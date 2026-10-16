@@ -2,6 +2,7 @@
 
     uv run apply_review_verdicts.py verdicts.json [--dry-run]                      # G3 (generated)
     uv run apply_review_verdicts.py --g2 runs/<book>/g2.json --book <book> [--dry-run]   # G2 (book)
+    uv run apply_review_verdicts.py --book-reviews compiled/<book>/review-stamps.json [--dry-run]   # the review tool
 
 The input names a reviewer and a verdict per sampled question:
 
@@ -248,6 +249,71 @@ def main_g2(args) -> int:
     return 0
 
 
+# THE LOCAL REVIEW TOOL (groundtruth/review, the Generated answers task). A person's decision on a generated answer
+# is a review of the question made from it: compile_book_records.py writes them, with the question each decided, to
+# compiled/<book>/review-stamps.json (only decisions on the answer as it is now: its fingerprint). Like G2, this is
+# a replay of committed decisions, never a loader writing a stamp (answer 33):
+#     approve          reviewed_by '<by> (answer approved, review tool)'; status and any automatic hold untouched
+#     fix_requested    status 'review', hold_reason 'human_hold', reviewed_by '<by> (answer fix requested, review tool)'
+#     reject           status 'rejected', reviewed_by '<by> (answer rejected, review tool)'
+# Only the book's own rows (source 'seed') of the book's course; a question not in the database is listed.
+BOOK_REVIEW = {"approve": "answer approved", "fix_requested": "answer fix requested", "reject": "answer rejected"}
+
+
+def apply_book_reviews(cur, doc: dict, dry_run: bool) -> dict:
+    review_policy.require_review_columns(cur)
+    course = doc["course_id"]
+    cur.execute("SELECT node_id FROM node_subject WHERE course_id = %s", (course,))
+    course_los = {r[0] for r in cur.fetchall()}
+    out = {"stamped": [], "held": [], "rejected": [], "absent": [], "unchanged": 0}
+    for st in doc.get("stamps") or []:
+        if st["decision"] not in BOOK_REVIEW or not (st.get("by") or "").strip():
+            raise SystemExit(f"REVIEW STAMPS NOT APPLIED: {st.get('question')}: decision {st.get('decision')!r} by {st.get('by')!r}")
+        cur.execute("SELECT status, reviewed_by, source, lo_id, hold_reason FROM questions WHERE id = %s", (st["question"],))
+        row = cur.fetchone()
+        if row is None:
+            if st["decision"] == "approve":
+                out["absent"].append(st["question"])
+            continue
+        status, reviewed_by, source, lo, hold = row
+        if source != "seed" or lo not in course_los:
+            raise SystemExit(f"REVIEW STAMPS NOT APPLIED: {st['question']} is not a book question of {course} (source {source}, objective {lo})")
+        stamp = f"{st['by'].strip()} ({BOOK_REVIEW[st['decision']]}, review tool)"
+        if st["decision"] == "approve":
+            want, bucket = (status, stamp, hold), "stamped"
+        elif st["decision"] == "fix_requested":
+            want, bucket = ("review", stamp, review_policy.HUMAN_HOLD), "held"
+        else:
+            want, bucket = ("rejected", stamp, None), "rejected"
+        if (status, reviewed_by, hold) == want:
+            out["unchanged"] += 1
+            continue
+        out[bucket].append(st["question"])
+        if not dry_run:
+            cur.execute("""UPDATE questions SET status = %s, reviewed_by = %s,
+                                  reviewed_at = CASE WHEN %s::text IS DISTINCT FROM reviewed_by THEN %s::date ELSE reviewed_at END,
+                                  hold_reason = %s
+                            WHERE id = %s""", (want[0], want[1], want[1], st["at"], want[2], st["question"]))
+    return out
+
+
+def main_book_reviews(args) -> int:
+    doc = json.loads(args.book_reviews.read_text())
+    import psycopg
+    with psycopg.connect(args.dsn) as conn, conn.cursor() as cur:
+        res = apply_book_reviews(cur, doc, args.dry_run)
+        if not args.dry_run:
+            conn.commit()
+    verb = "would" if args.dry_run else "did"
+    print(f"{args.book_reviews}: {doc['course_id']} — {verb} stamp {len(res['stamped'])} approved, hold {len(res['held'])} for a fix, "
+          f"reject {len(res['rejected'])}; {res['unchanged']} already as recorded")
+    if res["absent"]:
+        print(f"  ! {len(res['absent'])} approved question(s) not in this database — load the compiled bundles first: {res['absent'][:6]}",
+              file=sys.stderr)
+        return 1
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("verdicts", type=Path, nargs="?")
@@ -256,7 +322,13 @@ def main() -> int:
     ap.add_argument("--g2", type=Path, help="G2 verdicts on the book's own questions ({by, items})")
     ap.add_argument("--book", help="with --g2: the book config (its course and its runs)")
     ap.add_argument("--runs", help="with --g2: the lesson run files (default runs/<book>/lesson/)")
+    ap.add_argument("--book-reviews", type=Path, help="compiled/<book>/review-stamps.json: the review tool's decisions")
     args = ap.parse_args()
+    if args.book_reviews:
+        if not args.dsn:
+            print("ERROR: --book-reviews needs a database (--dsn or AINEXT_DB_DSN)", file=sys.stderr)
+            return 2
+        return main_book_reviews(args)
     if args.g2:
         if not args.book or not args.dsn:
             print("ERROR: --g2 needs --book and a database (--dsn or AINEXT_DB_DSN)", file=sys.stderr)

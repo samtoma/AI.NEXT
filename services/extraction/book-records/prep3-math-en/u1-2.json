@@ -82,11 +82,22 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.4721,
+          0.2184,
+          0.6797,
+          0.3454
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-2:think-and-discuss-2",
       "type": "activity",
+      "lo": "u1-2:objective-1",
       "source_page": 13,
       "quote": "Write the previous statements in the form of ordered pairs from X to Y.",
       "text": "Write the previous statements in the form of ordered pairs from X to Y.",
@@ -129,6 +140,16 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.5416,
+          0.5431,
+          0.681,
+          0.6541
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
@@ -145,7 +166,7 @@
     {
       "id": "u1-2:think-1",
       "type": "open_prompt",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-3",
       "source_page": 13,
       "quote": "Is R a subset from the cartesian product X × Z?",
       "text": "Is R a subset from the cartesian product X × Z?",
@@ -160,12 +181,13 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
-      }
+      },
+      "uses_figure": "u1-2:figure-2"
     },
     {
       "id": "u1-2:example-1",
       "type": "worked_example",
-      "lo": "u1-2:objective-1",
+      "lo": "u1-2:objective-2",
       "source_page": 13,
       "pages": [
         13,
@@ -190,7 +212,7 @@
     {
       "id": "u1-2:figure-3",
       "type": "figure",
-      "lo": "u1-2:objective-1",
+      "lo": "u1-2:objective-2",
       "belongs_to": "u1-2:example-1",
       "source_page": 14,
       "quote": "Arrow diagram",
@@ -198,12 +220,22 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.5415,
+          0.1179,
+          0.6777,
+          0.2677
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-2:figure-4",
       "type": "figure",
-      "lo": "u1-2:objective-1",
+      "lo": "u1-2:objective-2",
       "belongs_to": "u1-2:example-1",
       "source_page": 14,
       "quote": "Graph digram",
@@ -212,6 +244,16 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.725,
+          0.1067,
+          0.9047,
+          0.2755
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
@@ -228,7 +270,7 @@
     {
       "id": "u1-2:rule-1",
       "type": "rule",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "The relation from X to Y where X, Y are two non-empty sets",
       "claim": "A relation from X to Y, where X, Y are two non-empty sets, connects some or all of the elements of X with some or all of the elements of Y.",
@@ -240,7 +282,7 @@
     {
       "id": "u1-2:rule-2",
       "type": "rule",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "X × Y is the set of ordered pairs where the first projection",
       "claim": "X × Y is the set of ordered pairs where the first projection in each ordered pair belongs to X and the second projection belongs to Y.",
@@ -253,7 +295,7 @@
     {
       "id": "u1-2:rule-3",
       "type": "rule",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "If R is a relation from X to Y , then R ⊂ X × Y",
       "claim": "If R is a relation from X to Y, then R is a subset of X × Y.",
@@ -277,7 +319,7 @@
     {
       "id": "u1-2:definition-1",
       "type": "definition",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-4",
       "source_page": 14,
       "quote": "If R is a relation from a set X to X (itself) then R is called a relation",
       "claim": "If R is a relation from a set X to X (itself), then R is called a relation on X, and R ⊂ X × X.",
@@ -290,7 +332,7 @@
     {
       "id": "u1-2:example-2",
       "type": "worked_example",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-4",
       "source_page": 14,
       "quote": "If X = {-2, -1, 0, 1, 2} and R is a given relation on X where a R b means:",
       "stem": "If $X=\\{-2,-1,0,1,2\\}$ and R is a given relation on X where $a\\,R\\,b$ means: «The number a is the additive inverse of the number b» for each of $a,b\\in X$. Write the relation R and represent it by an arrow diagram and also by cartesian diagram.",
@@ -311,7 +353,7 @@
     {
       "id": "u1-2:figure-5",
       "type": "figure",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-4",
       "belongs_to": "u1-2:example-2",
       "source_page": 14,
       "quote": "Arrow diagram",
@@ -320,12 +362,22 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.126,
+          0.6977,
+          0.6278,
+          0.8226
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-2:figure-6",
       "type": "figure",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-4",
       "belongs_to": "u1-2:example-2",
       "source_page": 14,
       "quote": "Cartesian Diagram",
@@ -334,12 +386,22 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6529,
+          0.696,
+          0.8957,
+          0.891
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-2:drill-1",
       "type": "exercise",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-2",
       "source_page": 15,
       "quote": "If X = {1, 2, 3}, Y = {12, 21, 47, 52}, and R is the relation from X to Y",
       "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
@@ -382,67 +444,65 @@
   "learning_objectives": [
     {
       "id": "u1-2:objective-1",
-      "label": "Write a relation as ordered pairs",
-      "description": "Describe a relation from X to Y from a verbal statement and write it as a set of ordered pairs.",
+      "label": "Represent a relation from X to Y",
+      "description": "Write a relation between two sets as ordered pairs and as an arrow diagram.",
       "order_in_parent": 1,
       "evidence": [
-        "u1-2:think-and-discuss-1",
         "u1-2:think-and-discuss-2",
-        "u1-2:linking-text-2",
-        "u1-2:example-1"
+        "u1-2:think-and-discuss-3",
+        "u1-2:figure-2",
+        "u1-2:linking-text-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-2:objective-2",
-      "label": "Represent a relation by diagrams",
-      "description": "Represent a relation from X to Y with an arrow diagram and a cartesian (graph) diagram.",
+      "label": "Write and represent a relation given by a rule",
+      "description": "Find the ordered pairs of a relation defined by a rule and show it in an arrow diagram and a cartesian diagram.",
       "order_in_parent": 2,
       "evidence": [
-        "u1-2:think-and-discuss-3",
-        "u1-2:figure-2",
+        "u1-2:example-1",
         "u1-2:figure-3",
         "u1-2:figure-4",
-        "u1-2:example-1"
+        "u1-2:drill-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-2:objective-3",
       "label": "Relate a relation to the cartesian product",
-      "description": "Explain that a relation from X to Y connects elements of X with elements of Y and is a subset of X × Y.",
+      "description": "Decide that a relation from X to Y is a subset of X × Y.",
       "order_in_parent": 3,
       "evidence": [
-        "u1-2:think-1",
         "u1-2:rule-1",
         "u1-2:rule-2",
-        "u1-2:rule-3"
+        "u1-2:rule-3",
+        "u1-2:think-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-2:objective-4",
-      "label": "Find and represent a relation on a set",
-      "description": "Write and represent a relation from a set to itself, R ⊂ X × X, using arrow and cartesian diagrams.",
+      "label": "Represent a relation on a set itself",
+      "description": "Write and represent a relation from a set to itself, R ⊂ X × X, with arrow and cartesian diagrams.",
       "order_in_parent": 4,
       "evidence": [
         "u1-2:definition-1",
         "u1-2:example-2",
         "u1-2:figure-5",
-        "u1-2:figure-6",
-        "u1-2:drill-1"
+        "u1-2:figure-6"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     }
@@ -458,6 +518,10 @@
   },
   "open_questions": [],
   "history": [
-    "2026-10-15: extracted from the page images (ext-v3, sonnet), $0.158"
+    "2026-10-15: extracted from the page images (ext-v3, sonnet), $0.158",
+    "2026-10-16: figure regions placed (crop-v1, sonnet): 6 cropped",
+    "2026-10-16: figure regions placed (crop-v1, sonnet): 2 cropped",
+    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)",
+    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)"
   ]
 }

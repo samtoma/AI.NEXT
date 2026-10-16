@@ -45,6 +45,14 @@ import type { CurriculumId } from "./curricula.ts";
 
 /** Prep-3 Mathematics, National (the book the product launched with). */
 export const PREP3_MATH_EN = "course:prep3-math-en";
+/**
+ * Prep-3 Mathematics, National — the SAME book ingested again by the book-record
+ * pipeline (book record v2: page images, crops, S4, the review tool), as its own
+ * course beside the launch course so the two can be compared (Tamer, 2026-10-16;
+ * the name is the one proposed to Samuel and may still change). Hidden until an
+ * operator makes it live for a grade on the console (no row is hidden, FR-4002).
+ */
+export const PREP3_PARALLEL_MATH_EN = "course:prep3-parallel-math-en";
 /** Prep-3 Social Studies, National. */
 export const PREP3_SOCIAL_AR = "course:prep3-social-ar";
 /** Prep-3 Arabic, National. */
@@ -394,6 +402,35 @@ export const COURSES = {
       figureLedSlugPrefix: "geo",
       lessonWidgets: "unit-map",
       exampleFallbacks: nationalExamples("v:geo1-1:001"),
+    },
+  },
+  [PREP3_PARALLEL_MATH_EN]: {
+    subject: "math-en",
+    curriculum: "eg-national-en",
+    grades: ["9"],
+    label: "Mathematics — Prep 3 (book-record ingestion)",
+    cardLabel: "Mathematics — Prep 3 (new ingestion)",
+    book: "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+    cite: NATIONAL_CITE,
+    homeCopy: NATIONAL_HOME,
+    pipelineBook: "prep3-parallel",
+    // Lesson slugs `pp3u1-1` …: no term rule yet, so every module reads Term 1
+    // until the Term 2 units are ingested and given one.
+    terms: { rules: [], defaultTerm: 1 },
+    // Decision 7: exactly one course probes, and it is the launch course.
+    probing: false,
+    // A National book, so the National facts — but never the launch course's
+    // ids: no example id of another course (`null` means placeholders), the
+    // book's printed lesson titles from the book-sections store, and the
+    // widgets of its own units' live widget questions (it has no unit map).
+    tutor: {
+      ...NATIONAL_BOOK,
+      askExamples: null,
+      lessonTitles: null,
+      bookLessonTitles: true,
+      figureLedSlugPrefix: null,
+      lessonWidgets: "module-questions",
+      exampleFallbacks: null,
     },
   },
   [PREP3_SOCIAL_AR]: {

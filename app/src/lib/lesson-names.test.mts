@@ -24,7 +24,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 import { provenanceFromRow, type BookSectionRow } from "./book-sections.ts";
-import { COURSE_IDS, COURSES, PREP3_ARABIC_AR, PREP3_MATH_EN, PREP3_SOCIAL_AR, US_G10_MATH_EN } from "./courses.ts";
+import { COURSE_IDS, COURSES, PREP3_ARABIC_AR, PREP3_MATH_EN, PREP3_PARALLEL_MATH_EN, PREP3_SOCIAL_AR, US_G10_MATH_EN } from "./courses.ts";
 import { SUBJECTS } from "./subjects.ts";
 import { rollupText, rollupTextAr, shownProvenance, shownTitles } from "./section-label.ts";
 import { hasMath, plainMath } from "./math-text.ts";
@@ -95,7 +95,7 @@ test("the registry: Arabic touches off only for the Grade 10 course, and only an
 });
 
 test("#36: every course cites its own book — the National ones as they always did, the Grade 10 book by name", () => {
-  for (const id of [PREP3_MATH_EN, PREP3_SOCIAL_AR, PREP3_ARABIC_AR] as const) {
+  for (const id of [PREP3_MATH_EN, PREP3_PARALLEL_MATH_EN, PREP3_SOCIAL_AR, PREP3_ARABIC_AR] as const) {
     assert.deepEqual(COURSES[id].cite, { name: "Ministry textbook", edition: "MOETE 2025–2026" }, id);
   }
   const g10 = COURSES[US_G10_MATH_EN].cite;
@@ -104,7 +104,7 @@ test("#36: every course cites its own book — the National ones as they always 
   // each course names the pipeline book whose coverage audit the console reads
   assert.deepEqual(
     COURSE_IDS.map((id) => COURSES[id].pipelineBook),
-    ["prep3-math-en", "prep3-social-ar", "prep3-arabic-ar", "g10-math"]
+    ["prep3-math-en", "prep3-parallel", "prep3-social-ar", "prep3-arabic-ar", "g10-math"]
   );
 });
 

@@ -124,9 +124,10 @@ test("a curriculum is validated exactly: no case folding, no default, no trimmin
   assert.match(curriculumLabel("x-y"), /unknown curriculum \(x-y\)/);
 });
 
-test("courses: the four, in course order — curriculum, then subject — each in exactly one curriculum (FR-4002)", () => {
+test("courses: the five, in course order — curriculum, then subject — each in exactly one curriculum (FR-4002)", () => {
   assert.deepEqual(COURSE_IDS, [
     "course:prep3-math-en",
+    "course:prep3-parallel-math-en",
     "course:prep3-social-ar",
     "course:prep3-arabic-ar",
     "course:us-g10-math-en",
@@ -149,8 +150,11 @@ test("courses: the four, in course order — curriculum, then subject — each i
     assert.equal(at[at.length - 1] - at[0], at.length - 1, `${c}'s courses are contiguous`);
   }
   // the National courses keep the subject registry's order (so every
-  // National list is ordered as before 003)
-  assert.deepEqual(coursesOf("eg-national-en").map((id) => COURSES[id].subject), SUBJECT_IDS);
+  // National list is ordered as before 003); a subject's second book (the
+  // book-record ingestion of Prep-3 maths, 2026-10-16) sits right after its first
+  const national = coursesOf("eg-national-en").map((id) => COURSES[id].subject);
+  assert.deepEqual([...new Set(national)], SUBJECT_IDS);
+  assert.deepEqual(national, [...national].sort((a, b) => SUBJECT_IDS.indexOf(a) - SUBJECT_IDS.indexOf(b)));
 });
 
 test("an unknown course has no curriculum and no subject — it fails closed", () => {
@@ -169,7 +173,7 @@ test("the subject registry names no course: two courses share maths (decision E)
     assert.ok(!("courseId" in SUBJECTS[id]), `${id} still carries a courseId`);
     assert.ok(!("book" in SUBJECTS[id]), `${id} still carries a book`);
   }
-  assert.deepEqual(coursesOfSpineKey("math"), ["course:prep3-math-en", "course:us-g10-math-en"]);
+  assert.deepEqual(coursesOfSpineKey("math"), ["course:prep3-math-en", "course:prep3-parallel-math-en", "course:us-g10-math-en"]);
   assert.deepEqual(coursesOfSpineKey("social"), ["course:prep3-social-ar"]);
   assert.deepEqual(coursesOfSpineKey("geography"), []);
 });

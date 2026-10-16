@@ -2,6 +2,7 @@
 
     uv run --with pymupdf --with jsonschema extract_book_record.py run prep3-math-en u1-2 [--cap 10] [--model sonnet] [--force]
     uv run --with pymupdf --with jsonschema extract_book_record.py run prep3-math-en --all [--cap 10]
+    uv run --with jsonschema extract_book_record.py objectives prep3-math-en u1-1 [--cap 2]   # step 3 again, from the saved record
 
 Run from services/extraction/. The lessons and their printed page ranges come from
 book-records/<book>/lessons.json. Writes book-records/<book>/<slug>.json, the format of
@@ -22,7 +23,9 @@ HOW.
      lesson-wide count), resolves links (belongs_to, answer_figure), joins page-break continuations, and fills
      what the schema requires.
   3. One text-only call per lesson draws the "can do" objectives from the printed objective box and the
-     items, each citing its evidence, and says which objective each item teaches.
+     items, each citing its evidence, says which objective each item teaches, and which figure printed apart
+     from a prompt a student must look at to answer it (`uses_figure`). `objectives` runs this step again on a
+     saved record, with nothing read from the pages.
   4. The record is checked with groundtruth/validate.py; problems are printed, not hidden.
 
 COST. Every call runs the `claude` CLI on the developer's sign-in, with a minimal system prompt and only the Read
@@ -47,7 +50,7 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE / "groundtruth"))
 import validate as V  # noqa: E402
 
-VERSION = "ext-v3"
+VERSION = "ext-v4"  # v4: objectives numbered from 1 (v3 filed every item one objective early) and uses_figure
 ITEM_TYPES = ["definition", "rule", "caution", "convention", "method", "exercise", "activity", "open_prompt",
               "worked_example", "figure", "table", "key_term", "printed_objective", "heading", "linking_text",
               "prior_knowledge"]
@@ -88,7 +91,8 @@ OBJ_SYSTEM = """You draw the "can do" learning objectives of one textbook lesson
 - Objectives follow the book's teaching order; each is one thing a student can do, phrased "Find…", "Represent…", "Decide…". Usually 3–6 for a lesson.
 - Ground them in the printed "What you'll learn" box and in what the items actually teach. Never invent content the items do not cover.
 - evidence_keys: the items that teach it; at least two, of different types where possible.
-- item_objective: for every statement, worked example, exercise, activity, open prompt, figure and table, the objective it teaches (by index). Headings, key terms, linking text and printed objectives get none."""
+- item_objective: for every statement, worked example, exercise, activity, open prompt, figure and table, the objective it teaches, by its NUMBER: 1 for the first objective you list, 2 for the second. Headings, key terms, linking text and printed objectives get none.
+- prompt_figures: for every exercise, activity, open prompt and worked example that a student cannot answer without LOOKING at a figure printed apart from it ("the previous graphical net", "which of the following arrow diagrams", relations shown only in a figure printed just before it), the key(s) of that figure. Not a figure the student is asked to draw, not a figure printed inside the item (marked "inside"), and not a figure that only shows the answer."""
 
 PAGE_SCHEMA = {"type": "object", "required": ["records"], "properties": {"records": {"type": "array", "items": {
     "type": "object", "required": ["key", "type", "quote"],
@@ -113,7 +117,9 @@ OBJ_SCHEMA = {"type": "object", "required": ["objectives", "item_objective"], "p
     "objectives": {"type": "array", "items": {"type": "object", "required": ["label", "description", "evidence_keys"], "properties": {
         "label": {"type": "string"}, "description": {"type": "string"}, "evidence_keys": {"type": "array", "items": {"type": "string"}}}}},
     "item_objective": {"type": "array", "items": {"type": "object", "required": ["key", "objective"], "properties": {
-        "key": {"type": "string"}, "objective": {"type": "integer"}}}}}}
+        "key": {"type": "string"}, "objective": {"type": "integer"}}}},
+    "prompt_figures": {"type": "array", "items": {"type": "object", "required": ["key", "figures"], "properties": {
+        "key": {"type": "string"}, "figures": {"type": "array", "items": {"type": "string"}}}}}}}
 
 
 # ============================================================================ calls
@@ -275,7 +281,8 @@ def finish_item(r: dict, by_key: dict[str, str], types: dict[str, str], prov: di
 def item_summary(r: dict) -> str:
     body = r.get("claim") or r.get("stem") or r.get("text") or r.get("caption") or r.get("term") or ""
     parts = "; ".join(f"{p.get('label')}: {p.get('stem', '')}" for p in r.get("parts") or [])
-    return f"[{r['_key']}] {r['type']}{' ' + r['label'] if r.get('label') else ''} (p.{r['source_page']}): {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
+    inside = f" (inside {r['belongs_to_key']})" if r.get("belongs_to_key") else ""
+    return f"[{r['_key']}] {r['type']}{' ' + r['label'] if r.get('label') else ''} (p.{r['source_page']}){inside}: {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
 
 
 def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, budget: Budget) -> dict:
@@ -318,23 +325,7 @@ def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, 
     items = [finish_item(r, by_key, types, prov) for r in recs]
 
     # objectives (text only)
-    lines = [item_summary(r) for r in recs]
-    obj = call_claude(OBJ_SYSTEM, f"Lesson: {lesson['syllabus_ref']} {lesson['title']}\n\nITEMS\n" + "\n".join(lines),
-                      OBJ_SCHEMA, model, budget, f"{slug} objectives")
-    objectives = []
-    for n, o in enumerate(obj.get("objectives") or [], start=1):
-        ev = list(dict.fromkeys(by_key[k] for k in o.get("evidence_keys") or [] if k in by_key))
-        if ev:
-            objectives.append({"id": f"{slug}:objective-{n}", "label": o["label"], "description": o["description"],
-                               "order_in_parent": n, "evidence": ev, "provenance": prov})
-    valid = {o["order_in_parent"]: o["id"] for o in objectives}
-    lo_of = {by_key[x["key"]]: valid[x["objective"]] for x in obj.get("item_objective") or []
-             if x.get("key") in by_key and x.get("objective") in valid}
-    ordered = []
-    for it in items:
-        if it["id"] in lo_of and it["type"] not in ("heading", "key_term", "linking_text", "printed_objective"):
-            it = {"id": it["id"], "type": it["type"], "lo": lo_of[it["id"]], **{k: v for k, v in it.items() if k not in ("id", "type")}}
-        ordered.append(it)
+    objectives, ordered = draw_objectives(slug, lesson, [item_summary(r) for r in recs], by_key, items, model, budget, prov)
 
     src = {"title": cfg["title"], "publisher": cfg.get("publisher") or "Arab Republic of Egypt, Ministry of Education & Technical Education",
            "language": cfg.get("language", "en"), "grade": cfg.get("grade"), "subject": cfg.get("subject"),
@@ -347,6 +338,75 @@ def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, 
             "items": ordered, "learning_objectives": objectives, "provenance": prov,
             "review": {"status": "draft", "reviewed_by": None, "reviewed_at": None},
             "open_questions": [], "history": [f"{stamp}: extracted from the page images ({VERSION}, {model})"]}
+
+
+PROMPTS = ("exercise", "activity", "open_prompt", "worked_example")
+NO_OBJECTIVE = ("heading", "key_term", "linking_text", "printed_objective")
+
+
+def draw_objectives(slug: str, lesson: dict, lines: list[str], by_key: dict, items: list[dict], model: str, budget: Budget,
+                    prov: dict) -> tuple[list[dict], list[dict]]:
+    """One text-only call: the lesson's objectives, each item's objective, and the figures a prompt needs (uses_figure).
+    The call numbers objectives from 1; obj-v1 read them so, the model answered from 0, and every item was filed one
+    objective early (found by the Unit 1 smoke test, 2026-10-16) — so the prompt says so and the answer is checked."""
+    obj = call_claude(OBJ_SYSTEM, f"Lesson: {lesson['syllabus_ref']} {lesson['title']}\n\nITEMS\n" + "\n".join(lines),
+                      OBJ_SCHEMA, model, budget, f"{slug} objectives")
+    objectives = []
+    for n, o in enumerate(obj.get("objectives") or [], start=1):
+        ev = list(dict.fromkeys(by_key[k] for k in o.get("evidence_keys") or [] if k in by_key))
+        if ev:
+            objectives.append({"id": f"{slug}:objective-{n}", "label": o["label"], "description": o["description"],
+                               "order_in_parent": n, "evidence": ev, "provenance": prov})
+    lazy = [o["label"] for o in objectives if re.fullmatch(r"(?i)\s*(?:obj(?:ective)?)\s*\d+\s*", o["label"])]
+    if lazy:
+        raise SystemExit(f"{slug} objectives: placeholder labels {lazy}: run again")
+    nums = [x.get("objective") for x in obj.get("item_objective") or []]
+    if nums and 0 in nums and len(objectives) not in nums:
+        raise SystemExit(f"{slug} objectives: item_objective counts from 0 although the prompt counts from 1: not filed")
+    valid = {o["order_in_parent"]: o["id"] for o in objectives}
+    lo_of = {by_key[x["key"]]: valid[x["objective"]] for x in obj.get("item_objective") or []
+             if x.get("key") in by_key and x.get("objective") in valid}
+    types = {it["id"]: it["type"] for it in items}
+    figs_of: dict[str, list[str]] = {}
+    for x in obj.get("prompt_figures") or []:
+        rid = by_key.get(x.get("key"))
+        figs = [by_key[k] for k in x.get("figures") or [] if k in by_key and types.get(by_key[k]) == "figure"]
+        if rid and types.get(rid) in PROMPTS and figs:
+            inside = {it["id"] for it in items if it.get("belongs_to") == rid}
+            figs = [f for f in dict.fromkeys(figs) if f not in inside]
+            if figs:
+                figs_of[rid] = figs
+    ordered = []
+    for it in items:
+        it = {k: v for k, v in it.items() if k not in ("lo", "uses_figure")}
+        if it["id"] in lo_of and it["type"] not in NO_OBJECTIVE:
+            it = {"id": it["id"], "type": it["type"], "lo": lo_of[it["id"]], **{k: v for k, v in it.items() if k not in ("id", "type")}}
+        if it["id"] in figs_of:
+            it["uses_figure"] = figs_of[it["id"]] if len(figs_of[it["id"]]) > 1 else figs_of[it["id"]][0]
+        ordered.append(it)
+    return objectives, ordered
+
+
+def record_summary(it: dict) -> str:
+    """item_summary for a saved record: the item's id is its key."""
+    body = it.get("claim") or it.get("stem") or it.get("text") or it.get("caption") or it.get("term") or ""
+    parts = "; ".join(f"{p.get('label')}: {p.get('stem') or p.get('text') or ''}" for p in it.get("parts") or [])
+    inside = f" (inside {it['belongs_to']})" if it.get("belongs_to") else ""
+    return f"[{it['id']}] {it['type']} (p.{it['source_page']}){inside}: {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
+
+
+def redraw_objectives(book: str, lesson: dict, model: str, budget: Budget) -> dict:
+    """Draw a saved record's objectives, item filing and figure links again, from its items (no page is read)."""
+    path = HERE / "book-records" / book / f"{lesson['slug']}.json"
+    doc = json.loads(path.read_text())
+    stamp = date.today().isoformat()
+    prov = {"by": f"extract_book_record.py {VERSION} (objectives redrawn), {model}, {stamp}", "method": "page image"}
+    items = doc["items"]
+    by_key = {it["id"]: it["id"] for it in items}
+    objectives, ordered = draw_objectives(lesson["slug"], lesson, [record_summary(it) for it in items], by_key, items, model, budget, prov)
+    doc["learning_objectives"], doc["items"] = objectives, ordered
+    doc.setdefault("history", []).append(f"{stamp}: objectives, item filing and figure links redrawn ({VERSION}, {model})")
+    return doc
 
 
 def check(doc: dict) -> list[str]:
@@ -370,6 +430,12 @@ def main(argv: list[str]) -> int:
     r.add_argument("--cap", type=float, default=10.0)
     r.add_argument("--model", default="sonnet")
     r.add_argument("--force", action="store_true")
+    o = sub.add_parser("objectives", help="redraw a saved record's objectives, item filing and figure links (text only)")
+    o.add_argument("book")
+    o.add_argument("lessons", nargs="*")
+    o.add_argument("--all", action="store_true")
+    o.add_argument("--cap", type=float, default=2.0)
+    o.add_argument("--model", default="sonnet")
     a = ap.parse_args(argv)
     cfg = json.loads((HERE / "books" / f"{a.book}.json").read_text())
     lmap = json.loads((HERE / "book-records" / a.book / "lessons.json").read_text())
@@ -378,6 +444,24 @@ def main(argv: list[str]) -> int:
         raise SystemExit("no lessons: name them or pass --all")
     budget = Budget(a.cap)
     report = []
+    if a.cmd == "objectives":
+        for lesson in todo:
+            doc = redraw_objectives(a.book, lesson, a.model, budget)
+            errs = check(doc)
+            if errs:
+                print(f"{lesson['slug']}: NOT written:\n  " + "\n  ".join(errs[:15]), file=sys.stderr)
+                continue
+            (HERE / "book-records" / a.book / f"{lesson['slug']}.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+            filed = sum(1 for it in doc["items"] if it.get("lo"))
+            linked = sum(1 for it in doc["items"] if it.get("uses_figure"))
+            print(f"{lesson['slug']}: {len(doc['learning_objectives'])} objectives, {filed} items filed, {linked} prompt(s) linked to a figure",
+                  file=sys.stderr)
+            report.append((lesson["slug"], len(doc["items"]), len(doc["learning_objectives"]), 0, errs))
+        with (HERE / "book-records" / a.book / "extraction-runs.jsonl").open("a") as f:
+            f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "version": VERSION, "step": "objectives",
+                                "model": a.model, "lessons": [x[0] for x in report], "cost_usd": round(budget.spent, 4), "calls": budget.calls}) + "\n")
+        print(f"done: ${budget.spent:.3f}", file=sys.stderr)
+        return 0
     for lesson in todo:
         out = HERE / "book-records" / a.book / f"{lesson['slug']}.json"
         if out.exists() and not a.force:

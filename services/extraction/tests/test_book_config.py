@@ -16,16 +16,20 @@ from pydantic import ValidationError
 
 
 class ConfigsTest(unittest.TestCase):
-    def test_the_four_books_are_valid_and_the_three_shipped_ones_agree_with_their_bundles(self):
+    def test_the_five_books_are_valid_and_the_shipped_ones_agree_with_their_bundles(self):
         books = book_config.all_books()
         self.assertEqual([b.book for b in books],
-                         ["prep3-math-en", "prep3-social-ar", "prep3-arabic-ar", "g10-math"])
-        # all four loadable since 2026-10-12 (Samuel's answer 49: the whole Grade 10 book on production)
-        self.assertEqual([b.status for b in books], ["loadable", "loadable", "loadable", "loadable"])
+                         ["prep3-math-en", "prep3-parallel", "prep3-social-ar", "prep3-arabic-ar", "g10-math"])
+        # four loadable since 2026-10-12 (Samuel's answer 49: the whole Grade 10 book on production); the
+        # book-record ingestion of the Prep-3 maths book is going through the line (2026-10-16)
+        self.assertEqual([b.status for b in books], ["loadable", "ingest", "loadable", "loadable", "loadable"])
         self.assertEqual(book_config.check_all(), [])
-        # a load asks the strict question, and every book passes it
+        # a load asks the strict question, and every loadable book passes it; an ingest book has nothing to load
         for b in books:
-            self.assertEqual(book_config.check_book(b, books), [], b.book)
+            if b.status == "loadable":
+                self.assertEqual(book_config.check_book(b, books), [], b.book)
+            else:
+                self.assertEqual(book_config.check_book(b, books, allow_ingest=True), [], b.book)
 
     def test_every_path_in_a_config_is_repo_relative(self):
         for p in sorted(book_config.BOOKS_DIR.glob("*.json")):
@@ -41,7 +45,7 @@ class ConfigsTest(unittest.TestCase):
 
     def test_course_subjects_replace_the_old_hardcoded_map(self):
         self.assertEqual(book_config.course_subjects(), {
-            "course:prep3-math-en": "math", "course:prep3-social-ar": "social",
+            "course:prep3-math-en": "math", "course:prep3-parallel-math-en": "math", "course:prep3-social-ar": "social",
             "course:prep3-arabic-ar": "arabic", "course:us-g10-math-en": "math"})
 
 

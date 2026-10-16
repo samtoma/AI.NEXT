@@ -89,14 +89,17 @@ test("COURSE_RANK is the course registry's order, read from lib/courses.ts — n
   // then course. The three National courses keep the positions the subject
   // registry gave them — maths, Social Studies, Arabic — so every list a
   // National student sees is ordered as it was; the American course follows.
+  // The book-record ingestion of Prep-3 maths (2026-10-16) is a second National
+  // maths course, right after the first, so subjects stay in registry order.
   assert.deepEqual(courses, [
     "course:prep3-math-en",
+    "course:prep3-parallel-math-en",
     "course:prep3-social-ar",
     "course:prep3-arabic-ar",
     "course:us-g10-math-en",
   ]);
   assert.deepEqual(
-    courses.slice(0, 3).map((c) => COURSES[c as keyof typeof COURSES].subject),
+    [...new Set(courses.slice(0, 4).map((c) => COURSES[c as keyof typeof COURSES].subject))],
     SUBJECT_IDS,
     "the National courses in subject-registry order"
   );

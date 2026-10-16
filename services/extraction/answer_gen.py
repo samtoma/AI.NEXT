@@ -86,6 +86,14 @@ AUTHOR_SCHEMA = {"type": "object", "required": ["answers"], "properties": {"answ
     "properties": {"ref": {"type": "string"}, "kind": {"enum": ["value", "drawing", "explanation"]},
                    "answer": {"type": "string"}, "solution": {"type": "array", "items": {"type": "string"}},
                    "grounded_in": {"type": "array", "items": {"type": "string"}}}}}}}
+JUDGE_SYSTEM = """You compare two final answers to the same maths exercise: the one the textbook prints and one a solver gave without seeing it.
+"equivalent" when they say the same thing (the same values, pairs, sets or conclusion, in any order or notation, a set written with or without braces, a value with or without its name).
+"different" when they do not. "unclear" only when the question itself does not let you decide. Give the reason in one line."""
+
+JUDGE_SCHEMA = {"type": "object", "required": ["verdicts"], "properties": {"verdicts": {"type": "array", "items": {
+    "type": "object", "required": ["ref", "verdict", "reason"],
+    "properties": {"ref": {"type": "string"}, "verdict": {"enum": ["equivalent", "different", "unclear"]}, "reason": {"type": "string"}}}}}}
+
 RESOLVE_SCHEMA = {"type": "object", "required": ["answers"], "properties": {"answers": {"type": "array", "items": {
     "type": "object", "required": ["ref", "kind", "answer"],
     "properties": {"ref": {"type": "string"}, "kind": {"enum": ["value", "drawing", "explanation"]},
@@ -378,6 +386,108 @@ def _entry(u: dict) -> dict:
             "needs_page": u["needs_page"], "question_fingerprint": u["fingerprint"]}
 
 
+# ============================================================================ the printed answers, checked blind
+CHECKS_FORMAT = "ainext.printed-checks/1"
+CHECK_VERSION = "chk-v1"
+
+
+def printed_units(doc: dict) -> list[dict]:
+    """One unit per part (or prompt) whose answer the book prints as text: the answer to check, and what the blind
+    solver may see. A printed drawing (answer_figure only) is not compared."""
+    out = []
+    los = {o["id"]: o for o in doc.get("learning_objectives") or []}
+    items = {r["id"]: r for r in doc.get("items") or []}
+    answer_figs = {f for r in items.values() for h in [r] + list(r.get("parts") or [])
+                   for f in ([h["answer_figure"]] if isinstance(h.get("answer_figure"), str) else h.get("answer_figure") or [])}
+    for raw in doc.get("items") or []:
+        if raw.get("type") not in ("exercise", "worked_example"):
+            continue
+        r = with_intended(raw)
+        for p in r.get("parts") or [None]:
+            printed = (p or r).get("answer") or (r.get("answer") if p is None else None)
+            if not printed:
+                continue
+            ref = f"{r['id']}:{p['label']}" if p else r["id"]
+            figs = [f for f, it in items.items() if it.get("type") == "figure" and f not in answer_figs
+                    and (it.get("belongs_to") == r["id"] or f in ([r["uses_figure"]] if isinstance(r.get("uses_figure"), str) else r.get("uses_figure") or []))]
+            lo = los.get(r.get("lo") or "")
+            u = {"ref": ref, "record_id": r["id"], "part": (p or {}).get("label"), "type": r["type"], "page": r.get("source_page"),
+                 "text": r.get("text") or r.get("stem") or "", "stem": (p or {}).get("stem") or "", "notes": "",
+                 "notation": r.get("notation"), "objective": f"{lo['label']}: {lo['description']}" if lo else None,
+                 "context": [], "needs_page": False, "figures": figs, "printed": printed}
+            u["fingerprint"] = hashlib.md5(json.dumps({k: u[k] for k in ("text", "stem", "printed", "figures")},
+                                                      sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+            out.append(u)
+    return out
+
+
+def check_printed(doc: dict, us: list[dict], model: str, budget: Budget, book: str) -> list[dict]:
+    """Grade 10's S3 blind re-solve, for a book record: each item solved from its question alone (never its printed
+    solution or answer: the worked examples being checked are left out of the lesson material, and the solver sees
+    the item's figure crops, never the page), compared with the printed answer; a disagreement the comparison cannot
+    settle goes to a judge. agreed | disagreed | cannot_answer."""
+    import crop_figures as CF  # noqa: PLC0415
+    hidden = {u["record_id"] for u in us}
+    shown = copy.deepcopy(doc)
+    shown["items"] = [r for r in shown.get("items") or [] if r["id"] not in hidden]
+    ground = grounding(shown)
+    fig_dir = CF.figures_dir(book)
+    lines = ["PARTS TO ANSWER"]
+    for u in us:
+        lines.append(f"\n[{u['ref']}] ({u['type'].replace('_', ' ')}, printed page {u['page']})")
+        if u["objective"]:
+            lines.append(f"  objective: {u['objective']}")
+        lines.append(f"  question: {u['text']}")
+        if u["part"]:
+            lines.append(f"  answer only part {u['part']}" + (f": {u['stem']}" if u["stem"] else " (the part the question labels so)"))
+        crops = [fig_dir / CF.crop_name(f) for f in u["figures"] if (fig_dir / CF.crop_name(f)).exists()]
+        for c in crops:
+            lines.append(f"  its figure: {c} (read it with the Read tool)")
+        if u["figures"] and not crops:
+            lines.append("  (its figure is not available: if the part cannot be answered without it, say CANNOT ANSWER)")
+    lines.append("\nAnswer every part above, using its [ref] exactly.")
+    resolved = call_claude(RESOLVE_SYSTEM, f"{ground}\n\n" + "\n".join(lines), RESOLVE_SCHEMA, model, budget,
+                           f"blind re-solve ({len(us)} printed answers)", fig_dir if any(u["figures"] for u in us) else None)
+    by_r = {a["ref"]: a for a in resolved.get("answers") or []}
+    results = []
+    for u in us:
+        b = by_r.get(u["ref"])
+        row = {"ref": u["ref"], "record_id": u["record_id"], "part": u["part"], "type": u["type"], "page": u["page"],
+               "printed": u["printed"], "blind": (b or {}).get("answer"), "blind_kind": (b or {}).get("kind"),
+               "figures": u["figures"], "question_fingerprint": u["fingerprint"]}
+        if not b:
+            row.update(status="cannot_answer", note="the solver gave no answer for it")
+        elif str(b["answer"]).startswith("CANNOT ANSWER"):
+            row.update(status="cannot_answer", note=b["answer"][:200])
+        elif same_answer(u["printed"], b["answer"]):
+            row.update(status="agreed", how="the same answer")
+        else:
+            row.update(status="disagreed")
+        results.append(row)
+    unsure = [r for r in results if r["status"] == "disagreed"]
+    if unsure:
+        by_ref = {u["ref"]: u for u in us}
+        prompt = "\n\n".join(f"[{r['ref']}] question: {by_ref[r['ref']]['text']}" + (f" (part {r['part']}: {by_ref[r['ref']]['stem']})" if r["part"] else "")
+                              + f"\n  printed: {r['printed']}\n  solver: {r['blind']}" for r in unsure) + "\n\nGive one verdict per [ref], ref as shown without the brackets."
+        judged = call_claude(JUDGE_SYSTEM, prompt, JUDGE_SCHEMA, model, budget, f"judge ({len(unsure)} disagreements)")
+        verdicts = {v["ref"].strip("[]"): v for v in judged.get("verdicts") or []}
+        for r in unsure:
+            v = verdicts.get(r["ref"])
+            r["judge"] = v
+            if v and v["verdict"] == "equivalent":
+                r.update(status="agreed", how=f"judged equivalent: {v['reason']}")
+            elif v and v["verdict"] == "unclear":
+                r.update(status="cannot_answer", note=f"the judge could not decide: {v['reason']}")
+    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    for r in results:
+        r["made"] = {"at": stamp, "model": model, "prompts": CHECK_VERSION}
+    return results
+
+
+def checks_path(book: str, slug: str) -> Path:
+    return HERE / "teaching" / book / "printed-checks" / f"{slug}.json"
+
+
 def out_path(book: str, slug: str) -> Path:
     return HERE / "teaching" / book / "answers" / f"{slug}.json"
 
@@ -392,8 +502,15 @@ def main(argv: list[str]) -> int:
         s.add_argument("--force", action="store_true", help="redo parts that already have an answer")
         s.add_argument("--model", default="sonnet")
         s.add_argument("--cap", type=float, default=5.0, help="stop before spending more than this many USD (default 5)")
+    c = sub.add_parser("check-printed", help="re-solve every printed answer blind and compare (Grade 10's S3 rule)")
+    c.add_argument("record", type=Path)
+    c.add_argument("--force", action="store_true")
+    c.add_argument("--model", default="sonnet")
+    c.add_argument("--cap", type=float, default=3.0)
     a = ap.parse_args(argv)
     path = a.record.resolve()
+    if a.cmd == "check-printed":
+        return cmd_check_printed(path, a)
     doc = json.loads(path.read_text())
     book, slug = book_of(path), doc["lesson"]["slug"]
     out = out_path(book, slug)
@@ -424,6 +541,32 @@ def main(argv: list[str]) -> int:
     from collections import Counter
     print(f"{len(results)} answered -> {out.relative_to(HERE)}  {dict(Counter(r['status'] for r in results))}  "
           f"${budget.spent:.3f}", file=sys.stderr)
+    return 0
+
+
+def cmd_check_printed(path: Path, a) -> int:
+    doc = json.loads(path.read_text())
+    book, slug = book_of(path), doc["lesson"]["slug"]
+    out = checks_path(book, slug)
+    prev = json.loads(out.read_text()) if out.exists() else None
+    done = {x["ref"]: x for x in (prev or {}).get("checks") or []}
+    us = printed_units(doc)
+    todo = [u for u in us if a.force or u["ref"] not in done or done[u["ref"]].get("question_fingerprint") != u["fingerprint"]]
+    print(f"{slug}: {len(us)} printed answer(s); {len(todo)} to check now", file=sys.stderr)
+    if not todo:
+        return 0
+    budget = Budget(a.cap)
+    for r in check_printed(doc, todo, a.model, budget, book):
+        done[r["ref"]] = r
+    order = {u["ref"]: i for i, u in enumerate(us)}
+    data = {"format": CHECKS_FORMAT, "book": book, "lesson": slug, "source": str(path.relative_to(HERE)), "made_by": "answer_gen.py check-printed",
+            "runs": (prev or {}).get("runs", []) + [{"at": date.today().isoformat(), "model": a.model, "prompts": CHECK_VERSION,
+                                                      "parts": len(todo), "cost_usd": round(budget.spent, 4), "calls": budget.calls}],
+            "checks": sorted((v for k, v in done.items() if k in order), key=lambda x: order[x["ref"]])}
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    from collections import Counter
+    print(f"-> {out.relative_to(HERE)}  {dict(Counter(r['status'] for r in data['checks']))}  ${budget.spent:.3f}", file=sys.stderr)
     return 0
 
 

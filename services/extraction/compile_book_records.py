@@ -17,12 +17,25 @@ Nothing about how Noor teaches changes: the app reads these exactly as it reads 
 HOW A BOOK PROMPT BECOMES A QUESTION
   * Objective: the book record's objectives become the app's: `u1-1:objective-3` → `lo:u1-1-3`. A prompt the
     extractor left without one takes the objective of the nearest assigned record on its page.
-  * Which: every exercise and worked-example part with an answer, printed or generated as above.
+  * Which: every exercise and worked-example part with an answer, printed or generated as above; a "Think and
+    discuss" activity or a "Think" prompt only with a generated answer a person approved or two readings agreed on.
   * Marking, with what the app has: a number is `numeric` (today's grade()); assigned values ("a = 4, b = -4"),
-    a point and a set ("{(1, 2), (1, 3)}", any order) go to the app's marker (`choices.marker`, kinds values /
-    coordinates); a short name or yes/no is `short` with today's plain check. Anything else is listed, not loaded.
+    a function's values ("f(-2) = 9, f(0) = 3": the values, any order), a point and a set ("{(1, 2), (1, 3)}", any
+    order) go to the app's marker (`choices.marker`, kinds values / coordinates); a short name or yes/no is `short`
+    with today's plain check. A key the app's marker then cannot read is held (`unanswerable`), not dropped.
+  * Not markable (a drawing, an explanation, a worked example with no answer apart from its solution): the worked
+    example goes to the explanation library as a worked example (`expl:<lo tail>:bk-<item>`, Grade 10's
+    `not_markable` rule), as does an approved or agreed generated answer that cannot be marked.
   * A worked example is a question too: its printed solution is the worked solution the tutor teaches from.
-  * A prompt that needs its printed figure is held (`hold_reason: figure_missing`): the app has no figure for it.
+  * A printed answer is re-solved blind first (`answer_gen.py check-printed`, Grade 10's S3 rule): agreed → live
+    and AI-checked; disagreed → held `answer_mismatch`; not re-solved or not answerable → held `unverified`.
+  * Figures (`lesson_figures`): S4's drawing (book_record_figures.py) is shown with the questions of the prompt the
+    figure is printed in or that needs it (`uses_figure`); a question whose figure S4 did not draw, or whose drawing
+    withholds what a read-off question asks for, gets the book's own picture (answer 37d) from its checked crop
+    (crop_figures.py), copied to app/public/book-figures/<book>/; a picture that draws the asked-for point is held
+    (`figure_reveals_answer`); a question with no figure at all is held (`figure_missing`).
+  * Human stamps: each decision in the review tool's Generated answers task, on the answer as it is now, is written
+    to review-stamps.json with the question it decided; `apply_review_verdicts.py --book-reviews` stamps the rows.
   * Not used yet: the book's statements (definitions, rules). Today's maths prompt teaches from objective
     descriptions and worked solutions only; using them would change how Noor teaches.
 
@@ -49,6 +62,7 @@ import argparse
 import copy
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -58,14 +72,16 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE / "groundtruth"))
 import answer_gen as AG  # noqa: E402  (with_intended, NEEDS_PAGE)
-import assemble_lesson_bundle as ALB  # noqa: E402  (normalise, normalise_pairs, normalise_nested_dollars, katex_errors)
+import assemble_lesson_bundle as ALB  # noqa: E402  (normalise, …, katex_errors, the figure rules A8 / answer 37d)
+import book_record_figures as BRF  # noqa: E402  (figure_users, answer_figures)
+import crop_figures as CF  # noqa: E402  (figures_dir, crop_name)
 import schemas  # noqa: E402
 import score_book_record as SC  # noqa: E402
 from collections import Counter  # noqa: E402
 from pydantic import ValidationError  # noqa: E402
 
 FORMAT_REPORT = "ainext.compile-report/2"
-VERSION = "compile-v2"
+VERSION = "compile-v3"  # v3: figures, unanswerable holds, library entries, printed-answer checks, human stamps
 NUM = r"-?\d+(?:\.\d+)?(?:/\d+)?"
 # A question that points the student at a printed picture ("on the Z × Z net", "in the previous diagram"): without
 # the picture it cannot be answered, so it is held. Narrower than answer_gen.NEEDS_PAGE, which only decides when
@@ -109,6 +125,16 @@ def normalise_question(q: dict, decimal: str, counts: Counter) -> None:
         q["answer"] = normalise(q["answer"], decimal, counts)
     if isinstance(q.get("choices"), dict) and "marker" in q["choices"]:
         q["choices"]["marker"]["key"] = normalise(q["choices"]["marker"]["key"], decimal, counts)
+
+
+def normalise_spec(spec, decimal: str, counts: Counter):
+    """The text a figure draws (ALB.SPEC_TEXT_KEYS: a point's label, a scene's text), in the book's notation."""
+    if isinstance(spec, dict):
+        return {k: (normalise(x, decimal, counts) if k in ALB.SPEC_TEXT_KEYS and isinstance(x, str) else normalise_spec(x, decimal, counts))
+                for k, x in spec.items()}
+    if isinstance(spec, list):
+        return [normalise_spec(x, decimal, counts) for x in spec]
+    return spec
 
 
 def katex_rows(questions: list[dict], objectives: list[dict]) -> list[dict]:
@@ -183,6 +209,12 @@ def answer_type(ans: str):
     a = re.sub(r"\s+", " ", a).strip()
     if re.fullmatch(NUM, a):
         return "numeric", None, a
+    # values of a function, "f(-2) = 9, f(0) = 3, f(\\sqrt{3}) = 6-\\sqrt{3}": the values, in any order (the app's
+    # marker reads no function name; Grade 10's typing makes several values a `values` key the same way)
+    fv = re.findall(r"\b[a-zA-Z]_?\d?\(([^()=]*)\)\s*=\s*([^,;]+?)(?=\s*(?:[,;]|\band\b|$))", a)
+    if len(fv) >= 2 and re.sub(r"\b[a-zA-Z]_?\d?\([^()=]*\)\s*=\s*[^,;]+?(?=\s*(?:[,;]|\band\b|$))|[,;\s]|\band\b", "", a) == "":
+        key = ", ".join(v.strip() for _, v in fv)
+        return "short", {"marker": {"kind": "values", "key": key}}, key
     asg = re.findall(rf"\b([a-zA-Z])\s*=\s*({NUM})", a)
     if asg and re.sub(rf"\b[a-zA-Z]\s*=\s*{NUM}|[,;\s]|\band\b", "", a) == "":
         key = ", ".join(f"{v} = {x}" for v, x in asg)
@@ -207,8 +239,20 @@ def answer_type(ans: str):
 
 
 # ============================================================================ answers
-def usable_answers(book: str, slug: str, record: dict, record_path: Path) -> dict[str, dict]:
-    """ref (in THIS record's ids) → answer: approved, or agreed by both readings with no failed check."""
+def _review_answers():
+    """groundtruth/review/answers.py, the review tool's Generated answers task: its fingerprint is what a decision signs."""
+    import importlib.util  # noqa: PLC0415
+    spec = importlib.util.spec_from_file_location("review_answers", HERE / "groundtruth" / "review" / "answers.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def usable_answers(book: str, slug: str, record: dict, record_path: Path, decided: dict | None = None) -> dict[str, dict]:
+    """ref (in THIS record's ids) → answer: approved, or agreed by both readings with no failed check and no decision.
+    A decision counts only for the answer it was made on (its fingerprint, as the review tool shows it): an answer
+    made again after it comes back as undecided. `decided` collects every decision on this lesson (ref → decision),
+    for the human stamps (review-stamps.json)."""
     p = HERE / "teaching" / book / "answers" / f"{slug}.json"
     if not p.exists():
         return {}
@@ -220,19 +264,30 @@ def usable_answers(book: str, slug: str, record: dict, record_path: Path) -> dic
         alias = {g["id"]: e["id"] for g, e, _ in pairs}
     dp = HERE / "reviews" / book / "generated-answers.json"
     decisions = {d["ref"]: d for d in json.loads(dp.read_text()).get("decisions", [])} if dp.exists() else {}
+    RA = _review_answers()
     out = {}
     for a in data.get("answers") or []:
+        rid = alias.get(a["record_id"], a["record_id"])
+        ref = f"{rid}:{a['part']}" if a.get("part") else rid
         dec = decisions.get(a["ref"])
+        if dec and dec.get("fingerprint") != RA.fingerprint(a):
+            dec = None   # decided on an earlier answer: this one is undecided
+        if dec and decided is not None:
+            decided[ref] = dec
         if dec and dec["decision"] == "approve":
             how = f"generated, approved by {dec['by']}"
         elif not dec and a.get("status") == "agreed":
             how = "generated, both readings agree, not yet reviewed"
         else:
             continue
-        rid = alias.get(a["record_id"], a["record_id"])
-        out[f"{rid}:{a['part']}" if a.get("part") else rid] = {"answer": a["answer"], "solution": a["solution"], "how": how,
-                                                              "needs_page": a.get("needs_page")}
+        out[ref] = {"answer": a["answer"], "solution": a["solution"], "how": how, "needs_page": a.get("needs_page"), "decision": dec}
     return out
+
+
+def printed_checks(book: str, slug: str) -> dict[str, dict]:
+    """ref → the blind re-solve of a printed answer (answer_gen.py check-printed): agreed | disagreed | cannot_answer."""
+    p = HERE / "teaching" / book / "printed-checks" / f"{slug}.json"
+    return {c["ref"]: c for c in json.loads(p.read_text()).get("checks") or []} if p.exists() else {}
 
 
 # ============================================================================ the lesson
@@ -241,7 +296,7 @@ def objectives_for_items(record: dict) -> dict[str, str]:
     items = record.get("items") or []
     out = {r["id"]: r["lo"] for r in items if r.get("lo")}
     for i, r in enumerate(items):
-        if r["id"] in out or r["type"] not in ("exercise", "worked_example"):
+        if r["id"] in out or r["type"] not in QUESTION_SOURCES:
             continue
         near = sorted((abs(j - i), j) for j, x in enumerate(items) if x.get("lo") and x.get("source_page") == r.get("source_page"))
         near = near or sorted((abs(j - i), j) for j, x in enumerate(items) if x.get("lo"))
@@ -260,40 +315,71 @@ def lesson_objectives(slug: str, record: dict, syllabus_ref: str | None) -> list
     return nodes
 
 
-def book_questions(slug: str, record: dict, answers: dict, skipped: list) -> list[dict]:
+QUESTION_SOURCES = ("exercise", "worked_example", "activity", "open_prompt")
+
+
+def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None) -> list[dict]:
+    """The book's prompts as questions; a worked example (or an answered prompt) the app cannot mark goes to the
+    explanation library as a worked example instead (Grade 10's `not_markable` -> library entry, FR-4303)."""
     out = []
+    checks = checks or {}
     lo_by_item = objectives_for_items(record)
     for raw in record.get("items") or []:
-        if raw["type"] not in ("exercise", "worked_example"):
+        if raw["type"] not in QUESTION_SOURCES:
             continue
         r = AG.with_intended(raw)
+        if r["type"] in ("activity", "open_prompt") and not any(ref.startswith(r["id"]) for ref in answers):
+            continue   # a "Think and discuss" or "Think" prompt becomes a question only with an answer a person approved or two readings agreed on
         if r["id"] not in lo_by_item:
             skipped.append({"ref": r["id"], "why": "no objective"})
             continue
         lo = lo_of(slug, lo_by_item[r["id"]])
+        text = r.get("text") or r.get("stem") or ""
         holders = [(p, f"{r['id']}:{p['label']}") for p in r.get("parts") or []] or [(None, r["id"])]
+        kept_as_entry = False
         for p, ref in holders:
             h = p or r
             printed = h.get("answer") or (r.get("answer") if p is None else None)
             gen = answers.get(ref)
+            stem = f"{text} {('(' + p['label'] + ') ' + p['stem']) if p and p.get('stem') else ('(' + p['label'] + ')' if p else '')}".strip()
+            local = re.sub(r"[^a-z0-9]+", "-", ref.split(":", 1)[1].lower()).strip("-")
             if printed:
                 ans, how = printed, "printed in the book"
                 sol = (p or {}).get("solution") or r.get("solution") or []
             elif gen:
                 ans, how, sol = gen["answer"], gen["how"], gen["solution"]
+            elif r["type"] == "worked_example" and r.get("solution"):
+                ans, how, sol = None, "printed in the book", r["solution"]
             else:
                 skipped.append({"ref": ref, "why": "no usable answer yet (none printed; the generated one is not approved or not agreed)"})
                 continue
-            typed = answer_type(ans)
+            typed = answer_type(ans) if ans else None
             if not typed:
-                skipped.append({"ref": ref, "why": f"an answer the app cannot mark: {str(ans)[:90]}"})
+                # a worked example the book solves, or an answer a person approved / two readings agreed on, that the
+                # app cannot mark: the tutor still teaches from it, as a worked example in the library
+                if r["type"] == "worked_example":
+                    if not kept_as_entry:
+                        tail = re.sub(r"[^a-z0-9]+", "-", r["id"].split(":", 1)[1].lower()).strip("-")
+                        entries.append({"id": f"expl:{lo.removeprefix('lo:')}:bk-{tail}", "lo": lo, "entry_type": "worked_example",
+                                        "content": [{"kind": "problem", "text_md": text}]
+                                                   + [{"step": i + 1, "text_md": x} for i, x in enumerate(r.get("solution") or sol) if x],
+                                        "source_page": r["source_page"],
+                                        "generated_by": f"book (book_worked: {r['id']}, printed p.{r['source_page']}); compile_book_records.py {VERSION}",
+                                        "_item": r["id"]})
+                        kept_as_entry = True
+                    skipped.append({"ref": ref, "why": "not markable: kept as a worked example in the library", "teaching": True})
+                elif gen and sol:
+                    entries.append({"id": f"expl:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "entry_type": "worked_example",
+                                    "content": [{"kind": "problem", "text_md": stem}] + [{"step": i + 1, "text_md": x} for i, x in enumerate(sol) if x],
+                                    "source_page": r["source_page"], "generated_by": f"answer_gen.py ({how}); compile_book_records.py {VERSION}",
+                                    "_item": r["id"]})
+                    skipped.append({"ref": ref, "why": f"not markable ({str(ans)[:60]}): kept as a worked example in the library", "teaching": True})
+                else:
+                    skipped.append({"ref": ref, "why": f"an answer the app cannot mark: {str(ans)[:90]}"})
                 continue
             qtype, choices, key = typed
-            text = r.get("text") or r.get("stem") or ""
-            stem = f"{text} {('(' + p['label'] + ') ' + p['stem']) if p and p.get('stem') else ('(' + p['label'] + ')' if p else '')}".strip()
-            local = re.sub(r"[^a-z0-9]+", "-", ref.split(":", 1)[1].lower()).strip("-")
-            q = {"_item": r["id"], "id": f"q:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "tier": "standard", "type": qtype, "stem": stem,
-                 "answer": key, "solution": [s for s in sol if s] or [f"The book's answer: {key}"],
+            q = {"_item": r["id"], "_ref": ref, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "tier": "standard", "type": qtype, "stem": stem,
+                 "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {key}"],
                  "source_page": r["source_page"], "source": "seed",
                  "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
                                 "Compiled from the book record (compile_book_records.py)."}
@@ -303,11 +389,117 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list) -> lis
                 q["solution_provenance"] = "book_worked"
             if not printed and gen:  # two independent readings agreed (or a person approved): the loader records the AI check
                 q["verified"] = True
-            if FIGURE_NEEDED.search(" ".join([text, (p or {}).get("stem", "")])):
-                q["hold_reason"] = "figure_missing"
-                q.pop("verified", None)  # a held question is not verified (schemas.Question)
+                if gen.get("decision"):
+                    q["_decision"] = gen["decision"]
+            if printed:  # the blind re-solve of a printed answer (answer_gen.py check-printed), Grade 10's S3 rule
+                c = checks.get(ref)
+                if c and c["status"] == "agreed":
+                    q["verified"] = True
+                elif c and c["status"] == "disagreed":
+                    q["hold_reason"] = "answer_mismatch"
+                    q["_why"] = f"a blind re-solve answered {c['blind']!r}, the book prints {printed!r}"
+                elif c is None or c["status"] != "agreed":
+                    q["hold_reason"] = "unverified"
+                    q["_why"] = "the printed answer was not re-solved" if c is None else f"the blind re-solve could not answer ({c.get('note') or c['status']})"
             out.append(q)
     return out
+
+
+# ============================================================================ figures (S4's drawings and the book's pictures)
+GIVEN = re.compile(r"\(\s*-?\$?\d|=")   # a coordinate or an equation in the stem: ALB.book_picture_reveals's read-off test
+
+
+def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], report: dict, stand_in_files: set,
+                   book_pictures: bool = True) -> list[dict]:
+    """The lesson's visuals and the figure holds, by Grade 10's rules:
+      * a figure S4 drew is shown with the questions of the prompt it is printed in or that needs it (`uses_figure`),
+        and on its objective when no question shows it; an exercise's drawing that draws the unknown is never shown
+        (A8, ALB.visual_gives_answer), nor one that withholds the points a READ-OFF question asks for (the figure is
+        the data: the book's picture is shown instead, as ALB.book_picture_reveals allows);
+      * a question whose figure S4 did not draw gets the book's own picture as a stand-in (answer 37d), from its crop,
+        if the crop passed its check, unless that picture draws the question's unknown (`figure_reveals_answer`);
+      * a question that still has no figure is held (`figure_missing`), as is one that points at a figure no record
+        links (FIGURE_NEEDED)."""
+    tv_path = HERE / "teaching" / book / "visuals" / f"{slug}.json"
+    tv = json.loads(tv_path.read_text()) if tv_path.exists() else {"visuals": [], "gaps": []}
+    drawn = {v["figure"]: v for v in tv["visuals"]}
+    gaps = {g["figure"]: g for g in tv["gaps"]}
+    items = {it["id"]: it for it in record.get("items") or []}
+    users = BRF.figure_users(record)
+    answer_figs = BRF.answer_figures(record)
+    by_item: dict[str, list[dict]] = {}
+    for q in questions:
+        by_item.setdefault(q["_item"], []).append(q)
+    visuals, n_of = [], Counter()
+
+    def vid(base: str) -> str:
+        n_of[base] += 1
+        return base if n_of[base] == 1 else f"{base}-{n_of[base]}"
+
+    def hold(q: dict, reason: str, why: str) -> None:
+        if not q.get("hold_reason"):
+            q["hold_reason"] = reason
+            q.pop("verified", None)
+            report["held"].append({"question": q["id"], "why": why})
+
+    shown: set[str] = set()   # question ids with a figure
+    for fid, fig in items.items():
+        if fig["type"] != "figure" or BRF.DECORATIVE.search(fig.get("caption") or ""):
+            continue
+        local = fid.split(":", 1)[1]
+        d = drawn.get(fid)
+        qs = []
+        for it in users.get(fid, []):
+            if fid in answer_figs and items[it]["type"] != "worked_example":
+                continue   # an exercise's drawn answer is never shown with its question
+            qs += by_item.get(it, [])
+        crop = CF.figures_dir(book) / CF.crop_name(fid)
+        checked = crop.exists() and (fig.get("region") or {}).get("checked")
+        on_question = False
+        for q in qs:
+            exercise = items[q["_item"]]["type"] != "worked_example"
+            if d:
+                why = ALB.visual_gives_answer(q, {"spec": d["spec"]}) if exercise else None
+                readoff = exercise and d.get("withheld") and not GIVEN.search(q["stem"])
+                if not why and not readoff:
+                    visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": q["lo"], "question": q["id"], "kind": d["kind"], "spec": d["spec"],
+                                    "caption": d.get("caption"), "source_page": fig["source_page"]})
+                    shown.add(q["id"])
+                    on_question = True
+                    continue
+                report["figures"].append({"figure": fid, "question": q["id"], "native_not_shown":
+                                          why or f"read off the figure, but the drawing withholds {d['withheld']}: the book's picture instead"})
+            if not (checked and book_pictures):
+                continue
+            natives = [{"labels": [str(pt.get("label")) for pt in ALB._spec_points(d["spec"]) if pt.get("label")], "withheld": d.get("withheld") or []}] if d else []
+            why = ALB.book_picture_reveals(q, natives) if exercise else None
+            if why:
+                hold(q, "figure_reveals_answer", f"the book's picture of {fid}: {why}")
+                continue
+            tail = q["id"].split(":", 2)[-1]
+            visuals.append({"id": vid(f"v:{slug}:{tail}"), "lo": q["lo"], "question": q["id"], "kind": "book_image",
+                            "spec": {"src": f"/book-figures/{book}/{crop.name}", "alt": ALB.stand_in_alt(fig["source_page"]),
+                                     "stand_in": True, "native_kind_needed": (gaps.get(fid) or {}).get("needed_kind") or (d or {}).get("kind")},
+                            "caption": None, "source_page": fig["source_page"]})
+            stand_in_files.add(crop)
+            report["stand_ins"].append({"question": q["id"], "figure": fid, "file": crop.name,
+                                        "why": (gaps.get(fid) or {}).get("reason") or "the drawing is not shown with this question"})
+            shown.add(q["id"])
+        if d and not on_question:   # an illustration of its objective (a body figure, or one whose prompt is teaching material)
+            # the record's own filing first (the objectives call files every figure); S4's guess only for one it left out
+            lo = lo_of(slug, fig["lo"]) if fig.get("lo") else (d.get("lo") if str(d.get("lo", "")).startswith(f"lo:{slug}-") else None)
+            if lo:
+                visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"], "spec": d["spec"],
+                                "caption": d.get("caption"), "source_page": fig["source_page"]})
+    for q in questions:
+        linked = [f for f, its in users.items() if q["_item"] in its and f not in answer_figs]
+        if q["id"] in shown:
+            continue
+        if linked:
+            hold(q, "figure_missing", f"needs {', '.join(linked)}: not drawn, and no checked crop to show the book's picture")
+        elif FIGURE_NEEDED.search(q["stem"]):
+            hold(q, "figure_missing", "points at a printed figure no record links")
+    return visuals
 
 
 def marker_check(questions: list[dict]) -> dict[str, str]:
@@ -329,7 +521,8 @@ def course_registered(course_id: str) -> bool:
     return f.exists() and f'"{course_id}"' in f.read_text()
 
 
-def standalone_bundles(cfg: dict, slugs: list[str], lmap: dict, records: dict, new_nodes: dict, new_questions: dict) -> dict[str, dict]:
+def standalone_bundles(cfg: dict, slugs: list[str], lmap: dict, records: dict, new_nodes: dict, new_questions: dict,
+                       new_visuals: dict, new_entries: dict) -> dict[str, dict]:
     """A new curriculum's own bundles, one per module (the lesson slug without its number: pp3u1-2 → pp3u1), with the
     book config's program and course and the lesson map's module titles. Nothing is borrowed from another course."""
     by_module: dict[str, list[str]] = {}
@@ -354,15 +547,18 @@ def standalone_bundles(cfg: dict, slugs: list[str], lmap: dict, records: dict, n
             module["source_page"] = l0["pages"][0]
         nodes.append(module)
         edges.append({"src": module["id"], "dst": cfg["course_id"], "type": "part_of"})
-        questions = []
+        questions, visuals, entries = [], [], []
         for s in ss:
             nodes += new_nodes[s]
             edges += [{"src": module["id"], "dst": n["id"], "type": "teaches"} for n in new_nodes[s]]
             questions += new_questions[s]
+            visuals += new_visuals[s]
+            entries += new_entries[s]
         b = {"extraction_run": {"extractor": "compile_book_records.py, from book records", "extractor_version": VERSION,
                                 "schema_version": "book-record-2"},
              "syllabus_version": cfg.get("syllabus_version") or src.get("edition") or "book-record-2",
-             "nodes": nodes, "edges": edges, "questions": questions, "visuals": []}
+             "nodes": nodes, "edges": edges, "questions": questions, "visuals": visuals,
+             **({"explanation_entries": entries} if entries else {})}
         if first:
             b = {"source_document": doc, **b}
         else:
@@ -376,6 +572,8 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("book")
     ap.add_argument("lessons", nargs="+")
+    ap.add_argument("--no-book-pictures", action="store_true",
+                    help="native figures only (answer 29): a question whose figure S4 did not draw stays held as figure_missing")
     a = ap.parse_args(argv)
     slugs = a.lessons
     cfg = json.loads((HERE / "books" / f"{a.book}.json").read_text())
@@ -387,12 +585,15 @@ def main(argv: list[str]) -> int:
     lmap_path = HERE / "book-records" / a.book / "lessons.json"
     lmap = json.loads(lmap_path.read_text()) if lmap_path.exists() else {"lessons": []}
     report = {"format": FORMAT_REPORT, "version": VERSION, "book": a.book, "printed_decimal": decimal, "lessons": {},
-              "skipped": [], "left_out_today": {}, "held": [], "warnings": [], "errors": []}
+              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "warnings": [], "errors": []}
 
     bundles = {p: json.loads(rel(p).read_text()) for p in cfg.get("bundles") or []}
     in_bundle = lambda s: any(any(n.get("kind") == "learning_objective" and n["id"].startswith(f"lo:{s}-") for n in b["nodes"])
                               for b in bundles.values())
-    new_nodes, new_questions, records, counts = {}, {}, {}, Counter()
+    new_nodes, new_questions, new_entries, new_visuals, records, counts = {}, {}, {}, {}, {}, Counter()
+    stand_in_files: set[Path] = set()
+    stamps: list[dict] = []          # the review tool's decisions, for apply_review_verdicts.py --book-reviews
+    decided_all: dict[str, dict] = {}
     for slug in slugs:
         rec_path = HERE / "book-records" / a.book / f"{slug}.json"
         record = json.loads(rec_path.read_text())
@@ -404,16 +605,33 @@ def main(argv: list[str]) -> int:
             n["description"] = normalise(n["description"], decimal, counts, objective=True)
         new_nodes[slug] = nodes
         skipped: list = []
-        qs = book_questions(slug, record, usable_answers(a.book, slug, record, rec_path), skipped)
+        entries: list = []
+        decided: dict = {}
+        qs = book_questions(slug, record, usable_answers(a.book, slug, record, rec_path, decided), skipped, entries, printed_checks(a.book, slug))
+        lo_by_item = objectives_for_items(record)
+        for ref, d in decided.items():   # a rejected or fix-requested answer: the question an earlier load may hold
+            item = next((it["id"] for it in record["items"] if ref == it["id"] or ref.startswith(it["id"] + ":")), None)
+            if d["decision"] != "approve" and item in lo_by_item:
+                local = re.sub(r"[^a-z0-9]+", "-", ref.split(":", 1)[1].lower()).strip("-")
+                decided_all[f"q:{lo_of(slug, lo_by_item[item]).removeprefix('lo:')}:bk-{local}"] = {**d, "ref": ref}
         for q in qs:
             normalise_question(q, decimal, counts)
+        for e in entries:
+            for c in e["content"]:
+                c["text_md"] = normalise(c["text_md"], decimal, counts)
+        # the app's marker cannot read the key: held (`unanswerable`), listed, released by a load once the key reads
         bad = marker_check(qs)
         for q in qs:
-            if q["id"] in bad:
-                skipped.append({"ref": q["id"], "why": f"the app's marker refused it: {bad[q['id']]}"})
-        qs = [q for q in qs if q["id"] not in bad]
+            if q["id"] in bad and not q.get("hold_reason"):
+                q["hold_reason"] = "unanswerable"
+                q.pop("verified", None)
+                report["held"].append({"question": q["id"], "why": f"the app's marker cannot mark the key: {bad[q['id']]}"})
         report["errors"] += [f"misprint reaches a question: {x}" for x in misprint_leaks(record, qs)]
+        for q in qs:
+            if q.get("_why"):
+                report["held"].append({"question": q["id"], "why": f"{q['hold_reason']}: {q['_why']}"})
         new_questions[slug] = qs
+        new_entries[slug] = entries
         report["skipped"] += [{"lesson": slug, **x} for x in skipped]
 
     # KaTeX: the app's own renderer over everything a student or the tutor reads
@@ -426,16 +644,32 @@ def main(argv: list[str]) -> int:
             q.pop("verified", None)
             report["held"].append({"question": q["id"], "why": f"KaTeX: {broken[q['id']]['why']}", "segment": broken[q["id"]]["segment"]})
     report["errors"] += [f"objective {e['where']}: KaTeX cannot render {e['segment']!r}: {e['why']}" for e in errs if e["where"].startswith("lo:")]
-    for q in all_q:
-        q.pop("_item", None)
-        if q.get("hold_reason") == "figure_missing":
-            report["held"].append({"question": q["id"], "why": "needs its printed figure"})
     for slug in slugs:
+        new_visuals[slug] = lesson_figures(a.book, slug, records[slug], new_questions[slug], report, stand_in_files, not a.no_book_pictures)
+        for v in new_visuals[slug]:   # S4's captions and drawn labels are read too: the same notation
+            v["caption"] = normalise(v.get("caption"), decimal, counts)
+            if v["kind"] != "book_image":
+                v["spec"] = normalise_spec(v["spec"], decimal, counts)
+    for q in all_q:
+        if q.get("_decision"):
+            d = q["_decision"]
+            stamps.append({"question": q["id"], "ref": q["_ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
+                           "fingerprint": d["fingerprint"], "what": "generated answer"})
+        for k in ("_item", "_ref", "_why", "_decision"):
+            q.pop(k, None)
+    for slug in slugs:
+        for e in new_entries[slug]:
+            e.pop("_item", None)
         qs = new_questions[slug]
         report["lessons"][slug] = {"objectives": len(new_nodes[slug]), "questions": len(qs),
+                                   "live": sum(1 for q in qs if not q.get("hold_reason")),
                                    "held": sum(1 for q in qs if q.get("hold_reason")),
+                                   "held_by_reason": dict(Counter(q["hold_reason"] for q in qs if q.get("hold_reason"))),
                                    "by_type": {t: sum(1 for q in qs if q["type"] == t) for t in ("numeric", "short")},
-                                   "marker": sum(1 for q in qs if isinstance(q.get("choices"), dict))}
+                                   "marker": sum(1 for q in qs if isinstance(q.get("choices"), dict)),
+                                   "library_entries": len(new_entries[slug]),
+                                   "visuals": sum(1 for v in new_visuals[slug] if v["kind"] != "book_image"),
+                                   "book_pictures": sum(1 for v in new_visuals[slug] if v["kind"] == "book_image")}
     report["notation_changes"] = {k: v for k, v in counts.items() if v}
 
     to_write: dict[str, dict] = {}
@@ -456,13 +690,19 @@ def main(argv: list[str]) -> int:
         b["edges"] = [e for e in b["edges"] if not (in_lessons(e["src"], here) or in_lessons(e["dst"], here))]
         b["questions"] = [q for q in b["questions"] if not in_lessons(q["lo"], here)]
         b["visuals"] = [v for v in b.get("visuals") or [] if not in_lessons(v["lo"], here)]
+        left["explanation_entries"] = sum(1 for x in b.get("explanation_entries") or [] if in_lessons(x["lo"], here))
+        b["explanation_entries"] = [x for x in b.get("explanation_entries") or [] if not in_lessons(x["lo"], here)]
         for s in here:
             b["nodes"] += new_nodes[s]
             b["edges"] += [{"src": module, "dst": n["id"], "type": "teaches"} for n in new_nodes[s]]
             b["questions"] += new_questions[s]
+            b["visuals"] += new_visuals[s]
+            b["explanation_entries"] += new_entries[s]
+        if not b["explanation_entries"]:
+            b.pop("explanation_entries")
         to_write[Path(bpath).name] = b
     if standalone:
-        to_write.update(standalone_bundles(cfg, standalone, lmap, records, new_nodes, new_questions))
+        to_write.update(standalone_bundles(cfg, standalone, lmap, records, new_nodes, new_questions, new_visuals, new_entries))
         missing = [s for s in standalone if s not in (cfg.get("lesson_titles") or {})]
         if missing:
             report["warnings"].append(f"no title in books/{a.book}.json lesson_titles for {missing}: the app lists a lesson by it")
@@ -508,13 +748,29 @@ def main(argv: list[str]) -> int:
     if ok:
         for name, b in {**to_write, **generated}.items():
             (out_dir / name).write_text(json.dumps(b, ensure_ascii=False, indent=2) + "\n")
+        if stand_in_files:   # the app serves the book's pictures itself, as Grade 10's (assemble_lesson_bundle.py)
+            fig_out = REPO / "app" / "public" / "book-figures" / a.book
+            fig_out.mkdir(parents=True, exist_ok=True)
+            for f in sorted(stand_in_files):
+                if not (fig_out / f.name).exists() or (fig_out / f.name).read_bytes() != f.read_bytes():
+                    shutil.copyfile(f, fig_out / f.name)
+            report["stand_in_files"] = sorted(f.name for f in stand_in_files)
+        stamps += [{"question": qid, "ref": d["ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
+                    "fingerprint": d["fingerprint"], "what": "generated answer"} for qid, d in decided_all.items()]
+        (out_dir / "review-stamps.json").write_text(json.dumps(
+            {"format": "ainext.review-stamps/1", "book": a.book, "course_id": cfg["course_id"], "from": "reviews/" + a.book + "/generated-answers.json",
+             "note": "apply_review_verdicts.py --book-reviews: each decision a person made in the review tool, as the stamp of the question it decided",
+             "stamps": sorted(stamps, key=lambda x: x["question"])}, ensure_ascii=False, indent=2) + "\n")
     report["files"] = sorted(str(x.relative_to(HERE)) for x in out_dir.glob("*.json"))
     (out_dir / "compile-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     for slug, r in report["lessons"].items():
-        print(f"{slug}: {r['objectives']} objectives; {r['questions']} book questions ({r['by_type']['numeric']} numeric, "
-              f"{r['marker']} on the marker, {r['held']} held)", file=sys.stderr)
+        print(f"{slug}: {r['objectives']} objectives; {r['questions']} book questions ({r['live']} live, {r['held']} held "
+              f"{r['held_by_reason'] or ''}); {r['visuals']} drawn figure(s), {r['book_pictures']} book picture(s); "
+              f"{r['library_entries']} library worked example(s)", file=sys.stderr)
     print(f"notation: {report['notation_changes'] or 'nothing to change'}", file=sys.stderr)
-    print(f"not loaded: {len(report['skipped'])} book prompt(s); held: {len(report['held'])}", file=sys.stderr)
+    teaching = sum(1 for x in report["skipped"] if x.get("teaching"))
+    print(f"not questions: {len(report['skipped'])} book prompt(s), {teaching} of them kept as library worked examples; "
+          f"held: {len(report['held'])}; book pictures: {len(report['stand_ins'])}", file=sys.stderr)
     for w in report["warnings"]:
         print(f"WARNING: {w}", file=sys.stderr)
     for e in report["errors"][:20]:

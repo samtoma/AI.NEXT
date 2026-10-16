@@ -108,6 +108,7 @@
     {
       "id": "u1-3:figure-1",
       "type": "figure",
+      "lo": "u1-3:objective-1",
       "source_page": 16,
       "quote": "(1) (2) (3)",
       "caption": "Three arrow diagrams, labelled (1), (2), (3), each from set X = {2, 3, 5, 7} to set Y = {1, 4, 6, 8, 9}. Arrows are drawn between X and Y in each diagram; the individual arrows are too small to read reliably (diagram 3 appears to have several arrows ending at 6 and 9).",
@@ -115,33 +116,48 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3483,
+          0.2538,
+          0.8971,
+          0.3792
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-3:think-and-discuss-1",
       "type": "activity",
+      "lo": "u1-3:objective-3",
       "source_page": 16,
       "quote": "Write each relation and represent it by a cartesian diagram.",
       "text": "Write each relation and represent it by a cartesian diagram.",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
-      }
+      },
+      "uses_figure": "u1-3:figure-1"
     },
     {
       "id": "u1-3:think-and-discuss-2",
       "type": "activity",
+      "lo": "u1-3:objective-1",
       "source_page": 16,
       "quote": "Which of these relations satifies the following condition: each element of X is connected to only one element of Y.",
       "text": "Which of these relations satifies the following condition: each element of X is connected to only one element of Y.",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
-      }
+      },
+      "uses_figure": "u1-3:figure-1"
     },
     {
       "id": "u1-3:definition-1",
       "type": "definition",
+      "lo": "u1-3:objective-1",
       "source_page": 16,
       "quote": "A relation from X to Y is said to be a function if:",
       "claim": "A relation from X to Y is said to be a function if each of the elements of X appears only once as a first projection in one of the ordered pairs of the relation.",
@@ -164,7 +180,7 @@
     {
       "id": "u1-3:convention-1",
       "type": "convention",
-      "lo": "u1-3:objective-1",
+      "lo": "u1-3:objective-2",
       "source_page": 16,
       "quote": "The function is denoted by one of the following symbols: f or m or Q",
       "claim": "The function is denoted by one of the symbols f or m or Q, etc. The function f from the set X to the set Y is written mathematically as f : X → Y and is read as \"f is a fuction from X to Y\".",
@@ -185,7 +201,7 @@
     {
       "id": "u1-3:convention-2",
       "type": "convention",
-      "lo": "u1-3:objective-1",
+      "lo": "u1-3:objective-2",
       "source_page": 16,
       "quote": "If f is a function from X to itself, we say that f is a function on X.",
       "claim": "If f is a function from X to itself, we say that f is a function on X.",
@@ -197,7 +213,7 @@
     {
       "id": "u1-3:convention-3",
       "type": "convention",
-      "lo": "u1-3:objective-1",
+      "lo": "u1-3:objective-2",
       "source_page": 16,
       "quote": "If the ordered pair (x, y) belongs to the function, then the element",
       "claim": "If the ordered pair (x, y) belongs to the function, then the element y is called the image of the element x by the function f, and we express it in one of two forms: f : x ↦ y, read as \"the function f maps x to y\"; or f(x) = y, read as \"f is a function where f(x) = y\".",
@@ -210,7 +226,7 @@
     {
       "id": "u1-3:example-1",
       "type": "worked_example",
-      "lo": "u1-3:objective-2",
+      "lo": "u1-3:objective-3",
       "source_page": 17,
       "quote": "If f is a function on X where: X = {3, 4, 5, 6}",
       "stem": "If f is a function on X where $X=\\{3,4,5,6\\}$ and $f(3)=3$, $f(4)=5$, $f(5)=4$, $f(6)=5$. Represent f by an arrow diagram and also, by a cartesian diagram.",
@@ -230,7 +246,7 @@
     {
       "id": "u1-3:figure-2",
       "type": "figure",
-      "lo": "u1-3:objective-2",
+      "lo": "u1-3:objective-3",
       "belongs_to": "u1-3:example-1",
       "source_page": 17,
       "quote": "Arrow digaram",
@@ -238,12 +254,22 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.5207,
+          0.1819,
+          0.7578,
+          0.3077
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-3:figure-3",
       "type": "figure",
-      "lo": "u1-3:objective-2",
+      "lo": "u1-3:objective-3",
       "belongs_to": "u1-3:example-1",
       "source_page": 17,
       "quote": "Cartesian diagram",
@@ -251,33 +277,57 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7528,
+          0.1788,
+          0.8848,
+          0.2989
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-3:drill-1",
       "type": "exercise",
+      "lo": "u1-3:objective-1",
       "source_page": 17,
       "quote": "If X = {1, 2, 3, 4} which of the following arrow diagrams",
       "text": "If $X=\\{1,2,3,4\\}$ which of the following arrow diagrams represent a function on the set X?",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
-      }
+      },
+      "uses_figure": "u1-3:figure-4"
     },
     {
       "id": "u1-3:figure-4",
       "type": "figure",
+      "lo": "u1-3:objective-1",
       "source_page": 17,
       "quote": "(1) (2) (3) arrow diagrams on X",
       "caption": "Three arrow diagrams (1), (2), (3) on X = {1,2,3,4}, with arrows among points 1, 2, 3, 4. Arrows cannot be read reliably; verify against image.",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.4161,
+          0.3066,
+          0.9083,
+          0.4132
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-3:drill-2",
       "type": "exercise",
+      "lo": "u1-3:objective-3",
       "source_page": 17,
       "quote": "Which of the following cartesian diagrams represent a fuction from X to X.",
       "text": "Which of the following cartesian diagrams represent a fuction from X to X.",
@@ -292,22 +342,35 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
-      }
+      },
+      "uses_figure": "u1-3:figure-5"
     },
     {
       "id": "u1-3:figure-5",
       "type": "figure",
+      "lo": "u1-3:objective-3",
       "source_page": 17,
       "quote": "(1) (2) (3) cartesian diagrams",
       "caption": "Three cartesian diagrams (1), (2), (3), axes 1 to 5 on both. (1): dots at about (2,2), (3,3), (4,4), (4,5)... (2): dots in row 3 at x=1,2,3,4,5. (3): dots at about (1,1), (3,2), (4,4), (5,5). Points read from figure; verify.",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.4339,
+          0.4076,
+          0.8933,
+          0.5336
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
       "id": "u1-3:think-1",
       "type": "open_prompt",
+      "lo": "u1-3:objective-1",
       "source_page": 17,
       "quote": "Is every relation a function? Explain your answer and give examples.",
       "text": "Is every relation a function? Explain your answer and give examples.",
@@ -341,7 +404,7 @@
     {
       "id": "u1-3:definition-2",
       "type": "definition",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 17,
       "quote": "The set X is called the domain of the function f.",
       "claim": "The set X is called the domain of the function f.",
@@ -353,7 +416,7 @@
     {
       "id": "u1-3:definition-3",
       "type": "definition",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 17,
       "quote": "The set Y is called the codomain of the function f.",
       "claim": "The set Y is called the codomain of the function f.",
@@ -365,7 +428,7 @@
     {
       "id": "u1-3:definition-4",
       "type": "definition",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 17,
       "quote": "The set of images of the elements of the domain of X",
       "claim": "The set of images of the elements of the domain X by the function f is called the range of the function.",
@@ -388,13 +451,23 @@
     {
       "id": "u1-3:figure-6",
       "type": "figure",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 17,
       "quote": "X Y arrow diagram",
       "caption": "Arrow diagram from X={-1,2,3} to Y={2,3,5,7}: -1→3, 2→7, 3→5.",
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7464,
+          0.6264,
+          0.8948,
+          0.7761
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": true
       }
     },
     {
@@ -411,7 +484,7 @@
     {
       "id": "u1-3:rule-1",
       "type": "rule",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 17,
       "quote": "The range is a subset of the codomain of the function.",
       "claim": "The range is a subset of the codomain of the function.",
@@ -423,7 +496,7 @@
     {
       "id": "u1-3:example-2",
       "type": "worked_example",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "source_page": 18,
       "quote": "If X = {2, 3, 4}, Y = {y : y ∈ N, 2 ≤ y < 9}",
       "stem": "If $X=\\{2,3,4\\}$, $Y=\\{y : y\\in N, 2\\le y<9\\}$ where N is the set of natural numbers, and R is a relation from X to Y where a R b means: « $a=\\frac{1}{2}b$ » for each of $a\\in X$, $b\\in Y$, write R and represent it by an arrow diagram, show that R is a function from X to Y and find its range.",
@@ -444,7 +517,7 @@
     {
       "id": "u1-3:figure-7",
       "type": "figure",
-      "lo": "u1-3:objective-3",
+      "lo": "u1-3:objective-4",
       "belongs_to": "u1-3:example-2",
       "source_page": 18,
       "quote": "X 2 3 4 Y 2 3 4 5 6 7 8",
@@ -453,6 +526,16 @@
       "provenance": {
         "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
         "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7392,
+          0.2134,
+          0.9058,
+          0.3851
+        ],
+        "by": "crop_figures.py crop-v1, sonnet, 2026-10-16",
+        "checked": false
       }
     },
     {
@@ -471,26 +554,24 @@
     {
       "id": "u1-3:objective-1",
       "label": "Decide whether a relation is a function",
-      "description": "Decide whether a relation from X to Y is a function by checking that each element of X appears exactly once as a first projection, using ordered pairs, arrow diagrams or cartesian diagrams.",
+      "description": "Decide whether a relation from X to Y is a function by checking that each element of X appears only once as a first projection, using arrow diagrams, cartesian diagrams and ordered pairs.",
       "order_in_parent": 1,
       "evidence": [
         "u1-3:figure-1",
-        "u1-3:think-and-discuss-1",
         "u1-3:think-and-discuss-2",
         "u1-3:definition-1",
-        "u1-3:drill-1",
-        "u1-3:drill-2",
-        "u1-3:think-1"
+        "u1-3:think-1",
+        "u1-3:drill-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-3:objective-2",
-      "label": "Write a function in symbols",
-      "description": "Use function notation f : X → Y, f : x ↦ y and f(x) = y, and name the image of an element.",
+      "label": "Represent a function symbolically",
+      "description": "Write a function with symbols such as f : X → Y, f : x ↦ y and f(x) = y, and name the image of an element.",
       "order_in_parent": 2,
       "evidence": [
         "u1-3:convention-1",
@@ -499,45 +580,43 @@
         "u1-3:example-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-3:objective-3",
-      "label": "Represent a function by diagrams",
-      "description": "Represent a function by an arrow diagram and a cartesian diagram from its rule or ordered pairs.",
+      "label": "Represent a function by arrow and cartesian diagrams",
+      "description": "Represent a function or relation by a set of ordered pairs, an arrow diagram and a cartesian diagram, and tell which diagrams show functions.",
       "order_in_parent": 3,
       "evidence": [
+        "u1-3:think-and-discuss-1",
         "u1-3:example-1",
         "u1-3:figure-2",
         "u1-3:figure-3",
-        "u1-3:figure-4",
+        "u1-3:drill-2",
         "u1-3:figure-5"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     },
     {
       "id": "u1-3:objective-4",
-      "label": "Find the domain, codomain and range",
-      "description": "Identify the domain, codomain and range of a function, and recognise that the range is a subset of the codomain.",
+      "label": "Find the domain, codomain and range of a function",
+      "description": "Identify the domain, codomain and range of a function, and see that the range is a subset of the codomain.",
       "order_in_parent": 4,
       "evidence": [
         "u1-3:definition-2",
         "u1-3:definition-3",
         "u1-3:definition-4",
-        "u1-3:linking-text-3",
         "u1-3:figure-6",
-        "u1-3:linking-text-4",
         "u1-3:rule-1",
-        "u1-3:example-2",
-        "u1-3:figure-7"
+        "u1-3:example-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v3, sonnet, 2026-10-15",
+        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
         "method": "page image"
       }
     }
@@ -553,6 +632,10 @@
   },
   "open_questions": [],
   "history": [
-    "2026-10-15: extracted from the page images (ext-v3, sonnet), $0.157"
+    "2026-10-15: extracted from the page images (ext-v3, sonnet), $0.157",
+    "2026-10-16: figure regions placed (crop-v1, sonnet): 7 cropped",
+    "2026-10-16: figure regions placed (crop-v1, sonnet): 3 cropped",
+    "2026-10-16: figure regions placed (crop-v1, sonnet): 2 cropped",
+    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)"
   ]
 }

@@ -40,7 +40,7 @@ import {
   type AvailabilityRule,
   type StudentOverride,
 } from "./catalog.ts";
-import { PREP3_ARABIC_AR, PREP3_MATH_EN, PREP3_SOCIAL_AR, US_G10_MATH_EN } from "./courses.ts";
+import { PREP3_ARABIC_AR, PREP3_MATH_EN, PREP3_PARALLEL_MATH_EN, PREP3_SOCIAL_AR, US_G10_MATH_EN } from "./courses.ts";
 import { resolveCourseGating } from "./env.ts";
 import { coursesOfSpineKey } from "./subjects.ts";
 
@@ -48,6 +48,7 @@ const MATH = PREP3_MATH_EN;
 const SOCIAL = PREP3_SOCIAL_AR;
 const ARABIC = PREP3_ARABIC_AR;
 const G10 = US_G10_MATH_EN;
+const PARALLEL = PREP3_PARALLEL_MATH_EN;
 const NATIONAL = "eg-national-en" as const;
 const AMERICAN = "us-american-en" as const;
 
@@ -286,8 +287,11 @@ test("003: switched off, an unknown curriculum or an unregistered loaded course 
 
 test("003: courseForSubject — her own curriculum's visible course, else a course that 404s, never maths by default", () => {
   const maths = coursesOfSpineKey("math");
-  assert.deepEqual(maths, [MATH, G10], "both maths courses, in course order");
+  assert.deepEqual(maths, [MATH, PARALLEL, G10], "the three maths courses, in course order");
   const sees = (...ids: string[]) => (c: string) => ids.includes(c);
+  // the book-record ingestion of the same book (2026-10-16): National too, after the launch course
+  assert.equal(courseForSubject(maths, sees(PARALLEL), NATIONAL), PARALLEL, "the only visible one");
+  assert.equal(courseForSubject(maths, sees(MATH, PARALLEL), NATIONAL), MATH, "both visible: the launch course first");
   assert.equal(courseForSubject(maths, sees(MATH), NATIONAL), MATH);
   assert.equal(courseForSubject(maths, sees(G10), AMERICAN), G10);
   // a tester who can see both: her own curriculum's first

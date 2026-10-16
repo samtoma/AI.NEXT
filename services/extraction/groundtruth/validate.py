@@ -101,6 +101,14 @@ def rule_errors(d: dict) -> list[str]:
             errs.append(f"{rid}: belongs_to {b} is not an item in this file")
         if b == rid:
             errs.append(f"{rid}: belongs_to itself")
+        for f in ids_of(r.get("uses_figure")):
+            if f not in item_ids or item_ids[f].get("type") != "figure":
+                errs.append(f"{rid}: uses_figure {f} is not a figure in this file")
+        if r.get("uses_figure") and r.get("type") not in ("exercise", "activity", "open_prompt", "worked_example"):
+            errs.append(f"{rid}: uses_figure on a {r.get('type')}: only a prompt uses a figure")
+        box = (r.get("region") or {}).get("box")
+        if box and not (box[0] < box[2] and box[1] < box[3]):
+            errs.append(f"{rid}: region box {box} is not [left, top, right, bottom] with left < right and top < bottom")
         for where, rec in [(rid, r)] + [(f"{rid}:{p.get('label')}", p) for p in r.get("parts", [])]:
             for f in ids_of(rec.get("answer_figure")):
                 if f not in item_ids or item_ids[f].get("type") not in ("figure", "table"):

@@ -21,6 +21,33 @@ A lesson already extracted is skipped unless `--force`. Each run is logged in `<
 Score a lesson against its ground truth with `../groundtruth/score_book_record.py <extraction> <ground truth>`;
 Lesson 1-1 (ext-v3): 98% of the ground truth's records found, 100% of the confirmed ones, 3 of its 4 misprints.
 
+The objectives call (step 3) also says which figure a prompt needs (`uses_figure`). ext-v3 filed every item one
+objective early (the model counted objectives from 0, the code from 1); ext-v4 numbers them from 1 and refuses an
+answer that counts from 0. Redraw a saved record's objectives, filing and figure links, with no page read (≈ $0.03
+a lesson):
+
+    uv run --with jsonschema extract_book_record.py objectives prep3-math-en u1-1 u1-2 u1-3 u1-4
+
+**Figures of a PDF book.** An EPUB ships each figure as an image file; this PDF does not (its pages are built from
+image tiles and vector paths). For a book whose config has a PDF and no EPUB, in this order (≈ $0.11 a figure in
+all, Unit 1: 24 figures):
+
+    uv run --with pymupdf --with pillow --with jsonschema crop_figures.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
+    uv run book_record_figures.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
+    uv run --with pymupdf answer_gen.py check-printed book-records/prep3-math-en/u1-1.json   # each lesson
+
+1. `crop_figures.py` places each figure's box on the page (a gridded page, then a close-up), crops it at 200 dpi
+   to `work/<book>/figures/<id>.png` and checks the crop edge by edge; the box is the record's `region`
+   (`checked: false` lists a crop that never passed; `--failed` tries those again).
+2. `book_record_figures.py` is Grade 10's S4, unchanged: it writes the same embedded copy of
+   `runbook/lesson.workflow.js` in visuals-only mode, from the book records and the crops. `args` writes the copy
+   for Claude Code (Workflow scriptPath, no args; then `accept` the saved return); `run` runs it here through the
+   workflow runtime with each agent answered by the `claude` CLI (`runbook/cli_responder.mjs`). The drawings and
+   gaps go to the teaching layer, `teaching/<book>/visuals/<slug>.json`.
+3. `answer_gen.py check-printed` re-solves every printed answer blind (Grade 10's S3 rule: the solver never sees
+   the item's printed solution, answer or page, only its figure crops), compares, and sends what the comparison
+   cannot settle to a judge: `teaching/<book>/printed-checks/<slug>.json`. Unit 1: 18 of 18 agree.
+
 **From book records to the tutor:** `../compile_book_records.py` compiles lessons into the bundles the app
 already loads (`compiled/<book>/`). For a compiled lesson only the new content is used: the book record's
 objectives (`u1-1:objective-3` becomes `lo:u1-1-3`) and the book's own exercises and worked examples, with answers
@@ -46,11 +73,27 @@ After loading, check that the app can teach every compiled lesson (from `app/`):
     DATABASE_URL=postgres://ainext_app:ainext_app@127.0.0.1:5432/<database> \
       node --import ./scripts/ts-resolver.mjs scripts/lesson-smoke.mts ../services/extraction/compiled/<book>/compile-report.json
 
-A trial database with Unit 1 compiled:
+A trial database with Unit 1 compiled (`ainext_bookrecord_trial`; Noor with the `bookrecord-trial` launch entry,
+port 3013):
 
     uv run compile_book_records.py prep3-math-en u1-1 u1-2 u1-3 u1-4
-    # then load compiled/prep3-math-en/unit1.json with the book's other bundles, and the compiled generated
-    # files, into a separate database; run Noor with the `bookrecord-trial` launch entry (port 3013)
+    AINEXT_DB_DSN=postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_bookrecord_trial AINEXT_ENVIRONMENT=mvp1 \
+      uv run load_seed.py compiled/prep3-math-en/unit1.json seed/unit2.json seed/unit3.json seed/unit4.json seed/unit5.json \
+        seed/geo-unit1.json seed/t2-unit12.json seed/t2-unit3.json seed/geo-unit2a.json seed/geo-unit2b.json \
+        --course course:prep3-math-en --replace
+    AINEXT_DB_DSN=… uv run apply_review_verdicts.py --book-reviews compiled/prep3-math-en/review-stamps.json
+
+`--replace` matters: a question whose id changed (its objective was refiled) is retired, never left live. The
+stamps are the review tool's decisions (Generated answers), each as the human stamp of the question it decided
+(`reviewed_by "TD (answer approved, review tool)"`); a rejection retires the question, a fix request holds it.
+Unit 1 today: 49 live book questions (13 with the book's picture, 11 with an S4 drawing), 11 worked examples in the
+library, 0 held, 11 stamped; the compile report lists the rest, with why.
+
+**A second course for the same book.** `books/prep3-parallel.json` (`course:prep3-parallel-math-en`, registered
+in `app/src/lib/courses.ts`, status `ingest`) is the Prep-3 maths book ingested by this pipeline as its own course,
+so it can sit beside the launch course. Its lessons carry the `pp3` prefixes (`pp3u1-1`), so its objectives never
+collide with the launch course's. Nothing is built for it yet; it stays hidden until an operator makes it live
+for a grade on the console (no availability row is hidden).
 
 A book that has an EPUB and a text layer (Grade 10) is meant to get its book records from the extraction line
 instead: a deterministic writer after S1–S3 that turns `blocks.jsonl`, the claims, the book questions and the

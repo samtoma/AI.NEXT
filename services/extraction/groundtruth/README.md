@@ -79,7 +79,14 @@ Rules:
    behind a Siyavula practice code, which goes in `code`). A printed answer that is a drawing is a
    `figure` (or `table`) record, and the item or part points at it with `answer_figure`.
 6. **Things printed inside other things.** A figure or table inside an example, or a labelled prompt
-   inside an example's frame, is its own record with `belongs_to` set to that example's id.
+   inside an example's frame, is its own record with `belongs_to` set to that example's id. A
+   prompt that needs a figure printed apart from it ("the previous graphical net", "which of the
+   following arrow diagrams") points at it with `uses_figure`; a figure the student is asked to
+   draw is not linked.
+   **Where a figure is printed (PDF books only):** `region` holds its box on its page,
+   `[left, top, right, bottom]` as fractions of the page, so it can be cropped (`crop_figures.py`;
+   `checked` says whether the crop passed its check). An EPUB ships each figure as its own image
+   file and needs none. Neither field is scored.
 7. **Tables** have `header` (the printed column headings, corner cell first) and `rows` (each row
    left to right, row label first), cells exactly as printed. Printed row and column titles go in the
    `caption`.

@@ -193,8 +193,20 @@
       },
       "dependentRequired": { "answer": ["solution_provenance"], "answer_figure": ["solution_provenance"] }
     },
+    "region": {
+      "type": "object",
+      "description": "Figure only, PDF books only: where the figure is printed on its source_page, so it can be cropped (an EPUB ships each figure as its own image file and needs none). Not scored.",
+      "required": ["box", "by"],
+      "additionalProperties": false,
+      "properties": {
+        "box": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 }, "minItems": 4, "maxItems": 4, "description": "[left, top, right, bottom] as fractions of the page's width and height." },
+        "by": { "type": "string", "description": "What placed the box: the crop step's version and model, or a reviewer." },
+        "checked": { "type": "boolean", "description": "true when the crop check found the whole figure and nothing else in the box." }
+      }
+    },
+
     "solution_provenance": {
-      "enum": ["book_printed", "book_worked", "book_online"],
+      "enum":["book_printed", "book_worked", "book_online"],
       "description": "book_printed: answer printed in the student book; book_worked: a worked example's printed solution; book_online: the publisher's answer behind a printed practice code."
     },
 
@@ -215,6 +227,7 @@
         },
         "lo": { "$ref": "#/$defs/record_id", "description": "The learning objective this item teaches." },
         "belongs_to": { "$ref": "#/$defs/record_id", "description": "The item this one is printed as part of: a figure or table inside an example, a labelled prompt inside an example's frame." },
+        "uses_figure": { "$ref": "#/$defs/record_ids", "description": "Prompt only: figure record(s) printed apart from this prompt that a student must look at to answer it ('the previous graphical net', 'which of the following arrow diagrams'). A figure printed inside the prompt is linked by its own belongs_to; a figure the student is asked to draw is not linked." },
         "source_page": { "$ref": "#/$defs/page" },
         "pages": { "type": "array", "items": { "$ref": "#/$defs/page" }, "minItems": 2, "maxItems": 2, "description": "When the item spans pages." },
         "quote": { "type": "string", "minLength": 1, "description": "A few exact printed words that locate the item, misprints included. The book's full text is not copied. Required in ground-truth files." },
@@ -233,6 +246,7 @@
         "solution": { "type": "array", "items": { "$ref": "#/$defs/text" } },
         "answer": { "$ref": "#/$defs/text" },
         "answer_figure": { "$ref": "#/$defs/record_ids", "description": "Figure or table record(s) holding a printed answer that is a drawing." },
+        "region": { "$ref": "#/$defs/region" },
         "solution_provenance": { "$ref": "#/$defs/solution_provenance" },
         "code": { "type": "string" },
         "misprints": { "type": "array", "items": { "$ref": "#/$defs/misprint" }, "minItems": 1 },
@@ -246,7 +260,7 @@
         { "if": { "properties": { "type": { "enum": ["definition", "rule", "caution", "convention", "method"] } } }, "then": { "required": ["claim"] } },
         { "if": { "properties": { "type": { "enum": ["exercise", "activity", "open_prompt", "printed_objective", "heading", "linking_text", "prior_knowledge"] } } }, "then": { "required": ["text"] } },
         { "if": { "properties": { "type": { "const": "worked_example" } } }, "then": { "required": ["stem"] } },
-        { "if": { "properties": { "type": { "const": "figure" } } }, "then": { "required": ["caption"] } },
+        { "if": { "properties": { "type": { "const": "figure" } } }, "then": { "required": ["caption"] }, "else": { "not": { "required": ["region"] } } },
         { "if": { "properties": { "type": { "const": "table" } } }, "then": { "required": ["caption", "rows"] }, "else": { "not": { "anyOf": [{ "required": ["header"] }, { "required": ["rows"] }] } } },
         { "if": { "properties": { "type": { "const": "key_term" } } }, "then": { "required": ["term"] } }
       ]

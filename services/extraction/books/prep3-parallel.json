@@ -1,0 +1,48 @@
+{
+  "config_version": 1,
+  "book": "prep3-parallel",
+  "title": "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+  "course_id": "course:prep3-parallel-math-en",
+  "curriculum": "eg-national-en",
+  "subject": "math",
+  "grade": "prep-3",
+  "language": "en",
+  "direction": "ltr",
+  "id_prefixes": ["pp3u", "pp3t", "pp3geo"],
+  "load_order": 15,
+  "status": "ingest",
+  "sources": {
+    "pdf": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+    "epub": null,
+    "teacher_pdf": null
+  },
+  "page_offsets": [
+    {
+      "label": "First Term Student's Book",
+      "pdf_from": 1,
+      "pdf_to": 73,
+      "pdf_minus_printed": 1,
+      "verified_at": [[7, 8], [16, 17], [23, 24]],
+      "note": "Read from the page images during the Unit 1 book-record extraction (book-records/prep3-math-en/lessons.json, page_offset 1)."
+    },
+    {
+      "label": "Second Term Student's Book",
+      "pdf_from": 74,
+      "pdf_to": 178,
+      "pdf_minus_printed": 73,
+      "verified_at": [[5, 78], [39, 112], [42, 115], [64, 137], [100, 173]],
+      "note": "seed/geometry-structure.md"
+    }
+  ],
+  "objectives_mode": "printed",
+  "sacred_content": false,
+  "bundles": [],
+  "content_files": [],
+  "lesson_titles": {
+    "pp3u1-1": "Cartesian product",
+    "pp3u1-2": "Relations",
+    "pp3u1-3": "Functions",
+    "pp3u1-4": "Polynomial functions"
+  },
+  "lesson_titles_note": "The same book as prep3-math-en, ingested again by the book-record pipeline (book record v2: page images, figure crops, S4, the review tool) as its own course, course:prep3-parallel-math-en (app/src/lib/courses.ts), hidden until an operator makes it live. Lesson slugs carry a pp3 prefix (pp3u1-1, pp3t2u1-1, pp3geo1-1, mirroring the launch book's u, t2u and geo) so its objectives never collide with the launch course's (lo:pp3u1-1-1, not lo:u1-1-1). The name is the one proposed to Samuel and may still change. Planned bundles are listed here once the runbook writes them."
+}

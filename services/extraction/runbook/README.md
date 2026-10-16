@@ -288,6 +288,14 @@ What it does that matters for review:
 Resume a stopped run with the same script, the same args and `resumeFromRunId`. Cached agents return
 instantly.
 
+**A PDF book's figures (no EPUB): the same S4.** A book whose config has a PDF and no EPUB has no figure image
+files, so S4 has nothing to read. `crop_figures.py` crops each figure of its book records first (the figure
+record's `region`), and `book_record_figures.py args <book> <slugs>` writes this script's visuals-only copy from
+the book records and the crops, exactly as `embed_workflow.py lesson-args … --visuals-only` does for Grade 10 (run
+it with scriptPath and no args, then `book_record_figures.py accept <book> <saved return>.json`). Outside Claude
+Code, `book_record_figures.py run` runs the same copy through `tests/workflow_stub.mjs` with every agent answered
+by the `claude` CLI (`runbook/cli_responder.mjs`, metered and capped). See `book-records/README.md`.
+
 **Launch or resume a workflow only in a turn whose latest user message is the go-ahead for it.** The
 Workflow harness relays the operator's latest message to every agent and tells it that message wins; the
 Chapter 8 pilot's 8.1 and 8.3a (and the stopped 8.3b and 8.4) were launched under an unrelated question and

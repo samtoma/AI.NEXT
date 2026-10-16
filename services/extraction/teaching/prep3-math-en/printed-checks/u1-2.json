@@ -1,0 +1,68 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-math-en",
+  "lesson": "u1-2",
+  "source": "book-records/prep3-math-en/u1-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-16",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0165,
+      "calls": [
+        {
+          "call": "blind re-solve (2 printed answers)",
+          "cost_usd": 0.0165,
+          "model": "sonnet",
+          "turns": 2,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "u1-2:example-1",
+      "record_id": "u1-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 13,
+      "printed": "$R=\\{(-1,2),(1,6),(2,8)\\}$",
+      "blind": "R = {(-1, 2), (1, 6), (2, 8)}. Arrow diagram: arrows from -1 to 2, 1 to 6, 2 to 8 (4 in Y gets no arrow). Cartesian diagram: points (-1,2), (1,6), (2,8) plotted with X on the horizontal axis and Y on the vertical axis.",
+      "blind_kind": "drawing",
+      "figures": [
+        "u1-2:figure-3",
+        "u1-2:figure-4"
+      ],
+      "question_fingerprint": "45d19a200fdc41f97b28e66c7a9bcb89",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-16T06:21:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "u1-2:example-2",
+      "record_id": "u1-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 14,
+      "printed": "$R=\\{(-2,2),(-1,1),(0,0),(1,-1),(2,-2)\\}$",
+      "blind": "R = {(-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2)}. Arrow diagram on X: arrows -2→2, -1→1, 0→0 (a loop on 0), 1→-1, 2→-2. Cartesian diagram: the five points (-2,2), (-1,1), (0,0), (1,-1), (2,-2) plotted, lying on a line.",
+      "blind_kind": "drawing",
+      "figures": [],
+      "question_fingerprint": "4d15002829e42b65ff1000025c3415a0",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-16T06:21:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}
