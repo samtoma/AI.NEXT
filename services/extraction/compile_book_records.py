@@ -374,7 +374,9 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             h = p or r
             printed = h.get("answer") or (r.get("answer") if p is None else None)
             gen = answers.get(ref)
-            stem = f"{text} {('(' + p['label'] + ') ' + p['stem']) if p and p.get('stem') else ('(' + p['label'] + ')' if p else '')}".strip()
+            # a part with its own words is asked on its own: the book's label ("(A)") is how the page lists it, not
+            # part of the question. A part with none keeps it, since the label is what is asked ("point C").
+            stem = f"{text} {p['stem'] if p and p.get('stem') else ('(' + p['label'] + ')' if p else '')}".strip()
             local = re.sub(r"[^a-z0-9]+", "-", ref.split(":", 1)[1].lower()).strip("-")
             if printed:
                 ans, how = printed, "printed in the book"
