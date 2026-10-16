@@ -1435,7 +1435,9 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     reviewSubjectRules: () => "",
     protocol: mathProtocol,
     learnRichNote: () => "",
-    reviewOpenerEg: `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`,
+    // English, as Grade 10's (Tamer, 2026-10-16: no Arabic opener anywhere in maths; it was «فهمت كله؟ حلو —»,
+    // one of ADR-0020's held National touches, and the tutor copied it word for word).
+    reviewOpenerEg: ENGLISH_ONLY.reviewOpenerEg,
     reviewWidgetMoment: (data) => {
       const a = addressForms(data.gender, data.studentName);
       const visualMoment = `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask ${a.them} ONE quick question about what it shows — ${a.they} answer${a.s} in chat.`;
