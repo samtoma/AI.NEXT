@@ -1,6 +1,8 @@
 """Tier every book question with Grade 10's S3 rule, read twice, for the teaching layer.
 
-    uv run tier_questions.py run prep3-math-en u1-1 u1-2 u1-3 u1-4 [--cap 1] [--force]
+    uv run tier_questions.py run    prep3-math-en u1-1 u1-2 u1-3 u1-4 [--cap 1] [--force]   # the workflow, run here
+    uv run tier_questions.py args   prep3-math-en u1-1 …                                   # its copy, for Claude Code
+    uv run tier_questions.py accept prep3-math-en <saved return>.json
 
 Run from services/extraction/. A tier is not printed in the book: it is a teaching judgement, so it lives in the
 teaching layer, keyed by book-record ids (`u1-1:drill-2:A`), beside the generated answers.
@@ -41,7 +43,7 @@ import answer_gen as AG  # noqa: E402  (call_claude, Budget, with_intended)
 import score_book_record as SC  # noqa: E402
 
 FORMAT = "ainext.question-tiers/1"
-VERSION = "tier-v1"
+VERSION = "tier-v2"  # v2: the two readings are runbook/tiers.workflow.js
 TIERS = ("basic", "standard", "advanced")
 PROMPTS = ("exercise", "worked_example", "activity", "open_prompt")
 # Grade 10's tier rule, as runbook/lesson.workflow.js writes it (S3 Typing's `tier:` line and S3 Tier check)
@@ -94,21 +96,11 @@ def units(book: str, record: dict, record_path: Path) -> list[dict]:
     return out
 
 
-def read_twice(slug: str, us: list[dict], budget: AG.Budget) -> dict[str, dict]:
-    typing = AG.call_claude(SYSTEM, (
-        f"Assign each book item below a difficulty tier from its QUESTION, its ANSWER and its WORKED SOLUTION: what the steps "
-        f"actually take. tier: {RULE} Do not read any file.\n\nLESSON {slug}\n"
-        + "\n\n".join(f"[{u['ref']}] ({u['type'].replace('_', ' ')})\n  QUESTION: {u['question']}\n  ANSWER: {u['answer'] or '(none)'}"
-                      f"\n  WORKED SOLUTION: {' ⏎ '.join(u['solution']) or '(none)'}" for u in us)
-        + "\n\nReturn one row per item; ref is the item's id as shown in brackets, written without the brackets."),
-        TIER_SCHEMA, "haiku", budget, f"{slug} tiers: typing reading ({len(us)})")
-    blind = AG.call_claude(SYSTEM, (
-        f"Assign each item a difficulty tier: {RULE} Do not read any file.\n\n"
-        + "\n\n".join(f"[{u['ref']}] {u['question']}" for u in us)
-        + "\n\nReturn one row per item; ref is the item's id as shown in brackets, written without the brackets."),
-        TIER_SCHEMA, "sonnet", budget, f"{slug} tiers: blind reading ({len(us)})")
-    first = {t["ref"].strip("[]"): t["tier"] for t in typing.get("tiers") or []}
-    second = {t["ref"].strip("[]"): t["tier"] for t in blind.get("tiers") or []}
+def compare(us: list[dict], typing: list[dict], blind: list[dict], version: str) -> dict[str, dict]:
+    """The two readings (runbook/tiers.workflow.js) compared: agreed, disagreed (the blind reading's tier until a person
+    decides: Grade 10's check wins) or missing."""
+    first = {t["ref"]: t["tier"] for t in typing}
+    second = {t["ref"]: t["tier"] for t in blind}
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
     out = {}
     for u in us:
@@ -119,45 +111,72 @@ def read_twice(slug: str, us: list[dict], budget: AG.Budget) -> dict[str, dict]:
                          "readings": [{"reading": "typing", "model": "haiku", "sees": "question, answer and worked solution", "tier": a},
                                       {"reading": "blind", "model": "sonnet", "sees": "question only", "tier": b}],
                          "status": status, "tier": a if status == "agreed" else (b or a),
-                         "made": {"at": stamp, "version": VERSION}}
+                         "made": {"at": stamp, "version": version}}
     return out
+
+
+def todo_units(book: str, slug: str, force: bool) -> tuple[list[dict], list[dict], dict | None]:
+    rec_path = HERE / "book-records" / book / f"{slug}.json"
+    record = json.loads(rec_path.read_text())
+    out = HERE / "teaching" / book / "tiers" / f"{slug}.json"
+    prev = json.loads(out.read_text()) if out.exists() else None
+    done = {x["ref"]: x for x in (prev or {}).get("tiers") or []}
+    us = units(book, record, rec_path)
+    todo = [u for u in us if force or u["ref"] not in done or done[u["ref"]]["question_fingerprint"] != u["fingerprint"]]
+    return us, todo, prev
+
+
+def write(book: str, slug: str, us: list[dict], new: dict[str, dict], prev: dict | None, run: str | None, parts: int) -> None:
+    done = {x["ref"]: x for x in (prev or {}).get("tiers") or []}
+    done.update(new)
+    order = {u["ref"]: i for i, u in enumerate(us)}
+    runs = (prev or {}).get("runs", []) + ([{"at": date.today().isoformat(), "version": VERSION, "parts": parts, "run": run}] if run else [])
+    doc = {"format": FORMAT, "book": book, "lesson": slug, "source": f"book-records/{book}/{slug}.json", "rule": RULE,
+           "made_by": "tier_questions.py (runbook/tiers.workflow.js)", "runs": runs,
+           "tiers": sorted((v for k, v in done.items() if k in order), key=lambda x: order[x["ref"]])}
+    out = HERE / "teaching" / book / "tiers" / f"{slug}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+    print(f"{slug}: {len(doc['tiers'])} part(s), {parts} read now; {dict(Counter(t['status'] for t in doc['tiers']))}; "
+          f"{dict(Counter(t['tier'] for t in doc['tiers']))}", file=sys.stderr)
 
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("run")
-    r.add_argument("book")
-    r.add_argument("lessons", nargs="+")
-    r.add_argument("--cap", type=float, default=1.0)
-    r.add_argument("--force", action="store_true")
+    for name in ("run", "args"):
+        r = sub.add_parser(name)
+        r.add_argument("book")
+        r.add_argument("lessons", nargs="+")
+        r.add_argument("--cap", type=float, default=1.0)
+        r.add_argument("--force", action="store_true")
+    acc = sub.add_parser("accept")
+    acc.add_argument("book")
+    acc.add_argument("run_file", type=Path)
+    acc.add_argument("--force", action="store_true")
     a = ap.parse_args(argv)
-    budget = AG.Budget(a.cap)
-    for slug in a.lessons:
-        rec_path = HERE / "book-records" / a.book / f"{slug}.json"
-        record = json.loads(rec_path.read_text())
-        out = HERE / "teaching" / a.book / "tiers" / f"{slug}.json"
-        prev = json.loads(out.read_text()) if out.exists() else None
-        done = {x["ref"]: x for x in (prev or {}).get("tiers") or []}
-        us = units(a.book, record, rec_path)
-        todo = [u for u in us if a.force or u["ref"] not in done or done[u["ref"]]["question_fingerprint"] != u["fingerprint"]]
-        if todo:
-            before = budget.spent
-            done.update(read_twice(slug, todo, budget))
-            runs = (prev or {}).get("runs", []) + [{"at": date.today().isoformat(), "version": VERSION, "parts": len(todo),
-                                                    "cost_usd": round(budget.spent - before, 4)}]
-        else:
-            runs = (prev or {}).get("runs", [])
-        order = {u["ref"]: i for i, u in enumerate(us)}
-        doc = {"format": FORMAT, "book": a.book, "lesson": slug, "source": str(rec_path.relative_to(HERE)), "rule": RULE,
-               "made_by": "tier_questions.py", "runs": runs,
-               "tiers": sorted((v for k, v in done.items() if k in order), key=lambda x: order[x["ref"]])}
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
-        st = Counter(t["status"] for t in doc["tiers"])
-        tiers = Counter(t["tier"] for t in doc["tiers"])
-        print(f"{slug}: {len(doc['tiers'])} part(s), {len(todo)} read now; {dict(st)}; {dict(tiers)}", file=sys.stderr)
-    print(f"cost ${budget.spent:.3f}", file=sys.stderr)
+    import embed_workflow as EW  # noqa: PLC0415
+    import workflow_runner as WR  # noqa: PLC0415
+    lessons = a.lessons if a.cmd != "accept" else [l["slug"] for l in json.loads(a.run_file.read_text())["lessons"]]
+    plan = {s: todo_units(a.book, s, a.force) for s in lessons}
+    if a.cmd == "accept":
+        res, run_name = json.loads(a.run_file.read_text()), str(a.run_file)
+    else:
+        args = {"stage": "S3-tiers", "book": {"book": a.book},
+                "lessons": [{"slug": s, "units": [{k: u[k] for k in ("ref", "type", "question", "answer", "solution")} for u in todo]}
+                            for s, (_us, todo, _p) in plan.items() if todo]}
+        if not args["lessons"]:
+            print("nothing to tier: every question already read (--force to read again)", file=sys.stderr)
+            return 0
+        copy = EW.default_out(a.book, "tiers", f"{lessons[0]}..{lessons[-1]}")
+        print(EW.summary(EW.write(HERE / "runbook" / "tiers.workflow.js", args, copy)), file=sys.stderr)
+        if a.cmd == "args":
+            return 0
+        run_file, res, _cost = WR.run_copy(copy, [], a.cap, "tiers", a.book, "tiers", stage="S3")
+        run_name = str(run_file.relative_to(HERE))
+    for rl in res["lessons"]:
+        us, todo, prev = plan[rl["slug"]]
+        write(a.book, rl["slug"], us, compare(todo, rl["typing"], rl["blind"], res.get("prompts_version")), prev, run_name, len(todo))
     return 0
 
 

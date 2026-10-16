@@ -49,55 +49,23 @@ sys.path.insert(0, str(HERE))
 import working_check as WC  # noqa: E402  (the free numeric pre-check; standard library only)
 
 FORMAT = "ainext.generated-answers/1"
-PROMPT_VERSION = "ans-v2"
+PROMPT_VERSION = "ans-v3"  # v3: the author, re-solve and judge prompts are runbook/answers.workflow.js
 PROMPTS = ("exercise", "activity", "open_prompt", "worked_example")
 STATEMENTS = ("definition", "rule", "caution", "convention", "method")
 NEEDS_PAGE = re.compile(r"\b(figures?|nets?|graphs?|diagrams?|grids?|tables?|shown|opposite|pictures?|previous|following|above|below)\b", re.I)
 
-ANSWER_RULES = """Answer format (both of you use it, so answers can be compared):
-- numbers plainly: 7, -4, 3/2;
-- several unknowns as assignments: a = 4, b = -4;
-- an ordered pair as (x, y); a set as {(1, 2), (1, 3)} or {1, 2, 3};
-- a place or a name in words: "fourth quadrant", "y-axis";
-- yes/no questions start with Yes or No.
-Maths in $...$ inside sentences. English."""
+# ANSWER_RULES: in runbook/answers.workflow.js since ans-v3 (one copy of every prompt)
 
-AUTHOR_SYSTEM = f"""You write the answer and the worked solution a Prep-3 (Grade 9) student in Egypt is taught for exercises in their maths textbook.
+# AUTHOR_SYSTEM: in runbook/answers.workflow.js since ans-v3 (one copy of every prompt)
 
-Rules:
-- Use ONLY the lesson material given: its definitions, rules, conventions and worked-example methods. Cite the ids you used in grounded_in. Never use a method the lesson does not teach.
-- Steps are short, one idea each, in the order a student would write them. The last step states the answer.
-- kind: "value" when the answer is something a student writes (numbers, pairs, sets, names, yes/no);
-  "drawing" when the answer is a drawing (say exactly what to draw and where, in steps);
-  "explanation" when the question asks why or to describe (give the reasoning in steps; answer is one sentence).
-- Read every value from the question or, where given, the page image. Never invent data.
-- If a part cannot be answered from what is given, set kind "explanation" and start the answer with "CANNOT ANSWER:" and the reason.
+# RESOLVE_SYSTEM: in runbook/answers.workflow.js since ans-v3 (one copy of every prompt)
 
-{ANSWER_RULES}"""
+# AUTHOR_SCHEMA: in runbook/answers.workflow.js since ans-v3
+# JUDGE_SYSTEM: in runbook/answers.workflow.js since ans-v3 (one copy of every prompt)
 
-RESOLVE_SYSTEM = f"""You solve exercises from a Prep-3 (Grade 9) maths textbook, using the lesson material given.
-Give only each part's final answer and its kind ("value", "drawing" or "explanation"). For a drawing, say in one line what is drawn.
-Read every value from the question or, where given, the page image. If a part cannot be answered, start the answer with "CANNOT ANSWER:".
+# JUDGE_SCHEMA: in runbook/answers.workflow.js since ans-v3
 
-{ANSWER_RULES}"""
-
-AUTHOR_SCHEMA = {"type": "object", "required": ["answers"], "properties": {"answers": {"type": "array", "items": {
-    "type": "object", "required": ["ref", "kind", "answer", "solution", "grounded_in"],
-    "properties": {"ref": {"type": "string"}, "kind": {"enum": ["value", "drawing", "explanation"]},
-                   "answer": {"type": "string"}, "solution": {"type": "array", "items": {"type": "string"}},
-                   "grounded_in": {"type": "array", "items": {"type": "string"}}}}}}}
-JUDGE_SYSTEM = """You compare two final answers to the same maths exercise: the one the textbook prints and one a solver gave without seeing it.
-"equivalent" when they say the same thing (the same values, pairs, sets or conclusion, in any order or notation, a set written with or without braces, a value with or without its name).
-"different" when they do not. "unclear" only when the question itself does not let you decide. Give the reason in one line."""
-
-JUDGE_SCHEMA = {"type": "object", "required": ["verdicts"], "properties": {"verdicts": {"type": "array", "items": {
-    "type": "object", "required": ["ref", "verdict", "reason"],
-    "properties": {"ref": {"type": "string"}, "verdict": {"enum": ["equivalent", "different", "unclear"]}, "reason": {"type": "string"}}}}}}
-
-RESOLVE_SCHEMA = {"type": "object", "required": ["answers"], "properties": {"answers": {"type": "array", "items": {
-    "type": "object", "required": ["ref", "kind", "answer"],
-    "properties": {"ref": {"type": "string"}, "kind": {"enum": ["value", "drawing", "explanation"]},
-                   "answer": {"type": "string"}}}}}}
+# RESOLVE_SCHEMA: in runbook/answers.workflow.js since ans-v3
 
 
 # ============================================================================ what needs an answer
@@ -235,34 +203,7 @@ class Budget:
         return round(self.cap - self.spent, 4)
 
 
-def call_claude(system: str, prompt: str, schema: dict, model: str, budget: Budget, label: str,
-                image_dir: Path | None = None) -> dict:
-    if budget.left() <= 0.05:
-        raise SystemExit(f"cost cap reached (${budget.spent:.3f} of ${budget.cap:.2f}): stopped before {label}")
-    cmd = ["claude", "-p", "--output-format", "json", "--model", model, "--no-session-persistence",
-           "--setting-sources", "", "--system-prompt", system, "--json-schema", json.dumps(schema),
-           "--max-budget-usd", f"{budget.left():.2f}"]
-    if image_dir:
-        cmd += ["--tools", "Read", "--allowedTools", "Read", "--add-dir", str(image_dir)]
-    else:
-        cmd += ["--tools", ""]
-    cwd = tempfile.mkdtemp(prefix="answer-gen-")  # outside the repo: no project instructions are loaded
-    try:
-        res = subprocess.run(cmd, input=prompt, capture_output=True, text=True, cwd=cwd, timeout=900)
-    finally:
-        shutil.rmtree(cwd, ignore_errors=True)
-    try:
-        out = json.loads(res.stdout)
-    except json.JSONDecodeError:
-        raise SystemExit(f"{label}: the CLI returned no JSON (exit {res.returncode}): {res.stderr[-500:] or res.stdout[-500:]}")
-    cost = float(out.get("total_cost_usd") or 0)
-    budget.spent += cost
-    budget.calls.append({"call": label, "cost_usd": round(cost, 4), "model": model,
-                         "turns": out.get("num_turns"), "error": out.get("is_error") or None})
-    print(f"  {label}: ${cost:.4f} (total ${budget.spent:.3f} of ${budget.cap:.2f})", file=sys.stderr)
-    if out.get("is_error") or not isinstance(out.get("structured_output"), dict):
-        raise SystemExit(f"{label}: no structured answer ({out.get('subtype')}): {str(out.get('result'))[:400]}")
-    return out["structured_output"]
+# call_claude: every model call is runbook/answers.workflow.js since ans-v3 (workflow())
 
 
 # ============================================================================ the checks (no model)
@@ -352,18 +293,37 @@ def render_pages(doc: dict, pages: set[int], book: str) -> dict[int, Path]:
     return files
 
 
+def workflow(book: str, mode: str, model: str, budget: Budget, name: str, read_dirs: list[Path], groups=None, judge=None) -> dict:
+    """runbook/answers.workflow.js (the prompts live there): its embedded copy, run here through the workflow runner,
+    metered into runs/<book>/cost.jsonl and counted against this run's cap."""
+    import embed_workflow as EW  # noqa: PLC0415
+    import workflow_runner as WR  # noqa: PLC0415
+    if budget.left() <= 0.05:
+        raise SystemExit(f"cost cap reached (${budget.spent:.3f} of ${budget.cap:.2f}): stopped before {name}")
+    args = {"stage": "S3-answers", "mode": mode, "book": {"book": book}, "model": model,
+            **({"groups": groups} if groups is not None else {}), **({"judge": judge} if judge is not None else {})}
+    copy = EW.default_out(book, "answers", name)
+    EW.write(HERE / "runbook" / "answers.workflow.js", args, copy)
+    _run, res, cost = WR.run_copy(copy, read_dirs, budget.left(), name, book, "answers", stage="S3")
+    budget.spent += cost
+    budget.calls.append({"call": name, "cost_usd": round(cost, 4), "model": model})
+    return res
+
+
 def answer_lesson(doc: dict, us: list[dict], model: str, budget: Budget, book: str) -> list[dict]:
     ground = grounding(doc)
     text_units = [u for u in us if not u["needs_page"]]
     page_units = [u for u in us if u["needs_page"]]
     files = render_pages(doc, {u["page"] for u in page_units if u["page"]}, book)
     results = []
-    for group, label, image_dir in ((text_units, "text", None), (page_units, "page", files and next(iter(files.values())).parent)):
-        if not group:
-            continue
-        prompt = f"{ground}\n\n{unit_block(group, files if image_dir else {})}"
-        authored = call_claude(AUTHOR_SYSTEM, prompt, AUTHOR_SCHEMA, model, budget, f"author ({label}, {len(group)} parts)", image_dir)
-        resolved = call_claude(RESOLVE_SYSTEM, prompt, RESOLVE_SCHEMA, model, budget, f"re-solve ({label}, {len(group)} parts)", image_dir)
+    slug = doc["lesson"]["slug"]
+    plan = [(g, label) for g, label in ((text_units, "text"), (page_units, "page")) if g]
+    groups = [{"label": f"{slug}:{label}", "material": f"{ground}\n\n{unit_block(g, files if label == 'page' else {})}"} for g, label in plan]
+    res = workflow(book, "answer", model, budget, f"answers.{slug}", [d for d in [files and next(iter(files.values())).parent] if d], groups=groups)
+    out = {g["label"]: g for g in res.get("groups") or []}
+    for group, label in plan:
+        authored = (out.get(f"{slug}:{label}") or {}).get("authored") or {}
+        resolved = (out.get(f"{slug}:{label}") or {}).get("resolved") or {}
         by_a = {a["ref"]: a for a in authored.get("answers") or []}
         by_r = {a["ref"]: a for a in resolved.get("answers") or []}
         for u in group:
@@ -446,8 +406,10 @@ def check_printed(doc: dict, us: list[dict], model: str, budget: Budget, book: s
         if u["figures"] and not crops:
             lines.append("  (its figure is not available: if the part cannot be answered without it, say CANNOT ANSWER)")
     lines.append("\nAnswer every part above, using its [ref] exactly.")
-    resolved = call_claude(RESOLVE_SYSTEM, f"{ground}\n\n" + "\n".join(lines), RESOLVE_SCHEMA, model, budget,
-                           f"blind re-solve ({len(us)} printed answers)", fig_dir if any(u["figures"] for u in us) else None)
+    slug = doc["lesson"]["slug"]
+    res = workflow(book, "blind", model, budget, f"check-printed.{slug}", [fig_dir] if any(u["figures"] for u in us) else [],
+                   groups=[{"label": f"{slug}:printed", "material": f"{ground}\n\n" + "\n".join(lines)}])
+    resolved = ((res.get("groups") or [{}])[0] or {}).get("resolved") or {}
     by_r = {a["ref"]: a for a in resolved.get("answers") or []}
     results = []
     for u in us:
@@ -469,7 +431,7 @@ def check_printed(doc: dict, us: list[dict], model: str, budget: Budget, book: s
         by_ref = {u["ref"]: u for u in us}
         prompt = "\n\n".join(f"[{r['ref']}] question: {by_ref[r['ref']]['text']}" + (f" (part {r['part']}: {by_ref[r['ref']]['stem']})" if r["part"] else "")
                               + f"\n  printed: {r['printed']}\n  solver: {r['blind']}" for r in unsure) + "\n\nGive one verdict per [ref], ref as shown without the brackets."
-        judged = call_claude(JUDGE_SYSTEM, prompt, JUDGE_SCHEMA, model, budget, f"judge ({len(unsure)} disagreements)")
+        judged = (workflow(book, "judge", model, budget, f"judge.{slug}", [], judge={"label": slug, "material": prompt}).get("judge") or {})
         verdicts = {v["ref"].strip("[]"): v for v in judged.get("verdicts") or []}
         for r in unsure:
             v = verdicts.get(r["ref"])

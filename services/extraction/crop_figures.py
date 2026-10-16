@@ -32,6 +32,7 @@ default 3) stops the run before it spends more. Costs go to book-records/<book>/
 from __future__ import annotations
 
 import argparse
+import re
 import json
 import sys
 from collections import defaultdict
@@ -41,30 +42,16 @@ from pathlib import Path
 import extract_book_record as X
 
 HERE = Path(__file__).resolve().parent
-VERSION = "crop-v1"
+VERSION = "crop-v2"  # v2: the locate, refine and check prompts are runbook/crops.workflow.js
 MARGIN = 0.006         # added on every side of the refined box
 WIDEN = 0.06           # the close-up around the located box
 CHECKS = 3             # checks per figure; a failed one is refined (or located again) before the next
 
-LOCATE_SYSTEM = """You find figures on a printed textbook page and give the box around each.
-The page image has a grid drawn over it: thin lines every 5% of the page's width and height, numbered 0-100 along the edges.
-For each figure listed, give the smallest box that holds the WHOLE figure: every line, arrow, point, label, number and the figure's own title or set names (e.g. "X × Y" printed under an arrow diagram). Leave out everything that is not part of the figure: paragraph text, headings, other figures, page decoration.
-Give left, top, right and bottom as percentages of the page (0-100), to the nearest 0.5. A figure listed that is not on the page: found=false.
-Read the page image with the Read tool first."""
+# LOCATE_SYSTEM: in runbook/crops.workflow.js since crop-v2 (one copy of every prompt)
 
-CHECK_SYSTEM = """You check crops cut from a textbook page, one per figure.
-For each crop, read the image with the Read tool and compare it with the figure's description. For each edge (left, top, right, bottom) say:
-- "extend": the figure is cut at this edge (a line, arrow, label or number of the figure runs off it, or a described part is missing on that side);
-- "trim": something that is NOT part of the figure is inside the crop along this edge (paragraph text, a heading, part of another figure);
-- "ok": neither.
-shows_figure=false when the crop does not show the described figure at all (it shows other text, a page header or footer, another figure).
-Blank margin is fine. ok=true only when shows_figure is true and all four edges are "ok"."""
+# CHECK_SYSTEM: in runbook/crops.workflow.js since crop-v2 (one copy of every prompt)
 
-REFINE_SYSTEM = """You place a tight box around a figure in a close-up of a textbook page.
-Each close-up has a grid drawn over it: lines every 10% of ITS width and height, numbered 0-100 along the edges. The figure is somewhere inside, with parts of the page around it.
-For each close-up, give the smallest box that holds the WHOLE figure described: every line, arrow, point, label, number and the figure's own title or set names. Leave out everything that is not part of it: paragraph text beside it, headings, other figures.
-Give left, top, right and bottom as percentages of the CLOSE-UP (0-100), to the nearest 0.5. If the figure runs off an edge of the close-up, give that edge as 0 or 100.
-Read each close-up with the Read tool first."""
+# REFINE_SYSTEM: in runbook/crops.workflow.js since crop-v2 (one copy of every prompt)
 
 EDGE = {"type": "string", "enum": ["ok", "extend", "trim"]}
 LOCATE_SCHEMA = {"type": "object", "required": ["figures"], "properties": {"figures": {"type": "array", "items": {
@@ -75,6 +62,22 @@ CHECK_SCHEMA = {"type": "object", "required": ["crops"], "properties": {"crops":
     "type": "object", "required": ["id", "shows_figure", "ok", "left", "top", "right", "bottom"], "properties": {
         "id": {"type": "string"}, "shows_figure": {"type": "boolean"}, "ok": {"type": "boolean"},
         "left": EDGE, "top": EDGE, "right": EDGE, "bottom": EDGE, "note": {"type": "string"}}}}}}
+
+
+def ask(mode: str, material: str, label: str, read_dir: Path, model: str, budget: X.Budget, book: str) -> dict:
+    """One task of runbook/crops.workflow.js (the prompts live there), run here and metered; counted against the cap."""
+    import embed_workflow as EW  # noqa: PLC0415
+    import workflow_runner as WR  # noqa: PLC0415
+    if budget.left() <= 0.1:
+        raise SystemExit(f"cost cap reached (${budget.spent:.3f} of ${budget.cap:.2f}): stopped before {label}")
+    args = {"stage": "S0a-crops", "mode": mode, "book": {"book": book}, "model": model, "task": {"label": label, "material": material}}
+    name = re.sub(r"[^a-z0-9.-]+", "-", f"crops-{mode}-{label}".lower()).strip("-")
+    copy = EW.default_out(book, "crops", name)
+    EW.write(HERE / "runbook" / "crops.workflow.js", args, copy)
+    _run, res, cost = WR.run_copy(copy, [read_dir], budget.left(), name, book, "crops", stage="S0a")
+    budget.spent += cost
+    budget.calls.append({"call": label, "cost_usd": round(cost, 4), "mode": mode})
+    return res.get("result") or {}
 
 
 def is_pdf_book(cfg: dict) -> bool:
@@ -132,9 +135,8 @@ def locate(pdf: Path, printed: int, offset: int, figs: list[dict], grid: Path, m
     listing = "\n".join(f"[{f['id']}] {f.get('caption', '')}"
                         + (f"\n  NOT the region {misses[f['id']]} (percent): a crop there showed something else" if misses.get(f["id"]) else "")
                         for f in figs)
-    loc = X.call_claude(LOCATE_SYSTEM, f"Printed page {printed}. The page image with its grid: {grid}\n\nFIGURES\n{listing}\n\n"
-                        "Return one row per figure, id as shown in brackets, without the brackets.",
-                        LOCATE_SCHEMA, model, budget, label, grid_dir)
+    loc = ask("locate", f"Printed page {printed}. The page image with its grid: {grid}\n\nFIGURES\n{listing}\n\n"
+              "Return one row per figure, id as shown in brackets, without the brackets.", label, grid_dir, model, budget, BOOK[0])
     rows = {r["id"].strip("[]"): r for r in loc.get("figures") or []}
     out = {}
     for f in figs:
@@ -170,10 +172,9 @@ def refine(pdf: Path, printed: int, offset: int, slug: str, figs: list[dict], vi
     """Place each figure's box on a close-up of `views[id]`; returns page-fraction boxes (with MARGIN)."""
     cap = {f["id"]: f.get("caption", "") for f in figs}
     files = {fid: closeup(pdf, printed, offset, v, zoom_dir / crop_name(fid)) for fid, v in views.items()}
-    res = X.call_claude(REFINE_SYSTEM, "\n".join(f"[{fid}] {files[fid]}\n  the figure: {cap[fid]}" + (f"\n  a check of the last crop said: {hints[fid]}" if hints.get(fid) else "")
-                                               for fid in views)
-                        + "\n\nReturn one row per close-up, id as shown in brackets, without the brackets.",
-                        LOCATE_SCHEMA, model, budget, label, zoom_dir)
+    res = ask("refine", "\n".join(f"[{fid}] {files[fid]}\n  the figure: {cap[fid]}" + (f"\n  a check of the last crop said: {hints[fid]}" if hints.get(fid) else "")
+                                   for fid in views)
+              + "\n\nReturn one row per close-up, id as shown in brackets, without the brackets.", label, zoom_dir, model, budget, BOOK[0])
     rows = {r["id"].strip("[]"): r for r in res.get("figures") or []}
     out = {}
     for fid, (l, t, r, b) in views.items():
@@ -200,8 +201,12 @@ def page_figures(doc: dict, force: bool, failed_only: bool = False) -> dict[int,
     return by_page
 
 
+BOOK = [""]   # the book being cropped, for the workflow's args (set by crop_lesson)
+
+
 def crop_lesson(book: str, cfg: dict, slug: str, offset: int, model: str, budget: X.Budget, force: bool,
                 failed_only: bool = False) -> dict:
+    BOOK[0] = book
     path = HERE / "book-records" / book / f"{slug}.json"
     doc = json.loads(path.read_text())
     pdf = X.REPO / cfg["sources"]["pdf"]
@@ -229,9 +234,9 @@ def crop_lesson(book: str, cfg: dict, slug: str, offset: int, model: str, budget
         for rnd in range(CHECKS):
             for fid in pending:
                 crop(pdf, printed, offset, boxes[fid], out_dir / crop_name(fid))
-            res = X.call_claude(CHECK_SYSTEM, "\n".join(f"[{fid}] {out_dir / crop_name(fid)}\n  description: {cap[fid]}" for fid in pending)
-                                + "\n\nReturn one row per crop, id as shown in brackets, without the brackets.",
-                                CHECK_SCHEMA, model, budget, f"{slug} p.{printed} check {rnd + 1}", out_dir)
+            res = ask("check", "\n".join(f"[{fid}] {out_dir / crop_name(fid)}\n  description: {cap[fid]}" for fid in pending)
+                      + "\n\nReturn one row per crop, id as shown in brackets, without the brackets.",
+                      f"{slug} p.{printed} check {rnd + 1}", out_dir, model, budget, book)
             verdicts = {v["id"].strip("[]"): v for v in res.get("crops") or []}
             elsewhere, refit = {}, {}
             for fid in pending:

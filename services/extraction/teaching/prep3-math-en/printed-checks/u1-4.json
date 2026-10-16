@@ -27,6 +27,25 @@
           "error": null
         }
       ]
+    },
+    {
+      "at": "2026-10-16",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 1,
+      "cost_usd": 0.0243,
+      "calls": [
+        {
+          "call": "check-printed.u1-4",
+          "cost_usd": 0.0171,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.u1-4",
+          "cost_usd": 0.0072,
+          "model": "sonnet"
+        }
+      ]
     }
   ],
   "checks": [
@@ -45,11 +64,11 @@
       "judge": {
         "ref": "u1-4:example-1",
         "verdict": "equivalent",
-        "reason": "Same values: f(-2)=9, f(0)=3, f(√3)=6-√3 (3-√3+3)."
+        "reason": "Same values: f(-2)=9, f(0)=3, f(√3)=6-√3 (3-√3+3 checks)."
       },
-      "how": "judged equivalent: Same values: f(-2)=9, f(0)=3, f(√3)=6-√3 (3-√3+3).",
+      "how": "judged equivalent: Same values: f(-2)=9, f(0)=3, f(√3)=6-√3 (3-√3+3 checks).",
       "made": {
-        "at": "2026-10-16T06:22:22+00:00",
+        "at": "2026-10-16T17:25:28+00:00",
         "model": "sonnet",
         "prompts": "chk-v1"
       }
