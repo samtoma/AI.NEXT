@@ -4,6 +4,7 @@ import { useId, useMemo, useRef } from "react";
 import { TeX } from "@/components/TeX";
 import { previewLatex, reentryMessage, type MarkerInput } from "@/lib/answer-marker";
 import { STROKE, STROKE_SM, VERDICT_INK, STROKE_WIDTH_SM, cx } from "@/components/sticker";
+import { MathSymbolPicker } from "./MathSymbolPicker";
 
 /**
  * Typed maths entry for a question the maths-expression marker marks (T417, FR-4320, ADR-0025).
@@ -11,6 +12,9 @@ import { STROKE, STROKE_SM, VERDICT_INK, STROKE_WIDTH_SM, cx } from "@/component
  * A plain text field, so the iPad's own keyboard works as it does everywhere else: letters for x and y,
  * Return to submit, no custom keyboard to learn. Beside it:
  *
+ *  - **the "∑ Symbols" picker** (`MathSymbolPicker`) when the caller passes `picker` — the lesson chat
+ *    does, so a typed maths question looks like every other answer box there: one pill that opens the
+ *    keys, never a row of them (Tamer, 2026-10-16). Without `picker`,
  *  - **a symbol bar** for what the keyboard makes hard to reach (^, √, a fraction, ±, π, brackets, and
  *    ≤ ≥ ∞ on an interval). Each key inserts at the caret and keeps the keyboard up: it takes no focus.
  *  - **a live preview**, typeset by the app's KaTeX (`<TeX>`), of the answer *as the marker reads it*:
@@ -30,6 +34,7 @@ export function MathAnswerInput({
   disabled = false,
   reentry = null,
   label = "Your answer",
+  picker,
 }: {
   input: MarkerInput;
   value: string;
@@ -39,6 +44,8 @@ export function MathAnswerInput({
   /** The marker's message from the last submit, when the answer came back for re-entry. */
   reentry?: string | null;
   label?: string;
+  /** Show the collapsible "∑ Symbols" picker inside the field instead of the symbol bar. */
+  picker?: { lessonKeyIds: readonly string[]; recents: readonly string[]; onUse: (id: string) => void };
 }) {
   const id = useId();
   const field = useRef<HTMLInputElement>(null);
@@ -70,6 +77,7 @@ export function MathAnswerInput({
       <label htmlFor={`${id}-field`} className="font-display text-[0.85rem] font-bold text-ink-soft">
         {label}
       </label>
+      <div className="relative">
       <input
         ref={field}
         id={`${id}-field`}
@@ -96,10 +104,25 @@ export function MathAnswerInput({
         placeholder="Type the answer, e.g. (x - 3)(x + 3)"
         className={cx(
           STROKE,
-          "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
+          "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm",
+          // typed text never runs under the pill
+          picker && "pe-32"
         )}
       />
+      {picker && (
+        <MathSymbolPicker
+          lessonKeyIds={picker.lessonKeyIds}
+          recents={picker.recents}
+          onUse={picker.onUse}
+          field={field}
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+        />
+      )}
+      </div>
 
+      {!picker && (
       <div role="group" aria-label="Maths symbols" className="flex flex-wrap gap-1.5" dir="ltr">
         {keys.map((k) => (
           <button
@@ -122,6 +145,7 @@ export function MathAnswerInput({
           </button>
         ))}
       </div>
+      )}
 
       <div
         id={`${id}-preview`}

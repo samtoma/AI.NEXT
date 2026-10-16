@@ -290,6 +290,15 @@ export function ChatQuestionCard({
                 onSubmit={() => void submit()}
                 disabled={busy}
                 reentry={reentry}
+                picker={
+                  symbols
+                    ? {
+                        lessonKeyIds: symbolKeys,
+                        recents: symbolRecents,
+                        onUse: (id) => setSymbolRecents((r) => pushRecent(r, id)),
+                      }
+                    : undefined
+                }
               />
             ) : (
               <div className="relative">
