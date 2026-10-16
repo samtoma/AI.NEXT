@@ -169,7 +169,7 @@ def accept(book: str, run_file: Path) -> list[str]:
 def run_here(book: str, slugs: list[str], cap: float) -> Path:
     import workflow_runner  # noqa: PLC0415
     copy, _info = write_copy(book, slugs)
-    out, _result, _cost = workflow_runner.run_copy(copy, [CF.figures_dir(book)], cap, "s4-visuals", book, "lessons")
+    out, _result, _cost = workflow_runner.run_copy(copy, [CF.figures_dir(book)], cap, "s4-visuals", book, "lessons", stage="S4")
     return out
 
 

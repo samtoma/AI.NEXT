@@ -688,20 +688,22 @@ $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
 /* ---------- the tasks ---------- */
-const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers" };
+const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers", objectives: "› Objectives (G1)" };
 function show(v) {
   view = v; editing = false;
   $("#crumb").textContent = TASKS[v] ?? "";
   $("#home").hidden = v !== "home"; $("#work").hidden = v === "home";
   $("#tools").innerHTML = "";
   if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
-  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : openGenerated();
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : openGenerated();
 }
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
 
 async function renderHome() {
-  const [ls, ms, gbooks, abooks, tbooks] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books")]);
+  const [ls, ms, gbooks, abooks, tbooks, obooks] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books")]);
+  const os_ = (await Promise.all(obooks.map((b) => getJSON(`/api/objectives?book=${encodeURIComponent(b)}`)))).flat();
+  const oOpen = os_.filter((o) => o.state === "open" || o.state === "changed");
   const ts = (await Promise.all(tbooks.map((b) => getJSON(`/api/tiers?book=${encodeURIComponent(b)}`)))).flat();
   const tOpen = ts.filter((t) => t.state === "open" || t.state === "changed");
   const as = (await Promise.all(abooks.map((b) => getJSON(`/api/answers?book=${encodeURIComponent(b)}`)))).flat();
@@ -727,6 +729,12 @@ async function renderHome() {
         <span class="muted">Mistakes the book prints. Every one needs a decision, because it changes what students are taught.</span>
         <span class="n">${open} <small>to decide</small></span>
         <span class="muted">${books.map((b) => `${ms.filter((m) => m.book === b && !m.decision).length} ${esc(b)}`).join(" · ")} · ${ms.length - open} decided</span>
+      </button>
+      <button class="task" id="t-obj">
+        <span class="t">Objectives (G1)</span>
+        <span class="muted">The objectives S1 found, their evidence and items, the prerequisite links, and S1's questions. Nothing after S1 uses them until you approve.</span>
+        <span class="n">${oOpen.length} <small>to decide</small></span>
+        <span class="muted">${oOpen.filter((o) => o.kind === "objective").length} objectives · ${oOpen.filter((o) => o.kind === "link").length} links · ${oOpen.filter((o) => o.kind === "question").length} questions · ${os_.filter((o) => o.flag && o.kind === "objective").length} failing a check</span>
       </button>
     </div></div>
     <div class="group"><h3>Generated: review everything the pipeline wrote</h3><div class="cards">
@@ -754,6 +762,7 @@ async function renderHome() {
   $("#t-gen").onclick = () => show("generated");
   $("#t-ans").onclick = () => show("answers");
   $("#t-tier").onclick = () => show("tiers");
+  $("#t-obj").onclick = () => show("objectives");
 }
 
 /* ---------- Label extraction ---------- */
@@ -1180,6 +1189,107 @@ async function tierDecide(tier) {
   renderTiers();
 }
 
+/* ---------- Objectives (G1) ---------- */
+let objRows = [], oi = -1;
+const OKIND = { objective: "Objectives", link: "Links", question: "Questions" };
+const OSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", keep: "Kept", drop: "Dropped", answer: "Answered", changed: "S1 changed it since", open: "Not decided yet" };
+function oVisible() {
+  const k = $("#okind").value, w = $("#oshow").value;
+  return objRows.map((o, i) => ({ o, i })).filter(({ o }) => o.kind === k && (w === "all" || (w === "todo" ? o.state === "open" || o.state === "changed" : o.state !== "open")));
+}
+async function openObjectives() {
+  const books = await getJSON("/api/objectives/books");
+  $("#tools").innerHTML = `
+    <label>Book <select id="obook">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <label>Kind <select id="okind">${Object.entries(OKIND).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}</select></label>
+    <label>Show <select id="oshow"><option value="todo">To decide</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <div class="progress"><div class="bar"><div id="obar" style="width:0"></div></div><div id="oprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · a approve/keep · f fix · x reject/drop</span>`;
+  if (!books.length) { $("#list").innerHTML = '<p class="muted" style="padding:8px">No S1 results yet. Run book_record_objectives.py (see the README).</p>'; $("#detail").innerHTML = ""; return; }
+  $("#obook").onchange = () => { $("#obook").blur(); loadObjectives(); };
+  $("#okind").onchange = () => { $("#okind").blur(); oi = -1; renderObjectives(); };
+  $("#oshow").onchange = () => { $("#oshow").blur(); oi = -1; renderObjectives(); };
+  await loadObjectives();
+}
+async function loadObjectives() { objRows = await getJSON(`/api/objectives?book=${encodeURIComponent($("#obook").value)}`); oi = -1; renderObjectives(); }
+function renderObjectives() {
+  const done = objRows.filter((o) => o.state !== "open" && o.state !== "changed").length;
+  $("#obar").style.width = `${objRows.length ? (100 * done) / objRows.length : 0}%`;
+  $("#oprog").textContent = `${done} of ${objRows.length} decided · ${objRows.filter((o) => o.flag && o.kind === "objective").length} objectives fail a check`;
+  const vis = oVisible();
+  if (!vis.some((x) => x.i === oi)) oi = vis[0]?.i ?? -1;
+  const dot = (o) => ["approve", "keep", "answer"].includes(o.state) ? '<span class="dot s-done">✓</span>' : ["reject", "drop"].includes(o.state) ? '<span class="dot s-disp">✗</span>'
+    : o.state === "fix_requested" ? '<span class="dot s-one">✎</span>' : o.flag ? '<span class="dot s-disp" title="fails a check / dropped by S1">!</span>' : '<span class="dot s-none">·</span>';
+  let last = null, html = "";
+  for (const { o, i } of vis) {
+    if (o.lesson !== last) { html += `<h3>${esc(o.lesson)}</h3>`; last = o.lesson; }
+    html += `<button class="rec${i === oi ? " sel" : ""}" data-i="${i}">${dot(o)}<span class="t">${esc(o.title)}</span></button>`;
+  }
+  $("#list").innerHTML = html || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { oi = Number(b.dataset.i); renderObjectives(); }));
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (oi < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2></div>'; return; }
+  showObjective(objRows[oi]);
+}
+const evList = (ev) => (ev || []).map((e) => `<li><b>${esc(e.kind)}</b> · ${esc(e.anchor)} · p.${esc(e.printed_page ?? "?")}: “${md(e.quote || "")}”${e.why || e.reason ? ` <span class="muted">— dropped: ${esc(e.why || e.reason)}</span>` : ""}</li>`).join("");
+async function showObjective(row) {
+  const book = $("#obook").value;
+  const d = await getJSON(`/api/objectives/item?book=${encodeURIComponent(book)}&kind=${row.kind}&ref=${encodeURIComponent(row.ref)}`);
+  const it = d.item, dec = d.decision, me = meNow();
+  let body = "";
+  if (d.kind === "objective") {
+    body = `<div class="gen"><span class="label">Objective</span><div style="font-size:17px;margin-top:4px"><b>${md(it.label || "")}</b></div><div>${md(it.statement || "")}</div>
+        <div class="muted" style="margin-top:4px">${esc(it.confidence || "")} · ${(it.exercise_items || []).length} item(s) · ${(it.worked_examples || []).length} worked example(s)</div></div>
+      ${(it.failures || []).length ? `<div class="warn"><span class="label">Fails Samuel's checks</span><ul class="answers">${it.failures.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></div>` : ""}
+      <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul>${(it.evidence_dropped || []).length ? `<span class="label">Evidence the checks dropped</span><ul class="answers">${evList(it.evidence_dropped)}</ul>` : ""}</div>
+      <div class="why"><span class="label">Items filed here</span><div class="muted">${[...(it.worked_examples || []), ...(it.exercise_items || [])].map(esc).join(" · ") || "none"}</div></div>`;
+  } else if (d.kind === "link") {
+    body = `<div class="${it.kept_by_s1 ? "gen" : "warn"}"><span class="label">${it.kept_by_s1 ? "Link S1's checker confirmed" : "Link S1 dropped"}</span>
+        <div style="font-size:17px;margin-top:4px"><b>${esc(String(it.src || it.key).replace(/lo:/g, ""))}</b>${it.dst ? ` is needed for <b>${esc(it.dst.replace("lo:", ""))}</b>` : ""}</div>
+        <div class="muted">${esc(it.signal || "")}${it.why ? ` · ${esc(it.why)}` : ""}${it.check ? ` · checker: ${esc(it.check.verdict || "")} ${esc(it.check.note || "")}` : ""}</div></div>
+      <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul></div>`;
+  } else {
+    body = `<div class="warn"><span class="label">${esc(it.kind)}</span><div>${esc(it.detail || it.question || "")}</div></div>`;
+  }
+  const buttons = d.kind === "objective" ? `<button class="confirm" id="oa" ${!me ? "disabled" : ""}>Approve (a)</button><button id="of" ${!me ? "disabled" : ""}>Needs fix (f)</button><button class="dispute" id="ox" ${!me ? "disabled" : ""}>Reject (x)</button>`
+    : d.kind === "link" ? `<button class="confirm" id="oa" ${!me ? "disabled" : ""}>Keep (a)</button><button class="dispute" id="ox" ${!me ? "disabled" : ""}>Drop (x)</button>`
+    : `<button class="confirm" id="of" ${!me ? "disabled" : ""}>Answer (f)</button>`;
+  $("#detail").innerHTML = `<div class="card">
+    <div class="muted">G1 · ${esc(book)} · chapter ${esc(d.chapter)} · ${esc(d.lesson)} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(d.ref)}</span></div>
+    ${body}
+    <div class="who">${dec ? `<b>${esc(OSTATE[dec.decision] || dec.decision)}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.statement ? ` · statement: ${md(dec.statement)}` : ""}${dec.label ? ` · label: ${md(dec.label)}` : ""}${dec.note ? ` · ${md(dec.note)}` : ""}${d.state === "changed" ? " · <b>S1 changed it since</b>" : ""}` : "Not decided yet"}</div>
+    <div class="actions">${buttons}<span class="grow"></span><button id="oprev">‹ Prev (k)</button><button id="onext">Next (j) ›</button></div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
+    <form class="flag-form" id="oform">
+      ${d.kind === "objective" ? `<label>Label to use <input id="olabel" style="width:100%" value="${esc(it.label || "")}"></label><label>Statement to use <textarea id="ostmt" rows="2" style="width:100%">${esc(it.statement || "")}</textarea></label>` : ""}
+      <label>${d.kind === "question" ? "Your answer" : "What is wrong"} <textarea id="onote" rows="2" style="width:100%"></textarea></label>
+      <div class="actions"><button class="confirm" type="submit">Record</button><button type="button" id="ocancel">Cancel</button></div>
+    </form>
+    <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/objectives-g1.json. book_record_objectives.py apply writes only what you approve.</div>
+  </div>`;
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  if ($("#oa")) $("#oa").onclick = () => objDecide(d.kind === "link" ? "keep" : "approve");
+  if ($("#ox")) $("#ox").onclick = () => objDecide(d.kind === "link" ? "drop" : "reject");
+  if ($("#of")) $("#of").onclick = openObjFix;
+  $("#oprev").onclick = () => objMove(-1); $("#onext").onclick = () => objMove(1);
+  $("#ocancel").onclick = () => $("#oform").classList.remove("open");
+  $("#oform").onsubmit = (e) => { e.preventDefault(); objDecide(d.kind === "question" ? "answer" : "fix_requested", $("#onote").value.trim(), $("#ostmt")?.value.trim(), $("#olabel")?.value.trim()); };
+}
+function openObjFix() { if (!meNow() || !$("#oform")) return; $("#oform").classList.add("open"); ($("#ostmt") || $("#onote")).focus(); }
+function objMove(dir) { const vis = oVisible().map((x) => x.i); if (!vis.length) return; let p = vis.indexOf(oi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1); oi = vis[p]; renderObjectives(); }
+async function objDecide(decision, note, statement, label) {
+  const row = objRows[oi]; if (!row || !meNow()) return;
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/objectives/decision", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ book: $("#obook").value, kind: row.kind, ref: row.ref, decision, note, statement, label, by: meNow() }) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  row.state = decision;
+  const vis = oVisible().map((x) => x.i); oi = vis.find((i) => i > oi) ?? vis[0] ?? -1; renderObjectives();
+}
+
 /* ---------- Generated content ---------- */
 let gen = [], gi = -1, gDetail = null;
 const GKIND = { question: "Generated question", widget: "Widget question", mapping: "Widget mapping", misconception: "Misconception", figure: "Figure" };
@@ -1474,7 +1584,7 @@ async function genDecide(decision, note, correction) {
 
 /* ---------- boot ---------- */
 $("#me").value = store.get("gt-me") || "";
-$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); };
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); };
 show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
@@ -1492,6 +1602,13 @@ document.addEventListener("keydown", (e) => {
     else if (e.key === "r" && $("#ar")) resolveIsRight();
     else if (e.key === "f") { e.preventDefault(); openAnsFix(); }
     else if (e.key === "x" && meNow()) ansDecide("reject");
+    return;
+  }
+  if (view === "objectives") {
+    if (e.key === "j") objMove(1); else if (e.key === "k") objMove(-1);
+    else if (e.key === "a" && meNow() && $("#oa")) $("#oa").click();
+    else if (e.key === "x" && meNow() && $("#ox")) $("#ox").click();
+    else if (e.key === "f") { e.preventDefault(); openObjFix(); }
     return;
   }
   if (view === "tiers") {

@@ -23,8 +23,32 @@ STUB = HERE / "tests" / "workflow_stub.mjs"
 RESPONDER = HERE / "runbook" / "cli_responder.mjs"
 
 
-def run_copy(copy: Path, read_dirs: list[Path], cap: float, name: str, book: str, folder: str) -> tuple[Path, dict, float]:
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+def meter_line(ledger: Path, book: str, stage: str, run_id: str, workflow: str | None, duration_ms: int) -> dict:
+    """meter_run.py's own ledger line for a run from the shell: one agent per `claude` CLI call."""
+    import book_config  # noqa: PLC0415
+    import meter_run as MR  # noqa: PLC0415
+    b = book_config.load_book(book)
+    agents = []
+    for i, line in enumerate(ledger.read_text().splitlines() if ledger.exists() else []):
+        c = json.loads(line)
+        by_model = {}
+        for m, t in (c.get("by_model") or {}).items():
+            tok = {k: int(t.get(k) or 0) for k in MR.TOKEN_KEYS}
+            if not tok.get("cache_write_5m") and not tok.get("cache_write_1h") and t.get("cache_write"):
+                tok["cache_write_5m"] = int(t["cache_write"])   # unsplit: priced as a 5-minute write
+            by_model[m] = dict(tok, usd=MR.usd(tok, m))
+        agents.append({"agent_id": f"{run_id}#{i + 1}", "label": c.get("label") or "", "phase": c.get("phase"),
+                       "lesson": MR.lesson_of(c.get("label") or "", b) or "(book)", "state": "error" if c.get("error") else "done",
+                       "calls": 1, "estimated": not by_model, "by_model": by_model, "cli_cost_usd": c.get("cost_usd")})
+    line = MR.summarise(agents, [], [], b, stage, run_id, workflow, "completed", duration_ms)
+    line["runner"] = "workflow_runner.py (claude CLI)"
+    return line
+
+
+def run_copy(copy: Path, read_dirs: list[Path], cap: float, name: str, book: str, folder: str,
+             stage: str | None = None) -> tuple[Path, dict, float]:
+    started = datetime.now(timezone.utc)
+    stamp = started.strftime("%Y%m%dT%H%M%SZ")
     runs = HERE / "runs" / book / folder
     runs.mkdir(parents=True, exist_ok=True)
     ledger = runs / f"{name}.{stamp}.cost.jsonl"
@@ -44,6 +68,11 @@ def run_copy(copy: Path, read_dirs: list[Path], cap: float, name: str, book: str
         raise SystemExit(f"the workflow failed: {rep.get('error')}")
     out = runs / f"{name}.{stamp}.json"
     out.write_text(json.dumps(rep["result"], ensure_ascii=False, indent=1) + "\n")
+    if stage:   # Samuel's ledger, the line meter_run.py writes for a Claude Code run (runs/<book>/cost.jsonl)
+        meta = (rep.get("meta") or {}).get("name")
+        line = meter_line(ledger, book, stage, f"{name}.{stamp}", meta, int((datetime.now(timezone.utc) - started).total_seconds() * 1000))
+        with (HERE / "runs" / book / "cost.jsonl").open("a") as fh:
+            fh.write(json.dumps(line) + "\n")
     cost = sum(json.loads(l)["cost_usd"] for l in ledger.read_text().splitlines()) if ledger.exists() else 0.0
     print(f"saved {out.relative_to(HERE)}; ${cost:.3f} ({ledger.relative_to(HERE)})", file=sys.stderr)
     return out, rep["result"], cost

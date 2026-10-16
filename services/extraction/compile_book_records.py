@@ -787,6 +787,15 @@ def main(argv: list[str]) -> int:
                                    "book_pictures": sum(1 for v in new_visuals[slug] if v["kind"] == "book_image")}
     report["notation_changes"] = {k: v for k, v in counts.items() if v}
 
+    # The prerequisite links a person kept at G1 (book_record_objectives.py apply → teaching/<book>/links/): Samuel's
+    # S1 linker and checker, on book records. Only a link whose two ends are objectives compiled here.
+    compiled_los = {n["id"] for s in slugs for n in new_nodes[s]}
+    link_edges = []
+    for f in sorted((HERE / "teaching" / a.book / "links").glob("*.json")):
+        for k in json.loads(f.read_text()).get("links") or []:
+            if k["src"] in compiled_los and k["dst"] in compiled_los:
+                link_edges.append({"src": k["src"], "dst": k["dst"], "type": "prerequisite_of"})
+    report["prerequisite_links"] = len(link_edges)
     to_write: dict[str, dict] = {}
     existing = [s for s in slugs if in_bundle(s)]
     standalone = [s for s in slugs if s not in existing]
@@ -807,6 +816,7 @@ def main(argv: list[str]) -> int:
         b["visuals"] = [v for v in b.get("visuals") or [] if not in_lessons(v["lo"], here)]
         left["explanation_entries"] = sum(1 for x in b.get("explanation_entries") or [] if in_lessons(x["lo"], here))
         b["explanation_entries"] = [x for x in b.get("explanation_entries") or [] if not in_lessons(x["lo"], here)]
+        b["edges"] += link_edges
         for s in here:
             b["nodes"] += new_nodes[s]
             b["edges"] += [{"src": module, "dst": n["id"], "type": "teaches"} for n in new_nodes[s]]
@@ -817,7 +827,10 @@ def main(argv: list[str]) -> int:
             b.pop("explanation_entries")
         to_write[Path(bpath).name] = b
     if standalone:
-        to_write.update(standalone_bundles(cfg, standalone, lmap, records, new_nodes, new_questions, new_visuals, new_entries))
+        sb = standalone_bundles(cfg, standalone, lmap, records, new_nodes, new_questions, new_visuals, new_entries)
+        if sb and not existing:   # a new curriculum's links ride in its first bundle (its objectives are all loaded with it)
+            next(iter(sb.values()))["edges"] += link_edges
+        to_write.update(sb)
         missing = [s for s in standalone if s not in (cfg.get("lesson_titles") or {})]
         if missing:
             report["warnings"].append(f"no title in books/{a.book}.json lesson_titles for {missing}: the app lists a lesson by it")

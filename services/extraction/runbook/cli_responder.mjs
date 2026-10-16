@@ -33,7 +33,7 @@ function run(args, prompt, cwd) {
   })
 }
 
-export async function respond({ label, prompt, schema, model, stub }) {
+export async function respond({ label, prompt, schema, phase, model, stub }) {
   const cap = Number(stub.cap_usd ?? 3)
   if (spent >= cap - 0.05) throw new Error(`cost cap reached ($${spent.toFixed(3)} of $${cap}): stopped before ${label}`)
   const m = model || 'sonnet'
@@ -55,8 +55,21 @@ export async function respond({ label, prompt, schema, model, stub }) {
   const cost = Number(res.total_cost_usd || 0)
   spent += cost
   if (stub.ledger) {
-    fs.appendFileSync(stub.ledger, JSON.stringify({ label, model: m, cost_usd: Math.round(cost * 1e4) / 1e4,
-      turns: res.num_turns ?? null, error: res.is_error ? (res.subtype || true) : null }) + '\n')
+    // per model, the tokens meter_run.py prices (input, cache writes 5m/1h, cache reads, output): one call here is
+    // one agent of the run, so the runner can write meter_run's own ledger line (runs/<book>/cost.jsonl)
+    const c = (res.usage && res.usage.cache_creation) || {}
+    const byModel = {}
+    for (const [id, u] of Object.entries(res.modelUsage || {})) {
+      byModel[u.canonicalModel || id] = { input: u.inputTokens || 0, output: u.outputTokens || 0,
+        cache_read: u.cacheReadInputTokens || 0, cache_write_5m: 0, cache_write_1h: 0, cache_write: u.cacheCreationInputTokens || 0 }
+    }
+    const models = Object.keys(byModel)
+    if (models.length === 1) {   // the split of cache writes is only reported for the call as a whole
+      byModel[models[0]].cache_write_5m = c.ephemeral_5m_input_tokens || 0
+      byModel[models[0]].cache_write_1h = c.ephemeral_1h_input_tokens || 0
+    }
+    fs.appendFileSync(stub.ledger, JSON.stringify({ label, phase: phase || null, model: m, cost_usd: Math.round(cost * 1e4) / 1e4,
+      turns: res.num_turns ?? null, error: res.is_error ? (res.subtype || true) : null, by_model: byModel }) + '\n')
   }
   process.stderr.write(`  ${label}: $${cost.toFixed(4)} (total $${spent.toFixed(3)} of $${cap})\n`)
   if (res.is_error) return null

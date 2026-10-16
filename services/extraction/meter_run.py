@@ -247,6 +247,14 @@ def meter(record_path: Path | None, transcripts: Path | None, book, stage: str,
         entry["by_model"] = {m: dict(t, usd=usd(t, m)) for m, t in by_model.items()}
         agents.append(entry)
 
+    return summarise(agents, missing, skipped, book, stage, run_id, rec.get("workflowName"), rec.get("status"),
+                     rec.get("durationMs"))
+
+
+def summarise(agents: list[dict], missing: list, skipped: list, book, stage: str, run_id: str, workflow: str | None,
+              status: str | None, duration_ms: int | None) -> dict:
+    """One ledger line from metered agents — shared by a Claude Code run (`meter`) and a run from the shell
+    (workflow_runner.py: one agent per `claude` CLI call, its tokens as the CLI reported them)."""
     def roll(key) -> dict:
         out: dict[str, dict] = {}
         for a in agents:
@@ -269,9 +277,9 @@ def meter(record_path: Path | None, transcripts: Path | None, book, stage: str,
         "book": book.book if book else None,
         "stage": stage,
         "run_id": run_id,
-        "workflow": rec.get("workflowName"),
-        "status": rec.get("status"),
-        "duration_ms": rec.get("durationMs"),
+        "workflow": workflow,
+        "status": status,
+        "duration_ms": duration_ms,
         "prices": {"as_of": PRICES_AS_OF, "per_million_usd": PRICES,
                    "cache": {"read": CACHE_READ, "write_5m": CACHE_WRITE_5M, "write_1h": CACHE_WRITE_1H}},
         "totals": totals,

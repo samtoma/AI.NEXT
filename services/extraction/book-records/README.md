@@ -108,6 +108,25 @@ review columns.
 Unit 1 today: 49 live book questions (13 with the book's picture, 11 with an S4 drawing), 11 worked examples in the
 library, 0 held, 11 stamped; the compile report lists the rest, with why.
 
+**S1 objectives and prerequisite links, then G1 (Tamer, 2026-10-16: Samuel's two-reader S1 for every book).**
+`../book_record_objectives.py run <book> <chapter> <lessons…>` builds S1's chapter packet from the book records (every
+anchor a book-record id; a unit is a chapter) and runs Samuel's `objectives.workflow.js` unchanged — two blind finders,
+a reconciler, two blind mappers, an evidence check, his linker and its independent checker — then his own checks
+(`assemble_objectives.evaluate_chapter`) into `teaching/<book>/objectives/ch<NN>.json`. A person decides every
+objective, link and question in the review tool's **Objectives (G1)** task; `apply <book> <chapter>` then writes only
+what was approved: the objectives and each item's objective into the book records, the kept links into
+`teaching/<book>/links/`, which compile turns into the app's `prerequisite_of` edges. Unit 1 ($1.48): 14 objectives
+(6 fail Samuel's evidence rule and wait for G1), 2 links confirmed of 13 proposed, 17 questions.
+
+**SW, the book's worked solutions step by step.** `../book_record_checks.py sw <book> <chapter> <lessons…>` runs
+Samuel's working checker (`working_check.py`, `working-check.workflow.js`) on the compiled bundle and exports every
+flag on the book's own working to `misprint-candidates.json`, the Misprints task. Unit 1 ($1.01, 60 solutions): 54
+consistent, 1 flag (Example 2 prints (3, 0) for (3, a): the misprint the ground truth records), 5 unclear (their
+points are only in a figure).
+
+**Costs** of every run from the shell are written to Samuel's ledger, `runs/<book>/cost.jsonl` (the line
+`meter_run.py` writes for a Claude Code run): `uv run meter_run.py summary --book <book> --by phase`.
+
 **Generation: S5 misconceptions, S6 question families, S7 widget questions.** Grade 10's own steps, run on the
 compiled bundles by `../book_record_generation.py` (the same builders and embedded workflow copies; a book-config
 view, `work/<book>/bookrecord/<book>.json`, points the S6/S7 commands at the compiled lessons; S7 reads the trial

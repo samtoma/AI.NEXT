@@ -18,6 +18,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Generated answers every answer answer_gen.py wrote for a book prompt the book leaves unanswered
                     (teaching/<book>/answers/), beside the book's question; decisions are appended to
                     reviews/<book>/generated-answers.json (answers.py).
+  Objectives (G1)   every objective S1 found (book_record_objectives.py, teaching/<book>/objectives/), its evidence
+                    and its items, every prerequisite link, and the questions S1 says G1 owes; decisions are appended
+                    to reviews/<book>/objectives-g1.json (objectives.py).
   Question tiers    where the two readings of a book question's tier disagree (tier_questions.py,
                     teaching/<book>/tiers/), a person chooses; decisions are appended to
                     reviews/<book>/question-tiers.json (tiers.py).
@@ -39,6 +42,7 @@ from urllib.parse import parse_qs, urlparse
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import answers  # noqa: E402
 import tiers  # noqa: E402
+import objectives  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
@@ -373,6 +377,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(answers.summary(q["book"]))
             if u.path == "/api/answers/item":
                 return self.send_json(answers.detail(q["book"], q["ref"]))
+            if u.path == "/api/objectives/books":
+                return self.send_json(objectives.books())
+            if u.path == "/api/objectives":
+                return self.send_json(objectives.summary(q["book"]))
+            if u.path == "/api/objectives/item":
+                return self.send_json(objectives.detail(q["book"], q["kind"], q["ref"]))
             if u.path == "/api/tiers/books":
                 return self.send_json(tiers.books())
             if u.path == "/api/tiers":
@@ -417,6 +427,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "decision": decide_misprint(body)})
             if u.path == "/api/answers/decision":
                 return self.send_json({"ok": True, "decision": answers.decide(body)})
+            if u.path == "/api/objectives/decision":
+                return self.send_json({"ok": True, "decision": objectives.decide(body)})
             if u.path == "/api/tiers/decision":
                 return self.send_json({"ok": True, "decision": tiers.decide(body)})
             if u.path == "/api/generated/decision":

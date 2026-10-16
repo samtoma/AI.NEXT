@@ -249,7 +249,7 @@ def main(argv: list[str]) -> int:
         print(EW.summary(EW.write(HERE / "runbook" / "widgets.workflow.js", json.loads(wargs.read_text()), copy)), file=sys.stderr)
         if a.args_only:
             return 0
-        run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s7-{mode}", a.book, "widgets")
+        run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s7-{mode}", a.book, "widgets", stage="S7")
         if mode == "author":   # the runbook's merge (one run) writes the templates, never overwriting
             gw("--merge-author-runs", str(run), "--merged", str(runs / "author-merged.json"), "--write-templates", str(wdir))
         return 0
@@ -270,7 +270,7 @@ def main(argv: list[str]) -> int:
         print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", args, copy)), file=sys.stderr)
         if a.args_only:
             return 0
-        run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-author", a.book, "families")
+        run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-author", a.book, "families", stage="S6")
         written = fanout.write_specs(run, fam, view)
         print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
         gq("--families", str(fam), "--book", str(view), "--check")
@@ -286,7 +286,7 @@ def main(argv: list[str]) -> int:
         print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", json.loads(gargs.read_text()), copy)), file=sys.stderr)
         if a.args_only:
             return 0
-        WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-grade", a.book, "families")
+        WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-grade", a.book, "families", stage="S6")
         return 0
     if a.cmd == "s5":
         draft = json.loads(a.draft.read_text()) if a.draft else None
@@ -300,7 +300,7 @@ def main(argv: list[str]) -> int:
         print(EW.summary(EW.write(HERE / "runbook" / "misconceptions.workflow.js", args, copy)), file=sys.stderr)
         if a.args_only:
             return 0
-        WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s5-{a.stage}", a.book, "misconceptions")
+        WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s5-{a.stage}", a.book, "misconceptions", stage="S5")
     return 0
 
 

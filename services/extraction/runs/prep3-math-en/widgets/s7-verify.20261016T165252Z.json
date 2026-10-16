@@ -1,0 +1,143 @@
+{
+ "mode": "verify",
+ "book": "prep3-math-en",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "1cfacaddb6f5fe0faa6defeb668c3e5d956d7dae833fe672254332c546760a30",
+  "generated_sha256": "0b139d45d7b464c11debd30480fb142d63d4d16e56d45ddc72ce8935993543c2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:u1-1-1:w001",
+   "template_sha": "88be8fbf914b3c51c7d1d5caefe25a07d78c857878428555d1113a21eebaf97a",
+   "reading": {
+    "target": [
+     3,
+     -2
+    ]
+   },
+   "construction": "Tap lattice point (3,-2): 3 right, 2 down (quadrant IV). In range.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Tapping (-2,3) is (y,x) of the target, distinct from it. A student treating the pair as an unordered set would plot it this way."
+    }
+   ]
+  },
+  {
+   "question_id": "q:u1-1-1:w002",
+   "template_sha": "88be8fbf914b3c51c7d1d5caefe25a07d78c857878428555d1113a21eebaf97a",
+   "reading": {
+    "target": [
+     -3,
+     1
+    ]
+   },
+   "construction": "Tap lattice point (-3,1): 3 left, 1 up (quadrant II). In range.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Tapping (1,-3) is the swap, distinct from the target. This is what a student ignoring order would plot."
+    }
+   ]
+  },
+  {
+   "question_id": "q:u1-1-1:w003",
+   "template_sha": "88be8fbf914b3c51c7d1d5caefe25a07d78c857878428555d1113a21eebaf97a",
+   "reading": {
+    "target": [
+     -3,
+     -4
+    ]
+   },
+   "construction": "Tap lattice point (-3,-4): 3 left, 4 down (quadrant III). In range.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Tapping (-4,-3) is the swap, distinct from the target. This fits a student who treats (a,b) and (b,a) as the same."
+    }
+   ]
+  },
+  {
+   "question_id": "q:u1-1-2:w001",
+   "template_sha": "eced6c0ea7ab5e4b253a5758942c2ca07b5a1512ec87fa1a3003caaaf46c3306",
+   "reading": {
+    "X": [
+     2,
+     -1
+    ],
+    "Y": [
+     4,
+     0
+    ]
+   },
+   "construction": "Tap the four ordered pairs (2,4), (2,0), (-1,4), (-1,0). X and Y each have 2 numbers, within limits, so this is a valid build of X×Y.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "The build fires when the student taps the Y×X pairs (4,2), (4,-1), (0,2), (0,-1). That is what a student who thinks X×Y and Y×X are the same set would build, so it matches product-order-irrelevant. A student could also reverse pairs by mistake while knowing order matters. The reversal here is systematic and the spec lists no other cause, so this is the main reason it fires."
+    }
+   ]
+  },
+  {
+   "question_id": "q:u1-1-2:w002",
+   "template_sha": "6b17a7bc852ad085158d37d5bb687ed21e00f82df73db95e130f808f25da7158",
+   "reading": {
+    "X": [
+     4,
+     0
+    ],
+    "Y": [
+     4,
+     5,
+     -2
+    ]
+   },
+   "construction": "Tap all 6 ordered pairs of Y×Z: (4,4),(4,5),(4,-2),(0,4),(0,5),(0,-2). Within limits (2 and 3 elements), so reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "Fires when the student builds Z×Y: (4,4),(5,4),(-2,4),(4,0),(5,0),(-2,0). These are the right numbers in swapped order, which is what a student who thinks the order of the sets doesn't matter would build (X×Y = Y×X). Swapping the coordinates within each pair is a possible alternative cause, but it is the same belief about order, so the diagnosis fits."
+    }
+   ]
+  },
+  {
+   "question_id": "q:u1-2-1:w001",
+   "template_sha": "e6435b4be44e9679d84aeeb841912b2383f8f1541e68cea9aa9bf528538cb4f7",
+   "reading": {
+    "X": [
+     -1,
+     1,
+     2
+    ],
+    "Y": [
+     2,
+     4,
+     6
+    ]
+   },
+   "construction": "Tap all 9 ordered pairs of X×Y: (-1,2),(-1,4),(-1,6),(1,2),(1,4),(1,6),(2,2),(2,4),(2,6). Sets have 3 numbers each (within 2–3 limit), so reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "Firing means tapping Y×X pairs like (2,-1),(4,1) instead of X×Y. A student who writes the book/Y first does exactly that, so it matches the pair-order-reversed misconception."
+    }
+   ]
+  }
+ ]
+}
