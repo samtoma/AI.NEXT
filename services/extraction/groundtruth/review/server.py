@@ -12,11 +12,15 @@ Tasks (docs/design/review-console.md, built here as a local tool):
                     (book-records/<book>/misprint-candidates.json) and the misprints on book records.
                     Decisions are appended to groundtruth/<book>/misprint-decisions.json.
   Generated content every generated question, widget question, widget mapping and misconception the book
-                    configs name, each beside the book item it was made from; decisions are appended to
-                    reviews/<book>/generated-content.json (generated.py).
+                    configs name, each beside the book item it was made from, and every figure S4 drew (or
+                    could not draw) for a PDF book (teaching/<book>/visuals/), beside the book's own crop of
+                    it; decisions are appended to reviews/<book>/generated-content.json (generated.py).
   Generated answers every answer answer_gen.py wrote for a book prompt the book leaves unanswered
                     (teaching/<book>/answers/), beside the book's question; decisions are appended to
                     reviews/<book>/generated-answers.json (answers.py).
+  Question tiers    where the two readings of a book question's tier disagree (tier_questions.py,
+                    teaching/<book>/tiers/), a person chooses; decisions are appended to
+                    reviews/<book>/question-tiers.json (tiers.py).
 
 Everything is a file in the repository, so a review is committed like any other change. Serves on 127.0.0.1
 only. The book PDFs are not in git (docs/Source/*.pdf is ignored); the server looks for each in docs/Source/,
@@ -34,6 +38,7 @@ from urllib.parse import parse_qs, urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import answers  # noqa: E402
+import tiers  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
@@ -368,12 +373,20 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(answers.summary(q["book"]))
             if u.path == "/api/answers/item":
                 return self.send_json(answers.detail(q["book"], q["ref"]))
+            if u.path == "/api/tiers/books":
+                return self.send_json(tiers.books())
+            if u.path == "/api/tiers":
+                return self.send_json(tiers.summary(q["book"]))
+            if u.path == "/api/tiers/item":
+                return self.send_json(tiers.detail(q["book"], q["ref"]))
             if u.path == "/api/generated/books":
                 return self.send_json(generated.books())
             if u.path == "/api/generated":
                 return self.send_json(generated.summary(q["book"]))
             if u.path == "/api/generated/item":
                 return self.send_json(generated.detail(q["book"], q["kind"], q["ref"]))
+            if u.path == "/api/generated/crop":
+                return self.send_file(generated.crop_path(q["book"], q["figure"]), "image/png")
             if u.path == "/api/file":
                 return self.send_json(json.loads(resolve_key(q["path"]).read_text()))
             if u.path == "/pdf":
@@ -404,6 +417,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "decision": decide_misprint(body)})
             if u.path == "/api/answers/decision":
                 return self.send_json({"ok": True, "decision": answers.decide(body)})
+            if u.path == "/api/tiers/decision":
+                return self.send_json({"ok": True, "decision": tiers.decide(body)})
             if u.path == "/api/generated/decision":
                 return self.send_json({"ok": True, "decision": generated.decide(body)})
         except (FileNotFoundError, KeyError, ValueError, StopIteration) as e:

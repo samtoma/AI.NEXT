@@ -28,13 +28,14 @@ a lesson):
 
     uv run --with jsonschema extract_book_record.py objectives prep3-math-en u1-1 u1-2 u1-3 u1-4
 
-**Figures of a PDF book.** An EPUB ships each figure as an image file; this PDF does not (its pages are built from
-image tiles and vector paths). For a book whose config has a PDF and no EPUB, in this order (≈ $0.11 a figure in
-all, Unit 1: 24 figures):
+**Figures of a PDF book, printed-answer checks and tiers.** An EPUB ships each figure as an image file; this PDF
+does not (its pages are built from image tiles and vector paths). For a book whose config has a PDF and no EPUB, in
+this order (figures ≈ $0.11 each, Unit 1: 24; the checks and tiers a few cents a lesson):
 
     uv run --with pymupdf --with pillow --with jsonschema crop_figures.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
     uv run book_record_figures.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
     uv run --with pymupdf answer_gen.py check-printed book-records/prep3-math-en/u1-1.json   # each lesson
+    uv run tier_questions.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
 
 1. `crop_figures.py` places each figure's box on the page (a gridded page, then a close-up), crops it at 200 dpi
    to `work/<book>/figures/<id>.png` and checks the crop edge by edge; the box is the record's `region`
@@ -47,6 +48,10 @@ all, Unit 1: 24 figures):
 3. `answer_gen.py check-printed` re-solves every printed answer blind (Grade 10's S3 rule: the solver never sees
    the item's printed solution, answer or page, only its figure crops), compares, and sends what the comparison
    cannot settle to a judge: `teaching/<book>/printed-checks/<slug>.json`. Unit 1: 18 of 18 agree.
+4. `tier_questions.py` tiers every book question with Grade 10's S3 rule, read twice (with the answer and steps,
+   and blind): `teaching/<book>/tiers/<slug>.json`. Disagreements wait in the review tool's Question tiers task;
+   compile uses a person's choice, else the agreed tier, else the blind reading's. Unit 1: 26 basic, 18 standard,
+   5 advanced live questions (was all "standard").
 
 **From book records to the tutor:** `../compile_book_records.py` compiles lessons into the bundles the app
 already loads (`compiled/<book>/`). For a compiled lesson only the new content is used: the book record's
@@ -86,6 +91,10 @@ port 3013):
 `--replace` matters: a question whose id changed (its objective was refiled) is retired, never left live. The
 stamps are the review tool's decisions (Generated answers), each as the human stamp of the question it decided
 (`reviewed_by "TD (answer approved, review tool)"`); a rejection retires the question, a fix request holds it.
+Figures are reviewed too (Generated content → Figures): the compile leaves out an S4 drawing that was rejected or
+sent back for a fix, so its questions get the book's picture, and lists every figure decision in the report
+(`figure_reviews`) and in `review-stamps.json` (`figures`). No row is stamped from those: the visuals table has no
+review columns.
 Unit 1 today: 49 live book questions (13 with the book's picture, 11 with an S4 drawing), 11 worked examples in the
 library, 0 held, 11 stamped; the compile report lists the rest, with why.
 

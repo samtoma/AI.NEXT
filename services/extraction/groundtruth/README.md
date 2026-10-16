@@ -179,14 +179,15 @@ Run it from a terminal, then open http://127.0.0.1:3020:
 
     python3 services/extraction/groundtruth/review/server.py
 
-Type your initials at the top. The home page has four tasks; pick one and you see only its items.
+Type your initials at the top. The home page has five tasks; pick one and you see only its items.
 
 | Task | Status | What you do | Where it is saved |
 |---|---|---|---|
 | **Label extraction** | built | Check each extracted record against the page: confirm, correct, flag, mark a misprint, or label it not in the book. Partial is fine. | Labelled records go into this folder's ground truth (`<book>/…`, created on the first label) |
 | **Misprints** | built | Decide every mistake the book prints: misprint confirmed, a different correction, or not a misprint | `<book>/misprint-decisions.json`, append-only (a changed mind is a new entry) |
 | **Generated answers** | built | Review every answer `answer_gen.py` wrote for a prompt the book leaves unanswered: approve, "re-solve is right", needs fix (with the right answer), or reject | `services/extraction/reviews/<book>/generated-answers.json`, append-only |
-| **Generated content** | built | Review every generated question, widget question, widget mapping and misconception, each beside the book item it was made from: approve, needs fix (with a note and a correction), or reject | `services/extraction/reviews/<book>/generated-content.json`, append-only |
+| **Generated content** | built | Review every generated question, widget question, widget mapping, misconception and S4 figure, each beside the book item it was made from: approve, needs fix (with a note and a correction), or reject | `services/extraction/reviews/<book>/generated-content.json`, append-only |
+| **Question tiers** | built | Choose the tier (basic, standard, advanced) where the two readings of a book question's tier disagree | `services/extraction/reviews/<book>/question-tiers.json`, append-only |
 
 **Label extraction.** A lesson's records come from the pipeline's book record
 (`services/extraction/book-records/<book>/<slug>.json`) when there is one. What you label is written into
@@ -215,14 +216,22 @@ confirmed misprint does to the question students see is waiting on Samuel.
 
 **Generated content.** It reads the files each book config names under `generated` (`services/extraction/books/<book>.json`):
 the generated and widget question banks and the misconception catalogue. Each widget's "this pattern means that
-misconception" rules are reviewed one by one as **widget mappings**. Small tabs switch between the four kinds, and each
+misconception" rules are reviewed one by one as **widget mappings**. Small tabs switch between the kinds, and each
 shows how many are left. Above every item is what it was made from in the book: a question's parent book question,
 a misconception's book questions and what students answered on them, and the objective it teaches. The printed
 page is shown beside it.
+- **Figures** are every figure S4 redrew for a PDF book (`book_record_figures.py` →
+  `services/extraction/teaching/<book>/visuals/`), one per book-record figure. The book's own crop of the figure
+  (`work/<book>/figures/`) sits beside S4's drawing: a preview drawn from the spec's data (arrow maps, coordinate
+  plots and function graphs; other kinds show the spec only), the points or arrows it draws, its caption and what it
+  withholds. The preview warns when the app would drop a pair or a label is not at its point. A **gap** shows why S4
+  did not draw the figure, the kind it needs, and any drawing S4's own compare step rejected.
 - **Approve** (`a`), **Needs fix** (`f`: say what, and optionally suggest the correction), **Reject** (`x`).
 - Each decision records the item's fingerprint, so an item the pipeline changes after you decided comes back as
-  "changed since it was decided".
-- Nothing changes for students until a pipeline step reads the decisions. The admin console is not touched.
+  "changed since it was decided" (a figure S4 redraws included; which S4 run made it is not part of it).
+- Nothing changes for students until a pipeline step reads the decisions. `compile_book_records.py` reads the
+  figure decisions: a drawing you reject, or send back for a fix, is not shown, and its questions get the book's
+  picture instead. The admin console is not touched.
 
 **Generated answers.** `services/extraction/answer_gen.py` answers every exercise, activity, open prompt or
 worked-example part a lesson's book record leaves unanswered:
@@ -244,6 +253,22 @@ In the task, "Needs attention first" lists what the checks could not settle: rea
 step that fails, a part the model could not answer. Drawings and explanations have no machine check and are
 marked `?`. An answer is taught only once approved, and only when a pipeline step loads it; none does yet,
 pending Samuel's ruling on project rule 3.
+
+**Question tiers.** A tier is not printed in the book; it decides which questions a student practises at which
+mastery (below 0.4 basic, below 0.7 standard, then advanced). `services/extraction/tier_questions.py` tiers every
+exercise, worked-example, activity and open-prompt part with Grade 10's S3 rule, word for word: basic = one method
+step; standard = a multi-step application of one method; advanced = methods combined, a word problem, or an
+end-of-chapter item. Every part is read twice (Grade 10 re-reads one in five): once with its answer and worked
+solution (Haiku, as S3 Typing) and once blind (Sonnet, as S3 Tier check). The tiers go into the teaching layer
+(`services/extraction/teaching/<book>/tiers/<slug>.json`). From `services/extraction/`:
+
+    uv run tier_questions.py run prep3-math-en u1-1 u1-2 u1-3 u1-4
+
+Unit 1's 90 parts cost $0.23: 60 agreed, 30 disagreed. The task lists the disagreements with both readings, the
+rule and the page: press `1`, `2` or `3`. Until you decide, `compile_book_records.py` uses the blind reading's tier
+(Grade 10's rule: the check wins); an agreed tier is used as it is, and can be overruled from "All". A decision is
+kept with the question's fingerprint, so a question whose text changes comes back. A tier is a teaching judgement,
+not a review of the question: it never stamps `reviewed_by`.
 
 Refresh the Grade 10 candidates after a new G2 run (from `services/extraction/`):
 

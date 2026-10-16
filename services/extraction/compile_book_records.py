@@ -34,8 +34,16 @@ HOW A BOOK PROMPT BECOMES A QUESTION
     withholds what a read-off question asks for, gets the book's own picture (answer 37d) from its checked crop
     (crop_figures.py), copied to app/public/book-figures/<book>/; a picture that draws the asked-for point is held
     (`figure_reveals_answer`); a question with no figure at all is held (`figure_missing`).
+  * Reviewed figures: every S4 drawing and gap is reviewed in the review tool (Generated content → Figures). A
+    drawing a person rejected, or sent back for a fix, on the drawing as it is now (its fingerprint), is not shown:
+    its questions get the book's picture as if S4 had not drawn it, and the report lists why (`figures`,
+    `stand_ins`). Every figure decision is listed in `figure_reviews`, with the visuals an approved drawing shows as.
   * Human stamps: each decision in the review tool's Generated answers task, on the answer as it is now, is written
     to review-stamps.json with the question it decided; `apply_review_verdicts.py --book-reviews` stamps the rows.
+    The figure decisions travel in the same file (`figures`), but no row is stamped from them: the visuals table has
+    no review columns.
+  * Tier (tier_questions.py, Grade 10's S3 rule read twice): a person's choice in the review tool's Question tiers
+    task, else the tier both readings agreed on, else the blind reading's; "standard" only for a question never tiered.
   * Not used yet: the book's statements (definitions, rules). Today's maths prompt teaches from objective
     descriptions and worked solutions only; using them would change how Noor teaches.
 
@@ -239,10 +247,11 @@ def answer_type(ans: str):
 
 
 # ============================================================================ answers
-def _review_answers():
-    """groundtruth/review/answers.py, the review tool's Generated answers task: its fingerprint is what a decision signs."""
+def _review_task(name: str):
+    """groundtruth/review/<name>.py, a task of the review tool (answers: Generated answers; generated: Generated
+    content, its Figures): its fingerprint is what a decision signs."""
     import importlib.util  # noqa: PLC0415
-    spec = importlib.util.spec_from_file_location("review_answers", HERE / "groundtruth" / "review" / "answers.py")
+    spec = importlib.util.spec_from_file_location(f"review_{name}", HERE / "groundtruth" / "review" / f"{name}.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -264,7 +273,7 @@ def usable_answers(book: str, slug: str, record: dict, record_path: Path, decide
         alias = {g["id"]: e["id"] for g, e, _ in pairs}
     dp = HERE / "reviews" / book / "generated-answers.json"
     decisions = {d["ref"]: d for d in json.loads(dp.read_text()).get("decisions", [])} if dp.exists() else {}
-    RA = _review_answers()
+    RA = _review_task("answers")
     out = {}
     for a in data.get("answers") or []:
         rid = alias.get(a["record_id"], a["record_id"])
@@ -281,6 +290,27 @@ def usable_answers(book: str, slug: str, record: dict, record_path: Path, decide
         else:
             continue
         out[ref] = {"answer": a["answer"], "solution": a["solution"], "how": how, "needs_page": a.get("needs_page"), "decision": dec}
+    return out
+
+
+def question_tiers(book: str, slug: str) -> dict[str, tuple[str, str]]:
+    """ref → (tier, where it came from), from tier_questions.py (Grade 10's S3 rule, read twice): a person's choice in
+    the review tool's Question tiers task (on the question as it is now), else the tier both readings agreed on, else
+    the blind reading's (Grade 10: the check wins). A ref with none is "standard" (the caller's default)."""
+    p = HERE / "teaching" / book / "tiers" / f"{slug}.json"
+    if not p.exists():
+        return {}
+    dp = HERE / "reviews" / book / "question-tiers.json"
+    decisions = {d["ref"]: d for d in json.loads(dp.read_text()).get("decisions", [])} if dp.exists() else {}
+    out = {}
+    for t in json.loads(p.read_text()).get("tiers") or []:
+        d = decisions.get(t["ref"])
+        if d and d.get("fingerprint") == t["question_fingerprint"]:
+            out[t["ref"]] = (d["tier"], f"chosen by {d['by']}")
+        elif t.get("status") == "agreed":
+            out[t["ref"]] = (t["tier"], "both readings")
+        elif t.get("tier"):
+            out[t["ref"]] = (t["tier"], "the blind reading (the readings disagree; not decided yet)")
     return out
 
 
@@ -318,7 +348,8 @@ def lesson_objectives(slug: str, record: dict, syllabus_ref: str | None) -> list
 QUESTION_SOURCES = ("exercise", "worked_example", "activity", "open_prompt")
 
 
-def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None) -> list[dict]:
+def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None,
+                   tiers: dict | None = None) -> list[dict]:
     """The book's prompts as questions; a worked example (or an answered prompt) the app cannot mark goes to the
     explanation library as a worked example instead (Grade 10's `not_markable` -> library entry, FR-4303)."""
     out = []
@@ -378,7 +409,9 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                     skipped.append({"ref": ref, "why": f"an answer the app cannot mark: {str(ans)[:90]}"})
                 continue
             qtype, choices, key = typed
-            q = {"_item": r["id"], "_ref": ref, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "tier": "standard", "type": qtype, "stem": stem,
+            tier, tier_from = (tiers or {}).get(ref, ("standard", "no tier yet"))
+            q = {"_item": r["id"], "_ref": ref, "_tier_from": tier_from, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "tier": tier,
+                 "type": qtype, "stem": stem,
                  "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {key}"],
                  "source_page": r["source_page"], "source": "seed",
                  "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
@@ -424,6 +457,16 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
     tv = json.loads(tv_path.read_text()) if tv_path.exists() else {"visuals": [], "gaps": []}
     drawn = {v["figure"]: v for v in tv["visuals"]}
     gaps = {g["figure"]: g for g in tv["gaps"]}
+    # the review tool's decisions on these drawings and gaps (Generated content → Figures), on each as it is now: a
+    # drawing a person rejected, or sent back for a fix, is not shown; its questions get the book's picture instead
+    verdicts = _review_task("generated").figure_decisions(book, {"lesson": slug, **tv})
+    reviewed_out: dict[str, tuple[dict, str]] = {}
+    for fid, dec in verdicts.items():
+        if fid in drawn and dec["decision"] in ("reject", "fix_requested"):
+            what = "rejected" if dec["decision"] == "reject" else "sent back for a fix"
+            reviewed_out[fid] = (drawn.pop(fid), f"S4's drawing was {what} in review ({dec['by']}, {dec['at']}"
+                                                 f"{': ' + dec['note'] if dec.get('note') else ''})")
+    shown_drawing: dict[str, list[str]] = {}   # figure → the visuals that show S4's drawing of it
     items = {it["id"]: it for it in record.get("items") or []}
     users = BRF.figure_users(record)
     answer_figs = BRF.answer_figures(record)
@@ -464,11 +507,14 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
                 if not why and not readoff:
                     visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": q["lo"], "question": q["id"], "kind": d["kind"], "spec": d["spec"],
                                     "caption": d.get("caption"), "source_page": fig["source_page"]})
+                    shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
                     shown.add(q["id"])
                     on_question = True
                     continue
                 report["figures"].append({"figure": fid, "question": q["id"], "native_not_shown":
                                           why or f"read off the figure, but the drawing withholds {d['withheld']}: the book's picture instead"})
+            elif fid in reviewed_out:
+                report["figures"].append({"figure": fid, "question": q["id"], "native_not_shown": reviewed_out[fid][1]})
             if not (checked and book_pictures):
                 continue
             natives = [{"labels": [str(pt.get("label")) for pt in ALB._spec_points(d["spec"]) if pt.get("label")], "withheld": d.get("withheld") or []}] if d else []
@@ -477,13 +523,15 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
                 hold(q, "figure_reveals_answer", f"the book's picture of {fid}: {why}")
                 continue
             tail = q["id"].split(":", 2)[-1]
+            native = d or (reviewed_out.get(fid) or ({}, ""))[0]
             visuals.append({"id": vid(f"v:{slug}:{tail}"), "lo": q["lo"], "question": q["id"], "kind": "book_image",
                             "spec": {"src": f"/book-figures/{book}/{crop.name}", "alt": ALB.stand_in_alt(fig["source_page"]),
-                                     "stand_in": True, "native_kind_needed": (gaps.get(fid) or {}).get("needed_kind") or (d or {}).get("kind")},
+                                     "stand_in": True, "native_kind_needed": (gaps.get(fid) or {}).get("needed_kind") or native.get("kind")},
                             "caption": None, "source_page": fig["source_page"]})
             stand_in_files.add(crop)
             report["stand_ins"].append({"question": q["id"], "figure": fid, "file": crop.name,
-                                        "why": (gaps.get(fid) or {}).get("reason") or "the drawing is not shown with this question"})
+                                        "why": (gaps.get(fid) or {}).get("reason") or (reviewed_out.get(fid) or ({}, ""))[1]
+                                               or "the drawing is not shown with this question"})
             shown.add(q["id"])
         if d and not on_question:   # an illustration of its objective (a body figure, or one whose prompt is teaching material)
             # the record's own filing first (the objectives call files every figure); S4's guess only for one it left out
@@ -491,6 +539,17 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             if lo:
                 visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"], "spec": d["spec"],
                                 "caption": d.get("caption"), "source_page": fig["source_page"]})
+                shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
+        elif fid in reviewed_out and not qs:
+            report["figures"].append({"figure": fid, "question": None, "native_not_shown": reviewed_out[fid][1]})
+    for fid, dec in sorted(verdicts.items()):
+        gap = fid in gaps
+        effect = ("the book's picture stands in" if gap else f"shown as {', '.join(shown_drawing[fid])}" if fid in shown_drawing
+                  else "not shown: the book's picture instead" if fid in reviewed_out else "not shown with any question")
+        report["figure_reviews"].append({"lesson": slug, "figure": fid, "what": "S4 gap" if gap else "S4 drawing", "decision": dec["decision"],
+                                         "by": dec["by"], "at": dec["at"], "fingerprint": dec["fingerprint"],
+                                         "visuals": shown_drawing.get(fid, []), "effect": effect,
+                                         **({"note": dec["note"]} if dec.get("note") else {})})
     for q in questions:
         linked = [f for f, its in users.items() if q["_item"] in its and f not in answer_figs]
         if q["id"] in shown:
@@ -585,7 +644,7 @@ def main(argv: list[str]) -> int:
     lmap_path = HERE / "book-records" / a.book / "lessons.json"
     lmap = json.loads(lmap_path.read_text()) if lmap_path.exists() else {"lessons": []}
     report = {"format": FORMAT_REPORT, "version": VERSION, "book": a.book, "printed_decimal": decimal, "lessons": {},
-              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "warnings": [], "errors": []}
+              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": []}
 
     bundles = {p: json.loads(rel(p).read_text()) for p in cfg.get("bundles") or []}
     in_bundle = lambda s: any(any(n.get("kind") == "learning_objective" and n["id"].startswith(f"lo:{s}-") for n in b["nodes"])
@@ -607,7 +666,8 @@ def main(argv: list[str]) -> int:
         skipped: list = []
         entries: list = []
         decided: dict = {}
-        qs = book_questions(slug, record, usable_answers(a.book, slug, record, rec_path, decided), skipped, entries, printed_checks(a.book, slug))
+        qs = book_questions(slug, record, usable_answers(a.book, slug, record, rec_path, decided), skipped, entries, printed_checks(a.book, slug),
+                            question_tiers(a.book, slug))
         lo_by_item = objectives_for_items(record)
         for ref, d in decided.items():   # a rejected or fix-requested answer: the question an earlier load may hold
             item = next((it["id"] for it in record["items"] if ref == it["id"] or ref.startswith(it["id"] + ":")), None)
@@ -655,7 +715,8 @@ def main(argv: list[str]) -> int:
             d = q["_decision"]
             stamps.append({"question": q["id"], "ref": q["_ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
                            "fingerprint": d["fingerprint"], "what": "generated answer"})
-        for k in ("_item", "_ref", "_why", "_decision"):
+        report["tiers"].append({"question": q["id"], "tier": q["tier"], "from": q["_tier_from"]})
+        for k in ("_item", "_ref", "_why", "_decision", "_tier_from"):
             q.pop(k, None)
     for slug in slugs:
         for e in new_entries[slug]:
@@ -667,6 +728,7 @@ def main(argv: list[str]) -> int:
                                    "held_by_reason": dict(Counter(q["hold_reason"] for q in qs if q.get("hold_reason"))),
                                    "by_type": {t: sum(1 for q in qs if q["type"] == t) for t in ("numeric", "short")},
                                    "marker": sum(1 for q in qs if isinstance(q.get("choices"), dict)),
+                                   "by_tier": dict(Counter(q["tier"] for q in qs)),
                                    "library_entries": len(new_entries[slug]),
                                    "visuals": sum(1 for v in new_visuals[slug] if v["kind"] != "book_image"),
                                    "book_pictures": sum(1 for v in new_visuals[slug] if v["kind"] == "book_image")}
@@ -760,7 +822,11 @@ def main(argv: list[str]) -> int:
         (out_dir / "review-stamps.json").write_text(json.dumps(
             {"format": "ainext.review-stamps/1", "book": a.book, "course_id": cfg["course_id"], "from": "reviews/" + a.book + "/generated-answers.json",
              "note": "apply_review_verdicts.py --book-reviews: each decision a person made in the review tool, as the stamp of the question it decided",
-             "stamps": sorted(stamps, key=lambda x: x["question"])}, ensure_ascii=False, indent=2) + "\n")
+             "stamps": sorted(stamps, key=lambda x: x["question"]),
+             "figures_from": "reviews/" + a.book + "/generated-content.json",
+             "figures_note": "each decision a person made on an S4 figure (Generated content → Figures), with the visuals it shows as; "
+                             "the visuals table has no review columns, so apply_review_verdicts.py lists these and writes none",
+             "figures": report["figure_reviews"]}, ensure_ascii=False, indent=2) + "\n")
     report["files"] = sorted(str(x.relative_to(HERE)) for x in out_dir.glob("*.json"))
     (out_dir / "compile-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     for slug, r in report["lessons"].items():

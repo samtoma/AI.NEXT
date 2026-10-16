@@ -257,6 +257,8 @@ def main_g2(args) -> int:
 #     fix_requested    status 'review', hold_reason 'human_hold', reviewed_by '<by> (answer fix requested, review tool)'
 #     reject           status 'rejected', reviewed_by '<by> (answer rejected, review tool)'
 # Only the book's own rows (source 'seed') of the book's course; a question not in the database is listed.
+# The file's `figures` (decisions on S4's drawings and gaps, Generated content → Figures) are only counted: compile
+# already left a rejected drawing out, and the visuals table has no review columns to stamp.
 BOOK_REVIEW = {"approve": "answer approved", "fix_requested": "answer fix requested", "reject": "answer rejected"}
 
 
@@ -307,6 +309,11 @@ def main_book_reviews(args) -> int:
     verb = "would" if args.dry_run else "did"
     print(f"{args.book_reviews}: {doc['course_id']} — {verb} stamp {len(res['stamped'])} approved, hold {len(res['held'])} for a fix, "
           f"reject {len(res['rejected'])}; {res['unchanged']} already as recorded")
+    figs = doc.get("figures") or []
+    if figs:   # the S4 figure decisions: compile_book_records.py already acted on them; the visuals table has no review columns
+        by = {k: sum(1 for f in figs if f["decision"] == k) for k in BOOK_REVIEW}
+        print(f"  {len(figs)} figure decision(s) in the file ({by['approve']} approved, {by['fix_requested']} fix requested, "
+              f"{by['reject']} rejected): not written, the visuals table has no review columns")
     if res["absent"]:
         print(f"  ! {len(res['absent'])} approved question(s) not in this database — load the compiled bundles first: {res['absent'][:6]}",
               file=sys.stderr)
