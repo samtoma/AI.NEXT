@@ -1,0 +1,34 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:u1-2-1:pairs-from-x-to-y",
+ "lo_id": "lo:u1-2-1",
+ "parent_question_id": "q:u1-2-1:bk-example-1",
+ "tier": "basic",
+ "kind": "product_builder",
+ "spec": {
+  "X": [
+   -1,
+   1,
+   2
+  ],
+  "Y": [
+   2,
+   4,
+   6
+  ]
+ },
+ "stem": "A relation from $X=\\{-1, 1, 2\\}$ to $Y=\\{2, 4, 6\\}$ is made of ordered pairs $(a, b)$ with $a \\in X$ first and $b \\in Y$ second. Tap every ordered pair that could belong to a relation from $X$ to $Y$ (all of $X \\times Y$).",
+ "solution": [
+  "A relation from X to Y is written with ordered pairs (a, b): the first member a comes from X and the second member b from Y.",
+  "Pair each member of X with every member of Y: with -1 we get (-1, 2), (-1, 4), (-1, 6).",
+  "With 1 we get (1, 2), (1, 4), (1, 6); with 2 we get (2, 2), (2, 4), (2, 6).",
+  "These 9 pairs form X × Y; any relation from X to Y, such as the pairs where b = 2a + 4, is chosen from among them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "reversed-pairs",
+   "misconception_id": "mc:u1-2-1:pair-order-reversed"
+  }
+ ],
+ "notes": "Honest limit: this widget builds the whole of X × Y, the pool every relation from X to Y draws from. It does not choose the pairs that satisfy a rule, so it covers only the pair-order part of lo:u1-2-1 and not the rule-based pairs of the anchor. missing-pairs is not mapped. lo:u1-2-1 has only the pair-order misconception, and an incomplete list is a different error that would mean a different misconception. It is not mapped to pair-order-reversed. extra-pairs cannot be emitted for this spec."
+}

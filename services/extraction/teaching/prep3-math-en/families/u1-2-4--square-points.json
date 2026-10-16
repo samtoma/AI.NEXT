@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-2-4:square-points",
+ "kind": "family",
+ "lo_id": "lo:u1-2-4",
+ "parent_question_id": "q:u1-2-4:bk-example-2",
+ "source_page": 14,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    4,
+    5,
+    9,
+    10
+   ]
+  },
+  {
+   "name": "r",
+   "let": "isqrt(m)"
+  },
+  {
+   "name": "c",
+   "let": "2 * r + 1"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $X=\\{-{=m}, \\dots, -1, 0, 1, \\dots, {=m}\\}$ (all integers from $-{=m}$ to ${=m}$) and R is a relation on X where $a\\,R\\,b$ means: «The number a is the square of the number b» for each of $a, b\\in X$. How many points does the cartesian diagram of R contain?",
+ "answer": "c",
+ "solution": [
+  "The pair $(a, b)$ is in R when $a = b^2$ and both a and b belong to X.",
+  "Since $a = b^2$ must be at most {=m}, we need $b^2 \\le {=m}$, so b can be any integer from $-{=r}$ to {=r}.",
+  "For each such b, $a=b^2$ is in X, so each gives exactly one pair $(b^2, b)$.",
+  "The number of values of b is $2\\times{=r}+1={=c}$, so the cartesian diagram has {=c} points."
+ ],
+ "notes": "Advanced twist: the relation is not one-to-one (b and -b give the same a), and pairs are ordered (a, b) with a the square. Count of b in [-r, r] with r=isqrt(m)."
+}

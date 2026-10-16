@@ -859,6 +859,41 @@ def main(argv: list[str]) -> int:
                         if isinstance(c, dict) and c.get("misconception_id") in dropped_mc:
                             report["links_dropped"].append({"question": q["id"], "option": c.get("key"), "misconception": c.pop("misconception_id")})
 
+    # The compiled lessons' OWN generated content: S5–S7 run on these bundles (book_record_generation.py), assembled
+    # and reconciled by the runbook's own tools into teaching/<book>/generated/. Added after the old rows were cut
+    # and their links dropped, so nothing above can touch them.
+    tg = HERE / "teaching" / a.book / "generated"
+    report["generated_added"] = {}
+    for name, key in (("generated-questions.json", "questions"), ("widget-questions.json", "questions"), ("misconceptions.json", "misconceptions")):
+        f = tg / name
+        if not f.exists() or name not in generated:
+            continue
+        rows = [r for r in json.loads(f.read_text()).get(key) or [] if in_lessons(r.get("lo_id"), slugs)]
+        have = {r["id"] for r in generated[name].get(key) or []}
+        clash = [r["id"] for r in rows if r["id"] in have]
+        if clash:
+            report["errors"].append(f"{name}: generated ids already in the book's file: {clash[:5]}")
+            continue
+        if decimal != "comma":   # what a student or the tutor reads, in the app's notation (never an answer key)
+            for r in rows:
+                for k in ("label", "description", "signal", "stem"):
+                    if isinstance(r.get(k), str):
+                        r[k], n = LIST_COMMA.subn(", ", r[k])
+                        counts["list_comma"] += n
+                for k in ("refutation", "solution"):
+                    if isinstance(r.get(k), list):
+                        for i, x in enumerate(r[k]):
+                            if isinstance(x, str):
+                                r[k][i], n = LIST_COMMA.subn(", ", x)
+                                counts["list_comma"] += n
+                            elif isinstance(x, dict):
+                                for tk in ("text_md", "text"):
+                                    if isinstance(x.get(tk), str):
+                                        x[tk], n = LIST_COMMA.subn(", ", x[tk])
+                                        counts["list_comma"] += n
+        generated[name].setdefault(key, []).extend(rows)
+        report["generated_added"][name] = len(rows)
+
     ok = not report["errors"]
     if ok:
         for name, b in {**to_write, **generated}.items():

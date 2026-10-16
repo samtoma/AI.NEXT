@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-4-5:extreme-val",
+ "kind": "family",
+ "lo_id": "lo:u1-4-5",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "h == 0"
+  },
+  {
+   "name": "b",
+   "let": "-2 * a * h"
+  },
+  {
+   "name": "c",
+   "randint": [
+    -5,
+    9
+   ]
+  },
+  {
+   "name": "k",
+   "let": "a * h * h + b * h + c"
+  }
+ ],
+ "stem": "The curve $f(x) = {=a}x^2 + ({=b})x + ({=c})$ has an extreme value: a minimum value if it opens upward, a maximum value if it opens downward. Find this extreme value (give the number only).",
+ "answer": "k",
+ "solution": [
+  "The sign of $a = {=a}$ decides the opening direction; the curve has a turning point at $x = -\\frac{b}{2a} = -\\frac{({=b})}{2 \\times ({=a})} = {=h}$.",
+  "Substitute: $f({=h}) = {=a} \\times ({=h})^2 + ({=b}) \\times ({=h}) + ({=c}) = {=k}$.",
+  "The extreme value is {=k}."
+ ],
+ "notes": "No book questions supplied, so parent_question_id is empty. Answer is the number whether max or min.",
+ "proposed_misconceptions": []
+}

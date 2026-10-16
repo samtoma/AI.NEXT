@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-4-2:single-value",
+ "kind": "family",
+ "lo_id": "lo:u1-4-2",
+ "parent_question_id": "q:u1-4-2:bk-example-1",
+ "source_page": 20,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    -3,
+    4
+   ],
+   "resample_while": "n == 0"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $f(x)=x^2-{=p}x+{=q}$, find $f({=n})$.",
+ "answer": "n*n - p*n + q",
+ "solution": [
+  "Substitute $x={=n}$: $f({=n})=({=n})^2-{=p}({=n})+{=q}$.",
+  "Evaluate each term: $({=n})^2={=n*n}$ and ${=p}({=n})={=p*n}$, so $f({=n})={=n*n}-({=p*n})+{=q}$.",
+  "Add: $f({=n})={=n*n - p*n + q}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: one substitution into a quadratic, integer input, nonzero n. Mirrors book example f(-2)."
+}

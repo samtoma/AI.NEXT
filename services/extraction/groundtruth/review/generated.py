@@ -66,9 +66,16 @@ def _config(book: str) -> dict:
 def _paths(book: str, cfg: dict) -> dict[str, list[Path]]:
     g = cfg.get("generated") or {}
     as_list = lambda v: v if isinstance(v, list) else [v] if v else []
-    return {"questions": [REPO / p for p in as_list(g.get("questions"))],
-            "misconceptions": [REPO / p for p in as_list(g.get("misconceptions"))],
-            "bundles": [REPO / p for p in cfg.get("bundles") or []],
+    # book-record lessons' own S5–S7 output (book_record_generation.py → teaching/<book>/generated/), and the compiled
+    # bundles their parent book questions live in; a missing file is skipped by every reader
+    tg = TEACHING / book / "generated"
+    compiled = sorted((EXTRACTION / "compiled" / book).glob("*.json")) if NAME.match(book) else []
+    return {"questions": [REPO / p for p in as_list(g.get("questions"))]
+                         + [tg / "generated-questions.json", tg / "widget-questions.json"],
+            "misconceptions": [REPO / p for p in as_list(g.get("misconceptions"))] + [tg / "misconceptions.json"],
+            "bundles": [REPO / p for p in cfg.get("bundles") or []]
+                       + [c for c in compiled if c.name not in ("generated-questions.json", "widget-questions.json",
+                                                                 "misconceptions.json", "compile-report.json", "review-stamps.json")],
             "visuals": _visual_files(book)}
 
 

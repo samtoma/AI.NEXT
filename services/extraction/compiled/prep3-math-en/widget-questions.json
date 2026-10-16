@@ -2009,6 +2009,57 @@
       "source_note": "Generated from template family line-equation.",
       "reviewed_by": null,
       "reviewed_at": null
+    },
+    {
+      "id": "q:u1-2-1:w001",
+      "lo_id": "lo:u1-2-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "A relation from $X=\\{-1, 1, 2\\}$ to $Y=\\{2, 4, 6\\}$ is made of ordered pairs $(a, b)$ with $a \\in X$ first and $b \\in Y$ second. Tap every ordered pair that could belong to a relation from $X$ to $Y$ (all of $X \\times Y$).",
+      "choices": {
+        "kind": "product_builder",
+        "spec": {
+          "X": [
+            -1,
+            1,
+            2
+          ],
+          "Y": [
+            2,
+            4,
+            6
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "reversed-pairs",
+            "misconception_id": "mc:u1-2-1:pair-order-reversed"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from X to Y is written with ordered pairs (a, b): the first member a comes from X and the second member b from Y."
+        },
+        {
+          "step": 2,
+          "text_md": "Pair each member of X with every member of Y: with -1 we get (-1, 2), (-1, 4), (-1, 6)."
+        },
+        {
+          "step": 3,
+          "text_md": "With 1 we get (1, 2), (1, 4), (1, 6); with 2 we get (2, 2), (2, 4), (2, 6)."
+        },
+        {
+          "step": 4,
+          "text_md": "These 9 pairs form X × Y; any relation from X to Y, such as the pairs where b = 2a + 4, is chosen from among them."
+        }
+      ],
+      "parent_question_id": "q:u1-2-1:bk-example-1",
+      "source_note": "Generated from template family wt:u1-2-1:pairs-from-x-to-y.",
+      "family": "wt:u1-2-1:pairs-from-x-to-y",
+      "template_sha": "e6435b4be44e9679d84aeeb841912b2383f8f1541e68cea9aa9bf528538cb4f7"
     }
   ],
   "misconceptions": []

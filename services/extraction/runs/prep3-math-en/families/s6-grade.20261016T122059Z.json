@@ -1,0 +1,449 @@
+{
+ "mode": "grade",
+ "book": "prep3-math-en",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "acaacfbbdebe12ae9acb999df4f3f64c2092ae4c76c1fbe2d53165ab27de7e84",
+  "generated_sha256": "392af8f33fbc6272302f1dfb39084c96497245bb5ff2fe84e1d04698dd64733f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:u1-1-4:locate-words",
+   "spec_sha": "0c5d149b836f9a15c46be0c86e0076624322faad17afa9ce8e74a667dfcaa118",
+   "answers": [
+    {
+     "instance_id": "q:u1-1-4:g001-locate",
+     "stem_sha": "2737074e11ae7faf",
+     "answer": {
+      "plain": "(2, -6)"
+     },
+     "working": "Right 2 gives x=2; below 6 gives y=-6."
+    },
+    {
+     "instance_id": "q:u1-1-4:g005-locate",
+     "stem_sha": "bb6944a8f4ce26d7",
+     "answer": {
+      "plain": "(5, -4)"
+     },
+     "working": "Right 5 gives x=5; below 4 gives y=-4."
+    },
+    {
+     "instance_id": "q:u1-1-4:g007-locate",
+     "stem_sha": "cba261fb5f1a6108",
+     "answer": {
+      "plain": "(4, 2)"
+     },
+     "working": "Right 4 gives x=4; above 2 gives y=2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options are shown, so there are no distractors to check. In all three instances the key matches answer_check and the stem. Right and above give positive values, and below gives a negative value. The solution steps are correct and in the order of the stem."
+   }
+  },
+  {
+   "family_id": "tpl:u1-1-4:rectangle-fourth",
+   "spec_sha": "5c3ff338763ef0b52df57b1862dd2815fc5148645f89a2075536ae3627b9428b",
+   "answers": [
+    {
+     "instance_id": "q:u1-1-4:g007-rectan",
+     "stem_sha": "788053528bacae49",
+     "answer": {
+      "plain": "(-1, 0)"
+     },
+     "working": "Rectangle with axis-parallel sides: D has x of A and y of C. A(-1,-5), C(3,0) so D=(-1,0)."
+    },
+    {
+     "instance_id": "q:u1-1-4:g008-rectan",
+     "stem_sha": "f911291082ff4d18",
+     "answer": {
+      "plain": "(1, 1)"
+     },
+     "working": "D has x of A and y of C: A(1,-3), C(3,1) so D=(1,1)."
+    },
+    {
+     "instance_id": "q:u1-1-4:g010-rectan",
+     "stem_sha": "78fe82747c7d1647",
+     "answer": {
+      "plain": "(-1, 1)"
+     },
+     "working": "D has x of A and y of C: A(-1,-4), C(2,1) so D=(-1,1)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options were given, so there were no distractors to check. I re-derived D for all three instances: g007 gives (-1, 0), g008 gives (1, 1), and g010 gives (-1, 1). Each key matches its answer_check. The worked steps are correct and consistent. The stems are unambiguous: the vertices are consecutive and the sides are parallel to the axes."
+   }
+  },
+  {
+   "family_id": "tpl:u1-1-5:count-in",
+   "spec_sha": "af1c895d91ab9cd01c2f07281227c1288effad6681b3461becea6d76141df52f",
+   "answers": [
+    {
+     "instance_id": "q:u1-1-5:g004-count-",
+     "stem_sha": "3ca8bf4acf4bee04",
+     "answer": {
+      "value": "3"
+     },
+     "working": "A yes, B yes, C no (-3 outside), D yes"
+    },
+    {
+     "instance_id": "q:u1-1-5:g005-count-",
+     "stem_sha": "3dba0dd68e62b00a",
+     "answer": {
+      "value": "2"
+     },
+     "working": "A yes, B no (3), C no (-6), D yes"
+    },
+    {
+     "instance_id": "q:u1-1-5:g010-count-",
+     "stem_sha": "74eb0e8f8006c2c3",
+     "answer": {
+      "value": "2"
+     },
+     "working": "A yes, B yes, C no (-6), D no (-7)"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand: the keys 3, 2 and 2 are correct, and each solution checks both coordinates of each point against X and counts them correctly. No wrong options were shown, so distractors is empty.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:u1-2-2:addrule",
+   "spec_sha": "69563415bd684b46c1c4125e8dccc1da2d3571e2d74e3a75dce57be93946f319",
+   "answers": [
+    {
+     "instance_id": "q:u1-2-2:g001-addrul",
+     "stem_sha": "539425e3d9b8f54a",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-2-2:g006-addrul",
+     "stem_sha": "ed2aaedbe737ae60",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-2-2:g010-addrul",
+     "stem_sha": "b01d33ea6f01d484",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances were checked by hand. Each rule maps every a in X to a b that is in Y, so the keys are correct. No options exist, so there are no distractors. The key omits the outer braces while the solution includes them, which is cosmetic. Step 4 writes `$R=$\\{...\\}` with the braces outside the math delimiters, which may render oddly. The stem contains «» quote marks around the rule, which is a minor formatting issue.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:u1-2-2:filtered",
+   "spec_sha": "d061e9fa28f39e29a720af5fc7cc6439777c01a1b43045a1daf96b292a9418d9",
+   "answers": [
+    {
+     "instance_id": "q:u1-2-2:g002-filter",
+     "stem_sha": "9e40c2edc5e47aa3",
+     "answer": {
+      "plain": "[(2, 8), (4, 14), (5, 17)]"
+     },
+     "working": "3a+2 for a=2,3,4,5 gives 8,11,14,17; keep those in Y (8,14,17)."
+    },
+    {
+     "instance_id": "q:u1-2-2:g004-filter",
+     "stem_sha": "3a23d6e970129df5",
+     "answer": {
+      "plain": "[(2, 9), (4, 15), (5, 18)]"
+     },
+     "working": "3a+3 gives 9,12,15,18; keep those in Y (9,15,18)."
+    },
+    {
+     "instance_id": "q:u1-2-2:g006-filter",
+     "stem_sha": "e889576c0fee509c",
+     "answer": {
+      "plain": "[(1, 4), (4, 10), (5, 12)]"
+     },
+     "working": "2a+2 for a=1,3,4,5 gives 4,8,10,12; keep those in Y (4,10,12)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three instances and each key is correct, and each key matches its answer_check. The family has no wrong options. The only issue is cosmetic: step 5 puts \\{ \\} outside math mode, which may render oddly. The key also omits the set braces, but it matches answer_check, so I accepted it."
+   }
+  },
+  {
+   "family_id": "tpl:u1-2-4:shift-count",
+   "spec_sha": "e9c2fbba3fb2b7da470d32c2521c1e4b4468e62c260adeffe1065edb08487f84",
+   "answers": [
+    {
+     "instance_id": "q:u1-2-4:g001-shift-",
+     "stem_sha": "342570825bfb5f03",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Pairs (a,a+2) with a+2<=8, a=1..6 → 6"
+    },
+    {
+     "instance_id": "q:u1-2-4:g006-shift-",
+     "stem_sha": "7e08fbcc8a214ab7",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Pairs (a,a+3), a+3<=5, a=1..2 → 2"
+    },
+    {
+     "instance_id": "q:u1-2-4:g009-shift-",
+     "stem_sha": "a237e35dff8fdfb4",
+     "answer": {
+      "value": "7"
+     },
+     "working": "Pairs (a,a+1), a=1..7 → 7"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys are correct (6, 2, 7). The instances show no wrong options. Minor wording issue: g006 step 3 says \"1, 2, …, 2\", which is clumsy. The set notation {1,2,3,…,5} is also slightly odd. Neither changes the answer."
+   }
+  },
+  {
+   "family_id": "tpl:u1-2-4:square-points",
+   "spec_sha": "9b431c21ecdeef21d890576bfb478b3ba722283761b69a0600539819c838b274",
+   "answers": [
+    {
+     "instance_id": "q:u1-2-4:g001-square",
+     "stem_sha": "3ce3474db7a7fc3a",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-2-4:g002-square",
+     "stem_sha": "bd33e3f648ec1260",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-2-4:g005-square",
+     "stem_sha": "36cdc82a4897176b",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the keys by hand and all three are correct. The pairs are (b², b) with b² ≤ max(X). For X from -9 to 9, b runs from -3 to 3, which gives 7 points. For X from -2 to 2, b runs from -1 to 1, which gives 3 points. For X from -10 to 10, b runs from -3 to 3, which gives 7 points. The solution steps are correct and consistent. The family has no answer options, so there are no distractors to check. I didn't open any files, because none were named."
+   }
+  },
+  {
+   "family_id": "tpl:u1-3-4:codomain-extra",
+   "spec_sha": "ac09a5b24b81e3409cc4446bd7fb2df0c74ea6f68aaba6eb877eadd83003ffd5",
+   "answers": [
+    {
+     "instance_id": "q:u1-3-4:g005-codoma",
+     "stem_sha": "93601c31bd2a4001",
+     "answer": {
+      "value": "13"
+     },
+     "working": "Each x has exactly one image 3x: 6, 9, 12, all in Y, so R is a function. Range has 3 elements; |Y|=16; 16-3=13."
+    },
+    {
+     "instance_id": "q:u1-3-4:g008-codoma",
+     "stem_sha": "ede882e0b773516a",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Images 3, 6, 9 all in Y, so R is a function. Range has 3 elements; |Y|=11; 11-3=8."
+    },
+    {
+     "instance_id": "q:u1-3-4:g009-codoma",
+     "stem_sha": "3e6351b8a34335c9",
+     "answer": {
+      "value": "11"
+     },
+     "working": "Images 6, 9, 12 all in Y, so R is a function. Range has 3 elements; |Y|=14; 14-3=11."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked the arithmetic for all three instances (13, 8, 11) and each key is correct. The range values lie inside Y, so R is a valid function from X to Y. Y is explicitly defined as 1 ≤ y ≤ n, so it doesn't matter whether N includes 0. The family has no options listed, and the steps in each worked solution are correct."
+   }
+  },
+  {
+   "family_id": "tpl:u1-3-4:range-list",
+   "spec_sha": "c6bc8a595b457b049d4a4a452905fef23d6ed3a203d0e6fe16550072133050bd",
+   "answers": [
+    {
+     "instance_id": "q:u1-3-4:g001-range-",
+     "stem_sha": "48ab49c7fd807fb1",
+     "answer": {
+      "plain": "[3, 4, 5, 6]"
+     },
+     "working": "f(1)=3, f(2)=4, f(3)=5, f(4)=6; all in Y."
+    },
+    {
+     "instance_id": "q:u1-3-4:g003-range-",
+     "stem_sha": "8ec73d9e7b73f2c0",
+     "answer": {
+      "plain": "[6, 7, 8, 9]"
+     },
+     "working": "f(1)=6, f(2)=7, f(3)=8, f(4)=9; all in Y."
+    },
+    {
+     "instance_id": "q:u1-3-4:g004-range-",
+     "stem_sha": "4d22eae44a943dba",
+     "answer": {
+      "plain": "[5, 6, 7, 8]"
+     },
+     "working": "f(1)=5, f(2)=6, f(3)=7, f(4)=8; all in Y."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family has no options, so there are no distractors to check. I checked the three instances' arithmetic: x+2 gives {3,4,5,6}, x+5 gives {6,7,8,9}, and x+4 gives {5,6,7,8}. Each key matches its answer_check. The keys are written as comma-separated values without braces, and the marker kind is \"values\". That is fine for a set answer, though a grader should accept the braces as optional. The solution steps follow the usual method of listing the images and then collecting them as the range."
+   }
+  },
+  {
+   "family_id": "tpl:u1-4-1:cancel-lead",
+   "spec_sha": "5d1e7070821507354cc74730d5decb111e44f4822f2410f15e2d6b832168cb80",
+   "answers": [
+    {
+     "instance_id": "q:u1-4-1:g005-cancel",
+     "stem_sha": "401facc2a935cbb4",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Expand x^3(x-2)^2 = x^5-4x^4+4x^3; minus x^5 gives -4x^4+4x^3; degree 4"
+    },
+    {
+     "instance_id": "q:u1-4-1:g007-cancel",
+     "stem_sha": "01ad1e4c1f8a1717",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Expand x^2(x-6)^2 = x^4-12x^3+36x^2; minus x^4 gives -12x^3+36x^2; degree 3"
+    },
+    {
+     "instance_id": "q:u1-4-1:g008-cancel",
+     "stem_sha": "fb7d47759f32b2d9",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Expand x^2(x-5)^2 = x^4-10x^3+25x^2; minus x^4 gives -10x^3+25x^2; degree 3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I expanded all three instances and each key is correct (g005 gives 4, g007 gives 3, g008 gives 3). The leading terms cancel and the highest remaining power matches the key each time. No options were supplied, so there are no distractors to check. Step 5 in each solution (\"The last step states the answer\") is filler wording and doesn't affect correctness. The stem's \"mention the degree\" is the book's phrasing."
+   }
+  },
+  {
+   "family_id": "tpl:u1-4-2:combine-surd",
+   "spec_sha": "6d4f839563f7f7e100e42bdd9a64ceb206f9721393fe0643f7db971053e50414",
+   "answers": [
+    {
+     "instance_id": "q:u1-4-2:g006-combin",
+     "stem_sha": "d4c9eb5cb9259b10",
+     "answer": {
+      "value": "1"
+     },
+     "working": "f(√5)=5-3√5+5=10-3√5; 3g=3√5-9; sum=1"
+    },
+    {
+     "instance_id": "q:u1-4-2:g007-combin",
+     "stem_sha": "be2df3c01ad08146",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "f(√2)=2-3√2+3=5-3√2; 3g=3√2-9; sum=-4"
+    },
+    {
+     "instance_id": "q:u1-4-2:g008-combin",
+     "stem_sha": "47c068432b434e78",
+     "answer": {
+      "value": "0"
+     },
+     "working": "f(√5)=5-3√5+4=9-3√5; 3g=3√5-9; sum=0"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key is correct. g006 gives 10-9=1, g007 gives 5-9=-4, and g008 gives 9-9=0. The surd terms cancel in every case. The worked steps are correct and each key is a plain integer, which is the simplest form. No options were listed, so there are no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:u1-4-2:single-value",
+   "spec_sha": "4d74e13cf96a2646ec31e2abb4346946dd13a94aa421896cd67fcc0be44d142b",
+   "answers": [
+    {
+     "instance_id": "q:u1-4-2:g004-single",
+     "stem_sha": "c0de9af27dffc8d7",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-4-2:g005-single",
+     "stem_sha": "7a54c242de60ff63",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:u1-4-2:g009-single",
+     "stem_sha": "0b067ef8783118a0",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys check out by direct computation: g004 gives 9, g005 gives 24 and g009 gives 27. No options were supplied, so there are no distractors to judge. The solutions substitute, evaluate each term and add, and the sign handling is correct.",
+    "distractors": []
+   }
+  }
+ ]
+}

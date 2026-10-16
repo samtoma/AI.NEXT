@@ -1,0 +1,45 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:u1-4-3:line-not-through-origin",
+ "lo_id": "lo:u1-4-3",
+ "parent_question_id": "q:u1-4-1:bk-drill-2-a",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "instances": [
+  {
+   "m": -2,
+   "b": 3
+  },
+  {
+   "m": 1,
+   "b": 2
+  },
+  {
+   "m": 2,
+   "b": -1
+  },
+  {
+   "m": 3,
+   "b": -2
+  }
+ ],
+ "spec": {
+  "mode": "equation",
+  "m": "{=m}",
+  "b": "{=b}"
+ },
+ "stem": "Draw the graph of the function $f(x) = {=linear(m, b)}$. Place the two points so that the line is the graph of $y = f(x)$.",
+ "solution": [
+  "Make a table: choose x = 0 and find f(0) = b. This gives the point (0, b) on the y-axis.",
+  "Choose another value, for example x = 1, and find f(1) = m + b. This gives a second ordered pair.",
+  "Plot both points, (0, b) and (1, m + b).",
+  "Join them with a straight line. It crosses the y-axis at (0, b), so it does not pass through (0, 0) because b is not 0."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:u1-4-3:line-always-through-origin"
+  }
+ ],
+ "notes": "The objective has no anchor book question, so the parent is the nearest linear-function drill (f(x)=3-2x, lo:u1-4-1); Samuel should confirm or re-parent. All instances have b≠0, so a line through the origin has the right slope and the wrong intercept, which fires intercept-wrong. That predicate also fires for other intercept slips (e.g. sign of b), but the through-origin slip is the likeliest here. slope-sign-flipped, slope-inverted, vertical-line and off-target are left unmapped because the objective has no own misconception for them."
+}

@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-1-4:locate-words",
+ "kind": "family",
+ "lo_id": "lo:u1-1-4",
+ "parent_question_id": "q:u1-1-4:bk-drill-3-b",
+ "source_page": 11,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "sx",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sy",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "hx",
+   "let": "[\"left of\", \"right of\"][(sx + 1) // 2]"
+  },
+  {
+   "name": "vy",
+   "let": "[\"below\", \"above\"][(sy + 1) // 2]"
+  },
+  {
+   "name": "x",
+   "let": "sx * p"
+  },
+  {
+   "name": "y",
+   "let": "sy * q"
+  }
+ ],
+ "constraints": [],
+ "stem": "On the $\\mathbb{Z} \\times \\mathbb{Z}$ perpendicular net, point $P$ is {=p} units to the {=hx} the y-axis (measured along the x-axis) and {=q} units {=vy} the x-axis. Write the ordered pair $(x, y)$ that represents $P$.",
+ "solution": [
+  "The first projection is read along the x-axis: {=p} units {=hx} the y-axis gives $x = {=x}$.",
+  "The second projection is read along the y-axis: {=q} units {=vy} the x-axis gives $y = {=y}$.",
+  "So $P$ is $({=x}, {=y})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x}, {=y})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Text-only; no figure. Stem wording 'to the left of the y-axis' reads naturally via the hx string."
+}

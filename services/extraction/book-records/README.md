@@ -108,6 +108,26 @@ review columns.
 Unit 1 today: 49 live book questions (13 with the book's picture, 11 with an S4 drawing), 11 worked examples in the
 library, 0 held, 11 stamped; the compile report lists the rest, with why.
 
+**Generation: S5 misconceptions, S6 question families, S7 widget questions.** Grade 10's own steps, run on the
+compiled bundles by `../book_record_generation.py` (the same builders and embedded workflow copies; a book-config
+view, `work/<book>/bookrecord/<book>.json`, points the S6/S7 commands at the compiled lessons; S7 reads the trial
+database). In the runbook's order (runbook/README.md §4):
+
+    uv run book_record_generation.py s5 prep3-math-en u1-1 u1-2 u1-3 u1-4 --stage draft
+    uv run book_record_generation.py s6-author prep3-math-en u1-1 … --catalogue <draft run>   # then s6-grade
+    uv run book_record_generation.py s7-author prep3-math-en u1-1 … --catalogue <draft run>   # then s7-verify
+    uv run book_record_generation.py s5 prep3-math-en u1-1 … --stage final --draft <draft run> \
+        --distractors runs/<book>/families/s5-distractors.json --distractors runs/<book>/widgets/s5-distractors.json
+    # then the runbook's two-pass assembly (assemble_misconceptions.py --catalogue-only, load, the S6/S7 bundles,
+    # the --bundle pass) into teaching/<book>/generated/; compile adds those rows to the compiled generated files
+
+S5 keeps only entries the book's evidence supports. This book prints no caution box and no multiple choice, so the
+adapter also gives S5 its printed contrasts and "Notice that" lines as remarks. Unit 1 ($5.81 in all): 6
+misconceptions on 5 objectives; 9 of 12 families pass the blind grade (84 questions; 7 more families held: 6 have
+no book question to build on, 1 a template error); 1 widget question (S7 found 11 gaps, a list for Samuel: arrow
+diagrams, parabola plotting, rule-based pair selection; 3 widgets lost their only diagnostic and were left out).
+Unit 1 now has 134 live questions, 10 of 18 objectives practised, most in two or three tiers.
+
 **A second course for the same book.** `books/prep3-parallel.json` (`course:prep3-parallel-math-en`, registered
 in `app/src/lib/courses.ts`, status `ingest`) is the Prep-3 maths book ingested by this pipeline as its own course,
 so it can sit beside the launch course. Its lessons carry the `pp3` prefixes (`pp3u1-1`), so its objectives never

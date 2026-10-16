@@ -1,0 +1,129 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-3-1:pairs-verdict",
+ "kind": "family",
+ "lo_id": "lo:u1-3-1",
+ "parent_question_id": "lo:u1-3-1:no-book-question",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "x2",
+   "randint": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x3",
+   "randint": [
+    5,
+    6
+   ]
+  },
+  {
+   "name": "x4",
+   "randint": [
+    7,
+    8
+   ]
+  },
+  {
+   "name": "ys",
+   "sample": {
+    "from": "range(1, 10)",
+    "k": 4
+   }
+  },
+  {
+   "name": "y1",
+   "let": "ys[0]"
+  },
+  {
+   "name": "y2",
+   "let": "ys[1]"
+  },
+  {
+   "name": "y3",
+   "let": "ys[2]"
+  },
+  {
+   "name": "y4",
+   "let": "ys[3]"
+  },
+  {
+   "name": "t",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "f4",
+   "let": "x4 if t == 0 else x1"
+  },
+  {
+   "name": "cor",
+   "let": "'It is a function, because each element of X appears exactly once as a first projection.' if t == 0 else 'It is not a function, because one element of X appears as the first projection of two different pairs.'"
+  },
+  {
+   "name": "d1",
+   "let": "'It is not a function, because not every element of Y is used as a second projection.' if t == 0 else 'It is a function, because every ordered pair has a different second projection.'"
+  },
+  {
+   "name": "d2",
+   "let": "'It is not a function, because no two pairs have the same second projection.' if t == 0 else 'It is a function, because all the ordered pairs are different from each other.'"
+  },
+  {
+   "name": "s2",
+   "let": "'Each element of X appears exactly once as a first projection, so the relation is a function.' if t == 0 else 'One element of X appears twice as a first projection (and another element of X does not appear at all), so the relation is not a function.'"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X=\\{ {=x1}, {=x2}, {=x3}, {=x4}\\}$ and $Y=\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$. The relation $R$ from $X$ to $Y$ is given by the ordered pairs $R=\\{({=x1}, {=y1}), ({=x2}, {=y2}), ({=x3}, {=y3}), ({=f4}, {=y4})\\}$. Which statement is correct?",
+ "answer": "",
+ "solution": [
+  "The first projections of the ordered pairs are {=x1}, {=x2}, {=x3} and {=f4}.",
+  "The elements of X are {=x1}, {=x2}, {=x3} and {=x4}. A relation from X to Y is a function when each element of X appears exactly once as a first projection.",
+  "{=s2}"
+ ],
+ "choices": {
+  "correct": "{=cor}",
+  "distractors": [
+   {
+    "text": "{=d1}",
+    "misconception_id": "mc:u1-3-1:unused-y"
+   },
+   {
+    "text": "{=d2}",
+    "misconception_id": "mc:u1-3-1:second-proj"
+   },
+   {
+    "text": "It cannot be decided without an arrow diagram.",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:u1-3-1:unused-y",
+   "label": "Requires every element of Y to be used",
+   "description": "Thinks a function must use every element of the co-domain as a second projection."
+  },
+  {
+   "id": "mc:u1-3-1:second-proj",
+   "label": "Checks second projections instead of first",
+   "description": "Judges the relation by whether the second projections repeat or differ, rather than checking that each element of X appears once as a first projection."
+  }
+ ],
+ "notes": "No book question was supplied; parent id is a placeholder. t=0: function. t=1: first projection of 4th pair repeats x1 and x4 is missing. ys are distinct so the pairs are always distinct and second projections never repeat."
+}

@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-4-5:axis-line",
+ "kind": "family",
+ "lo_id": "lo:u1-4-5",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "h == 0"
+  },
+  {
+   "name": "b",
+   "let": "-2 * a * h"
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  }
+ ],
+ "stem": "The axis of symmetry of the curve $f(x) = {=a}x^2 + ({=b})x + ({=c})$ is the line $x = h$. Find $h$.",
+ "answer": "h",
+ "solution": [
+  "For $f(x) = ax^2 + bx + c$ the axis of symmetry is $x = -\\frac{b}{2a}$. Here $a = {=a}$ and $b = {=b}$.",
+  "$x = -\\frac{({=b})}{2 \\times {=a}} = {=h}$.",
+  "So $h = {=h}$."
+ ],
+ "notes": "No book questions were supplied, so parent_question_id is empty. Integer h by construction.",
+ "proposed_misconceptions": []
+}

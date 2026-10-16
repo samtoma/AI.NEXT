@@ -1,0 +1,248 @@
+{
+ "mode": "author",
+ "book": "prep3-math-en",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "965da09cde6903518f232519d0170ed8089513ebd1de0fd15080d0bf91a70df4",
+  "generated_sha256": "e36043109b9e327b4a970fdd3323dc037a8f4ae7ef1c7416ef0d736ed66dd2aa",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "u1-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:u1-1-3",
+     "need_kind": "arrow_diagram_builder",
+     "description": "The student draws arrows from each element of X to each element of Y, building the arrow diagram of X×Y. The same pairs are then shown on a Cartesian diagram, and the student marks the matching points. Errors it would diagnose: arrows missing, arrows going Y to X, and a point plotted with its coordinates swapped.",
+     "why": "No existing kind draws arrows between two sets. product_builder only taps ordered pairs, and pair_plotter taps one point. Neither builds the arrow diagram this objective is about."
+    },
+    {
+     "lo_id": "lo:u1-1-1",
+     "need_kind": "pair_equality_solver",
+     "description": "The student is given an equation such as (a − 2, b + 1) = (2, −3). They match the first components and the second components, and so build the two linear equations. Errors it would diagnose: comparing the first component with the second, and sign slips when solving.",
+     "why": "The task is solving for unknowns, not constructing a figure. Every existing kind would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:u1-1-2",
+     "need_kind": "misconception_registry",
+     "description": "product_builder fits X×Y and Y×X for X={2,−1}, Y={4,0}. Its reversed-pairs and missing-pairs predicates are the right ones. But no misconception id exists for this objective to map them to.",
+     "why": "The 'misconceptions' list is empty for every objective in this lesson. A template needs at least one diagnostic, and an id from another objective is refused (FR-1215). So I wrote no template rather than invent ids."
+    },
+    {
+     "lo_id": "lo:u1-1-4",
+     "need_kind": "misconception_registry",
+     "description": "pair_plotter fits locating or plotting points such as (3, −2), (−3, 1) and (−3, −4). Its swapped-coordinates and wrong-quadrant predicates would fire on the usual errors. But there is no misconception id to attach them to.",
+     "why": "The misconceptions list is empty for lo:u1-1-4, lo:u1-1-5 and every other objective in this lesson, so no valid diagnostics can be written. Once Samuel adds ids for swapped coordinates and wrong-quadrant signs, pair_plotter templates for lo:u1-1-4 and lo:u1-1-5 can be written at once."
+    }
+   ],
+   "notes": "I wrote no templates. Two kinds do fit: product_builder for lo:u1-1-2, and pair_plotter for lo:u1-1-4 and lo:u1-1-5. But every objective's 'misconceptions' list is empty. The template format needs at least one diagnostic, and an id borrowed from elsewhere is refused (FR-1215). Inventing ids would be a forced fit. Once ids exist for 'reversed pairs (Y×X for X×Y)', 'swapped coordinates' and 'sign/quadrant slip', the templates are ready to write. They would be product_builder with X={2,−1}, Y={4,0} (reversed-pairs first, then missing-pairs), and pair_plotter with targets (3,−2), (−3,1) and (−3,−4) (swapped-coordinates first, then wrong-quadrant). I recorded the lo:u1-1-3 and lo:u1-1-1 gaps because no existing kind fits those two objectives."
+  },
+  {
+   "lesson": "u1-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:u1-2-1",
+     "need_kind": "arrow_diagram_builder",
+     "description": "Two columns of dots for X and Y. The student draws arrows from elements of X to elements of Y to represent a stated relation (by a rule, or by a listed set of ordered pairs). The ordered-pair list updates live beside the diagram. Graded as a set of arrows. It would diagnose: reversed arrow direction (pairs written (b, a)), missing arrows, extra arrows for pairs that do not satisfy the rule, and arrows drawn from elements outside X or Y.",
+     "why": "No existing kind draws arrows between two sets. product_builder selects pairs from the full product, which is not an arrow diagram. number_line_marker and pair_plotter do not fit either. The lesson's own anchor question asks for exactly this representation."
+    },
+    {
+     "lo_id": "lo:u1-2-2",
+     "need_kind": "relation_rule_builder",
+     "description": "Given X, Y and a rule such as b = 2a + 4, the student picks, from the grid of all candidate pairs X×Y, exactly those that satisfy the rule. The arrow diagram and the cartesian dot-diagram fill in live. Graded as a set. It would diagnose: substituting b for a in the rule (reversed roles), including pairs whose second element is not in Y, missing pairs, and sign slips when a is negative. A first-quadrant-only cartesian view would also need negative values on the axes.",
+     "why": "product_builder only builds the whole product with no rule filter, so the 'satisfies the rule' step, which is the core of this objective, cannot be graded. pair_plotter places a single point and cannot grade a set of pairs against a rule."
+    },
+    {
+     "lo_id": "lo:u1-2-3",
+     "need_kind": "relation_subset_selector",
+     "description": "X×Y is shown as a full grid of pairs. A relation is stated in words, for example 'a is less than b'. The student highlights the subset that is the relation. Highlighted pairs stay inside the grid, which shows a relation as part of X×Y, and the extremes show that the empty set and X×Y itself are both relations. Graded as a set. It would diagnose: treating the relation as the whole product, choosing pairs outside X×Y, reversing pair order, and missing pairs.",
+     "why": "product_builder asks for the entire product X×Y and so cannot express 'a part of it chosen by a condition'. Using it would leave the 'subset' idea out. Neither a number line nor a plotter shows pairs as a subset."
+    },
+    {
+     "lo_id": "lo:u1-2-4",
+     "need_kind": "relation_on_set_builder",
+     "description": "A single set X, drawn once as a ring of dots or as a self-product grid. The student draws arrows from elements of X back to elements of X, or selects cells of X×X, for a stated rule such as 'a is the additive inverse of b'. Loops (0 to 0) are allowed, and the diagram checks them. Graded as a set of pairs. It would diagnose: omitting loops such as (0, 0), reversing arrows for non-symmetric rules, and including a pair only in one direction when the rule gives both.",
+     "why": "The same missing arrow/self-product construction as the other objectives, with the extra twist that both ends lie in one set. No existing kind draws arrows or loops on a single set."
+    }
+   ],
+   "notes": "The gaps are written to be built together as one family. A single 'relation builder' widget with modes arrow, pairs-from-rule, subset-of-product and on-a-set would cover all four objectives. Its predicates would be reversed-pairs, missing-pairs, extra-pairs, outside-the-sets and missing-loops. Misconception ids should be added to the u1-2 objectives before any template can be written."
+  },
+  {
+   "lesson": "u1-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:u1-3-1",
+     "need_kind": "relation_checker (arrow-diagram editor)",
+     "description": "The student gets sets X and Y and drags arrows from elements of X to elements of Y to build a relation that IS a function. A variant gives a relation and asks the student to add or remove arrows until it becomes a function, or to build one that is not. The check is live: each element of X must have exactly one arrow leaving it. Errors it would diagnose: an element of X with no arrow, an element of X with two arrows, and one-to-many read as allowed. The student would also see that an element of Y with no arrow, or with two arrows arriving, does not break the function property.",
+     "why": "product_builder builds the whole product X×Y, not a chosen subset, so it cannot test whether a relation is a function. The other kinds have no arrow or pair-selection instrument. Also, this objective lists no misconceptions, so no diagnostic could be mapped."
+    },
+    {
+     "lo_id": "lo:u1-3-2",
+     "need_kind": "none worth building yet (notation matching)",
+     "description": "The objective is about reading and writing notation: f : X → Y, f : x ↦ y, f(x) = y, and the image of an element. A matching or fill-in widget could ask the student to pair each symbol with its role, such as domain, rule or image. That is a recall task and would be an answer box in disguise.",
+     "why": "No existing kind fits, and no construction here carries the mathematics. The objective has no misconceptions listed, so nothing could be mapped."
+    },
+    {
+     "lo_id": "lo:u1-3-3",
+     "need_kind": "relation_diagrams (linked arrow, cartesian and ordered-pair views)",
+     "description": "For the book example (X = {2, 3, 4}, Y = {2, ..., 8}, a = ½b), the student builds R by tapping ordered pairs. The matching arrow diagram and cartesian dot diagram update live, and the student then says whether the picture is a function. Errors it would diagnose: pairs written as (y, x), a missing pair, and an extra pair. It would also show which diagram features signal a function: one arrow per element of X, and at most one dot on each vertical line.",
+     "why": "product_builder only builds the full X×Y product. pair_plotter takes a single point on a −5..5 grid, and the example's values go up to 8. Neither can build a relation as a subset and show it in three linked representations. No misconceptions are listed for this objective either."
+    },
+    {
+     "lo_id": "lo:u1-3-4",
+     "need_kind": "domain_range_marker (select domain, codomain and range on the arrow diagram)",
+     "description": "The student is given a function as an arrow diagram. In the book example this is X = {2, 3, 4} into Y = {2, ..., 8}, with range {4, 6, 8}. They tap the elements that make up the domain, the codomain and the range. The widget would then show that the range is a subset of the codomain, and that Y elements with no arrow are in the codomain but not in the range. Errors it would diagnose: range given as the whole codomain, range given as the domain, and domain and range swapped.",
+     "why": "number_line_marker grades a set of marked values on a number line, but the range here must be read from an arrow diagram, and the three sets must be told apart. That does not fit the number line honestly, and it would be an answer box in disguise. The objective has no misconceptions listed, so none could be mapped."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "u1-4",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:u1-4-1",
+     "need_kind": "expression_sorter",
+     "description": "The student sorts function rules into polynomial and not polynomial (x^3+1/x, x^2+√x, x(x-2x^2)). Then they drag each polynomial to a degree slot, after expanding it. Errors it would diagnose: counting a negative or fractional power as a polynomial term, reading the degree off the first term rather than the highest power, and failing to expand brackets, so x^2-(x^2-3) is given degree 2 instead of 0.",
+     "why": "No existing kind classifies algebraic expressions or reads a degree. Using number_line_marker or bar_builder would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:u1-4-2",
+     "need_kind": "function_machine",
+     "description": "The student feeds an input into a function machine f(x)=x^2-x+3 and builds the output step by step: square, subtract, add. They also combine f and g values, as in f(√2)+3g(√2). Errors it would diagnose: (-2)^2 evaluated as -4, dropping the sign when subtracting a negative, and applying 3 only to part of 3g.",
+     "why": "Evaluation is a numeric computation, and no existing kind constructs it. pair_plotter could plot the image, but only for whole numbers in -5..5, so it cannot handle the book's √2 and √3 cases."
+    },
+    {
+     "lo_id": "lo:u1-4-3",
+     "need_kind": "line_drawer",
+     "description": "line_drawer in equation mode, for example {\"mode\":\"equation\",\"m\":2,\"b\":1}, would fit drawing a linear or constant function from its rule. The constant case needs m=0. It would diagnose slope sign flipped, slope inverted, and the wrong intercept.",
+     "why": "The kind genuinely fits, but I can't write the template. The objective has no anchor book question for parent_question_id and no misconception ids, so there is nothing to map the diagnostics to. Samuel needs to add an anchor question and misconceptions for this objective."
+    },
+    {
+     "lo_id": "lo:u1-4-4",
+     "need_kind": "curve_sketcher (quadratic)",
+     "description": "The student builds a parabola from a table of values over an interval and fits the curve through the plotted points. curve_sketcher with fn quadratic looks like the right instrument. Errors it would diagnose: joining points with straight segments, mis-squaring negative x, and a wrong opening direction.",
+     "why": "The curve_sketcher predicates and can_emit rules are not in the contract provided. The objective also has no anchor question and no misconception ids, so I can't write diagnostics."
+    },
+    {
+     "lo_id": "lo:u1-4-5",
+     "need_kind": "curve_sketcher or vertex_placer",
+     "description": "The student places the vertex and the axis of symmetry of y=ax^2+bx+c. Then they read off the maximum or minimum value, using x=-b/2a and the sign of a. Errors it would diagnose: using x=b/2a (sign error), reporting the x-coordinate as the extreme value, and a wrong opening direction.",
+     "why": "This needs a quadratic-aware instrument, and none is documented. There is no anchor question or misconception list either."
+    }
+   ],
+   "notes": "No templates. All five objectives have empty misconception lists, and u1-4-3 to u1-4-5 have no anchor questions. The only kind that clearly fits is line_drawer for u1-4-3, and it is blocked by the missing anchor question and misconception ids."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:u1-1-3",
+   "need_kind": "arrow_diagram_builder",
+   "description": "The student draws arrows from each element of X to each element of Y, building the arrow diagram of X×Y. The same pairs are then shown on a Cartesian diagram, and the student marks the matching points. Errors it would diagnose: arrows missing, arrows going Y to X, and a point plotted with its coordinates swapped.",
+   "why": "No existing kind draws arrows between two sets. product_builder only taps ordered pairs, and pair_plotter taps one point. Neither builds the arrow diagram this objective is about."
+  },
+  {
+   "lo_id": "lo:u1-1-1",
+   "need_kind": "pair_equality_solver",
+   "description": "The student is given an equation such as (a − 2, b + 1) = (2, −3). They match the first components and the second components, and so build the two linear equations. Errors it would diagnose: comparing the first component with the second, and sign slips when solving.",
+   "why": "The task is solving for unknowns, not constructing a figure. Every existing kind would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:u1-1-2",
+   "need_kind": "misconception_registry",
+   "description": "product_builder fits X×Y and Y×X for X={2,−1}, Y={4,0}. Its reversed-pairs and missing-pairs predicates are the right ones. But no misconception id exists for this objective to map them to.",
+   "why": "The 'misconceptions' list is empty for every objective in this lesson. A template needs at least one diagnostic, and an id from another objective is refused (FR-1215). So I wrote no template rather than invent ids."
+  },
+  {
+   "lo_id": "lo:u1-1-4",
+   "need_kind": "misconception_registry",
+   "description": "pair_plotter fits locating or plotting points such as (3, −2), (−3, 1) and (−3, −4). Its swapped-coordinates and wrong-quadrant predicates would fire on the usual errors. But there is no misconception id to attach them to.",
+   "why": "The misconceptions list is empty for lo:u1-1-4, lo:u1-1-5 and every other objective in this lesson, so no valid diagnostics can be written. Once Samuel adds ids for swapped coordinates and wrong-quadrant signs, pair_plotter templates for lo:u1-1-4 and lo:u1-1-5 can be written at once."
+  },
+  {
+   "lo_id": "lo:u1-2-1",
+   "need_kind": "arrow_diagram_builder",
+   "description": "Two columns of dots for X and Y. The student draws arrows from elements of X to elements of Y to represent a stated relation (by a rule, or by a listed set of ordered pairs). The ordered-pair list updates live beside the diagram. Graded as a set of arrows. It would diagnose: reversed arrow direction (pairs written (b, a)), missing arrows, extra arrows for pairs that do not satisfy the rule, and arrows drawn from elements outside X or Y.",
+   "why": "No existing kind draws arrows between two sets. product_builder selects pairs from the full product, which is not an arrow diagram. number_line_marker and pair_plotter do not fit either. The lesson's own anchor question asks for exactly this representation."
+  },
+  {
+   "lo_id": "lo:u1-2-2",
+   "need_kind": "relation_rule_builder",
+   "description": "Given X, Y and a rule such as b = 2a + 4, the student picks, from the grid of all candidate pairs X×Y, exactly those that satisfy the rule. The arrow diagram and the cartesian dot-diagram fill in live. Graded as a set. It would diagnose: substituting b for a in the rule (reversed roles), including pairs whose second element is not in Y, missing pairs, and sign slips when a is negative. A first-quadrant-only cartesian view would also need negative values on the axes.",
+   "why": "product_builder only builds the whole product with no rule filter, so the 'satisfies the rule' step, which is the core of this objective, cannot be graded. pair_plotter places a single point and cannot grade a set of pairs against a rule."
+  },
+  {
+   "lo_id": "lo:u1-2-3",
+   "need_kind": "relation_subset_selector",
+   "description": "X×Y is shown as a full grid of pairs. A relation is stated in words, for example 'a is less than b'. The student highlights the subset that is the relation. Highlighted pairs stay inside the grid, which shows a relation as part of X×Y, and the extremes show that the empty set and X×Y itself are both relations. Graded as a set. It would diagnose: treating the relation as the whole product, choosing pairs outside X×Y, reversing pair order, and missing pairs.",
+   "why": "product_builder asks for the entire product X×Y and so cannot express 'a part of it chosen by a condition'. Using it would leave the 'subset' idea out. Neither a number line nor a plotter shows pairs as a subset."
+  },
+  {
+   "lo_id": "lo:u1-2-4",
+   "need_kind": "relation_on_set_builder",
+   "description": "A single set X, drawn once as a ring of dots or as a self-product grid. The student draws arrows from elements of X back to elements of X, or selects cells of X×X, for a stated rule such as 'a is the additive inverse of b'. Loops (0 to 0) are allowed, and the diagram checks them. Graded as a set of pairs. It would diagnose: omitting loops such as (0, 0), reversing arrows for non-symmetric rules, and including a pair only in one direction when the rule gives both.",
+   "why": "The same missing arrow/self-product construction as the other objectives, with the extra twist that both ends lie in one set. No existing kind draws arrows or loops on a single set."
+  },
+  {
+   "lo_id": "lo:u1-3-1",
+   "need_kind": "relation_checker (arrow-diagram editor)",
+   "description": "The student gets sets X and Y and drags arrows from elements of X to elements of Y to build a relation that IS a function. A variant gives a relation and asks the student to add or remove arrows until it becomes a function, or to build one that is not. The check is live: each element of X must have exactly one arrow leaving it. Errors it would diagnose: an element of X with no arrow, an element of X with two arrows, and one-to-many read as allowed. The student would also see that an element of Y with no arrow, or with two arrows arriving, does not break the function property.",
+   "why": "product_builder builds the whole product X×Y, not a chosen subset, so it cannot test whether a relation is a function. The other kinds have no arrow or pair-selection instrument. Also, this objective lists no misconceptions, so no diagnostic could be mapped."
+  },
+  {
+   "lo_id": "lo:u1-3-2",
+   "need_kind": "none worth building yet (notation matching)",
+   "description": "The objective is about reading and writing notation: f : X → Y, f : x ↦ y, f(x) = y, and the image of an element. A matching or fill-in widget could ask the student to pair each symbol with its role, such as domain, rule or image. That is a recall task and would be an answer box in disguise.",
+   "why": "No existing kind fits, and no construction here carries the mathematics. The objective has no misconceptions listed, so nothing could be mapped."
+  },
+  {
+   "lo_id": "lo:u1-3-3",
+   "need_kind": "relation_diagrams (linked arrow, cartesian and ordered-pair views)",
+   "description": "For the book example (X = {2, 3, 4}, Y = {2, ..., 8}, a = ½b), the student builds R by tapping ordered pairs. The matching arrow diagram and cartesian dot diagram update live, and the student then says whether the picture is a function. Errors it would diagnose: pairs written as (y, x), a missing pair, and an extra pair. It would also show which diagram features signal a function: one arrow per element of X, and at most one dot on each vertical line.",
+   "why": "product_builder only builds the full X×Y product. pair_plotter takes a single point on a −5..5 grid, and the example's values go up to 8. Neither can build a relation as a subset and show it in three linked representations. No misconceptions are listed for this objective either."
+  },
+  {
+   "lo_id": "lo:u1-3-4",
+   "need_kind": "domain_range_marker (select domain, codomain and range on the arrow diagram)",
+   "description": "The student is given a function as an arrow diagram. In the book example this is X = {2, 3, 4} into Y = {2, ..., 8}, with range {4, 6, 8}. They tap the elements that make up the domain, the codomain and the range. The widget would then show that the range is a subset of the codomain, and that Y elements with no arrow are in the codomain but not in the range. Errors it would diagnose: range given as the whole codomain, range given as the domain, and domain and range swapped.",
+   "why": "number_line_marker grades a set of marked values on a number line, but the range here must be read from an arrow diagram, and the three sets must be told apart. That does not fit the number line honestly, and it would be an answer box in disguise. The objective has no misconceptions listed, so none could be mapped."
+  },
+  {
+   "lo_id": "lo:u1-4-1",
+   "need_kind": "expression_sorter",
+   "description": "The student sorts function rules into polynomial and not polynomial (x^3+1/x, x^2+√x, x(x-2x^2)). Then they drag each polynomial to a degree slot, after expanding it. Errors it would diagnose: counting a negative or fractional power as a polynomial term, reading the degree off the first term rather than the highest power, and failing to expand brackets, so x^2-(x^2-3) is given degree 2 instead of 0.",
+   "why": "No existing kind classifies algebraic expressions or reads a degree. Using number_line_marker or bar_builder would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:u1-4-2",
+   "need_kind": "function_machine",
+   "description": "The student feeds an input into a function machine f(x)=x^2-x+3 and builds the output step by step: square, subtract, add. They also combine f and g values, as in f(√2)+3g(√2). Errors it would diagnose: (-2)^2 evaluated as -4, dropping the sign when subtracting a negative, and applying 3 only to part of 3g.",
+   "why": "Evaluation is a numeric computation, and no existing kind constructs it. pair_plotter could plot the image, but only for whole numbers in -5..5, so it cannot handle the book's √2 and √3 cases."
+  },
+  {
+   "lo_id": "lo:u1-4-3",
+   "need_kind": "line_drawer",
+   "description": "line_drawer in equation mode, for example {\"mode\":\"equation\",\"m\":2,\"b\":1}, would fit drawing a linear or constant function from its rule. The constant case needs m=0. It would diagnose slope sign flipped, slope inverted, and the wrong intercept.",
+   "why": "The kind genuinely fits, but I can't write the template. The objective has no anchor book question for parent_question_id and no misconception ids, so there is nothing to map the diagnostics to. Samuel needs to add an anchor question and misconceptions for this objective."
+  },
+  {
+   "lo_id": "lo:u1-4-4",
+   "need_kind": "curve_sketcher (quadratic)",
+   "description": "The student builds a parabola from a table of values over an interval and fits the curve through the plotted points. curve_sketcher with fn quadratic looks like the right instrument. Errors it would diagnose: joining points with straight segments, mis-squaring negative x, and a wrong opening direction.",
+   "why": "The curve_sketcher predicates and can_emit rules are not in the contract provided. The objective also has no anchor question and no misconception ids, so I can't write diagnostics."
+  },
+  {
+   "lo_id": "lo:u1-4-5",
+   "need_kind": "curve_sketcher or vertex_placer",
+   "description": "The student places the vertex and the axis of symmetry of y=ax^2+bx+c. Then they read off the maximum or minimum value, using x=-b/2a and the sign of a. Errors it would diagnose: using x=b/2a (sign error), reporting the x-coordinate as the extreme value, and a wrong opening direction.",
+   "why": "This needs a quadratic-aware instrument, and none is documented. There is no anchor question or misconception list either."
+  }
+ ]
+}

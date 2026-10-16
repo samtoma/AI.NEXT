@@ -33,7 +33,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,8 +44,6 @@ import embed_workflow as EW  # noqa: E402
 
 FORMAT = "ainext.teaching-visuals/1"
 WORKFLOW = HERE / "runbook" / "lesson.workflow.js"
-STUB = HERE / "tests" / "workflow_stub.mjs"
-RESPONDER = HERE / "runbook" / "cli_responder.mjs"
 PROMPTS = ("exercise", "activity", "open_prompt", "worked_example")
 DECORATIVE = re.compile(r"\bdecorative\b", re.I)
 
@@ -170,26 +167,9 @@ def accept(book: str, run_file: Path) -> list[str]:
 
 
 def run_here(book: str, slugs: list[str], cap: float) -> Path:
-    copy, info = write_copy(book, slugs)
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    runs = HERE / "runs" / book / "lessons"
-    runs.mkdir(parents=True, exist_ok=True)
-    ledger = runs / f"s4-visuals.{stamp}.cost.jsonl"
-    fixture = runs / f"s4-visuals.{stamp}.fixture.json"
-    fixture.write_text(json.dumps({"responses": {}, "responder": str(RESPONDER.resolve()),
-                                   "stub": {"cap_usd": cap, "read_dirs": [str(CF.figures_dir(book).resolve())], "ledger": str(ledger)}}))
-    p = subprocess.run(["node", str(STUB), str(copy), str(fixture)], capture_output=True, text=True, cwd=HERE)
-    sys.stderr.write(p.stderr[-4000:])
-    fixture.unlink()
-    rep = json.loads(p.stdout or "{}")
-    for line in rep.get("logs") or []:
-        print(f"  [workflow] {line}", file=sys.stderr)
-    if not rep.get("ok"):
-        raise SystemExit(f"the workflow failed: {rep.get('error')}")
-    out = runs / f"s4-visuals.{stamp}.json"
-    out.write_text(json.dumps(rep["result"], ensure_ascii=False, indent=1) + "\n")
-    cost = sum(json.loads(l)["cost_usd"] for l in ledger.read_text().splitlines()) if ledger.exists() else 0.0
-    print(f"saved {out.relative_to(HERE)}; ${cost:.3f} ({ledger.relative_to(HERE)})", file=sys.stderr)
+    import workflow_runner  # noqa: PLC0415
+    copy, _info = write_copy(book, slugs)
+    out, _result, _cost = workflow_runner.run_copy(copy, [CF.figures_dir(book)], cap, "s4-visuals", book, "lessons")
     return out
 
 

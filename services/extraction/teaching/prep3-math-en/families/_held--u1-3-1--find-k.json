@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-3-1:find-k",
+ "kind": "family",
+ "lo_id": "lo:u1-3-1",
+ "parent_question_id": "lo:u1-3-1:no-book-question",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "let": "s * k + r"
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    30
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    30
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X=\\{1, 2, 3\\}$. The relation $R=\\{(1, {=p}), (2, {=q}), (3, {=c}), (1, {=s}k+{=r})\\}$ is from $X$ to the set of natural numbers. Find the value of $k$ for which $R$ is a function.",
+ "answer": "k",
+ "solution": [
+  "Each of 1, 2 and 3 appears once as a first projection except 1, which appears in the pairs $(1, {=p})$ and $(1, {=s}k+{=r})$.",
+  "For R to be a function, 1 must have only one second projection, so ${=s}k+{=r}={=p}$.",
+  "${=s}k={=p}-{=r}={=p - r}$, so $k={=k}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Placeholder parent id: no book question supplied. Unique integer k since s*k+r=p. Other pairs unaffected."
+}

@@ -1,0 +1,32 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:u1-1-2:build-x-times-y",
+ "lo_id": "lo:u1-1-2",
+ "parent_question_id": "q:u1-1-2:bk-drill-2-a",
+ "tier": "basic",
+ "kind": "product_builder",
+ "spec": {
+  "X": [
+   2,
+   -1
+  ],
+  "Y": [
+   4,
+   0
+  ]
+ },
+ "stem": "Let $X=\\{2, -1\\}$ and $Y=\\{4, 0\\}$. Build $X\\times Y$ by tapping every ordered pair it contains.",
+ "solution": [
+  "$X\\times Y$ is the set of all ordered pairs $(x, y)$ with $x\\in X$ and $y\\in Y$: the first element comes from X, the second from Y.",
+  "Pair 2 with each element of Y: $(2, 4)$, $(2, 0)$.",
+  "Pair $-1$ with each element of Y: $(-1, 4)$, $(-1, 0)$.",
+  "So $X\\times Y=\\{(2,4),(2,0),(-1,4),(-1,0)\\}$, with $2\\times2=4$ pairs."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "reversed-pairs",
+   "misconception_id": "mc:u1-1-2:product-order-irrelevant"
+  }
+ ],
+ "notes": "missing-pairs (an incomplete product) has no misconception in this objective's own list, so it is left unmapped. Wrong pairs from Y x X are exactly what reversed-pairs reports."
+}

@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-2-4:shift-count",
+ "kind": "family",
+ "lo_id": "lo:u1-2-4",
+ "parent_question_id": "q:u1-2-4:bk-example-2",
+ "source_page": 14,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    5,
+    8
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "let": "n - k"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $X=\\{1, 2, 3, \\dots, {=n}\\}$ and R is a relation on X where $a\\,R\\,b$ means: «$b = a + {=k}$» for each of $a, b\\in X$. When R is represented by an arrow diagram, how many arrows are drawn? (Each ordered pair of R is one arrow.)",
+ "answer": "c",
+ "solution": [
+  "An arrow goes from a to b exactly when $(a, b)\\in R$, that is when $b = a + {=k}$ and both a and b belong to X.",
+  "The first pair is $(1, {=k + 1})$ and the last pair is $({=n - k}, {=n})$, because a + {=k} must not exceed {=n}.",
+  "So a takes the values $1, 2, \\dots, {=n - k}$, giving {=c} ordered pairs and therefore {=c} arrows."
+ ],
+ "notes": "Basic entry: reading a relation on one set as ordered pairs / arrows. Numeric count to avoid set-of-pairs marker."
+}

@@ -1,0 +1,130 @@
+{
+  "generator": "services/extraction/generate_widget_questions.py (ADR-0009) --templates",
+  "question_type": "widget",
+  "book": "work/prep3-math-en/bookrecord/prep3-math-en.json",
+  "course_id": "course:prep3-math-en",
+  "templates": {
+    "wt:u1-2-1:pairs-from-x-to-y": "e6435b4be44e9679d84aeeb841912b2383f8f1541e68cea9aa9bf528538cb4f7"
+  },
+  "rejected_templates": {
+    "wt:u1-1-1:plot-the-pair": [
+      "not shipped: S5's verifier refused every mapping of it (swapped-coordinates → mc:u1-1-1:order-ignored-pair-as-set), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:u1-1-2:build-x-times-y": [
+      "not shipped: S5's verifier refused every mapping of it (reversed-pairs → mc:u1-1-2:product-order-irrelevant), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:u1-1-2:build-y-times-z": [
+      "not shipped: S5's verifier refused every mapping of it (reversed-pairs → mc:u1-1-2:product-order-irrelevant), so no widget of it could say why an answer is wrong"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q:u1-2-1:w001",
+      "lo_id": "lo:u1-2-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "A relation from $X=\\{-1, 1, 2\\}$ to $Y=\\{2, 4, 6\\}$ is made of ordered pairs $(a, b)$ with $a \\in X$ first and $b \\in Y$ second. Tap every ordered pair that could belong to a relation from $X$ to $Y$ (all of $X \\times Y$).",
+      "choices": {
+        "kind": "product_builder",
+        "spec": {
+          "X": [
+            -1,
+            1,
+            2
+          ],
+          "Y": [
+            2,
+            4,
+            6
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "reversed-pairs",
+            "misconception_id": "mc:u1-2-1:pair-order-reversed"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from X to Y is written with ordered pairs (a, b): the first member a comes from X and the second member b from Y."
+        },
+        {
+          "step": 2,
+          "text_md": "Pair each member of X with every member of Y: with -1 we get (-1, 2), (-1, 4), (-1, 6)."
+        },
+        {
+          "step": 3,
+          "text_md": "With 1 we get (1, 2), (1, 4), (1, 6); with 2 we get (2, 2), (2, 4), (2, 6)."
+        },
+        {
+          "step": 4,
+          "text_md": "These 9 pairs form X × Y; any relation from X to Y, such as the pairs where b = 2a + 4, is chosen from among them."
+        }
+      ],
+      "parent_question_id": "q:u1-2-1:bk-example-1",
+      "source_note": "Generated from template family wt:u1-2-1:pairs-from-x-to-y.",
+      "family": "wt:u1-2-1:pairs-from-x-to-y",
+      "template_sha": "e6435b4be44e9679d84aeeb841912b2383f8f1541e68cea9aa9bf528538cb4f7"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:u1-2-1:pair-order-reversed",
+      "lo_id": "lo:u1-2-1",
+      "label": "Writes the pairs from Y to X instead of from X to Y",
+      "description": "The student writes each ordered pair with the book type first and the student second, or draws the arrows from the books back to the students."
+    }
+  ],
+  "mapping_review": {
+    "rule": "decision 47",
+    "verifier_runs": [
+      "s7-verify.20261016T124626Z"
+    ],
+    "counts": {
+      "active": 6,
+      "held": 0,
+      "kept_by_review": 0,
+      "dropped_by_review": 0
+    },
+    "reviews": []
+  },
+  "s5_reconciled": {
+    "runs": [
+      "s5-final.20261016T124654Z.json"
+    ],
+    "catalogue": "prep3-math-en-misconceptions",
+    "refused_attachments_stripped": [
+      [
+        "lo:u1-1-1",
+        "S7",
+        "wt:u1-1-1:plot-the-pair#swapped-coordinates",
+        "mc:u1-1-1:order-ignored-pair-as-set",
+        "Plotted (y, x) — the pair read in the wrong order"
+      ],
+      [
+        "lo:u1-1-2",
+        "S7",
+        "wt:u1-1-2:build-x-times-y#reversed-pairs",
+        "mc:u1-1-2:product-order-irrelevant",
+        "Built Y×X — the pairs are the right numbers in the wrong order"
+      ],
+      [
+        "lo:u1-1-2",
+        "S7",
+        "wt:u1-1-2:build-y-times-z#reversed-pairs",
+        "mc:u1-1-2:product-order-irrelevant",
+        "Built Y×X — the pairs are the right numbers in the wrong order"
+      ]
+    ],
+    "widgets_left_out": [
+      "q:u1-1-1:w001",
+      "q:u1-1-1:w002",
+      "q:u1-1-1:w003",
+      "q:u1-1-2:w001",
+      "q:u1-1-2:w002"
+    ]
+  }
+}

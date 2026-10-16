@@ -1,0 +1,39 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:u1-4-1:cancel-lead",
+ "kind": "family",
+ "lo_id": "lo:u1-4-1",
+ "parent_question_id": "q:u1-4-1:bk-drill-2-d",
+ "source_page": 19,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=x^{{=m}}(x-{=a})^2-x^{{=m+2}}$",
+ "answer": "m + 1",
+ "solution": [
+  "$(x-{=a})^2=x^2-{=2*a}x+{=a*a}$.",
+  "$f(x)=x^{{=m}}(x^2-{=2*a}x+{=a*a})-x^{{=m+2}}=x^{{=m+2}}-{=2*a}x^{{=m+1}}+{=a*a}x^{{=m}}-x^{{=m+2}}$.",
+  "The terms in $x^{{=m+2}}$ cancel, so $f(x)=-{=2*a}x^{{=m+1}}+{=a*a}x^{{=m}}$.",
+  "The highest power of x is {=m+1}.",
+  "The last step states the answer: degree {=m+1}."
+ ],
+ "notes": "Leading terms cancel after expansion, so the degree is one less than the naive m+2. Same method as book 2-b and 2-d (expand, then read the highest power)."
+}

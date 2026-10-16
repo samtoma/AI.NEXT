@@ -1,0 +1,1095 @@
+{
+  "book": {
+    "config_version": 1,
+    "book": "prep3-math-en",
+    "title": "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+    "course_id": "course:prep3-math-en",
+    "curriculum": "eg-national-en",
+    "subject": "math",
+    "grade": "prep-3",
+    "language": "en",
+    "direction": "ltr",
+    "id_prefixes": [
+      "geo",
+      "t2u",
+      "u"
+    ],
+    "id_prefix": null,
+    "load_order": 10,
+    "sources": {
+      "pdf": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    },
+    "page_offsets": [
+      {
+        "label": "First Term Student's Book",
+        "pdf_from": 1,
+        "pdf_to": 73,
+        "pdf_minus_printed": null,
+        "verified_at": [],
+        "note": "Not recorded. The Prep-3 maths bundles were written by ad-hoc agents before the line existed and set source_page by hand (extraction-pipeline.md §2.2, G1)."
+      },
+      {
+        "label": "Second Term Student's Book",
+        "pdf_from": 74,
+        "pdf_to": 178,
+        "pdf_minus_printed": 73,
+        "verified_at": [
+          [
+            5,
+            78
+          ],
+          [
+            39,
+            112
+          ],
+          [
+            42,
+            115
+          ],
+          [
+            64,
+            137
+          ],
+          [
+            100,
+            173
+          ]
+        ],
+        "note": "seed/geometry-structure.md"
+      }
+    ],
+    "objectives_mode": "printed",
+    "notation": null,
+    "sacred_content": false,
+    "bundles": [
+      "services/extraction/work/prep3-math-en/bookrecord/bundle-1.json"
+    ],
+    "superseded_bundles": {},
+    "content_files": [],
+    "manifest": null,
+    "generated": null,
+    "parity": null,
+    "program": null,
+    "status": "loadable",
+    "maths_source": null,
+    "lesson_unit": null,
+    "answer_rules": null,
+    "lesson_titles": {
+      "u1-1": "Cartesian product",
+      "u1-2": "Relations",
+      "u1-3": "Functions",
+      "u1-4": "Polynomial functions"
+    },
+    "lesson_titles_note": "Moved here from app/src/lib/courses.ts PREP3_MATH_LESSON_TITLES (integration backlog 5), text unchanged. The loader writes them to course_lessons.title; the other Prep-3 maths lessons keep their first objective's label, as the app shows today.",
+    "paths": {
+      "repo_root": "/Users/tdeif/Developer/Noor",
+      "extraction_dir": "/Users/tdeif/Developer/Noor/services/extraction",
+      "pdf": "/Users/tdeif/Developer/Noor/docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    }
+  },
+  "mode": "author",
+  "course_id": "course:prep3-math-en",
+  "contract": {
+    "pair_plotter": {
+      "predicates": {
+        "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
+        "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
+        "off-target": "Neither coordinate matches, with no recognisable pattern"
+      },
+      "can_emit": [
+        "swapped-coordinates",
+        "wrong-quadrant",
+        "off-target"
+      ],
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5."
+    },
+    "product_builder": {
+      "predicates": {
+        "reversed-pairs": "Built Y×X — the pairs are the right numbers in the wrong order",
+        "missing-pairs": "An incomplete product: some pairs of X×Y were not selected",
+        "extra-pairs": "Selected pairs that are not in X×Y at all"
+      },
+      "can_emit": [
+        "reversed-pairs",
+        "missing-pairs"
+      ],
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers."
+    },
+    "line_drawer": {
+      "predicates": {
+        "slope-inverted": "Slope taken as run over rise instead of rise over run",
+        "slope-sign-flipped": "Right gradient, wrong sign — the line leans the other way",
+        "intercept-wrong": "Correct slope, wrong intercept — a line parallel to the answer",
+        "vertical-line": "A vertical line, which has no slope and cannot be written y = mx + c",
+        "points-swapped": "The named points plotted with x and y exchanged",
+        "off-target": "Neither the slope nor the intercept matches"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed."
+    },
+    "circle_builder": {
+      "predicates": {
+        "ends-not-on-circle": "One or both endpoints are not on the circle",
+        "chord-not-through-centre": "A chord was drawn where a diameter was asked for — it misses the centre",
+        "radius-drawn-as-chord": "Both ends on the circle where a radius was asked for; a radius starts at the centre",
+        "radius-short": "Starts at the centre but does not reach the circle",
+        "is-secant": "The line cuts the circle twice — a secant, not a tangent",
+        "is-external": "The line misses the circle completely",
+        "off-target": "The construction does not satisfy the element asked for"
+      },
+      "can_emit": {
+        "by": "element",
+        "cases": {
+          "radius": [
+            "radius-drawn-as-chord",
+            "radius-short",
+            "off-target"
+          ],
+          "chord": [
+            "ends-not-on-circle"
+          ],
+          "diameter": [
+            "chord-not-through-centre",
+            "ends-not-on-circle"
+          ],
+          "tangent": [
+            "is-secant",
+            "is-external"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"element\":\"chord\"} — a circle of radius 5 about M; the student drags both ends of a segment to construct the named element. element ∈ radius | chord | diameter | tangent. Every construction with the right PROPERTY is accepted (a chord has dozens of correct answers), and the defining properties light up live as the student drags — so use it to teach what the word means, not to test one remembered picture."
+    },
+    "angle_setter": {
+      "predicates": {
+        "arc-given-as-angle": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+        "angle-given-as-arc": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+        "other-arc": "Set the arc on the far side; C faces the arc across from it",
+        "off-target": "The angle is not the one asked for, with no recognisable pattern"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem."
+    },
+    "triangle_ratio": {
+      "predicates": {
+        "ratio-inverted": "The right pair of sides, the wrong way up",
+        "used-sine": "Built the sine where another ratio was asked for",
+        "used-cosine": "Built the cosine where another ratio was asked for",
+        "used-tangent": "Built the tangent where another ratio was asked for",
+        "off-target": "The ratio does not match and is not a recognised substitution"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "sin": [
+            "used-cosine",
+            "used-tangent",
+            "off-target"
+          ],
+          "cos": [
+            "used-sine",
+            "used-tangent",
+            "off-target"
+          ],
+          "tan": [
+            "used-sine",
+            "used-cosine",
+            "ratio-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"ask\":\"sin\",\"target\":0.6} — a right triangle whose two legs the student drags, with sin, cos and tan all updating live. ask ∈ sin | cos | tan; it is graded on the RATIO, so every similar triangle is accepted — 3-4 and 6-8 both give tan 0.75. sin and cos targets must be below 1. Use it to show that the ratio does not depend on the size. Validator limits (parseMathWidget): every target is above 0, and a tan target is at most 12."
+    },
+    "bar_builder": {
+      "predicates": {
+        "median-for-mean": "Built a set whose MEDIAN is the target — the mean is the total shared equally",
+        "mean-for-median": "Built a set whose MEAN is the target — the median is the middle value in order",
+        "no-mode": "No value repeats, so the set has no mode at all",
+        "multi-modal": "Two or more values tie at the top, so the set has more than one mode",
+        "total-wrong": "For this mean across n values the total must be mean x n, and it is not",
+        "off-target": "The statistic does not match the target"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "mean": [
+            "median-for-mean",
+            "total-wrong"
+          ],
+          "median": [
+            "mean-for-median",
+            "off-target"
+          ],
+          "mode": [
+            "no-mode",
+            "multi-modal",
+            "off-target"
+          ],
+          "range": [
+            "off-target"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"ask\":\"mean\",\"target\":6,\"n\":5} — the student drags bars (0..10) to BUILD a data set with a given statistic; mean, median, mode, range and the population standard deviation are all shown live. ask ∈ mean | median | mode | range; n is 3–8. This runs the book's question backwards on purpose: many data sets have a mean of 6, and discovering that is the lesson. Validator limits (parseMathWidget): the target is between 0 and 10, the bars' own range; a mode or range target is a whole number."
+    },
+    "number_line_marker": {
+      "predicates": {
+        "missed-values": "Part of the answer set was not marked",
+        "extra-values": "Marked values that the answer set does not contain",
+        "sign-flipped": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+        "endpoint-inclusion-wrong": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
+        "interval-wrong": "The interval does not run between the right endpoints",
+        "off-target": "Wrong in a way none of the named errors describes"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "missed-values",
+            "extra-values",
+            "sign-flipped"
+          ],
+          "interval": [
+            "endpoint-inclusion-wrong",
+            "interval-wrong"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number line; the answer is a SET and is graded as one (1–4 targets). The other mode is {\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range."
+    },
+    "ratio_balance": {
+      "predicates": {
+        "inverse-solved-as-direct": "Matched the quotients where the products should match",
+        "direct-solved-as-inverse": "Matched the products where the quotients should match",
+        "off-target": "The fourth term does not balance the relationship"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "direct": [
+            "direct-solved-as-inverse",
+            "off-target"
+          ],
+          "inverse": [
+            "inverse-solved-as-direct",
+            "off-target"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"mode\":\"direct\",\"a\":3,\"b\":4,\"c\":9} — a beam balance for the fourth term; the student drags the right pan until it is level. mode \"direct\" requires the two QUOTIENTS to match, \"inverse\" the two PRODUCTS (use inverse for \"more workers, fewer days\"). The fourth term must come out a whole number from 1 to 24 — check that before emitting. Validator limits (parseMathWidget): a, b and c are positive."
+    },
+    "sample_space": {
+      "predicates": {
+        "missed-outcomes": "Some outcomes in the event were not selected",
+        "extra-outcomes": "Selected outcomes that do not satisfy the event",
+        "counted-once": "Counted a compound outcome once where the grid shows several ways to make it"
+      },
+      "can_emit": [
+        "counted-once",
+        "missed-outcomes",
+        "extra-outcomes"
+      ],
+      "instrument": "Spec example {\"rows\":6,\"cols\":6,\"rule\":{\"kind\":\"sum\",\"op\":\"eq\",\"value\":7}} — the whole sample space as a grid; the student taps or drags across the outcomes in the event and n(E)/n(S) assembles live. kind ∈ sum | diff | product | same | first | second; op ∈ eq | ne | lt | le | gt | ge. You name the RULE and the app works out which cells satisfy it — never send a list of correct cells. Validator limits (parseMathWidget): rows and cols are 2–8 each. Pipeline rule (stricter than the app): the event holds at least one outcome."
+    },
+    "curve_sketcher": {
+      "predicates": {
+        "fails-vertical-line-test": "The stroke doubles back: one x carries two y values, so it is not a function",
+        "opens-wrong-way": "The parabola opens the opposite way — the sign of a",
+        "slope-sign-flipped": "The line rises where it should fall, or the reverse",
+        "vertically-displaced": "Right shape, sitting consistently above or below the true curve",
+        "partial-coverage": "The sketch covers only part of the visible domain",
+        "asymptote-crossed": "The stroke runs straight through where the curve is undefined, as if it were continuous there",
+        "wrong-quadrants": "The hyperbola's branches sit in the wrong pair of quadrants — the sign of a",
+        "wrong-intercept": "The curve does not pass through its true y-intercept",
+        "amplitude-wrong": "The curve reaches the wrong distance from its midline",
+        "period-wrong": "The curve repeats at the wrong rate for this function",
+        "vertical-shift-wrong": "The curve is centred on the wrong midline",
+        "off-target": "The sketch does not follow the curve"
+      },
+      "can_emit": {
+        "by": "fn",
+        "cases": {
+          "linear": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "slope-sign-flipped"
+          ],
+          "quadratic": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "opens-wrong-way"
+          ],
+          "hyperbola": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-quadrants"
+          ],
+          "exponential": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-intercept"
+          ],
+          "sine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "cosine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "tangent": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"fn\":\"quadratic\",\"coefs\":[1,0,-4]} — the student draws the curve FREEHAND with a finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside −5..5. Validator limits (parseMathWidget): every linear or quadratic coefficient is within ±10. Five more families: spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the student to lift their finger and draw each branch separately. Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is a boundary the curve approaches and never crosses."
+    },
+    "polygon_builder": {
+      "predicates": {
+        "only-one-pair-parallel": "That is a trapezium — only one pair of opposite sides is parallel",
+        "sides-not-equal": "The sides that must be equal for this shape are not",
+        "no-right-angle": "None of the interior angles is a right angle",
+        "midsegment-not-half": "Parallel to the third side, but not half its length",
+        "area-missing-half": "Exactly double the target — the ÷2 was left out of the area formula",
+        "not-the-shape": "The construction does not have the property this shape needs"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "construct": {
+            "by": "shape",
+            "cases": {
+              "scalene": [
+                "not-the-shape"
+              ],
+              "isosceles": [
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "right": [
+                "no-right-angle",
+                "not-the-shape"
+              ],
+              "parallelogram": [
+                "only-one-pair-parallel",
+                "not-the-shape"
+              ],
+              "rectangle": [
+                "only-one-pair-parallel",
+                "no-right-angle",
+                "not-the-shape"
+              ],
+              "rhombus": [
+                "only-one-pair-parallel",
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "square": [
+                "only-one-pair-parallel",
+                "no-right-angle",
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "trapezium": [
+                "not-the-shape"
+              ],
+              "kite": [
+                "sides-not-equal",
+                "not-the-shape"
+              ]
+            }
+          },
+          "midsegment": [
+            "midsegment-not-half",
+            "not-the-shape"
+          ],
+          "area": [
+            "area-missing-half",
+            "not-the-shape"
+          ]
+        }
+      },
+      "instrument": "Spec example {\"mode\":\"construct\",\"shape\":\"rhombus\"} — the student drags 3 or 4 vertices on a lattice into the named shape; graded on its PROPERTIES (side lengths, parallel sides, right angles), so every valid figure is accepted. shape (triangle) ∈ scalene | isosceles | right; shape (quadrilateral) ∈ parallelogram | rectangle | rhombus | square | trapezium | kite — never equilateral, which a square lattice cannot draw. Two other modes: {\"mode\":\"midsegment\",\"triangle\":[[0,0],[6,0],[0,6]],\"apex\":0} — the student drags a segment onto the two sides touching \"apex\" and it is graded parallel-and-half-length against the third side (the midpoint theorem, as a property, not a position); and {\"mode\":\"area\",\"shape\":\"triangle\",\"target\":6} — any polygon of that vertex count is accepted if its area matches (target must be a whole or half number, Pick's theorem). Validator limits (parseMathWidget): a midsegment triangle's vertices are whole-number pairs within ±6 and not collinear, apex 0, 1 or 2; an area target is above 0 and at most 24."
+    },
+    "solid_scaler": {
+      "predicates": {
+        "volume-scaled-by-k": "The scale factor was applied once (k), not cubed (k³) — a linear length scaling used for a volume",
+        "area-scaled-by-k": "The scale factor was applied once (k), not squared (k²) — a linear length scaling used for an area",
+        "wrong-formula-part": "The scale factor is right, but a face — usually a base — is missing from the surface-area reading",
+        "off-target": "Neither the scale factor nor the surface reading matches"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "volume": [
+            "volume-scaled-by-k",
+            "off-target"
+          ],
+          "area": {
+            "by": "solid",
+            "cases": {
+              "box": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "cylinder": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "cone": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "pyramid": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "sphere": [
+                "area-scaled-by-k",
+                "off-target"
+              ]
+            }
+          }
+        }
+      },
+      "instrument": "Spec example {\"solid\":\"cylinder\",\"ask\":\"volume\",\"ratio\":8} — a simple isometric solid the student scales by dragging a factor k; the live readout shows V0·k³ and A0·k² together. solid ∈ box | cylinder | cone | pyramid | sphere; ask ∈ volume | area. \"ratio\" is the TARGET MULTIPLE (never an absolute number) and its correct k — ∛ratio for volume, √ratio for area — must land on the slider's own 0.5 stops from 0.5 to 4 (so favour ratio ∈ {1, 2.25, 4, 8, 9, 15.625, 16, 27, 64, …} — check ∛ or √ lands on a half before emitting). ask:\"area\" also shows toggles for which face(s) count, so leaving a base off is diagnosed on its own. Validator limits (parseMathWidget): ratio above 0; optional \"dims\" — box {l, w, h} (default 4, 3, 2), cylinder and cone {r, h} (default 2, 4), pyramid {s, h} (default 4, 3), sphere {r} (default 2) — each above 0 and at most 8. Give dims whenever the question states the solid's measurements, so the drawing shows them."
+    },
+    "box_plot_builder": {
+      "predicates": {
+        "median-of-unsorted": "The middle of the data as GIVEN, not the middle once it is sorted",
+        "iqr-as-range": "The lower and upper quartiles were placed at the minimum and maximum — the interquartile range rebuilt as the full range",
+        "quartile-method": "A different quartile method was used (splitting at the median) — this book uses linear interpolation between ranks",
+        "whisker-to-outlier": "A whisker was dragged out to a raw outlier instead of stopping at the last value within 1.5×IQR",
+        "off-target": "The five-number summary does not match, with no recognisable pattern"
+      },
+      "can_emit": [
+        "median-of-unsorted",
+        "iqr-as-range",
+        "quartile-method",
+        "whisker-to-outlier",
+        "off-target"
+      ],
+      "instrument": "Spec example {\"data\":[2,4,4,5,6,7,9,12,15]} — the student drags five markers (minimum, Q1, median, Q3, maximum) onto a number line for the given data set. \"data\" must be 5–16 WHOLE numbers (so every quartile lands on the widget's snap grid) — never pre-sorted for the student, and include an outlier only when you want the whisker-vs-outlier distinction taught. Quartiles are graded by this book's own method: linear interpolation between ranks (Siyavula §10.4's \"percentile formula\"), not the split-at-the-median method some other syllabuses use. Validator limits (parseMathWidget): every value within ±500."
+    },
+    "venn_builder": {
+      "predicates": {
+        "overlap-counted-twice": "A region's raw set size was entered instead of the count exclusive to it — the overlap counted in twice",
+        "intersection-for-union": "The intersection was shaded (or counted) where the union was asked for",
+        "complement-inside-a": "The complement was shaded inside the set it complements, rather than everywhere outside it",
+        "exclusive-drawn-overlapping": "\"X only\" was shaded including its overlap with another set",
+        "neither-region-missed": "The region outside every set was left unshaded or uncounted",
+        "off-target": "Wrong in a way none of the named errors describes"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "shade": {
+            "by": "target",
+            "cases": {
+              "union": [
+                "intersection-for-union",
+                "off-target"
+              ],
+              "intersection": [
+                "off-target"
+              ],
+              "aOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "bOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "cOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "complementA": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "complementB": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "complementC": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "neither": [
+                "neither-region-missed",
+                "off-target"
+              ]
+            }
+          },
+          "counts": {
+            "by": "clues",
+            "cases": {
+              "(present)": [
+                "overlap-counted-twice",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "(absent)": [
+                "neither-region-missed",
+                "off-target"
+              ]
+            }
+          }
+        }
+      },
+      "instrument": "Spec example {\"sets\":2,\"labels\":[\"Football\",\"Chess\"],\"mode\":\"shade\",\"target\":\"aOnly\"} — a real 2- or 3-circle Venn diagram; the student taps the region(s) that make the named target true. target ∈ union | intersection | aOnly | bOnly | cOnly | complementA | complementB | complementC | neither — cOnly/complementC need sets:3. The other mode fills in counts instead of shading: {\"mode\":\"counts\",\"sets\":2,\"labels\":[\"French\",\"German\"],\"total\":20,\"regions\":{\"a\":8,\"b\":5,\"ab\":4,\"n\":3},\"clues\":{\"a\":12,\"b\":9}} — \"regions\" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the set count needs) and must sum to \"total\" when you give one; \"clues\" are the word problem's raw, PRE-overlap set sizes, which is what lets the widget name \"counted the overlap twice\" as the specific mistake it is. Validator limits (parseMathWidget): \"labels\" holds one non-empty name per set; every region count is a whole number 0–999; total and clues are whole numbers, not negative. Pipeline rule: each clue is the size of its set as the regions give it (a + ab for two sets; a + ab + ac + abc for three)."
+    },
+    "area_model": {
+      "predicates": {
+        "missing-cross-term": "The x tiles were skipped — only x² and the constant are there, as in (a+b)² read as a² + b²",
+        "middle-term-sign": "The constant term is right and the linear (x) term is not — usually its sign",
+        "constant-sign": "The linear (x) term is right and the constant term is not — usually its sign",
+        "not-a-rectangle": "The placed tiles do not tile a rectangle: a gap, a stray tile, or more than one x² tile",
+        "off-target": "A valid rectangle whose terms match neither the target sum nor its product"
+      },
+      "can_emit": [
+        "missing-cross-term",
+        "middle-term-sign",
+        "constant-sign",
+        "not-a-rectangle",
+        "off-target"
+      ],
+      "instrument": "Spec example {\"mode\":\"expand\",\"a\":2,\"b\":-3} — algebra tiles as a grid the student builds: one x² tile anchored, x-tiles run out along its top and left edges (the \"a\" and \"b\" signs — negative tiles are hatched AND marked \"−\", never colour alone), and the block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation of FOIL: the cross term is something the student places, not a step they recite."
+    }
+  },
+  "objectives": [
+    {
+      "lo_id": "lo:u1-1-1",
+      "label": "Represent ordered pairs and decide when they are equal",
+      "description": "Represent ordered pairs as points in the coordinate plane, and use equality of ordered pairs to find unknown values.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-1-1:bk-drill-1-a",
+          "stem": "Find $a$ and $b$ in each of the following: $(a, b) = (-5, 9)$",
+          "type": "short",
+          "answer": "a = -5, b = 9"
+        },
+        {
+          "id": "q:u1-1-1:bk-drill-1-b",
+          "stem": "Find $a$ and $b$ in each of the following: $(a - 2, b + 1) = (2, -3)$",
+          "type": "short",
+          "answer": "a = 4, b = -4"
+        },
+        {
+          "id": "q:u1-1-1:bk-drill-1-c",
+          "stem": "Find $a$ and $b$ in each of the following: $(6, b - 3) = (2 - a, -1)$",
+          "type": "short",
+          "answer": "a = -4, b = 2"
+        },
+        {
+          "id": "q:u1-1-1:bk-drill-1-d",
+          "stem": "Find $a$ and $b$ in each of the following: $(a - 7, 26) = (-2, b^3 - 1)$",
+          "type": "short",
+          "answer": "a = 5, b = 3"
+        },
+        {
+          "id": "q:u1-1-1:bk-drill-2-a",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find (A) $X\\times Y$",
+          "type": "short",
+          "answer": "\\{(2, 4), (2, 0), (-1, 4), (-1, 0)\\}"
+        },
+        {
+          "id": "q:u1-1-1:bk-drill-2-b",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find (B) $Y\\times Z$",
+          "type": "short",
+          "answer": "\\{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)\\}"
+        }
+      ],
+      "misconceptions": [
+        {
+          "id": "mc:u1-1-1:order-ignored-pair-as-set",
+          "lo_id": "lo:u1-1-1",
+          "label": "Treating an ordered pair like a set, so order does not matter",
+          "description": "The student thinks (a, b) and (b, a) are the same, as if the pair were just the set {a, b} with no order.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-1-2",
+      "label": "Find the Cartesian product of two finite sets",
+      "description": "Find X×Y, Y×X and X² from the definition, compare them, and find the number of elements.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-1-2:bk-drill-2-a",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $X\\times Y$",
+          "type": "short",
+          "answer": "\\{(2, 4), (2, 0), (-1, 4), (-1, 0)\\}"
+        },
+        {
+          "id": "q:u1-1-2:bk-drill-2-b",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $Y\\times Z$",
+          "type": "short",
+          "answer": "\\{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)\\}"
+        },
+        {
+          "id": "q:u1-1-2:bk-drill-2-c",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $X^2$",
+          "type": "short",
+          "answer": "\\{(2, 2), (2, -1), (-1, 2), (-1, -1)\\}"
+        },
+        {
+          "id": "q:u1-1-2:bk-drill-2-d",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(X\\times Z)$",
+          "type": "numeric",
+          "answer": "6"
+        },
+        {
+          "id": "q:u1-1-2:bk-drill-2-e",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(Y^2)$",
+          "type": "numeric",
+          "answer": "4"
+        },
+        {
+          "id": "q:u1-1-2:bk-drill-2-f",
+          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(Z^2)$",
+          "type": "numeric",
+          "answer": "9"
+        }
+      ],
+      "misconceptions": [
+        {
+          "id": "mc:u1-1-2:product-order-irrelevant",
+          "lo_id": "lo:u1-1-2",
+          "label": "Treats X×Y and Y×X as the same set",
+          "description": "The student assumes that swapping the two sets gives the same set of pairs, as if the order of the sets did not matter.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-1-3",
+      "label": "Represent a Cartesian product of finite sets by an arrow diagram and a Cartesian diagram",
+      "description": "Draw an arrow diagram and a Cartesian diagram for X×Y and X×X.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-1-3:bk-exercise-1-c",
+          "stem": "Complete: point C represents the ordered pair (......, ......), point O represents the ordered pair (......, ......). (C) point C represents the ordered pair (......, ......)",
+          "type": "short",
+          "answer": "(5, 0)"
+        },
+        {
+          "id": "q:u1-1-3:bk-exercise-1-o",
+          "stem": "Complete: point C represents the ordered pair (......, ......), point O represents the ordered pair (......, ......). (O) point O represents the ordered pair (......, ......)",
+          "type": "short",
+          "answer": "(0, 0)"
+        }
+      ],
+      "misconceptions": [
+        {
+          "id": "mc:u1-1-3:adds-instead-of-multiplies-count",
+          "lo_id": "lo:u1-1-3",
+          "label": "Adds the sizes to count the pairs in X×X",
+          "description": "The student expects X×X to have $n(X)+n(X)$ pairs, for example 6 pairs for a 3-element set, and so draws too few arrows or points.",
+          "own": true
+        },
+        {
+          "id": "mc:u1-1-3:omits-buttonhole-equal-pairs",
+          "lo_id": "lo:u1-1-3",
+          "label": "Leaves out the arrows for pairs with equal projections",
+          "description": "When drawing X×X, the student draws arrows only between different elements and skips pairs like (3, 3), because an arrow 'must go somewhere else'.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-1-4",
+      "label": "Represent N×N, Z×Z and Q×Q in the coordinate plane and identify points",
+      "description": "Draw the perpendicular net for infinite sets and read or plot the ordered pairs given by points.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-1-4:bk-drill-3-b",
+          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point B",
+          "type": "short",
+          "answer": "(3, -2)"
+        },
+        {
+          "id": "q:u1-1-4:bk-drill-3-c",
+          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point C",
+          "type": "short",
+          "answer": "(-3, 1)"
+        },
+        {
+          "id": "q:u1-1-4:bk-drill-3-d",
+          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point D",
+          "type": "short",
+          "answer": "(-3, -4)"
+        },
+        {
+          "id": "q:u1-1-4:bk-drill-4-a",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) (A) A (1, 2)",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-1-4:bk-drill-4-b",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) (B) B (3, -1)",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-1-4:bk-drill-4-c",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) (C) C (-1, 4)",
+          "type": "short",
+          "answer": "No"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-1-5",
+      "label": "Locate points of R×R by quadrant or axis and decide membership in X×X",
+      "description": "Use the axes and quadrants of R×R to locate points, and decide whether points belong to X×X for an interval X.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-1-5:bk-drill-4-a",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) A (1, 2)",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-1-5:bk-drill-4-b",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) B (3, -1)",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-1-5:bk-drill-4-c",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) C (-1, 4)",
+          "type": "short",
+          "answer": "No"
+        },
+        {
+          "id": "q:u1-1-5:bk-drill-4-d",
+          "stem": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0) D (-2, 0)",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-1-5:bk-example-6-a",
+          "stem": "Draw a perpendicular square net of the cartesian product R × R, then tell the quadrant or the axis where each of the following points is located: A (3, 3), B (3, -2), C (-4, -2), D (-4, 3), E (0, - 3), F (2, 0) A (3, 3)",
+          "type": "short",
+          "answer": "first quadrant"
+        },
+        {
+          "id": "q:u1-1-5:bk-example-6-b",
+          "stem": "Draw a perpendicular square net of the cartesian product R × R, then tell the quadrant or the axis where each of the following points is located: A (3, 3), B (3, -2), C (-4, -2), D (-4, 3), E (0, - 3), F (2, 0) B (3, -2)",
+          "type": "short",
+          "answer": "fourth quadrant"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-2-1",
+      "label": "Represent a relation from X to Y",
+      "description": "Write a relation between two sets as ordered pairs and as an arrow diagram.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-2-1:bk-example-1",
+          "stem": "If $X=\\{-1, 1, 2\\}$, $Y=\\{2, 4, 6, 8\\}$, and R is a relation from X to Y where $a\\,R\\,b$ means: «$b = 2a + 4$», for each $a \\in X$, $b \\in Y$. Write and represent R once in an arrow diagram and another by a cartesian diagram.",
+          "type": "short",
+          "answer": "\\{(-1, 2), (1, 6), (2, 8)\\}"
+        }
+      ],
+      "misconceptions": [
+        {
+          "id": "mc:u1-2-1:pair-order-reversed",
+          "lo_id": "lo:u1-2-1",
+          "label": "Writes the pairs from Y to X instead of from X to Y",
+          "description": "The student writes each ordered pair with the book type first and the student second, or draws the arrows from the books back to the students.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-2-2",
+      "label": "Write and represent a relation given by a rule",
+      "description": "Find the ordered pairs of a relation defined by a rule and show it in an arrow diagram and a cartesian diagram.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-2-2:bk-example-1",
+          "stem": "If $X=\\{-1, 1, 2\\}$, $Y=\\{2, 4, 6, 8\\}$, and R is a relation from X to Y where $a\\,R\\,b$ means: «$b = 2a + 4$», for each $a \\in X$, $b \\in Y$. Write and represent R once in an arrow diagram and another by a cartesian diagram.",
+          "type": "short",
+          "answer": "\\{(-1, 2), (1, 6), (2, 8)\\}"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-2-3",
+      "label": "Relate a relation to the cartesian product",
+      "description": "Decide that a relation from X to Y is a subset of X × Y.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-2-4",
+      "label": "Represent a relation on a set itself",
+      "description": "Write and represent a relation from a set to itself, R ⊂ X × X, with arrow and cartesian diagrams.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-2-4:bk-example-2",
+          "stem": "If $X=\\{-2, -1, 0, 1, 2\\}$ and R is a given relation on X where $a\\,R\\,b$ means: «The number a is the additive inverse of the number b» for each of $a, b\\in X$. Write the relation R and represent it by an arrow diagram and also by cartesian diagram.",
+          "type": "short",
+          "answer": "\\{(-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2)\\}"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-3-1",
+      "label": "Decide whether a relation is a function",
+      "description": "Decide whether a relation from X to Y is a function by checking that each element of X appears only once as a first projection, using arrow diagrams, cartesian diagrams and ordered pairs.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-3-2",
+      "label": "Represent a function symbolically",
+      "description": "Write a function with symbols such as f : X → Y, f : x ↦ y and f(x) = y, and name the image of an element.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-3-3",
+      "label": "Represent a function by arrow and cartesian diagrams",
+      "description": "Represent a function or relation by a set of ordered pairs, an arrow diagram and a cartesian diagram, and tell which diagrams show functions.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-3-3:bk-example-2",
+          "stem": "If $X=\\{2, 3, 4\\}$, $Y=\\{y : y\\in N, 2\\le y<9\\}$ where N is the set of natural numbers, and R is a relation from X to Y where a R b means: « $a=\\frac{1}{2}b$ » for each of $a\\in X$, $b\\in Y$, write R and represent it by an arrow diagram, show that R is a function from X to Y and find its range.",
+          "type": "short",
+          "answer": "\\{4, 6, 8\\}"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-3-4",
+      "label": "Find the domain, codomain and range of a function",
+      "description": "Identify the domain, codomain and range of a function, and see that the range is a subset of the codomain.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-3-4:bk-example-2",
+          "stem": "If $X=\\{2, 3, 4\\}$, $Y=\\{y : y\\in N, 2\\le y<9\\}$ where N is the set of natural numbers, and R is a relation from X to Y where a R b means: « $a=\\frac{1}{2}b$ » for each of $a\\in X$, $b\\in Y$, write R and represent it by an arrow diagram, show that R is a function from X to Y and find its range.",
+          "type": "short",
+          "answer": "\\{4, 6, 8\\}"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-4-1",
+      "label": "Identify polynomial functions and state their degree",
+      "description": "Decide whether a function rule is a polynomial and find its degree from the highest power of x.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-4-1:bk-drill-1-a",
+          "stem": "Which of the following functions represents polynomial: $f_1(x)=x^3+x^2+3$",
+          "type": "short",
+          "answer": "Yes"
+        },
+        {
+          "id": "q:u1-4-1:bk-drill-1-b",
+          "stem": "Which of the following functions represents polynomial: $F_2(x)=x^3+\\frac{1}{x}+7$",
+          "type": "short",
+          "answer": "No"
+        },
+        {
+          "id": "q:u1-4-1:bk-drill-1-c",
+          "stem": "Which of the following functions represents polynomial: $f_3(x)=x^2+\\sqrt{x}+8$",
+          "type": "short",
+          "answer": "No"
+        },
+        {
+          "id": "q:u1-4-1:bk-drill-2-a",
+          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=3-2x$",
+          "type": "numeric",
+          "answer": "1"
+        },
+        {
+          "id": "q:u1-4-1:bk-drill-2-b",
+          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=x^2-(x^2-3)$",
+          "type": "numeric",
+          "answer": "0"
+        },
+        {
+          "id": "q:u1-4-1:bk-drill-2-c",
+          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=x(x-2x^2)$",
+          "type": "numeric",
+          "answer": "3"
+        }
+      ],
+      "misconceptions": [
+        {
+          "id": "mc:u1-4-1:degree-from-unexpanded-form",
+          "lo_id": "lo:u1-4-1",
+          "label": "Reads the degree off the rule without simplifying first",
+          "description": "The student takes the highest power of x they can see in the rule as written, without expanding brackets or cancelling terms.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-4-2",
+      "label": "Evaluate a polynomial function at given values",
+      "description": "Find the image of a number under a polynomial function and combine function values.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [
+        {
+          "id": "q:u1-4-2:bk-drill-3-a",
+          "stem": "If $f(x)=x^2-3x$, $g(x)=x-3$ Find $f(\\sqrt{2})+3g(\\sqrt{2})$",
+          "type": "numeric",
+          "answer": "-7"
+        },
+        {
+          "id": "q:u1-4-2:bk-example-1",
+          "stem": "If $f(x)=x^2-x+3$ then find: $f(-2)$, $f(0)$, $f(\\sqrt{3})$",
+          "type": "short",
+          "answer": "9, 3, 6-\\sqrt{3}"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-4-3",
+      "label": "Represent linear and constant functions graphically",
+      "description": "Draw the graph of a linear or constant function as a straight line using a table of two or three ordered pairs.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": [
+        {
+          "id": "mc:u1-4-3:line-always-through-origin",
+          "lo_id": "lo:u1-4-3",
+          "label": "Draws every linear function's line through (0, 0)",
+          "description": "The student carries the 'straight line through the origin' idea over to functions like f(x)=ax+b with b≠0 and draws the line through (0, 0) instead of plotting the ordered pairs from a table.",
+          "own": true
+        }
+      ]
+    },
+    {
+      "lo_id": "lo:u1-4-4",
+      "label": "Represent quadratic functions graphically",
+      "description": "Draw the parabola of a quadratic function from a table of values over an interval.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:u1-4-5",
+      "label": "Find the vertex, axis of symmetry and extreme value of a quadratic",
+      "description": "Use the sign of a and the formula x = -b/2a to find the vertex, the opening direction, the axis of symmetry and the minimum or maximum value.",
+      "module": "module:u1",
+      "module_label": "Unit 1 — Relations and Functions",
+      "anchor_questions": [],
+      "misconceptions": []
+    }
+  ]
+}
