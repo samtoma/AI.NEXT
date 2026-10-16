@@ -50,76 +50,18 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE / "groundtruth"))
 import validate as V  # noqa: E402
 
-VERSION = "ext-v4"  # v4: objectives numbered from 1 (v3 filed every item one objective early) and uses_figure
+VERSION = "ext-v5"  # v5: the page and filing agents are runbook/book-record.workflow.js (v4: objectives numbered from 1, uses_figure)
 ITEM_TYPES = ["definition", "rule", "caution", "convention", "method", "exercise", "activity", "open_prompt",
               "worked_example", "figure", "table", "key_term", "printed_objective", "heading", "linking_text",
               "prior_knowledge"]
 STATEMENTS = {"definition", "rule", "caution", "convention", "method"}
 MAIN = {**{t: "claim" for t in STATEMENTS}, "key_term": "term", "figure": "caption", "table": "caption", "worked_example": "stem"}
 
-PAGE_SYSTEM = """You read one printed page of a school maths textbook (Egypt, Preparatory Year 3, English edition) and record everything it prints, as structured data. You never solve, add or correct anything: you record what the page prints.
+# PAGE_SYSTEM: in runbook/book-record.workflow.js since ext-v5 (one copy of every prompt)
 
-ONE RECORD PER PRINTED THING, in reading order (top to bottom; a side column before the main column only when it is printed first, like "What you'll learn" and "Key terms").
-Types (use exactly one):
-- definition, rule, caution, convention, method (a printed method box only): a statement. Put it in `claim`, in your words but faithful; a printed formula also in `formula` as $...$.
-- exercise (Drill, Exercise, a "Complete:" task, any question for the student), activity ("Think and Discuss" points), open_prompt (a printed "Think", "Why?" with no printed answer): the instruction in `text`, the lettered/numbered sub-questions in `parts` [{label, stem}].
-- worked_example ("Example n"): `stem` = the question; `solution` = the printed solution steps; `answer` = the final printed answer; a multi-part example uses `parts` with each part's printed `answer`.
-- figure: a picture that carries maths or that the text refers to. `caption` describes it with every value, label and point read from it.
-- table: `caption` (what it shows, row/column titles), `header` (column headings, corner cell first), `rows` (each row left to right, row label first). Cells exactly as printed.
-- key_term (each printed key term, `term`), printed_objective (the "What you'll learn" box, `text`), heading (a printed section heading, `text`), linking_text (prose leading between items, `text`), prior_knowledge (what the page says the student already knows, `text`).
-COUNTING RULES:
-- Skip page furniture: running headers, page numbers, footers ("Student's Book", "For More Exercises, go to MOE website" stays as linking_text), decorative pictures, QR codes.
-- Each printed bullet or numbered point of a box is its own statement record.
-- A prompt with its own printed label or box ("Think", "Notice") printed inside a worked example's frame is its own record with `belongs_to` = that example's key. An unlabelled question inside the stem stays in the stem.
-- Each printed question number is one exercise; its lettered sub-questions are parts. A drill with letters only is one exercise with parts. Nested labels are joined with a space ("First A").
-- NUMBERED QUESTIONS ARE SEPARATE RECORDS: points printed 1, 2, 3 in a "Think and Discuss" or "Think" box are three records (label "Think and Discuss", number 1, 2, 3), never one record with parts. Only letters (A, B, C) or labelled things inside ONE question are parts. A worked example's own steps are its `solution`, not parts, unless the book prints labelled sub-questions ("First:", "A", "B").
-- When an exercise or example asks the same thing of several labelled things (points A, B, C, D; points A(3, 3), B(3, -2), …), each is its own part, labelled as printed ("A", "B", …). A task that also asks for something else (shade a region, draw the net, complete C and O) gets a part for that too ("region", "plot", "C", "O"). A worked example's printed answers then go on the parts.
-- A sentence that fixes notation or a name ("where n denotes the number of elements", "X × X is written X² and read X two") is a convention, its own record, even inside a numbered box.
-- A worked example's `answer` is only the final answer it prints, as a short value; leave it out when the solution ends without one.
-- A figure or table inside an example: `belongs_to` = the example's key. A printed answer that is a drawing: put the figure's key in the example's (or part's) `answer_figure_keys`.
-FIELDS ON EVERY RECORD:
-- key: "k1", "k2", … in reading order on this page.
-- label: the label the book prints for prompts and examples only ("Example", "Drill", "Think", "Think and Discuss", "Exercise"), else "". number: the printed number for that label, else null.
-- quote: a few EXACT printed words (5–12) that locate it, misprints and spelling slips included.
-- continues: true only for the first record, when it continues the previous page's last record (same example or exercise running over the page break); then give only what is on this page.
-MATHS in $...$ (LaTeX). Keep the book's notation; where a printed form needs reading, `notation` {printed, normalised}.
-MISPRINTS: if the page prints something plainly wrong (a wrong value in a solution, a missing "=", a bracket that does not close, a label that contradicts the text), record it as printed and add to `misprints` [{field, printed, intended, notes}]: field names where it sits ("stem", "solution[1]", "caption", "quote", "rows[2][1]"), notes say how you know. Spelling slips that change no meaning need no entry.
-NOTES: anything a reviewer should check, e.g. "point read from the figure; verify".
-Read the page image with the Read tool first."""
+# OBJ_SYSTEM: in runbook/book-record.workflow.js since ext-v5 (one copy of every prompt)
 
-OBJ_SYSTEM = """You draw the "can do" learning objectives of one textbook lesson from what it prints. You are given the printed objective box and every printed item (key, type, label, quote, content).
-- Objectives follow the book's teaching order; each is one thing a student can do, phrased "Find…", "Represent…", "Decide…". Usually 3–6 for a lesson.
-- Ground them in the printed "What you'll learn" box and in what the items actually teach. Never invent content the items do not cover.
-- evidence_keys: the items that teach it; at least two, of different types where possible.
-- item_objective: for every statement, worked example, exercise, activity, open prompt, figure and table, the objective it teaches, by its NUMBER: 1 for the first objective you list, 2 for the second. Headings, key terms, linking text and printed objectives get none.
-- prompt_figures: for every exercise, activity, open prompt and worked example that a student cannot answer without LOOKING at a figure printed apart from it ("the previous graphical net", "which of the following arrow diagrams", relations shown only in a figure printed just before it), the key(s) of that figure. Not a figure the student is asked to draw, not a figure printed inside the item (marked "inside"), and not a figure that only shows the answer."""
-
-PAGE_SCHEMA = {"type": "object", "required": ["records"], "properties": {"records": {"type": "array", "items": {
-    "type": "object", "required": ["key", "type", "quote"],
-    "properties": {
-        "key": {"type": "string"}, "type": {"enum": ITEM_TYPES}, "label": {"type": "string"}, "number": {"type": ["integer", "null"]},
-        "continues": {"type": "boolean"}, "belongs_to_key": {"type": "string"}, "quote": {"type": "string"},
-        "claim": {"type": "string"}, "term": {"type": "string"}, "stem": {"type": "string"}, "text": {"type": "string"},
-        "caption": {"type": "string"}, "header": {"type": "array", "items": {"type": "string"}},
-        "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}},
-        "formula": {"type": "string"}, "examples": {"type": "array", "items": {"type": "string"}},
-        "notation": {"type": "object", "properties": {"printed": {"type": "string"}, "normalised": {"type": "string"}, "notes": {"type": "string"}}},
-        "parts": {"type": "array", "items": {"type": "object", "required": ["label"], "properties": {
-            "label": {"type": "string"}, "stem": {"type": "string"}, "answer": {"type": "string"},
-            "solution": {"type": "array", "items": {"type": "string"}}, "answer_figure_keys": {"type": "array", "items": {"type": "string"}},
-            "notes": {"type": "string"},
-            "misprints": {"type": "array", "items": {"type": "object", "properties": {"field": {"type": "string"}, "printed": {"type": "string"}, "intended": {"type": "string"}, "notes": {"type": "string"}}}}}}},
-        "solution": {"type": "array", "items": {"type": "string"}}, "answer": {"type": "string"},
-        "answer_figure_keys": {"type": "array", "items": {"type": "string"}},
-        "misprints": {"type": "array", "items": {"type": "object", "properties": {"field": {"type": "string"}, "printed": {"type": "string"}, "intended": {"type": "string"}, "notes": {"type": "string"}}}},
-        "notes": {"type": "string"}}}}}}
-OBJ_SCHEMA = {"type": "object", "required": ["objectives", "item_objective"], "properties": {
-    "objectives": {"type": "array", "items": {"type": "object", "required": ["label", "description", "evidence_keys"], "properties": {
-        "label": {"type": "string"}, "description": {"type": "string"}, "evidence_keys": {"type": "array", "items": {"type": "string"}}}}},
-    "item_objective": {"type": "array", "items": {"type": "object", "required": ["key", "objective"], "properties": {
-        "key": {"type": "string"}, "objective": {"type": "integer"}}}},
-    "prompt_figures": {"type": "array", "items": {"type": "object", "required": ["key", "figures"], "properties": {
-        "key": {"type": "string"}, "figures": {"type": "array", "items": {"type": "string"}}}}}}}
+# PAGE_SCHEMA, OBJ_SCHEMA: in runbook/book-record.workflow.js since ext-v5
 
 
 # ============================================================================ calls
@@ -285,34 +227,25 @@ def item_summary(r: dict) -> str:
     return f"[{r['_key']}] {r['type']}{' ' + r['label'] if r.get('label') else ''} (p.{r['source_page']}){inside}: {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
 
 
-def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, budget: Budget) -> dict:
-    slug = lesson["slug"]
+def lesson_args(book: str, cfg: dict, lesson: dict, offset: int) -> dict:
+    """One lesson of the workflow's args: its pages rendered to images (work/<book>/page-images/)."""
     pdf = REPO / cfg["sources"]["pdf"]
     img_dir = HERE / "work" / book / "page-images"
     img_dir.mkdir(parents=True, exist_ok=True)
     first, last = lesson["pages"]
-    pages: list[tuple[int, list[dict]]] = []
-    prev_last = None
-    for printed in range(first, last + 1):
-        f = render(pdf, printed, offset, img_dir)
-        ctx = (f"The previous page's last record: {prev_last['type']}{' ' + prev_last['label'] if prev_last.get('label') else ''} "
-               f"\"{(prev_last.get('quote') or '')[:80]}\". If this page starts by continuing it, set continues=true on the first record."
-               if prev_last else "This is the lesson's first page.")
-        prompt = (f"Book: {cfg['title']}\nLesson: {lesson['syllabus_ref']} {lesson['title']} ({lesson['module']}), printed pages {first}–{last}.\n"
-                  f"This is printed page {printed}. The page image: {f}\n{ctx}\n"
-                  + ("Records on this page that belong to the next lesson or unit: leave them out.\n" if printed == last else "")
-                  + "Record everything this page prints for this lesson.")
-        out = call_claude(PAGE_SYSTEM, prompt, PAGE_SCHEMA, model, budget, f"{slug} p.{printed}", img_dir)
-        recs = out.get("records") or []
-        for r in recs:
-            r["_key"] = f"p{printed}-{r.get('key') or len(recs)}"
-            r["belongs_to_key"] = f"p{printed}-{r['belongs_to_key']}" if r.get("belongs_to_key") else None
-            r["answer_figure_keys"] = [f"p{printed}-{k}" for k in r.get("answer_figure_keys") or []]
-            for p in r.get("parts") or []:
-                p["answer_figure_keys"] = [f"p{printed}-{k}" for k in p.get("answer_figure_keys") or []]
-        pages.append((printed, recs))
-        if recs:
-            prev_last = recs[-1]
+    images = {str(p): str(render(pdf, p, offset, img_dir).resolve()) for p in range(first, last + 1)}
+    return {k: lesson[k] for k in ("slug", "syllabus_ref", "title", "module", "pages")} | {"images": images}
+
+
+def build_args(book: str, cfg: dict, lessons: list[dict], offset: int, model: str) -> dict:
+    return {"stage": "S0a-pages", "book": {"book": book, "title": cfg["title"]},
+            "lessons": [lesson_args(book, cfg, l, offset) for l in lessons], "options": {"model": model}}
+
+
+def accept_lesson(book: str, cfg: dict, lesson: dict, offset: int, run_lesson: dict, version: str, model: str) -> dict:
+    """A lesson of a saved workflow return → its book record (ids, continuations, links, provisional filing)."""
+    slug = lesson["slug"]
+    pages = [(p["printed"], p["records"]) for p in run_lesson["pages"]]
     recs = merge_continuations(pages)
     assign_ids(slug, recs)
     by_key = {r["_key"]: r["id"] for r in recs}
@@ -321,12 +254,9 @@ def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, 
             by_key[a] = r["id"]
     types = {r["id"]: r["type"] for r in recs}
     stamp = date.today().isoformat()
-    prov = {"by": f"extract_book_record.py {VERSION}, {model}, {stamp}", "method": "page image"}
+    prov = {"by": f"runbook/book-record.workflow.js {version}, {model}, {stamp}", "method": "page image"}
     items = [finish_item(r, by_key, types, prov) for r in recs]
-
-    # objectives (text only)
-    objectives, ordered = draw_objectives(slug, lesson, [item_summary(r) for r in recs], by_key, items, model, budget, prov)
-
+    objectives, ordered = filed(run_lesson.get("filing") or {}, slug, by_key, items, prov)
     src = {"title": cfg["title"], "publisher": cfg.get("publisher") or "Arab Republic of Egypt, Ministry of Education & Technical Education",
            "language": cfg.get("language", "en"), "grade": cfg.get("grade"), "subject": cfg.get("subject"),
            "course_id": cfg.get("course_id"), "file_path": cfg["sources"]["pdf"], "page_offset": offset,
@@ -337,20 +267,18 @@ def extract_lesson(book: str, cfg: dict, lesson: dict, offset: int, model: str, 
                        "pages": lesson["pages"], "provenance": prov},
             "items": ordered, "learning_objectives": objectives, "provenance": prov,
             "review": {"status": "draft", "reviewed_by": None, "reviewed_at": None},
-            "open_questions": [], "history": [f"{stamp}: extracted from the page images ({VERSION}, {model})"]}
+            "open_questions": [], "history": [f"{stamp}: extracted from the page images ({version}, {model})"]}
 
 
 PROMPTS = ("exercise", "activity", "open_prompt", "worked_example")
 NO_OBJECTIVE = ("heading", "key_term", "linking_text", "printed_objective")
 
 
-def draw_objectives(slug: str, lesson: dict, lines: list[str], by_key: dict, items: list[dict], model: str, budget: Budget,
-                    prov: dict) -> tuple[list[dict], list[dict]]:
-    """One text-only call: the lesson's objectives, each item's objective, and the figures a prompt needs (uses_figure).
-    The call numbers objectives from 1; obj-v1 read them so, the model answered from 0, and every item was filed one
-    objective early (found by the Unit 1 smoke test, 2026-10-16) — so the prompt says so and the answer is checked."""
-    obj = call_claude(OBJ_SYSTEM, f"Lesson: {lesson['syllabus_ref']} {lesson['title']}\n\nITEMS\n" + "\n".join(lines),
-                      OBJ_SCHEMA, model, budget, f"{slug} objectives")
+def filed(obj: dict, slug: str, by_key: dict, items: list[dict], prov: dict) -> tuple[list[dict], list[dict]]:
+    """The filing agent's answer (runbook/book-record.workflow.js, phase Filing) applied: the lesson's provisional
+    objectives, each item's objective, and the figures a prompt needs (uses_figure). Objectives are numbered from 1;
+    ext-v3's model counted from 0 and filed every item one objective early (found by the Unit 1 smoke test,
+    2026-10-16), so an answer that counts from 0 is refused. S1 replaces these objectives at G1."""
     objectives = []
     for n, o in enumerate(obj.get("objectives") or [], start=1):
         ev = list(dict.fromkeys(by_key[k] for k in o.get("evidence_keys") or [] if k in by_key))
@@ -395,17 +323,17 @@ def record_summary(it: dict) -> str:
     return f"[{it['id']}] {it['type']} (p.{it['source_page']}){inside}: {body[:240]}{' | parts: ' + parts[:200] if parts else ''}"
 
 
-def redraw_objectives(book: str, lesson: dict, model: str, budget: Budget) -> dict:
-    """Draw a saved record's objectives, item filing and figure links again, from its items (no page is read)."""
+def redraw_objectives(book: str, lesson: dict, filing: dict, version: str, model: str) -> dict:
+    """A saved record's objectives, item filing and figure links, drawn again from the workflow's filing answer
+    (mode "filing": no page is read)."""
     path = HERE / "book-records" / book / f"{lesson['slug']}.json"
     doc = json.loads(path.read_text())
     stamp = date.today().isoformat()
-    prov = {"by": f"extract_book_record.py {VERSION} (objectives redrawn), {model}, {stamp}", "method": "page image"}
+    prov = {"by": f"runbook/book-record.workflow.js {version} (filing redrawn), {model}, {stamp}", "method": "page image"}
     items = doc["items"]
-    by_key = {it["id"]: it["id"] for it in items}
-    objectives, ordered = draw_objectives(lesson["slug"], lesson, [record_summary(it) for it in items], by_key, items, model, budget, prov)
+    objectives, ordered = filed(filing, lesson["slug"], {it["id"]: it["id"] for it in items}, items, prov)
     doc["learning_objectives"], doc["items"] = objectives, ordered
-    doc.setdefault("history", []).append(f"{stamp}: objectives, item filing and figure links redrawn ({VERSION}, {model})")
+    doc.setdefault("history", []).append(f"{stamp}: objectives, item filing and figure links redrawn ({version}, {model})")
     return doc
 
 
@@ -420,69 +348,98 @@ def check(doc: dict) -> list[str]:
     return errs
 
 
+def run_workflow(book: str, args: dict, name: str, cap: float, args_only: bool) -> dict | None:
+    """The embedded copy of runbook/book-record.workflow.js (for Claude Code), and, unless args_only, its run here."""
+    import embed_workflow as EW  # noqa: PLC0415
+    import workflow_runner as WR  # noqa: PLC0415
+    copy = EW.default_out(book, "book-record", name)
+    print(EW.summary(EW.write(HERE / "runbook" / "book-record.workflow.js", args, copy)), file=sys.stderr)
+    if args_only:
+        return None
+    _run, res, _cost = WR.run_copy(copy, [HERE / "work" / book / "page-images"], cap, name, book, "book-record", stage="S0a")
+    return res
+
+
+def accept(book: str, cfg: dict, lmap: dict, res: dict, force: bool) -> list[tuple]:
+    """A saved return of the workflow → the lessons' book records (ids, continuations, links, provisional filing)."""
+    report = []
+    by_slug = {l["slug"]: l for l in lmap["lessons"]}
+    for rl in res.get("lessons") or []:
+        lesson = by_slug[rl["slug"]]
+        out = HERE / "book-records" / book / f"{rl['slug']}.json"
+        if out.exists() and not force:
+            print(f"{rl['slug']}: already extracted (--force to replace)", file=sys.stderr)
+            continue
+        if any(p.get("failed") for p in rl["pages"]):
+            print(f"{rl['slug']}: a page agent returned nothing: not written, run it again", file=sys.stderr)
+            continue
+        doc = accept_lesson(book, cfg, lesson, lmap["page_offset"], rl, res.get("prompts_version"), "sonnet")
+        errs = check(doc)
+        out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+        report.append((rl["slug"], len(doc["items"]), len(doc["learning_objectives"]), errs))
+        print(f"  -> {out.relative_to(HERE)}: {len(doc['items'])} items, {len(doc['learning_objectives'])} provisional objectives, "
+              f"{len(errs)} problem(s)", file=sys.stderr)
+        for e in errs[:15]:
+            print(f"     {e}", file=sys.stderr)
+    return report
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("run")
-    r.add_argument("book")
-    r.add_argument("lessons", nargs="*", help="lesson slugs (default with --all: every lesson in the map)")
-    r.add_argument("--all", action="store_true")
-    r.add_argument("--cap", type=float, default=10.0)
-    r.add_argument("--model", default="sonnet")
-    r.add_argument("--force", action="store_true")
-    o = sub.add_parser("objectives", help="redraw a saved record's objectives, item filing and figure links (text only)")
-    o.add_argument("book")
-    o.add_argument("lessons", nargs="*")
-    o.add_argument("--all", action="store_true")
-    o.add_argument("--cap", type=float, default=2.0)
-    o.add_argument("--model", default="sonnet")
+    for name, help_ in (("run", "read the pages (the workflow, run here) and write the records"),
+                        ("args", "write the workflow's embedded copy, for Claude Code"),
+                        ("objectives", "file a saved record's items again (the workflow's filing mode)")):
+        r = sub.add_parser(name, help=help_)
+        r.add_argument("book")
+        r.add_argument("lessons", nargs="*", help="lesson slugs (default with --all: every lesson in the map)")
+        r.add_argument("--all", action="store_true")
+        r.add_argument("--cap", type=float, default=10.0)
+        r.add_argument("--model", default="sonnet")
+        r.add_argument("--force", action="store_true")
+    acc = sub.add_parser("accept", help="a saved return of the workflow → book records")
+    acc.add_argument("book")
+    acc.add_argument("run_file", type=Path)
+    acc.add_argument("--force", action="store_true")
     a = ap.parse_args(argv)
     cfg = json.loads((HERE / "books" / f"{a.book}.json").read_text())
     lmap = json.loads((HERE / "book-records" / a.book / "lessons.json").read_text())
+    if a.cmd == "accept":
+        accept(a.book, cfg, lmap, json.loads(a.run_file.read_text()), a.force)
+        return 0
     todo = [l for l in lmap["lessons"] if a.all or l["slug"] in a.lessons]
     if not todo:
         raise SystemExit("no lessons: name them or pass --all")
-    budget = Budget(a.cap)
-    report = []
     if a.cmd == "objectives":
-        for lesson in todo:
-            doc = redraw_objectives(a.book, lesson, a.model, budget)
+        lessons = []
+        for l in todo:
+            doc = json.loads((HERE / "book-records" / a.book / f"{l['slug']}.json").read_text())
+            lessons.append({k: l[k] for k in ("slug", "syllabus_ref", "title", "module", "pages")}
+                           | {"images": {}, "items_text": [record_summary(it) for it in doc["items"]]})
+        args = {"stage": "S0a-pages", "mode": "filing", "book": {"book": a.book, "title": cfg["title"]}, "lessons": lessons,
+                "options": {"model": a.model}}
+        res = run_workflow(a.book, args, "filing", a.cap, False)
+        for rl in res["lessons"]:
+            l = next(x for x in todo if x["slug"] == rl["slug"])
+            doc = redraw_objectives(a.book, l, rl["filing"] or {}, res.get("prompts_version"), a.model)
             errs = check(doc)
             if errs:
-                print(f"{lesson['slug']}: NOT written:\n  " + "\n  ".join(errs[:15]), file=sys.stderr)
+                print(f"{rl['slug']}: NOT written:\n  " + "\n  ".join(errs[:15]), file=sys.stderr)
                 continue
-            (HERE / "book-records" / a.book / f"{lesson['slug']}.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
-            filed = sum(1 for it in doc["items"] if it.get("lo"))
-            linked = sum(1 for it in doc["items"] if it.get("uses_figure"))
-            print(f"{lesson['slug']}: {len(doc['learning_objectives'])} objectives, {filed} items filed, {linked} prompt(s) linked to a figure",
-                  file=sys.stderr)
-            report.append((lesson["slug"], len(doc["items"]), len(doc["learning_objectives"]), 0, errs))
-        with (HERE / "book-records" / a.book / "extraction-runs.jsonl").open("a") as f:
-            f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "version": VERSION, "step": "objectives",
-                                "model": a.model, "lessons": [x[0] for x in report], "cost_usd": round(budget.spent, 4), "calls": budget.calls}) + "\n")
-        print(f"done: ${budget.spent:.3f}", file=sys.stderr)
+            (HERE / "book-records" / a.book / f"{rl['slug']}.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+            print(f"{rl['slug']}: {len(doc['learning_objectives'])} objectives, {sum(1 for it in doc['items'] if it.get('lo'))} items filed, "
+                  f"{sum(1 for it in doc['items'] if it.get('uses_figure'))} prompt(s) linked to a figure", file=sys.stderr)
         return 0
-    for lesson in todo:
-        out = HERE / "book-records" / a.book / f"{lesson['slug']}.json"
-        if out.exists() and not a.force:
-            print(f"{lesson['slug']}: already extracted (--force to redo)", file=sys.stderr)
-            continue
-        print(f"{lesson['slug']}: pages {lesson['pages'][0]}–{lesson['pages'][1]}", file=sys.stderr)
-        before = budget.spent
-        doc = extract_lesson(a.book, cfg, lesson, lmap["page_offset"], a.model, budget)
-        doc["history"][-1] += f", ${budget.spent - before:.3f}"
-        out.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
-        errs = check(doc)
-        report.append((lesson["slug"], len(doc["items"]), len(doc["learning_objectives"]), budget.spent - before, errs))
-        print(f"  -> {out.relative_to(HERE)}: {len(doc['items'])} items, {len(doc['learning_objectives'])} objectives, "
-              f"${budget.spent - before:.3f}, {len(errs)} problem(s)", file=sys.stderr)
-        for e in errs[:15]:
-            print(f"     {e}", file=sys.stderr)
-    runlog = HERE / "book-records" / a.book / "extraction-runs.jsonl"
-    with runlog.open("a") as f:
-        f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "version": VERSION, "model": a.model,
-                            "lessons": [x[0] for x in report], "cost_usd": round(budget.spent, 4), "calls": budget.calls}) + "\n")
-    print(f"done: ${budget.spent:.3f} of ${budget.cap:.2f}", file=sys.stderr)
+    if a.cmd == "run" and not a.force:
+        todo = [l for l in todo if not (HERE / "book-records" / a.book / f"{l['slug']}.json").exists()]
+        if not todo:
+            print("every lesson named is already extracted (--force to redo)", file=sys.stderr)
+            return 0
+    args = build_args(a.book, cfg, todo, lmap["page_offset"], a.model)
+    tag = todo[0]["slug"] if len(todo) == 1 else f"{todo[0]['slug']}..{todo[-1]['slug']}"
+    res = run_workflow(a.book, args, f"pages.{tag}", a.cap, a.cmd == "args")
+    if res is not None:
+        accept(a.book, cfg, lmap, res, True)
     return 0
 
 

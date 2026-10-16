@@ -73,6 +73,9 @@ const PROMPTS_VERSION = 'lesson-v8'   // v3: ids are asked for WITHOUT their bra
 // v5 (2026-09-27, consistency review A8): the visuals prompt carries each figure's question and the rule "a figure
 // never draws the unknown, never contradicts the question's numbers, and its caption never changes the question".
 // ARGS.visuals_only (A3): run S4 alone, for the figures each lesson lists in rerun_figures (merge_visual_reruns.py).
+// ARGS.oracle_only (book records, 2026-10-16): run S8 alone, its prompt unchanged, on what another line produced: each
+// lesson carries `claims` (the statements, as S2's kept claims) and `produced` (the questions and worked examples, as S3's
+// items: ref, lo, answer_type, stem). book_record_checks.py s8 builds these from book records and compiled bundles.
 // v6 (2026-09-27, after the first re-run): an EXERCISE figure withholds its unknown by name ("withheld") and draws the
 // rest — Compare accepts exactly that omission; a worked example's figure is drawn whole (it may show its answer);
 // every element a figure shows is drawn, or the figure is a gap naming exactly what its kind cannot draw.
@@ -1377,8 +1380,17 @@ async function runVisualsOnly(L) {
     counts: { visuals: s4.visuals.length, viz_gaps: s4.gaps.length, compared: s4.compared } }
 }
 
+async function runOracleOnly(L) {
+  const s2 = { kept: (L.claims || []).map((c) => Object.assign({ supported: true }, c)) }
+  const s3 = { items: L.produced || [] }
+  const s8 = await runS8(L, s2, s3)
+  return { lesson: L.slug, mode: 'oracle',
+    oracle: s8.result ? Object.assign({ tally: s8.tally }, s8.result) : { verdict: 'RED', subheadings: [], tally: s8.tally, note: 'the oracle returned nothing' } }
+}
+
 async function runLesson(L) {
   if (ARGS.visuals_only) return runVisualsOnly(L)
+  if (ARGS.oracle_only) return runOracleOnly(L)
   const [s2, s3] = await parallel([() => runS2(L), () => runS3(L)])
   const s4 = await runS4(L, s2)
   const s8 = await runS8(L, s2, s3)
@@ -1436,6 +1448,7 @@ for (const c of Object.values(calls)) for (const [s, n] of Object.entries(c.by_l
 return {
   stage: 'S2-S4,S8', workflow: 'lesson', prompts_version: PROMPTS_VERSION, collect_version: COLLECT_VERSION, book: BOOK.book,
   ...(ARGS.visuals_only ? { mode: 'visuals' } : {}),
+  ...(ARGS.oracle_only ? { mode: 'oracle' } : {}),
   ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
   lessons: lessons.filter(Boolean),
   failed_lessons: ARGS.lessons.filter((l, i) => !lessons[i]).map((l) => l.slug),

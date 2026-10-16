@@ -1,6 +1,12 @@
 """SW for book records: Samuel's step-level working checker on every worked solution a compiled lesson teaches from.
 
     uv run book_record_checks.py sw prep3-math-en 1 u1-1 u1-2 u1-3 u1-4 [--cap 4] [--args-only]
+    uv run book_record_checks.py s8 prep3-math-en u1-1 u1-2 u1-3 u1-4 [--cap 2] [--args-only]
+
+S8 (Tamer, 2026-10-16: add Samuel's coverage oracle): runbook/lesson.workflow.js in its oracle-only mode — S8's own
+prompt, unchanged — given, per lesson, the book record's sub-headings and text, the book's statements as the claims,
+and the compiled lesson's book questions and worked examples as what was produced. Every sub-heading is judged
+covered, thin or MISSING; GREEN only when all are covered. Saved to runs/<book>/coverage/s8-summary.json.
 
 Run from services/extraction/, after compile_book_records.py. Decided by Tamer, 2026-10-16: the tutor teaches from
 worked solutions, so a wrong step in the book's own working must be caught, not taught.
@@ -80,6 +86,35 @@ def export_candidates(book: str, chapter: int, flags_file: Path, bundle: dict) -
     return n
 
 
+def s8_args(book: str, slugs: list[str]) -> dict:
+    import book_config  # noqa: PLC0415
+    import book_record_objectives as BO  # noqa: PLC0415  (lesson_packet: the same text blocks S1 reads)
+    cfg = book_config.load_book(book)
+    lmap = json.loads((HERE / "book-records" / book / "lessons.json").read_text())
+    bundles = BG.unit_bundles(book, slugs)
+    lessons = []
+    for slug in slugs:
+        pk = BO.lesson_packet(book, slug, lmap)
+        rec = json.loads((HERE / "book-records" / book / f"{slug}.json").read_text())
+        los = [n for b in bundles for n in b["nodes"] if n["id"].startswith(f"lo:{slug}-")]
+        lo_of = lambda rid: next((f"lo:{slug}-{int(it['lo'].rsplit('-', 1)[1])}" for it in rec["items"] if it["id"] == rid and it.get("lo")), None)
+        claims = [{"lo": lo_of(b["id"]), "text": b["text"], "anchor": b["id"], "printed_page": b["printed_page"]}
+                  for b in pk["blocks"] if b["type"] in ("definition", "box")]
+        produced = [{"ref": q["id"], "lo": q["lo"], "answer_type": q["type"], "stem": q["stem"]}
+                    for b in bundles for q in b["questions"] if q["lo"].startswith(f"lo:{slug}-")]
+        produced += [{"ref": e["id"], "lo": e["lo"], "answer_type": "not_markable",
+                      "stem": next((c.get("text_md") for c in e["content"] if c.get("kind") == "problem"), "")}
+                     for b in bundles for e in b.get("explanation_entries") or [] if e["lo"].startswith(f"lo:{slug}-")]
+        lessons.append({"slug": slug, "title": pk["title"],
+                        "objectives": [{"id": n["id"], "statement": f"{n['label']}: {n.get('description') or ''}"} for n in los],
+                        "subheadings": [{"anchor": b["id"], "title": b["text"]} for b in pk["blocks"] if b["type"] == "heading"],
+                        "blocks": pk["blocks"], "claims": claims, "produced": produced,
+                        "items": [], "worked_examples": [], "figures": []})
+    return {"book": {"book": book, "course_id": cfg.course_id, "language": cfg.language, "id_prefixes": cfg.id_prefixes,
+                     "notation": cfg.notation, "multiplication_dot": False},
+            "stage": "S2-S4,S8", "oracle_only": True, "lessons": lessons, "viz_kinds": [], "options": {}}
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -89,7 +124,28 @@ def main(argv: list[str]) -> int:
     s.add_argument("lessons", nargs="+")
     s.add_argument("--cap", type=float, default=4.0)
     s.add_argument("--args-only", action="store_true")
+    o = sub.add_parser("s8")
+    o.add_argument("book")
+    o.add_argument("lessons", nargs="+")
+    o.add_argument("--cap", type=float, default=2.0)
+    o.add_argument("--args-only", action="store_true")
     a = ap.parse_args(argv)
+    if a.cmd == "s8":
+        import embed_workflow as EW  # noqa: PLC0415
+        args = s8_args(a.book, a.lessons)
+        copy = EW.default_out(a.book, "lesson", "s8-oracle.bookrecord")
+        print(EW.summary(EW.write(HERE / "runbook" / "lesson.workflow.js", args, copy)), file=sys.stderr)
+        if a.args_only:
+            return 0
+        _run, res, _cost = WR.run_copy(copy, [], a.cap, "s8", a.book, "coverage", stage="S8")
+        summary = {L["lesson"]: {"verdict": L["oracle"].get("verdict"),
+                                 "subheadings": L["oracle"].get("subheadings"), "tally": L["oracle"].get("tally")} for L in res["lessons"]}
+        out = HERE / "runs" / a.book / "coverage" / "s8-summary.json"
+        out.write_text(json.dumps(summary, ensure_ascii=False, indent=1) + "\n")
+        for slug, v in summary.items():
+            gaps = [h for h in v["subheadings"] or [] if h.get("status") != "covered"]
+            print(f"{slug}: {v['verdict']}" + (f" — {len(gaps)} sub-heading(s) thin or missing" if gaps else ""), file=sys.stderr)
+        return 0
     view = BG.book_view(a.book, a.lessons)
     bundle_file = view.parent / "bundle-1.json"
     ch = f"ch{a.chapter:02d}"
