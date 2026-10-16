@@ -10,6 +10,7 @@ import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
+import { bookStatementsBlock, getBookStatements, statementCount } from "./book-statements";
 import { getLessonBridges } from "./subject-queries";
 import { resolveStudentScope, visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
@@ -1321,10 +1322,19 @@ function arabicGroundingRules(data: LessonData): string {
 
 /** MATHEMATICS grounding rules — the original two-rule text, byte for byte. */
 function mathGroundingRules(data: LessonData): string {
+  // A lesson compiled from book records also carries the book's own statements
+  // (lib/book-statements.ts): they join what a claim may come from. Every other
+  // lesson's rules are the text below, unchanged.
+  const book = statementCount(data.bookStatements) > 0;
   return `HARD GROUNDING RULES:
-1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the learning objective descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
-2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.`;
+1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the learning objective descriptions${book ? ", THE BOOK'S STATEMENTS" : ""} and the canonical solutions provided. Never invent other methods, notations, or topics.
+2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.${book ? `
+3. When you define a term or state a rule, use THE BOOK'S STATEMENTS: the book's own wording, cited [[page:N]]. Never a definition or rule the book does not print.` : ""}`;
 }
+
+/** Review mode, for a lesson that carries the book's statements: its one corrective line may quote the book's rule. */
+const BOOK_STATEMENTS_REVIEW_RULE = `
+- A corrective line may instead quote the book's own rule or definition from THE BOOK'S STATEMENTS, cited [[page:N]] — never one the book does not print.`;
 
 /** Extra review-mode rule bullets for social studies (maths gets none — its
  *  review prompt stays byte-identical to the single-subject original). */
@@ -1595,7 +1605,7 @@ ${picks.length + 2}. One-line warm wrap that also tells ${a.them} the revision i
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless ${a.they} got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
 - Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's learning objectives.
-- If a [live event] says ${a.they} tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules(a)}
+- If a [live event] says ${a.they} tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules(a)}${statementCount(data.bookStatements) > 0 ? BOOK_STATEMENTS_REVIEW_RULE : ""}
 - {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.
 
 ${languageContract(data.subject, facts, wordsExampleLo(data, facts))}
@@ -1736,7 +1746,7 @@ export async function buildLessonContext(
   );
   // The subjects a handoff may name: those with a course she may see. `null`
   // courses is the ungated harness scope — not narrowed, the rule as written.
-  const taught: LessonData =
+  const scopedData: LessonData =
     scope.courses === null
       ? data
       : {
@@ -1751,6 +1761,12 @@ export async function buildLessonContext(
   const content = kit.usesTeachingScript
     ? await getLessonContent(data.slug)
     : null;
+  // The book's own statements, for a maths lesson compiled from book records
+  // (lib/book-statements.ts): read only from the folder AINEXT_BOOK_STATEMENTS_DIR
+  // names, so null everywhere it is unset. Given in learn AND review mode.
+  const bookStatements = data.subject === "math-en" ? await getBookStatements(data.slug) : null;
+  // Only a lesson that has them carries the field: every other lesson's data is the object it was before.
+  const taught: LessonData = bookStatements ? { ...scopedData, bookStatements } : scopedData;
   const teaching =
     mode === "learn" && content ? teachingScriptBlock(content) : "";
   // Sealed passages (Arabic vertical): pinned on السبورة by the surface; the
@@ -1785,6 +1801,7 @@ export async function buildLessonContext(
     probing,
     dataBlock:
       lessonDataBlock(data) +
+      bookStatementsBlock(bookStatements) +
       gazetteer +
       bridges +
       passagesBlock +

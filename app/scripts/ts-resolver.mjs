@@ -60,6 +60,10 @@ const STUBS = {
       // compiled load (services/extraction/compile_book_records.py). Same
       // `lib/lesson.ts` -> `auth/principal.ts` import; no student, no principal.
       "lesson-smoke.mts",
+      // renders the REAL learnPrompt / reviewPrompt with and without the book's
+      // statements (lib/book-statements.ts). Same `lib/lesson.ts` ->
+      // `auth/principal.ts` import; no student, no principal.
+      "book-statements.test.mts",
       // renders the REAL lesson and Ask builders over the fake pool to prove
       // an `answer_only` question's working never reaches the tutor (Samuel's
       // G2 answer 22). Same `lib/lesson.ts` -> `auth/principal.ts` import; no

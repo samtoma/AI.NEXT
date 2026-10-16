@@ -59,8 +59,18 @@ objectives (`u1-1:objective-3` becomes `lo:u1-1-3`) and the book's own exercises
 printed or generated (approved, or agreed by both readings). Today's questions, figures, generated questions,
 widgets, misconceptions and links for that lesson are left out; every other lesson is unchanged. Marking uses
 what the app has: numbers by its number check, values, points and sets by its marker, names and yes/no by its
-plain check. What could not become a question is listed in `compiled/<book>/compile-report.json`. How Noor teaches
-does not change; the book's statements are not used yet.
+plain check. What could not become a question is listed in `compiled/<book>/compile-report.json`.
+
+**The book's statements reach the tutor** (Tamer, 2026-10-16: book-record lessons only, learn and review mode). The
+compile writes each lesson's definitions, rules, cautions, conventions, printed methods, key terms and prior
+knowledge, by objective, misprints corrected and in the app's notation, to `compiled/<book>/content/<slug>.json`
+(Unit 1: 62). The maths tutor then gets them as "THE BOOK'S STATEMENTS", and its grounding rule lets a claim come
+from them as well as from objective descriptions and worked solutions: define a term in the book's words, cite the
+page, never state a rule the book does not print; a review correction may quote the book's rule
+(`app/src/lib/book-statements.ts`). The app reads them only from the folder `AINEXT_BOOK_STATEMENTS_DIR` names: the
+`bookrecord-trial` launch entry sets it; unset, as everywhere else, every prompt is byte-identical, and Grade 10's
+extracted claims (`seed/content/`) are never read. The smoke test fails if a lesson has statements that the tutor is
+not given while the folder is set.
 
 The compile step also does what the old assembly did on the way to the tutor, and refuses to write a bundle that
 fails:

@@ -410,6 +410,13 @@ export interface LessonData {
    */
   unitWidgets?: readonly string[];
   /**
+   * The book's own definitions, rules and key terms for a maths lesson
+   * compiled from book records (`lib/book-statements.ts`). Absent for every
+   * other lesson, and for every lesson when `AINEXT_BOOK_STATEMENTS_DIR` is
+   * unset — so their prompts are unchanged.
+   */
+  bookStatements?: import("./book-statements").BookStatements | null;
+  /**
    * True when `unitWidgets` includes "curve_sketcher" AND this unit's live
    * bank holds one drawn from one of the five families `curve_sketcher_g10`
    * documents (hyperbola, exponential, sine, cosine, tangent) rather than only

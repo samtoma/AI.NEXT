@@ -44,8 +44,10 @@ HOW A BOOK PROMPT BECOMES A QUESTION
     no review columns.
   * Tier (tier_questions.py, Grade 10's S3 rule read twice): a person's choice in the review tool's Question tiers
     task, else the tier both readings agreed on, else the blind reading's; "standard" only for a question never tiered.
-  * Not used yet: the book's statements (definitions, rules). Today's maths prompt teaches from objective
-    descriptions and worked solutions only; using them would change how Noor teaches.
+  * The book's statements (definitions, rules, cautions, conventions, printed methods, key terms, prior knowledge),
+    by objective, misprints corrected, notation normalised and KaTeX-checked, go to compiled/<book>/content/<slug>.json
+    (`ainext.book-statements/1`). The maths tutor reads them in learn and review mode, for book-record lessons only:
+    only where AINEXT_BOOK_STATEMENTS_DIR points at that folder (app/src/lib/book-statements.ts; Tamer, 2026-10-16).
 
 WHAT THE OLD ASSEMBLY DID ON THE WAY TO THE TUTOR, DONE HERE TOO (teachability, 2026-10-16)
   * Notation, by the book's PRINTED notation (book config `printed_notation.decimal`, default "point"): a
@@ -561,6 +563,44 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
     return visuals
 
 
+# ============================================================================ the book's statements, for the tutor
+STATEMENT_TYPES = ("definition", "rule", "caution", "convention", "method", "key_term", "prior_knowledge")
+STATEMENTS_FORMAT = "ainext.book-statements/1"
+
+
+def lesson_statements(slug: str, record: dict, decimal: str, counts: Counter) -> dict:
+    """The book's own definitions, rules, cautions, conventions, printed methods, key terms and prior knowledge for
+    the lesson, misprints corrected, in the app's notation, grouped by objective in objective order (a statement the
+    extractor filed under none takes the nearest filed record on its page; "the whole lesson" when there is none).
+    The maths tutor reads them in learn and review mode (app/src/lib/book-statements.ts), only where the deployment
+    points AINEXT_BOOK_STATEMENTS_DIR at compiled/<book>/content/."""
+    items = record.get("items") or []
+    order = {o["id"]: o["order_in_parent"] for o in record.get("learning_objectives") or []}
+    labels = {o["id"]: o["label"] for o in record.get("learning_objectives") or []}
+    groups: dict[str | None, list[dict]] = {}
+    for i, raw in enumerate(items):
+        if raw["type"] not in STATEMENT_TYPES:
+            continue
+        r = AG.with_intended(raw)
+        text = r.get("claim") or r.get("text") or (f"{r['term']}" if r.get("term") else "")
+        squash = lambda t: re.sub(r"\\[ ,;!]|[\s$]", "", t or "")   # spacing commands and blanks never make a formula new
+        if r.get("formula") and squash(r["formula"]) not in squash(text):   # a formula the statement already gives is not repeated
+            text = f"{text} Formula: {r['formula']}".strip()
+        if r.get("examples"):
+            text = f"{text} Examples: {'; '.join(r['examples'])}"
+        text = normalise(text.strip(), decimal, counts)
+        if not text:
+            continue
+        lo = r.get("lo")
+        if not lo and r["type"] != "key_term":   # the key terms are the lesson's list: they stay with the whole lesson
+            near = sorted((abs(j - i), j) for j, x in enumerate(items) if x.get("lo") and x.get("source_page") == r.get("source_page"))
+            lo = items[near[0][1]]["lo"] if near else None
+        groups.setdefault(lo, []).append({"id": r["id"], "type": r["type"], "text": text, "page": r.get("source_page")})
+    ordered = sorted(groups, key=lambda k: (k is None, order.get(k, 0)))
+    return {"format": STATEMENTS_FORMAT, "lesson": slug, "source": f"book-records/{record['source_document'].get('course_id', '')}",
+            "groups": [{"lo": lo_of(slug, k) if k else None, "label": labels.get(k) if k else None, "statements": groups[k]} for k in ordered]}
+
+
 def marker_check(questions: list[dict]) -> dict[str, str]:
     """The app's own reader and key check (marker_check.mjs) on every marker question: id → why it was refused."""
     rows = [{"id": q["id"], "choices": q["choices"]} for q in questions if isinstance(q.get("choices"), dict)]
@@ -650,6 +690,7 @@ def main(argv: list[str]) -> int:
     in_bundle = lambda s: any(any(n.get("kind") == "learning_objective" and n["id"].startswith(f"lo:{s}-") for n in b["nodes"])
                               for b in bundles.values())
     new_nodes, new_questions, new_entries, new_visuals, records, counts = {}, {}, {}, {}, {}, Counter()
+    new_statements: dict[str, dict] = {}
     stand_in_files: set[Path] = set()
     stamps: list[dict] = []          # the review tool's decisions, for apply_review_verdicts.py --book-reviews
     decided_all: dict[str, dict] = {}
@@ -704,6 +745,15 @@ def main(argv: list[str]) -> int:
             q.pop("verified", None)
             report["held"].append({"question": q["id"], "why": f"KaTeX: {broken[q['id']]['why']}", "segment": broken[q["id"]]["segment"]})
     report["errors"] += [f"objective {e['where']}: KaTeX cannot render {e['segment']!r}: {e['why']}" for e in errs if e["where"].startswith("lo:")]
+    for slug in slugs:   # the book's statements: KaTeX-checked like everything the tutor reads; a failing one is left out
+        st = lesson_statements(slug, records[slug], decimal, counts)
+        bad = {e["where"] for e in ALB.katex_errors([{"where": x["id"], "text": x["text"]} for g in st["groups"] for x in g["statements"]])}
+        for g in st["groups"]:
+            report["warnings"] += [f"{x['id']}: left out of the tutor's statements, KaTeX cannot render it" for x in g["statements"] if x["id"] in bad]
+            g["statements"] = [x for x in g["statements"] if x["id"] not in bad]
+        st["groups"] = [g for g in st["groups"] if g["statements"]]
+        st["source"] = f"book-records/{a.book}/{slug}.json"
+        new_statements[slug] = st
     for slug in slugs:
         new_visuals[slug] = lesson_figures(a.book, slug, records[slug], new_questions[slug], report, stand_in_files, not a.no_book_pictures)
         for v in new_visuals[slug]:   # S4's captions and drawn labels are read too: the same notation
@@ -729,6 +779,7 @@ def main(argv: list[str]) -> int:
                                    "by_type": {t: sum(1 for q in qs if q["type"] == t) for t in ("numeric", "short")},
                                    "marker": sum(1 for q in qs if isinstance(q.get("choices"), dict)),
                                    "by_tier": dict(Counter(q["tier"] for q in qs)),
+                                   "statements": sum(len(g["statements"]) for g in new_statements[slug]["groups"]),
                                    "library_entries": len(new_entries[slug]),
                                    "visuals": sum(1 for v in new_visuals[slug] if v["kind"] != "book_image"),
                                    "book_pictures": sum(1 for v in new_visuals[slug] if v["kind"] == "book_image")}
@@ -817,6 +868,10 @@ def main(argv: list[str]) -> int:
                 if not (fig_out / f.name).exists() or (fig_out / f.name).read_bytes() != f.read_bytes():
                     shutil.copyfile(f, fig_out / f.name)
             report["stand_in_files"] = sorted(f.name for f in stand_in_files)
+        content_dir = out_dir / "content"   # the book's statements, for AINEXT_BOOK_STATEMENTS_DIR (app/src/lib/book-statements.ts)
+        content_dir.mkdir(exist_ok=True)
+        for slug, st in new_statements.items():
+            (content_dir / f"{slug}.json").write_text(json.dumps(st, ensure_ascii=False, indent=2) + "\n")
         stamps += [{"question": qid, "ref": d["ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
                     "fingerprint": d["fingerprint"], "what": "generated answer"} for qid, d in decided_all.items()]
         (out_dir / "review-stamps.json").write_text(json.dumps(

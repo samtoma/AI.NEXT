@@ -20,7 +20,9 @@
  *      reported (a warning: the tutor can still explain it, but has nothing to practise it with);
  *   5. both tutor surfaces build (learn and review), and what the tutor is given names every objective;
  *   6. what the tutor is given has no unspaced list comma ("{2,3}", read as a decimal) in a decimal-point book and
- *      no `align` environment (KaTeX draws it only in display mode).
+ *      no `align` environment (KaTeX draws it only in display mode);
+ *   7. a lesson the compile gave statements to (the book's definitions and rules, lib/book-statements.ts) has them in
+ *      both modes when AINEXT_BOOK_STATEMENTS_DIR points at them; with it unset, that is a warning, not a failure.
  * Exits 1 when any check fails, 0 otherwise. Warnings never fail it.
  */
 import { readFileSync } from "node:fs";
@@ -31,7 +33,7 @@ import * as lesson from "../src/lib/lesson.ts";
 type Report = {
   book: string;
   printed_decimal?: string;
-  lessons: Record<string, { objectives: number; questions: number; held: number }>;
+  lessons: Record<string, { objectives: number; questions: number; held: number; statements?: number }>;
 };
 
 const args = process.argv.slice(2);
@@ -106,6 +108,14 @@ for (const slug of slugs) {
       continue;
     }
     const given = `${ctx.systemPrompt}\n${ctx.dataBlock}`;
+    // 7. the book's statements, where the compile wrote some
+    if ((expected.statements ?? 0) > 0) {
+      if (!process.env.AINEXT_BOOK_STATEMENTS_DIR) {
+        if (mode === "learn") warn(slug, `${expected.statements} book statement(s) compiled, not given: AINEXT_BOOK_STATEMENTS_DIR is unset`);
+      } else if (!ctx.dataBlock.includes("THE BOOK'S STATEMENTS") || !ctx.systemPrompt.includes("THE BOOK'S STATEMENTS")) {
+        fail(slug, `${mode}: the book's statements are compiled but the tutor is not given them`);
+      }
+    }
     const missing = data.los.filter((l) => !given.includes(l.label)).map((l) => l.id);
     if (missing.length) fail(slug, `${mode}: the tutor is not given objective(s) ${missing.join(", ")}`);
     // 6. notation in what the tutor reads
