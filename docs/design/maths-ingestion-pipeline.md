@@ -36,7 +36,12 @@ adapter.
 | **S8** coverage | Every sub-heading covered by what was produced | `lesson.workflow.js` S8 | Adopted, on book records |
 | **Assembly** | The app's bundles | `assemble_lesson_bundle.py` | `compile_book_records.py`, converging on the assembly's own functions (multi-part, answer forms) |
 | **Meter** | Cost per stage, lesson and model | `meter_run.py` → `runs/<book>/cost.jsonl` | Adopted: runs from the shell write the same ledger |
-| **Load** | Into the database | `load_seed.py`, `load_generated_questions.py`, `load_misconceptions.py` | Adopted unchanged |
+| **Coverage audit** | Integer checks that must be GREEN before a load | `coverage_report.py` (§5) | **Built** as `book_record_coverage.py`: his check ids, his `Check`, states and signed exceptions, recomputed from book records; adds maths reading, misprints decided, statements served |
+| **Multi-part carry-over** | A part carries what an earlier part defines | `multipart.py` (§11) | **Adopted unchanged** inside compile (stand-in refs; a preamble printed without a stop is closed for his rules only) |
+| **G2 recommendations** | An agent recommends a verdict for each held book question; a second confirms any that would go live | `g2-recommend.workflow.js`, `g2_recommend.py` (§7c) | **Adopted unchanged** on the questions compile holds (`book_record_g2.py`); compile applies a confirmed accept or fix, signed as the AI line's |
+| **G5 go / no-go** | A person decides from the audit, the load preview, the reviews and the cost | §8 | **Built**: `book_record_gonogo.py report` and `decide`; the real load refuses a unit without a GO on it as it stands |
+| **Fan-out** | Every chapter's stages, in parallel | `fanout.py` (§10), gates auto-passed (answer 37c) | **Built** as `ingest.py run`: units in parallel, stops at G0 and G1. **Auto-passes no gate:** that was Samuel's decision for Grade 10, not made for this line |
+| **Load** | Into the database | `load_seed.py`, `load_generated_questions.py`, `load_misconceptions.py` | Adopted unchanged, behind `book_record_load.py`: GREEN and fresh audit, validate, every loader previewed and rolled back, then `--go` (G5) or `--scratch` (a local database), review stamps, parity |
 | **Review** | A person decides | Gates G0–G5 in the console | The local review tool's tasks (Label, Misprints, Maths reading, Generated answers, Generated content, Tiers, Objectives) |
 
 ## Running a new book

@@ -109,7 +109,7 @@
     {
       "id": "u1-2:think-and-discuss-3",
       "type": "activity",
-      "lo": "u1-2:objective-1",
+      "lo": "u1-2:objective-2",
       "source_page": 13,
       "quote": "Represent a set of the ordered pairs in the form of an arrow diagram.",
       "text": "Represent a set of the ordered pairs in the form of an arrow diagram.",
@@ -132,7 +132,6 @@
     {
       "id": "u1-2:figure-2",
       "type": "figure",
-      "lo": "u1-2:objective-1",
       "source_page": 13,
       "quote": "as shown in the opposite figure",
       "caption": "Arrow diagram from X = {a, b, c, d, e} to Y = {Science, art, culture, history}. Arrows: a to Science, a to culture, b to history, c to culture (read from figure: c's arrow appears to go to culture), e to history; d has no arrow. Arrow endpoints read from picture; verify.",
@@ -166,7 +165,7 @@
     {
       "id": "u1-2:think-1",
       "type": "open_prompt",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-1",
       "source_page": 13,
       "quote": "Is R a subset from the cartesian product X × Z?",
       "text": "Is R a subset from the cartesian product X × Z?",
@@ -187,7 +186,7 @@
     {
       "id": "u1-2:example-1",
       "type": "worked_example",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-1",
       "source_page": 13,
       "pages": [
         13,
@@ -270,7 +269,6 @@
     {
       "id": "u1-2:rule-1",
       "type": "rule",
-      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "The relation from X to Y where X, Y are two non-empty sets",
       "claim": "A relation from X to Y, where X, Y are two non-empty sets, connects some or all of the elements of X with some or all of the elements of Y.",
@@ -282,7 +280,7 @@
     {
       "id": "u1-2:rule-2",
       "type": "rule",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-1",
       "source_page": 14,
       "quote": "X × Y is the set of ordered pairs where the first projection",
       "claim": "X × Y is the set of ordered pairs where the first projection in each ordered pair belongs to X and the second projection belongs to Y.",
@@ -295,7 +293,7 @@
     {
       "id": "u1-2:rule-3",
       "type": "rule",
-      "lo": "u1-2:objective-3",
+      "lo": "u1-2:objective-1",
       "source_page": 14,
       "quote": "If R is a relation from X to Y , then R ⊂ X × Y",
       "claim": "If R is a relation from X to Y, then R is a subset of X × Y.",
@@ -319,7 +317,7 @@
     {
       "id": "u1-2:definition-1",
       "type": "definition",
-      "lo": "u1-2:objective-4",
+      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "If R is a relation from a set X to X (itself) then R is called a relation",
       "claim": "If R is a relation from a set X to X (itself), then R is called a relation on X, and R ⊂ X × X.",
@@ -332,7 +330,7 @@
     {
       "id": "u1-2:example-2",
       "type": "worked_example",
-      "lo": "u1-2:objective-4",
+      "lo": "u1-2:objective-3",
       "source_page": 14,
       "quote": "If X = {-2, -1, 0, 1, 2} and R is a given relation on X where a R b means:",
       "stem": "If $X=\\{-2,-1,0,1,2\\}$ and R is a given relation on X where $a\\,R\\,b$ means: «The number a is the additive inverse of the number b» for each of $a,b\\in X$. Write the relation R and represent it by an arrow diagram and also by cartesian diagram.",
@@ -353,7 +351,7 @@
     {
       "id": "u1-2:figure-5",
       "type": "figure",
-      "lo": "u1-2:objective-4",
+      "lo": "u1-2:objective-3",
       "belongs_to": "u1-2:example-2",
       "source_page": 14,
       "quote": "Arrow diagram",
@@ -377,7 +375,7 @@
     {
       "id": "u1-2:figure-6",
       "type": "figure",
-      "lo": "u1-2:objective-4",
+      "lo": "u1-2:objective-3",
       "belongs_to": "u1-2:example-2",
       "source_page": 14,
       "quote": "Cartesian Diagram",
@@ -401,7 +399,7 @@
     {
       "id": "u1-2:drill-1",
       "type": "exercise",
-      "lo": "u1-2:objective-2",
+      "lo": "u1-2:objective-1",
       "source_page": 15,
       "quote": "If X = {1, 2, 3}, Y = {12, 21, 47, 52}, and R is the relation from X to Y",
       "text": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$, and $R$ is the relation from $X$ to $Y$ where $a\\,R\\,b$ means: (a is a digit from the digits of b), for each $a\\in X$, $b\\in Y$.",
@@ -444,65 +442,45 @@
   "learning_objectives": [
     {
       "id": "u1-2:objective-1",
-      "label": "Represent a relation from X to Y",
-      "description": "Write a relation between two sets as ordered pairs and as an arrow diagram.",
+      "label": "Write a relation as ordered pairs",
+      "description": "Write a relation R from X to Y as a set of ordered pairs, a subset of X × Y, by applying the rule given for a R b, and decide whether a given pair satisfies R.",
       "order_in_parent": 1,
       "evidence": [
-        "u1-2:think-and-discuss-2",
-        "u1-2:think-and-discuss-3",
-        "u1-2:figure-2",
-        "u1-2:linking-text-2"
+        "u1-2:example-1",
+        "u1-2:rule-3",
+        "u1-2:think-and-discuss-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     },
     {
       "id": "u1-2:objective-2",
-      "label": "Write and represent a relation given by a rule",
-      "description": "Find the ordered pairs of a relation defined by a rule and show it in an arrow diagram and a cartesian diagram.",
+      "label": "Represent relations by diagrams",
+      "description": "Represent a relation from X to Y by an arrow diagram and by a cartesian diagram.",
       "order_in_parent": 2,
       "evidence": [
-        "u1-2:example-1",
-        "u1-2:figure-3",
-        "u1-2:figure-4",
+        "u1-2:linking-text-1",
+        "u1-2:think-and-discuss-3",
         "u1-2:drill-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     },
     {
       "id": "u1-2:objective-3",
-      "label": "Relate a relation to the cartesian product",
-      "description": "Decide that a relation from X to Y is a subset of X × Y.",
+      "label": "Relation on a set",
+      "description": "Write and represent a relation on a set X (from X to itself) as a subset of X × X.",
       "order_in_parent": 3,
       "evidence": [
-        "u1-2:rule-1",
-        "u1-2:rule-2",
-        "u1-2:rule-3",
-        "u1-2:think-1"
-      ],
-      "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
-        "method": "page image"
-      }
-    },
-    {
-      "id": "u1-2:objective-4",
-      "label": "Represent a relation on a set itself",
-      "description": "Write and represent a relation from a set to itself, R ⊂ X × X, with arrow and cartesian diagrams.",
-      "order_in_parent": 4,
-      "evidence": [
         "u1-2:definition-1",
-        "u1-2:example-2",
-        "u1-2:figure-5",
-        "u1-2:figure-6"
+        "u1-2:example-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     }
@@ -522,6 +500,10 @@
     "2026-10-16: figure regions placed (crop-v1, sonnet): 6 cropped",
     "2026-10-16: figure regions placed (crop-v1, sonnet): 2 cropped",
     "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)",
-    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)"
+    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)",
+    "objectives from S1 (runs/prep3-math-en/objectives/s1-ch01.20261017T055544Z.json), approved at G1 (3)",
+    "2026-10-17: 5 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "objectives from S1 (runs/prep3-math-en/objectives/s1-ch01.20261017T055544Z.json), approved at G1 (3)",
+    "2026-10-17: 5 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)"
   ]
 }

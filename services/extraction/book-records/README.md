@@ -181,3 +181,12 @@ two of its tasks:
 See `../groundtruth/README.md`, "Reviewing". An extracted record may be located by `anchor` (the
 pipeline's block reference) instead of a quote; ground truth needs a quote, so the tool asks for one
 when you confirm it. Check a file with `uv run --with jsonschema python ../groundtruth/validate.py <file>`.
+
+**Before a load (2026-10-17: the steps Grade 10 had that this line lacked).** After compile, in order:
+`../book_record_coverage.py <book> <unit>` (Samuel's coverage audit on book records: GREEN, or a person signs each
+exception in `coverage/<book>.unit<NN>.book-records.json`); `../book_record_g2.py run <book> <unit>` when compile held a
+book question (his G2 recommender; compile applies what an independent agent confirmed); `../book_record_gonogo.py
+report`, then a person's `decide … go`; then `../book_record_load.py <book> <unit> --dsn … --go` (validate, preview every
+loader rolled back, load, stamp, parity). `--scratch` loads a database on this machine without G5, for S7 and the
+fan-out. `../ingest.py run <book> <units…>` runs units in parallel up to the first gate a person owes. Compile now
+also carries what an earlier part of a question defines into a part asked alone (his `multipart.py`).

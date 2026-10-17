@@ -82,7 +82,8 @@ def lesson_packet(book: str, slug: str, lmap: dict) -> dict:
             q = it.get("stem") or ""
             for p in it.get("parts") or []:
                 q += f" ({p.get('label')}) {p.get('stem') or ''}"
-            wes.append({"anchor": it["id"], "n": None, "section": meta.get("syllabus_ref"), "title": it["id"].split(":", 1)[1],
+            label = f"{it.get('label') or 'Example'} {it['number']}" if it.get("number") is not None else it["id"].split(":", 1)[1]
+            wes.append({"anchor": it["id"], "n": None, "section": meta.get("syllabus_ref"), "title": label,
                         "printed_page": page, "question": q.strip(), "steps": steps, "loose_solution": ""})
         elif t in PROMPT_TYPES:
             text = it.get("text") or it.get("stem") or ""
@@ -98,6 +99,13 @@ def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
     book = book_config.load_book(book_name)
     lmap = json.loads((HERE / "book-records" / book_name / "lessons.json").read_text())
     lessons = [lesson_packet(book_name, s, lmap) for s in slugs]
+    # Samuel's S1 names a worked example `WE<n>`, numbered through the chapter (assemble_objectives.we_ref), and its
+    # prompt tells the agents to cite it so. Each keeps its book-record id beside it; evaluate() maps a cited WE<n> back.
+    k = 0
+    for l in lessons:
+        for w in l["worked_examples"]:
+            k += 1
+            w.update(n=k, record_id=w["anchor"], anchor=f"WE{k}")
     module = (next((l for l in lmap["lessons"] if l["slug"] == slugs[0]), {}) or {}).get("module")
     packet = {"n": chapter, "module": f"module:{slugs[0].rsplit('-', 1)[0]}", "title": module, "intro": [], "summary": [],
               "lessons": lessons, "pool": []}
@@ -111,6 +119,24 @@ def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
 RESULT_FORMAT = "ainext.s1-result/1"
 
 
+def book_ids(ev, we: dict[str, str]):
+    """Every `WE<n>` S1 cites (an evidence anchor, a worked example filed, a link's evidence) as its book-record id,
+    so the review tool and `apply` work on book-record items; the cited name is kept as `cited_as`."""
+    if isinstance(ev, list):
+        return [book_ids(x, we) for x in ev]
+    if not isinstance(ev, dict):
+        return we.get(ev, ev) if isinstance(ev, str) else ev
+    out = {}
+    for key, v in ev.items():
+        if key == "anchor" and v in we:
+            out["cited_as"], out[key] = v, we[v]
+        elif key in ("worked_examples", "evidence", "evidence_dropped", "lessons", "objectives", "links", "kept", "dropped"):
+            out[key] = book_ids(v, we)
+        else:
+            out[key] = v
+    return out
+
+
 def evaluate(book_name: str, args_file: Path, run_file: Path) -> Path:
     """Samuel's deterministic S1 checks on a run, saved for G1 (the review tool's Objectives task):
     teaching/<book>/objectives/ch<NN>.json."""
@@ -120,6 +146,7 @@ def evaluate(book_name: str, args_file: Path, run_file: Path) -> Path:
     if run.get("packet_sha256") != args["packet_sha256"]:
         raise SystemExit("the run was made from another packet (packet_sha256 differs): run S1 again")
     ev = AO.evaluate_chapter(args["chapter"], run, AO.egyptian_vocabulary(), {}, args.get("prior_objectives") or [])
+    ev = book_ids(ev, {w["anchor"]: w["record_id"] for l in args["chapter"]["lessons"] for w in l["worked_examples"] if w.get("record_id")})
     fails: dict[str, list[str]] = {}
     for f in ev["failures"]:
         fails.setdefault(f.split(":", 1)[0] + ":" + f.split(":", 2)[1] if f.startswith("lo:") else "(chapter)", []).append(f)
@@ -156,7 +183,8 @@ def g1_decisions(book: str) -> dict[tuple[str, str], dict]:
 def apply(book: str, chapter: int, dry_run: bool = False) -> dict:
     """Write what G1 approved: the objectives and their items into the book records, the kept links into
     teaching/<book>/links/ch<NN>.json. A decision counts only on the item as S1 left it (its fingerprint). A lesson
-    with no approved objective is left as it is, and said so."""
+    with no approved objective is left as it is, and said so. A `refile` decision moves one item to another approved
+    objective after S1's filing."""
     import extract_book_record as X  # noqa: PLC0415  (check: the record still validates)
     res = json.loads((HERE / "teaching" / book / "objectives" / f"ch{chapter:02d}.json").read_text())
     dec = g1_decisions(book)
@@ -189,6 +217,13 @@ def apply(book: str, chapter: int, dry_run: bool = False) -> dict:
             objs.append({"id": oid, "label": d.get("label") or o.get("label") or o["statement"][:60],
                          "description": d.get("statement") or o["statement"], "order_in_parent": n,
                          "evidence": ev or [r for r, x in lo_of.items() if x == oid][:2], "provenance": prov})
+        # a person's refile at G1 (kind "refile": an item S1 filed under one approved objective, moved to another by its
+        # S1 id) wins over S1's own filing, here and on every later apply
+        s1_oid = {o["id"]: f"{slug}:objective-{n}" for n, o in enumerate(kept, start=1)}
+        for (kind, ref), d in dec.items():
+            if kind == "refile" and ref in ids and d.get("objective") in s1_oid:
+                lo_of[ref] = s1_oid[d["objective"]]
+                report.setdefault("refiled", []).append(f"{ref} → {d['objective']} ({d['by']})")
         items = []
         for it in rec["items"]:
             it = {k: v for k, v in it.items() if k != "lo"}

@@ -42,6 +42,12 @@ HOW A BOOK PROMPT BECOMES A QUESTION
     to review-stamps.json with the question it decided; `apply_review_verdicts.py --book-reviews` stamps the rows.
     The figure decisions travel in the same file (`figures`), but no row is stamped from them: the visuals table has
     no review columns.
+  * Multi-part carry-over (Samuel's multipart.py, rules R1–R3, unchanged): a part asked on its own carries the
+    sentence an earlier part of its question gives it (a name, an unknown's value, a gradient) after the preamble;
+    what the rules cannot settle is listed in the report (`multipart.unresolved`), never changed.
+  * G2 recommendations (book_record_g2.py: Samuel's recommender on the questions compile holds): an accept or fix an
+    independent agent confirmed releases the hold, an exclude leaves the question out; each signed as the AI line's,
+    applied only while the question is what the agents read, and listed in the report (`g2`).
   * Tier (tier_questions.py, Grade 10's S3 rule read twice): a person's choice in the review tool's Question tiers
     task, else the tier both readings agreed on, else the blind reading's; "standard" only for a question never tiered.
   * The book's statements (definitions, rules, cautions, conventions, printed methods, key terms, prior knowledge),
@@ -85,6 +91,7 @@ import answer_gen as AG  # noqa: E402  (with_intended, NEEDS_PAGE)
 import assemble_lesson_bundle as ALB  # noqa: E402  (normalise, …, katex_errors, the figure rules A8 / answer 37d)
 import book_record_figures as BRF  # noqa: E402  (figure_users, answer_figures)
 import crop_figures as CF  # noqa: E402  (figures_dir, crop_name)
+import multipart as MP  # noqa: E402  (Samuel's carry-over rules R1–R3)
 import schemas  # noqa: E402
 import score_book_record as SC  # noqa: E402
 from collections import Counter  # noqa: E402
@@ -350,11 +357,105 @@ def lesson_objectives(slug: str, record: dict, syllabus_ref: str | None) -> list
 QUESTION_SOURCES = ("exercise", "worked_example", "activity", "open_prompt")
 
 
+def apply_g2(book: str, questions: dict[str, list[dict]], report: dict) -> None:
+    """Samuel's G2 recommendations on held book questions (book_record_g2.py → teaching/<book>/g2/unit<NN>.json), applied
+    to the question each was made for and only while it is still what the agents read. Every verdict is an AI line's:
+    signed `auto-pass G2 (AI recommendation)`, never a person's sign-off."""
+    import review_policy  # noqa: PLC0415
+    by = review_policy.auto_pass_by("G2")
+    recs = {}
+    for f in sorted((HERE / "teaching" / book / "g2").glob("unit*.json")):
+        d = json.loads(f.read_text())
+        for k, v in d.get("items", {}).items():
+            if k in d.get("questions", {}):
+                recs[d["questions"][k]["question"]] = (v, d["questions"][k])
+    for slug, qs in questions.items():
+        keep = []
+        for q in qs:
+            hit = recs.get(q["id"])
+            if not hit:
+                keep.append(q)
+                continue
+            v, meta = hit
+            now = {"stem": q.get("stem"), "answer": q.get("answer"), "hold_reason": q.get("hold_reason")}
+            if now != meta["facts"]:
+                report["g2"].append({"question": q["id"], "verdict": v["verdict"], "applied": False,
+                                     "why": "the question changed since the agents read it: run book_record_g2.py again"})
+                keep.append(q)
+                continue
+            line = {"question": q["id"], "ref": meta["book_ref"], "verdict": v["verdict"], "class": v.get("class"),
+                    "confidence": v.get("confidence"), "note": v.get("note"), "by": by, "applied": True}
+            if v["verdict"] == "exclude":
+                report["skipped"].append({"lesson": slug, "ref": meta["book_ref"], "why": f"excluded by the G2 recommendation ({by}): {v.get('note')}"})
+                report["g2"].append(line)
+                continue
+            if v["verdict"] in ("accept", "fix"):
+                f = v.get("fields") or {}
+                if f.get("stem"):
+                    q["stem"] = f["stem"]
+                if f.get("answer_type") == "numeric":
+                    q["type"], q["answer"] = "numeric", f["answer"]
+                    q.pop("choices", None)
+                elif f.get("answer_type") == "expression" and f.get("marker"):
+                    q["type"], q["answer"], q["choices"] = "short", f["marker"]["key"], {"marker": f["marker"]}
+                q.pop("hold_reason", None)
+                q.pop("_why", None)
+                q["verified"] = True
+                q["source_note"] += f" Released by the G2 recommendation ({v['verdict']}, {by}; confirmed by an independent agent)."
+                report["held"] = [h for h in report["held"] if h.get("question") != q["id"]]
+            report["g2"].append(line)
+            keep.append(q)
+        qs[:] = keep
+
+
+PREAMBLE_END = "⁂."   # closes a preamble the book prints without a stop, for multipart.py's eyes only
+
+
+def carry_over(record: dict, out: list[dict], stems: dict[str, tuple[str, str, str]], unresolved: list | None) -> None:
+    """Samuel's multipart.py on a lesson's multi-part items: a part asked on its own carries what an earlier part of
+    its question defines (a name, an unknown's value, a gradient), in the book's words, after the shared preamble.
+    His rules group parts by Grade 10 refs (`Ex<a>-<b>:<q><sub>`), so each item gets a stand-in ref, its parts lettered
+    in printed order; every part takes part, the asked and the not asked, since an earlier part defines a name either
+    way. What the rules cannot settle is listed (`unresolved`), never changed.
+    His rules find the shared preamble by its closing stop or colon; Prep-3 prints "… Find" with none, so the preamble
+    is closed with a marker for the rules to read, taken out again before a stem reaches a student."""
+    qs_by_ref = {q["_ref"]: q for q in out}
+    parts, back = [], {}
+    for i, it in enumerate(x for x in record.get("items") or [] if len(x.get("parts") or []) >= 2):
+        for k, p in enumerate(it["parts"]):
+            ref = f"{it['id']}:{p['label']}"
+            sub = chr(97 + k) if k < 26 else "z" + chr(97 + k - 26)
+            stand_in = f"Ex{i + 1}-1:1{sub}"
+            back[stand_in] = ref
+            q = qs_by_ref.get(ref)
+            marker = ((q or {}).get("choices") or {}).get("marker") or {}
+            key = q["answer"] if q and q["type"] == "numeric" else marker.get("key")
+            pre, own, working = stems.get(ref, ("", "", ""))
+            closed = f"{pre} {PREAMBLE_END} {own}" if pre and not pre.rstrip().endswith((".", ":", "?", "!")) else f"{pre} {own}"
+            parts.append(MP.Part(ref=stand_in, stem=closed.strip(), working=working,
+                                 fate="verified" if q and not q.get("hold_reason") else ("held" if q else "teaching"),
+                                 kind=marker.get("kind"), key=key or None))
+    if not parts:
+        return
+    carries, unres = MP.plan(parts)
+    for stand_in, c in carries.items():
+        q = qs_by_ref.get(back[stand_in])
+        if q is None:
+            continue
+        q["stem"] = re.sub(r"\s+", " ", c.after.replace(PREAMBLE_END, "")).strip()
+        q["source_note"] += f" The part carries {len(c.sentences)} sentence(s) from earlier parts ({MP.CARRY_BY})."
+        q["_carry"] = {"ref": back[stand_in], "sentences": c.sentences, "from": [back.get(x.get("from"), x.get("from")) for x in c.items]}
+    if unresolved is not None:
+        unresolved += [{**u.as_dict(), "ref": back.get(u.ref, u.ref),
+                        "sources": [{**s, "ref": back.get(s.get("ref"), s.get("ref"))} for s in u.sources]} for u in unres]
+
+
 def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None,
-                   tiers: dict | None = None) -> list[dict]:
+                   tiers: dict | None = None, unresolved: list | None = None) -> list[dict]:
     """The book's prompts as questions; a worked example (or an answered prompt) the app cannot mark goes to the
     explanation library as a worked example instead (Grade 10's `not_markable` -> library entry, FR-4303)."""
     out = []
+    stems: dict[str, tuple[str, str, str]] = {}   # every part's preamble, own words and working, for the carry-over
     checks = checks or {}
     lo_by_item = objectives_for_items(record)
     for raw in record.get("items") or []:
@@ -378,6 +479,7 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             # part of the question. A part with none keeps it, since the label is what is asked ("point C").
             stem = f"{text} {p['stem'] if p and p.get('stem') else ('(' + p['label'] + ')' if p else '')}".strip()
             local = re.sub(r"[^a-z0-9]+", "-", ref.split(":", 1)[1].lower()).strip("-")
+            stems[ref] = (text, stem[len(text):].strip() if p else "", " ".join((p or {}).get("solution") or []))
             if printed:
                 ans, how = printed, "printed in the book"
                 sol = (p or {}).get("solution") or r.get("solution") or []
@@ -439,6 +541,7 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                     q["hold_reason"] = "unverified"
                     q["_why"] = "the printed answer was not re-solved" if c is None else f"the blind re-solve could not answer ({c.get('note') or c['status']})"
             out.append(q)
+    carry_over(record, out, stems, unresolved)
     return out
 
 
@@ -539,7 +642,10 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             shown.add(q["id"])
         if d and not on_question:   # an illustration of its objective (a body figure, or one whose prompt is teaching material)
             # the record's own filing first (the objectives call files every figure); S4's guess only for one it left out
-            lo = lo_of(slug, fig["lo"]) if fig.get("lo") else (d.get("lo") if str(d.get("lo", "")).startswith(f"lo:{slug}-") else None)
+            # S4's own guess names an objective of its day; it counts only while that objective still exists (G1 may have
+            # replaced it): a figure G1 left unfiled is not shown on its own until it is filed (book_record_filing.py)
+            current = {lo_of(slug, o["id"]) for o in record.get("learning_objectives") or []}
+            lo = lo_of(slug, fig["lo"]) if fig.get("lo") else (d.get("lo") if d.get("lo") in current else None)
             if lo:
                 visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"], "spec": d["spec"],
                                 "caption": d.get("caption"), "source_page": fig["source_page"]})
@@ -686,7 +792,8 @@ def main(argv: list[str]) -> int:
     lmap_path = HERE / "book-records" / a.book / "lessons.json"
     lmap = json.loads(lmap_path.read_text()) if lmap_path.exists() else {"lessons": []}
     report = {"format": FORMAT_REPORT, "version": VERSION, "book": a.book, "printed_decimal": decimal, "lessons": {},
-              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": []}
+              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": [],
+              "multipart": {"carried": [], "unresolved": []}, "g2": []}
 
     bundles = {p: json.loads(rel(p).read_text()) for p in cfg.get("bundles") or []}
     in_bundle = lambda s: any(any(n.get("kind") == "learning_objective" and n["id"].startswith(f"lo:{s}-") for n in b["nodes"])
@@ -709,8 +816,11 @@ def main(argv: list[str]) -> int:
         skipped: list = []
         entries: list = []
         decided: dict = {}
+        unresolved: list = []
         qs = book_questions(slug, record, usable_answers(a.book, slug, record, rec_path, decided), skipped, entries, printed_checks(a.book, slug),
-                            question_tiers(a.book, slug))
+                            question_tiers(a.book, slug), unresolved)
+        report["multipart"]["carried"] += [{"lesson": slug, **q.pop("_carry")} for q in qs if q.get("_carry")]
+        report["multipart"]["unresolved"] += [{"lesson": slug, **u} for u in unresolved]
         lo_by_item = objectives_for_items(record)
         for ref, d in decided.items():   # a rejected or fix-requested answer: the question an earlier load may hold
             item = next((it["id"] for it in record["items"] if ref == it["id"] or ref.startswith(it["id"] + ":")), None)
@@ -747,6 +857,7 @@ def main(argv: list[str]) -> int:
             q.pop("verified", None)
             report["held"].append({"question": q["id"], "why": f"KaTeX: {broken[q['id']]['why']}", "segment": broken[q["id"]]["segment"]})
     report["errors"] += [f"objective {e['where']}: KaTeX cannot render {e['segment']!r}: {e['why']}" for e in errs if e["where"].startswith("lo:")]
+    apply_g2(a.book, new_questions, report)   # Samuel's G2 recommendations on held book questions (book_record_g2.py)
     for slug in slugs:   # the book's statements: KaTeX-checked like everything the tutor reads; a failing one is left out
         st = lesson_statements(slug, records[slug], decimal, counts)
         bad = {e["where"] for e in ALB.katex_errors([{"where": x["id"], "text": x["text"]} for g in st["groups"] for x in g["statements"]])}

@@ -3,9 +3,9 @@
  "book": "prep3-math-en",
  "chapter": 1,
  "module": "module:u1",
- "run": "runs/prep3-math-en/objectives/s1-ch01.20261016T165421Z.json",
+ "run": "runs/prep3-math-en/objectives/s1-ch01.20261017T055544Z.json",
  "prompts_version": "s1-v5",
- "status": "failures",
+ "status": "awaiting_g1",
  "lessons": [
   {
    "slug": "u1-1",
@@ -13,14 +13,24 @@
     {
      "id": "lo:u1-1-1",
      "n": 1,
-     "label": "Ordered pairs and equality",
-     "statement": "Find unknown values by using the equality of ordered pairs (equating first and second projections), and distinguish (a, b) from (b, a) and from the set {a, b}.",
+     "label": "Equality of ordered pairs",
+     "statement": "Find unknown values by using equality of ordered pairs, equating first projections and second projections.",
      "evidence": [
       {
-       "kind": "definition",
+       "kind": "intro",
        "anchor": "u1-1:rule-4",
        "printed_page": 7,
        "quote": "If $(a, b) = (x, y)$ then $a = x$, $b = y$.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE1",
+       "anchor": "u1-1:example-1",
+       "printed_page": 7,
+       "quote": "$(x - 2, 3) = (5, y + 1)$",
        "contained": true,
        "present": true,
        "supports": true
@@ -35,26 +45,7 @@
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE1",
-       "printed_page": 7,
-       "quote": "$(x - 2, 3) = (5, y + 1)$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE1' is not in the chapter packet"
-      },
-      {
-       "kind": "worked_example",
-       "anchor": "WE1",
-       "printed_page": 7,
-       "quote": "$x - 2 = 5 \\therefore x = 7$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE1' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-1:think-and-discuss-1",
       "u1-1:think-and-discuss-2",
@@ -75,19 +66,29 @@
       "second projection"
      ],
      "failures": [],
-     "fingerprint": "2a7b1ccca84e37fb1a57b0c0d62dbcd4"
+     "fingerprint": "0c7b83088c20f09ab568175c4d63d6ce"
     },
     {
      "id": "lo:u1-1-2",
      "n": 2,
      "label": "Cartesian product of finite sets",
-     "statement": "Find X×Y, Y×X and X² for finite non-empty sets, and calculate the number of elements n(X×Y) as n(X)×n(Y).",
+     "statement": "Find the cartesian product X×Y and X² of finite sets, determine the number of its elements, and compare X×Y with Y×X.",
      "evidence": [
       {
        "kind": "definition",
        "anchor": "u1-1:definition-2",
        "printed_page": 8,
        "quote": "$X\\times Y=\\{(a,b): a\\in X, b\\in Y\\}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE2",
+       "anchor": "u1-1:example-2",
+       "printed_page": 8,
+       "quote": "$X\\times Y\\neq Y\\times X$",
        "contained": true,
        "present": true,
        "supports": true
@@ -102,17 +103,7 @@
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE2",
-       "printed_page": 8,
-       "quote": "$X\\times Y\\neq Y\\times X$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE2' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-1:think-1",
       "u1-1:think-2",
@@ -131,18 +122,18 @@
      "terms": [
       "cartesian product",
       "finite set",
+      "ordered pair",
       "n(X)",
-      "X²",
-      "ordered pair"
+      "X²"
      ],
      "failures": [],
-     "fingerprint": "98996891e7036b9ba336cca8c024a5e3"
+     "fingerprint": "25e65aaede5cd959405ceb4e75bcc334"
     },
     {
      "id": "lo:u1-1-3",
      "n": 3,
      "label": "Arrow and cartesian diagrams",
-     "statement": "Represent the cartesian product of finite sets by an arrow diagram and a cartesian diagram.",
+     "statement": "Represent a cartesian product of finite sets by an arrow diagram and a cartesian diagram.",
      "evidence": [
       {
        "kind": "heading",
@@ -152,28 +143,29 @@
        "contained": true,
        "present": true,
        "supports": true
-      }
-     ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE4",
-       "printed_page": 9,
-       "quote": "by the arrow diagram",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE4' is not in the chapter packet"
       },
       {
        "kind": "worked_example",
-       "anchor": "WE5",
+       "cited_as": "WE4",
+       "anchor": "u1-1:example-4",
+       "printed_page": 9,
+       "quote": "by the arrow diagram",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE5",
+       "anchor": "u1-1:example-5",
        "printed_page": 10,
        "quote": "represent it with an arrow diagram",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE5' is not in the chapter packet"
+       "contained": true,
+       "present": true,
+       "supports": true
       }
      ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-1:think-3"
      ],
@@ -187,48 +179,45 @@
       "cartesian diagram",
       "cartesian product"
      ],
-     "failures": [
-      "1 kind(s) of valid evidence (heading); rule 1 needs two different kinds",
-      "no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-     ],
-     "fingerprint": "213d1208afc96924222ec26b231599e1"
+     "failures": [],
+     "fingerprint": "2cc496b3278675823512313cd0df78cf"
     },
     {
      "id": "lo:u1-1-4",
      "n": 4,
-     "label": "Graphing N, Z, Q, R products",
-     "statement": "Represent N×N, Z×Z, Q×Q and R×R on a perpendicular graphical net, identify the ordered pair at a point, and locate points in quadrants or on the x-axis or y-axis.",
+     "label": "Graphing products of infinite sets",
+     "statement": "Represent N×N, Z×Z, Q×Q and R×R on a perpendicular graphical net, identify points as ordered pairs, and locate them by quadrant or axis.",
      "evidence": [
       {
        "kind": "heading",
        "anchor": "u1-1:heading-7",
        "printed_page": 12,
-       "quote": "Representing the cartesian product $R \\times R",
+       "quote": "Representing the cartesian product",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE6",
+       "anchor": "u1-1:example-6",
+       "printed_page": 12,
+       "quote": "A (3, 3) is located in the first quadrant.",
        "contained": true,
        "present": true,
        "supports": true
       },
       {
        "kind": "exercise",
-       "anchor": "u1-1:drill-4:A",
-       "printed_page": 12,
-       "quote": "If X = [-2, 3]",
+       "anchor": "u1-1:exercise-2:A",
+       "printed_page": 11,
+       "quote": "$A(3, \\frac{5}{2})$",
        "contained": true,
        "present": true,
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE6",
-       "printed_page": 12,
-       "quote": "is located in the first quadrant",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE6' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-1:exercise-1:C",
       "u1-1:exercise-1:O",
@@ -251,16 +240,16 @@
      "confidence": "agreed",
      "terms": [
       "perpendicular graphical net",
+      "ordered pair",
       "quadrant",
-      "x-axis",
-      "y-axis",
+      "axis",
       "N×N",
       "Z×Z",
       "Q×Q",
       "R×R"
      ],
      "failures": [],
-     "fingerprint": "a347c555a0a986bcdd2832a09140cd86"
+     "fingerprint": "58e62bcdfed8ad2f8971b6a55144f5e3"
     }
    ]
   },
@@ -270,14 +259,15 @@
     {
      "id": "lo:u1-2-1",
      "n": 1,
-     "label": "Write relation as ordered pairs",
-     "statement": "Write a relation R from a set X to a set Y as a set of ordered pairs, as a subset of X × Y, by applying the stated rule to the elements of X and Y.",
+     "label": "Write a relation as ordered pairs",
+     "statement": "Write a relation R from X to Y as a set of ordered pairs, a subset of X × Y, by applying the rule given for a R b, and decide whether a given pair satisfies R.",
      "evidence": [
       {
-       "kind": "exercise",
-       "anchor": "u1-2:think-and-discuss-2",
+       "kind": "worked_example",
+       "cited_as": "WE7",
+       "anchor": "u1-2:example-1",
        "printed_page": 13,
-       "quote": "Write the previous statements in the form of ordered pairs",
+       "quote": "$\\therefore R=\\{(-1,2),(1,6),(2,8)\\}$",
        "contained": true,
        "present": true,
        "supports": true
@@ -286,22 +276,22 @@
        "kind": "definition",
        "anchor": "u1-2:rule-3",
        "printed_page": 14,
-       "quote": "then R is a subset of X × Y",
+       "quote": "R is a subset of X × Y",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "u1-2:think-and-discuss-2",
+       "printed_page": 13,
+       "quote": "Write the previous statements in the form of ordered pairs from X to Y.",
        "contained": true,
        "present": true,
        "supports": true
       }
      ],
      "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE1",
-       "printed_page": 13,
-       "quote": "$\\therefore R=\\{(-1,2),(1,6),(2,8)\\}$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE1' is not in the chapter packet"
-      },
       {
        "kind": "exercise",
        "anchor": "u1-2:think-1",
@@ -310,12 +300,15 @@
        "contained": true,
        "present": true,
        "supports": false,
-       "dropped": "the evidence check says it does not support the objective: Exercise asks about subset relationships but does not ask student to write R or apply a rule to find ordered pairs"
+       "dropped": "the evidence check says it does not support the objective: Exercise asks about the subset property of R itself, but the objective asks to 'decide whether a given pair satisfies R'—testing a specific pair (a,b), not verifying the general subset property."
       }
      ],
      "exercise_items": [
       "u1-2:think-and-discuss-2",
-      "u1-2:think-1"
+      "u1-2:think-1",
+      "u1-2:drill-1:Second 1",
+      "u1-2:drill-1:Second 2",
+      "u1-2:drill-1:Second 3"
      ],
      "worked_examples": [
       "u1-2:example-1"
@@ -323,24 +316,24 @@
      "confidence": "merged",
      "terms": [
       "relation",
-      "ordered pairs",
+      "ordered pair",
       "subset",
       "cartesian product"
      ],
      "failures": [],
-     "fingerprint": "55a05d12d7b13f89a1e45b3eda0a2188"
+     "fingerprint": "ae894ad6504d769f150935dd486063fb"
     },
     {
      "id": "lo:u1-2-2",
      "n": 2,
      "label": "Represent relations by diagrams",
-     "statement": "Represent a relation by an arrow diagram and by a cartesian diagram.",
+     "statement": "Represent a relation from X to Y by an arrow diagram and by a cartesian diagram.",
      "evidence": [
       {
        "kind": "intro",
        "anchor": "u1-2:linking-text-1",
        "printed_page": 13,
-       "quote": "represented by an arrow diagram",
+       "quote": "This relation can be represented by an arrow diagram",
        "contained": true,
        "present": true,
        "supports": true
@@ -349,7 +342,7 @@
        "kind": "exercise",
        "anchor": "u1-2:think-and-discuss-3",
        "printed_page": 13,
-       "quote": "Represent a set of the ordered pairs in the form of an arrow diagram",
+       "quote": "Represent a set of the ordered pairs in the form of an arrow diagram.",
        "contained": true,
        "present": true,
        "supports": true
@@ -358,7 +351,7 @@
        "kind": "exercise",
        "anchor": "u1-2:drill-1:First",
        "printed_page": 15,
-       "quote": "Write $R$ and represent it by an arrow diagram",
+       "quote": "represent it by an arrow diagram and also, by a cartasian diagram",
        "contained": true,
        "present": true,
        "supports": true
@@ -377,7 +370,7 @@
       "relation"
      ],
      "failures": [],
-     "fingerprint": "c964c56662ee1f92608d6969f09b2144"
+     "fingerprint": "41dd8a3b1b8cb45a43d6c2222dcb60c4"
     },
     {
      "id": "lo:u1-2-3",
@@ -389,80 +382,35 @@
        "kind": "definition",
        "anchor": "u1-2:definition-1",
        "printed_page": 14,
-       "quote": "then R is called a relation on X",
-       "contained": true,
-       "present": true,
-       "supports": true
-      }
-     ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE2",
-       "printed_page": 14,
-       "quote": "$R=\\{(-2,2),(-1,1),(0,0),(1,-1),(2,-2)\\}$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE2' is not in the chapter packet"
-      }
-     ],
-     "exercise_items": [],
-     "worked_examples": [
-      "u1-2:example-2"
-     ],
-     "confidence": "agreed",
-     "terms": [
-      "relation on a set",
-      "ordered pairs",
-      "cartesian product"
-     ],
-     "failures": [
-      "1 kind(s) of valid evidence (definition); rule 1 needs two different kinds",
-      "no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-     ],
-     "fingerprint": "9a4374007e7563867234dd36f5fc0e1e"
-    },
-    {
-     "id": "lo:u1-2-4",
-     "n": 4,
-     "label": "Decide if pairs satisfy R",
-     "statement": "Determine whether a given statement a R b is correct by checking the rule of the relation, and justify the answer.",
-     "evidence": [
-      {
-       "kind": "exercise",
-       "anchor": "u1-2:drill-1:Second 1",
-       "printed_page": 15,
-       "quote": "Show which of the following relations are correct and why?",
+       "quote": "R is called a relation on X",
        "contained": true,
        "present": true,
        "supports": true
       },
       {
-       "kind": "exercise",
-       "anchor": "u1-2:drill-1:Second 3",
-       "printed_page": 15,
-       "quote": "$3\\,R\\,47$",
+       "kind": "worked_example",
+       "cited_as": "WE8",
+       "anchor": "u1-2:example-2",
+       "printed_page": 14,
+       "quote": "$R=\\{(-2,2),(-1,1),(0,0),(1,-1),(2,-2)\\}$",
        "contained": true,
        "present": true,
        "supports": true
       }
      ],
      "evidence_dropped": [],
-     "exercise_items": [
-      "u1-2:drill-1:Second 1",
-      "u1-2:drill-1:Second 2",
-      "u1-2:drill-1:Second 3"
+     "exercise_items": [],
+     "worked_examples": [
+      "u1-2:example-2"
      ],
-     "worked_examples": [],
-     "confidence": "agreed",
+     "confidence": "single",
      "terms": [
-      "relation",
-      "rule of the relation"
+      "relation on X",
+      "subset",
+      "cartesian product"
      ],
-     "failures": [
-      "1 kind(s) of valid evidence (exercise); rule 1 needs two different kinds"
-     ],
-     "fingerprint": "1bf68730751b76ebd019b76185ef2d82"
+     "failures": [],
+     "fingerprint": "cd85a25dbffc5a6dc1a0a514cc6252b9"
     }
    ]
   },
@@ -472,14 +420,24 @@
     {
      "id": "lo:u1-3-1",
      "n": 1,
-     "label": "Identify functions among relations",
-     "statement": "Decide whether a relation, given as ordered pairs, an arrow diagram or a cartesian diagram, is a function, and justify the decision using the condition that each element of X appears only once as a first projection (has only one arrow).",
+     "label": "Identify functions from relations",
+     "statement": "Decide whether a relation from X to Y, given as ordered pairs, an arrow diagram or a cartesian diagram, is a function, by checking that each element of X is connected to only one element of Y, and justify the decision.",
      "evidence": [
       {
        "kind": "definition",
        "anchor": "u1-3:definition-1",
        "printed_page": 16,
        "quote": "each of the elements of X appears only once as a first projection",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE10",
+       "anchor": "u1-3:example-2",
+       "printed_page": 18,
+       "quote": "R is a function because every element of the X has only one arrow coming out",
        "contained": true,
        "present": true,
        "supports": true
@@ -492,28 +450,9 @@
        "contained": true,
        "present": true,
        "supports": true
-      },
-      {
-       "kind": "exercise",
-       "anchor": "u1-3:drill-2",
-       "printed_page": 17,
-       "quote": "Which of the following cartesian diagrams represent a function from X to X.",
-       "contained": true,
-       "present": true,
-       "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE2",
-       "printed_page": 18,
-       "quote": "R is a function because every element of the X has only one arrow coming out to one element of Y.",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE2' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-3:think-and-discuss-1",
       "u1-3:think-and-discuss-2",
@@ -529,40 +468,40 @@
       "relation",
       "function",
       "ordered pair",
+      "first projection",
       "arrow diagram",
-      "cartesian diagram",
-      "first projection"
+      "cartesian diagram"
      ],
      "failures": [],
-     "fingerprint": "ad64f6316db6f52336a78a9fbbea045a"
+     "fingerprint": "1a83e99dbd11eace7c0a2174d319e9c0"
     },
     {
      "id": "lo:u1-3-2",
      "n": 2,
-     "label": "Express and represent functions symbolically",
-     "statement": "Write a function using the symbols f : X → Y, f : x ↦ y and f(x) = y, and represent it by an arrow diagram and a cartesian diagram.",
+     "label": "Write functions symbolically",
+     "statement": "Write a function symbolically using f : X → Y, f : x ↦ y and f(x) = y, and as a set of ordered pairs, and represent it by an arrow diagram and a cartesian diagram.",
      "evidence": [
       {
-       "kind": "intro",
+       "kind": "definition",
        "anchor": "u1-3:convention-3",
        "printed_page": 16,
        "quote": "f(x) = y",
        "contained": true,
        "present": true,
        "supports": true
-      }
-     ],
-     "evidence_dropped": [
+      },
       {
        "kind": "worked_example",
-       "anchor": "WE1",
+       "cited_as": "WE9",
+       "anchor": "u1-3:example-1",
        "printed_page": 17,
-       "quote": "Represent f by an arrow diagram and also, by a cartesian diagram.",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE1' is not in the chapter packet"
+       "quote": "$f=\\{(3,3),(4,5),(5,4),(6,5)\\}$",
+       "contained": true,
+       "present": true,
+       "supports": true
       }
      ],
+     "evidence_dropped": [],
      "exercise_items": [],
      "worked_examples": [
       "u1-3:example-1"
@@ -570,43 +509,40 @@
      "confidence": "agreed",
      "terms": [
       "function",
+      "ordered pair",
       "arrow diagram",
-      "cartesian diagram",
-      "ordered pairs"
+      "cartesian diagram"
      ],
-     "failures": [
-      "1 kind(s) of valid evidence (intro); rule 1 needs two different kinds",
-      "no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-     ],
-     "fingerprint": "0609433fd2094a868b2d81dbec58ec35"
+     "failures": [],
+     "fingerprint": "54c4d81e6bc05acd47bf7156bf1b3251"
     },
     {
      "id": "lo:u1-3-3",
      "n": 3,
-     "label": "Find domain, codomain, range",
-     "statement": "Determine the domain, codomain and range of a function, and find the range as the set of images, a subset of the codomain.",
+     "label": "Find domain, codomain and range",
+     "statement": "Determine the domain, codomain and range of a function, recognising that the range is a subset of the codomain.",
      "evidence": [
       {
        "kind": "definition",
        "anchor": "u1-3:definition-4",
        "printed_page": 17,
-       "quote": "The set of images of the elements of the domain X by the function f is called the range",
+       "quote": "is called the range of the function",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE10",
+       "anchor": "u1-3:example-2",
+       "printed_page": 18,
+       "quote": "The function range = $\\{4,6,8\\}$",
        "contained": true,
        "present": true,
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE2",
-       "printed_page": 18,
-       "quote": "The function range = $\\{4,6,8\\}$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE2' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [],
      "worked_examples": [],
      "confidence": "agreed",
@@ -614,14 +550,10 @@
       "domain",
       "codomain",
       "range",
-      "image",
       "subset"
      ],
-     "failures": [
-      "1 kind(s) of valid evidence (definition); rule 1 needs two different kinds",
-      "no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-     ],
-     "fingerprint": "43ddf5bd5ec845e27720ad63988f11b5"
+     "failures": [],
+     "fingerprint": "a12c099b9be6c3d4eeff16a4ca04f668"
     }
    ]
   },
@@ -631,8 +563,8 @@
     {
      "id": "lo:u1-4-1",
      "n": 1,
-     "label": "Identify and evaluate polynomial functions",
-     "statement": "Identify which functions are polynomial functions, state the degree of a polynomial function as the highest power of the variable, and evaluate function values by substitution.",
+     "label": "Identify polynomial and degree",
+     "statement": "Identify which functions are polynomial functions and state the degree of a polynomial function.",
      "evidence": [
       {
        "kind": "definition",
@@ -654,9 +586,50 @@
       },
       {
        "kind": "exercise",
-       "anchor": "u1-4:drill-2:C",
+       "anchor": "u1-4:drill-2:A",
        "printed_page": 19,
        "quote": "mention the degree of the function",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "u1-4:think-and-discuss-1",
+      "u1-4:think-and-discuss-2",
+      "u1-4:think-and-discuss-3",
+      "u1-4:think-and-discuss-4",
+      "u1-4:drill-1:A",
+      "u1-4:drill-1:B",
+      "u1-4:drill-1:C",
+      "u1-4:drill-1:D",
+      "u1-4:drill-2:A",
+      "u1-4:drill-2:B",
+      "u1-4:drill-2:C",
+      "u1-4:drill-2:D"
+     ],
+     "worked_examples": [],
+     "confidence": "agreed",
+     "terms": [
+      "polynomial function",
+      "degree"
+     ],
+     "failures": [],
+     "fingerprint": "40c59647074b2f3ead50543613fba3d2"
+    },
+    {
+     "id": "lo:u1-4-2",
+     "n": 2,
+     "label": "Evaluate function values",
+     "statement": "Calculate the values of a polynomial function at given real numbers by substitution.",
+     "evidence": [
+      {
+       "kind": "worked_example",
+       "cited_as": "WE11",
+       "anchor": "u1-4:example-1",
+       "printed_page": 20,
+       "quote": "$f(-2)=(-2)^2-(-2)+3=4+2+3=9$",
        "contained": true,
        "present": true,
        "supports": true
@@ -671,57 +644,52 @@
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE1",
-       "printed_page": 20,
-       "quote": "$f(-2)=(-2)^2-(-2)+3=4+2+3=9$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE1' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
-      "u1-4:think-and-discuss-1",
-      "u1-4:think-and-discuss-2",
-      "u1-4:think-and-discuss-3",
-      "u1-4:think-and-discuss-4",
-      "u1-4:drill-1:A",
-      "u1-4:drill-1:B",
-      "u1-4:drill-1:C",
-      "u1-4:drill-1:D",
-      "u1-4:drill-2:A",
-      "u1-4:drill-2:B",
-      "u1-4:drill-2:C",
-      "u1-4:drill-2:D",
       "u1-4:drill-3:A",
       "u1-4:drill-3:B"
      ],
      "worked_examples": [
       "u1-4:example-1"
      ],
-     "confidence": "merged",
+     "confidence": "agreed",
      "terms": [
       "polynomial function",
-      "degree",
-      "function value",
-      "image"
+      "function value"
      ],
      "failures": [],
-     "fingerprint": "714a978e8926356eb3b9271e810f1486"
+     "fingerprint": "4e6507a399619c8788adc8c8da51c81a"
     },
     {
-     "id": "lo:u1-4-2",
-     "n": 2,
+     "id": "lo:u1-4-3",
+     "n": 3,
      "label": "Graph linear and constant functions",
-     "statement": "Represent a linear function and a constant function graphically using a table of ordered pairs and a straight line.",
+     "statement": "Represent a linear function or constant function graphically using a table of ordered pairs.",
      "evidence": [
+      {
+       "kind": "worked_example",
+       "cited_as": "WE12",
+       "anchor": "u1-4:example-2",
+       "printed_page": 20,
+       "quote": "Represent graphically the function",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "u1-4:drill-4:2",
+       "printed_page": 21,
+       "quote": "$g: g(x) = 3x$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
       {
        "kind": "definition",
        "anchor": "u1-4:definition-2",
        "printed_page": 20,
-       "quote": "is called a linear function or a function of the first degree",
+       "quote": "is called a linear function",
        "contained": true,
        "present": true,
        "supports": true
@@ -730,41 +698,13 @@
        "kind": "definition",
        "anchor": "u1-4:definition-3",
        "printed_page": 21,
-       "quote": "it is called a constant function",
-       "contained": false,
-       "present": true,
-       "supports": true
-      },
-      {
-       "kind": "exercise",
-       "anchor": "u1-4:drill-4:2",
-       "printed_page": 21,
-       "quote": "Represent graphically each of the following functions",
-       "contained": true,
-       "present": true,
-       "supports": true
-      },
-      {
-       "kind": "exercise",
-       "anchor": "u1-4:drill-5:1",
-       "printed_page": 21,
-       "quote": "$f(x) = 5$",
+       "quote": "is called a constant function",
        "contained": true,
        "present": true,
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE2",
-       "printed_page": 20,
-       "quote": "$f(1)=2-3=-1$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE2' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [
       "u1-4:drill-4:1",
       "u1-4:drill-4:2",
@@ -780,31 +720,40 @@
      "confidence": "agreed",
      "terms": [
       "linear function",
-      "function of the first degree",
       "constant function",
-      "ordered pairs",
-      "graph"
+      "ordered pairs"
      ],
      "failures": [],
-     "fingerprint": "0103e09a4f3ab43e34c6a26f165bd783"
+     "fingerprint": "045e2bd416b1d6461081178d4daf4e6c"
     },
     {
-     "id": "lo:u1-4-3",
-     "n": 3,
+     "id": "lo:u1-4-4",
+     "n": 4,
      "label": "Graph quadratic functions",
-     "statement": "Represent a quadratic function graphically and state its vertex, axis of symmetry and maximum or minimum value.",
+     "statement": "Represent a quadratic function graphically on an interval and state its axis of symmetry, vertex and maximum or minimum value.",
      "evidence": [
       {
-       "kind": "definition",
-       "anchor": "u1-4:definition-4",
-       "printed_page": 21,
-       "quote": "is called a quadratic function",
+       "kind": "worked_example",
+       "cited_as": "WE13",
+       "anchor": "u1-4:example-3",
+       "printed_page": 22,
+       "quote": "Represent graphically the quadratic function",
        "contained": true,
        "present": true,
        "supports": true
       },
       {
-       "kind": "intro",
+       "kind": "worked_example",
+       "cited_as": "WE14",
+       "anchor": "u1-4:example-4",
+       "printed_page": 23,
+       "quote": "the maximum value of the function = 0",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "definition",
        "anchor": "u1-4:rule-6",
        "printed_page": 22,
        "quote": "The coordinates of the vertex of the curve",
@@ -813,26 +762,7 @@
        "supports": true
       }
      ],
-     "evidence_dropped": [
-      {
-       "kind": "worked_example",
-       "anchor": "WE3",
-       "printed_page": 22,
-       "quote": "Represent graphically the quadratic function $f$",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE3' is not in the chapter packet"
-      },
-      {
-       "kind": "worked_example",
-       "anchor": "WE4",
-       "printed_page": 23,
-       "quote": "the maximum value of the function = 0",
-       "present": false,
-       "supports": false,
-       "dropped": "anchor 'WE4' is not in the chapter packet"
-      }
-     ],
+     "evidence_dropped": [],
      "exercise_items": [],
      "worked_examples": [
       "u1-4:example-3",
@@ -846,10 +776,8 @@
       "maximum value",
       "minimum value"
      ],
-     "failures": [
-      "no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
-     ],
-     "fingerprint": "3d00dcedcb315e931a572357692724c1"
+     "failures": [],
+     "fingerprint": "aca4478f25495877e74db489a5708efa"
     }
    ]
   }
@@ -857,156 +785,172 @@
  "links": [
   {
    "src": "lo:u1-1-2",
-   "dst": "lo:u1-2-1",
-   "signal": "reference",
+   "dst": "lo:u1-1-3",
+   "signal": "uses_method",
    "evidence": [
     {
-     "kind": "text",
-     "anchor": "u1-2:rule-2",
-     "printed_page": 14,
-     "quote": "X × Y is the set of ordered pairs where the first projection in each ordered pair belongs to X"
+     "kind": "worked_example",
+     "cited_as": "WE4",
+     "anchor": "u1-1:example-4",
+     "printed_page": 9,
+     "quote": "$X \\times Y = \\{1,2\\} \\times \\{3,4,5\\} = \\{(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)\\}$"
     }
    ],
    "evidence_dropped": [],
    "check": {
     "verdict": "CONFIRMED",
-    "note": "Text recalls X×Y as set of ordered pairs; relation as subset builds on it."
+    "note": "Example computes X×Y then represents it by diagrams; uses the product as the step."
    },
-   "key": "lo:u1-1-2->lo:u1-2-1",
+   "key": "lo:u1-1-2->lo:u1-1-3",
    "backward": false,
-   "fingerprint": "f3fb6301b77c7e5bce5c28d24bb11157"
+   "fingerprint": "c11b1090dae2ddad8466193007e0d1e6"
   },
   {
-   "src": "lo:u1-1-2",
-   "dst": "lo:u1-2-3",
-   "signal": "reference",
+   "src": "lo:u1-4-2",
+   "dst": "lo:u1-4-3",
+   "signal": "uses_method",
    "evidence": [
     {
-     "kind": "text",
-     "anchor": "u1-2:definition-1",
-     "printed_page": 14,
-     "quote": "R is called a relation on X, and R ⊂ X × X."
+     "kind": "worked_example",
+     "cited_as": "WE12",
+     "anchor": "u1-4:example-2",
+     "printed_page": 20,
+     "quote": "$\\therefore f(0)=0-3=-3,\\ f(1)=2-3=-1,\\ f(2)=4-3=1$"
     }
    ],
    "evidence_dropped": [],
    "check": {
     "verdict": "CONFIRMED",
-    "note": "R ⊂ X×X uses the product X×X (X²) concept."
+    "note": "Evaluates f at values by substitution to form the table of ordered pairs for graphing."
    },
-   "key": "lo:u1-1-2->lo:u1-2-3",
+   "key": "lo:u1-4-2->lo:u1-4-3",
    "backward": false,
-   "fingerprint": "6483a0d88dc103d5ebf0951fc8bd4ffa"
+   "fingerprint": "96d02abc1c52b09db333d5835a1cc54f"
+  },
+  {
+   "src": "lo:u1-4-2",
+   "dst": "lo:u1-4-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE13",
+     "anchor": "u1-4:example-3",
+     "printed_page": 22,
+     "quote": "$f(-3)=9$, $f(-2)=4$, $f(-1)=1$, $f(0)=0$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Computes f values by substitution as the step to build the table and graph."
+   },
+   "key": "lo:u1-4-2->lo:u1-4-4",
+   "backward": false,
+   "fingerprint": "30ae9e1f6b11b3fa41eabe77db77c2a7"
+  },
+  {
+   "src": "lo:u1-1-4",
+   "dst": "lo:u1-4-3",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE12",
+     "anchor": "u1-4:example-2",
+     "printed_page": 20,
+     "quote": "The ordered pairs of the cartesian product of R × R is represented on the square net."
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Text plots ordered pairs on the R×R square net, using that representation."
+   },
+   "key": "lo:u1-1-4->lo:u1-4-3",
+   "backward": false,
+   "fingerprint": "e0ef31ea6312aecbe650b47dcd3cf47a"
   }
  ],
  "links_dropped": [
   {
-   "key": "lo:u1-1-2->lo:u1-1-3",
-   "src": "lo:u1-1-2",
-   "dst": "lo:u1-1-3",
-   "why": "Representing a product by diagrams starts by finding X×Y.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
-   }
-  },
-  {
    "key": "lo:u1-1-3->lo:u1-1-4",
    "src": "lo:u1-1-3",
    "dst": "lo:u1-1-4",
-   "why": "The graphical net extends the cartesian diagram idea to infinite sets.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "Text only says points represent pairs of N×N; doesn't show reliance on arrow/cartesian diagram objective."
-   }
-  },
-  {
-   "key": "lo:u1-2-1->lo:u1-2-2",
-   "src": "lo:u1-2-1",
-   "dst": "lo:u1-2-2",
-   "why": "R is written before it is drawn.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
-   }
-  },
-  {
-   "key": "lo:u1-2-1->lo:u1-2-4",
-   "src": "lo:u1-2-1",
-   "dst": "lo:u1-2-4",
-   "why": "Checking statements uses the relation's rule.",
+   "why": "The perpendicular net was used for the cartesian diagram of finite sets before being extended to infinite sets.",
    "check": {
     "verdict": "UNCLEAR",
-    "note": "Exercise checks aRb using the rule; doesn't clearly rely on writing relation as ordered pairs."
+    "note": "Text builds the net for N×N but doesn't refer back to diagram representation of finite products."
+   }
+  },
+  {
+   "key": "lo:u1-1-2->lo:u1-2-1",
+   "src": "lo:u1-1-2",
+   "dst": "lo:u1-2-1",
+   "why": "A relation is defined as a subset of X×Y.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Quote just defines X×Y; doesn't show reliance on computing products as an objective."
+   }
+  },
+  {
+   "key": "lo:u1-1-2->lo:u1-2-3",
+   "src": "lo:u1-1-2",
+   "dst": "lo:u1-2-3",
+   "why": "Relation on X is a subset of X×X.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Definition of relation on X; doesn't recall the cartesian product skill."
+   }
+  },
+  {
+   "key": "lo:u1-1-3->lo:u1-2-2",
+   "src": "lo:u1-1-3",
+   "dst": "lo:u1-2-2",
+   "why": "Relations are represented using arrow and cartesian diagrams already taught.",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Anchored text shows relation set writing and diagram representation; no explicit reference back to representing products."
    }
   },
   {
    "key": "lo:u1-2-1->lo:u1-3-1",
    "src": "lo:u1-2-1",
    "dst": "lo:u1-3-1",
-   "why": "Function is defined as a special relation.",
+   "why": "A function is defined as a special relation.",
    "check": {
     "verdict": "REJECTED",
-    "note": "Definition refers to first projection in ordered pairs, but not shown to rely on writing a relation as set of pairs specifically; weak."
+    "note": "Function definition doesn't recall writing relations as ordered pairs."
    }
   },
   {
    "key": "lo:u1-2-2->lo:u1-3-2",
    "src": "lo:u1-2-2",
    "dst": "lo:u1-3-2",
-   "why": "Function representation uses relation diagrams.",
+   "why": "Representing by diagrams is reused.",
    "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
+    "verdict": "UNCLEAR",
+    "note": "Exercise asks to represent relations by cartesian diagram, which uses the prior skill, but it's implicit."
    }
   },
   {
    "key": "lo:u1-3-1->lo:u1-3-3",
    "src": "lo:u1-3-1",
    "dst": "lo:u1-3-3",
-   "why": "Range is found after confirming it is a function.",
+   "why": "Range is found after verifying the function.",
    "check": {
     "verdict": "REJECTED",
-    "note": "No such anchor."
+    "note": "Example shows function check and finds range, but doesn't show domain/codomain relying on the decision step explicitly."
    }
   },
   {
-   "key": "lo:u1-3-2->lo:u1-4-1",
-   "src": "lo:u1-3-2",
+   "key": "lo:u1-3-3->lo:u1-4-1",
+   "src": "lo:u1-3-3",
    "dst": "lo:u1-4-1",
-   "why": "Function notation is used for polynomials.",
+   "why": "Polynomial lesson uses domain and codomain.",
    "check": {
-    "verdict": "REJECTED",
-    "note": "Polynomial definition doesn't use function notation objective as a step."
-   }
-  },
-  {
-   "key": "lo:u1-4-1->lo:u1-4-2",
-   "src": "lo:u1-4-1",
-   "dst": "lo:u1-4-2",
-   "why": "Table of values uses substitution.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
-   }
-  },
-  {
-   "key": "lo:u1-4-1->lo:u1-4-3",
-   "src": "lo:u1-4-1",
-   "dst": "lo:u1-4-3",
-   "why": "Quadratic table uses substitution.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
-   }
-  },
-  {
-   "key": "lo:u1-1-4->lo:u1-4-2",
-   "src": "lo:u1-1-4",
-   "dst": "lo:u1-4-2",
-   "why": "Graphing plots points on the R×R net.",
-   "check": {
-    "verdict": "REJECTED",
-    "note": "No such anchor."
+    "verdict": "UNCLEAR",
+    "note": "Statement of domain/codomain used in polynomial context; no clear reliance."
    }
   }
  ],
@@ -1019,11 +963,11 @@
    "detail": "equality of ordered pairs: not in the Egyptian Prep-3 maths book's vocabulary"
   },
   {
-   "key": "term:first projection / second projection",
+   "key": "term:projection",
    "kind": "terminology",
    "lesson": "u1-1",
    "objective": "lo:u1-1-1",
-   "detail": "first projection / second projection: Other curricula call these the first and second coordinates (components) of an ordered pair."
+   "detail": "projection: Other curricula call the components of an ordered pair coordinates (x- and y-coordinates) or first/second elements."
   },
   {
    "key": "term:finite set",
@@ -1040,6 +984,13 @@
    "detail": "n(X): Number of elements of a set; other curricula write |X| or #X and call it cardinality."
   },
   {
+   "key": "term:cartesian product",
+   "kind": "terminology",
+   "lesson": "u1-1",
+   "objective": "lo:u1-1-2",
+   "detail": "cartesian product: Also known as the Cartesian product / cross product of sets."
+  },
+  {
    "key": "term:cartesian diagram",
    "kind": "terminology",
    "lesson": "u1-1",
@@ -1051,7 +1002,7 @@
    "kind": "terminology",
    "lesson": "u1-1",
    "objective": "lo:u1-1-3",
-   "detail": "arrow diagram: Often called a mapping diagram or arrow (relation) diagram in other curricula."
+   "detail": "arrow diagram: Often called a mapping diagram or arrow/mapping diagram in other curricula."
   },
   {
    "key": "term:perpendicular graphical net",
@@ -1061,89 +1012,74 @@
    "detail": "perpendicular graphical net: not in the Egyptian Prep-3 maths book's vocabulary"
   },
   {
-   "key": "term:cartesian product",
+   "key": "term:quadrant",
    "kind": "terminology",
-   "lesson": "u1-2",
-   "objective": "lo:u1-2-1",
-   "detail": "cartesian product: Other curricula may call X × Y the product set or cross product."
+   "lesson": "u1-1",
+   "objective": "lo:u1-1-4",
+   "detail": "quadrant: Same idea as elsewhere; here located points use the book's first-quadrant wording."
   },
   {
-   "key": "term:rule of the relation",
+   "key": "single:lo:u1-2-3",
+   "kind": "single",
+   "lesson": "u1-2",
+   "objective": "lo:u1-2-3",
+   "detail": "lo:u1-2-3 'Write and represent a relation on a set X (from X to itself) as a subset of X × X.': only finder A found it"
+  },
+  {
+   "key": "term:relation on x",
    "kind": "terminology",
    "lesson": "u1-2",
-   "objective": "lo:u1-2-4",
-   "detail": "rule of the relation: not in the Egyptian Prep-3 maths book's vocabulary"
+   "objective": "lo:u1-2-3",
+   "detail": "relation on X: not in the Egyptian Prep-3 maths book's vocabulary"
   },
   {
    "key": "unpractised:lo:u1-3-3",
    "kind": "unpractised",
    "lesson": "u1-3",
    "objective": "lo:u1-3-3",
-   "detail": "lo:u1-3-3 'Determine the domain, codomain and range of a function, and find the range as the set of images, a subset of the codomain.': no exercise item or worked example is mapped to it (its practice evidence may be an end-of-chapter item the mappers placed elsewhere)"
+   "detail": "lo:u1-3-3 'Determine the domain, codomain and range of a function, recognising that the range is a subset of the codomain.': no exercise item or worked example is mapped to it (its practice evidence may be an end-of-chapter item the mappers placed elsewhere)"
   },
   {
    "key": "term:first projection",
    "kind": "terminology",
    "lesson": "u1-3",
    "objective": "lo:u1-3-1",
-   "detail": "first projection: Other curricula call this the first element/coordinate of an ordered pair, or the input/x-value."
-  },
-  {
-   "key": "term:image",
-   "kind": "terminology",
-   "lesson": "u1-3",
-   "objective": "lo:u1-3-3",
-   "detail": "image: Output value of an element; some curricula say 'value of f(x)'."
+   "detail": "first projection: Other curricula say first component or x-coordinate of an ordered pair."
   },
   {
    "key": "term:range",
    "kind": "terminology",
    "lesson": "u1-3",
    "objective": "lo:u1-3-3",
-   "detail": "range: Some curricula use 'range' for the codomain, or 'image' for the set of outputs."
+   "detail": "range: Some curricula use range for the codomain, or call the set of actual outputs the image."
+  },
+  {
+   "key": "term:codomain",
+   "kind": "terminology",
+   "lesson": "u1-3",
+   "objective": "lo:u1-3-3",
+   "detail": "codomain: Some curricula do not use this term and only speak of the range."
   },
   {
    "key": "term:function value",
    "kind": "terminology",
    "lesson": "u1-4",
-   "objective": "lo:u1-4-1",
-   "detail": "function value: not in the Egyptian Prep-3 maths book's vocabulary"
-  },
-  {
-   "key": "term:function of the first degree",
-   "kind": "terminology",
-   "lesson": "u1-4",
    "objective": "lo:u1-4-2",
-   "detail": "function of the first degree: not in the Egyptian Prep-3 maths book's vocabulary"
-  },
-  {
-   "key": "term:vertex",
-   "kind": "terminology",
-   "lesson": "u1-4",
-   "objective": "lo:u1-4-3",
-   "detail": "vertex: Other curricula may call this the turning point of the parabola."
+   "detail": "function value: not in the Egyptian Prep-3 maths book's vocabulary"
   },
   {
    "key": "term:axis of symmetry",
    "kind": "terminology",
    "lesson": "u1-4",
-   "objective": "lo:u1-4-3",
-   "detail": "axis of symmetry: Sometimes called line of symmetry."
+   "objective": "lo:u1-4-4",
+   "detail": "axis of symmetry: Book also says 'symmetrical axis'; other curricula may say line of symmetry."
   }
  ],
- "failures": [
-  "lo:u1-1-3: 1 kind(s) of valid evidence (heading); rule 1 needs two different kinds",
-  "lo:u1-1-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed",
-  "lo:u1-2-3: 1 kind(s) of valid evidence (definition); rule 1 needs two different kinds",
-  "lo:u1-2-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed",
-  "lo:u1-2-4: 1 kind(s) of valid evidence (exercise); rule 1 needs two different kinds",
-  "lo:u1-3-2: 1 kind(s) of valid evidence (intro); rule 1 needs two different kinds",
-  "lo:u1-3-2: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed",
-  "lo:u1-3-3: 1 kind(s) of valid evidence (definition); rule 1 needs two different kinds",
-  "lo:u1-3-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed",
-  "lo:u1-4-3: no valid worked-example or exercise evidence; an objective the book never demonstrates or practises cannot be assessed"
- ],
+ "failures": [],
  "warnings": [
-  "lo:u1-2-4: the reconciler said 'merged', the finders say 'agreed'"
+  "lo:u1-2-2: the reconciler said 'merged', the finders say 'agreed'",
+  "u1-2: objectives are not numbered in the order the book practises them (rule 6)",
+  "u1-3: objectives are not numbered in the order the book practises them (rule 6)",
+  "u1-4: objectives are not numbered in the order the book practises them (rule 6)"
  ]
 }

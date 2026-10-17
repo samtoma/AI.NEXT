@@ -1313,8 +1313,8 @@ async function mathsDecide(choice, latex) {
 
 /* ---------- Objectives (G1) ---------- */
 let objRows = [], oi = -1;
-const OKIND = { objective: "Objectives", link: "Links", question: "Questions" };
-const OSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", keep: "Kept", drop: "Dropped", answer: "Answered", changed: "S1 changed it since", open: "Not decided yet" };
+const OKIND = { objective: "Objectives", link: "Links", question: "Questions", filing: "Filing" };
+const OSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", keep: "Kept", drop: "Dropped", answer: "Answered", file: "Filed", changed: "S1 changed it since", open: "Not decided yet" };
 function oVisible() {
   const k = $("#okind").value, w = $("#oshow").value;
   return objRows.map((o, i) => ({ o, i })).filter(({ o }) => o.kind === k && (w === "all" || (w === "todo" ? o.state === "open" || o.state === "changed" : o.state !== "open")));
@@ -1354,7 +1354,7 @@ function renderObjectives() {
   if (oi < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2></div>'; return; }
   showObjective(objRows[oi]);
 }
-const evList = (ev) => (ev || []).map((e) => `<li><b>${esc(e.kind)}</b> · ${esc(e.anchor)} · p.${esc(e.printed_page ?? "?")}: “${md(e.quote || "")}”${e.why || e.reason ? ` <span class="muted">— dropped: ${esc(e.why || e.reason)}</span>` : ""}</li>`).join("");
+const evList = (ev) => (ev || []).map((e) => `<li><b>${esc(e.kind)}</b> · ${esc(e.anchor)} · ${Number.isInteger(e.printed_page) ? `<a href="#" class="evpage" data-page="${e.printed_page}" title="Show this page">p.${e.printed_page}</a>` : "p.?"}: “${md(e.quote || "")}”${e.why || e.reason ? ` <span class="muted">— dropped: ${esc(e.why || e.reason)}</span>` : ""}</li>`).join("");
 async function showObjective(row) {
   const book = $("#obook").value;
   const d = await getJSON(`/api/objectives/item?book=${encodeURIComponent(book)}&kind=${row.kind}&ref=${encodeURIComponent(row.ref)}`);
@@ -1371,11 +1371,21 @@ async function showObjective(row) {
         <div style="font-size:17px;margin-top:4px"><b>${esc(String(it.src || it.key).replace(/lo:/g, ""))}</b>${it.dst ? ` is needed for <b>${esc(it.dst.replace("lo:", ""))}</b>` : ""}</div>
         <div class="muted">${esc(it.signal || "")}${it.why ? ` · ${esc(it.why)}` : ""}${it.check ? ` · checker: ${esc(it.check.verdict || "")} ${esc(it.check.note || "")}` : ""}</div></div>
       <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul></div>`;
+  } else if (d.kind === "filing") {
+    const name = (n) => n === 0 ? "none of them" : n == null ? "no answer" : `${n}. ${(it.objectives.find((o) => o.n === n) || {}).label || "?"}`;
+    body = `<div class="gen"><span class="label">${esc(it.type)} · p.${esc(it.page ?? "?")}</span><div style="margin-top:4px">${md(it.text || "")}</div></div>
+      <div class="warn"><span class="label">The two readings</span>
+        <div style="margin-top:4px"><b>A:</b> ${esc(name(it.A.objective))}${it.A.why ? ` <span class="muted">— ${esc(it.A.why)}</span>` : ""}</div>
+        <div style="margin-top:4px"><b>B:</b> ${esc(name(it.B.objective))}${it.B.why ? ` <span class="muted">— ${esc(it.B.why)}</span>` : ""}</div></div>
+      <div class="why"><span class="label">File it under</span><div class="actions" style="flex-wrap:wrap">
+        ${it.objectives.map((o) => `<button data-file="${o.n}" ${!me ? "disabled" : ""}>${o.n}. ${esc(o.label)}</button>`).join("")}
+        <button data-file="0" ${!me ? "disabled" : ""}>None of them (0)</button></div></div>`;
   } else {
     body = `<div class="warn"><span class="label">${esc(it.kind)}</span><div>${esc(it.detail || it.question || "")}</div></div>`;
   }
   const buttons = d.kind === "objective" ? `<button class="confirm" id="oa" ${!me ? "disabled" : ""}>Approve (a)</button><button id="of" ${!me ? "disabled" : ""}>Needs fix (f)</button><button class="dispute" id="ox" ${!me ? "disabled" : ""}>Reject (x)</button>`
     : d.kind === "link" ? `<button class="confirm" id="oa" ${!me ? "disabled" : ""}>Keep (a)</button><button class="dispute" id="ox" ${!me ? "disabled" : ""}>Drop (x)</button>`
+    : d.kind === "filing" ? ""
     : `<button class="confirm" id="of" ${!me ? "disabled" : ""}>Answer (f)</button>`;
   $("#detail").innerHTML = `<div class="card">
     <div class="muted">G1 · ${esc(book)} · chapter ${esc(d.chapter)} · ${esc(d.lesson)} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(d.ref)}</span></div>
@@ -1391,20 +1401,25 @@ async function showObjective(row) {
     <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/objectives-g1.json. book_record_objectives.py apply writes only what you approve.</div>
   </div>`;
   renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#detail").querySelectorAll("[data-file]").forEach((b) => (b.onclick = () => objDecide("file", "", undefined, undefined, Number(b.dataset.file))));
   if ($("#oa")) $("#oa").onclick = () => objDecide(d.kind === "link" ? "keep" : "approve");
   if ($("#ox")) $("#ox").onclick = () => objDecide(d.kind === "link" ? "drop" : "reject");
   if ($("#of")) $("#of").onclick = openObjFix;
   $("#oprev").onclick = () => objMove(-1); $("#onext").onclick = () => objMove(1);
+  // the book page: the first evidence's page on opening; any evidence's page on a click
+  if (Number.isInteger(d.page_offset)) offset = d.page_offset;
+  $("#detail").querySelectorAll(".evpage").forEach((a) => (a.onclick = (e) => { e.preventDefault(); showPage(Number(a.dataset.page)); }));
+  if (d.printed_page) { page = d.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(book)}`); }
   $("#ocancel").onclick = () => $("#oform").classList.remove("open");
   $("#oform").onsubmit = (e) => { e.preventDefault(); objDecide(d.kind === "question" ? "answer" : "fix_requested", $("#onote").value.trim(), $("#ostmt")?.value.trim(), $("#olabel")?.value.trim()); };
 }
 function openObjFix() { if (!meNow() || !$("#oform")) return; $("#oform").classList.add("open"); ($("#ostmt") || $("#onote")).focus(); }
 function objMove(dir) { const vis = oVisible().map((x) => x.i); if (!vis.length) return; let p = vis.indexOf(oi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1); oi = vis[p]; renderObjectives(); }
-async function objDecide(decision, note, statement, label) {
+async function objDecide(decision, note, statement, label, objective) {
   const row = objRows[oi]; if (!row || !meNow()) return;
   $("#saved").textContent = "Saving…";
   const res = await fetch("/api/objectives/decision", { method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ book: $("#obook").value, kind: row.kind, ref: row.ref, decision, note, statement, label, by: meNow() }) });
+    body: JSON.stringify({ book: $("#obook").value, kind: row.kind, ref: row.ref, decision, note, statement, label, objective, by: meNow() }) });
   const out = await res.json().catch(() => ({}));
   if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
   $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;

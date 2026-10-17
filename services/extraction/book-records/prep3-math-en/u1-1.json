@@ -178,7 +178,6 @@
     {
       "id": "u1-1:rule-1",
       "type": "rule",
-      "lo": "u1-1:objective-1",
       "source_page": 7,
       "quote": "Each pair is represented by one and only one point in the coordinate plane.",
       "claim": "Each ordered pair is represented by one and only one point in the coordinate plane.",
@@ -457,6 +456,7 @@
     {
       "id": "u1-1:convention-1",
       "type": "convention",
+      "lo": "u1-1:objective-2",
       "source_page": 8,
       "quote": "where n denotes the number of set elements",
       "claim": "n denotes the number of set elements.",
@@ -494,6 +494,7 @@
     {
       "id": "u1-1:convention-2",
       "type": "convention",
+      "lo": "u1-1:objective-2",
       "source_page": 8,
       "quote": "and written as X² and it is read as (X two)",
       "claim": "$X\\times X$ is written $X^2$ and read 'X two'.",
@@ -594,7 +595,6 @@
     {
       "id": "u1-1:figure-1",
       "type": "figure",
-      "lo": "u1-1:objective-2",
       "belongs_to": "u1-1:example-3",
       "source_page": 9,
       "quote": "Venn diagram with Z, X, Y",
@@ -800,7 +800,7 @@
     {
       "id": "u1-1:rule-8",
       "type": "rule",
-      "lo": "u1-1:objective-3",
+      "lo": "u1-1:objective-2",
       "belongs_to": "u1-1:example-5",
       "source_page": 10,
       "quote": "Notice that: n (X) = 3, then n (X ×X) = 3 × 3 = 9",
@@ -814,7 +814,7 @@
     {
       "id": "u1-1:think-3",
       "type": "open_prompt",
-      "lo": "u1-1:objective-4",
+      "lo": "u1-1:objective-3",
       "belongs_to": "u1-1:example-5",
       "source_page": 10,
       "quote": "How can you represent the cartesian product of each of the following?",
@@ -1119,7 +1119,7 @@
     {
       "id": "u1-1:definition-5",
       "type": "definition",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "source_page": 12,
       "quote": "is called the x - axis",
       "claim": "The horizontal straight line xx' is called the x-axis.",
@@ -1131,7 +1131,7 @@
     {
       "id": "u1-1:definition-6",
       "type": "definition",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "source_page": 12,
       "quote": "vertical straight line y y' is called the y - axis",
       "claim": "The vertical straight line yy' is called the y-axis.",
@@ -1154,7 +1154,7 @@
     {
       "id": "u1-1:figure-7",
       "type": "figure",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "source_page": 12,
       "quote": "first quadrant x > 0, y > 0",
       "caption": "Perpendicular axes with x-axis (x, x') and y-axis (y, y') meeting at O, divided into four quadrants: first quadrant x > 0, y > 0 (top right); second quadrant x < 0, y > 0 (top left); third quadrant x < 0, y < 0 (bottom left); fourth quadrant x > 0, y < 0 (bottom right). Axes marked with numbers from -4 to 4.",
@@ -1177,7 +1177,7 @@
     {
       "id": "u1-1:example-6",
       "type": "worked_example",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "source_page": 12,
       "quote": "Draw a perpendicular square net of the cartesian product",
       "stem": "Draw a perpendicular square net of the cartesian product R × R, then tell the quadrant or the axis where each of the following points is located: A (3, 3), B (3, -2), C (-4, -2), D (-4, 3), E (0, - 3), F (2, 0)",
@@ -1246,7 +1246,7 @@
     {
       "id": "u1-1:figure-8",
       "type": "figure",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "belongs_to": "u1-1:example-6",
       "source_page": 12,
       "quote": "D x A",
@@ -1270,7 +1270,7 @@
     {
       "id": "u1-1:drill-4",
       "type": "exercise",
-      "lo": "u1-1:objective-5",
+      "lo": "u1-1:objective-4",
       "source_page": 12,
       "quote": "If X = [ - 2 , 3] find the location which represents",
       "text": "If X = [-2, 3] find the location which represents X × X. Show which of the following points belongs to the cartesian product of X × X: A (1, 2), B (3, -1), C (-1, 4) and D (-2, 0)",
@@ -1313,86 +1313,61 @@
   "learning_objectives": [
     {
       "id": "u1-1:objective-1",
-      "label": "Represent ordered pairs and decide when they are equal",
-      "description": "Represent ordered pairs as points in the coordinate plane, and use equality of ordered pairs to find unknown values.",
+      "label": "Equality of ordered pairs",
+      "description": "Find unknown values by using equality of ordered pairs, equating first projections and second projections.",
       "order_in_parent": 1,
       "evidence": [
-        "u1-1:think-and-discuss-1",
-        "u1-1:think-and-discuss-3",
         "u1-1:rule-4",
         "u1-1:example-1",
         "u1-1:drill-1"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     },
     {
       "id": "u1-1:objective-2",
-      "label": "Find the Cartesian product of two finite sets",
-      "description": "Find X×Y, Y×X and X² from the definition, compare them, and find the number of elements.",
+      "label": "Cartesian product of finite sets",
+      "description": "Find the cartesian product X×Y and X² of finite sets, determine the number of its elements, and compare X×Y with Y×X.",
       "order_in_parent": 2,
       "evidence": [
-        "u1-1:example-2",
         "u1-1:definition-2",
-        "u1-1:rule-6",
-        "u1-1:example-3",
+        "u1-1:example-2",
         "u1-1:drill-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     },
     {
       "id": "u1-1:objective-3",
-      "label": "Represent a Cartesian product of finite sets by an arrow diagram and a Cartesian diagram",
-      "description": "Draw an arrow diagram and a Cartesian diagram for X×Y and X×X.",
+      "label": "Arrow and cartesian diagrams",
+      "description": "Represent a cartesian product of finite sets by an arrow diagram and a cartesian diagram.",
       "order_in_parent": 3,
       "evidence": [
+        "u1-1:heading-2",
         "u1-1:example-4",
-        "u1-1:figure-2",
-        "u1-1:figure-3",
-        "u1-1:example-5",
-        "u1-1:figure-4"
+        "u1-1:example-5"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     },
     {
       "id": "u1-1:objective-4",
-      "label": "Represent N×N, Z×Z and Q×Q in the coordinate plane and identify points",
-      "description": "Draw the perpendicular net for infinite sets and read or plot the ordered pairs given by points.",
+      "label": "Graphing products of infinite sets",
+      "description": "Represent N×N, Z×Z, Q×Q and R×R on a perpendicular graphical net, identify points as ordered pairs, and locate them by quadrant or axis.",
       "order_in_parent": 4,
       "evidence": [
-        "u1-1:method-1",
-        "u1-1:figure-5",
-        "u1-1:exercise-1",
-        "u1-1:figure-6",
-        "u1-1:drill-3",
+        "u1-1:heading-7",
+        "u1-1:example-6",
         "u1-1:exercise-2"
       ],
       "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
-        "method": "page image"
-      }
-    },
-    {
-      "id": "u1-1:objective-5",
-      "label": "Locate points of R×R by quadrant or axis and decide membership in X×X",
-      "description": "Use the axes and quadrants of R×R to locate points, and decide whether points belong to X×X for an interval X.",
-      "order_in_parent": 5,
-      "evidence": [
-        "u1-1:figure-7",
-        "u1-1:example-6",
-        "u1-1:figure-8",
-        "u1-1:drill-4"
-      ],
-      "provenance": {
-        "by": "extract_book_record.py ext-v4 (objectives redrawn), sonnet, 2026-10-16",
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
         "method": "page image"
       }
     }
@@ -1411,6 +1386,10 @@
     "2026-10-15: extracted from the page images (ext-v3, sonnet), $0.342",
     "2026-10-16: figure regions placed (crop-v1, sonnet): 8 cropped",
     "2026-10-16: figure regions placed (crop-v1, sonnet): 8 cropped",
-    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)"
+    "2026-10-16: objectives, item filing and figure links redrawn (ext-v4, sonnet)",
+    "objectives from S1 (runs/prep3-math-en/objectives/s1-ch01.20261017T055544Z.json), approved at G1 (4)",
+    "2026-10-17: 28 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "objectives from S1 (runs/prep3-math-en/objectives/s1-ch01.20261017T055544Z.json), approved at G1 (4)",
+    "2026-10-17: 28 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)"
   ]
 }

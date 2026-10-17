@@ -28,7 +28,7 @@ EXTRACTION = Path(__file__).resolve().parents[2]
 TEACHING = EXTRACTION / "teaching"
 REVIEWS = EXTRACTION / "reviews"
 NAME = re.compile(r"^[a-z0-9][a-z0-9.-]{0,63}$")
-DECISIONS = {"objective": {"approve", "fix_requested", "reject"}, "link": {"keep", "drop"}, "question": {"answer"}}
+DECISIONS = {"objective": {"approve", "fix_requested", "reject"}, "link": {"keep", "drop"}, "question": {"answer"}, "filing": {"file"}, "refile": {"refile"}}
 
 
 def books() -> list[str]:
@@ -60,6 +60,14 @@ def _items(book: str) -> list[dict]:
         for q in d.get("decisions") or []:
             out.append({"kind": "question", "ref": q["key"], "chapter": ch, "lesson": f"ch{ch}", "item": q,
                         "fingerprint": "q:" + q["key"] + ":" + str(q.get("detail"))})
+    # after G1: the statements, tables and figures the two filing readings disagreed on (book_record_filing.py)
+    for f in sorted((TEACHING / book / "filing").glob("ch*.json")) if (TEACHING / book / "filing").is_dir() else []:
+        d = json.loads(f.read_text())
+        for l in d.get("lessons") or []:
+            for e in l.get("entries") or []:
+                if e.get("status") != "agreed":
+                    out.append({"kind": "filing", "ref": e["key"], "chapter": d.get("chapter"), "lesson": l["slug"],
+                                "item": {**e, "objectives": l.get("objectives") or []}, "fingerprint": e["fingerprint"]})
     return out
 
 
@@ -88,11 +96,28 @@ def summary(book: str) -> list[dict]:
         title = {"objective": lambda: f"{r['ref'].removeprefix('lo:')} · {it.get('label') or ''}",
                  "link": lambda: f"{it.get('src', '').removeprefix('lo:')} → {it.get('dst', '').removeprefix('lo:')}" if it.get("src")
                  else r["ref"].replace("lo:", ""),
-                 "question": lambda: f"{it.get('kind')} · {str(it.get('key', '')).split(':', 1)[-1]}"}[r["kind"]]()
+                 "question": lambda: f"{it.get('kind')} · {str(it.get('key', '')).split(':', 1)[-1]}",
+                 "filing": lambda: f"{r['ref'].split(':', 1)[-1]} · {it.get('type')}"}[r["kind"]]()
         flag = bool(it.get("failures")) if r["kind"] == "objective" else (not it.get("kept_by_s1") if r["kind"] == "link" else False)
         out.append({"kind": r["kind"], "ref": r["ref"], "lesson": r["lesson"], "title": title, "flag": flag,
                     "state": state_of(r, dec.get((r["kind"], r["ref"])))})
     return out
+
+
+def page_offset(book: str, lesson: str) -> int | None:
+    """PDF page = printed page + offset, from the lesson's book record (the lesson map's when the record has none)."""
+    rec = EXTRACTION / "book-records" / book / f"{lesson}.json"
+    if rec.exists():
+        off = (json.loads(rec.read_text()).get("source_document") or {}).get("page_offset")
+        if isinstance(off, int):
+            return off
+    lmap = EXTRACTION / "book-records" / book / "lessons.json"
+    if lmap.exists():
+        m = json.loads(lmap.read_text())
+        l = next((x for x in m.get("lessons") or [] if x.get("slug") == lesson), {})
+        off = l.get("page_offset", m.get("page_offset"))
+        return off if isinstance(off, int) else None
+    return None
 
 
 def detail(book: str, kind: str, ref: str) -> dict:
@@ -100,7 +125,11 @@ def detail(book: str, kind: str, ref: str) -> dict:
     if r is None:
         raise FileNotFoundError(ref)
     d = latest(book).get((kind, ref))
-    return {**r, "decision": d, "state": state_of(r, d)}
+    ev = [e for e in (r["item"].get("evidence") or []) if isinstance(e.get("printed_page"), int)]
+    page = ev[0]["printed_page"] if ev else (r["item"].get("page") if isinstance(r["item"].get("page"), int) else None)
+    off = page_offset(book, r["lesson"])
+    return {**r, "decision": d, "state": state_of(r, d), "printed_page": page, "page_offset": off,
+            "pdf_page": page + off if page is not None and off is not None else None}
 
 
 def decide(body: dict) -> dict:
@@ -115,6 +144,15 @@ def decide(body: dict) -> dict:
     for k in ("statement", "label"):
         if (body.get(k) or "").strip():
             entry[k] = body[k].strip()
+    if kind == "filing":   # the objective's number in its lesson, or 0 for none
+        valid = {o["n"] for o in r["item"].get("objectives") or []} | {0}
+        try:
+            n = int(body.get("objective"))
+        except (TypeError, ValueError):
+            n = -1
+        if n not in valid:
+            raise ValueError(f"choose one of the lesson's objectives ({', '.join(str(v) for v in sorted(valid) if v)}) or 0 for none")
+        entry["objective"] = n
     if note:
         entry["note"] = note
     if decision in ("fix_requested", "answer") and not (note or entry.get("statement") or entry.get("label")):

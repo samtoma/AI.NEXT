@@ -1,0 +1,1282 @@
+{
+ "format": "ainext.filing/1",
+ "book": "prep3-math-en",
+ "chapter": 1,
+ "made": "2026-10-17",
+ "made_by": "book_record_filing.py accept (file-v1)",
+ "run": "runs/prep3-math-en/filing/filing-ch01.20261017T060940Z.json",
+ "lessons": [
+  {
+   "slug": "u1-1",
+   "title": "Cartesian product",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "u1-1:objective-1",
+     "label": "Equality of ordered pairs",
+     "description": "Find unknown values by using equality of ordered pairs, equating first projections and second projections."
+    },
+    {
+     "n": 2,
+     "id": "u1-1:objective-2",
+     "label": "Cartesian product of finite sets",
+     "description": "Find the cartesian product X×Y and X² of finite sets, determine the number of its elements, and compare X×Y with Y×X."
+    },
+    {
+     "n": 3,
+     "id": "u1-1:objective-3",
+     "label": "Arrow and cartesian diagrams",
+     "description": "Represent a cartesian product of finite sets by an arrow diagram and a cartesian diagram."
+    },
+    {
+     "n": 4,
+     "id": "u1-1:objective-4",
+     "label": "Graphing products of infinite sets",
+     "description": "Represent N×N, Z×Z, Q×Q and R×R on a perpendicular graphical net, identify points as ordered pairs, and locate them by quadrant or axis."
+    }
+   ],
+   "entries": [
+    {
+     "key": "u1-1:prior-knowledge-1",
+     "type": "prior knowledge",
+     "page": 7,
+     "text": "You have previously studied relation between two variables x, y",
+     "A": {
+      "objective": 0,
+      "why": "Assumed prior knowledge introducing the lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Assumed earlier knowledge of relations between x and y."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "d85406b87613c2a1"
+    },
+    {
+     "key": "u1-1:definition-1",
+     "type": "definition",
+     "page": 7,
+     "text": "In each ordered pair $(a, b)$, a is called the first projection, and b is called the second projection.",
+     "A": {
+      "objective": 1,
+      "why": "Defines first and second projections, which are equated to solve ordered-pair equality."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines first and second projections used to equate pairs."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "84b305f3eb12ceb5"
+    },
+    {
+     "key": "u1-1:rule-1",
+     "type": "rule",
+     "page": 7,
+     "text": "Each ordered pair is represented by one and only one point in the coordinate plane.",
+     "A": {
+      "objective": 4,
+      "why": "Each ordered pair is one point in the coordinate plane, as in graphing."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Each ordered pair is one point, as in the graphing activities filed under objective 1."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "8ba76cfa11aeae17"
+    },
+    {
+     "key": "u1-1:rule-2",
+     "type": "rule",
+     "page": 7,
+     "text": "If $a \\neq b$ then $(a, b) \\neq (b, a)$. (The page asks 'Why?', no answer printed.) $a \\neq b \\Rightarrow (a,b) \\neq (b,a)$",
+     "A": {
+      "objective": 1,
+      "why": "Ordered pairs with a≠b are unequal when swapped, a fact about ordered-pair equality."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Order matters, so (a,b) ≠ (b,a) when a ≠ b."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "d54441a9209c5a25"
+    },
+    {
+     "key": "u1-1:rule-3",
+     "type": "rule",
+     "page": 7,
+     "text": "The ordered pair $(a, b)$ is not equal to the set $\\{a, b\\}$. $(a,b) \\neq \\{a,b\\}$",
+     "A": {
+      "objective": 1,
+      "why": "Distinguishes an ordered pair from a set, which belongs with ordered-pair equality."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Ordered pair differs from a set, groundwork for pair equality."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "c366e69f55de4218"
+    },
+    {
+     "key": "u1-1:table-1",
+     "type": "table",
+     "page": 8,
+     "text": "Table of X×Y: rows are first projection (a, b), columns are second projection (-1, 0, 3). ×, -1, 0, 3 / a, (a, -1), (a, 0), (a, 3) / b, (b, -1), (b, 0), (b, 3)",
+     "A": {
+      "objective": 2,
+      "why": "Table listing the elements of X×Y."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Lists X × Y for the worked example."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "dabed86cd7b7c809"
+    },
+    {
+     "key": "u1-1:table-2",
+     "type": "table",
+     "page": 8,
+     "text": "Table of Y×X: rows are first projection (-1, 0, 3), columns are second projection (a, b). ×, a, b / -1, (-1, a), (-1, b) / 0, (0, a), (0, b) / 3, (3, a), (3,b)",
+     "A": {
+      "objective": 2,
+      "why": "Table listing the elements of Y×X for comparison with X×Y."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Lists Y × X for the worked example."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "77e17129ecbed866"
+    },
+    {
+     "key": "u1-1:rule-5",
+     "type": "rule",
+     "page": 8,
+     "text": "$X\\times Y\\neq Y\\times X$ where $X\\neq Y$. $X\\times Y\\neq Y\\times X$",
+     "A": {
+      "objective": 2,
+      "why": "States that X×Y differs from Y×X when X≠Y."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Compares X×Y with Y×X."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "1e35bed5e0a4c463"
+    },
+    {
+     "key": "u1-1:rule-6",
+     "type": "rule",
+     "page": 8,
+     "text": "The number of elements of X×Y equals that of Y×X, which equals the product of the numbers of elements of X and Y. $n(X\\times Y)=n(Y\\times X)=n(X)\\times n(Y)$",
+     "A": {
+      "objective": 2,
+      "why": "Gives the number of elements of X×Y as n(X)×n(Y)."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Number of elements of X×Y and Y×X."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "fb68af9426825346"
+    },
+    {
+     "key": "u1-1:convention-1",
+     "type": "convention",
+     "page": 8,
+     "text": "n denotes the number of set elements.",
+     "A": {
+      "objective": 2,
+      "why": "Notation n for number of elements, used to count elements of products."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Notation n for counting elements of the product."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "fdf0798f70827851"
+    },
+    {
+     "key": "u1-1:rule-7",
+     "type": "rule",
+     "page": 8,
+     "text": "If $(k,m)\\in X\\times Y$ then $k\\in X$, $m\\in Y$. $(k,m)\\in X\\times Y\\Rightarrow k\\in X,\\ m\\in Y$",
+     "A": {
+      "objective": 2,
+      "why": "Says what membership in X×Y means for the components of a pair."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Components of a pair in X × Y belong to X and Y."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "7bfbe53bb17da0f3"
+    },
+    {
+     "key": "u1-1:definition-3",
+     "type": "definition",
+     "page": 8,
+     "text": "If X is a non-empty set, then $X\\times X=\\{(a,b):a,b\\in X\\}$. $X\\times X=\\{(a,b):a,b\\in X\\}$",
+     "A": {
+      "objective": 2,
+      "why": "Defines X×X for a finite set."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Defines X × X for a finite set."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "6554c1fed59e6f2c"
+    },
+    {
+     "key": "u1-1:convention-2",
+     "type": "convention",
+     "page": 8,
+     "text": "$X\\times X$ is written $X^2$ and read 'X two'.",
+     "A": {
+      "objective": 2,
+      "why": "Notation X² for X×X."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Notation X² for X × X."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "206f88a38ec5add2"
+    },
+    {
+     "key": "u1-1:figure-1",
+     "type": "figure",
+     "page": 9,
+     "text": "Venn diagram: a black circle labelled Z contains 5, 6 and 2; a green oval labelled Y contains 2 and 3 and overlaps Z (2 in the overlap); a separate pink circle labelled X contains 1.",
+     "A": {
+      "objective": 0,
+      "why": "Venn diagram of sets X, Y, Z that is not about the product's representation."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Venn diagram of sets, prior knowledge not about the product."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "3f4518afe12a6dbb"
+    },
+    {
+     "key": "u1-1:figure-2",
+     "type": "figure",
+     "page": 10,
+     "text": "Arrow diagram for X × Y: left oval X containing 1 and 2, right oval Y containing 3, 4, 5. Arrows from 1 to 3, 4, 5 and from 2 to 3, 4, 5 (six arrows). Labelled X × Y below.",
+     "A": {
+      "objective": 3,
+      "why": "Arrow diagram of X×Y."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Arrow diagram for X × Y."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "7aa5cc60b2b9bd42"
+    },
+    {
+     "key": "u1-1:figure-3",
+     "type": "figure",
+     "page": 10,
+     "text": "Cartesian diagram (perpendicular graphical net) for X × Y: X = 1, 2 along the horizontal axis (bottom), Y = 3, 4, 5 along the vertical axis (left). Grid intersection points marked and labelled (1,3), (2,3), (1,4), (2,4), (1,5), (2,5). Labelled X × Y.",
+     "A": {
+      "objective": 3,
+      "why": "Cartesian diagram of X×Y."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Cartesian diagram for X × Y."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "1ee2fe413c00fe47"
+    },
+    {
+     "key": "u1-1:figure-4",
+     "type": "figure",
+     "page": 10,
+     "text": "Arrow Diagram for X × X: three points 3 (top), 4 (bottom right), 8 (bottom left); arrows between each pair of points in both directions, and a loop (buttonhole) at each of 3, 4 and 8.",
+     "A": {
+      "objective": 3,
+      "why": "Arrow diagram of X×X."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Arrow diagram for X × X."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "ef409bf5378e5ec2"
+    },
+    {
+     "key": "u1-1:rule-8",
+     "type": "rule",
+     "page": 10,
+     "text": "If n(X) = 3, then n(X × X) = 3 × 3 = 9. $n(X)=3 \\Rightarrow n(X\\times X)=3\\times 3=9$",
+     "A": {
+      "objective": 2,
+      "why": "Counts the elements of X×X for n(X)=3."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Number of elements of X × X from n(X)."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "15fea61bd8a8525a"
+    },
+    {
+     "key": "u1-1:method-1",
+     "type": "method",
+     "page": 11,
+     "text": "Step 1: Draw two perpendicular straight lines, one horizontal (xx') and the other vertical (yy'), intersecting at point O.",
+     "A": {
+      "objective": 4,
+      "why": "Step to draw the perpendicular lines for the net."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Step for drawing the perpendicular axes of the net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "346b27439a53b0e3"
+    },
+    {
+     "key": "u1-1:method-2",
+     "type": "method",
+     "page": 11,
+     "text": "Step 2: Represent the natural numbers N on each of the horizontal and vertical lines, starting with the origin O which represents zero.",
+     "A": {
+      "objective": 4,
+      "why": "Step to represent N on both axes."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Step for representing N on the axes of the net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "2753652e39d423af"
+    },
+    {
+     "key": "u1-1:method-3",
+     "type": "method",
+     "page": 11,
+     "text": "Step 3: Draw vertical and horizontal lines from the points representing the natural numbers; the points of intersection form the perpendicular graphical net of the cartesian product N × N.",
+     "A": {
+      "objective": 4,
+      "why": "Step to form the net of N×N."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Step for building the N × N perpendicular net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "47fc94629f8932d2"
+    },
+    {
+     "key": "u1-1:figure-5",
+     "type": "figure",
+     "page": 11,
+     "text": "Grid with axes x'x and y'y, origin O, numbers 1 to 5 marked on both axes. Point A at (3, 2), point B at (0, 4) on the y-axis, point C on the x-axis at about 5, and O at origin.",
+     "A": {
+      "objective": 4,
+      "why": "Grid of N×N with points read as ordered pairs."
+     },
+     "B": {
+      "objective": 4,
+      "why": "N × N net with points A, B, C, O identified as ordered pairs."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "4fc60e0ca183e17a"
+    },
+    {
+     "key": "u1-1:rule-9",
+     "type": "rule",
+     "page": 11,
+     "text": "Each point of this net represents one of the ordered pairs in the cartesian product N × N.",
+     "A": {
+      "objective": 4,
+      "why": "Each net point is an ordered pair of N×N."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Each point of the net represents a pair of N × N."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "d3b5879f9e2439a4"
+    },
+    {
+     "key": "u1-1:method-4",
+     "type": "method",
+     "page": 11,
+     "text": "Represent the set of integers on each of the horizontal and vertical lines, where the point O represents the ordered pair (0, 0).",
+     "A": {
+      "objective": 4,
+      "why": "Represents Z on both axes for Z×Z."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Steps for representing Z on the axes of the Z × Z net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "2404d32f05aeba4b"
+    },
+    {
+     "key": "u1-1:rule-10",
+     "type": "rule",
+     "page": 11,
+     "text": "Each point of the net represents one of the pairs in the cartesian product Z × Z.",
+     "A": {
+      "objective": 4,
+      "why": "Each net point is a pair of Z×Z."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Each point of the net represents a pair of Z × Z."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "4198e7dea86ac803"
+    },
+    {
+     "key": "u1-1:definition-4",
+     "type": "definition",
+     "page": 11,
+     "text": "This net is known as the coordinate plane of Z × Z.",
+     "A": {
+      "objective": 4,
+      "why": "Names the net the coordinate plane of Z×Z."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Names the net as the coordinate plane of Z × Z."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "d03bf57b0ccfc4b8"
+    },
+    {
+     "key": "u1-1:figure-6",
+     "type": "figure",
+     "page": 11,
+     "text": "Coordinate plane of Z × Z with axes x'x and y'y, integers from -4 to 4 marked. Points: A at about (3, 3), B at about (3, -2), C at about (-3, 1), D at about (-3, -4).",
+     "A": {
+      "objective": 4,
+      "why": "Z×Z plane with points to identify as ordered pairs."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Z × Z coordinate plane with points as ordered pairs."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "cfc1dfff63eb2581"
+    },
+    {
+     "key": "u1-1:definition-5",
+     "type": "definition",
+     "page": 12,
+     "text": "The horizontal straight line xx' is called the x-axis.",
+     "A": {
+      "objective": 4,
+      "why": "Defines the x-axis of the graphical net."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Names the x-axis of the graphical net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "8d7dbaa098c23131"
+    },
+    {
+     "key": "u1-1:definition-6",
+     "type": "definition",
+     "page": 12,
+     "text": "The vertical straight line yy' is called the y-axis.",
+     "A": {
+      "objective": 4,
+      "why": "Defines the y-axis of the graphical net."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Names the y-axis of the graphical net."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "06d1b6419f124834"
+    },
+    {
+     "key": "u1-1:figure-7",
+     "type": "figure",
+     "page": 12,
+     "text": "Perpendicular axes with x-axis (x, x') and y-axis (y, y') meeting at O, divided into four quadrants: first quadrant x > 0, y > 0 (top right); second quadrant x < 0, y > 0 (top left); third quadrant x < 0, y < 0 (bottom left); fourth quadrant x > 0, y < 0 (bottom right). Axes marked with numbers from -4 to 4.",
+     "A": {
+      "objective": 4,
+      "why": "Shows the four quadrants for locating points."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Four quadrants of the coordinate plane used to locate points."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "c39b9d85f0a85aa3"
+    },
+    {
+     "key": "u1-1:figure-8",
+     "type": "figure",
+     "page": 12,
+     "text": "Square grid with x-axis and y-axis, origin O, axes marked -4 to 4. Points plotted: A (3, 3) top right, D (-4, 3) top left, C (-4, -2) bottom left, B (3, -2) bottom right, E (0, -3) on y-axis, F (2, 0) on x-axis.",
+     "A": {
+      "objective": 4,
+      "why": "Points located by quadrant or axis."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Points A–F plotted as ordered pairs in the plane, including on the axes."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "b9ce4b1773d148d8"
+    }
+   ]
+  },
+  {
+   "slug": "u1-2",
+   "title": "Relations",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "u1-2:objective-1",
+     "label": "Write a relation as ordered pairs",
+     "description": "Write a relation R from X to Y as a set of ordered pairs, a subset of X × Y, by applying the rule given for a R b, and decide whether a given pair satisfies R."
+    },
+    {
+     "n": 2,
+     "id": "u1-2:objective-2",
+     "label": "Represent relations by diagrams",
+     "description": "Represent a relation from X to Y by an arrow diagram and by a cartesian diagram."
+    },
+    {
+     "n": 3,
+     "id": "u1-2:objective-3",
+     "label": "Relation on a set",
+     "description": "Write and represent a relation on a set X (from X to itself) as a subset of X × X."
+    }
+   ],
+   "entries": [
+    {
+     "key": "u1-2:figure-1",
+     "type": "figure",
+     "page": 13,
+     "text": "Picture of people holding up books with the words 'Reading for all'. Decorative.",
+     "A": {
+      "objective": 0,
+      "why": "Decorative picture introducing the lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Decorative 'Reading for all' picture."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "5b22c6d395a195c8"
+    },
+    {
+     "key": "u1-2:figure-2",
+     "type": "figure",
+     "page": 13,
+     "text": "Arrow diagram from X = {a, b, c, d, e} to Y = {Science, art, culture, history}. Arrows: a to Science, a to culture, b to history, c to culture (read from figure: c's arrow appears to go to culture), e to history; d has no arrow. Arrow endpoints read from picture; verify.",
+     "A": {
+      "objective": 2,
+      "why": "Arrow diagram of a relation from X to Y."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Introductory arrow diagram illustrating the idea of a relation, before representation is taught."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "10d43535df4baddf"
+    },
+    {
+     "key": "u1-2:figure-3",
+     "type": "figure",
+     "page": 14,
+     "text": "Arrow diagram from X={-1,1,2} to Y={2,4,6,8}: arrows -1→2, 1→6, 2→8.",
+     "A": {
+      "objective": 2,
+      "why": "Arrow diagram of the relation from X to Y in the worked example."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Arrow diagram of the relation from X to Y showing -1→2, 1→6, 2→8."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "9fa4cfdafebc2234"
+    },
+    {
+     "key": "u1-2:figure-4",
+     "type": "figure",
+     "page": 14,
+     "text": "Graph diagram (printed 'Graph digram') with X axis marked -1, 1, 2 and Y axis marked 2, 4, 6, 8; points plotted at (-1,2), (1,6), (2,8).",
+     "A": {
+      "objective": 2,
+      "why": "Cartesian (graph) diagram of a relation from X to Y."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Graph (cartesian) diagram of the relation from X to Y with points (-1,2), (1,6), (2,8)."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "8013752dd1521827"
+    },
+    {
+     "key": "u1-2:rule-1",
+     "type": "rule",
+     "page": 14,
+     "text": "A relation from X to Y, where X, Y are two non-empty sets, connects some or all of the elements of X with some or all of the elements of Y.",
+     "A": {
+      "objective": 0,
+      "why": "General definition of a relation introducing the lesson, not tied to one skill."
+     },
+     "B": {
+      "objective": 0,
+      "why": "General definition introducing what a relation from X to Y is, before any particular objective."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "de4f212d79c41a33"
+    },
+    {
+     "key": "u1-2:rule-2",
+     "type": "rule",
+     "page": 14,
+     "text": "X × Y is the set of ordered pairs where the first projection in each ordered pair belongs to X and the second projection belongs to Y. $X\\times Y$",
+     "A": {
+      "objective": 1,
+      "why": "Defines X × Y, the set of ordered pairs of which a relation is a subset."
+     },
+     "B": {
+      "objective": 1,
+      "why": "X × Y as the set of ordered pairs is the set whose subsets are the relations written as ordered pairs."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "ea10b3e505c8c39a"
+    },
+    {
+     "key": "u1-2:figure-5",
+     "type": "figure",
+     "page": 14,
+     "text": "Arrow diagram of R on X: on a number line with points -2, -1, 0, 1, 2 curved arrows join -2↔2, -1↔1 and a loop at 0; beside it an oval Venn-style diagram of X with elements 0 (self-loop), -1 and 1 joined by double arrows, -2 and 2 joined by double arrows.",
+     "A": {
+      "objective": 3,
+      "why": "Arrow diagram of a relation on the set X."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Arrow diagram of R on X (from X to itself) with loop at 0 illustrates a relation on a set."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "9bf9ed93bfb54f19"
+    },
+    {
+     "key": "u1-2:figure-6",
+     "type": "figure",
+     "page": 14,
+     "text": "Cartesian diagram with both axes marked -2, -1, 0, 1, 2; points plotted at (-2,2), (-1,1), (0,0), (1,-1), (2,-2).",
+     "A": {
+      "objective": 3,
+      "why": "Cartesian diagram of a relation on X, a subset of X × X."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Cartesian diagram of the relation on X with both axes -2 to 2 represents a relation on a set."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "aba5cebdada12b75"
+    }
+   ]
+  },
+  {
+   "slug": "u1-3",
+   "title": "Functions (Mapping)",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "u1-3:objective-1",
+     "label": "Identify functions from relations",
+     "description": "Decide whether a relation from X to Y, given as ordered pairs, an arrow diagram or a cartesian diagram, is a function, by checking that each element of X is connected to only one element of Y, and justify the decision."
+    },
+    {
+     "n": 2,
+     "id": "u1-3:objective-2",
+     "label": "Write functions symbolically",
+     "description": "Write a function symbolically using f : X → Y, f : x ↦ y and f(x) = y, and as a set of ordered pairs, and represent it by an arrow diagram and a cartesian diagram."
+    },
+    {
+     "n": 3,
+     "id": "u1-3:objective-3",
+     "label": "Find domain, codomain and range",
+     "description": "Determine the domain, codomain and range of a function, recognising that the range is a subset of the codomain."
+    }
+   ],
+   "entries": [
+    {
+     "key": "u1-3:figure-1",
+     "type": "figure",
+     "page": 16,
+     "text": "Three arrow diagrams, labelled (1), (2), (3), each from set X = {2, 3, 5, 7} to set Y = {1, 4, 6, 8, 9}. Arrows are drawn between X and Y in each diagram; the individual arrows are too small to read reliably (diagram 3 appears to have several arrows ending at 6 and 9).",
+     "A": {
+      "objective": 1,
+      "why": "Arrow diagrams from X to Y are used to decide which relations are functions."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Arrow diagrams from X to Y that introduce deciding which relations are functions."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "ce3a670919d2ae8e"
+    },
+    {
+     "key": "u1-3:convention-1",
+     "type": "convention",
+     "page": 16,
+     "text": "The function is denoted by one of the symbols f or m or Q, etc. The function f from the set X to the set Y is written mathematically as f : X → Y and is read as \"f is a fuction from X to Y\". $f : X \\rightarrow Y$",
+     "A": {
+      "objective": 2,
+      "why": "Gives the symbol f : X → Y for writing a function."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Gives the symbol f : X → Y for writing a function."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "955161116f887299"
+    },
+    {
+     "key": "u1-3:convention-2",
+     "type": "convention",
+     "page": 16,
+     "text": "If f is a function from X to itself, we say that f is a function on X.",
+     "A": {
+      "objective": 2,
+      "why": "Defines a function on X, part of the function notation."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Naming convention: a function from X to itself is a function on X, used in symbolic writing."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "89b45b03aca537dd"
+    },
+    {
+     "key": "u1-3:figure-2",
+     "type": "figure",
+     "page": 17,
+     "text": "Arrow diagram of f on X: 3 has a loop to itself; 4 and 5 joined by arrows both ways (4→5 and 5→4); 6 has an arrow to 5. Read from figure; verify arrow directions. Printed caption 'Arrow digaram'.",
+     "A": {
+      "objective": 2,
+      "why": "Arrow diagram representing the function f on X from the worked example."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Arrow diagram representing the function f on X of the worked example."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "7b138993ff4a76da"
+    },
+    {
+     "key": "u1-3:figure-3",
+     "type": "figure",
+     "page": 17,
+     "text": "Cartesian diagram with X on horizontal axis (3,4,5,6) and X on vertical axis (3,4,5,6); dots at (3,3), (4,5), (5,4), (6,5). Read from figure; verify.",
+     "A": {
+      "objective": 2,
+      "why": "Cartesian diagram representing the same function f on X."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Cartesian diagram representing the function f on X with f(3)=3, f(4)=5, f(5)=4, f(6)=5."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "ceb1104f56ab3eeb"
+    },
+    {
+     "key": "u1-3:figure-4",
+     "type": "figure",
+     "page": 17,
+     "text": "Three arrow diagrams (1), (2), (3) on X = {1,2,3,4}, with arrows among points 1, 2, 3, 4. Arrows cannot be read reliably; verify against image.",
+     "A": {
+      "objective": 1,
+      "why": "Arrow diagrams on X={1,2,3,4} to decide which represent a function."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Arrow diagrams on X to decide which represent a function."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "9f9f51978fc8f218"
+    },
+    {
+     "key": "u1-3:figure-5",
+     "type": "figure",
+     "page": 17,
+     "text": "Three cartesian diagrams (1), (2), (3), axes 1 to 5 on both. (1): dots at about (2,2), (3,3), (4,4), (4,5)... (2): dots in row 3 at x=1,2,3,4,5. (3): dots at about (1,1), (3,2), (4,4), (5,5). Points read from figure; verify.",
+     "A": {
+      "objective": 1,
+      "why": "Cartesian diagrams to decide which represent a function."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Cartesian diagrams to decide which represent a function by checking each x has one y."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "ef89f2051dfb895d"
+    },
+    {
+     "key": "u1-3:definition-2",
+     "type": "definition",
+     "page": 17,
+     "text": "The set X is called the domain of the function f.",
+     "A": {
+      "objective": 3,
+      "why": "Defines the domain of a function."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Defines the domain of f."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "526d8532d934571f"
+    },
+    {
+     "key": "u1-3:definition-3",
+     "type": "definition",
+     "page": 17,
+     "text": "The set Y is called the codomain of the function f.",
+     "A": {
+      "objective": 3,
+      "why": "Defines the codomain of a function."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Defines the codomain of f."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "aaffb888bb52adba"
+    },
+    {
+     "key": "u1-3:figure-6",
+     "type": "figure",
+     "page": 17,
+     "text": "Arrow diagram from X={-1,2,3} to Y={2,3,5,7}: -1→3, 2→7, 3→5.",
+     "A": {
+      "objective": 3,
+      "why": "Arrow diagram used to find domain, codomain and range."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Arrow diagram where the codomain {2,3,5,7} has an element not an image, illustrating domain, codomain and range."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0a28b728f3cdc180"
+    },
+    {
+     "key": "u1-3:rule-1",
+     "type": "rule",
+     "page": 17,
+     "text": "The range is a subset of the codomain of the function.",
+     "A": {
+      "objective": 3,
+      "why": "States the range is a subset of the codomain."
+     },
+     "B": {
+      "objective": 3,
+      "why": "States that the range is a subset of the codomain."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "29e50a23023be5a5"
+    },
+    {
+     "key": "u1-3:figure-7",
+     "type": "figure",
+     "page": 18,
+     "text": "Arrow diagram from X to Y. X = {2, 3, 4}; Y = {2, 3, 4, 5, 6, 7, 8}. Arrows: 2→4, 3→6, 4→8.",
+     "A": {
+      "objective": 3,
+      "why": "Arrow diagram showing range {4,6,8} as a subset of codomain."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Arrow diagram with codomain larger than the set of images shows range as a subset of codomain."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "ab57f54c1f1c54cd"
+    }
+   ]
+  },
+  {
+   "slug": "u1-4",
+   "title": "Polynomial functions",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "u1-4:objective-1",
+     "label": "Identify polynomial and degree",
+     "description": "Identify which functions are polynomial functions and state the degree of a polynomial function."
+    },
+    {
+     "n": 2,
+     "id": "u1-4:objective-2",
+     "label": "Evaluate function values",
+     "description": "Calculate the values of a polynomial function at given real numbers by substitution."
+    },
+    {
+     "n": 3,
+     "id": "u1-4:objective-3",
+     "label": "Graph linear and constant functions",
+     "description": "Represent a linear function or constant function graphically using a table of ordered pairs."
+    },
+    {
+     "n": 4,
+     "id": "u1-4:objective-4",
+     "label": "Graph quadratic functions",
+     "description": "Represent a quadratic function graphically on an interval and state its axis of symmetry, vertex and maximum or minimum value."
+    }
+   ],
+   "entries": [
+    {
+     "key": "u1-4:rule-1",
+     "type": "rule",
+     "page": 19,
+     "text": "The degree of the polynomial is the highest power of the variable in the function rule.",
+     "A": {
+      "objective": 1,
+      "why": "Degree is defined as the highest power of the variable, which is what objective 1 asks students to state."
+     },
+     "B": {
+      "objective": 1,
+      "why": "States how to find the degree of a polynomial."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "f0b6df369a4b6616"
+    },
+    {
+     "key": "u1-4:table-1",
+     "type": "table",
+     "page": 20,
+     "text": "Values of f(x)=2x-3 for x = 0, 1, 2 x, 0, 1, 2 / y = f(x), -3, -1, 1",
+     "A": {
+      "objective": 3,
+      "why": "Table of ordered pairs for the linear function f(x)=2x-3 used to graph it."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Table of ordered pairs for f(x)=2x-3."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "69cda6c50df438f4"
+    },
+    {
+     "key": "u1-4:figure-1",
+     "type": "figure",
+     "page": 20,
+     "text": "Square-net graph with X and Y axes; straight line with arrows at both ends through points (0,-3), (1,-1) and (2,1), passing the x-axis between 1 and 2 (at 1.5). Marked points shown in blue. Read from the image; verify.",
+     "A": {
+      "objective": 3,
+      "why": "Straight-line graph of the linear function f(x)=2x-3."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Graph of linear function f(x)=2x-3 from its table."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "851c1c451bc0d8ba"
+    },
+    {
+     "key": "u1-4:rule-2",
+     "type": "rule",
+     "page": 21,
+     "text": "It is enough to find two ordered pairs belonging to the function; it is preferred to find a third ordered pair to check the graph.",
+     "A": {
+      "objective": 3,
+      "why": "Says to find two or three ordered pairs when graphing a linear function."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Two ordered pairs suffice to graph a linear function, a third to check."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "5315ea2a8fba4cf0"
+    },
+    {
+     "key": "u1-4:rule-3",
+     "type": "rule",
+     "page": 21,
+     "text": "If f: R → R, f(x) = ax, where a ≠ 0, then it is represented graphically by a straight line passing through the origin (0, 0). $f(x)=ax,\\ a\\neq 0$",
+     "A": {
+      "objective": 3,
+      "why": "States that f(x)=ax graphs as a straight line through the origin, a linear function."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Graph of f(x)=ax is a straight line through the origin."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "2e7a5527191175f6"
+    },
+    {
+     "key": "u1-4:table-2",
+     "type": "table",
+     "page": 21,
+     "text": "Values of the constant function f(x) = 3 for x = -1, 1, 2 x, -1, 1, 2 / y = f(x), 3, 3, 3",
+     "A": {
+      "objective": 3,
+      "why": "Table of values of the constant function f(x)=3 used for graphing."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Table of ordered pairs for the constant function f(x)=3."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "21f8b34463d719d6"
+    },
+    {
+     "key": "u1-4:figure-2",
+     "type": "figure",
+     "page": 21,
+     "text": "Coordinate grid with axes x'x and y'y, x-axis marks -2, -1, 1, 2, y-axis mark 3. A horizontal line with arrows at both ends at y = 3, with points plotted at x = -1, 1, 2.",
+     "A": {
+      "objective": 3,
+      "why": "Horizontal-line graph of the constant function f(x)=3."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Graph of constant function f(x)=3 as a horizontal line."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "3845814d0d866613"
+    },
+    {
+     "key": "u1-4:definition-4",
+     "type": "definition",
+     "page": 21,
+     "text": "The function f: R → R where f(x) = ax² + bx + c, with a, b, c real numbers and a ≠ 0, is called a quadratic function and it is a function of second degree. $f(x)=ax^2+bx+c,\\ a\\neq 0$",
+     "A": {
+      "objective": 4,
+      "why": "Defines the quadratic function, which the graphing examples that follow are about."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Defines the quadratic function, introducing the quadratic graphing objective."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "e5bf6e8bc56ffcc4"
+    },
+    {
+     "key": "u1-4:table-3",
+     "type": "table",
+     "page": 22,
+     "text": "Table of values of f(x)=x² for x from 3 down to -3 x, 3, 2, 1, 0, -1, -2, -3 / y = f(x), 9, 4, 1, 0, 1, 4, 9",
+     "A": {
+      "objective": 4,
+      "why": "Ordered pairs for graphing the quadratic f(x)=x²."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Table of values of f(x)=x² for graphing the quadratic."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "2d578e1344def75b"
+    },
+    {
+     "key": "u1-4:figure-3",
+     "type": "figure",
+     "page": 22,
+     "text": "Cartesian plane with x'x and y'y axes; blue parabola with vertex at origin (0,0) opening upwards, passing through plotted points (±1,1), (±2,4), (±3,9); y-axis marked 1 to 10, x-axis marked -4 to 4.",
+     "A": {
+      "objective": 4,
+      "why": "Parabola of f(x)=x² with vertex at the origin."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Graph of f(x)=x², an upward parabola with vertex at origin."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "e758f9543a65dc49"
+    },
+    {
+     "key": "u1-4:rule-4",
+     "type": "rule",
+     "page": 22,
+     "text": "The curve of the function f is symmetrical about the y-axis and the equation of the symmetrical axis is x = 0. $x=0$",
+     "A": {
+      "objective": 4,
+      "why": "Gives the axis of symmetry x=0 of the curve of x²."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Axis of symmetry of f(x)=x² is x=0."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "6c2b6142058b19cb"
+    },
+    {
+     "key": "u1-4:rule-5",
+     "type": "rule",
+     "page": 22,
+     "text": "The coordinate of the vertex of the curve is (0, 0), and the minimum value of the function = 0. $(0,0)$",
+     "A": {
+      "objective": 4,
+      "why": "Gives the vertex (0,0) and minimum value 0 for f(x)=x²."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Vertex (0,0) and minimum value of f(x)=x²."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "d6d8acdbc5206969"
+    },
+    {
+     "key": "u1-4:rule-7",
+     "type": "rule",
+     "page": 22,
+     "text": "The curve is open upwards when the coefficient of x² is positive (a > 0), and in this case the function has a minimum value equal to f(-b/2a). $f\\left(\\frac{-b}{2a}\\right)$",
+     "A": {
+      "objective": 4,
+      "why": "Says an upward-opening curve (a>0) has a minimum value f(-b/2a)."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Upward-opening curve when a>0 gives a minimum value."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "830d1dd06f11b571"
+    },
+    {
+     "key": "u1-4:rule-8",
+     "type": "rule",
+     "page": 22,
+     "text": "The curve is open downward when the coefficient of x² is negative (a < 0), and in this case the function has a maximum value equal to f(-b/2a). $f\\left(\\frac{-b}{2a}\\right)$",
+     "A": {
+      "objective": 4,
+      "why": "Says a downward-opening curve (a<0) has a maximum value f(-b/2a)."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Downward-opening curve when a<0 gives a maximum value."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "14e823ef7968b796"
+    },
+    {
+     "key": "u1-4:rule-9",
+     "type": "rule",
+     "page": 22,
+     "text": "The curve is symmetric about the vertical line through the vertex of the curve, whose equation is X = -b/2a; this line is called the axis of symmetry of the function. $x=\\frac{-b}{2a}$",
+     "A": {
+      "objective": 4,
+      "why": "Gives the axis of symmetry x=-b/2a of a quadratic curve."
+     },
+     "B": {
+      "objective": 4,
+      "why": "States the axis of symmetry x=-b/2a of a quadratic curve."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "995109afb0ee368a"
+    },
+    {
+     "key": "u1-4:table-4",
+     "type": "table",
+     "page": 23,
+     "text": "Table of values of y = f(x) for x from 3 to -3 x, 3, 2, 1, 0, -1, -2, -3 / y = f(x), -9, -4, -1, 0, -1, -4, -9",
+     "A": {
+      "objective": 4,
+      "why": "Ordered pairs for graphing the quadratic f(x)=-x²."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Table of values for the quadratic f(x)=-x² used to draw the curve."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "d729cec1f8e6d22f"
+    },
+    {
+     "key": "u1-4:figure-4",
+     "type": "figure",
+     "page": 23,
+     "text": "Graph on x'x and y'y axes (grid) showing a downward-opening parabola with vertex at the origin (0,0), symmetric about the y-axis, passing through plotted points (±1,-1), (±2,-4), (±3,-9). x-axis labelled -4 to 4, y-axis labelled 1 to 9 downward (negative).",
+     "A": {
+      "objective": 4,
+      "why": "Downward-opening parabola of f(x)=-x² with vertex at the origin."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Graph of f(x)=-x² showing downward parabola with vertex at origin."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "8405ee79254b3842"
+    }
+   ]
+  }
+ ]
+}
