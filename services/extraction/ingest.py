@@ -157,7 +157,9 @@ def plan(name: str, unit: int) -> dict:
         ex("teaching", bk, "families"))
     add("S7", "refutations", f"{UV} book_record_generation.py s7-author {bk} {L} --catalogue <S5 draft>  ·  s7-verify", ran("widgets", "s7-verify"))
     add("S5", "misconceptions (final)", f"{UV} book_record_generation.py s5 {bk} {L} --stage final --draft <S5 draft>", ran("misconceptions", "s5-final"))
-    add("G3", "review generated content", "review tool: Generated content", False, gate=True)
+    add("G3s", "draw the review sample of generated questions (Samuel's stratified 10%: one per family, then random)",
+        f"{UV} book_record_sample.py {bk}", ex("reviews", bk, "generated-review-sample.json"))
+    add("G3", "review generated content: the sampled questions, every misconception, mapping and figure", "review tool: Generated content", False, gate=True)
     add("C", "compile again with the generated content", f"{UV} compile_book_records.py {bk} {L}", False)
     add("S8", "coverage oracle: every sub-heading covered?", f"{UV} book_record_checks.py s8 {bk} {L}", ex("runs", bk, "coverage", "s8-summary.json"))
     add("A", "coverage audit: Samuel's integer checks; GREEN, or a person signs each exception",
@@ -228,6 +230,7 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     out.append(("S5 final", latest(bk, "misconceptions", "s5-final") is not None,
                 lambda: [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "final", "--draft", cat(), *c())]))
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
+    out.append(("G3s", False, [U("book_record_sample.py", bk)]))
     out.append(("S8", ex("runs", bk, "coverage", "s8-summary.json"), [U("book_record_checks.py", "s8", bk, *slugs, *c())]))
     out.append(("A", False, [U("book_record_coverage.py", bk, str(unit))]))
     return slugs, out

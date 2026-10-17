@@ -717,7 +717,8 @@ async function renderHome() {
   const as = (await Promise.all(abooks.map((b) => getJSON(`/api/answers?book=${encodeURIComponent(b)}`)))).flat();
   const aOpen = as.filter((a) => a.state === "open" || a.state === "changed");
   const gs = (await Promise.all(gbooks.map((b) => getJSON(`/api/generated?book=${encodeURIComponent(b)}`)))).flat();
-  const gOpen = gs.filter((g) => g.state === "open" || g.state === "changed");
+  const gOpen = gs.filter((g) => (g.state === "open" || g.state === "changed") && g.sampled !== false);
+  const gOutside = gs.filter((g) => g.sampled === false).length;
   const gCount = (k) => gOpen.filter((g) => g.kind === k).length;
   const done = ls.reduce((n, l) => n + l.labelled, 0), all = ls.reduce((n, l) => n + l.total, 0);
   const open = ms.filter((m) => !m.decision).length, books = [...new Set(ms.map((m) => m.book))];
@@ -766,9 +767,9 @@ async function renderHome() {
       </button>
       <button class="task" id="t-gen">
         <span class="t">Generated content</span>
-        <span class="muted">Generated questions, widgets, widget mappings, misconceptions and redrawn figures, each beside the book item it was made from. Every one is reviewed.</span>
+        <span class="muted">Generated questions, widgets, widget mappings, misconceptions and redrawn figures, each beside the book item it was made from. Questions are reviewed by a 10% sample, one from every family (Samuel's rule); everything else is reviewed in full.</span>
         <span class="n">${gOpen.length.toLocaleString()} <small>to review</small></span>
-        <span class="muted">${gCount("question").toLocaleString()} questions · ${gCount("widget")} widgets · ${gCount("mapping")} mappings · ${gCount("misconception")} misconceptions · ${gCount("figure")} figures</span>
+        <span class="muted">${gCount("question").toLocaleString()} sampled questions · ${gCount("widget")} widgets · ${gCount("mapping")} mappings · ${gCount("misconception")} misconceptions · ${gCount("figure")} figures${gOutside ? ` · ${gOutside.toLocaleString()} questions outside the sample, live, not asked` : ""}</span>
       </button>
       <button class="task" id="t-tier">
         <span class="t">Question tiers</span>
@@ -1572,7 +1573,8 @@ const olist = (arr) => (arr && arr.length ? `<ol>${stepsOf(arr).map((s) => `<li>
 function gVisible() {
   const k = $("#gkind").dataset.kind, l = $("#glesson").value, w = $("#gshow").value;
   return gen.map((g, i) => ({ g, i })).filter(({ g }) => g.kind === k && (l === "all" || g.lesson === l)
-    && (w === "all" || (w === "todo" ? g.state === "open" || g.state === "changed" : w === "fix" ? g.state === "fix_requested" : g.state !== "open")));
+    && (w === "all" || (w === "todo" ? (g.state === "open" || g.state === "changed") && g.sampled !== false
+      : w === "outside" ? g.sampled === false : w === "fix" ? g.state === "fix_requested" : g.state !== "open")));
 }
 async function openGenerated() {
   const books = await getJSON("/api/generated/books");
@@ -1580,7 +1582,7 @@ async function openGenerated() {
     <label>Book <select id="gbook">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
     <span id="gkind" class="subtabs"></span>
     <label>Lesson <select id="glesson"></select></label>
-    <label>Show <select id="gshow"><option value="todo">To review</option><option value="fix">Fix requested</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <label>Show <select id="gshow"><option value="todo">To review</option><option value="fix">Fix requested</option><option value="done">Decided</option><option value="outside">Outside the sample</option><option value="all">All</option></select></label>
     <div class="progress"><div class="bar"><div id="gbar" style="width:0"></div></div><div id="gprog" class="muted"></div></div>
     <span class="grow"></span>
     <span class="kbd muted">j/k move · a approve · f needs fix · x reject</span>`;
@@ -1602,13 +1604,14 @@ async function loadGenerated() {
 function renderGen() {
   const kinds = Object.keys(GKIND), cur = $("#gkind").dataset.kind;
   $("#gkind").innerHTML = kinds.map((k) => {
-    const all = gen.filter((g) => g.kind === k), open = all.filter((g) => g.state === "open" || g.state === "changed").length;
+    const all = gen.filter((g) => g.kind === k && g.sampled !== false), open = all.filter((g) => g.state === "open" || g.state === "changed").length;
     return `<button type="button" class="${k === cur ? "on" : ""}" data-k="${k}">${GKIND[k]}s · ${open}</button>`;
   }).join("");
   $("#gkind").querySelectorAll("button").forEach((b) => (b.onclick = () => { $("#gkind").dataset.kind = b.dataset.k; store.set("rv-gkind", b.dataset.k); gi = -1; renderGen(); }));
-  const ofKind = gen.filter((g) => g.kind === cur), done = ofKind.filter((g) => g.state !== "open" && g.state !== "changed").length;
+  const ofKind = gen.filter((g) => g.kind === cur && g.sampled !== false), done = ofKind.filter((g) => g.state !== "open" && g.state !== "changed").length;
+  const outside = gen.filter((g) => g.kind === cur && g.sampled === false).length;
   $("#gbar").style.width = `${ofKind.length ? (100 * done) / ofKind.length : 0}%`;
-  $("#gprog").textContent = `${done} of ${ofKind.length} ${GKIND[cur].toLowerCase()}s reviewed`;
+  $("#gprog").textContent = `${done} of ${ofKind.length} ${outside ? "sampled " : ""}${GKIND[cur].toLowerCase()}s reviewed${outside ? ` · ${outside} outside the sample` : ""}`;
   const vis = gVisible();
   if (!vis.some((x) => x.i === gi)) gi = vis[0]?.i ?? -1;
   const dot = (s) => s === "approve" ? '<span class="dot s-done">✓</span>' : s === "reject" ? '<span class="dot s-disp">✗</span>'

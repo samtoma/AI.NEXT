@@ -63,6 +63,13 @@ def open_queues(book: str, slugs: list[str]) -> dict[str, int]:
     if cf.exists():
         refs += [x["ref"] for x in json.loads(cf.read_text()).get("candidates") or [] if x.get("lesson") in slugs]
     out["Misprints"] = sum(1 for r in refs if r not in decided)
+    try:   # generated content: its review sample of questions, and every misconception, mapping and figure
+        import generated as GEN  # noqa: PLC0415
+        rows = GEN.summary(book) if book in GEN.books() else []
+        out["Generated content (sample)"] = sum(1 for r in rows if r.get("sampled") is not False and r.get("state") in ("open", "changed")
+                                                and in_unit(r.get("lesson")))
+    except (FileNotFoundError, ImportError, KeyError, ValueError):
+        pass
     return out
 
 

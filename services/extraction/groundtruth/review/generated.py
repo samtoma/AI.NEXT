@@ -11,6 +11,11 @@ withholds) or a gap (why S4 could not draw it, and the kind it needs), shown bes
 (crop_figures.py: work/<book>/figures/) and the prompt it belongs to. compile_book_records.py reads these decisions:
 a rejected drawing, or one a fix was asked for, is not shown, and its question gets the book's picture instead.
 
+THE SAMPLE (Tamer, 2026-10-17: Samuel's stratified 10%, book_record_sample.py → reviews/<book>/generated-review-sample.json).
+Generated and widget questions are asked for review only when they are in the sample: one per family, then the rest at
+random up to the percentage. A question outside it is `sampled: false`, stays live and can still be reviewed. Without a
+sample file every question is asked, as before. Misconceptions, widget mappings and figures are never sampled.
+
 Decisions are appended to `services/extraction/reviews/<book>/generated-content.json`
 (format `ainext.generated-review/1`): approve, fix requested (with a note and a correction), or reject. Each
 decision carries the item's fingerprint, so an item that changes after it was decided comes back for review
@@ -240,15 +245,24 @@ def _title(kind: str, it: dict) -> str:
     return re.sub(r"\s+", " ", re.sub(r"\$|\\[a-z]+|[{}*]", "", str(it.get("stem") or "")))[:90]
 
 
+def sample(book: str) -> dict | None:
+    """The review sample of generated questions (book_record_sample.py), or None: then every question is asked."""
+    p = REVIEWS / book / "generated-review-sample.json"
+    return json.loads(p.read_text()) if NAME.match(book) and p.exists() else None
+
+
 def summary(book: str) -> list[dict]:
     data = load(book)
     dec = latest_decisions(book)
+    smp = sample(book)
+    chosen = set(smp["question_ids"]) if smp else None
     out = []
     for (kind, ref), it in data["items"].items():
         d = dec.get((kind, ref))
         state = "open" if not d else ("changed" if d.get("fingerprint") != fingerprint(it, kind) else d["decision"])
+        sampled = chosen is None or kind not in ("question", "widget") or ref in chosen
         out.append({"kind": kind, "ref": ref, "lesson": it["lesson"] if kind == "figure" else lesson_of(it.get("lo_id")),
-                    "title": _title(kind, it), "status": it.get("status"), "state": state,
+                    "title": _title(kind, it), "status": it.get("status"), "state": state, "sampled": sampled,
                     **({"drawn": it["drawn"]} if kind == "figure" else {})})
     order = {k: i for i, k in enumerate(KINDS)}
     nat = lambda s: [(0, int(x)) if x.isdigit() else (1, x) for x in re.split(r"(\d+)", s) if x]

@@ -13,36 +13,36 @@
  "made": "2026-10-17",
  "recommendation": "NO-GO",
  "why": [
-  "the coverage audit is RED (objective_evidence, tier_floor, figures, maths_reading, misprints_decided): fix each at its stage, or a person signs an exception"
+  "the coverage audit is RED (objective_evidence, tier_floor, figures, maths_reading, misprints_decided, statements_checked): fix each at its stage, or a person signs an exception"
  ],
  "coverage": {
   "status": "RED",
   "fresh_and_green": false,
-  "detail": "the coverage audit is RED (objective_evidence, tier_floor, figures, maths_reading, misprints_decided): fix each at its stage, or a person signs an exception",
+  "detail": "the coverage audit is RED (objective_evidence, tier_floor, figures, maths_reading, misprints_decided, statements_checked): fix each at its stage, or a person signs an exception",
   "failing": [
    {
     "check": "objective_evidence",
-    "want": 18,
+    "want": 14,
     "got": 7,
     "first": [
      {
       "scope": "lo:u1-1-3",
-      "detail": "lacks a book question"
-     },
-     {
-      "scope": "lo:u1-2-1",
-      "detail": "lacks a statement, a book question, a worked example or exercise"
+      "detail": "lacks a statement, a book question"
      },
      {
       "scope": "lo:u1-2-2",
-      "detail": "lacks a statement"
+      "detail": "lacks a statement, a book question, a worked example or exercise"
+     },
+     {
+      "scope": "lo:u1-3-1",
+      "detail": "lacks a book question"
      }
     ]
    },
    {
     "check": "tier_floor",
-    "want": 54,
-    "got": 24,
+    "want": 42,
+    "got": 21,
     "first": [
      {
       "scope": "lo:u1-1-1 advanced",
@@ -72,19 +72,19 @@
    {
     "check": "maths_reading",
     "want": 200,
-    "got": 195,
+    "got": 197,
     "first": [
      {
       "scope": "u1-1:example-3|parts[7].solution[1]|0",
       "detail": "disagreed: $\\therefore (Z-Y)\\times(X\\cup Y)=\\ldots\\ldots$ / $\\therefore (Z - Y) \\times (X \\cup Y) = \\ldots\\ldots\\ldots$"
      },
      {
-      "scope": "u1-1:heading-7|text|0",
-      "detail": "disagreed: $R \\times R = \\{(x, y) : x \\in R, y \\in R\\}$ / $\\mathbb{R}\\times\\mathbb{R}=\\{(x, y) : x\\in\\mathbb{R}, y\\in\\mathbb{R}\\}$"
-     },
-     {
       "scope": "u1-4:example-3|stem|2",
       "detail": "disagreed: $x\\in\\mathbb{R}$ / $x\\in R$"
+     },
+     {
+      "scope": "u1-4:example-4|stem|1",
+      "detail": "disagreed: $x \\in \\mathbb{R}$ / $x \\in R$"
      }
     ]
    },
@@ -98,6 +98,21 @@
       "detail": "not decided in the Misprints task"
      }
     ]
+   },
+   {
+    "check": "statements_checked",
+    "want": 62,
+    "got": 60,
+    "first": [
+     {
+      "scope": "item u1-1:rule-9",
+      "detail": "the check could not confirm it says what the page prints: Page reads 'one the ordered pairs in the cartesian product of N × N'. The claim inserts 'of'."
+     },
+     {
+      "scope": "item u1-1:definition-4",
+      "detail": "the check could not confirm it says what the page prints: Page reads 'coordinat plane of Z × Z'. The claim corrects the spelling to 'coordinate'."
+     }
+    ]
    }
   ],
   "excepted": []
@@ -106,11 +121,12 @@
   "skipped": "no database named, or the audit is not GREEN"
  },
  "open_reviews": {
-  "Maths reading": 5,
+  "Maths reading": 3,
   "Question tiers": 33,
   "Generated answers": 49,
-  "Objectives (G1)": 44,
-  "Misprints": 1
+  "Objectives (G1)": 31,
+  "Misprints": 1,
+  "Generated content (sample)": 105
  },
  "compile": {
   "held": 0,
@@ -126,12 +142,14 @@
  },
  "cost_usd_by_stage": {
   "S0": 1.84,
-  "S0a": 2.82,
-  "S1": 1.48,
+  "S0a": 3.36,
+  "S1": 2.83,
+  "S1F": 0.34,
+  "S2": 0.84,
   "S3": 0.05,
   "S7": 0.21,
   "S8": 0.25,
   "SW": 1.01
  },
- "fingerprint": "aaef9270dcce827e"
+ "fingerprint": "62cc7963548803ad"
 }

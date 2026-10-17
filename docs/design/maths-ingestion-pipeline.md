@@ -32,7 +32,7 @@ adapter.
 | **S3** answers | Typing for the marker; blind re-solve; tiers | `lesson.workflow.js` S3 | Adopted step by step: the typing agent, answer rules, multi-part carry; blind re-solve and two-reading tiers already run |
 | **SW** working | Step-check the book's worked solutions | `working-check.workflow.js`, `working_check.py` | Adopted on the book's worked examples; a wrong step goes to the Misprints task |
 | **S4** figures | Redraw each figure, or record a gap | `lesson.workflow.js` S4 | Adopted unchanged; PDF figures cropped first (`crop_figures.py`) |
-| **S5–S7** | Misconceptions, question families, widgets | `misconceptions`, `families`, `widgets` workflows | Adopted unchanged (`book_record_generation.py`); a book's printed contrasts count as remarks |
+| **S5–S7** | Misconceptions, question families, widgets | `misconceptions`, `families`, `widgets` workflows | Adopted unchanged (`book_record_generation.py`); a book's printed contrasts count as remarks. **Review by Samuel's sample** (`book_record_sample.py`, his `review_sample`): generated questions go live and 10% go to a person, one from every family first; misconceptions, mappings and figures are all reviewed. Prep 3: 77 of 676 questions sampled (77 families) |
 | **S8** coverage | Every sub-heading covered by what was produced | `lesson.workflow.js` S8 | Adopted, on book records |
 | **Assembly** | The app's bundles | `assemble_lesson_bundle.py` | `compile_book_records.py`, converging on the assembly's own functions (multi-part, answer forms) |
 | **Meter** | Cost per stage, lesson and model | `meter_run.py` → `runs/<book>/cost.jsonl` | Adopted: runs from the shell write the same ledger |

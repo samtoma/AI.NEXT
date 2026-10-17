@@ -101,6 +101,25 @@ def family_of(q: dict) -> str | None:
     return note.split(FAMILY_NOTE, 1)[1].rstrip(". ") if FAMILY_NOTE in note else None
 
 
+def review_sample(questions: list[dict], percent: int, seed: int | None, keep: set[str] | None = None) -> tuple[set[str], int]:
+    """Samuel's stratified review sample (2026-09-10), as (question ids, families): one item per family first, then the
+    rest at random up to `percent`. `keep` (book_record_sample.py) holds an earlier draw: what of it still exists stays
+    picked, so a person's past reviews still count, and only families with no pick and the top-up are drawn anew. Without
+    `keep` it is exactly the draw the --sample flag has always made."""
+    rng = random.Random(seed)
+    by_family: dict[str, list[str]] = {}
+    for q in questions:
+        fam = family_of(q) or f"(no family) {q['id']}"
+        by_family.setdefault(fam, []).append(q["id"])
+    kept = {i for i in (keep or set()) if any(i in ids for ids in by_family.values())}
+    picked = set(kept) | {rng.choice(ids) for ids in by_family.values() if not kept & set(ids)}
+    target = max(len(picked), round(len(questions) * percent / 100))
+    rest = [q["id"] for q in questions if q["id"] not in picked]
+    rng.shuffle(rest)
+    picked.update(rest[: max(0, target - len(picked))])
+    return picked, len(by_family)
+
+
 def parent_kind_of(q: dict) -> str:
     """The row's parent kind: the bundle's field, else the default every earlier bundle meant."""
     return q.get("parent_kind") or "question"
@@ -587,25 +606,15 @@ def main() -> int:
         #
         # One item per family first, then the remainder spread at random to
         # reach the requested percentage.
-        rng = random.Random(args.seed)
-        by_family: dict[str, list[str]] = {}
-        for q in questions:
-            fam = family_of(q) or f"(no family) {q['id']}"
-            by_family.setdefault(fam, []).append(q["id"])
-
-        picked = {rng.choice(ids) for ids in by_family.values()}
-        target = max(len(picked), round(len(questions) * args.sample / 100))
-        rest = [q["id"] for q in questions if q["id"] not in picked]
-        rng.shuffle(rest)
-        picked.update(rest[: max(0, target - len(picked))])
+        picked, n_families = review_sample(questions, args.sample, args.seed)
 
         out = args.bundle.with_suffix(".review-queue.json")
         out.write_text(json.dumps(
             {"bundle": args.bundle.name, "sample_percent": args.sample,
-             "seed": args.seed, "families": len(by_family),
+             "seed": args.seed, "families": n_families,
              "question_ids": sorted(picked)}, indent=2) + "\n")
         print(f"  review queue: {len(picked)} of {len(questions)} items "
-              f"covering all {len(by_family)} families -> {out.name}")
+              f"covering all {n_families} families -> {out.name}")
 
     return 0
 
