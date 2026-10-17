@@ -26,7 +26,8 @@ and start pages, and a few body pages once each for their printed page number. `
   - takes the offset (PDF page = printed page + offset) from the probe pages, and reports any that disagree;
   - gives each lesson its end page: the page before the next lesson (or unit) starts. The book's last lesson ends on
     the last page and is flagged, since a contents page never prints where a lesson ends;
-  - slugs are u<unit position>-<lesson position>, as the hand-made Prep-3 map's; a unit review is u<U>-r<n>;
+  - slugs are <prefix><unit position>-<lesson position>, the prefix the book config's first id prefix (u1-1 for the
+    launch book, pp3u1-1 for prep3-parallel, so two courses from one book share no objective id); a unit review is <prefix><U>-r<n>;
   - when a lessons.json exists, lists every way the proposal differs from it (the check on a book already mapped).
 It writes book-records/<book>/lessons.proposed.json (format `ainext.lesson-map/1`, status "proposed").
 `approve` refuses while a disagreement is left (settle it in the proposal file, then delete the entry). An existing
@@ -143,7 +144,16 @@ def offset_of(probes: list[dict]) -> tuple[int | None, list[str]]:
     return best, odd
 
 
-def compare(res: dict, first_unit: int = 1, openers: dict | None = None) -> dict:
+def lesson_prefix(book: str) -> str:
+    """The book's first id prefix names its lessons (`u` → u1-1; prep3-parallel's `pp3u` → pp3u1-1), so two courses
+    made from one book never share an objective id. A book that declares none is `u`."""
+    try:   # the first as the config file writes it (the loaded config does not keep their order)
+        return (json.loads(book_config.load_book(book).path.read_text()).get("id_prefixes") or ["u"])[0]
+    except (Exception, SystemExit):  # noqa: BLE001  (a made-up book: the loader exits on an unknown one)
+        return "u"
+
+
+def compare(res: dict, first_unit: int = 1, openers: dict | None = None, prefix: str = "u") -> dict:
     """openers: {unit position: printed page} of each unit opener page the 'openers' pass confirmed."""
     openers = openers or {}
     A, B = (res["readings"].get("A") or {}), (res["readings"].get("B") or {})
@@ -170,10 +180,10 @@ def compare(res: dict, first_unit: int = 1, openers: dict | None = None) -> dict
             m = lb[li] if li < len(lb) else {}
             if l.get("kind") == "review":
                 n_r += 1
-                slug = f"u{ui}-r{n_r}"
+                slug = f"{prefix}{ui}-r{n_r}"
             else:
                 n_l += 1
-                slug = f"u{ui}-{n_l}"
+                slug = f"{prefix}{ui}-{n_l}"
             for k in ("ref", "title", "start"):
                 if (numbers if k == "ref" else norm)(l.get(k)) != (numbers if k == "ref" else norm)(m.get(k)):
                     dis.append({"where": f"{slug} {k}", "A": l.get(k), "B": m.get(k)})
@@ -231,12 +241,12 @@ def against_existing(book: str, prop: dict) -> list[str]:
     return out
 
 
-def opener_candidates(res: dict) -> list[dict]:
+def opener_candidates(res: dict, prefix: str = "u") -> list[dict]:
     """The page before each later unit's first lesson, as the contents put it: maybe that unit's opener."""
-    c = compare(res, int(res.get("first_unit") or 1))
+    c = compare(res, int(res.get("first_unit") or 1), prefix=prefix)
     out, seen = [], set()
     for l in c["lessons"]:
-        unit = int(l["slug"][1:].split("-")[0])
+        unit = int(l["slug"][len(prefix):].split("-")[0])
         if unit in seen or unit == int(res.get("first_unit") or 1) or not isinstance(l["pages"][0], int):
             seen.add(unit)
             continue
@@ -264,7 +274,7 @@ def accept(book: str, run_file: Path, openers_file: Path | None = None) -> dict:
     if res.get("stage") != "S0-lesson-map" or res.get("mode") == "openers":
         raise SystemExit(f"{run_file} is not a lesson-map contents return")
     op = json.loads(openers_file.read_text())["openers"] if openers_file else []
-    c = compare(res, int(res.get("first_unit") or 1), {o["unit"]: o["printed"] for o in op if o.get("opener")})
+    c = compare(res, int(res.get("first_unit") or 1), {o["unit"]: o["printed"] for o in op if o.get("opener")}, lesson_prefix(book))
     return write_proposal(book, {**c, "method": "scout"}, f"book_record_lessons.py accept ({res.get('prompts_version')})", {
         "source_run": str(run_file.relative_to(HERE)) if run_file.is_relative_to(HERE) else str(run_file),
         "unit_openers": [{"unit": o["unit"], "printed": o["printed"], "opener": o.get("opener")} for o in op]})
@@ -296,7 +306,30 @@ def approve(book: str, by: str, force: bool) -> dict:
                "approved_by": by, "approved_at": stamp,
                "history": [f"{stamp}: approved from S0's proposal by {by}"]}
     af.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
-    return {"added": [l["slug"] for l in added], "lessons": len(doc["lessons"])}
+    titled = record_titles(book, doc["lessons"])
+    return {"added": [l["slug"] for l in added], "lessons": len(doc["lessons"]), "titles_recorded": titled}
+
+
+def record_titles(book: str, lessons: list[dict]) -> int:
+    """The approved lessons' printed titles into the book config's `lesson_titles`, where the loader reads a lesson's
+    title (load_seed.py); a title already there is kept. Only that one key of the file is rewritten."""
+    import re  # noqa: PLC0415
+    try:
+        path = book_config.load_book(book).path
+    except (Exception, SystemExit):  # noqa: BLE001  (a made-up book)
+        return 0
+    text = path.read_text()
+    cfg = json.loads(text)
+    titles = dict(cfg.get("lesson_titles") or {})
+    new = {l["slug"]: l["title"] for l in lessons if l.get("title") and l["slug"] not in titles}
+    if not new:
+        return 0
+    titles.update(new)
+    block = json.dumps(titles, ensure_ascii=False, indent=2).replace("\n", "\n  ")
+    text, n = re.subn(r'"lesson_titles": \{[^}]*\}', lambda m: f'"lesson_titles": {block}', text, count=1)
+    if n:
+        path.write_text(text)
+    return len(new) if n else 0
 
 
 def main(argv: list[str]) -> int:
@@ -345,7 +378,7 @@ def main(argv: list[str]) -> int:
         run_file, res, cost = WR.run_copy(copy, [img], a.cap, "s0", a.book, "lesson-map", stage="S0")
         openers_file = None
         offset, _odd = offset_of(res.get("probes") or [])
-        cands = opener_candidates(res) if offset is not None else []
+        cands = opener_candidates(res, lesson_prefix(a.book)) if offset is not None else []
         if cands:   # the second pass: is the page before each later unit's first lesson its opener?
             import pymupdf  # noqa: PLC0415
             import extract_book_record as X  # noqa: PLC0415

@@ -135,6 +135,9 @@ def run(book: str, unit: int, dry_run: bool) -> dict:
               "questions_moved": [], "questions_unplaced": [], "misconceptions_moved": [], "misconceptions_unplaced": [],
               "widget_gaps_stale": []}
     files = {n: json.loads((gdir / n).read_text()) for n in (*GEN, "misconceptions.json", "widget-gaps.json") if (gdir / n).exists()}
+    if not files:   # a book whose content has not been generated yet: nothing to move
+        report["note"] = "nothing generated yet"
+        return report
     for n in GEN:
         if n in files:
             remap_questions(files[n].get("questions") or [], idx, slugs, report)

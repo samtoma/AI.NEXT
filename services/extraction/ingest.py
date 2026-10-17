@@ -147,16 +147,22 @@ def plan(name: str, unit: int) -> dict:
         all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")))
     add("S3", "question tiers (two readings)", f"{UV} tier_questions.py run {bk} {L}", all_of(lambda s: ex("teaching", bk, "tiers", f"{s}.json")))
     add("G2", "review generated answers and tier disagreements", "review tool: Generated answers, Question tiers", False, gate=True)
-    add("S4", "figures: crops (PDF only) and visual specs", f"{UV} book_record_figures.py run {bk} {L}",
+    if r["route"] != "epub":
+        add("S4", "figure crops from the page (PDF only)", f"{UV} --with pymupdf --with pillow --with jsonschema crop_figures.py run {bk} {L}",
+            all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")))
+    add("S4", "figures: visual specs", f"{UV} book_record_figures.py run {bk} {L}",
         all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")))
-    add("SW", "step check of every worked solution; book flags → Misprints", f"{UV} book_record_checks.py sw {bk} {unit} {L}",
-        ex("runs", bk, "working-check", f"{ch}.flags.json"))
     add("C", "compile the unit", f"{UV} compile_book_records.py {bk} {L}", ex("compiled", bk, f"unit{unit}.json"))
+    add("SW", "step check of every worked solution (reads the compiled unit); book flags → Misprints",
+        f"{UV} book_record_checks.py sw {bk} {unit} {L}", ex("runs", bk, "working-check", f"{ch}.flags.json"))
     add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", ran("misconceptions", "s5-draft"))
     add("S6", "question families and widgets", f"{UV} book_record_generation.py s6-author {bk} {L} --catalogue <S5 draft>  ·  s6-grade",
         ex("teaching", bk, "families"))
     add("S7", "refutations", f"{UV} book_record_generation.py s7-author {bk} {L} --catalogue <S5 draft>  ·  s7-verify", ran("widgets", "s7-verify"))
-    add("S5", "misconceptions (final)", f"{UV} book_record_generation.py s5 {bk} {L} --stage final --draft <S5 draft>", ran("misconceptions", "s5-final"))
+    add("S5", "misconceptions (final), with S6/S7's distractors", f"{UV} book_record_generation.py s5 {bk} {L} --stage final --draft <S5 draft> --distractors …",
+        ran("misconceptions", "s5-final"))
+    add("S5–S7", "finish: the catalogue, the generated and widget questions (Samuel's §4 passes)",
+        f"{UV} book_record_generation.py finish {bk} {L}", ex("teaching", bk, "generated", "misconceptions.json"))
     add("G3s", "draw the review sample of generated questions (Samuel's stratified 10%: one per family, then random)",
         f"{UV} book_record_sample.py {bk}", ex("reviews", bk, "generated-review-sample.json"))
     add("G3", "review generated content: the sampled questions, every misconception, mapping and figure", "review tool: Generated content", False, gate=True)
@@ -208,9 +214,12 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
                 [U("answer_gen.py", "run", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]
                 + [U("answer_gen.py", "check-printed", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]))
     out.append(("S3", all_of(lambda s: ex("teaching", bk, "tiers", f"{s}.json")), [U("tier_questions.py", "run", bk, *slugs, *c())]))
+    if r["route"] != "epub":   # a PDF's figures are cropped from the page first; an EPUB ships each as an image
+        out.append(("S4 crops", all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")),
+                    [U("crop_figures.py", "run", bk, *slugs, *c(), w=("pymupdf", "pillow", "jsonschema"))]))
     out.append(("S4", all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")), [U("book_record_figures.py", "run", bk, *slugs, *c())]))
+    out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))   # SW reads the compiled unit
     out.append(("SW", ex("runs", bk, "working-check", f"{ch}.flags.json"), [U("book_record_checks.py", "sw", bk, str(unit), *slugs, *c())]))
-    out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
     out.append(("G2R", False, [U("book_record_g2.py", "run", bk, str(unit), *c())]))
     out.append(("S5 draft", latest(bk, "misconceptions", "s5-draft") is not None,
                 [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "draft", *c())]))
@@ -227,8 +236,12 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
                              U("book_record_generation.py", "s7-verify", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c())]))
     else:
         out.append(("S7", latest(bk, "widgets", "s7-verify") is not None, "S7 builds against the unit in a scratch database: pass --dsn"))
+    dists = lambda: [x for f in ("families", "widgets") if ex("runs", bk, f, "s5-distractors.json")
+                     for x in ("--distractors", f"runs/{bk}/{f}/s5-distractors.json")]   # what S6 and S7 offer S5
     out.append(("S5 final", latest(bk, "misconceptions", "s5-final") is not None,
-                lambda: [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "final", "--draft", cat(), *c())]))
+                lambda: [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "final", "--draft", cat(), *dists(), *c())]))
+    out.append(("finish", ex("teaching", bk, "generated", "misconceptions.json"),   # Samuel's §4 finishing passes
+                [U("book_record_generation.py", "finish", bk, *slugs, *(["--dsn", dsn] if dsn else []))]))
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
     out.append(("G3s", False, [U("book_record_sample.py", bk)]))
     out.append(("S8", ex("runs", bk, "coverage", "s8-summary.json"), [U("book_record_checks.py", "s8", bk, *slugs, *c())]))
@@ -251,8 +264,8 @@ def run_unit(name: str, unit: int, dsn: str | None, cap: float | None, dry: bool
             return {"unit": unit, "stopped": f"{stage}: {what}", "ran": done}
         cmds = what() if callable(what) else what
         for argv in cmds:
-            if dry:
-                done.append(f"{stage}: {' '.join(argv)}")
+            if dry:   # a later stage's input (the S5 draft) does not exist yet in a dry run
+                done.append(f"{stage}: {' '.join(x if x is not None else '<an earlier stage s output>' for x in argv)}")
                 continue
             with log.open("a") as fh:
                 fh.write(f"\n== {stage}: {' '.join(argv)}\n")

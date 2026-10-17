@@ -119,6 +119,43 @@ def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
 RESULT_FORMAT = "ainext.s1-result/1"
 
 
+def printed_in(term: str, vocab: str) -> bool:
+    """Does the book print this term? Samuel's word match (assemble_objectives.in_vocabulary), a plural being the same
+    word, and maths matched without its spacing ("n(X×Y)" is printed "n (X × Y)")."""
+    import re  # noqa: PLC0415
+    return (AO.in_vocabulary(term, vocab) or AO.in_vocabulary(term + "s", vocab)
+            or (not term.replace(" ", "").isalpha() and re.sub(r"\s+", "", term) in re.sub(r"\s+", "", vocab)))
+
+
+def book_vocabulary(book: str) -> str:
+    """The book's OWN printed text, lower-cased, from its book records: what Samuel's terminology check compares an
+    objective's words against (assemble_objectives.in_vocabulary). Tamer, 2026-10-17: a book is its own reference, never
+    another course's bundles, so a term this book prints is its students' word and raises no question."""
+    parts: list[str] = []
+
+    def walk(v):
+        if isinstance(v, str):
+            parts.append(v)
+        elif isinstance(v, list):
+            for x in v:
+                walk(x)
+        elif isinstance(v, dict):
+            for k, x in v.items():
+                if k in ("claim", "text", "stem", "caption", "term", "quote", "answer", "solution", "examples", "rows",
+                         "header", "parts", "formula", "label"):
+                    walk(x)
+    for p in sorted((HERE / "book-records" / book).glob("*.json")):
+        try:
+            d = json.loads(p.read_text())
+        except ValueError:
+            continue
+        if isinstance(d, dict) and d.get("schema") == "book-record":
+            for it in d.get("items") or []:
+                walk(it)
+    import re  # noqa: PLC0415
+    return " " + re.sub(r"\s+", " ", " ".join(parts).replace("$", " ").lower()) + " "
+
+
 def book_ids(ev, we: dict[str, str]):
     """Every `WE<n>` S1 cites (an evidence anchor, a worked example filed, a link's evidence) as its book-record id,
     so the review tool and `apply` work on book-record items; the cited name is kept as `cited_as`."""
@@ -145,7 +182,12 @@ def evaluate(book_name: str, args_file: Path, run_file: Path) -> Path:
     run = json.loads(run_file.read_text())
     if run.get("packet_sha256") != args["packet_sha256"]:
         raise SystemExit("the run was made from another packet (packet_sha256 differs): run S1 again")
-    ev = AO.evaluate_chapter(args["chapter"], run, AO.egyptian_vocabulary(), {}, args.get("prior_objectives") or [])
+    vocab = book_vocabulary(book_name)
+    ev = AO.evaluate_chapter(args["chapter"], run, vocab, {}, args.get("prior_objectives") or [])
+    # a term the book itself prints needs no G1 question, whoever raised it (the vocabulary check or the reconciler)
+    ev["decisions"] = [dict(d, detail=d["detail"].replace("not in the Egyptian Prep-3 maths book's vocabulary",
+                                                          "this book never prints it"))
+                       for d in ev["decisions"] if d.get("kind") != "terminology" or not printed_in(d["key"].split(":", 1)[1], vocab)]
     ev = book_ids(ev, {w["anchor"]: w["record_id"] for l in args["chapter"]["lessons"] for w in l["worked_examples"] if w.get("record_id")})
     fails: dict[str, list[str]] = {}
     for f in ev["failures"]:

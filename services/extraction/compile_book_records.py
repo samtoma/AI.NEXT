@@ -1028,6 +1028,14 @@ def main(argv: list[str]) -> int:
                         if isinstance(c, dict) and c.get("misconception_id") in dropped_mc:
                             report["links_dropped"].append({"question": q["id"], "option": c.get("key"), "misconception": c.pop("misconception_id")})
 
+    if not cfg.get("generated"):   # a book of its own (no shared generated bank): its generated content starts its own
+        for name, key in (("generated-questions.json", "questions"), ("widget-questions.json", "questions"),   # files,
+                          ("misconceptions.json", "misconceptions")):                                          # shaped as
+            f = HERE / "teaching" / a.book / "generated" / name                                               # S5–S7 wrote them
+            if f.exists() and name not in generated:
+                doc = json.loads(f.read_text())
+                doc[key] = []
+                generated[name] = doc
     # The compiled lessons' OWN generated content: S5–S7 run on these bundles (book_record_generation.py), assembled
     # and reconciled by the runbook's own tools into teaching/<book>/generated/. Added after the old rows were cut
     # and their links dropped, so nothing above can touch them.

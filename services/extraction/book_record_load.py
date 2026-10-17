@@ -7,7 +7,8 @@
 Run from services/extraction/ after compile_book_records.py and book_record_coverage.py. In order, stopping at the
 first that fails:
   1. the unit's coverage audit (coverage/<book>.unit<NN>.book-records.json) is GREEN, and every file it read is
-     unchanged since (its `inputs` fingerprint): a stale audit is no audit;
+     unchanged since (its `inputs` fingerprint): a stale audit is no audit. --scratch skips this: a local scratch
+     load comes mid-run, before the audit can hold, as Samuel's fan-out loads his preview database before the gates;
   2. `load_seed.py --validate-only` on the course's bundles: a compiled unit replaces the course bundle of the same
      name (compiled/<book>/unit1.json for seed/unit1.json), every other bundle of the course comes as it is;
   3. every loader's dry run on the real database, inside a transaction that is rolled back: `load_seed.py --course
@@ -15,7 +16,8 @@ first that fails:
      a re-run never reverts a promotion; catalogue-only: no misconception the catalogue does not hold);
   4. only with --go, and only on a person's GO at G5 for the unit as it stands (book_record_gonogo.py; Samuel's runbook §8),
      or with --scratch into a database on this machine (localhost: what S7 builds against and the fan-out loads,
-     as Samuel's fan-out loads his local preview database before G5): the same loads for real, `apply_review_verdicts.py --book-reviews` (the review tool's decisions
+     as Samuel's fan-out loads his local preview database before G5; no parity check, the course's shape is not
+     final mid-run): the same loads for real, `apply_review_verdicts.py --book-reviews` (the review tool's decisions
      as human stamps), then `parity_check.py --candidate <dsn> --course <id>` — Samuel's per-course drift check.
      A course whose expected numbers the book config's `parity` gives must still match them; this unit changing the
      course on purpose is a change to that constant, made by a person, never by this script.
@@ -88,7 +90,7 @@ def main(argv: list[str] | None = None) -> int:
     compiled = a.compiled or HERE / "compiled" / book.book
     ok, why = audit_ok(book.book, a.unit, compiled)
     print(f"== coverage: {why}", file=sys.stderr)
-    if not ok:
+    if not ok and not a.scratch:   # a local scratch load comes mid-run, before the audit can hold (S7 builds against it)
         return 1
     if not a.dsn:
         raise SystemExit("--dsn (or AINEXT_DB_DSN) is needed: the previews run on the real database and are rolled back")
@@ -121,7 +123,8 @@ def main(argv: list[str] | None = None) -> int:
     if load:
         if (compiled / "review-stamps.json").exists():
             step("the review tool's decisions as human stamps", ["apply_review_verdicts.py", "--book-reviews", rel("review-stamps.json")], env)
-        step("parity: the course has not drifted", ["parity_check.py", "--candidate", a.dsn, "--course", book.course_id], env)
+        if a.go:   # a scratch load is mid-run: a course's parity constant is a person's, set once its shape is final
+            step("parity: the course has not drifted", ["parity_check.py", "--candidate", a.dsn, "--course", book.course_id], env)
         print(f"\nloaded {book.book} unit {a.unit} into the database; parity holds", file=sys.stderr)
     else:
         print("\nevery preview passed; nothing was kept. --go loads it.", file=sys.stderr)

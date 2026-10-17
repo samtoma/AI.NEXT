@@ -7,6 +7,7 @@
     uv run book_record_generation.py s7-verify prep3-math-en u1-1 u1-2 u1-3 u1-4 --catalogue <S5 draft run>
     uv run book_record_generation.py s5 prep3-math-en u1-1 … --stage final --draft runs/<book>/misconceptions/s5-draft.<stamp>.json \
         --distractors runs/<book>/families/s5-distractors.json --distractors runs/<book>/widgets/s5-distractors.json
+    uv run book_record_generation.py finish prep3-math-en u1-1 … [--dsn …]   # Samuel's §4 finishing passes → the bundles
 
 Run from services/extraction/, after compile_book_records.py. Grade 10's S5–S7 (runbook §4) build their args from
 the ASSEMBLED BUNDLES: the objectives, the book questions with their canonical solutions, and the worked examples kept
@@ -46,6 +47,52 @@ import crop_figures as CF  # noqa: E402
 import subprocess  # noqa: E402
 import embed_workflow as EW  # noqa: E402
 import workflow_runner as WR  # noqa: E402
+
+
+def latest(book: str, folder: str, prefix: str) -> list[Path]:
+    return sorted((HERE / "runs" / book / folder).glob(f"{prefix}.*Z.json"))
+
+
+def finish(book: str, slugs: list[str], dsn: str | None) -> int:
+    """Samuel's runbook §4 finishing passes, after S5 final, into teaching/<book>/generated/ (what compile reads):
+      1. the misconception catalogue from S5's final run (assemble_misconceptions.py --catalogue-only: pass 1);
+      2. the generated questions from the families the blind grade passed (generate_questions.py --grades);
+      3. the widget questions from the templates the verifier confirmed (generate_widget_questions.py --verdicts), when
+         a template is left (one with no confirmed mapping is held, `widgets-held/`, as his runbook says);
+      4. the catalogue again with the bundles (pass 2: strips the distractor links S5 refused).
+    Each is his command, unchanged; a failure stops here and says which."""
+    view = book_view(book, slugs)
+    gdir = HERE / "teaching" / book / "generated"
+    gdir.mkdir(parents=True, exist_ok=True)
+    final = latest(book, "misconceptions", "s5-final")
+    if not final:
+        raise SystemExit("no S5 final run: run `s5 … --stage final` first")
+    cat, gq_out, wq_out = gdir / "misconceptions.json", gdir / "generated-questions.json", gdir / "widget-questions.json"
+
+    def run(*argv: str) -> None:
+        p = subprocess.run(["uv", "run", *argv], cwd=HERE, text=True, capture_output=True)
+        sys.stderr.write(p.stdout[-2500:] + p.stderr[-2500:])
+        if p.returncode != 0:
+            raise SystemExit(f"{argv[0]} failed ({p.returncode})")
+    run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat), "--catalogue-only")
+    grades = latest(book, "families", "s6-grade")
+    fams = [f for f in families_dir(book).glob("*.json") if not f.name.startswith("_held--")]
+    bundles = []
+    if fams and grades:
+        run("generate_questions.py", "--families", str(families_dir(book)), "--book", str(view), "--catalogue", str(cat),
+            "--grades", *map(str, grades), "--out", str(gq_out))
+        bundles.append(gq_out)
+    wdir = HERE / "teaching" / book / "widgets"
+    verdicts = latest(book, "widgets", "s7-verify")
+    if wdir.is_dir() and any(not f.name.startswith("_held--") for f in wdir.glob("*.json")) and verdicts and dsn:
+        run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn,
+            "--verdicts", *map(str, verdicts), "--gaps", *map(str, latest(book, "widgets", "s7-author")), "--out", str(wq_out))
+        bundles.append(wq_out)
+    if bundles:
+        run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat),
+            *[x for b in bundles for x in ("--bundle", str(b))])
+    print(f"finished: {cat.relative_to(HERE)}" + "".join(f", {b.relative_to(HERE)}" for b in bundles), file=sys.stderr)
+    return 0
 
 
 def in_lessons(lo: str | None, slugs: list[str]) -> bool:
@@ -218,6 +265,10 @@ def main(argv: list[str]) -> int:
     s6a.add_argument("--catalogue", type=Path, required=True, help="the S5 draft run (or a catalogue)")
     s6a.add_argument("--cap", type=float, default=6.0)
     s6a.add_argument("--args-only", action="store_true")
+    fin = sub.add_parser("finish", help="Samuel's §4 finishing passes after S5 final: catalogue, questions, widgets")
+    fin.add_argument("book")
+    fin.add_argument("lessons", nargs="+")
+    fin.add_argument("--dsn", default=None, help="the database holding the lessons, for the widget pass")
     s6g = sub.add_parser("s6-grade", help="S6 grade (families.workflow.js, mode grade) on the checked specs")
     s6g.add_argument("book")
     s6g.add_argument("lessons", nargs="+")
@@ -281,13 +332,15 @@ def main(argv: list[str]) -> int:
         runs.mkdir(parents=True, exist_ok=True)
         gargs = runs / "s6-grade.args.json"
         gq("--families", str(families_dir(a.book)), "--book", str(view), "--grading-set", str(runs / "grading-set.json"),
-           "--grade-args", str(gargs))
+           "--grade-args", str(gargs), "--s5-distractors", str(runs / "s5-distractors.json"))   # S5 final reads these
         copy = EW.default_out(a.book, "families", "s6-grade.bookrecord")
         print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", json.loads(gargs.read_text()), copy)), file=sys.stderr)
         if a.args_only:
             return 0
         WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-grade", a.book, "families", stage="S6")
         return 0
+    if a.cmd == "finish":
+        return finish(a.book, a.lessons, a.dsn)
     if a.cmd == "s5":
         draft = json.loads(a.draft.read_text()) if a.draft else None
         # S6 writes {"distractors": […]}, S7 a bare list: both are S5's distractors
