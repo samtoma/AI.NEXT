@@ -17,7 +17,8 @@ It trusts no stage's own count: every number is recomputed from the rows. The fi
 
 THE CHECKS (Samuel's id where it is his check; † a check the book-record line adds):
     pages                   the unit's printed pages = pages in a lesson + pages excluded with a reason (a unit opener
-                            the S0 scout confirmed, or lessons.json `excluded_pages`)
+                            the S0 scout confirmed, or lessons.json `excluded_pages`); a page two lessons share is an
+                            error unless the later one starts mid-page (the manifest method records it)
     lesson_provenance       every lesson has its record, the record names its source file and offset, its pages are
                             the lesson map's, and every item sits on one of them
     items_mapped_once       prompts (exercise, worked example, activity, open prompt) = prompts filed under one objective
@@ -146,7 +147,8 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
         seen: dict[int, str] = {}
         for l, s in zip(ls, spans):
             for p in s:
-                if p in seen:
+                # a lesson that starts mid-page shares its first page with the lesson before it (an EPUB section)
+                if p in seen and not (l.get("starts_mid_page") and p == min(s)):
                     c.fail(f"page {p}", f"in two lessons: {seen[p]} and {l['slug']}")
                 seen[p] = l["slug"]
     checks.append(c)

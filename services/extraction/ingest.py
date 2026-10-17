@@ -111,11 +111,16 @@ def plan(name: str, unit: int) -> dict:
         if b.maths_source == "epub-images-md5":
             add("S0b", "equation images → LaTeX (recover, vision passes, assemble)", f"{UV} assemble_maths.py recover {bk}  … assemble",
                 ex("runs", bk, "maths", "accepted.json"))
-        add("G0", "approve the lesson manifest", "review tool / build_manifest.py", bool(slugs), gate=True)
+        add("G0", "approve the lesson manifest (Samuel's G0: build_manifest.py + the book config's lesson_unit)",
+            f"{UV} build_manifest.py {bk}", bool(slugs), gate=True)
+        add("S0", "the lesson map from the manifest (method: manifest, no model)", f"{UV} book_record_lessons.py run {bk}",
+            ex("book-records", bk, "lessons.proposed.json"))
+        add("G0", "approve the lesson map", f"{UV} book_record_lessons.py approve {bk} --by <initials>",
+            ex("book-records", bk, "lessons.json"), gate=True)
         add("S0a", "blocks → book records", f"{UV} --with jsonschema epub_book_record.py write {bk} {unit}",
             all_of(lambda s: ex("book-records", bk, f"{s}.json")))
     else:
-        add("S0", "propose the lesson map from the contents pages", f"{UV} --with pymupdf book_record_lessons.py run {bk}",
+        add("S0", "propose the lesson map from the contents pages (method: scout)", f"{UV} --with pymupdf book_record_lessons.py run {bk}",
             ex("book-records", bk, "lessons.json"))
         add("G0", "approve the lesson map (units, lessons, printed pages, offset)", f"{UV} book_record_lessons.py approve {bk}",
             ex("book-records", bk, "lessons.json"), gate=True)
@@ -177,6 +182,8 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     U = lambda script, *a, w=(): ["uv", "run", *[x for m in w for x in ("--with", m)], script, *a]
     out: list[tuple[str, object, object]] = []
     if r["route"] == "epub":
+        out.append(("G0", ex("book-records", bk, "lessons.json"),
+                    "the lesson map is not approved (book_record_lessons.py run, method manifest, then approve)"))
         out.append(("S0a", all_of(lambda s: ex("book-records", bk, f"{s}.json")),
                     [U("epub_book_record.py", "write", bk, str(unit), w=("jsonschema",))]))
     else:

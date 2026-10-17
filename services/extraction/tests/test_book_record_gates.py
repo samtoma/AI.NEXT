@@ -74,6 +74,14 @@ class Coverage(unittest.TestCase):
         self.assertEqual(c.got, 1)
         self.assertEqual(sorted(f["scope"] for f in c.failures), ["lo:t-1-1 advanced", "lo:t-1-1 basic"])
 
+    def test_a_shared_boundary_page_needs_a_mid_page_start(self):
+        I = self.inputs()
+        I["lmap"] = {"page_offset": 1, "lessons": [{"slug": "t-1", "pages": [7, 9]}, {"slug": "t-2", "pages": [9, 12]}]}
+        I["records"]["t-2"]["lesson"]["pages"] = [9, 12]
+        self.assertEqual([f["scope"] for f in self.check(I, "pages").failures], ["page 9"])
+        I["lmap"]["lessons"][1]["starts_mid_page"] = True
+        self.assertEqual(self.check(I, "pages").failures, [])
+
     def test_signed_exceptions_only(self):
         c = self.check(self.inputs(), "pages")
         self.assertEqual(c.as_dict([{"check": "pages", "scope": "page 10"}])["state"], "fails")

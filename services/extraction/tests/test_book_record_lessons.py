@@ -16,6 +16,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 EX = Path(__file__).resolve().parents[1]
@@ -123,3 +124,22 @@ class LessonMap(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ManifestMethod(unittest.TestCase):
+    """The lesson map's second method (Tamer, 2026-10-17): an EPUB book's map comes from Samuel's G0 manifest."""
+
+    def test_the_book_type_chooses(self):
+        with mock.patch("ingest.route", lambda b: {"route": "epub"}):
+            self.assertEqual(BL.method_for("x"), "manifest")
+        with mock.patch("ingest.route", lambda b: {"route": "pages"}):
+            self.assertEqual(BL.method_for("x"), "scout")
+
+    @unittest.skipUnless((EX / "manifest" / "g10-math-american.json").exists(), "needs the Grade 10 manifest")
+    def test_grade_10_from_its_manifest(self):
+        c = BL.from_manifest("g10-math")
+        self.assertEqual((c["page_offset"], len(c["lessons"]), c["disagreements"]), (11, 65, []))
+        first = c["lessons"][0]
+        self.assertEqual((first["slug"], first["syllabus_ref"], first["pages"]), ("g10m1s3-1", "Section 1.2 + 1.3", [6, 12]))
+        self.assertTrue(any("opener" in x["reason"] for x in c["excluded_pages"]))
+        self.assertEqual(c["upstream_g0"]["by"], "Samuel")

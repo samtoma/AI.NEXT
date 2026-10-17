@@ -1,9 +1,22 @@
-"""S0 for page-image books: the lesson map (book-records/<book>/lessons.json), proposed from the contents pages.
+"""S0, the lesson map (book-records/<book>/lessons.json): two methods, chosen by the book's type.
 
     uv run --with pymupdf book_record_lessons.py run     prep3-math-en [--contents 1-8] [--probes 5] [--cap 2]
+    uv run book_record_lessons.py run     g10-math                     # an EPUB book: from Samuel's G0 manifest
+    uv run book_record_lessons.py run     <book> --method scout|manifest   # override the choice
     uv run --with pymupdf book_record_lessons.py args    prep3-math-en …          # the embedded copy, for Claude Code
     uv run book_record_lessons.py accept  prep3-math-en runs/<book>/lesson-map/<saved return>.json
     uv run book_record_lessons.py approve prep3-math-en --by TD [--force]           # G0: the person's decision
+
+THE METHOD (Tamer, 2026-10-17: both available, chosen by the book's type; `--method` overrides):
+  manifest  a book whose config names an EPUB (ingest.route says "epub"): Samuel's own S0. build_manifest.py reads the
+            EPUB's sections into the manifest and applies his G0 decisions (the book config's `lesson_unit`: splits,
+            merges, promotions); it is deterministic and calls no model. This turns that manifest into the lesson map:
+            one entry per manifest lesson (same id), a chapter per unit, the pages a chapter excludes with their reason
+            (its opener; its summary and end-of-chapter exercises, which are S1 evidence), each lesson's mid-page start
+            (so a boundary page two lessons share is not an error), and the offset of the book's PDF (`page_offsets`)
+            for the page images the review tool shows. A manifest Samuel passed at G0 says so in the proposal.
+  scout     every other book (page images): below.
+Either way the result is a proposal, and `approve` is the person's gate.
 
 Decided by Tamer, 2026-10-16: S0 is a scout that proposes and a person approves; nothing downstream reads a proposal.
 The workflow (runbook/lesson-map.workflow.js) reads the first PDF pages twice, blind, for the printed units, lessons
@@ -34,6 +47,55 @@ sys.path.insert(0, str(HERE))
 import book_config  # noqa: E402
 
 FORMAT = "ainext.lesson-map/1"
+
+
+def method_for(book: str) -> str:
+    """The book's type picks the method: an EPUB has its own structure (Samuel's manifest); a page-image book has only
+    its printed contents (the scout)."""
+    import ingest  # noqa: PLC0415
+    return "manifest" if ingest.route(book).get("route") == "epub" else "scout"
+
+
+def from_manifest(book: str) -> dict:
+    """Samuel's G0 manifest as the lesson map's proposal (no model)."""
+    b = book_config.load_book(book)
+    if not b.manifest:
+        raise SystemExit(f"{book}: the config names no manifest: run Samuel's S0 first (source_adapter.py, then build_manifest.py)")
+    mpath = book_config.REPO_ROOT / b.manifest
+    if not mpath.exists():
+        raise SystemExit(f"{mpath} not found: run Samuel's S0 first (source_adapter.py {book}, then build_manifest.py {book}; "
+                         "they need the book's EPUB in docs/Source/)")
+    m = json.loads(mpath.read_text())
+    offs = [o.get("pdf_minus_printed") for o in (json.loads(b.path.read_text()).get("page_offsets") or []) if isinstance(o.get("pdf_minus_printed"), int)]
+    lessons, excluded, dis = [], [], []
+    for mod in m.get("modules") or []:
+        module = f"Chapter {mod.get('chapter')} {mod.get('title')}".strip()
+        for x in mod.get("excluded_pages") or []:
+            if x.get("reason"):
+                excluded.append({"pages": x["pages"], "reason": x["reason"]})
+        for key, why in (("chapter_summary", "the chapter summary: S1 evidence, not a lesson"),
+                         ("end_of_chapter_exercise", "the end-of-chapter exercise: S1's mappers place its items")):
+            v = mod.get(key)
+            if isinstance(v, dict) and v.get("printed_pages"):
+                excluded.append({"pages": v["printed_pages"], "reason": why})
+        for l in sorted(mod.get("lessons") or [], key=lambda x: x.get("order_in_module") or 0):
+            bp = l.get("book_provenance") or {}
+            secs = [s["number"] for s in bp.get("sections") or []] or [l.get("section")]
+            part = bp.get("part")
+            ref = "Section " + " + ".join(str(s) for s in secs if s) + (f", part {part['n']} of {part['of']}" if part else "")
+            if not l.get("printed_pages"):
+                dis.append({"where": f"{l['id']} pages", "A": None, "B": None, "why": "the manifest gives no printed pages"})
+            lessons.append({"slug": l["id"], "syllabus_ref": ref, "title": l.get("part_title") or l.get("title"), "kind": "lesson",
+                            "module": module, "pages": l.get("printed_pages"),
+                            **({"starts_mid_page": True} if l.get("starts_mid_page") else {}),
+                            **({"chapter_intro": True} if bp.get("chapter_intro") else {})})
+    if len(set(offs)) != 1:
+        dis.append({"where": "page_offset", "A": offs or None, "B": None,
+                    "why": "the book config gives no single PDF offset (`page_offsets`): give it by hand"})
+    gate = (m.get("lesson_unit") or {}).get("gate") if isinstance(m.get("lesson_unit"), dict) else None
+    return {"page_offset": offs[0] if len(set(offs)) == 1 else None, "lessons": lessons, "excluded_pages": excluded,
+            "disagreements": dis, "method": "manifest", "source": str(mpath.relative_to(book_config.REPO_ROOT)),
+            "upstream_g0": gate or (m.get("status") if "G0 passed" in str(m.get("status")) else None)}
 
 
 def mapdir(book: str) -> Path:
@@ -183,20 +245,13 @@ def opener_candidates(res: dict) -> list[dict]:
     return out
 
 
-def accept(book: str, run_file: Path, openers_file: Path | None = None) -> dict:
-    res = json.loads(run_file.read_text())
-    if res.get("stage") != "S0-lesson-map" or res.get("mode") == "openers":
-        raise SystemExit(f"{run_file} is not a lesson-map contents return")
-    op = json.loads(openers_file.read_text())["openers"] if openers_file else []
-    c = compare(res, int(res.get("first_unit") or 1), {o["unit"]: o["printed"] for o in op if o.get("opener")})
+def write_proposal(book: str, c: dict, made_by: str, extra: dict) -> dict:
     prop = {"format": FORMAT, "book": book, "status": "proposed",
-            "note": "Proposed by S0 (book_record_lessons.py) from two blind readings of the contents pages. "
-                    "PDF page = printed page + page_offset. Settle each disagreement, delete it, then approve.",
-            "page_offset": c["page_offset"], "coverage": c["coverage"], "lessons": c["lessons"], "disagreements": c["disagreements"],
-            "contents_pages": c["contents_pages"], "reader_notes": c["reader_notes"],
-            "made": date.today().isoformat(), "made_by": f"book_record_lessons.py accept ({res.get('prompts_version')})",
-            "source_run": str(run_file.relative_to(HERE)) if run_file.is_relative_to(HERE) else str(run_file),
-            "unit_openers": [{"unit": o["unit"], "printed": o["printed"], "opener": o.get("opener")} for o in op]}
+            "note": "Proposed by S0 (book_record_lessons.py). PDF page = printed page + page_offset. "
+                    "Settle each disagreement, delete it, then approve.",
+            "page_offset": c["page_offset"], "lessons": c["lessons"], "disagreements": c["disagreements"],
+            **{k: v for k, v in c.items() if k in ("coverage", "contents_pages", "reader_notes", "excluded_pages", "method", "source", "upstream_g0")},
+            "made": date.today().isoformat(), "made_by": made_by, **extra}
     prop["differs_from_approved"] = against_existing(book, prop)
     out = mapdir(book) / "lessons.proposed.json"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -204,12 +259,23 @@ def accept(book: str, run_file: Path, openers_file: Path | None = None) -> dict:
     return prop
 
 
+def accept(book: str, run_file: Path, openers_file: Path | None = None) -> dict:
+    res = json.loads(run_file.read_text())
+    if res.get("stage") != "S0-lesson-map" or res.get("mode") == "openers":
+        raise SystemExit(f"{run_file} is not a lesson-map contents return")
+    op = json.loads(openers_file.read_text())["openers"] if openers_file else []
+    c = compare(res, int(res.get("first_unit") or 1), {o["unit"]: o["printed"] for o in op if o.get("opener")})
+    return write_proposal(book, {**c, "method": "scout"}, f"book_record_lessons.py accept ({res.get('prompts_version')})", {
+        "source_run": str(run_file.relative_to(HERE)) if run_file.is_relative_to(HERE) else str(run_file),
+        "unit_openers": [{"unit": o["unit"], "printed": o["printed"], "opener": o.get("opener")} for o in op]})
+
+
 def approve(book: str, by: str, force: bool) -> dict:
     pf, af = mapdir(book) / "lessons.proposed.json", mapdir(book) / "lessons.json"
     prop = json.loads(pf.read_text())
     if prop.get("disagreements"):
         raise SystemExit(f"{len(prop['disagreements'])} disagreement(s) left in {pf.name}: settle each and delete it first")
-    keep = lambda l: {k: l[k] for k in ("slug", "syllabus_ref", "title", "module", "pages", "kind", "term") if k in l}
+    keep = lambda l: {k: l[k] for k in ("slug", "syllabus_ref", "title", "module", "pages", "kind", "term", "starts_mid_page", "chapter_intro") if k in l}
     stamp = date.today().isoformat()
     if af.exists():
         old = json.loads(af.read_text())
@@ -225,7 +291,9 @@ def approve(book: str, by: str, force: bool) -> dict:
     else:
         added = [keep(l) for l in prop["lessons"]]
         doc = {"format": FORMAT, "book": book, "note": prop["note"].split(" Settle")[0], "page_offset": prop["page_offset"],
-               "lessons": added, "approved_by": by, "approved_at": stamp,
+               "lessons": added, **({"excluded_pages": prop["excluded_pages"]} if prop.get("excluded_pages") else {}),
+               **({"method": prop["method"], "source": prop.get("source")} if prop.get("method") else {}),
+               "approved_by": by, "approved_at": stamp,
                "history": [f"{stamp}: approved from S0's proposal by {by}"]}
     af.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     return {"added": [l["slug"] for l in added], "lessons": len(doc["lessons"])}
@@ -242,6 +310,7 @@ def main(argv: list[str]) -> int:
         s.add_argument("--first-unit", type=int, default=1, help="the position of these contents' first unit (a second part continues the count)")
         s.add_argument("--model", default="sonnet")
         s.add_argument("--cap", type=float, default=2.0)
+        s.add_argument("--method", choices=("scout", "manifest"), help="default: chosen by the book's type")
     c = sub.add_parser("accept")
     c.add_argument("book")
     c.add_argument("run_file", type=Path)
@@ -256,6 +325,13 @@ def main(argv: list[str]) -> int:
     elif a.cmd == "approve":
         print(json.dumps(approve(a.book, a.by, a.force), indent=1))
         return 0
+    elif (a.method or method_for(a.book)) == "manifest":
+        if a.cmd == "args":
+            raise SystemExit("the manifest method calls no model: there is no workflow copy to make; use run")
+        c = from_manifest(a.book)
+        prop = write_proposal(a.book, c, "book_record_lessons.py run (method: manifest)", {})
+        print(f"method: manifest ({c['source']}){'; G0 passed upstream: ' + str(c['upstream_g0'].get('by') if isinstance(c['upstream_g0'], dict) else c['upstream_g0']) if c['upstream_g0'] else ''}",
+              file=sys.stderr)
     else:
         import embed_workflow as EW  # noqa: PLC0415
         import workflow_runner as WR  # noqa: PLC0415
