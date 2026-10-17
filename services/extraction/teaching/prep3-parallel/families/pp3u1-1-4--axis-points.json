@@ -1,0 +1,37 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-4:axis-points",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-4",
+ "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+ "source_page": 12,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X=\\{x\\in\\mathbb{Z} : -{=p}\\le x\\le {=q}\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+ "answer": "2 * (p + q) + 1",
+ "solution": [
+  "X has {=p + q + 1} elements: the integers from -{=p} to {=q}, including 0.",
+  "Points on the x-axis have y = 0 and any x in X: {=p + q + 1} points. Points on the y-axis have x = 0 and any y in X: {=p + q + 1} points.",
+  "The point (0, 0) is counted twice, so the total is {=p + q + 1} + {=p + q + 1} - 1 = {=2 * (p + q) + 1}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "X is explicitly integers so the count is finite. Answer 2(p+q)+1."
+}

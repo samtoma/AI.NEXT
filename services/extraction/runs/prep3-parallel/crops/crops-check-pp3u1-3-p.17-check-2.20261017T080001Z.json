@@ -1,0 +1,67 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "b638d76e93dd2dafaa203e1daeb6914ebb8715a1382eefec22a70bbd756d1e6c",
+  "generated_sha256": "01e198079fe5da5a61d6ac3bf283f14c375d79fa8073cc819eab6923cf40534c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u1-3:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Stray letter 'a' from adjacent text at top-left."
+   },
+   {
+    "id": "pp3u1-3:figure-5",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": ""
+   },
+   {
+    "id": "pp3u1-3:figure-6",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Text fragment visible at bottom-left edge."
+   },
+   {
+    "id": "pp3u1-3:figure-7",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Sliver of a different figure at the top edge."
+   },
+   {
+    "id": "pp3u1-3:figure-8",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Bottom of another figure's blue box at the top."
+   }
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u1-4",
+  "source": "book-records/prep3-parallel/pp3u1-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 1,
+      "cost_usd": 0.024,
+      "calls": [
+        {
+          "call": "check-printed.pp3u1-4",
+          "cost_usd": 0.0164,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u1-4",
+          "cost_usd": 0.0076,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u1-4:example-1",
+      "record_id": "pp3u1-4:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 20,
+      "printed": "$f(-2)=9$, $f(0)=3$, $f(\\sqrt{3})=6-\\sqrt{3}$",
+      "blind": "f(-2) = 9, f(0) = 3, f(√3) = 6 - √3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "ed25dd5fc4add52292abb0f5aa6b03e2",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u1-4:example-1",
+        "verdict": "equivalent",
+        "reason": "Same values: f(-2)=9, f(0)=3, f(√3)=6-√3."
+      },
+      "how": "judged equivalent: Same values: f(-2)=9, f(0)=3, f(√3)=6-√3.",
+      "made": {
+        "at": "2026-10-17T07:42:55+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

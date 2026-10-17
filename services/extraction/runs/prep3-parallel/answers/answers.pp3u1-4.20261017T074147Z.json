@@ -1,0 +1,447 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "64185f03c61b4fdd0086c3264dc2b27709e283f5d7c07436977113967d27d393",
+  "generated_sha256": "e5762531b7e5fae65ee5849ee7f4a14dd9fb121ff8a60968f66d0c9e5be2456f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-4:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-4:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "All three rules are polynomial functions: f_1 is constant, f_2 is of degree 1 and f_3 is of degree 2.",
+      "solution": [
+       "f_1(x)=5 has no variable, so it is a constant function.",
+       "f_2(x)=3x-8: the highest power of x is 1, so it is a linear function (degree 1).",
+       "f_3(x)=4x^2-5x+8: the highest power of x is 2, so it is a quadratic function (degree 2).",
+       "The degree is the highest power of the variable in the rule."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1",
+       "pp3u1-4:rule-1",
+       "pp3u1-4:definition-2",
+       "pp3u1-4:definition-3",
+       "pp3u1-4:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Each function is written f: R → R, so its domain and codomain are both the set of real numbers R.",
+      "solution": [
+       "Each function is given as $f:\\mathbb{R}\\to\\mathbb{R}$.",
+       "The first R is the domain and the second R is the codomain.",
+       "So both are the set of real numbers R."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "The rule of each function is a single term or an algebraic expression in x.",
+      "solution": [
+       "$f_1(x)=5$ is a single term.",
+       "$f_2(x)=3x-8$ is an algebraic expression of two terms.",
+       "$f_3(x)=4x^2-5x+8$ is an algebraic expression of three terms.",
+       "So the image of x is a term or an algebraic expression."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-3:A",
+      "kind": "value",
+      "answer": "-7",
+      "solution": [
+       "$f(\\sqrt{2})=(\\sqrt{2})^2-3\\sqrt{2}=2-3\\sqrt{2}$",
+       "$g(\\sqrt{2})=\\sqrt{2}-3$",
+       "$3g(\\sqrt{2})=3\\sqrt{2}-9$",
+       "$f(\\sqrt{2})+3g(\\sqrt{2})=2-3\\sqrt{2}+3\\sqrt{2}-9$",
+       "The sum is $-7$."
+      ],
+      "grounded_in": [
+       "pp3u1-4:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-3:B",
+      "kind": "value",
+      "answer": "f(3) = 0 and g(3) = 0, so f(3) = g(3) = 0",
+      "solution": [
+       "$f(3)=3^2-3(3)=9-9=0$",
+       "$g(3)=3-3=0$",
+       "Both equal 0, so $f(3)=g(3)=0$."
+      ],
+      "grounded_in": [
+       "pp3u1-4:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-4:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "The three functions $f_1(x)=5$, $f_2(x)=3x-8$ and $f_3(x)=4x^2-5x+8$ all have domain and codomain R, and each rule is a term or an algebraic expression in x with whole-number powers. They are polynomial functions of degree 0 (constant), 1 (linear) and 2 (quadratic)."
+     },
+     {
+      "ref": "pp3u1-4:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The domain and the codomain of each of these functions is the set of real numbers R."
+     },
+     {
+      "ref": "pp3u1-4:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "The rule of each function (the image of x) is a single term or an algebraic expression in x: 5, $3x-8$ and $4x^2-5x+8$."
+     },
+     {
+      "ref": "pp3u1-4:drill-3:A",
+      "kind": "value",
+      "answer": "-7"
+     },
+     {
+      "ref": "pp3u1-4:drill-3:B",
+      "kind": "explanation",
+      "answer": "$f(3)=3^2-3(3)=9-9=0$ and $g(3)=3-3=0$, so $f(3)=g(3)=0$."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u1-4:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-4:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "The power of x is 0 in f_1(x)=5, 1 in f_2(x)=3x-8, and 2 in f_3(x)=4x^2-5x+8.",
+      "solution": [
+       "In $f_1(x)=5$ there is no x term, so the power of x is 0.",
+       "In $f_2(x)=3x-8$ the highest power of x is 1.",
+       "In $f_3(x)=4x^2-5x+8$ the highest power of x is 2.",
+       "The powers are 0, 1 and 2 (whole numbers), so these functions are polynomials."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1",
+       "pp3u1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-1:A",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "$f_1(x)=x^3+x^2+3$ has powers of x equal to 3, 2 and 0.",
+       "These are whole-number powers and the coefficients are real numbers.",
+       "So it is a polynomial (of degree 3)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1",
+       "pp3u1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-1:B",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+       "$F_2(x)=x^3+\\frac{1}{x}+7$ contains $\\frac{1}{x}=x^{-1}$.",
+       "The power of x is -1, which is not a whole number.",
+       "So it is not a polynomial."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-1:C",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+       "$f_3(x)=x^2+\\sqrt{x}+8$ contains $\\sqrt{x}=x^{\\frac{1}{2}}$.",
+       "The power of x is $\\frac{1}{2}$, which is not a whole number.",
+       "So it is not a polynomial."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-1:D",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "Expand: $F_4(x)=x\\left(x+\\frac{1}{x}-2\\right)=x^2+1-2x$.",
+       "The x terms cancel in $x\\cdot\\frac{1}{x}=1$, so no negative power remains.",
+       "$F_4(x)=x^2-2x+1$ has whole-number powers 2, 1, 0.",
+       "So it is a polynomial (of degree 2)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-1",
+       "pp3u1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-2:A",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "$f(x)=3-2x$.",
+       "The highest power of x is 1.",
+       "The degree is 1."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-1",
+       "pp3u1-4:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-2:B",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+       "Remove the brackets: $f(x)=x^2-x^2+3$.",
+       "Simplify: $f(x)=3$.",
+       "This has no x term, so the degree is 0."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-1",
+       "pp3u1-4:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-2:C",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+       "Expand: $f(x)=x(x-2x^2)=x^2-2x^3$.",
+       "The highest power of x is 3.",
+       "The degree is 3."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-2:D",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "$f(x)=x^2(x-3)^2$.",
+       "$(x-3)^2$ has highest term $x^2$.",
+       "Multiply by $x^2$: the highest term is $x^2\\cdot x^2=x^4$.",
+       "The degree is 4."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-4:1",
+      "kind": "drawing",
+      "answer": "A straight line through (-1, 1), (0, 2) and (1, 3).",
+      "solution": [
+       "$f(x)=x+2$ is a linear function, so its graph is a straight line.",
+       "$f(-1)=1$, $f(0)=2$, $f(1)=3$.",
+       "Table: x = -1, 0, 1 and y = 1, 2, 3.",
+       "Plot (-1, 1), (0, 2), (1, 3) on the square net.",
+       "Draw a straight line through the points, with arrows at both ends.",
+       "The line crosses the y-axis at (0, 2)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-2",
+       "pp3u1-4:rule-2",
+       "pp3u1-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-4:2",
+      "kind": "drawing",
+      "answer": "A straight line through the origin, passing through (-1, -3), (0, 0) and (1, 3).",
+      "solution": [
+       "$g(x)=3x$ has the form $ax$, so its graph is a straight line through the origin.",
+       "$g(-1)=-3$, $g(0)=0$, $g(1)=3$.",
+       "Table: x = -1, 0, 1 and y = -3, 0, 3.",
+       "Plot (-1, -3), (0, 0), (1, 3).",
+       "Draw a straight line through the points, with arrows at both ends."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-3",
+       "pp3u1-4:rule-2",
+       "pp3u1-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-4:3",
+      "kind": "drawing",
+      "answer": "A straight line through the origin, passing through (-1, 2), (0, 0) and (1, -2).",
+      "solution": [
+       "$\\ell(x)=-2x$ has the form $ax$, so its graph is a straight line through the origin.",
+       "$\\ell(-1)=2$, $\\ell(0)=0$, $\\ell(1)=-2$.",
+       "Table: x = -1, 0, 1 and y = 2, 0, -2.",
+       "Plot (-1, 2), (0, 0), (1, -2).",
+       "Draw a straight line through the points, with arrows at both ends."
+      ],
+      "grounded_in": [
+       "pp3u1-4:rule-3",
+       "pp3u1-4:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-5:1",
+      "kind": "drawing",
+      "answer": "A horizontal straight line through y = 5, parallel to the x-axis.",
+      "solution": [
+       "$f(x)=5$ is a constant function, so y = 5 for every x.",
+       "Table: x = -1, 1, 2 and y = 5, 5, 5.",
+       "Plot (-1, 5), (1, 5), (2, 5).",
+       "Draw a straight line through them, parallel to the x-axis, crossing the y-axis at (0, 5)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-5:2",
+      "kind": "drawing",
+      "answer": "A horizontal straight line through y = -4, parallel to the x-axis.",
+      "solution": [
+       "$f(x)=-4$ is a constant function, so y = -4 for every x.",
+       "Table: x = -1, 1, 2 and y = -4, -4, -4.",
+       "Plot (-1, -4), (1, -4), (2, -4).",
+       "Draw a straight line through them, parallel to the x-axis, crossing the y-axis at (0, -4)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-5:3",
+      "kind": "drawing",
+      "answer": "A horizontal straight line along y = 0, which is the x-axis itself.",
+      "solution": [
+       "$f(x)=0$ is a constant function, so y = 0 for every x.",
+       "Table: x = -1, 1, 2 and y = 0, 0, 0.",
+       "Plot (-1, 0), (1, 0), (2, 0).",
+       "Draw a straight line through them, parallel to the x-axis. It lies on the x-axis."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-4:drill-5:4",
+      "kind": "drawing",
+      "answer": "A horizontal straight line through y = 2 1/2 (5/2), parallel to the x-axis.",
+      "solution": [
+       "$f(x)=2\\frac{1}{2}$ is a constant function, so y = 2.5 for every x.",
+       "Table: x = -1, 1, 2 and y = 2.5, 2.5, 2.5.",
+       "Plot (-1, 2.5), (1, 2.5), (2, 2.5), halfway between 2 and 3 on the y-axis.",
+       "Draw a straight line through them, parallel to the x-axis, crossing the y-axis at (0, 2.5)."
+      ],
+      "grounded_in": [
+       "pp3u1-4:definition-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-4:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "In $f_1(x)=5$ the power of x is 0 (since $5=5x^0$); in $f_2(x)=3x-8$ the highest power is 1; in $f_3(x)=4x^2-5x+8$ the highest power is 2. All powers are non-negative whole numbers."
+     },
+     {
+      "ref": "pp3u1-4:drill-1:A",
+      "kind": "explanation",
+      "answer": "Yes, it is a polynomial (degree 3)."
+     },
+     {
+      "ref": "pp3u1-4:drill-1:B",
+      "kind": "explanation",
+      "answer": "No, not a polynomial, because $\\frac{1}{x}=x^{-1}$ has a negative power."
+     },
+     {
+      "ref": "pp3u1-4:drill-1:C",
+      "kind": "explanation",
+      "answer": "No, not a polynomial, because $\\sqrt{x}=x^{1/2}$ has a fractional power."
+     },
+     {
+      "ref": "pp3u1-4:drill-1:D",
+      "kind": "explanation",
+      "answer": "No, not a polynomial, because $x(x+\\frac{1}{x}-2)=x^2+1-2x$ is only equal to a polynomial for $x\\neq 0$; as written the rule contains $\\frac{1}{x}$, so it is not a polynomial function on R."
+     },
+     {
+      "ref": "pp3u1-4:drill-2:A",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "pp3u1-4:drill-2:B",
+      "kind": "value",
+      "answer": "0"
+     },
+     {
+      "ref": "pp3u1-4:drill-2:C",
+      "kind": "value",
+      "answer": "3"
+     },
+     {
+      "ref": "pp3u1-4:drill-2:D",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u1-4:drill-4:1",
+      "kind": "drawing",
+      "answer": "Straight line through (0, 2), (1, 3), (-1, 1) (and (-2, 0))."
+     },
+     {
+      "ref": "pp3u1-4:drill-4:2",
+      "kind": "drawing",
+      "answer": "Straight line through the origin, passing through (0, 0), (1, 3), (-1, -3)."
+     },
+     {
+      "ref": "pp3u1-4:drill-4:3",
+      "kind": "drawing",
+      "answer": "Straight line through the origin, passing through (0, 0), (1, -2), (-1, 2)."
+     },
+     {
+      "ref": "pp3u1-4:drill-5:1",
+      "kind": "drawing",
+      "answer": "Horizontal line y = 5, parallel to the x-axis, through (-1, 5), (1, 5), (2, 5)."
+     },
+     {
+      "ref": "pp3u1-4:drill-5:2",
+      "kind": "drawing",
+      "answer": "Horizontal line y = -4, parallel to the x-axis, through (-1, -4), (1, -4), (2, -4)."
+     },
+     {
+      "ref": "pp3u1-4:drill-5:3",
+      "kind": "drawing",
+      "answer": "The x-axis itself (line y = 0), through (-1, 0), (1, 0), (2, 0)."
+     },
+     {
+      "ref": "pp3u1-4:drill-5:4",
+      "kind": "drawing",
+      "answer": "Horizontal line y = 5/2 (2.5), parallel to the x-axis, through (-1, 5/2), (1, 5/2), (2, 5/2)."
+     }
+    ]
+   }
+  }
+ ]
+}

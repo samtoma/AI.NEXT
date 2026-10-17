@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-2:poly-int",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-2",
+ "parent_question_id": "q:pp3u1-4-2:bk-example-1",
+ "source_page": 20,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    -3,
+    3
+   ],
+   "resample_while": "t == 0"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $f(x)={=a}x^2-{=b}x+{=c}$, find $f({=t})$.",
+ "answer": "a * t**2 - b * t + c",
+ "solution": [
+  "Substitute $x={=t}$: $f({=t})={=a}({=t})^2-{=b}({=t})+{=c}$.",
+  "Evaluate: $({=t})^2={=t**2}$, so $f({=t})={=a*t**2}-({=b*t})+{=c}$.",
+  "$f({=t})={=a*t**2-b*t+c}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Integer substitution into a quadratic, incl. negative inputs (square of a negative). Answer integer."
+}

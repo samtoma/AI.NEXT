@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:yicept",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "lo:pp3u1-4-3",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "let": "-n"
+  }
+ ],
+ "stem": "The straight line is the graph of $f(x) = {=a}x - {=n}$. At which point does it cross the $y$-axis?",
+ "answer": "",
+ "choices": {
+  "correct": "$(0, {=m})$",
+  "distractors": [
+   {
+    "text": "$(0, 0)$",
+    "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
+   },
+   {
+    "text": "$(0, {=n})$",
+    "misconception_id": null
+   },
+   {
+    "text": "$({=n}, 0)$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "solution": [
+  "On the $y$-axis, $x = 0$.",
+  "$f(0) = {=a} \\times 0 - {=n} = {=m}$.",
+  "The line crosses the $y$-axis at $(0, {=m})$, not at the origin."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Stem differs per instance via a and n. Placeholder parent id as no book questions supplied."
+}

@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:xicept",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "lo:pp3u1-4-3",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "x0",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "let": "a*x0"
+  },
+  {
+   "name": "y1",
+   "let": "-n"
+  }
+ ],
+ "stem": "Draw the graph of $f(x) = {=a}x - {=n}$ by finding ordered pairs. At which point does the line cross the $x$-axis? Write it as $(x, y)$.",
+ "answer": "",
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, 0)",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "Find ordered pairs: $f(0) = {=y1}$, so $(0, {=y1})$ is on the line; $f({=x0}) = {=a} \\times {=x0} - {=n} = 0$, so $({=x0}, 0)$ is on the line.",
+  "On the $x$-axis $y = 0$, so ${=a}x - {=n} = 0$, giving $x = {=x0}$.",
+  "The line crosses the $x$-axis at $({=x0}, 0)$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Placeholder parent id as no book questions supplied. Constant functions not covered; only sloped lines."
+}

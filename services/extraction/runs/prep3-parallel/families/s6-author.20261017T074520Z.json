@@ -1,0 +1,1307 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "d9a789e99b8c75785344ad224f7a7221fa8c1187c142b23c3e8b3f4e7a3d5476",
+  "generated_sha256": "39fe415af620c8eb332249efea4e9b786df4877c30144a8322991e862c0329a7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u1-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-1:both-sides",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-1",
+     "parent_question_id": "q:pp3u1-1-1:bk-drill-1-c",
+     "source_page": 7,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "n",
+       "let": "m + (p - 1) * a"
+      },
+      {
+       "name": "r",
+       "let": "(q - 1) * b + t"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find $a$ and $b$ if: $({=p}a+{=m},\\ b+{=r})=(a+{=n},\\ {=q}b+{=t})$",
+     "answer": "a = {=a}, b = {=b}",
+     "solution": [
+      "Equal ordered pairs have equal first projections and equal second projections.",
+      "Equate the first projections: ${=p}a+{=m}=a+{=n}$.",
+      "So ${=p-1}a={=n-m}$, so $a={=a}$.",
+      "Equate the second projections: $b+{=r}={=q}b+{=t}$.",
+      "So ${=r-t}={=q-1}b$, so $b={=b}$.",
+      "So a = {=a}, b = {=b}."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "a = {=a}, b = {=b}",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: unknowns on both sides of each component equation. Constants kept positive so templates print cleanly. Second-pair equation: b+r=qb+t with r=(q-1)b+t gives b exactly."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-2:sizes-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-2",
+     "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+     "source_page": 9,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "X",
+       "sample": {
+        "from": "range(-4, 10)",
+        "k": "m"
+       }
+      },
+      {
+       "name": "Y",
+       "sample": {
+        "from": "range(-4, 10)",
+        "k": "k"
+       }
+      }
+     ],
+     "constraints": [],
+     "stem": "If $X={=setof(sorted(X))}$ and $Y={=setof(sorted(Y))}$, find $n(X^2)+n(X\\times Y)$.",
+     "answer": "m * m + m * k",
+     "solution": [
+      "n(X) = {=m} and n(Y) = {=k}.",
+      "n(X²) = n(X) × n(X) = {=m} × {=m} = {=m*m}.",
+      "n(X×Y) = n(X) × n(Y) = {=m} × {=k} = {=m*k}.",
+      "n(X²) + n(X×Y) = {=m*m} + {=m*k} = {=m*m+m*k}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Relies on setof rendering a braced set; sample k given as expression 'm'. Sizes 2-5."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-2:find-size",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-2",
+     "parent_question_id": "q:pp3u1-1-2:bk-drill-2-f",
+     "source_page": 9,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "randint": [
+        3,
+        7
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "sq",
+       "let": "s * s"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $n(X^2)={=sq}$ and $n(Y)={=k}$, find $n(X\\times Y)$.",
+     "answer": "s * k",
+     "solution": [
+      "n(X²) = n(X) × n(X) = {=sq}.",
+      "Since {=s} × {=s} = {=sq}, n(X) = {=s}.",
+      "n(X×Y) = n(X) × n(Y) = {=s} × {=k}.",
+      "n(X×Y) = {=s*k}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Reverse use of n(X²)=n(X)×n(X); sq is a perfect square so n(X) is a unique positive whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions. Every family needs a parent_question_id that is a book question of this objective, and none exists. With no book solutions as a model, I would be guessing the book's arrow-diagram and cartesian-diagram conventions."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there are no book questions to use as parent or model for the book's method and notation."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there are no book questions to use as parent or model, so I can't tell which twists the book uses at its harder level."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-4:quadrant-of-point",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-4",
+     "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+     "source_page": 12,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "sx",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "sy",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "ax",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "ay",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "x",
+       "let": "sx * ax"
+      },
+      {
+       "name": "y",
+       "let": "sy * ay"
+      },
+      {
+       "name": "names",
+       "let": [
+        "first",
+        "second",
+        "third",
+        "fourth"
+       ]
+      },
+      {
+       "name": "idx",
+       "let": "0 if (sx == 1 and sy == 1) else (1 if (sx == -1 and sy == 1) else (2 if sx == -1 else 3))"
+      }
+     ],
+     "constraints": [],
+     "stem": "The point $({=x}, {=y})$ belongs to $\\mathbb{R}\\times\\mathbb{R}$, drawn on a perpendicular graphical net. The quadrants are numbered anticlockwise starting from the quadrant where both coordinates are positive. In which quadrant does the point lie?",
+     "solution": [
+      "Look at the signs of the coordinates: the x-coordinate is {=x} and the y-coordinate is {=y}.",
+      "The first quadrant has x > 0, y > 0; the second has x < 0, y > 0; the third has x < 0, y < 0; the fourth has x > 0, y < 0.",
+      "So the point $({=x}, {=y})$ lies in the {=names[idx]} quadrant."
+     ],
+     "choices": {
+      "correct": "The {=names[idx]} quadrant",
+      "distractors": [
+       {
+        "text": "The {=names[(idx + 1) % 4]} quadrant",
+        "misconception_id": null
+       },
+       {
+        "text": "The {=names[(idx + 2) % 4]} quadrant",
+        "misconception_id": null
+       },
+       {
+        "text": "The {=names[(idx + 3) % 4]} quadrant",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Both coordinates are nonzero so the point is always inside a quadrant. Quadrant numbering stated in stem."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-4:axis-points",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-4",
+     "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+     "source_page": 12,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $X=\\{x\\in\\mathbb{Z} : -{=p}\\le x\\le {=q}\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+     "answer": "2 * (p + q) + 1",
+     "solution": [
+      "X has {=p + q + 1} elements: the integers from -{=p} to {=q}, including 0.",
+      "Points on the x-axis have y = 0 and any x in X: {=p + q + 1} points. Points on the y-axis have x = 0 and any y in X: {=p + q + 1} points.",
+      "The point (0, 0) is counted twice, so the total is {=p + q + 1} + {=p + q + 1} - 1 = {=2 * (p + q) + 1}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "X is explicitly integers so the count is finite. Answer 2(p+q)+1."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-1:addcon",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-1",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "$X = \\{{=x1}, {=x1+1}, {=x1+2}\\}$ and $Y = \\{{=x1+k}, {=x1+k+1}, {=x1+k+2}, {=x1+k+4}\\}$. The relation $R$ from $X$ to $Y$ is given by $b = a + {=k}$, where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$.",
+     "answer": "",
+     "solution": [
+      "Take each element $a$ of $X$ and find $b = a + {=k}$.",
+      "For $a = {=x1}$: $b = {=x1+k}$, so the pair is $({=x1}, {=x1+k})$.",
+      "For $a = {=x1+1}$: $b = {=x1+1+k}$, so the pair is $({=x1+1}, {=x1+1+k})$.",
+      "For $a = {=x1+2}$: $b = {=x1+2+k}$, so the pair is $({=x1+2}, {=x1+2+k})$.",
+      "All these values of $b$ belong to $Y$, so $R = \\{({=x1}, {=x1+k}), ({=x1+1}, {=x1+1+k}), ({=x1+2}, {=x1+2+k})\\}$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x1}, {=x1+k}), ({=x1+1}, {=x1+1+k}), ({=x1+2}, {=x1+2+k})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book question was supplied for this objective, so parent_question_id is a placeholder. Answer is an unordered set of pairs; marker should accept any order."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-1:linrul",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-1",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "i1",
+       "let": "m*1+c"
+      },
+      {
+       "name": "i2",
+       "let": "m*2+c"
+      },
+      {
+       "name": "i4",
+       "let": "m*4+c"
+      }
+     ],
+     "constraints": [],
+     "stem": "$X = \\{1, 2, 3, 4\\}$ and $Y = \\{{=i1}, {=i2}, {=i4}, {=i4+1}\\}$. The relation $R$ from $X$ to $Y$ is given by $b = {=m}a + {=c}$, where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$.",
+     "answer": "",
+     "solution": [
+      "For each $a \\in X$ find $b = {=m}a + {=c}$: $a=1$ gives ${=i1}$, $a=2$ gives ${=i2}$, $a=3$ gives ${=m*3+c}$, $a=4$ gives ${=i4}$.",
+      "Keep only the pairs whose $b$ is in $Y$. The value ${=m*3+c}$ is not in $Y$, so $a = 3$ gives no pair.",
+      "$R = \\{(1, {=i1}), (2, {=i2}), (4, {=i4})\\}$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "(1, {=i1}), (2, {=i2}), (4, {=i4})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No parent book question supplied; placeholder. The element a=3 has no image in Y, which tests that b must lie in Y."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-1:digits",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-1",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "idx",
+       "choice": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "Xs",
+       "let": "['1, 2, 3', '2, 5, 7', '1, 4, 6', '3, 4, 8']"
+      },
+      {
+       "name": "Ys",
+       "let": "['12, 23, 34, 41', '25, 37, 52, 70', '14, 46, 61, 80', '34, 48, 83, 15']"
+      },
+      {
+       "name": "As",
+       "let": "['(1, 12), (1, 41), (2, 12), (2, 23), (3, 23), (3, 34)', '(2, 25), (2, 52), (5, 25), (5, 52), (7, 37), (7, 70)', '(1, 14), (1, 61), (4, 14), (4, 46), (6, 46), (6, 61)', '(3, 34), (3, 83), (4, 34), (4, 48), (8, 48), (8, 83)']"
+      }
+     ],
+     "constraints": [],
+     "stem": "$X = \\{{=Xs[idx]}\\}$ and $Y = \\{{=Ys[idx]}\\}$. The relation $R$ from $X$ to $Y$ is \"$a$ is a digit of $b$\", where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$, then in order of $b$.",
+     "answer": "",
+     "solution": [
+      "For each $a \\in X$, look at every number $b$ in $Y$ and check whether $a$ is one of its digits.",
+      "Write each pair that works as $(a, b)$. A number in $Y$ may pair with two elements of $X$, and some may pair with none.",
+      "$R = \\{{=As[idx]}\\}$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "{=As[idx]}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No parent book question supplied; placeholder. Only four preset instances, checked by hand. In each, one y-element may have no pair (80, 15)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The task listed no book questions, so parent_question_id is \"none\" and source_page is null on all three families. These need a real parent assigned before the families are accepted. The advanced family has only four preset instances, which I checked by hand. The answers are unordered sets of pairs, so the marker needs to accept any order. The answer field is left empty because the answer is carried by the marker."
+  },
+  {
+   "lo_id": "lo:pp3u1-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-2:arrowend",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-2",
+     "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+     "source_page": 14,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      }
+     ],
+     "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{{=k}, {=2*k}, {=3*k}, {=4*k}\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = {=k} \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from ${=p}$ ends at which element of Y?",
+     "answer": "p * k",
+     "solution": [
+      "Each arrow goes from $a$ in X to $b$ in Y with $b = {=k} \\times a$.",
+      "For $a = {=p}$: $b = {=k} \\times {=p} = {=p*k}$.",
+      "So the arrow from ${=p}$ ends at ${=p*k}$, and the cartesian diagram has the point $({=p}, {=p*k})$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: reading the arrow of a relation. Y always contains the image, so the answer is in Y."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-2:cartpoints",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-2",
+     "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+     "source_page": 14,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        "n"
+       ]
+      },
+      {
+       "name": "pts",
+       "let": "[a for a in range(-n, n + 1) if -n <= k - a <= n]"
+      }
+     ],
+     "stem": "If $X=\\{-{=n}, \\ldots, -1, 0, 1, \\ldots, {=n}\\}$ (all the integers from $-{=n}$ to ${=n}$) and R is a relation on X where $a \\; R \\; b$ means: «$a + b = {=k}$» for each $a, b \\in X$. If R is represented by a cartesian diagram, how many points are marked?",
+     "answer": "len(pts)",
+     "solution": [
+      "Each point $(a, b)$ has $b = {=k} - a$, and both $a$ and $b$ must belong to X, that is between $-{=n}$ and ${=n}$.",
+      "Check every $a$ from $-{=n}$ to ${=n}$: keep those where ${=k} - a$ is also in X. The kept values are $a \\in$ {=pts}.",
+      "The number of ordered pairs is {=len(pts)}, so {=len(pts)} points are marked (and {=len(pts)} arrows in the arrow diagram)."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: the student must discard pairs whose second element falls outside X. The count is 2n+1-k."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-2-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for this objective, so there is no real parent_question_id or source_page and no canonical solution to model the method on."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions were supplied for this objective, so there is no real parent_question_id or source_page and no canonical solution to model the method on."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions were supplied for this objective, so there is no real parent_question_id or source_page and no canonical solution to model the method on."
+    }
+   ],
+   "notes": "The book question list for lo:pp3u1-2-3 was empty. I did not invent parents or page numbers. Re-run with the book questions and their solutions to get the three families."
+  },
+  {
+   "lo_id": "lo:pp3u1-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-3-1:pick-func",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-3-1",
+     "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+     "source_page": 18,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "xs",
+       "sample": {
+        "from": "range(1, 10)",
+        "k": 3
+       }
+      },
+      {
+       "name": "x1",
+       "let": "sorted(xs)[0]"
+      },
+      {
+       "name": "x2",
+       "let": "sorted(xs)[1]"
+      },
+      {
+       "name": "x3",
+       "let": "sorted(xs)[2]"
+      },
+      {
+       "name": "ys",
+       "sample": {
+        "from": "range(2, 16)",
+        "k": 4
+       }
+      },
+      {
+       "name": "y1",
+       "let": "sorted(ys)[0]"
+      },
+      {
+       "name": "y2",
+       "let": "sorted(ys)[1]"
+      },
+      {
+       "name": "y3",
+       "let": "sorted(ys)[2]"
+      },
+      {
+       "name": "y4",
+       "let": "sorted(ys)[3]"
+      },
+      {
+       "name": "f1",
+       "choice": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+       ]
+      },
+      {
+       "require": "f1 in ys",
+       "why": "image must lie in Y"
+      },
+      {
+       "name": "f2",
+       "choice": "ys"
+      },
+      {
+       "name": "f3",
+       "choice": "ys"
+      },
+      {
+       "require": "len(unique([f1, f2, f3])) >= 2",
+       "why": "avoid constant relation"
+      },
+      {
+       "name": "g1",
+       "choice": "ys",
+       "resample_while": "g1 == f1"
+      },
+      {
+       "name": "g2",
+       "choice": "ys",
+       "resample_while": "g2 == f2"
+      },
+      {
+       "name": "g3",
+       "choice": "ys",
+       "resample_while": "g3 == f3"
+      },
+      {
+       "name": "pa",
+       "let": "\"(\" + str(x1) + \", \" + str(f1) + \")\""
+      },
+      {
+       "name": "pb",
+       "let": "\"(\" + str(x2) + \", \" + str(f2) + \")\""
+      },
+      {
+       "name": "pc",
+       "let": "\"(\" + str(x3) + \", \" + str(f3) + \")\""
+      },
+      {
+       "name": "pa2",
+       "let": "\"(\" + str(x1) + \", \" + str(g1) + \")\""
+      },
+      {
+       "name": "pb2",
+       "let": "\"(\" + str(x2) + \", \" + str(g2) + \")\""
+      },
+      {
+       "name": "pc2",
+       "let": "\"(\" + str(x3) + \", \" + str(g3) + \")\""
+      },
+      {
+       "name": "optok",
+       "let": "pa + \", \" + pb + \", \" + pc"
+      },
+      {
+       "name": "optA",
+       "let": "pa + \", \" + pa2 + \", \" + pb + \", \" + pc"
+      },
+      {
+       "name": "optB",
+       "let": "pa + \", \" + pb"
+      },
+      {
+       "name": "optC",
+       "let": "pa + \", \" + pb + \", \" + pb2 + \", \" + pc"
+      }
+     ],
+     "constraints": [],
+     "stem": "$X=\\{ {=x1}, {=x2}, {=x3} \\}$ and $Y=\\{ {=y1}, {=y2}, {=y3}, {=y4} \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+     "solution": [
+      "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of {=x1}, {=x2} and {=x3} must appear as a first element exactly once.",
+      "$\\{ {=optok} \\}$ has {=x1}, {=x2}, {=x3} each once as a first element, so it is a function.",
+      "$\\{ {=optA} \\}$ is not a function: {=x1} has two images, {=f1} and {=g1}.",
+      "$\\{ {=optB} \\}$ is not a function: {=x3} has no image.",
+      "$\\{ {=optC} \\}$ is not a function: {=x2} has two images, {=f2} and {=g2}."
+     ],
+     "choices": {
+      "correct": "$\\{ {=optok} \\}$",
+      "distractors": [
+       {
+        "text": "$\\{ {=optA} \\}$",
+        "misconception_id": "mc:pp3u1-3-1:two-images"
+       },
+       {
+        "text": "$\\{ {=optB} \\}$",
+        "misconception_id": "mc:pp3u1-3-1:no-image"
+       },
+       {
+        "text": "$\\{ {=optC} \\}$",
+        "misconception_id": "mc:pp3u1-3-1:two-images"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u1-3-1:two-images",
+       "label": "Allows an element of X with two images",
+       "description": "Accepts a relation as a function although some element of X has more than one arrow/pair."
+      },
+      {
+       "id": "mc:pp3u1-3-1:no-image",
+       "label": "Allows an element of X with no image",
+       "description": "Accepts a relation as a function even though some element of X is not the first element of any pair."
+      }
+     ],
+     "notes": "Correct option and distractors are built from the same pairs; each distractor breaks exactly the one-image rule. Ys are sampled, f's drawn from ys (f1 choice list is filtered by require, so some attempts are discarded; acceptable). Stem varies via X and Y holes."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-3-1:rule-range",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-3-1",
+     "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+     "source_page": 18,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "xs",
+       "sample": {
+        "from": "range(2, 7)",
+        "k": 3
+       }
+      },
+      {
+       "name": "x1",
+       "let": "sorted(xs)[0]"
+      },
+      {
+       "name": "x2",
+       "let": "sorted(xs)[1]"
+      },
+      {
+       "name": "x3",
+       "let": "sorted(xs)[2]"
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "hi",
+       "let": "m * x3 + 2"
+      },
+      {
+       "name": "r1",
+       "let": "m * x1"
+      },
+      {
+       "name": "r2",
+       "let": "m * x2"
+      },
+      {
+       "name": "r3",
+       "let": "m * x3"
+      },
+      {
+       "name": "top",
+       "let": "hi - 1"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $X=\\{ {=x1}, {=x2}, {=x3} \\}$, $Y=\\{y : y\\in N, 2\\le y<{=hi}\\}$ where $N$ is the set of natural numbers, and $R$ is a relation from $X$ to $Y$ where $a R b$ means: « $a=\\frac{1}{{=m}}b$ » for each of $a\\in X$, $b\\in Y$, write $R$ as a set of ordered pairs, show that $R$ is a function from $X$ to $Y$ and write its range.",
+     "answer": "",
+     "solution": [
+      "$Y$ is the set of natural numbers from 2 to {=top}. From $a=\\frac{1}{{=m}}b$ we get $b={=m}a$.",
+      "$R=\\{({=x1}, {=r1}), ({=x2}, {=r2}), ({=x3}, {=r3})\\}$.",
+      "$R$ is a function because every element of $X$ has only one image, and {=r1}, {=r2}, {=r3} all belong to $Y$.",
+      "The range is the set of images: $\\{ {=r1}, {=r2}, {=r3} \\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=r1}, {=r2}, {=r3}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Mirrors the book example with ordered m in {2,3}; hi = m*max(X)+2 guarantees all images lie in Y and each image >= 4. Answer asked as the elements of the range."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Basic family uses ordered-pair option sets; standard uses the book's rule-based relation with range."
+  },
+  {
+   "lo_id": "lo:pp3u1-3-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The brief lists no book questions for lo:pp3u1-3-2 (the list is empty). Every family needs a parent_question_id and source_page taken from that list, and I have no printed solutions to follow for notation or method. Inventing a parent id or page would break the rule against teaching techniques the book doesn't use. I have not made up a parent. Please supply the book questions and rerun."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason as basic: no book questions are given for this objective, so there is no valid parent_question_id or source_page. There is also no model for how the book writes ordered pairs, arrow diagrams and cartesian diagrams."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason as basic: no book questions are given for this objective, so there is no valid parent_question_id or source_page. I can't judge what the book's harder twist looks like without its exercises."
+    }
+   ],
+   "notes": "No families were written. The brief gave an empty list of book questions and no catalogued misconceptions, and the spec requires each family to name a parent book question from that list. Once the book questions for lesson pp3u1-3 are supplied, the three tiers can be filled. The likely forms are: writing f: X→Y, f(x)=y and the ordered-pair set from a rule (basic); reading an arrow or cartesian diagram into a set of pairs (standard); and deciding whether a relation is a function, or finding the missing value or the range (advanced)."
+  },
+  {
+   "lo_id": "lo:pp3u1-3-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. I also have no canonical solution showing the book's method or notation for domain, codomain and range, and I won't invent one."
+    },
+    {
+     "tier": "standard",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. Without the book's worked solutions I can't say what a typical exercise looks like or match its vocabulary."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. Without the book's harder exercises I can't say which twist the book uses, and I won't invent one."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-1:expand-cancel",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-1",
+     "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+     "source_page": 19,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        "n - 1"
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "tn",
+       "let": "\"x^\" + str(n)"
+      },
+      {
+       "name": "tm",
+       "let": "\"x\" if m == 1 else \"x^\" + str(m)"
+      },
+      {
+       "name": "cb",
+       "let": "\"\" if b == 1 else str(b)"
+      },
+      {
+       "name": "ca",
+       "let": "\"\" if a == 1 else str(a)"
+      },
+      {
+       "name": "s",
+       "let": "n + m"
+      },
+      {
+       "name": "p",
+       "let": "a * b"
+      }
+     ],
+     "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=({=tn}+{=a})({=tm}+{=b})-x^{{=s}}$",
+     "answer": "n",
+     "solution": [
+      "Expand the brackets: $({=tn}+{=a})({=tm}+{=b})=x^{{=s}}+{=cb}{=tn}+{=ca}{=tm}+{=p}$.",
+      "Subtract $x^{{=s}}$: $f(x)=x^{{=s}}+{=cb}{=tn}+{=ca}{=tm}+{=p}-x^{{=s}}={=cb}{=tn}+{=ca}{=tm}+{=p}$.",
+      "The $x^{{=s}}$ terms cancel, so the highest power of x left is {=n}.",
+      "The degree is {=n}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: top term cancels after expansion, so degree is n not n+m (degree-read-before-simplifying). b is never 0 so the x^n term survives. Exponent n+m at most 7, single digit."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-2:poly-int",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-2",
+     "parent_question_id": "q:pp3u1-4-2:bk-example-1",
+     "source_page": 20,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        -3,
+        3
+       ],
+       "resample_while": "t == 0"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $f(x)={=a}x^2-{=b}x+{=c}$, find $f({=t})$.",
+     "answer": "a * t**2 - b * t + c",
+     "solution": [
+      "Substitute $x={=t}$: $f({=t})={=a}({=t})^2-{=b}({=t})+{=c}$.",
+      "Evaluate: $({=t})^2={=t**2}$, so $f({=t})={=a*t**2}-({=b*t})+{=c}$.",
+      "$f({=t})={=a*t**2-b*t+c}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Integer substitution into a quadratic, incl. negative inputs (square of a negative). Answer integer."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-2:surd-combo",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-2",
+     "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+     "source_page": 20,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3,
+        5,
+        6,
+        7
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        1,
+        5
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "If $f(x)=x^2-{=p}x+{=q}$ and $g(x)=x-{=r}$, find $f(\\sqrt{{=n}})+{=p}\\,g(\\sqrt{{=n}})$.",
+     "answer": "n + q - p * r",
+     "solution": [
+      "$f(\\sqrt{{=n}})=(\\sqrt{{=n}})^2-{=p}\\sqrt{{=n}}+{=q}={=n+q}-{=p}\\sqrt{{=n}}$.",
+      "$g(\\sqrt{{=n}})=\\sqrt{{=n}}-{=r}$, so ${=p}\\,g(\\sqrt{{=n}})={=p}\\sqrt{{=n}}-{=p*r}$.",
+      "Add: $f(\\sqrt{{=n}})+{=p}\\,g(\\sqrt{{=n}})={=n+q}-{=p}\\sqrt{{=n}}+{=p}\\sqrt{{=n}}-{=p*r}$.",
+      "The surd terms cancel, so the sum is ${=n+q-p*r}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Mirrors book drill: coefficient of g equals the x coefficient in f so the surds cancel; answer is a whole number (may be negative)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-4-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:ordpair",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "lo:pp3u1-4-3",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "y",
+       "let": "a*k+b"
+      }
+     ],
+     "stem": "To graph the linear function $f(x) = {=a}x + {=b}$ we find ordered pairs. Complete the ordered pair $({=k}, \\;?)$ that lies on the line. Give the missing $y$-value.",
+     "answer": "y",
+     "solution": [
+      "Substitute $x = {=k}$ into $f(x) = {=a}x + {=b}$.",
+      "$f({=k}) = {=a} \\times {=k} + {=b} = {=y}$.",
+      "The ordered pair is $({=k}, {=y})$, so the missing value is {=y}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is the objective id as a placeholder; please set a real parent. Method: table of values/ordered pairs."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:yicept",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "lo:pp3u1-4-3",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "let": "-n"
+      }
+     ],
+     "stem": "The straight line is the graph of $f(x) = {=a}x - {=n}$. At which point does it cross the $y$-axis?",
+     "answer": "",
+     "choices": {
+      "correct": "$(0, {=m})$",
+      "distractors": [
+       {
+        "text": "$(0, 0)$",
+        "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
+       },
+       {
+        "text": "$(0, {=n})$",
+        "misconception_id": null
+       },
+       {
+        "text": "$({=n}, 0)$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "solution": [
+      "On the $y$-axis, $x = 0$.",
+      "$f(0) = {=a} \\times 0 - {=n} = {=m}$.",
+      "The line crosses the $y$-axis at $(0, {=m})$, not at the origin."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Stem differs per instance via a and n. Placeholder parent id as no book questions supplied."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:xicept",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "lo:pp3u1-4-3",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "x0",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "n",
+       "let": "a*x0"
+      },
+      {
+       "name": "y1",
+       "let": "-n"
+      }
+     ],
+     "stem": "Draw the graph of $f(x) = {=a}x - {=n}$ by finding ordered pairs. At which point does the line cross the $x$-axis? Write it as $(x, y)$.",
+     "answer": "",
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x0}, 0)",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Find ordered pairs: $f(0) = {=y1}$, so $(0, {=y1})$ is on the line; $f({=x0}) = {=a} \\times {=x0} - {=n} = 0$, so $({=x0}, 0)$ is on the line.",
+      "On the $x$-axis $y = 0$, so ${=a}x - {=n} = 0$, giving $x = {=x0}$.",
+      "The line crosses the $x$-axis at $({=x0}, 0)$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Placeholder parent id as no book questions supplied. Constant functions not covered; only sloped lines."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list was empty, so parent_question_id is a placeholder (the objective id) and source_page is null. A real parent needs to be set by the reviewer."
+  },
+  {
+   "lo_id": "lo:pp3u1-4-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions and no canonical solutions. Every family needs a parent_question_id and source_page from a book question of this objective, and none exists. Without a model solution I can't tell which graphing method the book uses (table of values, vertex formula, or completing the square), so I would be guessing at the technique."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book question to use as parent, and no book solution to show the method and notation."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book question to use as parent, so I can't tell what counts as a harder exercise in this book."
+    }
+   ],
+   "notes": "No families written. The book-question list for lo:pp3u1-4-4 is empty, and the spec requires each family to name a parent book question from this objective. I did not invent a parent id or source page. Please supply the book questions and solutions for this objective. Families for vertex, axis of symmetry and maximum or minimum value can then be written against the book's method."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,184 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-3-1:pick-func",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-3-1",
+ "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+ "source_page": 18,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "xs",
+   "sample": {
+    "from": "range(1, 10)",
+    "k": 3
+   }
+  },
+  {
+   "name": "x1",
+   "let": "sorted(xs)[0]"
+  },
+  {
+   "name": "x2",
+   "let": "sorted(xs)[1]"
+  },
+  {
+   "name": "x3",
+   "let": "sorted(xs)[2]"
+  },
+  {
+   "name": "ys",
+   "sample": {
+    "from": "range(2, 16)",
+    "k": 4
+   }
+  },
+  {
+   "name": "y1",
+   "let": "sorted(ys)[0]"
+  },
+  {
+   "name": "y2",
+   "let": "sorted(ys)[1]"
+  },
+  {
+   "name": "y3",
+   "let": "sorted(ys)[2]"
+  },
+  {
+   "name": "y4",
+   "let": "sorted(ys)[3]"
+  },
+  {
+   "name": "f1",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  {
+   "require": "f1 in ys",
+   "why": "image must lie in Y"
+  },
+  {
+   "name": "f2",
+   "choice": "ys"
+  },
+  {
+   "name": "f3",
+   "choice": "ys"
+  },
+  {
+   "require": "len(unique([f1, f2, f3])) >= 2",
+   "why": "avoid constant relation"
+  },
+  {
+   "name": "g1",
+   "choice": "ys",
+   "resample_while": "g1 == f1"
+  },
+  {
+   "name": "g2",
+   "choice": "ys",
+   "resample_while": "g2 == f2"
+  },
+  {
+   "name": "g3",
+   "choice": "ys",
+   "resample_while": "g3 == f3"
+  },
+  {
+   "name": "pa",
+   "let": "\"(\" + str(x1) + \", \" + str(f1) + \")\""
+  },
+  {
+   "name": "pb",
+   "let": "\"(\" + str(x2) + \", \" + str(f2) + \")\""
+  },
+  {
+   "name": "pc",
+   "let": "\"(\" + str(x3) + \", \" + str(f3) + \")\""
+  },
+  {
+   "name": "pa2",
+   "let": "\"(\" + str(x1) + \", \" + str(g1) + \")\""
+  },
+  {
+   "name": "pb2",
+   "let": "\"(\" + str(x2) + \", \" + str(g2) + \")\""
+  },
+  {
+   "name": "pc2",
+   "let": "\"(\" + str(x3) + \", \" + str(g3) + \")\""
+  },
+  {
+   "name": "optok",
+   "let": "pa + \", \" + pb + \", \" + pc"
+  },
+  {
+   "name": "optA",
+   "let": "pa + \", \" + pa2 + \", \" + pb + \", \" + pc"
+  },
+  {
+   "name": "optB",
+   "let": "pa + \", \" + pb"
+  },
+  {
+   "name": "optC",
+   "let": "pa + \", \" + pb + \", \" + pb2 + \", \" + pc"
+  }
+ ],
+ "constraints": [],
+ "stem": "$X=\\{ {=x1}, {=x2}, {=x3} \\}$ and $Y=\\{ {=y1}, {=y2}, {=y3}, {=y4} \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+ "solution": [
+  "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of {=x1}, {=x2} and {=x3} must appear as a first element exactly once.",
+  "$\\{ {=optok} \\}$ has {=x1}, {=x2}, {=x3} each once as a first element, so it is a function.",
+  "$\\{ {=optA} \\}$ is not a function: {=x1} has two images, {=f1} and {=g1}.",
+  "$\\{ {=optB} \\}$ is not a function: {=x3} has no image.",
+  "$\\{ {=optC} \\}$ is not a function: {=x2} has two images, {=f2} and {=g2}."
+ ],
+ "choices": {
+  "correct": "$\\{ {=optok} \\}$",
+  "distractors": [
+   {
+    "text": "$\\{ {=optA} \\}$",
+    "misconception_id": "mc:pp3u1-3-1:two-images"
+   },
+   {
+    "text": "$\\{ {=optB} \\}$",
+    "misconception_id": "mc:pp3u1-3-1:no-image"
+   },
+   {
+    "text": "$\\{ {=optC} \\}$",
+    "misconception_id": "mc:pp3u1-3-1:two-images"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:pp3u1-3-1:two-images",
+   "label": "Allows an element of X with two images",
+   "description": "Accepts a relation as a function although some element of X has more than one arrow/pair."
+  },
+  {
+   "id": "mc:pp3u1-3-1:no-image",
+   "label": "Allows an element of X with no image",
+   "description": "Accepts a relation as a function even though some element of X is not the first element of any pair."
+  }
+ ],
+ "notes": "Correct option and distractors are built from the same pairs; each distractor breaks exactly the one-image rule. Ys are sampled, f's drawn from ys (f1 choice list is filtered by require, so some attempts are discarded; acceptable). Stem varies via X and Y holes."
+}

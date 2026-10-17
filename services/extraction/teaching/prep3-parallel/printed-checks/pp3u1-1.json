@@ -1,0 +1,403 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u1-1",
+  "source": "book-records/prep3-parallel/pp3u1-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 17,
+      "cost_usd": 0.055,
+      "calls": [
+        {
+          "call": "check-printed.pp3u1-1",
+          "cost_usd": 0.0435,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u1-1",
+          "cost_usd": 0.0115,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u1-1:example-1",
+      "record_id": "pp3u1-1:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 7,
+      "printed": "$x=7,\\ y=2$",
+      "blind": "x = 7, y = 2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "dfe2a366270bbb3629e49585cd5b3d0a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-2",
+      "record_id": "pp3u1-1:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 8,
+      "printed": "$X\\times Y\\neq Y\\times X$",
+      "blind": "X×Y = {(a,-1), (a,0), (a,3), (b,-1), (b,0), (b,3)}; Y×X = {(-1,a), (0,a), (3,a), (-1,b), (0,b), (3,b)}. Notice: X×Y ≠ Y×X, but both have 6 elements, n(X)×n(Y).",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "0dd6e8da511eab4bfe9f6fa9cb85eb19",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u1-1:example-2",
+        "verdict": "equivalent",
+        "reason": "Both conclude X×Y ≠ Y×X; solver's extra sets are correct detail."
+      },
+      "how": "judged equivalent: Both conclude X×Y ≠ Y×X; solver's extra sets are correct detail.",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:First A",
+      "record_id": "pp3u1-1:example-3",
+      "part": "First A",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(1,2),(1,3)\\}$",
+      "blind": "{(1, 2), (1, 3)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "ee004290d8db52102baaea34a4545164",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:First B",
+      "record_id": "pp3u1-1:example-3",
+      "part": "First B",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(2,2),(2,5),(2,6),(3,2),(3,5),(3,6)\\}$",
+      "blind": "{(2, 2), (2, 5), (2, 6), (3, 2), (3, 5), (3, 6)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "3cca12e5bb5f5ceca3b624f7c7eba251",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:First C",
+      "record_id": "pp3u1-1:example-3",
+      "part": "First C",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(1,2),(1,5),(1,6)\\}$",
+      "blind": "{(1, 2), (1, 5), (1, 6)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "c3dd7fc21202974e37b30701be3db12d",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:First D",
+      "record_id": "pp3u1-1:example-3",
+      "part": "First D",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(2,2),(2,3),(3,2),(3,3)\\}$",
+      "blind": "{(2, 2), (2, 3), (3, 2), (3, 3)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "6372f3926d894abf287bbfd1e0401741",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:Second",
+      "record_id": "pp3u1-1:example-3",
+      "part": "Second",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(1,2),(1,3),(2,2),(2,5),(2,6),(3,2),(3,5),(3,6)\\}$",
+      "blind": "{(1, 2), (1, 3), (2, 2), (2, 5), (2, 6), (3, 2), (3, 5), (3, 6)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "e575e76cf63c22619be8cf7ed64cbb55",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:Third",
+      "record_id": "pp3u1-1:example-3",
+      "part": "Third",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(1,2)\\}$",
+      "blind": "{(1, 2)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "460b2476683d02bfe24f52f7546c2fb4",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:Fourth",
+      "record_id": "pp3u1-1:example-3",
+      "part": "Fourth",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$\\{(1,2)\\}$",
+      "blind": "{(1, 2)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "3ae69ae51fa6122b84d3555c5b945cd2",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-3:Fifth",
+      "record_id": "pp3u1-1:example-3",
+      "part": "Fifth",
+      "type": "worked_example",
+      "page": 9,
+      "printed": "left for student to complete (printed 'Complete'); Z − Y = {5, 6}",
+      "blind": "{(5, 1), (5, 2), (5, 3), (6, 1), (6, 2), (6, 3)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-1"
+      ],
+      "question_fingerprint": "5b9112c533493d7dc78e43fdb5abf48d",
+      "status": "cannot_answer",
+      "judge": {
+        "ref": "pp3u1-1:example-3:Fifth",
+        "verdict": "unclear",
+        "reason": "Printed answer is left incomplete (only Z−Y given); solver's product is correct: {5,6}×{1,2,3}, but nothing to compare against."
+      },
+      "note": "the judge could not decide: Printed answer is left incomplete (only Z−Y given); solver's product is correct: {5,6}×{1,2,3}, but nothing to compare against.",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-5",
+      "record_id": "pp3u1-1:example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 10,
+      "printed": "$\\{(3,3),(3,4),(3,8),(4,3),(4,4),(4,8),(8,3),(8,4),(8,8)\\}$",
+      "blind": "Arrow diagram from X to X with 9 arrows, one for each pair in X×X = {(3,3), (3,4), (3,8), (4,3), (4,4), (4,8), (8,3), (8,4), (8,8)}; each element of the first copy of X has arrows to 3, 4 and 8 in the second copy.",
+      "blind_kind": "drawing",
+      "figures": [
+        "pp3u1-1:figure-4"
+      ],
+      "question_fingerprint": "ffa47420aa23e26c3d7d9ddf9fdf86f9",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:A",
+      "record_id": "pp3u1-1:example-6",
+      "part": "A",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "first quadrant",
+      "blind": "first quadrant",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "9b5216ca359d343bda30226d7096c5c0",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:B",
+      "record_id": "pp3u1-1:example-6",
+      "part": "B",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "fourth quadrant",
+      "blind": "fourth quadrant",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "da4e6af9c28cb7a994221d03dd0d69b9",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:C",
+      "record_id": "pp3u1-1:example-6",
+      "part": "C",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "third quadrant",
+      "blind": "third quadrant",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "0b01cebb66810f08f4e5fb9c29e2e9d6",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:D",
+      "record_id": "pp3u1-1:example-6",
+      "part": "D",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "second quadrant",
+      "blind": "second quadrant",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "e26bcdf41cc72b1516627d187e753914",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:E",
+      "record_id": "pp3u1-1:example-6",
+      "part": "E",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "y-axis",
+      "blind": "negative y-axis",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "d7ecdb74ab37df6cd7263c7c5a5b6e2c",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u1-1:example-6:E",
+        "verdict": "equivalent",
+        "reason": "E(0,-3) lies on the y-axis; 'negative y-axis' is the same location, just more specific."
+      },
+      "how": "judged equivalent: E(0,-3) lies on the y-axis; 'negative y-axis' is the same location, just more specific.",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-1:example-6:F",
+      "record_id": "pp3u1-1:example-6",
+      "part": "F",
+      "type": "worked_example",
+      "page": 12,
+      "printed": "x-axis",
+      "blind": "positive x-axis",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u1-1:figure-8"
+      ],
+      "question_fingerprint": "b490a20b7f5a4ed4de5f17937fefe19d",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u1-1:example-6:F",
+        "verdict": "equivalent",
+        "reason": "F(2,0) lies on the x-axis; 'positive x-axis' is the same location, just more specific."
+      },
+      "how": "judged equivalent: F(2,0) lies on the x-axis; 'positive x-axis' is the same location, just more specific.",
+      "made": {
+        "at": "2026-10-17T07:42:28+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

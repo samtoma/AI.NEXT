@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "c36841a9417353060999d38147f941d6f2ad941ba0f38b36f0c6bbc16d012424",
+  "generated_sha256": "1b0fb483318271b2b1906868347035ab859c59648566458f56ffe3fd8ce223b5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-2:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:example-1",
+      "kind": "drawing",
+      "answer": "R = {(-1, 2), (1, 6), (2, 8)}. Arrow diagram: arrows -1→2, 1→6, 2→8 (4 in Y gets no arrow). Cartesian diagram: points plotted at (-1,2), (1,6), (2,8) with X on the horizontal axis and Y on the vertical axis."
+     },
+     {
+      "ref": "pp3u1-2:example-2",
+      "kind": "drawing",
+      "answer": "R = {(-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2)}. Arrow diagram on X: arrows -2→2, -1→1, 0→0 (loop), 1→-1, 2→-2. Cartesian diagram: points plotted at those five pairs, lying on the line y = -x."
+     }
+    ]
+   }
+  }
+ ]
+}

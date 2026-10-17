@@ -1,0 +1,54 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-1-1:solve-then-plot",
+ "lo_id": "lo:pp3u1-1-1",
+ "parent_question_id": "q:pp3u1-1-1:bk-drill-1-b",
+ "tier": "standard",
+ "kind": "pair_plotter",
+ "instances": [
+  {
+   "h": 2,
+   "k": 1,
+   "u": 2,
+   "v": -3,
+   "tx": 4,
+   "ty": -4
+  },
+  {
+   "h": 1,
+   "k": 2,
+   "u": 3,
+   "v": -1,
+   "tx": 4,
+   "ty": -3
+  },
+  {
+   "h": 3,
+   "k": 2,
+   "u": -1,
+   "v": 1,
+   "tx": 2,
+   "ty": -1
+  }
+ ],
+ "spec": {
+  "target": [
+   "{=tx}",
+   "{=ty}"
+  ]
+ },
+ "stem": "If $(a - {=h}, b + {=k}) = ({=u}, {=v})$, find $a$ and $b$, then plot the point $(a, b)$.",
+ "solution": [
+  "Equal ordered pairs have equal first components and equal second components.",
+  "Equate the first components: $a - {=h} = {=u}$, so $a = {=tx}$.",
+  "Equate the second components: $b + {=k} = {=v}$, so $b = {=ty}$.",
+  "Plot $({=tx}, {=ty})$: go along the x-axis first, then up or down."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "swapped-coordinates",
+   "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair"
+  }
+ ],
+ "notes": "Targets kept within the -5..5 grid (the book's x=7,y=2 would be off-grid). wrong-quadrant and off-target are arithmetic/sign slips, not the order misconception, so left unmapped."
+}

@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-1:addcon",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-1",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "$X = \\{{=x1}, {=x1+1}, {=x1+2}\\}$ and $Y = \\{{=x1+k}, {=x1+k+1}, {=x1+k+2}, {=x1+k+4}\\}$. The relation $R$ from $X$ to $Y$ is given by $b = a + {=k}$, where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$.",
+ "answer": "",
+ "solution": [
+  "Take each element $a$ of $X$ and find $b = a + {=k}$.",
+  "For $a = {=x1}$: $b = {=x1+k}$, so the pair is $({=x1}, {=x1+k})$.",
+  "For $a = {=x1+1}$: $b = {=x1+1+k}$, so the pair is $({=x1+1}, {=x1+1+k})$.",
+  "For $a = {=x1+2}$: $b = {=x1+2+k}$, so the pair is $({=x1+2}, {=x1+2+k})$.",
+  "All these values of $b$ belong to $Y$, so $R = \\{({=x1}, {=x1+k}), ({=x1+1}, {=x1+1+k}), ({=x1+2}, {=x1+2+k})\\}$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x1}, {=x1+k}), ({=x1+1}, {=x1+1+k}), ({=x1+2}, {=x1+2+k})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book question was supplied for this objective, so parent_question_id is a placeholder. Answer is an unordered set of pairs; marker should accept any order."
+}

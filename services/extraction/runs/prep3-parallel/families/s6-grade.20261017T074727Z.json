@@ -1,0 +1,359 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "8d172ad3e507937064124c560f00e37d658ecbf628dcc11827ed3a9749b80126",
+  "generated_sha256": "cf12b09514c64e24c442d9574c86fe75471fa7d21d1f1cea22ac8f8e7092b9ac",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u1-1-2:find-size",
+   "spec_sha": "061ad5e657490342a42a59392b2b6d03af4a3897e0e23530884e56a4806c3ddb",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-1-2:g004-find-s",
+     "stem_sha": "6ed53921aeda3830",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u1-1-2:g005-find-s",
+     "stem_sha": "30d763327612c28e",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u1-1-2:g007-find-s",
+     "stem_sha": "b7b085a529c1d5e2",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options are given, so there are no distractors to judge. All three keys (10, 20, 16) are correct, and the worked solutions are correct and use the book's method for the size of X², then X×Y."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-1-2:sizes-sum",
+   "spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-1-2:g006-sizes-",
+     "stem_sha": "5175b45ed5a794e2",
+     "answer": {
+      "value": "28"
+     },
+     "working": "n(X)=4, n(Y)=3; 16+12=28"
+    },
+    {
+     "instance_id": "q:pp3u1-1-2:g008-sizes-",
+     "stem_sha": "b5d2365b8269e6f1",
+     "answer": {
+      "value": "35"
+     },
+     "working": "n(X)=5, n(Y)=2; 25+10=35"
+    },
+    {
+     "instance_id": "q:pp3u1-1-2:g010-sizes-",
+     "stem_sha": "5ff3e36c7ebf7083",
+     "answer": {
+      "value": "24"
+     },
+     "working": "n(X)=4, n(Y)=2; 16+8=24"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task gave no wrong options, so distractors are vacuously fine. I recomputed all three keys (28, 35, 24) and each matches its worked solution. Elements within each set are distinct. X² meaning X×X is standard notation.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-1-4:axis-points",
+   "spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-1-4:g005-axis-p",
+     "stem_sha": "92ba6d6cb66ecc06",
+     "answer": {
+      "value": "19"
+     },
+     "working": "|X|=10, includes 0; axes points = 2*10-1 = 19"
+    },
+    {
+     "instance_id": "q:pp3u1-1-4:g008-axis-p",
+     "stem_sha": "3b19cb9b62df556c",
+     "answer": {
+      "value": "17"
+     },
+     "working": "|X|=9, includes 0; 2*9-1=17"
+    },
+    {
+     "instance_id": "q:pp3u1-1-4:g010-axis-p",
+     "stem_sha": "d45bb323ce7f6150",
+     "answer": {
+      "value": "11"
+     },
+     "working": "|X|=6, includes 0; 2*6-1=11"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys (19, 17, 11) are correct, and each solution follows the same sound method: count the elements of X, add the two axes, subtract the origin. The family lists no wrong options, so there are no distractors to judge. The stem wording is clear and 0 is in X in every instance.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-2-2:arrowend",
+   "spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-2-2:g004-arrowe",
+     "stem_sha": "1056df16c77213a8",
+     "answer": {
+      "value": "16"
+     },
+     "working": "b=4*4=16, which is in Y."
+    },
+    {
+     "instance_id": "q:pp3u1-2-2:g009-arrowe",
+     "stem_sha": "06a56493d1bdd80a",
+     "answer": {
+      "value": "12"
+     },
+     "working": "b=6*2=12, which is in Y."
+    },
+    {
+     "instance_id": "q:pp3u1-2-2:g010-arrowe",
+     "stem_sha": "fb9793093ed505e7",
+     "answer": {
+      "value": "15"
+     },
+     "working": "b=5*3=15, which is in Y."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the three instances and each key is correct: 4×4=16, 6×2=12 and 5×3=15. Each key is an element of Y, and each solution applies b = k×a correctly. No options were supplied, so there are no distractors to judge. Step 3 of each solution mentions the cartesian diagram point, which the question doesn't ask for. It is correct and harmless.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-3-1:pick-func",
+   "spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-3-1:g001-pick-f",
+     "stem_sha": "94f1deea44c4d0e8",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{ (1, 10), (5, 10), (9, 12) \\}$"
+     },
+     "working": "A function needs every x in X to have exactly one pair. A covers 1, 5 and 9 once each. B repeats 1. C is missing 9. D repeats 5."
+    },
+    {
+     "instance_id": "q:pp3u1-3-1:g004-pick-f",
+     "stem_sha": "53b5e574dc8fc8d0",
+     "answer": {
+      "choice": "C",
+      "choice_text": "$\\{ (4, 6), (5, 7), (8, 10) \\}$"
+     },
+     "working": "A repeats 5. B repeats 4 and is missing nothing else. C covers 4, 5 and 8 once each. D is missing 8."
+    },
+    {
+     "instance_id": "q:pp3u1-3-1:g010-pick-f",
+     "stem_sha": "a51838186adc6bf2",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\{ (1, 7), (3, 10), (9, 7) \\}$"
+     },
+     "working": "A covers 1, 3 and 9 once each. B is missing 9. C repeats 3. D repeats 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. In each one, the keyed option has every element of X exactly once as a first element, and every second element is in Y. Each wrong option is clearly not a function. The \"two-images\" options give one X element two images. The \"no-image\" option leaves one X element out. The solutions walk through each option correctly.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u1-3-1:g001-pick-f",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g001-pick-f",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g001-pick-f",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g004-pick-f",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g004-pick-f",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g004-pick-f",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g010-pick-f",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g010-pick-f",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u1-3-1:g010-pick-f",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-4-1:expand-cancel",
+   "spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-4-1:g004-expand",
+     "stem_sha": "d6e4a262b8a148ce",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Expand: x^4+2x^3+2x+4 - x^4 = 2x^3+2x+4; degree 3"
+    },
+    {
+     "instance_id": "q:pp3u1-4-1:g005-expand",
+     "stem_sha": "5969e9e88f4e653b",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Expand: x^6+5x^4+3x^2+15 - x^6 = 5x^4+3x^2+15; degree 4"
+    },
+    {
+     "instance_id": "q:pp3u1-4-1:g008-expand",
+     "stem_sha": "22e2eccfd0065593",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Expand: x^3+5x^2+x+5 - x^3 = 5x^2+x+5; degree 2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked the expansions and keys for all three instances: 3, 4 and 2. All are correct. The family has no options, so there are no distractors to judge. The stem wording \"mention the degree\" is slightly odd but clear."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-4-2:poly-int",
+   "spec_sha": "3681ff19d94cbd36c8369d2b64c143e0f9467fc205485420af507489fb0962e6",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-4-2:g001-poly-i",
+     "stem_sha": "eee5269bd68838c7",
+     "answer": {
+      "value": "15"
+     },
+     "working": "3*4 - 2 + 5 = 12-2+5 = 15"
+    },
+    {
+     "instance_id": "q:pp3u1-4-2:g004-poly-i",
+     "stem_sha": "e31486802d5cabf9",
+     "answer": {
+      "value": "13"
+     },
+     "working": "3*4 - 8 + 9 = 13"
+    },
+    {
+     "instance_id": "q:pp3u1-4-2:g006-poly-i",
+     "stem_sha": "380eb8137193887b",
+     "answer": {
+      "value": "18"
+     },
+     "working": "2*4 + 2 + 8 = 18"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "notes": "The keys are correct: 15, 13 and 18. The worked solutions are arithmetically correct and follow the substitution method. No options were shown, so I had no distractors to check. The stems g001 and g006 write the coefficient as \"-1x\", which no textbook prints (it would be \"-x\"). This is unnatural notation that could confuse a Grade prep-3 student, so the generator should drop an explicit coefficient of 1. That is why context_ok is false."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u1-4-2:surd-combo",
+   "spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-4-2:g002-surd-c",
+     "stem_sha": "a49d305bebac7fea",
+     "answer": {
+      "value": "-8"
+     },
+     "working": "f(√3)=8-4√3; 4g=4√3-16; sum=-8"
+    },
+    {
+     "instance_id": "q:pp3u1-4-2:g004-surd-c",
+     "stem_sha": "8399087c970da43f",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "f(√6)=10-4√6; 4g=4√6-16; sum=-6"
+    },
+    {
+     "instance_id": "q:pp3u1-4-2:g006-surd-c",
+     "stem_sha": "f888be38e9f76a6f",
+     "answer": {
+      "value": "5"
+     },
+     "working": "f(√7)=11-2√7; 2g=2√7-6; sum=5"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key matches. g002: f(√3)=3−4√3+5=8−4√3, and 8−16=−8. g004: f(√6)=6−4√6+4=10−4√6, and 10−16=−6. g006: f(√7)=7−2√7+4=11−2√7, and 11−6=5. In each case the surd terms cancel, so the answer is an integer. The family lists no options, so there are no distractors to check. One small point: step 1 goes from (√n)² straight to the simplified constant without showing the n. That is acceptable."
+   }
+  }
+ ]
+}

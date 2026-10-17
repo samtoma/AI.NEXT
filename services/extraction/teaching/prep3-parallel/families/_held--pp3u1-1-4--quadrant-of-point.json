@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-4:quadrant-of-point",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-4",
+ "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+ "source_page": 12,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "sx",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sy",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "ax",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "ay",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "x",
+   "let": "sx * ax"
+  },
+  {
+   "name": "y",
+   "let": "sy * ay"
+  },
+  {
+   "name": "names",
+   "let": [
+    "first",
+    "second",
+    "third",
+    "fourth"
+   ]
+  },
+  {
+   "name": "idx",
+   "let": "0 if (sx == 1 and sy == 1) else (1 if (sx == -1 and sy == 1) else (2 if sx == -1 else 3))"
+  }
+ ],
+ "constraints": [],
+ "stem": "The point $({=x}, {=y})$ belongs to $\\mathbb{R}\\times\\mathbb{R}$, drawn on a perpendicular graphical net. The quadrants are numbered anticlockwise starting from the quadrant where both coordinates are positive. In which quadrant does the point lie?",
+ "solution": [
+  "Look at the signs of the coordinates: the x-coordinate is {=x} and the y-coordinate is {=y}.",
+  "The first quadrant has x > 0, y > 0; the second has x < 0, y > 0; the third has x < 0, y < 0; the fourth has x > 0, y < 0.",
+  "So the point $({=x}, {=y})$ lies in the {=names[idx]} quadrant."
+ ],
+ "choices": {
+  "correct": "The {=names[idx]} quadrant",
+  "distractors": [
+   {
+    "text": "The {=names[(idx + 1) % 4]} quadrant",
+    "misconception_id": null
+   },
+   {
+    "text": "The {=names[(idx + 2) % 4]} quadrant",
+    "misconception_id": null
+   },
+   {
+    "text": "The {=names[(idx + 3) % 4]} quadrant",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Both coordinates are nonzero so the point is always inside a quadrant. Quadrant numbering stated in stem."
+}

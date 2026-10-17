@@ -1,0 +1,34 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-1-2:build-y-times-z",
+ "lo_id": "lo:pp3u1-1-2",
+ "parent_question_id": "q:pp3u1-1-2:bk-drill-2-b",
+ "tier": "standard",
+ "kind": "product_builder",
+ "instances": [],
+ "spec": {
+  "X": [
+   4,
+   0
+  ],
+  "Y": [
+   4,
+   5,
+   -2
+  ]
+ },
+ "stem": "If $Y=\\{4, 0\\}$ and $Z=\\{4, 5, -2\\}$, build $Y\\times Z$ by selecting all its ordered pairs.",
+ "solution": [
+  "First components come from $Y$, second components from $Z$.",
+  "Pair $4$ with each element of $Z$: $(4, 4), (4, 5), (4, -2)$.",
+  "Pair $0$ with each element of $Z$: $(0, 4), (0, 5), (0, -2)$.",
+  "$n(Y\\times Z)=2\\times 3=6$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "reversed-pairs",
+   "misconception_id": "mc:pp3u1-1-2:product-order-ignored"
+  }
+ ],
+ "notes": "Spec X/Y fields hold Y and Z of the book question."
+}

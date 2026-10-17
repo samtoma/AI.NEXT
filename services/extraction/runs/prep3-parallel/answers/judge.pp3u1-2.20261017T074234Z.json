@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "e0df58d8be6062e149d3bdeaa149576b009f05b4abc320494997468281d7a58a",
+  "generated_sha256": "1fc346a927da112fc833c16126667191c33e5c48062eab0f1aa4c405b8381824",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u1-2:example-2",
+    "verdict": "equivalent",
+    "reason": "Same relation set of five pairs; the solver's added diagram descriptions are consistent with it."
+   }
+  ]
+ }
+}

@@ -1,0 +1,704 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "808b2e7ae5175b4eef681c9b154929dcb8f5dd1679308ea0b80f2023bc8ec69a",
+  "generated_sha256": "47fa2c15a594c17e69a0f5493b1896af25d42ccbad10c3d64a6f7b86125b5887",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": "{(0, -1), (1, 1), (2, 3)}",
+      "solution": [
+       "Put x = 0 in y = 2x - 1: y = 2(0) - 1 = -1, giving (0, -1).",
+       "Put x = 1: y = 2(1) - 1 = 1, giving (1, 1).",
+       "Put x = 2: y = 2(2) - 1 = 3, giving (2, 3).",
+       "The set is {(0, -1), (1, 1), (2, 3)}."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-1",
+       "pp3u1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:think-and-discuss-2",
+      "kind": "drawing",
+      "answer": "Plot the points (0, -1), (1, 1) and (2, 3) on a coordinate plane.",
+      "solution": [
+       "Draw the horizontal x-axis and the vertical y-axis, meeting at O.",
+       "Mark the integers on both axes.",
+       "Plot (0, -1): at 0 on the x-axis, then 1 unit down, on the y-axis.",
+       "Plot (1, 1): 1 unit right, 1 unit up.",
+       "Plot (2, 3): 2 units right, 3 units up.",
+       "Each ordered pair is one and only one point."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:rule-2",
+       "pp3u1-1:definition-2",
+       "pp3u1-1:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:think-1",
+      "kind": "explanation",
+      "answer": "X×Y = Y×X when X = Y (the two sets are the same).",
+      "solution": [
+       "The lesson says X×Y ≠ Y×X when X ≠ Y.",
+       "So the two products can be equal only when X and Y are the same set.",
+       "If X = Y then X×Y = X×X = Y×X.",
+       "Answer: when X = Y."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-7",
+       "pp3u1-1:rule-10"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:think-2",
+      "kind": "explanation",
+      "answer": "Yes, n(X×Y) = n(Y×X) = n(X) × n(Y).",
+      "solution": [
+       "In the example n(X) = 2 and n(Y) = 3.",
+       "X×Y has 2 × 3 = 6 pairs.",
+       "Y×X has 3 × 2 = 6 pairs.",
+       "So the numbers of elements are equal."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-8",
+       "pp3u1-1:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:A",
+      "kind": "value",
+      "answer": "{(2, 4), (2, 0), (-1, 4), (-1, 0)}",
+      "solution": [
+       "X×Y = {2, -1} × {4, 0}.",
+       "Pair 2 with each element of Y: (2, 4), (2, 0).",
+       "Pair -1 with each element of Y: (-1, 4), (-1, 0).",
+       "X×Y = {(2, 4), (2, 0), (-1, 4), (-1, 0)}."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-6",
+       "pp3u1-1:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:B",
+      "kind": "value",
+      "answer": "{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)}",
+      "solution": [
+       "Y×Z = {4, 0} × {4, 5, -2}.",
+       "Pair 4 with each element of Z: (4, 4), (4, 5), (4, -2).",
+       "Pair 0 with each element of Z: (0, 4), (0, 5), (0, -2).",
+       "Y×Z = {(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)}."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-6",
+       "pp3u1-1:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:C",
+      "kind": "value",
+      "answer": "{(2, 2), (2, -1), (-1, 2), (-1, -1)}",
+      "solution": [
+       "X² = X×X = {2, -1} × {2, -1}.",
+       "Pair 2 with each element: (2, 2), (2, -1).",
+       "Pair -1 with each element: (-1, 2), (-1, -1).",
+       "X² = {(2, 2), (2, -1), (-1, 2), (-1, -1)}."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-10",
+       "pp3u1-1:convention-2",
+       "pp3u1-1:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:D",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+       "n(X) = 2 and n(Z) = 3.",
+       "n(X×Z) = n(X) × n(Z) = 2 × 3.",
+       "n(X×Z) = 6."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:E",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "n(Y) = 2.",
+       "n(Y²) = n(Y) × n(Y) = 2 × 2.",
+       "n(Y²) = 4."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-11",
+       "pp3u1-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-2:F",
+      "kind": "value",
+      "answer": "9",
+      "solution": [
+       "n(Z) = 3.",
+       "n(Z²) = 3 × 3.",
+       "n(Z²) = 9."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-11",
+       "pp3u1-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-1:C",
+      "kind": "value",
+      "answer": "(5, 0)",
+      "solution": [
+       "From the figure, point C is on the x-axis at the mark 5.",
+       "Its second projection (the height) is 0.",
+       "Point C represents (5, 0)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-12",
+       "pp3u1-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-1:O",
+      "kind": "value",
+      "answer": "(0, 0)",
+      "solution": [
+       "O is the origin, where the two axes meet.",
+       "It represents zero on both lines.",
+       "Point O represents (0, 0)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": "{(0, -1), (1, 1), (2, 3)}"
+     },
+     {
+      "ref": "pp3u1-1:think-and-discuss-2",
+      "kind": "drawing",
+      "answer": "Coordinate plane with the three points (0, -1), (1, 1), (2, 3) plotted (they lie on a straight line)."
+     },
+     {
+      "ref": "pp3u1-1:think-1",
+      "kind": "explanation",
+      "answer": "When $X=Y$ (the two sets are equal), then $X\\times Y=Y\\times X$."
+     },
+     {
+      "ref": "pp3u1-1:think-2",
+      "kind": "explanation",
+      "answer": "Yes, $n(X\\times Y)=n(Y\\times X)=n(X)\\times n(Y)$ (here 2 × 3 = 6)."
+     },
+     {
+      "ref": "pp3u1-1:drill-2:A",
+      "kind": "value",
+      "answer": "{(2, 4), (2, 0), (-1, 4), (-1, 0)}"
+     },
+     {
+      "ref": "pp3u1-1:drill-2:B",
+      "kind": "value",
+      "answer": "{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)}"
+     },
+     {
+      "ref": "pp3u1-1:drill-2:C",
+      "kind": "value",
+      "answer": "{(2, 2), (2, -1), (-1, 2), (-1, -1)}"
+     },
+     {
+      "ref": "pp3u1-1:drill-2:D",
+      "kind": "value",
+      "answer": "6"
+     },
+     {
+      "ref": "pp3u1-1:drill-2:E",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u1-1:drill-2:F",
+      "kind": "value",
+      "answer": "9"
+     },
+     {
+      "ref": "pp3u1-1:exercise-1:C",
+      "kind": "value",
+      "answer": "(5, 0)"
+     },
+     {
+      "ref": "pp3u1-1:exercise-1:O",
+      "kind": "value",
+      "answer": "(0, 0)"
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u1-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "No, (3, 5) ≠ (5, 3) because they are different points on the graph.",
+      "solution": [
+       "Plot (3, 5): go 3 along the x-axis, then 5 up.",
+       "Plot (5, 3): go 5 along the x-axis, then 3 up.",
+       "The two points are in different places.",
+       "Each ordered pair is represented by one and only one point, so different points mean different pairs.",
+       "The first projections 3 and 5 differ, so the pairs are not equal.",
+       "So (3, 5) ≠ (5, 3)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-2",
+       "pp3u1-1:rule-3",
+       "pp3u1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-1:A",
+      "kind": "value",
+      "answer": "a = -5, b = 9",
+      "solution": [
+       "Equal ordered pairs have equal first projections and equal second projections.",
+       "a = -5.",
+       "b = 9.",
+       "So a = -5, b = 9."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-5",
+       "pp3u1-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-1:B",
+      "kind": "value",
+      "answer": "a = 4, b = -4",
+      "solution": [
+       "Equate the first projections: a - 2 = 2.",
+       "So a = 4.",
+       "Equate the second projections: b + 1 = -3.",
+       "So b = -4.",
+       "So a = 4, b = -4."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-5",
+       "pp3u1-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-1:C",
+      "kind": "value",
+      "answer": "a = -4, b = 2",
+      "solution": [
+       "Equate the first projections: 6 = 2 - a.",
+       "So a = 2 - 6 = -4.",
+       "Equate the second projections: b - 3 = -1.",
+       "So b = 2.",
+       "So a = -4, b = 2."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-5",
+       "pp3u1-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-1:D",
+      "kind": "value",
+      "answer": "a = 5, b = 3",
+      "solution": [
+       "Equate the first projections: a - 7 = -2.",
+       "So a = 5.",
+       "Equate the second projections: 26 = b³ - 1.",
+       "So b³ = 27.",
+       "So b = 3.",
+       "So a = 5, b = 3."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-5",
+       "pp3u1-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:example-4:First",
+      "kind": "drawing",
+      "answer": "Arrow diagram of X × Y = {(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)}: six arrows from X to Y.",
+      "solution": [
+       "Write X × Y = {1, 2} × {3, 4, 5} = {(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)}.",
+       "Draw an oval for X on the left containing 1 and 2.",
+       "Draw an oval for Y on the right containing 3, 4 and 5.",
+       "Draw an arrow from each element of X (first projection) to each element of Y (second projection).",
+       "From 1 draw arrows to 3, to 4 and to 5.",
+       "From 2 draw arrows to 3, to 4 and to 5.",
+       "This gives 6 arrows, one for each ordered pair."
+      ],
+      "grounded_in": [
+       "pp3u1-1:example-4",
+       "pp3u1-1:rule-6",
+       "pp3u1-1:objective-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:example-4:Second",
+      "kind": "drawing",
+      "answer": "Cartesian diagram: a grid with X = 1, 2 on the horizontal line and Y = 3, 4, 5 on the vertical line, with the 6 intersection points marked as the pairs of X × Y.",
+      "solution": [
+       "Draw a horizontal line and mark 1 and 2 on it, for the elements of X.",
+       "Draw a vertical line and mark 3, 4 and 5 on it, for the elements of Y.",
+       "Draw vertical lines through 1 and 2.",
+       "Draw horizontal lines through 3, 4 and 5.",
+       "Mark the 6 points where these lines cross.",
+       "Label them (1,3), (2,3), (1,4), (2,4), (1,5), (2,5)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:example-4",
+       "pp3u1-1:objective-3"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:think-3",
+      "kind": "explanation",
+      "answer": "Use a perpendicular graphical net, with the set marked on both the horizontal and vertical lines, where each intersection point is one ordered pair.",
+      "solution": [
+       "Draw two perpendicular lines x'x (horizontal) and y'y (vertical) meeting at O, which represents 0.",
+       "For N × N, mark the natural numbers on both lines starting from O.",
+       "For Z × Z, mark the integers on both lines, with O as (0, 0). The net is the coordinate plane of Z × Z.",
+       "For Q × Q, mark the rational numbers on both lines in the same way.",
+       "For R × R, mark the real numbers on both lines. The net is divided into four quadrants.",
+       "Draw vertical and horizontal lines through the marked points. Each intersection point represents one ordered pair of the product."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-2",
+       "pp3u1-1:method-3",
+       "pp3u1-1:rule-12",
+       "pp3u1-1:rule-13",
+       "pp3u1-1:definition-1",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-3:A",
+      "kind": "value",
+      "answer": "(2, 3)",
+      "solution": [
+       "Read from the Z × Z net: A is 2 units right of O on the x-axis and 3 units up.",
+       "So A is (2, 3)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-13",
+       "pp3u1-1:definition-1",
+       "pp3u1-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-3:B",
+      "kind": "value",
+      "answer": "(3, -2)",
+      "solution": [
+       "Read from the Z × Z net: B is 3 units right of O and 2 units down.",
+       "So B is (3, -2)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-13",
+       "pp3u1-1:definition-1",
+       "pp3u1-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-3:C",
+      "kind": "value",
+      "answer": "(-3, 1)",
+      "solution": [
+       "Read from the Z × Z net: C is 3 units left of O and 1 unit up.",
+       "So C is (-3, 1)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-13",
+       "pp3u1-1:definition-1",
+       "pp3u1-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-3:D",
+      "kind": "value",
+      "answer": "(-3, -4)",
+      "solution": [
+       "Read from the Z × Z net: D is 3 units left of O and 4 units down.",
+       "So D is (-3, -4)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-13",
+       "pp3u1-1:definition-1",
+       "pp3u1-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:A",
+      "kind": "drawing",
+      "answer": "A(3, 5/2): plot the point 3 units right of O and 5/2 units up.",
+      "solution": [
+       "Draw perpendicular lines x'x and y'y meeting at O.",
+       "Mark the rational numbers on both lines, including halves such as 5/2 = 2.5.",
+       "From 3 on the x-axis draw a vertical line.",
+       "From 5/2 on the y-axis draw a horizontal line.",
+       "Mark A where they meet.",
+       "A is (3, 5/2)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-3",
+       "pp3u1-1:rule-1",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:B",
+      "kind": "drawing",
+      "answer": "B(-3/2, 4): plot the point 3/2 units left of O and 4 units up.",
+      "solution": [
+       "Use the same net with the rational numbers marked on both lines.",
+       "From -3/2 = -1.5 on the x-axis draw a vertical line.",
+       "From 4 on the y-axis draw a horizontal line.",
+       "Mark B where they meet.",
+       "B is (-3/2, 4)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-3",
+       "pp3u1-1:rule-1",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:C",
+      "kind": "drawing",
+      "answer": "C(-3, -3/2): plot the point 3 units left of O and 3/2 units down.",
+      "solution": [
+       "Use the same net with the rational numbers marked on both lines.",
+       "From -3 on the x-axis draw a vertical line.",
+       "From -3/2 = -1.5 on the y-axis draw a horizontal line.",
+       "Mark C where they meet.",
+       "C is (-3, -3/2)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-3",
+       "pp3u1-1:rule-1",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:D",
+      "kind": "drawing",
+      "answer": "D(5/2, -3/2): plot the point 5/2 units right of O and 3/2 units down.",
+      "solution": [
+       "Use the same net with the rational numbers marked on both lines.",
+       "From 5/2 = 2.5 on the x-axis draw a vertical line.",
+       "From -3/2 = -1.5 on the y-axis draw a horizontal line.",
+       "Mark D where they meet.",
+       "D is (5/2, -3/2)."
+      ],
+      "grounded_in": [
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-3",
+       "pp3u1-1:rule-1",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-4:A",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "X = [-2, 3] is the real numbers from -2 to 3, so X × X is the square region with x and y both in [-2, 3].",
+       "For (1, 2): 1 is in X and 2 is in X.",
+       "So (1, 2) belongs to X × X."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-9",
+       "pp3u1-1:rule-10",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-4:B",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "X × X is the square region with x and y both in [-2, 3].",
+       "For (3, -1): 3 is in X and -1 is in X.",
+       "So (3, -1) belongs to X × X."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-9",
+       "pp3u1-1:rule-10",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-4:C",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+       "X × X is the square region with x and y both in [-2, 3].",
+       "For (-1, 4): -1 is in X, but 4 is not in X because 4 > 3.",
+       "So (-1, 4) does not belong to X × X."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-9",
+       "pp3u1-1:rule-10",
+       "pp3u1-1:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:drill-4:D",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "X × X is the square region with x and y both in [-2, 3].",
+       "For (-2, 0): -2 is in X and 0 is in X.",
+       "So (-2, 0) belongs to X × X."
+      ],
+      "grounded_in": [
+       "pp3u1-1:rule-9",
+       "pp3u1-1:rule-10",
+       "pp3u1-1:objective-4"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "No. (3, 5) and (5, 3) are different points on the graph, because the first and second projections differ: 3 ≠ 5. So (3, 5) ≠ (5, 3)."
+     },
+     {
+      "ref": "pp3u1-1:drill-1:A",
+      "kind": "value",
+      "answer": "a = -5, b = 9"
+     },
+     {
+      "ref": "pp3u1-1:drill-1:B",
+      "kind": "value",
+      "answer": "a = 4, b = -4"
+     },
+     {
+      "ref": "pp3u1-1:drill-1:C",
+      "kind": "value",
+      "answer": "a = -4, b = 2"
+     },
+     {
+      "ref": "pp3u1-1:drill-1:D",
+      "kind": "value",
+      "answer": "a = -5, b = 3"
+     },
+     {
+      "ref": "pp3u1-1:example-4:First",
+      "kind": "drawing",
+      "answer": "Arrow diagram: two ovals, X with 1, 2 and Y with 3, 4, 5. Arrows go from 1 to 3, 4, 5 and from 2 to 3, 4, 5. That is 6 arrows for X×Y = {(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)}."
+     },
+     {
+      "ref": "pp3u1-1:example-4:Second",
+      "kind": "drawing",
+      "answer": "Cartesian graph net: X = 1, 2 on the horizontal axis and Y = 3, 4, 5 on the vertical axis. The 6 intersection points are (1,3), (2,3), (1,4), (2,4), (1,5), (2,5)."
+     },
+     {
+      "ref": "pp3u1-1:think-3",
+      "kind": "explanation",
+      "answer": "Draw two perpendicular number lines, x'x horizontal and y'y vertical, meeting at the origin O. Mark the numbers of the set on each line, then draw vertical and horizontal lines through the marks. The intersection points (a perpendicular graphical net, or coordinate plane) represent the ordered pairs. N×N is the points in the first quadrant and on the positive axes. Z×Z is the grid points at integers in all four quadrants. Q×Q and R×R are represented on the whole plane. For R×R every point of the plane is an ordered pair."
+     },
+     {
+      "ref": "pp3u1-1:drill-3:A",
+      "kind": "value",
+      "answer": "(2, 3)"
+     },
+     {
+      "ref": "pp3u1-1:drill-3:B",
+      "kind": "value",
+      "answer": "(3, -2)"
+     },
+     {
+      "ref": "pp3u1-1:drill-3:C",
+      "kind": "value",
+      "answer": "(-3, 1)"
+     },
+     {
+      "ref": "pp3u1-1:drill-3:D",
+      "kind": "value",
+      "answer": "(-3, -4)"
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:A",
+      "kind": "drawing",
+      "answer": "On the net for Q×Q, point A is plotted at (3, 5/2): 3 on the x-axis and 2.5 on the y-axis."
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:B",
+      "kind": "drawing",
+      "answer": "On the net for Q×Q, point B is plotted at (-3/2, 4): -1.5 on the x-axis and 4 on the y-axis, in the second quadrant."
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:C",
+      "kind": "drawing",
+      "answer": "On the net for Q×Q, point C is plotted at (-3, -3/2): -3 on the x-axis and -1.5 on the y-axis, in the third quadrant."
+     },
+     {
+      "ref": "pp3u1-1:exercise-2:D",
+      "kind": "drawing",
+      "answer": "On the net for Q×Q, point D is plotted at (5/2, -3/2): 2.5 on the x-axis and -1.5 on the y-axis, in the fourth quadrant."
+     },
+     {
+      "ref": "pp3u1-1:drill-4:A",
+      "kind": "explanation",
+      "answer": "Yes. X×X is the square region with -2 ≤ x ≤ 3 and -2 ≤ y ≤ 3, including its boundary. A (1, 2) belongs to X×X because 1 and 2 are both in [-2, 3]."
+     },
+     {
+      "ref": "pp3u1-1:drill-4:B",
+      "kind": "explanation",
+      "answer": "Yes. B (3, -1) belongs to X×X because 3 and -1 are both in [-2, 3]."
+     },
+     {
+      "ref": "pp3u1-1:drill-4:C",
+      "kind": "explanation",
+      "answer": "No. C (-1, 4) does not belong to X×X because 4 ∉ [-2, 3]."
+     },
+     {
+      "ref": "pp3u1-1:drill-4:D",
+      "kind": "explanation",
+      "answer": "Yes. D (-2, 0) belongs to X×X because -2 and 0 are both in [-2, 3]."
+     }
+    ]
+   }
+  }
+ ]
+}

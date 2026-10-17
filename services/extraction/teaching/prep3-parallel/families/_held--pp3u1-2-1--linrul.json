@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-1:linrul",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-1",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "i1",
+   "let": "m*1+c"
+  },
+  {
+   "name": "i2",
+   "let": "m*2+c"
+  },
+  {
+   "name": "i4",
+   "let": "m*4+c"
+  }
+ ],
+ "constraints": [],
+ "stem": "$X = \\{1, 2, 3, 4\\}$ and $Y = \\{{=i1}, {=i2}, {=i4}, {=i4+1}\\}$. The relation $R$ from $X$ to $Y$ is given by $b = {=m}a + {=c}$, where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$.",
+ "answer": "",
+ "solution": [
+  "For each $a \\in X$ find $b = {=m}a + {=c}$: $a=1$ gives ${=i1}$, $a=2$ gives ${=i2}$, $a=3$ gives ${=m*3+c}$, $a=4$ gives ${=i4}$.",
+  "Keep only the pairs whose $b$ is in $Y$. The value ${=m*3+c}$ is not in $Y$, so $a = 3$ gives no pair.",
+  "$R = \\{(1, {=i1}), (2, {=i2}), (4, {=i4})\\}$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "(1, {=i1}), (2, {=i2}), (4, {=i4})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No parent book question supplied; placeholder. The element a=3 has no image in Y, which tests that b must lie in Y."
+}

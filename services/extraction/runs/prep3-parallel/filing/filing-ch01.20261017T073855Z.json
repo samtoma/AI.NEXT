@@ -1,0 +1,763 @@
+{
+ "stage": "filing",
+ "workflow": "filing",
+ "prompts_version": "file-v1",
+ "embedded": {
+  "source": "runbook/filing.workflow.js",
+  "source_sha256": "159227a549f0c70b9c4e7462bda371a1734ecd386db808d283700d3c299cf3c7",
+  "args_sha256": "14cda8f08d70cc16cf5a5ecd6217e676f9cd3d958f6ed8287d947538f1fbb8fc",
+  "generated_sha256": "367f6a5ec49342ef187c753dd25e16c64d6907f05e08c1aee4eb7e900939910a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u1-1",
+   "A": [
+    {
+     "key": "pp3u1-1:prior-knowledge-1",
+     "objective": 0,
+     "why": "Assumed prior knowledge about relations between two variables, not taught here."
+    },
+    {
+     "key": "pp3u1-1:rule-1",
+     "objective": 1,
+     "why": "Names the components of an ordered pair, used when equating corresponding components."
+    },
+    {
+     "key": "pp3u1-1:rule-2",
+     "objective": 1,
+     "why": "Each ordered pair is one point in the plane, which is the plotting of ordered pairs."
+    },
+    {
+     "key": "pp3u1-1:rule-3",
+     "objective": 1,
+     "why": "Unequal order means unequal pairs, like (3,5) versus (5,3) in the equality activity."
+    },
+    {
+     "key": "pp3u1-1:rule-4",
+     "objective": 1,
+     "why": "Distinguishes an ordered pair from a set, part of the ordered-pair equality ideas."
+    },
+    {
+     "key": "pp3u1-1:table-1",
+     "objective": 2,
+     "why": "Table listing the elements of X×Y."
+    },
+    {
+     "key": "pp3u1-1:table-2",
+     "objective": 2,
+     "why": "Table listing the elements of Y×X, for comparison with X×Y."
+    },
+    {
+     "key": "pp3u1-1:rule-7",
+     "objective": 2,
+     "why": "States X×Y ≠ Y×X, following the worked example of X×Y and Y×X."
+    },
+    {
+     "key": "pp3u1-1:rule-8",
+     "objective": 2,
+     "why": "Gives n(X×Y) = n(X)×n(Y), the counting of elements."
+    },
+    {
+     "key": "pp3u1-1:convention-1",
+     "objective": 2,
+     "why": "Notation n for number of elements, used in counting n(X×Y)."
+    },
+    {
+     "key": "pp3u1-1:rule-9",
+     "objective": 2,
+     "why": "Says what membership in X×Y means for the components."
+    },
+    {
+     "key": "pp3u1-1:rule-10",
+     "objective": 2,
+     "why": "Defines X×X, part of finding cartesian products."
+    },
+    {
+     "key": "pp3u1-1:convention-2",
+     "objective": 2,
+     "why": "Notation X² for X×X."
+    },
+    {
+     "key": "pp3u1-1:figure-1",
+     "objective": 2,
+     "why": "Venn diagram of sets X, Y, Z used for finding products of finite sets."
+    },
+    {
+     "key": "pp3u1-1:figure-2",
+     "objective": 3,
+     "why": "Arrow diagram of X×Y for the worked example."
+    },
+    {
+     "key": "pp3u1-1:figure-3",
+     "objective": 3,
+     "why": "Cartesian diagram of X×Y for the same example."
+    },
+    {
+     "key": "pp3u1-1:figure-4",
+     "objective": 3,
+     "why": "Arrow diagram of X×X for X={3,4,8}."
+    },
+    {
+     "key": "pp3u1-1:rule-11",
+     "objective": 2,
+     "why": "Counts the elements of X×X when n(X)=3."
+    },
+    {
+     "key": "pp3u1-1:method-2",
+     "objective": 4,
+     "why": "Step in drawing the graphical net of N×N."
+    },
+    {
+     "key": "pp3u1-1:method-3",
+     "objective": 4,
+     "why": "Step giving the net points of N×N."
+    },
+    {
+     "key": "pp3u1-1:figure-5",
+     "objective": 4,
+     "why": "Graphical net for N×N with points A, B, C."
+    },
+    {
+     "key": "pp3u1-1:rule-12",
+     "objective": 4,
+     "why": "Each net point represents a pair of N×N."
+    },
+    {
+     "key": "pp3u1-1:rule-13",
+     "objective": 4,
+     "why": "Each net point represents a pair of Z×Z."
+    },
+    {
+     "key": "pp3u1-1:definition-1",
+     "objective": 4,
+     "why": "Names the net the coordinate plane of Z×Z."
+    },
+    {
+     "key": "pp3u1-1:figure-6",
+     "objective": 4,
+     "why": "Coordinate plane of Z×Z with labelled points to identify."
+    },
+    {
+     "key": "pp3u1-1:definition-2",
+     "objective": 4,
+     "why": "Names the x-axis of the plane."
+    },
+    {
+     "key": "pp3u1-1:definition-3",
+     "objective": 4,
+     "why": "Names the y-axis of the plane."
+    },
+    {
+     "key": "pp3u1-1:figure-7",
+     "objective": 4,
+     "why": "Shows the four quadrants of the plane."
+    },
+    {
+     "key": "pp3u1-1:figure-8",
+     "objective": 4,
+     "why": "Points in quadrants and on the axes of the plane."
+    }
+   ],
+   "B": [
+    {
+     "key": "pp3u1-1:figure-8",
+     "objective": 1,
+     "why": "Plotted points with read-off coordinates illustrate plotting ordered pairs in the plane."
+    },
+    {
+     "key": "pp3u1-1:figure-7",
+     "objective": 4,
+     "why": "Shows the quadrants of the coordinate plane, used to locate points by quadrant."
+    },
+    {
+     "key": "pp3u1-1:definition-3",
+     "objective": 4,
+     "why": "Names the y-axis of the graphical net."
+    },
+    {
+     "key": "pp3u1-1:definition-2",
+     "objective": 4,
+     "why": "Names the x-axis of the graphical net."
+    },
+    {
+     "key": "pp3u1-1:figure-6",
+     "objective": 4,
+     "why": "Z×Z net with points A to D whose pairs are to be identified."
+    },
+    {
+     "key": "pp3u1-1:definition-1",
+     "objective": 4,
+     "why": "Names the net as the coordinate plane of Z×Z."
+    },
+    {
+     "key": "pp3u1-1:rule-13",
+     "objective": 4,
+     "why": "Each point of the Z×Z net represents a pair of the product."
+    },
+    {
+     "key": "pp3u1-1:rule-12",
+     "objective": 4,
+     "why": "Each point of the N×N net represents a pair of N×N."
+    },
+    {
+     "key": "pp3u1-1:figure-5",
+     "objective": 4,
+     "why": "N×N graphical net with points A, B, C."
+    },
+    {
+     "key": "pp3u1-1:method-3",
+     "objective": 4,
+     "why": "Step of drawing the N×N perpendicular graphical net."
+    },
+    {
+     "key": "pp3u1-1:method-2",
+     "objective": 4,
+     "why": "Step of marking natural numbers on the axes of the net."
+    },
+    {
+     "key": "pp3u1-1:rule-11",
+     "objective": 2,
+     "why": "Counts the elements of X×X from n(X)."
+    },
+    {
+     "key": "pp3u1-1:figure-4",
+     "objective": 3,
+     "why": "Arrow diagram of X×X for X={3,4,8}."
+    },
+    {
+     "key": "pp3u1-1:figure-3",
+     "objective": 3,
+     "why": "Cartesian diagram of X×Y in the worked example."
+    },
+    {
+     "key": "pp3u1-1:figure-2",
+     "objective": 3,
+     "why": "Arrow diagram of X×Y in the worked example."
+    },
+    {
+     "key": "pp3u1-1:figure-1",
+     "objective": 0,
+     "why": "Venn diagram of sets not tied to a particular objective."
+    },
+    {
+     "key": "pp3u1-1:convention-2",
+     "objective": 2,
+     "why": "Notation X² for X×X belongs to finding products."
+    },
+    {
+     "key": "pp3u1-1:rule-10",
+     "objective": 2,
+     "why": "Defines X×X as a set of pairs."
+    },
+    {
+     "key": "pp3u1-1:rule-9",
+     "objective": 2,
+     "why": "Says what membership in X×Y means for the components."
+    },
+    {
+     "key": "pp3u1-1:convention-1",
+     "objective": 2,
+     "why": "Notation n for counting elements of the product."
+    },
+    {
+     "key": "pp3u1-1:rule-8",
+     "objective": 2,
+     "why": "Number of elements of X×Y equals n(X)×n(Y)."
+    },
+    {
+     "key": "pp3u1-1:rule-7",
+     "objective": 2,
+     "why": "X×Y differs from Y×X, from the worked example comparison."
+    },
+    {
+     "key": "pp3u1-1:table-2",
+     "objective": 2,
+     "why": "Table listing the pairs of Y×X."
+    },
+    {
+     "key": "pp3u1-1:table-1",
+     "objective": 2,
+     "why": "Table listing the pairs of X×Y."
+    },
+    {
+     "key": "pp3u1-1:rule-4",
+     "objective": 0,
+     "why": "General remark on ordered pairs versus sets, introducing the lesson."
+    },
+    {
+     "key": "pp3u1-1:rule-3",
+     "objective": 1,
+     "why": "Order matters, so unequal pairs, tied to equality of ordered pairs."
+    },
+    {
+     "key": "pp3u1-1:rule-2",
+     "objective": 1,
+     "why": "Each ordered pair is one point, underlying plotting pairs."
+    },
+    {
+     "key": "pp3u1-1:rule-1",
+     "objective": 0,
+     "why": "Introduces the terms first and second projection at the start of the lesson."
+    },
+    {
+     "key": "pp3u1-1:prior-knowledge-1",
+     "objective": 0,
+     "why": "Prior knowledge about relations assumed by the lesson."
+    }
+   ]
+  },
+  {
+   "slug": "pp3u1-2",
+   "A": [
+    {
+     "key": "pp3u1-2:figure-1",
+     "objective": 0,
+     "why": "Decorative 'Reading for all' picture introducing the lesson."
+    },
+    {
+     "key": "pp3u1-2:figure-2",
+     "objective": 2,
+     "why": "Arrow diagram of the relation from X to Y."
+    },
+    {
+     "key": "pp3u1-2:definition-2",
+     "objective": 1,
+     "why": "Expresses the relation as a set of ordered pairs."
+    },
+    {
+     "key": "pp3u1-2:figure-3",
+     "objective": 2,
+     "why": "Arrow diagram of the relation from X to Y."
+    },
+    {
+     "key": "pp3u1-2:figure-4",
+     "objective": 2,
+     "why": "Graph (cartesian) diagram showing the relation's ordered pairs."
+    },
+    {
+     "key": "pp3u1-2:rule-1",
+     "objective": 3,
+     "why": "States that a relation connects elements of X with elements of Y, leading to R as a subset of X × Y."
+    },
+    {
+     "key": "pp3u1-2:definition-3",
+     "objective": 3,
+     "why": "Defines X × Y, the product of which a relation is a subset."
+    },
+    {
+     "key": "pp3u1-2:figure-5",
+     "objective": 2,
+     "why": "Arrow diagram of a relation on X."
+    },
+    {
+     "key": "pp3u1-2:figure-6",
+     "objective": 2,
+     "why": "Cartesian diagram of the relation on X."
+    }
+   ],
+   "B": [
+    {
+     "key": "pp3u1-2:figure-6",
+     "objective": 2,
+     "why": "Cartesian diagram plotting the ordered pairs of the relation on X."
+    },
+    {
+     "key": "pp3u1-2:figure-5",
+     "objective": 2,
+     "why": "Arrow diagram of relation R on X."
+    },
+    {
+     "key": "pp3u1-2:definition-3",
+     "objective": 3,
+     "why": "Defines X × Y, the cartesian product that a relation is a subset of."
+    },
+    {
+     "key": "pp3u1-2:rule-1",
+     "objective": 3,
+     "why": "States what a relation from X to Y is, connecting some or all elements, leading to the subset of X × Y idea."
+    },
+    {
+     "key": "pp3u1-2:figure-4",
+     "objective": 2,
+     "why": "Graph (cartesian) diagram of the relation from X to Y."
+    },
+    {
+     "key": "pp3u1-2:figure-3",
+     "objective": 2,
+     "why": "Arrow diagram of the relation from X to Y."
+    },
+    {
+     "key": "pp3u1-2:definition-2",
+     "objective": 1,
+     "why": "Expresses the relation as a set of ordered pairs."
+    },
+    {
+     "key": "pp3u1-2:figure-2",
+     "objective": 2,
+     "why": "Arrow diagram showing the relation from X to Y."
+    },
+    {
+     "key": "pp3u1-2:figure-1",
+     "objective": 0,
+     "why": "Decorative illustration introducing the lesson."
+    }
+   ]
+  },
+  {
+   "slug": "pp3u1-3",
+   "A": [
+    {
+     "key": "pp3u1-3:figure-1",
+     "objective": 1,
+     "why": "Arrow diagrams from X to Y used to decide which relations are functions."
+    },
+    {
+     "key": "pp3u1-3:convention-1",
+     "objective": 2,
+     "why": "Gives the symbol f : X → Y for writing a function."
+    },
+    {
+     "key": "pp3u1-3:convention-2",
+     "objective": 2,
+     "why": "Naming a function on X is part of the notation for functions f : X → X."
+    },
+    {
+     "key": "pp3u1-3:figure-2",
+     "objective": 2,
+     "why": "Arrow diagram representing the function f given in the worked example."
+    },
+    {
+     "key": "pp3u1-3:figure-3",
+     "objective": 2,
+     "why": "Cartesian diagram representing the same function f."
+    },
+    {
+     "key": "pp3u1-3:figure-4",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise asking which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-5",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise asking which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-6",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise asking which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-7",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on whether it is a function (3 has two images)."
+    },
+    {
+     "key": "pp3u1-3:figure-8",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on whether it is a function."
+    },
+    {
+     "key": "pp3u1-3:figure-9",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on whether it is a function (element 3 has no image)."
+    },
+    {
+     "key": "pp3u1-3:definition-2",
+     "objective": 3,
+     "why": "Defines the domain of a function."
+    },
+    {
+     "key": "pp3u1-3:definition-3",
+     "objective": 3,
+     "why": "Defines the codomain of a function."
+    },
+    {
+     "key": "pp3u1-3:figure-10",
+     "objective": 3,
+     "why": "Arrow diagram for the worked example finding domain, codomain and range."
+    },
+    {
+     "key": "pp3u1-3:rule-1",
+     "objective": 3,
+     "why": "States the range is a subset of the codomain."
+    },
+    {
+     "key": "pp3u1-3:figure-11",
+     "objective": 3,
+     "why": "Arrow diagram used to find domain, codomain and range."
+    }
+   ],
+   "B": [
+    {
+     "key": "pp3u1-3:figure-11",
+     "objective": 3,
+     "why": "Arrow diagram with Y larger than the images shows codomain versus range."
+    },
+    {
+     "key": "pp3u1-3:rule-1",
+     "objective": 3,
+     "why": "States the range is a subset of the codomain."
+    },
+    {
+     "key": "pp3u1-3:figure-10",
+     "objective": 3,
+     "why": "Arrow diagram of the domain/codomain/range worked example."
+    },
+    {
+     "key": "pp3u1-3:definition-3",
+     "objective": 3,
+     "why": "Defines the codomain."
+    },
+    {
+     "key": "pp3u1-3:definition-2",
+     "objective": 3,
+     "why": "Defines the domain."
+    },
+    {
+     "key": "pp3u1-3:figure-9",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on which diagrams are functions from X to X."
+    },
+    {
+     "key": "pp3u1-3:figure-8",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on which diagrams are functions from X to X."
+    },
+    {
+     "key": "pp3u1-3:figure-7",
+     "objective": 1,
+     "why": "Cartesian diagram in the exercise on which diagrams are functions from X to X."
+    },
+    {
+     "key": "pp3u1-3:figure-6",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise on which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-5",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise on which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-4",
+     "objective": 1,
+     "why": "Arrow diagram in the exercise on which represent a function on X."
+    },
+    {
+     "key": "pp3u1-3:figure-3",
+     "objective": 2,
+     "why": "Cartesian diagram representing the function f from the worked example."
+    },
+    {
+     "key": "pp3u1-3:figure-2",
+     "objective": 2,
+     "why": "Arrow diagram representing the function f from the worked example."
+    },
+    {
+     "key": "pp3u1-3:convention-2",
+     "objective": 2,
+     "why": "Naming convention for a function on X, part of function notation."
+    },
+    {
+     "key": "pp3u1-3:convention-1",
+     "objective": 2,
+     "why": "Gives the symbol f : X → Y for writing a function."
+    },
+    {
+     "key": "pp3u1-3:figure-1",
+     "objective": 1,
+     "why": "Arrow diagrams from X to Y in the opening activity on which relations are functions."
+    }
+   ]
+  },
+  {
+   "slug": "pp3u1-4",
+   "A": [
+    {
+     "key": "pp3u1-4:rule-1",
+     "objective": 1,
+     "why": "Degree is the highest power of the variable in the rule."
+    },
+    {
+     "key": "pp3u1-4:definition-2",
+     "objective": 3,
+     "why": "Linear function definition introduces the functions graphed next."
+    },
+    {
+     "key": "pp3u1-4:table-1",
+     "objective": 3,
+     "why": "Ordered pairs for graphing f(x)=2x-3."
+    },
+    {
+     "key": "pp3u1-4:figure-1",
+     "objective": 3,
+     "why": "Straight-line graph of f(x)=2x-3."
+    },
+    {
+     "key": "pp3u1-4:rule-2",
+     "objective": 3,
+     "why": "Says how many ordered pairs are needed to draw the line."
+    },
+    {
+     "key": "pp3u1-4:rule-3",
+     "objective": 3,
+     "why": "Graph of f(x)=ax is a line through the origin."
+    },
+    {
+     "key": "pp3u1-4:table-2",
+     "objective": 3,
+     "why": "Ordered pairs for the constant function f(x)=3."
+    },
+    {
+     "key": "pp3u1-4:figure-2",
+     "objective": 3,
+     "why": "Horizontal line graph of the constant function y=3."
+    },
+    {
+     "key": "pp3u1-4:definition-4",
+     "objective": 4,
+     "why": "Defines the quadratic function that is then graphed."
+    },
+    {
+     "key": "pp3u1-4:table-3",
+     "objective": 4,
+     "why": "Values for graphing f(x)=x²."
+    },
+    {
+     "key": "pp3u1-4:figure-3",
+     "objective": 4,
+     "why": "Parabola of f(x)=x² with vertex at origin."
+    },
+    {
+     "key": "pp3u1-4:rule-4",
+     "objective": 4,
+     "why": "Axis of symmetry of the curve is x=0."
+    },
+    {
+     "key": "pp3u1-4:rule-5",
+     "objective": 4,
+     "why": "States the vertex and minimum value of the curve."
+    },
+    {
+     "key": "pp3u1-4:rule-7",
+     "objective": 4,
+     "why": "Opens upward with a minimum value when a>0."
+    },
+    {
+     "key": "pp3u1-4:rule-8",
+     "objective": 4,
+     "why": "Opens downward with a maximum value when a<0."
+    },
+    {
+     "key": "pp3u1-4:rule-9",
+     "objective": 4,
+     "why": "Axis of symmetry is x=-b/2a."
+    },
+    {
+     "key": "pp3u1-4:table-4",
+     "objective": 4,
+     "why": "Values for graphing f(x)=-x²."
+    },
+    {
+     "key": "pp3u1-4:figure-4",
+     "objective": 4,
+     "why": "Downward parabola of f(x)=-x² with maximum at the vertex."
+    }
+   ],
+   "B": [
+    {
+     "key": "pp3u1-4:figure-4",
+     "objective": 4,
+     "why": "Graph of the downward parabola y=-x² with vertex at the origin."
+    },
+    {
+     "key": "pp3u1-4:table-4",
+     "objective": 4,
+     "why": "Values table used to plot the quadratic f(x)=-x²."
+    },
+    {
+     "key": "pp3u1-4:rule-9",
+     "objective": 4,
+     "why": "States the axis of symmetry x=-b/2a of a quadratic curve."
+    },
+    {
+     "key": "pp3u1-4:rule-8",
+     "objective": 4,
+     "why": "States that a<0 gives a maximum value f(-b/2a)."
+    },
+    {
+     "key": "pp3u1-4:rule-7",
+     "objective": 4,
+     "why": "States that a>0 gives a minimum value f(-b/2a)."
+    },
+    {
+     "key": "pp3u1-4:rule-5",
+     "objective": 4,
+     "why": "Gives the vertex and minimum value for f(x)=x²."
+    },
+    {
+     "key": "pp3u1-4:rule-4",
+     "objective": 4,
+     "why": "Gives the axis of symmetry of the graph of x²."
+    },
+    {
+     "key": "pp3u1-4:figure-3",
+     "objective": 4,
+     "why": "Graph of the parabola f(x)=x² with its vertex at the origin."
+    },
+    {
+     "key": "pp3u1-4:table-3",
+     "objective": 4,
+     "why": "Values table used to plot f(x)=x²."
+    },
+    {
+     "key": "pp3u1-4:definition-4",
+     "objective": 1,
+     "why": "Defines a quadratic function as a second-degree polynomial, identified by its rule and degree."
+    },
+    {
+     "key": "pp3u1-4:figure-2",
+     "objective": 3,
+     "why": "Graph of the constant function y=3 as a horizontal line."
+    },
+    {
+     "key": "pp3u1-4:table-2",
+     "objective": 3,
+     "why": "Ordered pairs for graphing the constant function f(x)=3."
+    },
+    {
+     "key": "pp3u1-4:rule-3",
+     "objective": 3,
+     "why": "States that f(x)=ax graphs as a straight line through the origin."
+    },
+    {
+     "key": "pp3u1-4:rule-2",
+     "objective": 3,
+     "why": "Says two ordered pairs suffice to draw the line, with a third as a check."
+    },
+    {
+     "key": "pp3u1-4:figure-1",
+     "objective": 3,
+     "why": "Straight-line graph of f(x)=2x-3 from its ordered pairs."
+    },
+    {
+     "key": "pp3u1-4:table-1",
+     "objective": 3,
+     "why": "Ordered pairs for graphing f(x)=2x-3."
+    },
+    {
+     "key": "pp3u1-4:definition-2",
+     "objective": 1,
+     "why": "Defines a linear function as a first-degree polynomial, identified from its rule."
+    },
+    {
+     "key": "pp3u1-4:rule-1",
+     "objective": 1,
+     "why": "States that the degree is the highest power of the variable in the rule."
+    }
+   ]
+  }
+ ]
+}

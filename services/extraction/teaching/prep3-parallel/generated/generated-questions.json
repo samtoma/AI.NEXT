@@ -1,0 +1,2184 @@
+{
+  "bundle": "generated-questions-v2",
+  "generator": "declarative families — services/extraction/generate_questions.py --families (decision 16)",
+  "course_id": "course:prep3-parallel-math-en",
+  "book": "prep3-parallel",
+  "reviewed": false,
+  "seed": 20260925,
+  "per_family": 10,
+  "note": "Declarative families: every key computed from the sampled parameters by the safe evaluator that writes the stem; each family blind-graded on sampled instances before it could reach this file (ADR-0008, decision 16).",
+  "families": {
+    "tpl:pp3u1-1-2:sizes-sum": 10,
+    "tpl:pp3u1-1-4:axis-points": 10,
+    "tpl:pp3u1-2-2:arrowend": 10,
+    "tpl:pp3u1-3-1:pick-func": 10,
+    "tpl:pp3u1-4-1:expand-cancel": 10,
+    "tpl:pp3u1-4-2:surd-combo": 10
+  },
+  "family_specs": {
+    "tpl:pp3u1-1-2:sizes-sum": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683",
+    "tpl:pp3u1-1-4:axis-points": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887",
+    "tpl:pp3u1-2-2:arrowend": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d",
+    "tpl:pp3u1-3-1:pick-func": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc",
+    "tpl:pp3u1-4-1:expand-cancel": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9",
+    "tpl:pp3u1-4-2:surd-combo": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+  },
+  "family_grades": {
+    "tpl:pp3u1-1-2:sizes-sum": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:pp3u1-1-4:axis-points": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:pp3u1-2-2:arrowend": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:pp3u1-3-1:pick-func": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:pp3u1-4-1:expand-cancel": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    },
+    "tpl:pp3u1-4-2:surd-combo": {
+      "grades": [
+        "s6-grade.20261017T074727Z.json"
+      ],
+      "graded_instances": 3
+    }
+  },
+  "rejected_families": {
+    "tpl:pp3u1-1-2:find-size": [
+      "q:pp3u1-1-2:g004-find-s: blind answer disagrees — unreadable number ''",
+      "q:pp3u1-1-2:g005-find-s: blind answer disagrees — unreadable number ''",
+      "q:pp3u1-1-2:g007-find-s: blind answer disagrees — unreadable number ''"
+    ],
+    "tpl:pp3u1-4-2:poly-int": [
+      "judge: context_ok is False — The keys are correct: 15, 13 and 18. The worked solutions are arithmetically correct and follow the substitution method. No options were shown, so I had no distractors to check. The stems g001 and g006 write the coefficient as \"-1x\", which no textbook prints (it would be \"-x\"). This is unnatural notation that could confuse a Grade prep-3 student, so the generator should drop an explicit coefficient of 1. That is why context_ok is false."
+    ]
+  },
+  "untagged_distractors": [
+    "q:pp3u1-3-1:g001-pick-f option C: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g002-pick-f option B: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g003-pick-f option B: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g004-pick-f option D: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g005-pick-f option C: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g006-pick-f option D: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g007-pick-f option A: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g008-pick-f option A: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g009-pick-f option D: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped",
+    "q:pp3u1-3-1:g010-pick-f option B: mc:pp3u1-3-1:no-image is not in the catalogue — tag dropped"
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:pp3u1-3-1:two-images",
+      "lo_id": "lo:pp3u1-3-1",
+      "label": "Accepts an element of X with two images",
+      "description": "The student calls a relation a function even though one element of X is paired with more than one element of Y."
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:pp3u1-1-2:g001-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-4,\\ 0\\}$ and $Y=\\{-1,\\ 4,\\ 8\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "10",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 2 and n(Y) = 3."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 2 × 2 = 4."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 2 × 3 = 6."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 4 + 6 = 10."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g002-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{0,\\ 6,\\ 9\\}$ and $Y=\\{1,\\ 6\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "15",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 3 and n(Y) = 2."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 3 × 3 = 9."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 3 × 2 = 6."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 9 + 6 = 15."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g003-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-3,\\ -2,\\ 0,\\ 7,\\ 8\\}$ and $Y=\\{1,\\ 2,\\ 3,\\ 4\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "45",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 5 and n(Y) = 4."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 5 × 5 = 25."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 5 × 4 = 20."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 25 + 20 = 45."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g004-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{3,\\ 4,\\ 7,\\ 8\\}$ and $Y=\\{5,\\ 7\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "24",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 4 and n(Y) = 2."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 2 = 8."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 16 + 8 = 24."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g005-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-3,\\ 6,\\ 8\\}$ and $Y=\\{-1,\\ 0,\\ 5,\\ 9\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "21",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 3 and n(Y) = 4."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 3 × 3 = 9."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 3 × 4 = 12."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 9 + 12 = 21."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g006-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-2,\\ 1,\\ 4,\\ 5\\}$ and $Y=\\{5,\\ 6,\\ 8\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "28",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 4 and n(Y) = 3."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 3 = 12."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 16 + 12 = 28."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g007-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-1,\\ 1,\\ 2,\\ 9\\}$ and $Y=\\{-1,\\ 4,\\ 9\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "28",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 4 and n(Y) = 3."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 3 = 12."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 16 + 12 = 28."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g008-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-4,\\ -3,\\ 3,\\ 6,\\ 7\\}$ and $Y=\\{-4,\\ 5\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "35",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 5 and n(Y) = 2."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 5 × 5 = 25."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 5 × 2 = 10."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 25 + 10 = 35."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g009-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-4,\\ -3,\\ 8\\}$ and $Y=\\{-2,\\ 1,\\ 5,\\ 6\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "21",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 3 and n(Y) = 4."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 3 × 3 = 9."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 3 × 4 = 12."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 9 + 12 = 21."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-2:g010-sizes-",
+      "lo_id": "lo:pp3u1-1-2",
+      "tier": "standard",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+      "source_page": 9,
+      "source_note": "Generated from template family tpl:pp3u1-1-2:sizes-sum.",
+      "stem": "If $X=\\{-4,\\ 0,\\ 1,\\ 6\\}$ and $Y=\\{-3,\\ 8\\}$, find $n(X^2)+n(X\\times Y)$.",
+      "correct_answer": "24",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "n(X) = 4 and n(Y) = 2."
+        },
+        {
+          "step": 2,
+          "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
+        },
+        {
+          "step": 3,
+          "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 2 = 8."
+        },
+        {
+          "step": 4,
+          "text_md": "n(X²) + n(X×Y) = 16 + 8 = 24."
+        }
+      ],
+      "family": "tpl:pp3u1-1-2:sizes-sum",
+      "family_spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683"
+    },
+    {
+      "id": "q:pp3u1-1-4:g001-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -4\\le x\\le 2\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "13",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 7 elements: the integers from -4 to 2, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 7 points. Points on the y-axis have x = 0 and any y in X: 7 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 7 + 7 - 1 = 13."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g002-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -3\\le x\\le 4\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "15",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 8 elements: the integers from -3 to 4, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 8 points. Points on the y-axis have x = 0 and any y in X: 8 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 8 + 8 - 1 = 15."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g003-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -2\\le x\\le 1\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 4 elements: the integers from -2 to 1, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 4 points. Points on the y-axis have x = 0 and any y in X: 4 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 4 + 4 - 1 = 7."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g004-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -4\\le x\\le 3\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "15",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 8 elements: the integers from -4 to 3, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 8 points. Points on the y-axis have x = 0 and any y in X: 8 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 8 + 8 - 1 = 15."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g005-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -4\\le x\\le 5\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "19",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 10 elements: the integers from -4 to 5, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 10 points. Points on the y-axis have x = 0 and any y in X: 10 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 10 + 10 - 1 = 19."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g006-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -3\\le x\\le 5\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "17",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 9 elements: the integers from -3 to 5, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 9 points. Points on the y-axis have x = 0 and any y in X: 9 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 9 + 9 - 1 = 17."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g007-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -4\\le x\\le 1\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "11",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 6 elements: the integers from -4 to 1, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 6 points. Points on the y-axis have x = 0 and any y in X: 6 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 6 + 6 - 1 = 11."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g008-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -2\\le x\\le 6\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "17",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 9 elements: the integers from -2 to 6, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 9 points. Points on the y-axis have x = 0 and any y in X: 9 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 9 + 9 - 1 = 17."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g009-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -5\\le x\\le 5\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "21",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 11 elements: the integers from -5 to 5, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 11 points. Points on the y-axis have x = 0 and any y in X: 11 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 11 + 11 - 1 = 21."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-1-4:g010-axis-p",
+      "lo_id": "lo:pp3u1-1-4",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+      "source_page": 12,
+      "source_note": "Generated from template family tpl:pp3u1-1-4:axis-points.",
+      "stem": "Let $X=\\{x\\in\\mathbb{Z} : -3\\le x\\le 2\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
+      "correct_answer": "11",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "X has 6 elements: the integers from -3 to 2, including 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Points on the x-axis have y = 0 and any x in X: 6 points. Points on the y-axis have x = 0 and any y in X: 6 points."
+        },
+        {
+          "step": 3,
+          "text_md": "The point (0, 0) is counted twice, so the total is 6 + 6 - 1 = 11."
+        }
+      ],
+      "family": "tpl:pp3u1-1-4:axis-points",
+      "family_spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887"
+    },
+    {
+      "id": "q:pp3u1-2-2:g001-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{3, 6, 9, 12\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 3 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $3$ ends at which element of Y?",
+      "correct_answer": "9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 3 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 3$: $b = 3 \\times 3 = 9$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $3$ ends at $9$, and the cartesian diagram has the point $(3, 9)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g002-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{2, 4, 6, 8\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 2 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $1$ ends at which element of Y?",
+      "correct_answer": "2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 2 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 1$: $b = 2 \\times 1 = 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $1$ ends at $2$, and the cartesian diagram has the point $(1, 2)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g003-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{2, 4, 6, 8\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 2 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $2$ ends at which element of Y?",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 2 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 2$: $b = 2 \\times 2 = 4$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $2$ ends at $4$, and the cartesian diagram has the point $(2, 4)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g004-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{4, 8, 12, 16\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 4 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $4$ ends at which element of Y?",
+      "correct_answer": "16",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 4 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 4$: $b = 4 \\times 4 = 16$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $4$ ends at $16$, and the cartesian diagram has the point $(4, 16)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g005-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{6, 12, 18, 24\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 6 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $4$ ends at which element of Y?",
+      "correct_answer": "24",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 6 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 4$: $b = 6 \\times 4 = 24$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $4$ ends at $24$, and the cartesian diagram has the point $(4, 24)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g006-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{2, 4, 6, 8\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 2 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $3$ ends at which element of Y?",
+      "correct_answer": "6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 2 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 3$: $b = 2 \\times 3 = 6$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $3$ ends at $6$, and the cartesian diagram has the point $(3, 6)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g007-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{4, 8, 12, 16\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 4 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $2$ ends at which element of Y?",
+      "correct_answer": "8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 4 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 2$: $b = 4 \\times 2 = 8$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $2$ ends at $8$, and the cartesian diagram has the point $(2, 8)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g008-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{4, 8, 12, 16\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 4 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $1$ ends at which element of Y?",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 4 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 1$: $b = 4 \\times 1 = 4$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $1$ ends at $4$, and the cartesian diagram has the point $(1, 4)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g009-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{6, 12, 18, 24\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 6 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $2$ ends at which element of Y?",
+      "correct_answer": "12",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 6 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 2$: $b = 6 \\times 2 = 12$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $2$ ends at $12$, and the cartesian diagram has the point $(2, 12)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-2-2:g010-arrowe",
+      "lo_id": "lo:pp3u1-2-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+      "source_page": 14,
+      "source_note": "Generated from template family tpl:pp3u1-2-2:arrowend.",
+      "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{5, 10, 15, 20\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 5 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $3$ ends at which element of Y?",
+      "correct_answer": "15",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 5 \\times a$."
+        },
+        {
+          "step": 2,
+          "text_md": "For $a = 3$: $b = 5 \\times 3 = 15$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the arrow from $3$ ends at $15$, and the cartesian diagram has the point $(3, 15)$."
+        }
+      ],
+      "family": "tpl:pp3u1-2-2:arrowend",
+      "family_spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d"
+    },
+    {
+      "id": "q:pp3u1-3-1:g001-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 1, 5, 9 \\}$ and $Y=\\{ 2, 7, 10, 12 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "A",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 5 and 9 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (1, 10), (5, 10), (9, 12) \\}$ has 1, 5, 9 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$ is not a function: 1 has two images, 10 and 12."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (1, 10), (5, 10) \\}$ is not a function: 9 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (1, 10), (5, 10), (5, 12), (9, 12) \\}$ is not a function: 5 has two images, 10 and 12."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (1, 10), (5, 10), (9, 12) \\}$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (1, 10), (5, 10) \\}$"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (1, 10), (5, 10), (5, 12), (9, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g002-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 2, 6, 8 \\}$ and $Y=\\{ 2, 8, 10, 12 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "D",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 2, 6 and 8 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (2, 2), (6, 8), (8, 10) \\}$ has 2, 6, 8 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (2, 2), (2, 12), (6, 8), (8, 10) \\}$ is not a function: 2 has two images, 2 and 12."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (2, 2), (6, 8) \\}$ is not a function: 8 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (2, 2), (6, 8), (6, 12), (8, 10) \\}$ is not a function: 6 has two images, 8 and 12."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (2, 2), (2, 12), (6, 8), (8, 10) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (2, 2), (6, 8) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (2, 2), (6, 8), (6, 12), (8, 10) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (2, 2), (6, 8), (8, 10) \\}$"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g003-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 1, 2, 3 \\}$ and $Y=\\{ 3, 7, 12, 13 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "A",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 2 and 3 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (1, 7), (2, 7), (3, 12) \\}$ has 1, 2, 3 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (1, 7), (1, 12), (2, 7), (3, 12) \\}$ is not a function: 1 has two images, 7 and 12."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (1, 7), (2, 7) \\}$ is not a function: 3 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (1, 7), (2, 7), (2, 13), (3, 12) \\}$ is not a function: 2 has two images, 7 and 13."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (1, 7), (2, 7), (3, 12) \\}$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (1, 7), (2, 7) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (1, 7), (2, 7), (2, 13), (3, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (1, 7), (1, 12), (2, 7), (3, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g004-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 4, 5, 8 \\}$ and $Y=\\{ 6, 7, 8, 10 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "C",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 4, 5 and 8 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (4, 6), (5, 7), (8, 10) \\}$ has 4, 5, 8 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (4, 6), (4, 8), (5, 7), (8, 10) \\}$ is not a function: 4 has two images, 6 and 8."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (4, 6), (5, 7) \\}$ is not a function: 8 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (4, 6), (5, 7), (5, 10), (8, 10) \\}$ is not a function: 5 has two images, 7 and 10."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (4, 6), (5, 7), (5, 10), (8, 10) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (4, 6), (4, 8), (5, 7), (8, 10) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (4, 6), (5, 7), (8, 10) \\}$"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (4, 6), (5, 7) \\}$"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g005-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 2, 4, 8 \\}$ and $Y=\\{ 3, 8, 11, 14 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "B",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 2, 4 and 8 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (2, 3), (4, 14), (8, 3) \\}$ has 2, 4, 8 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (2, 3), (2, 11), (4, 14), (8, 3) \\}$ is not a function: 2 has two images, 3 and 11."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (2, 3), (4, 14) \\}$ is not a function: 8 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (2, 3), (4, 14), (4, 3), (8, 3) \\}$ is not a function: 4 has two images, 14 and 3."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (2, 3), (2, 11), (4, 14), (8, 3) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (2, 3), (4, 14), (8, 3) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (2, 3), (4, 14) \\}$"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (2, 3), (4, 14), (4, 3), (8, 3) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g006-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 3, 4, 7 \\}$ and $Y=\\{ 2, 4, 12, 13 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "B",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 3, 4 and 7 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (3, 13), (4, 4), (7, 2) \\}$ has 3, 4, 7 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (3, 13), (3, 4), (4, 4), (7, 2) \\}$ is not a function: 3 has two images, 13 and 4."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (3, 13), (4, 4) \\}$ is not a function: 7 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (3, 13), (4, 4), (4, 13), (7, 2) \\}$ is not a function: 4 has two images, 4 and 13."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (3, 13), (4, 4), (4, 13), (7, 2) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (3, 13), (4, 4), (7, 2) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (3, 13), (3, 4), (4, 4), (7, 2) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (3, 13), (4, 4) \\}$"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g007-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 2, 3, 4 \\}$ and $Y=\\{ 8, 9, 12, 14 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "B",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 2, 3 and 4 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (2, 9), (3, 14), (4, 12) \\}$ has 2, 3, 4 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (2, 9), (2, 14), (3, 14), (4, 12) \\}$ is not a function: 2 has two images, 9 and 14."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (2, 9), (3, 14) \\}$ is not a function: 4 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (2, 9), (3, 14), (3, 8), (4, 12) \\}$ is not a function: 3 has two images, 14 and 8."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (2, 9), (3, 14) \\}$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (2, 9), (3, 14), (4, 12) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (2, 9), (2, 14), (3, 14), (4, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (2, 9), (3, 14), (3, 8), (4, 12) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g008-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 1, 7, 9 \\}$ and $Y=\\{ 2, 3, 9, 15 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "D",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 7 and 9 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (1, 2), (7, 3), (9, 9) \\}$ has 1, 7, 9 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (1, 2), (1, 3), (7, 3), (9, 9) \\}$ is not a function: 1 has two images, 2 and 3."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (1, 2), (7, 3) \\}$ is not a function: 9 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (1, 2), (7, 3), (7, 15), (9, 9) \\}$ is not a function: 7 has two images, 3 and 15."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (1, 2), (7, 3) \\}$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (1, 2), (1, 3), (7, 3), (9, 9) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (1, 2), (7, 3), (7, 15), (9, 9) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (1, 2), (7, 3), (9, 9) \\}$"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g009-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 1, 6, 7 \\}$ and $Y=\\{ 4, 5, 9, 11 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "C",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 6 and 7 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (1, 11), (6, 11), (7, 5) \\}$ has 1, 6, 7 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (1, 11), (1, 9), (6, 11), (7, 5) \\}$ is not a function: 1 has two images, 11 and 9."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (1, 11), (6, 11) \\}$ is not a function: 7 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (1, 11), (6, 11), (6, 5), (7, 5) \\}$ is not a function: 6 has two images, 11 and 5."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (1, 11), (6, 11), (6, 5), (7, 5) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (1, 11), (1, 9), (6, 11), (7, 5) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (1, 11), (6, 11), (7, 5) \\}$"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (1, 11), (6, 11) \\}$"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-3-1:g010-pick-f",
+      "lo_id": "lo:pp3u1-3-1",
+      "tier": "basic",
+      "question_type": "mcq",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+      "source_page": 18,
+      "source_note": "Generated from template family tpl:pp3u1-3-1:pick-func.",
+      "stem": "$X=\\{ 1, 3, 9 \\}$ and $Y=\\{ 5, 7, 8, 10 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
+      "correct_answer": "A",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 3 and 9 must appear as a first element exactly once."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\{ (1, 7), (3, 10), (9, 7) \\}$ has 1, 3, 9 each once as a first element, so it is a function."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{ (1, 7), (1, 10), (3, 10), (9, 7) \\}$ is not a function: 1 has two images, 7 and 10."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\{ (1, 7), (3, 10) \\}$ is not a function: 9 has no image."
+        },
+        {
+          "step": 5,
+          "text_md": "$\\{ (1, 7), (3, 10), (3, 8), (9, 7) \\}$ is not a function: 3 has two images, 10 and 8."
+        }
+      ],
+      "choices": [
+        {
+          "key": "A",
+          "text": "$\\{ (1, 7), (3, 10), (9, 7) \\}$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{ (1, 7), (3, 10) \\}$"
+        },
+        {
+          "key": "C",
+          "text": "$\\{ (1, 7), (3, 10), (3, 8), (9, 7) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        },
+        {
+          "key": "D",
+          "text": "$\\{ (1, 7), (1, 10), (3, 10), (9, 7) \\}$",
+          "misconception_id": "mc:pp3u1-3-1:two-images"
+        }
+      ],
+      "family": "tpl:pp3u1-3-1:pick-func",
+      "family_spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc"
+    },
+    {
+      "id": "q:pp3u1-4-1:g001-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+5)(x^3+5)-x^{7}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+5)(x^3+5)=x^{7}+5x^4+5x^3+25$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{7}$: $f(x)=x^{7}+5x^4+5x^3+25-x^{7}=5x^4+5x^3+25$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{7}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g002-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^2+2)(x+2)-x^{3}$",
+      "correct_answer": "2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^2+2)(x+2)=x^{3}+2x^2+2x+4$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{3}$: $f(x)=x^{3}+2x^2+2x+4-x^{3}=2x^2+2x+4$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{3}$ terms cancel, so the highest power of x left is 2."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 2."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g003-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+5)(x^2+3)-x^{6}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+5)(x^2+3)=x^{6}+3x^4+5x^2+15$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{6}$: $f(x)=x^{6}+3x^4+5x^2+15-x^{6}=3x^4+5x^2+15$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{6}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g004-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^3+2)(x+2)-x^{4}$",
+      "correct_answer": "3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^3+2)(x+2)=x^{4}+2x^3+2x+4$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{4}$: $f(x)=x^{4}+2x^3+2x+4-x^{4}=2x^3+2x+4$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{4}$ terms cancel, so the highest power of x left is 3."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 3."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g005-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+3)(x^2+5)-x^{6}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+3)(x^2+5)=x^{6}+5x^4+3x^2+15$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{6}$: $f(x)=x^{6}+5x^4+3x^2+15-x^{6}=5x^4+3x^2+15$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{6}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g006-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+1)(x+4)-x^{5}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+1)(x+4)=x^{5}+4x^4+x+4$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{5}$: $f(x)=x^{5}+4x^4+x+4-x^{5}=4x^4+x+4$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{5}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g007-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+3)(x^2+1)-x^{6}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+3)(x^2+1)=x^{6}+x^4+3x^2+3$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{6}$: $f(x)=x^{6}+x^4+3x^2+3-x^{6}=x^4+3x^2+3$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{6}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g008-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^2+1)(x+5)-x^{3}$",
+      "correct_answer": "2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^2+1)(x+5)=x^{3}+5x^2+x+5$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{3}$: $f(x)=x^{3}+5x^2+x+5-x^{3}=5x^2+x+5$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{3}$ terms cancel, so the highest power of x left is 2."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 2."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g009-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^2+5)(x+2)-x^{3}$",
+      "correct_answer": "2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^2+5)(x+2)=x^{3}+2x^2+5x+10$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{3}$: $f(x)=x^{3}+2x^2+5x+10-x^{3}=2x^2+5x+10$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{3}$ terms cancel, so the highest power of x left is 2."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 2."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-1:g010-expand",
+      "lo_id": "lo:pp3u1-4-1",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+      "source_page": 19,
+      "source_note": "Generated from template family tpl:pp3u1-4-1:expand-cancel.",
+      "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+3)(x+3)-x^{5}$",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Expand the brackets: $(x^4+3)(x+3)=x^{5}+3x^4+3x+9$."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract $x^{5}$: $f(x)=x^{5}+3x^4+3x+9-x^{5}=3x^4+3x+9$."
+        },
+        {
+          "step": 3,
+          "text_md": "The $x^{5}$ terms cancel, so the highest power of x left is 4."
+        },
+        {
+          "step": 4,
+          "text_md": "The degree is 4."
+        }
+      ],
+      "family": "tpl:pp3u1-4-1:expand-cancel",
+      "family_spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9"
+    },
+    {
+      "id": "q:pp3u1-4-2:g001-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-4x+1$ and $g(x)=x-5$, find $f(\\sqrt{7})+4\\,g(\\sqrt{7})$.",
+      "correct_answer": "-12",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{7})=(\\sqrt{7})^2-4\\sqrt{7}+1=8-4\\sqrt{7}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{7})=\\sqrt{7}-5$, so $4\\,g(\\sqrt{7})=4\\sqrt{7}-20$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{7})+4\\,g(\\sqrt{7})=8-4\\sqrt{7}+4\\sqrt{7}-20$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-12$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g002-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-4x+5$ and $g(x)=x-4$, find $f(\\sqrt{3})+4\\,g(\\sqrt{3})$.",
+      "correct_answer": "-8",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{3})=(\\sqrt{3})^2-4\\sqrt{3}+5=8-4\\sqrt{3}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{3})=\\sqrt{3}-4$, so $4\\,g(\\sqrt{3})=4\\sqrt{3}-16$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{3})+4\\,g(\\sqrt{3})=8-4\\sqrt{3}+4\\sqrt{3}-16$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-8$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g003-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-5x+2$ and $g(x)=x-4$, find $f(\\sqrt{7})+5\\,g(\\sqrt{7})$.",
+      "correct_answer": "-11",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{7})=(\\sqrt{7})^2-5\\sqrt{7}+2=9-5\\sqrt{7}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{7})=\\sqrt{7}-4$, so $5\\,g(\\sqrt{7})=5\\sqrt{7}-20$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{7})+5\\,g(\\sqrt{7})=9-5\\sqrt{7}+5\\sqrt{7}-20$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-11$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g004-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-4x+4$ and $g(x)=x-4$, find $f(\\sqrt{6})+4\\,g(\\sqrt{6})$.",
+      "correct_answer": "-6",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{6})=(\\sqrt{6})^2-4\\sqrt{6}+4=10-4\\sqrt{6}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{6})=\\sqrt{6}-4$, so $4\\,g(\\sqrt{6})=4\\sqrt{6}-16$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{6})+4\\,g(\\sqrt{6})=10-4\\sqrt{6}+4\\sqrt{6}-16$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-6$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g005-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-3x+3$ and $g(x)=x-4$, find $f(\\sqrt{6})+3\\,g(\\sqrt{6})$.",
+      "correct_answer": "-3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{6})=(\\sqrt{6})^2-3\\sqrt{6}+3=9-3\\sqrt{6}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{6})=\\sqrt{6}-4$, so $3\\,g(\\sqrt{6})=3\\sqrt{6}-12$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{6})+3\\,g(\\sqrt{6})=9-3\\sqrt{6}+3\\sqrt{6}-12$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-3$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g006-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-2x+4$ and $g(x)=x-3$, find $f(\\sqrt{7})+2\\,g(\\sqrt{7})$.",
+      "correct_answer": "5",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{7})=(\\sqrt{7})^2-2\\sqrt{7}+4=11-2\\sqrt{7}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{7})=\\sqrt{7}-3$, so $2\\,g(\\sqrt{7})=2\\sqrt{7}-6$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{7})+2\\,g(\\sqrt{7})=11-2\\sqrt{7}+2\\sqrt{7}-6$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $5$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g007-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-5x+1$ and $g(x)=x-2$, find $f(\\sqrt{2})+5\\,g(\\sqrt{2})$.",
+      "correct_answer": "-7",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{2})=(\\sqrt{2})^2-5\\sqrt{2}+1=3-5\\sqrt{2}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{2})=\\sqrt{2}-2$, so $5\\,g(\\sqrt{2})=5\\sqrt{2}-10$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{2})+5\\,g(\\sqrt{2})=3-5\\sqrt{2}+5\\sqrt{2}-10$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-7$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g008-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-4x+4$ and $g(x)=x-1$, find $f(\\sqrt{3})+4\\,g(\\sqrt{3})$.",
+      "correct_answer": "3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{3})=(\\sqrt{3})^2-4\\sqrt{3}+4=7-4\\sqrt{3}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{3})=\\sqrt{3}-1$, so $4\\,g(\\sqrt{3})=4\\sqrt{3}-4$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{3})+4\\,g(\\sqrt{3})=7-4\\sqrt{3}+4\\sqrt{3}-4$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $3$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g009-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-3x+4$ and $g(x)=x-3$, find $f(\\sqrt{3})+3\\,g(\\sqrt{3})$.",
+      "correct_answer": "-2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{3})=(\\sqrt{3})^2-3\\sqrt{3}+4=7-3\\sqrt{3}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{3})=\\sqrt{3}-3$, so $3\\,g(\\sqrt{3})=3\\sqrt{3}-9$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{3})+3\\,g(\\sqrt{3})=7-3\\sqrt{3}+3\\sqrt{3}-9$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $-2$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    },
+    {
+      "id": "q:pp3u1-4-2:g010-surd-c",
+      "lo_id": "lo:pp3u1-4-2",
+      "tier": "advanced",
+      "question_type": "numeric",
+      "source": "variant",
+      "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+      "source_page": 20,
+      "source_note": "Generated from template family tpl:pp3u1-4-2:surd-combo.",
+      "stem": "If $f(x)=x^2-2x+3$ and $g(x)=x-3$, find $f(\\sqrt{6})+2\\,g(\\sqrt{6})$.",
+      "correct_answer": "3",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$f(\\sqrt{6})=(\\sqrt{6})^2-2\\sqrt{6}+3=9-2\\sqrt{6}$."
+        },
+        {
+          "step": 2,
+          "text_md": "$g(\\sqrt{6})=\\sqrt{6}-3$, so $2\\,g(\\sqrt{6})=2\\sqrt{6}-6$."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: $f(\\sqrt{6})+2\\,g(\\sqrt{6})=9-2\\sqrt{6}+2\\sqrt{6}-6$."
+        },
+        {
+          "step": 4,
+          "text_md": "The surd terms cancel, so the sum is $3$."
+        }
+      ],
+      "family": "tpl:pp3u1-4-2:surd-combo",
+      "family_spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453"
+    }
+  ],
+  "s5_reconciled": {
+    "runs": [
+      "s5-final.20261017T080354Z.json"
+    ],
+    "catalogue": "prep3-parallel-misconceptions",
+    "refused_attachments_stripped": [],
+    "widgets_left_out": []
+  }
+}

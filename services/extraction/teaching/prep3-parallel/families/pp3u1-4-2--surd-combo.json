@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-2:surd-combo",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-2",
+ "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
+ "source_page": 20,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    5
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "If $f(x)=x^2-{=p}x+{=q}$ and $g(x)=x-{=r}$, find $f(\\sqrt{{=n}})+{=p}\\,g(\\sqrt{{=n}})$.",
+ "answer": "n + q - p * r",
+ "solution": [
+  "$f(\\sqrt{{=n}})=(\\sqrt{{=n}})^2-{=p}\\sqrt{{=n}}+{=q}={=n+q}-{=p}\\sqrt{{=n}}$.",
+  "$g(\\sqrt{{=n}})=\\sqrt{{=n}}-{=r}$, so ${=p}\\,g(\\sqrt{{=n}})={=p}\\sqrt{{=n}}-{=p*r}$.",
+  "Add: $f(\\sqrt{{=n}})+{=p}\\,g(\\sqrt{{=n}})={=n+q}-{=p}\\sqrt{{=n}}+{=p}\\sqrt{{=n}}-{=p*r}$.",
+  "The surd terms cancel, so the sum is ${=n+q-p*r}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Mirrors book drill: coefficient of g equals the x coefficient in f so the surds cancel; answer is a whole number (may be negative)."
+}

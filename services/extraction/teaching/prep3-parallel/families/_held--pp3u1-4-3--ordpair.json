@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:ordpair",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "lo:pp3u1-4-3",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "y",
+   "let": "a*k+b"
+  }
+ ],
+ "stem": "To graph the linear function $f(x) = {=a}x + {=b}$ we find ordered pairs. Complete the ordered pair $({=k}, \\;?)$ that lies on the line. Give the missing $y$-value.",
+ "answer": "y",
+ "solution": [
+  "Substitute $x = {=k}$ into $f(x) = {=a}x + {=b}$.",
+  "$f({=k}) = {=a} \\times {=k} + {=b} = {=y}$.",
+  "The ordered pair is $({=k}, {=y})$, so the missing value is {=y}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied for this objective, so parent_question_id is the objective id as a placeholder; please set a real parent. Method: table of values/ordered pairs."
+}

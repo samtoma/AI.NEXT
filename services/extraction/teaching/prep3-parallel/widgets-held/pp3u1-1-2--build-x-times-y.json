@@ -1,0 +1,33 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-1-2:build-x-times-y",
+ "lo_id": "lo:pp3u1-1-2",
+ "parent_question_id": "q:pp3u1-1-2:bk-drill-2-a",
+ "tier": "basic",
+ "kind": "product_builder",
+ "instances": [],
+ "spec": {
+  "X": [
+   2,
+   -1
+  ],
+  "Y": [
+   4,
+   0
+  ]
+ },
+ "stem": "If $X=\\{2, -1\\}$ and $Y=\\{4, 0\\}$, build $X\\times Y$ by selecting all its ordered pairs.",
+ "solution": [
+  "In $X\\times Y$ the first component comes from $X$ and the second from $Y$.",
+  "Pair $2$ with each element of $Y$: $(2, 4), (2, 0)$.",
+  "Pair $-1$ with each element of $Y$: $(-1, 4), (-1, 0)$.",
+  "So $X\\times Y$ has $2\\times 2 = 4$ pairs."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "reversed-pairs",
+   "misconception_id": "mc:pp3u1-1-2:product-order-ignored"
+  }
+ ],
+ "notes": "missing-pairs could reflect adding set sizes (adds-set-sizes) but more likely just an incomplete listing; not mapped to avoid a weak diagnosis."
+}

@@ -1,0 +1,155 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "d2db9cbb8389a786e3e66c8ce254b8d2080d6749e7271ebe951eee26c79891cc",
+  "generated_sha256": "57373f7745ac9f070c834d7e1ce29961013745d8635c718cbfe5c6ca7fd5c9a6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the set Z and the relation R in this question are not given, so we cannot check whether R is a subset of X × Z.",
+      "solution": [
+       "The rule says that a relation R from X to Z is a subset of X × Z.",
+       "To decide, we need the elements of Z and the ordered pairs of R.",
+       "The page information only gives X = {a, b, c, d, e} and Y = {science, literature, culture, history}.",
+       "Set Z is not defined, and no relation from X to Z is given.",
+       "So the question cannot be answered from the given data."
+      ],
+      "grounded_in": [
+       "pp3u1-2:rule-2",
+       "pp3u1-2:definition-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: The question refers to a set Z and a relation R that are not given in the question or the page details. The page only defines X, Y and the relation \"read\" from X to Y. The question probably means $X \\times Y$, but without the actual R and Z I can't check whether $R\\subset X\\times Z$."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u1-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-and-discuss-1",
+      "kind": "value",
+      "answer": "{(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)}",
+      "solution": [
+       "Read each statement: the first element is the student, the second is the type of book he read.",
+       "Student a read science and culture: (a, Science), (a, Culture).",
+       "Student b read history: (b, History).",
+       "Student c read a literary book: (c, Literature).",
+       "Student e read a history book: (e, History).",
+       "Student d read nothing, so d is in no pair.",
+       "R = {(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)}."
+      ],
+      "grounded_in": [
+       "pp3u1-2:definition-2",
+       "pp3u1-2:rule-1",
+       "pp3u1-2:objective-1"
+      ]
+     },
+     {
+      "ref": "pp3u1-2:think-and-discuss-2",
+      "kind": "drawing",
+      "answer": "An arrow diagram from X = {a, b, c, d, e} to Y = {Science, Literature, Culture, History} with 5 arrows: a→Science, a→Culture, b→History, c→Literature, e→History.",
+      "solution": [
+       "Draw two closed curves. Write X = {a, b, c, d, e} in the left one and Y = {Science, Literature, Culture, History} in the right one.",
+       "Mark a point for each element.",
+       "Draw an arrow from a to Science and another from a to Culture.",
+       "Draw an arrow from b to History.",
+       "Draw an arrow from c to Literature.",
+       "Draw an arrow from e to History.",
+       "Draw no arrow from d, because d read no book.",
+       "This gives the 5 arrows, one for each ordered pair of R."
+      ],
+      "grounded_in": [
+       "pp3u1-2:definition-1",
+       "pp3u1-2:definition-2",
+       "pp3u1-2:objective-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-2:drill-1:First",
+      "kind": "drawing",
+      "answer": "R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52)}. Arrow diagram: 1→12, 1→21, 2→12, 2→21, 2→52, and no arrow from 3. Cartesian diagram: 5 points at these pairs.",
+      "solution": [
+       "For each a in X, find the b in Y that has a as one of its digits.",
+       "a = 1: 1 is a digit of 12 and 21. This gives (1, 12) and (1, 21).",
+       "a = 2: 2 is a digit of 12, 21 and 52. This gives (2, 12), (2, 21) and (2, 52).",
+       "a = 3: 3 is not a digit of any number in Y, so there is no pair.",
+       "R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52)}.",
+       "Arrow diagram: draw X = {1, 2, 3} on the left and Y = {12, 21, 47, 52} on the right. Draw arrows 1→12, 1→21, 2→12, 2→21, 2→52. Draw no arrow from 3, and none to 47.",
+       "Cartesian diagram: draw a horizontal axis for X with 1, 2, 3 and a vertical axis for Y with 12, 21, 47, 52.",
+       "Mark the 5 points (1, 12), (1, 21), (2, 12), (2, 21), (2, 52). Mark no point above 3."
+      ],
+      "grounded_in": [
+       "pp3u1-2:example-1",
+       "pp3u1-2:example-2",
+       "pp3u1-2:objective-2",
+       "pp3u1-2:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u1-2:drill-1:Second",
+      "kind": "explanation",
+      "answer": "Only 2 R 21 is correct; 1 R 52 and 3 R 47 are not correct.",
+      "solution": [
+       "A relation a R b is correct when (a, b) belongs to R, that is when a is a digit of b.",
+       "1 R 52: the digits of 52 are 5 and 2. 1 is not one of them, so it is not correct, and (1, 52) is not in R.",
+       "2 R 21: the digits of 21 are 2 and 1. 2 is one of them, so it is correct, and (2, 21) is in R.",
+       "3 R 47: the digits of 47 are 4 and 7. 3 is not one of them, so it is not correct, and (3, 47) is not in R.",
+       "Only 2 R 21 is correct."
+      ],
+      "grounded_in": [
+       "pp3u1-2:objective-3",
+       "pp3u1-2:rule-2",
+       "pp3u1-2:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-and-discuss-1",
+      "kind": "value",
+      "answer": "{(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)}"
+     },
+     {
+      "ref": "pp3u1-2:think-and-discuss-2",
+      "kind": "drawing",
+      "answer": "Arrow diagram with X = {a, b, c, d, e} on the left and Y = {Science, Literature, Culture, History} on the right. Arrows: a→Science, a→Culture, b→History, c→Literature, e→History. d has no arrow."
+     },
+     {
+      "ref": "pp3u1-2:drill-1:First",
+      "kind": "drawing",
+      "answer": "R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52), (3, ...)}: no, correctly R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52)}. Arrow diagram from X = {1, 2, 3} to Y = {12, 21, 47, 52}: 1→12, 1→21, 2→12, 2→21, 2→52. 3 has no arrow and 47 receives none. Cartesian diagram: points plotted at (1,12), (1,21), (2,12), (2,21), (2,52), with X on the horizontal axis and Y on the vertical axis."
+     },
+     {
+      "ref": "pp3u1-2:drill-1:Second",
+      "kind": "explanation",
+      "answer": "1 R 52 is not correct, because 1 is not a digit of 52. 2 R 21 is correct, because 2 is a digit of 21. 3 R 47 is not correct, because 3 is not a digit of 47."
+     }
+    ]
+   }
+  }
+ ]
+}

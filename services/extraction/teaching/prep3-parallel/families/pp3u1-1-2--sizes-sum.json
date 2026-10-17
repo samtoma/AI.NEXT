@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-2:sizes-sum",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-2",
+ "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
+ "source_page": 9,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "X",
+   "sample": {
+    "from": "range(-4, 10)",
+    "k": "m"
+   }
+  },
+  {
+   "name": "Y",
+   "sample": {
+    "from": "range(-4, 10)",
+    "k": "k"
+   }
+  }
+ ],
+ "constraints": [],
+ "stem": "If $X={=setof(sorted(X))}$ and $Y={=setof(sorted(Y))}$, find $n(X^2)+n(X\\times Y)$.",
+ "answer": "m * m + m * k",
+ "solution": [
+  "n(X) = {=m} and n(Y) = {=k}.",
+  "n(X²) = n(X) × n(X) = {=m} × {=m} = {=m*m}.",
+  "n(X×Y) = n(X) × n(Y) = {=m} × {=k} = {=m*k}.",
+  "n(X²) + n(X×Y) = {=m*m} + {=m*k} = {=m*m+m*k}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Relies on setof rendering a braced set; sample k given as expression 'm'. Sizes 2-5."
+}

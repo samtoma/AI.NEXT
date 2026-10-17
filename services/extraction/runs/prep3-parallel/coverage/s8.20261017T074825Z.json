@@ -1,0 +1,171 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "oracle",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "9aab0feb0690347460490b66fcf2fe0d5f92babdeb1fcfa28644d75283b445f4",
+  "generated_sha256": "32c37ff807d6f537fe8ca7e603e86bef8e403cbfb963f9bade9387d1f4a073a3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u1-1",
+   "mode": "oracle",
+   "oracle": {
+    "verdict": "RED",
+    "subheadings": [],
+    "tally": {
+     "claims": 21,
+     "questions": 15,
+     "worked_examples_kept_as_teaching": 3,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u1-1-1",
+       "claims": 3,
+       "items": 5
+      },
+      {
+       "lo": "lo:pp3u1-1-2",
+       "claims": 8,
+       "items": 8
+      },
+      {
+       "lo": "lo:pp3u1-1-3",
+       "claims": 0,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-1-4",
+       "claims": 8,
+       "items": 4
+      }
+     ]
+    },
+    "note": "the oracle returned nothing"
+   }
+  },
+  {
+   "lesson": "pp3u1-2",
+   "mode": "oracle",
+   "oracle": {
+    "verdict": "RED",
+    "subheadings": [],
+    "tally": {
+     "claims": 6,
+     "questions": 1,
+     "worked_examples_kept_as_teaching": 1,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u1-2-1",
+       "claims": 1,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-2-2",
+       "claims": 1,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-2-3",
+       "claims": 4,
+       "items": 0
+      }
+     ]
+    },
+    "note": "the oracle returned nothing"
+   }
+  },
+  {
+   "lesson": "pp3u1-3",
+   "mode": "oracle",
+   "oracle": {
+    "verdict": "RED",
+    "subheadings": [],
+    "tally": {
+     "claims": 8,
+     "questions": 1,
+     "worked_examples_kept_as_teaching": 1,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u1-3-1",
+       "claims": 1,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-3-2",
+       "claims": 3,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-3-3",
+       "claims": 4,
+       "items": 0
+      }
+     ]
+    },
+    "note": "the oracle returned nothing"
+   }
+  },
+  {
+   "lesson": "pp3u1-4",
+   "mode": "oracle",
+   "oracle": {
+    "verdict": "RED",
+    "subheadings": [],
+    "tally": {
+     "claims": 13,
+     "questions": 9,
+     "worked_examples_kept_as_teaching": 4,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u1-4-1",
+       "claims": 2,
+       "items": 7
+      },
+      {
+       "lo": "lo:pp3u1-4-2",
+       "claims": 0,
+       "items": 3
+      },
+      {
+       "lo": "lo:pp3u1-4-3",
+       "claims": 3,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u1-4-4",
+       "claims": 6,
+       "items": 2
+      }
+     ]
+    },
+    "note": "the oracle returned nothing"
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S8 Oracle": 4
+  },
+  "per_lesson": {
+   "pp3u1-1": 1,
+   "pp3u1-2": 1,
+   "pp3u1-3": 1,
+   "pp3u1-4": 1
+  },
+  "total": 4
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-4-3:draw-linear-with-constant",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "instances": [
+  {
+   "m": 2,
+   "b": -3
+  },
+  {
+   "m": 1,
+   "b": -3
+  },
+  {
+   "m": 3,
+   "b": -1
+  },
+  {
+   "m": -2,
+   "b": 1
+  }
+ ],
+ "spec": {
+  "mode": "equation",
+  "m": "{=m}",
+  "b": "{=b}"
+ },
+ "stem": "Draw the graph of the linear function $f(x) = {=linear(m, b)}$. Drag two points so that the line is its graph.",
+ "solution": [
+  "Write the rule as $y = f(x)$ and find two ordered pairs.",
+  "Put $x = 0$: $y = b$, so the graph cuts the y-axis at $(0, b)$. This point is not the origin when the rule has a constant term.",
+  "Put $x = 1$: $y = m + b$, a second ordered pair.",
+  "Plot the two pairs and draw the straight line through them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
+  }
+ ],
+ "notes": "The anchor list for lo:pp3u1-4-3 is empty, so parent_question_id is left blank. Samuel should assign the book's graphing exercise. Only intercept-wrong is mapped: the correct slope with the line forced through (0, 0) is the signature of the origin misconception. A student who has the right slope but the wrong intercept for another reason would also fire it. slope-sign-flipped, slope-inverted, vertical-line and off-target are left unmapped because this objective has no misconception that names them. The instances are all inside the instrument limits: whole-number m, |m| ≤ 5, b in −5..5. A constant-function instance (m = 0) could be added as a later row."
+}

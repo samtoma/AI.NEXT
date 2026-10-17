@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "08967881dc79f6a99150d5be2ff0328a8523a1056209417a629f32fbf847b5c1",
+  "generated_sha256": "b6e98bd7bcd934af1239cd86b0f2ef7ed422ac9b6b563c3fbdffeca922d15a7b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u1-4:example-1",
+    "verdict": "equivalent",
+    "reason": "Same values: f(-2)=9, f(0)=3, f(√3)=6-√3."
+   }
+  ]
+ }
+}

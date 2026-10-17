@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-1:digits",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-1",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "idx",
+   "choice": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "Xs",
+   "let": "['1, 2, 3', '2, 5, 7', '1, 4, 6', '3, 4, 8']"
+  },
+  {
+   "name": "Ys",
+   "let": "['12, 23, 34, 41', '25, 37, 52, 70', '14, 46, 61, 80', '34, 48, 83, 15']"
+  },
+  {
+   "name": "As",
+   "let": "['(1, 12), (1, 41), (2, 12), (2, 23), (3, 23), (3, 34)', '(2, 25), (2, 52), (5, 25), (5, 52), (7, 37), (7, 70)', '(1, 14), (1, 61), (4, 14), (4, 46), (6, 46), (6, 61)', '(3, 34), (3, 83), (4, 34), (4, 48), (8, 48), (8, 83)']"
+  }
+ ],
+ "constraints": [],
+ "stem": "$X = \\{{=Xs[idx]}\\}$ and $Y = \\{{=Ys[idx]}\\}$. The relation $R$ from $X$ to $Y$ is \"$a$ is a digit of $b$\", where $a \\in X$ and $b \\in Y$. Write $R$ as a set of ordered pairs $(a, b)$, listed in order of $a$, then in order of $b$.",
+ "answer": "",
+ "solution": [
+  "For each $a \\in X$, look at every number $b$ in $Y$ and check whether $a$ is one of its digits.",
+  "Write each pair that works as $(a, b)$. A number in $Y$ may pair with two elements of $X$, and some may pair with none.",
+  "$R = \\{{=As[idx]}\\}$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "{=As[idx]}",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No parent book question supplied; placeholder. Only four preset instances, checked by hand. In each, one y-element may have no pair (80, 15)."
+}

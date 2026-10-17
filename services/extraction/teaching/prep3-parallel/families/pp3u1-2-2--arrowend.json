@@ -1,0 +1,36 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-2:arrowend",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-2",
+ "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+ "source_page": 14,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    4
+   ]
+  }
+ ],
+ "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{{=k}, {=2*k}, {=3*k}, {=4*k}\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = {=k} \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from ${=p}$ ends at which element of Y?",
+ "answer": "p * k",
+ "solution": [
+  "Each arrow goes from $a$ in X to $b$ in Y with $b = {=k} \\times a$.",
+  "For $a = {=p}$: $b = {=k} \\times {=p} = {=p*k}$.",
+  "So the arrow from ${=p}$ ends at ${=p*k}$, and the cartesian diagram has the point $({=p}, {=p*k})$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: reading the arrow of a relation. Y always contains the image, so the answer is in Y."
+}

@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-2:cartpoints",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-2",
+ "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+ "source_page": 14,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    "n"
+   ]
+  },
+  {
+   "name": "pts",
+   "let": "[a for a in range(-n, n + 1) if -n <= k - a <= n]"
+  }
+ ],
+ "stem": "If $X=\\{-{=n}, \\ldots, -1, 0, 1, \\ldots, {=n}\\}$ (all the integers from $-{=n}$ to ${=n}$) and R is a relation on X where $a \\; R \\; b$ means: «$a + b = {=k}$» for each $a, b \\in X$. If R is represented by a cartesian diagram, how many points are marked?",
+ "answer": "len(pts)",
+ "solution": [
+  "Each point $(a, b)$ has $b = {=k} - a$, and both $a$ and $b$ must belong to X, that is between $-{=n}$ and ${=n}$.",
+  "Check every $a$ from $-{=n}$ to ${=n}$: keep those where ${=k} - a$ is also in X. The kept values are $a \\in$ {=pts}.",
+  "The number of ordered pairs is {=len(pts)}, so {=len(pts)} points are marked (and {=len(pts)} arrows in the arrow diagram)."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the student must discard pairs whose second element falls outside X. The count is 2n+1-k."
+}

@@ -1,0 +1,502 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "17d8875c8f2769fec7ce88ff9ee208993084048020b1acc69de71630a5d50bb7",
+  "generated_sha256": "841f6f8b101375e32ed0a462c7e90d3366dee1fee082f3dbb4e40f81fc549414",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u1-1-1",
+   "entries": [
+    {
+     "id": "mc:pp3u1-1-1:order-ignored-in-pair",
+     "lo_id": "lo:pp3u1-1-1",
+     "label": "Treats an ordered pair like an unordered set",
+     "description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are treating the pair like a set, where only the numbers matter and the order does not. That is true for $\\{a, b\\}$, but not for an ordered pair $(a, b)$."
+      },
+      {
+       "step": 2,
+       "text_md": "In an ordered pair, position carries meaning: the first place is the first projection and the second place is the second projection. Two ordered pairs are equal only when the first projections are equal and the second projections are equal."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it on $(a-2, b+1)=(2, -3)$. If you match crosswise, $a-2=-3$ and $b+1=2$ give $a=-1$ and $b=1$. Put these back: the left side is $(-3, 2)$, which is not $(2, -3)$."
+      },
+      {
+       "step": 4,
+       "text_md": "Match by position. First projections: $a-2=2$, so $a=4$. Second projections: $b+1=-3$, so $b=-4$. Check: $(4-2,\\,-4+1)=(2,-3)$."
+      },
+      {
+       "step": 5,
+       "text_md": "Each time, first compare the two first places, then the two second places. Write one equation for each place."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u1-1:rule-3"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u1-1:rule-4"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is supported by the book's remarks that (a,b)≠(b,a) and that (a,b) is not the set {a,b}. I re-checked the arithmetic. The crosswise match gives a-2=-3, so a=-1, and b+1=2, so b=1. The left side then becomes (-3,2), which is not (2,-3). The positional method gives a=4, b=-4, which matches the canonical answer. The refutation uses only the book's terms (first and second projections) and the book's own drill, and it cites no question ids, page numbers or review history. It argues against the specific crosswise-matching mistake rather than just restating the method. It has no signal, so there is nothing to misdiagnose."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u1-1-2:product-order-ignored",
+     "lo_id": "lo:pp3u1-1-2",
+     "label": "Treats X×Y and Y×X as the same",
+     "description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right pairs of elements in mind, but you treated a pair like a set where order does not matter. In $X\\times Y$ the first element of each pair must come from $X$ and the second from $Y$."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $X=\\{a, b\\}$ and $Y=\\{-1, 0, 3\\}$. Then $X\\times Y$ contains $(a, -1)$, but $Y\\times X$ contains $(-1, a)$. These are different ordered pairs, so $X\\times Y\\neq Y\\times X$ when $X\\neq Y$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same thing happens with $Y\\times Z$ where $Y=\\{4, 0\\}$ and $Z=\\{4, 5, -2\\}$. The answer has pairs like $(4, 5)$ with a $Y$ element first. Writing $(5, 4)$ would put a $Z$ element first, and that belongs to $Z\\times Y$."
+      },
+      {
+       "step": 4,
+       "text_md": "Before you write each pair, check the order of the product. Take each element of the first set in turn and pair it with every element of the second set, always writing the first set's element first."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u1-1:rule-7"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u1-1-2:bk-example-2"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and backed by the book's remark that X×Y ≠ Y×X, and by its worked example. The refutation is correct: (a,-1) is in X×Y while (-1,a) is in Y×X. For Y×Z, (4,5) has the Y element first, and (5,4) would belong to Z×Y. The closing advice to take each element of the first set and pair it with every element of the second matches the canonical method. It cites no question ids, pages or review history. The entry has no signal."
+     }
+    },
+    {
+     "id": "mc:pp3u1-1-2:adds-set-sizes",
+     "lo_id": "lo:pp3u1-1-2",
+     "label": "Adds the sizes instead of multiplying",
+     "description": "To find n(X×Y) or n(X²), the student adds (or doubles) the numbers of elements instead of multiplying n(X) by n(Y).",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the right sizes, $n(Z)=3$, but then combined them by adding. Adding counts the elements of two sets put together. A cartesian product counts pairs."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at $Z^2$ with $Z=\\{4, 5, -2\\}$. Pair $4$ with each of the 3 elements, then pair $5$ with each of the 3, then $-2$ with each of the 3. That gives 3 groups of 3 pairs, which is $3\\times 3=9$ pairs, not $3+3=6$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same applies to $X\\times Z$ with $X=\\{2, -1\\}$ and $Z=\\{4, 5, -2\\}$. Each of the 2 elements of $X$ is paired with 3 elements of $Z$, so there are $2\\times 3=6$ pairs, not $2+3=5$."
+      },
+      {
+       "step": 4,
+       "text_md": "Use $n(X\\times Y)=n(X)\\times n(Y)$, and for a square $n(X^2)=n(X)\\times n(X)$. A check is that $n(Y^2)=2\\times 2=4$ for $Y=\\{4, 0\\}$ happens to equal $2+2$, so test your method on $Z^2$ as well."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u1-1:rule-11"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:pp3u1-1-2:bk-drill-2-f"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. It is supported by the remark that n(X×X)=3×3=9 and by the canonical answers 6, 4 and 9. The refutation's arithmetic is correct: Z² gives 3×3=9, X×Z gives 2×3=6, and Y²=4 coincides with 2+2. It argues against adding and does not just restate the method. The signal is flawed because it lists 'n(Y²) = 4 by coincidence', which is the correct answer. A student who gives that answer would be misdiagnosed, so the signal is not ok."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "mc:pp3u1-1-2:adds-set-sizes: signal removed — the verifier could not confirm it"
+   ]
+  },
+  {
+   "lo": "lo:pp3u1-1-3",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u1-1-3:no-arrow-for-equal-pair",
+     "lo_id": "lo:pp3u1-1-3",
+     "label": "Leaves out the arrow when the first and second projection are the same element",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The buttonhole fact is in the book's remark, but the canonical example for this objective (X={1,2}, Y={3,4,5}) has no pair with equal projections, so the error isn't shown to arise here. Step 3 is also mathematically faulty. It says the product 'holds' (3,3), (3,4) and (4,4), but a cartesian product containing 3 and 4 in both sets would also hold (4,3). That set is not a full cartesian product, so the example misleads. Step 4 mostly restates the method."
+    }
+   ],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "'buttonhole' is the book's word for the loop on a point; kept as printed. 'First projection' and 'second projection' are also the book's terms."
+    },
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a remark from a later example (equal-element pairs). The questions on this objective (X={1,2}, Y={3,4,5}) share no elements, so this error does not appear in them directly. No evidence supported an axis-swap or other error, so none was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a remark that each point of the net represents one ordered pair of N × N. It describes the method and names no error. No caution box, wrong option or re-solve wrong turn was supplied, so I added no entries."
+    },
+    {
+     "kind": "other",
+     "text": "There are no distractors or widget predicates to assign."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. Possible errors such as reversing the order of a pair or listing student d with an empty partner are plausible but have no evidence, so they were left out."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The only canonical solution given lists the pairs of R and does not show the arrow or cartesian diagram, so diagram-drawing errors could not be grounded."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u1-3-1",
+   "entries": [
+    {
+     "id": "mc:pp3u1-3-1:two-images",
+     "lo_id": "lo:pp3u1-3-1",
+     "label": "Accepts an element of X with two images",
+     "description": "The student calls a relation a function even though one element of X is paired with more than one element of Y.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You may be checking that every pair is a sensible pair, or that every element of Y is used. That is not the test. The test is about the elements of X, and what comes out of each one."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at $\\{(1, 10), (1, 12), (5, 10), (9, 12)\\}$. The element $1$ is the first element of two pairs, $(1, 10)$ and $(1, 12)$. In an arrow diagram, two arrows would leave $1$, one to $10$ and one to $12$."
+      },
+      {
+       "step": 3,
+       "text_md": "A function needs every element of X to have only one image, which means only one arrow coming out. Here $1$ has two images, so this relation is not a function. The other pairs being fine does not rescue it, because one element of X with two arrows is enough to fail."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, take each element of X in turn and count the pairs that start with it, or the arrows that leave it. If any element has more than one, it is not a function."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "tpl:pp3u1-3-1:pick-func#mc:pp3u1-3-1:two-images"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:pp3u1-3-1:pick-func#mc:pp3u1-3-1:two-images",
+       "question_id": "q:pp3u1-3-1:g001-pick-f",
+       "text": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$",
+       "tagged": "mc:pp3u1-3-1:two-images"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The refutation is correct: 1 has two images, 10 and 12, so the relation is not a function. This matches the canonical test of one arrow out of each element of X. It cites no outside references."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u1-3-1:no-image",
+     "lo_id": "lo:pp3u1-3-1",
+     "label": "Accepts an element of X with no image",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation points to \"the book's worked example\", which the student cannot see. That is a book reference. Step 1 also assumes what the student noticed. The idea itself, that each element of X needs an image, fits the canonical wording."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:pp3u1-3-1",
+     "origin": "S6",
+     "ref": "tpl:pp3u1-3-1:pick-func#mc:pp3u1-3-1:no-image",
+     "question_id": "q:pp3u1-3-1:g001-pick-f",
+     "text": "$\\{ (1, 10), (5, 10) \\}$",
+     "tagged": "mc:pp3u1-3-1:no-image",
+     "reason": "its entry mc:pp3u1-3-1:no-image was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [
+    {
+     "kind": "other",
+     "text": "The set X for the generated question is not shown, so the no-image refutation stays general instead of naming the missing element."
+    },
+    {
+     "kind": "terminology",
+     "text": "I used 'image' and 'arrow coming out', as in the description and the worked solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u1-4-1",
+   "entries": [
+    {
+     "id": "mc:pp3u1-4-1:non-whole-power-still-polynomial",
+     "lo_id": "lo:pp3u1-4-1",
+     "label": "Counts 1/x or √x terms as allowed in a polynomial",
+     "description": "The student sees a sum of x-terms and numbers and calls it a polynomial without checking that every power of x is a whole number.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You noticed that the function is built from $x$ and numbers added together, and that is a good start. A polynomial needs one more thing: every power of $x$ must be a whole number."
+      },
+      {
+       "step": 2,
+       "text_md": "Rewrite each term as a power of $x$. In $x^3+\\frac{1}{x}+7$, the term $\\frac{1}{x}$ is $x^{-1}$, and in $x^2+\\sqrt{x}+8$, the term $\\sqrt{x}$ is $x^{\\frac{1}{2}}$."
+      },
+      {
+       "step": 3,
+       "text_md": "The powers $-1$ and $\\frac{1}{2}$ are not whole numbers, so these two functions do not fit the form $a_0+a_1x+\\dots+a_nx^n$. Neither is a polynomial. Compare $x^3+x^2+3$, whose powers are $3$, $2$ and $0$, all whole numbers, so it is a polynomial."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, write every term as $x^{\\text{power}}$ and check each power. If any one is negative or a fraction, the answer is No."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u1-4:definition-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real: a student calls 1/x or √x terms polynomial. The refutation matches the canonical solutions (x^-1 and x^(1/2) are not whole-number powers; x^3+x^2+3 is a polynomial). It cites no book ids, pages or review history."
+     }
+    },
+    {
+     "id": "mc:pp3u1-4-1:degree-read-before-simplifying",
+     "lo_id": "lo:pp3u1-4-1",
+     "label": "Reads the degree from the unexpanded rule",
+     "description": "The student takes the degree from the powers they see in the brackets or in the first terms, instead of expanding and simplifying first.",
+     "signal": "Gives 2 for x^2-(x^2-3), or 2 for x(x-2x^2).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You looked at the powers of $x$ that are printed and picked the biggest. That works when the rule is already written as $a_0+a_1x+\\dots+a_nx^n$, but brackets can hide what is left."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $f(x)=x^2-(x^2-3)$. Reading it as it stands suggests degree $2$. Remove the brackets: $x^2-x^2+3$. The $x^2$ terms cancel, so $f(x)=3$, which has no $x$ term. The degree is $0$, not $2$."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $f(x)=x(x-2x^2)$. The brackets show $x^2$, but multiplying out gives $x^2-2x^3$. The highest power is $3$, so the degree is $3$."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, expand and simplify first, then read off the highest power of $x$ that is still there."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u1-4:definition-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The refutation's expansions and answers match the canonical solutions: x^2-(x^2-3) gives 3, degree 0, and x(x-2x^2) gives x^2-2x^3, degree 3. The signal (2 for both) matches what a student who reads the degree off the unexpanded rule would give. It cites no book ids or review history."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only remark supplied (the definition of a linear function f(x)=ax+b) is about naming linear functions, not evaluating values, so it supports no error for this objective. I did not use it."
+    },
+    {
+     "kind": "evidence",
+     "text": "No caution box, wrong option, widget predicate or re-solve wrong turn was supplied. Candidate errors such as squaring a negative wrongly, e.g. (-2)^2 = -4, or writing (√3)^2 = √3 have no supporting evidence, so I left them out. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-4-3",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u1-4-3:line-always-through-origin",
+     "lo_id": "lo:pp3u1-4-3",
+     "label": "Thinks every straight-line graph passes through (0, 0)",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real and the f(0) = -3 argument in step 3 is correct and matches the book's method. Step 4 is a non sequitur. It says none of the three plotted points is the origin, so the line cannot pass through (0,0). Three points that aren't the origin don't show that the line misses the origin, and a student could take that as valid reasoning. Only the f(0) = -3 argument proves it. Because this is unreviewed student-facing text, I'm not confirming it."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u1-4-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The two remarks (\"Notice that:\" and the statement of properties of f(x) = ax² + bx + c) are only introductory text. They flag no specific error, so I did not use them."
+    },
+    {
+     "kind": "evidence",
+     "text": "There are no caution boxes, no wrong options and no re-solve wrong turns for this objective. I wrote no entries rather than invent errors the evidence does not support. A student might call the vertex of f(x) = -x² a minimum. The book's own working states the maximum value is 0, but nothing in the evidence points to that error."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 14,
+  "entries": 6,
+  "dropped": 3,
+  "stripped": 1,
+  "skipped": 2,
+  "flags": 13
+ }
+}

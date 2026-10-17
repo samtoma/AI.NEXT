@@ -1,0 +1,42 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-2:find-size",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-2",
+ "parent_question_id": "q:pp3u1-1-2:bk-drill-2-f",
+ "source_page": 9,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "sq",
+   "let": "s * s"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $n(X^2)={=sq}$ and $n(Y)={=k}$, find $n(X\\times Y)$.",
+ "answer": "s * k",
+ "solution": [
+  "n(X²) = n(X) × n(X) = {=sq}.",
+  "Since {=s} × {=s} = {=sq}, n(X) = {=s}.",
+  "n(X×Y) = n(X) × n(Y) = {=s} × {=k}.",
+  "n(X×Y) = {=s*k}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Reverse use of n(X²)=n(X)×n(X); sq is a perfect square so n(X) is a unique positive whole number."
+}

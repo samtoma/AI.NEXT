@@ -1,0 +1,1291 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "c858b809586d41808a3a45d796f21e0810c11b1b07249639b4baeca7790b03d7",
+  "generated_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u1-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u1-1:figure-1",
+    "pp3u1-1:figure-2",
+    "pp3u1-1:figure-3",
+    "pp3u1-1:figure-4",
+    "pp3u1-1:figure-5",
+    "pp3u1-1:figure-6",
+    "pp3u1-1:figure-7",
+    "pp3u1-1:figure-8"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u1-1-3",
+     "question": "pp3u1-1:example-4",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       1,
+       2
+      ],
+      "Y": [
+       3,
+       4,
+       5
+      ],
+      "pairs": [
+       [
+        1,
+        3
+       ],
+       [
+        1,
+        4
+       ],
+       [
+        1,
+        5
+       ],
+       [
+        2,
+        3
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        2,
+        5
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Every element of X sends an arrow to every element of Y, giving all 6 pairs of X × Y.",
+     "printed_page": 10,
+     "figure_id": "pp3u1-1:figure-2",
+     "src": "pp3u1-1__figure-2.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u1-1-3",
+     "question": "pp3u1-1:example-4",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       0,
+       6
+      ],
+      "yRange": [
+       0,
+       6
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 3,
+        "label": "(1,3)"
+       },
+       {
+        "x": 2,
+        "y": 3,
+        "label": "(2,3)"
+       },
+       {
+        "x": 1,
+        "y": 4,
+        "label": "(1,4)"
+       },
+       {
+        "x": 2,
+        "y": 4,
+        "label": "(2,4)"
+       },
+       {
+        "x": 1,
+        "y": 5,
+        "label": "(1,5)"
+       },
+       {
+        "x": 2,
+        "y": 5,
+        "label": "(2,5)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "The six points of X × Y sit where x is 1 or 2 and y is 3, 4 or 5.",
+     "printed_page": 10,
+     "figure_id": "pp3u1-1:figure-3",
+     "src": "pp3u1-1__figure-3.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u1-1-3",
+     "question": "pp3u1-1:example-5",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       3,
+       4,
+       8
+      ],
+      "Y": [
+       3,
+       4,
+       8
+      ],
+      "pairs": [
+       [
+        3,
+        3
+       ],
+       [
+        3,
+        4
+       ],
+       [
+        3,
+        8
+       ],
+       [
+        4,
+        3
+       ],
+       [
+        4,
+        4
+       ],
+       [
+        4,
+        8
+       ],
+       [
+        8,
+        3
+       ],
+       [
+        8,
+        4
+       ],
+       [
+        8,
+        8
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Each of 3, 4 and 8 is paired with every element of the same set, giving all 9 pairs of X × X.",
+     "printed_page": 10,
+     "figure_id": "pp3u1-1:figure-4",
+     "src": "pp3u1-1__figure-4.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u1-1-4",
+     "question": "pp3u1-1:exercise-1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -1,
+       6
+      ],
+      "yRange": [
+       -1,
+       6
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 2,
+        "label": "A"
+       },
+       {
+        "x": 0,
+        "y": 4,
+        "label": "B"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A grid for N × N with points A and B plotted.",
+     "printed_page": 11,
+     "figure_id": "pp3u1-1:figure-5",
+     "src": "pp3u1-1__figure-5.png",
+     "withheld": [
+      "C",
+      "O"
+     ]
+    },
+    {
+     "n": 5,
+     "lo": "lo:pp3u1-1-4",
+     "question": "pp3u1-1:drill-3",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [],
+      "animate": "none",
+      "interactive": "click-to-plot"
+     },
+     "caption": "An empty Z × Z grid where you can plot points to find their ordered pairs.",
+     "printed_page": 11,
+     "figure_id": "pp3u1-1:figure-6",
+     "src": "pp3u1-1__figure-6.png",
+     "withheld": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    },
+    {
+     "n": 6,
+     "lo": "lo:pp3u1-1-4",
+     "question": "pp3u1-1:example-6",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 3,
+        "label": "A (3, 3)"
+       },
+       {
+        "x": 3,
+        "y": -2,
+        "label": "B (3, -2)"
+       },
+       {
+        "x": -4,
+        "y": -2,
+        "label": "C (-4, -2)"
+       },
+       {
+        "x": -4,
+        "y": 3,
+        "label": "D (-4, 3)"
+       },
+       {
+        "x": 0,
+        "y": -3,
+        "label": "E (0, -3)"
+       },
+       {
+        "x": 2,
+        "y": 0,
+        "label": "F (2, 0)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Six points plotted on the R × R grid: four in quadrants, E on the y-axis and F on the x-axis.",
+     "printed_page": 12,
+     "figure_id": "pp3u1-1:figure-8",
+     "src": "pp3u1-1__figure-8.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u1-1:figure-1",
+     "src": "pp3u1-1__figure-1.png",
+     "ref": "pp3u1-1:example-3",
+     "printed_page": 9,
+     "reason": "Venn diagram of sets X, Y, Z with Y overlapping Z at 2 and X separate cannot be drawn by any existing kind.",
+     "needed_kind": "venn_diagram (overlapping labelled set regions with elements)"
+    },
+    {
+     "figure_id": "pp3u1-1:figure-7",
+     "src": "pp3u1-1__figure-7.png",
+     "ref": null,
+     "printed_page": 12,
+     "reason": "Figure shows the four quadrants of the plane named and annotated with sign conditions (x>0, y>0 etc.); coordinate_plot cannot draw quadrant names or text annotations.",
+     "needed_kind": "coordinate_plot with labelled quadrant text annotations"
+    }
+   ],
+   "counts": {
+    "visuals": 6,
+    "viz_gaps": 2,
+    "compared": 6
+   }
+  },
+  {
+   "lesson": "pp3u1-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u1-2:figure-2",
+    "pp3u1-2:figure-3",
+    "pp3u1-2:figure-4",
+    "pp3u1-2:figure-5",
+    "pp3u1-2:figure-6"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u1-2-2",
+     "question": "pp3u1-2:think-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       "a",
+       "b",
+       "c",
+       "d",
+       "e"
+      ],
+      "Y": [
+       "Science",
+       "art",
+       "culture",
+       "history"
+      ],
+      "pairs": [
+       [
+        "a",
+        "Science"
+       ],
+       [
+        "a",
+        "culture"
+       ],
+       [
+        "b",
+        "history"
+       ],
+       [
+        "c",
+        "culture"
+       ],
+       [
+        "e",
+        "history"
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Arrows go from a to Science and culture, b to history, c to culture, e to history, and d has no arrow.",
+     "printed_page": 13,
+     "figure_id": "pp3u1-2:figure-2",
+     "src": "pp3u1-2__figure-2.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u1-2-2",
+     "question": "pp3u1-2:example-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       -1,
+       1,
+       2
+      ],
+      "Y": [
+       2,
+       4,
+       6,
+       8
+      ],
+      "pairs": [
+       [
+        -1,
+        2
+       ],
+       [
+        1,
+        6
+       ],
+       [
+        2,
+        8
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Each a in X points to b = 2a + 4 in Y: -1 to 2, 1 to 6, 2 to 8.",
+     "printed_page": 14,
+     "figure_id": "pp3u1-2:figure-3",
+     "src": "pp3u1-2__figure-3.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u1-2-2",
+     "question": "pp3u1-2:example-1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       4
+      ],
+      "yRange": [
+       -1,
+       9
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 2,
+        "label": "(-1, 2)"
+       },
+       {
+        "x": 1,
+        "y": 6,
+        "label": "(1, 6)"
+       },
+       {
+        "x": 2,
+        "y": 8,
+        "label": "(2, 8)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "The three ordered pairs of R plotted as points: (-1, 2), (1, 6) and (2, 8).",
+     "printed_page": 14,
+     "figure_id": "pp3u1-2:figure-4",
+     "src": "pp3u1-2__figure-4.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u1-2-2",
+     "question": "pp3u1-2:example-2",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       -2,
+       -1,
+       0,
+       1,
+       2
+      ],
+      "Y": [
+       -2,
+       -1,
+       0,
+       1,
+       2
+      ],
+      "pairs": [
+       [
+        -2,
+        2
+       ],
+       [
+        2,
+        -2
+       ],
+       [
+        -1,
+        1
+       ],
+       [
+        1,
+        -1
+       ],
+       [
+        0,
+        0
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Each number points to its additive inverse, and 0 points to itself.",
+     "printed_page": 14,
+     "figure_id": "pp3u1-2:figure-5",
+     "src": "pp3u1-2__figure-5.png"
+    },
+    {
+     "n": 5,
+     "lo": "lo:pp3u1-2-2",
+     "question": "pp3u1-2:example-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       3
+      ],
+      "yRange": [
+       -3,
+       3
+      ],
+      "points": [
+       {
+        "x": -2,
+        "y": 2,
+        "label": "(-2, 2)"
+       },
+       {
+        "x": -1,
+        "y": 1,
+        "label": "(-1, 1)"
+       },
+       {
+        "x": 0,
+        "y": 0,
+        "label": "(0, 0)"
+       },
+       {
+        "x": 1,
+        "y": -1,
+        "label": "(1, -1)"
+       },
+       {
+        "x": 2,
+        "y": -2,
+        "label": "(2, -2)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "The pairs of R plotted: (-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2).",
+     "printed_page": 14,
+     "figure_id": "pp3u1-2:figure-6",
+     "src": "pp3u1-2__figure-6.png"
+    }
+   ],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 5,
+    "viz_gaps": 0,
+    "compared": 5
+   }
+  },
+  {
+   "lesson": "pp3u1-3",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u1-3:figure-1",
+    "pp3u1-3:figure-2",
+    "pp3u1-3:figure-3",
+    "pp3u1-3:figure-4",
+    "pp3u1-3:figure-5",
+    "pp3u1-3:figure-6",
+    "pp3u1-3:figure-7",
+    "pp3u1-3:figure-8",
+    "pp3u1-3:figure-9",
+    "pp3u1-3:figure-10",
+    "pp3u1-3:figure-11"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u1-3-2",
+     "question": "pp3u1-3:example-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       3,
+       4,
+       5,
+       6
+      ],
+      "Y": [
+       3,
+       4,
+       5,
+       6
+      ],
+      "pairs": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        1
+       ],
+       [
+        3,
+        2
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Each of 3, 4, 5, 6 has exactly one arrow: 3 goes to 3, 4 to 5, 5 to 4, and 6 to 5.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-2",
+     "src": "pp3u1-3__figure-2.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u1-3-2",
+     "question": "pp3u1-3:example-1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       2,
+       7
+      ],
+      "yRange": [
+       2,
+       7
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 3,
+        "label": "(3,3)"
+       },
+       {
+        "x": 4,
+        "y": 5,
+        "label": "(4,5)"
+       },
+       {
+        "x": 5,
+        "y": 4,
+        "label": "(5,4)"
+       },
+       {
+        "x": 6,
+        "y": 5,
+        "label": "(6,5)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "The function f plotted as the points (3,3), (4,5), (5,4) and (6,5).",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-3",
+     "src": "pp3u1-3__figure-3.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "Y": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "pairs": [
+       [
+        0,
+        2
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        1,
+        3
+       ],
+       [
+        2,
+        3
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Arrows on the set {1, 2, 3, 4}: 1 to 3, 2 to 3, 2 to 4, and 3 to 4.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-4",
+     "src": "pp3u1-3__figure-4.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "Y": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "pairs": [
+       [
+        0,
+        2
+       ],
+       [
+        2,
+        0
+       ],
+       [
+        1,
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Arrows on the set {1, 2, 3, 4}: 1 to 3, 3 to 1, 2 to 4, and 4 to 1.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-5",
+     "src": "pp3u1-3__figure-5.png"
+    },
+    {
+     "n": 5,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "Y": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "pairs": [
+       [
+        0,
+        2
+       ],
+       [
+        0,
+        3
+       ],
+       [
+        1,
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "Arrows on the set {1, 2, 3, 4}: 1 to 3, 1 to 4, 2 to 4, and 4 to 1.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-6",
+     "src": "pp3u1-3__figure-6.png"
+    },
+    {
+     "n": 6,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       0,
+       6
+      ],
+      "yRange": [
+       0,
+       6
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 5,
+        "label": "(3,5)"
+       },
+       {
+        "x": 4,
+        "y": 4,
+        "label": "(4,4)"
+       },
+       {
+        "x": 2,
+        "y": 3,
+        "label": "(2,3)"
+       },
+       {
+        "x": 1,
+        "y": 2,
+        "label": "(1,2)"
+       },
+       {
+        "x": 3,
+        "y": 2,
+        "label": "(3,2)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Five dots on the grid: (1,2), (2,3), (3,2), (3,5) and (4,4).",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-7",
+     "src": "pp3u1-3__figure-7.png"
+    },
+    {
+     "n": 7,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       0,
+       6
+      ],
+      "yRange": [
+       0,
+       6
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 3,
+        "label": "(1,3)"
+       },
+       {
+        "x": 2,
+        "y": 3,
+        "label": "(2,3)"
+       },
+       {
+        "x": 3,
+        "y": 3,
+        "label": "(3,3)"
+       },
+       {
+        "x": 4,
+        "y": 3,
+        "label": "(4,3)"
+       },
+       {
+        "x": 5,
+        "y": 3,
+        "label": "(5,3)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Five dots in a row at height 3, one above each of x = 1 to 5.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-8",
+     "src": "pp3u1-3__figure-8.png"
+    },
+    {
+     "n": 8,
+     "lo": "lo:pp3u1-3-1",
+     "question": "pp3u1-3:drill-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       0,
+       6
+      ],
+      "yRange": [
+       0,
+       6
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 1,
+        "label": "(1,1)"
+       },
+       {
+        "x": 2,
+        "y": 2,
+        "label": "(2,2)"
+       },
+       {
+        "x": 4,
+        "y": 4,
+        "label": "(4,4)"
+       },
+       {
+        "x": 5,
+        "y": 5,
+        "label": "(5,5)"
+       }
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Four dots on the grid: (1,1), (2,2), (4,4) and (5,5).",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-9",
+     "src": "pp3u1-3__figure-9.png"
+    },
+    {
+     "n": 9,
+     "lo": "lo:pp3u1-3-3",
+     "question": "pp3u1-3:for-example-1",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       -1,
+       2,
+       3
+      ],
+      "Y": [
+       2,
+       3,
+       5,
+       7
+      ],
+      "pairs": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        3
+       ],
+       [
+        2,
+        2
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "From X = {-1, 2, 3} to Y = {2, 3, 5, 7}: -1 goes to 3, 2 goes to 7, and 3 goes to 5.",
+     "printed_page": 17,
+     "figure_id": "pp3u1-3:figure-10",
+     "src": "pp3u1-3__figure-10.png"
+    },
+    {
+     "n": 10,
+     "lo": "lo:pp3u1-3-3",
+     "question": "pp3u1-3:example-2",
+     "kind": "arrow_map",
+     "spec": {
+      "X": [
+       2,
+       3,
+       4
+      ],
+      "Y": [
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "pairs": [
+       [
+        0,
+        2
+       ],
+       [
+        1,
+        4
+       ],
+       [
+        2,
+        6
+       ]
+      ],
+      "animate": "arrows"
+     },
+     "caption": "From X = {2, 3, 4} to Y = {2, 3, 4, 5, 6, 7, 8}: 2 goes to 4, 3 goes to 6, and 4 goes to 8.",
+     "printed_page": 18,
+     "figure_id": "pp3u1-3:figure-11",
+     "src": "pp3u1-3__figure-11.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u1-3:figure-1",
+     "src": "pp3u1-3__figure-1.png",
+     "ref": "pp3u1-3:think-and-discuss-1",
+     "printed_page": 16,
+     "reason": "The image holds three separate arrow diagrams side by side, and the arrows are too blurry to read reliably. One arrow_map shows only one diagram.",
+     "needed_kind": "arrow_map showing three diagrams side by side"
+    }
+   ],
+   "counts": {
+    "visuals": 10,
+    "viz_gaps": 1,
+    "compared": 10
+   }
+  },
+  {
+   "lesson": "pp3u1-4",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u1-4:figure-1",
+    "pp3u1-4:figure-2",
+    "pp3u1-4:figure-3",
+    "pp3u1-4:figure-4"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u1-4-3",
+     "question": "pp3u1-4:example-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 0,
+        "y": -3,
+        "label": "(0,-3)"
+       },
+       {
+        "x": 1,
+        "y": -1,
+        "label": "(1,-1)"
+       },
+       {
+        "x": 2,
+        "y": 1,
+        "label": "(2,1)"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "I plot (0,-3), (1,-1) and (2,1) for f(x)=2x-3 and join them with a straight line.",
+     "printed_page": 20,
+     "figure_id": "pp3u1-4:figure-1",
+     "src": "pp3u1-4__figure-1.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u1-4-3",
+     "question": null,
+     "kind": "function_graph",
+     "spec": {
+      "fn": "linear",
+      "coefs": [
+       0,
+       3
+      ],
+      "domain": [
+       -3,
+       3
+      ],
+      "markers": [
+       {
+        "x": -1,
+        "label": "(-1,3)"
+       },
+       {
+        "x": 1,
+        "label": "(1,3)"
+       },
+       {
+        "x": 2,
+        "label": "(2,3)"
+       }
+      ],
+      "animate": "draw"
+     },
+     "caption": "The graph of y = 3 is a horizontal line, and every point on it has y = 3.",
+     "printed_page": 21,
+     "figure_id": "pp3u1-4:figure-2",
+     "src": "pp3u1-4__figure-2.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u1-4-4",
+     "question": "pp3u1-4:example-3",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       0,
+       0
+      ],
+      "domain": [
+       -3,
+       3
+      ],
+      "markers": [
+       {
+        "x": -3,
+        "label": "(-3,9)"
+       },
+       {
+        "x": -2,
+        "label": "(-2,4)"
+       },
+       {
+        "x": -1,
+        "label": "(-1,1)"
+       },
+       {
+        "x": 0,
+        "label": "(0,0)"
+       },
+       {
+        "x": 1,
+        "label": "(1,1)"
+       },
+       {
+        "x": 2,
+        "label": "(2,4)"
+       },
+       {
+        "x": 3,
+        "label": "(3,9)"
+       }
+      ],
+      "reveals": [
+       "vertex",
+       "axis"
+      ],
+      "animate": "draw"
+     },
+     "caption": "The graph of f(x)=x² for x from -3 to 3 is a U-shaped curve with its lowest point at the origin.",
+     "printed_page": 22,
+     "figure_id": "pp3u1-4:figure-3",
+     "src": "pp3u1-4__figure-3.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u1-4-4",
+     "question": "pp3u1-4:example-4",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       -1,
+       0,
+       0
+      ],
+      "domain": [
+       -3,
+       3
+      ],
+      "markers": [
+       {
+        "x": -3,
+        "label": "(-3,-9)"
+       },
+       {
+        "x": -2,
+        "label": "(-2,-4)"
+       },
+       {
+        "x": -1,
+        "label": "(-1,-1)"
+       },
+       {
+        "x": 0,
+        "label": "(0,0)"
+       },
+       {
+        "x": 1,
+        "label": "(1,-1)"
+       },
+       {
+        "x": 2,
+        "label": "(2,-4)"
+       },
+       {
+        "x": 3,
+        "label": "(3,-9)"
+       }
+      ],
+      "reveals": [
+       "vertex",
+       "axis"
+      ],
+      "animate": "draw"
+     },
+     "caption": "The graph of f(x)=-x² for x from -3 to 3 is an upside-down U with its highest point at the origin.",
+     "printed_page": 23,
+     "figure_id": "pp3u1-4:figure-4",
+     "src": "pp3u1-4__figure-4.png"
+    }
+   ],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 4,
+    "viz_gaps": 0,
+    "compared": 4
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 4,
+   "S4 Compare": 4
+  },
+  "per_lesson": {
+   "pp3u1-1": 2,
+   "pp3u1-2": 2,
+   "pp3u1-3": 2,
+   "pp3u1-4": 2
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

@@ -1,0 +1,76 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u1-2",
+  "source": "book-records/prep3-parallel/pp3u1-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0212,
+      "calls": [
+        {
+          "call": "check-printed.pp3u1-2",
+          "cost_usd": 0.0136,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u1-2",
+          "cost_usd": 0.0076,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u1-2:example-1",
+      "record_id": "pp3u1-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 13,
+      "printed": "$R=\\{(-1,2),(1,6),(2,8)\\}$",
+      "blind": "R = {(-1, 2), (1, 6), (2, 8)}. Arrow diagram: arrows -1→2, 1→6, 2→8 (4 in Y gets no arrow). Cartesian diagram: points plotted at (-1,2), (1,6), (2,8) with X on the horizontal axis and Y on the vertical axis.",
+      "blind_kind": "drawing",
+      "figures": [
+        "pp3u1-2:figure-3",
+        "pp3u1-2:figure-4"
+      ],
+      "question_fingerprint": "f6e8c0724162aaa482a4260a8b06d76b",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T07:42:39+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u1-2:example-2",
+      "record_id": "pp3u1-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 14,
+      "printed": "$R=\\{(-2,2),(-1,1),(0,0),(1,-1),(2,-2)\\}$",
+      "blind": "R = {(-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2)}. Arrow diagram on X: arrows -2→2, -1→1, 0→0 (loop), 1→-1, 2→-2. Cartesian diagram: points plotted at those five pairs, lying on the line y = -x.",
+      "blind_kind": "drawing",
+      "figures": [],
+      "question_fingerprint": "01bfbfe2ef6a121990f7e67c2d753686",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u1-2:example-2",
+        "verdict": "equivalent",
+        "reason": "Same relation set of five pairs; the solver's added diagram descriptions are consistent with it."
+      },
+      "how": "judged equivalent: Same relation set of five pairs; the solver's added diagram descriptions are consistent with it.",
+      "made": {
+        "at": "2026-10-17T07:42:39+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

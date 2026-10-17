@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "766dcc65a1745c13a1761f8a795a86f58c9e2f676849ee80aaaf9e9d52c5b770",
+  "generated_sha256": "c9949edd1a9f1bf08e869e99f3d5bbb3ee4276d0d56eaa04806b3c32d334fb05",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u1-1:example-2",
+    "verdict": "equivalent",
+    "reason": "Both conclude X×Y ≠ Y×X; solver's extra sets are correct detail."
+   },
+   {
+    "ref": "pp3u1-1:example-3:Fifth",
+    "verdict": "unclear",
+    "reason": "Printed answer is left incomplete (only Z−Y given); solver's product is correct: {5,6}×{1,2,3}, but nothing to compare against."
+   },
+   {
+    "ref": "pp3u1-1:example-6:E",
+    "verdict": "equivalent",
+    "reason": "E(0,-3) lies on the y-axis; 'negative y-axis' is the same location, just more specific."
+   },
+   {
+    "ref": "pp3u1-1:example-6:F",
+    "verdict": "equivalent",
+    "reason": "F(2,0) lies on the x-axis; 'positive x-axis' is the same location, just more specific."
+   }
+  ]
+ }
+}

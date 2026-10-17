@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-3-1:rule-range",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-3-1",
+ "parent_question_id": "q:pp3u1-3-1:bk-example-2",
+ "source_page": 18,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "xs",
+   "sample": {
+    "from": "range(2, 7)",
+    "k": 3
+   }
+  },
+  {
+   "name": "x1",
+   "let": "sorted(xs)[0]"
+  },
+  {
+   "name": "x2",
+   "let": "sorted(xs)[1]"
+  },
+  {
+   "name": "x3",
+   "let": "sorted(xs)[2]"
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "hi",
+   "let": "m * x3 + 2"
+  },
+  {
+   "name": "r1",
+   "let": "m * x1"
+  },
+  {
+   "name": "r2",
+   "let": "m * x2"
+  },
+  {
+   "name": "r3",
+   "let": "m * x3"
+  },
+  {
+   "name": "top",
+   "let": "hi - 1"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $X=\\{ {=x1}, {=x2}, {=x3} \\}$, $Y=\\{y : y\\in N, 2\\le y<{=hi}\\}$ where $N$ is the set of natural numbers, and $R$ is a relation from $X$ to $Y$ where $a R b$ means: « $a=\\frac{1}{{=m}}b$ » for each of $a\\in X$, $b\\in Y$, write $R$ as a set of ordered pairs, show that $R$ is a function from $X$ to $Y$ and write its range.",
+ "answer": "",
+ "solution": [
+  "$Y$ is the set of natural numbers from 2 to {=top}. From $a=\\frac{1}{{=m}}b$ we get $b={=m}a$.",
+  "$R=\\{({=x1}, {=r1}), ({=x2}, {=r2}), ({=x3}, {=r3})\\}$.",
+  "$R$ is a function because every element of $X$ has only one image, and {=r1}, {=r2}, {=r3} all belong to $Y$.",
+  "The range is the set of images: $\\{ {=r1}, {=r2}, {=r3} \\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=r1}, {=r2}, {=r3}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Mirrors the book example with ordered m in {2,3}; hi = m*max(X)+2 guarantees all images lie in Y and each image >= 4. Answer asked as the elements of the range."
+}

@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-1:both-sides",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-1",
+ "parent_question_id": "q:pp3u1-1-1:bk-drill-1-c",
+ "source_page": 7,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "let": "m + (p - 1) * a"
+  },
+  {
+   "name": "r",
+   "let": "(q - 1) * b + t"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find $a$ and $b$ if: $({=p}a+{=m},\\ b+{=r})=(a+{=n},\\ {=q}b+{=t})$",
+ "answer": "a = {=a}, b = {=b}",
+ "solution": [
+  "Equal ordered pairs have equal first projections and equal second projections.",
+  "Equate the first projections: ${=p}a+{=m}=a+{=n}$.",
+  "So ${=p-1}a={=n-m}$, so $a={=a}$.",
+  "Equate the second projections: $b+{=r}={=q}b+{=t}$.",
+  "So ${=r-t}={=q-1}b$, so $b={=b}$.",
+  "So a = {=a}, b = {=b}."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "a = {=a}, b = {=b}",
+  "form": null,
+  "variables": [
+   "a",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: unknowns on both sides of each component equation. Constants kept positive so templates print cleanly. Second-pair equation: b+r=qb+t with r=(q-1)b+t gives b exactly."
+}

@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-1:expand-cancel",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-1",
+ "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
+ "source_page": 19,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    "n - 1"
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "tn",
+   "let": "\"x^\" + str(n)"
+  },
+  {
+   "name": "tm",
+   "let": "\"x\" if m == 1 else \"x^\" + str(m)"
+  },
+  {
+   "name": "cb",
+   "let": "\"\" if b == 1 else str(b)"
+  },
+  {
+   "name": "ca",
+   "let": "\"\" if a == 1 else str(a)"
+  },
+  {
+   "name": "s",
+   "let": "n + m"
+  },
+  {
+   "name": "p",
+   "let": "a * b"
+  }
+ ],
+ "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=({=tn}+{=a})({=tm}+{=b})-x^{{=s}}$",
+ "answer": "n",
+ "solution": [
+  "Expand the brackets: $({=tn}+{=a})({=tm}+{=b})=x^{{=s}}+{=cb}{=tn}+{=ca}{=tm}+{=p}$.",
+  "Subtract $x^{{=s}}$: $f(x)=x^{{=s}}+{=cb}{=tn}+{=ca}{=tm}+{=p}-x^{{=s}}={=cb}{=tn}+{=ca}{=tm}+{=p}$.",
+  "The $x^{{=s}}$ terms cancel, so the highest power of x left is {=n}.",
+  "The degree is {=n}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: top term cancels after expansion, so degree is n not n+m (degree-read-before-simplifying). b is never 0 so the x^n term survives. Exponent n+m at most 7, single digit."
+}
