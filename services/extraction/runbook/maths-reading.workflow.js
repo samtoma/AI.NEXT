@@ -4,6 +4,7 @@ export const meta = {
   whenToUse: 'After the page reader, before G0. Args: `uv run book_record_maths.py args <book> <lessons>`; accept the saved return with `book_record_maths.py accept <book> <file>`; disagreements go to the review tool\'s Maths reading task.',
   phases: [
     { title: 'Second reading', detail: 'one agent per printed page, the page image and the masked places of its formulas (Sonnet, vision)' },
+    { title: 'Third reading', detail: "mode 'third': only the formulas the first two readings did not agree on, blind to both (Sonnet, vision)" },
   ],
 }
 
@@ -17,7 +18,9 @@ export const meta = {
 //         places: [{ref, item, field, context}]}], options?: {model: 'sonnet'} }
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'mread-v3'   // v2: a formula runs over lines and = signs; v3: places located by their printed opening words; an item over a page break is offered each page
+// v2: a formula runs over lines and = signs; v3: places located by their printed opening words, an item over a page break
+// offered each page; v4: mode 'third' (Samuel's pass C), the prompt unchanged
+const PROMPTS_VERSION = 'mread-v4'
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 if (ARGS.stage !== 'S0a-maths-reading' || !Array.isArray(ARGS.pages)) {
@@ -38,12 +41,16 @@ const SCHEMA = {"type": "object", "required": ["readings"], "properties": {"read
 
 const placeLine = (p) => `[${p.ref}] ${p.item}, ${p.field}: ${p.context}`
 
-phase('Second reading')
+// mode 'third' (Samuel's S0b pass C, answer 11): only the places the first two readings did not agree on, read by a
+// third agent blind to both, with the same prompt; book_record_maths.py third settles a place where it agrees with one
+const THIRD = ARGS.mode === 'third'
+const PH = THIRD ? 'Third reading' : 'Second reading'
+phase(PH)
 const got = await parallel(ARGS.pages.map((P) => () =>
   agent(`${RULES}\n\nThis is printed page ${P.printed} (lesson ${P.lesson}). The page image: ${P.image}\n\nThe places (${P.places.length}):\n${P.places.map(placeLine).join('\n')}`,
-    { label: `maths:${P.lesson}:p${P.printed}`, phase: 'Second reading', model: MODEL, schema: SCHEMA })))
+    { label: `maths:${THIRD ? 'C:' : ''}${P.lesson}:p${P.printed}`, phase: PH, model: MODEL, schema: SCHEMA })))
 log(`${ARGS.pages.length} page(s), ${ARGS.pages.reduce((n, P) => n + P.places.length, 0)} formula(s); ${got.filter(Boolean).length} page(s) read`)
 
-return { stage: 'S0a-maths-reading', workflow: 'maths-reading', prompts_version: PROMPTS_VERSION, ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
+return { stage: 'S0a-maths-reading', workflow: 'maths-reading', prompts_version: PROMPTS_VERSION, mode: THIRD ? 'third' : 'second', ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
   book: BOOK.book, pages: ARGS.pages.map((P, i) => ({ lesson: P.lesson, printed: P.printed, failed: !got[i],
     readings: got[i] ? got[i].readings || [] : [] })) }

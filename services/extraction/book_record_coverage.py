@@ -34,7 +34,8 @@ THE CHECKS (Samuel's id where it is his check; † a check the book-record line 
     figures                 figures in the records = figures drawn + gaps with a reason (teaching/<book>/visuals/)
     book_pictures           book pictures standing in for a figure that are not servable = 0 (alt, stand_in, a
                             /book-figures/ file in app/public)
-    maths_reading †         page-image books: formulas read twice = agreed + decided in the Maths reading task
+    maths_reading †         page-image books: formulas read twice = agreed + settled by a third reading + decided in the
+                            Maths reading task
     misprints_decided †     misprints on the records and the checks' candidates = those a person decided
     items_typed_once        book questions = distinct prompts asked once, each with one type
     solution_sources        book questions = answers printed in the book + generated answers a person approved or two
@@ -335,7 +336,7 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
             for e in json.loads(mf.read_text())["entries"]:
                 c.want += 1
                 d = dec.get(e["ref"])
-                if e["status"] == "agreed" or (d and d.get("fingerprint") == e["fingerprint"]):
+                if e["status"] in ("agreed", "settled") or (d and d.get("fingerprint") == e["fingerprint"]):
                     c.got += 1
                 else:
                     c.fail(e["ref"], f"{e['status']}: ${e['first']}$ / ${e.get('second') or '—'}$")

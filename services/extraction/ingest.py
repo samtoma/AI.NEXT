@@ -126,7 +126,8 @@ def plan(name: str, unit: int) -> dict:
             ex("book-records", bk, "lessons.json"), gate=True)
         add("S0a", "read the pages → book records", f"{UV} --with pymupdf --with jsonschema extract_book_record.py run {bk} <lesson> (each of: {L})",
             all_of(lambda s: ex("book-records", bk, f"{s}.json")))
-        add("S0a", "second, blind reading of the maths; disagreements to review", f"{UV} --with pymupdf book_record_maths.py run {bk} {L}",
+        add("S0a", "second, blind reading of the maths; a third where they differ (Samuel's pass C); the rest to review",
+            f"{UV} --with pymupdf book_record_maths.py run {bk} {L}",
             all_of(lambda s: ex("book-records", bk, "maths-reading", f"{s}.json")))
         add("G0", "label review and misprints", "review tool: Label extraction, Misprints", False, gate=True)
     add("S1", "objectives (two finders, reconciler, two mappers, evidence check) and prerequisite links",

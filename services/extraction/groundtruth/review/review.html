@@ -1266,6 +1266,7 @@ async function showMaths(row) {
     <div class="${d.state === "open" || d.state === "changed" ? "warn" : "gen"}"><span class="label">The two readings</span>
       <div style="margin-top:6px"><b>1 · First reading</b> (the record's, by the page reader)${tex(e.first)}</div>
       <div style="margin-top:10px"><b>2 · Second reading</b> (blind)${tex(e.second)}${e.notes ? `<div class="muted">${esc(e.notes)}</div>` : ""}</div>
+      ${"third" in e ? `<div style="margin-top:10px"><b>Third reading</b> (blind to both${e.status === "settled" ? `; agrees with the ${esc(e.sided_with)}, so it is settled` : "; agrees with neither"})${tex(e.third)}${e.third_notes ? `<div class="muted">${esc(e.third_notes)}</div>` : ""}</div>` : ""}
     </div>
     <div class="who">${dec ? `<b>${esc(dec.choice === "other" ? "typed: " + dec.latex : dec.choice + " reading")}</b>, chosen by ${esc(dec.by)} on ${esc(dec.at)}${d.state === "changed" ? " · <b>the reading changed since</b>, so it is back" : ""}`
       : `${esc(MSTATE[d.state])} · the record keeps the first reading until you decide`}</div>

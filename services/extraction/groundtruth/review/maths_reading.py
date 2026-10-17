@@ -52,7 +52,7 @@ def state_of(e: dict, dec: dict | None) -> str:
     """decided | changed (decided on another reading) | open (disagreed or unread) | agreed."""
     if dec:
         return "decided" if dec.get("fingerprint") == e["fingerprint"] else "changed"
-    return "agreed" if e.get("status") == "agreed" else "open"
+    return "agreed" if e.get("status") in ("agreed", "settled") else "open"
 
 
 def summary(book: str) -> list[dict]:

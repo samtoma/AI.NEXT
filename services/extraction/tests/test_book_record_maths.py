@@ -9,7 +9,9 @@ through tests/workflow_stub.mjs; no model is called. What is proved:
   - accept: LaTeX written two ways for one print agrees, a different print disagrees, a missing one is unread, and a
     page that did not find an item's formula does not hide the page that did;
   - review and apply: a decision is fingerprinted; apply writes only a chosen second or typed reading, only where the
-    record still holds the first, with a history line.
+    record still holds the first, with a history line;
+  - the third reading (Samuel's pass C): it settles a place when it agrees with the first (the record stays) or the
+    second (apply writes the second, no person needed); agreeing with neither leaves it for a person, who still wins.
 """
 from __future__ import annotations
 
@@ -112,6 +114,28 @@ class MathsReading(unittest.TestCase):
         again = M.apply("t", False)
         self.assertEqual((again["applied"], again["skipped"]), ([], []))   # applied already: nothing again, nothing stale
         self.assertEqual(R.summary("t")[0]["state"], "agreed")
+
+    def test_the_third_reading_settles_two_of_three(self):
+        self.read_twice()
+        f = self.root / "book-records/t/maths-reading/t-1.json"
+        open_refs = [e["ref"] for e in json.loads(f.read_text())["entries"] if e["status"] != "agreed"]
+        self.assertEqual(sorted(M.unsettled("t", ["t-1"])["t-1"]), sorted(open_refs))
+        third = {"stage": "S0a-maths-reading", "mode": "third", "pages": [
+            {"lesson": "t-1", "printed": 8, "readings": [
+                {"ref": "t-1:example-1|solution[0]|0", "latex": "\\{1\\} \\times \\{3\\} = \\{(1, 3)\\}"},   # = the second
+                {"ref": "t-1:exercise-1|parts[0].stem|0", "latex": "\\frac{1}{2}\\le x"},                     # = the first
+                {"ref": "t-1:exercise-1|parts[0].answer|0", "latex": "x > 0.5"}]}]}                            # neither
+        run = self.tmp / "third.json"
+        run.write_text(json.dumps(third))
+        self.assertEqual(M.settle("t", run)["t-1"], {"settled_first": 1, "settled_second": 1, "still_open": 1})
+        st = {e["ref"]: (e["status"], e.get("sided_with")) for e in json.loads(f.read_text())["entries"]}
+        self.assertEqual(st["t-1:example-1|solution[0]|0"], ("settled", "second"))
+        self.assertEqual(st["t-1:exercise-1|parts[0].stem|0"], ("settled", "first"))
+        self.assertEqual(st["t-1:exercise-1|parts[0].answer|0"][0], "unread")
+        self.assertEqual(M.unsettled("t", ["t-1"]), {})                              # read three times: nothing more to read
+        self.assertEqual(M.apply("t", False)["applied"], ["t-1:example-1|solution[0]|0"])   # settled for the second: written
+        rows = {r["ref"]: r["state"] for r in R.summary("t")}
+        self.assertEqual((rows["t-1:example-1|solution[0]|0"], rows["t-1:exercise-1|parts[0].answer|0"]), ("agreed", "open"))
 
 
 if __name__ == "__main__":
