@@ -24,6 +24,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Question tiers    where the two readings of a book question's tier disagree (tier_questions.py,
                     teaching/<book>/tiers/), a person chooses; decisions are appended to
                     reviews/<book>/question-tiers.json (tiers.py).
+  Book questions    each book question compile holds on its answer (answer mismatch, unverified, unanswerable), with
+  (G2)              the blind re-solve and Samuel's G2 recommendation: release, fix the key, hold or exclude; decisions
+                    are appended to reviews/<book>/book-questions-g2.json (book_questions.py) and compile applies them.
   Maths reading     where the two readings of a page-image book's formula disagree (book_record_maths.py,
                     book-records/<book>/maths-reading/), a person says what is printed; decisions are appended to
                     reviews/<book>/maths-reading.json (maths_reading.py).
@@ -48,6 +51,7 @@ import tiers  # noqa: E402
 import objectives  # noqa: E402
 import maths_reading  # noqa: E402
 import provenance  # noqa: E402
+import book_questions  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
@@ -115,9 +119,12 @@ def lessons():
         gone = {n["id"] for n in (gt or {}).get("not_in_book", [])}
         ids = all_ids(source)
         if ext and gt:  # extracted ids that are the ground truth's records under another id count as those records
-            pairs, _m, _i = score_book_record.match(ext.get("items") or [], gt.get("items") or [])
+            # by content only, as the overlay shows them: an extracted record that merely shares an id with a
+            # ground-truth record is not that record, so its label does not count for it
+            pairs, _m, _i = score_book_record.match_by_content(ext.get("items") or [], gt.get("items") or [])
             alias = {e["id"]: g["id"] for g, e, _how in pairs}
-            ids = [alias.get(i, i) for i in ids]
+            fresh = {e["id"] for e in ext.get("items") or []} - set(alias)
+            ids = [alias.get(i, f"unlabelled:{i}" if i in fresh else i) for i in ids]
         row["total"] = len(ids)
         row["labelled"] = sum(1 for i in ids if status.get(i) in ("confirmed", "flagged") or i in gone)
         row["flagged"] = sum(1 for i in ids if status.get(i) == "flagged")
@@ -369,11 +376,12 @@ class Handler(BaseHTTPRequestHandler):
             if u.path == "/api/lessons":
                 return self.send_json(lessons())
             if u.path == "/api/lesson-match":
-                # which extracted record is which ground-truth record, when their ids differ (content match, the scorer's)
+                # which extracted record is which ground-truth record, by content only (the scorer's quote/text match):
+                # every pair, equal ids included; an extracted record left out has no labelled counterpart
                 ext = json.loads(resolve_key(q["ext"]).read_text())
                 gt = json.loads(resolve_key(q["gt"]).read_text())
-                pairs, _missing, _invented = score_book_record.match(ext.get("items") or [], gt.get("items") or [])
-                return self.send_json({e["id"]: g["id"] for g, e, _how in pairs if e["id"] != g["id"]})
+                pairs, _missing, _invented = score_book_record.match_by_content(ext.get("items") or [], gt.get("items") or [])
+                return self.send_json({e["id"]: g["id"] for g, e, _how in pairs})
             if u.path == "/api/provenance":
                 # the statements S2's provenance check could not confirm (book_record_provenance.py), for Label extraction
                 return self.send_json(provenance.flags(q["book"], q["slug"]))
@@ -391,6 +399,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(objectives.summary(q["book"]))
             if u.path == "/api/objectives/item":
                 return self.send_json(objectives.detail(q["book"], q["kind"], q["ref"]))
+            if u.path == "/api/g2/books":
+                return self.send_json(book_questions.books())
+            if u.path == "/api/g2":
+                return self.send_json(book_questions.summary(q["book"]))
+            if u.path == "/api/g2/item":
+                return self.send_json(book_questions.detail(q["book"], q["question"]))
             if u.path == "/api/maths/books":
                 return self.send_json(maths_reading.books())
             if u.path == "/api/maths":
@@ -443,6 +457,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "decision": answers.decide(body)})
             if u.path == "/api/objectives/decision":
                 return self.send_json({"ok": True, "decision": objectives.decide(body)})
+            if u.path == "/api/g2/decision":
+                return self.send_json({"ok": True, "decision": book_questions.decide(body)})
             if u.path == "/api/maths/decision":
                 return self.send_json({"ok": True, "decision": maths_reading.decide(body)})
             if u.path == "/api/tiers/decision":

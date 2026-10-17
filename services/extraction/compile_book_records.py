@@ -45,6 +45,9 @@ HOW A BOOK PROMPT BECOMES A QUESTION
   * Multi-part carry-over (Samuel's multipart.py, rules R1–R3, unchanged): a part asked on its own carries the
     sentence an earlier part of its question gives it (a name, an unknown's value, a gradient) after the preamble;
     what the rules cannot settle is listed in the report (`multipart.unresolved`), never changed.
+  * G2, a person first: a decision in the review tool's Book questions (G2) task on a held book question (release,
+    fix with the right key, hold, exclude) is applied while the question is what was decided, and a release or fix is
+    stamped as that person's review.
   * G2 recommendations (book_record_g2.py: Samuel's recommender on the questions compile holds): an accept or fix an
     independent agent confirmed releases the hold, an exclude leaves the question out; each signed as the AI line's,
     applied only while the question is what the agents read, and listed in the report (`g2`).
@@ -361,8 +364,14 @@ def apply_g2(book: str, questions: dict[str, list[dict]], report: dict) -> None:
     """Samuel's G2 recommendations on held book questions (book_record_g2.py → teaching/<book>/g2/unit<NN>.json), applied
     to the question each was made for and only while it is still what the agents read. Every verdict is an AI line's:
     signed `auto-pass G2 (AI recommendation)`, never a person's sign-off."""
+    import hashlib  # noqa: PLC0415
     import review_policy  # noqa: PLC0415
     by = review_policy.auto_pass_by("G2")
+    # a PERSON's decision in the review tool's Book questions (G2) task wins over any recommendation
+    pf = HERE / "reviews" / book / "book-questions-g2.json"
+    people = {d["question"]: d for d in json.loads(pf.read_text()).get("decisions", [])} if pf.exists() else {}
+    held_fp = lambda q: hashlib.sha256(json.dumps({"stem": q.get("stem"), "answer": q.get("answer"), "hold_reason": q.get("hold_reason")},
+                                                  sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]   # groundtruth/review/book_questions.fingerprint
     recs = {}
     for f in sorted((HERE / "teaching" / book / "g2").glob("unit*.json")):
         d = json.loads(f.read_text())
@@ -372,6 +381,42 @@ def apply_g2(book: str, questions: dict[str, list[dict]], report: dict) -> None:
     for slug, qs in questions.items():
         keep = []
         for q in qs:
+            d = people.get(q["id"])
+            if d and q.get("hold_reason") and d.get("fingerprint") == held_fp(q):
+                line = {"question": q["id"], "ref": d.get("ref"), "verdict": d["choice"], "by": f"{d['by']} (review tool)", "applied": True,
+                        **({"note": d["note"]} if d.get("note") else {})}
+                report["g2"].append(line)
+                if d["choice"] == "exclude":
+                    report["skipped"].append({"lesson": slug, "ref": d.get("ref") or q["id"], "why": f"left out at G2 by {d['by']}: {d.get('note') or ''}".strip(": ")})
+                    report["held"] = [h for h in report["held"] if h.get("question") != q["id"]]
+                    continue
+                if d["choice"] in ("release", "fix"):
+                    if d["choice"] == "fix":
+                        typed = answer_type(d["key"])
+                        if not typed:
+                            line.update(applied=False, why=f"the fixed key {d['key']!r} is not one the app can mark: decide it again")
+                            keep.append(q)
+                            continue
+                        q["type"], q["answer"] = typed[0], typed[2]
+                        q.pop("choices", None)
+                        if typed[1]:
+                            q["choices"] = typed[1]
+                        bad = marker_check([q])   # the app's own reader, as for every key
+                        if q["id"] in bad:
+                            q["hold_reason"] = "unanswerable"
+                            line.update(applied=False, why=f"the app's marker cannot mark the fixed key: {bad[q['id']]}")
+                            keep.append(q)
+                            continue
+                    q.pop("hold_reason", None)
+                    q.pop("_why", None)
+                    q["verified"] = True
+                    q["source_note"] += (f" {'Answer fixed' if d['choice'] == 'fix' else 'Released'} at G2 by {d['by']}"
+                                         + (f": {d['note']}" if d.get("note") else "") + ".")
+                    q["_decision"] = {"decision": "approve", "by": d["by"], "at": d["at"], "fingerprint": d["fingerprint"]}
+                    q["_stamp_what"] = "book question at G2"
+                    report["held"] = [h for h in report["held"] if h.get("question") != q["id"]]
+                keep.append(q)   # hold: stays held, no recommendation applies
+                continue
             hit = recs.get(q["id"])
             if not hit:
                 keep.append(q)
@@ -877,9 +922,9 @@ def main(argv: list[str]) -> int:
         if q.get("_decision"):
             d = q["_decision"]
             stamps.append({"question": q["id"], "ref": q["_ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
-                           "fingerprint": d["fingerprint"], "what": "generated answer"})
+                           "fingerprint": d["fingerprint"], "what": q.get("_stamp_what") or "generated answer"})
         report["tiers"].append({"question": q["id"], "tier": q["tier"], "from": q["_tier_from"]})
-        for k in ("_item", "_ref", "_why", "_decision", "_tier_from"):
+        for k in ("_item", "_ref", "_why", "_decision", "_tier_from", "_stamp_what"):
             q.pop(k, None)
     for slug in slugs:
         for e in new_entries[slug]:

@@ -692,20 +692,22 @@ $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
 /* ---------- the tasks ---------- */
-const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers", objectives: "› Objectives (G1)", maths: "› Maths reading" };
+const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers", objectives: "› Objectives (G1)", maths: "› Maths reading", g2: "› Book questions (G2)" };
 function show(v) {
   view = v; editing = false;
   $("#crumb").textContent = TASKS[v] ?? "";
   $("#home").hidden = v !== "home"; $("#work").hidden = v === "home";
   $("#tools").innerHTML = "";
   if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
-  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : openGenerated();
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : v === "g2" ? openG2() : openGenerated();
 }
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
 
 async function renderHome() {
-  const [ls, ms, gbooks, abooks, tbooks, obooks, mbooks] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books")]);
+  const [ls, ms, gbooks, abooks, tbooks, obooks, mbooks, g2books] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books"), getJSON("/api/g2/books")]);
+  const g2s = (await Promise.all(g2books.map((b) => getJSON(`/api/g2?book=${encodeURIComponent(b)}`)))).flat();
+  const g2Open = g2s.filter((x) => x.state === "open" || x.state === "changed");
   const mrs = (await Promise.all(mbooks.map((b) => getJSON(`/api/maths?book=${encodeURIComponent(b)}`)))).flat();
   const mrOpen = mrs.filter((m) => m.state === "open" || m.state === "changed");
   const os_ = (await Promise.all(obooks.map((b) => getJSON(`/api/objectives?book=${encodeURIComponent(b)}`)))).flat();
@@ -742,6 +744,12 @@ async function renderHome() {
         <span class="n">${mrOpen.length} <small>to decide</small></span>
         <span class="muted">${mrs.filter((m) => m.status === "disagreed").length} disagreements · ${mrs.filter((m) => m.status === "unread").length} unread · ${mrs.filter((m) => m.status === "agreed").length} agreed</span>
       </button>
+      <button class="task" id="t-g2">
+        <span class="t">Book questions (G2)</span>
+        <span class="muted">Book questions held because their answer cannot be trusted yet. Release, fix the answer, keep holding or leave out. Until you decide, students never see them.</span>
+        <span class="n">${g2Open.length} <small>to decide</small></span>
+        <span class="muted">${g2s.filter((x) => x.hold === "answer_mismatch").length} answer disagreements · ${g2s.filter((x) => x.hold === "unverified").length} not re-solved · ${g2s.filter((x) => x.hold === "unanswerable").length} keys the app cannot mark</span>
+      </button>
       <button class="task" id="t-obj">
         <span class="t">Objectives (G1)</span>
         <span class="muted">The objectives S1 found, their evidence and items, the prerequisite links, and S1's questions. Nothing after S1 uses them until you approve.</span>
@@ -776,6 +784,7 @@ async function renderHome() {
   $("#t-tier").onclick = () => show("tiers");
   $("#t-obj").onclick = () => show("objectives");
   $("#t-mr").onclick = () => show("maths");
+  $("#t-g2").onclick = () => show("g2");
 }
 
 /* ---------- Label extraction ---------- */
@@ -808,9 +817,11 @@ async function openLabel() {
   if (lessonList.length) openLesson(lessonList[i]);
 }
 // an extraction file with the ground truth laid over it, so the reviewer sees each record once, in its latest state.
-// `match` pairs an extracted id with the ground-truth id of the same printed thing when they differ (the scorer's
-// content match): the ground truth's record and its frozen id win. An unmatched extracted record whose id the ground
-// truth already uses for something else gets the next free id of its type, so nothing is overwritten.
+// `match` pairs every extracted item with the ground-truth id of the same printed thing, by content only (the scorer's
+// quote/text match, /api/lesson-match): the ground truth's record and its frozen id win. An equal id alone proves
+// nothing (a ground truth labelled on an earlier extraction can hold another record under it), so an unmatched
+// extracted item is shown as itself, under the next free id of its type when the ground truth already uses its id.
+// Learning objectives have no content match and still pair by id.
 function overlay(ext, gt, match = {}) {
   const d = structuredClone(ext);
   const g = Object.fromEntries([...(gt?.items || []), ...(gt?.learning_objectives || [])].map((r) => [r.id, r]));
@@ -825,7 +836,7 @@ function overlay(ext, gt, match = {}) {
   for (const sec of ["items", "learning_objectives"]) {
     const shown = new Set();
     d[sec] = (d[sec] || []).filter((r) => !gone.has(r.id)).map((r) => {
-      const gid = match[r.id] || r.id;
+      const gid = sec === "items" ? match[r.id] : r.id;
       if (g[gid] && !shown.has(gid)) { shown.add(gid); return structuredClone(g[gid]); }
       if (g[r.id] || shown.has(r.id)) return { ...r, id: fresh(r) }; // the id is the ground truth's for another record
       return r;
@@ -1327,6 +1338,114 @@ async function mathsDecide(choice, latex) {
   renderMaths();
 }
 
+/* ---------- Book questions (G2) ---------- */
+let g2Rows = [], g2i = -1;
+const G2HOLD = { answer_mismatch: "A blind re-solve disagrees with the book's printed answer", unverified: "The printed answer could not be re-solved", unanswerable: "The app's marker cannot read the key" };
+const G2STATE = { release: "Released", fix: "Answer fixed", hold: "Kept held", exclude: "Left out", changed: "The question changed since it was decided", open: "Not decided yet" };
+function g2Visible() {
+  const l = $("#g2lesson").value, w = $("#g2show").value;
+  return g2Rows.map((x, i) => ({ x, i })).filter(({ x }) => (l === "all" || x.lesson === l) && (
+    w === "all" ? true : w === "todo" ? x.state === "open" || x.state === "changed" : x.state !== "open" && x.state !== "changed"));
+}
+async function openG2() {
+  const books = await getJSON("/api/g2/books");
+  $("#tools").innerHTML = `
+    <label>Book <select id="g2book">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <label>Lesson <select id="g2lesson"></select></label>
+    <label>Show <select id="g2show"><option value="todo">To decide</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <div class="progress"><div class="bar"><div id="g2bar" style="width:0"></div></div><div id="g2prog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · r release · f fix · h hold · x leave out</span>`;
+  if (!books.length) {
+    $("#list").innerHTML = '<p class="muted" style="padding:8px">No book question is held on its answer. Compile holds one when a blind re-solve disagrees with the printed answer, cannot re-solve it, or the app cannot read its key.</p>';
+    $("#detail").innerHTML = ""; return;
+  }
+  const saved = store.get("rv-g2book"); if (saved && books.includes(saved)) $("#g2book").value = saved;
+  $("#g2book").onchange = () => { store.set("rv-g2book", $("#g2book").value); $("#g2book").blur(); loadG2(); };
+  $("#g2show").value = store.get("rv-g2show") || "todo";
+  $("#g2show").onchange = () => { store.set("rv-g2show", $("#g2show").value); $("#g2show").blur(); g2i = -1; renderG2(); };
+  $("#g2lesson").onchange = () => { $("#g2lesson").blur(); g2i = -1; renderG2(); };
+  await loadG2();
+}
+async function loadG2() {
+  g2Rows = await getJSON(`/api/g2?book=${encodeURIComponent($("#g2book").value)}`);
+  const lessons = [...new Set(g2Rows.map((x) => x.lesson))];
+  $("#g2lesson").innerHTML = `<option value="all">All lessons</option>${lessons.map((l) => `<option>${esc(l)}</option>`).join("")}`;
+  g2i = -1; renderG2();
+}
+function renderG2() {
+  const left = g2Rows.filter((x) => x.state === "open" || x.state === "changed").length;
+  $("#g2bar").style.width = `${g2Rows.length ? (100 * (g2Rows.length - left)) / g2Rows.length : 0}%`;
+  $("#g2prog").textContent = `${g2Rows.length - left} of ${g2Rows.length} held book questions decided`;
+  const vis = g2Visible();
+  if (!vis.some((v) => v.i === g2i)) g2i = vis[0]?.i ?? -1;
+  let last = null, html = "";
+  for (const { x, i } of vis) {
+    if (x.lesson !== last) { html += `<h3>${esc(x.lesson)}</h3>`; last = x.lesson; }
+    const dot = x.state === "open" || x.state === "changed" ? '<span class="dot s-disp">!</span>' : '<span class="dot s-done">✓</span>';
+    html += `<button class="rec${i === g2i ? " sel" : ""}" data-i="${i}">${dot}<span class="t">${esc(x.title)}</span></button>`;
+  }
+  $("#list").innerHTML = html || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { g2i = Number(b.dataset.i); renderG2(); }));
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (g2i < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2><div class="muted">Every held book question in this view has a decision.</div></div>'; return; }
+  showG2(g2Rows[g2i]);
+}
+async function showG2(row) {
+  const book = $("#g2book").value;
+  const d = await getJSON(`/api/g2/item?book=${encodeURIComponent(book)}&question=${encodeURIComponent(row.question)}`);
+  const q = d.question, c = d.check || {}, rec = d.recommendation, dec = d.decision, me = meNow();
+  const sol = (q.solution || []).map((s) => `<li>${md(s)}</li>`).join("");
+  $("#detail").innerHTML = `<div class="card">
+    <div class="muted">Book question · ${esc(book)} · ${esc(d.lesson)} · printed p.${esc(d.printed_page ?? "?")} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(q.id)}</span></div>
+    <div class="warn"><span class="label">Why it is held</span><div>${esc(G2HOLD[q.hold_reason] || q.hold_reason)}</div></div>
+    <div class="why"><span class="label">The question, as a student would see it</span><div style="font-size:15px;margin-top:4px">${md(q.stem)}</div></div>
+    <div class="gen"><span class="label">The answers</span>
+      <div style="margin-top:4px"><b>The book prints:</b> $${esc(q.answer ?? "")}$</div>
+      ${c.blind !== undefined ? `<div style="margin-top:4px"><b>A blind re-solve got:</b> ${md(c.blind || "nothing")}${c.note ? ` <span class="muted">— ${esc(c.note)}</span>` : ""}</div>` : ""}
+      ${sol ? `<div style="margin-top:6px"><b>The book's working</b><ol>${sol}</ol></div>` : ""}</div>
+    ${rec ? `<div class="why"><span class="label">Samuel's G2 recommender said</span><div><b>${esc(rec.verdict)}</b> (${esc(rec.confidence || "")}, ${esc(rec.class || "")}): ${md(rec.note || "")}</div></div>` : '<div class="muted">No G2 recommendation for it yet (book_record_g2.py run).</div>'}
+    <div class="who">${dec ? `<b>${esc(G2STATE[dec.choice])}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.key ? ` · key: ${md("$" + dec.key + "$")}` : ""}${dec.note ? ` · ${md(dec.note)}` : ""}${d.state === "changed" ? " · <b>the question changed since</b>, so it is back" : ""}` : "Not decided yet: students never see it until you do"}</div>
+    <div class="actions">
+      <button class="confirm" data-g2="release" ${!me ? "disabled" : ""}>The book is right: release (r)</button>
+      <button id="g2fix" ${!me ? "disabled" : ""}>Fix the answer (f)</button>
+      <button data-g2="hold" ${!me ? "disabled" : ""}>Keep held (h)</button>
+      <button class="dispute" data-g2="exclude" ${!me ? "disabled" : ""}>Leave out (x)</button>
+      <span class="grow"></span><button id="g2prev">‹ Prev (k)</button><button id="g2next">Next (j) ›</button>
+    </div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
+    <form class="flag-form" id="g2form">
+      <label>The right answer, as the app should mark it (LaTeX, no $) <input id="g2key" style="width:100%"></label>
+      <label>Why the book's answer is wrong <textarea id="g2note" rows="2" style="width:100%"></textarea></label>
+      <div class="actions"><button class="confirm" type="submit">Record the fix</button><button type="button" id="g2cancel">Cancel</button></div>
+    </form>
+    <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/book-questions-g2.json; compile applies them, yours winning over the recommendation. A fix corrects what the app marks; record the book's own error in the Misprints task too.</div>
+  </div>`;
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#detail").querySelectorAll("[data-g2]").forEach((b) => (b.onclick = () => g2Decide(b.dataset.g2)));
+  $("#g2fix").onclick = openG2Fix;
+  $("#g2cancel").onclick = () => $("#g2form").classList.remove("open");
+  $("#g2form").onsubmit = (e) => { e.preventDefault(); g2Decide("fix", $("#g2key").value.trim(), $("#g2note").value.trim()); };
+  $("#g2prev").onclick = () => g2Move(-1); $("#g2next").onclick = () => g2Move(1);
+  if (d.printed_page) {
+    offset = d.pdf_page ? d.pdf_page - d.printed_page : 0;
+    page = d.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(book)}`);
+  }
+}
+function openG2Fix() { if (!meNow() || !$("#g2form")) return; $("#g2form").classList.add("open"); $("#g2key").focus(); }
+function g2Move(dir) { const vis = g2Visible().map((v) => v.i); if (!vis.length) return; let p = vis.indexOf(g2i); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1); g2i = vis[p]; renderG2(); }
+async function g2Decide(choice, key, note) {
+  const row = g2Rows[g2i]; if (!row || !meNow()) return;
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/g2/decision", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ book: $("#g2book").value, question: row.question, choice, key, note, by: meNow() }) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  row.state = choice; $("#g2form")?.classList.remove("open");
+  const vis = g2Visible().map((v) => v.i); g2i = vis.find((i) => i > g2i) ?? vis[0] ?? -1; renderG2();
+}
+
 /* ---------- Objectives (G1) ---------- */
 let objRows = [], oi = -1;
 const OKIND = { objective: "Objectives", link: "Links", question: "Questions", filing: "Filing" };
@@ -1737,7 +1856,7 @@ async function genDecide(decision, note, correction) {
 
 /* ---------- boot ---------- */
 $("#me").value = store.get("gt-me") || "";
-$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); };
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); else if (view === "g2" && g2i >= 0) showG2(g2Rows[g2i]); };
 show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
@@ -1762,6 +1881,14 @@ document.addEventListener("keydown", (e) => {
     else if (e.key === "a" && meNow() && $("#oa")) $("#oa").click();
     else if (e.key === "x" && meNow() && $("#ox")) $("#ox").click();
     else if (e.key === "f") { e.preventDefault(); openObjFix(); }
+    return;
+  }
+  if (view === "g2") {
+    if (e.key === "j") g2Move(1); else if (e.key === "k") g2Move(-1);
+    else if (e.key === "r" && meNow()) g2Decide("release");
+    else if (e.key === "h" && meNow()) g2Decide("hold");
+    else if (e.key === "x" && meNow()) g2Decide("exclude");
+    else if (e.key === "f") { e.preventDefault(); openG2Fix(); }
     return;
   }
   if (view === "maths") {

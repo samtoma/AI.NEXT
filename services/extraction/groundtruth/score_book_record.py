@@ -49,15 +49,43 @@ def match(ext: list[dict], gt: list[dict]) -> tuple[list[tuple[dict, dict, str]]
             del ext_left[e["id"]]
         else:
             gt_left.append(g)
+    still = by_content(gt_left, ext_left, pairs)
+    return pairs, still, list(ext_left.values())
+
+
+def near(e: dict, g: dict) -> bool:
+    return abs((e.get("source_page") or 0) - (g.get("source_page") or 0)) <= 1
+
+
+def by_content(gt_left: list[dict], ext_left: dict[str, dict], pairs: list) -> list[dict]:
+    """Pair each ground-truth record with the closest extracted one on a page either side (quote or main text);
+    takes the paired records out of ext_left, appends to pairs, returns the ground truth left unpaired."""
     still = []
     for g in gt_left:
-        cands = [e for e in ext_left.values() if abs((e.get("source_page") or 0) - (g.get("source_page") or 0)) <= 1]
+        cands = [e for e in ext_left.values() if near(e, g)]
         best = max(cands, key=lambda e: (sim(e, g) + (0.15 if e["type"] == g["type"] else 0)), default=None)
         if best is not None and sim(best, g) >= 0.45:
             pairs.append((g, best, "content"))
             del ext_left[best["id"]]
         else:
             still.append(g)
+    return still
+
+
+def match_by_content(ext: list[dict], gt: list[dict]) -> tuple[list[tuple[dict, dict, str]], list[dict], list[dict]]:
+    """match() for the review tool, where an equal id proves nothing: a ground truth labelled on an earlier extraction
+    can hold a different record under the id the current extraction uses. Two records are the same printed thing only
+    when their content says so; an equal id only settles which of several content matches wins."""
+    pairs, ext_left = [], {e["id"]: e for e in ext}
+    gt_left = []
+    for g in gt:
+        e = ext_left.get(g["id"])
+        if e and near(e, g) and sim(e, g) >= 0.45:
+            pairs.append((g, e, "id+content"))
+            del ext_left[e["id"]]
+        else:
+            gt_left.append(g)
+    still = by_content(gt_left, ext_left, pairs)
     return pairs, still, list(ext_left.values())
 
 
