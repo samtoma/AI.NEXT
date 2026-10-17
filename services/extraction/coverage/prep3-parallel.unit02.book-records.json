@@ -1,0 +1,306 @@
+{
+  "coverage_version": 1,
+  "line": "book-records",
+  "book": "prep3-parallel",
+  "course_id": "course:prep3-parallel-math-en",
+  "unit": 2,
+  "lessons": [
+    "pp3u2-1",
+    "pp3u2-2",
+    "pp3u2-3"
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 19,
+    "hold": 15,
+    "excepted": 0,
+    "fail": 4
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "The unit's printed pages = pages in a lesson + pages excluded with a reason",
+      "want": 12,
+      "got": 12,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons whose record names its source, offset and the map's pages",
+      "want": 3,
+      "got": 3,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Prompts = prompts filed under exactly one objective",
+      "want": 28,
+      "got": 28,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Prompts and parts filed = asked as book questions + left out with a reason",
+      "want": 37,
+      "got": 37,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "pp3u2-2:open-prompt-1: not asked, no answer approved yet",
+        "pp3u2-2:open-prompt-2: not asked, no answer approved yet",
+        "pp3u2-2:open-prompt-3: not asked, no answer approved yet"
+      ]
+    },
+    {
+      "id": "worked_examples",
+      "title": "Worked examples = asked as a question, or kept in the explanation library",
+      "want": 11,
+      "got": 11,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
+      "want": 8,
+      "got": 3,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:pp3u2-1-1",
+          "detail": "lacks a book question"
+        },
+        {
+          "scope": "lo:pp3u2-1-2",
+          "detail": "lacks a statement"
+        },
+        {
+          "scope": "lo:pp3u2-2-2",
+          "detail": "lacks a book question"
+        },
+        {
+          "scope": "lo:pp3u2-2-3",
+          "detail": "lacks a book question"
+        },
+        {
+          "scope": "lo:pp3u2-3-3",
+          "detail": "lacks a statement, a book question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × 3 tiers = cells with a live question, book or generated",
+      "want": 24,
+      "got": 11,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:pp3u2-1-1 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-1-1 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-1-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-2 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-2 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-2 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-3 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-3 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-2-3 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-3-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-3-3 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-3-3 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u2-3-3 advanced",
+          "detail": "no live question at this tier"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "module_widgets",
+      "title": "The unit = a unit with a live widget question",
+      "want": 1,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "unit 2",
+          "detail": "no live widget question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors = those whose misconception has a refutation",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "The unit's catalogue entries = entries with a refutation",
+      "want": 2,
+      "got": 2,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "figures",
+      "title": "Figures in the records = figures drawn + gaps with a reason",
+      "want": 3,
+      "got": 3,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book pictures standing in for a figure that are not servable = 0",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_reading",
+      "title": "Formulas read twice = agreed + decided in the Maths reading task",
+      "want": 135,
+      "got": 135,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misprints_decided",
+      "title": "Misprints and candidates = those a person decided",
+      "want": 6,
+      "got": 6,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Book questions = distinct prompts asked once, each with one type",
+      "want": 9,
+      "got": 9,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = answers printed in the book + generated answers approved or agreed",
+      "want": 9,
+      "got": 9,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
+      "want": 445,
+      "got": 445,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_served",
+      "title": "The records' statements filed under an objective = statements in the content files",
+      "want": 25,
+      "got": 25,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_checked",
+      "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
+      "want": 39,
+      "got": 38,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "item pp3u2-3:rule-4",
+          "detail": "the check could not confirm it says what the page prints: Page says 'You can find the relation y1/y2 = x1/x2 to find the value of y'. The claim's 'use the relation' is a close paraphrase of the intent"
+        }
+      ],
+      "excepted_scopes": []
+    }
+  ],
+  "inputs": {
+    "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
+    "book-records/prep3-parallel/misprint-candidates.json": "c73db103e35a520e1e6a4d40e20b18eb81d96acc329f79ac8eef844bce6490b9",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "7c4cea29b356525aa2236851e337d6a76b50f738daa1f5584d035c7dde34ab9c",
+    "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
+    "book-records/prep3-parallel/pp3u2-1.json": "8aa963e09fc183df800ca442dfc573284a76359f459d5523cf0b5f3f18f8a6cd",
+    "book-records/prep3-parallel/pp3u2-2.json": "646b07430209b6cc3e21ad9f447e2baeb876b06dec0b245f7cb20e989d84a087",
+    "book-records/prep3-parallel/pp3u2-3.json": "12bb30ae181bde5f55e8eb10ef48950dee02529451cec23cc75e5914248156a6",
+    "book-records/prep3-parallel/maths-reading/pp3u2-1.json": "1e38465211f0939495f32419f0b412d8b1ae2ef6265085d4a4a06ff2dbe2e75c",
+    "book-records/prep3-parallel/maths-reading/pp3u2-2.json": "6fb7e48a293c1d495d6716761330c815dfe07a5dfb5f18a0fa1b922230431f49",
+    "book-records/prep3-parallel/maths-reading/pp3u2-3.json": "eab6c2c4d26156f1bbaaa9c2e2a61adb2a362f70cf9e08635b0215f1a45e71de",
+    "teaching/prep3-parallel/visuals/pp3u2-1.json": "fe9eb7f1e7f205fc7e116a0b8d645dc2baa0b946e5fea58c46a9b9e3dfe340a4",
+    "teaching/prep3-parallel/visuals/pp3u2-2.json": "69afbb9d728a4ffab0ff67d2c332c0541c3756fdd4c42a1126c3554c15a7516a",
+    "teaching/prep3-parallel/visuals/pp3u2-3.json": "50c011ea501e2eb0d046cf1d5c6c69a0abf3ea4b00b959e9886b42ba96533050",
+    "compiled/prep3-parallel/compile-report.json": "f326dbe0b4feba056ef9f79e2e0dfc63bec79d23e3fc9d3bfbfd1d96b373c355",
+    "compiled/prep3-parallel/generated-questions.json": "285b4dd80fdc7a3d88b1f4cf95d07332bd164adffc01022faa8d9e2556a4e707",
+    "compiled/prep3-parallel/misconceptions.json": "7c65dae6670104e43095f663c66e8ace110832a80066c819a8d96ca3cd763f09",
+    "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
+    "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
+    "compiled/prep3-parallel/content/pp3u2-1.json": "2c12e87d872b3f7b29b943dcb03dff81ff34f6d13d9255ba81d84ad4ec9c66d0",
+    "compiled/prep3-parallel/content/pp3u2-2.json": "479834e414c372d0ef057f3786de82d020d3f755373c893f37e367b817ae73a0",
+    "compiled/prep3-parallel/content/pp3u2-3.json": "0b012eb6c9a88a1fe118695304161bfcb35be1f9a2171fe9a5235d8b215b3dee"
+  },
+  "exceptions": []
+}

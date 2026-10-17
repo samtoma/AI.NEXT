@@ -13,9 +13,9 @@
   "status": "RED",
   "summary": {
     "checks": 19,
-    "hold": 12,
+    "hold": 14,
     "excepted": 0,
-    "fail": 7
+    "fail": 5
   },
   "checks": [
     {
@@ -83,7 +83,7 @@
       "id": "objective_evidence",
       "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
       "want": 14,
-      "got": 9,
+      "got": 8,
       "state": "fails",
       "failures": [
         {
@@ -97,6 +97,10 @@
         {
           "scope": "lo:pp3u1-3-2",
           "detail": "lacks a book question"
+        },
+        {
+          "scope": "lo:pp3u1-4-2",
+          "detail": "lacks a statement"
         },
         {
           "scope": "lo:pp3u1-4-3",
@@ -113,7 +117,7 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 42,
-      "got": 19,
+      "got": 18,
       "state": "fails",
       "failures": [
         {
@@ -130,6 +134,10 @@
         },
         {
           "scope": "lo:pp3u1-1-3 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u1-1-4 standard",
           "detail": "no live question at this tier"
         },
         {
@@ -270,79 +278,25 @@
       "id": "maths_reading",
       "title": "Formulas read twice = agreed + decided in the Maths reading task",
       "want": 144,
-      "got": 142,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "pp3u1-1:example-2|stem|1",
-          "detail": "disagreed: $Y=\\{-1,0,3\\}$ / $Y = \\{ -1 , 0 , 3)$"
-        },
-        {
-          "scope": "pp3u1-1:example-3|solution[7]|1",
-          "detail": "disagreed: $\\therefore (Z-Y)\\times(X\\cup Y)=$ / $\\therefore (Z - Y) \\times (X \\cup Y) = .............$"
-        }
-      ],
+      "got": 144,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "misprints_decided",
       "title": "Misprints and candidates = those a person decided",
       "want": 11,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "pp3u1-1:example-2#stem",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-1:example-2#solution[1]",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-1:example-2#solution[2]",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-1:rule-10#formula",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-1:example-4#stem",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-1:heading-3#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-2:definition-2#claim",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-2:think-1#text",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-2:figure-4#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u1-4:rule-2#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "sw:ch01:expl:pp3u1-1-2:bk-example-2#3",
-          "detail": "not decided in the Misprints task"
-        }
-      ],
+      "got": 11,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
-      "want": 50,
-      "got": 50,
+      "want": 51,
+      "got": 51,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -350,8 +304,8 @@
     {
       "id": "solution_sources",
       "title": "Book questions = answers printed in the book + generated answers approved or agreed",
-      "want": 50,
-      "got": 50,
+      "want": 51,
+      "got": 51,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -359,8 +313,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 709,
-      "got": 709,
+      "want": 717,
+      "got": 717,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -368,8 +322,8 @@
     {
       "id": "statements_served",
       "title": "The records' statements filed under an objective = statements in the content files",
-      "want": 44,
-      "got": 44,
+      "want": 48,
+      "got": 48,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -399,11 +353,13 @@
   ],
   "inputs": {
     "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
-    "book-records/prep3-parallel/misprint-candidates.json": "1b87ecc2741a644eed3629c924cbd20593afe2e8be0ee1780cd1eb4a8706b833",
-    "book-records/prep3-parallel/pp3u1-1.json": "9a0a32d8f5f2c87ba9b484cfe97cd0de2ca457d69e92bb0f9fea856df076f5b1",
+    "book-records/prep3-parallel/misprint-candidates.json": "c73db103e35a520e1e6a4d40e20b18eb81d96acc329f79ac8eef844bce6490b9",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "7c4cea29b356525aa2236851e337d6a76b50f738daa1f5584d035c7dde34ab9c",
+    "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
+    "book-records/prep3-parallel/pp3u1-1.json": "f372db6ee9e4affc21e99d3dede159a89c2693fa94ac87bdcfbda0d9e92fb971",
     "book-records/prep3-parallel/pp3u1-2.json": "ee6f2124edc1d8ae8cf2346ae92eb3977349c910946eadb1935ade07cf9149d4",
     "book-records/prep3-parallel/pp3u1-3.json": "0f07b8c3b43cbc0e8f06245244b9fc2898939a443653433c5466c6b8c88713b8",
-    "book-records/prep3-parallel/pp3u1-4.json": "ecce7bd0926da02101d3700477f87456c05cfa2bc7693ad3470a81f260c82ce4",
+    "book-records/prep3-parallel/pp3u1-4.json": "e26d1eb16b5e9da3c8d615ff85a75b05e396649e9f9e161ee8260f280c08469f",
     "book-records/prep3-parallel/maths-reading/pp3u1-1.json": "0e2ffec905425ec37ce75c581da4286672b1e5b2dd3483c7e53cea755db36d3f",
     "book-records/prep3-parallel/maths-reading/pp3u1-2.json": "73df817ca477417906073c400c5e2b87d7380f1e6b27f28bc695455692572db5",
     "book-records/prep3-parallel/maths-reading/pp3u1-3.json": "8c7ba81a8160902f44fe7db7714744a4f7191033d455ee233559cecf10a8b4bf",
@@ -412,15 +368,16 @@
     "teaching/prep3-parallel/visuals/pp3u1-2.json": "639c2d5729cf7f9a2ff2c84e6c0dd98f5b3d01725bf79a438428a0272586d5b0",
     "teaching/prep3-parallel/visuals/pp3u1-3.json": "df36ecf499b6377c95dfd54afa8ca840468f47216b6b1d5830ba117d24235a0c",
     "teaching/prep3-parallel/visuals/pp3u1-4.json": "5bba807e3682d583f324dfc57aeeced0380feb391aad2d836fd8b8465d84cd8d",
-    "compiled/prep3-parallel/compile-report.json": "fbf902d20607449d65eb140d528769dcbce6ec628f5edb5cb2c7f93463124bac",
-    "compiled/prep3-parallel/generated-questions.json": "fc7330ecf09d187c14ab124289fbb6cea7683fb699e8bdd09830d894a7315e86",
-    "compiled/prep3-parallel/misconceptions.json": "6e7badd20c2bd3873d999eb0102c416de4c50cde04dbb5c31be90352c3c9ba9b",
-    "compiled/prep3-parallel/pp3u1.json": "2a38cc1b827aeb289f2022d3aa0e3c092fb924292feeffeccf0faac6f4edf6d7",
-    "compiled/prep3-parallel/review-stamps.json": "14770a6ee9fb5834c745e1d0ed03eee1fd5243bb386240839ffc9574c8ccdab9",
+    "compiled/prep3-parallel/compile-report.json": "f326dbe0b4feba056ef9f79e2e0dfc63bec79d23e3fc9d3bfbfd1d96b373c355",
+    "compiled/prep3-parallel/generated-questions.json": "285b4dd80fdc7a3d88b1f4cf95d07332bd164adffc01022faa8d9e2556a4e707",
+    "compiled/prep3-parallel/misconceptions.json": "7c65dae6670104e43095f663c66e8ace110832a80066c819a8d96ca3cd763f09",
+    "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
+    "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
     "compiled/prep3-parallel/content/pp3u1-1.json": "202213972d4f6b943c3f2780e5715b5a485882a00a5794a863daf0aa089487d9",
     "compiled/prep3-parallel/content/pp3u1-2.json": "07de87aa01155f27e0db6a321406dee739e71da391e046fc5d0c9875a6348259",
     "compiled/prep3-parallel/content/pp3u1-3.json": "ee67feb5601314211f04b9603d54d27ae7b77d5458cdb0b6da9dc861a13fb71e",
-    "compiled/prep3-parallel/content/pp3u1-4.json": "45f3ca6cf44fd1a44a9e4437c9524850534c1595540bbd6c793b241065cfd382"
+    "compiled/prep3-parallel/content/pp3u1-4.json": "5e9a5a6ce6a696ebbe1c8b28344182c496864def76b3193343419670a35a9cab"
   },
   "exceptions": []
 }

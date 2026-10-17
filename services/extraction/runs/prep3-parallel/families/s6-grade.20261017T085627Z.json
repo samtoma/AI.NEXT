@@ -1,0 +1,240 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "1af664d79ee660820bd5ab07379741e5e7726508b83b1b922d52e3200687b481",
+  "generated_sha256": "dd7e26e065715086676d179496123968c35746dd4d28571de892f08d44e9b431",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u2-1-2:add-both",
+   "spec_sha": "f90dbeeb7dc4c47fe7e2f48afa8cc43db05b5d414a73768de3cc061aebd3b7df",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-1-2:g004-add-bo",
+     "stem_sha": "a4abb0f5c81ee33f",
+     "answer": {
+      "value": "16"
+     },
+     "working": "7+3=10, 3+3=6, sum 16"
+    },
+    {
+     "instance_id": "q:pp3u2-1-2:g006-add-bo",
+     "stem_sha": "248e40c30b24cddc",
+     "answer": {
+      "value": "27"
+     },
+     "working": "5+8=13, 6+8=14, sum 27"
+    },
+    {
+     "instance_id": "q:pp3u2-1-2:g009-add-bo",
+     "stem_sha": "cd062e13eae1a0e1",
+     "answer": {
+      "value": "20"
+     },
+     "working": "5+3=8, 9+3=12, sum 20"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The keys 16, 27 and 20 are correct for all three instances. The solutions are correct step by step. No options were supplied, so there are no distractors to judge. The stem is unambiguous and asks only for the sum, so it doesn't matter that 8:12 isn't in simplest form."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-1:added-number",
+   "spec_sha": "7a3b3b15229239e5c8bef8d6dc8eb66f16bcf0551489ed133c302e409e9ab7d7",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-1:g001-added-",
+     "stem_sha": "d4b0568fa54b2c50",
+     "answer": {
+      "value": "5"
+     },
+     "working": "(1+x)/(10+x)=(5+x)/(20+x) → x=(ad-bc)/(b+c-a-d)=(20-50)/(15-21)=5. Check 6/15=10/25."
+    },
+    {
+     "instance_id": "q:pp3u2-2-1:g004-added-",
+     "stem_sha": "1380184696ca5c69",
+     "answer": {
+      "value": "4"
+     },
+     "working": "x=(6*24-16*10)/(26-30)=(-16)/(-4)=4. Check 10/20=14/28."
+    },
+    {
+     "instance_id": "q:pp3u2-2-1:g009-added-",
+     "stem_sha": "74c891402c2aedc8",
+     "answer": {
+      "value": "6"
+     },
+     "working": "x=(2*22-10*8)/(18-24)=(-36)/(-6)=6. Check 8/16=14/28."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options in the family. All three instances check out algebraically: keys 5, 4 and 6, and each step-6 check shows equal ratios. Solutions follow the product of extremes = product of means method.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-3-1:findx-word",
+   "spec_sha": "e04df2bacfc6818ec2d74d1cc1c87a05723988a20e38f970ba54927f5fca29cb",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-3-1:g001-findx-",
+     "stem_sha": "9c41dcc3677c3695",
+     "answer": {
+      "value": "50"
+     },
+     "working": "d = kt, k = 14/10 = 1.4, so d = 1.4t. t = 70/1.4 = 50."
+    },
+    {
+     "instance_id": "q:pp3u2-3-1:g003-findx-",
+     "stem_sha": "7ea0b42bc2ff1b65",
+     "answer": {
+      "value": "50"
+     },
+     "working": "k = 26/10 = 2.6, d = 2.6t. t = 130/2.6 = 50."
+    },
+    {
+     "instance_id": "q:pp3u2-3-1:g006-findx-",
+     "stem_sha": "90d85981a4aba8b1",
+     "answer": {
+      "value": "20"
+     },
+     "working": "k = 45/10 = 4.5, d = 4.5t. t = 90/4.5 = 20."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "notes": "I didn't open any files, because the task named none. I judged from the text in the message. The family has no options, so distractors_ok is vacuously true. The keys 50, 50 and 20 are correct, and each worked solution follows d = mt correctly. The problem is realism. A car covering 14 km in 10 hours is 1.4 km/h, 26 km in 10 hours is 2.6 km/h, and 45 km in 10 hours is 4.5 km/h. These are walking speeds or slower, not car speeds. Needing 50 hours to cover 70 km also makes no sense for a car. The numbers should be realistic, for example 60 km in 1 hour or 240 km in 3 hours, or the context changed to something like a walker or a cyclist."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-3-1:findy",
+   "spec_sha": "a2cf9f57539800f9e2e82c9a8293573eb8b42b83fa53975436839b286df7e756",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-3-1:g002-findy",
+     "stem_sha": "65c20ad736d6116e",
+     "answer": {
+      "value": "10"
+     },
+     "working": "y = kx, k = 14/49 = 2/7. y = (2/7)(35) = 10"
+    },
+    {
+     "instance_id": "q:pp3u2-3-1:g003-findy",
+     "stem_sha": "7ac61ab1338639d5",
+     "answer": {
+      "value": "22"
+     },
+     "working": "k = 10/35 = 2/7. y = (2/7)(77) = 22"
+    },
+    {
+     "instance_id": "q:pp3u2-3-1:g005-findy",
+     "stem_sha": "cb076554450aea3f",
+     "answer": {
+      "value": "28"
+     },
+     "working": "k = 32/56 = 4/7. y = (4/7)(49) = 28"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic in all three instances and each key is correct (10, 22, 28). The solutions follow the standard y = mx method. The stem asks for the relation and then the value of y, and it says the value of y is the answer, so the numeric key matches the stem. No options were provided, so there were no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-3-2:find-x-from-y",
+   "spec_sha": "9add06c9e2863af83317c67e2062ba26851c7f3725c691259258ac4b6b488dad",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-3-2:g003-find-x",
+     "stem_sha": "9d7eb887c3df5712",
+     "answer": {
+      "value": "6"
+     },
+     "working": "xy=k=72; x=72/12=6"
+    },
+    {
+     "instance_id": "q:pp3u2-3-2:g009-find-x",
+     "stem_sha": "f911de9e4eb99344",
+     "answer": {
+      "value": "8"
+     },
+     "working": "xy=24; x=24/3=8"
+    },
+    {
+     "instance_id": "q:pp3u2-3-2:g010-find-x",
+     "stem_sha": "b61f4edd62fffcdf",
+     "answer": {
+      "value": "2"
+     },
+     "working": "xy=24; x=24/12=2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The message showed no wrong options, so there is nothing to judge there. I did not open any files because none were named. I checked the arithmetic in all three instances. g003 gives m=72 and x=6. g009 gives m=24 and x=8. g010 gives m=24 and x=2. Each solution follows y=m/x, then finds m, states the relation, and solves for x. The stem asks for the relation and then x. The numeric key gives only x, and the relation appears in step 3 of the solution."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-3-2:squared-var",
+   "spec_sha": "379338680e544ce6eb5b9e15cb188c1cedaf8c0f9961ef7555396e70b2da80b9",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-3-2:g001-square",
+     "stem_sha": "5b371b1b16b1263e",
+     "answer": {
+      "value": "48"
+     },
+     "working": "y=k/x^2; k=3*16=48; y=48/x^2; x=1 gives 48"
+    },
+    {
+     "instance_id": "q:pp3u2-3-2:g006-square",
+     "stem_sha": "f7e1e1637c588234",
+     "answer": {
+      "value": "18"
+     },
+     "working": "y=k/x^2; k=2*9=18; y=18/x^2; x=1 gives 18"
+    },
+    {
+     "instance_id": "q:pp3u2-3-2:g009-square",
+     "stem_sha": "ddda8790f3f01285",
+     "answer": {
+      "value": "171"
+     },
+     "working": "y=k/x^2; k=19*9=171; y=171/x^2; x=1 gives 171"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options are present in the instances. Keys check out: m=y·x², and y at x=1 equals m. 3·16=48, 2·9=18, 19·9=171. The stem asks for the relation and then the value of y; the key gives the final value, which is acceptable. Solutions follow the book method step by step.",
+    "distractors": []
+   }
+  }
+ ]
+}

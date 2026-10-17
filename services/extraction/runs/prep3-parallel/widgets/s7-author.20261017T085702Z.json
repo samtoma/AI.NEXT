@@ -1,0 +1,145 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "c9e515c50731f6e61c0f43c15f5641f1f61d3c6f23fbc0f4578b9fa6895b0f4c",
+  "generated_sha256": "b9717b60027db376bfc2b2954fa6b5c395c7fdac267d0a6a87e8f07a53dce29d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u2-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-1-2",
+     "need_kind": "ratio_equivalence_stepper",
+     "description": "The student starts with a ratio such as $7 : 11$ shown as two bars (the antecedent and the consequent). Two controls act on both terms together: multiply by k, or add n. A live readout shows the simplified ratio and the decimal value a/b. The student is given a target such as $2 : 3$ and finds the single number to add that reaches it, as in the book's $7 : 11 \\to 2 : 3$ and $5 : 11 \\to 3 : 5$ questions. They see that multiplying keeps the ratio and adding changes it. Errors it could diagnose: believing that adding the same number keeps the ratio equal (additive-preserves-ratio); adding to one term only; adding the number to the wrong side of the equation, which gives a negative or non-matching n; and forgetting that the added quantity in the drill is the square of the number.",
+     "why": "No existing kind can express this. ratio_balance appears in the spec list, but its instrument and predicates were cut from the contract, so I could not confirm it fits or map any diagnostics to it. The other kinds work on coordinates, products, lines, circles, angles, triangles, statistics, number lines and Venn diagrams. None lets the student act on both terms of a ratio at once and watch the ratio stay or change. Using one would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u2-1-1",
+     "need_kind": "ratio_bar_builder",
+     "description": "The student builds a ratio $a : b$ by setting two tape or bar lengths, for example 'make the ratio 3 to 5'. The widget shows the ratio in the three notations (to, :, fraction) with the antecedent and consequent labelled. A second task asks the student to tap the antecedent or the consequent on a given ratio, or to build the ratio of one quantity to another from a described situation. Errors it could diagnose: reversing the order (b : a); confusing antecedent with consequent; and reading the ratio as part-to-whole instead of part-to-part.",
+     "why": "This objective is mostly notation and vocabulary, so none of the existing kinds fits without being stretched. The existing bar_builder is for statistics (mean, median, mode, range), not ratio. A forced fit would put an answer box into a widget."
+    },
+    {
+     "lo_id": "lo:pp3u2-1-1",
+     "need_kind": "misconception_data",
+     "description": "The lesson file lists no misconceptions for either objective, and lo:pp3u2-1-1 has no anchor questions. Every template needs a parent question id and at least one diagnostic mapping to a misconception id from its own objective.",
+     "why": "Without misconception ids, no template for this lesson can pass validation, even if a widget kind fits. Samuel needs to add misconceptions to both objectives, plus an anchor question for lo:pp3u2-1-1, before templates can be authored."
+    }
+   ],
+   "notes": "I authored no templates. The only candidate kind, ratio_balance, has no instrument description or predicates in the contract I received (it was truncated), so I could not check that it fits or map diagnostics to it. It is probably aimed at direct and inverse variation, not at ratio terms or ratio properties. Both objectives also have an empty misconceptions list, so no template could satisfy the rule that each one carries at least one diagnostic. If ratio_balance turns out to support a 'add the same number to both terms' mode, lo:pp3u2-1-2 with parent q:pp3u2-1-2:bk-example-1 would be the first candidate, once misconceptions are added."
+  },
+  {
+   "lesson": "pp3u2-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-2-1",
+     "need_kind": "proportion_balancer (two equal ratios, extremes × means)",
+     "description": "The student would see a:b = c:d with one term unknown. They would drag the unknown until the two ratios match. Both ratios would show as simplified fractions. A second panel would show the product of extremes (a×d) next to the product of means (b×c), and the two products would be equal only when the proportion holds. The same instrument would handle the first, second, third and fourth proportional by changing which slot is unknown. Adding the same number to 3, 5, 8 and 12 would be a further mode. It would diagnose these errors: (1) multiplying extremes by extremes' partner, i.e. pairing a×b with c×d; (2) putting the unknown in the wrong slot, for example reading the third proportional as the fourth; (3) comparing by difference (an additive relationship) rather than by ratio; (4) inverting one ratio, as in a:b = d:c.",
+     "why": "None of the listed kinds fits. The ones I can read in the contract are about coordinates, circles, triangles, statistics and number lines. Only the name ratio_balance {mode, a, b, c} appears in the spec list, and its predicates are cut off. I can't confirm it can report the errors above. Also, this objective's misconception list is empty, so I have no ids to map. A diagnostics array needs at least one entry, so any template I wrote would have been forced."
+    },
+    {
+     "lo_id": "lo:pp3u2-2-2",
+     "need_kind": "proportion_identity_checker (substitution a = mc, b = md)",
+     "description": "The student would be given a/b = c/d and an expression such as (a+b)/b or (2a+3c)/(2b+3d). They would choose a value of m, and a, b, c, d would then be generated as a = mc and b = md. The expression would be evaluated live for several different choices of m, c and d, so the student sees the value stay the same. The student would then pick which property of proportion (componendo, dividendo, alternando) turns one side into the other. It would diagnose these errors: (1) adding numerators and denominators separately, as in (a+c)/(b+d) ≠ (a+b)/b; (2) applying a property to only one side; (3) treating a/b = c/d as a = c and b = d.",
+     "why": "No existing kind constructs or manipulates a symbolic identity. This is algebraic proof, and an answer box would be a forced fit. This objective also has no anchor question and no misconception ids."
+    },
+    {
+     "lo_id": "lo:pp3u2-2-3",
+     "need_kind": "geometric_mean_builder (continued proportion, b² = ac)",
+     "description": "The student would drag the middle term b between a and c. A square of side b would be shown next to a rectangle a×c, and they match in area only when b² = ac. A chain a:b = b:c would show both ratios side by side. The student would then see that b is the middle proportional, not the average (a+c)/2. It would diagnose these errors: (1) taking the arithmetic mean (a+c)/2 as the middle proportional; (2) using b = ac, not b² = ac; (3) forgetting the square root; (4) taking the negative root when a positive length is asked for.",
+     "why": "No existing kind shows a square against a rectangle or a chain of equal ratios. The area_model kind in the spec list expands or factors binomials and does not fit. The objective has no anchor question and no misconception ids."
+    }
+   ],
+   "notes": "I produced no templates. No file was named in the task, so I read none. Two things made any template a forced fit. First, all three objectives have empty misconception lists, and a diagnostics array needs at least one id from the objective's own list, so none can be written. Second, the contract I was given is truncated and shows no widget whose construction is a proportion. The only candidate is ratio_balance, which appears in the spec list with no predicates or can_emit. It looks aimed at direct and inverse variation, which the next lesson covers, so I did not use it. Samuel may want to add misconception ids for this lesson and check what ratio_balance can report."
+  },
+  {
+   "lesson": "pp3u2-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-3-1",
+     "need_kind": "line_drawer (equation mode) with a direct-variation framing, or a ratio_balance-style widget",
+     "description": "The student would draw the graph of y = mx from a given y ∝ x and one pair of values (for example y = 14 when x = 42). They would find m, then drag two points to build the line through the origin. This ties to the book's think-and-discuss question on d = vt passing through (0, 0). A line_drawer in equation mode could do this. It could report intercept-wrong, which is a line that misses the origin, and slope-inverted. The student could also read y off the line at x = 60.",
+     "why": "This objective's misconception list is empty. The pipeline accepts only ids from the objective's own list, and a template needs at least one diagnostic. So any template I wrote would carry a refuted-but-unnamed error or an invalid id. Samuel should add misconceptions to lo:pp3u2-3-1, for example 'direct variation line has an intercept' and 'divides x by y to get m'. A line_drawer template can then be written. The two skipped kinds, ratio_balance and curve_sketcher, appear in the template spec list. Their predicates and limits are not in the contract I was given, so I did not use them."
+    },
+    {
+     "lo_id": "lo:pp3u2-3-2",
+     "need_kind": "curve_sketcher (hyperbola) or a ratio_balance (inverse) widget; the contract shown to me does not list their predicates",
+     "description": "The student would build or sketch y = m/x from one pair (y = 3 when x = 2, so m = 6). They would see that y falls as x grows and read off y at x = 1.5. They would then do the same for y = m/x² with a squared variable. Useful errors to report: a straight rising line (inverse treated as direct, so m = y/x) and a hyperbola with the wrong constant. Another is a 1/x curve where 1/x² was asked (the square ignored).",
+     "why": "line_drawer can only draw straight lines, so it cannot show an inverse relation without being forced into a mislabelled fit. The other visible kinds are about unrelated mathematics. Neither the hyperbola sketcher nor ratio_balance is described in the contract I was given, so I cannot confirm that it can emit the predicates these two misconceptions need."
+    },
+    {
+     "lo_id": "lo:pp3u2-3-3",
+     "need_kind": "table-classifier widget, or ratio_balance with a mode that gives a table and asks the student to classify it",
+     "description": "The student would be given a table of x and y values and would test it by dragging or selecting. For each table they would check whether y/x is constant (direct), whether xy is constant (inverse) or neither, and give the reason. Errors the widget would diagnose: reading a decreasing y as inverse without checking xy, and forming y/x for an inverse table (inverse treated as direct). The squared-variable case would also be covered.",
+     "why": "No visible kind constructs or tests a table of values. The choice among direct, inverse and neither is a classification with a reason, which an answer box or multiple choice could handle but which is not a construction. Using number_line_marker or bar_builder would be a forced fit."
+    }
+   ],
+   "notes": "I authored no templates for this lesson. Only line_drawer fits direct variation, and lo:pp3u2-3-1 has no misconceptions to name. A template with no valid diagnostic would be refused, and a made-up diagnostic would be a forced fit. The other two objectives need curve or table instruments that the visible contract does not describe. The contract text I received was cut off partway through number_line_marker. If ratio_balance and curve_sketcher exist with their own predicates, lo:pp3u2-3-2 would suit them, and the gaps above can be rechecked against them."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u2-1-2",
+   "need_kind": "ratio_equivalence_stepper",
+   "description": "The student starts with a ratio such as $7 : 11$ shown as two bars (the antecedent and the consequent). Two controls act on both terms together: multiply by k, or add n. A live readout shows the simplified ratio and the decimal value a/b. The student is given a target such as $2 : 3$ and finds the single number to add that reaches it, as in the book's $7 : 11 \\to 2 : 3$ and $5 : 11 \\to 3 : 5$ questions. They see that multiplying keeps the ratio and adding changes it. Errors it could diagnose: believing that adding the same number keeps the ratio equal (additive-preserves-ratio); adding to one term only; adding the number to the wrong side of the equation, which gives a negative or non-matching n; and forgetting that the added quantity in the drill is the square of the number.",
+   "why": "No existing kind can express this. ratio_balance appears in the spec list, but its instrument and predicates were cut from the contract, so I could not confirm it fits or map any diagnostics to it. The other kinds work on coordinates, products, lines, circles, angles, triangles, statistics, number lines and Venn diagrams. None lets the student act on both terms of a ratio at once and watch the ratio stay or change. Using one would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u2-1-1",
+   "need_kind": "ratio_bar_builder",
+   "description": "The student builds a ratio $a : b$ by setting two tape or bar lengths, for example 'make the ratio 3 to 5'. The widget shows the ratio in the three notations (to, :, fraction) with the antecedent and consequent labelled. A second task asks the student to tap the antecedent or the consequent on a given ratio, or to build the ratio of one quantity to another from a described situation. Errors it could diagnose: reversing the order (b : a); confusing antecedent with consequent; and reading the ratio as part-to-whole instead of part-to-part.",
+   "why": "This objective is mostly notation and vocabulary, so none of the existing kinds fits without being stretched. The existing bar_builder is for statistics (mean, median, mode, range), not ratio. A forced fit would put an answer box into a widget."
+  },
+  {
+   "lo_id": "lo:pp3u2-1-1",
+   "need_kind": "misconception_data",
+   "description": "The lesson file lists no misconceptions for either objective, and lo:pp3u2-1-1 has no anchor questions. Every template needs a parent question id and at least one diagnostic mapping to a misconception id from its own objective.",
+   "why": "Without misconception ids, no template for this lesson can pass validation, even if a widget kind fits. Samuel needs to add misconceptions to both objectives, plus an anchor question for lo:pp3u2-1-1, before templates can be authored."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-1",
+   "need_kind": "proportion_balancer (two equal ratios, extremes × means)",
+   "description": "The student would see a:b = c:d with one term unknown. They would drag the unknown until the two ratios match. Both ratios would show as simplified fractions. A second panel would show the product of extremes (a×d) next to the product of means (b×c), and the two products would be equal only when the proportion holds. The same instrument would handle the first, second, third and fourth proportional by changing which slot is unknown. Adding the same number to 3, 5, 8 and 12 would be a further mode. It would diagnose these errors: (1) multiplying extremes by extremes' partner, i.e. pairing a×b with c×d; (2) putting the unknown in the wrong slot, for example reading the third proportional as the fourth; (3) comparing by difference (an additive relationship) rather than by ratio; (4) inverting one ratio, as in a:b = d:c.",
+   "why": "None of the listed kinds fits. The ones I can read in the contract are about coordinates, circles, triangles, statistics and number lines. Only the name ratio_balance {mode, a, b, c} appears in the spec list, and its predicates are cut off. I can't confirm it can report the errors above. Also, this objective's misconception list is empty, so I have no ids to map. A diagnostics array needs at least one entry, so any template I wrote would have been forced."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-2",
+   "need_kind": "proportion_identity_checker (substitution a = mc, b = md)",
+   "description": "The student would be given a/b = c/d and an expression such as (a+b)/b or (2a+3c)/(2b+3d). They would choose a value of m, and a, b, c, d would then be generated as a = mc and b = md. The expression would be evaluated live for several different choices of m, c and d, so the student sees the value stay the same. The student would then pick which property of proportion (componendo, dividendo, alternando) turns one side into the other. It would diagnose these errors: (1) adding numerators and denominators separately, as in (a+c)/(b+d) ≠ (a+b)/b; (2) applying a property to only one side; (3) treating a/b = c/d as a = c and b = d.",
+   "why": "No existing kind constructs or manipulates a symbolic identity. This is algebraic proof, and an answer box would be a forced fit. This objective also has no anchor question and no misconception ids."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-3",
+   "need_kind": "geometric_mean_builder (continued proportion, b² = ac)",
+   "description": "The student would drag the middle term b between a and c. A square of side b would be shown next to a rectangle a×c, and they match in area only when b² = ac. A chain a:b = b:c would show both ratios side by side. The student would then see that b is the middle proportional, not the average (a+c)/2. It would diagnose these errors: (1) taking the arithmetic mean (a+c)/2 as the middle proportional; (2) using b = ac, not b² = ac; (3) forgetting the square root; (4) taking the negative root when a positive length is asked for.",
+   "why": "No existing kind shows a square against a rectangle or a chain of equal ratios. The area_model kind in the spec list expands or factors binomials and does not fit. The objective has no anchor question and no misconception ids."
+  },
+  {
+   "lo_id": "lo:pp3u2-3-1",
+   "need_kind": "line_drawer (equation mode) with a direct-variation framing, or a ratio_balance-style widget",
+   "description": "The student would draw the graph of y = mx from a given y ∝ x and one pair of values (for example y = 14 when x = 42). They would find m, then drag two points to build the line through the origin. This ties to the book's think-and-discuss question on d = vt passing through (0, 0). A line_drawer in equation mode could do this. It could report intercept-wrong, which is a line that misses the origin, and slope-inverted. The student could also read y off the line at x = 60.",
+   "why": "This objective's misconception list is empty. The pipeline accepts only ids from the objective's own list, and a template needs at least one diagnostic. So any template I wrote would carry a refuted-but-unnamed error or an invalid id. Samuel should add misconceptions to lo:pp3u2-3-1, for example 'direct variation line has an intercept' and 'divides x by y to get m'. A line_drawer template can then be written. The two skipped kinds, ratio_balance and curve_sketcher, appear in the template spec list. Their predicates and limits are not in the contract I was given, so I did not use them."
+  },
+  {
+   "lo_id": "lo:pp3u2-3-2",
+   "need_kind": "curve_sketcher (hyperbola) or a ratio_balance (inverse) widget; the contract shown to me does not list their predicates",
+   "description": "The student would build or sketch y = m/x from one pair (y = 3 when x = 2, so m = 6). They would see that y falls as x grows and read off y at x = 1.5. They would then do the same for y = m/x² with a squared variable. Useful errors to report: a straight rising line (inverse treated as direct, so m = y/x) and a hyperbola with the wrong constant. Another is a 1/x curve where 1/x² was asked (the square ignored).",
+   "why": "line_drawer can only draw straight lines, so it cannot show an inverse relation without being forced into a mislabelled fit. The other visible kinds are about unrelated mathematics. Neither the hyperbola sketcher nor ratio_balance is described in the contract I was given, so I cannot confirm that it can emit the predicates these two misconceptions need."
+  },
+  {
+   "lo_id": "lo:pp3u2-3-3",
+   "need_kind": "table-classifier widget, or ratio_balance with a mode that gives a table and asks the student to classify it",
+   "description": "The student would be given a table of x and y values and would test it by dragging or selecting. For each table they would check whether y/x is constant (direct), whether xy is constant (inverse) or neither, and give the reason. Errors the widget would diagnose: reading a decreasing y as inverse without checking xy, and forming y/x for an inverse table (inverse treated as direct). The squared-variable case would also be covered.",
+   "why": "No visible kind constructs or tests a table of values. The choice among direct, inverse and neither is a classification with a reason, which an answer box or multiple choice could handle but which is not a construction. Using number_line_marker or bar_builder would be a forced fit."
+  }
+ ]
+}

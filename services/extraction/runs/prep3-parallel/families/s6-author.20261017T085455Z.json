@@ -1,0 +1,697 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "da8e0acfde02513e0e2f292bb399259c2e2f5752e80c61f761160a50fb5ee688",
+  "generated_sha256": "b0a333a9fc5cb73d60e0d7f4260f9ef4022e2acf588a2bc8f713c62d9ff78956",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u2-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for lo:pp3u2-1-1 (list is empty), so there is no valid parent_question_id, source_page, or book solution to model. Inventing a parent would break traceability and the book's own method and notation cannot be verified."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same: no book questions or canonical solutions were provided, so I cannot honestly anchor a family to the book's typical exercise."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same: no book questions or canonical solutions were provided, so I cannot identify the book's harder-exercise twist or a valid parent."
+    }
+   ],
+   "notes": "The BOOK QUESTIONS list was empty and no files were named. I did not invent a parent_question_id. Please supply the book questions for this objective and re-run."
+  },
+  {
+   "lo_id": "lo:pp3u2-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-1-2:add-both",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-1-2",
+     "parent_question_id": "q:pp3u2-1-2:bk-example-1",
+     "source_page": 26,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        3,
+        12
+       ],
+       "resample_while": "b == a"
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "p",
+       "let": "a + n"
+      },
+      {
+       "name": "q",
+       "let": "b + n"
+      }
+     ],
+     "constraints": [],
+     "stem": "The number ${=n}$ is added to each of the two terms of the ratio ${=a} : {=b}$. Find the sum of the two terms of the new ratio.",
+     "answer": "p + q",
+     "solution": [
+      "Add ${=n}$ to the first term: ${=a} + {=n} = {=p}$.",
+      "Add ${=n}$ to the second term: ${=b} + {=n} = {=q}$.",
+      "The new ratio is ${=p} : {=q}$. (Adding a number to both terms changes the ratio.)",
+      "The sum of its two terms is ${=p} + {=q} = {=p + q}$."
+     ],
+     "notes": "Basic entry point: adding the same number to both terms and computing the new ratio's terms. Parent is the book's add-to-both-terms example."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-1:added-number",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-1",
+     "parent_question_id": "q:pp3u2-2-1:bk-example-3",
+     "source_page": 28,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "u",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "v",
+       "randint": [
+        "u + 1",
+        "u + 3"
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        3,
+        6
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        "m + 1",
+        "m + 3"
+       ]
+      },
+      {
+       "name": "x",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "a",
+       "let": "u*m - x"
+      },
+      {
+       "name": "b",
+       "let": "v*m - x"
+      },
+      {
+       "name": "c",
+       "let": "u*n - x"
+      },
+      {
+       "name": "d",
+       "let": "v*n - x"
+      },
+      {
+       "require": "a >= 1",
+       "why": "all four given numbers must be positive"
+      }
+     ],
+     "constraints": [
+      "b + c - a - d != 0"
+     ],
+     "stem": "Find the number that if added to each of the numbers ${=a}$, ${=b}$, ${=c}$ and ${=d}$, in this order, the results become proportional.",
+     "answer": "x",
+     "solution": [
+      "Let the number be $x$. Then ${=a}+x$, ${=b}+x$, ${=c}+x$, ${=d}+x$ are proportional, so $\\frac{{=a}+x}{{=b}+x}=\\frac{{=c}+x}{{=d}+x}$.",
+      "Product of extremes = product of means: $({=b}+x)({=c}+x)=({=a}+x)({=d}+x)$.",
+      "Expand: ${=b*c}+{=b+c}x+x^2={=a*d}+{=a+d}x+x^2$.",
+      "The $x^2$ terms cancel: ${=b+c}x-{=a+d}x={=a*d}-{=b*c}$, so $({=b+c-a-d})x={=a*d-b*c}$.",
+      "$x=\\frac{{=a*d-b*c}}{{=b+c-a-d}}={=x}$.",
+      "Check: ${=a+x}$, ${=b+x}$, ${=c+x}$, ${=d+x}$ give $\\frac{{=a+x}}{{=b+x}}=\\frac{{=c+x}}{{=d+x}}$. The number is {=x}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Mirrors book example 3. Built backwards: proportional numbers u*m, v*m, u*n, v*n minus x. Unique linear solution; answer a positive whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-2:ratio-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-2",
+     "parent_question_id": "none-provided",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        9
+       ],
+       "resample_while": "m == n or gcd(m, n) != 1"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1",
+      "m != n"
+     ],
+     "stem": "If $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{a+b}{b}$ as a fraction in its simplest form.",
+     "answer": "",
+     "solution": [
+      "Since $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, we can write $a={=m}k$ and $b={=n}k$ for some $k\\neq 0$.",
+      "Substitute: $\\frac{a+b}{b}=\\frac{{=m}k+{=n}k}{{=n}k}=\\frac{({=m}+{=n})k}{{=n}k}$.",
+      "Cancel $k$: $\\frac{a+b}{b}=\\frac{{=m+n}}{{=n}}$, which is already in simplest form."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=m+n}/{=n}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Parent book question not available (none listed); placeholder parent id. m+n and n are coprime since gcd(m,n)=1."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-2:ratio-lin",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-2",
+     "parent_question_id": "none-provided",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        9
+       ],
+       "resample_while": "m == n or gcd(m, n) != 1"
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "require": "p * m > q * n",
+       "why": "keep denominator positive"
+      },
+      {
+       "name": "num",
+       "let": "p * m + q * n"
+      },
+      {
+       "name": "den",
+       "let": "p * m - q * n"
+      },
+      {
+       "name": "g",
+       "let": "gcd(num, den)"
+      },
+      {
+       "name": "n2",
+       "let": "num // g"
+      },
+      {
+       "name": "d2",
+       "let": "den // g"
+      },
+      {
+       "require": "d2 > 1",
+       "why": "answer is a proper fraction not an integer"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1"
+     ],
+     "stem": "If $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{{=p}a+{=q}b}{{=p}a-{=q}b}$ as a fraction in its simplest form.",
+     "answer": "",
+     "solution": [
+      "Since $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, put $a={=m}k$ and $b={=n}k$ with $k\\neq 0$.",
+      "Substitute: $\\frac{{=p}a+{=q}b}{{=p}a-{=q}b}=\\frac{{=p*m}k+{=q*n}k}{{=p*m}k-{=q*n}k}=\\frac{{=num}k}{{=den}k}$.",
+      "Cancel $k$: $\\frac{{=num}}{{=den}}$, which in simplest form is $\\frac{{=n2}}{{=d2}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=n2}/{=d2}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Placeholder parent id; no book questions were supplied."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-2:square-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-2",
+     "parent_question_id": "none-provided",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        7
+       ],
+       "resample_while": "m == n or gcd(m, n) != 1"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1",
+      "m != n"
+     ],
+     "stem": "If $\\frac{a}{b}=\\frac{c}{d}$ and $\\frac{a}{c}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{a^2+b^2}{c^2+d^2}$ as a fraction in its simplest form.",
+     "answer": "",
+     "solution": [
+      "From $\\frac{a}{b}=\\frac{c}{d}$, by alternation $\\frac{a}{c}=\\frac{b}{d}$, so $\\frac{b}{d}=\\frac{{=m}}{{=n}}$ too.",
+      "Write $a={=m}k$, $c={=n}k$, $b={=m}t$, $d={=n}t$.",
+      "Then $\\frac{a^2+b^2}{c^2+d^2}=\\frac{{=m*m}k^2+{=m*m}t^2}{{=n*n}k^2+{=n*n}t^2}=\\frac{{=m*m}(k^2+t^2)}{{=n*n}(k^2+t^2)}$.",
+      "Cancel $k^2+t^2$: the value is $\\frac{{=m*m}}{{=n*n}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=m*m}/{=n*n}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Placeholder parent id; no book questions supplied. m/n coprime so squares coprime. Solver may also write a=mc/n; same answer."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were listed for this objective, so parent_question_id is a placeholder (\"none-provided\") and source_page is null. Reviewer should attach real parents."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The prompt lists no book questions for lo:pp3u2-2-3. Every family needs a parent_question_id from this objective's book questions, and I have no printed solutions to model the book's method and notation on. I did not invent a parent id."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there are no book questions or canonical solutions to use as a parent or as a model. The description alone (b^2 = ac) doesn't tell me how the book lays out its worked steps or what counts as a typical exercise."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there is no book question to identify the book's harder exercises or twists. I did not guess at them."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-3-1:findy",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-3-1",
+     "parent_question_id": "q:pp3u2-3-1:bk-example-1-second",
+     "source_page": 33,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        3,
+        4,
+        5,
+        7
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "j",
+       "randint": [
+        2,
+        12
+       ],
+       "resample_while": "j == k"
+      },
+      {
+       "name": "x1",
+       "let": "d * k"
+      },
+      {
+       "name": "y1",
+       "let": "n * k"
+      },
+      {
+       "name": "x2",
+       "let": "d * j"
+      },
+      {
+       "name": "y2",
+       "let": "n * j"
+      }
+     ],
+     "constraints": [
+      "gcd(n, d) == 1"
+     ],
+     "stem": "If $y \\propto x$ and $y = {=y1}$ when $x = {=x1}$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = {=x2}$. Give the value of $y$ as your answer.",
+     "answer": "y2",
+     "solution": [
+      "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$).",
+      "Substitute the values of $x$ and $y$: ${=y1} = {=x1} \\times m$, so $m = \\frac{{=y1}}{{=x1}} = \\frac{{=n}}{{=d}}$.",
+      "The relation is $y = \\frac{{=n}}{{=d}}x$.",
+      "When $x = {=x2}$: $y = \\frac{{=n}}{{=d}} \\times {=x2} = {=y2}$."
+     ],
+     "notes": "m is a lowest-terms fraction n/d; x1 multiple of d so all values whole."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-3-1:findx-word",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-3-1",
+     "parent_question_id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+     "source_page": 32,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A car moves at a uniform velocity, so the distance covered (d) in kilometres is directly proportional to the time (t) in hours.",
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        7,
+        9,
+        11,
+        13
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "j",
+       "randint": [
+        2,
+        12
+       ],
+       "resample_while": "j == k"
+      },
+      {
+       "name": "t1",
+       "let": "d * k"
+      },
+      {
+       "name": "d1",
+       "let": "n * k"
+      },
+      {
+       "name": "d2",
+       "let": "n * j"
+      },
+      {
+       "name": "t2",
+       "let": "d * j"
+      }
+     ],
+     "constraints": [
+      "gcd(n, d) == 1"
+     ],
+     "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers ${=d1}$ km in ${=t1}$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover ${=d2}$ km. Give the number of hours as your answer.",
+     "answer": "t2",
+     "solution": [
+      "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$).",
+      "Substitute: ${=d1} = m \\times {=t1}$, so $m = \\frac{{=d1}}{{=t1}} = \\frac{{=n}}{{=d}}$.",
+      "The relation is $d = \\frac{{=n}}{{=d}}t$.",
+      "Put $d = {=d2}$: ${=d2} = \\frac{{=n}}{{=d}}t$, so $t = {=d2} \\times \\frac{{=d}}{{=n}} = {=t2}$ hours."
+     ],
+     "notes": "Finds the unknown x (time) rather than y; m fraction in lowest terms; values whole."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-3-2:find-x-from-y",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-3-2",
+     "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
+     "source_page": 34,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "m",
+       "let": "a * b"
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        12
+       ],
+       "resample_while": "d == a"
+      },
+      {
+       "require": "m % d == 0",
+       "why": "x must be a whole number"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $y \\propto \\frac{1}{x}$ and $y={=a}$ when $x={=b}$, find the relation between $x$ and $y$, then find the value of $x$ when $y={=d}$.",
+     "answer": "m / d",
+     "solution": [
+      "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant.",
+      "Substitute $y={=a}$ and $x={=b}$: ${=a}=\\frac{m}{{=b}}$, so $m={=a}\\times {=b}={=m}$.",
+      "The relation is $y=\\frac{{=m}}{x}$.",
+      "When $y={=d}$: ${=d}=\\frac{{=m}}{x}$, so $x=\\frac{{=m}}{{=d}}={=m / d}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Inverse variation, solving for x. d is resampled so it differs from a and divides m, so x is a whole number."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-3-2:squared-var",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-3-2",
+     "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
+     "source_page": 34,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "choice": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10
+       ],
+       "resample_while": "c == b"
+      },
+      {
+       "name": "a",
+       "randint": [
+        1,
+        20
+       ]
+      },
+      {
+       "name": "m",
+       "let": "a * b * b"
+      },
+      {
+       "require": "m % (c * c) == 0",
+       "why": "y must be a whole number"
+      },
+      {
+       "require": "m / (c * c) <= 200",
+       "why": "keep the answer small"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y={=a}$ when $x={=b}$, find the relation between $x$ and $y$, then find the value of $y$ when $x={=c}$.",
+     "answer": "m / (c * c)",
+     "solution": [
+      "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant.",
+      "Substitute $y={=a}$ and $x={=b}$: ${=a}=\\frac{m}{{=b * b}}$, so $m={=a}\\times {=b * b}={=m}$.",
+      "The relation is $y=\\frac{{=m}}{x^{2}}$.",
+      "When $x={=c}$: $y=\\frac{{=m}}{{=c * c}}={=m / (c * c)}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Inverse variation with the square. Requires m divisible by c squared so y is whole."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-3-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions. Every family needs a parent_question_id that is a book question of this objective, and none was supplied. I have no canonical solution or page to model, and I won't invent a parent id or guess the book's method."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book question exists as a parent, so there is no book exercise to take as the typical case."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book question exists as a parent, so there is no harder book exercise or twist to base a family on."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

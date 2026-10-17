@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-1-2:add-both",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-1-2",
+ "parent_question_id": "q:pp3u2-1-2:bk-example-1",
+ "source_page": 26,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    3,
+    12
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "p",
+   "let": "a + n"
+  },
+  {
+   "name": "q",
+   "let": "b + n"
+  }
+ ],
+ "constraints": [],
+ "stem": "The number ${=n}$ is added to each of the two terms of the ratio ${=a} : {=b}$. Find the sum of the two terms of the new ratio.",
+ "answer": "p + q",
+ "solution": [
+  "Add ${=n}$ to the first term: ${=a} + {=n} = {=p}$.",
+  "Add ${=n}$ to the second term: ${=b} + {=n} = {=q}$.",
+  "The new ratio is ${=p} : {=q}$. (Adding a number to both terms changes the ratio.)",
+  "The sum of its two terms is ${=p} + {=q} = {=p + q}$."
+ ],
+ "notes": "Basic entry point: adding the same number to both terms and computing the new ratio's terms. Parent is the book's add-to-both-terms example."
+}

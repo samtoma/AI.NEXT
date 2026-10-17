@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "79947146f2fd245dbf1de2ad43676da19580813f8eee6f9ef5d343719c8144b6",
+  "generated_sha256": "6739d8e424ab5c51348cb103be4831a1004bee5bbb03764b7ae5c07dd03b5783",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u2-2:example-5",
+    "verdict": "equivalent",
+    "reason": "Both give the middle proportional as ±9 (9 or -9)."
+   }
+  ]
+ }
+}

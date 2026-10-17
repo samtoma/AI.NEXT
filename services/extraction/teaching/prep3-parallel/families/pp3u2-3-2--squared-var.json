@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-3-2:squared-var",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-3-2",
+ "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
+ "source_page": 34,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    10
+   ],
+   "resample_while": "c == b"
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    20
+   ]
+  },
+  {
+   "name": "m",
+   "let": "a * b * b"
+  },
+  {
+   "require": "m % (c * c) == 0",
+   "why": "y must be a whole number"
+  },
+  {
+   "require": "m / (c * c) <= 200",
+   "why": "keep the answer small"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y={=a}$ when $x={=b}$, find the relation between $x$ and $y$, then find the value of $y$ when $x={=c}$.",
+ "answer": "m / (c * c)",
+ "solution": [
+  "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant.",
+  "Substitute $y={=a}$ and $x={=b}$: ${=a}=\\frac{m}{{=b * b}}$, so $m={=a}\\times {=b * b}={=m}$.",
+  "The relation is $y=\\frac{{=m}}{x^{2}}$.",
+  "When $x={=c}$: $y=\\frac{{=m}}{{=c * c}}={=m / (c * c)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Inverse variation with the square. Requires m divisible by c squared so y is whole."
+}

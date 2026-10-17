@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-3-1:findy",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-3-1",
+ "parent_question_id": "q:pp3u2-3-1:bk-example-1-second",
+ "source_page": 33,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    2,
+    12
+   ],
+   "resample_while": "j == k"
+  },
+  {
+   "name": "x1",
+   "let": "d * k"
+  },
+  {
+   "name": "y1",
+   "let": "n * k"
+  },
+  {
+   "name": "x2",
+   "let": "d * j"
+  },
+  {
+   "name": "y2",
+   "let": "n * j"
+  }
+ ],
+ "constraints": [
+  "gcd(n, d) == 1"
+ ],
+ "stem": "If $y \\propto x$ and $y = {=y1}$ when $x = {=x1}$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = {=x2}$. Give the value of $y$ as your answer.",
+ "answer": "y2",
+ "solution": [
+  "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$).",
+  "Substitute the values of $x$ and $y$: ${=y1} = {=x1} \\times m$, so $m = \\frac{{=y1}}{{=x1}} = \\frac{{=n}}{{=d}}$.",
+  "The relation is $y = \\frac{{=n}}{{=d}}x$.",
+  "When $x = {=x2}$: $y = \\frac{{=n}}{{=d}} \\times {=x2} = {=y2}$."
+ ],
+ "notes": "m is a lowest-terms fraction n/d; x1 multiple of d so all values whole."
+}

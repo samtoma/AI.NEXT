@@ -1,0 +1,119 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "5522ea9d7c47a4fdcfbe5925d8c4ac1558e50fee76516aaf0b1304c05f3a7537",
+  "generated_sha256": "d6f10704a13aeac8973c5113349d5d098ae291377c15254a10e6627cd453875c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u2-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u2-1:figure-1"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u2-1:figure-1",
+     "src": "pp3u2-1__figure-1.png",
+     "ref": null,
+     "printed_page": 25,
+     "reason": "the spec does not match the figure: Image is an illustration of children, not a ratio_bars chart. Missing numeric values (4 boys, 3 girls), missing labeled bar visualization, missing chart structure entirely. The spec requires a bar chart showing the ratio of Boys:Girls (4:3 children), but the image is just a generic illustration of happy people.",
+     "rejected_spec": {
+      "kind": "ratio_bars",
+      "spec": {
+       "parts": [
+        {
+         "label": "Boys",
+         "value": 4
+        },
+        {
+         "label": "Girls",
+         "value": 3
+        }
+       ],
+       "animate": "grow",
+       "unit": "children"
+      }
+     }
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 1,
+    "compared": 1
+   }
+  },
+  {
+   "lesson": "pp3u2-2",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "pp3u2-3",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u2-3:figure-1",
+    "pp3u2-3:figure-2"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u2-3:figure-1",
+     "src": "pp3u2-3__figure-1.png",
+     "ref": null,
+     "printed_page": 32,
+     "reason": "The figure is a line through the origin and (1,15), (2,30), (3,45), (4,60), with the axes titled 'Time in seconds' and 'Distance in meters'. No available kind can draw the axis titles. The coordinate_plot and function_graph kinds also have no way to set the 15-unit tick spacing.",
+     "needed_kind": "function_graph or coordinate_plot with custom axis titles and tick spacing"
+    },
+    {
+     "figure_id": "pp3u2-3:figure-2",
+     "src": "pp3u2-3__figure-2.png",
+     "ref": "pp3u2-3:example-4",
+     "printed_page": 36,
+     "reason": "The figure is a calculator key sequence (27 × 10.5 x² ÷ 10.75 x² =). It is not a graph, a set, a chart or a geometric scene, and it would also show the worked steps to the answer of the exercise.",
+     "needed_kind": "calculator key-sequence display"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 2,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 2,
+   "S4 Compare": 1
+  },
+  "per_lesson": {
+   "pp3u2-1": 2,
+   "pp3u2-3": 1
+  },
+  "total": 3
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

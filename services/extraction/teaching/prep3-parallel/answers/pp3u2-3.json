@@ -1,0 +1,300 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u2-3",
+  "source": "book-records/prep3-parallel/pp3u2-3.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 7,
+      "cost_usd": 0.2968,
+      "calls": [
+        {
+          "call": "answers.pp3u2-3",
+          "cost_usd": 0.2968,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u2-3:think-and-discuss-1:A",
+      "record_id": "pp3u2-3:think-and-discuss-1",
+      "part": "A",
+      "type": "activity",
+      "page": 32,
+      "question": {
+        "text": "A car moves at a uniform velocity (V) 15 m/sec. If the covered distance (d) in meter in a time (t) per second to give the relation: $d = vt$.",
+        "stem": "Represent the relation between d and t graphically.",
+        "notes": "Relation printed with lowercase v although velocity is named (V). Table k7 belongs to this activity."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1f4b02e138a69af98e4bd440456495a9",
+      "kind": "drawing",
+      "answer": "Plot (1, 15), (2, 30), (3, 45), (4, 60) and draw a straight line through them starting at the origin (0, 0).",
+      "solution": [
+        "Draw the horizontal axis for time t in seconds, marked 1, 2, 3, 4.",
+        "Draw the vertical axis for distance d in meters, marked 15, 30, 45, 60.",
+        "Plot the points from the table: (1, 15), (2, 30), (3, 45), (4, 60).",
+        "Draw a straight line through the points, starting at the origin (0, 0), with an arrow at the upper end.",
+        "The graph is a straight line rising from the origin."
+      ],
+      "grounded_in": [
+        "pp3u2-3:rule-2",
+        "pp3u2-3:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "A straight line through the origin passing through (1,15), (2,30), (3,45), (4,60), with t (seconds) on the horizontal axis and d (meters) on the vertical axis.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:think-and-discuss-1:B",
+      "record_id": "pp3u2-3:think-and-discuss-1",
+      "part": "B",
+      "type": "activity",
+      "page": 32,
+      "question": {
+        "text": "A car moves at a uniform velocity (V) 15 m/sec. If the covered distance (d) in meter in a time (t) per second to give the relation: $d = vt$.",
+        "stem": "Does the graphical representation pass through the origin point (0, 0)?",
+        "notes": "Relation printed with lowercase v although velocity is named (V). Table k7 belongs to this activity."
+      },
+      "needs_page": true,
+      "question_fingerprint": "8d9835435685fb496eb03c6279e40dca",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+        "The relation is d = 15t, which is a direct variation d ∝ t.",
+        "A direct variation is represented by a straight line passing through the origin point.",
+        "When t = 0, d = 15 × 0 = 0, so the point (0, 0) is on the line.",
+        "Yes, the graph passes through the origin (0, 0)."
+      ],
+      "grounded_in": [
+        "pp3u2-3:rule-2",
+        "pp3u2-3:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "Yes, the line passes through the origin (0, 0), because $d = 15t$ gives $d = 0$ when $t = 0$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:think-and-discuss-1:C",
+      "record_id": "pp3u2-3:think-and-discuss-1",
+      "part": "C",
+      "type": "activity",
+      "page": 32,
+      "question": {
+        "text": "A car moves at a uniform velocity (V) 15 m/sec. If the covered distance (d) in meter in a time (t) per second to give the relation: $d = vt$.",
+        "stem": "Find $\\frac{d}{t}$ in each case, what do you notice?",
+        "notes": "Relation printed with lowercase v although velocity is named (V). Table k7 belongs to this activity."
+      },
+      "needs_page": true,
+      "question_fingerprint": "5e39b1c752d41a0265110feaa54668e8",
+      "kind": "explanation",
+      "answer": "d/t = 15 in every case, so d/t is constant and d varies directly with t (d ∝ t).",
+      "solution": [
+        "For t = 1, d = 15: d/t = 15/1 = 15.",
+        "For t = 2, d = 30: d/t = 30/2 = 15.",
+        "For t = 3, d = 45: d/t = 45/3 = 15.",
+        "For t = 4, d = 60: d/t = 60/4 = 15.",
+        "d/t is the same constant, 15, in each case, so d = 15t and d ∝ t."
+      ],
+      "grounded_in": [
+        "pp3u2-3:definition-1",
+        "pp3u2-3:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "$\\frac{d}{t} = 15$ in every case (15/1, 30/2, 45/3, 60/4). The ratio is constant, so $d \\propto t$ (direct variation, $d = 15t$).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:exercise-1:A",
+      "record_id": "pp3u2-3:exercise-1",
+      "part": "A",
+      "type": "exercise",
+      "page": 33,
+      "question": {
+        "text": "Write the relation between m, x and y.",
+        "stem": "Write the relation between m, x and y.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a895d62ee3f77dff38dfb711767f20bb",
+      "kind": "value",
+      "answer": "m = x y",
+      "solution": [
+        "The area of a rectangle is the product of its two dimensions.",
+        "One dimension is x and the other is y, and the area is m.",
+        "So m = x y."
+      ],
+      "grounded_in": [
+        "pp3u2-3:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "m = x y (area = x × y), so y = m/x",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:exercise-2:B",
+      "record_id": "pp3u2-3:exercise-2",
+      "part": "B",
+      "type": "exercise",
+      "page": 33,
+      "question": {
+        "text": "If the area of the rectangle is constant and equal to 30 cm² complete the following table:",
+        "stem": "Complete the table (x = 3, 5, 6, 10; y = blanks).",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "86c015f3e9a8b4bf50350721047b3e53",
+      "kind": "value",
+      "answer": "x = 3, y = 10; x = 5, y = 6; x = 6, y = 5; x = 10, y = 3",
+      "solution": [
+        "The area is constant, so xy = 30 and y = 30/x.",
+        "When x = 3: y = 30/3 = 10.",
+        "When x = 5: y = 30/5 = 6.",
+        "When x = 6: y = 30/6 = 5.",
+        "When x = 10: y = 30/10 = 3.",
+        "The table is y = 10, 6, 5, 3."
+      ],
+      "grounded_in": [
+        "pp3u2-3:rule-5",
+        "pp3u2-3:definition-2",
+        "pp3u2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "y = 10, 6, 5, 3 (for x = 3, 5, 6, 10 respectively)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:exercise-3:C",
+      "record_id": "pp3u2-3:exercise-3",
+      "part": "C",
+      "type": "exercise",
+      "page": 33,
+      "question": {
+        "text": "Find x y in each case. What do you notice?",
+        "stem": "Find x y in each case. What do you notice?",
+        "notes": "x y is presumably the product xy."
+      },
+      "needs_page": false,
+      "question_fingerprint": "ab35fcee87706d88ea62948be75db099",
+      "kind": "explanation",
+      "answer": "In every case x y = 30, so the product is constant and y = 30/x (y varies inversely with x).",
+      "solution": [
+        "The area is 30, so y = 30/x. This gives y = 10, 6, 5, 3 for x = 3, 5, 6, 10.",
+        "x = 3, y = 10: x y = 3 × 10 = 30.",
+        "x = 5, y = 6: x y = 5 × 6 = 30.",
+        "x = 6, y = 5: x y = 6 × 5 = 30.",
+        "x = 10, y = 3: x y = 10 × 3 = 30.",
+        "We notice that x y is always 30, a constant, so y ∝ 1/x."
+      ],
+      "grounded_in": [
+        "pp3u2-3:rule-5",
+        "pp3u2-3:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "For x = 6, y = 5: xy = 30. I assumed the third table column is part C. The same product 30 comes out in every case, so xy is constant (xy = 30).",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-3:drill-1",
+      "record_id": "pp3u2-3:drill-1",
+      "part": null,
+      "type": "exercise",
+      "page": 35,
+      "question": {
+        "text": "Show which of the following tables represents the direct variation and which represents the inverse variation and which does not represent the direct variation or inverse variation while mentioning the reason in each case:",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "389ec1f953a4dfc75e0621eff6a79956",
+      "kind": "explanation",
+      "answer": "First table: inverse variation (xy = 60 always); second table: direct variation (y/x = 4.5 always); third table: direct variation (y/x = 1.8 always); fourth table: neither (y/x is not constant and xy is not constant).",
+      "solution": [
+        "First table: xy = 3×20 = 60, 5×12 = 60, 4×15 = 60, 6×10 = 60. xy is the same constant 60, so it is an inverse variation, y = 60/x.",
+        "Second table: y/x = 9/2 = 4.5, 18/4 = 4.5, 54/12 = 4.5, 72/16 = 4.5. y/x is constant, so it is a direct variation, y = 4.5x.",
+        "Third table: y/x = 9/5 = 1.8, 18/10 = 1.8, 27/15 = 1.8, 45/25 = 1.8. y/x is constant, so it is a direct variation, y = 1.8x.",
+        "Fourth table: xy = 3×6 = 18, (-2)×(-9) = 18, (-18)×1 = -18, 9×(-2) = -18. xy is not constant.",
+        "Fourth table: y/x = 6/3 = 2, but (-9)/(-2) = 4.5. y/x is not constant either.",
+        "So the fourth table is neither a direct nor an inverse variation."
+      ],
+      "grounded_in": [
+        "pp3u2-3:definition-1",
+        "pp3u2-3:definition-2",
+        "pp3u2-3:rule-3",
+        "pp3u2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "First table: inverse variation, because $xy = 60$ is constant in every row (3×20, 5×12, 4×15, 6×10). Second table: direct variation, because $y/x = 4.5$ is constant in every row. Third table: direct variation, because $y/x = 9/5$ is constant in every row. Fourth table: inverse variation, because $xy = 18$ is constant in every row (3×6 = 18, (-2)×(-9) = 18, (-18)×1 = -18).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:40+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

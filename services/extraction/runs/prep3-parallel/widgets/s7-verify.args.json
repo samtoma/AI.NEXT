@@ -38,7 +38,11 @@
     "maths_source": null,
     "lesson_unit": null,
     "answer_rules": null,
-    "lesson_titles": {},
+    "lesson_titles": {
+      "pp3u2-1": "Ratio",
+      "pp3u2-2": "Proportion",
+      "pp3u2-3": "Direct Variation and Inverse Variation"
+    },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
       "repo_root": "/Users/tdeif/Developer/Noor",
@@ -49,102 +53,5 @@
     }
   },
   "mode": "verify",
-  "widgets": [
-    {
-      "question_id": "q:pp3u1-1-1:w001",
-      "template_id": "wt:pp3u1-1-1:solve-then-plot",
-      "template_sha": "ff0c7a3b3fd40a6510359ed1150c093b739091c4a4aa3b4e4ab9453c54b6358f",
-      "lo_id": "lo:pp3u1-1-1",
-      "kind": "pair_plotter",
-      "spec": {
-        "target": [
-          4,
-          -4
-        ]
-      },
-      "stem": "If $(a - 2, b + 1) = (2, -3)$, find $a$ and $b$, then plot the point $(a, b)$.",
-      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5.",
-      "reading_fields": {
-        "target": "[x, y], the point the question asks for"
-      },
-      "can_emit": [
-        "swapped-coordinates",
-        "wrong-quadrant",
-        "off-target"
-      ],
-      "diagnostics": [
-        {
-          "predicate": "swapped-coordinates",
-          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
-          "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair",
-          "misconception_label": "Treats an ordered pair like an unordered set",
-          "misconception_description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions."
-        }
-      ]
-    },
-    {
-      "question_id": "q:pp3u1-1-1:w002",
-      "template_id": "wt:pp3u1-1-1:solve-then-plot",
-      "template_sha": "ff0c7a3b3fd40a6510359ed1150c093b739091c4a4aa3b4e4ab9453c54b6358f",
-      "lo_id": "lo:pp3u1-1-1",
-      "kind": "pair_plotter",
-      "spec": {
-        "target": [
-          4,
-          -3
-        ]
-      },
-      "stem": "If $(a - 1, b + 2) = (3, -1)$, find $a$ and $b$, then plot the point $(a, b)$.",
-      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5.",
-      "reading_fields": {
-        "target": "[x, y], the point the question asks for"
-      },
-      "can_emit": [
-        "swapped-coordinates",
-        "wrong-quadrant",
-        "off-target"
-      ],
-      "diagnostics": [
-        {
-          "predicate": "swapped-coordinates",
-          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
-          "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair",
-          "misconception_label": "Treats an ordered pair like an unordered set",
-          "misconception_description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions."
-        }
-      ]
-    },
-    {
-      "question_id": "q:pp3u1-1-1:w003",
-      "template_id": "wt:pp3u1-1-1:solve-then-plot",
-      "template_sha": "ff0c7a3b3fd40a6510359ed1150c093b739091c4a4aa3b4e4ab9453c54b6358f",
-      "lo_id": "lo:pp3u1-1-1",
-      "kind": "pair_plotter",
-      "spec": {
-        "target": [
-          2,
-          -1
-        ]
-      },
-      "stem": "If $(a - 3, b + 2) = (-1, 1)$, find $a$ and $b$, then plot the point $(a, b)$.",
-      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5.",
-      "reading_fields": {
-        "target": "[x, y], the point the question asks for"
-      },
-      "can_emit": [
-        "swapped-coordinates",
-        "wrong-quadrant",
-        "off-target"
-      ],
-      "diagnostics": [
-        {
-          "predicate": "swapped-coordinates",
-          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
-          "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair",
-          "misconception_label": "Treats an ordered pair like an unordered set",
-          "misconception_description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions."
-        }
-      ]
-    }
-  ]
+  "widgets": []
 }

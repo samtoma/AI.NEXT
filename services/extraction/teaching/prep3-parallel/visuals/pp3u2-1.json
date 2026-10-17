@@ -1,0 +1,51 @@
+{
+  "format": "ainext.teaching-visuals/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u2-1",
+  "source": "book-records/prep3-parallel/pp3u2-1.json",
+  "visuals": [],
+  "gaps": [
+    {
+      "figure": "pp3u2-1:figure-1",
+      "for_item": null,
+      "reason": "the spec does not match the figure: Image is an illustration of children, not a ratio_bars chart. Missing numeric values (4 boys, 3 girls), missing labeled bar visualization, missing chart structure entirely. The spec requires a bar chart showing the ratio of Boys:Girls (4:3 children), but the image is just a generic illustration of happy people.",
+      "needed_kind": null,
+      "page": 25,
+      "rejected_spec": {
+        "kind": "ratio_bars",
+        "spec": {
+          "parts": [
+            {
+              "label": "Boys",
+              "value": 4
+            },
+            {
+              "label": "Girls",
+              "value": 3
+            }
+          ],
+          "animate": "grow",
+          "unit": "children"
+        }
+      },
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T084535Z.json",
+        "script_sha256": "d6f10704a13aeac8973c5113349d5d098ae291377c15254a10e6627cd453875c"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "at": "2026-10-17T08:45:55+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T084535Z.json",
+      "script_sha256": "d6f10704a13aeac8973c5113349d5d098ae291377c15254a10e6627cd453875c",
+      "counts": {
+        "visuals": 0,
+        "viz_gaps": 1,
+        "compared": 1
+      }
+    }
+  ]
+}

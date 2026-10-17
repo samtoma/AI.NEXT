@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-3-1:findx-word",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-3-1",
+ "parent_question_id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+ "source_page": 32,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A car moves at a uniform velocity, so the distance covered (d) in kilometres is directly proportional to the time (t) in hours.",
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    7,
+    9,
+    11,
+    13
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    2,
+    12
+   ],
+   "resample_while": "j == k"
+  },
+  {
+   "name": "t1",
+   "let": "d * k"
+  },
+  {
+   "name": "d1",
+   "let": "n * k"
+  },
+  {
+   "name": "d2",
+   "let": "n * j"
+  },
+  {
+   "name": "t2",
+   "let": "d * j"
+  }
+ ],
+ "constraints": [
+  "gcd(n, d) == 1"
+ ],
+ "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers ${=d1}$ km in ${=t1}$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover ${=d2}$ km. Give the number of hours as your answer.",
+ "answer": "t2",
+ "solution": [
+  "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$).",
+  "Substitute: ${=d1} = m \\times {=t1}$, so $m = \\frac{{=d1}}{{=t1}} = \\frac{{=n}}{{=d}}$.",
+  "The relation is $d = \\frac{{=n}}{{=d}}t$.",
+  "Put $d = {=d2}$: ${=d2} = \\frac{{=n}}{{=d}}t$, so $t = {=d2} \\times \\frac{{=d}}{{=n}} = {=t2}$ hours."
+ ],
+ "notes": "Finds the unknown x (time) rather than y; m fraction in lowest terms; values whole."
+}

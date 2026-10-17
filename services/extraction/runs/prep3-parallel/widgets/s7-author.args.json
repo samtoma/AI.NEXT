@@ -38,7 +38,11 @@
     "maths_source": null,
     "lesson_unit": null,
     "answer_rules": null,
-    "lesson_titles": {},
+    "lesson_titles": {
+      "pp3u2-1": "Ratio",
+      "pp3u2-2": "Proportion",
+      "pp3u2-3": "Direct Variation and Inverse Variation"
+    },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
       "repo_root": "/Users/tdeif/Developer/Noor",
@@ -586,393 +590,164 @@
   },
   "objectives": [
     {
-      "lo_id": "lo:pp3u1-1-1",
-      "label": "Equal ordered pairs",
-      "description": "Find unknown values by equating the corresponding components of equal ordered pairs, and plot ordered pairs.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-1-1:bk-drill-1-a",
-          "stem": "Find a and b in each of the following: $(a, b)=(-5, 9)$",
-          "type": "short",
-          "answer": "a = -5, b = 9"
-        },
-        {
-          "id": "q:pp3u1-1-1:bk-drill-1-b",
-          "stem": "Find a and b in each of the following: $(a-2, b+1)=(2, -3)$",
-          "type": "short",
-          "answer": "a = 4, b = -4"
-        },
-        {
-          "id": "q:pp3u1-1-1:bk-drill-1-c",
-          "stem": "Find a and b in each of the following: $(6, b-3)=(2-a, -1)$",
-          "type": "short",
-          "answer": "a = -4, b = 2"
-        },
-        {
-          "id": "q:pp3u1-1-1:bk-example-1",
-          "stem": "Find x, y if: $(x-2, 3)=(5, y+1)$",
-          "type": "short",
-          "answer": "x = 7, y = 2"
-        },
-        {
-          "id": "q:pp3u1-1-1:bk-think-and-discuss-1",
-          "stem": "Find a set of the ordered pairs which satisfy the relation: y = 2x - 1 when x = 0 and x = 1, x = 2",
-          "type": "short",
-          "answer": "\\{(0, -1), (1, 1), (2, 3)\\}"
-        }
-      ],
-      "misconceptions": [
-        {
-          "id": "mc:pp3u1-1-1:order-ignored-in-pair",
-          "lo_id": "lo:pp3u1-1-1",
-          "label": "Treats an ordered pair like an unordered set",
-          "description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions.",
-          "own": true
-        }
-      ]
-    },
-    {
-      "lo_id": "lo:pp3u1-1-2",
-      "label": "Finding cartesian products",
-      "description": "Find the cartesian product X×Y of two finite sets, including X², and calculate the number of its elements n(X×Y).",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-a",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $X\\times Y$",
-          "type": "short",
-          "answer": "\\{(2, 4), (2, 0), (-1, 4), (-1, 0)\\}"
-        },
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-b",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $Y\\times Z$",
-          "type": "short",
-          "answer": "\\{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)\\}"
-        },
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-c",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $X^2$",
-          "type": "short",
-          "answer": "\\{(2, 2), (2, -1), (-1, 2), (-1, -1)\\}"
-        },
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-d",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(X\\times Z)$",
-          "type": "numeric",
-          "answer": "6"
-        },
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-e",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(Y^2)$",
-          "type": "numeric",
-          "answer": "4"
-        },
-        {
-          "id": "q:pp3u1-1-2:bk-drill-2-f",
-          "stem": "If $X=\\{2, -1\\}$, $Y=\\{4, 0\\}$, $Z=\\{4, 5, -2\\}$ Find $n(Z^2)$",
-          "type": "numeric",
-          "answer": "9"
-        }
-      ],
-      "misconceptions": [
-        {
-          "id": "mc:pp3u1-1-2:adds-set-sizes",
-          "lo_id": "lo:pp3u1-1-2",
-          "label": "Adds the sizes instead of multiplying",
-          "description": "To find n(X×Y) or n(X²), the student adds (or doubles) the numbers of elements instead of multiplying n(X) by n(Y).",
-          "own": true
-        },
-        {
-          "id": "mc:pp3u1-1-2:product-order-ignored",
-          "lo_id": "lo:pp3u1-1-2",
-          "label": "Treats X×Y and Y×X as the same",
-          "description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X.",
-          "own": true
-        }
-      ]
-    },
-    {
-      "lo_id": "lo:pp3u1-1-3",
-      "label": "Arrow and cartesian diagrams",
-      "description": "Represent the cartesian product of finite sets by an arrow diagram and a cartesian diagram.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-1-3:bk-example-5",
-          "stem": "If $X=\\{3, 4, 8\\}$ then find $X\\times X$ and represent it with an arrow diagram.",
-          "type": "short",
-          "answer": "\\{(3, 3), (3, 4), (3, 8), (4, 3), (4, 4), (4, 8), (8, 3), (8, 4), (8, 8)\\}"
-        }
-      ],
-      "misconceptions": [
-        {
-          "id": "mc:pp3u1-1-2:adds-set-sizes",
-          "lo_id": "lo:pp3u1-1-2",
-          "label": "Adds the sizes instead of multiplying",
-          "description": "To find n(X×Y) or n(X²), the student adds (or doubles) the numbers of elements instead of multiplying n(X) by n(Y).",
-          "own": false
-        },
-        {
-          "id": "mc:pp3u1-1-2:product-order-ignored",
-          "lo_id": "lo:pp3u1-1-2",
-          "label": "Treats X×Y and Y×X as the same",
-          "description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X.",
-          "own": false
-        }
-      ]
-    },
-    {
-      "lo_id": "lo:pp3u1-1-4",
-      "label": "Graphing infinite cartesian products",
-      "description": "Represent products of infinite sets such as N×N, Z×Z, Q×Q and R×R on a perpendicular graphical net, identify ordered pairs of points, and locate points by quadrant or axis.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-1-4:bk-drill-3-a",
-          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point A",
-          "type": "short",
-          "answer": "(2, 3)"
-        },
-        {
-          "id": "q:pp3u1-1-4:bk-drill-3-b",
-          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point B",
-          "type": "short",
-          "answer": "(3, -2)"
-        },
-        {
-          "id": "q:pp3u1-1-4:bk-drill-3-c",
-          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point C",
-          "type": "short",
-          "answer": "(-3, 1)"
-        },
-        {
-          "id": "q:pp3u1-1-4:bk-drill-3-d",
-          "stem": "Identify the ordered pairs which represented by the points A, B, C and D in the previous graphical net. point D",
-          "type": "short",
-          "answer": "(-3, -4)"
-        },
-        {
-          "id": "q:pp3u1-1-4:bk-drill-4-a",
-          "stem": "If $X=[-2, 3]$ find the location which represents $X\\times X$. Show which of the following points belongs to the cartesian product of $X\\times X$. A (1, 2)",
-          "type": "short",
-          "answer": "Yes"
-        },
-        {
-          "id": "q:pp3u1-1-4:bk-drill-4-b",
-          "stem": "If $X=[-2, 3]$ find the location which represents $X\\times X$. Show which of the following points belongs to the cartesian product of $X\\times X$. B (3, -1)",
-          "type": "short",
-          "answer": "Yes"
-        }
-      ],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u1-2-1",
-      "label": "Write relations as ordered pairs",
-      "description": "Write a relation from a set X to a set Y as a set of ordered pairs, using the rule connecting a and b (e.g. b = 2a + 4, or 'a is a digit of b').",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-2-1:bk-example-1",
-          "stem": "If $X=\\{-1, 1, 2\\}$, $Y=\\{2, 4, 6, 8\\}$, and R is a relation from X to Y where a R b means: «b = 2a + 4», for each $a\\in X$, $b\\in Y$. Write and represent R once in an arrow diagram and another by a cartesian diagram.",
-          "type": "short",
-          "answer": "\\{(-1, 2), (1, 6), (2, 8)\\}"
-        }
-      ],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u1-2-2",
-      "label": "Represent relations by diagrams",
-      "description": "Represent a relation by an arrow diagram and by a cartesian diagram.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-2-2:bk-example-2",
-          "stem": "If $X=\\{-2, -1, 0, 1, 2\\}$ and R is a given relation on X where a R b means: «The number a is the additive inverse of the number b» for each of a, b ∈ X. Write the relation R and represent it by an arrow diagram and also by cartesian diagram.",
-          "type": "short",
-          "answer": "\\{(-2, 2), (-1, 1), (0, 0), (1, -1), (2, -2)\\}"
-        }
-      ],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u1-2-3",
-      "label": "Relations as subsets of X × Y",
-      "description": "Determine whether a relation is a subset of the cartesian product X × Y, decide which ordered pairs satisfy the stated relation, and identify a relation on a set X as R ⊂ X × X.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
+      "lo_id": "lo:pp3u2-1-1",
+      "label": "Ratio notation and terms",
+      "description": "Write the ratio between two numbers a and b as a to b, a:b or a/b, and name its antecedent, consequent and two terms.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
       "anchor_questions": [],
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u1-3-1",
-      "label": "Identify functions",
-      "description": "Decide whether a relation, given as arrow diagram, cartesian diagram or ordered pairs, is a function by checking that each element of X has only one image.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
+      "lo_id": "lo:pp3u2-1-2",
+      "label": "Properties of ratio",
+      "description": "Apply the properties of ratio: decide whether a ratio is changed when both terms are multiplied by a fixed non-zero amount or have a real number added to them.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
       "anchor_questions": [
         {
-          "id": "q:pp3u1-3-1:bk-example-2",
-          "stem": "If $X=\\{2, 3, 4\\}$, $Y=\\{y : y\\in N, 2\\le y<9\\}$ where N is the set of natural numbers, and R is a relation from X to Y where a R b means: « $a=\\frac{1}{2}b$» for each of $a\\in X$, $b\\in Y$, write R and represent it by an arrow diagram show that R is a function from X to Y and find its range.",
+          "id": "q:pp3u2-1-2:bk-drill-1",
+          "stem": "Find the positive number which if we add its square to each of the two terms of ratio $5 : 11$ it becomes $3 : 5$.",
+          "type": "numeric",
+          "answer": "2"
+        },
+        {
+          "id": "q:pp3u2-1-2:bk-example-1",
+          "stem": "Find the number which if added to the two terms of ratio $7 : 11$ it will be $2 : 3$",
           "type": "short",
-          "answer": "\\{4, 6, 8\\}"
+          "answer": "x = 1"
         }
       ],
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u1-3-2",
-      "label": "Symbolic representation of functions",
-      "description": "Write a function using the symbols f : X \\to Y, f(x) = y and as a set of ordered pairs, and represent it by an arrow diagram and a cartesian diagram.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u1-3-3",
-      "label": "Domain, codomain and range",
-      "description": "Determine the domain, codomain and range of a function, noting the range is a subset of the codomain.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
+      "lo_id": "lo:pp3u2-2-1",
+      "label": "What is a proportion?",
+      "description": "Use the equality of two ratios and the product of extremes equals the product of means to find the first, second, third or fourth proportional, or an unknown number that makes quantities proportional.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
       "anchor_questions": [
         {
-          "id": "q:pp3u1-3-3:bk-for-example-1-1",
-          "stem": "If $f: X\\to Y$, $X=\\{-1, 2, 3\\}$, $Y=\\{2, 3, 5, 7\\}$, $f=\\{(-1, 3), (3, 5), (2, 7)\\}$ then: domain",
-          "type": "short",
-          "answer": "\\{-1, 2, 3\\}"
-        },
-        {
-          "id": "q:pp3u1-3-3:bk-for-example-1-2",
-          "stem": "If $f: X\\to Y$, $X=\\{-1, 2, 3\\}$, $Y=\\{2, 3, 5, 7\\}$, $f=\\{(-1, 3), (3, 5), (2, 7)\\}$ then: codomain",
-          "type": "short",
-          "answer": "\\{2, 3, 5, 7\\}"
-        },
-        {
-          "id": "q:pp3u1-3-3:bk-for-example-1-3",
-          "stem": "If $f: X\\to Y$, $X=\\{-1, 2, 3\\}$, $Y=\\{2, 3, 5, 7\\}$, $f=\\{(-1, 3), (3, 5), (2, 7)\\}$ then: range",
-          "type": "short",
-          "answer": "\\{3, 5, 7\\}"
-        }
-      ],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u1-4-1",
-      "label": "Identify polynomials and degree",
-      "description": "Identify polynomial functions and state their degree from the function rule.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [
-        {
-          "id": "q:pp3u1-4-1:bk-drill-1-a",
-          "stem": "Which of the following functions represents polynomial: $f_1(x)=x^3+x^2+3$",
-          "type": "short",
-          "answer": "Yes"
-        },
-        {
-          "id": "q:pp3u1-4-1:bk-drill-1-b",
-          "stem": "Which of the following functions represents polynomial: $F_2(x)=x^3+\\frac{1}{x}+7$",
-          "type": "short",
-          "answer": "No"
-        },
-        {
-          "id": "q:pp3u1-4-1:bk-drill-1-c",
-          "stem": "Which of the following functions represents polynomial: $f_3(x)=x^2+\\sqrt{x}+8$",
-          "type": "short",
-          "answer": "No"
-        },
-        {
-          "id": "q:pp3u1-4-1:bk-drill-2-a",
-          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=3-2x$",
-          "type": "numeric",
-          "answer": "1"
-        },
-        {
-          "id": "q:pp3u1-4-1:bk-drill-2-b",
-          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=x^2-(x^2-3)$",
-          "type": "numeric",
-          "answer": "0"
-        },
-        {
-          "id": "q:pp3u1-4-1:bk-drill-2-c",
-          "stem": "If f: R → R then mention the degree of the function in the following: $f(x)=x(x-2x^2)$",
+          "id": "q:pp3u2-2-1:bk-drill-1-a",
+          "stem": "Drill question 1. Find the second proportional of the numbers $2, \\ldots\\ldots, 4, 6$",
           "type": "numeric",
           "answer": "3"
-        }
-      ],
-      "misconceptions": [
-        {
-          "id": "mc:pp3u1-4-1:degree-read-before-simplifying",
-          "lo_id": "lo:pp3u1-4-1",
-          "label": "Reads the degree from the unexpanded rule",
-          "description": "The student takes the degree from the powers they see in the brackets or in the first terms, instead of expanding and simplifying first.",
-          "own": true
         },
         {
-          "id": "mc:pp3u1-4-1:non-whole-power-still-polynomial",
-          "lo_id": "lo:pp3u1-4-1",
-          "label": "Counts 1/x or √x terms as allowed in a polynomial",
-          "description": "The student sees a sum of x-terms and numbers and calls it a polynomial without checking that every power of x is a whole number.",
-          "own": true
+          "id": "q:pp3u2-2-1:bk-drill-1-b",
+          "stem": "Drill question 1. Find the third proportional of the numbers $8, 6, \\ldots\\ldots, 12$",
+          "type": "numeric",
+          "answer": "16"
+        },
+        {
+          "id": "q:pp3u2-2-1:bk-example-2",
+          "stem": "Find the fourth proportional for the numbers 4, 12, 16",
+          "type": "numeric",
+          "answer": "48"
+        },
+        {
+          "id": "q:pp3u2-2-1:bk-example-3",
+          "stem": "Find the number that if added to the numbers 3, 5, 8 and 12 it becomes proportional.",
+          "type": "short",
+          "answer": "x = 2"
         }
-      ]
+      ],
+      "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u1-4-2",
-      "label": "Evaluate function values",
-      "description": "Calculate the image of a given value (including surds) under a polynomial function.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
+      "lo_id": "lo:pp3u2-2-2",
+      "label": "Use properties of proportion",
+      "description": "Find the value of a ratio of expressions, and prove identities, from a/b = c/d by substituting a = mc, b = md or by using the properties of proportion.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u2-2-3",
+      "label": "Work with continued proportional",
+      "description": "Find the middle proportional between two numbers and prove relations for quantities in continued proportional using b^2 = ac.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u2-3-1",
+      "label": "Solve direct variation problems",
+      "description": "Determine the relation y = mx for a direct variation y ∝ x, find the constant m, and calculate unknown values of y or x.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
       "anchor_questions": [
         {
-          "id": "q:pp3u1-4-2:bk-drill-3-a",
-          "stem": "If $f(x)=x^2-3x$, $g(x)=x-3$ Find $f(\\sqrt{2})+3\\,g(\\sqrt{2})$",
-          "type": "numeric",
-          "answer": "-7"
+          "id": "q:pp3u2-3-1:bk-example-1-second",
+          "stem": "If $y \\propto x$ then $y = 14$ when $x = 42$, then find first: the relation between x and y; second: find the value of y when $x = 60$. find the value of y when x = 60",
+          "type": "short",
+          "answer": "y = 20"
         },
         {
-          "id": "q:pp3u1-4-2:bk-example-1",
-          "stem": "If $f(x)=x^2-x+3$ then find: $f(-2)$, $f(0)$, $f(\\sqrt{3})$",
+          "id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+          "stem": "A car moves at a uniform velocity (V) 15 m/sec. If the covered distance (d) in meter in a time (t) per second to give the relation: $d = vt$. Does the graphical representation pass through the origin point (0, 0)?",
           "type": "short",
-          "answer": "9, 3, 6-\\sqrt{3}"
+          "answer": "Yes"
         }
       ],
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u1-4-3",
-      "label": "Graph linear and constant functions",
-      "description": "Represent a linear function or constant function graphically by finding ordered pairs and drawing the straight line.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
-      "anchor_questions": [],
+      "lo_id": "lo:pp3u2-3-2",
+      "label": "Solve inverse variation problems",
+      "description": "Determine the relation y = m/x for an inverse variation y ∝ 1/x, find the constant m, and calculate unknown values of y or x, including with a squared variable.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u2-3-2:bk-example-2-second",
+          "stem": "If $y \\propto \\frac{1}{x}$ and $y=3$ when $x=2$. First: find the relation between x and y. Second: find the value of y when $x=1.5$. find the value of y when x = 1.5",
+          "type": "short",
+          "answer": "y = 4"
+        }
+      ],
       "misconceptions": [
         {
-          "id": "mc:pp3u1-4-3:line-always-through-origin",
-          "lo_id": "lo:pp3u1-4-3",
-          "label": "Thinks every straight-line graph passes through (0, 0)",
-          "description": "The student carries the rule for f(x) = ax over to every linear function, so they force the line through the origin even when the rule has a constant term such as −3.",
+          "id": "mc:pp3u2-3-2:ignores-the-square",
+          "lo_id": "lo:pp3u2-3-2",
+          "label": "Leaves out the square in inverse variation with the square",
+          "description": "When h varies inversely as the square of r, the student uses $h=\\frac{m}{r}$ and does not square the radius.",
+          "own": true
+        },
+        {
+          "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
+          "lo_id": "lo:pp3u2-3-2",
+          "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
+          "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows.",
           "own": true
         }
       ]
     },
     {
-      "lo_id": "lo:pp3u1-4-4",
-      "label": "Graph quadratic functions",
-      "description": "Represent a quadratic function graphically and state its vertex, axis of symmetry and maximum or minimum value.",
-      "module": "module:pp3u1",
-      "module_label": "Unit 1 Relations and functions (Algebra)",
+      "lo_id": "lo:pp3u2-3-3",
+      "label": "Distinguish direct from inverse variation",
+      "description": "Determine from a table of x and y values whether the relation is a direct variation, an inverse variation or neither, giving the reason.",
+      "module": "module:pp3u2",
+      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
       "anchor_questions": [],
-      "misconceptions": []
+      "misconceptions": [
+        {
+          "id": "mc:pp3u2-3-2:ignores-the-square",
+          "lo_id": "lo:pp3u2-3-2",
+          "label": "Leaves out the square in inverse variation with the square",
+          "description": "When h varies inversely as the square of r, the student uses $h=\\frac{m}{r}$ and does not square the radius.",
+          "own": false
+        },
+        {
+          "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
+          "lo_id": "lo:pp3u2-3-2",
+          "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
+          "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows.",
+          "own": false
+        }
+      ]
     }
   ]
 }

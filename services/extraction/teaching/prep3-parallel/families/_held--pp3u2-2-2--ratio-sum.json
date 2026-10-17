@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-2:ratio-sum",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-2",
+ "parent_question_id": "none-provided",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    9
+   ],
+   "resample_while": "m == n or gcd(m, n) != 1"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1",
+  "m != n"
+ ],
+ "stem": "If $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{a+b}{b}$ as a fraction in its simplest form.",
+ "answer": "",
+ "solution": [
+  "Since $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, we can write $a={=m}k$ and $b={=n}k$ for some $k\\neq 0$.",
+  "Substitute: $\\frac{a+b}{b}=\\frac{{=m}k+{=n}k}{{=n}k}=\\frac{({=m}+{=n})k}{{=n}k}$.",
+  "Cancel $k$: $\\frac{a+b}{b}=\\frac{{=m+n}}{{=n}}$, which is already in simplest form."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=m+n}/{=n}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Parent book question not available (none listed); placeholder parent id. m+n and n are coprime since gcd(m,n)=1."
+}

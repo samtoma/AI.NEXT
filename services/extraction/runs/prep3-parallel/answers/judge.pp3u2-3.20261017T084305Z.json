@@ -1,0 +1,47 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "1992791488a3ef36e1199f72e26d8bf649dd53aacafcef55b702e275fb96191d",
+  "generated_sha256": "3abd0201c982c03d3828f84bc657b0d71b5943d03b978e915bc25cf3de8a8798",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u2-3:example-1:first",
+    "verdict": "equivalent",
+    "reason": "y = x/3 is the same as y = (1/3)x."
+   },
+   {
+    "ref": "pp3u2-3:example-2:First",
+    "verdict": "equivalent",
+    "reason": "y = 6/x, and xy = 6 is the same relation."
+   },
+   {
+    "ref": "pp3u2-3:example-3:First",
+    "verdict": "equivalent",
+    "reason": "Both conclude direct variation, v ∝ t."
+   },
+   {
+    "ref": "pp3u2-3:example-3:Second A",
+    "verdict": "equivalent",
+    "reason": "Same values: 19.6 and 39.2."
+   },
+   {
+    "ref": "pp3u2-3:example-3:Second B",
+    "verdict": "equivalent",
+    "reason": "Both give 2.5, the unit omitted by the solver."
+   },
+   {
+    "ref": "pp3u2-3:example-4",
+    "verdict": "equivalent",
+    "reason": "Both give 12, the unit omitted by the solver."
+   }
+  ]
+ }
+}

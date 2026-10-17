@@ -3,356 +3,154 @@
   "book": "prep3-parallel",
   "merged_from": [
     {
-      "file": "s7-author.20261017T074616Z.json",
+      "file": "s7-author.20261017T085702Z.json",
       "run_id": null,
       "prompts_version": "s7-v7",
       "lessons": [
-        "pp3u1-1",
-        "pp3u1-2",
-        "pp3u1-3",
-        "pp3u1-4"
+        "pp3u2-1",
+        "pp3u2-2",
+        "pp3u2-3"
       ]
     }
   ],
   "rule": "oldest first; a lesson's record in a later run replaces its earlier one whole",
   "records": [
     {
-      "lesson": "pp3u1-1",
-      "templates": [
-        {
-          "format": "ainext.widget-template/1",
-          "id": "wt:pp3u1-1-1:solve-then-plot",
-          "lo_id": "lo:pp3u1-1-1",
-          "parent_question_id": "q:pp3u1-1-1:bk-drill-1-b",
-          "tier": "standard",
-          "kind": "pair_plotter",
-          "instances": [
-            {
-              "h": 2,
-              "k": 1,
-              "u": 2,
-              "v": -3,
-              "tx": 4,
-              "ty": -4
-            },
-            {
-              "h": 1,
-              "k": 2,
-              "u": 3,
-              "v": -1,
-              "tx": 4,
-              "ty": -3
-            },
-            {
-              "h": 3,
-              "k": 2,
-              "u": -1,
-              "v": 1,
-              "tx": 2,
-              "ty": -1
-            }
-          ],
-          "spec": {
-            "target": [
-              "{=tx}",
-              "{=ty}"
-            ]
-          },
-          "stem": "If $(a - {=h}, b + {=k}) = ({=u}, {=v})$, find $a$ and $b$, then plot the point $(a, b)$.",
-          "solution": [
-            "Equal ordered pairs have equal first components and equal second components.",
-            "Equate the first components: $a - {=h} = {=u}$, so $a = {=tx}$.",
-            "Equate the second components: $b + {=k} = {=v}$, so $b = {=ty}$.",
-            "Plot $({=tx}, {=ty})$: go along the x-axis first, then up or down."
-          ],
-          "diagnostics": [
-            {
-              "predicate": "swapped-coordinates",
-              "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair"
-            }
-          ],
-          "notes": "Targets kept within the -5..5 grid (the book's x=7,y=2 would be off-grid). wrong-quadrant and off-target are arithmetic/sign slips, not the order misconception, so left unmapped."
-        },
-        {
-          "format": "ainext.widget-template/1",
-          "id": "wt:pp3u1-1-2:build-x-times-y",
-          "lo_id": "lo:pp3u1-1-2",
-          "parent_question_id": "q:pp3u1-1-2:bk-drill-2-a",
-          "tier": "basic",
-          "kind": "product_builder",
-          "instances": [],
-          "spec": {
-            "X": [
-              2,
-              -1
-            ],
-            "Y": [
-              4,
-              0
-            ]
-          },
-          "stem": "If $X=\\{2, -1\\}$ and $Y=\\{4, 0\\}$, build $X\\times Y$ by selecting all its ordered pairs.",
-          "solution": [
-            "In $X\\times Y$ the first component comes from $X$ and the second from $Y$.",
-            "Pair $2$ with each element of $Y$: $(2, 4), (2, 0)$.",
-            "Pair $-1$ with each element of $Y$: $(-1, 4), (-1, 0)$.",
-            "So $X\\times Y$ has $2\\times 2 = 4$ pairs."
-          ],
-          "diagnostics": [
-            {
-              "predicate": "reversed-pairs",
-              "misconception_id": "mc:pp3u1-1-2:product-order-ignored"
-            }
-          ],
-          "notes": "missing-pairs could reflect adding set sizes (adds-set-sizes) but more likely just an incomplete listing; not mapped to avoid a weak diagnosis."
-        },
-        {
-          "format": "ainext.widget-template/1",
-          "id": "wt:pp3u1-1-2:build-y-times-z",
-          "lo_id": "lo:pp3u1-1-2",
-          "parent_question_id": "q:pp3u1-1-2:bk-drill-2-b",
-          "tier": "standard",
-          "kind": "product_builder",
-          "instances": [],
-          "spec": {
-            "X": [
-              4,
-              0
-            ],
-            "Y": [
-              4,
-              5,
-              -2
-            ]
-          },
-          "stem": "If $Y=\\{4, 0\\}$ and $Z=\\{4, 5, -2\\}$, build $Y\\times Z$ by selecting all its ordered pairs.",
-          "solution": [
-            "First components come from $Y$, second components from $Z$.",
-            "Pair $4$ with each element of $Z$: $(4, 4), (4, 5), (4, -2)$.",
-            "Pair $0$ with each element of $Z$: $(0, 4), (0, 5), (0, -2)$.",
-            "$n(Y\\times Z)=2\\times 3=6$."
-          ],
-          "diagnostics": [
-            {
-              "predicate": "reversed-pairs",
-              "misconception_id": "mc:pp3u1-1-2:product-order-ignored"
-            }
-          ],
-          "notes": "Spec X/Y fields hold Y and Z of the book question."
-        }
-      ],
-      "gaps": [
-        {
-          "lo_id": "lo:pp3u1-1-3",
-          "need_kind": "arrow_diagram_builder",
-          "description": "Two columns of dots (set X on the left, Y on the right); the student draws arrows to construct the arrow diagram of X×Y (or X×X), with the matching list of ordered pairs updating live. It would diagnose missing arrows (incomplete product), arrows drawn in the wrong direction (reversed order, Y×X), and arrows only between equal elements (treating X×X as the identity pairs).",
-          "why": "No existing kind draws arrows between two sets; product_builder only selects pairs from a list and does not teach the arrow diagram or the cartesian diagram representation."
-        },
-        {
-          "lo_id": "lo:pp3u1-1-4",
-          "need_kind": "region_shader",
-          "description": "On a coordinate net the student shades the region representing a product of intervals such as $[-2,3]\\times[-2,3]$ (or N×N, Z×Z dots) and then taps points to test membership. It would diagnose shading only the axes or boundary, using the wrong interval for one coordinate, and treating a continuous product as a finite set of dots.",
-          "why": "pair_plotter only places a single lattice point, and the objective's misconception list is empty, so no honest diagnostic mapping exists for point plotting; the interval-product region needs a shading instrument."
-        }
-      ],
-      "notes": "Two templates cover LO1 (pair_plotter) and LO2 (product_builder). LO3 and LO4 are recorded as gaps.",
-      "source": "s7-author.20261017T074616Z.json",
-      "run_id": null
-    },
-    {
-      "lesson": "pp3u1-2",
+      "lesson": "pp3u2-1",
       "templates": [],
       "gaps": [
         {
-          "lo_id": "lo:pp3u1-2-1",
-          "need_kind": "relation_builder (rule-filtered pair selector)",
-          "description": "The student sees X, Y and a rule such as b = 2a + 4 or 'a is a digit of b'. She taps, from the full grid of X×Y, exactly the ordered pairs that satisfy the rule. Anchor example: X={-1,1,2}, Y={2,4,6,8}, expected {(-1,2),(1,6),(2,8)}. Errors it would report: a pair missing, a pair that fails the rule, a pair written (b, a), a pair outside X×Y, and a pair found by a sign slip such as 2a−4.",
-          "why": "product_builder grades against the whole of X×Y, so it cannot ask for a rule-defined subset. pair_plotter takes one lattice point, not a set, and would only check one value of the rule. Both would be answer boxes in disguise. In addition, this objective lists no misconceptions, so a diagnostics mapping is impossible under FR-1215."
+          "lo_id": "lo:pp3u2-1-2",
+          "need_kind": "ratio_equivalence_stepper",
+          "description": "The student starts with a ratio such as $7 : 11$ shown as two bars (the antecedent and the consequent). Two controls act on both terms together: multiply by k, or add n. A live readout shows the simplified ratio and the decimal value a/b. The student is given a target such as $2 : 3$ and finds the single number to add that reaches it, as in the book's $7 : 11 \\to 2 : 3$ and $5 : 11 \\to 3 : 5$ questions. They see that multiplying keeps the ratio and adding changes it. Errors it could diagnose: believing that adding the same number keeps the ratio equal (additive-preserves-ratio); adding to one term only; adding the number to the wrong side of the equation, which gives a negative or non-matching n; and forgetting that the added quantity in the drill is the square of the number.",
+          "why": "No existing kind can express this. ratio_balance appears in the spec list, but its instrument and predicates were cut from the contract, so I could not confirm it fits or map any diagnostics to it. The other kinds work on coordinates, products, lines, circles, angles, triangles, statistics, number lines and Venn diagrams. None lets the student act on both terms of a ratio at once and watch the ratio stay or change. Using one would be an answer box in disguise."
         },
         {
-          "lo_id": "lo:pp3u1-2-2",
-          "need_kind": "relation_diagram (arrow diagram and cartesian diagram drawer)",
-          "description": "The student is given a relation as a set of pairs, or by its rule. She draws arrows from elements of X to elements of Y in two side-by-side ovals, and the same pairs appear live as points on a cartesian grid (or the reverse). Anchor example: the additive-inverse relation on {-2,-1,0,1,2}, giving arrows -2→2, -1→1, 0→0, 1→-1, 2→-2. Errors it would report: arrows reversed in direction, a missing arrow (for example the loop 0→0), an extra arrow, and cartesian points with x and y swapped.",
-          "why": "No existing kind draws arrows between two sets. pair_plotter marks only one point and does not link the diagram to the arrow form. Representing the same relation in both forms is the whole objective. Also, no misconceptions are registered for this objective."
+          "lo_id": "lo:pp3u2-1-1",
+          "need_kind": "ratio_bar_builder",
+          "description": "The student builds a ratio $a : b$ by setting two tape or bar lengths, for example 'make the ratio 3 to 5'. The widget shows the ratio in the three notations (to, :, fraction) with the antecedent and consequent labelled. A second task asks the student to tap the antecedent or the consequent on a given ratio, or to build the ratio of one quantity to another from a described situation. Errors it could diagnose: reversing the order (b : a); confusing antecedent with consequent; and reading the ratio as part-to-whole instead of part-to-part.",
+          "why": "This objective is mostly notation and vocabulary, so none of the existing kinds fits without being stretched. The existing bar_builder is for statistics (mean, median, mode, range), not ratio. A forced fit would put an answer box into a widget."
         },
         {
-          "lo_id": "lo:pp3u1-2-3",
-          "need_kind": "relation_subset_sorter (is it a subset of X×Y?)",
-          "description": "Given X, Y and a candidate set of pairs, the student sorts each pair as 'in X×Y' or 'not in X×Y', and then states whether the set is a relation from X to Y. For a relation on X she checks that R ⊂ X×X. She would also pick which pairs satisfy the stated rule. Errors it would report: a pair accepted although one entry is not in X or Y, a valid pair rejected, and the reversed order (b, a) accepted for X to Y.",
-          "why": "product_builder builds the entire product X×Y. It cannot model a subset chosen by a rule or the yes/no test of membership. Using it would be a forced fit. The objective has no anchor question and no misconceptions in the lesson file, so any template would also have no valid misconception ids."
+          "lo_id": "lo:pp3u2-1-1",
+          "need_kind": "misconception_data",
+          "description": "The lesson file lists no misconceptions for either objective, and lo:pp3u2-1-1 has no anchor questions. Every template needs a parent question id and at least one diagnostic mapping to a misconception id from its own objective.",
+          "why": "Without misconception ids, no template for this lesson can pass validation, even if a widget kind fits. Samuel needs to add misconceptions to both objectives, plus an anchor question for lo:pp3u2-1-1, before templates can be authored."
         }
       ],
-      "notes": "I wrote no templates. First, all three objectives have empty misconception lists, so no diagnostics mapping is legal under FR-1215, and the schema requires at least one. Second, no existing kind genuinely fits. product_builder builds the whole X×Y rather than a rule-defined subset, and pair_plotter handles a single point. Using either would be a forced fit. Lesson 2 needs one or more new kinds, listed in the gaps. Samuel should also add misconceptions to these objectives, such as reversed pairs, missing the 0→0 pair, and sign slips in b = 2a + 4.",
-      "source": "s7-author.20261017T074616Z.json",
+      "notes": "I authored no templates. The only candidate kind, ratio_balance, has no instrument description or predicates in the contract I received (it was truncated), so I could not check that it fits or map diagnostics to it. It is probably aimed at direct and inverse variation, not at ratio terms or ratio properties. Both objectives also have an empty misconceptions list, so no template could satisfy the rule that each one carries at least one diagnostic. If ratio_balance turns out to support a 'add the same number to both terms' mode, lo:pp3u2-1-2 with parent q:pp3u2-1-2:bk-example-1 would be the first candidate, once misconceptions are added.",
+      "source": "s7-author.20261017T085702Z.json",
       "run_id": null
     },
     {
-      "lesson": "pp3u1-3",
+      "lesson": "pp3u2-2",
       "templates": [],
       "gaps": [
         {
-          "lo_id": "lo:pp3u1-3-1",
-          "need_kind": "arrow_diagram_builder",
-          "description": "Two columns of dots (X on the left, Y on the right). The student drags arrows from elements of X to elements of Y. Two modes. (1) Build: draw a relation such as 'a = ½b' as arrows, or a relation that IS a function. (2) Repair: given a relation, add or remove arrows so that it becomes a function. The grading property is that every element of X has exactly one outgoing arrow, which the widget can light up live. It could also ask the student to construct a relation that is NOT a function, so they discover what fails. Predicates it could report: an element of X with two images, an element of X with no image, an arrow ending outside Y, and an arrow drawn in the wrong direction (Y to X).",
-          "why": "Identifying a function means checking that each x has exactly one image. product_builder selects all pairs of X×Y, which is a different task. pair_plotter places one point and cannot express the one-image rule. An answer box would only test the verdict 'function / not function', not the construction. The objective also has no misconceptions listed, so any template would need ids added first."
+          "lo_id": "lo:pp3u2-2-1",
+          "need_kind": "proportion_balancer (two equal ratios, extremes × means)",
+          "description": "The student would see a:b = c:d with one term unknown. They would drag the unknown until the two ratios match. Both ratios would show as simplified fractions. A second panel would show the product of extremes (a×d) next to the product of means (b×c), and the two products would be equal only when the proportion holds. The same instrument would handle the first, second, third and fourth proportional by changing which slot is unknown. Adding the same number to 3, 5, 8 and 12 would be a further mode. It would diagnose these errors: (1) multiplying extremes by extremes' partner, i.e. pairing a×b with c×d; (2) putting the unknown in the wrong slot, for example reading the third proportional as the fourth; (3) comparing by difference (an additive relationship) rather than by ratio; (4) inverting one ratio, as in a:b = d:c.",
+          "why": "None of the listed kinds fits. The ones I can read in the contract are about coordinates, circles, triangles, statistics and number lines. Only the name ratio_balance {mode, a, b, c} appears in the spec list, and its predicates are cut off. I can't confirm it can report the errors above. Also, this objective's misconception list is empty, so I have no ids to map. A diagnostics array needs at least one entry, so any template I wrote would have been forced."
         },
         {
-          "lo_id": "lo:pp3u1-3-2",
-          "need_kind": "function_representation_linker",
-          "description": "The student sees a function given as a set of ordered pairs. They build the matching arrow diagram and the matching cartesian diagram by placing arrows and grid points, and the widget shows the three views changing together. A second mode gives f(x) = ax + b and a domain, and the student places the points. The widget would check that the diagram and the pair set agree. Predicates it could report: pairs read as (y, x), a missing pair, and an extra pair.",
-          "why": "The objective is about moving between the symbolic form, the arrow diagram and the cartesian diagram. pair_plotter plots only one point and has no arrow-diagram view. There is no link between several representations of one set of pairs. No misconceptions are listed for this objective."
+          "lo_id": "lo:pp3u2-2-2",
+          "need_kind": "proportion_identity_checker (substitution a = mc, b = md)",
+          "description": "The student would be given a/b = c/d and an expression such as (a+b)/b or (2a+3c)/(2b+3d). They would choose a value of m, and a, b, c, d would then be generated as a = mc and b = md. The expression would be evaluated live for several different choices of m, c and d, so the student sees the value stay the same. The student would then pick which property of proportion (componendo, dividendo, alternando) turns one side into the other. It would diagnose these errors: (1) adding numerators and denominators separately, as in (a+c)/(b+d) ≠ (a+b)/b; (2) applying a property to only one side; (3) treating a/b = c/d as a = c and b = d.",
+          "why": "No existing kind constructs or manipulates a symbolic identity. This is algebraic proof, and an answer box would be a forced fit. This objective also has no anchor question and no misconception ids."
         },
         {
-          "lo_id": "lo:pp3u1-3-3",
-          "need_kind": "domain_codomain_range_sorter",
-          "description": "The student is given a function as arrows between X and Y and taps the elements that make up the domain, the codomain and the range. Elements of Y with no incoming arrow, such as 2 in the book example, stay in the codomain but drop out of the range. The student marks the range and sees it sit inside the codomain as a subset. Predicates it could report: range given as the whole codomain, range given as the domain, and an element of the range left out.",
-          "why": "The core idea is that the range is the subset of the codomain that is actually reached. number_line_marker could tap a set of numbers, but it is a stretch. Sets like {2, 3, 5, 7} are not naturally laid out on a line, the range limit stops at 6, and it has no notion of codomain or of arrows. That would be an answer box in disguise. No misconceptions are listed for this objective."
+          "lo_id": "lo:pp3u2-2-3",
+          "need_kind": "geometric_mean_builder (continued proportion, b² = ac)",
+          "description": "The student would drag the middle term b between a and c. A square of side b would be shown next to a rectangle a×c, and they match in area only when b² = ac. A chain a:b = b:c would show both ratios side by side. The student would then see that b is the middle proportional, not the average (a+c)/2. It would diagnose these errors: (1) taking the arithmetic mean (a+c)/2 as the middle proportional; (2) using b = ac, not b² = ac; (3) forgetting the square root; (4) taking the negative root when a positive length is asked for.",
+          "why": "No existing kind shows a square against a rectangle or a chain of equal ratios. The area_model kind in the spec list expands or factors binomials and does not fit. The objective has no anchor question and no misconception ids."
         }
       ],
-      "notes": "",
-      "source": "s7-author.20261017T074616Z.json",
+      "notes": "I produced no templates. No file was named in the task, so I read none. Two things made any template a forced fit. First, all three objectives have empty misconception lists, and a diagnostics array needs at least one id from the objective's own list, so none can be written. Second, the contract I was given is truncated and shows no widget whose construction is a proportion. The only candidate is ratio_balance, which appears in the spec list with no predicates or can_emit. It looks aimed at direct and inverse variation, which the next lesson covers, so I did not use it. Samuel may want to add misconception ids for this lesson and check what ratio_balance can report.",
+      "source": "s7-author.20261017T085702Z.json",
       "run_id": null
     },
     {
-      "lesson": "pp3u1-4",
-      "templates": [
-        {
-          "format": "ainext.widget-template/1",
-          "id": "wt:pp3u1-4-3:draw-linear-with-constant",
-          "lo_id": "lo:pp3u1-4-3",
-          "parent_question_id": "",
-          "tier": "basic",
-          "kind": "line_drawer",
-          "instances": [
-            {
-              "m": 2,
-              "b": -3
-            },
-            {
-              "m": 1,
-              "b": -3
-            },
-            {
-              "m": 3,
-              "b": -1
-            },
-            {
-              "m": -2,
-              "b": 1
-            }
-          ],
-          "spec": {
-            "mode": "equation",
-            "m": "{=m}",
-            "b": "{=b}"
-          },
-          "stem": "Draw the graph of the linear function $f(x) = {=linear(m, b)}$. Drag two points so that the line is its graph.",
-          "solution": [
-            "Write the rule as $y = f(x)$ and find two ordered pairs.",
-            "Put $x = 0$: $y = b$, so the graph cuts the y-axis at $(0, b)$. This point is not the origin when the rule has a constant term.",
-            "Put $x = 1$: $y = m + b$, a second ordered pair.",
-            "Plot the two pairs and draw the straight line through them."
-          ],
-          "diagnostics": [
-            {
-              "predicate": "intercept-wrong",
-              "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
-            }
-          ],
-          "notes": "The anchor list for lo:pp3u1-4-3 is empty, so parent_question_id is left blank. Samuel should assign the book's graphing exercise. Only intercept-wrong is mapped: the correct slope with the line forced through (0, 0) is the signature of the origin misconception. A student who has the right slope but the wrong intercept for another reason would also fire it. slope-sign-flipped, slope-inverted, vertical-line and off-target are left unmapped because this objective has no misconception that names them. The instances are all inside the instrument limits: whole-number m, |m| ≤ 5, b in −5..5. A constant-function instance (m = 0) could be added as a later row."
-        }
-      ],
+      "lesson": "pp3u2-3",
+      "templates": [],
       "gaps": [
         {
-          "lo_id": "lo:pp3u1-4-1",
-          "need_kind": "expression_sorter / expand-and-classify tool",
-          "description": "The student is given a function rule such as $x(x-2x^2)$, $x^2-(x^2-3)$ or $x^3+\\frac{1}{x}+7$. They expand and simplify it by dropping term tiles into place. They then tag each term's power of x as a whole number or not, and read off the degree of the simplified polynomial. Errors it could diagnose: degree read before simplifying (the power in the brackets is taken), and 1/x or √x terms accepted as polynomial terms.",
-          "why": "None of the existing kinds builds or classifies algebraic expressions. An answer box would be an answer box in disguise, so this is a gap and not a forced fit."
+          "lo_id": "lo:pp3u2-3-1",
+          "need_kind": "line_drawer (equation mode) with a direct-variation framing, or a ratio_balance-style widget",
+          "description": "The student would draw the graph of y = mx from a given y ∝ x and one pair of values (for example y = 14 when x = 42). They would find m, then drag two points to build the line through the origin. This ties to the book's think-and-discuss question on d = vt passing through (0, 0). A line_drawer in equation mode could do this. It could report intercept-wrong, which is a line that misses the origin, and slope-inverted. The student could also read y off the line at x = 60.",
+          "why": "This objective's misconception list is empty. The pipeline accepts only ids from the objective's own list, and a template needs at least one diagnostic. So any template I wrote would carry a refuted-but-unnamed error or an invalid id. Samuel should add misconceptions to lo:pp3u2-3-1, for example 'direct variation line has an intercept' and 'divides x by y to get m'. A line_drawer template can then be written. The two skipped kinds, ratio_balance and curve_sketcher, appear in the template spec list. Their predicates and limits are not in the contract I was given, so I did not use them."
         },
         {
-          "lo_id": "lo:pp3u1-4-4",
-          "need_kind": "parabola_drawer (vertex / axis / max-min)",
-          "description": "The student drags the vertex and one more point to build the graph of a quadratic such as $f(x)=x^2-4x+3$. They mark the vertex and the axis of symmetry and say whether the turning point is a maximum or a minimum. Errors it could diagnose: the vertex x-coordinate sign flipped, the axis drawn through the y-axis, a maximum and minimum mixed up, and the parabola opening the wrong way.",
-          "why": "line_drawer cannot draw curves. The curve_sketcher kind is named in the contract, but its predicates and limits were not given for this lesson. If it is confirmed to cover quadratics with vertex and axis grading, it would fit. This objective also has no listed misconceptions or anchor questions."
+          "lo_id": "lo:pp3u2-3-2",
+          "need_kind": "curve_sketcher (hyperbola) or a ratio_balance (inverse) widget; the contract shown to me does not list their predicates",
+          "description": "The student would build or sketch y = m/x from one pair (y = 3 when x = 2, so m = 6). They would see that y falls as x grows and read off y at x = 1.5. They would then do the same for y = m/x² with a squared variable. Useful errors to report: a straight rising line (inverse treated as direct, so m = y/x) and a hyperbola with the wrong constant. Another is a 1/x curve where 1/x² was asked (the square ignored).",
+          "why": "line_drawer can only draw straight lines, so it cannot show an inverse relation without being forced into a mislabelled fit. The other visible kinds are about unrelated mathematics. Neither the hyperbola sketcher nor ratio_balance is described in the contract I was given, so I cannot confirm that it can emit the predicates these two misconceptions need."
         },
         {
-          "lo_id": "lo:pp3u1-4-2",
-          "need_kind": "substitution evaluator with surds",
-          "description": "The student substitutes a value, including a surd such as √3, into f(x) and builds the simplified image step by step. For example, $f(\\sqrt{3}) = 3 - \\sqrt{3} + 3 = 6-\\sqrt{3}$. Errors it could diagnose: $(\\sqrt{3})^2$ left unsimplified, and sign errors when substituting a negative value.",
-          "why": "This is symbolic arithmetic with no spatial or constructive instrument among the existing kinds, so any widget would just be an answer box. The objective also has no listed misconceptions."
+          "lo_id": "lo:pp3u2-3-3",
+          "need_kind": "table-classifier widget, or ratio_balance with a mode that gives a table and asks the student to classify it",
+          "description": "The student would be given a table of x and y values and would test it by dragging or selecting. For each table they would check whether y/x is constant (direct), whether xy is constant (inverse) or neither, and give the reason. Errors the widget would diagnose: reading a decreasing y as inverse without checking xy, and forming y/x for an inverse table (inverse treated as direct). The squared-variable case would also be covered.",
+          "why": "No visible kind constructs or tests a table of values. The choice among direct, inverse and neither is a classification with a reason, which an answer box or multiple choice could handle but which is not a construction. Using number_line_marker or bar_builder would be a forced fit."
         }
       ],
-      "notes": "I wrote one template, a line_drawer for lo:pp3u1-4-3. It fits because the misconception is that every line goes through the origin, and the student can see the intercept they place. The other three objectives are recorded as gaps. The anchor list for 4-3 is empty, so the template's parent_question_id is blank and needs assigning.",
-      "source": "s7-author.20261017T074616Z.json",
+      "notes": "I authored no templates for this lesson. Only line_drawer fits direct variation, and lo:pp3u2-3-1 has no misconceptions to name. A template with no valid diagnostic would be refused, and a made-up diagnostic would be a forced fit. The other two objectives need curve or table instruments that the visible contract does not describe. The contract text I received was cut off partway through number_line_marker. If ratio_balance and curve_sketcher exist with their own predicates, lo:pp3u2-3-2 would suit them, and the gaps above can be rechecked against them.",
+      "source": "s7-author.20261017T085702Z.json",
       "run_id": null
     }
   ],
   "gaps": [
     {
-      "lo_id": "lo:pp3u1-1-3",
-      "need_kind": "arrow_diagram_builder",
-      "description": "Two columns of dots (set X on the left, Y on the right); the student draws arrows to construct the arrow diagram of X×Y (or X×X), with the matching list of ordered pairs updating live. It would diagnose missing arrows (incomplete product), arrows drawn in the wrong direction (reversed order, Y×X), and arrows only between equal elements (treating X×X as the identity pairs).",
-      "why": "No existing kind draws arrows between two sets; product_builder only selects pairs from a list and does not teach the arrow diagram or the cartesian diagram representation."
+      "lo_id": "lo:pp3u2-1-2",
+      "need_kind": "ratio_equivalence_stepper",
+      "description": "The student starts with a ratio such as $7 : 11$ shown as two bars (the antecedent and the consequent). Two controls act on both terms together: multiply by k, or add n. A live readout shows the simplified ratio and the decimal value a/b. The student is given a target such as $2 : 3$ and finds the single number to add that reaches it, as in the book's $7 : 11 \\to 2 : 3$ and $5 : 11 \\to 3 : 5$ questions. They see that multiplying keeps the ratio and adding changes it. Errors it could diagnose: believing that adding the same number keeps the ratio equal (additive-preserves-ratio); adding to one term only; adding the number to the wrong side of the equation, which gives a negative or non-matching n; and forgetting that the added quantity in the drill is the square of the number.",
+      "why": "No existing kind can express this. ratio_balance appears in the spec list, but its instrument and predicates were cut from the contract, so I could not confirm it fits or map any diagnostics to it. The other kinds work on coordinates, products, lines, circles, angles, triangles, statistics, number lines and Venn diagrams. None lets the student act on both terms of a ratio at once and watch the ratio stay or change. Using one would be an answer box in disguise."
     },
     {
-      "lo_id": "lo:pp3u1-1-4",
-      "need_kind": "region_shader",
-      "description": "On a coordinate net the student shades the region representing a product of intervals such as $[-2,3]\\times[-2,3]$ (or N×N, Z×Z dots) and then taps points to test membership. It would diagnose shading only the axes or boundary, using the wrong interval for one coordinate, and treating a continuous product as a finite set of dots.",
-      "why": "pair_plotter only places a single lattice point, and the objective's misconception list is empty, so no honest diagnostic mapping exists for point plotting; the interval-product region needs a shading instrument."
+      "lo_id": "lo:pp3u2-1-1",
+      "need_kind": "ratio_bar_builder",
+      "description": "The student builds a ratio $a : b$ by setting two tape or bar lengths, for example 'make the ratio 3 to 5'. The widget shows the ratio in the three notations (to, :, fraction) with the antecedent and consequent labelled. A second task asks the student to tap the antecedent or the consequent on a given ratio, or to build the ratio of one quantity to another from a described situation. Errors it could diagnose: reversing the order (b : a); confusing antecedent with consequent; and reading the ratio as part-to-whole instead of part-to-part.",
+      "why": "This objective is mostly notation and vocabulary, so none of the existing kinds fits without being stretched. The existing bar_builder is for statistics (mean, median, mode, range), not ratio. A forced fit would put an answer box into a widget."
     },
     {
-      "lo_id": "lo:pp3u1-2-1",
-      "need_kind": "relation_builder (rule-filtered pair selector)",
-      "description": "The student sees X, Y and a rule such as b = 2a + 4 or 'a is a digit of b'. She taps, from the full grid of X×Y, exactly the ordered pairs that satisfy the rule. Anchor example: X={-1,1,2}, Y={2,4,6,8}, expected {(-1,2),(1,6),(2,8)}. Errors it would report: a pair missing, a pair that fails the rule, a pair written (b, a), a pair outside X×Y, and a pair found by a sign slip such as 2a−4.",
-      "why": "product_builder grades against the whole of X×Y, so it cannot ask for a rule-defined subset. pair_plotter takes one lattice point, not a set, and would only check one value of the rule. Both would be answer boxes in disguise. In addition, this objective lists no misconceptions, so a diagnostics mapping is impossible under FR-1215."
+      "lo_id": "lo:pp3u2-1-1",
+      "need_kind": "misconception_data",
+      "description": "The lesson file lists no misconceptions for either objective, and lo:pp3u2-1-1 has no anchor questions. Every template needs a parent question id and at least one diagnostic mapping to a misconception id from its own objective.",
+      "why": "Without misconception ids, no template for this lesson can pass validation, even if a widget kind fits. Samuel needs to add misconceptions to both objectives, plus an anchor question for lo:pp3u2-1-1, before templates can be authored."
     },
     {
-      "lo_id": "lo:pp3u1-2-2",
-      "need_kind": "relation_diagram (arrow diagram and cartesian diagram drawer)",
-      "description": "The student is given a relation as a set of pairs, or by its rule. She draws arrows from elements of X to elements of Y in two side-by-side ovals, and the same pairs appear live as points on a cartesian grid (or the reverse). Anchor example: the additive-inverse relation on {-2,-1,0,1,2}, giving arrows -2→2, -1→1, 0→0, 1→-1, 2→-2. Errors it would report: arrows reversed in direction, a missing arrow (for example the loop 0→0), an extra arrow, and cartesian points with x and y swapped.",
-      "why": "No existing kind draws arrows between two sets. pair_plotter marks only one point and does not link the diagram to the arrow form. Representing the same relation in both forms is the whole objective. Also, no misconceptions are registered for this objective."
+      "lo_id": "lo:pp3u2-2-1",
+      "need_kind": "proportion_balancer (two equal ratios, extremes × means)",
+      "description": "The student would see a:b = c:d with one term unknown. They would drag the unknown until the two ratios match. Both ratios would show as simplified fractions. A second panel would show the product of extremes (a×d) next to the product of means (b×c), and the two products would be equal only when the proportion holds. The same instrument would handle the first, second, third and fourth proportional by changing which slot is unknown. Adding the same number to 3, 5, 8 and 12 would be a further mode. It would diagnose these errors: (1) multiplying extremes by extremes' partner, i.e. pairing a×b with c×d; (2) putting the unknown in the wrong slot, for example reading the third proportional as the fourth; (3) comparing by difference (an additive relationship) rather than by ratio; (4) inverting one ratio, as in a:b = d:c.",
+      "why": "None of the listed kinds fits. The ones I can read in the contract are about coordinates, circles, triangles, statistics and number lines. Only the name ratio_balance {mode, a, b, c} appears in the spec list, and its predicates are cut off. I can't confirm it can report the errors above. Also, this objective's misconception list is empty, so I have no ids to map. A diagnostics array needs at least one entry, so any template I wrote would have been forced."
     },
     {
-      "lo_id": "lo:pp3u1-2-3",
-      "need_kind": "relation_subset_sorter (is it a subset of X×Y?)",
-      "description": "Given X, Y and a candidate set of pairs, the student sorts each pair as 'in X×Y' or 'not in X×Y', and then states whether the set is a relation from X to Y. For a relation on X she checks that R ⊂ X×X. She would also pick which pairs satisfy the stated rule. Errors it would report: a pair accepted although one entry is not in X or Y, a valid pair rejected, and the reversed order (b, a) accepted for X to Y.",
-      "why": "product_builder builds the entire product X×Y. It cannot model a subset chosen by a rule or the yes/no test of membership. Using it would be a forced fit. The objective has no anchor question and no misconceptions in the lesson file, so any template would also have no valid misconception ids."
+      "lo_id": "lo:pp3u2-2-2",
+      "need_kind": "proportion_identity_checker (substitution a = mc, b = md)",
+      "description": "The student would be given a/b = c/d and an expression such as (a+b)/b or (2a+3c)/(2b+3d). They would choose a value of m, and a, b, c, d would then be generated as a = mc and b = md. The expression would be evaluated live for several different choices of m, c and d, so the student sees the value stay the same. The student would then pick which property of proportion (componendo, dividendo, alternando) turns one side into the other. It would diagnose these errors: (1) adding numerators and denominators separately, as in (a+c)/(b+d) ≠ (a+b)/b; (2) applying a property to only one side; (3) treating a/b = c/d as a = c and b = d.",
+      "why": "No existing kind constructs or manipulates a symbolic identity. This is algebraic proof, and an answer box would be a forced fit. This objective also has no anchor question and no misconception ids."
     },
     {
-      "lo_id": "lo:pp3u1-3-1",
-      "need_kind": "arrow_diagram_builder",
-      "description": "Two columns of dots (X on the left, Y on the right). The student drags arrows from elements of X to elements of Y. Two modes. (1) Build: draw a relation such as 'a = ½b' as arrows, or a relation that IS a function. (2) Repair: given a relation, add or remove arrows so that it becomes a function. The grading property is that every element of X has exactly one outgoing arrow, which the widget can light up live. It could also ask the student to construct a relation that is NOT a function, so they discover what fails. Predicates it could report: an element of X with two images, an element of X with no image, an arrow ending outside Y, and an arrow drawn in the wrong direction (Y to X).",
-      "why": "Identifying a function means checking that each x has exactly one image. product_builder selects all pairs of X×Y, which is a different task. pair_plotter places one point and cannot express the one-image rule. An answer box would only test the verdict 'function / not function', not the construction. The objective also has no misconceptions listed, so any template would need ids added first."
+      "lo_id": "lo:pp3u2-2-3",
+      "need_kind": "geometric_mean_builder (continued proportion, b² = ac)",
+      "description": "The student would drag the middle term b between a and c. A square of side b would be shown next to a rectangle a×c, and they match in area only when b² = ac. A chain a:b = b:c would show both ratios side by side. The student would then see that b is the middle proportional, not the average (a+c)/2. It would diagnose these errors: (1) taking the arithmetic mean (a+c)/2 as the middle proportional; (2) using b = ac, not b² = ac; (3) forgetting the square root; (4) taking the negative root when a positive length is asked for.",
+      "why": "No existing kind shows a square against a rectangle or a chain of equal ratios. The area_model kind in the spec list expands or factors binomials and does not fit. The objective has no anchor question and no misconception ids."
     },
     {
-      "lo_id": "lo:pp3u1-3-2",
-      "need_kind": "function_representation_linker",
-      "description": "The student sees a function given as a set of ordered pairs. They build the matching arrow diagram and the matching cartesian diagram by placing arrows and grid points, and the widget shows the three views changing together. A second mode gives f(x) = ax + b and a domain, and the student places the points. The widget would check that the diagram and the pair set agree. Predicates it could report: pairs read as (y, x), a missing pair, and an extra pair.",
-      "why": "The objective is about moving between the symbolic form, the arrow diagram and the cartesian diagram. pair_plotter plots only one point and has no arrow-diagram view. There is no link between several representations of one set of pairs. No misconceptions are listed for this objective."
+      "lo_id": "lo:pp3u2-3-1",
+      "need_kind": "line_drawer (equation mode) with a direct-variation framing, or a ratio_balance-style widget",
+      "description": "The student would draw the graph of y = mx from a given y ∝ x and one pair of values (for example y = 14 when x = 42). They would find m, then drag two points to build the line through the origin. This ties to the book's think-and-discuss question on d = vt passing through (0, 0). A line_drawer in equation mode could do this. It could report intercept-wrong, which is a line that misses the origin, and slope-inverted. The student could also read y off the line at x = 60.",
+      "why": "This objective's misconception list is empty. The pipeline accepts only ids from the objective's own list, and a template needs at least one diagnostic. So any template I wrote would carry a refuted-but-unnamed error or an invalid id. Samuel should add misconceptions to lo:pp3u2-3-1, for example 'direct variation line has an intercept' and 'divides x by y to get m'. A line_drawer template can then be written. The two skipped kinds, ratio_balance and curve_sketcher, appear in the template spec list. Their predicates and limits are not in the contract I was given, so I did not use them."
     },
     {
-      "lo_id": "lo:pp3u1-3-3",
-      "need_kind": "domain_codomain_range_sorter",
-      "description": "The student is given a function as arrows between X and Y and taps the elements that make up the domain, the codomain and the range. Elements of Y with no incoming arrow, such as 2 in the book example, stay in the codomain but drop out of the range. The student marks the range and sees it sit inside the codomain as a subset. Predicates it could report: range given as the whole codomain, range given as the domain, and an element of the range left out.",
-      "why": "The core idea is that the range is the subset of the codomain that is actually reached. number_line_marker could tap a set of numbers, but it is a stretch. Sets like {2, 3, 5, 7} are not naturally laid out on a line, the range limit stops at 6, and it has no notion of codomain or of arrows. That would be an answer box in disguise. No misconceptions are listed for this objective."
+      "lo_id": "lo:pp3u2-3-2",
+      "need_kind": "curve_sketcher (hyperbola) or a ratio_balance (inverse) widget; the contract shown to me does not list their predicates",
+      "description": "The student would build or sketch y = m/x from one pair (y = 3 when x = 2, so m = 6). They would see that y falls as x grows and read off y at x = 1.5. They would then do the same for y = m/x² with a squared variable. Useful errors to report: a straight rising line (inverse treated as direct, so m = y/x) and a hyperbola with the wrong constant. Another is a 1/x curve where 1/x² was asked (the square ignored).",
+      "why": "line_drawer can only draw straight lines, so it cannot show an inverse relation without being forced into a mislabelled fit. The other visible kinds are about unrelated mathematics. Neither the hyperbola sketcher nor ratio_balance is described in the contract I was given, so I cannot confirm that it can emit the predicates these two misconceptions need."
     },
     {
-      "lo_id": "lo:pp3u1-4-1",
-      "need_kind": "expression_sorter / expand-and-classify tool",
-      "description": "The student is given a function rule such as $x(x-2x^2)$, $x^2-(x^2-3)$ or $x^3+\\frac{1}{x}+7$. They expand and simplify it by dropping term tiles into place. They then tag each term's power of x as a whole number or not, and read off the degree of the simplified polynomial. Errors it could diagnose: degree read before simplifying (the power in the brackets is taken), and 1/x or √x terms accepted as polynomial terms.",
-      "why": "None of the existing kinds builds or classifies algebraic expressions. An answer box would be an answer box in disguise, so this is a gap and not a forced fit."
-    },
-    {
-      "lo_id": "lo:pp3u1-4-4",
-      "need_kind": "parabola_drawer (vertex / axis / max-min)",
-      "description": "The student drags the vertex and one more point to build the graph of a quadratic such as $f(x)=x^2-4x+3$. They mark the vertex and the axis of symmetry and say whether the turning point is a maximum or a minimum. Errors it could diagnose: the vertex x-coordinate sign flipped, the axis drawn through the y-axis, a maximum and minimum mixed up, and the parabola opening the wrong way.",
-      "why": "line_drawer cannot draw curves. The curve_sketcher kind is named in the contract, but its predicates and limits were not given for this lesson. If it is confirmed to cover quadratics with vertex and axis grading, it would fit. This objective also has no listed misconceptions or anchor questions."
-    },
-    {
-      "lo_id": "lo:pp3u1-4-2",
-      "need_kind": "substitution evaluator with surds",
-      "description": "The student substitutes a value, including a surd such as √3, into f(x) and builds the simplified image step by step. For example, $f(\\sqrt{3}) = 3 - \\sqrt{3} + 3 = 6-\\sqrt{3}$. Errors it could diagnose: $(\\sqrt{3})^2$ left unsimplified, and sign errors when substituting a negative value.",
-      "why": "This is symbolic arithmetic with no spatial or constructive instrument among the existing kinds, so any widget would just be an answer box. The objective also has no listed misconceptions."
+      "lo_id": "lo:pp3u2-3-3",
+      "need_kind": "table-classifier widget, or ratio_balance with a mode that gives a table and asks the student to classify it",
+      "description": "The student would be given a table of x and y values and would test it by dragging or selecting. For each table they would check whether y/x is constant (direct), whether xy is constant (inverse) or neither, and give the reason. Errors the widget would diagnose: reading a decreasing y as inverse without checking xy, and forming y/x for an inverse table (inverse treated as direct). The squared-variable case would also be covered.",
+      "why": "No visible kind constructs or tests a table of values. The choice among direct, inverse and neither is a classification with a reason, which an answer box or multiple choice could handle but which is not a construction. Using number_line_marker or bar_builder would be a forced fit."
     }
   ]
 }

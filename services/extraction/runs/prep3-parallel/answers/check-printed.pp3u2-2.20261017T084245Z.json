@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "f5a1b6e1032707159b291edfc01eb64b27b95cccb9836354fcc55e92a5b1565a",
+  "generated_sha256": "a3d4932b4f08258333a434426f9eb43a383768bda6b0be1176f598641306d53a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u2-2:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-2:example-1",
+      "kind": "value",
+      "answer": "3/4"
+     },
+     {
+      "ref": "pp3u2-2:example-2",
+      "kind": "value",
+      "answer": "48"
+     },
+     {
+      "ref": "pp3u2-2:example-3",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "pp3u2-2:example-5",
+      "kind": "value",
+      "answer": "9 or -9 (±9)"
+     }
+    ]
+   }
+  }
+ ]
+}

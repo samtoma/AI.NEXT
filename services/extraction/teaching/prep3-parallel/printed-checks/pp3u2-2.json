@@ -1,0 +1,111 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u2-2",
+  "source": "book-records/prep3-parallel/pp3u2-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 4,
+      "cost_usd": 0.302,
+      "calls": [
+        {
+          "call": "check-printed.pp3u2-2",
+          "cost_usd": 0.1582,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u2-2",
+          "cost_usd": 0.1438,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u2-2:example-1",
+      "record_id": "pp3u2-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 28,
+      "printed": "$\\frac{3}{4}$",
+      "blind": "3/4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "f682adcd6e64f3824a4655b68778dc9a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T08:42:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u2-2:example-2",
+      "record_id": "pp3u2-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 28,
+      "printed": "48",
+      "blind": "48",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "a4836c12957b1d3eebc15644b7ce4150",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T08:42:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u2-2:example-3",
+      "record_id": "pp3u2-2:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 28,
+      "printed": "$x=2$",
+      "blind": "2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "d082500c6c4d59af0690649c7fbb8d36",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-17T08:42:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u2-2:example-5",
+      "record_id": "pp3u2-2:example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 30,
+      "printed": "$\\pm 9$",
+      "blind": "9 or -9 (±9)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "1bcfc8ccf3278428b6df06f08659dc09",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u2-2:example-5",
+        "verdict": "equivalent",
+        "reason": "Both give the middle proportional as ±9 (9 or -9)."
+      },
+      "how": "judged equivalent: Both give the middle proportional as ±9 (9 or -9).",
+      "made": {
+        "at": "2026-10-17T08:42:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

@@ -39,7 +39,11 @@
     "maths_source": null,
     "lesson_unit": null,
     "answer_rules": null,
-    "lesson_titles": {},
+    "lesson_titles": {
+      "pp3u2-1": "Ratio",
+      "pp3u2-2": "Proportion",
+      "pp3u2-3": "Direct Variation and Inverse Variation"
+    },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
       "repo_root": "/Users/tdeif/Developer/Noor",
@@ -55,54 +59,86 @@
     "sample_per_family": 3,
     "families": [
       {
-        "family_id": "tpl:pp3u1-1-2:find-size",
-        "spec_sha": "061ad5e657490342a42a59392b2b6d03af4a3897e0e23530884e56a4806c3ddb",
+        "family_id": "tpl:pp3u2-1-2:add-both",
+        "spec_sha": "f90dbeeb7dc4c47fe7e2f48afa8cc43db05b5d414a73768de3cc061aebd3b7df",
         "kind": "family",
-        "lo_id": "lo:pp3u1-1-2",
-        "tier": "advanced",
+        "lo_id": "lo:pp3u2-1-2",
+        "tier": "basic",
         "answer_type": "numeric",
         "context": null,
-        "parent_question_id": "q:pp3u1-1-2:bk-drill-2-f",
+        "parent_question_id": "q:pp3u2-1-2:bk-example-1",
         "instances_available": 10,
         "instances": [
           {
-            "instance_id": "q:pp3u1-1-2:g004-find-s",
+            "instance_id": "q:pp3u2-1-2:g004-add-bo",
             "blind": {
-              "instance_id": "q:pp3u1-1-2:g004-find-s",
-              "stem": "If $n(X^2)=25$ and $n(Y)=2$, find $n(X\\times Y)$.",
-              "stem_sha": "6ed53921aeda3830",
+              "instance_id": "q:pp3u2-1-2:g004-add-bo",
+              "stem": "The number $3$ is added to each of the two terms of the ratio $7 : 3$. Find the sum of the two terms of the new ratio.",
+              "stem_sha": "a4abb0f5c81ee33f",
               "answer_format": {
                 "type": "number"
               }
             },
             "sealed": {
-              "correct_answer": "10",
+              "correct_answer": "16",
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "n(X²) = n(X) × n(X) = 25."
+                  "text_md": "Add $3$ to the first term: $7 + 3 = 10$."
                 },
                 {
                   "step": 2,
-                  "text_md": "Since 5 × 5 = 25, n(X) = 5."
+                  "text_md": "Add $3$ to the second term: $3 + 3 = 6$."
                 },
                 {
                   "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 5 × 2."
+                  "text_md": "The new ratio is $10 : 6$. (Adding a number to both terms changes the ratio.)"
                 },
                 {
                   "step": 4,
-                  "text_md": "n(X×Y) = 10."
+                  "text_md": "The sum of its two terms is $10 + 6 = 16$."
                 }
               ]
             }
           },
           {
-            "instance_id": "q:pp3u1-1-2:g005-find-s",
+            "instance_id": "q:pp3u2-1-2:g006-add-bo",
             "blind": {
-              "instance_id": "q:pp3u1-1-2:g005-find-s",
-              "stem": "If $n(X^2)=16$ and $n(Y)=5$, find $n(X\\times Y)$.",
-              "stem_sha": "30d763327612c28e",
+              "instance_id": "q:pp3u2-1-2:g006-add-bo",
+              "stem": "The number $8$ is added to each of the two terms of the ratio $5 : 6$. Find the sum of the two terms of the new ratio.",
+              "stem_sha": "248e40c30b24cddc",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "27",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Add $8$ to the first term: $5 + 8 = 13$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Add $8$ to the second term: $6 + 8 = 14$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The new ratio is $13 : 14$. (Adding a number to both terms changes the ratio.)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sum of its two terms is $13 + 14 = 27$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-1-2:g009-add-bo",
+            "blind": {
+              "instance_id": "q:pp3u2-1-2:g009-add-bo",
+              "stem": "The number $3$ is added to each of the two terms of the ratio $5 : 9$. Find the sum of the two terms of the new ratio.",
+              "stem_sha": "cd062e13eae1a0e1",
               "answer_format": {
                 "type": "number"
               }
@@ -112,51 +148,19 @@
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "n(X²) = n(X) × n(X) = 16."
+                  "text_md": "Add $3$ to the first term: $5 + 3 = 8$."
                 },
                 {
                   "step": 2,
-                  "text_md": "Since 4 × 4 = 16, n(X) = 4."
+                  "text_md": "Add $3$ to the second term: $9 + 3 = 12$."
                 },
                 {
                   "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 5."
+                  "text_md": "The new ratio is $8 : 12$. (Adding a number to both terms changes the ratio.)"
                 },
                 {
                   "step": 4,
-                  "text_md": "n(X×Y) = 20."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-1-2:g007-find-s",
-            "blind": {
-              "instance_id": "q:pp3u1-1-2:g007-find-s",
-              "stem": "If $n(X^2)=16$ and $n(Y)=4$, find $n(X\\times Y)$.",
-              "stem_sha": "b7b085a529c1d5e2",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "16",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "n(X²) = n(X) × n(X) = 16."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Since 4 × 4 = 16, n(X) = 4."
-                },
-                {
-                  "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 4."
-                },
-                {
-                  "step": 4,
-                  "text_md": "n(X×Y) = 16."
+                  "text_md": "The sum of its two terms is $8 + 12 = 20$."
                 }
               ]
             }
@@ -164,833 +168,22 @@
         ]
       },
       {
-        "family_id": "tpl:pp3u1-1-2:sizes-sum",
-        "spec_sha": "9089fb93d5ecb51cb9c24983e1b137a5c986a5a59ac15f9dd7c6a2ec6ced9683",
+        "family_id": "tpl:pp3u2-2-1:added-number",
+        "spec_sha": "7a3b3b15229239e5c8bef8d6dc8eb66f16bcf0551489ed133c302e409e9ab7d7",
         "kind": "family",
-        "lo_id": "lo:pp3u1-1-2",
-        "tier": "standard",
-        "answer_type": "numeric",
-        "context": null,
-        "parent_question_id": "q:pp3u1-1-2:bk-drill-2-d",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-1-2:g006-sizes-",
-            "blind": {
-              "instance_id": "q:pp3u1-1-2:g006-sizes-",
-              "stem": "If $X=\\{-2,\\ 1,\\ 4,\\ 5\\}$ and $Y=\\{5,\\ 6,\\ 8\\}$, find $n(X^2)+n(X\\times Y)$.",
-              "stem_sha": "5175b45ed5a794e2",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "28",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "n(X) = 4 and n(Y) = 3."
-                },
-                {
-                  "step": 2,
-                  "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
-                },
-                {
-                  "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 3 = 12."
-                },
-                {
-                  "step": 4,
-                  "text_md": "n(X²) + n(X×Y) = 16 + 12 = 28."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-1-2:g008-sizes-",
-            "blind": {
-              "instance_id": "q:pp3u1-1-2:g008-sizes-",
-              "stem": "If $X=\\{-4,\\ -3,\\ 3,\\ 6,\\ 7\\}$ and $Y=\\{-4,\\ 5\\}$, find $n(X^2)+n(X\\times Y)$.",
-              "stem_sha": "b5d2365b8269e6f1",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "35",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "n(X) = 5 and n(Y) = 2."
-                },
-                {
-                  "step": 2,
-                  "text_md": "n(X²) = n(X) × n(X) = 5 × 5 = 25."
-                },
-                {
-                  "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 5 × 2 = 10."
-                },
-                {
-                  "step": 4,
-                  "text_md": "n(X²) + n(X×Y) = 25 + 10 = 35."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-1-2:g010-sizes-",
-            "blind": {
-              "instance_id": "q:pp3u1-1-2:g010-sizes-",
-              "stem": "If $X=\\{-4,\\ 0,\\ 1,\\ 6\\}$ and $Y=\\{-3,\\ 8\\}$, find $n(X^2)+n(X\\times Y)$.",
-              "stem_sha": "5ff3e36c7ebf7083",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "24",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "n(X) = 4 and n(Y) = 2."
-                },
-                {
-                  "step": 2,
-                  "text_md": "n(X²) = n(X) × n(X) = 4 × 4 = 16."
-                },
-                {
-                  "step": 3,
-                  "text_md": "n(X×Y) = n(X) × n(Y) = 4 × 2 = 8."
-                },
-                {
-                  "step": 4,
-                  "text_md": "n(X²) + n(X×Y) = 16 + 8 = 24."
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-1-4:axis-points",
-        "spec_sha": "572fc1fbfe6cdd3a8a9231d1e7739d09b11faae4f1d3e0396a04707850d18887",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-1-4",
+        "lo_id": "lo:pp3u2-2-1",
         "tier": "advanced",
         "answer_type": "numeric",
         "context": null,
-        "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+        "parent_question_id": "q:pp3u2-2-1:bk-example-3",
         "instances_available": 10,
         "instances": [
           {
-            "instance_id": "q:pp3u1-1-4:g005-axis-p",
+            "instance_id": "q:pp3u2-2-1:g001-added-",
             "blind": {
-              "instance_id": "q:pp3u1-1-4:g005-axis-p",
-              "stem": "Let $X=\\{x\\in\\mathbb{Z} : -4\\le x\\le 5\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
-              "stem_sha": "92ba6d6cb66ecc06",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "19",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "X has 10 elements: the integers from -4 to 5, including 0."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Points on the x-axis have y = 0 and any x in X: 10 points. Points on the y-axis have x = 0 and any y in X: 10 points."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The point (0, 0) is counted twice, so the total is 10 + 10 - 1 = 19."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-1-4:g008-axis-p",
-            "blind": {
-              "instance_id": "q:pp3u1-1-4:g008-axis-p",
-              "stem": "Let $X=\\{x\\in\\mathbb{Z} : -2\\le x\\le 6\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
-              "stem_sha": "3b19cb9b62df556c",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "17",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "X has 9 elements: the integers from -2 to 6, including 0."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Points on the x-axis have y = 0 and any x in X: 9 points. Points on the y-axis have x = 0 and any y in X: 9 points."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The point (0, 0) is counted twice, so the total is 9 + 9 - 1 = 17."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-1-4:g010-axis-p",
-            "blind": {
-              "instance_id": "q:pp3u1-1-4:g010-axis-p",
-              "stem": "Let $X=\\{x\\in\\mathbb{Z} : -3\\le x\\le 2\\}$, so $X$ is a set of integers. The product $X\\times X$ is drawn as points on a perpendicular graphical net. How many of the points of $X\\times X$ lie on the axes (that is, have $x=0$ or $y=0$)?",
-              "stem_sha": "d45bb323ce7f6150",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "11",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "X has 6 elements: the integers from -3 to 2, including 0."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Points on the x-axis have y = 0 and any x in X: 6 points. Points on the y-axis have x = 0 and any y in X: 6 points."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The point (0, 0) is counted twice, so the total is 6 + 6 - 1 = 11."
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-2-2:arrowend",
-        "spec_sha": "9c82608ba7ef404e87a7313386aedba1085e0bb3c40b0466ba29a2b216b9269d",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-2-2",
-        "tier": "basic",
-        "answer_type": "numeric",
-        "context": null,
-        "parent_question_id": "q:pp3u1-2-2:bk-example-2",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-2-2:g004-arrowe",
-            "blind": {
-              "instance_id": "q:pp3u1-2-2:g004-arrowe",
-              "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{4, 8, 12, 16\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 4 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $4$ ends at which element of Y?",
-              "stem_sha": "1056df16c77213a8",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "16",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 4 \\times a$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "For $a = 4$: $b = 4 \\times 4 = 16$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "So the arrow from $4$ ends at $16$, and the cartesian diagram has the point $(4, 16)$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-2-2:g009-arrowe",
-            "blind": {
-              "instance_id": "q:pp3u1-2-2:g009-arrowe",
-              "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{6, 12, 18, 24\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 6 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $2$ ends at which element of Y?",
-              "stem_sha": "06a56493d1bdd80a",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "12",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 6 \\times a$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "For $a = 2$: $b = 6 \\times 2 = 12$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "So the arrow from $2$ ends at $12$, and the cartesian diagram has the point $(2, 12)$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-2-2:g010-arrowe",
-            "blind": {
-              "instance_id": "q:pp3u1-2-2:g010-arrowe",
-              "stem": "If $X=\\{1, 2, 3, 4\\}$, $Y=\\{5, 10, 15, 20\\}$ and R is a relation from X to Y where $a \\; R \\; b$ means: «$b = 5 \\times a$» for each $a \\in X$, $b \\in Y$. In the arrow diagram that represents R, the arrow starting from $3$ ends at which element of Y?",
-              "stem_sha": "fb9793093ed505e7",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "15",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Each arrow goes from $a$ in X to $b$ in Y with $b = 5 \\times a$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "For $a = 3$: $b = 5 \\times 3 = 15$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "So the arrow from $3$ ends at $15$, and the cartesian diagram has the point $(3, 15)$."
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-3-1:pick-func",
-        "spec_sha": "0e850678e794f0ac4b7ee9fecd251766aee675c292c18576707370c088ceaecc",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-3-1",
-        "tier": "basic",
-        "answer_type": "mcq",
-        "context": null,
-        "parent_question_id": "q:pp3u1-3-1:bk-example-2",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-3-1:g001-pick-f",
-            "blind": {
-              "instance_id": "q:pp3u1-3-1:g001-pick-f",
-              "stem": "$X=\\{ 1, 5, 9 \\}$ and $Y=\\{ 2, 7, 10, 12 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
-              "stem_sha": "94f1deea44c4d0e8",
-              "options": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (1, 10), (5, 10), (9, 12) \\}$"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (1, 10), (5, 10) \\}$"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (1, 10), (5, 10), (5, 12), (9, 12) \\}$"
-                }
-              ],
-              "answer_format": {
-                "type": "choice"
-              }
-            },
-            "sealed": {
-              "correct_answer": "A",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 5 and 9 must appear as a first element exactly once."
-                },
-                {
-                  "step": 2,
-                  "text_md": "$\\{ (1, 10), (5, 10), (9, 12) \\}$ has 1, 5, 9 each once as a first element, so it is a function."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$ is not a function: 1 has two images, 10 and 12."
-                },
-                {
-                  "step": 4,
-                  "text_md": "$\\{ (1, 10), (5, 10) \\}$ is not a function: 9 has no image."
-                },
-                {
-                  "step": 5,
-                  "text_md": "$\\{ (1, 10), (5, 10), (5, 12), (9, 12) \\}$ is not a function: 5 has two images, 10 and 12."
-                }
-              ],
-              "choices": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (1, 10), (5, 10), (9, 12) \\}$"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (1, 10), (5, 10) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:no-image"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (1, 10), (5, 10), (5, 12), (9, 12) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-3-1:g004-pick-f",
-            "blind": {
-              "instance_id": "q:pp3u1-3-1:g004-pick-f",
-              "stem": "$X=\\{ 4, 5, 8 \\}$ and $Y=\\{ 6, 7, 8, 10 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
-              "stem_sha": "53b5e574dc8fc8d0",
-              "options": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (4, 6), (5, 7), (5, 10), (8, 10) \\}$"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (4, 6), (4, 8), (5, 7), (8, 10) \\}$"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (4, 6), (5, 7), (8, 10) \\}$"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (4, 6), (5, 7) \\}$"
-                }
-              ],
-              "answer_format": {
-                "type": "choice"
-              }
-            },
-            "sealed": {
-              "correct_answer": "C",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 4, 5 and 8 must appear as a first element exactly once."
-                },
-                {
-                  "step": 2,
-                  "text_md": "$\\{ (4, 6), (5, 7), (8, 10) \\}$ has 4, 5, 8 each once as a first element, so it is a function."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$\\{ (4, 6), (4, 8), (5, 7), (8, 10) \\}$ is not a function: 4 has two images, 6 and 8."
-                },
-                {
-                  "step": 4,
-                  "text_md": "$\\{ (4, 6), (5, 7) \\}$ is not a function: 8 has no image."
-                },
-                {
-                  "step": 5,
-                  "text_md": "$\\{ (4, 6), (5, 7), (5, 10), (8, 10) \\}$ is not a function: 5 has two images, 7 and 10."
-                }
-              ],
-              "choices": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (4, 6), (5, 7), (5, 10), (8, 10) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (4, 6), (4, 8), (5, 7), (8, 10) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (4, 6), (5, 7), (8, 10) \\}$"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (4, 6), (5, 7) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:no-image"
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-3-1:g010-pick-f",
-            "blind": {
-              "instance_id": "q:pp3u1-3-1:g010-pick-f",
-              "stem": "$X=\\{ 1, 3, 9 \\}$ and $Y=\\{ 5, 7, 8, 10 \\}$. Which of the following relations from $X$ to $Y$ is a function?",
-              "stem_sha": "a51838186adc6bf2",
-              "options": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (1, 7), (3, 10), (9, 7) \\}$"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (1, 7), (3, 10) \\}$"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (1, 7), (3, 10), (3, 8), (9, 7) \\}$"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (1, 7), (1, 10), (3, 10), (9, 7) \\}$"
-                }
-              ],
-              "answer_format": {
-                "type": "choice"
-              }
-            },
-            "sealed": {
-              "correct_answer": "A",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "A relation from $X$ to $Y$ is a function when every element of $X$ has exactly one image in $Y$, so each of 1, 3 and 9 must appear as a first element exactly once."
-                },
-                {
-                  "step": 2,
-                  "text_md": "$\\{ (1, 7), (3, 10), (9, 7) \\}$ has 1, 3, 9 each once as a first element, so it is a function."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$\\{ (1, 7), (1, 10), (3, 10), (9, 7) \\}$ is not a function: 1 has two images, 7 and 10."
-                },
-                {
-                  "step": 4,
-                  "text_md": "$\\{ (1, 7), (3, 10) \\}$ is not a function: 9 has no image."
-                },
-                {
-                  "step": 5,
-                  "text_md": "$\\{ (1, 7), (3, 10), (3, 8), (9, 7) \\}$ is not a function: 3 has two images, 10 and 8."
-                }
-              ],
-              "choices": [
-                {
-                  "key": "A",
-                  "text": "$\\{ (1, 7), (3, 10), (9, 7) \\}$"
-                },
-                {
-                  "key": "B",
-                  "text": "$\\{ (1, 7), (3, 10) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:no-image"
-                },
-                {
-                  "key": "C",
-                  "text": "$\\{ (1, 7), (3, 10), (3, 8), (9, 7) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                },
-                {
-                  "key": "D",
-                  "text": "$\\{ (1, 7), (1, 10), (3, 10), (9, 7) \\}$",
-                  "misconception_id": "mc:pp3u1-3-1:two-images"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-4-1:expand-cancel",
-        "spec_sha": "98299863223176448588b772524dcb5893b42abca04914e4921309e17858e7a9",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-4-1",
-        "tier": "advanced",
-        "answer_type": "numeric",
-        "context": null,
-        "parent_question_id": "q:pp3u1-4-1:bk-drill-2-b",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-4-1:g004-expand",
-            "blind": {
-              "instance_id": "q:pp3u1-4-1:g004-expand",
-              "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^3+2)(x+2)-x^{4}$",
-              "stem_sha": "d6e4a262b8a148ce",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "3",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Expand the brackets: $(x^3+2)(x+2)=x^{4}+2x^3+2x+4$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Subtract $x^{4}$: $f(x)=x^{4}+2x^3+2x+4-x^{4}=2x^3+2x+4$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The $x^{4}$ terms cancel, so the highest power of x left is 3."
-                },
-                {
-                  "step": 4,
-                  "text_md": "The degree is 3."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-1:g005-expand",
-            "blind": {
-              "instance_id": "q:pp3u1-4-1:g005-expand",
-              "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^4+3)(x^2+5)-x^{6}$",
-              "stem_sha": "5969e9e88f4e653b",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "4",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Expand the brackets: $(x^4+3)(x^2+5)=x^{6}+5x^4+3x^2+15$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Subtract $x^{6}$: $f(x)=x^{6}+5x^4+3x^2+15-x^{6}=5x^4+3x^2+15$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The $x^{6}$ terms cancel, so the highest power of x left is 4."
-                },
-                {
-                  "step": 4,
-                  "text_md": "The degree is 4."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-1:g008-expand",
-            "blind": {
-              "instance_id": "q:pp3u1-4-1:g008-expand",
-              "stem": "If $f: R \\to R$ then mention the degree of the function: $f(x)=(x^2+1)(x+5)-x^{3}$",
-              "stem_sha": "22e2eccfd0065593",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "2",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Expand the brackets: $(x^2+1)(x+5)=x^{3}+5x^2+x+5$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Subtract $x^{3}$: $f(x)=x^{3}+5x^2+x+5-x^{3}=5x^2+x+5$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "The $x^{3}$ terms cancel, so the highest power of x left is 2."
-                },
-                {
-                  "step": 4,
-                  "text_md": "The degree is 2."
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-4-2:poly-int",
-        "spec_sha": "3681ff19d94cbd36c8369d2b64c143e0f9467fc205485420af507489fb0962e6",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-4-2",
-        "tier": "basic",
-        "answer_type": "numeric",
-        "context": null,
-        "parent_question_id": "q:pp3u1-4-2:bk-example-1",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-4-2:g001-poly-i",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g001-poly-i",
-              "stem": "If $f(x)=3x^2-1x+5$, find $f(2)$.",
-              "stem_sha": "eee5269bd68838c7",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "15",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Substitute $x=2$: $f(2)=3(2)^2-1(2)+5$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Evaluate: $(2)^2=4$, so $f(2)=12-(2)+5$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$f(2)=15$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-2:g004-poly-i",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g004-poly-i",
-              "stem": "If $f(x)=3x^2-4x+9$, find $f(2)$.",
-              "stem_sha": "e31486802d5cabf9",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "13",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Substitute $x=2$: $f(2)=3(2)^2-4(2)+9$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Evaluate: $(2)^2=4$, so $f(2)=12-(8)+9$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$f(2)=13$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-2:g006-poly-i",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g006-poly-i",
-              "stem": "If $f(x)=2x^2-1x+8$, find $f(-2)$.",
-              "stem_sha": "380eb8137193887b",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "18",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "Substitute $x=-2$: $f(-2)=2(-2)^2-1(-2)+8$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "Evaluate: $(-2)^2=4$, so $f(-2)=8-(-2)+8$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "$f(-2)=18$."
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "family_id": "tpl:pp3u1-4-2:surd-combo",
-        "spec_sha": "cb017787633d7835297f5ea2f46cf5a20cb5b0e8d55fc749d75e6f7f2f114453",
-        "kind": "family",
-        "lo_id": "lo:pp3u1-4-2",
-        "tier": "advanced",
-        "answer_type": "numeric",
-        "context": null,
-        "parent_question_id": "q:pp3u1-4-2:bk-drill-3-a",
-        "instances_available": 10,
-        "instances": [
-          {
-            "instance_id": "q:pp3u1-4-2:g002-surd-c",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g002-surd-c",
-              "stem": "If $f(x)=x^2-4x+5$ and $g(x)=x-4$, find $f(\\sqrt{3})+4\\,g(\\sqrt{3})$.",
-              "stem_sha": "a49d305bebac7fea",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "-8",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "$f(\\sqrt{3})=(\\sqrt{3})^2-4\\sqrt{3}+5=8-4\\sqrt{3}$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "$g(\\sqrt{3})=\\sqrt{3}-4$, so $4\\,g(\\sqrt{3})=4\\sqrt{3}-16$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "Add: $f(\\sqrt{3})+4\\,g(\\sqrt{3})=8-4\\sqrt{3}+4\\sqrt{3}-16$."
-                },
-                {
-                  "step": 4,
-                  "text_md": "The surd terms cancel, so the sum is $-8$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-2:g004-surd-c",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g004-surd-c",
-              "stem": "If $f(x)=x^2-4x+4$ and $g(x)=x-4$, find $f(\\sqrt{6})+4\\,g(\\sqrt{6})$.",
-              "stem_sha": "8399087c970da43f",
-              "answer_format": {
-                "type": "number"
-              }
-            },
-            "sealed": {
-              "correct_answer": "-6",
-              "canonical_solution": [
-                {
-                  "step": 1,
-                  "text_md": "$f(\\sqrt{6})=(\\sqrt{6})^2-4\\sqrt{6}+4=10-4\\sqrt{6}$."
-                },
-                {
-                  "step": 2,
-                  "text_md": "$g(\\sqrt{6})=\\sqrt{6}-4$, so $4\\,g(\\sqrt{6})=4\\sqrt{6}-16$."
-                },
-                {
-                  "step": 3,
-                  "text_md": "Add: $f(\\sqrt{6})+4\\,g(\\sqrt{6})=10-4\\sqrt{6}+4\\sqrt{6}-16$."
-                },
-                {
-                  "step": 4,
-                  "text_md": "The surd terms cancel, so the sum is $-6$."
-                }
-              ]
-            }
-          },
-          {
-            "instance_id": "q:pp3u1-4-2:g006-surd-c",
-            "blind": {
-              "instance_id": "q:pp3u1-4-2:g006-surd-c",
-              "stem": "If $f(x)=x^2-2x+4$ and $g(x)=x-3$, find $f(\\sqrt{7})+2\\,g(\\sqrt{7})$.",
-              "stem_sha": "f888be38e9f76a6f",
+              "instance_id": "q:pp3u2-2-1:g001-added-",
+              "stem": "Find the number that if added to each of the numbers $1$, $10$, $5$ and $20$, in this order, the results become proportional.",
+              "stem_sha": "d4b0568fa54b2c50",
               "answer_format": {
                 "type": "number"
               }
@@ -1000,19 +193,543 @@
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "$f(\\sqrt{7})=(\\sqrt{7})^2-2\\sqrt{7}+4=11-2\\sqrt{7}$."
+                  "text_md": "Let the number be $x$. Then $1+x$, $10+x$, $5+x$, $20+x$ are proportional, so $\\frac{1+x}{10+x}=\\frac{5+x}{20+x}$."
                 },
                 {
                   "step": 2,
-                  "text_md": "$g(\\sqrt{7})=\\sqrt{7}-3$, so $2\\,g(\\sqrt{7})=2\\sqrt{7}-6$."
+                  "text_md": "Product of extremes = product of means: $(10+x)(5+x)=(1+x)(20+x)$."
                 },
                 {
                   "step": 3,
-                  "text_md": "Add: $f(\\sqrt{7})+2\\,g(\\sqrt{7})=11-2\\sqrt{7}+2\\sqrt{7}-6$."
+                  "text_md": "Expand: $50+15x+x^2=20+21x+x^2$."
                 },
                 {
                   "step": 4,
-                  "text_md": "The surd terms cancel, so the sum is $5$."
+                  "text_md": "The $x^2$ terms cancel: $15x-21x=20-50$, so $(-6)x=-30$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$x=\\frac{-30}{-6}=5$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "Check: $6$, $15$, $10$, $25$ give $\\frac{6}{15}=\\frac{10}{25}$. The number is 5."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-2-1:g004-added-",
+            "blind": {
+              "instance_id": "q:pp3u2-2-1:g004-added-",
+              "stem": "Find the number that if added to each of the numbers $6$, $16$, $10$ and $24$, in this order, the results become proportional.",
+              "stem_sha": "1380184696ca5c69",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "4",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Let the number be $x$. Then $6+x$, $16+x$, $10+x$, $24+x$ are proportional, so $\\frac{6+x}{16+x}=\\frac{10+x}{24+x}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Product of extremes = product of means: $(16+x)(10+x)=(6+x)(24+x)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Expand: $160+26x+x^2=144+30x+x^2$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The $x^2$ terms cancel: $26x-30x=144-160$, so $(-4)x=-16$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$x=\\frac{-16}{-4}=4$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "Check: $10$, $20$, $14$, $28$ give $\\frac{10}{20}=\\frac{14}{28}$. The number is 4."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-2-1:g009-added-",
+            "blind": {
+              "instance_id": "q:pp3u2-2-1:g009-added-",
+              "stem": "Find the number that if added to each of the numbers $2$, $10$, $8$ and $22$, in this order, the results become proportional.",
+              "stem_sha": "74c891402c2aedc8",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "6",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Let the number be $x$. Then $2+x$, $10+x$, $8+x$, $22+x$ are proportional, so $\\frac{2+x}{10+x}=\\frac{8+x}{22+x}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Product of extremes = product of means: $(10+x)(8+x)=(2+x)(22+x)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Expand: $80+18x+x^2=44+24x+x^2$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The $x^2$ terms cancel: $18x-24x=44-80$, so $(-6)x=-36$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$x=\\frac{-36}{-6}=6$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "Check: $8$, $16$, $14$, $28$ give $\\frac{8}{16}=\\frac{14}{28}$. The number is 6."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:pp3u2-3-1:findx-word",
+        "spec_sha": "e04df2bacfc6818ec2d74d1cc1c87a05723988a20e38f970ba54927f5fca29cb",
+        "kind": "family",
+        "lo_id": "lo:pp3u2-3-1",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": "A car moves at a uniform velocity, so the distance covered (d) in kilometres is directly proportional to the time (t) in hours.",
+        "parent_question_id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u2-3-1:g001-findx-",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g001-findx-",
+              "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $14$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $70$ km. Give the number of hours as your answer.",
+              "stem_sha": "9c41dcc3677c3695",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "50",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute: $14 = m \\times 10$, so $m = \\frac{14}{10} = \\frac{7}{5}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $d = \\frac{7}{5}t$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Put $d = 70$: $70 = \\frac{7}{5}t$, so $t = 70 \\times \\frac{5}{7} = 50$ hours."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-1:g003-findx-",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g003-findx-",
+              "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $26$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $130$ km. Give the number of hours as your answer.",
+              "stem_sha": "7ea0b42bc2ff1b65",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "50",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute: $26 = m \\times 10$, so $m = \\frac{26}{10} = \\frac{13}{5}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $d = \\frac{13}{5}t$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Put $d = 130$: $130 = \\frac{13}{5}t$, so $t = 130 \\times \\frac{5}{13} = 50$ hours."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-1:g006-findx-",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g006-findx-",
+              "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $45$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $90$ km. Give the number of hours as your answer.",
+              "stem_sha": "90d85981a4aba8b1",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "20",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute: $45 = m \\times 10$, so $m = \\frac{45}{10} = \\frac{9}{2}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $d = \\frac{9}{2}t$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Put $d = 90$: $90 = \\frac{9}{2}t$, so $t = 90 \\times \\frac{2}{9} = 20$ hours."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:pp3u2-3-1:findy",
+        "spec_sha": "a2cf9f57539800f9e2e82c9a8293573eb8b42b83fa53975436839b286df7e756",
+        "kind": "family",
+        "lo_id": "lo:pp3u2-3-1",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:pp3u2-3-1:bk-example-1-second",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u2-3-1:g002-findy",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g002-findy",
+              "stem": "If $y \\propto x$ and $y = 14$ when $x = 49$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 35$. Give the value of $y$ as your answer.",
+              "stem_sha": "65c20ad736d6116e",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "10",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute the values of $x$ and $y$: $14 = 49 \\times m$, so $m = \\frac{14}{49} = \\frac{2}{7}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y = \\frac{2}{7}x$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x = 35$: $y = \\frac{2}{7} \\times 35 = 10$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-1:g003-findy",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g003-findy",
+              "stem": "If $y \\propto x$ and $y = 10$ when $x = 35$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 77$. Give the value of $y$ as your answer.",
+              "stem_sha": "7ac61ab1338639d5",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "22",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute the values of $x$ and $y$: $10 = 35 \\times m$, so $m = \\frac{10}{35} = \\frac{2}{7}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y = \\frac{2}{7}x$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x = 77$: $y = \\frac{2}{7} \\times 77 = 22$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-1:g005-findy",
+            "blind": {
+              "instance_id": "q:pp3u2-3-1:g005-findy",
+              "stem": "If $y \\propto x$ and $y = 32$ when $x = 56$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 49$. Give the value of $y$ as your answer.",
+              "stem_sha": "cb076554450aea3f",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "28",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute the values of $x$ and $y$: $32 = 56 \\times m$, so $m = \\frac{32}{56} = \\frac{4}{7}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y = \\frac{4}{7}x$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x = 49$: $y = \\frac{4}{7} \\times 49 = 28$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:pp3u2-3-2:find-x-from-y",
+        "spec_sha": "9add06c9e2863af83317c67e2062ba26851c7f3725c691259258ac4b6b488dad",
+        "kind": "family",
+        "lo_id": "lo:pp3u2-3-2",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u2-3-2:g003-find-x",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g003-find-x",
+              "stem": "If $y \\propto \\frac{1}{x}$ and $y=9$ when $x=8$, find the relation between $x$ and $y$, then find the value of $x$ when $y=12$.",
+              "stem_sha": "9d7eb887c3df5712",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "6",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=9$ and $x=8$: $9=\\frac{m}{8}$, so $m=9\\times 8=72$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{72}{x}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $y=12$: $12=\\frac{72}{x}$, so $x=\\frac{72}{12}=6$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-2:g009-find-x",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g009-find-x",
+              "stem": "If $y \\propto \\frac{1}{x}$ and $y=6$ when $x=4$, find the relation between $x$ and $y$, then find the value of $x$ when $y=3$.",
+              "stem_sha": "f911de9e4eb99344",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "8",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=6$ and $x=4$: $6=\\frac{m}{4}$, so $m=6\\times 4=24$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{24}{x}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $y=3$: $3=\\frac{24}{x}$, so $x=\\frac{24}{3}=8$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-2:g010-find-x",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g010-find-x",
+              "stem": "If $y \\propto \\frac{1}{x}$ and $y=6$ when $x=4$, find the relation between $x$ and $y$, then find the value of $x$ when $y=12$.",
+              "stem_sha": "b61f4edd62fffcdf",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=6$ and $x=4$: $6=\\frac{m}{4}$, so $m=6\\times 4=24$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{24}{x}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $y=12$: $12=\\frac{24}{x}$, so $x=\\frac{24}{12}=2$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:pp3u2-3-2:squared-var",
+        "spec_sha": "379338680e544ce6eb5b9e15cb188c1cedaf8c0f9961ef7555396e70b2da80b9",
+        "kind": "family",
+        "lo_id": "lo:pp3u2-3-2",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u2-3-2:g001-square",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g001-square",
+              "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=3$ when $x=4$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
+              "stem_sha": "5b371b1b16b1263e",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "48",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=3$ and $x=4$: $3=\\frac{m}{16}$, so $m=3\\times 16=48$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{48}{x^{2}}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x=1$: $y=\\frac{48}{1}=48$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-2:g006-square",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g006-square",
+              "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=2$ when $x=3$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
+              "stem_sha": "f7e1e1637c588234",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "18",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=2$ and $x=3$: $2=\\frac{m}{9}$, so $m=2\\times 9=18$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{18}{x^{2}}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x=1$: $y=\\frac{18}{1}=18$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u2-3-2:g009-square",
+            "blind": {
+              "instance_id": "q:pp3u2-3-2:g009-square",
+              "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=19$ when $x=3$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
+              "stem_sha": "ddda8790f3f01285",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "171",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $y=19$ and $x=3$: $19=\\frac{m}{9}$, so $m=19\\times 9=171$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The relation is $y=\\frac{171}{x^{2}}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "When $x=1$: $y=\\frac{171}{1}=171$."
                 }
               ]
             }

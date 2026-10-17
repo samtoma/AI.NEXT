@@ -1,0 +1,158 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "prep3-parallel",
+ "chapter": 2,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 4,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/tdeif/Developer/Noor/services/extraction/work/prep3-parallel/packets/sw-ch02",
+  "stage": "SW",
+  "shards_sha256": "b070c1bcec60fe7fbe5b85f3cd5f9284cf4ed59a8333ab33e9bf1e8023d76158",
+  "files": 19
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "351e0d562f78ba5405baab411bb3aaa0c0b4d63d3aa810c1458a9023227e9684",
+  "generated_sha256": "937fd4480e8142c8739a0410bab0a206ea33a0b04f7eb37902b39b3b974cde19",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:pp3u2-1-2:bk-example-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-1-2:bk-drill-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-2-1:bk-example-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-2-1:bk-example-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-2-1:bk-drill-1-a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-2-1:bk-drill-1-b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-3-1:bk-example-1-second",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:pp3u2-3-2:bk-example-2-second",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-1:bk-exercise-1-first",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-1:bk-exercise-1-second",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-2:bk-example-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-2:bk-example-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-3:bk-example-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-2-3:bk-example-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-3-1:bk-example-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-3-2:bk-example-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-3-1:bk-example-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u2-3-2:bk-example-4",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "$\\because v \\propto \\frac{1}{r^2}$",
+     "kind": "label",
+     "where": "working",
+     "expected": "h",
+     "why": "The question's variable is the height h, but the working uses v throughout."
+    }
+   ],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage SW --run <runId>"
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-2:ratio-lin",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-2",
+ "parent_question_id": "none-provided",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "m == n or gcd(m, n) != 1"
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "require": "p * m > q * n",
+   "why": "keep denominator positive"
+  },
+  {
+   "name": "num",
+   "let": "p * m + q * n"
+  },
+  {
+   "name": "den",
+   "let": "p * m - q * n"
+  },
+  {
+   "name": "g",
+   "let": "gcd(num, den)"
+  },
+  {
+   "name": "n2",
+   "let": "num // g"
+  },
+  {
+   "name": "d2",
+   "let": "den // g"
+  },
+  {
+   "require": "d2 > 1",
+   "why": "answer is a proper fraction not an integer"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1"
+ ],
+ "stem": "If $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{{=p}a+{=q}b}{{=p}a-{=q}b}$ as a fraction in its simplest form.",
+ "answer": "",
+ "solution": [
+  "Since $\\frac{a}{b}=\\frac{{=m}}{{=n}}$, put $a={=m}k$ and $b={=n}k$ with $k\\neq 0$.",
+  "Substitute: $\\frac{{=p}a+{=q}b}{{=p}a-{=q}b}=\\frac{{=p*m}k+{=q*n}k}{{=p*m}k-{=q*n}k}=\\frac{{=num}k}{{=den}k}$.",
+  "Cancel $k$: $\\frac{{=num}}{{=den}}$, which in simplest form is $\\frac{{=n2}}{{=d2}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=n2}/{=d2}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Placeholder parent id; no book questions were supplied."
+}

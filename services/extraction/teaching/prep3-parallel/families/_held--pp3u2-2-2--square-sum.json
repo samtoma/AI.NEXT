@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-2:square-sum",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-2",
+ "parent_question_id": "none-provided",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    7
+   ],
+   "resample_while": "m == n or gcd(m, n) != 1"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1",
+  "m != n"
+ ],
+ "stem": "If $\\frac{a}{b}=\\frac{c}{d}$ and $\\frac{a}{c}=\\frac{{=m}}{{=n}}$, find the value of $\\frac{a^2+b^2}{c^2+d^2}$ as a fraction in its simplest form.",
+ "answer": "",
+ "solution": [
+  "From $\\frac{a}{b}=\\frac{c}{d}$, by alternation $\\frac{a}{c}=\\frac{b}{d}$, so $\\frac{b}{d}=\\frac{{=m}}{{=n}}$ too.",
+  "Write $a={=m}k$, $c={=n}k$, $b={=m}t$, $d={=n}t$.",
+  "Then $\\frac{a^2+b^2}{c^2+d^2}=\\frac{{=m*m}k^2+{=m*m}t^2}{{=n*n}k^2+{=n*n}t^2}=\\frac{{=m*m}(k^2+t^2)}{{=n*n}(k^2+t^2)}$.",
+  "Cancel $k^2+t^2$: the value is $\\frac{{=m*m}}{{=n*n}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=m*m}/{=n*n}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Placeholder parent id; no book questions supplied. m/n coprime so squares coprime. Solver may also write a=mc/n; same answer."
+}

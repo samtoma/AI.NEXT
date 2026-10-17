@@ -1,0 +1,62 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "8bad82634eec617c09c6a029ee325f894adb84682ba22332bb974b1499919941",
+  "generated_sha256": "6e50cd38680dcc2170d2adebec5e1b97e6e85e0be495ab0c730bedde907fb4f6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u2-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-3:example-1:first",
+      "kind": "value",
+      "answer": "y = x/3 (m = 1/3)"
+     },
+     {
+      "ref": "pp3u2-3:example-1:second",
+      "kind": "value",
+      "answer": "20"
+     },
+     {
+      "ref": "pp3u2-3:example-2:First",
+      "kind": "value",
+      "answer": "y = 6/x (xy = 6)"
+     },
+     {
+      "ref": "pp3u2-3:example-2:Second",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u2-3:example-3:First",
+      "kind": "explanation",
+      "answer": "Direct variation: $v = 9.8t$ so $v \\propto t$, with constant 9.8."
+     },
+     {
+      "ref": "pp3u2-3:example-3:Second A",
+      "kind": "value",
+      "answer": "19.6 m/sec when t = 2; 39.2 m/sec when t = 4"
+     },
+     {
+      "ref": "pp3u2-3:example-3:Second B",
+      "kind": "value",
+      "answer": "2.5"
+     },
+     {
+      "ref": "pp3u2-3:example-4",
+      "kind": "value",
+      "answer": "12"
+     }
+    ]
+   }
+  }
+ ]
+}

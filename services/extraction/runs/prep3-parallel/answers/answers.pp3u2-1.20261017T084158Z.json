@@ -1,0 +1,122 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "b9eee0000a1d8620084f5d3ecb0f5e97aea56a99fe7c51a5691353f377774d99",
+  "generated_sha256": "16aaefd318053c638d353248cbe7b5167a6138f830c6383ee33be784e31a7463",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u2-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u2-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Yes, the ratio is changed (in general): for example 2/3 ≠ 3/4 when 1 is added to each term.",
+      "solution": [
+       "Take the ratio $\\frac{2}{3}$ and add the same number, for example 1, to each term.",
+       "$\\frac{2+1}{3+1}=\\frac{3}{4}$.",
+       "$\\frac{3}{4}\\neq\\frac{2}{3}$, because $3\\times3=9$ but $2\\times4=8$.",
+       "So adding a real number to both terms changes the ratio: $\\frac{2}{3}\\neq\\frac{2+1}{3+1}$."
+      ],
+      "grounded_in": [
+       "pp3u2-1:definition-1",
+       "pp3u2-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u2-1:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "No, a and b are not necessarily 3 and 5; they only have the same ratio 3:5, e.g. a = 6, b = 10.",
+      "solution": [
+       "$\\frac{a}{b}=\\frac{3}{5}$ says that a to b is the ratio 3 to 5.",
+       "Take a = 6 and b = 10: $\\frac{6}{10}=\\frac{3}{5}$, but a ≠ 3 and b ≠ 5.",
+       "So a and b can be other values with the same ratio, such as 6 and 10 or 9 and 15.",
+       "Therefore a = 3 and b = 5 is not necessarily true."
+      ],
+      "grounded_in": [
+       "pp3u2-1:definition-1",
+       "pp3u2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u2-1:drill-1",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "Let the positive number be x, so its square is $x^2$.",
+       "$\\frac{x^2+5}{x^2+11}=\\frac{3}{5}$",
+       "$5(x^2+5)=3(x^2+11)$",
+       "$5x^2+25=3x^2+33$",
+       "$5x^2-3x^2=33-25$",
+       "$2x^2=8$, so $x^2=4$",
+       "x is positive, so x = 2.",
+       "The number is 2."
+      ],
+      "grounded_in": [
+       "pp3u2-1:example-1",
+       "pp3u2-1:definition-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "No, in general the ratio changes. For example, adding 1 gives $\\frac{2+1}{3+1}=\\frac{3}{4}\\neq\\frac{2}{3}$, so $\\frac{2}{3}\\neq\\frac{2+1}{3+1}$."
+     },
+     {
+      "ref": "pp3u2-1:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "No, not necessarily. a and b only have to be in the ratio 3:5, so $a=3k$ and $b=5k$ for any non-zero k (e.g. a=6, b=10). a=3 and b=5 is just one possibility."
+     },
+     {
+      "ref": "pp3u2-1:drill-1",
+      "kind": "value",
+      "answer": "2"
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u2-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u2-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "No, the ratio is not changed: 3/5 = (3×2)/(5×2) = 6/10 (any fixed non-zero number can fill the blanks).",
+      "solution": [
+       "Choose a fixed number that is not zero, for example 2.",
+       "Multiply both terms by it: 3×2 = 6 and 5×2 = 10.",
+       "So $\\frac{3\\times 2}{5\\times 2} = \\frac{6}{10}$.",
+       "$\\frac{6}{10}$ simplifies to $\\frac{3}{5}$, so the two ratios are equal.",
+       "The ratio is not changed. Fill both blanks with the same non-zero number, e.g. 2, and use = in place of ?."
+      ],
+      "grounded_in": [
+       "pp3u2-1:objective-2",
+       "pp3u2-1:definition-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "No, the ratio is not changed. For any non-zero number $k$: $\\frac{3}{5} = \\frac{3\\times k}{5\\times k}$, e.g. $\\frac{3}{5} = \\frac{3\\times 2}{5\\times 2} = \\frac{6}{10}$ (the '?' becomes '=')."
+     }
+    ]
+   }
+  }
+ ]
+}

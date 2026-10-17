@@ -1,0 +1,452 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u2-2",
+  "source": "book-records/prep3-parallel/pp3u2-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-17",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 11,
+      "cost_usd": 0.2619,
+      "calls": [
+        {
+          "call": "answers.pp3u2-2",
+          "cost_usd": 0.2619,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u2-2:open-prompt-1",
+      "record_id": "pp3u2-2:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 27,
+      "question": {
+        "text": "Check the previous properties by giving numerical examples of your own",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f68ad33b3eaec0a41bee2fad02276100",
+      "kind": "explanation",
+      "answer": "Take 4/2 = 8/4 (so 4×4 = 2×8): a = 4, b = 2, c = 8, d = 4; all three properties hold.",
+      "solution": [
+        "Choose the proportion $\\frac{4}{2}=\\frac{8}{4}$, so a = 4, b = 2, c = 8, d = 4.",
+        "Property 1: m = 1/2 gives a = mc = (1/2)×8 = 4 and b = md = (1/2)×4 = 2, which is true.",
+        "Property 2: ad = 4×4 = 16 and bc = 2×8 = 16, so ad = bc.",
+        "Property 3: $\\frac{a}{c}=\\frac{4}{8}=\\frac{1}{2}$ and $\\frac{b}{d}=\\frac{2}{4}=\\frac{1}{2}$, so they are equal.",
+        "So the properties are checked with this example."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-1",
+        "pp3u2-2:rule-3",
+        "pp3u2-2:rule-4",
+        "pp3u2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "Example: $\\frac{3}{6}=\\frac{4}{8}$, so a = 3, b = 6, c = 4, d = 8. (1) With m = 3/4: $mc = \\frac34\\times4 = 3 = a$ and $md = \\frac34\\times8 = 6 = b$. (2) $ad = 3\\times8 = 24$ and $bc = 6\\times4 = 24$, so they are equal. (3) $\\frac{a}{c}=\\frac{3}{4}$ and $\\frac{b}{d}=\\frac{6}{8}=\\frac{3}{4}$, so they are equal. Conversely, since $ad = bc$, we get $\\frac{a}{b}=\\frac{c}{d}$ and $\\frac{a}{c}=\\frac{b}{d}$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:exercise-1:first",
+      "record_id": "pp3u2-2:exercise-1",
+      "part": "first",
+      "type": "exercise",
+      "page": 27,
+      "question": {
+        "text": "Check the proporties in the following numeric example: You know that: 4 × 8 = 2 × 16, then: 4/2 = ..... / ..... , 4/16 = ..... / .....",
+        "stem": "$\\frac{4}{2}=\\frac{....}{....}$",
+        "notes": "Blank fractions to complete; part labels are added, not printed."
+      },
+      "needs_page": true,
+      "question_fingerprint": "11d19dd6f4283b9fe1459c317e6ce42c",
+      "kind": "value",
+      "answer": "4/2 = 16/8",
+      "solution": [
+        "From 4 × 8 = 2 × 16, take a = 4, d = 8, b = 2, c = 16, so ad = bc.",
+        "By the second property, ad = bc gives $\\frac{a}{b}=\\frac{c}{d}$.",
+        "So $\\frac{4}{2}=\\frac{16}{8}$.",
+        "Check: 4/2 = 2 and 16/8 = 2.",
+        "The blanks are 16 and 8."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-6",
+        "pp3u2-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "16/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:exercise-1:second",
+      "record_id": "pp3u2-2:exercise-1",
+      "part": "second",
+      "type": "exercise",
+      "page": 27,
+      "question": {
+        "text": "Check the proporties in the following numeric example: You know that: 4 × 8 = 2 × 16, then: 4/2 = ..... / ..... , 4/16 = ..... / .....",
+        "stem": "$\\frac{4}{16}=\\frac{....}{....}$",
+        "notes": "Blank fractions to complete; part labels are added, not printed."
+      },
+      "needs_page": true,
+      "question_fingerprint": "5bc2bc412be11d1728e7eb98fdf11283",
+      "kind": "value",
+      "answer": "4/16 = 2/8",
+      "solution": [
+        "From 4 × 8 = 2 × 16, take a = 4, d = 8, b = 2, c = 16, so ad = bc.",
+        "By the second property, ad = bc gives $\\frac{a}{c}=\\frac{b}{d}$.",
+        "So $\\frac{4}{16}=\\frac{2}{8}$.",
+        "Check: 4/16 = 1/4 and 2/8 = 1/4.",
+        "The blanks are 2 and 8."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-6",
+        "pp3u2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "2/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-1:A",
+      "record_id": "pp3u2-2:drill-1",
+      "part": "A",
+      "type": "exercise",
+      "page": 29,
+      "question": {
+        "text": "Drill question 1.",
+        "stem": "Find the second proportional of the numbers $2, \\ldots\\ldots, 4, 6$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "289fe5e8568cf208b01ae82586a280ea",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+        "Let the second proportional be $x$, so $\\frac{2}{x}=\\frac{4}{6}$.",
+        "Product of extremes = product of means: $4\\times x=2\\times 6$.",
+        "$x=\\frac{12}{4}=3$.",
+        "The second proportional is 3."
+      ],
+      "grounded_in": [
+        "pp3u2-2:definition-2",
+        "pp3u2-2:rule-4",
+        "pp3u2-2:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-1:B",
+      "record_id": "pp3u2-2:drill-1",
+      "part": "B",
+      "type": "exercise",
+      "page": 29,
+      "question": {
+        "text": "Drill question 1.",
+        "stem": "Find the third proportional of the numbers $8, 6, \\ldots\\ldots, 12$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3a80b32b5fe32e5a8f0dfe1b29c7d043",
+      "kind": "value",
+      "answer": "16",
+      "solution": [
+        "Let the third proportional be $x$, so $\\frac{8}{6}=\\frac{x}{12}$.",
+        "Product of extremes = product of means: $8\\times 12=6\\times x$.",
+        "$x=\\frac{96}{6}=16$.",
+        "The third proportional is 16."
+      ],
+      "grounded_in": [
+        "pp3u2-2:definition-2",
+        "pp3u2-2:rule-4",
+        "pp3u2-2:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-2",
+      "record_id": "pp3u2-2:drill-2",
+      "part": null,
+      "type": "exercise",
+      "page": 29,
+      "question": {
+        "text": "If $\\frac{a}{b}=\\frac{3}{5}$ find the value of $7a+9b : 4a+2b$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c9ab5e70d2cc5237df50074ade897228",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+        "Since $\\frac{a}{b}=\\frac{3}{5}$, let $a=3m$, $b=5m$ with $m\\neq 0$.",
+        "$\\frac{7a+9b}{4a+2b}=\\frac{21m+45m}{12m+10m}$.",
+        "$=\\frac{66m}{22m}=3$.",
+        "The value of the ratio is 3."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-3",
+        "pp3u2-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3 (i.e. 3:1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-3:First",
+      "record_id": "pp3u2-2:drill-3",
+      "part": "First",
+      "type": "exercise",
+      "page": 30,
+      "question": {
+        "text": "If $\\frac{a}{b}=\\frac{c}{d}$ prove that:",
+        "stem": "$\\frac{a+b}{b}=\\frac{c+d}{d}$",
+        "notes": "Second is printed as ': =' with a stray blue '=' before the fraction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "5f9fa4784a70f2c513cde4999438a115",
+      "kind": "explanation",
+      "answer": "Both sides equal $m+1$, so $\\frac{a+b}{b}=\\frac{c+d}{d}$.",
+      "solution": [
+        "Let $\\frac{a}{b}=\\frac{c}{d}=m$, $m\\neq 0$.",
+        "Then $a=bm$ and $c=dm$.",
+        "L.H.S $=\\frac{bm+b}{b}=\\frac{b(m+1)}{b}=m+1$.",
+        "R.H.S $=\\frac{dm+d}{d}=\\frac{d(m+1)}{d}=m+1$.",
+        "L.H.S = R.H.S, so $\\frac{a+b}{b}=\\frac{c+d}{d}$."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-3",
+        "pp3u2-2:example-4",
+        "pp3u2-2:example-6"
+      ],
+      "checks": {
+        "resolve_answer": "Let a/b = c/d = m, so a = bm, c = dm. Then (a+b)/b = (bm+b)/b = m+1 and (c+d)/d = (dm+d)/d = m+1. Hence (a+b)/b = (c+d)/d.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-3:Second",
+      "record_id": "pp3u2-2:drill-3",
+      "part": "Second",
+      "type": "exercise",
+      "page": 30,
+      "question": {
+        "text": "If $\\frac{a}{b}=\\frac{c}{d}$ prove that:",
+        "stem": "$\\frac{a-b}{b}=\\frac{c-d}{d}$",
+        "notes": "Second is printed as ': =' with a stray blue '=' before the fraction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "e90b4a97100614ce5e1a5557db3a1320",
+      "kind": "explanation",
+      "answer": "Both sides equal $m-1$, so $\\frac{a-b}{b}=\\frac{c-d}{d}$.",
+      "solution": [
+        "Let $\\frac{a}{b}=\\frac{c}{d}=m$, $m\\neq 0$.",
+        "Then $a=bm$ and $c=dm$.",
+        "L.H.S $=\\frac{bm-b}{b}=\\frac{b(m-1)}{b}=m-1$.",
+        "R.H.S $=\\frac{dm-d}{d}=\\frac{d(m-1)}{d}=m-1$.",
+        "L.H.S = R.H.S, so $\\frac{a-b}{b}=\\frac{c-d}{d}$."
+      ],
+      "grounded_in": [
+        "pp3u2-2:rule-3",
+        "pp3u2-2:example-4",
+        "pp3u2-2:example-6"
+      ],
+      "checks": {
+        "resolve_answer": "Let a/b = c/d = m, so a = bm, c = dm. Then (a-b)/b = (bm-b)/b = m-1 and (c-d)/d = (dm-d)/d = m-1. Hence (a-b)/b = (c-d)/d.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:open-prompt-2",
+      "record_id": "pp3u2-2:open-prompt-2",
+      "part": null,
+      "type": "open_prompt",
+      "page": 30,
+      "question": {
+        "text": "Is there a relation between $(6)^2$ and the product of $2\\times 18$?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7d1415d0d675888c90b1d9e15b76ad74",
+      "kind": "explanation",
+      "answer": "Yes, $(6)^2=2\\times 18=36$.",
+      "solution": [
+        "$(6)^2=36$.",
+        "$2\\times 18=36$.",
+        "They are equal, so the square of the middle number equals the product of the other two ($b^2=ac$)."
+      ],
+      "grounded_in": [
+        "pp3u2-2:definition-4"
+      ],
+      "checks": {
+        "resolve_answer": "Yes, $(6)^2 = 36 = 2\\times 18$, so the square of the middle number equals the product of the other two.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:open-prompt-3",
+      "record_id": "pp3u2-2:open-prompt-3",
+      "part": null,
+      "type": "open_prompt",
+      "page": 30,
+      "question": {
+        "text": "If you replace the number 6 with $(-6)$ is there a relation between $(-6)^2$ and the product of $2\\times 18$?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4c8e5adf5de3aebe55a7cb0c5c878861",
+      "kind": "explanation",
+      "answer": "Yes, $(-6)^2=2\\times 18=36$.",
+      "solution": [
+        "$(-6)^2=36$.",
+        "$2\\times 18=36$.",
+        "They are equal, so $b^2=ac$ also holds for $b=-6$, which matches $b=\\pm\\sqrt{ac}$."
+      ],
+      "grounded_in": [
+        "pp3u2-2:definition-4",
+        "pp3u2-2:example-5"
+      ],
+      "checks": {
+        "resolve_answer": "Yes, $(-6)^2 = 36 = 2\\times 18$, so the relation still holds (the middle proportional can be $\\pm 6$).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u2-2:drill-4",
+      "record_id": "pp3u2-2:drill-4",
+      "part": null,
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "If a, b, c and d are in continued proportional. Prove that: $\\frac{a-2b}{b-2c}=\\frac{3b+4c}{3c+4d}$. Hint: Let $\\frac{a}{b}=\\frac{b}{c}=\\frac{c}{d}=m$, then $c = dm$, $b = dm^2$, $a = dm^3$, complete",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "97169711e81cbd1e0a72c8eb93994c01",
+      "kind": "explanation",
+      "answer": "Both sides equal $m$, so $\\frac{a-2b}{b-2c}=\\frac{3b+4c}{3c+4d}$.",
+      "solution": [
+        "Let $\\frac{a}{b}=\\frac{b}{c}=\\frac{c}{d}=m$.",
+        "Then $c=dm$, $b=cm=dm^2$, $a=bm=dm^3$.",
+        "L.H.S $=\\frac{dm^3-2dm^2}{dm^2-2dm}=\\frac{dm^2(m-2)}{dm(m-2)}=m$.",
+        "R.H.S $=\\frac{3dm^2+4dm}{3dm+4d}=\\frac{dm(3m+4)}{d(3m+4)}=m$.",
+        "L.H.S = R.H.S, so the relation is proved."
+      ],
+      "grounded_in": [
+        "pp3u2-2:definition-4",
+        "pp3u2-2:example-6"
+      ],
+      "checks": {
+        "resolve_answer": "Let a/b = b/c = c/d = m, so c = dm, b = dm^2, a = dm^3. Then (a-2b)/(b-2c) = dm^2(m-2)/(dm(m-2)) = m, and (3b+4c)/(3c+4d) = dm(3m+4)/(d(3m+4)) = m. Hence (a-2b)/(b-2c) = (3b+4c)/(3c+4d).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-17T08:42:22+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

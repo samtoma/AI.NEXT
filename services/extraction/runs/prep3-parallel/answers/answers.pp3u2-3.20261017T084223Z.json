@@ -1,0 +1,186 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "186ede2d7e8c20a08a25e9a539d4c78e25d963b8edefd4d68484db60021f3087",
+  "generated_sha256": "f73b9457049f9f93ffcb760cacb30d6aa4787f83155305f4f74131e321523c79",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u2-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u2-3:exercise-1:A",
+      "kind": "value",
+      "answer": "m = x y",
+      "solution": [
+       "The area of a rectangle is the product of its two dimensions.",
+       "One dimension is x and the other is y, and the area is m.",
+       "So m = x y."
+      ],
+      "grounded_in": [
+       "pp3u2-3:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u2-3:exercise-3:C",
+      "kind": "explanation",
+      "answer": "In every case x y = 30, so the product is constant and y = 30/x (y varies inversely with x).",
+      "solution": [
+       "The area is 30, so y = 30/x. This gives y = 10, 6, 5, 3 for x = 3, 5, 6, 10.",
+       "x = 3, y = 10: x y = 3 × 10 = 30.",
+       "x = 5, y = 6: x y = 5 × 6 = 30.",
+       "x = 6, y = 5: x y = 6 × 5 = 30.",
+       "x = 10, y = 3: x y = 10 × 3 = 30.",
+       "We notice that x y is always 30, a constant, so y ∝ 1/x."
+      ],
+      "grounded_in": [
+       "pp3u2-3:rule-5",
+       "pp3u2-3:definition-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-3:exercise-1:A",
+      "kind": "value",
+      "answer": "m = x y (area = x × y), so y = m/x"
+     },
+     {
+      "ref": "pp3u2-3:exercise-3:C",
+      "kind": "value",
+      "answer": "For x = 6, y = 5: xy = 30. I assumed the third table column is part C. The same product 30 comes out in every case, so xy is constant (xy = 30)."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u2-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:A",
+      "kind": "drawing",
+      "answer": "Plot (1, 15), (2, 30), (3, 45), (4, 60) and draw a straight line through them starting at the origin (0, 0).",
+      "solution": [
+       "Draw the horizontal axis for time t in seconds, marked 1, 2, 3, 4.",
+       "Draw the vertical axis for distance d in meters, marked 15, 30, 45, 60.",
+       "Plot the points from the table: (1, 15), (2, 30), (3, 45), (4, 60).",
+       "Draw a straight line through the points, starting at the origin (0, 0), with an arrow at the upper end.",
+       "The graph is a straight line rising from the origin."
+      ],
+      "grounded_in": [
+       "pp3u2-3:rule-2",
+       "pp3u2-3:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:B",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "The relation is d = 15t, which is a direct variation d ∝ t.",
+       "A direct variation is represented by a straight line passing through the origin point.",
+       "When t = 0, d = 15 × 0 = 0, so the point (0, 0) is on the line.",
+       "Yes, the graph passes through the origin (0, 0)."
+      ],
+      "grounded_in": [
+       "pp3u2-3:rule-2",
+       "pp3u2-3:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:C",
+      "kind": "explanation",
+      "answer": "d/t = 15 in every case, so d/t is constant and d varies directly with t (d ∝ t).",
+      "solution": [
+       "For t = 1, d = 15: d/t = 15/1 = 15.",
+       "For t = 2, d = 30: d/t = 30/2 = 15.",
+       "For t = 3, d = 45: d/t = 45/3 = 15.",
+       "For t = 4, d = 60: d/t = 60/4 = 15.",
+       "d/t is the same constant, 15, in each case, so d = 15t and d ∝ t."
+      ],
+      "grounded_in": [
+       "pp3u2-3:definition-1",
+       "pp3u2-3:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u2-3:exercise-2:B",
+      "kind": "value",
+      "answer": "x = 3, y = 10; x = 5, y = 6; x = 6, y = 5; x = 10, y = 3",
+      "solution": [
+       "The area is constant, so xy = 30 and y = 30/x.",
+       "When x = 3: y = 30/3 = 10.",
+       "When x = 5: y = 30/5 = 6.",
+       "When x = 6: y = 30/6 = 5.",
+       "When x = 10: y = 30/10 = 3.",
+       "The table is y = 10, 6, 5, 3."
+      ],
+      "grounded_in": [
+       "pp3u2-3:rule-5",
+       "pp3u2-3:definition-2",
+       "pp3u2-3:rule-9"
+      ]
+     },
+     {
+      "ref": "pp3u2-3:drill-1",
+      "kind": "explanation",
+      "answer": "First table: inverse variation (xy = 60 always); second table: direct variation (y/x = 4.5 always); third table: direct variation (y/x = 1.8 always); fourth table: neither (y/x is not constant and xy is not constant).",
+      "solution": [
+       "First table: xy = 3×20 = 60, 5×12 = 60, 4×15 = 60, 6×10 = 60. xy is the same constant 60, so it is an inverse variation, y = 60/x.",
+       "Second table: y/x = 9/2 = 4.5, 18/4 = 4.5, 54/12 = 4.5, 72/16 = 4.5. y/x is constant, so it is a direct variation, y = 4.5x.",
+       "Third table: y/x = 9/5 = 1.8, 18/10 = 1.8, 27/15 = 1.8, 45/25 = 1.8. y/x is constant, so it is a direct variation, y = 1.8x.",
+       "Fourth table: xy = 3×6 = 18, (-2)×(-9) = 18, (-18)×1 = -18, 9×(-2) = -18. xy is not constant.",
+       "Fourth table: y/x = 6/3 = 2, but (-9)/(-2) = 4.5. y/x is not constant either.",
+       "So the fourth table is neither a direct nor an inverse variation."
+      ],
+      "grounded_in": [
+       "pp3u2-3:definition-1",
+       "pp3u2-3:definition-2",
+       "pp3u2-3:rule-3",
+       "pp3u2-3:rule-9"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:A",
+      "kind": "drawing",
+      "answer": "A straight line through the origin passing through (1,15), (2,30), (3,45), (4,60), with t (seconds) on the horizontal axis and d (meters) on the vertical axis."
+     },
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:B",
+      "kind": "explanation",
+      "answer": "Yes, the line passes through the origin (0, 0), because $d = 15t$ gives $d = 0$ when $t = 0$."
+     },
+     {
+      "ref": "pp3u2-3:think-and-discuss-1:C",
+      "kind": "explanation",
+      "answer": "$\\frac{d}{t} = 15$ in every case (15/1, 30/2, 45/3, 60/4). The ratio is constant, so $d \\propto t$ (direct variation, $d = 15t$)."
+     },
+     {
+      "ref": "pp3u2-3:exercise-2:B",
+      "kind": "value",
+      "answer": "y = 10, 6, 5, 3 (for x = 3, 5, 6, 10 respectively)"
+     },
+     {
+      "ref": "pp3u2-3:drill-1",
+      "kind": "explanation",
+      "answer": "First table: inverse variation, because $xy = 60$ is constant in every row (3×20, 5×12, 4×15, 6×10). Second table: direct variation, because $y/x = 4.5$ is constant in every row. Third table: direct variation, because $y/x = 9/5$ is constant in every row. Fourth table: inverse variation, because $xy = 18$ is constant in every row (3×6 = 18, (-2)×(-9) = 18, (-18)×1 = -18)."
+     }
+    ]
+   }
+  }
+ ]
+}
