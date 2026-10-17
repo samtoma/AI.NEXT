@@ -46,11 +46,11 @@ import type { CurriculumId } from "./curricula.ts";
 /** Prep-3 Mathematics, National (the book the product launched with). */
 export const PREP3_MATH_EN = "course:prep3-math-en";
 /**
- * Prep-3 Mathematics, National — the SAME book ingested again by the book-record
- * pipeline (book record v2: page images, crops, S4, the review tool), as its own
- * course beside the launch course so the two can be compared (Tamer, 2026-10-16;
- * the name is the one proposed to Samuel and may still change). Hidden until an
- * operator makes it live for a grade on the console (no row is hidden, FR-4002).
+ * Prep-3 Mathematics, ingested from its PDF by the book-record pipeline (book record
+ * v2: page images, crops, S4, the review tool) as a book and course of its own,
+ * unrelated to any live course (Tamer, 2026-10-17; the name is the one proposed to
+ * Samuel and may still change). Hidden until an operator makes it live for a grade
+ * on the console (no row is hidden, FR-4002).
  */
 export const PREP3_PARALLEL_MATH_EN = "course:prep3-parallel-math-en";
 /** Prep-3 Social Studies, National. */
