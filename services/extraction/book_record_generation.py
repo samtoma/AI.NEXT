@@ -53,6 +53,39 @@ def latest(book: str, folder: str, prefix: str) -> list[Path]:
     return sorted((HERE / "runs" / book / folder).glob(f"{prefix}.*Z.json"))
 
 
+def covering(runs: list[Path], slugs: list[str]) -> list[Path]:
+    """The runs made for these lessons: a book's runs sit side by side, one set per unit, and each names its objectives."""
+    marks = [f'"lo:{s}-' for s in slugs]
+    return [r for r in runs if any(m in r.read_text() for m in marks)]
+
+
+def unit_dir(book: str, src: Path, slugs: list[str], name: str) -> Path:
+    """The unit's own files of a book-wide folder (families, widget templates: named <lesson>-<objective>--<id>.json), linked into a
+    work folder, so a pass that reads a whole folder sees this unit only and never re-grades or re-writes another's."""
+    d = HERE / "work" / book / "unit-view" / name
+    d.mkdir(parents=True, exist_ok=True)
+    for f in d.iterdir():
+        f.unlink()
+    for f in sorted(src.glob("*.json")) if src.is_dir() else []:
+        if any(f.name.startswith(f"{s}-") for s in slugs):   # <lesson>-<objective>--<id>.json
+            (d / f.name).symlink_to(f.resolve())
+    return d
+
+
+def merge_unit(src: Path, dst: Path, slugs: list[str]) -> int:
+    """A unit's finished file into the book's: the other units' rows kept, this unit's replaced."""
+    new = json.loads(src.read_text())
+    old = json.loads(dst.read_text()) if dst.exists() else {}
+    n = 0
+    for key in ("questions", "misconceptions"):
+        if key in new or key in old:
+            mine = new.get(key) or []
+            n += len(mine)
+            new[key] = [r for r in old.get(key) or [] if not in_lessons(r.get("lo_id"), slugs)] + mine
+    dst.write_text(json.dumps(new, ensure_ascii=False, indent=2) + "\n")
+    return n
+
+
 def finish(book: str, slugs: list[str], dsn: str | None) -> int:
     """Samuel's runbook §4 finishing passes, after S5 final, into teaching/<book>/generated/ (what compile reads):
       1. the misconception catalogue from S5's final run (assemble_misconceptions.py --catalogue-only: pass 1);
@@ -64,10 +97,16 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
     view = book_view(book, slugs)
     gdir = HERE / "teaching" / book / "generated"
     gdir.mkdir(parents=True, exist_ok=True)
-    final = latest(book, "misconceptions", "s5-final")
+    final = covering(latest(book, "misconceptions", "s5-final"), slugs)
     if not final:
-        raise SystemExit("no S5 final run: run `s5 … --stage final` first")
-    cat, gq_out, wq_out = gdir / "misconceptions.json", gdir / "generated-questions.json", gdir / "widget-questions.json"
+        raise SystemExit(f"no S5 final run for {slugs}: run `s5 … --stage final` first")
+    # the passes write this unit's files in a work folder; they are merged into the book's after (other units kept)
+    wout = HERE / "work" / book / "unit-view" / "generated"
+    wout.mkdir(parents=True, exist_ok=True)
+    for f in wout.glob("*.json"):
+        f.unlink()
+    cat, gq_out, wq_out = wout / "misconceptions.json", wout / "generated-questions.json", wout / "widget-questions.json"
+    fam_dir = unit_dir(book, families_dir(book), slugs, "families")
 
     def run(*argv: str) -> None:
         p = subprocess.run(["uv", "run", *argv], cwd=HERE, text=True, capture_output=True)
@@ -76,22 +115,24 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
             raise SystemExit(f"{argv[0]} failed ({p.returncode})")
     run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat), "--catalogue-only")
     grades = latest(book, "families", "s6-grade")
-    fams = [f for f in families_dir(book).glob("*.json") if not f.name.startswith("_held--")]
+    fams = list(fam_dir.glob("*.json"))
     bundles = []
     if fams and grades:
-        run("generate_questions.py", "--families", str(families_dir(book)), "--book", str(view), "--catalogue", str(cat),
+        run("generate_questions.py", "--families", str(fam_dir), "--book", str(view), "--catalogue", str(cat),
             "--grades", *map(str, grades), "--out", str(gq_out))
         bundles.append(gq_out)
-    wdir = HERE / "teaching" / book / "widgets"
+    wdir = unit_dir(book, widgets_dir(book), slugs, "widgets")
     verdicts = latest(book, "widgets", "s7-verify")
-    if wdir.is_dir() and any(not f.name.startswith("_held--") for f in wdir.glob("*.json")) and verdicts and dsn:
+    if any(wdir.glob("*.json")) and verdicts and dsn:
         run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn,
             "--verdicts", *map(str, verdicts), "--gaps", *map(str, latest(book, "widgets", "s7-author")), "--out", str(wq_out))
         bundles.append(wq_out)
     if bundles:
         run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat),
             *[x for b in bundles for x in ("--bundle", str(b))])
-    print(f"finished: {cat.relative_to(HERE)}" + "".join(f", {b.relative_to(HERE)}" for b in bundles), file=sys.stderr)
+    for f in [cat, *bundles]:
+        n = merge_unit(f, gdir / f.name, slugs)
+        print(f"finished: {n} row(s) of {slugs[0]}… into {(gdir / f.name).relative_to(HERE)}", file=sys.stderr)
     return 0
 
 
@@ -291,10 +332,15 @@ def main(argv: list[str]) -> int:
         wdir.mkdir(parents=True, exist_ok=True)
         mode = a.cmd.split("-")[1]
         wargs = runs / f"s7-{mode}.args.json"
-        common = ["--templates", str(wdir), "--book", str(view), "--dsn", a.dsn, "--catalogue", str(a.catalogue)]
+        common = ["--templates", str(wdir if mode == "author" else unit_dir(a.book, wdir, a.lessons, "widgets")),
+                  "--book", str(view), "--dsn", a.dsn, "--catalogue", str(a.catalogue)]
         if mode == "author":
             gw(*common, "--only-lessons", ",".join(a.lessons), "--author-args", str(wargs))
         else:
+            if not any(unit_dir(a.book, wdir, a.lessons, "widgets").glob("*.json")):
+                print(f"S7 verify: no widget template for {a.lessons} (the author's gaps go to Samuel): nothing to verify",
+                      file=sys.stderr)
+                return 0
             gw(*common, "--verify-args", str(wargs))
         copy = EW.default_out(a.book, "widgets", f"s7-{mode}.bookrecord")
         print(EW.summary(EW.write(HERE / "runbook" / "widgets.workflow.js", json.loads(wargs.read_text()), copy)), file=sys.stderr)
@@ -324,14 +370,14 @@ def main(argv: list[str]) -> int:
         run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-author", a.book, "families", stage="S6")
         written = fanout.write_specs(run, fam, view)
         print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
-        gq("--families", str(fam), "--book", str(view), "--check")
+        gq("--families", str(unit_dir(a.book, fam, a.lessons, "families")), "--book", str(view), "--check")
         return 0
     if a.cmd == "s6-grade":
         view = book_view(a.book, a.lessons)
         runs = HERE / "runs" / a.book / "families"
         runs.mkdir(parents=True, exist_ok=True)
         gargs = runs / "s6-grade.args.json"
-        gq("--families", str(families_dir(a.book)), "--book", str(view), "--grading-set", str(runs / "grading-set.json"),
+        gq("--families", str(unit_dir(a.book, families_dir(a.book), a.lessons, "families")), "--book", str(view), "--grading-set", str(runs / "grading-set.json"),
            "--grade-args", str(gargs), "--s5-distractors", str(runs / "s5-distractors.json"))   # S5 final reads these
         copy = EW.default_out(a.book, "families", "s6-grade.bookrecord")
         print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", json.loads(gargs.read_text()), copy)), file=sys.stderr)

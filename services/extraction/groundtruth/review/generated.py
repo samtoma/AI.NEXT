@@ -20,8 +20,10 @@ Decisions are appended to `services/extraction/reviews/<book>/generated-content.
 (format `ainext.generated-review/1`): approve, fix requested (with a note and a correction), or reject. Each
 decision carries the item's fingerprint, so an item that changes after it was decided comes back for review
 (a figure S4 redraws included; S4's run record, `made`, is not part of a figure's fingerprint).
-The admin console's own backlog is untouched; nothing here changes what students see until a pipeline step
-reads these decisions. Standard library only.
+compile_book_records.py applies them to a book's own generated rows (GeneratedReview): a rejected question is left
+out, a fix request holds it, and both, with an approval, are review stamps written at load (apply_review_verdicts.py
+--book-reviews); a misconception or widget mapping rejected or sent for a fix is left out (its links with it), an
+approved one listed. The admin console's own backlog is untouched. Standard library only.
 """
 import hashlib
 import json

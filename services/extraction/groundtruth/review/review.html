@@ -323,6 +323,7 @@ function renderDetail() {
       ${isExtraction() && hasMisprints(r) ? '<div class="muted">The extractor proposes the misprint(s) below. Confirming this record confirms them; if one is wrong, edit or flag the record.</div>' : ""}
       <dl style="margin-top:12px">${fields.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${value(k, x, ids)}</dd>`).join("")}${r.rows ? `<dt>table</dt><dd>${tableBlock(r)}</dd>` : ""}</dl>
       ${misprintBlock(r.misprints)}
+      <div id="bkrec"></div>
       <div class="who">
         ${r.provenance?.by ? `<div class="muted">Drafted by ${esc(r.provenance.by)}</div>` : ""}
         ${v.status === "confirmed" ? `<b>Confirmed</b> by ${esc(v.by)} on ${esc(v.at)}` : v.status === "flagged" ? `<div class="warn"><b>Flagged</b> by ${esc(v.by)} on ${esc(v.at)}: ${esc(v.reason || "")}</div>` : "Not reviewed yet"}
@@ -353,6 +354,33 @@ function renderDetail() {
   $("#fcancel").onclick = () => $("#fform").classList.remove("open");
   $("#fform").onsubmit = (e) => { e.preventDefault(); flag($("#freason").value.trim()); };
   bindFileCard();
+  statementDiff(r);
+}
+
+/* a corrected statement reaches the tutor only through the book record (what compile reads): show what it still says */
+const STATEMENT_TYPES = new Set(["definition", "rule", "caution", "convention", "method", "key_term", "prior_knowledge"]);
+async function statementDiff(r) {
+  const el = $("#bkrec");
+  if (!el || !extMode || !lessonRow?.gt || !STATEMENT_TYPES.has(r.type) || !edited(r)) return;
+  const q = `ext=${encodeURIComponent(lessonRow.ext)}&gt=${encodeURIComponent(lessonRow.gt)}&id=${encodeURIComponent(r.id)}`;
+  let d;
+  try { d = await getJSON(`/api/statement-diff?${q}`); } catch (e) { el.innerHTML = `<div class="muted" style="margin-top:8px">Book record: ${esc(e.message || e)}</div>`; return; }
+  if (records[idx]?.r !== r) return;   // moved on while it loaded
+  const fs = Object.entries(d.fields || {});
+  if (!fs.length) { el.innerHTML = `<div class="muted" style="margin-top:8px">The book record (what the tutor is taught from) says the same.</div>`; return; }
+  el.innerHTML = `<div class="warn" style="margin-top:12px"><span class="label">The book record still says</span>
+      ${fs.map(([k, v]) => `<div><b>${esc(k)}</b>: ${v.book_record == null ? '<span class="muted">(nothing)</span>' : esc(typeof v.book_record === "string" ? v.book_record : JSON.stringify(v.book_record))}</div>`).join("")}
+      <div class="muted" style="margin-top:4px">Your label corrects the scoring copy only. Compile, and so the tutor, reads the book record (${esc(d.record_id)}).</div>
+      <div class="actions"><button class="confirm" id="bapply" ${meNow() ? "" : "disabled"}>Apply to the book record</button><span id="bapplied" class="muted"></span></div></div>`;
+  renderMathInElement(el, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#bapply").onclick = async () => {
+    $("#bapply").disabled = true;
+    const res = await fetch("/api/statement-apply", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ext: lessonRow.ext, gt: lessonRow.gt, id: r.id, by: meNow() }) });
+    const out = await res.json();
+    if (!res.ok) { $("#bapplied").textContent = out.error || "failed"; $("#bapply").disabled = false; return; }
+    el.innerHTML = `<div class="muted" style="margin-top:8px">Applied to the book record (${esc(out.fields.join(", ") || "nothing differed")}). Refresh the book (home page) to recompile.</div>`;
+  };
 }
 
 /* ---------- edit view ---------- */
@@ -704,8 +732,22 @@ function show(v) {
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
 
+// the home page's book: every count is that book's, and each task opens on it ("all": every book, aggregated)
+const homeBook = () => store.get("rv-home-book") || "all";
+function openOnHomeBook(lessons) {
+  const b = homeBook();
+  if (b === "all") return;
+  for (const k of ["rv-abook", "rv-tbook", "rv-mbook", "rv-g2book", "rv-gbook", "rv-obook"]) store.set(k, b);
+  const last = store.get("rv-lesson") || "";
+  if (!last.startsWith(b + "|")) { const l = lessons.find((x) => x.book === b); if (l) store.set("rv-lesson", `${l.book}|${l.slug}`); }
+}
 async function renderHome() {
-  const [ls, ms, gbooks, abooks, tbooks, obooks, mbooks, g2books] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books"), getJSON("/api/g2/books")]);
+  const [ls0, ms0, gb, ab, tb, ob, mb, g2b] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books"), getJSON("/api/g2/books")]);
+  const allBooks = [...new Set([...ls0.map((l) => l.book), ...ms0.map((m) => m.book), ...gb, ...ab, ...tb, ...ob, ...mb, ...g2b])].sort();
+  let hb = homeBook();
+  if (hb !== "all" && !allBooks.includes(hb)) { hb = "all"; store.set("rv-home-book", hb); }
+  const mine = (b) => hb === "all" || b === hb;
+  const [ls, ms, gbooks, abooks, tbooks, obooks, mbooks, g2books] = [ls0.filter((l) => mine(l.book)), ms0.filter((m) => mine(m.book)), gb.filter(mine), ab.filter(mine), tb.filter(mine), ob.filter(mine), mb.filter(mine), g2b.filter(mine)];
   const g2s = (await Promise.all(g2books.map((b) => getJSON(`/api/g2?book=${encodeURIComponent(b)}`)))).flat();
   const g2Open = g2s.filter((x) => x.state === "open" || x.state === "changed");
   const mrs = (await Promise.all(mbooks.map((b) => getJSON(`/api/maths?book=${encodeURIComponent(b)}`)))).flat();
@@ -725,6 +767,15 @@ async function renderHome() {
   $("#home").innerHTML = `
     <h2>What do you want to work on?</h2>
     <div class="muted">One task at a time. Each task has its own list, its own buttons and its own count.</div>
+    <div class="actions" style="margin-top:12px">
+      <label>Book <select id="hbook"><option value="all">All books</option>${allBooks.map((b) => `<option ${b === hb ? "selected" : ""}>${esc(b)}</option>`).join("")}</select></label>
+      <span class="muted">${hb === "all" ? "Every book's counts, added together. Pick a book to see only its work, and to refresh it." : `Only ${esc(hb)}: every count below, and every task opens on it.`}</span>
+    </div>
+    ${hb === "all" ? "" : `<div class="group"><h3>Bring your decisions into the book</h3><div class="card" id="refresh">
+      <div>Applies your Maths reading and filing decisions to the book records, re-maps generated content, recompiles (every other decision is read there: book questions, answers, tiers, figures, generated content, statements applied to the book record), draws the review sample again and reruns the coverage audit. No model is called: it is free.</div>
+      <div class="actions"><button class="confirm" id="brefresh">Refresh ${esc(hb)}</button><span id="refreshing" class="muted"></span></div>
+      <div id="refreshout"></div>
+    </div></div>`}
     <div class="group"><h3>Book: check what the pipeline read</h3><div class="cards">
       <button class="task" id="t-label">
         <span class="t">Label extraction</span>
@@ -778,6 +829,9 @@ async function renderHome() {
         <span class="muted">${ts.filter((t) => t.status === "disagreed").length} disagreements · ${ts.filter((t) => t.state === "agreed").length} agreed · ${ts.length} questions tiered</span>
       </button>
     </div></div>`;
+  $("#hbook").onchange = () => { store.set("rv-home-book", $("#hbook").value); renderHome(); };
+  if ($("#brefresh")) $("#brefresh").onclick = () => refreshBook(hb);
+  document.querySelectorAll("#home .task").forEach((b) => b.addEventListener("click", () => openOnHomeBook(ls0), { capture: true }));
   $("#t-label").onclick = () => show("label");
   $("#t-mis").onclick = () => show("misprints");
   $("#t-gen").onclick = () => show("generated");
@@ -786,6 +840,21 @@ async function renderHome() {
   $("#t-obj").onclick = () => show("objectives");
   $("#t-mr").onclick = () => show("maths");
   $("#t-g2").onclick = () => show("g2");
+}
+
+async function refreshBook(book) {
+  $("#brefresh").disabled = true;
+  $("#refreshing").textContent = "Refreshing… (a minute or two: compile and the audits run)";
+  $("#refreshout").innerHTML = "";
+  let out;
+  try {
+    const res = await fetch("/api/refresh", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ book }) });
+    out = await res.json();
+    if (!res.ok && !out.steps) throw new Error(out.error || res.statusText);
+  } catch (e) { $("#refreshing").textContent = "Refresh failed: " + (e.message || e); $("#brefresh").disabled = false; return; }
+  $("#refreshing").textContent = out.ok ? `Refreshed ${new Date().toLocaleTimeString()} · units ${(out.units || []).join(", ")} · no model call` : `Stopped: ${out.error}`;
+  $("#refreshout").innerHTML = `<ul style="margin:8px 0 0 18px">${(out.steps || []).map((st) => `<li>${st.ok ? "✓" : "✗"} ${esc(st.step)}${st.status ? `: <b>${esc(st.status)}</b>${st.failing?.length ? ` <span class="muted">(${esc(st.failing.join(", "))})</span>` : ""}` : ""}${st.ok ? "" : `<div class="muted noformat">${esc((st.tail || []).join(" · "))}</div>`}</li>`).join("")}</ul>`;
+  $("#brefresh").disabled = false;
 }
 
 /* ---------- Label extraction ---------- */
@@ -1465,7 +1534,8 @@ async function openObjectives() {
     <span class="grow"></span>
     <span class="kbd muted">j/k move · a approve/keep · f fix · x reject/drop</span>`;
   if (!books.length) { $("#list").innerHTML = '<p class="muted" style="padding:8px">No S1 results yet. Run book_record_objectives.py (see the README).</p>'; $("#detail").innerHTML = ""; return; }
-  $("#obook").onchange = () => { $("#obook").blur(); loadObjectives(); };
+  const savedO = store.get("rv-obook"); if (savedO && books.includes(savedO)) $("#obook").value = savedO;
+  $("#obook").onchange = () => { store.set("rv-obook", $("#obook").value); $("#obook").blur(); loadObjectives(); };
   $("#okind").onchange = () => { $("#okind").blur(); oi = -1; renderObjectives(); };
   $("#oshow").onchange = () => { $("#oshow").blur(); oi = -1; renderObjectives(); };
   await loadObjectives();

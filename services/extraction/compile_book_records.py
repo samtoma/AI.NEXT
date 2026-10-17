@@ -820,6 +820,100 @@ def standalone_bundles(cfg: dict, slugs: list[str], lmap: dict, records: dict, n
     return out
 
 
+class GeneratedReview:
+    """The review tool's Generated content decisions (reviews/<book>/generated-content.json), applied to the book's
+    own generated rows as compile adds them, each only while the row is as it was decided (its fingerprint):
+      a generated or widget question: approve is a stamp; a fix request is a stamp that holds it (status review, a
+        person's hold); reject leaves it out, and is a stamp too, for a row an earlier load put in the database —
+        as Generated answers are (apply_review_verdicts.py --book-reviews);
+      a misconception: reject or a fix request leaves it out of the catalogue, and every link to it from a question
+        is dropped (the question kept); approve is listed (the catalogue has no review columns);
+      a widget mapping (a predicate → misconception claim): reject or a fix request drops that claim from its
+        widget; approve is listed.
+    A decision on an item that has changed since is not applied: the item is back in the task, open."""
+
+    def __init__(self, book: str):
+        self.task = _review_task("generated")
+        self.dec = self.task.latest_decisions(book)
+        self.stamps: list[dict] = []
+        self.listed: list[dict] = []
+        self.left_mc: set[str] = set()
+        self.report = {"left_out": [], "held": [], "stamped": 0, "links_dropped": [], "changed_since": []}
+
+    def _current(self, kind: str, row: dict) -> dict | None:
+        d = self.dec.get((kind, row["id"]))
+        if not d:
+            return None
+        if d.get("fingerprint") != self.task.fingerprint(row, kind):
+            self.report["changed_since"].append(f"{kind} {row['id']}")
+            return None
+        return d
+
+    def _stamp(self, qid: str, d: dict, what: str) -> None:
+        self.stamps.append({"question": qid, "ref": qid, "decision": d["decision"], "by": d["by"], "at": d["at"],
+                            "fingerprint": d["fingerprint"], "what": what, **({"note": d["note"]} if d.get("note") else {})})
+
+    def apply(self, rows: list[dict], key: str) -> list[dict]:
+        out = []
+        for r in rows:
+            if key == "misconceptions":
+                d = self._current("misconception", r)
+                if d and d["decision"] in ("reject", "fix_requested"):
+                    self.left_mc.add(r["id"])
+                    self.report["left_out"].append({"misconception": r["id"], "decision": d["decision"], "by": d["by"]})
+                    continue
+                if d:
+                    self.listed.append({"kind": "misconception", "ref": r["id"], "decision": d["decision"], "by": d["by"], "at": d["at"]})
+                out.append(r)
+                continue
+            kind = "widget" if r.get("question_type") == "widget" else "question"
+            ch = r.get("choices")
+            if kind == "widget" and isinstance(ch, dict) and ch.get("diagnostics"):
+                keep = []
+                for dg in ch["diagnostics"]:
+                    ref = f"{r['id']}#{dg.get('predicate')}"
+                    item = {"id": ref, "widget_id": r["id"], "lo_id": r.get("lo_id"), **dg}
+                    dm = self.dec.get(("mapping", ref))
+                    if dm and dm.get("fingerprint") == self.task.fingerprint(item, "mapping"):
+                        if dm["decision"] in ("reject", "fix_requested"):
+                            self.report["links_dropped"].append({"question": r["id"], "predicate": dg.get("predicate"), "by": dm["by"]})
+                            continue
+                        self.listed.append({"kind": "mapping", "ref": ref, "decision": dm["decision"], "by": dm["by"], "at": dm["at"]})
+                    keep.append(dg)
+                d = self._current(kind, r)   # the widget's own decision signs it with every claim it was shown with
+                ch["diagnostics"] = keep
+            else:
+                d = self._current(kind, r)
+            if d:
+                self._stamp(r["id"], d, f"generated {kind}")
+                self.report["stamped"] += 1
+                if d["decision"] == "reject":
+                    self.report["left_out"].append({"question": r["id"], "decision": "reject", "by": d["by"]})
+                    continue
+                if d["decision"] == "fix_requested":
+                    self.report["held"].append({"question": r["id"], "by": d["by"], "note": d.get("note")})
+            out.append(r)
+        return out
+
+    def unlink_left_out(self, generated: dict) -> None:
+        """A misconception left out takes its links with it: no question may name what the catalogue no longer holds."""
+        if not self.left_mc:
+            return
+        for g in generated.values():
+            for q in g.get("questions") or []:
+                ch = q.get("choices")
+                if isinstance(ch, dict) and ch.get("diagnostics"):
+                    for dg in [x for x in ch["diagnostics"] if x.get("misconception_id") in self.left_mc]:
+                        ch["diagnostics"].remove(dg)
+                        self.report["links_dropped"].append({"question": q["id"], "predicate": dg.get("predicate"), "misconception": dg["misconception_id"]})
+                elif isinstance(ch, list):
+                    for c in ch:
+                        if isinstance(c, dict) and c.get("misconception_id") in self.left_mc:
+                            self.report["links_dropped"].append({"question": q["id"], "option": c.get("key"), "misconception": c.pop("misconception_id")})
+            if "misconceptions" in g:   # a questions file declares the misconceptions it uses
+                g["misconceptions"] = [m for m in g["misconceptions"] if m.get("id") not in self.left_mc]
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("book")
@@ -832,10 +926,22 @@ def main(argv: list[str]) -> int:
     decimal = (cfg.get("printed_notation") or {}).get("decimal", "point")
     out_dir = HERE / "compiled" / a.book
     out_dir.mkdir(parents=True, exist_ok=True)
-    for f in out_dir.glob("*.json"):
-        f.unlink()
     lmap_path = HERE / "book-records" / a.book / "lessons.json"
     lmap = json.loads(lmap_path.read_text()) if lmap_path.exists() else {"lessons": []}
+    if not cfg.get("bundles"):   # a book of its own: its compiled folder IS the book, so every lesson compiled before is
+        before = set()           # compiled again with these (compile makes no model calls), or a unit would erase the others
+        for f in out_dir.glob("*.json"):
+            try:
+                b = json.loads(f.read_text())
+            except ValueError:
+                continue
+            for n in (b.get("nodes") or []) if isinstance(b, dict) else []:
+                if n.get("kind") == "learning_objective":
+                    before |= {l["slug"] for l in lmap["lessons"] if n["id"].startswith(f"lo:{l['slug']}-")}
+        order = [l["slug"] for l in lmap["lessons"]]
+        slugs = sorted(set(slugs) | before, key=lambda s: order.index(s) if s in order else len(order))
+        if before - set(a.lessons):
+            print(f"also compiling the lessons compiled before: {sorted(before - set(a.lessons))}", file=sys.stderr)
     report = {"format": FORMAT_REPORT, "version": VERSION, "book": a.book, "printed_decimal": decimal, "lessons": {},
               "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": [],
               "multipart": {"carried": [], "unresolved": []}, "g2": []}
@@ -984,8 +1090,15 @@ def main(argv: list[str]) -> int:
         to_write[Path(bpath).name] = b
     if standalone:
         sb = standalone_bundles(cfg, standalone, lmap, records, new_nodes, new_questions, new_visuals, new_entries)
-        if sb and not existing:   # a new curriculum's links ride in its first bundle (its objectives are all loaded with it)
-            next(iter(sb.values()))["edges"] += link_edges
+        if sb and not existing:   # a new curriculum's links: each rides in the bundle of the objective it leads to, and
+            home = {n["id"]: name for name, b in sb.items() for n in b["nodes"]}   # a bundle names what it borrows from
+            for e in link_edges:                                                  # another (external_node_refs, as the
+                sb[home.get(e["dst"]) or next(iter(sb))]["edges"].append(e)        # live course's unit bundles do)
+            for b in sb.values():
+                own = {n["id"] for n in b["nodes"]}
+                ext = sorted({x for e in b["edges"] for x in (e["src"], e["dst"]) if x not in own and x in home})
+                if ext:
+                    b["external_node_refs"] = ext
         to_write.update(sb)
         missing = [s for s in standalone if s not in (cfg.get("lesson_titles") or {})]
         if missing:
@@ -1041,11 +1154,13 @@ def main(argv: list[str]) -> int:
     # and their links dropped, so nothing above can touch them.
     tg = HERE / "teaching" / a.book / "generated"
     report["generated_added"] = {}
+    gen_review = GeneratedReview(a.book)
     for name, key in (("generated-questions.json", "questions"), ("widget-questions.json", "questions"), ("misconceptions.json", "misconceptions")):
         f = tg / name
         if not f.exists() or name not in generated:
             continue
         rows = [r for r in json.loads(f.read_text()).get(key) or [] if in_lessons(r.get("lo_id"), slugs)]
+        rows = gen_review.apply(rows, key)
         have = {r["id"] for r in generated[name].get(key) or []}
         clash = [r["id"] for r in rows if r["id"] in have]
         if clash:
@@ -1071,8 +1186,13 @@ def main(argv: list[str]) -> int:
         generated[name].setdefault(key, []).extend(rows)
         report["generated_added"][name] = len(rows)
 
+    gen_review.unlink_left_out(generated)
+    report["generated_review"] = gen_review.report
+    stamps += gen_review.stamps
     ok = not report["errors"]
-    if ok:
+    if ok:   # cleared only now: a compile that fails leaves the last good one in place
+        for f in out_dir.glob("*.json"):
+            f.unlink()
         for name, b in {**to_write, **generated}.items():
             (out_dir / name).write_text(json.dumps(b, ensure_ascii=False, indent=2) + "\n")
         if stand_in_files:   # the app serves the book's pictures itself, as Grade 10's (assemble_lesson_bundle.py)
@@ -1095,7 +1215,11 @@ def main(argv: list[str]) -> int:
              "figures_from": "reviews/" + a.book + "/generated-content.json",
              "figures_note": "each decision a person made on an S4 figure (Generated content → Figures), with the visuals it shows as; "
                              "the visuals table has no review columns, so apply_review_verdicts.py lists these and writes none",
-             "figures": report["figure_reviews"]}, ensure_ascii=False, indent=2) + "\n")
+             "figures": report["figure_reviews"],
+             "generated_note": "each decision a person made on a generated misconception or widget mapping (Generated content); "
+                               "neither has review columns, so these are listed and none is written: a rejected one, or one a "
+                               "fix was asked for, is left out of the compiled files",
+             "generated": gen_review.listed}, ensure_ascii=False, indent=2) + "\n")
     report["files"] = sorted(str(x.relative_to(HERE)) for x in out_dir.glob("*.json"))
     (out_dir / "compile-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     for slug, r in report["lessons"].items():

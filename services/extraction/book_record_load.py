@@ -13,7 +13,9 @@ first that fails:
      name (compiled/<book>/unit1.json for seed/unit1.json), every other bundle of the course comes as it is;
   3. every loader's dry run on the real database, inside a transaction that is rolled back: `load_seed.py --course
      <id> --replace --dry-run`, `load_misconceptions.py --dry-run`, `load_generated_questions.py --add-only --catalogue-only --dry-run` (add-only:
-     a re-run never reverts a promotion; catalogue-only: no misconception the catalogue does not hold);
+     a re-run never reverts a promotion; catalogue-only: no misconception the catalogue does not hold). Each is rolled
+     back on its own, so when the load also brings the catalogue the generated preview checks catalogue-only itself,
+     against the compiled misconceptions file, and the loader runs without it; the real load passes it as ever;
   4. only with --go, and only on a person's GO at G5 for the unit as it stands (book_record_gonogo.py; Samuel's runbook §8),
      or with --scratch into a database on this machine (localhost: what S7 builds against and the fan-out loads,
      as Samuel's fan-out loads his local preview database before G5; no parity check, the course's shape is not
@@ -119,13 +121,21 @@ def main(argv: list[str] | None = None) -> int:
         if "misconceptions.json" in gen:
             step(f"{tag}: misconceptions", ["load_misconceptions.py", rel("misconceptions.json"), "--course", book.course_id, *d], env)
         for n in gen[1:] if "misconceptions.json" in gen else gen:
-            step(f"{tag}: {n}", ["load_generated_questions.py", rel(n), "--course", book.course_id, "--add-only", "--catalogue-only", *d], env)
+            only = ["--catalogue-only"]
+            if dry and "misconceptions.json" in gen:   # each preview is rolled back, so the catalogue this load brings
+                only = []                              # is not there yet: its rule is checked here, against that file
+                cat = {m["id"] for m in json.loads((compiled / "misconceptions.json").read_text()).get("misconceptions") or []}
+                bad = [m["id"] for m in json.loads((compiled / n).read_text()).get("misconceptions") or [] if m["id"] not in cat]
+                if bad:
+                    raise SystemExit(f"{n}: declares misconceptions the catalogue this load brings does not hold: {bad[:5]} "
+                                     "(nothing unverified becomes a row)")
+            step(f"{tag}: {n}", ["load_generated_questions.py", rel(n), "--course", book.course_id, "--add-only", *only, *d], env)
     if load:
         if (compiled / "review-stamps.json").exists():
             step("the review tool's decisions as human stamps", ["apply_review_verdicts.py", "--book-reviews", rel("review-stamps.json")], env)
         if a.go:   # a scratch load is mid-run: a course's parity constant is a person's, set once its shape is final
             step("parity: the course has not drifted", ["parity_check.py", "--candidate", a.dsn, "--course", book.course_id], env)
-        print(f"\nloaded {book.book} unit {a.unit} into the database; parity holds", file=sys.stderr)
+        print(f"\nloaded {book.book} unit {a.unit} into the database" + ("; parity holds" if a.go else " (scratch: no parity check)"), file=sys.stderr)
     else:
         print("\nevery preview passed; nothing was kept. --go loads it.", file=sys.stderr)
     return 0

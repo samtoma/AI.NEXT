@@ -140,8 +140,9 @@ def main(argv: list[str]) -> int:
         _run, res, _cost = WR.run_copy(copy, [], a.cap, "s8", a.book, "coverage", stage="S8")
         summary = {L["lesson"]: {"verdict": L["oracle"].get("verdict"),
                                  "subheadings": L["oracle"].get("subheadings"), "tally": L["oracle"].get("tally")} for L in res["lessons"]}
-        out = HERE / "runs" / a.book / "coverage" / "s8-summary.json"
-        out.write_text(json.dumps(summary, ensure_ascii=False, indent=1) + "\n")
+        out = HERE / "runs" / a.book / "coverage" / "s8-summary.json"   # the book's: other lessons' verdicts kept
+        kept = json.loads(out.read_text()) if out.exists() else {}
+        out.write_text(json.dumps({**kept, **summary}, ensure_ascii=False, indent=1) + "\n")
         for slug, v in summary.items():
             gaps = [h for h in v["subheadings"] or [] if h.get("status") != "covered"]
             print(f"{slug}: {v['verdict']}" + (f" — {len(gaps)} sub-heading(s) thin or missing" if gaps else ""), file=sys.stderr)

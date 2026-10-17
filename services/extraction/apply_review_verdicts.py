@@ -257,9 +257,13 @@ def main_g2(args) -> int:
 #     fix_requested    status 'review', hold_reason 'human_hold', reviewed_by '<by> (answer fix requested, review tool)'
 #     reject           status 'rejected', reviewed_by '<by> (answer rejected, review tool)'
 # Only the book's own rows (source 'seed') of the book's course; a question not in the database is listed.
+# A decision on a generated or widget question (Generated content, `what` 'generated question'/'generated widget') is
+# the same three stamps on that row ('question approved', …), which must be generated (not source 'seed').
+# The file's `generated` (misconceptions, widget mappings) are only counted, as figures are: no review columns.
 # The file's `figures` (decisions on S4's drawings and gaps, Generated content → Figures) are only counted: compile
 # already left a rejected drawing out, and the visuals table has no review columns to stamp.
 BOOK_REVIEW = {"approve": "answer approved", "fix_requested": "answer fix requested", "reject": "answer rejected"}
+GENERATED_REVIEW = {"approve": "question approved", "fix_requested": "question fix requested", "reject": "question rejected"}
 
 
 def apply_book_reviews(cur, doc: dict, dry_run: bool) -> dict:
@@ -278,9 +282,11 @@ def apply_book_reviews(cur, doc: dict, dry_run: bool) -> dict:
                 out["absent"].append(st["question"])
             continue
         status, reviewed_by, source, lo, hold = row
-        if source != "seed" or lo not in course_los:
-            raise SystemExit(f"REVIEW STAMPS NOT APPLIED: {st['question']} is not a book question of {course} (source {source}, objective {lo})")
-        stamp = f"{st['by'].strip()} ({BOOK_REVIEW[st['decision']]}, review tool)"
+        gen = str(st.get("what") or "").startswith("generated ")
+        if (source == "seed") == gen or lo not in course_los:
+            raise SystemExit(f"REVIEW STAMPS NOT APPLIED: {st['question']} is not a {'generated' if gen else 'book'} question "
+                             f"of {course} (source {source}, objective {lo})")
+        stamp = f"{st['by'].strip()} ({(GENERATED_REVIEW if gen else BOOK_REVIEW)[st['decision']]}, review tool)"
         if st["decision"] == "approve":
             want, bucket = (status, stamp, hold), "stamped"
         elif st["decision"] == "fix_requested":
@@ -314,6 +320,9 @@ def main_book_reviews(args) -> int:
         by = {k: sum(1 for f in figs if f["decision"] == k) for k in BOOK_REVIEW}
         print(f"  {len(figs)} figure decision(s) in the file ({by['approve']} approved, {by['fix_requested']} fix requested, "
               f"{by['reject']} rejected): not written, the visuals table has no review columns")
+    gen = doc.get("generated") or []
+    if gen:   # misconceptions and widget mappings: compile already left out what was rejected or sent for a fix
+        print(f"  {len(gen)} misconception/mapping decision(s) in the file: not written, neither table has review columns")
     if res["absent"]:
         print(f"  ! {len(res['absent'])} approved question(s) not in this database — load the compiled bundles first: {res['absent'][:6]}",
               file=sys.stderr)

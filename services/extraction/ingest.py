@@ -4,6 +4,7 @@
     uv run ingest.py plan  prep3-math-en 1        # unit 1's stages in order: the command, what it leaves, done or not
     uv run ingest.py plan  g10-math 1 --json
     uv run ingest.py run   prep3-math-en 2 3 4 5 --parallel 2 --dsn postgres://127.0.0.1/…   # the fan-out (below)
+    uv run ingest.py refresh prep3-parallel [1 2] [--dsn postgres://127.0.0.1/…]           # the reviews in (below)
 
 Decided by Tamer, 2026-10-16 (docs/design/maths-ingestion-pipeline.md): every book ends in book records, whatever
 it came in as, and every stage after the source reads only book records and the teaching layer. The switch:
@@ -21,7 +22,8 @@ Nothing in `route` or `plan` calls a model; `plan` only prints. Each row is a co
 order; a gate row (G0, G1, …) is a person's decision in the review tool.
 
 `run` is the fan-out (Samuel's runbook §10, for book-record units): every named unit's agent stages in plan order, the
-units in parallel (`--parallel`, default 2), each stage skipped when its output is on disk. A unit STOPS at the first
+units in parallel (`--parallel`, default 2), each stage skipped when its output is on disk, and a failed stage
+retried once before the unit stops. A unit STOPS at the first
 gate a person owes before the next stage may use it: G0 (the lesson map approved) before the page reader, and G1 (the
 objectives approved and applied) before anything after S1, as the Objectives task promises. Unlike Samuel's fan-out it
 auto-passes no gate: that was his decision for Grade 10 (answer 37c) and nobody has made it for this line. The other
@@ -30,6 +32,18 @@ person approved or two readings agreed on, and the coverage audit and G5 stand b
 the unit loaded in a local scratch database (`--dsn`, loaded with book_record_load.py --scratch after the first
 compile), as Samuel's fan-out loads his local preview database. The run ends at the coverage audit: G5 and the real
 load are a person's. Every stage writes Samuel's cost ledger; `--cap` bounds each stage.
+
+`refresh` brings what people decided in the review tool into what the tutor teaches, with no model call (free), in
+order, stopping at the first that fails (Tamer, 2026-10-17; the review tool's home page runs it from a button):
+  1. the Maths reading decisions into the book records (book_record_maths.py apply);
+  2. per unit past G1, the filing decisions (book_record_filing.py apply), then generated content re-mapped to where
+     its source now is (book_record_remap.py);
+  3. compile (every lesson compiled before, with the units named): the G2, answer, tier, figure and Generated content
+     decisions and the book records' own edits (Label extraction's "apply to the book record") are read there;
+  4. the review sample drawn again (book_record_sample.py: past sampled questions kept);
+  5. each unit's coverage audit (RED is reported, not a failure);
+  6. with --dsn, the scratch database loaded again (book_record_load.py --scratch, localhost only).
+With no unit named, every unit past G1 (teaching/<book>/links/ch<NN>.json).
 """
 from __future__ import annotations
 
@@ -155,14 +169,14 @@ def plan(name: str, unit: int) -> dict:
     add("C", "compile the unit", f"{UV} compile_book_records.py {bk} {L}", ex("compiled", bk, f"unit{unit}.json"))
     add("SW", "step check of every worked solution (reads the compiled unit); book flags → Misprints",
         f"{UV} book_record_checks.py sw {bk} {unit} {L}", ex("runs", bk, "working-check", f"{ch}.flags.json"))
-    add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", ran("misconceptions", "s5-draft"))
+    add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", "S5 draft" in ledger(bk, unit))
     add("S6", "question families and widgets", f"{UV} book_record_generation.py s6-author {bk} {L} --catalogue <S5 draft>  ·  s6-grade",
-        ex("teaching", bk, "families"))
-    add("S7", "refutations", f"{UV} book_record_generation.py s7-author {bk} {L} --catalogue <S5 draft>  ·  s7-verify", ran("widgets", "s7-verify"))
+        "S6" in ledger(bk, unit))
+    add("S7", "refutations", f"{UV} book_record_generation.py s7-author {bk} {L} --catalogue <S5 draft>  ·  s7-verify", "S7" in ledger(bk, unit))
     add("S5", "misconceptions (final), with S6/S7's distractors", f"{UV} book_record_generation.py s5 {bk} {L} --stage final --draft <S5 draft> --distractors …",
-        ran("misconceptions", "s5-final"))
+        "S5 final" in ledger(bk, unit))
     add("S5–S7", "finish: the catalogue, the generated and widget questions (Samuel's §4 passes)",
-        f"{UV} book_record_generation.py finish {bk} {L}", ex("teaching", bk, "generated", "misconceptions.json"))
+        f"{UV} book_record_generation.py finish {bk} {L}", "finish" in ledger(bk, unit))
     add("G3s", "draw the review sample of generated questions (Samuel's stratified 10%: one per family, then random)",
         f"{UV} book_record_sample.py {bk}", ex("reviews", bk, "generated-review-sample.json"))
     add("G3", "review generated content: the sampled questions, every misconception, mapping and figure", "review tool: Generated content", False, gate=True)
@@ -175,9 +189,32 @@ def plan(name: str, unit: int) -> dict:
     return {"route": r, "unit": unit, "title": title, "lessons": slugs, "stages": rows}
 
 
-def latest(book: str, folder: str, prefix: str) -> str | None:
+def latest(book: str, folder: str, prefix: str, slugs: list[str] | None = None) -> str | None:
+    """The newest run; with `slugs`, the newest made for those lessons (a book's units' runs sit side by side)."""
     runs = sorted((HERE / "runs" / book / folder).glob(f"{prefix}.*Z.json"))
+    if slugs is not None:
+        runs = [r for r in runs if any(f'"lo:{s}-' in r.read_text() for s in slugs)]
     return str(runs[-1].relative_to(HERE)) if runs else None
+
+
+# The generation stages' outputs are the book's (one families folder, one generated catalogue), so whether a unit has
+# been through one is recorded per unit, by the fan-out, when the stage succeeds.
+LEDGER = ("S5 draft", "S6", "S7", "S5 final", "finish")
+
+
+def ledger_path(book: str, unit: int) -> Path:
+    return HERE / "runs" / book / "fanout" / f"unit{unit:02d}.stages.json"
+
+
+def ledger(book: str, unit: int) -> set[str]:
+    p = ledger_path(book, unit)
+    return set(json.loads(p.read_text()).get("done") or []) if p.exists() else set()
+
+
+def mark(book: str, unit: int, stage: str) -> None:
+    p = ledger_path(book, unit)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps({"book": book, "unit": unit, "done": sorted(ledger(book, unit) | {stage})}, indent=1) + "\n")
 
 
 def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[list[str], list[tuple[str, object, object]]]:
@@ -221,32 +258,84 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))   # SW reads the compiled unit
     out.append(("SW", ex("runs", bk, "working-check", f"{ch}.flags.json"), [U("book_record_checks.py", "sw", bk, str(unit), *slugs, *c())]))
     out.append(("G2R", False, [U("book_record_g2.py", "run", bk, str(unit), *c())]))
-    out.append(("S5 draft", latest(bk, "misconceptions", "s5-draft") is not None,
+    did = ledger(bk, unit)
+    out.append(("S5 draft", "S5 draft" in did,
                 [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "draft", *c())]))
-    cat = lambda: latest(bk, "misconceptions", "s5-draft")
+    cat = lambda: latest(bk, "misconceptions", "s5-draft", slugs)
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
     if dsn:
         out.append(("load scratch", False, [U("book_record_load.py", bk, str(unit), "--dsn", dsn, "--scratch")]))
-    out.append(("S6", ex("teaching", bk, "families"),
+    out.append(("S6", "S6" in did,
                 lambda: [U("book_record_generation.py", "s6-author", bk, *slugs, "--catalogue", cat(), *c()),
                          U("book_record_generation.py", "s6-grade", bk, *slugs, *c())]))
     if dsn:
-        out.append(("S7", latest(bk, "widgets", "s7-verify") is not None,
+        out.append(("S7", "S7" in did,
                     lambda: [U("book_record_generation.py", "s7-author", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c()),
                              U("book_record_generation.py", "s7-verify", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c())]))
     else:
-        out.append(("S7", latest(bk, "widgets", "s7-verify") is not None, "S7 builds against the unit in a scratch database: pass --dsn"))
+        out.append(("S7", "S7" in did, "S7 builds against the unit in a scratch database: pass --dsn"))
     dists = lambda: [x for f in ("families", "widgets") if ex("runs", bk, f, "s5-distractors.json")
                      for x in ("--distractors", f"runs/{bk}/{f}/s5-distractors.json")]   # what S6 and S7 offer S5
-    out.append(("S5 final", latest(bk, "misconceptions", "s5-final") is not None,
+    out.append(("S5 final", "S5 final" in did,
                 lambda: [U("book_record_generation.py", "s5", bk, *slugs, "--stage", "final", "--draft", cat(), *dists(), *c())]))
-    out.append(("finish", ex("teaching", bk, "generated", "misconceptions.json"),   # Samuel's §4 finishing passes
+    out.append(("finish", "finish" in did,   # Samuel's §4 finishing passes
                 [U("book_record_generation.py", "finish", bk, *slugs, *(["--dsn", dsn] if dsn else []))]))
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
     out.append(("G3s", False, [U("book_record_sample.py", bk)]))
-    out.append(("S8", ex("runs", bk, "coverage", "s8-summary.json"), [U("book_record_checks.py", "s8", bk, *slugs, *c())]))
+    s8 = HERE / "runs" / bk / "coverage" / "s8-summary.json"
+    out.append(("S8", s8.exists() and all(x in json.loads(s8.read_text()) for x in slugs), [U("book_record_checks.py", "s8", bk, *slugs, *c())]))
     out.append(("A", False, [U("book_record_coverage.py", bk, str(unit))]))
     return slugs, out
+
+
+def refresh_units(name: str) -> list[int]:
+    b = book_config.load_book(name)
+    return sorted(int(p.stem[2:]) for p in (HERE / "teaching" / b.book / "links").glob("ch[0-9][0-9].json"))
+
+
+def refresh(name: str, units: list[int] | None, dsn: str | None) -> dict:
+    """The review tool's decisions into the book records and the compiled book, with no model call (`refresh`)."""
+    import subprocess  # noqa: PLC0415
+    b = book_config.load_book(name)
+    bk, r = b.book, route(name)
+    units = units or refresh_units(name)
+    if not units:
+        return {"ok": False, "steps": [], "error": f"no unit of {bk} is past G1 yet: nothing to refresh"}
+    slugs = [s for u in units for s in unit_lessons(b, r, u)[0]]
+    U = lambda script, *x: ["uv", "run", "--with", "jsonschema", script, *x]   # a record written is validated
+    steps: list[tuple[str, list[str]]] = []
+    if r["route"] != "epub" and (HERE / "book-records" / bk / "maths-reading").is_dir():
+        steps.append(("maths decisions", U("book_record_maths.py", "apply", bk)))
+    for u in units:
+        if (HERE / "teaching" / bk / "filing" / f"ch{u:02d}.json").exists():
+            steps.append((f"unit {u}: filing decisions", U("book_record_filing.py", "apply", bk, str(u))))
+        steps.append((f"unit {u}: re-map generated content", U("book_record_remap.py", bk, str(u))))
+    steps.append(("compile", U("compile_book_records.py", bk, *slugs)))
+    steps.append(("review sample", U("book_record_sample.py", bk)))
+    steps += [(f"unit {u}: coverage audit", U("book_record_coverage.py", bk, str(u))) for u in units]
+    if dsn:
+        steps += [(f"unit {u}: scratch load", U("book_record_load.py", bk, str(u), "--dsn", dsn, "--scratch")) for u in units[-1:]]
+    log = HERE / "runs" / bk / "fanout" / "refresh.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    out = []
+    for label, argv in steps:
+        p = subprocess.run(argv, cwd=HERE, text=True, capture_output=True)
+        with log.open("a") as fh:
+            fh.write(f"\n== {label}: {' '.join(argv)}\n{p.stdout}{p.stderr}")
+        tail = [x for x in (p.stdout + p.stderr).strip().splitlines() if x.strip()][-3:]
+        audit = "coverage audit" in label
+        ok = p.returncode == 0 or (audit and p.returncode == 1)
+        row = {"step": label, "ok": ok, "exit": p.returncode, "tail": tail}
+        if audit:
+            cov = HERE / "coverage" / f"{bk}.unit{int(label.split()[1].rstrip(':')):02d}.book-records.json"
+            if cov.exists():
+                c = json.loads(cov.read_text())
+                row["status"] = c.get("status")
+                row["failing"] = [x["id"] for x in c.get("checks") or [] if x.get("state") != "holds"]
+        out.append(row)
+        if not ok:
+            return {"ok": False, "book": bk, "units": units, "steps": out, "error": f"{label} failed (exit {p.returncode}); see {log.relative_to(HERE)}"}
+    return {"ok": True, "book": bk, "units": units, "steps": out}
 
 
 def run_unit(name: str, unit: int, dsn: str | None, cap: float | None, dry: bool) -> dict:
@@ -267,13 +356,18 @@ def run_unit(name: str, unit: int, dsn: str | None, cap: float | None, dry: bool
             if dry:   # a later stage's input (the S5 draft) does not exist yet in a dry run
                 done.append(f"{stage}: {' '.join(x if x is not None else '<an earlier stage s output>' for x in argv)}")
                 continue
-            with log.open("a") as fh:
-                fh.write(f"\n== {stage}: {' '.join(argv)}\n")
-                fh.flush()
-                p = subprocess.run(argv, cwd=HERE, stdout=fh, stderr=subprocess.STDOUT)
+            for attempt in (1, 2):   # an agent can return an incomplete batch now and then: one retry before stopping
+                with log.open("a") as fh:
+                    fh.write(f"\n== {stage}: {' '.join(argv)}" + (" (retry)" if attempt == 2 else "") + "\n")
+                    fh.flush()
+                    p = subprocess.run(argv, cwd=HERE, stdout=fh, stderr=subprocess.STDOUT)
+                if p.returncode == 0 or (stage == "A" and p.returncode == 1):
+                    break
             if p.returncode != 0 and not (stage == "A" and p.returncode == 1):
                 return {"unit": unit, "stopped": f"{stage} failed (exit {p.returncode}); see {log.relative_to(HERE)}", "ran": done}
             done.append(f"{stage}: {' '.join(argv[2:4])}…")
+        if stage in LEDGER and not dry:
+            mark(name, unit, stage)
     cov = HERE / "coverage" / f"{name}.unit{unit:02d}.book-records.json"
     status = json.loads(cov.read_text()).get("status") if cov.exists() and not dry else None
     return {"unit": unit, "stopped": None, "ran": done, "coverage": status,
@@ -289,6 +383,11 @@ def main(argv: list[str]) -> int:
     p.add_argument("book")
     p.add_argument("unit", type=int)
     p.add_argument("--json", action="store_true")
+    rf = sub.add_parser("refresh", help="the review tool's decisions into the records and the compiled book (no model call)")
+    rf.add_argument("book")
+    rf.add_argument("units", type=int, nargs="*", help="default: every unit past G1")
+    rf.add_argument("--dsn", help="also load a LOCAL scratch database again")
+    rf.add_argument("--json", action="store_true")
     rn = sub.add_parser("run", help="the fan-out: each unit's stages in order, units in parallel, stopping at a person's gate")
     rn.add_argument("book")
     rn.add_argument("units", type=int, nargs="+")
@@ -309,6 +408,15 @@ def main(argv: list[str]) -> int:
     if a.cmd == "route":
         print(json.dumps(route(a.book), indent=1))
         return 0
+    if a.cmd == "refresh":
+        res = refresh(a.book, a.units, a.dsn)
+        if a.json:
+            print(json.dumps(res, indent=1, ensure_ascii=False))
+        else:
+            for st in res["steps"]:
+                print(f"{'✓' if st['ok'] else '✗'} {st['step']}" + (f": {st['status']}" + (f" ({', '.join(st['failing'])})" if st.get('failing') else "") if st.get("status") else ""))
+            print("refreshed, no model call" if res["ok"] else f"STOPPED: {res['error']}")
+        return 0 if res["ok"] else 1
     pl = plan(a.book, a.unit)
     if a.json:
         print(json.dumps(pl, indent=1, ensure_ascii=False))

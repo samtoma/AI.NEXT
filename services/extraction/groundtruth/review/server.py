@@ -31,6 +31,11 @@ Tasks (docs/design/review-console.md, built here as a local tool):
                     book-records/<book>/maths-reading/), a person says what is printed; decisions are appended to
                     reviews/<book>/maths-reading.json (maths_reading.py).
 
+The home page filters every count by book, and for one book offers Refresh: `ingest.py refresh <book>` (no model
+call), which brings the decisions made here into the book records and the compiled book (--scratch-dsn: and loads
+a local scratch database again). Label extraction offers "apply to the book record" for a corrected statement, so
+the correction reaches what compile, and the tutor, read.
+
 Everything is a file in the repository, so a review is committed like any other change. Serves on 127.0.0.1
 only. The book PDFs are not in git (docs/Source/*.pdf is ignored); the server looks for each in docs/Source/,
 then in every --pdf-dir, then in ~/Downloads. Standard library only.
@@ -39,7 +44,9 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
+import threading
 from datetime import date
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -297,6 +304,85 @@ def apply_to_record(m: dict, entry: dict) -> None:
     write_json(p, d)
 
 
+# A statement is what the tutor quotes (compile's statements): its wording fields are what a label can correct.
+STATEMENT_TYPES = {"definition", "rule", "caution", "convention", "method", "key_term", "prior_knowledge"}
+STATEMENT_FIELDS = ("claim", "term", "text", "quote", "formula", "examples", "notation", "notes")
+
+
+def statement_pair(ext: dict, gt: dict, gt_id: str) -> tuple[dict, dict]:
+    """The ground truth's statement and the book record's item for the same printed thing: paired by content, as the
+    overlay pairs them; failing that (its wording was corrected past recognition), the extracted item of that id and
+    type that no other ground-truth record claims."""
+    g = next((r for r in gt.get("items") or [] if r.get("id") == gt_id), None)
+    if g is None or g.get("type") not in STATEMENT_TYPES:
+        raise ValueError(f"{gt_id} is not a statement of the ground truth")
+    pairs, _m, _i = score_book_record.match_by_content(ext.get("items") or [], gt.get("items") or [])
+    paired = {gg["id"]: e for gg, e, _how in pairs}
+    e = paired.get(gt_id)
+    if e is None:
+        claimed = {x["id"] for x in paired.values()}
+        e = next((r for r in ext.get("items") or [] if r.get("id") == gt_id and r.get("type") == g["type"] and r["id"] not in claimed), None)
+    if e is None:
+        raise ValueError(f"no item of the book record is {gt_id}: nothing to apply it to")
+    return g, e
+
+
+def statement_diff(ext_key: str, gt_key: str, gt_id: str) -> dict:
+    ext, gt = json.loads(resolve_key(ext_key).read_text()), json.loads(resolve_key(gt_key).read_text())
+    g, e = statement_pair(ext, gt, gt_id)
+    return {"record_id": e["id"], "fields": {k: {"book_record": e.get(k), "labelled": g.get(k)}
+                                             for k in STATEMENT_FIELDS if e.get(k) != g.get(k)}}
+
+
+def apply_statement(body: dict) -> dict:
+    """A labelled statement's wording into the book record (Tamer, 2026-10-17: a corrected definition must reach the tutor,
+    not only the scoring copy). Compile reads the book record; the provenance check sees the statement changed and
+    checks it again on its next run. The item keeps a trace in its review.edits."""
+    by = (body.get("by") or "").strip()
+    if not by:
+        raise ValueError("type your initials")
+    ext_p, gt_p = resolve_key(body["ext"]), resolve_key(body["gt"])
+    if not (body["ext"].startswith("1/") and body["gt"].startswith("0/")):
+        raise ValueError("ext must be a book record, gt its ground truth")
+    ext, gt = json.loads(ext_p.read_text()), json.loads(gt_p.read_text())
+    if (ext.get("lesson") or {}).get("slug") != (gt.get("lesson") or {}).get("slug"):
+        raise ValueError("the two files are not the same lesson")
+    g, e = statement_pair(ext, gt, body["id"])
+    changed = [k for k in STATEMENT_FIELDS if e.get(k) != g.get(k)]
+    if not changed:
+        return {"record_id": e["id"], "fields": []}
+    for k in changed:
+        if g.get(k) is None:
+            e.pop(k, None)
+        else:
+            e[k] = g[k]
+    ((e.setdefault("review", {})).setdefault("edits", [])).append(
+        {"by": by, "at": date.today().isoformat(), "fields": [f"applied from the ground truth ({g['id']}): {', '.join(changed)}"]})
+    write_json(ext_p, ext)
+    return {"record_id": e["id"], "fields": changed}
+
+
+REFRESH_LOCK = threading.Lock()
+SCRATCH_DSN: list[str] = []   # --scratch-dsn: a refresh also loads this LOCAL scratch database again
+
+
+def refresh_book(book: str) -> dict:
+    """`ingest.py refresh <book>`: the decisions made here into the book records and the compiled book (no model call)."""
+    if not NAME.match(book or "") or not (EXTRACTION / "books" / f"{book}.json").exists():
+        raise ValueError(f"no book {book!r}")
+    if not REFRESH_LOCK.acquire(blocking=False):
+        raise ValueError("a refresh is already running")
+    try:
+        argv = ["uv", "run", "ingest.py", "refresh", book, "--json", *(["--dsn", SCRATCH_DSN[0]] if SCRATCH_DSN else [])]
+        p = subprocess.run(argv, cwd=EXTRACTION, text=True, capture_output=True, timeout=1800)
+        try:
+            return json.loads(p.stdout)
+        except ValueError:
+            return {"ok": False, "steps": [], "error": (p.stderr or p.stdout).strip()[-600:] or f"exit {p.returncode}"}
+    finally:
+        REFRESH_LOCK.release()
+
+
 def create_ground_truth(book: str, slug: str, data: dict) -> str:
     if not NAME.match(book) or not NAME.match(slug):
         raise ValueError("bad book or lesson slug")
@@ -382,6 +468,9 @@ class Handler(BaseHTTPRequestHandler):
                 gt = json.loads(resolve_key(q["gt"]).read_text())
                 pairs, _missing, _invented = score_book_record.match_by_content(ext.get("items") or [], gt.get("items") or [])
                 return self.send_json({e["id"]: g["id"] for g, e, _how in pairs})
+            if u.path == "/api/statement-diff":
+                # what the book record (what compile teaches from) says of a labelled statement, where it differs
+                return self.send_json(statement_diff(q["ext"], q["gt"], q["id"]))
             if u.path == "/api/provenance":
                 # the statements S2's provenance check could not confirm (book_record_provenance.py), for Label extraction
                 return self.send_json(provenance.flags(q["book"], q["slug"]))
@@ -451,6 +540,10 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True})
             if u.path == "/api/ground-truth":
                 return self.send_json({"ok": True, "path": create_ground_truth(q["book"], q["slug"], body)})
+            if u.path == "/api/refresh":
+                return self.send_json(refresh_book(body.get("book")))
+            if u.path == "/api/statement-apply":
+                return self.send_json({"ok": True, **apply_statement(body)})
             if u.path == "/api/misprint-decision":
                 return self.send_json({"ok": True, "decision": decide_misprint(body)})
             if u.path == "/api/answers/decision":
@@ -475,7 +568,10 @@ def main():
     ap.add_argument("--port", type=int, default=3020)
     ap.add_argument("--pdf-dir", action="append", default=[], help="extra folder to look for book PDFs in")
     ap.add_argument("--records", action="append", default=[], help="extra folder of book records to open")
+    ap.add_argument("--scratch-dsn", help="a LOCAL scratch database the home page's Refresh also loads again")
     a = ap.parse_args()
+    if a.scratch_dsn:
+        SCRATCH_DSN.append(a.scratch_dsn)
     PDF_DIRS.extend(Path(x).expanduser() for x in a.pdf_dir)
     ROOTS.extend(("extraction", Path(x).expanduser().resolve()) for x in a.records)
     srv = ThreadingHTTPServer(("127.0.0.1", a.port), Handler)
