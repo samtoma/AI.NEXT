@@ -185,7 +185,8 @@ const meNow = () => $("#me").value.trim();
 let path = null, data = null, records = [], idx = 0, offset = 0, pdf = null, pdfPath = null, page = 1, rendering = null, editing = false;
 // Label extraction: the lesson open, its ground truth (null until the first label), and whether the records come from an
 // extraction file (labels are then written into the ground truth) or from the ground truth itself (edited in place).
-let view = "home", lessonRow = null, gtDoc = null, extMode = false, notInBook = [];
+let view = "home", lessonRow = null, gtDoc = null, extMode = false, notInBook = [], provFlags = {}, pendingProv = [];
+const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 const getJSON = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(await r.text()); return r.json(); };
 
 /* ---------- sections and kinds ---------- */
@@ -252,6 +253,7 @@ function visible() {
   const f = $("#filter").value;
   return records.map((x, i) => ({ ...x, i })).filter(({ r }) =>
     f === "all" ? true : f === "todo" ? !status(r) : f === "flagged" ? status(r) === "flagged"
+      : f === "provenance" ? !!provFlags[r.id]
       : f === "misprints" ? hasMisprints(r) : edited(r));
 }
 function renderList() {
@@ -264,7 +266,7 @@ function renderList() {
     const label = s === "confirmed" ? "✓" : s === "flagged" ? "!" : "·";
     const b = document.createElement("button");
     b.className = "rec" + (i === idx ? " sel" : "");
-    b.innerHTML = `<span class="dot ${cls}" title="${s || "not reviewed"}">${label}</span><span class="t">${esc(titleOf(sec, r))}</span>${edited(r) ? '<span class="muted" title="edited">✎</span>' : ""}`;
+    b.innerHTML = `<span class="dot ${cls}" title="${s || "not reviewed"}">${label}</span><span class="t">${esc(titleOf(sec, r))}</span>${edited(r) ? '<span class="muted" title="edited">✎</span>' : ""}${provFlags[r.id] ? '<span class="muted" title="the provenance check could not confirm it says what the page prints">⚑</span>' : ""}`;
     b.onclick = () => select(i);
     el.appendChild(b);
   }
@@ -311,9 +313,11 @@ function renderDetail() {
       <h2>${esc(titleOf(sec, r))}</h2>`;
   if (editing) { el.innerHTML = `<div class="card">${head}${editForm(sec, r)}</div>${renderFileCard()}`; bindEdit(sec, r); bindFileCard(); return; }
   const fields = Object.entries(r).filter(([k]) => !HIDE.has(k) && k !== "quote");
+  const pf = provFlags[r.id];
   el.innerHTML = `
     <div class="card">
       ${head}
+      ${pf ? `<div class="warn"><span class="label">The provenance check could not confirm this</span><div>Two checks read the page and did not find it says this, with nothing added. Read it against the page before you confirm.</div><div class="muted" style="margin-top:4px">First check (Haiku): ${esc(pf.first_note || "no note")}<br>Re-audit (Sonnet): ${esc(pf.note || "no note")}</div></div>` : ""}
       ${r.quote ? `<div class="quote">“${esc(r.quote)}”</div><div class="muted">Find these words on the page, then check everything below against the book.</div>`
         : r.anchor ? `<div class="quote">Anchor ${esc(r.anchor)}</div><div class="muted">The extractor located this by its own reference, with no quote. Find it on the page, then check everything below against the book.</div>` : ""}
       ${isExtraction() && hasMisprints(r) ? '<div class="muted">The extractor proposes the misprint(s) below. Confirming this record confirms them; if one is wrong, edit or flag the record.</div>' : ""}
@@ -790,7 +794,8 @@ async function openLabel() {
     <span id="role" class="tag"></span>
     <label>Show <select id="filter">
       <option value="todo">Not labelled yet</option><option value="all">All records</option><option value="flagged">Flagged</option>
-      <option value="edited">Edited</option><option value="misprints">Has misprints</option></select></label>
+      <option value="edited">Edited</option><option value="misprints">Has misprints</option>
+      <option value="provenance">Flagged by the provenance check</option></select></label>
     <div class="progress"><div class="bar"><div id="lbar" style="width:0"></div></div><div id="lprog" class="muted"></div></div>
     <span class="grow"></span>
     <span class="kbd muted">j/k move · c confirm · f flag · e edit · m misprint · u undo</span>
@@ -836,10 +841,20 @@ async function openLesson(row) {
   extMode = !!row.ext; notInBook = [];
   if (extMode) {
     const match = row.gt ? await getJSON(`/api/lesson-match?ext=${encodeURIComponent(row.ext)}&gt=${encodeURIComponent(row.gt)}`) : {};
+    // the provenance check's flags, on the record the list shows FOR THAT STATEMENT: matched by its printed words, never
+    // by id alone (a ground truth labelled on an earlier extraction can hold another record under the same id)
+    const pf = await getJSON(`/api/provenance?book=${encodeURIComponent(row.book)}&slug=${encodeURIComponent(row.slug)}`).catch(() => ({}));
+    pendingProv = Object.values(pf);
     data = overlay(await getJSON(`/api/file?path=${encodeURIComponent(row.ext)}`), gtDoc, match);
     path = row.ext;
   }
-  else { data = gtDoc; path = row.gt; }
+  else { data = gtDoc; path = row.gt; pendingProv = []; }
+  provFlags = {};
+  for (const e of pendingProv) {
+    const hit = (data.items || []).find((r) => words(r.quote) && words(r.quote) === words(e.quote))
+      || (data.items || []).find((r) => words(r.claim) && words(r.claim) === words(e.claim));
+    if (hit) provFlags[hit.id] = e;
+  }
   $("#role").textContent = extMode ? "extraction → ground truth" : "ground truth (no extraction yet)";
   $("#role").title = extMode ? "Records come from the pipeline's book record; what you label is written into the ground truth."
     : "This lesson has no extraction file yet, so its ground truth is labelled directly.";

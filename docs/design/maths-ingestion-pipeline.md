@@ -28,7 +28,7 @@ adapter.
 | **S1** objectives | The "can do" objectives and each item's objective | `objectives.workflow.js`: two finders, reconciler, two mappers, evidence check | Adopted, on book records |
 | **S1** links | Prerequisite links between objectives | The linker and its independent checker inside S1 | Adopted, on book records |
 | **G1** | A person approves the objectives | Samuel's gate | A review task in the review tool (approve, fix, reject per objective and per link) |
-| **S2** statements | The book's definitions, rules, cautions | Claims, provenance check | The book record's statements, kept as built (they reach the tutor) |
+| **S2** statements | The book's definitions, rules, cautions | Claims, provenance check | The book record's statements (they reach the tutor), with **Samuel's provenance check adopted** (`book_record_provenance.py`, `provenance.workflow.js`): containment for an EPUB's verbatim text; otherwise Haiku against the printed page, Sonnet re-audits what it cannot confirm; an unsupported statement is flagged in Label extraction and counted by the audit until a person labels it. Unit 1: 62 statements, 59 checked, 1 re-audited, 2 flagged (both silent corrections of printing slips) |
 | **S3** answers | Typing for the marker; blind re-solve; tiers | `lesson.workflow.js` S3 | Adopted step by step: the typing agent, answer rules, multi-part carry; blind re-solve and two-reading tiers already run |
 | **SW** working | Step-check the book's worked solutions | `working-check.workflow.js`, `working_check.py` | Adopted on the book's worked examples; a wrong step goes to the Misprints task |
 | **S4** figures | Redraw each figure, or record a gap | `lesson.workflow.js` S4 | Adopted unchanged; PDF figures cropped first (`crop_figures.py`) |

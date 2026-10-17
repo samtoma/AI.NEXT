@@ -129,7 +129,9 @@ def plan(name: str, unit: int) -> dict:
         add("S0a", "second, blind reading of the maths; a third where they differ (Samuel's pass C); the rest to review",
             f"{UV} --with pymupdf book_record_maths.py run {bk} {L}",
             all_of(lambda s: ex("book-records", bk, "maths-reading", f"{s}.json")))
-        add("G0", "label review and misprints", "review tool: Label extraction, Misprints", False, gate=True)
+        add("S2", "provenance: each statement against the page (Haiku), doubts re-audited (Sonnet); flags to Label extraction",
+            f"{UV} --with pymupdf book_record_provenance.py run {bk} {L}", all_of(lambda s: ex("book-records", bk, "provenance", f"{s}.json")))
+        add("G0", "label review (start with the provenance check's flags) and misprints", "review tool: Label extraction, Misprints", False, gate=True)
     add("S1", "objectives (two finders, reconciler, two mappers, evidence check) and prerequisite links",
         f"{UV} book_record_objectives.py run {bk} {unit} {L}", ex("teaching", bk, "objectives", f"{ch}.json"))
     add("G1", "review the objectives, links and S1's questions", "review tool: Objectives (G1)", ex("reviews", bk, "objectives-g1.json"), gate=True)
@@ -193,6 +195,8 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
                     [U("extract_book_record.py", "run", bk, s, *c(), w=("pymupdf", "jsonschema")) for s in slugs]))
         out.append(("S0a maths", all_of(lambda s: ex("book-records", bk, "maths-reading", f"{s}.json")),
                     [U("book_record_maths.py", "run", bk, *slugs, *c(), w=("pymupdf",))]))
+        out.append(("S2", all_of(lambda s: ex("book-records", bk, "provenance", f"{s}.json")),
+                    [U("book_record_provenance.py", "run", bk, *slugs, *c(), w=("pymupdf",))]))
     out.append(("S1", ex("teaching", bk, "objectives", f"{ch}.json"), [U("book_record_objectives.py", "run", bk, str(unit), *slugs, *c())]))
     out.append(("G1", ex("teaching", bk, "links", f"{ch}.json"),
                 "the objectives are not approved: the review tool's Objectives (G1) task, then book_record_objectives.py apply"))

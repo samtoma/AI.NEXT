@@ -47,6 +47,7 @@ import answers  # noqa: E402
 import tiers  # noqa: E402
 import objectives  # noqa: E402
 import maths_reading  # noqa: E402
+import provenance  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
@@ -373,6 +374,9 @@ class Handler(BaseHTTPRequestHandler):
                 gt = json.loads(resolve_key(q["gt"]).read_text())
                 pairs, _missing, _invented = score_book_record.match(ext.get("items") or [], gt.get("items") or [])
                 return self.send_json({e["id"]: g["id"] for g, e, _how in pairs if e["id"] != g["id"]})
+            if u.path == "/api/provenance":
+                # the statements S2's provenance check could not confirm (book_record_provenance.py), for Label extraction
+                return self.send_json(provenance.flags(q["book"], q["slug"]))
             if u.path == "/api/misprints":
                 return self.send_json(misprints())
             if u.path == "/api/answers/books":

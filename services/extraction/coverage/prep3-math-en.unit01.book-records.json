@@ -12,10 +12,10 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 18,
+    "checks": 19,
     "hold": 13,
     "excepted": 0,
-    "fail": 5
+    "fail": 6
   },
   "checks": [
     {
@@ -260,7 +260,7 @@
       "id": "maths_reading",
       "title": "Formulas read twice = agreed + decided in the Maths reading task",
       "want": 200,
-      "got": 195,
+      "got": 197,
       "state": "fails",
       "failures": [
         {
@@ -268,15 +268,7 @@
           "detail": "disagreed: $\\therefore (Z-Y)\\times(X\\cup Y)=\\ldots\\ldots$ / $\\therefore (Z - Y) \\times (X \\cup Y) = \\ldots\\ldots\\ldots$"
         },
         {
-          "scope": "u1-1:heading-7|text|0",
-          "detail": "disagreed: $R \\times R = \\{(x, y) : x \\in R, y \\in R\\}$ / $\\mathbb{R}\\times\\mathbb{R}=\\{(x, y) : x\\in\\mathbb{R}, y\\in\\mathbb{R}\\}$"
-        },
-        {
           "scope": "u1-4:example-3|stem|2",
-          "detail": "disagreed: $x\\in\\mathbb{R}$ / $x\\in R$"
-        },
-        {
-          "scope": "u1-4:example-3|solution[0]|2",
           "detail": "disagreed: $x\\in\\mathbb{R}$ / $x\\in R$"
         },
         {
@@ -335,6 +327,24 @@
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
+    },
+    {
+      "id": "statements_checked",
+      "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
+      "want": 62,
+      "got": 60,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "item u1-1:rule-9",
+          "detail": "the check could not confirm it says what the page prints: Page reads 'one the ordered pairs in the cartesian product of N × N'. The claim inserts 'of'."
+        },
+        {
+          "scope": "item u1-1:definition-4",
+          "detail": "the check could not confirm it says what the page prints: Page reads 'coordinat plane of Z × Z'. The claim corrects the spelling to 'coordinate'."
+        }
+      ],
+      "excepted_scopes": []
     }
   ],
   "inputs": {
@@ -344,11 +354,11 @@
     "book-records/prep3-math-en/u1-1.json": "01acb14db53f7d31de698eb6b4ca570993140bac2dc5b3153e05b567308c7afb",
     "book-records/prep3-math-en/u1-2.json": "9fbed032cd530e1b5f30c4221b5ee9697b75d8427daf2ae5c8d108730f90248e",
     "book-records/prep3-math-en/u1-3.json": "976efd2821927364b69571f5cb941fd76087ec7ca5b6a5332e3a53c8b523e9d0",
-    "book-records/prep3-math-en/u1-4.json": "ed93c20071405007b0dadb40f79e27ed13145e82759826a58be190972d68d8c8",
-    "book-records/prep3-math-en/maths-reading/u1-1.json": "f7b8c29b7af0408bf3f01ef5d30862852d7453112bade352252a91697d63858b",
+    "book-records/prep3-math-en/u1-4.json": "84eb9ec6cee25e2d51fbbc8a604b05653902f4b6156185615eff18d9f9e4bc0c",
+    "book-records/prep3-math-en/maths-reading/u1-1.json": "4763374f5c96486ea98ddf2dfa05f0bbc490e070970f7af1e24558e14c048ad3",
     "book-records/prep3-math-en/maths-reading/u1-2.json": "55013f60c47220c5709655ee7819ce930ea7a45926ca135fa5b0e61f7dbfb006",
     "book-records/prep3-math-en/maths-reading/u1-3.json": "37795b4962f285db66115791eb56d756685ba49ebb3c10b8bff9274aa3efdac8",
-    "book-records/prep3-math-en/maths-reading/u1-4.json": "ec28e43b064cdba4bcde61f1f40b5e7a26372429bef0efe08ecf42ada705d616",
+    "book-records/prep3-math-en/maths-reading/u1-4.json": "482933c66bd850df9099b3a242aab2b1723ad18eeec6afb20d5ac117fe3819b3",
     "teaching/prep3-math-en/visuals/u1-1.json": "6373213b14bde565244879d7a2a1d3588a015b70bbcf1586d2f6c09ff751d379",
     "teaching/prep3-math-en/visuals/u1-2.json": "1c78fdb53b90decba804e50fe8b6e8167cff99da2460aa385546fdf624a178a1",
     "teaching/prep3-math-en/visuals/u1-3.json": "532c7e6f3a3ad1acede81d3ee4ab318e60cefc470763936e74f6c09f3d1a4039",

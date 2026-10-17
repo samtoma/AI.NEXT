@@ -42,6 +42,8 @@ THE CHECKS (Samuel's id where it is his check; † a check the book-record line 
                             readings agreed on
     notation                un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0
     statements_served †     the records' statements filed under an objective = statements in the content files
+    statements_checked †    the statements the tutor quotes = those S2's provenance check kept (containment, checked,
+                            re-audited) + those it flagged that a person has since labelled in Label extraction
 """
 from __future__ import annotations
 
@@ -419,7 +421,52 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
             else:
                 c.fail(f"item {it['id']}", "filed under an objective, not served to the tutor")
     checks.append(c)
+
+    # ---- statements_checked (book_record_provenance.py: Samuel's S2 provenance check) ---------------------------
+    import book_record_provenance as BRP  # noqa: PLC0415
+    c = Check("statements_checked", "Statements = statements the provenance check kept + those it flagged that a person labelled")
+    labelled = ground_truth_labels(book.book, slugs, recs)
+    for s in slugs:
+        if s not in recs:
+            continue
+        done = BRP.checked_already(book.book, s)
+        for it in recs[s]["items"]:
+            if it["type"] not in BRP.STATEMENTS or not BRP.claim_of(it):
+                continue
+            c.want += 1
+            e = done.get(it["id"])
+            if e is None or e["fingerprint"] != BRP.fingerprint(it):
+                c.fail(f"item {it['id']}", "not checked (book_record_provenance.py run)" if e is None else "edited since it was checked")
+            elif e["provenance"] != "unsupported" or labelled.get(it["id"]) in ("confirmed", "flagged"):
+                c.got += 1
+            else:
+                c.fail(f"item {it['id']}", f"the check could not confirm it says what the page prints: {e.get('note') or ''}"[:200])
+    checks.append(c)
     return checks
+
+
+def ground_truth_labels(book: str, slugs: list[str], recs: dict[str, dict]) -> dict[str, str]:
+    """A person's label (review status) on each extracted record of these lessons, from the book's ground-truth files.
+    A labelled record may carry another id than the extracted one: they are matched as the review tool matches them
+    (score_book_record.match)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "groundtruth"))
+    import score_book_record as SC  # noqa: PLC0415
+    out: dict[str, str] = {}
+    for f in (HERE / "groundtruth" / book).rglob("*.json") if (HERE / "groundtruth" / book).is_dir() else []:
+        try:
+            d = json.loads(f.read_text())
+        except ValueError:
+            continue
+        slug = (d.get("lesson") or {}).get("slug") if isinstance(d, dict) else None
+        if d.get("role") == "ground_truth" and slug in slugs and slug in recs:
+            status = {it["id"]: (it.get("review") or {}).get("status") for it in d.get("items") or []}
+            pairs, _missing, _invented = SC.match(recs[slug].get("items") or [], d.get("items") or [])
+            words = lambda t: " ".join(re.sub(r"[^a-z0-9]+", " ", str(t or "").lower()).split())
+            for g, e, _how in pairs:   # a label counts only on the same printed words (a ground truth labelled on an
+                same = words(g.get("quote")) == words(e.get("quote")) or words(g.get("claim")) == words(e.get("claim"))  # earlier extraction can reuse an id)
+                if status.get(g["id"]) and same:
+                    out[e["id"]] = status[g["id"]]
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:
