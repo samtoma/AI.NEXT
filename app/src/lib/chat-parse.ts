@@ -304,7 +304,53 @@ function parseActionAt(s: string, i: number): Action | null {
       return { start: i, end, block };
     }
   }
-  return null;
+  return parseUnknownAt(s, i);
+}
+
+/* ------------------------------------------------------------------ */
+/* Unknown directives (prompt drift)                                   */
+/* ------------------------------------------------------------------ */
+
+/** `{{name}}` / `{{name:payload}}` that no rule above recognised — e.g. a
+ *  blend like `{{expects_question:q:pp3u1-1-1:bk-drill-1-a}}`. Same id-safe
+ *  payload alphabet as SIMPLE_RE; no braces, so a JSON widget never lands here. */
+const UNKNOWN_RE = /^\{\{([a-z][a-z0-9_]{0,39})(?::([^{}\n]{1,160}))?\}\}/;
+/** What may still become an UNKNOWN_RE match while streaming. */
+const UNKNOWN_PREFIX_RE = /^[a-z][a-z0-9_]{0,39}(?::[^{}\n]{0,160})?\}?$/;
+/** `{{<anything>_question:q:…}}` is a near-miss of `{{show_question:q:…}}`. */
+const QUESTION_NEAR_MISS_RE = /(^|_)question$/;
+
+/** True when `i` sits inside an open `$…$` maths segment, where `{{x}}` is
+ *  TeX grouping (`x^{{n}}`), not protocol. */
+function insideMath(s: string, i: number): boolean {
+  let dollars = 0;
+  for (let k = 0; k < i; k++) if (s[k] === "$" && s[k - 1] !== "\\") dollars++;
+  return dollars % 2 === 1;
+}
+
+const warnedUnknown = new Set<string>();
+/** One warning per directive name per page load — parseMessage re-runs on
+ *  every streamed delta, so an unthrottled warn would flood the console. */
+function warnUnknown(name: string, raw: string) {
+  if (warnedUnknown.has(name)) return;
+  warnedUnknown.add(name);
+  console.warn(`[chat-parse] unknown directive "${name}" — ${raw}`);
+}
+
+/** Consume an unknown directive so its braces never reach the student. A
+ *  question-id near-miss becomes the question card it meant; anything else
+ *  renders as nothing, with a console warning so the drift stays visible. */
+function parseUnknownAt(s: string, i: number): Action | null {
+  const m = UNKNOWN_RE.exec(s.slice(i, i + 220));
+  if (!m || insideMath(s, i)) return null;
+  const [raw, name, payload] = m;
+  warnUnknown(name, raw);
+  const qid = payload?.trim();
+  const block: Block | null =
+    QUESTION_NEAR_MISS_RE.test(name) && qid?.startsWith("q:")
+      ? { t: "question", qid }
+      : null;
+  return { start: i, end: i + raw.length, block };
 }
 
 function scanActions(s: string): Action[] {
@@ -352,7 +398,12 @@ function isIncompleteDirective(s: string, i: number): boolean {
       return parseActionAt(s, i) === null; // keyword done, body incomplete
     }
   }
-  return false;
+  // could still close as an unknown directive (consumed once complete)
+  return (
+    UNKNOWN_PREFIX_RE.test(after) &&
+    parseActionAt(s, i) === null &&
+    !insideMath(s, i)
+  );
 }
 
 /** Trim an incomplete trailing `[[…` / `{{…` / `$…` marker during streaming. */
