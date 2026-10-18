@@ -27,6 +27,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Book questions    each book question compile holds on its answer (answer mismatch, unverified, unanswerable), with
   (G2)              the blind re-solve and Samuel's G2 recommendation: release, fix the key, hold or exclude; decisions
                     are appended to reviews/<book>/book-questions-g2.json (book_questions.py) and compile applies them.
+  Held generation   every question family and widget template S6/S7 held (nothing generated from it), with the
+                    checks' reasons: drop it, or send it back with a note to be authored again (book_record_held.py
+                    reauthor); decisions are appended to reviews/<book>/held-generation.json (held.py).
   Maths reading     where the two readings of a page-image book's formula disagree (book_record_maths.py,
                     book-records/<book>/maths-reading/), a person says what is printed; decisions are appended to
                     reviews/<book>/maths-reading.json (maths_reading.py).
@@ -62,6 +65,7 @@ import book_questions  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
+import held  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 GT_DIR = HERE.parent
@@ -506,6 +510,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(tiers.summary(q["book"]))
             if u.path == "/api/tiers/item":
                 return self.send_json(tiers.detail(q["book"], q["ref"]))
+            if u.path == "/api/held/books":
+                return self.send_json(held.books())
+            if u.path == "/api/held":
+                return self.send_json(held.summary(q["book"]))
+            if u.path == "/api/held/item":
+                return self.send_json(held.detail(q["book"], q["kind"], q["file"]))
             if u.path == "/api/generated/books":
                 return self.send_json(generated.books())
             if u.path == "/api/generated":
@@ -556,6 +566,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"ok": True, "decision": maths_reading.decide(body)})
             if u.path == "/api/tiers/decision":
                 return self.send_json({"ok": True, "decision": tiers.decide(body)})
+            if u.path == "/api/held/decision":
+                return self.send_json({"ok": True, "decision": held.decide(body)})
             if u.path == "/api/generated/decision":
                 return self.send_json({"ok": True, "decision": generated.decide(body)})
         except (FileNotFoundError, KeyError, ValueError, StopIteration) as e:

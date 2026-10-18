@@ -62,7 +62,7 @@ def covering(runs: list[Path], slugs: list[str]) -> list[Path]:
 def unit_dir(book: str, src: Path, slugs: list[str], name: str) -> Path:
     """The unit's own files of a book-wide folder (families, widget templates: named <lesson>-<objective>--<id>.json), linked into a
     work folder, so a pass that reads a whole folder sees this unit only and never re-grades or re-writes another's."""
-    d = HERE / "work" / book / "unit-view" / name
+    d = HERE / "work" / book / "unit-view" / slugs[0] / name   # one per unit: units may run side by side
     d.mkdir(parents=True, exist_ok=True)
     for f in d.iterdir():
         f.unlink()
@@ -101,7 +101,7 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
     if not final:
         raise SystemExit(f"no S5 final run for {slugs}: run `s5 … --stage final` first")
     # the passes write this unit's files in a work folder; they are merged into the book's after (other units kept)
-    wout = HERE / "work" / book / "unit-view" / "generated"
+    wout = HERE / "work" / book / "unit-view" / slugs[0] / "generated"
     wout.mkdir(parents=True, exist_ok=True)
     for f in wout.glob("*.json"):
         f.unlink()
@@ -133,6 +133,14 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
     for f in [cat, *bundles]:
         n = merge_unit(f, gdir / f.name, slugs)
         print(f"finished: {n} row(s) of {slugs[0]}… into {(gdir / f.name).relative_to(HERE)}", file=sys.stderr)
+    for f in (gq_out, wq_out):   # a file the unit no longer makes (every family held): its old rows go
+        if f not in bundles and (gdir / f.name).exists():
+            d = json.loads((gdir / f.name).read_text())
+            before = len(d.get("questions") or [])
+            d["questions"] = [q for q in d.get("questions") or [] if not in_lessons(q.get("lo_id"), slugs)]
+            if len(d["questions"]) != before:
+                (gdir / f.name).write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
+                print(f"finished: {before - len(d['questions'])} old row(s) of {slugs[0]}… removed from {(gdir / f.name).relative_to(HERE)}", file=sys.stderr)
     return 0
 
 
@@ -258,6 +266,147 @@ def gq(*argv: str) -> None:
         raise SystemExit(f"generate_questions.py {' '.join(argv[:4])} … failed ({p.returncode})")
 
 
+def held_ledger(book: str) -> Path:
+    return HERE / "teaching" / book / "held.json"
+
+
+def record_held(book: str, kind: str, name: str, out: str, how: str) -> None:
+    """Why a family or widget template was held (teaching/<book>/held.json, format `ainext.held/1`), for the review
+    tool's Held generation task: the check's lines that name it."""
+    stem = name.removesuffix(".json")
+    obj, _, slug = stem.partition("--")
+    tpl = f"tpl:{obj}:{slug}"
+    reasons = [l.strip().removeprefix("x ").strip() for l in out.splitlines()
+               if l.strip().startswith("x ") and (name in l or re.search(re.escape(tpl) + r"\b", l))]
+    p = held_ledger(book)
+    doc = json.loads(p.read_text()) if p.exists() else {"format": "ainext.held/1", "book": book, "items": {}}
+    doc["items"][f"{kind}:{name}"] = {"kind": kind, "file": name, "objective": f"lo:{obj}", "lesson": obj.rsplit("-", 1)[0],
+                                      "reasons": list(dict.fromkeys(reasons)) or ["the check refused it (no line named it)"],
+                                      "held_by": how, "at": __import__("datetime").date.today().isoformat()}
+    p.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+
+
+def author_again(book: str, slugs: list[str], objectives: list[str], notes: dict[str, str | None], cap: float) -> Path:
+    """S6's author for the named objectives only (book_record_held.py reauthor: the families a person sent back), with
+    each held family and why it was held, and the person's note, beside the objective's description: Samuel's author
+    prompt shows the description, so this is how the author learns what to change. Writes and checks the specs as
+    s6-author does; returns the run."""
+    import fanout  # noqa: PLC0415
+    import generate_questions as GQ  # noqa: PLC0415
+    from families import spec as FS  # noqa: PLC0415
+    view = book_view(book, slugs)
+    bk = book_config.load_book(view)
+    fam = families_dir(book)
+    specs, _problems = FS.load_dir(fam)
+    cat = covering(latest(book, "misconceptions", "s5-draft"), slugs)
+    if not cat:
+        raise SystemExit(f"no S5 draft for {slugs}")
+    entries, _alias = GQ.load_catalogue(cat[-1])
+    args = GQ.author_args(bk, specs, GQ.book_objectives(bk), entries, False, [], question_figures(book, unit_bundles(book, slugs)))
+    led = json.loads(held_ledger(book).read_text()) if held_ledger(book).exists() else {"items": {}}
+    keep = []
+    for o in args["objectives"]:
+        if o["lo_id"] not in objectives:
+            continue
+        sent = [(n, led["items"].get(f"family:{n}", {})) for n in notes if f"lo:{n.partition('--')[0]}" == o["lo_id"]]
+        o["description"] = (o.get("description") or "") + "".join(
+            f"\n\nA PERSON SENT BACK an earlier family for this objective ({n}): it was held because "
+            f"{'; '.join(e.get('reasons') or ['the checks refused it'])}. Their note: {notes[n]}. Its spec was: "
+            f"{(fam / ('_held--' + n)).read_text()[:3000] if (fam / ('_held--' + n)).exists() else '(gone)'}. "
+            "Write a family that does what it meant to, without those faults." for n, e in sent)
+        o["tier_gaps"] = o.get("tier_gaps") or ["standard"]   # a sent-back family is wanted even past the floor
+        keep.append(o)
+    if not keep:
+        raise SystemExit(f"none of {objectives} is an objective of {slugs}")
+    args["objectives"] = keep
+    copy = EW.default_out(book, "families", "s6-reauthor.bookrecord")
+    print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", args, copy)), file=sys.stderr)
+    run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(book)], cap, "s6-author", book, "families", stage="S6")
+    written = fanout.write_specs(run, fam, view)
+    print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
+    hold_malformed(book, slugs, view)
+    return run
+
+
+def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
+    """generate_questions.py --check on the unit's families; a family it refuses is held, `_held--<file>` (Samuel's
+    convention, FR-1101: nothing is instantiated from a malformed spec), so one bad family never stops the unit (nor
+    makes the fan-out pay to author them all again). The held files and their problems are printed; a person may fix
+    and un-hold one."""
+    fam = families_dir(book)
+    held: list[str] = []
+    for _round in range(4):   # holding one can bring the next problem to light (a check stops at some)
+        argv = ["uv", "run", "generate_questions.py", "--families", str(unit_dir(book, fam, slugs, "families")), "--book", str(view), "--check"]
+        p = subprocess.run(argv, cwd=HERE, text=True, capture_output=True)
+        out = p.stdout + p.stderr
+        bad = set(re.findall(r"^\s*x ([A-Za-z0-9._-]+\.json):", out, re.M))
+        # two families whose item ids would collide ("tpl:<obj>:<a> and tpl:<obj>:<b> share …"): the second is held
+        bad |= {f"{o}--{b}.json" for o, b in re.findall(r"^\s*x tpl:[a-z0-9-]+:[a-z0-9-]+ and tpl:([a-z0-9-]+):([a-z0-9-]+) share", out, re.M)}
+        # families that evaluate to nothing ("families that produced nothing: tpl:<obj>:<slug>, …"): held
+        for line in re.findall(r"families that produced nothing: (.*)$", out, re.M):
+            bad |= {f"{o}--{b}.json" for o, b in re.findall(r"tpl:([a-z0-9-]+):([a-z0-9-]+)", line)}
+        # a family whose parent is not a book question of the unit (FR-1101: an anchor book question; S6 has
+        # written "q:<objective>:none" for an objective with none)
+        cfg = json.loads(view.read_text())
+        qids = {q["id"] for b in cfg.get("bundles") or [] for q in json.loads((book_config.REPO_ROOT / b).read_text()).get("questions") or []}
+        for f in unit_dir(book, fam, slugs, "families").glob("*.json"):
+            parent = json.loads(f.read_text()).get("parent_question_id")
+            if parent not in qids:
+                bad.add(f.name)
+                out += f"\n  x {f.name}: its parent {parent!r} is not a book question of the unit (FR-1101)"
+        bad = sorted(n for n in bad if (fam / n).exists())
+        if not bad:
+            break
+        for name in bad:
+            (fam / name).rename(fam / f"_held--{name}")
+            record_held(book, "family", name, out, "S6 check (generate_questions.py --check)")
+        held += bad
+        print(f"held {len(bad)} malformed famil(ies) (_held--): {bad}\n" + "\n".join(l for l in out.splitlines() if l.strip().startswith("x ")),
+              file=sys.stderr)
+    unit_dir(book, fam, slugs, "families")   # relinked without the held ones
+    gq(*argv[3:])   # what is left must pass
+    return held
+
+
+def merge_author(book: str, slugs: list[str], run: Path) -> list[str]:
+    """The runbook's merge of an S7 author run writes the unit's templates. It refuses a templates folder holding any it
+    did not write (another unit's), so it writes into the unit's own, empty folder; the templates are then copied into
+    the book's (teaching/<book>/widgets/), never overwriting one."""
+    wdir = widgets_dir(book)
+    wdir.mkdir(parents=True, exist_ok=True)
+    fresh = HERE / "work" / book / "unit-view" / slugs[0] / "widgets-new"
+    fresh.mkdir(parents=True, exist_ok=True)
+    for f in fresh.glob("*.json"):
+        f.unlink()
+    gw("--merge-author-runs", str(run), "--merged", str(HERE / "runs" / book / "widgets" / "author-merged.json"),
+       "--write-templates", str(fresh))
+    added = []
+    for f in sorted(fresh.glob("*.json")):
+        if not (wdir / f.name).exists():
+            (wdir / f.name).write_bytes(f.read_bytes())
+            added.append(f.name)
+    print(f"wrote {len(added)} template(s) of {slugs[0]}… to {wdir.relative_to(HERE)}", file=sys.stderr)
+    return added
+
+
+def hold_malformed_templates(book: str, slugs: list[str], wdir: Path, argv: list[str]) -> list[str]:
+    """A widget template generate_widget_questions.py rejects ("a malformed template renders nothing") moves to
+    teaching/<book>/widgets-held/, as Samuel's runbook holds them, so the unit's other templates are still verified."""
+    p = subprocess.run(["uv", "run", "generate_widget_questions.py", *argv], cwd=HERE, text=True, capture_output=True)
+    out = p.stdout + p.stderr
+    bad = sorted(set(re.findall(r"^\s*x ([A-Za-z0-9._-]+\.json):", out, re.M))) if p.returncode else []
+    held = HERE / "teaching" / book / "widgets-held"
+    held.mkdir(parents=True, exist_ok=True)
+    for name in bad:
+        if (wdir / name).exists():
+            (wdir / name).rename(held / name)
+            record_held(book, "template", name, out, "S7 verify (generate_widget_questions.py)")
+    if bad:
+        print(f"held {len(bad)} malformed widget template(s) → widgets-held/: {bad}\n"
+              + "\n".join(l for l in out.splitlines() if l.strip().startswith("x ")), file=sys.stderr)
+    return bad
+
+
 TRIAL_DSN = "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_bookrecord_trial"
 
 
@@ -341,14 +490,19 @@ def main(argv: list[str]) -> int:
                 print(f"S7 verify: no widget template for {a.lessons} (the author's gaps go to Samuel): nothing to verify",
                       file=sys.stderr)
                 return 0
+            hold_malformed_templates(a.book, a.lessons, wdir, [*common, "--verify-args", str(wargs)])
+            if not any(unit_dir(a.book, wdir, a.lessons, "widgets").glob("*.json")):
+                print("S7 verify: every template of the unit was malformed and is held: nothing to verify", file=sys.stderr)
+                return 0
+            common[1] = str(unit_dir(a.book, wdir, a.lessons, "widgets"))
             gw(*common, "--verify-args", str(wargs))
         copy = EW.default_out(a.book, "widgets", f"s7-{mode}.bookrecord")
         print(EW.summary(EW.write(HERE / "runbook" / "widgets.workflow.js", json.loads(wargs.read_text()), copy)), file=sys.stderr)
         if a.args_only:
             return 0
         run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s7-{mode}", a.book, "widgets", stage="S7")
-        if mode == "author":   # the runbook's merge (one run) writes the templates, never overwriting
-            gw("--merge-author-runs", str(run), "--merged", str(runs / "author-merged.json"), "--write-templates", str(wdir))
+        if mode == "author":
+            merge_author(a.book, a.lessons, run)
         return 0
     if a.cmd == "s6-author":
         import fanout  # noqa: PLC0415  (write_specs: the fan-out's own spec writer)
@@ -370,7 +524,7 @@ def main(argv: list[str]) -> int:
         run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, "s6-author", a.book, "families", stage="S6")
         written = fanout.write_specs(run, fam, view)
         print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
-        gq("--families", str(unit_dir(a.book, fam, a.lessons, "families")), "--book", str(view), "--check")
+        hold_malformed(a.book, a.lessons, view)
         return 0
     if a.cmd == "s6-grade":
         view = book_view(a.book, a.lessons)

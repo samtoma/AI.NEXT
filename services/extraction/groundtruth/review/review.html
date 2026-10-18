@@ -720,14 +720,14 @@ $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
 /* ---------- the tasks ---------- */
-const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers", objectives: "› Objectives (G1)", maths: "› Maths reading", g2: "› Book questions (G2)" };
+const TASKS = { home: "", label: "› Label extraction", misprints: "› Misprints", generated: "› Generated content", answers: "› Generated answers", tiers: "› Question tiers", objectives: "› Objectives (G1)", maths: "› Maths reading", g2: "› Book questions (G2)", held: "› Held generation" };
 function show(v) {
   view = v; editing = false;
   $("#crumb").textContent = TASKS[v] ?? "";
   $("#home").hidden = v !== "home"; $("#work").hidden = v === "home";
   $("#tools").innerHTML = "";
   if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
-  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : v === "g2" ? openG2() : openGenerated();
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : v === "g2" ? openG2() : v === "held" ? openHeld() : openGenerated();
 }
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
@@ -737,18 +737,21 @@ const homeBook = () => store.get("rv-home-book") || "all";
 function openOnHomeBook(lessons) {
   const b = homeBook();
   if (b === "all") return;
-  for (const k of ["rv-abook", "rv-tbook", "rv-mbook", "rv-g2book", "rv-gbook", "rv-obook"]) store.set(k, b);
+  for (const k of ["rv-abook", "rv-tbook", "rv-mbook", "rv-g2book", "rv-gbook", "rv-obook", "rv-hbook"]) store.set(k, b);
   const last = store.get("rv-lesson") || "";
   if (!last.startsWith(b + "|")) { const l = lessons.find((x) => x.book === b); if (l) store.set("rv-lesson", `${l.book}|${l.slug}`); }
 }
 async function renderHome() {
   const [ls0, ms0, gb, ab, tb, ob, mb, g2b] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books"), getJSON("/api/g2/books")]);
-  const allBooks = [...new Set([...ls0.map((l) => l.book), ...ms0.map((m) => m.book), ...gb, ...ab, ...tb, ...ob, ...mb, ...g2b])].sort();
+  const hb0 = await getJSON("/api/held/books");
+  const allBooks = [...new Set([...ls0.map((l) => l.book), ...ms0.map((m) => m.book), ...gb, ...ab, ...tb, ...ob, ...mb, ...g2b, ...hb0])].sort();
   let hb = homeBook();
   if (hb !== "all" && !allBooks.includes(hb)) { hb = "all"; store.set("rv-home-book", hb); }
   const mine = (b) => hb === "all" || b === hb;
   const [ls, ms, gbooks, abooks, tbooks, obooks, mbooks, g2books] = [ls0.filter((l) => mine(l.book)), ms0.filter((m) => mine(m.book)), gb.filter(mine), ab.filter(mine), tb.filter(mine), ob.filter(mine), mb.filter(mine), g2b.filter(mine)];
   const g2s = (await Promise.all(g2books.map((b) => getJSON(`/api/g2?book=${encodeURIComponent(b)}`)))).flat();
+  const hs = (await Promise.all(hb0.filter(mine).map((b) => getJSON(`/api/held?book=${encodeURIComponent(b)}`)))).flat();
+  const hOpen = hs.filter((h) => h.state === "open" || h.state === "changed");
   const g2Open = g2s.filter((x) => x.state === "open" || x.state === "changed");
   const mrs = (await Promise.all(mbooks.map((b) => getJSON(`/api/maths?book=${encodeURIComponent(b)}`)))).flat();
   const mrOpen = mrs.filter((m) => m.state === "open" || m.state === "changed");
@@ -828,6 +831,12 @@ async function renderHome() {
         <span class="n">${tOpen.length} <small>to decide</small></span>
         <span class="muted">${ts.filter((t) => t.status === "disagreed").length} disagreements · ${ts.filter((t) => t.state === "agreed").length} agreed · ${ts.length} questions tiered</span>
       </button>
+      <button class="task" id="t-held">
+        <span class="t">Held generation</span>
+        <span class="muted">Question families and widget templates the checks refused. Nothing was generated from them, so students never see them, but their objective goes without that practice. Drop each, or send it back with a note to be written again.</span>
+        <span class="n">${hOpen.length} <small>to decide</small></span>
+        <span class="muted">${hs.filter((h) => h.kind === "family").length} families · ${hs.filter((h) => h.kind === "template").length} widget templates · ${hs.filter((h) => h.state === "send_back").length} sent back, waiting to be written again · ${hs.filter((h) => h.state === "drop").length} dropped</span>
+      </button>
     </div></div>`;
   $("#hbook").onchange = () => { store.set("rv-home-book", $("#hbook").value); renderHome(); };
   if ($("#brefresh")) $("#brefresh").onclick = () => refreshBook(hb);
@@ -837,6 +846,7 @@ async function renderHome() {
   $("#t-gen").onclick = () => show("generated");
   $("#t-ans").onclick = () => show("answers");
   $("#t-tier").onclick = () => show("tiers");
+  $("#t-held").onclick = () => show("held");
   $("#t-obj").onclick = () => show("objectives");
   $("#t-mr").onclick = () => show("maths");
   $("#t-g2").onclick = () => show("g2");
@@ -1183,6 +1193,111 @@ async function ansDecide(decision, note, correction) {
   const vis = aVisible().map((x) => x.i);
   ai = vis.find((i) => i > ai) ?? vis[0] ?? -1;
   renderAns();
+}
+
+/* ---------- Held generation ---------- */
+let heldRows = [], hi = -1;
+const HSTATE = { open: "To decide", changed: "Changed since it was decided", drop: "Dropped", send_back: "Sent back: waiting to be written again", reauthored: "Sent back and written again" };
+function hVisible() {
+  const l = $("#hlesson").value, w = $("#hshow").value;
+  return heldRows.map((h, i) => ({ h, i })).filter(({ h }) => (l === "all" || h.lesson === l) && (
+    w === "all" ? true : w === "todo" ? h.state === "open" || h.state === "changed" : !(h.state === "open" || h.state === "changed")));
+}
+async function openHeld() {
+  const books = await getJSON("/api/held/books");
+  $("#tools").innerHTML = `
+    <label>Book <select id="hbook">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <label>Lesson <select id="hlesson"></select></label>
+    <label>Show <select id="hshow"><option value="todo">To decide</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <div class="progress"><div class="bar"><div id="hbar" style="width:0"></div></div><div id="hprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · d drop · s write a note to send back</span>`;
+  if (!books.length) { $("#list").innerHTML = '<p class="muted" style="padding:8px">Nothing is held.</p>'; $("#detail").innerHTML = ""; return; }
+  const saved = store.get("rv-hbook"); if (saved && books.includes(saved)) $("#hbook").value = saved;
+  $("#hbook").onchange = () => { store.set("rv-hbook", $("#hbook").value); $("#hbook").blur(); loadHeld(); };
+  $("#hshow").value = store.get("rv-hshow") || "todo";
+  $("#hshow").onchange = () => { store.set("rv-hshow", $("#hshow").value); $("#hshow").blur(); hi = -1; renderHeld(); };
+  $("#hlesson").onchange = () => { $("#hlesson").blur(); hi = -1; renderHeld(); };
+  await loadHeld();
+}
+async function loadHeld() {
+  heldRows = await getJSON(`/api/held?book=${encodeURIComponent($("#hbook").value)}`);
+  const lessons = [...new Set(heldRows.map((h) => h.lesson))];
+  $("#hlesson").innerHTML = `<option value="all">All lessons</option>${lessons.map((l) => `<option>${esc(l)}</option>`).join("")}`;
+  hi = -1; renderHeld();
+}
+function renderHeld() {
+  const left = heldRows.filter((h) => h.state === "open" || h.state === "changed").length;
+  $("#hbar").style.width = `${heldRows.length ? (100 * (heldRows.length - left)) / heldRows.length : 0}%`;
+  $("#hprog").textContent = `${heldRows.length - left} of ${heldRows.length} decided · ${heldRows.filter((h) => h.state === "send_back").length} waiting to be written again`;
+  const vis = hVisible();
+  if (!vis.some((x) => x.i === hi)) hi = vis[0]?.i ?? -1;
+  const dot = (h) => h.state === "open" || h.state === "changed" ? '<span class="dot s-disp">!</span>' : '<span class="dot s-done">✓</span>';
+  let last = null, html = "";
+  for (const { h, i } of vis) {
+    if (h.lesson !== last) { html += `<h3>${esc(h.lesson)}</h3>`; last = h.lesson; }
+    html += `<button class="rec${i === hi ? " sel" : ""}" data-i="${i}">${dot(h)}<span class="t">${h.kind === "template" ? "Widget · " : ""}${esc(h.title)}</span></button>`;
+  }
+  $("#list").innerHTML = html || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { hi = Number(b.dataset.i); renderHeld(); }));
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (hi < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2><div class="muted">Every held item in this view has a decision.</div></div>'; return; }
+  showHeld(heldRows[hi]);
+}
+async function showHeld(row) {
+  const book = $("#hbook").value, me = meNow();
+  const d = await getJSON(`/api/held/item?book=${encodeURIComponent(book)}&kind=${encodeURIComponent(row.kind)}&file=${encodeURIComponent(row.file)}`);
+  const sp = d.spec || {}, dec = d.decision;
+  $("#detail").innerHTML = `<div class="card">
+    <div class="muted">${d.kind === "template" ? "Widget template" : "Question family"} · ${esc(book)} · ${esc(d.lesson)} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(d.file)}</span></div>
+    <h2>${esc((d.file || "").replace(/\.json$/, "").split("--")[1] || d.file)}</h2>
+    ${d.objective_node ? `<div class="why"><span class="label">Objective ${esc(d.objective)}</span><div><b>${esc(d.objective_node.label || "")}</b></div>${d.objective_node.description ? `<div class="muted">${esc(d.objective_node.description)}</div>` : ""}</div>` : ""}
+    <div class="warn"><span class="label">Why it was held${d.held_by ? ` (${esc(d.held_by)}${d.held_at ? `, ${esc(d.held_at)}` : ""})` : ""}</span>
+      ${(d.reasons || []).length ? d.reasons.map((r) => `<div class="noformat">${esc(r)}</div>`).join("") : '<div class="muted">No reason recorded (book_record_held.py backfill).</div>'}</div>
+    <div class="gen"><span class="label">What it would generate</span>
+      ${sp.stem ? `<div>${md(sp.stem)}</div>` : ""}
+      ${sp.tier ? `<div class="muted">Tier ${esc(sp.tier)}${sp.answer_type ? ` · ${esc(sp.answer_type)} answer` : ""}${sp.kind ? ` · ${esc(sp.kind)}` : ""}</div>` : ""}
+      ${(sp.solution || []).length ? `<ol style="margin:6px 0 0 18px">${sp.solution.map((x) => `<li>${md(String(x))}</li>`).join("")}</ol>` : ""}
+      <details style="margin-top:6px"><summary class="muted">The whole spec</summary><pre class="noformat" style="white-space:pre-wrap;font-size:12px">${esc(JSON.stringify(sp, null, 1))}</pre></details></div>
+    ${d.parent ? `<div class="why"><span class="label">Its parent book question (${esc(d.parent.id)}, printed p.${esc(d.parent.source_page ?? "?")})</span><div>${md(d.parent.stem || "")}</div>${d.parent.answer ? `<div>Answer: <b>${md(String(d.parent.answer))}</b></div>` : ""}</div>`
+      : `<div class="muted" style="margin:8px 0">Its parent (${esc(sp.parent_question_id || "none")}) is not a book question of the lesson.</div>`}
+    <div class="who">${dec ? `<b>${esc(HSTATE[d.state] || dec.decision)}</b>, by ${esc(dec.by)} on ${esc(dec.at)}${dec.note ? ` · ${esc(dec.note)}` : ""}${d.state === "changed" ? " · <b>the held file changed since</b>, so it is back" : ""}${d.reauthored ? ` · written again ${esc(d.reauthored)}` : ""}` : "Not decided yet"}</div>
+    <label style="display:block;margin-top:8px">What to change, if you send it back (the author reads this beside the held spec)
+      <textarea id="hnote" rows="2" style="width:100%" ${!me ? "disabled" : ""}>${esc(dec?.note || "")}</textarea></label>
+    <div class="actions">
+      <button id="hdrop" ${!me ? "disabled" : ""}>Drop (d)</button>
+      <button class="confirm" id="hsend" ${!me ? "disabled" : ""}>Send back</button>
+      <span class="grow"></span><button id="hprev">‹ Prev (k)</button><button id="hnext">Next (j) ›</button>
+    </div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
+    <div class="muted" style="margin-top:8px">Drop: it stays held, decided. Send back: book_record_held.py reauthor writes it again (S6 or S7 for this objective only, a model call, about $0.10–0.20 each), then Refresh brings it in. Decisions are kept in services/extraction/reviews/${esc(book)}/held-generation.json.</div>
+  </div>`;
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, ignoredClasses: ["noformat"] });
+  $("#hdrop").onclick = () => heldDecide("drop");
+  $("#hsend").onclick = () => heldDecide("send_back");
+  $("#hnote").onkeydown = (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) heldDecide("send_back"); e.stopPropagation(); };
+  $("#hprev").onclick = () => heldMove(-1); $("#hnext").onclick = () => heldMove(1);
+  if (d.printed_page) { offset = d.pdf_page ? d.pdf_page - d.printed_page : 0; page = d.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(book)}`); }
+}
+function heldMove(dir) {
+  const vis = hVisible().map((x) => x.i); if (!vis.length) return;
+  let p = vis.indexOf(hi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1);
+  hi = vis[p]; renderHeld();
+}
+async function heldDecide(decision) {
+  const row = heldRows[hi]; if (!row || !meNow()) return;
+  const note = ($("#hnote")?.value || "").trim();
+  if (decision === "send_back" && !note) { $("#saved").textContent = "Write what to change before sending it back"; $("#hnote")?.focus(); return; }
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/held/decision", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ book: $("#hbook").value, kind: row.kind, file: row.file, decision, note, by: meNow() }) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  row.state = decision;
+  const vis = hVisible().map((x) => x.i);
+  hi = vis.find((i) => i > hi) ?? vis[0] ?? -1;
+  renderHeld();
 }
 
 /* ---------- Question tiers ---------- */
@@ -1929,7 +2044,7 @@ async function genDecide(decision, note, correction) {
 
 /* ---------- boot ---------- */
 $("#me").value = store.get("gt-me") || "";
-$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); else if (view === "g2" && g2i >= 0) showG2(g2Rows[g2i]); };
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); else if (view === "g2" && g2i >= 0) showG2(g2Rows[g2i]); else if (view === "held" && hi >= 0) showHeld(heldRows[hi]); };
 show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
@@ -1969,6 +2084,12 @@ document.addEventListener("keydown", (e) => {
     else if (e.key === "1" && meNow()) mathsDecide("first");
     else if (e.key === "2" && meNow() && mrRows[mri]) mathsDecide("second");
     else if (e.key === "e") { e.preventDefault(); mathsOther(); }
+    return;
+  }
+  if (view === "held") {
+    if (e.key === "j") heldMove(1); else if (e.key === "k") heldMove(-1);
+    else if (e.key === "d" && meNow()) heldDecide("drop");
+    else if (e.key === "s" && meNow()) { e.preventDefault(); $("#hnote")?.focus(); }
     return;
   }
   if (view === "tiers") {

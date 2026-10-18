@@ -282,7 +282,7 @@ def apply_book_reviews(cur, doc: dict, dry_run: bool) -> dict:
                 out["absent"].append(st["question"])
             continue
         status, reviewed_by, source, lo, hold = row
-        gen = str(st.get("what") or "").startswith("generated ")
+        gen = st.get("what") in ("generated question", "generated widget")   # a generated ANSWER is a book question's
         if (source == "seed") == gen or lo not in course_los:
             raise SystemExit(f"REVIEW STAMPS NOT APPLIED: {st['question']} is not a {'generated' if gen else 'book'} question "
                              f"of {course} (source {source}, objective {lo})")

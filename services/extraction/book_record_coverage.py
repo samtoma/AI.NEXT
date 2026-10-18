@@ -44,6 +44,8 @@ THE CHECKS (Samuel's id where it is his check; † a check the book-record line 
     statements_served †     the records' statements filed under an objective = statements in the content files
     statements_checked †    the statements the tutor quotes = those S2's provenance check kept (containment, checked,
                             re-audited) + those it flagged that a person has since labelled in Label extraction
+    held_decided †          families and widget templates S6/S7 held = those a person dropped + those sent back and
+                            written again (book_record_held.py; the review tool's Held generation task)
 """
 from __future__ import annotations
 
@@ -79,7 +81,8 @@ def objective_of(slug: str, record: dict) -> dict[str, str]:
 def input_files(book: str, slugs: list[str], compiled: Path) -> list[Path]:
     """Every file the audit reads, for its fingerprint: the load refuses an audit whose inputs have changed since."""
     fs = [HERE / "book-records" / book / "lessons.json", HERE / "book-records" / book / "misprint-candidates.json",
-          HERE / "groundtruth" / book / "misprint-decisions.json", HERE / "reviews" / book / "maths-reading.json"]
+          HERE / "groundtruth" / book / "misprint-decisions.json", HERE / "reviews" / book / "maths-reading.json",
+          HERE / "teaching" / book / "held.json", HERE / "reviews" / book / "held-generation.json"]
     fs += [HERE / "book-records" / book / f"{s}.json" for s in slugs]
     fs += [HERE / "book-records" / book / "maths-reading" / f"{s}.json" for s in slugs]
     fs += [HERE / "teaching" / book / "visuals" / f"{s}.json" for s in slugs]
@@ -441,6 +444,22 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
                 c.got += 1
             else:
                 c.fail(f"item {it['id']}", f"the check could not confirm it says what the page prints: {e.get('note') or ''}"[:200])
+    checks.append(c)
+
+    # ---- held_decided (book_record_held.py: what S6/S7 held, nothing generated from it) -------------------------
+    import book_record_held as BRH  # noqa: PLC0415
+    c = Check("held_decided", "Held families and widget templates = those a person dropped + those sent back and written again")
+    for r in BRH.state(book.book):
+        if r["lesson"] not in slugs:
+            continue
+        c.want += 1
+        if r["state"] in ("drop", "reauthored"):
+            c.got += 1
+        elif r["state"] == "send_back":
+            c.fail(f"{r['kind']} {r['file']}", "sent back, not written again yet (book_record_held.py reauthor)")
+        else:
+            c.fail(f"{r['kind']} {r['file']}", ("changed since it was decided: " if r["state"] == "changed" else "held, not decided: ")
+                   + "; ".join(r["reasons"])[:160])
     checks.append(c)
     return checks
 

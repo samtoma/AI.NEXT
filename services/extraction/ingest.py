@@ -242,11 +242,11 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
                     [U("book_record_maths.py", "run", bk, *slugs, *c(), w=("pymupdf",))]))
         out.append(("S2", all_of(lambda s: ex("book-records", bk, "provenance", f"{s}.json")),
                     [U("book_record_provenance.py", "run", bk, *slugs, *c(), w=("pymupdf",))]))
-    out.append(("S1", ex("teaching", bk, "objectives", f"{ch}.json"), [U("book_record_objectives.py", "run", bk, str(unit), *slugs, *c())]))
+    out.append(("S1", ex("teaching", bk, "objectives", f"{ch}.json"), [U("book_record_objectives.py", "run", bk, str(unit), *slugs, *c(), w=("jsonschema",))]))
     out.append(("G1", ex("teaching", bk, "links", f"{ch}.json"),
                 "the objectives are not approved: the review tool's Objectives (G1) task, then book_record_objectives.py apply"))
-    out.append(("S1F", ex("teaching", bk, "filing", f"{ch}.json"), [U("book_record_filing.py", "run", bk, str(unit), *c())]))
-    out.append(("S1R", False, [U("book_record_remap.py", bk, str(unit))]))
+    out.append(("S1F", ex("teaching", bk, "filing", f"{ch}.json"), [U("book_record_filing.py", "run", bk, str(unit), *c(), w=("jsonschema",))]))
+    out.append(("S1R", False, [U("book_record_remap.py", bk, str(unit), w=("jsonschema",))]))
     out.append(("S2", all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")),
                 [U("answer_gen.py", "run", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]
                 + [U("answer_gen.py", "check-printed", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]))
@@ -356,7 +356,9 @@ def run_unit(name: str, unit: int, dsn: str | None, cap: float | None, dry: bool
             if dry:   # a later stage's input (the S5 draft) does not exist yet in a dry run
                 done.append(f"{stage}: {' '.join(x if x is not None else '<an earlier stage s output>' for x in argv)}")
                 continue
-            for attempt in (1, 2):   # an agent can return an incomplete batch now and then: one retry before stopping
+            paid_once = any(x in argv for x in ("s6-author", "s7-author"))   # their runs are saved and their specs written:
+            for attempt in ((1,) if paid_once else (1, 2)):   # a retry would pay to author again. Others: an agent can
+                # return an incomplete batch now and then, so one retry before stopping
                 with log.open("a") as fh:
                     fh.write(f"\n== {stage}: {' '.join(argv)}" + (" (retry)" if attempt == 2 else "") + "\n")
                     fh.flush()
