@@ -1,0 +1,222 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "5f952b2cf9b05a49fe165e36d0fc22664147f3584255b37a857700fc549b45ee",
+  "generated_sha256": "fa2819b131dead076fec2b43c7fadb978d1e6c25be56e4c84b3828eca92f06aa",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u6-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added; the runtime falls back to the canonical solution."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's wording 'solution set', 'ordered pair' and 'straight line L' was kept as printed; no new terms were introduced."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added and there were no distractors to assign. I did not open the figure images, because no question was judged."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "other",
+     "text": "In the two-digit-number example the book lets x be the units digit and y the tens digit (the reverse of the usual convention). I did not write against this, but a reviewer may want to check it."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u6-2-1:touch-means-two-roots",
+     "lo_id": "lo:pp3u6-2-1",
+     "label": "A touching curve read as having two distinct roots",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The book's only worked case has two crossing points. The tangent case is not in the evidence. Step 3 brings in the discriminant, which is outside this objective and this book."
+    },
+    {
+     "id": "mc:pp3u6-2-1:no-meeting-read-as-every-x",
+     "lo_id": "lo:pp3u6-2-1",
+     "label": "No meeting point read as \"every x is a solution\"",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation is mathematically correct. But the book and its evidence never treat a curve that misses the x-axis or the empty solution set. The claimed error has no support, and the cited evidence is empty."
+    },
+    {
+     "id": "mc:pp3u6-2-1:roots-read-from-coefficients",
+     "lo_id": "lo:pp3u6-2-1",
+     "label": "Roots read off the numbers in the equation",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The error has no support in the evidence. The refutation teaches 'two, one, or none' and the empty set, which go beyond the book. The signal would misdiagnose students: for x^2-4x+3 the correct roots 1 and 3 are themselves numbers written in the equation."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence supplied is a linking remark that defines the quadratic equation ax^2+bx+c=0. It describes no error. There are no caution boxes, no wrong options and no re-solve wrong turns. I added no entries, so the runtime will fall back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The canonical solutions use 'solution set' and 'roots'. Neither term is flagged as uncertain, but no refutation text was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-3",
+   "entries": [
+    {
+     "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
+     "lo_id": "lo:pp3u6-2-3",
+     "label": "Keeps the negative solution as an answer",
+     "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
+     "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
+      },
+      {
+       "step": 2,
+       "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
+      },
+      {
+       "step": 3,
+       "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
+      },
+      {
+       "step": 4,
+       "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u6-2-3:bk-example-3"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked the arithmetic: the discriminant is 26.246 and its root is about 5.123. That gives x = -2.59 and x = 116.5465116, matching the canonical solution. The refutation rejects the negative distance because x is a distance, picks the root that fits, and gives about 116.55 m. It names no outside references. It targets this specific error rather than restating the method. The signal (answering -2.59, or both values) matches the error."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u6-2-3:discriminant-sign",
+     "lo_id": "lo:pp3u6-2-3",
+     "label": "Sign of the discriminant misread",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The book's evidence for this objective never mentions the discriminant or how its sign relates to the number of roots. The entry cites no evidence. The refutation teaches outside the book: repeated roots, the empty solution set, and the curve not meeting the x-axis. The canonical example has a positive discriminant, so this error never arises there."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "other",
+     "text": "The worked example's step 3 reads 'same' and shows no expansion. I did not use it to infer any expansion-related error."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  }
+ ],
+ "totals": {
+  "objectives": 9,
+  "entries": 1,
+  "dropped": 4,
+  "stripped": 0,
+  "skipped": 1,
+  "flags": 10
+ }
+}

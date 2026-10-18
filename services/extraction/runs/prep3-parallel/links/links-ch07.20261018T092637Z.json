@@ -1,0 +1,234 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 7,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "62e1bef9d1f864b0b3358149dc370ad37d0381387561e77450dcc936b8702d6c",
+  "generated_sha256": "2dc599afbcdca611f75d587a22bf4c8f0b79c4c965fb2114536f93dd45a4abc4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 57,
+  "proposed": [
+   {
+    "src": "lo:pp3u7-1-1",
+    "dst": "lo:pp3u7-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u7-1:method-1",
+      "printed_page": 15,
+      "quote": "put f(x) = 0 and solve the resulting equation"
+     }
+    ],
+    "reason": "Finding zeroes builds on the definition of Z(f) as values where f(x)=0."
+   },
+   {
+    "src": "lo:pp3u7-1-2",
+    "dst": "lo:pp3u7-2-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u7-2:rule-3",
+      "printed_page": 17,
+      "quote": "R - the set of zeroes of the denominator"
+     }
+    ],
+    "reason": "Domain is R minus the zeroes of the denominator."
+   },
+   {
+    "src": "lo:pp3u7-2-1",
+    "dst": "lo:pp3u7-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 18,
+      "quote": "$m_1=R-\\{1\\}$, $m_2=R-\\{-2,2\\}$"
+     }
+    ],
+    "reason": "Common domain uses each fraction's domain."
+   },
+   {
+    "src": "lo:pp3u6-2-2",
+    "dst": "lo:pp3u7-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 21,
+      "quote": "x(x^2+x-6)}{(x^2-4)(x^2-9)}"
+     }
+    ],
+    "reason": "Factorizing numerator and denominator is used for reducing."
+   },
+   {
+    "src": "lo:pp3u7-2-1",
+    "dst": "lo:pp3u7-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u7-3:method-2",
+      "printed_page": 20,
+      "quote": "identify the domain of the algebraic fraction before removing the common factors"
+     }
+    ],
+    "reason": "Stating the domain is a step of reducing."
+   },
+   {
+    "src": "lo:pp3u7-3-1",
+    "dst": "lo:pp3u7-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 22,
+      "quote": "therefore $n_1(x)=\\frac{1}{x-1}$"
+     }
+    ],
+    "reason": "Equality is tested by reducing each fraction."
+   },
+   {
+    "src": "lo:pp3u7-2-2",
+    "dst": "lo:pp3u7-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 22,
+      "quote": "common domain for the two functions"
+     }
+    ],
+    "reason": "Common domain found when not equal."
+   },
+   {
+    "src": "lo:pp3u7-3-1",
+    "dst": "lo:pp3u7-4-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 25,
+      "quote": "=\\frac{5(x-2)}{(x-2)(x-3)}=\\frac{5}{x-3}"
+     }
+    ],
+    "reason": "Factorising and reducing used in addition."
+   },
+   {
+    "src": "lo:pp3u7-2-2",
+    "dst": "lo:pp3u7-4-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u7-4:linking-text-2",
+      "printed_page": 24,
+      "quote": "the common domain of the two algebraic fractions"
+     }
+    ],
+    "reason": "Operations apply on the common domain."
+   },
+   {
+    "src": "lo:pp3u7-3-1",
+    "dst": "lo:pp3u7-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 27,
+      "quote": "=\\frac{1}{3x+1}$ (The simplest form)"
+     }
+    ],
+    "reason": "Factor and cancel to simplify products."
+   },
+   {
+    "src": "lo:pp3u7-2-2",
+    "dst": "lo:pp3u7-4-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u7-4:rule-5",
+      "printed_page": 27,
+      "quote": "x is in the common domain of the two fractions"
+     }
+    ],
+    "reason": "Product domain is common domain."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "UNCLEAR",
+     "note": "Text gives the method but does not refer back to evaluating or to Z(f) from the first objective."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "The domain rule is stated in terms of the zeroes of the denominator, so it uses the method for finding zeroes."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "The example finds each fraction's domain separately and then combines them."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "The example factorizes polynomials, but it does not solve quadratic equations."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "The step explicitly requires identifying the domain before cancelling."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "The example reduces each fraction to simplest form and then compares the domains."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "The example uses the common domain of the two functions."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "The example factorizes, states the domain, and reduces the result to simplest form."
+    },
+    {
+     "i": 8,
+     "verdict": "UNCLEAR",
+     "note": "The text mentions the common domain, but the snippet is too short to show how it is used."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "The example factorizes, cancels, gives the simplest form, and states the domain."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "The product rule uses the common domain, written as R minus the union of the zeroes of the denominators."
+    }
+   ]
+  }
+ }
+}

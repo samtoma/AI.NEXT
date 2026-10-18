@@ -1,0 +1,462 @@
+{
+ "book": "prep3-parallel",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "f55be2997ed3e2458cc640396a85519ae114179cb2f9109222987c328690d041",
+  "generated_sha256": "e1ab112fa9d7e505d4d95ac8344b0d49153a0a6bff5df8068269cf365a0ca0f8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u9-1-1",
+   "entries": [
+    {
+     "id": "mc:pp3u9-1-1:chord-endpoints-off-circle",
+     "lo_id": "lo:pp3u9-1-1",
+     "label": "A chord drawn without both ends on the circle",
+     "description": "Treats a chord as any line 'across' the circle, including one that stops inside it or runs past it.",
+     "signal": "At least one endpoint is not on the circle.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The direction you drew is fine — a chord does cut across the circle."
+      },
+      {
+       "step": 2,
+       "text_md": "What a chord needs is both ENDS on the circle itself. A segment that stops inside, or runs out past the edge, is not one."
+      },
+      {
+       "step": 3,
+       "text_md": "It matters because every chord result in this unit — equal chords, distance from the centre, the diameter being longest — is about the two points where it meets the circle."
+      },
+      {
+       "step": 4,
+       "text_md": "Put both ends on the circle first, then worry about where it sits."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u9-1-1:radius-any-length",
+     "lo_id": "lo:pp3u9-1-1",
+     "label": "A radius that stops short of the circle",
+     "description": "Starts correctly at the centre but ends anywhere, as though a radius were a direction rather than a fixed length.",
+     "signal": "One end is the centre; the other is strictly inside the circle.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You started in the right place — the centre — which is the part most people get wrong."
+      },
+      {
+       "step": 2,
+       "text_md": "But a radius has to REACH the circle. It is not any segment leaving the centre; it is the fixed distance from the centre to the circle."
+      },
+      {
+       "step": 3,
+       "text_md": "That fixed distance is what makes it a circle in the first place: every point on the circle is exactly $r$ from $M$."
+      },
+      {
+       "step": 4,
+       "text_md": "So a radius always has two jobs: start at $M$, and end ON the circle."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u9-1-1:radius-not-from-centre",
+     "lo_id": "lo:pp3u9-1-1",
+     "label": "A radius drawn between two points on the circle",
+     "description": "Builds a segment with both ends on the circle and calls it a radius — the word is attached to 'a line in the circle' rather than to the centre.",
+     "signal": "Both endpoints satisfy the circle; neither is the centre.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Look at what you drew: both ends landed on the circle, and that is a real thing — it is a chord."
+      },
+      {
+       "step": 2,
+       "text_md": "A radius is the one segment that always starts at the centre $M$ and stops at the circle. Its whole job is to carry the circle's fixed distance."
+      },
+      {
+       "step": 3,
+       "text_md": "That is why every radius of a circle has the same length, and chords do not: a chord can be short or long, but a radius cannot."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, ask where the segment STARTS. Centre to circle is a radius; circle to circle is a chord."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u9-1-1:diameter-is-any-long-chord",
+     "lo_id": "lo:pp3u9-1-1",
+     "label": "A diameter taken as any long chord",
+     "description": "Knows a diameter is long and knows it is a chord, but has not attached the condition that it must pass through the centre.",
+     "signal": "Both ends on the circle, and the segment misses $M$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "What you drew IS a chord — both ends are on the circle, so you have the harder half right."
+      },
+      {
+       "step": 2,
+       "text_md": "A diameter is the chord that passes through the centre $M$. Not the longest-looking one: the one through the centre."
+      },
+      {
+       "step": 3,
+       "text_md": "Those turn out to be the same thing, and that is the theorem — the diameter is the longest chord precisely BECAUSE it goes through the centre."
+      },
+      {
+       "step": 4,
+       "text_md": "Drag one end and watch: the chord grows as it swings towards $M$, and it is longest exactly when it crosses it."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported and no entries were written. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I wrote no entries; the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "other",
+     "text": "The canonical solution for the concentric-circles example (prove AC = BD) has only Given and R.T.P and no proof. I did not use it."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u9-2-1:point-position-reversed",
+     "lo_id": "lo:pp3u9-2-1",
+     "label": "Inside and outside reversed",
+     "description": "Compares the distance from the centre with the radius the wrong way round.",
+     "signal": "A point with MA > r is called inside, or the reverse.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Comparing $MA$ with $r$ is exactly the right test."
+      },
+      {
+       "step": 2,
+       "text_md": "Further from the centre than the radius means OUTSIDE: $MA > r$ is outside, $MA < r$ is inside, $MA = r$ is on the circle."
+      },
+      {
+       "step": 3,
+       "text_md": "Picture the radius as the wall: past it is outside."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-2",
+   "entries": [
+    {
+     "id": "mc:pp3u9-2-2:tangent-cuts-circle",
+     "lo_id": "lo:pp3u9-2-2",
+     "label": "A tangent drawn cutting the circle at two points",
+     "description": "Reads 'tangent' as any line touching or crossing the circle, missing that it meets it exactly once.",
+     "signal": "The distance from the centre to the line is less than $r$, so the line is a secant.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your line does meet the circle, so you are close — but it meets it TWICE."
+      },
+      {
+       "step": 2,
+       "text_md": "A line that cuts a circle at two points is a secant. A tangent touches at exactly one point and then leaves."
+      },
+      {
+       "step": 3,
+       "text_md": "The test is a distance: measure from the centre $M$ to the line. Less than $r$ and it cuts twice; equal to $r$ and it touches once; more than $r$ and it misses."
+      },
+      {
+       "step": 4,
+       "text_md": "So a tangent is the line whose distance from the centre is exactly the radius."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u9-2-2:tangent-need-not-touch",
+     "lo_id": "lo:pp3u9-2-2",
+     "label": "A tangent drawn missing the circle altogether",
+     "description": "Reads 'tangent' as a line running alongside the circle without meeting it.",
+     "signal": "The distance from the centre to the line is greater than $r$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Running alongside the circle is the right instinct — a tangent does lie against it."
+      },
+      {
+       "step": 2,
+       "text_md": "But it has to TOUCH. Your line stays clear of the circle, so it meets it nowhere at all."
+      },
+      {
+       "step": 3,
+       "text_md": "Bring it in until the distance from the centre $M$ equals the radius exactly. That single point of contact is what makes it a tangent."
+      },
+      {
+       "step": 4,
+       "text_md": "One number decides it: distance from the centre, compared with $r$."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-4",
+   "entries": [
+    {
+     "id": "mc:pp3u9-2-4:internal-touch-add-radii",
+     "lo_id": "lo:pp3u9-2-4",
+     "label": "Adds the radii when the circles touch internally",
+     "description": "The student takes the distance between the centres as the sum of the radii even though the circles touch from inside.",
+     "signal": "For radii 10 cm and 6 cm touching internally, uses MN = 16 cm and gets a much smaller AB than 12 cm (e.g. 24 = 1/2 × 16 × AB gives AB = 3 cm).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using $MN = 10 + 6$, which is right when two circles touch from outside. You were right that the point of contact lies on the line of centers, and that is the key fact."
+      },
+      {
+       "step": 2,
+       "text_md": "When the circles touch internally, the small circle sits inside the big one. Both centers lie on the same line through $A$, on the same side of $A$. $M$ is 10 cm from $A$ and $N$ is only 6 cm from $A$, so $N$ lies between $M$ and $A$."
+      },
+      {
+       "step": 3,
+       "text_md": "So the gap between the centers is what is left of the big radius: $MN = 10 - 6 = 4$ cm. Using 16 would put $N$ beyond $A$, outside the big circle."
+      },
+      {
+       "step": 4,
+       "text_md": "The wrong base changes the answer. With $MN = 16$, $24 = \\tfrac12 \\times 16 \\times AB$ gives $AB = 3$ cm. With $MN = 4$, $24 = \\tfrac12 \\times 4 \\times AB$ gives $AB = 12$ cm."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you use $MN$, ask whether the circles touch externally (add the radii) or internally (subtract them)."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "expl:pp3u9-2-4:bk-example-4"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only remark (linking-text-4) is empty, there are no caution boxes and there are no wrong options. The one entry rests on the worked example's '(why ?)' prompt about MN = 10 - 6, not on a printed caution."
+    },
+    {
+     "kind": "terminology",
+     "text": "'line of centers', 'common chord' and 'touching internally' are used as the book words them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-3-2",
+   "entries": [
+    {
+     "id": "mc:pp3u9-3-2:two-circles-share-more-than-two-points",
+     "lo_id": "lo:pp3u9-3-2",
+     "label": "Thinks two circles through A and B can meet at a third point",
+     "description": "The student believes that two different circles drawn through the same two points A and B can also cross or touch at more than two points.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that many circles pass through both $A$ and $B$, so they all share those two points. The doubt is whether two of them could share a third point as well."
+      },
+      {
+       "step": 2,
+       "text_md": "The center of every circle through $A$ and $B$ lies on the axis of the chord $AB$. Different centers on that axis give different circles, and all of them meet at $A$ and $B$."
+      },
+      {
+       "step": 3,
+       "text_md": "Suppose a circle also went through a third point $C$. Its center would then lie on the axis of $AB$ and on the axis of the chord $AC$, and those two axes cross in only one point. So there is only one possible center and only one circle."
+      },
+      {
+       "step": 4,
+       "text_md": "Two different circles therefore cannot intersect in more than two points. When two circles pass through $A$ and $B$, those two points are all they share."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u9-3:rule-9"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a remark that two circles cannot intersect in more than two points. No caution box or wrong option supports other errors, so none were added."
+    },
+    {
+     "kind": "terminology",
+     "text": "'axis of the chord' is taken from the objective description; please confirm it matches the book's wording ('perpendicular bisector')."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-4-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no new entry is supported. The runtime falls back to the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-4-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a neutral remark about the distance from the center to a chord. It is not a caution, there are no wrong options, and there is no re-solve wrong turn. No error is supported, so I added no entries."
+    },
+    {
+     "kind": "other",
+     "text": "Possible errors I left out for lack of evidence: using the converse for chords in two circles without checking the circles are congruent, and treating a non-perpendicular segment (such as a radius) as the distance to the chord."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 13,
+  "entries": 2,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 3,
+  "flags": 14
+ },
+ "carried_from_live": 8
+}

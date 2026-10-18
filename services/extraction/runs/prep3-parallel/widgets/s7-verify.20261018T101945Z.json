@@ -1,0 +1,124 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "36324e0f4e957b66f3d7f7b0f5c4aa2ec1e5d9e500605f47861982ff51dfb6f2",
+  "generated_sha256": "14f860176a285b66462c03e57c5206d93f5c8bee0cf7ede44b26f1b9802f6100",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u7-2-1:w001",
+   "template_sha": "f320189a103afcaa62023d915fd2b1f6b380d40309cae98679121a7bcb2de0b5",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     3
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap x=-3 and x=3. Denominator x^2-9=0 gives x=±3; both are whole numbers inside the range, and the numerator is nonzero at both, so there is no cancellation. Reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "A student who sets the numerator to zero marks only x=1. That value is not in {-3,3}, so extra-values fires. This is the most natural reason to mark 1 for this question, so the diagnosis fits."
+    },
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "A student who solves x^2=9 and keeps only x=3 marks {3} and misses -3, so missed-values fires. This is the typical one-root error. The predicate would also fire for the numerator-zero student, but this construction is exactly what the one-root misconception produces."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-1:w002",
+   "template_sha": "6223adf4f2a0fbf49b7e6f8c6012551a322c10b642488e47a19132924ce10528",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap -2 and 2. Both are whole numbers inside the range, and there are 2 targets (within the 1–4 limit).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": false,
+     "why": "It fires when only part of the set is marked, for example just 2, or just -2. A student holding the one-root-only-denominator misconception would mark only the positive root, 2, and that does trigger missed-values. But missed-values also fires for any partial answer, such as marking only -2, or marking one root plus a stray value. It is a generic partial-set signal, so it is not specific to this misconception. The 'when in doubt, false' rule applies."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "It fires when the student marks values outside the answer set. A student who sets the numerator to zero marks x=-1, and -1 is an extra value, so the predicate would fire. But that student would also leave out -2 and 2, so the construction is only a partial match for the excludes-numerator-zeroes error. The predicate would also fire for many other errors, such as marking 4 or 0. It is not specific to this misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-1:w003",
+   "template_sha": "965eb3b578c66e5640dc121f56b63b2f59c1b0699e02b6a1bb67a0595ff4e800",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2,
+     -3
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap x=-3 and x=2 on the number line (set {-3,2}); both are whole numbers inside the range, 2 targets.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Marking only one of {-3,2} (e.g. just x=2 or just x=-3) leaves part of the answer set unmarked, which is exactly the student who finds one zero of the denominator and stops. Mode is points, so the predicate can fire. Caveat: a student marking only one value might also have sign confusion, but marking a strict subset fits the 'stopped after one factor' misconception well."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-1:w004",
+   "template_sha": "d2dcd9c471b58e90c889de15ce6c64d9b1e4a0a67cbc89624febd6d747fe305c",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -1,
+     4
+    ]
+   },
+   "construction": "Points mode, range [-6,6]; tap -1 and 4 (denominator zeros of (x+1)(x-4)). Both are whole numbers within range, 2 targets within 1–4 limit.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Fires when the student marks only a subset, e.g. just -1 or just 4 (or neither fully). A student who finds one breaking value and stops marks exactly one of the two, which is the described misconception. Could also fire from carelessness, but the single-zero pattern is the main cause."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-1:w005",
+   "template_sha": "93c927aef6ad128f2b857b643238d6a2c040e018c63646c921f36f13746df54b",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     5,
+     -2
+    ]
+   },
+   "construction": "Denominator (x-5)(x+2) is zero at x=5 and x=-2. On range [-6,6], tap -2 and 5 in points mode. Both are whole numbers inside the range, 2 targets, so valid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Fires when the marked set is a proper subset of {-2,5}, e.g. only 5 or only -2. That is what a student does who finds one value that makes the denominator zero and stops, or who handles only one factor. The set-grading predicate lists missed-values for points mode, so it can fire. Other causes are possible, such as a mis-tap, but one-factor-only is the dominant reason."
+    }
+   ]
+  }
+ ]
+}

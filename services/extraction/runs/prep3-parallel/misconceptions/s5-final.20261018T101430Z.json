@@ -1,0 +1,344 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "6427a05134341e155ca6276a826619c22bd47b4b68552c0c406b05a556f597e4",
+  "generated_sha256": "b1091b01ee1a9a7d2e1dc65e89dfabb32b3dfd656883d0f4699466cb4e2160e8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u5-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
+     "lo_id": "lo:pp3u5-1-2",
+     "label": "Four equal sides taken as proof of a square",
+     "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
+     "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
+      },
+      {
+       "step": 2,
+       "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
+      },
+      {
+       "step": 3,
+       "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:pp3u5-1-2:bk-example-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real and matches the book's method: the example stops at 'rhombus or square' after four equal sides, then uses equal diagonals. I recomputed the numbers: all four sides are √41, AC=√82 and BD=√82. The refutation is correct and self-contained, with coordinates given and no question id or page reference. It argues against the specific shortcut and adds nothing beyond the book."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were added. Runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The question wording ('perpendicular coordinate plane', 'midpoint on C straight segment AB') looks like a translation artefact; I did not reuse it in student-facing text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The canonical solution will be used as the fallback."
+    },
+    {
+     "kind": "terminology",
+     "text": "Example 3 solution uses 'M is the mid of AC' and 'parallorgram' (typo in the question text); unsure of the book's preferred wording, so nothing was authored."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. I added none; the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book writes 'slope', 'm = tan E', and 'x-axes' (a typo in one example). The prompt gave no evidence on terms beyond these."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. I added none. The runtime will use the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "The worked example on the trapezoid ABCD gives only a partial canonical solution. It stops before the slopes are computed, so I made no claims about it."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error entry is supported. I added none."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-4-1",
+   "entries": [
+    {
+     "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
+     "lo_id": "lo:pp3u5-4-1",
+     "label": "Slope written as a/b, losing the minus",
+     "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
+     "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
+      },
+      {
+       "step": 2,
+       "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
+      },
+      {
+       "step": 3,
+       "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u5-4:rule-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u5-4-1:bk-example-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w001",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w002",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w003",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Real error. The refutation matches example 2 (m=-a/b, 4y=-3x+5, y=-3/4 x+5/4) and teaches both book methods. It has no outside references."
+     }
+    },
+    {
+     "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+     "lo_id": "lo:pp3u5-4-1",
+     "label": "Reading m and b straight off the equation without isolating y",
+     "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+     "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
+      },
+      {
+       "step": 4,
+       "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u5-4:rule-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u5-4-1:bk-example-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Real error. The refutation reproduces example 1 (2y=x+4, y=1/2 x+2, slope 1/2, intercept 2) and the graph check at (0,2). The math is correct and it has no outside references."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:pp3u5-4-1",
+     "origin": "S7",
+     "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#off-target",
+     "question_id": "q:pp3u5-4-1:w001",
+     "text": "Neither the slope nor the intercept matches",
+     "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+     "reason": "does not encode mc:pp3u5-4-1:read-coefficients-without-isolating-y: 'Neither matches' is a generic catch-all. Many different errors trigger it, so tagging it to this one misdiagnoses students."
+    },
+    {
+     "lo": "lo:pp3u5-4-1",
+     "origin": "S7",
+     "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#off-target",
+     "question_id": "q:pp3u5-4-1:w002",
+     "text": "Neither the slope nor the intercept matches",
+     "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+     "reason": "does not encode mc:pp3u5-4-1:read-coefficients-without-isolating-y: The same generic catch-all predicate, so it is not specific to this error."
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entry was written. The runtime will fall back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book writes the intercept as both $b$ (in the description) and $c$ (in its solutions), and says 'slope' and 'bisecting'. No entry used these terms, but a human should check which letter students are expected to see."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 11,
+  "entries": 3,
+  "dropped": 0,
+  "stripped": 2,
+  "skipped": 0,
+  "flags": 14
+ }
+}

@@ -1,0 +1,209 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 2,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "4349fe1ecc6105390c67ca65ca9f29c0b53e2e139c65b4baf3f40731fbf3d296",
+  "generated_sha256": "44e6678a97313a5f7e00c83f451e3f566d8371a4110f92983097a43734415875",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 14,
+  "proposed": [
+   {
+    "src": "lo:pp3u2-1-1",
+    "dst": "lo:pp3u2-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u2-2:definition-1",
+      "printed_page": 27,
+      "quote": "The proportion is the equality of two ratios or more."
+     }
+    ],
+    "reason": "Proportion is defined as equality of ratios, so the student must know what a ratio is."
+   },
+   {
+    "src": "lo:pp3u2-1-2",
+    "dst": "lo:pp3u2-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u2-2:linking-text-1",
+      "printed_page": 29,
+      "quote": "multiply the first two terms of the first ratio by 2"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 29,
+      "quote": "Multiply the first two means by five and the second means by 3"
+     }
+    ],
+    "reason": "The third property and proof multiply both terms of a ratio by a fixed amount."
+   },
+   {
+    "src": "lo:pp3u2-2-1",
+    "dst": "lo:pp3u2-2-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u2-2:definition-4",
+      "printed_page": 30,
+      "quote": "a is called the first proportional, b the middle proportional, and c the third proportional"
+     }
+    ],
+    "reason": "Continued proportion builds on proportion terms and a/b=b/c equality."
+   },
+   {
+    "src": "lo:pp3u2-2-2",
+    "dst": "lo:pp3u2-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 31,
+      "quote": "Consider $\\frac{a}{b}=\\frac{b}{c}=m$ , $\\therefore b = c\\,m$"
+     }
+    ],
+    "reason": "The proof uses the substitution by a constant m method."
+   },
+   {
+    "src": "lo:pp3u2-2-1",
+    "dst": "lo:pp3u2-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u2-3:rule-1",
+      "printed_page": 32,
+      "quote": "y1/y2 = x1/x2"
+     }
+    ],
+    "reason": "Direct variation uses equality of ratios to find unknowns."
+   },
+   {
+    "src": "lo:pp3u2-2-1",
+    "dst": "lo:pp3u2-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u2-3:rule-7",
+      "printed_page": 34,
+      "quote": "y₁/y₂ = x₂/x₁"
+     }
+    ],
+    "reason": "Inverse variation uses ratio equality to find unknowns."
+   },
+   {
+    "src": "lo:pp3u2-3-1",
+    "dst": "lo:pp3u2-3-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u2-3:drill-1",
+      "printed_page": 35,
+      "quote": "which of the following tables represents the direct variation"
+     }
+    ],
+    "reason": "Classifying tables requires recognising direct variation."
+   },
+   {
+    "src": "lo:pp3u2-3-2",
+    "dst": "lo:pp3u2-3-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u2-3:drill-1",
+      "printed_page": 35,
+      "quote": "which represents the inverse variation"
+     }
+    ],
+    "reason": "Classifying tables requires recognising inverse variation."
+   },
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u2-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u2-3:think-and-discuss-1:A",
+      "printed_page": 32,
+      "quote": "Represent the relation between d and t graphically."
+     }
+    ],
+    "reason": "Graphing the linear relation uses plotting a line from ordered pairs."
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u2-1-1",
+    "anchor": "prior-knowledge-1",
+    "printed_page": 25,
+    "quote": "We have learned in previous phases the subject of ratio, and that ratio is a comparison between two quantities."
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Proportion defined as equality of ratios; builds on ratio concept."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Text uses multiplying both terms of ratios by constants as a step, relying on ratio properties."
+    },
+    {
+     "i": 2,
+     "verdict": "REJECTED",
+     "note": "Defines continued proportion; doesn't show reliance on finding proportionals via product of extremes/means."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Uses substitution a=mc style method from 2-2 within continued proportion proof."
+    },
+    {
+     "i": 4,
+     "verdict": "UNCLEAR",
+     "note": "Rule is equality of ratios, but no explicit reference to the proportion method."
+    },
+    {
+     "i": 5,
+     "verdict": "UNCLEAR",
+     "note": "Equality of ratios used implicitly; not shown to refer back."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "Exercise asks to identify direct variation, relying on direct variation knowledge."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "Exercise asks to identify inverse variation, relying on inverse variation knowledge."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "Exercise asks to graph d=vt, using graphing of linear function from earlier."
+    }
+   ]
+  }
+ }
+}

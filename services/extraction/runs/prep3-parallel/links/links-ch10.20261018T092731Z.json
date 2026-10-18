@@ -1,0 +1,291 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 10,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "99c4df479ce38b511a104b30743efbe01beee37e3a2aec6f771c3f6ff159fd7e",
+  "generated_sha256": "5884b38e0ab74eb943127c72ed61bcc1534275bdbc13048a2725919d79637cff",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 83,
+  "proposed": [
+   {
+    "src": "lo:pp3u10-1-1",
+    "dst": "lo:pp3u10-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 75,
+      "quote": "$\\therefore 4x+5x+3x=360^\\circ$"
+     }
+    ],
+    "reason": "Arc measures summing to the circle's 360° are used before applying the inscribed angle rule."
+   },
+   {
+    "src": "lo:pp3u10-2-1",
+    "dst": "lo:pp3u10-2-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-2:linking-text-6",
+      "printed_page": 75,
+      "quote": "m(∠C) = 1/2 m(∠AMB)"
+     }
+    ],
+    "reason": "Corollary derived from the inscribed/central theorem."
+   },
+   {
+    "src": "lo:pp3u10-2-2",
+    "dst": "lo:pp3u10-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 76,
+      "quote": "= ½ m(arc AC) + ½ m(arc BD)"
+     }
+    ],
+    "reason": "Proof uses inscribed angle = half arc."
+   },
+   {
+    "src": "lo:pp3u10-2-1",
+    "dst": "lo:pp3u10-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 79,
+      "quote": "m(∠C) = $\\frac{1}{2}$ m(arc AB)"
+     }
+    ],
+    "reason": "Proof of equal inscribed angles uses inscribed angle = half arc."
+   },
+   {
+    "src": "lo:pp3u10-3-1",
+    "dst": "lo:pp3u10-3-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-3:rule-4",
+      "printed_page": 82,
+      "quote": "Converse of the previous corollary"
+     }
+    ],
+    "reason": "Builds on equal inscribed angles on same arc."
+   },
+   {
+    "src": "lo:pp3u10-3-3",
+    "dst": "lo:pp3u10-4-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-4:notice-2",
+      "printed_page": 85,
+      "quote": "they are two drawn angles on the base YZ and in one direction of it"
+     }
+    ],
+    "reason": "Cyclic test is the converse of theorem 2."
+   },
+   {
+    "src": "lo:pp3u10-4-1",
+    "dst": "lo:pp3u10-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE14",
+      "printed_page": 86,
+      "quote": "They are two drawn angles on the base AY and in one direction of it."
+     }
+    ],
+    "reason": "Proof applies the equal-angles test."
+   },
+   {
+    "src": "lo:pp3u10-4-2",
+    "dst": "lo:pp3u10-5-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE18",
+      "printed_page": 92,
+      "quote": "XYDC is a cyclic quadrilateral."
+     }
+    ],
+    "reason": "Proving cyclic quadrilaterals extended with the exterior-angle criterion."
+   },
+   {
+    "src": "lo:pp3u10-2-1",
+    "dst": "lo:pp3u10-5-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-5:linking-text-3",
+      "printed_page": 88,
+      "quote": "m(∠A) = 1/2 m(arc BCD)"
+     }
+    ],
+    "reason": "Theorem 3 proof uses inscribed angle = half arc."
+   },
+   {
+    "src": "lo:pp3u10-5-1",
+    "dst": "lo:pp3u10-6-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE19",
+      "printed_page": 95,
+      "quote": "∵ ABCD is a cyclic quadrilateral, $m(\\angle C)=125^\\circ$"
+     }
+    ],
+    "reason": "Example uses opposite angles supplementary."
+   },
+   {
+    "src": "lo:pp3u10-4-3",
+    "dst": "lo:pp3u10-6-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE20",
+      "printed_page": 96,
+      "quote": "XBYM is a cyclic quadrilateral."
+     }
+    ],
+    "reason": "Example proves cyclic then deduces equal angles."
+   },
+   {
+    "src": "lo:pp3u10-2-1",
+    "dst": "lo:pp3u10-7-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-7:linking-text-4",
+      "printed_page": 101,
+      "quote": "∴ $m(\\angle D)=\\frac{1}{2}m(\\widehat{AB})$ (2)"
+     }
+    ],
+    "reason": "Uses inscribed angle = half arc."
+   },
+   {
+    "src": "lo:pp3u10-7-1",
+    "dst": "lo:pp3u10-7-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 102,
+      "quote": "∴ $m(\\angle DBA) = m(\\angle C)$"
+     }
+    ],
+    "reason": "Tangency angle equality used in cyclic proof."
+   },
+   {
+    "src": "lo:pp3u10-7-1",
+    "dst": "lo:pp3u10-7-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-7:rule-7",
+      "printed_page": 103,
+      "quote": "Converse of theorem 5"
+     }
+    ],
+    "reason": "Converse of theorem 5."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Arcs sum to 360° (circle measure) used as a step, then inscribed angle."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Inscribed angle = half central angle used to derive half the arc."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Uses inscribed angle = half arc to derive the chord-angle theorem."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Uses inscribed angle = half arc (and half central angle) result."
+    },
+    {
+     "i": 4,
+     "verdict": "UNCLEAR",
+     "note": "Refers to previous corollary in the same LO 3-1 content, not clearly a dependency on the src as an objective; it recalls the 3-1 corollary, plausibly confirming."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "Uses the same-base, same-side equal angles criterion from 3-3."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "Applies the same-base equal-angle criterion for cyclic quadrilateral."
+    },
+    {
+     "i": 7,
+     "verdict": "REJECTED",
+     "note": "Text uses exterior angle/opposite angle criterion, and cyclic properties, not the 4-2 same-base method."
+    },
+    {
+     "i": 8,
+     "verdict": "REJECTED",
+     "note": "Proof of supplementary opposite angles uses inscribed angle = half arc, which is 2-1 or 2-2; the 5-1 dst relies on this theorem. Src 2-1 is the central/inscribed theorem, arguably relied on, but the quoted use is of inscribed angle half arc (2-2)."
+    },
+    {
+     "i": 9,
+     "verdict": "REJECTED",
+     "note": "Example uses the cyclic quadrilateral opposite-angle property as a step, plausibly from 5-1, so this could hold; but the anchored text shows it as a step."
+    },
+    {
+     "i": 10,
+     "verdict": "REJECTED",
+     "note": "Uses cyclic quadrilateral proof for a tangent problem; 4-3 deducing equal angles from a proven cyclic quadrilateral is used as a step."
+    },
+    {
+     "i": 11,
+     "verdict": "REJECTED",
+     "note": "Text uses inscribed angle = half arc, not the src central-angle method specifically."
+    },
+    {
+     "i": 12,
+     "verdict": "CONFIRMED",
+     "note": "Uses tangency angle equal to inscribed angle, as in 7-1."
+    },
+    {
+     "i": 13,
+     "verdict": "UNCLEAR",
+     "note": "Converse of theorem 5 refers to tangency angle theorem, plausible but not explicit."
+    }
+   ]
+  }
+ }
+}

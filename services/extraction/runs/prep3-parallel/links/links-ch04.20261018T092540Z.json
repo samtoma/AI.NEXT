@@ -1,0 +1,164 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 4,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "a6217f500c0a1ca0d7eb59c1d2b51ba7a2dc5d037560c07d405bd58cf86c5d4e",
+  "generated_sha256": "2f81c76f305d6efac4b30ab8cf433556d1e2290a834fa3ff41ddde3fa58feb56",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 29,
+  "proposed": [
+   {
+    "src": "lo:pp3u4-1-3",
+    "dst": "lo:pp3u4-2-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-1",
+      "printed_page": 52,
+      "quote": "So you can find the basic trigonometric ratios of the angles 30°, 60° as follows"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-2",
+      "printed_page": 53,
+      "quote": "So you can find the trigonometrical ratios of the angle 45° as follows"
+     }
+    ],
+    "reason": "Special-angle ratios are computed as opposite/adjacent/hypotenuse side ratios."
+   },
+   {
+    "src": "lo:pp3u4-1-3",
+    "dst": "lo:pp3u4-2-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-5",
+      "printed_page": 55,
+      "quote": "if you have a given angle, you can find its trigonometrical ratios"
+     }
+    ],
+    "reason": "Calculator ratio of a given angle builds on the ratio definitions."
+   },
+   {
+    "src": "lo:pp3u4-2-1",
+    "dst": "lo:pp3u4-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 54,
+      "quote": "= \\frac{1}{2} \\times \\frac{1}{2} - \\frac{\\sqrt{3}}{2} \\times \\sqrt{3}"
+     }
+    ],
+    "reason": "The worked example substitutes the exact special-angle values."
+   },
+   {
+    "src": "lo:pp3u4-1-1",
+    "dst": "lo:pp3u4-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 54,
+      "quote": "cos 53 [°'\"] 28 [°'\"] ="
+     }
+    ],
+    "reason": "Entering angles in degrees, minutes and seconds on the calculator."
+   },
+   {
+    "src": "lo:pp3u4-2-3",
+    "dst": "lo:pp3u4-2-4",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-6",
+      "printed_page": 55,
+      "quote": "sin 33° = 0,544639035"
+     }
+    ],
+    "reason": "Finding an angle from its ratio is introduced as the reverse of finding the ratio of an angle."
+   },
+   {
+    "src": "lo:pp3u4-1-3",
+    "dst": "lo:pp3u4-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-10",
+      "printed_page": 56,
+      "quote": "$\\because \\sin B=\\frac{AD}{AB}$"
+     }
+    ],
+    "reason": "The area solution uses the sine ratio to find a side."
+   },
+   {
+    "src": "lo:pp3u4-1-1",
+    "dst": "lo:pp3u4-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 55,
+      "quote": "$m(\\angle E) = 36^\\circ 52' 12''$"
+     }
+    ],
+    "reason": "The angle result is given in degrees, minutes and seconds via the calculator key."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "UNCLEAR",
+     "note": "Text uses side ratios to compute ratios, which implicitly uses the ratio definition, but it doesn't explicitly refer back."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "'You learned that if you have a given angle, you can find its trigonometrical ratios' recalls earlier work."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Example uses the exact special-angle values from 2-1 as a step."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "Example shows the calculator entry of degrees/minutes/seconds, but nothing recalls the conversion between DMS and decimal."
+    },
+    {
+     "i": 4,
+     "verdict": "UNCLEAR",
+     "note": "The text recalls the sin value from a calculator, but it does not show that finding an angle from a ratio depends on it."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "The sine ratio definition (opposite/hypotenuse) is used as a step in the area calculation."
+    },
+    {
+     "i": 6,
+     "verdict": "REJECTED",
+     "note": "The example uses the °′″ key, but it doesn't refer back to the conversion objective."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,514 @@
+{
+ "book": "prep3-parallel",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "fc8f54d03c482d4a63300c7d0c1e4ddd094852d2276d5c4b121428be9b196d42",
+  "generated_sha256": "537e3744c906b2f278900ea30f2c723e201570d70643b674923d57563329d695",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u8-1-1",
+   "entries": [
+    {
+     "id": "mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set",
+     "lo_id": "lo:pp3u8-1-1",
+     "label": "Thinks an event happens only when the outcome is the whole event set",
+     "description": "The student treats an event like {2, 4, 6} as a single outcome that must come up as a whole, instead of seeing that the event occurs when the outcome is any one element of the set.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are treating the event as one big outcome, so you think it only happens if the whole set turns up. It is natural to read $A = \\{2, 4, 6\\}$ as a single item, but it is a collection of outcomes."
+      },
+      {
+       "step": 2,
+       "text_md": "A dice shows only one number per roll. If the whole set had to appear, the event 'getting an even number' could never happen, because one roll never shows 2, 4 and 6 together."
+      },
+      {
+       "step": 3,
+       "text_md": "The book's rule is that an event occurred if the outcome of the experiment is an element of the set that expresses the event. If the dice shows 4, then 4 is in $\\{2, 4, 6\\}$, so the even-number event occurred."
+      },
+      {
+       "step": 4,
+       "text_md": "This is also why we count elements: $P(A) = \\frac{n(A)}{n(S)} = \\frac{3}{6}$ counts the 3 outcomes that each make $A$ occur, out of the 6 possible outcomes."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, ask 'Is the outcome one of the elements of the event set?' If yes, the event occurred. Then count those elements for $n(A)$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "pp3u8-1:caution-1"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u8-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:pp3u8-1-1:compound-outcome-counted-once",
+     "lo_id": "lo:pp3u8-1-1",
+     "label": "A compound outcome counted once instead of by its ways",
+     "description": "Counts 'a total of 7' as one outcome rather than the six ordered pairs that produce it.",
+     "signal": "$n(E)$ is far smaller than the number of cells in the sample space that satisfy the event.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You identified the right event — the totals you picked really do make $7$."
+      },
+      {
+       "step": 2,
+       "text_md": "But $n(E)$ counts OUTCOMES, not values. A total of $7$ happens six different ways: $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$."
+      },
+      {
+       "step": 3,
+       "text_md": "$(1,6)$ and $(6,1)$ are genuinely different outcomes — the first die and the second die did different things — so both are counted."
+      },
+      {
+       "step": 4,
+       "text_md": "That is what the grid is for. Every cell is one outcome, so count cells, and $P = \\frac{6}{36} = \\frac{1}{6}$."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-1:probability-denominator",
+     "lo_id": "lo:pp3u8-1-1",
+     "label": "Divided by the wrong total",
+     "description": "Puts n(S) on top, or divides by the outcomes NOT in A.",
+     "signal": "The answer is greater than 1, or uses n(S) − n(A) as the denominator.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your two counts are right."
+      },
+      {
+       "step": 2,
+       "text_md": "$P(A) = \\frac{n(A)}{n(S)}$ — favourable outcomes over ALL outcomes, including the favourable ones."
+      },
+      {
+       "step": 3,
+       "text_md": "A probability can never exceed $1$; if yours does, the fraction is inverted."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only one caution box (an event occurred if the outcome is an element of the event set) was available, and it was also printed as a remark. No re-solve wrong turns or wrong options were supplied, so only one entry was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u8-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u8-1-2:mutually-exclusive-meaning-confused",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "Mixes up 'mutually exclusive' with 'having an overlap'",
+     "description": "The student does not link mutually exclusive events to an empty intersection, so they look for a common element, or say the probability of both happening is 'not possible to find' instead of 0.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You may be treating 'mutually exclusive' as just a name for two events that sit in the same sample space. Looking for something they share is the right instinct for $A\\cap B$. The catch is that sometimes there is nothing to find."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $B$ and $C$ in the Venn diagram example: they are two separate sets with no element in common. So $B\\cap C=\\phi$ and $n(B\\cap C)=0$. They cannot occur at the same time, and that is exactly what 'mutually exclusive' means."
+      },
+      {
+       "step": 3,
+       "text_md": "An empty intersection still has a probability. It is $P(B\\cap C)=\\frac{0}{8}=0$. Writing 'no answer' or inventing a common element is wrong. The same happens with $A=\\{2,4,6\\}$ and $B=\\{1,3,5\\}$: no common element, so $P(A\\cap B)=\\frac{0}{6}=0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: list or find the common elements of the two events. If there are none, write $A\\cap B=\\phi$, say the events are mutually exclusive, and give the probability as $0$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u8-1:notice-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:pp3u8-1-2:assumed-mutually-exclusive",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "Answers zero because the two events sound unrelated",
+     "description": "Concludes the intersection is empty from the wording of the two events, without listing outcomes to check for a shared one.",
+     "signal": "Answers $0$ when a shared outcome does exist.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Answering $0$ is exactly right when nothing can be in both — so the instinct to check for that is a good one."
+      },
+      {
+       "step": 2,
+       "text_md": "The check has to be done on the outcomes, though, not on how the two events sound."
+      },
+      {
+       "step": 3,
+       "text_md": "Cards 1 to 10, A even and B prime: 2 is even AND prime, so $A \\cap B = \\{2\\}$ and $P = \\frac{1}{10}$, not $0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Make it a habit: write out both lists and look for a number in both. Only an empty overlap earns a $0$."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-2:exclusive-confused-with-exhaustive",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "Mutually exclusive confused with covering the whole sample space",
+     "description": "Defines mutually exclusive by the union filling S rather than by the intersection being empty.",
+     "signal": "Chooses $A \\cup B = S$ as the definition of mutually exclusive.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are reaching for a condition on how A and B sit inside S, which is the right kind of answer."
+      },
+      {
+       "step": 2,
+       "text_md": "Mutually exclusive means they cannot happen together: $A \\cap B = \\phi$, so $P(A \\cap B) = 0$."
+      },
+      {
+       "step": 3,
+       "text_md": "$A \\cup B = S$ says something else — that between them they cover every outcome. Two events can do that and still overlap."
+      },
+      {
+       "step": 4,
+       "text_md": "Rolling a die: 'greater than 2' and 'less than 5' cover everything between them, yet 3 and 4 are in both. Covering is not the same as excluding."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-2:gave-single-event-probability",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "Reports the probability of one event instead of the intersection",
+     "description": "Computes P(A) correctly and stops, without intersecting with B.",
+     "signal": "The answer equals P(A) or P(B) rather than P(A ∩ B).",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your value for the single event is right, so the counting is not the problem."
+      },
+      {
+       "step": 2,
+       "text_md": "The question asks for A and B TOGETHER, which needs the outcomes shared by both."
+      },
+      {
+       "step": 3,
+       "text_md": "A die, A even and B odd: no number is both, so $A \\cap B = \\phi$ and $P(A \\cap B) = 0$ — even though $P(A) = \\frac{1}{2}$."
+      },
+      {
+       "step": 4,
+       "text_md": "Before answering, read the last line again and ask which event it names: A, B, or both at once."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-2:intersection-as-a-only",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "A and B read as 'A happens and B does not'",
+     "description": "Reads the intersection as one event occurring in place of the other rather than alongside it.",
+     "signal": "Chooses 'the occurrence of A only'.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that $A \\cap B$ is stricter than 'either one' — it does narrow things down."
+      },
+      {
+       "step": 2,
+       "text_md": "But it narrows to outcomes where A and B happen TOGETHER, not to A by itself."
+      },
+      {
+       "step": 3,
+       "text_md": "'A only' is the part of A outside B, which is a different region of the Venn diagram and has its own notation."
+      },
+      {
+       "step": 4,
+       "text_md": "Check yourself with one outcome: if it is in both lists, it belongs to $A \\cap B$."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-2:intersection-read-as-union",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "A and B read as 'at least one of them' instead of 'both'",
+     "description": "Treats the intersection as the union: takes any outcome in either event rather than only the shared ones.",
+     "signal": "Chooses 'at least one of the two events', or computes a probability matching the union.",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right idea that two events are being combined — that is what the question is about."
+      },
+      {
+       "step": 2,
+       "text_md": "$A \\cap B$ is the event that BOTH happen at the same time. 'At least one of them' is $A \\cup B$, the union."
+      },
+      {
+       "step": 3,
+       "text_md": "The symbols are worth separating once: $\\cap$ is the overlap in the Venn diagram — the part inside both circles — and $\\cup$ is everything inside either circle."
+      },
+      {
+       "step": 4,
+       "text_md": "A phrase to keep: $\\cap$ means AND, $\\cup$ means OR."
+      }
+     ]
+    },
+    {
+     "id": "mc:pp3u8-1-2:union-counted-by-adding",
+     "lo_id": "lo:pp3u8-1-2",
+     "label": "Counts 'together' by adding the two event sizes",
+     "description": "Adds n(A) and n(B) instead of counting the outcomes common to both.",
+     "signal": "The numerator equals n(A) + n(B).",
+     "kind": "book_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You counted both events correctly — that part is done."
+      },
+      {
+       "step": 2,
+       "text_md": "Adding them answers a different question. For 'A and B together' you want only the outcomes appearing in BOTH lists."
+      },
+      {
+       "step": 3,
+       "text_md": "Cards 1 to 12, A divisible by 3 is $\\{3, 6, 9, 12\\}$ and B divisible by 4 is $\\{4, 8, 12\\}$. Only $12$ is in both, so $n(A \\cap B) = 1$ and $P = \\frac{1}{12}$."
+      },
+      {
+       "step": 4,
+       "text_md": "Adding the sizes is a move for the union, and even there it double-counts the overlap."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only one remark supports an entry. No wrong options or predicates were supplied, and I did not open the figure because the entry uses only the canonical solutions' text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u8-1-3",
+   "entries": [
+    {
+     "id": "mc:pp3u8-1-3:add-without-subtracting-overlap",
+     "lo_id": "lo:pp3u8-1-3",
+     "label": "Adds P(A) and P(B) and forgets the overlap",
+     "description": "The student finds P(A ∪ B) by adding P(A) and P(B) even though the events share outcomes, so shared outcomes are counted twice.",
+     "signal": "A probability for A ∪ B that is exactly P(A) + P(B), larger than the true value, when A and B overlap (e.g. 7/10 instead of 3/5, or 7/9 instead of 2/3).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are thinking \"A or B means add the two probabilities\". That is right when A and B have nothing in common, and it is a good start. The trouble starts when they share an outcome."
+      },
+      {
+       "step": 2,
+       "text_md": "Take cards numbered 1 to 9. $A$ is an even number, $A=\\{2,4,6,8\\}$, so $P(A)=\\frac{4}{9}$. $B$ is a number divisible by 3, $B=\\{3,6,9\\}$, so $P(B)=\\frac{3}{9}$. Adding gives $\\frac{7}{9}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now list $A\\cup B$ itself: $\\{2,3,4,6,8,9\\}$. That is only 6 cards, so $P(A\\cup B)=\\frac{6}{9}=\\frac{2}{3}$, not $\\frac{7}{9}$. The card 6 is in both $A$ and $B$, so adding counted it twice."
+      },
+      {
+       "step": 4,
+       "text_md": "Take the shared outcomes away once: $A\\cap B=\\{6\\}$, so $P(A\\cap B)=\\frac{1}{9}$, and $\\frac{4}{9}+\\frac{3}{9}-\\frac{1}{9}=\\frac{6}{9}=\\frac{2}{3}$, which matches."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, first find $A\\cap B$. If it has outcomes in it, use $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. If $A\\cap B$ is empty (mutually exclusive), the subtraction is $0$ and you just add."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:pp3u8-1-3:bk-drill-6-a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u8-1-3:bk-example-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:pp3u8-1-3:union-double-counts",
+     "lo_id": "lo:pp3u8-1-3",
+     "label": "Overlap counted twice in a union",
+     "description": "Adds P(A) and P(B) without subtracting P(A ∩ B).",
+     "signal": "The answer exceeds the correct union probability by exactly P(A ∩ B).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Adding the two is the right starting point."
+      },
+      {
+       "step": 2,
+       "text_md": "Outcomes in BOTH events get counted once in each, so they are counted twice. Subtract the overlap: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$."
+      },
+      {
+       "step": 3,
+       "text_md": "When the events are mutually exclusive the overlap is empty and the subtraction changes nothing — which is why the simple sum sometimes appears to work."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied. The one entry rests on the book's own formula and its worked example, which shows the overlap being subtracted. It is not backed by a printed caution."
+    },
+    {
+     "kind": "terminology",
+     "text": "Used 'mutually exclusive' as in the canonical solutions. The book also says 'separate' and 'two distant sets'; I did not use those."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u8-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u8-2-1:complement-not-from-one",
+     "lo_id": "lo:pp3u8-2-1",
+     "label": "Complement not subtracted from 1",
+     "description": "Reports P(A) itself, or inverts it, instead of 1 − P(A).",
+     "signal": "The answer and P(A) do not sum to 1.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right probability in hand."
+      },
+      {
+       "step": 2,
+       "text_md": "An event and its complement cover everything that can happen, so they sum to $1$: $P(A^c) = 1 - P(A)$."
+      },
+      {
+       "step": 3,
+       "text_md": "Quick check: add your two probabilities. If they do not make $1$, one of them is not the complement."
+      }
+     ]
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is the remark P(A)+P(A')=1, which states the correct rule. No caution box, wrong option or re-solve wrong turn was given, so no error is supported and no entries were written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u8-2-2",
+   "entries": [
+    {
+     "id": "mc:pp3u8-2-2:only-means-whole-set",
+     "lo_id": "lo:pp3u8-2-2",
+     "label": "Counts the whole set A when asked for A only",
+     "description": "The student takes the 'only' event A - B to be the whole set A, so they use all of A's students and never remove the overlap A ∩ B.",
+     "signal": "Gives 18/40 (or 9/20) for reading Al-Akhbar only, or 15/40 (or 3/8) for Al-Ahram only.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are treating 'reads Al-Akhbar' and 'reads Al-Akhbar only' as the same event. You were right to start from the 18 students in set A."
+      },
+      {
+       "step": 2,
+       "text_md": "Those 18 students are made of two groups. Some read only Al-Akhbar. Others read Al-Akhbar and Al-Ahram too, and that second group is the 8 in $A \\cap B$. This is what $(A - B) \\cup (A \\cap B) = A$ says."
+      },
+      {
+       "step": 3,
+       "text_md": "The 8 students who read both also read Al-Ahram, so they do not belong to 'Al-Akhbar only'. Answering $\\frac{18}{40}$ counts them as well."
+      },
+      {
+       "step": 4,
+       "text_md": "Take the overlap away: $n(A - B) = 18 - 8 = 10$, so $P(A - B) = \\frac{10}{40} = \\frac{1}{4}$, not $\\frac{18}{40}$."
+      },
+      {
+       "step": 5,
+       "text_md": "Whenever a question says 'only', subtract the overlap first: $n(A - B) = n(A) - n(A \\cap B)$. Then divide by $n(S)$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u8-2:linking-text-4"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u8-2:rule-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only one error is evidenced. A possible further error on the 'only or only' part is to add the full counts 18 and 15, which double-counts the overlap. Nothing in the evidence supports it, so I left it out."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 5,
+  "entries": 4,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 6
+ },
+ "carried_from_live": 10
+}

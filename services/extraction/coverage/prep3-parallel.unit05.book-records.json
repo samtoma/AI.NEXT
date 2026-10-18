@@ -12,8 +12,8 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 19,
-    "hold": 14,
+    "checks": 20,
+    "hold": 15,
     "excepted": 0,
     "fail": 5
   },
@@ -87,11 +87,11 @@
         },
         {
           "scope": "lo:pp3u5-1-3",
-          "detail": "lacks a statement, a book question"
+          "detail": "lacks a statement"
         },
         {
           "scope": "lo:pp3u5-2-1",
-          "detail": "lacks a worked example or exercise"
+          "detail": "lacks a statement, a worked example or exercise"
         },
         {
           "scope": "lo:pp3u5-2-3",
@@ -108,15 +108,11 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 33,
-      "got": 18,
+      "got": 19,
       "state": "fails",
       "failures": [
         {
           "scope": "lo:pp3u5-1-2 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u5-1-3 basic",
           "detail": "no live question at this tier"
         },
         {
@@ -178,21 +174,16 @@
       "id": "module_widgets",
       "title": "The unit = a unit with a live widget question",
       "want": 1,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "unit 5",
-          "detail": "no live widget question"
-        }
-      ],
+      "got": 1,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "distractor_refutations",
       "title": "Tagged distractors = those whose misconception has a refutation",
-      "want": 0,
-      "got": 0,
+      "want": 5,
+      "got": 5,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -200,8 +191,8 @@
     {
       "id": "misconception_refutations",
       "title": "The unit's catalogue entries = entries with a refutation",
-      "want": 3,
-      "got": 3,
+      "want": 8,
+      "got": 8,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -271,8 +262,8 @@
     {
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
-      "want": 22,
-      "got": 22,
+      "want": 25,
+      "got": 25,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -280,8 +271,8 @@
     {
       "id": "solution_sources",
       "title": "Book questions = answers printed in the book + generated answers approved or agreed",
-      "want": 22,
-      "got": 22,
+      "want": 25,
+      "got": 25,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -289,8 +280,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 719,
-      "got": 719,
+      "want": 740,
+      "got": 740,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -298,8 +289,8 @@
     {
       "id": "statements_served",
       "title": "The records' statements filed under an objective = statements in the content files",
-      "want": 22,
-      "got": 22,
+      "want": 24,
+      "got": 24,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -312,17 +303,52 @@
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
+    },
+    {
+      "id": "held_decided",
+      "title": "Held families and widget templates = those a person dropped + those sent back and written again",
+      "want": 6,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "family pp3u5-1-2--classify.json",
+          "detail": "held, not decided: pp3u5-1-2--classify.json: an mcq family's answer is choices.correct; it has no 'answer' and no marker"
+        },
+        {
+          "scope": "family pp3u5-2-2--endpoint.json",
+          "detail": "held, not decided: pp3u5-2-2--endpoint.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
+        },
+        {
+          "scope": "family pp3u5-2-2--midpoint.json",
+          "detail": "held, not decided: pp3u5-2-2--midpoint.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
+        },
+        {
+          "scope": "family pp3u5-2-3--diagonals.json",
+          "detail": "held, not decided: pp3u5-2-3--diagonals.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u5-2-3--diagonals.json: solution[1]: a '{' ins"
+        },
+        {
+          "scope": "family pp3u5-2-3--end-point.json",
+          "detail": "held, not decided: pp3u5-2-3--end-point.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u5-2-3--end-point.json: solution[0]: a '{' ins"
+        },
+        {
+          "scope": "family pp3u5-2-3--parallelogram.json",
+          "detail": "held, not decided: pp3u5-2-3--parallelogram.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u5-2-3--parallelogram.json: solution[1]: a"
+        }
+      ],
+      "excepted_scopes": []
     }
   ],
   "inputs": {
     "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
-    "book-records/prep3-parallel/misprint-candidates.json": "544462fe748ca500653378f15d602579de7366be996fee705aa7695dfd39a30e",
-    "groundtruth/prep3-parallel/misprint-decisions.json": "a58af01cb10ec268aa58ee07ddad750c6d8100539e9b0ae7d7cbead6e1a37db7",
+    "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "941c1aac3c315dbfe7d81fe7c4428d8d1d3b2cb889ea295fe31ae492cdd00804",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "book-records/prep3-parallel/pp3u5-1.json": "66a72ba59c6b1512a14cbbfc9cab6f4d276b768fdbc24650778283bb8e6aa020",
-    "book-records/prep3-parallel/pp3u5-2.json": "5ea90ff862a52e70efdf31bd99b53c433903b0bcec0b7c9d9902d5ad7f2896e9",
-    "book-records/prep3-parallel/pp3u5-3.json": "cee76bfe3ffc42919bdaca02c55c26decb341e294a0694af5209949e0e36f589",
-    "book-records/prep3-parallel/pp3u5-4.json": "e0e0411f2d1982cbce74a5ee9967a90b8d1ebf20b2f25f7ad42c43218d445f1e",
+    "teaching/prep3-parallel/held.json": "28b8566362431a7ca90966c43abdd65ec52da8e81543a34552d14b2683456865",
+    "book-records/prep3-parallel/pp3u5-1.json": "eb2e815588c5b6978ee3d816874ce9d5cefa6dbc9a28a7ae8988f8d7505b6417",
+    "book-records/prep3-parallel/pp3u5-2.json": "68c430b4a283eb4b4eb26c61ed24a7e05ff02c074fd1031bc9d443f200dd0bfb",
+    "book-records/prep3-parallel/pp3u5-3.json": "8450fe18fe60e69563c191d37c6bc168d8e41bccd9083f6cfcf2abf8b4f037e5",
+    "book-records/prep3-parallel/pp3u5-4.json": "bb8e2aa75ce202bd6b67829aa460c33c0286ed1636a10b9200c1cff8bd2bc218",
     "book-records/prep3-parallel/maths-reading/pp3u5-1.json": "2bc99abe492cdf2bd2f8769cb4d06a0c56449c3366f9d31f5af6bc63614f2f98",
     "book-records/prep3-parallel/maths-reading/pp3u5-2.json": "11fb8eabafaab63ed4c6c082ad6aefb6683bea680ff987b5de1a11a24ef25cd3",
     "book-records/prep3-parallel/maths-reading/pp3u5-3.json": "8f08b6756894bdb517d7a651ecfe31a71e80006fd0d7695654e84187f3ac6dd1",
@@ -331,18 +357,23 @@
     "teaching/prep3-parallel/visuals/pp3u5-2.json": "a71832ce82ef347b0236446c79f97ef3f7426b33654d8763825032b2021e6651",
     "teaching/prep3-parallel/visuals/pp3u5-3.json": "9559b4a3b1dbb712325775ad351a258b04b6566391c3292b527f487eca5b8f80",
     "teaching/prep3-parallel/visuals/pp3u5-4.json": "52c76c96c22ada6ee17bce52e9ca206b8d63db69a3b82fe4fa5c2527f4074e74",
-    "compiled/prep3-parallel/compile-report.json": "6de316504a46a77cd1046f22b1325ab562d75ba89911e720097fd4877073d555",
-    "compiled/prep3-parallel/generated-questions.json": "aa10afb5798c0b3aaf913af0d27d2ec843f8c3e64490e3d4e5f28b05e6ba2ce0",
-    "compiled/prep3-parallel/misconceptions.json": "e3c0174273487f20e05795147fa348efa36b8c3a1645934fe4c86e7b0b0f976e",
+    "compiled/prep3-parallel/compile-report.json": "b2906e457b98065879cea5ca85d1c968995a4d65686e8a6feeedff0cd9c080b8",
+    "compiled/prep3-parallel/generated-questions.json": "2b0d6de0d1c1f4ad8439dd6810be311f3a8e7d048f912dc8afb87e9e764b568b",
+    "compiled/prep3-parallel/misconceptions.json": "da3aeed73dce06e898f0db0e2928fd1e36c74ad42e765e849d8c96248fff520d",
     "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u10.json": "c2326e00e44bb6d45a37e5393e6be9c15817b04c6a3aa4bd85004a03b41e7a1e",
     "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
     "compiled/prep3-parallel/pp3u3.json": "a8c331c6a2cfe469a59c651b331e79293a31b3fa3fafe7fbd3cdd712e58ebfd8",
-    "compiled/prep3-parallel/pp3u4.json": "93a3d28a26e39b95bbce014dc54d4bde2af382a1476383d7e1d91b3fc7214626",
-    "compiled/prep3-parallel/pp3u5.json": "84823f794880e5f7200db507cb4049f4491742da9f9ba8534fa4e39380ae67e9",
+    "compiled/prep3-parallel/pp3u4.json": "e10ffb89e81e3f90712169758a3e29f6ae9991a716ed62382957367f2003e7ef",
+    "compiled/prep3-parallel/pp3u5.json": "82f37520fc7ea2fce7659d14907b51c606e6c4303d9a308c9e154494cb808d57",
+    "compiled/prep3-parallel/pp3u6.json": "b6eb9f2f823c25db9fbaca5264a9df955e43c51eab26dc1d57f1cadae4cec203",
+    "compiled/prep3-parallel/pp3u7.json": "b4fe2af8747ef5e8f7f52269bd8b1e34ad3963a132cd62e49e9cf3d94cc69836",
+    "compiled/prep3-parallel/pp3u8.json": "e4cb6ef969923d5362d08aeedb1e1929105f0ef4749673da736a0a3a1977cdf1",
+    "compiled/prep3-parallel/pp3u9.json": "2ebe78b88177fdbbd9a4efc1c01c9f35b7fbafe7f33449de4f13e04519ea7116",
     "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
-    "compiled/prep3-parallel/widget-questions.json": "7fa35a6f6db33cfd2e576c97ccb057623fa4c6945efb57799be313ad5b07626c",
+    "compiled/prep3-parallel/widget-questions.json": "dc873d010bfb0152ac3828e7ef47940fec3b63c5ad4fab4b18de3d217870080c",
     "compiled/prep3-parallel/content/pp3u5-1.json": "ffd19c604696de10f736547236a29357c4939d8c4a016c874e4ca742ad725731",
-    "compiled/prep3-parallel/content/pp3u5-2.json": "e7687259fda9d92a37e27251446183bcf7a32a583bb2bc4fc597d1de4b8cf7c6",
+    "compiled/prep3-parallel/content/pp3u5-2.json": "051964110ea23786eb375d60e7c12bf605d3b4b6f2e28378acc7327d93824cfc",
     "compiled/prep3-parallel/content/pp3u5-3.json": "2c36ce210b2f37a8a158afaf3984b70b85bd730a6360858aee82c67dc70152e9",
     "compiled/prep3-parallel/content/pp3u5-4.json": "35c5da5af9ce1d863cd398d592f8caae5a6d85b5d5aaa93e158079c3a595abf8"
   },

@@ -1,0 +1,272 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "96f0ab83ccf4b4af4065021a3d0456398a8163096ad3e69ce76117b92aa2534e",
+  "generated_sha256": "a38212b498dccb0458b924d6b0433035e22e38b749e0825d557725805e0e36f5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u7-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u7-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options/predicates were supplied for this objective, so no error is evidence-supported. No entries were added; the runtime will fall back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book writes the empty set as $\\phi$ and the zero set as $Z(f)$. I did not need these terms in any student-facing text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Removes the zeroes of the numerator instead of the denominator",
+     "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+     "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1,1\\}$ instead of $R$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
+      },
+      {
+       "step": 2,
+       "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
+      },
+      {
+       "step": 4,
+       "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
+      },
+      {
+       "step": 5,
+       "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u7-2:rule-3"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u7-2-1:exclude-numerator-trap#extra-values",
+       "question_id": "q:pp3u7-2-1:w001",
+       "text": "Marked values that the answer set does not contain",
+       "tagged": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Error is real. The refutation is correct: n(1)=0/2=0 is defined, x^2+1 has no real zero, domain R, matching the canonical solution for (x^2-1)/(x^2+1). It is backed by the book's rule that the domain is R minus the denominator's zeroes. It names no outside references."
+     }
+    },
+    {
+     "id": "mc:pp3u7-2-1:one-root-only-denominator",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Finds only the positive root of the denominator",
+     "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
+     "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
+      },
+      {
+       "step": 2,
+       "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
+      },
+      {
+       "step": 3,
+       "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4,4\\}$, so the domain is $R-\\{-4,4\\}$."
+      },
+      {
+       "step": 4,
+       "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u7-2:rule-3"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u7-2-1:exclude-numerator-trap#missed-values",
+       "question_id": "q:pp3u7-2-1:w001",
+       "text": "Part of the answer set was not marked",
+       "tagged": "mc:pp3u7-2-1:one-root-only-denominator"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Error is real. The refutation matches the canonical solution for (x^2+9)/(x^2-16): x=±4 and domain R-{-4,4}. The check of x=-4 is correct. The rule remark supports it."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u7-2-1:domain-from-numerator",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Domain excluded using the numerator",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "It duplicates the numerator-zeroes entry. It has no cited evidence and no worked example. The refutation mostly restates the rule rather than showing the student concretely why a numerator zero is fine."
+    },
+    {
+     "id": "mc:pp3u7-2-1:excluded-values-incomplete",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Only one zero of the denominator excluded",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "It has no cited evidence. Its refutation uses a factored-denominator example, 1/((x+2)(x-3)), and a 'every factor contributes' method. The book's canonical items solve x^2=16 and a quadratic with a given zero, so this goes beyond them."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:pp3u7-2-1",
+     "origin": "S7",
+     "ref": "wt:pp3u7-2-1:live-domain-excluded-standard#missed-values",
+     "question_id": "q:pp3u7-2-1:w003",
+     "text": "Part of the answer set was not marked",
+     "tagged": "mc:pp3u7-2-1:excluded-values-incomplete",
+     "reason": "its entry mc:pp3u7-2-1:excluded-values-incomplete was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:pp3u7-2-1",
+     "origin": "S7",
+     "ref": "wt:pp3u7-2-1:live-domain-excluded-standard-2#missed-values",
+     "question_id": "q:pp3u7-2-1:w004",
+     "text": "Part of the answer set was not marked",
+     "tagged": "mc:pp3u7-2-1:excluded-values-incomplete",
+     "reason": "its entry mc:pp3u7-2-1:excluded-values-incomplete was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:pp3u7-2-1",
+     "origin": "S7",
+     "ref": "wt:pp3u7-2-1:live-domain-excluded-standard-3#missed-values",
+     "question_id": "q:pp3u7-2-1:w005",
+     "text": "Part of the answer set was not marked",
+     "tagged": "mc:pp3u7-2-1:excluded-values-incomplete",
+     "reason": "its entry mc:pp3u7-2-1:excluded-values-incomplete was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-3-2",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u7-3-2:same-simplest-form-means-equal",
+     "lo_id": "lo:pp3u7-3-2",
+     "label": "Same simplest form, so the fractions are equal",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The misconception is real and step 3 matches canonical example 3 (domains R-{-3,2} and R-{-3,0,3}, x=0 correctly distinguishes them). But step 4 says 2/(2(x-3)) excludes only 3. That is mathematically right, yet the book's remark gives its domain as R-{-3}, so the refutation silently departs from the cited evidence. I can't confirm it against the book, and the book's own remark looks inconsistent. Step 4 also adds an extra example beyond the canonical solutions. Not safe to ship without review."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-4-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no entry is supported by evidence. I added none; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 8,
+  "entries": 2,
+  "dropped": 3,
+  "stripped": 3,
+  "skipped": 1,
+  "flags": 6
+ }
+}

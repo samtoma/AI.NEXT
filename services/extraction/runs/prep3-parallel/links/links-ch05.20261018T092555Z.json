@@ -1,0 +1,259 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 5,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "e51a36def7aa35a19b49023222d66cfa0a297eb56200650eaf487c9383719eaf",
+  "generated_sha256": "f25e1d47760c62787b608a809c69d030507721d2bfa845f075a6bdb6c4374525",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 37,
+  "proposed": [
+   {
+    "src": "lo:pp3u5-1-1",
+    "dst": "lo:pp3u5-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 59,
+      "quote": "AB = \\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}"
+     }
+    ],
+    "reason": "Proving a square uses the distance rule for sides and diagonals."
+   },
+   {
+    "src": "lo:pp3u5-1-1",
+    "dst": "lo:pp3u5-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 60,
+      "quote": "AM=\\sqrt{(-1-3)^2+[2-(-1)]^2}"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "pp3u5-1:drill-2:AB",
+      "printed_page": 61,
+      "quote": "AB = \\sqrt{(1-4)^2 + (1-3)^2}"
+     }
+    ],
+    "reason": "Collinearity and circle proofs compute distances with the distance rule."
+   },
+   {
+    "src": "lo:pp3u5-2-2",
+    "dst": "lo:pp3u5-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 63,
+      "quote": "6=\\frac{5+x_2}{2}"
+     }
+    ],
+    "reason": "Solving for an endpoint uses the midpoint formula."
+   },
+   {
+    "src": "lo:pp3u5-2-2",
+    "dst": "lo:pp3u5-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE16",
+      "printed_page": 72,
+      "quote": "The midpoint of"
+     }
+    ],
+    "reason": "Equation of the line bisecting a segment starts by finding the midpoint."
+   },
+   {
+    "src": "lo:pp3u5-3-1",
+    "dst": "lo:pp3u5-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE9",
+      "printed_page": 67,
+      "quote": "The slope of the first straight line"
+     }
+    ],
+    "reason": "Parallel proof computes slopes from points and angle."
+   },
+   {
+    "src": "lo:pp3u5-3-1",
+    "dst": "lo:pp3u5-3-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE12",
+      "printed_page": 69,
+      "quote": "Find the slope of line xy"
+     }
+    ],
+    "reason": "Perpendicular problems first compute slopes."
+   },
+   {
+    "src": "lo:pp3u5-3-1",
+    "dst": "lo:pp3u5-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE16",
+      "printed_page": 72,
+      "quote": "The slope of the required straight line"
+     }
+    ],
+    "reason": "Slope from two points is used to build the equation."
+   },
+   {
+    "src": "lo:pp3u5-3-3",
+    "dst": "lo:pp3u5-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE15",
+      "printed_page": 71,
+      "quote": "the slope of the line perpendicular on it = 3"
+     }
+    ],
+    "reason": "Perpendicular slope is used to find the equation."
+   },
+   {
+    "src": "lo:pp3u5-4-1",
+    "dst": "lo:pp3u5-4-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u5-4:definition-1",
+      "printed_page": 71,
+      "quote": "y = mx + b"
+     }
+    ],
+    "reason": "The y = mx + b form is the basis for finding the equation."
+   },
+   {
+    "src": "lo:pp3u4-2-3",
+    "dst": "lo:pp3u5-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 66,
+      "quote": "\\tan 56^\\circ 12' 48''"
+     }
+    ],
+    "reason": "Slope from an angle uses the calculator tangent."
+   },
+   {
+    "src": "lo:pp3u4-2-4",
+    "dst": "lo:pp3u5-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 66,
+      "quote": "SHIFT, tan"
+     }
+    ],
+    "reason": "Finding the angle from the slope uses the inverse tangent."
+   },
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u5-4-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE13",
+      "printed_page": 70,
+      "quote": "(0,2)"
+     }
+    ],
+    "reason": "Graphing the line uses finding points and drawing the line."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Uses distance formula for sides and diagonals."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Uses distance computations to show equal distances to center."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Solves the midpoint formula for the unknown endpoint, so it relies on the midpoint formula."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Computes the midpoint as a step, then the line equation."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Computes slopes from two points and from tan, then compares them."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "Slope from two points is used before the product -1."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "Slope from two points is a step in finding the line."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "Perpendicular slope is used to build the line equation."
+    },
+    {
+     "i": 8,
+     "verdict": "UNCLEAR",
+     "note": "The text only states the slope-intercept form. It doesn't show a dependency on reading slope and intercept from an equation."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Uses a calculator to evaluate tan of an angle in degrees, minutes and seconds, as a step."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "Uses the inverse tan on the calculator to find the angle from the slope."
+    },
+    {
+     "i": 11,
+     "verdict": "CONFIRMED",
+     "note": "Graphs the line by finding ordered pairs, then reads the slope and intercept."
+    }
+   ]
+  }
+ }
+}

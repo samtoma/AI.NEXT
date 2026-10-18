@@ -1,0 +1,208 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 6,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "c0ab4ea37204a42b9c4dc826017a943da886ac6cbd97194821ae88854dbf5013",
+  "generated_sha256": "ec939121fedfa9ee9e2647a78661525b509befd5e04504a5e6400e0fa7d3bdd8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 48,
+  "proposed": [
+   {
+    "src": "lo:pp3u6-1-1",
+    "dst": "lo:pp3u6-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 6,
+      "quote": "By putting $x = 0$ ∴ $y = -3$ ∴ $(0, -3)$ is a solution of this equation"
+     }
+    ],
+    "reason": "Graphing each line uses finding ordered pairs from y=... form."
+   },
+   {
+    "src": "lo:pp3u6-1-3",
+    "dst": "lo:pp3u6-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 9,
+      "quote": "Substituting in equation (1): $3\\times2-b=5$ ∴ $b=1$"
+     }
+    ],
+    "reason": "Solving the formed pair uses elimination and substitution."
+   },
+   {
+    "src": "lo:pp3u6-1-4",
+    "dst": "lo:pp3u6-1-4",
+    "signal": "uses_method",
+    "evidence": [],
+    "reason": "placeholder"
+   },
+   {
+    "src": "lo:pp3u6-1-1",
+    "dst": "lo:pp3u6-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 13,
+      "quote": "From the first equation: $y = -(2x+1)$. Substituting in second equation."
+     }
+    ],
+    "reason": "Writing the linear equation as y=... and substituting."
+   },
+   {
+    "src": "lo:pp3u6-2-2",
+    "dst": "lo:pp3u6-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 13,
+      "quote": "$7x(2x+1) = 0$"
+     }
+    ],
+    "reason": "The resulting quadratic is solved by factorizing."
+   },
+   {
+    "src": "lo:pp3u6-1-3",
+    "dst": "lo:pp3u6-3-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u6-3:linking-text-1",
+      "printed_page": 13,
+      "quote": "by the substitution method"
+     }
+    ],
+    "reason": "Substitution method taught in 6-1-3."
+   },
+   {
+    "src": "lo:pp3u6-3-1",
+    "dst": "lo:pp3u6-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 13,
+      "quote": "A rectangle of a perimeter 14 cm and area 12 cm$^2$. Find its two dimensions."
+     }
+    ],
+    "reason": "Solving the linear-plus-quadratic system gives the dimensions."
+   },
+   {
+    "src": "lo:pp3u1-4-4",
+    "dst": "lo:pp3u6-2-1",
+    "signal": "recall",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u6-2:linking-text-1",
+      "printed_page": 10,
+      "quote": "We have reperesented graphically the quadratic function f"
+     }
+    ],
+    "reason": "Graphing quadratic functions was done earlier."
+   },
+   {
+    "src": "lo:pp3u6-2-1",
+    "dst": "lo:pp3u6-2-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u6-2:prior-knowledge-1",
+      "printed_page": 10,
+      "quote": "You have previously solved this equation by factorizing."
+     }
+    ],
+    "reason": "Factorizing recalled."
+   },
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u6-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 5,
+      "quote": "And by drawing the straight line L passing throught the two represented points"
+     }
+    ],
+    "reason": "Drawing a line through two points."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Uses substitution to find solutions and draw lines as a step."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Uses elimination by subtraction and substitution as method steps."
+    },
+    {
+     "i": 2,
+     "verdict": "REJECTED",
+     "note": "Self-link; no text."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "Solving for y and substituting is algebraic, not the graphing/solution-listing of 1-1."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Factorizes the quadratic as a step: 7x(2x+1)=0."
+    },
+    {
+     "i": 5,
+     "verdict": "UNCLEAR",
+     "note": "Text just names substitution method; doesn't explicitly refer back to the earlier objective."
+    },
+    {
+     "i": 6,
+     "verdict": "REJECTED",
+     "note": "Quote is only the problem statement; no solution shown using 3-1."
+    },
+    {
+     "i": 7,
+     "verdict": "REJECTED",
+     "note": "Text recalls graphing quadratic functions generally, not 1-4-4's vertex/axis/extremum."
+    },
+    {
+     "i": 8,
+     "verdict": "REJECTED",
+     "note": "Recalls factorizing as prior knowledge, which is the dst's own method, not src (graphical)."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Draws a line through two plotted ordered pairs, using the linear graphing method."
+    }
+   ]
+  }
+ }
+}

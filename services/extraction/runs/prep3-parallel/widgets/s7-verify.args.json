@@ -39,10 +39,13 @@
     "lesson_unit": null,
     "answer_rules": null,
     "lesson_titles": {
-      "pp3u7-1": "Set of zeroes of a polynomial function",
-      "pp3u7-2": "Algebraic fractional function",
-      "pp3u7-3": "Equality of two Algebraic fractions",
-      "pp3u7-4": "Operations on Algebraic fractions"
+      "pp3u10-1": "Central Angle and Measuring Arcs",
+      "pp3u10-2": "The relation between the inscribed and central angles subtended by the same arc",
+      "pp3u10-3": "Inscribed Angles Subtended by the Same Arc",
+      "pp3u10-4": "Cyclic Quadrilaterals",
+      "pp3u10-5": "Properties of Cyclic Quadrilaterals",
+      "pp3u10-6": "The relation between the tangents of a circle",
+      "pp3u10-7": "Angle of Tangency"
     },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
@@ -56,118 +59,371 @@
   "mode": "verify",
   "widgets": [
     {
-      "question_id": "q:pp3u7-2-1:w001",
-      "template_id": "wt:pp3u7-2-1:exclude-numerator-trap",
-      "template_sha": "f320189a103afcaa62023d915fd2b1f6b380d40309cae98679121a7bcb2de0b5",
-      "lo_id": "lo:pp3u7-2-1",
-      "kind": "number_line_marker",
+      "question_id": "q:pp3u10-2-2:w001",
+      "template_id": "wt:pp3u10-2-2:live-central-angle-standard",
+      "template_sha": "865262ad77efef2205a549066dfb728e26727f38c5d478679c77e0d1acac79b4",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
       "spec": {
-        "mode": "points",
-        "range": [
-          -6,
-          6
-        ],
-        "targets": [
-          -3,
-          3
-        ]
+        "ask": "central",
+        "target": 60
       },
-      "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
-      "instrument": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number line; the answer is a SET and is graded as one (1–4 targets). The other mode is {\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range.",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $60°$, and read the inscribed angle.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
       "reading_fields": {
-        "mode": "'points' or 'interval'",
-        "targets": "every value to mark (points mode)",
-        "from": "left end (interval)",
-        "to": "right end (interval)",
-        "openFrom": "true if the left end is excluded",
-        "openTo": "true if the right end is excluded"
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
       },
       "can_emit": {
-        "by": "mode",
+        "by": "ask",
         "cases": {
-          "points": [
-            "missed-values",
-            "extra-values",
-            "sign-flipped"
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
           ],
-          "interval": [
-            "endpoint-inclusion-wrong",
-            "interval-wrong"
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
           ]
         }
       },
       "diagnostics": [
         {
-          "predicate": "extra-values",
-          "predicate_meaning": "Marked values that the answer set does not contain",
-          "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
-          "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
-          "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values."
-        },
-        {
-          "predicate": "missed-values",
-          "predicate_meaning": "Part of the answer set was not marked",
-          "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
-          "misconception_label": "Finds only the positive root of the denominator",
-          "misconception_description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
+          "predicate": "angle-given-as-arc",
+          "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
         }
       ]
     },
     {
-      "question_id": "q:pp3u7-2-1:w002",
-      "template_id": "wt:pp3u7-2-1:exclude-square-denominator",
-      "template_sha": "6223adf4f2a0fbf49b7e6f8c6012551a322c10b642488e47a19132924ce10528",
-      "lo_id": "lo:pp3u7-2-1",
-      "kind": "number_line_marker",
+      "question_id": "q:pp3u10-2-2:w002",
+      "template_id": "wt:pp3u10-2-2:live-central-angle-standard-2",
+      "template_sha": "90922ac97b178e41308885b16767ac6084e70059b9a237ad729319cf40e5113c",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
       "spec": {
-        "mode": "points",
-        "range": [
-          -6,
-          6
-        ],
-        "targets": [
-          -2,
-          2
-        ]
+        "ask": "central",
+        "target": 90
       },
-      "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
-      "instrument": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number line; the answer is a SET and is graded as one (1–4 targets). The other mode is {\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range.",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $90°$, and read the inscribed angle.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
       "reading_fields": {
-        "mode": "'points' or 'interval'",
-        "targets": "every value to mark (points mode)",
-        "from": "left end (interval)",
-        "to": "right end (interval)",
-        "openFrom": "true if the left end is excluded",
-        "openTo": "true if the right end is excluded"
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
       },
       "can_emit": {
-        "by": "mode",
+        "by": "ask",
         "cases": {
-          "points": [
-            "missed-values",
-            "extra-values",
-            "sign-flipped"
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
           ],
-          "interval": [
-            "endpoint-inclusion-wrong",
-            "interval-wrong"
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
           ]
         }
       },
       "diagnostics": [
         {
-          "predicate": "missed-values",
-          "predicate_meaning": "Part of the answer set was not marked",
-          "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
-          "misconception_label": "Finds only the positive root of the denominator",
-          "misconception_description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
-        },
+          "predicate": "angle-given-as-arc",
+          "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w003",
+      "template_id": "wt:pp3u10-2-2:live-central-angle-standard-3",
+      "template_sha": "dcc96153220223a67d337d2ceaf7ac83549a9380e70f811116c42861c4a98768",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "central",
+        "target": 120
+      },
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $120°$, and read the inscribed angle.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
         {
-          "predicate": "extra-values",
-          "predicate_meaning": "Marked values that the answer set does not contain",
-          "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
-          "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
-          "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values."
+          "predicate": "angle-given-as-arc",
+          "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w004",
+      "template_id": "wt:pp3u10-2-2:live-central-angle-standard-4",
+      "template_sha": "7c521e073733c0028c68dd2fe17202c8d34505e2899d848cf3683c36f58bb159",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "central",
+        "target": 140
+      },
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $140°$, and read the inscribed angle.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "angle-given-as-arc",
+          "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w005",
+      "template_id": "wt:pp3u10-2-2:live-inscribed-angle-standard",
+      "template_sha": "f0855918329c82dc7fac40a77167198d24e504b5dea7ac75bb6554eb43c1ad51",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "inscribed",
+        "target": 30
+      },
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $30°$.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "arc-given-as-angle",
+          "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w006",
+      "template_id": "wt:pp3u10-2-2:live-inscribed-angle-standard-2",
+      "template_sha": "d2ae06c1b457fc5515a629f73026c9c0dbac016ddbd8420d3f08cb8415e9674e",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "inscribed",
+        "target": 35
+      },
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $35°$.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "arc-given-as-angle",
+          "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w007",
+      "template_id": "wt:pp3u10-2-2:live-inscribed-angle-standard-3",
+      "template_sha": "dbeaa6be2e783ae4b2ec5d6aa5e0c9bd5347adb8ed8d386c618d5a621c7965d6",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "inscribed",
+        "target": 45
+      },
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $45°$.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "arc-given-as-angle",
+          "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w008",
+      "template_id": "wt:pp3u10-2-2:live-inscribed-angle-standard-4",
+      "template_sha": "7bd1d1774e73a16311445c06c30efe85af46f2c2d7a3dddef2f497e17fdf59c5",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "inscribed",
+        "target": 55
+      },
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $55°$.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "arc-given-as-angle",
+          "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u10-2-2:w009",
+      "template_id": "wt:pp3u10-2-2:live-inscribed-angle-standard-5",
+      "template_sha": "4786d18d3acb39af84dfa28da8e63c64c85c5ff7c6569f261f36f2b0537ef760",
+      "lo_id": "lo:pp3u10-2-2",
+      "kind": "angle_setter",
+      "spec": {
+        "ask": "inscribed",
+        "target": 70
+      },
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $70°$.",
+      "instrument": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation of that theorem.",
+      "reading_fields": {
+        "ask": "'central' or 'inscribed' — which angle the target is",
+        "target": "degrees"
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "arc-given-as-angle",
+          "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+          "misconception_id": "mc:pp3u10-2-2:inscribed-angle-doubled",
+          "misconception_label": "Inscribed angle doubled instead of halved",
+          "misconception_description": "Takes the inscribed angle to equal its arc, or twice it, rather than half."
         }
       ]
     }

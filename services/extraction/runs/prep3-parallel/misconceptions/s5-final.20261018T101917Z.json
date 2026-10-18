@@ -1,0 +1,546 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "859d7fe817be9d5cb706f7d5469233f7e63a8c9c782a44d32aaf7222c46c1098",
+  "generated_sha256": "ccd549a537c82fd973d1438aff97440bb22df0e6423d3e09b39c7e59057536df",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u5-1-1",
+   "entries": [
+    {
+     "id": "mc:pp3u5-1-1:legs-added-before-squaring",
+     "lo_id": "lo:pp3u5-1-1",
+     "label": "Differences added before squaring",
+     "description": "Computes (dx + dy) rather than √(dx² + dy²).",
+     "signal": "The answer equals the sum of the two coordinate differences.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Both differences are right — it is how they combine that changes."
+      },
+      {
+       "step": 2,
+       "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
+      },
+      {
+       "step": 3,
+       "text_md": "Square, add, then root — in that order."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real: for M(3,2), N(7,5) a student gets 4+3=7 instead of 5. The refutation is correct (√(36+64)=10 vs 14) and matches the canonical Pythagoras method. It is specific to adding the legs, and the signal is accurate."
+     }
+    },
+    {
+     "id": "mc:pp3u5-1-1:one-coordinate-used",
+     "lo_id": "lo:pp3u5-1-1",
+     "label": "Distance read from one point only",
+     "description": "Reports one point's coordinate as the distance instead of the separation between both.",
+     "signal": "The answer equals one of the given coordinates.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "That number is in the question, which is why it is tempting."
+      },
+      {
+       "step": 2,
+       "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
+      },
+      {
+       "step": 3,
+       "text_md": "Ask what the number is measuring FROM as well as to."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Plausible error, since a student may report a given coordinate. The refutation is mathematically correct (|6-2|=4) and consistent with the book's difference method. It names no external references."
+     }
+    },
+    {
+     "id": "mc:pp3u5-1-1:root-not-taken",
+     "lo_id": "lo:pp3u5-1-1",
+     "label": "Square root never taken in the distance rule",
+     "description": "Stops at the sum of the squares.",
+     "signal": "The answer is the square of the correct distance.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
+      },
+      {
+       "step": 2,
+       "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
+      },
+      {
+       "step": 3,
+       "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real: a student stops at 25 for MN. The refutation is correct (36+64=100, √100=10) and matches the canonical formula. It targets the missing root specifically, and the signal fits."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u5-1-1:coordinates-added",
+     "lo_id": "lo:pp3u5-1-1",
+     "label": "Coordinates added instead of subtracted",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "Step 1 praises combining the coordinates as 'the right idea', which is misleading. Step 3 claims adding gives a bigger number, which is false with negative coordinates such as A(3,0), B(-1,0), where the sum is 2. The refutation also uses 6 and 2 with no stated context. The misconception is not clearly tied to the book's examples."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
+     "lo_id": "lo:pp3u5-1-2",
+     "label": "Four equal sides taken as proof of a square",
+     "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
+     "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
+      },
+      {
+       "step": 2,
+       "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
+      },
+      {
+       "step": 3,
+       "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:pp3u5-1-2:bk-example-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The book's own example stops at 'square or rhombus' after four equal sides and then uses equal diagonals to reach 'square'. The numbers in the refutation are correct: AC=√82 and BD=√82. It argues against this specific error, and it names no question id or page."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u5-1-2:collinear-read-as-triangle",
+     "lo_id": "lo:pp3u5-1-2",
+     "label": "Three collinear points treated as a triangle",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The book never covers collinear points or the case AB+BC=AC. The refutation teaches the triangle inequality and the idea of a 'shortest path', which are outside the canonical method. There is no evidence for this error."
+    },
+    {
+     "id": "mc:pp3u5-1-2:right-angle-at-wrong-vertex",
+     "lo_id": "lo:pp3u5-1-2",
+     "label": "Right angle placed at the wrong vertex",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The book's example does put the right angle at the vertex opposite the longest side. But the book gives no caution or evidence about this slip. The refutation mostly restates the method ('compute all three lengths, find the largest') and does not show why the wrong vertex fails. The signal is also loose, because it does not say how the student chose the vertex."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no new entries are added. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u5-2-1:midpoint-from-difference",
+     "lo_id": "lo:pp3u5-2-1",
+     "label": "Midpoint built from differences or sums without halving",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "No evidence cited. The signal lumps two different errors together: the sum of the coordinates and the difference halved. The refutation only addresses the unhalved sum, so it fits just part of the signal. Its example A(2,6), B(4,0) is not from the book, and the student can't see it. It adds the 'check it lies between the points' test, which the book's method does not teach. The label says 'difference' but the refutation talks about a sum."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. I added no entries. The runtime will use the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-1",
+   "entries": [
+    {
+     "id": "mc:pp3u5-3-1:slope-inverted",
+     "lo_id": "lo:pp3u5-3-1",
+     "label": "Run divided by rise",
+     "description": "Computes Δx/Δy instead of Δy/Δx.",
+     "signal": "The answer is the reciprocal of the correct slope.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Both differences are right — the fraction is upside down."
+      },
+      {
+       "step": 2,
+       "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
+      },
+      {
+       "step": 3,
+       "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-3-1:live-line-equation-standard#slope-inverted",
+       "question_id": "q:pp3u5-3-1:w001",
+       "text": "Slope taken as run over rise instead of rise over run",
+       "tagged": "mc:pp3u5-3-1:slope-inverted"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-inverted",
+       "question_id": "q:pp3u5-3-1:w004",
+       "text": "Slope taken as run over rise instead of rise over run",
+       "tagged": "mc:pp3u5-3-1:slope-inverted"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Inverting the fraction is a real error for the two-point slope. The refutation keeps the canonical formula (y2-y1)/(x2-x1) and addresses the upside-down fraction specifically. The rise/run wording is a light gloss on that formula and does not change the method."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u5-3-1:slope-sign-flipped",
+     "lo_id": "lo:pp3u5-3-1",
+     "label": "The sign of the slope lost",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "Reversing the subtraction order in only one of numerator and denominator is a plausible error. But steps 3-4 teach a picture-based sign check (up to the right is positive, down to the right is negative), which the canonical solutions never use. Step 4 also repeats step 3. This teaches outside the book, so it is not confirmed."
+    }
+   ],
+   "stripped": [
+    {
+     "lo": "lo:pp3u5-3-1",
+     "origin": "S7",
+     "ref": "wt:pp3u5-3-1:live-line-equation-standard-2#slope-sign-flipped",
+     "question_id": "q:pp3u5-3-1:w002",
+     "text": "Right gradient, wrong sign — the line leans the other way",
+     "tagged": "mc:pp3u5-3-1:slope-sign-flipped",
+     "reason": "its entry mc:pp3u5-3-1:slope-sign-flipped was dropped (UNSUPPORTED)"
+    },
+    {
+     "lo": "lo:pp3u5-3-1",
+     "origin": "S7",
+     "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-sign-flipped",
+     "question_id": "q:pp3u5-3-1:w004",
+     "text": "Right gradient, wrong sign — the line leans the other way",
+     "tagged": "mc:pp3u5-3-1:slope-sign-flipped",
+     "reason": "its entry mc:pp3u5-3-1:slope-sign-flipped was dropped (UNSUPPORTED)"
+    }
+   ],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-3-3",
+   "entries": [
+    {
+     "id": "mc:pp3u5-3-3:perpendicular-sign-only",
+     "lo_id": "lo:pp3u5-3-3",
+     "label": "Sign flipped without taking the reciprocal",
+     "description": "Uses −m for a perpendicular slope instead of −1/m.",
+     "signal": "The answer is the negative of the original slope.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Changing the sign is half of the rule, and you got that half."
+      },
+      {
+       "step": 2,
+       "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
+      },
+      {
+       "step": 3,
+       "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. For slope 3/2, a student gives -3/2 instead of -2/3 (drill 7). The refutation is correct and uses the book's m1×m2=-1 rule. It targets the missing reciprocal and gives a product check that would expose the error. It names no outside references and adds nothing beyond the book."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-4-1",
+   "entries": [
+    {
+     "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
+     "lo_id": "lo:pp3u5-4-1",
+     "label": "Slope written as a/b, losing the minus",
+     "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
+     "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
+      },
+      {
+       "step": 2,
+       "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
+      },
+      {
+       "step": 3,
+       "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u5-4:rule-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u5-4-1:bk-example-2"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w001",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w002",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#slope-sign-flipped",
+       "question_id": "q:pp3u5-4-1:w003",
+       "text": "Right gradient, wrong sign — the line leans the other way",
+       "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Real error. The refutation matches book example 2 (m=-a/b, 4y=-3x+5, y=-3/4 x+5/4). The algebra is correct, the sign/direction explanation is sound, and no outside references appear."
+     }
+    },
+    {
+     "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+     "lo_id": "lo:pp3u5-4-1",
+     "label": "Reading m and b straight off the equation without isolating y",
+     "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+     "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
+      },
+      {
+       "step": 4,
+       "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u5-4:rule-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u5-4-1:bk-example-1"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#off-target",
+       "question_id": "q:pp3u5-4-1:w001",
+       "text": "Neither the slope nor the intercept matches",
+       "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#off-target",
+       "question_id": "q:pp3u5-4-1:w002",
+       "text": "Neither the slope nor the intercept matches",
+       "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+      },
+      {
+       "origin": "S7",
+       "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#off-target",
+       "question_id": "q:pp3u5-4-1:w003",
+       "text": "Neither the slope nor the intercept matches",
+       "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Real error. The refutation reproduces book example 1 (2y=x+4, y=1/2 x+2, intercept 2 matches the point (0,2)). The math is correct, it targets the specific misreading of coefficients, and it adds nothing outside the book."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u5-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, existing entries or wrong options were supplied, so no error is supported by evidence. I added no entries."
+    },
+    {
+     "kind": "other",
+     "text": "In the first worked example, step 4 prints '2 = 3 × 2 + c' where the point (1, 2) gives 3 × 1. The final answer y = 3x - 4 is consistent with 3 × 1. I did not use this as an error entry because it is a printing slip."
+    },
+    {
+     "kind": "terminology",
+     "text": "The objective description says y = mx + b, but the book's solutions use y = mx + c. Please check which letter students should see."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 11,
+  "entries": 8,
+  "dropped": 5,
+  "stripped": 2,
+  "skipped": 0,
+  "flags": 7
+ }
+}

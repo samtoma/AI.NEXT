@@ -1,0 +1,337 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "7fb0e12badc4a43b35fb02f6dc2b8241ad594fb309762ee4f18df8d96dc50a1f",
+  "generated_sha256": "3d423f69da610e2f05451e06ecc50d92e0f1b7676274a037d47e8e2d81599f5b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u3-1-1",
+   "entries": [
+    {
+     "id": "mc:pp3u3-1-1:primary-assumed-cheap",
+     "lo_id": "lo:pp3u3-1-1",
+     "label": "Primary resources assumed to be the quick and cheap option",
+     "description": "Reverses the trade-off: field data is accurate but costly; secondary data is cheap but second-hand.",
+     "signal": "The answer attributes low cost or speed to primary collection.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "There is a real trade-off here, and you are reaching for it."
+      },
+      {
+       "step": 2,
+       "text_md": "It runs the other way: PRIMARY resources are the accurate ones and cost the most time, effort and money. SECONDARY resources save all three but you did not control how they were gathered."
+      },
+      {
+       "step": 3,
+       "text_md": "Accuracy costs; convenience costs accuracy."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": []
+    },
+    {
+     "id": "mc:pp3u3-1-1:secondary-called-primary",
+     "lo_id": "lo:pp3u3-1-1",
+     "label": "Ready-made data called a primary resource",
+     "description": "Classifies data taken from published records as field data because the student gathered it themselves.",
+     "signal": "A record, website or publication is described as a primary resource.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Collecting the data yourself does feel like field work — that is the honest confusion here."
+      },
+      {
+       "step": 2,
+       "text_md": "What decides it is where the data ORIGINATED. Figures already compiled by someone else are SECONDARY, however you obtained them."
+      },
+      {
+       "step": 3,
+       "text_md": "Primary means you generated the observations: a questionnaire you distributed, an interview you conducted, a count you made."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": []
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u3-1-2:sample-assumed-more-accurate",
+     "lo_id": "lo:pp3u3-1-2",
+     "label": "A sample assumed to be more accurate than a census",
+     "description": "Justifies sampling by accuracy rather than by cost, size or destructive testing.",
+     "signal": "The reason given for sampling is that it is more accurate.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Sampling is the right method in that situation — the reason is what slipped."
+      },
+      {
+       "step": 2,
+       "text_md": "A census covers every value, so it is the MORE accurate method. We sample when a census is impossible or self-defeating: the society is gigantic, or the test destroys what it measures."
+      },
+      {
+       "step": 3,
+       "text_md": "Testing every lamp until it burns out would leave nothing to sell."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": []
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u3-2-1:equal-means-same-dispersion",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "Equal means, so equally spread",
+     "description": "The student finds that two sets have the same mean and concludes that their values are equally spread out, or that the sets are alike.",
+     "signal": "Says two sets with the same mean have the same dispersion, without finding either range.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found that both means are equal, and that part is right: both sets of wages have a mean of LE 200. The slip is in treating the mean as if it also told you how spread out the values are."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at the two sets of wages. Set A is $170, 180, 180, 230, 240$ and set B is $50, 180, 180, 190, 400$. Both add up to $1000$, so both have mean $200$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the values are not equally spread. Set A stays between $170$ and $240$, close to its mean. Set B runs from $50$ up to $400$, far on both sides of $200$. The mean is the same, yet B is clearly more scattered."
+      },
+      {
+       "step": 4,
+       "text_md": "The mean tells you where the centre of the values is. It says nothing about how far the values stretch around that centre. Sets with the same mean can have very different spreads."
+      },
+      {
+       "step": 5,
+       "text_md": "To compare dispersion, find the range of each set as greatest value $-$ smallest value. Compare the two ranges: the bigger range means the more divergent set."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u3-2-1:bk-think-and-discuss-1"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u3-2:rule-7"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Uses the book's wage sets (both mean 200, sums 1000 correct). Describes the spread correctly (A 170-240, B 50-400). Range method matches the canonical solution, and the bigger-range-means-more-divergent conclusion matches it too. It argues against this specific error. Remark rule-7 and the canonical items support it."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u3-2-1:mean-built-as-median",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "The middle value offered where the average was asked for",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "Mean versus median confusion is not part of the range/dispersion objective and has no cited evidence. The refutation teaches the median, which this objective's canonical solutions never cover."
+    },
+    {
+     "id": "mc:pp3u3-2-1:median-built-as-mean",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "The average offered where the middle value was asked for",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "This is about the median, which is outside this objective. No evidence is cited, and the refutation teaches content the objective's canonical solutions do not cover."
+    },
+    {
+     "id": "mc:pp3u3-2-1:mode-assumed-to-exist",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "A mode assumed to exist in every set",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The mode is outside this objective. No evidence is cited, and the refutation teaches content the book's items for this objective do not cover."
+    },
+    {
+     "id": "mc:pp3u3-2-1:range-is-mean",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "Range confused with the mean",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "No evidence is cited for this error. The refutation mostly restates the range definition and does not tie to a canonical item or remark."
+    },
+    {
+     "id": "mc:pp3u3-2-1:range-thought-to-use-all-values",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "The range assumed to reflect every value",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The weakness itself is supported by remark rule-7, but no evidence is cited. Step 3 brings in standard deviation, which this objective's book content does not teach."
+    },
+    {
+     "id": "mc:pp3u3-2-1:zero-dispersion-means-zero-values",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "Zero dispersion read as zero values",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "No evidence is cited. Zero dispersion is not covered by the canonical solutions or the remarks for this objective, so the refutation teaches outside the book."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-2",
+   "entries": [
+    {
+     "id": "mc:pp3u3-2-2:deviations-not-averaged",
+     "lo_id": "lo:pp3u3-2-2",
+     "label": "Squared deviations summed but not averaged",
+     "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
+     "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your deviations and their squares are right."
+      },
+      {
+       "step": 2,
+       "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
+      },
+      {
+       "step": 3,
+       "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
+      },
+      {
+       "step": 4,
+       "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Omitting the division by n is a plausible slip against the canonical formula σ=√(Σ(x−x̄)²/n). The refutation's arithmetic is correct: 3,5,5,7 has mean 5, squared deviations sum to 8, n=4, so σ=√2. It uses the book's method, names no outside references, and contrasts √8 with √2."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u3-2-2:divisor-n-minus-one",
+     "lo_id": "lo:pp3u3-2-2",
+     "label": "Dividing by n − 1 instead of n",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation teaches sample versus population standard deviation, estimation and bias, and calculator sample settings. None of that is in the book. The error also admits it comes from outside the book, and no evidence is cited."
+    },
+    {
+     "id": "mc:pp3u3-2-2:sigma-as-range-or-mean",
+     "lo_id": "lo:pp3u3-2-2",
+     "label": "Standard deviation confused with the range or the mean",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The book's evidence does not show students confusing σ with the range or the mean. The refutation gives no worked contrast, and its range remarks go beyond the objective. It mostly restates the definition."
+    },
+    {
+     "id": "mc:pp3u3-2-2:variance-not-rooted",
+     "lo_id": "lo:pp3u3-2-2",
+     "label": "Square root never taken",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The refutation introduces the term 'variance', which the canonical solution does not use, so it teaches vocabulary outside the book. No evidence is cited for this error."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-3",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u3-2-3:x-read-as-frequency",
+     "lo_id": "lo:pp3u3-2-3",
+     "label": "Frequency substituted for the value",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "No evidence in the book supports this as a real error. The refutation also says a frequency has no distance from the mean, which is not true: any number has a distance from the mean. It also opens with 'right formula — letters crossed', which is loose. The refutation mostly restates the notation (x is the value or centre, k is the frequency) and gives a weak reason why the error is wrong. When in doubt, do not confirm."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  }
+ ],
+ "totals": {
+  "objectives": 7,
+  "entries": 5,
+  "dropped": 10,
+  "stripped": 0,
+  "skipped": 4,
+  "flags": 0
+ }
+}

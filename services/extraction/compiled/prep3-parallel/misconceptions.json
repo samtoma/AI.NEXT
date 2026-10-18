@@ -3,7 +3,7 @@
   "course_id": "course:prep3-parallel-math-en",
   "book": "prep3-parallel",
   "reviewed": false,
-  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs ; pipeline-generated, UNREVIEWED",
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs s5-final.20261018T102128Z.json; pipeline-generated, UNREVIEWED",
   "misconceptions": [
     {
       "id": "mc:pp3u1-1-1:order-ignored-in-pair",
@@ -37,9 +37,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
+        "run": "s5-final.20261018T101704Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is supported by the book's remarks that (a,b)≠(b,a) and that (a,b) is not the set {a,b}. I re-checked the arithmetic. The crosswise match gives a-2=-3, so a=-1, and b+1=2, so b=1. The left side then becomes (-3,2), which is not (2,-3). The positional method gives a=4, b=-4, which matches the canonical answer. The refutation uses only the book's terms (first and second projections) and the book's own drill, and it cites no question ids, page numbers or review history. It argues against the specific crosswise-matching mistake rather than just restating the method. It has no signal, so there is nothing to misdiagnose.",
+        "verifier_reason": "The error is real and supported by the book's remarks (rule-3: (a,b)≠(b,a); rule-4: pair ≠ set). I checked the arithmetic. Crosswise matching gives a-2=-3, so a=-1, and b+1=2, so b=1. Substituting gives (-3,2)≠(2,-3). Matching by position gives a=4, b=-4, which agrees with the canonical answer to drill-1-b. The method is the book's: equate the first projections, then the second. The refutation targets the error with a concrete counter-check. It cites no question ids, pages or review history.",
         "sources": [
           {
             "type": "remark",
@@ -48,50 +48,6 @@
           {
             "type": "remark",
             "ref": "pp3u1-1:rule-4"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u1-1-2:adds-set-sizes",
-      "lo_id": "lo:pp3u1-1-2",
-      "label": "Adds the sizes instead of multiplying",
-      "description": "To find n(X×Y) or n(X²), the student adds (or doubles) the numbers of elements instead of multiplying n(X) by n(Y).",
-      "signal": null,
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You found the right sizes, $n(Z)=3$, but then combined them by adding. Adding counts the elements of two sets put together. A cartesian product counts pairs."
-        },
-        {
-          "step": 2,
-          "text_md": "Look at $Z^2$ with $Z=\\{4, 5, -2\\}$. Pair $4$ with each of the 3 elements, then pair $5$ with each of the 3, then $-2$ with each of the 3. That gives 3 groups of 3 pairs, which is $3\\times 3=9$ pairs, not $3+3=6$."
-        },
-        {
-          "step": 3,
-          "text_md": "The same applies to $X\\times Z$ with $X=\\{2, -1\\}$ and $Z=\\{4, 5, -2\\}$. Each of the 2 elements of $X$ is paired with 3 elements of $Z$, so there are $2\\times 3=6$ pairs, not $2+3=5$."
-        },
-        {
-          "step": 4,
-          "text_md": "Use $n(X\\times Y)=n(X)\\times n(Y)$, and for a square $n(X^2)=n(X)\\times n(X)$. A check is that $n(Y^2)=2\\times 2=4$ for $Y=\\{4, 0\\}$ happens to equal $2+2$, so test your method on $Z^2$ as well."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. It is supported by the remark that n(X×X)=3×3=9 and by the canonical answers 6, 4 and 9. The refutation's arithmetic is correct: Z² gives 3×3=9, X×Z gives 2×3=6, and Y²=4 coincides with 2+2. It argues against adding and does not just restate the method. The signal is flawed because it lists 'n(Y²) = 4 by coincidence', which is the correct answer. A student who gives that answer would be misdiagnosed, so the signal is not ok.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u1-1:rule-11"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "q:pp3u1-1-2:bk-drill-2-f"
           }
         ],
         "covers": []
@@ -125,9 +81,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
+        "run": "s5-final.20261018T101704Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real and backed by the book's remark that X×Y ≠ Y×X, and by its worked example. The refutation is correct: (a,-1) is in X×Y while (-1,a) is in Y×X. For Y×Z, (4,5) has the Y element first, and (5,4) would belong to Z×Y. The closing advice to take each element of the first set and pair it with every element of the second matches the canonical method. It cites no question ids, pages or review history. The entry has no signal.",
+        "verifier_reason": "The error is real and matches the book's rule X×Y ≠ Y×X for X≠Y. The a,b / -1,0,3 example agrees with the canonical X×Y. The Y×Z pair (4,5) and the claim that (5,4) belongs to Z×Y are correct. The refutation names no question ids, pages or review history, and it argues against the error instead of only restating the method.",
         "sources": [
           {
             "type": "remark",
@@ -142,51 +98,379 @@
       }
     },
     {
-      "id": "mc:pp3u1-3-1:two-images",
-      "lo_id": "lo:pp3u1-3-1",
-      "label": "Accepts an element of X with two images",
-      "description": "The student calls a relation a function even though one element of X is paired with more than one element of Y.",
-      "signal": null,
-      "kind": "generated_distractor",
+      "id": "mc:pp3u1-1-3:arrow-starts-at-y",
+      "lo_id": "lo:pp3u1-1-3",
+      "label": "Arrows drawn from the second set",
+      "description": "Starts each arrow in an arrow diagram from an element of Y rather than of X.",
+      "signal": "The diagram or the reasoning reverses the direction of every arrow.",
+      "kind": "conceptual",
       "refutation": [
         {
           "step": 1,
-          "text_md": "You may be checking that every pair is a sensible pair, or that every element of Y is used. That is not the test. The test is about the elements of X, and what comes out of each one."
+          "text_md": "You know the diagram joins one set to the other — that is the idea."
         },
         {
           "step": 2,
-          "text_md": "Look at $\\{(1, 10), (1, 12), (5, 10), (9, 12)\\}$. The element $1$ is the first element of two pairs, $(1, 10)$ and $(1, 12)$. In an arrow diagram, two arrows would leave $1$, one to $10$ and one to $12$."
+          "text_md": "In the arrow diagram of $X \\times Y$ every arrow STARTS at an element of $X$, the first projection, and ends at an element of $Y$."
         },
         {
           "step": 3,
-          "text_md": "A function needs every element of X to have only one image, which means only one arrow coming out. Here $1$ has two images, so this relation is not a function. The other pairs being fine does not rescue it, because one element of X with two arrows is enough to fail."
-        },
-        {
-          "step": 4,
-          "text_md": "Next time, take each element of X in turn and count the pairs that start with it, or the arrows that leave it. If any element has more than one, it is not a function."
+          "text_md": "The direction carries the order of the pair; reversing it draws $Y \\times X$ instead."
         }
       ],
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
+        "run": "s5-final.20261018T101704Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation is correct: 1 has two images, 10 and 12, so the relation is not a function. This matches the canonical test of one arrow out of each element of X. It cites no outside references.",
-        "sources": [
-          {
-            "type": "distractor",
-            "ref": "tpl:pp3u1-3-1:pick-func#mc:pp3u1-3-1:two-images"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S6",
-            "ref": "tpl:pp3u1-3-1:pick-func#mc:pp3u1-3-1:two-images",
-            "question_id": "q:pp3u1-3-1:g001-pick-f",
-            "text": "$\\{ (1, 10), (1, 12), (5, 10), (9, 12) \\}$",
-            "tagged": "mc:pp3u1-3-1:two-images"
-          }
-        ]
+        "verifier_reason": "This matches the book: each arrow starts at the first projection (X) and ends at the second (Y). The refutation addresses the reversed direction and is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-3:points-vs-columns",
+      "lo_id": "lo:pp3u1-1-3",
+      "label": "Total points read as the number of columns",
+      "description": "Reports the whole point count of a net diagram where a column count is asked.",
+      "signal": "The answer equals n(X) x n(Y) rather than one of the factors.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is genuinely in the diagram — it is the total of the points."
+        },
+        {
+          "step": 2,
+          "text_md": "Each COLUMN holds $n(Y)$ points, so the number of columns is the total divided by the height."
+        },
+        {
+          "step": 3,
+          "text_md": "$15$ points in columns of $3$ gives $5$ columns."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "It follows from the book's cartesian diagram, with X horizontal and Y vertical, so each column has n(Y) points. The arithmetic is correct (15 points in columns of 3 gives 5 columns). It addresses this specific error.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:axis-point-given-a-quadrant",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "A point on an axis placed in a quadrant",
+      "description": "Assigns a point with a zero coordinate to a quadrant; the axes belong to none.",
+      "signal": "A point containing 0 is reported as being in a quadrant.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The sign you did read is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But $(0, -3)$ has a zero first coordinate, so it sits ON the $y$-axis rather than inside any quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "The axes divide the plane into the four quadrants and belong to none of them — a zero anywhere in the pair puts the point on an axis."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches canonical E(0,-3) on the y-axis and F(2,0) on the x-axis; refutation is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:pair-order-ignored",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "Order of the pair ignored",
+      "description": "Reports (b, a) where (a, b) was asked; treats an ordered pair as an unordered set.",
+      "signal": "The answer is the correct pair with its components swapped.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both of your numbers are right — the issue is which one goes first."
+        },
+        {
+          "step": 2,
+          "text_md": "An ordered pair is *ordered*: $(0, 2)$ and $(2, 0)$ name different points and are not equal unless the two components happen to be the same."
+        },
+        {
+          "step": 3,
+          "text_md": "Match first-with-first and second-with-second, and keep them in that order when you write the answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Swapping coordinates is a real error when reading points like C(5,0) from the net; refutation is correct and consistent with the book's reading of pairs.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:quadrant-from-x-alone",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "Quadrant chosen from one coordinate",
+      "description": "Names the quadrant from the sign of x without checking y, or the reverse.",
+      "signal": "The named quadrant matches one coordinate's sign and contradicts the other.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reading signs, which is exactly the right instinct."
+        },
+        {
+          "step": 2,
+          "text_md": "A quadrant needs BOTH signs: $(-2, 5)$ is negative then positive, which is the second quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "In order: $(+,+)$ first, $(-,+)$ second, $(-,-)$ third, $(+,-)$ fourth."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Quadrant sign conventions match the canonical answers (first to fourth); the refutation example (-2,5) in the second quadrant is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:relation-subset-of-one-set",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "A relation taken to be a subset of one of the sets",
+      "description": "Treats a relation as a set of elements rather than a set of ordered pairs.",
+      "signal": "The answer names X or Y where X x Y is required.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation does involve both sets — that part is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But its members are ORDERED PAIRS, so a relation from $X$ to $Y$ is a subset of $X \\times Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ alone holds single elements, and a pair cannot be an element of it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "A relation is a set of ordered pairs, a subset of X×Y. The refutation is correct and argues against the error, and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:relation-subset-of-x",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "A relation on X taken to be a subset of X",
+      "description": "Treats a relation on a set as a set of elements rather than of ordered pairs.",
+      "signal": "The answer names X, or a set of single elements.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation on $X$ does live entirely inside $X$'s world — that instinct is right."
+        },
+        {
+          "step": 2,
+          "text_md": "Its members are ORDERED PAIRS of elements of $X$, so $R \\subseteq X \\times X$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ itself holds single elements, and a pair is not one of them."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This matches the canonical relation on X. The refutation that R ⊆ X×X, made of ordered pairs, is correct and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:self-pairs-dropped",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "Pairs of an element with itself left out",
+      "description": "Omits (x, x) from a relation on a set, assuming a relation must join two different elements.",
+      "signal": "The answer is the correct relation minus its self-paired members.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair you listed genuinely satisfies the rule."
+        },
+        {
+          "step": 2,
+          "text_md": "One is missing: with $a + b = 0$ and $a = b = 0$, the pair $(0, 0)$ satisfies it too."
+        },
+        {
+          "step": 3,
+          "text_md": "A relation on a set may pair an element with itself — nothing in the definition forbids it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "In the canonical answer, (0,0) is the self-pair. The refutation is correct, and the signal (the correct relation minus its self-pair) fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-1:domain-element-repeated",
+      "lo_id": "lo:pp3u1-3-1",
+      "label": "An element of the domain given two images",
+      "description": "Accepts a relation as a function although one first projection appears twice.",
+      "signal": "The chosen relation contains two pairs sharing a first component.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair there is legal on its own."
+        },
+        {
+          "step": 2,
+          "text_md": "But $1$ appears as a first projection twice, in $(1, 2)$ and $(1, 3)$, so $1$ has two images."
+        },
+        {
+          "step": 3,
+          "text_md": "A function gives each input exactly one output — one repeat is enough to disqualify it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Mathematically correct and matches the book's condition that each element of X has exactly one image. Two pairs sharing a first component is a precise signal, and the refutation argues against this error.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-1:function-condition-on-y",
+      "lo_id": "lo:pp3u1-3-1",
+      "label": "The function condition applied to the second set",
+      "description": "Requires each element of Y to appear once, instead of each element of X appearing exactly once as a first projection.",
+      "signal": "The stated condition is about images rather than about the domain.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right shape of condition — 'exactly once' is the key phrase."
+        },
+        {
+          "step": 2,
+          "text_md": "It applies to the FIRST set: every element of $X$ must appear exactly once as a first projection."
+        },
+        {
+          "step": 3,
+          "text_md": "Elements of $Y$ may repeat, or not appear at all — that is why the range can be a proper subset of the codomain."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The condition is correctly moved to X (each element of X appears exactly once as a first projection). The note that elements of Y may repeat or be unused is consistent with the canonical example, where the range {4,6,8} is a proper subset of Y. The signal is acceptable.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-3:range-is-codomain",
+      "lo_id": "lo:pp3u1-3-3",
+      "label": "Range and codomain treated as the same set",
+      "description": "Reports the whole codomain as the range; the range is the set of images actually reached.",
+      "signal": "The answer is Y rather than the set of second components of f.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have found the right set to be looking at — $Y$ is where the images live."
+        },
+        {
+          "step": 2,
+          "text_md": "The RANGE is only the part of $Y$ that is actually reached: the second components of the pairs, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$2$ belongs to the codomain but is nobody's image, so it is not in the range."
+        },
+        {
+          "step": 4,
+          "text_md": "Range $\\subseteq$ codomain, and the two are equal only when every element of $Y$ gets used."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches the canonical range {3,5,7} and the book's remark that the range is a subset of the codomain. The claim that 2 is in Y but is nobody's image is correct. The signal (answering Y) diagnoses the error accurately. No question ids or other forbidden references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-3:range-is-domain",
+      "lo_id": "lo:pp3u1-3-3",
+      "label": "Range confused with the domain",
+      "description": "Gives the set of inputs where the set of images was asked.",
+      "signal": "The answer is X rather than the images.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That set is the domain — the inputs."
+        },
+        {
+          "step": 2,
+          "text_md": "The range is what comes OUT: the second component of each pair, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain in, range out; the arrow diagram runs left to right."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation correctly separates inputs (the domain X) from the images {3,5,7}, matching the canonical solution. The signal (answering X) is accurate. The arrow-diagram remark is generic and consistent with the question's figure. It names no ids or page numbers.",
+        "sources": [],
+        "covers": []
       }
     },
     {
@@ -217,9 +501,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
+        "run": "s5-final.20261018T101704Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation's expansions and answers match the canonical solutions: x^2-(x^2-3) gives 3, degree 0, and x(x-2x^2) gives x^2-2x^3, degree 3. The signal (2 for both) matches what a student who reads the degree off the unexpanded rule would give. It cites no book ids or review history.",
+        "verifier_reason": "The signal (2 for x^2-(x^2-3), 2 for x(x-2x^2)) matches a student who reads the printed powers. The refutation's results are correct and match the canonical solutions: x^2-x^2+3=3 gives degree 0, and x^2-2x^3 gives degree 3. It uses the book's expand-then-read method and argues against this specific error.",
         "sources": [
           {
             "type": "remark",
@@ -257,15 +541,121 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T080354Z.json",
+        "run": "s5-final.20261018T101704Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real: a student calls 1/x or √x terms polynomial. The refutation matches the canonical solutions (x^-1 and x^(1/2) are not whole-number powers; x^3+x^2+3 is a polynomial). It cites no book ids, pages or review history.",
+        "verifier_reason": "The error is real for the drill 1-b and 1-c items. The refutation rewrites 1/x as x^-1 and sqrt(x) as x^(1/2), says these are not whole-number powers, and contrasts with x^3+x^2+3. That matches the canonical solutions and the definition. It cites no question ids or page numbers.",
         "sources": [
           {
             "type": "remark",
             "ref": "pp3u1-4:definition-1"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-4-3:line-always-through-origin",
+      "lo_id": "lo:pp3u1-4-3",
+      "label": "Thinks every straight-line graph passes through (0, 0)",
+      "description": "The student carries the rule for f(x) = ax over to every linear function, so they force the line through the origin even when the rule has a constant term such as −3.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You remembered that the graph of $f(x)=ax$ is a straight line through the origin $(0, 0)$. That is true, and it is a good fact to hold on to. The question is whether it covers every linear function."
+        },
+        {
+          "step": 2,
+          "text_md": "That fact is only about functions of the form $f(x)=ax$, with nothing added or subtracted. $f(x)=2x-3$ has a $-3$ as well, so it is a different kind of rule."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it by finding $f(0)$. $f(0)=2(0)-3=-3$. The point on the graph with $x=0$ is $(0, -3)$, not $(0, 0)$. A line through the origin would need $f(0)=0$, and here it isn't."
+        },
+        {
+          "step": 4,
+          "text_md": "The other points agree: $f(1)=2-3=-1$ and $f(2)=4-3=1$. These give $(1, -1)$ and $(2, 1)$. None of the three points is the origin, so the line cannot pass through $(0, 0)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Don't decide where the line goes in advance. Calculate $f(0)$, $f(1)$ and $f(2)$, write the ordered pairs in a table, plot them, and draw the straight line through the points you plotted."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real over-generalisation of the y=ax rule (remark rule-3). The refutation's arithmetic f(0)=-3, f(1)=-1, f(2)=1 matches the book's example, and the plot-and-draw method is canonical. No forbidden references.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u1-4:rule-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u2-1-2:adding-preserves-ratio",
+      "lo_id": "lo:pp3u2-1-2",
+      "label": "Adding the same number to both terms assumed to preserve the ratio",
+      "description": "Carries the rule for multiplication over to addition.",
+      "signal": "The student asserts the ratio is unchanged after adding to both terms.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The rule you are thinking of is real — but it is about multiplying."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiplying both terms by the same nonzero number leaves a ratio unchanged. ADDING does not: $3 : 5$ becomes $4 : 6 = 2 : 3$, which is different."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it with the numbers whenever you are unsure — one example settles it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101823Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The objective is about whether multiplying or adding changes a ratio, so this error belongs to it. The refutation is correct: 3:5 plus 1 gives 4:6 = 2:3, which differs from 3:5. It is consistent with the book's example, where adding 1 turns 7:11 into 2:3. It cites no ids, pages or review history. It argues against the error with a counterexample and does not just restate the method.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u2-2-1:means-extremes-swapped",
+      "lo_id": "lo:pp3u2-2-1",
+      "label": "Means and extremes exchanged",
+      "description": "Names b and c as the extremes of a/b = c/d.",
+      "signal": "The answer gives the middle pair where the outer pair is asked.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pair of terms in mind, just the other pair."
+        },
+        {
+          "step": 2,
+          "text_md": "Written as $a : b = c : d$, the EXTREMES are the outer terms $a$ and $d$; the means are the inner terms $b$ and $c$."
+        },
+        {
+          "step": 3,
+          "text_md": "The rule 'product of the extremes = product of the means' is exactly $ad = bc$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101823Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "In a/b=c/d the extremes are a and d and the means are b and c, which matches the canonical 4·x = 12·16 for 4/12 = 16/x. The error is a plausible one, and the refutation is correct and addresses it directly. Step 1 is slightly awkwardly worded, but it is not wrong.",
+        "sources": [],
         "covers": []
       }
     },
@@ -297,9 +687,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T085741Z.json",
+        "run": "s5-final.20261018T101823Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "Checked the arithmetic. Using h=m/r gives m=27*10.5 and h=27*10.5/15.75=18. The canonical answer is 27*(10.5)^2/(15.75)^2=12. The refutation follows the book's method. It uses h where the book's worked solution writes v, which is harmless. The text cites no references or review history.",
+        "verifier_reason": "Checked the numbers. h=m/r with m=27*10.5 gives 27*10.5/15.75=18. The canonical answer 12 is correct, since 27*(2/3)^2=12. The refutation follows the canonical method and argues against the specific slip of dropping the square. It cites no outside references.",
         "sources": [
           {
             "type": "remark",
@@ -345,9 +735,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261017T085741Z.json",
+        "run": "s5-final.20261018T101823Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "Checked the arithmetic. m=y/x=1.5 gives y=2.25. The inverted ratio y1/y2=x1/x2 also gives 2.25. The correct answer is 6/1.5=4. The ratio rule y1/y2=x2/x1 matches the book's rule-10. The sanity check (x smaller, so y bigger) is sound. The text cites no question ids, pages or review history.",
+        "verifier_reason": "Checked the numbers. Direct method gives m=1.5 and y=2.25. The turned-over ratio 3/y=2/1.5 also gives 2.25. The correct m=6 and y=4 match the canonical solution. The xy=m and y1/y2=x2/x1 statements match the book's remarks. The refutation targets the error and names no outside references.",
         "sources": [
           {
             "type": "remark",
@@ -364,498 +754,6 @@
           {
             "type": "remark",
             "ref": "pp3u2-3:rule-8"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
-      "lo_id": "lo:pp3u5-1-2",
-      "label": "Four equal sides taken as proof of a square",
-      "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
-      "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
-        },
-        {
-          "step": 2,
-          "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
-        },
-        {
-          "step": 3,
-          "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
-        },
-        {
-          "step": 4,
-          "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070126Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The canonical solution stops at 'rhombus or square' after the four equal sides and then uses equal diagonals AC = BD = √82 to conclude a square. I recomputed the figures: sides are √41, AC = √(81+1) = √82 and BD = √(1+81) = √82. The refutation matches this method and answers, gives coordinates so it is self-contained, and names no question id, page or review history.",
-        "sources": [
-          {
-            "type": "canonical_solution",
-            "ref": "q:pp3u5-1-2:bk-example-1"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
-      "lo_id": "lo:pp3u5-4-1",
-      "label": "Reading m and b straight off the equation without isolating y",
-      "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
-      "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
-        },
-        {
-          "step": 2,
-          "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
-        },
-        {
-          "step": 3,
-          "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
-        },
-        {
-          "step": 4,
-          "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070126Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The refutation follows canonical example 1: 2y = x + 4, so y = 1/2 x + 2, with slope 1/2 and intercept 2. The wrong answers 1 and 4 are plausible, and the (0,2) check is consistent with the book.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u5-4:rule-1"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u5-4-1:bk-example-1"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
-      "lo_id": "lo:pp3u5-4-1",
-      "label": "Slope written as a/b, losing the minus",
-      "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
-      "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
-        },
-        {
-          "step": 2,
-          "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
-        },
-        {
-          "step": 3,
-          "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
-        },
-        {
-          "step": 4,
-          "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070126Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation's algebra matches canonical example 2: 4y = -3x + 5 gives y = -3/4 x + 5/4. The direction claim is correct, and it uses only the book's two methods.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u5-4:rule-1"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u5-4-1:bk-example-2"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u6-1-2:assume-intersect",
-      "lo_id": "lo:pp3u6-1-2",
-      "label": "Expects two lines to always meet at one point",
-      "description": "The student assumes every pair of equations has exactly one solution and looks for a single intersection point even when the lines have equal slopes.",
-      "signal": null,
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are expecting the two lines to cross somewhere, which is true for many pairs, like $y = 2x - 3$ and $x + 2y = 4$, which meet at $(2, 1)$. But two lines do not have to cross."
-        },
-        {
-          "step": 2,
-          "text_md": "Take $3x + y = 4$ and $2y + 6x = 3$. Write them as $y = 4 - 3x$ and $y = \\frac{3 - 6x}{2}$. The first passes through $(0, 4)$ and $(2, -2)$. The second passes through $(0, \\frac{3}{2})$ and $(1, -\\frac{3}{2})$."
-        },
-        {
-          "step": 3,
-          "text_md": "Both lines have slope $-3$, so they go down at the same steepness. They stay the same distance apart and never meet, so $L_1 \\cap L_2 = \\phi$."
-        },
-        {
-          "step": 4,
-          "text_md": "A solution has to lie on both lines. If the lines never meet, no point lies on both, so there is no solution."
-        },
-        {
-          "step": 5,
-          "text_md": "Before you look for a crossing point, compare the slopes. Different slopes give one intersection point. Equal slopes mean the lines are parallel or coincide, and you must check which."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070936Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The math checks out. Both lines in the 3x+y=4 and 2y+6x=3 example have slope -3, and the points given satisfy their equations. It matches the book's no-solution example and its L1∩L2=φ conclusion. It argues against the 'always one crossing' belief, and it cites no question ids, pages or figures.",
-        "sources": [
-          {
-            "type": "distractor",
-            "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:assume-intersect"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S6",
-            "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:assume-intersect",
-            "question_id": "q:pp3u6-1-2:g001-lines-",
-            "text": "Exactly one solution: the lines meet at one point",
-            "tagged": "mc:pp3u6-1-2:assume-intersect"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u6-1-2:parallel-coincide-swap",
-      "lo_id": "lo:pp3u6-1-2",
-      "label": "Calls parallel lines coincident",
-      "description": "The student sees two lines with the same slope and decides they give infinitely many solutions, without checking whether they are the same line or different parallel lines.",
-      "signal": null,
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You noticed the lines have the same slope, which is a good start. But equal slopes alone do not tell you whether the lines are the same line or two separate lines."
-        },
-        {
-          "step": 2,
-          "text_md": "Take $3x + y = 4$ and $2y + 6x = 3$. Both have slope $-3$. The first passes through $(0, 4)$ and the second through $(0, \\frac{3}{2})$, so they are different lines."
-        },
-        {
-          "step": 3,
-          "text_md": "Check the point $(0, 4)$ in the second equation: $2(4) + 6(0) = 8$, not $3$. A point on $L_1$ is not on $L_2$, so the lines never share a point and there is no solution."
-        },
-        {
-          "step": 4,
-          "text_md": "Compare this with $3x + 2y = 6$ and $2y = 6 - 3x$. Rewriting the second gives $3x + 2y = 6$, which is exactly the first equation. Here every point of one line is on the other, so there are infinitely many solutions."
-        },
-        {
-          "step": 5,
-          "text_md": "When the slopes match, put both equations in the same form. If they are identical, the lines coincide and there are infinitely many solutions. If only the constant differs, the lines are parallel and the solution set is empty."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070936Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The refutation is correct. (0,4) gives 2(4)+6(0)=8, not 3, so the lines are different parallels. The coincident example 3x+2y=6 and 2y=6-3x matches the book. It targets the error of assuming equal slopes means coincident. The step 5 wording 'identical' is slightly loose, since proportional equations also coincide, but it is acceptable.",
-        "sources": [
-          {
-            "type": "distractor",
-            "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:parallel-coincide-swap"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S6",
-            "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:parallel-coincide-swap",
-            "question_id": "q:pp3u6-1-2:g001-lines-",
-            "text": "Infinitely many solutions: the two lines coincide",
-            "tagged": "mc:pp3u6-1-2:parallel-coincide-swap"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
-      "lo_id": "lo:pp3u6-2-3",
-      "label": "Keeps the negative solution as an answer",
-      "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
-      "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
-        },
-        {
-          "step": 2,
-          "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
-        },
-        {
-          "step": 3,
-          "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
-        },
-        {
-          "step": 4,
-          "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
-        },
-        {
-          "step": 5,
-          "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T070936Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Both roots (-2.59 and 116.5465116) match the canonical solution. The refutation rejects the negative distance for the context and lands on about 116.55 m, as the book does. It argues against this specific error and adds no outside method. It cites no question ids, pages or review history.",
-        "sources": [
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u6-2-3:bk-example-3"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
-      "lo_id": "lo:pp3u7-2-1",
-      "label": "Removes the zeroes of the numerator instead of the denominator",
-      "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
-      "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1, 1\\}$ instead of $R$.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
-        },
-        {
-          "step": 2,
-          "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
-        },
-        {
-          "step": 3,
-          "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
-        },
-        {
-          "step": 4,
-          "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
-        },
-        {
-          "step": 5,
-          "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T071542Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real and matches the book rule (domain = R minus the zeroes of the denominator). The refutation's arithmetic is correct: n(2)=3/5, n(0)=-1, n(1)=0/2=0. It correctly finds that x^2+1 has no real zeroes, so the domain is R. This matches the canonical solution for (x^2-1)/(x^2+1). It names no outside references.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u7-2:rule-3"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u7-2-1:one-root-only-denominator",
-      "lo_id": "lo:pp3u7-2-1",
-      "label": "Finds only the positive root of the denominator",
-      "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
-      "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
-        },
-        {
-          "step": 2,
-          "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
-        },
-        {
-          "step": 3,
-          "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4, 4\\}$, so the domain is $R-\\{-4, 4\\}$."
-        },
-        {
-          "step": 4,
-          "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T071542Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation checks (-4)^2-16=0 and gives the set {-4,4}, so the domain is R-{-4,4}. This matches the canonical solution for (x^2+9)/(x^2-16). The method is the book's, it addresses this specific slip, and it has no outside references.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u7-2:rule-3"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u7-3-2:same-simplest-form-means-equal",
-      "lo_id": "lo:pp3u7-3-2",
-      "label": "Same simplest form, so the fractions are equal",
-      "description": "The student simplifies both fractions, sees the same result, and concludes they are equal without comparing their domains.",
-      "signal": "States $n_1=n_2$ because both reduce to the same fraction, with no domains found, or with different domains ignored.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You simplified both fractions correctly and found the same result. That is half of the test. Two fractions are equal only when the simplest forms match and the domains match as well."
-        },
-        {
-          "step": 2,
-          "text_md": "Take $n_1(x)=\\frac{x^2-4}{x^2+x-6}$ and $n_2(x)=\\frac{x^3-x^2-6x}{x^3-9x}$. Both reduce to $\\frac{x+2}{x+3}$."
-        },
-        {
-          "step": 3,
-          "text_md": "But the domain of $n_1$ is $\\mathbb{R}-\\{-3, 2\\}$, and the domain of $n_2$ is $\\mathbb{R}-\\{-3, 0, 3\\}$. For example, $x=0$ is allowed in $n_1$ but not in $n_2$. They are not defined on the same set of numbers, so $n_1\\neq n_2$."
-        },
-        {
-          "step": 4,
-          "text_md": "Likewise $\\frac{x+3}{(x+3)(x-3)}$ and $\\frac{2}{2(x-3)}$ both reduce to $\\frac{1}{x-3}$. The first excludes $-3$ and $3$, the second excludes only $3$. So they are not equal."
-        },
-        {
-          "step": 5,
-          "text_md": "Next time, find the domain of each fraction from its original denominator, and compare the domains as well as the simplest forms. If the simplest forms match but the domains differ, they are not equal. They take the same values only on the common domain, which excludes every number excluded by either one."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T071542Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real and supported by the book's example 3 and its remark. The refutation's math checks out. The domains are R−{−3,2} and R−{−3,0,3}, and both fractions reduce to (x+2)/(x+3). x=0 is allowed in n1 but not in n2. The second pair is also correct: (x+3)/((x+3)(x−3)) excludes ±3, and 2/(2(x−3)) excludes only 3. The book's remark prints R−{−3} for n2, which looks like a typo, so the refutation is right and the printed remark is not. The closing advice about the common domain matches the book. It cites no hidden references.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u7-3:linking-text-3"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u7-3-2:bk-example-3"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u9-2-4:internal-touch-add-radii",
-      "lo_id": "lo:pp3u9-2-4",
-      "label": "Adds the radii when the circles touch internally",
-      "description": "The student takes the distance between the centres as the sum of the radii even though the circles touch from inside.",
-      "signal": "For radii 10 cm and 6 cm touching internally, uses MN = 16 cm and gets a much smaller AB than 12 cm (e.g. 24 = 1/2 × 16 × AB gives AB = 3 cm).",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are using $MN = 10 + 6$, which is right when two circles touch from outside. You were right that the point of contact lies on the line of centers, and that is the key fact."
-        },
-        {
-          "step": 2,
-          "text_md": "When the circles touch internally, the small circle sits inside the big one. Both centers lie on the same line through $A$, on the same side of $A$. $M$ is 10 cm from $A$ and $N$ is only 6 cm from $A$, so $N$ lies between $M$ and $A$."
-        },
-        {
-          "step": 3,
-          "text_md": "So the gap between the centers is what is left of the big radius: $MN = 10 - 6 = 4$ cm. Using 16 would put $N$ beyond $A$, outside the big circle."
-        },
-        {
-          "step": 4,
-          "text_md": "The wrong base changes the answer. With $MN = 16$, $24 = \\tfrac12 \\times 16 \\times AB$ gives $AB = 3$ cm. With $MN = 4$, $24 = \\tfrac12 \\times 4 \\times AB$ gives $AB = 12$ cm."
-        },
-        {
-          "step": 5,
-          "text_md": "Before you use $MN$, ask whether the circles touch externally (add the radii) or internally (subtract them)."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T075228Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The book's example 4 asks 'why?' for MN = 10 − 6, so adding the radii is the likely slip. The refutation is correct and follows the book's method. A lies on MN, N lies between M and A, MN = 4, and 24 = ½·4·AB gives AB = 12. Its counter-computation (MN = 16 gives AB = 3) is arithmetically right. It names no question id, page, figure or review history, and it adds nothing beyond the book.",
-        "sources": [
-          {
-            "type": "distractor",
-            "ref": "expl:pp3u9-2-4:bk-example-4"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u9-3-2:two-circles-share-more-than-two-points",
-      "lo_id": "lo:pp3u9-3-2",
-      "label": "Thinks two circles through A and B can meet at a third point",
-      "description": "The student believes that two different circles drawn through the same two points A and B can also cross or touch at more than two points.",
-      "signal": null,
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are right that many circles pass through both $A$ and $B$, so they all share those two points. The doubt is whether two of them could share a third point as well."
-        },
-        {
-          "step": 2,
-          "text_md": "The center of every circle through $A$ and $B$ lies on the axis of the chord $AB$. Different centers on that axis give different circles, and all of them meet at $A$ and $B$."
-        },
-        {
-          "step": 3,
-          "text_md": "Suppose a circle also went through a third point $C$. Its center would then lie on the axis of $AB$ and on the axis of the chord $AC$, and those two axes cross in only one point. So there is only one possible center and only one circle."
-        },
-        {
-          "step": 4,
-          "text_md": "Two different circles therefore cannot intersect in more than two points. When two circles pass through $A$ and $B$, those two points are all they share."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T075228Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error matches the book's question and rule that two circles cannot intersect in more than two points. The refutation uses the book's axis-of-chord idea (the center lies on the axis of any chord). A third common point C would force the center onto both the axis of AB and the axis of AC. Those axes meet in one point, so there is one circle. This is mathematically correct, consistent with the canonical answer No, and targets this error. It names no question ids, pages, figures or review history.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u9-3:rule-9"
           }
         ],
         "covers": []
@@ -893,9 +791,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T082706Z.json",
+        "run": "s5-final.20261018T101835Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "I checked the arithmetic. Set A sums to 1000 and set B sums to 1000, so both means are 200, as in the book's worked example. The ranges are 70 and 350, and the refutation's description of the spreads (170–240 against 50–400) is correct. It speaks directly to the error of treating equal means as equal spread. Its closing step uses the book's range method, greatest minus smallest, and says the bigger range means the more divergent set. It uses no references the student can't see and teaches nothing beyond the book. The signal describes the error accurately.",
+        "verifier_reason": "Uses the book's wage sets (both mean 200, sums 1000 correct). Describes the spread correctly (A 170-240, B 50-400). Range method matches the canonical solution, and the bigger-range-means-more-divergent conclusion matches it too. It argues against this specific error. Remark rule-7 and the canonical items support it.",
         "sources": [
           {
             "type": "canonical_solution",
@@ -907,6 +805,589 @@
           }
         ],
         "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u3-2-2:deviations-not-averaged",
+      "lo_id": "lo:pp3u3-2-2",
+      "label": "Squared deviations summed but not averaged",
+      "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
+      "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your deviations and their squares are right."
+        },
+        {
+          "step": 2,
+          "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
+        },
+        {
+          "step": 3,
+          "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101835Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Omitting the division by n is a plausible slip against the canonical formula σ=√(Σ(x−x̄)²/n). The refutation's arithmetic is correct: 3,5,5,7 has mean 5, squared deviations sum to 8, n=4, so σ=√2. It uses the book's method, names no outside references, and contrasts √8 with √2.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:ratio-inverted",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Ratio written upside down",
+      "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
+      "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The two sides are correct — they are the wrong way up."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
+        },
+        {
+          "step": 3,
+          "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: sin and cos have the hypotenuse as denominator, so they are below 1. The signal (sine or cosine greater than 1) correctly diagnoses a student who flips the fraction. For the 12-13-5 triangle, sin A = 5/13, not 13/5. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:tan-uses-hypotenuse",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Hypotenuse used in the tangent",
+      "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
+      "signal": "The tangent is reported as a sine or cosine value.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are choosing between the three sides, which is the right process."
+        },
+        {
+          "step": 2,
+          "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
+        },
+        {
+          "step": 3,
+          "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: tan is opposite over adjacent, the two legs, and any fraction with the hypotenuse is a sine or cosine. The signal fits, because a leg-over-hypotenuse tan equals a sine or cosine value. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:legs-added-before-squaring",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Differences added before squaring",
+      "description": "Computes (dx + dy) rather than √(dx² + dy²).",
+      "signal": "The answer equals the sum of the two coordinate differences.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — it is how they combine that changes."
+        },
+        {
+          "step": 2,
+          "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
+        },
+        {
+          "step": 3,
+          "text_md": "Square, add, then root — in that order."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: for M(3,2), N(7,5) a student gets 4+3=7 instead of 5. The refutation is correct (√(36+64)=10 vs 14) and matches the canonical Pythagoras method. It is specific to adding the legs, and the signal is accurate.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:one-coordinate-used",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Distance read from one point only",
+      "description": "Reports one point's coordinate as the distance instead of the separation between both.",
+      "signal": "The answer equals one of the given coordinates.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is in the question, which is why it is tempting."
+        },
+        {
+          "step": 2,
+          "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
+        },
+        {
+          "step": 3,
+          "text_md": "Ask what the number is measuring FROM as well as to."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Plausible error, since a student may report a given coordinate. The refutation is mathematically correct (|6-2|=4) and consistent with the book's difference method. It names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:root-not-taken",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Square root never taken in the distance rule",
+      "description": "Stops at the sum of the squares.",
+      "signal": "The answer is the square of the correct distance.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
+        },
+        {
+          "step": 2,
+          "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
+        },
+        {
+          "step": 3,
+          "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student stops at 25 for MN. The refutation is correct (36+64=100, √100=10) and matches the canonical formula. It targets the missing root specifically, and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
+      "lo_id": "lo:pp3u5-1-2",
+      "label": "Four equal sides taken as proof of a square",
+      "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
+      "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
+        },
+        {
+          "step": 2,
+          "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
+        },
+        {
+          "step": 3,
+          "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's own example stops at 'square or rhombus' after four equal sides and then uses equal diagonals to reach 'square'. The numbers in the refutation are correct: AC=√82 and BD=√82. It argues against this specific error, and it names no question id or page.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:pp3u5-1-2:bk-example-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-1:slope-inverted",
+      "lo_id": "lo:pp3u5-3-1",
+      "label": "Run divided by rise",
+      "description": "Computes Δx/Δy instead of Δy/Δx.",
+      "signal": "The answer is the reciprocal of the correct slope.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — the fraction is upside down."
+        },
+        {
+          "step": 2,
+          "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
+        },
+        {
+          "step": 3,
+          "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Inverting the fraction is a real error for the two-point slope. The refutation keeps the canonical formula (y2-y1)/(x2-x1) and addresses the upside-down fraction specifically. The rise/run wording is a light gloss on that formula and does not change the method.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w001",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w004",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-3:perpendicular-sign-only",
+      "lo_id": "lo:pp3u5-3-3",
+      "label": "Sign flipped without taking the reciprocal",
+      "description": "Uses −m for a perpendicular slope instead of −1/m.",
+      "signal": "The answer is the negative of the original slope.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Changing the sign is half of the rule, and you got that half."
+        },
+        {
+          "step": 2,
+          "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
+        },
+        {
+          "step": 3,
+          "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. For slope 3/2, a student gives -3/2 instead of -2/3 (drill 7). The refutation is correct and uses the book's m1×m2=-1 rule. It targets the missing reciprocal and gives a product check that would expose the error. It names no outside references and adds nothing beyond the book.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Reading m and b straight off the equation without isolating y",
+      "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
+        },
+        {
+          "step": 4,
+          "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error. The refutation reproduces book example 1 (2y=x+4, y=1/2 x+2, intercept 2 matches the point (0,2)). The math is correct, it targets the specific misreading of coefficients, and it adds nothing outside the book.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u5-4:rule-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u5-4-1:bk-example-1"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#off-target",
+            "question_id": "q:pp3u5-4-1:w001",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#off-target",
+            "question_id": "q:pp3u5-4-1:w002",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#off-target",
+            "question_id": "q:pp3u5-4-1:w003",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Slope written as a/b, losing the minus",
+      "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
+      "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
+        },
+        {
+          "step": 2,
+          "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error. The refutation matches book example 2 (m=-a/b, 4y=-3x+5, y=-3/4 x+5/4). The algebra is correct, the sign/direction explanation is sound, and no outside references appear.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u5-4:rule-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u5-4-1:bk-example-2"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w001",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w002",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w003",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
+      "lo_id": "lo:pp3u6-2-3",
+      "label": "Keeps the negative solution as an answer",
+      "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
+      "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
+        },
+        {
+          "step": 2,
+          "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
+        },
+        {
+          "step": 3,
+          "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
+        },
+        {
+          "step": 4,
+          "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101933Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the arithmetic: the discriminant is 26.246 and its root is about 5.123. That gives x = -2.59 and x = 116.5465116, matching the canonical solution. The refutation rejects the negative distance because x is a distance, picks the root that fits, and gives about 116.55 m. It names no outside references. It targets this specific error rather than restating the method. The signal (answering -2.59, or both values) matches the error.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u6-2-3:bk-example-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+      "lo_id": "lo:pp3u7-2-1",
+      "label": "Removes the zeroes of the numerator instead of the denominator",
+      "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+      "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1, 1\\}$ instead of $R$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
+        },
+        {
+          "step": 2,
+          "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
+        },
+        {
+          "step": 4,
+          "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
+        },
+        {
+          "step": 5,
+          "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101955Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Error is real. The refutation is correct: n(1)=0/2=0 is defined, x^2+1 has no real zero, domain R, matching the canonical solution for (x^2-1)/(x^2+1). It is backed by the book's rule that the domain is R minus the denominator's zeroes. It names no outside references.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u7-2:rule-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#extra-values",
+            "question_id": "q:pp3u7-2-1:w001",
+            "text": "Marked values that the answer set does not contain",
+            "tagged": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u7-2-1:one-root-only-denominator",
+      "lo_id": "lo:pp3u7-2-1",
+      "label": "Finds only the positive root of the denominator",
+      "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
+      "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
+        },
+        {
+          "step": 2,
+          "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
+        },
+        {
+          "step": 3,
+          "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4, 4\\}$, so the domain is $R-\\{-4, 4\\}$."
+        },
+        {
+          "step": 4,
+          "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101955Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Error is real. The refutation matches the canonical solution for (x^2+9)/(x^2-16): x=±4 and domain R-{-4,4}. The check of x=-4 is correct. The rule remark supports it.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u7-2:rule-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#missed-values",
+            "question_id": "q:pp3u7-2-1:w001",
+            "text": "Part of the answer set was not marked",
+            "tagged": "mc:pp3u7-2-1:one-root-only-denominator"
+          }
+        ]
       }
     },
     {
@@ -941,9 +1422,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T082926Z.json",
+        "run": "s5-final.20261018T102022Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The book's caution says an event occurred if the outcome is an element of the event set. The error of treating the event as one outcome that must appear as a whole is a plausible reading of that caution. The refutation is mathematically correct: one roll shows one number, and a roll of 4 is in {2,4,6}. P(A)=3/6 matches the canonical n(A)/n(S). It cites no question ids, pages or figures, and it teaches nothing beyond the book.",
+        "verifier_reason": "Backed by the book's caution that an event occurs when the outcome is an element of the event set. The refutation is mathematically correct: one roll shows one number, 4 is in {2,4,6}, and P=3/6 matches the book's method. It names no question ids or pages.",
         "sources": [
           {
             "type": "caution",
@@ -954,6 +1435,111 @@
             "ref": "pp3u8-1:caution-1"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u8-1-2:intersection-as-a-only",
+      "lo_id": "lo:pp3u8-1-2",
+      "label": "A and B read as 'A happens and B does not'",
+      "description": "Reads the intersection as one event occurring in place of the other rather than alongside it.",
+      "signal": "Chooses 'the occurrence of A only'.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that $A \\cap B$ is stricter than 'either one' — it does narrow things down."
+        },
+        {
+          "step": 2,
+          "text_md": "But it narrows to outcomes where A and B happen TOGETHER, not to A by itself."
+        },
+        {
+          "step": 3,
+          "text_md": "'A only' is the part of A outside B, which is a different region of the Venn diagram and has its own notation."
+        },
+        {
+          "step": 4,
+          "text_md": "Check yourself with one outcome: if it is in both lists, it belongs to $A \\cap B$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This is a plausible reading error. The refutation is correct and consistent with the book's meaning of A∩B as the shared elements, and it cites no outside references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u8-1-2:intersection-read-as-union",
+      "lo_id": "lo:pp3u8-1-2",
+      "label": "A and B read as 'at least one of them' instead of 'both'",
+      "description": "Treats the intersection as the union: takes any outcome in either event rather than only the shared ones.",
+      "signal": "Chooses 'at least one of the two events', or computes a probability matching the union.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right idea that two events are being combined — that is what the question is about."
+        },
+        {
+          "step": 2,
+          "text_md": "$A \\cap B$ is the event that BOTH happen at the same time. 'At least one of them' is $A \\cup B$, the union."
+        },
+        {
+          "step": 3,
+          "text_md": "The symbols are worth separating once: $\\cap$ is the overlap in the Venn diagram — the part inside both circles — and $\\cup$ is everything inside either circle."
+        },
+        {
+          "step": 4,
+          "text_md": "A phrase to keep: $\\cap$ means AND, $\\cup$ means OR."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Confusing intersection with union is a real error for this objective. The refutation correctly separates AND (overlap) from OR (either), and it matches the book's method.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u8-1-2:union-counted-by-adding",
+      "lo_id": "lo:pp3u8-1-2",
+      "label": "Counts 'together' by adding the two event sizes",
+      "description": "Adds n(A) and n(B) instead of counting the outcomes common to both.",
+      "signal": "The numerator equals n(A) + n(B).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You counted both events correctly — that part is done."
+        },
+        {
+          "step": 2,
+          "text_md": "Adding them answers a different question. For 'A and B together' you want only the outcomes appearing in BOTH lists."
+        },
+        {
+          "step": 3,
+          "text_md": "Cards 1 to 12, A divisible by 3 is $\\{3, 6, 9, 12\\}$ and B divisible by 4 is $\\{4, 8, 12\\}$. Only $12$ is in both, so $n(A \\cap B) = 1$ and $P = \\frac{1}{12}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Adding the sizes is a move for the union, and even there it double-counts the overlap."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The example is correct: A={3,6,9,12}, B={4,8,12}, only 12 is common, so P=1/12. It targets the error of adding n(A)+n(B), and the signal is accurate.",
+        "sources": [],
         "covers": []
       }
     },
@@ -989,9 +1575,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T082926Z.json",
+        "run": "s5-final.20261018T102022Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. Adding P(A) and P(B) gives 7/10 instead of 3/5 in drill (a), and 7/9 instead of 2/3 in the cards example. The refutation uses the book's own cards 1–9 example. Its numbers match the canonical solution: A={2,4,6,8}, B={3,6,9}, A∪B has 6 cards, P=2/3, and 4/9+3/9−1/9=2/3. It shows the double-count by listing A∪B directly, then applies the book's formula and the mutually exclusive case. It cites no question ids, pages or figures, and no review history.",
+        "verifier_reason": "The error is real. The refutation reuses the book's cards 1-9 example (A={2,4,6,8}, B={3,6,9}). Its numbers match the canonical solution: 7/9 versus 6/9 = 2/3, A∩B={6}, 4/9+3/9−1/9 = 2/3. It shows concretely why adding double counts, and it covers the mutually exclusive case. It cites no question ids, pages or figures, and teaches nothing beyond the book. The signal is accurate: 7/10 vs 3/5 matches drill 6a, and 7/9 vs 2/3 matches the example.",
         "sources": [
           {
             "type": "canonical_solution",
@@ -1037,9 +1623,9 @@
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T082926Z.json",
+        "run": "s5-final.20261018T102022Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The figure shows B-only 7, overlap 8, A-only 10 and outside 15, with n(S)=40. The refutation's numbers (18, 8, 10, 10/40 = 1/4) match the canonical solution. It uses the book's identity (A-B)∪(A∩B)=A. It targets the error of counting all of A, and it cites no question ids, pages or review history. The 15/40 form of the signal also equals the outside-region count, but the 18/40 case is clear and the signal is acceptable.",
+        "verifier_reason": "The figure shows A only = 10, both = 8, B only = 7 and outside = 15, so S = 40 and n(A) = 18. The error of giving 18/40 for 'only' is real, and the book's remark separates A from 'A only'. The refutation's arithmetic (18 - 8 = 10, 10/40 = 1/4) matches the canonical answer. It uses the book's identity (A - B) ∪ (A ∩ B) = A. It argues against the specific error, not just the method. It names no question id, page or figure number, and no review history. The signal (18/40 or 9/20, and 15/40 or 3/8) matches this error.",
         "sources": [
           {
             "type": "remark",
@@ -1050,6 +1636,360 @@
             "ref": "pp3u8-2:rule-3"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u9-1-1:radius-any-length",
+      "lo_id": "lo:pp3u9-1-1",
+      "label": "A radius that stops short of the circle",
+      "description": "Starts correctly at the centre but ends anywhere, as though a radius were a direction rather than a fixed length.",
+      "signal": "One end is the centre; the other is strictly inside the circle.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You started in the right place — the centre — which is the part most people get wrong."
+        },
+        {
+          "step": 2,
+          "text_md": "But a radius has to REACH the circle. It is not any segment leaving the centre; it is the fixed distance from the centre to the circle."
+        },
+        {
+          "step": 3,
+          "text_md": "That fixed distance is what makes it a circle in the first place: every point on the circle is exactly $r$ from $M$."
+        },
+        {
+          "step": 4,
+          "text_md": "So a radius always has two jobs: start at $M$, and end ON the circle."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The signal, a segment from the centre ending strictly inside, matches it. The refutation is correct and consistent with the book's use of MA = MB as radii. Its definitions are standard: a radius runs from the centre to the circle, and every point on the circle is r from M. The line 'the part most people get wrong' is a slight overclaim, but it does no harm.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u9-1-1:live-circle-radius-basic#radius-short",
+            "question_id": "q:pp3u9-1-1:w003",
+            "text": "Starts at the centre but does not reach the circle",
+            "tagged": "mc:pp3u9-1-1:radius-any-length"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u9-1-1:radius-not-from-centre",
+      "lo_id": "lo:pp3u9-1-1",
+      "label": "A radius drawn between two points on the circle",
+      "description": "Builds a segment with both ends on the circle and calls it a radius — the word is attached to 'a line in the circle' rather than to the centre.",
+      "signal": "Both endpoints satisfy the circle; neither is the centre.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Look at what you drew: both ends landed on the circle, and that is a real thing — it is a chord."
+        },
+        {
+          "step": 2,
+          "text_md": "A radius is the one segment that always starts at the centre $M$ and stops at the circle. Its whole job is to carry the circle's fixed distance."
+        },
+        {
+          "step": 3,
+          "text_md": "That is why every radius of a circle has the same length, and chords do not: a chord can be short or long, but a radius cannot."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, ask where the segment STARTS. Centre to circle is a radius; circle to circle is a chord."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. A segment with both ends on the circle is a chord, and a radius must start at the centre. The refutation is correct and uses only the objective's terms. Radii are equal and chords are not, which fits how the canonical solutions use MA = MB.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u9-1-1:live-circle-radius-basic#radius-drawn-as-chord",
+            "question_id": "q:pp3u9-1-1:w003",
+            "text": "Both ends on the circle where a radius was asked for; a radius starts at the centre",
+            "tagged": "mc:pp3u9-1-1:radius-not-from-centre"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u9-2-1:point-position-reversed",
+      "lo_id": "lo:pp3u9-2-1",
+      "label": "Inside and outside reversed",
+      "description": "Compares the distance from the centre with the radius the wrong way round.",
+      "signal": "A point with MA > r is called inside, or the reverse.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Comparing $MA$ with $r$ is exactly the right test."
+        },
+        {
+          "step": 2,
+          "text_md": "Further from the centre than the radius means OUTSIDE: $MA > r$ is outside, $MA < r$ is inside, $MA = r$ is on the circle."
+        },
+        {
+          "step": 3,
+          "text_md": "Picture the radius as the wall: past it is outside."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective, which is comparing MA with r. The canonical worked example says outside means MA > 5, and that matches the refutation's MA > r = outside. The refutation also gives MA < r = inside and MA = r = on the circle. The last case matches the drill, where A on the circle gives MA = r = 5. It names no question ids, pages or figures. It directly targets the swap of inside and outside, and the wall image adds no outside method.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u9-2-2:tangent-cuts-circle",
+      "lo_id": "lo:pp3u9-2-2",
+      "label": "A tangent drawn cutting the circle at two points",
+      "description": "Reads 'tangent' as any line touching or crossing the circle, missing that it meets it exactly once.",
+      "signal": "The distance from the centre to the line is less than $r$, so the line is a secant.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your line does meet the circle, so you are close — but it meets it TWICE."
+        },
+        {
+          "step": 2,
+          "text_md": "A line that cuts a circle at two points is a secant. A tangent touches at exactly one point and then leaves."
+        },
+        {
+          "step": 3,
+          "text_md": "The test is a distance: measure from the centre $M$ to the line. Less than $r$ and it cuts twice; equal to $r$ and it touches once; more than $r$ and it misses."
+        },
+        {
+          "step": 4,
+          "text_md": "So a tangent is the line whose distance from the centre is exactly the radius."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error tied directly to the objective's secant/tangent classification by comparing distance with r. Refutation is correct, consistent with the book's distance-vs-radius test, argues against the specific error, and has no outside references.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u9-2-2:live-circle-tangent-standard#is-secant",
+            "question_id": "q:pp3u9-2-2:w001",
+            "text": "The line cuts the circle twice — a secant, not a tangent",
+            "tagged": "mc:pp3u9-2-2:tangent-cuts-circle"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u9-2-2:tangent-need-not-touch",
+      "lo_id": "lo:pp3u9-2-2",
+      "label": "A tangent drawn missing the circle altogether",
+      "description": "Reads 'tangent' as a line running alongside the circle without meeting it.",
+      "signal": "The distance from the centre to the line is greater than $r$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Running alongside the circle is the right instinct — a tangent does lie against it."
+        },
+        {
+          "step": 2,
+          "text_md": "But it has to TOUCH. Your line stays clear of the circle, so it meets it nowhere at all."
+        },
+        {
+          "step": 3,
+          "text_md": "Bring it in until the distance from the centre $M$ equals the radius exactly. That single point of contact is what makes it a tangent."
+        },
+        {
+          "step": 4,
+          "text_md": "One number decides it: distance from the centre, compared with $r$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error for this objective (line outside the circle, distance > r, taken as a tangent). Refutation is mathematically correct, uses the book's distance-vs-radius comparison, addresses this error specifically, and contains no outside references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u9-2-4:internal-touch-add-radii",
+      "lo_id": "lo:pp3u9-2-4",
+      "label": "Adds the radii when the circles touch internally",
+      "description": "The student takes the distance between the centres as the sum of the radii even though the circles touch from inside.",
+      "signal": "For radii 10 cm and 6 cm touching internally, uses MN = 16 cm and gets a much smaller AB than 12 cm (e.g. 24 = 1/2 × 16 × AB gives AB = 3 cm).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using $MN = 10 + 6$, which is right when two circles touch from outside. You were right that the point of contact lies on the line of centers, and that is the key fact."
+        },
+        {
+          "step": 2,
+          "text_md": "When the circles touch internally, the small circle sits inside the big one. Both centers lie on the same line through $A$, on the same side of $A$. $M$ is 10 cm from $A$ and $N$ is only 6 cm from $A$, so $N$ lies between $M$ and $A$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the gap between the centers is what is left of the big radius: $MN = 10 - 6 = 4$ cm. Using 16 would put $N$ beyond $A$, outside the big circle."
+        },
+        {
+          "step": 4,
+          "text_md": "The wrong base changes the answer. With $MN = 16$, $24 = \\tfrac12 \\times 16 \\times AB$ gives $AB = 3$ cm. With $MN = 4$, $24 = \\tfrac12 \\times 4 \\times AB$ gives $AB = 12$ cm."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you use $MN$, ask whether the circles touch externally (add the radii) or internally (subtract them)."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the example's \"(why?)\" step. The refutation's arithmetic is correct: MN = 10 − 6 = 4, so AB = 12 from 24 = ½·4·AB, and MN = 16 gives AB = 3. It matches the canonical method and answer. It argues against the specific mistake of adding radii for internal touching. It cites no question ids, pages or figures, and it contrasts with external touching (add radii), which the book also uses.",
+        "sources": [
+          {
+            "type": "distractor",
+            "ref": "expl:pp3u9-2-4:bk-example-4"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u9-3-2:two-circles-share-more-than-two-points",
+      "lo_id": "lo:pp3u9-3-2",
+      "label": "Thinks two circles through A and B can meet at a third point",
+      "description": "The student believes that two different circles drawn through the same two points A and B can also cross or touch at more than two points.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that many circles pass through both $A$ and $B$, so they all share those two points. The doubt is whether two of them could share a third point as well."
+        },
+        {
+          "step": 2,
+          "text_md": "The center of every circle through $A$ and $B$ lies on the axis of the chord $AB$. Different centers on that axis give different circles, and all of them meet at $A$ and $B$."
+        },
+        {
+          "step": 3,
+          "text_md": "Suppose a circle also went through a third point $C$. Its center would then lie on the axis of $AB$ and on the axis of the chord $AC$, and those two axes cross in only one point. So there is only one possible center and only one circle."
+        },
+        {
+          "step": 4,
+          "text_md": "Two different circles therefore cannot intersect in more than two points. When two circles pass through $A$ and $B$, those two points are all they share."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is plausible and the book's rule says two circles cannot meet in more than two points. The refutation uses only the book's idea that the center lies on the axis of any chord. A third common point C would put the center on both the axis of AB and the axis of AC, and two such distinct axes meet in one point, so the circle would be unique. That is correct and fits the canonical method. It cites no outside references. It leaves out the case where C is collinear with A and B, but then no circle passes through all three points, so this doesn't harm the argument.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u9-3:rule-9"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u9-4-3:distance-measured-to-endpoint-not-perpendicular",
+      "lo_id": "lo:pp3u9-4-3",
+      "label": "Takes the distance to a chord as a segment to its endpoint",
+      "description": "The student treats a segment from the center to an end of the chord (such as a radius) as the chord's distance from the center, instead of the perpendicular segment to the midpoint.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that the converse is about distances from the center. The slip is in which segment counts as the distance of a chord from the center."
+        },
+        {
+          "step": 2,
+          "text_md": "The distance of a chord from the center is the perpendicular segment from the center to the chord. It meets the chord at its midpoint, like $MX$ where $X$ is the midpoint of the chord. A segment from the center to an endpoint of the chord is a radius, and it is not this distance."
+        },
+        {
+          "step": 3,
+          "text_md": "Take a chord $AB = 16$ cm with midpoint $E$ and $ME = 6$ cm. Then $AE = 8$ cm and $AM^2 = 6^2 + 8^2 = 100$, so $AM = 10$ cm. The distance is $6$, not $10$. Every radius in the circle is $10$, so comparing radii would make every chord look equidistant."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you use the converse, find the perpendicular from the center to each chord, such as $ME$ and $MF$. If those two are equal, the chords are equal. If you only have a radius or a half-chord, use right-triangle working like the one above to find the perpendicular first."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is plausible and matches the book's remark that a chord's distance from the center is MX, with X the midpoint. Every step is correct: the distance is the perpendicular to the midpoint, a radius is not that distance, and the 16/6/8/10 numbers check (6²+8²=100). It uses only the Pythagorean method the book uses, and it argues against this specific error. It names no question ids, pages or figures.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u9-4:linking-text-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u10-5-1:cyclic-angles-equal",
+      "lo_id": "lo:pp3u10-5-1",
+      "label": "Opposite angles of a cyclic quadrilateral taken as equal",
+      "description": "Applies the parallelogram property to a cyclic quadrilateral.",
+      "signal": "The answer repeats the given angle instead of its supplement.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using a real property of quadrilaterals — it belongs to parallelograms."
+        },
+        {
+          "step": 2,
+          "text_md": "In a CYCLIC quadrilateral the opposite angles are SUPPLEMENTARY: they add to $180^\\circ$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $m(\\angle A) = 100^\\circ$ gives $m(\\angle C) = 80^\\circ$."
+        },
+        {
+          "step": 4,
+          "text_md": "Equal opposite angles would only happen when both are $90^\\circ$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102128Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student gives the opposite angle as equal (e.g. B=80 gives D=80 instead of 100). The refutation is correct and matches the book's supplementary-angle method (100 gives 80). It contrasts the parallelogram property with the cyclic one and cites no ids, figures or pages. The 90° remark is a correct, trivial consequence of equal plus supplementary.",
+        "sources": [],
         "covers": []
       }
     }

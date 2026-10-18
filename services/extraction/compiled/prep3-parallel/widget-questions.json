@@ -5,21 +5,400 @@
   "course_id": "course:prep3-parallel-math-en",
   "templates": {},
   "rejected_templates": {
-    "wt:pp3u7-2-1:exclude-numerator-trap": [
-      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u7-2-1:excludes-numerator-zeroes, mc:pp3u7-2-1:one-root-only-denominator), so no widget of it could say why an answer is wrong"
+    "wt:pp3u10-2-2:live-central-angle-standard-2": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
     ],
-    "wt:pp3u7-2-1:exclude-square-denominator": [
-      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u7-2-1:one-root-only-denominator, mc:pp3u7-2-1:excludes-numerator-zeroes), so no widget of it could say why an answer is wrong"
+    "wt:pp3u10-2-2:live-central-angle-standard-3": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-central-angle-standard-4": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-central-angle-standard": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-inscribed-angle-standard-2": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-inscribed-angle-standard-3": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-inscribed-angle-standard-4": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-inscribed-angle-standard-5": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
+    ],
+    "wt:pp3u10-2-2:live-inscribed-angle-standard": [
+      "not shipped: every mapping names a misconception S5 did not keep (mc:pp3u10-2-2:inscribed-angle-doubled), so no widget of it could say why an answer is wrong"
     ]
   },
-  "questions": [],
-  "misconceptions": [],
+  "questions": [
+    {
+      "id": "q:pp3u5-4-1:w001",
+      "lo_id": "lo:pp3u5-4-1",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Represent the relation $x + 2y + 2 = 0$ graphically by dragging two points. Find the slope and the length of the part of the y-axis between the origin and the line.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": -0.5,
+          "b": -1
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "intercept-wrong",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+            "why": "It needs the correct slope -1/2 with a wrong intercept. A student who reads coefficients without isolating y gets the slope wrong too (m=1), so they would not fire it. Correct-slope, wrong-intercept lines come from other slips, such as a sign error on c or forgetting to divide by 2. / This fires when the slope is -1/2 but the intercept is wrong. A student who got -1/2 must have isolated y, so she would normally have the intercept right too. A wrong intercept there is more likely a sign or arithmetic slip, such as b=+1. Reading coefficients without isolating y gives a wrong slope, so this predicate mostly fires for other reasons.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Isolate $y$: $2y = -x - 2$, so $y = -\\frac{1}{2}x - 1$."
+        },
+        {
+          "step": 2,
+          "text_md": "The slope is $m = -\\frac{1}{2}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The line crosses the y-axis at (0, -1), so the length is 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Plot (0, -1) and (2, -2), then draw the line through them."
+        }
+      ],
+      "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+      "source_note": "Generated from template family wt:pp3u5-4-1:draw-from-general-form-advanced.",
+      "family": "wt:pp3u5-4-1:draw-from-general-form-advanced",
+      "template_sha": "1c847c1501730f60e38c5d14303bafc60c39a61108eb8ba136dc2cc79551299a"
+    },
+    {
+      "id": "q:pp3u5-4-1:w002",
+      "lo_id": "lo:pp3u5-4-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Represent the relation $x - 2y + 4 = 0$ graphically by dragging two points. Then read the slope of the line and the length of the part of the y-axis between the origin and the line.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": 0.5,
+          "b": 2
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "intercept-wrong",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+            "why": "Fires on slope 1/2 with an intercept other than 2. A student who reads coefficients off the unisolated equation takes m=1 here (the x coefficient), so the slope is wrong too. That case lands in off-target, not here. Slope 1/2 with b=4 is not what this misconception produces, so the diagnosis would mostly fire for another error, such as an arithmetic slip in the intercept. / This needs slope 0.5 with an intercept other than 2. A student who reads the constant straight off without isolating y also gets the slope wrong, because the x coefficient is 1, not 1/2. A correct slope with a wrong intercept would mostly come from an arithmetic slip, not from this misconception. Attributing it to this misconception would be wrong.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Isolate $y$: $2y = x + 4$, so $y = \\frac{1}{2}x + 2$."
+        },
+        {
+          "step": 2,
+          "text_md": "The slope is $m = \\frac{1}{2}$ (also $-\\frac{a}{b} = -\\frac{1}{-2}$)."
+        },
+        {
+          "step": 3,
+          "text_md": "The y-intercept is $b = 2$: the line crosses the y-axis at (0, 2), so the length is 2."
+        },
+        {
+          "step": 4,
+          "text_md": "Plot (0, 2), then go 2 right and 1 up to get (2, 3), and draw the line through them."
+        }
+      ],
+      "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+      "source_note": "Generated from template family wt:pp3u5-4-1:draw-from-general-form-basic.",
+      "family": "wt:pp3u5-4-1:draw-from-general-form-basic",
+      "template_sha": "ccc569aa806801699fe1f9ba0d3f57aaec45b0f49abb6a52156bbd1628a044c3"
+    },
+    {
+      "id": "q:pp3u5-4-1:w003",
+      "lo_id": "lo:pp3u5-4-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Represent the relation $2x + y - 3 = 0$ graphically by dragging two points. State the slope and the length of the y-intercept.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "mode": "equation",
+          "m": -2,
+          "b": 3
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "intercept-wrong",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+            "why": "Fires on slope -2 with an intercept other than 3, a parallel line. A student who reads coefficients without isolating y takes slope 2 (not -2) and intercept -3, so this error would not produce a correct slope. The predicate fires for other slips, such as arithmetic errors. / Fires on slope -2 with an intercept other than 3. A student who reads coefficients straight off 2x + y - 3 = 0 gets slope +2 (not -2), so they would not keep the correct slope; this construction would come from a different error.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z"
+            ]
+          },
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+            "why": "Fires when neither slope nor intercept matches and the slope is not a plain sign flip. The coefficient-reading student's line (m=2, b=-3) has slope magnitude 2 with the sign flipped, so it would most likely be caught by slope-sign-flipped first. Off-target is a catch-all with no specific link to this misconception.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Isolate $y$: $y = -2x + 3$."
+        },
+        {
+          "step": 2,
+          "text_md": "The slope is $m = -2$, and $-\\frac{a}{b} = -\\frac{2}{1} = -2$ agrees."
+        },
+        {
+          "step": 3,
+          "text_md": "The y-intercept is $b = 3$, so the line passes through (0, 3)."
+        },
+        {
+          "step": 4,
+          "text_md": "Plot (0, 3) and (1, 1), then draw the line through them."
+        }
+      ],
+      "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+      "source_note": "Generated from template family wt:pp3u5-4-1:draw-from-general-form-standard.",
+      "family": "wt:pp3u5-4-1:draw-from-general-form-standard",
+      "template_sha": "6af9323bf472c4ba2e7d5a0d1b8f50df40be3d1018e1be385cdc4af8f1551018"
+    },
+    {
+      "id": "q:pp3u7-2-1:w001",
+      "lo_id": "lo:pp3u7-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -3,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator"
+          }
+        ],
+        "pending_review": [
+          {
+            "predicate": "extra-values",
+            "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+            "why": "A student who excludes numerator zeroes would mark x=1 instead of ±3, so the marks would be {1}. That does fire extra-values, because 1 is not in the answer set. But it would also fire missed-values, and extra-values fires on any stray mark, such as a sign error or a guessed value. It is not specific to this misconception, so the diagnosis is not safe.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z",
+              "s7-verify.20261018T101945Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Only the denominator can make the fraction undefined, so solve $x^2-9=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "$x^2=9$ gives $x=3$ or $x=-3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Mark $-3$ and $3$; the domain is $R-\\{-3,3\\}$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x=1$ makes the numerator zero, so $n(1)=0$ is defined and 1 stays in the domain."
+        }
+      ],
+      "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+      "source_note": "Generated from template family wt:pp3u7-2-1:exclude-numerator-trap.",
+      "family": "wt:pp3u7-2-1:exclude-numerator-trap",
+      "template_sha": "f320189a103afcaa62023d915fd2b1f6b380d40309cae98679121a7bcb2de0b5"
+    },
+    {
+      "id": "q:pp3u7-2-1:w002",
+      "lo_id": "lo:pp3u7-2-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -2,
+            2
+          ]
+        },
+        "diagnostics": [],
+        "pending_review": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
+            "why": "It fires when only part of the set is marked, for example just 2, or just -2. A student holding the one-root-only-denominator misconception would mark only the positive root, 2, and that does trigger missed-values. But missed-values also fires for any partial answer, such as marking only -2, or marking one root plus a stray value. It is a generic partial-set signal, so it is not specific to this misconception. The 'when in doubt, false' rule applies.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z",
+              "s7-verify.20261018T101945Z"
+            ]
+          },
+          {
+            "predicate": "extra-values",
+            "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+            "why": "It fires when the student marks values outside the answer set. A student who sets the numerator to zero marks x=-1, and -1 is an extra value, so the predicate would fire. But that student would also leave out -2 and 2, so the construction is only a partial match for the excludes-numerator-zeroes error. The predicate would also fire for many other errors, such as marking 4 or 0. It is not specific to this misconception.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z",
+              "s7-verify.20261018T101945Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The domain is R minus the zeroes of the denominator, so set the denominator equal to zero: $x^2-4=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "Then $x^2=4$, so $x=2$ or $x=-2$ (a square has two roots)."
+        },
+        {
+          "step": 3,
+          "text_md": "Mark both $-2$ and $2$; the domain is $R-\\{-2,2\\}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The numerator's zero ($x=-1$) does not matter for the domain."
+        }
+      ],
+      "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+      "source_note": "Generated from template family wt:pp3u7-2-1:exclude-square-denominator.",
+      "family": "wt:pp3u7-2-1:exclude-square-denominator",
+      "template_sha": "6223adf4f2a0fbf49b7e6f8c6012551a322c10b642488e47a19132924ce10528"
+    }
+  ],
+  "misconceptions": [
+    {
+      "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Reading m and b straight off the equation without isolating y",
+      "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$."
+    },
+    {
+      "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Slope written as a/b, losing the minus",
+      "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$."
+    },
+    {
+      "id": "mc:pp3u7-2-1:one-root-only-denominator",
+      "lo_id": "lo:pp3u7-2-1",
+      "label": "Finds only the positive root of the denominator",
+      "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
+    }
+  ],
   "mapping_review": {
     "rule": "decision 47",
     "verifier_runs": [
       "s7-verify.20261017T074751Z",
       "s7-verify.20261018T070113Z",
-      "s7-verify.20261018T071535Z"
+      "s7-verify.20261018T071535Z",
+      "s7-verify.20261018T101810Z",
+      "s7-verify.20261018T101900Z",
+      "s7-verify.20261018T101945Z",
+      "s7-verify.20261018T102010Z",
+      "s7-verify.20261018T102042Z",
+      "s7-verify.20261018T102110Z"
     ],
     "counts": {
       "active": 0,
@@ -31,7 +410,7 @@
   },
   "s5_reconciled": {
     "runs": [
-      "s5-final.20261018T071542Z.json"
+      "s5-final.20261018T102128Z.json"
     ],
     "catalogue": "prep3-parallel-misconceptions",
     "refused_attachments_stripped": [],

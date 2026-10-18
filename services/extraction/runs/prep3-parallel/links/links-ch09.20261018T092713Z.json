@@ -1,0 +1,158 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 9,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "a1a014cba02fd9e698cc02e5e31104fb1f48b4c8199ca469f5a5de834b532191",
+  "generated_sha256": "da1b7eeb87ab367f334fb3c1c9151036f7b2221bff42134151ebecafb88cb5e6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 70,
+  "proposed": [
+   {
+    "src": "lo:pp3u9-1-3",
+    "dst": "lo:pp3u9-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u9-3:method-6",
+      "printed_page": 55,
+      "quote": "the center of the circle is on the axis of the chord AB"
+     }
+    ],
+    "reason": "Drawing a circle through two points uses the fact that the perpendicular bisector of a chord passes through the center."
+   },
+   {
+    "src": "lo:pp3u9-1-3",
+    "dst": "lo:pp3u9-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u9-4:linking-text-4",
+      "printed_page": 59,
+      "quote": "∴ $AX=\\frac{1}{2}AB$"
+     }
+    ],
+    "reason": "The proof uses that a perpendicular from the center bisects the chord."
+   },
+   {
+    "src": "lo:pp3u9-1-3",
+    "dst": "lo:pp3u9-4-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE12",
+      "printed_page": 62,
+      "quote": "X is the midpoint of $\\overline{BC}$"
+     }
+    ],
+    "reason": "The example uses the midpoint-perpendicular corollary as a step."
+   },
+   {
+    "src": "lo:pp3u9-2-1",
+    "dst": "lo:pp3u9-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u9-2:rule-4",
+      "printed_page": 47,
+      "quote": "MA > r"
+     }
+    ],
+    "reason": "Line position is decided by comparing MA with r, as for a point."
+   },
+   {
+    "src": "lo:pp3u9-2-2",
+    "dst": "lo:pp3u9-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 52,
+      "quote": "line MN ⊥ line AB"
+     }
+    ],
+    "reason": "Common tangent perpendicularity is used in the example."
+   },
+   {
+    "src": "lo:pp3u9-2-3",
+    "dst": "lo:pp3u9-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 52,
+      "quote": "MN = 10 - 6 = 4 cm"
+     }
+    ],
+    "reason": "The distance between centers is found as r1 - r2 for internally touching circles."
+   },
+   {
+    "src": "lo:pp3u9-4-2",
+    "dst": "lo:pp3u9-4-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 62,
+      "quote": "$\\therefore MX = MY$ (theorem)"
+     }
+    ],
+    "reason": "The converse example uses the direct theorem as a step."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Drawing the axis of chord with center on it uses the chord/perpendicular-bisector corollary."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Proof uses perpendicular from center bisects chord (AX = 1/2 AB)."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Uses midpoint of chord implies MX ⊥ BC, the corollary."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Line outside the circle uses MA > r, the point-position comparison idea; modest but the text shows relying on MA vs r."
+    },
+    {
+     "i": 4,
+     "verdict": "UNCLEAR",
+     "note": "Example uses tangent perpendicular to radius/line of centers; the quote is line MN ⊥ AB, plausible but not clearly tied to the criterion for tangency."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "MN = 10 - 6 uses internal touching distance r1 - r2."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "Example uses the theorem then its converse in sequence; the theorem step is used."
+    }
+   ]
+  }
+ }
+}

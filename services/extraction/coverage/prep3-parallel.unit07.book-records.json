@@ -12,10 +12,10 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 19,
-    "hold": 14,
+    "checks": 20,
+    "hold": 13,
     "excepted": 0,
-    "fail": 5
+    "fail": 7
   },
   "checks": [
     {
@@ -79,16 +79,12 @@
       "id": "objective_evidence",
       "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
       "want": 8,
-      "got": 3,
+      "got": 4,
       "state": "fails",
       "failures": [
         {
           "scope": "lo:pp3u7-1-1",
           "detail": "lacks a book question, a worked example or exercise"
-        },
-        {
-          "scope": "lo:pp3u7-2-2",
-          "detail": "lacks a book question"
         },
         {
           "scope": "lo:pp3u7-3-2",
@@ -109,7 +105,7 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 24,
-      "got": 7,
+      "got": 10,
       "state": "fails",
       "failures": [
         {
@@ -126,18 +122,6 @@
         },
         {
           "scope": "lo:pp3u7-1-2 advanced",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u7-2-1 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u7-2-2 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u7-2-2 standard",
           "detail": "no live question at this tier"
         },
         {
@@ -187,21 +171,16 @@
       "id": "module_widgets",
       "title": "The unit = a unit with a live widget question",
       "want": 1,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "unit 7",
-          "detail": "no live widget question"
-        }
-      ],
+      "got": 1,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "distractor_refutations",
       "title": "Tagged distractors = those whose misconception has a refutation",
-      "want": 0,
-      "got": 0,
+      "want": 1,
+      "got": 1,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -209,8 +188,8 @@
     {
       "id": "misconception_refutations",
       "title": "The unit's catalogue entries = entries with a refutation",
-      "want": 3,
-      "got": 3,
+      "want": 2,
+      "got": 2,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -299,21 +278,9 @@
       "id": "misprints_decided",
       "title": "Misprints and candidates = those a person decided",
       "want": 5,
-      "got": 0,
+      "got": 3,
       "state": "fails",
       "failures": [
-        {
-          "scope": "pp3u7-2:definition-2#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u7-2:example-1#solution[2]",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u7-3:definition-2#quote",
-          "detail": "not decided in the Misprints task"
-        },
         {
           "scope": "pp3u7-3:linking-text-3#text",
           "detail": "not decided in the Misprints task"
@@ -328,8 +295,8 @@
     {
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
-      "want": 7,
-      "got": 7,
+      "want": 21,
+      "got": 21,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -337,8 +304,8 @@
     {
       "id": "solution_sources",
       "title": "Book questions = answers printed in the book + generated answers approved or agreed",
-      "want": 7,
-      "got": 7,
+      "want": 21,
+      "got": 21,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -346,10 +313,19 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 367,
-      "got": 367,
-      "state": "holds",
-      "failures": [],
+      "want": 393,
+      "got": 391,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "q:pp3u7-2-1:w001",
+          "detail": "left: 3,3"
+        },
+        {
+          "scope": "q:pp3u7-2-1:w002",
+          "detail": "left: 2,2"
+        }
+      ],
       "excepted_scopes": []
     },
     {
@@ -365,21 +341,69 @@
       "id": "statements_checked",
       "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
       "want": 34,
-      "got": 34,
-      "state": "holds",
-      "failures": [],
+      "got": 33,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "item pp3u7-1:definition-2",
+          "detail": "edited since it was checked"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "held_decided",
+      "title": "Held families and widget templates = those a person dropped + those sent back and written again",
+      "want": 8,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "family pp3u7-2-1--square-diff.json",
+          "detail": "held, not decided: pp3u7-2-1--square-diff.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
+        },
+        {
+          "scope": "family pp3u7-4-1--common-denominator.json",
+          "detail": "held, not decided: pp3u7-4-1--common-denominator.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u7-4-1--common-denominator.json: its "
+        },
+        {
+          "scope": "family pp3u7-4-1--different-denominators.json",
+          "detail": "held, not decided: pp3u7-4-1--different-denominators.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u7-4-1--different-denominators.js"
+        },
+        {
+          "scope": "family pp3u7-4-1--factorise-first.json",
+          "detail": "held, not decided: pp3u7-4-1--factorise-first.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u7-4-1--factorise-first.json: its parent"
+        },
+        {
+          "scope": "family pp3u7-4-2--divide-factor.json",
+          "detail": "held, not decided: pp3u7-4-2--divide-factor.json: an expression family's answer is marker.answer; it has no 'answer' and no choices; pp3u7-4-2--divide-factor.json: its parent 'q:p"
+        },
+        {
+          "scope": "family pp3u7-4-2--factor-product.json",
+          "detail": "held, not decided: pp3u7-4-2--factor-product.json: an expression family's answer is marker.answer; it has no 'answer' and no choices; pp3u7-4-2--factor-product.json: its parent 'q"
+        },
+        {
+          "scope": "family pp3u7-4-2--mono-product.json",
+          "detail": "held, not decided: pp3u7-4-2--mono-product.json: an expression family's answer is marker.answer; it has no 'answer' and no choices; pp3u7-4-2--mono-product.json: its parent 'q:pp3"
+        },
+        {
+          "scope": "template pp3u7-3-2--common-domain-exclusions.json",
+          "detail": "held, not decided: pp3u7-3-2--common-domain-exclusions.json: parent_question_id is required: the objective's anchor book question (FR-1101, §3.10)"
+        }
+      ],
       "excepted_scopes": []
     }
   ],
   "inputs": {
     "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
-    "book-records/prep3-parallel/misprint-candidates.json": "c61e4fefbf5d849ec7be87486870ced36eb9974bed5f45236fbd3f31f3dc0b7f",
-    "groundtruth/prep3-parallel/misprint-decisions.json": "a58af01cb10ec268aa58ee07ddad750c6d8100539e9b0ae7d7cbead6e1a37db7",
+    "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "941c1aac3c315dbfe7d81fe7c4428d8d1d3b2cb889ea295fe31ae492cdd00804",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "book-records/prep3-parallel/pp3u7-1.json": "03c3d67d85346a3cd25bac03f4b8ef1893b7ab8c9f621c533e05e4d4fb0eea1a",
+    "teaching/prep3-parallel/held.json": "28b8566362431a7ca90966c43abdd65ec52da8e81543a34552d14b2683456865",
+    "book-records/prep3-parallel/pp3u7-1.json": "2c36c53ca2577d72126b1122bf44e1cdbdd066fe24a3e8f1d53cf51cb9f84eda",
     "book-records/prep3-parallel/pp3u7-2.json": "f56c5d978eb1b1a581464ddb76e49eb36636de2960c3f55844ada9dd600e2360",
-    "book-records/prep3-parallel/pp3u7-3.json": "2660ee60c768fdc0eea85c06bd8dc1bb866d2be23abdca2fc1f98ed5baaa3d05",
-    "book-records/prep3-parallel/pp3u7-4.json": "6dee23bef205585ca68e7da20f43d3590c9b194855ddb3a00fc1ab8ab84b623e",
+    "book-records/prep3-parallel/pp3u7-3.json": "fe4313458249315fb9ea7689b4efafb0cdec75ec8a29adfc4944054356766f78",
+    "book-records/prep3-parallel/pp3u7-4.json": "c74638fea120bb13644a31e68b89b260954a05592c0130fc12fec2c16334dcf2",
     "book-records/prep3-parallel/maths-reading/pp3u7-1.json": "02b2941e25b6629f3d5458c763017d58c8852a0af89588ff49f1bf78daafadfd",
     "book-records/prep3-parallel/maths-reading/pp3u7-2.json": "7099a63eab3d89f447821a44ca6398317b5beed3dbcedd8b2f4c9c9b177d222e",
     "book-records/prep3-parallel/maths-reading/pp3u7-3.json": "b7dccffc0f93f6b364f5d79c87062bbed8f9df88946edd24c200cebfeee0966f",
@@ -388,19 +412,22 @@
     "teaching/prep3-parallel/visuals/pp3u7-2.json": "254804ab0ef58e73fd9fecdb6660043f8dde0333d9f64fa0ed0fd42aed362e58",
     "teaching/prep3-parallel/visuals/pp3u7-3.json": "929023df98014a67532e6b97ed1b07f16292cc02ed5d767afc62d091abad3a2a",
     "teaching/prep3-parallel/visuals/pp3u7-4.json": "a5464cd5bb1a9042b0c67d37d82bd383c9fbec5bc97fb6c359d51c217fe9cc1f",
-    "compiled/prep3-parallel/compile-report.json": "a0e00367f2c524510815eee73a1fd9cb2acff40747784d09a71939109f7be0bd",
-    "compiled/prep3-parallel/generated-questions.json": "892531111e4bdcfbb7c71bf575988035987c03db5eb2fcbbc1f7595bbd8c325b",
-    "compiled/prep3-parallel/misconceptions.json": "2668c2bb4a45407fb4e4a1fcc24982bd951a17ba31847f95e1d5b22dd112b68c",
+    "compiled/prep3-parallel/compile-report.json": "b2906e457b98065879cea5ca85d1c968995a4d65686e8a6feeedff0cd9c080b8",
+    "compiled/prep3-parallel/generated-questions.json": "2b0d6de0d1c1f4ad8439dd6810be311f3a8e7d048f912dc8afb87e9e764b568b",
+    "compiled/prep3-parallel/misconceptions.json": "da3aeed73dce06e898f0db0e2928fd1e36c74ad42e765e849d8c96248fff520d",
     "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u10.json": "c2326e00e44bb6d45a37e5393e6be9c15817b04c6a3aa4bd85004a03b41e7a1e",
     "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
     "compiled/prep3-parallel/pp3u3.json": "a8c331c6a2cfe469a59c651b331e79293a31b3fa3fafe7fbd3cdd712e58ebfd8",
-    "compiled/prep3-parallel/pp3u4.json": "93a3d28a26e39b95bbce014dc54d4bde2af382a1476383d7e1d91b3fc7214626",
-    "compiled/prep3-parallel/pp3u5.json": "84823f794880e5f7200db507cb4049f4491742da9f9ba8534fa4e39380ae67e9",
-    "compiled/prep3-parallel/pp3u6.json": "87679f53831d7932fcf302e6ea546be935165d95c4578d52d47b8a3031593a44",
-    "compiled/prep3-parallel/pp3u7.json": "e4aea244ead277beb34d4eb31175a6520ddacd86851aeb1a39ad533cb0c7b9e0",
+    "compiled/prep3-parallel/pp3u4.json": "e10ffb89e81e3f90712169758a3e29f6ae9991a716ed62382957367f2003e7ef",
+    "compiled/prep3-parallel/pp3u5.json": "82f37520fc7ea2fce7659d14907b51c606e6c4303d9a308c9e154494cb808d57",
+    "compiled/prep3-parallel/pp3u6.json": "b6eb9f2f823c25db9fbaca5264a9df955e43c51eab26dc1d57f1cadae4cec203",
+    "compiled/prep3-parallel/pp3u7.json": "b4fe2af8747ef5e8f7f52269bd8b1e34ad3963a132cd62e49e9cf3d94cc69836",
+    "compiled/prep3-parallel/pp3u8.json": "e4cb6ef969923d5362d08aeedb1e1929105f0ef4749673da736a0a3a1977cdf1",
+    "compiled/prep3-parallel/pp3u9.json": "2ebe78b88177fdbbd9a4efc1c01c9f35b7fbafe7f33449de4f13e04519ea7116",
     "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
-    "compiled/prep3-parallel/widget-questions.json": "411efc433c6fee5f8451bf39efb8eba895feca614fdbe68fcb8544061aa86062",
-    "compiled/prep3-parallel/content/pp3u7-1.json": "e9664d3e5124ef79eb926fed48cc2177716461a0aa0317b5c27d8a8c16730622",
+    "compiled/prep3-parallel/widget-questions.json": "dc873d010bfb0152ac3828e7ef47940fec3b63c5ad4fab4b18de3d217870080c",
+    "compiled/prep3-parallel/content/pp3u7-1.json": "3acc1ebd4187309362542c7140eab0662bed0395b50bff4831bba06bdd9efc8a",
     "compiled/prep3-parallel/content/pp3u7-2.json": "7b415ae961a62714af09c02c58d92665c5ed3fbedffd71e0421dff9b9fdd7822",
     "compiled/prep3-parallel/content/pp3u7-3.json": "7049a6ba1723f481d34944870b985f95cdb9b81a8bed3e8fc99adf1bb0be894d",
     "compiled/prep3-parallel/content/pp3u7-4.json": "a7bb0a4438f9e14102b3426ce5912251117229bcbd4cacd1634abe0a2fd71c43"

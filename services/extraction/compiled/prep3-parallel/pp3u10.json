@@ -480,6 +480,33 @@
       "verified": true
     },
     {
+      "id": "q:pp3u10-1-3:bk-drill-7-2",
+      "lo": "lo:pp3u10-1-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "In the opposite figure: M is a circle, $\\overleftrightarrow{CD}$ is a tangent to the circle at C, $\\overline{AB}$ and $\\overline{EF}$ are two chords of the circle where $\\overline{AB} \\parallel \\overline{EF} \\parallel \\overleftrightarrow{CD}$. Complete the following to prove that CE = CF. Solution with blanks: ∵ AB // EF ∴ m(arc ......) = m(arc ......) (1); ∵ The tangent CD // AB ∴ m(arc ......) = m(arc ......) (2); By adding the two sides of (1) and (2) ∴ m(EC) = m(arc ......) ∴ CE = ........ ∵ The tangent $\\overleftrightarrow{CD} \\parallel \\overline{AB}$ ∴ m(arc ........) = m(arc ........) (2)",
+      "answer": "m(arc BC) = m(arc AC)",
+      "solution": [
+        "The tangent CD is parallel to chord AB.",
+        "The arcs between a chord and a parallel tangent are equal.",
+        "The arcs between them are arc BC and arc AC.",
+        "So m(BC) = m(AC)."
+      ],
+      "source_page": 69,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-1:drill-7:2, printed p.69); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "equation",
+          "key": "m(arc BC) = m(arc AC)",
+          "variables": [
+            "m"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u10-1-3:bk-drill-7-4",
       "lo": "lo:pp3u10-1-3",
       "tier": "basic",
@@ -1577,7 +1604,7 @@
       "lo": "lo:pp3u10-7-1",
       "tier": "basic",
       "type": "numeric",
-      "stem": "With the assistance of the given figures, complete: $m(\\angle ADC) = \\ldots$°",
+      "stem": "With the assistance of the given figures, complete: $m(\\angle ADC) = \\ldots\\ldots\\ldots\\ldots$°",
       "answer": "80",
       "solution": [
         "Line AB is tangent at A and chord AC is the chord of tangency, so the 100° angle is an angle of tangency.",
@@ -1595,7 +1622,7 @@
       "lo": "lo:pp3u10-7-1",
       "tier": "standard",
       "type": "numeric",
-      "stem": "With the assistance of the given figures, complete: $m(\\angle BAC) = \\ldots$°",
+      "stem": "With the assistance of the given figures, complete: $m(\\angle BAC) = \\ldots\\ldots\\ldots\\ldots$°",
       "answer": "70",
       "solution": [
         "AB and AC are tangents; the angle at D (125°) is inscribed on the minor arc BC.",
@@ -1614,7 +1641,7 @@
       "lo": "lo:pp3u10-7-1",
       "tier": "standard",
       "type": "numeric",
-      "stem": "With the assistance of the given figures, complete: $m(\\angle BAD) = \\ldots$°",
+      "stem": "With the assistance of the given figures, complete: $m(\\angle BAD) = \\ldots\\ldots\\ldots\\ldots$°",
       "answer": "50",
       "solution": [
         "Arc CB = 120° (from the figure).",
@@ -3287,6 +3314,143 @@
     },
     {
       "id": "v:pp3u10-1:figure-17",
+      "lo": "lo:pp3u10-1-3",
+      "question": "q:pp3u10-1-3:bk-drill-7-2",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -5,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "tangent",
+            "at": [
+              0,
+              -5
+            ],
+            "from": [
+              -6,
+              -5
+            ],
+            "to": [
+              6,
+              -5
+            ],
+            "step": 2
+          },
+          {
+            "type": "label",
+            "x": -2.5,
+            "y": -5.5,
+            "text": "D",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": -3.57,
+            "y": 3.5,
+            "label": "F",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 3.57,
+            "y": 3.5,
+            "label": "E",
+            "step": 3
+          },
+          {
+            "type": "chord",
+            "from": [
+              -3.57,
+              3.5
+            ],
+            "to": [
+              3.57,
+              3.5
+            ],
+            "label": "EF",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -4,
+            "y": -3,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": -3,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "chord",
+            "from": [
+              -4,
+              -3
+            ],
+            "to": [
+              4,
+              -3
+            ],
+            "label": "AB",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              -3.57,
+              3.5
+            ],
+            "label": "CF",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              3.57,
+              3.5
+            ],
+            "label": "CE",
+            "step": 5
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A circle with two parallel chords EF and AB, a tangent line at C parallel to them, and segments CE and CF.",
+      "source_page": 69
+    },
+    {
+      "id": "v:pp3u10-1:figure-17-2",
       "lo": "lo:pp3u10-1-3",
       "question": "q:pp3u10-1-3:bk-drill-7-4",
       "kind": "geo_scene",
@@ -16463,7 +16627,7 @@
       "content": [
         {
           "kind": "problem",
-          "text_md": "In the opposite figure: Two concentric circles, the radius length of the minor circle is 7 cm and the radius length of the major circle is 14 cm ($\\pi=\\frac{22}{7}$). Complete: $m(\\overset{\\frown}{AB}) = m(\\ldots\\ldots) = \\ldots\\ldots^\\circ$"
+          "text_md": "In the opposite figure: Two concentric circles, the radius length of the minor circle is 7 cm and the radius length of the major circle is 14 cm ($\\pi=\\frac{22}{7}$). Complete: $m\\left(\\overset{\\frown}{AB}\\right) = m\\left(\\overset{\\frown}{.....}\\right) = ..........^\\circ$"
         },
         {
           "step": 1,
@@ -16484,7 +16648,7 @@
       "content": [
         {
           "kind": "problem",
-          "text_md": "In the opposite figure: Two concentric circles, the radius length of the minor circle is 7 cm and the radius length of the major circle is 14 cm ($\\pi=\\frac{22}{7}$). Complete: $m(\\overset{\\frown}{EF}) = m(\\ldots\\ldots) = \\ldots\\ldots^\\circ$, length of $\\overset{\\frown}{EF} = \\ldots\\times\\ldots = \\ldots$ cm"
+          "text_md": "In the opposite figure: Two concentric circles, the radius length of the minor circle is 7 cm and the radius length of the major circle is 14 cm ($\\pi=\\frac{22}{7}$). Complete: $m\\left(\\overset{\\frown}{EF}\\right) = m\\left(\\overset{\\frown}{.......}\\right) = .........^\\circ$, length of $\\overset{\\frown}{EF} = \\ldots\\times\\ldots = \\ldots$ cm"
         },
         {
           "step": 1,
@@ -16504,35 +16668,6 @@
         }
       ],
       "source_page": 67,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u10-1-3:bk-drill-7-2",
-      "lo": "lo:pp3u10-1-3",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "In the opposite figure: M is a circle, $\\overleftrightarrow{CD}$ is a tangent to the circle at C, $\\overline{AB}$ and $\\overline{EF}$ are two chords of the circle where $\\overline{AB} \\parallel \\overline{EF} \\parallel \\overleftrightarrow{CD}$. Complete the following to prove that CE = CF. Solution with blanks: ∵ AB // EF ∴ m(arc ......) = m(arc ......) (1); ∵ The tangent CD // AB ∴ m(arc ......) = m(arc ......) (2); By adding the two sides of (1) and (2) ∴ m(EC) = m(arc ......) ∴ CE = ........ ∵ The tangent $\\overleftrightarrow{CD} \\parallel \\overline{AB}$ ∴ m(arc ........) = m(arc ........) (2)"
-        },
-        {
-          "step": 1,
-          "text_md": "The tangent CD is parallel to chord AB."
-        },
-        {
-          "step": 2,
-          "text_md": "The arcs between a chord and a parallel tangent are equal."
-        },
-        {
-          "step": 3,
-          "text_md": "The arcs between them are arc BC and arc AC."
-        },
-        {
-          "step": 4,
-          "text_md": "So m(BC) = m(AC)."
-        }
-      ],
-      "source_page": 69,
       "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
     },
     {
@@ -16587,7 +16722,7 @@
       "content": [
         {
           "kind": "problem",
-          "text_md": "In the opposite figure: ABCD is a quadrilateral inscribed in a circle M, $\\overline{AC}$ is a diameter in the circle, CB = CD. Prove that: $m(\\widehat{AB}) = m(\\widehat{AD})$"
+          "text_md": "In the opposite figure: ABCD is a quadrilateral inscribed in a circle M, $\\overline{AC}$ is a diameter in the circle, CB = CD. Prove that: $m(\\overset{\\frown}{AB}) = m(\\overset{\\frown}{AD})$"
         },
         {
           "step": 1,
@@ -16595,11 +16730,11 @@
         },
         {
           "step": 2,
-          "text_md": "R.T.P.: $m(\\widehat{AB}) = m(\\widehat{AD})$"
+          "text_md": "R.T.P.: $m(\\overset{\\frown}{AB}) = m(\\overset{\\frown}{AD})$"
         },
         {
           "step": 3,
-          "text_md": "Proof: ∵ CB = CD ∴ $m(\\widehat{CB}) = m(\\widehat{CD})$ (1)"
+          "text_md": "Proof: ∵ CB = CD ∴ $m(\\overset{\\frown}{CB}) = m(\\overset{\\frown}{CD})$ (1)"
         },
         {
           "step": 4,
@@ -16607,11 +16742,11 @@
         },
         {
           "step": 5,
-          "text_md": "∴ $m(\\widehat{AB}) = 180° - m(\\widehat{CB})$, $m(\\widehat{AD}) = 180° - m(\\widehat{CD})$ (2)"
+          "text_md": "∴ $m(\\overset{\\frown}{AB}) = 180^\\circ - m(\\overset{\\frown}{CB})$, $m(\\overset{\\frown}{AD}) = 180^\\circ - m(\\overset{\\frown}{CD})$ (2)"
         },
         {
           "step": 6,
-          "text_md": "from (1) and (2) we get: $m(\\widehat{AB})) = m(\\widehat{AD})$"
+          "text_md": "from (1) and (2) we get: $m(\\overset{\\frown}{AB})) = m(\\overset{\\frown}{AD})$"
         }
       ],
       "source_page": 70,
@@ -17108,7 +17243,7 @@
         },
         {
           "step": 4,
-          "text_md": "Draw $\\overline{BD}$, in $\\triangle BCD$ ∵ $CB = CD$"
+          "text_md": "Draw $\\overline{BD}$, in $\\Delta BCD$ ∵ $CB = CD$"
         },
         {
           "step": 5,

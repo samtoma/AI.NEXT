@@ -1,0 +1,53 @@
+{
+ "format": "ainext.cross-links/1",
+ "book": "prep3-parallel",
+ "chapter": 6,
+ "run": "runs/prep3-parallel/links/links-ch06.20261018T092618Z.json",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "prior_objectives": 48,
+ "links": [
+  {
+   "src": "lo:pp3u1-4-3",
+   "dst": "lo:pp3u6-1-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE1",
+     "anchor": "pp3u6-1:example-1",
+     "printed_page": 5,
+     "quote": "And by drawing the straight line L passing throught the two represented points"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Draws a line through two plotted ordered pairs, using the linear graphing method."
+   },
+   "key": "lo:pp3u1-4-3->lo:pp3u6-1-1",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Represent a linear function or constant function graphically by finding ordered pairs and drawing the straight line.",
+   "dst_statement": "Find ordered-pair solutions of a first-degree equation in two variables by writing it in the form y = ... or x = ... and substituting values, and represent its solution set as a straight line.",
+   "fingerprint": "92c723ded48e90f166aecf69055e006d"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:pp3u1-4-4->lo:pp3u6-2-1",
+   "src": "lo:pp3u1-4-4",
+   "dst": "lo:pp3u6-2-1",
+   "why": "the link checker said REJECTED: Text recalls graphing quadratic functions generally, not 1-4-4's vertex/axis/extremum.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Text recalls graphing quadratic functions generally, not 1-4-4's vertex/axis/extremum."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 3,
+ "outside_book": [],
+ "failures": [],
+ "decisions": [],
+ "made": "2026-10-18"
+}

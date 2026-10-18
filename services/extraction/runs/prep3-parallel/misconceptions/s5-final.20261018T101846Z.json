@@ -1,0 +1,206 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "0052a1fd1550fc3864330d10d9bb95c37e275976ba77e1fe04e1822bd146b486",
+  "generated_sha256": "a3213d0e64849949df521503a21de173937a819ada934da1b013d22edaa921b7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u4-1-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:pp3u4-1-1:degree-split-decimally",
+     "lo_id": "lo:pp3u4-1-1",
+     "label": "Degree divided into 100 parts",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "Refutation example 0.25° gives '20° 15'' with an unexplained 20° whole-degree part. Step 1 ('angles are the exception') is a vague claim and isn't from the book. Mostly restates the method."
+    },
+    {
+     "id": "mc:pp3u4-1-1:minute-second-confused",
+     "lo_id": "lo:pp3u4-1-1",
+     "label": "Minutes and seconds confused",
+     "aliases": [],
+     "verdict": "UNSUPPORTED",
+     "reason": "The entry merges two distinct errors (misnaming the subdivision, and leaving a decimal in the minutes). The signal covers only the first, so it would misdiagnose the second. The refutation mostly restates the method and uses a 0.6' example the book does not have."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-1-3",
+   "entries": [
+    {
+     "id": "mc:pp3u4-1-3:ratio-inverted",
+     "lo_id": "lo:pp3u4-1-3",
+     "label": "Ratio written upside down",
+     "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
+     "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The two sides are correct — they are the wrong way up."
+      },
+      {
+       "step": 2,
+       "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
+      },
+      {
+       "step": 3,
+       "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The refutation is correct: sin and cos have the hypotenuse as denominator, so they are below 1. The signal (sine or cosine greater than 1) correctly diagnoses a student who flips the fraction. For the 12-13-5 triangle, sin A = 5/13, not 13/5. The refutation names no external references."
+     }
+    },
+    {
+     "id": "mc:pp3u4-1-3:tan-uses-hypotenuse",
+     "lo_id": "lo:pp3u4-1-3",
+     "label": "Hypotenuse used in the tangent",
+     "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
+     "signal": "The tangent is reported as a sine or cosine value.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are choosing between the three sides, which is the right process."
+      },
+      {
+       "step": 2,
+       "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
+      },
+      {
+       "step": 3,
+       "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The refutation is correct: tan is opposite over adjacent, the two legs, and any fraction with the hypotenuse is a sine or cosine. The signal fits, because a leg-over-hypotenuse tan equals a sine or cosine value. The refutation names no external references."
+     }
+    }
+   ],
+   "dropped": [
+    {
+     "id": "mc:pp3u4-1-3:opposite-adjacent-swapped",
+     "lo_id": "lo:pp3u4-1-3",
+     "label": "Opposite and adjacent sides exchanged",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real. But step 1 ('You picked the right two sides') doesn't fit a student who swapped opposite and adjacent, because that student often picks the wrong leg. The signal 'ratio of the other acute angle, or the reciprocal' is also loose."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u4-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries; the runtime will fall back to the canonical solutions. I did not open the figure images because I used no question to judge an error."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no error is supported and no entries were written."
+    },
+    {
+     "kind": "evidence",
+     "text": "The canonical solution for the worked example with the fraction includes a part A (cos 60° sin 30° − sin 60° tan 60° + cos² 30° = −1/2) that belongs to a different question. Only part B matches the stated question and answer 2. Part A was not used."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u4-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no error is supported and no entries are added. The canonical solution for the isosceles-triangle example is incomplete (only two steps are given), so I did not write against it."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 8,
+  "entries": 2,
+  "dropped": 3,
+  "stripped": 0,
+  "skipped": 1,
+  "flags": 6
+ }
+}

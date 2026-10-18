@@ -1,0 +1,119 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 8,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "f2206d265fe846001a07bd11712fc749eb86698dcf1cd46a9606e1558f99d7ad",
+  "generated_sha256": "35e003efcf2cc65f1b4fcdd2ab163673cd07fd568f3c791e84c955b67c65a38c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 65,
+  "proposed": [
+   {
+    "src": "lo:pp3u8-1-1",
+    "dst": "lo:pp3u8-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 31,
+      "quote": "S = {1, 2, 3, 4, 5, 6, 7, 8}, n(S) = 8"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u8-1:linking-text-3",
+      "printed_page": 31,
+      "quote": "operations on events are similar to the operations on sets"
+     }
+    ],
+    "reason": "Intersection probability uses sample space, events and P=n(A)/n(S)."
+   },
+   {
+    "src": "lo:pp3u8-1-2",
+    "dst": "lo:pp3u8-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 33,
+      "quote": "$A\\cap B=\\{6\\}$, so $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{1}{9}$"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u8-1:linking-text-5",
+      "printed_page": 34,
+      "quote": "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)"
+     }
+    ],
+    "reason": "Union formula uses the intersection and mutual exclusivity."
+   },
+   {
+    "src": "lo:pp3u8-1-1",
+    "dst": "lo:pp3u8-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 36,
+      "quote": "$P(A)=\\frac{n(A)}{n(S)}=\\frac{18}{40}=\\frac{9}{20}$"
+     }
+    ],
+    "reason": "Complement computed using P=n/n(S)."
+   },
+   {
+    "src": "lo:pp3u8-1-2",
+    "dst": "lo:pp3u8-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 36,
+      "quote": "$\\therefore P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{8}{40}=\\frac{1}{5}$"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u8-2:rule-3",
+      "printed_page": 37,
+      "quote": "(A - B) ∪ (A ∩ B) = A"
+     }
+    ],
+    "reason": "Difference uses A∩B and the Venn diagram."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Example uses sample space S and events A,B as sets with n(S), and the linking text says event operations are like set operations; the intersection work builds on writing events as sets."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Example computes P(A∩B)=1/9 and uses it in the union formula; the text uses A∩B=∅ for mutually exclusive events."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Computes P(A)=n(A)/n(S) and then uses it in P(A`)=1-P(A)."
+    },
+    {
+     "i": 3,
+     "verdict": "UNCLEAR",
+     "note": "The example computes P(A∩B) but does not use it for the difference A-B. The rule text only states the identity and does not refer back to intersection as a prior skill."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "6107cbc96a48e25faecc49237a966a60455603dd38769eaa91302efd83cafeb6",
+  "generated_sha256": "ba97733463af19589d1f0bb74d3e935fbc7686d280fb36c7044666056cdb2768",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u2-3-1:w001",
+   "template_sha": "818139ede4dfe8407f62d0a3d0464d40713b4ac009e1cbdf376d44e2d84e6f79",
+   "reading": {
+    "mode": "direct",
+    "a": 3,
+    "b": 4,
+    "c": 9
+   },
+   "construction": "Direct mode: quotients must match, 3/4 = 9/x, so x = 12. Set the right pan to 12, which is a whole number in 1..24. Both quotients are 0.75 and the beam is level.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "direct-solved-as-inverse",
+     "matches": false,
+     "why": "It fires when the products match: 3*4 = 9*x gives x = 4/3, which is not a whole number. A student with this misconception can't place the pan at 1.333, so she lands on 1 or 2. Those values are only near the product answer, and she could equally have missed for other reasons, such as additive reasoning. The predicate would mostly fire for other errors, so I mark it false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-1:w002",
+   "template_sha": "57dc47540fde50251d022964d69c76f3c71859e58f00fd0943645239898eeb96",
+   "reading": {
+    "mode": "direct",
+    "a": 2,
+    "b": 5,
+    "c": 6
+   },
+   "construction": "Mode direct, a=2, b=5, c=6. Quotients match when 2/5 = 6/x, so x=15, a whole number within 1–24. Drag the right pan to 15 and the beam is level.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "direct-solved-as-inverse",
+     "matches": false,
+     "why": "This predicate fires when the pan is set so the products match: 2·5 = 6·x, so x = 5/3, about 1.67. That is not a whole number and is probably not reachable on the pan. A student with the misconception would more likely pick a nearby integer such as 1 or 2, which would be read as off-target or not read at all. The other product pairing, 2·x = 5·6, gives 15, which is the correct answer. The predicate would rarely or never fire cleanly for this error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-1:w003",
+   "template_sha": "78878acbd2633340b8d2a93ec55d1b1cb7659654dad111297d7d773a0336242a",
+   "reading": {
+    "mode": "direct",
+    "a": 4,
+    "b": 3,
+    "c": 8
+   },
+   "construction": "Set the right pan to 6: quotients 4/3 and 8/6 are equal, so the beam is level.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "direct-solved-as-inverse",
+     "matches": false,
+     "why": "Matching products gives 4*3 = 8*x, so x = 1.5, which is not a whole number and cannot be set on the beam. A student making this error cannot build that answer. Whatever whole number she settles on (1 or 2) would not reliably indicate the product rule, so the predicate would mostly fire for other reasons."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-2:w001",
+   "template_sha": "e6507a871e09ea9b0f577f328db355be5f5f07481a672c05607668c0cb403205",
+   "reading": {
+    "mode": "inverse",
+    "a": 6,
+    "b": 10,
+    "c": 4
+   },
+   "construction": "Inverse mode with a=6, b=10, c=4. The products must match: 6*10 = 60 = 4*d, so d = 15. Drag the right pan to 15. It is a whole number within 1 to 24, so the target is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "inverse-solved-as-direct",
+     "matches": true,
+     "why": "A student who sets the quotients equal gets 6/10 = 4/d, so d = 40/6, about 6.67 (7 if rounded). Placing the pan there is the direct-variation move this misconception describes, and it is listed for inverse mode. Few other errors would put the pan at that spot, so the predicate fires mainly for this reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-2:w002",
+   "template_sha": "0579c1012afa6ed2500d149c5f645385e413cbb1461425cd826edddb27a07472",
+   "reading": {
+    "mode": "inverse",
+    "a": 8,
+    "b": 6,
+    "c": 4
+   },
+   "construction": "Inverse mode with a=8, b=6, c=4: products must match, 8*6=48=4*d, so d=12 (whole number in 1..24). Drag the right pan to 12; products 48 and 48 balance.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "inverse-solved-as-direct",
+     "matches": true,
+     "why": "The predicate fires when the student sets the quotients equal (8/6 = 4/d), giving d=3 instead of 12. This is the direct-variation move applied to an inverse situation (fewer workers should take more days), which is the described misconception. d=3 is distinctive and unlikely from other errors."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-2:w003",
+   "template_sha": "06563f4415f7407b1acc12843cc3a3f5b784c91a77be4891569ae55702d17e25",
+   "reading": {
+    "mode": "inverse",
+    "a": 12,
+    "b": 5,
+    "c": 10
+   },
+   "construction": "Inverse mode with a=12, b=5, c=10. Products must match: 12*5 = 60 = 10*x, so the right pan is set to 6. 6 is a whole number between 1 and 24, so the target is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "inverse-solved-as-direct",
+     "matches": true,
+     "why": "A student who treats the situation as direct sets 12/5 = 10/x, so x = 25/6, about 4.17. The nearest pan setting is about 4, where the quotients are balanced and the products are not. This is the direct-variation move applied to an inverse problem, which is the claimed misconception. Inverse mode lists this predicate in its can_emit table."
+    }
+   ]
+  }
+ ]
+}

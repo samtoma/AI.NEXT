@@ -1,0 +1,93 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "facb85f825cefda3ead43bb2f48d3ab01c085d67e86925cbfa65d6444e5e7f22",
+  "generated_sha256": "f98ee14d6e2231d17cdad4b957bba7f281019c4a57a15460b1863bc339316983",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u9-1-1:w001",
+   "template_sha": "617f2d5bd445a122ca39b196624db63d2fac74f18db83c8e457c2a59222ab6d2",
+   "reading": {
+    "element": "chord"
+   },
+   "construction": "Circle centre M=(0,0), radius 5. Drag one end to (3,4) and the other to (-4,3)... both lie on the circle (9+16=25, 16+9=25). The segment joins two points on the circle and does not pass through the centre, so it is a chord. (Or (-5,0) to (3,4).)",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "ends-not-on-circle",
+     "matches": true,
+     "why": "It fires when one or both ends are off the circle, for example a segment that stops inside or runs past the circle. That is what a student holding the misconception 'a chord is any line across the circle' would build. The can_emit table lists it for the chord element."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-1-1:w002",
+   "template_sha": "54deafd292699c779e6ca00cfa082208d17f045bbee021b6a86a6535e5e16941",
+   "reading": {
+    "element": "diameter"
+   },
+   "construction": "With M at the origin (centre), drag one end to (5,0) and the other to (-5,0). Both ends are on the circle of radius 5 and the segment passes through M, so it is a chord through the centre, with length 10.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "chord-not-through-centre",
+     "matches": true,
+     "why": "It fires when the segment has both ends on the circle but misses M. A student who thinks any long chord is a diameter would build exactly that. The can_emit table lists it for diameter."
+    },
+    {
+     "predicate": "ends-not-on-circle",
+     "matches": false,
+     "why": "The can_emit table lists it for diameter, so it can fire. But a student with the 'chord endpoints off circle' misconception is thinking of chords that stop short or run past the circle. For a diameter, a segment with an end off the circle is more likely imprecise dragging, or a student who has drawn a line through the centre and not stopped it at the circle. It would mostly fire for those reasons and not for the chord misconception, so the diagnosis is not safe."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-1-1:w003",
+   "template_sha": "be48577a594d8c9940125ae8d9a01984de1ef709346a323c16804f501febc0bb",
+   "reading": {
+    "element": "radius"
+   },
+   "construction": "Drag one end to the centre M (say M=(0,0)) and the other end to a point on the circle, e.g. (5,0). The segment from (0,0) to (5,0) has length 5, starts at the centre and ends on the circle.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "radius-drawn-as-chord",
+     "matches": true,
+     "why": "Fires when both ends are on the circle (not at the centre) for a radius question. A student who thinks any segment inside the circle is a radius would build this. It is listed for radius."
+    },
+    {
+     "predicate": "radius-short",
+     "matches": true,
+     "why": "Fires when one end is at the centre and the other is inside the circle, not on it. That is what a student who treats a radius as a direction of any length would build. It is listed for radius."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-2-2:w001",
+   "template_sha": "7639690bb1a3f4365e29f58404af8d67b156cc352a84ccdbd411ddd3233d5546",
+   "reading": {
+    "element": "tangent"
+   },
+   "construction": "Take M=(0,0), radius 5. Drag one end to (5,-3) and the other to (5,4) (both on the vertical line x=5). The segment's line is perpendicular to radius MP at P=(5,0) and touches the circle exactly once, at (5,0). The line x=5 is at distance 5 from M, so it is tangent. The instrument checks the property, so the segment must lie on the tangent line and may extend past the point of contact.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "is-secant",
+     "matches": true,
+     "why": "The tangent case lists this predicate. It fires when the line crosses the circle twice. A student who reads 'tangent' as any line touching or crossing the circle would draw this."
+    },
+    {
+     "predicate": "is-external",
+     "matches": false,
+     "why": "The tangent case lists this predicate, and it fires when the line misses the circle. A student who draws a line near the circle without touching it could have several reasons, such as imprecise dragging or a sloppy tangent point. The misconception 'tangent need not touch' is only one of them, so I mark it false."
+    }
+   ]
+  }
+ ]
+}

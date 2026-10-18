@@ -1,0 +1,190 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "b74fa9343844137540c5165fab7a8cdc87d4d743f44841da3c5e9d47de6ec646",
+  "generated_sha256": "458c5e16734f426978279450b71afb3c7fc0a6bb997823430856f92412e92bbf",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u5-3-1:w001",
+   "template_sha": "b46ea6c541a21fabe694ffa50aaa478697651a7ded498eb211012668206b9210",
+   "reading": {
+    "mode": "equation",
+    "m": 2,
+    "b": -1
+   },
+   "construction": "Drag the handles to (0,-1) and (2,3), both on y=2x-1, or equivalently (-1,-3) and (2,3). The gradient is 2 and the intercept is -1. Both are lattice points within the grid, and the start positions (-3,-2) and (1,1) are not a problem in equation mode.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": true,
+     "why": "It fires on a line with gradient 1/2 (run over rise), for example through (0,-1) and (2,0). A student who computes Δx/Δy from the equation or from points would draw exactly this. It is in the equation-mode can_emit list."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "It fires on a line with gradient -2, for example through (0,-1) and (1,-3). The question gives the equation directly, so there is no coordinate subtraction for the stated mechanism to act on. A student who draws -2 here has most likely misread or mishandled the sign, or the 'negative' in the printed '+ -1', rather than subtracted in the wrong order. The diagnosis would mostly serve a refutation of a mistake she did not make."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-3-1:w002",
+   "template_sha": "cf0196d94adcdafd3181a46cbf8a6592b2a1de0455ca63ad94daf2195a00b811",
+   "reading": {
+    "mode": "equation",
+    "m": -1,
+    "b": 3
+   },
+   "construction": "Equation mode with y = -x + 3: drag the two handles to (0,3) and (3,0). Both are lattice points within the grid, and the line through them has gradient -1 and intercept 3. Other valid pairs: (1,2) and (2,1), or (-2,5) and (4,-1).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": false,
+     "why": "The reciprocal of -1 is -1, so inverting the slope gives the correct line. The predicate cannot fire for this question, and a student who inverted the slope would be marked correct."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": true,
+     "why": "It fires for the line y = x + 3, built from (0,3) and (1,4), which has the right intercept and magnitude but the wrong direction. A student who plots 3 on the y-axis and then goes up 1 and right 1 instead of down 1 makes exactly this error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-3-1:w003",
+   "template_sha": "a579ecebc7aea8ebc9e7ae1dff2843bea9c46288f7bd49e81dc76f8cd210fe39",
+   "reading": {
+    "mode": "equation",
+    "m": 1,
+    "b": 0
+   },
+   "construction": "Equation mode: drag handles to lattice points (0,0) and (2,2). The line through them is y = 1x + 0, so it is accepted. Any two points on y=x work, e.g. (-2,-2) and (3,3). The points-mode handle restriction does not apply.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": false,
+     "why": "The reciprocal of m=1 is 1, so the inverted line is the same as the correct line. The predicate can't fire on a wrong answer here, and it can't separate this misconception from a correct answer."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "It would fire on y = -x (through (0,0) and (2,-2)). But the rule is given directly as y = 1x + 0, with no two points to subtract. A student with the 'subtract in opposite order' misconception has nothing to compute, so a sign flip here is more likely a slip or misreading than that misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-3-1:w004",
+   "template_sha": "5df7c1cb8ef42bfaba558570d641859a8408745b63d2b57e26c6dae94836455c",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": 2
+   },
+   "construction": "Equation mode, m=-2, b=2. Drag handles to lattice points (0,2) and (1,0); the line through them is y=-2x+2 (also (-1,4) and (2,-2) work). All within limits: |m|=2<=5, b=2 in -5..5.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-inverted",
+     "matches": true,
+     "why": "Fires on a line with gradient -1/2 (reciprocal), e.g. through (0,2) and (2,1). A student who takes run over rise from -2 builds exactly this, keeping the intercept 2."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": true,
+     "why": "Fires on gradient +2 with intercept 2, e.g. through (0,2) and (1,4). A student who drops or misapplies the minus sign on -2x draws the rising line, so the sign was lost while the steepness stayed right."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-4-1:w001",
+   "template_sha": "1c847c1501730f60e38c5d14303bafc60c39a61108eb8ba136dc2cc79551299a",
+   "reading": {
+    "mode": "equation",
+    "m": -0.5,
+    "b": -1
+   },
+   "construction": "x+2y+2=0 gives y=-x/2-1, so m=-1/2 (reciprocal of -2, allowed) and b=-1 (in range). Drag one point to (0,-1) and another to (2,-2) (or (-2,0)). Both are lattice points on the line. The y-axis part from the origin has length 1.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": true,
+     "why": "A student who writes m=a/b=1/2 instead of -1/2 and uses intercept -1 draws y=x/2-1. That has the right magnitude and the opposite sign, so the predicate fires. It is the misconception's signature."
+    },
+    {
+     "predicate": "off-target",
+     "matches": true,
+     "why": "A student who reads the coefficients without isolating y takes m=1 and b=2, or m=2. The line y=x+2 has neither the right slope nor the right intercept, so off-target fires. This is the typical product of the misconception."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "matches": false,
+     "why": "This fires when the slope is -1/2 but the intercept is wrong. A student who got -1/2 must have isolated y, so she would normally have the intercept right too. A wrong intercept there is more likely a sign or arithmetic slip, such as b=+1. Reading coefficients without isolating y gives a wrong slope, so this predicate mostly fires for other reasons."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-4-1:w002",
+   "template_sha": "ccc569aa806801699fe1f9ba0d3f57aaec45b0f49abb6a52156bbd1628a044c3",
+   "reading": {
+    "mode": "equation",
+    "m": 0.5,
+    "b": 2
+   },
+   "construction": "Equation mode: drag points (0,2) and (2,3). Both satisfy x-2y+4=0 (slope 0.5, intercept 2). Neither is at the default handle positions (-3,-2) or (1,1). The limits hold: |m| = 0.5 = 1/2, b = 2 in -5..5.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": true,
+     "why": "A student who writes m = a/b = 1/(-2) = -0.5 instead of -a/b draws a line with slope -0.5, the sign-flipped version of the correct slope. This is exactly the claimed misconception."
+    },
+    {
+     "predicate": "off-target",
+     "matches": true,
+     "why": "A student who reads the coefficient of x as the slope (1) and the constant as the intercept (4) draws y = x + 4. Neither the slope nor the intercept matches, so off-target fires for this error."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "matches": false,
+     "why": "This needs slope 0.5 with an intercept other than 2. A student who reads the constant straight off without isolating y also gets the slope wrong, because the x coefficient is 1, not 1/2. A correct slope with a wrong intercept would mostly come from an arithmetic slip, not from this misconception. Attributing it to this misconception would be wrong."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-4-1:w003",
+   "template_sha": "6af9323bf472c4ba2e7d5a0d1b8f50df40be3d1018e1be385cdc4af8f1551018",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": 3
+   },
+   "construction": "Rearranged: y = -2x + 3. Equation mode, so drag the two handles to lattice points (0,3) and (2,-1) (avoiding the opening handle spots (-3,-2) and (1,1), though (1,1) is on the line). Slope -2, y-intercept 3 (length 3). Within limits: |m|=2, b=3.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": true,
+     "why": "Fires on y = 2x + 3 (e.g. points (0,3),(1,5)): correct magnitude, wrong sign, correct intercept. A student using m = a/b = 2 instead of -a/b = -2 would build exactly this, while still finding the intercept 3."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "matches": false,
+     "why": "Fires on slope -2 with an intercept other than 3. A student who reads coefficients straight off 2x + y - 3 = 0 gets slope +2 (not -2), so they would not keep the correct slope; this construction would come from a different error."
+    },
+    {
+     "predicate": "off-target",
+     "matches": true,
+     "why": "Reading the coefficients without isolating y gives m = 2 and b = -3, i.e. y = 2x - 3 (e.g. (0,-3),(1,-1)). Neither slope nor intercept matches, so off-target fires and fits this misconception."
+    }
+   ]
+  }
+ ]
+}

@@ -10,10 +10,10 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 19,
+    "checks": 20,
     "hold": 13,
     "excepted": 0,
-    "fail": 6
+    "fail": 7
   },
   "checks": [
     {
@@ -207,8 +207,8 @@
     {
       "id": "misconception_refutations",
       "title": "The unit's catalogue entries = entries with a refutation",
-      "want": 0,
-      "got": 0,
+      "want": 2,
+      "got": 2,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -329,30 +329,9 @@
       "id": "misprints_decided",
       "title": "Misprints and candidates = those a person decided",
       "want": 5,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "pp3u4-2:think-and-discuss-1#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u4-2:rule-5#quote",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u4-2:rule-6#claim",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u4-2:example-2#stem",
-          "detail": "not decided in the Misprints task"
-        },
-        {
-          "scope": "pp3u4-2:figure-6#caption",
-          "detail": "not decided in the Misprints task"
-        }
-      ],
+      "got": 5,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
@@ -377,9 +356,26 @@
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
       "want": 222,
-      "got": 222,
-      "state": "holds",
-      "failures": [],
+      "got": 218,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "expl:pp3u4-1-1:bk-drill-2-a",
+          "detail": "left: 4{,}6"
+        },
+        {
+          "scope": "expl:pp3u4-1-1:bk-drill-2-b",
+          "detail": "left: 8{,}0"
+        },
+        {
+          "scope": "expl:pp3u4-1-1:bk-drill-2-c",
+          "detail": "left: 6{,}1"
+        },
+        {
+          "scope": "expl:pp3u4-1-1:bk-drill-2-d",
+          "detail": "left: 3{,}2"
+        }
+      ],
       "excepted_scopes": []
     },
     {
@@ -404,27 +400,57 @@
         }
       ],
       "excepted_scopes": []
+    },
+    {
+      "id": "held_decided",
+      "title": "Held families and widget templates = those a person dropped + those sent back and written again",
+      "want": 3,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "family pp3u4-2-4--calc-inverse.json",
+          "detail": "held, not decided: pp3u4-2-4--calc-inverse.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u4-2-4--calc-inverse.json: its parent 'none"
+        },
+        {
+          "scope": "family pp3u4-2-4--isosceles.json",
+          "detail": "held, not decided: pp3u4-2-4--isosceles.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u4-2-4--isosceles.json: its parent 'none' is n"
+        },
+        {
+          "scope": "family pp3u4-2-4--right-tri.json",
+          "detail": "held, not decided: pp3u4-2-4--right-tri.json: parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101); pp3u4-2-4--right-tri.json: its parent 'none' is n"
+        }
+      ],
+      "excepted_scopes": []
     }
   ],
   "inputs": {
     "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
-    "book-records/prep3-parallel/misprint-candidates.json": "fd74dd034a898f25d54a7290bf00ca988f32e96983a321aa34a8146e14e47f16",
-    "groundtruth/prep3-parallel/misprint-decisions.json": "7c4cea29b356525aa2236851e337d6a76b50f738daa1f5584d035c7dde34ab9c",
+    "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "941c1aac3c315dbfe7d81fe7c4428d8d1d3b2cb889ea295fe31ae492cdd00804",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "book-records/prep3-parallel/pp3u4-1.json": "b2b1f04ca5ac4643d07b22ed9be0a2e9646a9865bc6e0fc82b112a09b88406b3",
-    "book-records/prep3-parallel/pp3u4-2.json": "3677185baf944b12a3497576c8974635ad8e28eca1791dd5af30f3fc7499b77a",
+    "teaching/prep3-parallel/held.json": "28b8566362431a7ca90966c43abdd65ec52da8e81543a34552d14b2683456865",
+    "book-records/prep3-parallel/pp3u4-1.json": "260e8da7699d8937f625464fea8463343ee19e79afe994ec92240a687a01ff4c",
+    "book-records/prep3-parallel/pp3u4-2.json": "5a07f0921a45db1d7da63429635dc24024220737e20770f4a199f740e73178cd",
     "book-records/prep3-parallel/maths-reading/pp3u4-1.json": "75f0d7ceeef72931888e2b6bf4b519f29f39e240197f45158f272f13842ec8ee",
     "book-records/prep3-parallel/maths-reading/pp3u4-2.json": "dcdf235d93fb8d4a9a2c335764cc7c836b199c491dbb182a5fa5df2d6509dac6",
     "teaching/prep3-parallel/visuals/pp3u4-1.json": "f4c29208210088b05d2f45941579d5fcbbcb8c979f891152d2025ac285f4a00e",
     "teaching/prep3-parallel/visuals/pp3u4-2.json": "3c94292ac2b2d674060c2e6b867b5a7a15c965a621c701ecc1a9c53ee033a43b",
-    "compiled/prep3-parallel/compile-report.json": "32eee6195b5cb0a4557230fbbb98d6a017b50e51be2da894540980b835f21c11",
-    "compiled/prep3-parallel/generated-questions.json": "43bc47efe2578717913e982b1e049f24ebc643da683177f5f59981874e4f826f",
-    "compiled/prep3-parallel/misconceptions.json": "cf703c2a19995a3f7b80b04a999d391bc54d8cc49978e5b33e987c5ea1bafed8",
+    "compiled/prep3-parallel/compile-report.json": "b2906e457b98065879cea5ca85d1c968995a4d65686e8a6feeedff0cd9c080b8",
+    "compiled/prep3-parallel/generated-questions.json": "2b0d6de0d1c1f4ad8439dd6810be311f3a8e7d048f912dc8afb87e9e764b568b",
+    "compiled/prep3-parallel/misconceptions.json": "da3aeed73dce06e898f0db0e2928fd1e36c74ad42e765e849d8c96248fff520d",
     "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u10.json": "c2326e00e44bb6d45a37e5393e6be9c15817b04c6a3aa4bd85004a03b41e7a1e",
     "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
     "compiled/prep3-parallel/pp3u3.json": "a8c331c6a2cfe469a59c651b331e79293a31b3fa3fafe7fbd3cdd712e58ebfd8",
-    "compiled/prep3-parallel/pp3u4.json": "93a3d28a26e39b95bbce014dc54d4bde2af382a1476383d7e1d91b3fc7214626",
+    "compiled/prep3-parallel/pp3u4.json": "e10ffb89e81e3f90712169758a3e29f6ae9991a716ed62382957367f2003e7ef",
+    "compiled/prep3-parallel/pp3u5.json": "82f37520fc7ea2fce7659d14907b51c606e6c4303d9a308c9e154494cb808d57",
+    "compiled/prep3-parallel/pp3u6.json": "b6eb9f2f823c25db9fbaca5264a9df955e43c51eab26dc1d57f1cadae4cec203",
+    "compiled/prep3-parallel/pp3u7.json": "b4fe2af8747ef5e8f7f52269bd8b1e34ad3963a132cd62e49e9cf3d94cc69836",
+    "compiled/prep3-parallel/pp3u8.json": "e4cb6ef969923d5362d08aeedb1e1929105f0ef4749673da736a0a3a1977cdf1",
+    "compiled/prep3-parallel/pp3u9.json": "2ebe78b88177fdbbd9a4efc1c01c9f35b7fbafe7f33449de4f13e04519ea7116",
     "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
+    "compiled/prep3-parallel/widget-questions.json": "dc873d010bfb0152ac3828e7ef47940fec3b63c5ad4fab4b18de3d217870080c",
     "compiled/prep3-parallel/content/pp3u4-1.json": "4f9b546e6682dee1f25079f3523b0b2a910d582b6ea333a45615525d8c301e38",
     "compiled/prep3-parallel/content/pp3u4-2.json": "7253d9db2786671ad49cb6891682c4de8adc9642795d92fa2b8578a4155932ac"
   },

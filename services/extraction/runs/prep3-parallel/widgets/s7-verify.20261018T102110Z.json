@@ -1,0 +1,167 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "deb12d9f2370e193616e57c394d3689980034c555b7447a3f74d0b0d17d0f191",
+  "generated_sha256": "ff568938477fbe82ac93f564644289418b0bedfee72eea2138a9c6c8157e0e9b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u10-2-2:w001",
+   "template_sha": "865262ad77efef2205a549066dfb728e26727f38c5d478679c77e0d1acac79b4",
+   "reading": {
+    "ask": "inscribed",
+    "target": 30
+   },
+   "construction": "Drag A, B (and C on the major arc) so the arc AB facing C is 60°; the displayed ∠ACB then reads 30° (2:1 ratio). Answer is the inscribed angle 30°.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "angle-given-as-arc",
+     "matches": false,
+     "why": "For ask=inscribed the kind can only emit arc-given-as-angle, other-arc, off-target; angle-given-as-arc belongs to ask=central, so it never fires for this question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w002",
+   "template_sha": "90922ac97b178e41308885b16767ac6084e70059b9a237ad729319cf40e5113c",
+   "reading": {
+    "ask": "central",
+    "target": 90
+   },
+   "construction": "Drag A and B so the arc AB facing C measures 90° (central angle 90°). The instrument then shows the inscribed angle ACB = 45°. 90 is a multiple of 5 within 10–350, so it is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "angle-given-as-arc",
+     "matches": false,
+     "why": "It fires if the student sets the arc to 180° (inscribed angle 90°), which means the student put the 90 on the angle. The question names the arc as 90°, so a student who thinks the inscribed angle equals its arc would set the arc to 90 correctly and be on target. The only way to fire is to misread which quantity was given, which is a different error from the claimed doubling/halving confusion."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w003",
+   "template_sha": "dcc96153220223a67d337d2ceaf7ac83549a9380e70f811116c42861c4a98768",
+   "reading": {
+    "ask": "central",
+    "target": 120
+   },
+   "construction": "Drag A and B so the arc AB facing C measures 120°; C on that arc then shows inscribed angle ACB = 60°.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "angle-given-as-arc",
+     "matches": false,
+     "why": "It is in the can_emit list for ask=central. It fires when the student sets 60 (the inscribed value) where the arc 120 was asked. That error is as likely a mix-up between the given arc and the angle to read as it is the doubled/halved misconception. A student who holds the claimed misconception, 'inscribed angle equals the arc', would set 120 here, which is correct, so the predicate does not reliably indicate it."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w004",
+   "template_sha": "7c521e073733c0028c68dd2fe17202c8d34505e2899d848cf3683c36f58bb159",
+   "reading": {
+    "ask": "inscribed",
+    "target": 70
+   },
+   "construction": "Drag A, B, C on the circle so the arc AB facing C is 140°. The angle ∠ACB then reads 70° (half the arc). Target 70 is a multiple of 5 and within 5–175, so it is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "angle-given-as-arc",
+     "matches": false,
+     "why": "The question asks for the inscribed angle (ask=inscribed), and the can_emit table for inscribed lists only arc-given-as-angle, other-arc and off-target. angle-given-as-arc belongs to the central case, so it never fires here."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w005",
+   "template_sha": "f0855918329c82dc7fac40a77167198d24e504b5dea7ac75bb6554eb43c1ad51",
+   "reading": {
+    "ask": "inscribed",
+    "target": 30
+   },
+   "construction": "Place A and B on the circle so the arc AB that C faces is 60° (central angle AOB = 60°, e.g. A at 0°, B at 60°). Put C on the major arc (the far side), e.g. at 210°. Then ∠ACB = 30°, matching the 2:1 ratio shown.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "arc-given-as-angle",
+     "matches": false,
+     "why": "It fires when the student sets the arc to 30° (so the inscribed angle reads 15°), or the angle to 60°. That is the 'angle equals arc' error, which is a different mistake from doubling the inscribed angle. A student who thinks the inscribed angle is twice its arc would build an arc of 15° and an angle of 60°, which doesn't fire the predicate. The predicate's own description ('gave the arc where the angle was asked') also doesn't match the misconception name 'doubled'. The mismatch is ambiguous enough that I mark it false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w006",
+   "template_sha": "d2ae06c1b457fc5515a629f73026c9c0dbac016ddbd8420d3f08cb8415e9674e",
+   "reading": {
+    "ask": "inscribed",
+    "target": 35
+   },
+   "construction": "Drag C to the major arc and set arc AB (the arc C faces) to 70°, e.g. A at 0°, B at 70°, C at about 200° on the circle. Then ∠ACB = 35°, which is a multiple of 5 within 5–175.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "arc-given-as-angle",
+     "matches": true,
+     "why": "It fires when the student sets the arc AB to 35° so the angle reads 17.5°, or sets the angle to 70°. The student has taken the inscribed angle to equal the arc, or twice it, which is the claimed misconception. The inscribed ask lists this predicate. It could also come from someone who simply confused the two readouts, but the construction fits the misconception well."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w007",
+   "template_sha": "dbeaa6be2e783ae4b2ec5d6aa5e0c9bd5347adb8ed8d386c618d5a621c7965d6",
+   "reading": {
+    "ask": "inscribed",
+    "target": 45
+   },
+   "construction": "Place A, B, C on circle M so that arc AB (the one C faces) is 90° and C lies on the major arc. E.g. A at 0°, B at 90° on the circle, C at 225° (opposite side). Then the central angle AMB = 90° and the inscribed angle ACB = 45°, which is a multiple of 5 within 5–175.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "arc-given-as-angle",
+     "matches": true,
+     "why": "Question asks for the inscribed angle 45°. The predicate fires when the student sets the arc AB to 45° (so the inscribed angle shows 22.5°) or the angle to 90°, i.e. treating the inscribed angle as equal to its arc or doubling it. That is exactly the 'inscribed angle equals arc / not halved' misconception, and it is the main way to get this wrong. It is listed for ask=inscribed."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w008",
+   "template_sha": "7bd1d1774e73a16311445c06c30efe85af46f2c2d7a3dddef2f497e17fdf59c5",
+   "reading": {
+    "ask": "inscribed",
+    "target": 55
+   },
+   "construction": "Drag A, B, C on circle M so arc AB (the one C faces) is 110° and C lies on the major arc; the display then shows ∠ACB = 55°. E.g. A at 0°, B at 110°, C at 250° on the circle. 55 is a multiple of 5 within 5–175, so it is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "arc-given-as-angle",
+     "matches": true,
+     "why": "The question asks for the inscribed angle, so the predicate is listed. It fires when the student makes the arc AB equal 55°, which gives an inscribed angle of 27.5° (shown as 25 or 30). That is the 'angle equals its arc' error, and it is the inscribed-angle-doubled misconception (inscribed angle taken as equal to its arc rather than half). The 'twice it' variant would give an arc of 27.5°, a different build. The main failure mode is the arc/angle confusion, so the diagnosis is reasonable."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w009",
+   "template_sha": "4786d18d3acb39af84dfa28da8e63c64c85c5ff7c6569f261f36f2b0537ef760",
+   "reading": {
+    "ask": "inscribed",
+    "target": 70
+   },
+   "construction": "Drag A, B and C on circle M so that the arc AB that C faces measures 140°. Then the inscribed angle ∠ACB reads 70°. For example, put A at 0°, B at 140° and C at 250° on the circle, which is on the major arc.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "arc-given-as-angle",
+     "matches": true,
+     "why": "The predicate fires when the student sets ∠ACB to 140°, the arc value, where 70° was asked for. A student who thinks the inscribed angle equals its arc, or twice it, builds exactly this. It is listed for ask=inscribed, and it matches the inscribed-angle-doubled misconception."
+    }
+   ]
+  }
+ ]
+}

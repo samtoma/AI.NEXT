@@ -1,0 +1,142 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "bdce1f05d7da10eb02e142e788dd92610181f9d28c48194f3471b49e3fd59a0f",
+  "generated_sha256": "78d8edd73cd5a307e0b54b5e68056fee8ac17941ec80c0f9caf9a97c58fdba45",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u8-1-1:w001",
+   "template_sha": "03549494dfdb772d44f98a5dd20e99a184412dfe6cbcf6efe1170f1e5dde671a",
+   "reading": {
+    "rows": 6,
+    "cols": 6,
+    "event": [
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "construction": "On the 6x6 grid select the six cells with first+second=7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1). n(E)=6, n(S)=36, P=6/36=1/6. Within limits (rows, cols 2-8; event nonempty).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "counted-once",
+     "matches": true,
+     "why": "A student who treats 'total 7' as a single outcome would select one cell (or one representative), so the grid shows one way where six exist. This is the misconception's signature build."
+    },
+    {
+     "predicate": "missed-outcomes",
+     "matches": false,
+     "why": "It fires for any incomplete selection, e.g. a student who treats (1,6) and (6,1) as the same and picks only three cells, or who just overlooks the diagonal. Those are order errors or carelessness, not the compound-outcome-counted-once misconception, so this predicate would mostly fire for other reasons."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-1-1:w002",
+   "template_sha": "2d1890eb2b733d2091cf0de7b5488b9602e201fb61e1c859a22ca9acd70d8e83",
+   "reading": {
+    "rows": 6,
+    "cols": 6,
+    "event": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      1
+     ]
+    ]
+   },
+   "construction": "Spec {\"rows\":6,\"cols\":6,\"rule\":{\"kind\":\"sum\",\"op\":\"eq\",\"value\":5}}. Select cells (1,4),(2,3),(3,2),(4,1). n(E)=4, n(S)=36, P=4/36=1/9. Within 6x6 limits, event non-empty.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "counted-once",
+     "matches": true,
+     "why": "A student who treats 'total of 5' as a single outcome selects one cell (or one per unordered pair), collapsing the several ordered ways into one. That is exactly this misconception, and the grid shows 4 ways."
+    },
+    {
+     "predicate": "missed-outcomes",
+     "matches": false,
+     "why": "It fires for any omitted cell, including slips, losing track while dragging, or forgetting reversed pairs. Those are not specific to the compound-outcome-counted-once belief, so it would mostly fire for other reasons and the diagnosis would be unjustified."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-1-1:w003",
+   "template_sha": "e53b4f2d28dbabd77c656cd692f4b11e99ffc437ecbd6f705da166de9bde5c76",
+   "reading": {
+    "rows": 6,
+    "cols": 6,
+    "event": [
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      3
+     ]
+    ]
+   },
+   "construction": "Grid 6x6, rule {kind:sum, op:eq, value:9}. Select cells (3,6),(4,5),(5,4),(6,3); n(E)=4, n(S)=36, P=4/36=1/9.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "counted-once",
+     "matches": true,
+     "why": "A student who treats 'total 9' as a single outcome selects one cell, or one per unordered pair, instead of all four ordered pairs. That is the compound-outcome-counted-once error, so the predicate fits."
+    },
+    {
+     "predicate": "missed-outcomes",
+     "matches": false,
+     "why": "It fires for any incomplete selection, such as forgetting a mirrored pair or a slip. That is mostly not the compound-outcome-counted-once misconception, so the diagnosis is too generic."
+    }
+   ]
+  }
+ ]
+}

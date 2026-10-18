@@ -1,0 +1,76 @@
+{
+ "stage": "S1-links",
+ "workflow": "links",
+ "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "book": "prep3-parallel",
+ "chapter": 3,
+ "embedded": {
+  "source": "runbook/links.workflow.js",
+  "source_sha256": "abfeacd9dd81e88e7a72841bb7eb0f05f75e2f10158602cf023d8fb153ec56d3",
+  "args_sha256": "f1a72a044a10f8a0b7750d4fa4cbc4e61c7088d08ed025f61a096b1cdfd80f5e",
+  "generated_sha256": "a98beb1638ba6d8844fbfca791e1ee33e4a7d2a7d2d5ea1f4158edb758677420",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 22,
+  "proposed": [
+   {
+    "src": "lo:pp3u3-2-2",
+    "dst": "lo:pp3u3-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 44,
+      "quote": "The standard variation"
+     }
+    ],
+    "reason": "The frequency-distribution standard deviation extends the squared-deviation method for a plain set."
+   },
+   {
+    "src": "lo:pp3u3-2-3",
+    "dst": "lo:pp3u3-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u3-2:exercise-2",
+      "printed_page": 47,
+      "quote": "Find the mean and standard deviation for both frequency distributions."
+     },
+     {
+      "kind": "exercise",
+      "anchor": "pp3u3-2:exercise-3",
+      "printed_page": 47,
+      "quote": "Which class is more homogeneous in getting marks?"
+     }
+    ],
+    "reason": "Deciding which class is more homogeneous requires computing the grouped mean and standard deviation first."
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u3-2-1",
+    "anchor": "pp3u3-2:prior-knowledge-1",
+    "printed_page": 41,
+    "quote": "You have previously learned the central tendency (mean - domain - mode)"
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "UNCLEAR",
+     "note": "The example computes the mean and the standard deviation of a frequency distribution. It uses the formula with squared deviations from the mean, but it does not recall or refer back to the ungrouped standard deviation objective. The quote 'The standard variation' only names the formula. The dependency is plausible but not shown explicitly."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Exercise 2 asks students to find the mean and standard deviation of both frequency distributions. Exercise 3 then asks which class is more homogeneous. This uses the dst-objective's computation as a step toward the comparison."
+    }
+   ]
+  }
+ }
+}
