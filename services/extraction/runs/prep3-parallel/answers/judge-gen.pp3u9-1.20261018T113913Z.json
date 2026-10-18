@@ -1,0 +1,57 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "952695d626b913f9209436b51970072cf7ebfa5dcf880b4bbce74484d9ac4458",
+  "generated_sha256": "6a6e350b40b00166fabadc93c1edfd08514ba7bfc1c383186facc2ffaaf2714a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u9-1:drill-1:3",
+    "verdict": "equivalent",
+    "reason": "Both say M belongs to the interior/surface of circle M."
+   },
+   {
+    "ref": "pp3u9-1:drill-4",
+    "verdict": "equivalent",
+    "reason": "Both say infinitely many."
+   },
+   {
+    "ref": "pp3u9-1:drill-5",
+    "verdict": "equivalent",
+    "reason": "Same blanks: AC, BM, AC, AC."
+   },
+   {
+    "ref": "pp3u9-1:exercise-4",
+    "verdict": "equivalent",
+    "reason": "Same: 2r, 2πr, πr²."
+   },
+   {
+    "ref": "pp3u9-1:exercise-5:d",
+    "verdict": "different",
+    "reason": "X=110,Y=35 vs X=35,Y=72.5."
+   },
+   {
+    "ref": "pp3u9-1:exercise-5:f",
+    "verdict": "different",
+    "reason": "Y=90 vs Y=40."
+   },
+   {
+    "ref": "pp3u9-1:think-1",
+    "verdict": "equivalent",
+    "reason": "Both say infinitely many."
+   },
+   {
+    "ref": "pp3u9-1:drill-10",
+    "verdict": "equivalent",
+    "reason": "Both give 2 cm or 14 cm, with another answer existing."
+   }
+  ]
+ }
+}

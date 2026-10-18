@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "ed66bd1b47e67dcae371c4cc9334899642004489f56af78a7ae0eed63ed70b23",
+  "generated_sha256": "672dc31613749d578cc4bd9b808adde82a29fb31b0a4ff905e943c5aeac131d1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u5-3:drill-1:A",
+    "verdict": "equivalent",
+    "reason": "Both give tan30° = 1/√3 (=√3/3)."
+   },
+   {
+    "ref": "pp3u5-3:drill-2:A",
+    "verdict": "different",
+    "reason": "arctan(0.3673) ≈ 20°10'5.8\", which rounds to 6\", not 7\"; the two seconds values differ."
+   },
+   {
+    "ref": "pp3u5-3:think-and-discuss-3",
+    "verdict": "equivalent",
+    "reason": "Both answer that tan E1 = tan E2."
+   },
+   {
+    "ref": "pp3u5-3:think-and-discuss-4",
+    "verdict": "equivalent",
+    "reason": "Both answer that m1 = m2."
+   }
+  ]
+ }
+}

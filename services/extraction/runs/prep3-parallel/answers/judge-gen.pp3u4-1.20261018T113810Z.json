@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "04a1f19fa46858cee8781f7d7dc7cc31c56ad9140872e78224e9b570c9376711",
+  "generated_sha256": "d4dfceadfd32f4c0b597b7f629c328a3a149dbf8fccd8bf29b5dbad1ca8a30e0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u4-1:drill-1:A",
+    "verdict": "equivalent",
+    "reason": "Both give 76.2667°."
+   },
+   {
+    "ref": "pp3u4-1:drill-1:B",
+    "verdict": "equivalent",
+    "reason": "Both give 45.0656°."
+   },
+   {
+    "ref": "pp3u4-1:drill-1:C",
+    "verdict": "equivalent",
+    "reason": "Both give 85.6356°."
+   },
+   {
+    "ref": "pp3u4-1:drill-1:D",
+    "verdict": "equivalent",
+    "reason": "Both give 65.4453°."
+   },
+   {
+    "ref": "pp3u4-1:drill-3:First",
+    "verdict": "equivalent",
+    "reason": "Both give sin = 3/5, cos = 4/5, tan = 3/4."
+   }
+  ]
+ }
+}

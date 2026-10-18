@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "9ebc135e976030893cada237ca50bc5ce632350621e6fc3b4785c986052e2eea",
+  "generated_sha256": "c9e50e557dd3fb2a47b1b8666ce146dc60351f9507ddb2fa8f05fc6557cda1bc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u10-6:drill-5",
+    "verdict": "different",
+    "reason": "First says 4 cyclic quadrilaterals (including XYNM); second says 3, omitting XYNM."
+   },
+   {
+    "ref": "pp3u10-6:drill-7:3",
+    "verdict": "different",
+    "reason": "Values differ: x=4,y=3 vs x=6,y=1."
+   }
+  ]
+ }
+}

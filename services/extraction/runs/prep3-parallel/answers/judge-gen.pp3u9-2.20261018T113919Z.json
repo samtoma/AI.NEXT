@@ -1,0 +1,77 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "5bdf137d4df41ef76d85a98db7f1d2745f2772c6901a9d22f1a6bbd53d3d4fa4",
+  "generated_sha256": "40d300c96fc8a08a3f23503e93531cc17691b70679f523c9bd8c2823ec893514",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u9-2:drill-1:1",
+    "verdict": "equivalent",
+    "reason": "Both: on, MA = r."
+   },
+   {
+    "ref": "pp3u9-2:drill-1:2",
+    "verdict": "equivalent",
+    "reason": "Both: inside, MA < r."
+   },
+   {
+    "ref": "pp3u9-2:drill-1:3",
+    "verdict": "equivalent",
+    "reason": "Both: outside, MA > r."
+   },
+   {
+    "ref": "pp3u9-2:drill-1:4",
+    "verdict": "equivalent",
+    "reason": "Both: inside, represented by the centre M."
+   },
+   {
+    "ref": "pp3u9-2:drill-2:2",
+    "verdict": "different",
+    "reason": "Second adds lower bound 27/8 < x; first only x < 4."
+   },
+   {
+    "ref": "pp3u9-2:think-1",
+    "verdict": "equivalent",
+    "reason": "Same three intersections: empty, segment CD, {A}."
+   },
+   {
+    "ref": "pp3u9-2:drill-3:1",
+    "verdict": "equivalent",
+    "reason": "Both: secant."
+   },
+   {
+    "ref": "pp3u9-2:drill-3:2",
+    "verdict": "different",
+    "reason": "First says outside; second says secant (3√7=√63<7, so secant is correct)."
+   },
+   {
+    "ref": "pp3u9-2:drill-3:3",
+    "verdict": "equivalent",
+    "reason": "Both: tangent (MA=7)."
+   },
+   {
+    "ref": "pp3u9-2:drill-3:4",
+    "verdict": "different",
+    "reason": "First gives only X<4; second gives a bounded interval with lower bound 5/3."
+   },
+   {
+    "ref": "pp3u9-2:drill-6:1",
+    "verdict": "equivalent",
+    "reason": "Both give empty sets for both."
+   },
+   {
+    "ref": "pp3u9-2:drill-9",
+    "verdict": "equivalent",
+    "reason": "Both AB = 9.6 cm."
+   }
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "071e5d0190b9d26f8adaab812176ec57cc90198bd793e79017842f34edc7fd50",
+  "generated_sha256": "e8b50750a912209dcd46758aca37d233f2bd75455b2689a1d28ded7b49495dab",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u6-1:drill-1",
+    "verdict": "equivalent",
+    "reason": "Both give {(-1,2)} for part 1 and {(1,2)} for part 2."
+   },
+   {
+    "ref": "pp3u6-1:drill-2:2",
+    "verdict": "equivalent",
+    "reason": "Both say infinitely many solutions, {(x,y): y=4-2x}."
+   },
+   {
+    "ref": "pp3u6-1:drill-4:C",
+    "verdict": "equivalent",
+    "reason": "Both say infinitely many solutions."
+   }
+  ]
+ }
+}

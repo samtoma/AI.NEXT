@@ -442,7 +442,14 @@
         "resolve_answer": "3 cyclic quadrilaterals: CDMA (∠D = ∠CAM = 90°), CENA (∠E = ∠CAN = 90°), and CXAY (∠CXA = ∠CYA = 90°).",
         "resolve_kind": "explanation",
         "numeric_flags": [],
-        "agree": false
+        "agree": false,
+        "judge": {
+          "ref": "pp3u10-6:drill-5",
+          "verdict": "different",
+          "reason": "First says 4 cyclic quadrilaterals (including XYNM); second says 3, omitting XYNM.",
+          "model": "sonnet",
+          "at": "2026-10-18T11:38:05+00:00"
+        }
       },
       "status": "disagreed",
       "made": {
@@ -638,7 +645,14 @@
         "resolve_answer": "x = 6, y = 1",
         "resolve_kind": "value",
         "numeric_flags": [],
-        "agree": false
+        "agree": false,
+        "judge": {
+          "ref": "pp3u10-6:drill-7:3",
+          "verdict": "different",
+          "reason": "Values differ: x=4,y=3 vs x=6,y=1.",
+          "model": "sonnet",
+          "at": "2026-10-18T11:38:05+00:00"
+        }
       },
       "status": "disagreed",
       "made": {
@@ -756,9 +770,14 @@
         "resolve_answer": "40 cm",
         "resolve_kind": "value",
         "numeric_flags": [],
-        "agree": false
+        "agree": true,
+        "rejudged": {
+          "from": "disagreed",
+          "by": "same-answer-v2",
+          "at": "2026-10-18T11:16:03+00:00"
+        }
       },
-      "status": "disagreed",
+      "status": "agreed",
       "made": {
         "at": "2026-10-18T08:01:10+00:00",
         "model": "sonnet",

@@ -430,9 +430,16 @@
         "resolve_answer": "√13 + 2√13 = 3√13",
         "resolve_kind": "value",
         "numeric_flags": [],
-        "agree": false
+        "agree": false,
+        "judge": {
+          "ref": "pp3u5-1:drill-2:AB + BC",
+          "verdict": "equivalent",
+          "reason": "Both give √13 + 2√13 = 3√13; the second just omits the 'AB + BC =' prefix.",
+          "model": "sonnet",
+          "at": "2026-10-18T11:38:25+00:00"
+        }
       },
-      "status": "disagreed",
+      "status": "agreed",
       "made": {
         "at": "2026-10-18T06:49:16+00:00",
         "model": "sonnet",
@@ -466,9 +473,14 @@
         "resolve_answer": "BC (AB + BC = AC)",
         "resolve_kind": "value",
         "numeric_flags": [],
-        "agree": false
+        "agree": true,
+        "rejudged": {
+          "from": "disagreed",
+          "by": "same-answer-v2",
+          "at": "2026-10-18T11:28:38+00:00"
+        }
       },
-      "status": "disagreed",
+      "status": "agreed",
       "made": {
         "at": "2026-10-18T06:49:16+00:00",
         "model": "sonnet",

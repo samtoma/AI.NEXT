@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "34cf8442c78a23b74b156f9826f6ad9da95e119621420f7bfac857433c1faea6",
+  "generated_sha256": "3e26ba3097949ffa8f14e0a2e6282239966ddd7edbadc09d25a5d5fda22484a3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u9-4:drill-1:1",
+    "verdict": "equivalent",
+    "reason": "Both give <."
+   },
+   {
+    "ref": "pp3u9-4:drill-1:2",
+    "verdict": "equivalent",
+    "reason": "Both give <."
+   },
+   {
+    "ref": "pp3u9-4:drill-1:3",
+    "verdict": "equivalent",
+    "reason": "Both give =."
+   },
+   {
+    "ref": "pp3u9-4:exercise-5:circles",
+    "verdict": "equivalent",
+    "reason": "Both say the circles are congruent."
+   }
+  ]
+ }
+}

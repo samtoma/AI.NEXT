@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "f232f009f070408d013ee73621df6fefd695b721b7297a7bb0833c7351699872",
+  "generated_sha256": "3a4e91b9d59dee884f0e8d870c3cf74e63503bf979cf70f53bdc38ca013ee237",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u10-1:drill-1:2",
+    "verdict": "equivalent",
+    "reason": "Both give 100°."
+   },
+   {
+    "ref": "pp3u10-1:drill-3:In the minor circle 2",
+    "verdict": "equivalent",
+    "reason": "Both give radius 7 and length 55/9 ≈ 6.11 cm."
+   },
+   {
+    "ref": "pp3u10-1:drill-4",
+    "verdict": "equivalent",
+    "reason": "Both name arcs AB and CD."
+   },
+   {
+    "ref": "pp3u10-1:drill-5",
+    "verdict": "equivalent",
+    "reason": "Both name arcs AB and CD."
+   }
+  ]
+ }
+}

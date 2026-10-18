@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "1d8332443860713b27aeaf71916175282b90d76e00975b41c387a48d45eac695",
+  "generated_sha256": "46ed95c9d40b60d13826946e833e2748a11859de930421f2c051f0bf4867debf",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u7-1:drill-1:c",
+    "verdict": "equivalent",
+    "reason": "Same set {1+√2, 1-√2}, order differs."
+   },
+   {
+    "ref": "pp3u7-1:drill-1:f",
+    "verdict": "equivalent",
+    "reason": "Same set {√2, -√2}, order differs."
+   }
+  ]
+ }
+}

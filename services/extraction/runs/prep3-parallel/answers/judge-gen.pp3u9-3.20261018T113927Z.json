@@ -1,0 +1,52 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "2c1b04392de13944f67228fa16968145e57b00e0120eb489daad9dfcd525b995",
+  "generated_sha256": "50921253287d91725d5fc6558e8138e7345262c7f0c49a848bcb133842b2c0ea",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u9-3:think-1",
+    "verdict": "equivalent",
+    "reason": "Both: infinitely many points and infinitely many circles."
+   },
+   {
+    "ref": "pp3u9-3:think-2",
+    "verdict": "equivalent",
+    "reason": "Both: centers on a circle centered at A with the same radius."
+   },
+   {
+    "ref": "pp3u9-3:drill-1",
+    "verdict": "equivalent",
+    "reason": "Both: infinitely many circles."
+   },
+   {
+    "ref": "pp3u9-3:think-3",
+    "verdict": "equivalent",
+    "reason": "Both: infinitely many points on L and infinitely many circles through A and B."
+   },
+   {
+    "ref": "pp3u9-3:drill-2:1",
+    "verdict": "equivalent",
+    "reason": "Both give 2 circles."
+   },
+   {
+    "ref": "pp3u9-3:drill-2:2",
+    "verdict": "equivalent",
+    "reason": "Both give one circle with AB as diameter."
+   },
+   {
+    "ref": "pp3u9-3:drill-2:3",
+    "verdict": "equivalent",
+    "reason": "Both: no circle possible."
+   }
+  ]
+ }
+}

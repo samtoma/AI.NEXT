@@ -135,7 +135,27 @@
       "type": "prerequisite_of"
     }
   ],
-  "questions": [],
+  "questions": [
+    {
+      "id": "q:pp3u3-2-4:bk-exercise-3",
+      "lo": "lo:pp3u3-2-4",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Which class is more homogeneous in getting marks?",
+      "answer": "Class A",
+      "solution": [
+        "Both classes have mean 30.",
+        "σ of A ≈ 10.724; σ of B ≈ 10.954.",
+        "The set with the larger standard deviation is more dispersed.",
+        "A has the smaller standard deviation, so it is more homogeneous.",
+        "Answer: Class A."
+      ],
+      "source_page": 47,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u3-2:exercise-3, printed p.47); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    }
+  ],
   "visuals": [],
   "explanation_entries": [
     {
@@ -259,6 +279,43 @@
       "generated_by": "book (book_worked: pp3u3-2:example-2, printed p.44); compile_book_records.py compile-v3"
     },
     {
+      "id": "expl:pp3u3-2-3:bk-drill-1",
+      "lo": "lo:pp3u3-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The following frequency distribution shows the goals scored in a number of football matches (table). Find the standard deviation for the numbers of goals."
+        },
+        {
+          "step": 1,
+          "text_md": "Σk = 1+4+6+9+5+3+2 = 30."
+        },
+        {
+          "step": 2,
+          "text_md": "Σxk = 0+4+12+27+20+15+12 = 90, so the mean = 90/30 = 3."
+        },
+        {
+          "step": 3,
+          "text_md": "Deviations x − 3: −3, −2, −1, 0, 1, 2, 3. Squares: 9, 4, 1, 0, 1, 4, 9."
+        },
+        {
+          "step": 4,
+          "text_md": "Multiply by k: 9, 16, 6, 0, 5, 12, 18. Σ(x−x̄)²k = 66."
+        },
+        {
+          "step": 5,
+          "text_md": "σ = √(66/30) = √2.2 ≈ 1.483."
+        },
+        {
+          "step": 6,
+          "text_md": "The standard deviation is about 1.483 goals."
+        }
+      ],
+      "source_page": 45,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
       "id": "expl:pp3u3-2-3:bk-example-3",
       "lo": "lo:pp3u3-2-3",
       "entry_type": "worked_example",
@@ -294,6 +351,63 @@
       ],
       "source_page": 45,
       "generated_by": "book (book_worked: pp3u3-2:example-3, printed p.45); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u3-2-3:bk-exercise-2",
+      "lo": "lo:pp3u3-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the mean and standard deviation for both frequency distributions."
+        },
+        {
+          "step": 1,
+          "text_md": "Centres of sets: 5, 15, 25, 35, 45."
+        },
+        {
+          "step": 2,
+          "text_md": "Class A frequencies 2, 5, 11, 15, 7; Σk = 40."
+        },
+        {
+          "step": 3,
+          "text_md": "Σxk = 10+75+275+525+315 = 1200, so mean = 1200/40 = 30."
+        },
+        {
+          "step": 4,
+          "text_md": "x - mean: -25, -15, -5, 5, 15; squares: 625, 225, 25, 25, 225."
+        },
+        {
+          "step": 5,
+          "text_md": "Multiply by k: 1250, 1125, 275, 375, 1575; sum = 4600."
+        },
+        {
+          "step": 6,
+          "text_md": "σ = √(4600/40) = √115 ≈ 10.724."
+        },
+        {
+          "step": 7,
+          "text_md": "Class B frequencies 2, 3, 18, 7, 10; Σk = 40."
+        },
+        {
+          "step": 8,
+          "text_md": "Σxk = 10+45+450+245+450 = 1200, so mean = 30."
+        },
+        {
+          "step": 9,
+          "text_md": "Squares × k: 1250, 675, 450, 175, 2250; sum = 4800."
+        },
+        {
+          "step": 10,
+          "text_md": "σ = √(4800/40) = √120 ≈ 10.954."
+        },
+        {
+          "step": 11,
+          "text_md": "Answer: both means are 30; σ(A) ≈ 10.724, σ(B) ≈ 10.954."
+        }
+      ],
+      "source_page": 47,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
     }
   ],
   "external_node_refs": [

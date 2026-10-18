@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "1490f9001cd9fe02d4043715f23cfd52f40487ed8497b48030fda880e8556376",
+  "generated_sha256": "37ee264d319c9b73a2adff2a6eb212e2b552eb7dfd83f7097d97f12d784c6506",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u7-4:think-and-discuss-1",
+    "verdict": "equivalent",
+    "reason": "Same sum and difference formulas, b ≠ 0."
+   },
+   {
+    "ref": "pp3u7-4:think-and-discuss-2",
+    "verdict": "equivalent",
+    "reason": "Same formulas (cb = bc), with b, d ≠ 0."
+   },
+   {
+    "ref": "pp3u7-4:drill-10",
+    "verdict": "equivalent",
+    "reason": "(4-x)/((1-x)(1+x)) equals (x-4)/((x-1)(x+1)), and both give the domain R - {-1, 1}."
+   },
+   {
+    "ref": "pp3u7-4:drill-14",
+    "verdict": "equivalent",
+    "reason": "Both give n(x) = 1 with domain R - {-3, -1, 1}."
+   }
+  ]
+ }
+}

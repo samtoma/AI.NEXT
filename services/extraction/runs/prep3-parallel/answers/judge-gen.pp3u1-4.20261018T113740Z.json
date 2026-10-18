@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "f109f65f93c6068beb418856bfc2956c2c3747a87001851b92ed795235939f4a",
+  "generated_sha256": "0fe575b2da7cc42db50b1e1f2fd762c49102e1918494039d8c0039b9c420e9da",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u1-4:drill-1:D",
+    "verdict": "different",
+    "reason": "First says it is a polynomial (Yes); second says it is not (No), so the conclusions conflict."
+   }
+  ]
+ }
+}
