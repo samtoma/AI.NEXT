@@ -503,6 +503,11 @@ def main(argv: list[str]) -> int:
         run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(a.book)], a.cap, f"s7-{mode}", a.book, "widgets", stage="S7")
         if mode == "author":
             merge_author(a.book, a.lessons, run)
+        else:   # the verified templates' predicate mappings, for S5's final pass (Samuel's runbook §4: S7 offers S5
+            # the misconceptions its widgets diagnose; without them S5 drops those entries and every widget mapping
+            # names a misconception S5 did not keep). Written from the S5 DRAFT the templates were authored against.
+            out = HERE / "work" / a.book / "unit-view" / a.lessons[0] / "widgets-verified.json"
+            gw(*common, "--verdicts", str(run), "--s5-distractors", str(runs / "s5-distractors.json"), "--out", str(out))
         return 0
     if a.cmd == "s6-author":
         import fanout  # noqa: PLC0415  (write_specs: the fan-out's own spec writer)

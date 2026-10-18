@@ -222,8 +222,9 @@ def in_lessons(lo: str, slugs: list[str]) -> bool:
 
 
 # ============================================================================ marking, with what the app has
-def answer_type(ans: str):
-    """(type, choices, answer) the app can mark today, or None. Deterministic: no model."""
+def answer_type(ans: str, marker_kinds: bool = True):
+    """(type, choices, answer) the app can mark today, or None. Deterministic: no model. `marker_kinds=False` keeps
+    to the forms typed before the marker kinds were added (a worked example: Tamer, 2026-10-18, no change for them)."""
     a = str(ans or "").replace("$", "").strip().rstrip(".")
     a = re.sub(r"\\[,;! ]", " ", a).replace("−", "-").replace("\\{", "{").replace("\\}", "}")
     a = re.sub(r"\s+", " ", a).strip()
@@ -255,6 +256,76 @@ def answer_type(ans: str):
         return "short", None, yn.group(1).capitalize()
     if re.fullmatch(r"[A-Za-z][A-Za-z\- ]{0,40}", a) and len(a.split()) <= 4:
         return "short", None, a
+    return marker_type(a) if marker_kinds else None
+
+
+# The app's marker reads more than the forms above (answer-marker.ts MARKER_KINDS): an expression, an equation, a surd,
+# an interval or a set of real numbers, and values with names. Tamer, 2026-10-18: "extend compile's answer typer to the
+# app marker's expression, equation, surd and interval kinds and sets with named elements". Each key is proposed here
+# and kept only when the app's own marker reads it and marks it correct (marker_check.mjs, the check compile runs on
+# every key); otherwise the answer stays as before: not markable, kept as a worked example. Not proposed: an angle in
+# degrees, minutes and seconds, and a ratio (a : b : c), which no marker kind marks as the book means them.
+SQRT = re.compile(r"√\s*(\d+(?:\.\d+)?|[A-Za-z]|\([^()]*\))")
+LETTER = re.compile(r"(?<![A-Za-z\\])[a-zA-Z](?![A-Za-z])")
+
+
+def _latex(a: str) -> str:
+    a = SQRT.sub(lambda m: "\\sqrt{" + m.group(1).strip("()") + "}", a)
+    return a.replace("×", "\\times ").replace("÷", "\\div ").replace("·", "\\cdot ")
+
+
+def _letters(a: str) -> list[str]:
+    bare = re.sub(r"\\[a-zA-Z]+", " ", a)
+    return sorted(set(LETTER.findall(bare)))
+
+
+_KEY_OK: dict[str, bool] = {}
+
+
+def _reads(spec: dict) -> bool:
+    """The app's marker reads this key and marks it correct (marker_check.mjs, one row)."""
+    k = json.dumps(spec, sort_keys=True)
+    if k not in _KEY_OK:
+        _KEY_OK[k] = not marker_check([{"id": "q:typer", "choices": {"marker": spec}}])
+    return _KEY_OK[k]
+
+
+def marker_type(a: str):
+    if re.search(r"°|'|:|\b(?:is|are|so|because|than|the|and then)\b", a):   # degrees, ratios, sentences
+        return None
+    cands = []
+    # R − {0, −1}: the reals but some values, as the interval kind's restrictions
+    m = re.fullmatch(r"(?:\\mathbb\{R\}|R|ℝ)\s*(?:-|\\setminus|\\backslash)\s*\{([^{}]*)\}", a)
+    if m:
+        vals = [v.strip() for v in m.group(1).split(",") if v.strip()]
+        if vals:
+            cands.append({"kind": "interval", "key": " and ".join(f"x != {_latex(v)}" for v in vals), "variables": ["x"]})
+    # x = 3 or x = 1: named values, any order
+    named = re.findall(rf"\b([a-zA-Z])\s*=\s*([^,;=]+?)(?=\s*(?:,|;|\bor\b|\band\b|$))", a)
+    if named and re.sub(rf"\b[a-zA-Z]\s*=\s*[^,;=]+?(?=\s*(?:,|;|\bor\b|\band\b|$))|[,;\s]|\bor\b|\band\b", "", a) == "":
+        cands.append({"kind": "values", "key": ", ".join(f"{v} = {_latex(x.strip())}" for v, x in named),
+                      "variables": sorted({v for v, _ in named})})
+    # a set whose elements are names or pairs of names: {(a, Science), (b, History)}
+    body = re.sub(r"^[A-Za-z]\w*(?:\s*[×x]\s*[A-Za-z]\w*)?\s*=\s*", "", a)
+    if re.fullmatch(r"\{.*\}", body):
+        elems = re.findall(r"\([^()]*\)|[^{},()\s][^{},()]*", body[1:-1])
+        names = sorted({w for e in elems for w in re.findall(r"[A-Za-z]\w*", re.sub(r"\\[a-zA-Z]+", " ", e))})
+        if elems:
+            key = "\\{" + ", ".join(re.sub(r"\s*,\s*", ", ", e.strip()) for e in elems) + "\\}"
+            cands.append({"kind": "values", "key": key, "variables": names})
+    if a.count("=") == 1 and _letters(a):
+        cands.append({"kind": "equation", "key": _latex(a), "variables": _letters(a)})
+    if "=" not in a and _letters(a) and re.search(r"[+\-*/^()]|\\frac|√|\d", a):
+        cands.append({"kind": "expression", "key": _latex(a), "variables": _letters(a)})
+    if "=" not in a and not _letters(re.sub(r"\\sqrt|\\frac", "", a)) and ("√" in a or "\\sqrt" in a):
+        cands.append({"kind": "surd", "key": _latex(a)})
+    if "=" not in a and not _letters(re.sub(r"\\frac", "", a)) and re.search(r"\d", a) and re.search(r"/|\\frac", a):
+        cands.append({"kind": "expression", "key": _latex(a), "variables": []})
+    for spec in cands:   # a variable the bundle schema refuses (a word such as "Science") cannot be keyed at all
+        if any(not schemas._VARIABLE_RE.match(v) for v in spec.get("variables") or []):
+            continue
+        if _reads(spec):
+            return "short", {"marker": spec}, spec["key"]
     return None
 
 
@@ -535,7 +606,7 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             else:
                 skipped.append({"ref": ref, "why": "no usable answer yet (none printed; the generated one is not approved or not agreed)"})
                 continue
-            typed = answer_type(ans) if ans else None
+            typed = answer_type(ans, marker_kinds=r["type"] != "worked_example") if ans else None
             if not typed:
                 # a worked example the book solves, or an answer a person approved / two readings agreed on, that the
                 # app cannot mark: the tutor still teaches from it, as a worked example in the library

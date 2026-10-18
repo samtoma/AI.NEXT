@@ -1688,8 +1688,10 @@ async function showObjective(row) {
       <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul>${(it.evidence_dropped || []).length ? `<span class="label">Evidence the checks dropped</span><ul class="answers">${evList(it.evidence_dropped)}</ul>` : ""}</div>
       <div class="why"><span class="label">Items filed here</span><div class="muted">${[...(it.worked_examples || []), ...(it.exercise_items || [])].map(esc).join(" · ") || "none"}</div></div>`;
   } else if (d.kind === "link") {
-    body = `<div class="${it.kept_by_s1 ? "gen" : "warn"}"><span class="label">${it.kept_by_s1 ? "Link S1's checker confirmed" : "Link S1 dropped"}</span>
+    body = `<div class="${it.kept_by_s1 ? "gen" : "warn"}"><span class="label">${it.cross ? "Link into an earlier unit, S1's checker confirmed" : it.kept_by_s1 ? "Link S1's checker confirmed" : "Link S1 dropped"}</span>
         <div style="font-size:17px;margin-top:4px"><b>${esc(String(it.src || it.key).replace(/lo:/g, ""))}</b>${it.dst ? ` is needed for <b>${esc(it.dst.replace("lo:", ""))}</b>` : ""}</div>
+        ${it.src_statement ? `<div style="margin-top:4px"><b>${esc(it.src.replace("lo:", ""))}</b>: ${md(it.src_statement)}</div>` : ""}
+        ${it.dst_statement ? `<div><b>${esc(it.dst.replace("lo:", ""))}</b>: ${md(it.dst_statement)}</div>` : ""}
         <div class="muted">${esc(it.signal || "")}${it.why ? ` · ${esc(it.why)}` : ""}${it.check ? ` · checker: ${esc(it.check.verdict || "")} ${esc(it.check.note || "")}` : ""}</div></div>
       <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul></div>`;
   } else if (d.kind === "filing") {

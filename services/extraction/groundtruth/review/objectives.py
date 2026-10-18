@@ -9,7 +9,8 @@ kinds of item:
              mappers filed under it, the finders' agreement, and any check it fails (Samuel's rule 1: two kinds of
              evidence, one of them a worked example or exercise). approve | fix_requested (with the statement or label
              to use, or a note) | reject.
-  link       each prerequisite link the checker confirmed (and each it dropped, so a person can restore one), with its
+  link       each prerequisite link the checker confirmed (and, after G1, each link into an earlier unit:
+             book_record_links.py, teaching/<book>/cross-links/; `book_record_links.py apply` writes those kept) (and each it dropped, so a person can restore one), with its
              evidence. keep | drop.
   question   each decision S1 says G1 owes (a term not in the book's vocabulary, an objective no item practises):
              the reviewer's answer, as text.
@@ -60,6 +61,12 @@ def _items(book: str) -> list[dict]:
         for q in d.get("decisions") or []:
             out.append({"kind": "question", "ref": q["key"], "chapter": ch, "lesson": f"ch{ch}", "item": q,
                         "fingerprint": "q:" + q["key"] + ":" + str(q.get("detail"))})
+    # after G1: links into earlier units, from Samuel's linker and checker run alone (book_record_links.py)
+    for f in sorted((TEACHING / book / "cross-links").glob("ch*.json")) if (TEACHING / book / "cross-links").is_dir() else []:
+        d = json.loads(f.read_text())
+        for k in d.get("links") or []:
+            out.append({"kind": "link", "ref": k["key"], "chapter": d.get("chapter"), "lesson": k["dst"].removeprefix("lo:").rsplit("-", 1)[0],
+                        "item": {**k, "kept_by_s1": True}, "fingerprint": k["fingerprint"]})
     # after G1: the statements, tables and figures the two filing readings disagreed on (book_record_filing.py)
     for f in sorted((TEACHING / book / "filing").glob("ch*.json")) if (TEACHING / book / "filing").is_dir() else []:
         d = json.loads(f.read_text())
@@ -94,7 +101,7 @@ def summary(book: str) -> list[dict]:
     for r in _items(book):
         it = r["item"]
         title = {"objective": lambda: f"{r['ref'].removeprefix('lo:')} · {it.get('label') or ''}",
-                 "link": lambda: f"{it.get('src', '').removeprefix('lo:')} → {it.get('dst', '').removeprefix('lo:')}" if it.get("src")
+                 "link": lambda: f"{it.get('src', '').removeprefix('lo:')} → {it.get('dst', '').removeprefix('lo:')}{' · from an earlier unit' if it.get('cross') else ''}" if it.get("src")
                  else r["ref"].replace("lo:", ""),
                  "question": lambda: f"{it.get('kind')} · {str(it.get('key', '')).split(':', 1)[-1]}",
                  "filing": lambda: f"{r['ref'].split(':', 1)[-1]} · {it.get('type')}"}[r["kind"]]()

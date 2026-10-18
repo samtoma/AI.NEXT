@@ -95,6 +95,12 @@ def lesson_packet(book: str, slug: str, lmap: dict) -> dict:
             "printed_pages": rec["lesson"].get("pages"), "blocks": blocks, "worked_examples": wes, "items": items}
 
 
+def prior_objectives(book_name: str, chapter: int) -> list[dict]:
+    """Every earlier unit's objectives as G1 approved them ([{id, statement, lesson}], book order)."""
+    import book_record_links as BL  # noqa: PLC0415
+    return BL.prior_objectives(book_name, chapter)
+
+
 def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
     book = book_config.load_book(book_name)
     lmap = json.loads((HERE / "book-records" / book_name / "lessons.json").read_text())
@@ -112,7 +118,9 @@ def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
     return {"book": {"book": book.book, "course_id": book.course_id, "language": book.language,
                      "objectives_mode": "derived", "id_prefixes": book.id_prefixes},
             "stage": "S1", "chapter": packet, "packet_sha256": AO.packet_sha(packet), "teacher_only_dropped": 0,
-            "prior_objectives": [], "options": {"second_mapper": True, "pool_batch": 60, "links": True},
+            # the earlier units' objectives approved at G1: the only other ids Samuel's linker may start a link at
+            # (Tamer, 2026-10-18: with none, no link could cross a unit; book_record_links.py adds them after G1)
+            "prior_objectives": prior_objectives(book_name, chapter), "options": {"second_mapper": True, "pool_batch": 60, "links": True},
             "source": "book records (book_record_objectives.py)"}
 
 
@@ -294,6 +302,8 @@ def apply(book: str, chapter: int, dry_run: bool = False) -> dict:
             if src in new_id and dst in new_id:
                 links.append({"src": new_id[src], "dst": new_id[dst], "signal": None, "evidence": [], "by": d["by"], "s1_key": k["key"], "restored": True})
     out = HERE / "teaching" / book / "links" / f"ch{chapter:02d}.json"
+    if out.exists():   # the links into earlier units a person kept (book_record_links.py apply) are not S1's to rewrite
+        links += [k for k in json.loads(out.read_text()).get("links") or [] if k.get("cross")]
     if not dry_run:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps({"format": "ainext.prerequisite-links/1", "book": book, "chapter": chapter, "source": res["run"],
