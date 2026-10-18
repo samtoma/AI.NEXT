@@ -229,15 +229,169 @@ def _same_value(a: str, b: str) -> bool:
     return x is not None and y is not None and abs(x - y) <= 1e-9 * max(1, abs(x), abs(y))
 
 
+# ---- the same answer written two ways (Tamer, 2026-10-18: "strip added working, compare numbers, √ and fractions by
+# value, angle and notation forms"). A blind re-solve often appends its working in brackets, writes √3 ≈ 1.732 for √3,
+# adds the unit, or spells an angle 45°41'46" where the author wrote 45° 41' 46''; none of that is a disagreement.
+def _drop_asides(s: str) -> str:
+    """Bracketed asides in words — "(mean = 90/30 = 3, Σ(x−x̄)²k = 66)", "(the line is vertical)" — dropped, nested
+    brackets and all; a bracket of maths, "(x - 3)", kept."""
+    out, i = [], 0
+    while i < len(s):
+        if s[i] == "(":
+            depth, j = 0, i
+            while j < len(s):
+                depth += {"(": 1, ")": -1}.get(s[j], 0)
+                if depth == 0:
+                    break
+                j += 1
+            inner = s[i + 1:j]
+            top = re.sub(r"\([^()]*\)", "", inner)
+            if re.search(r"[A-Za-z]{3}", re.sub(r"sqrt|frac", "", top)):
+                while out and out[-1] == " ":
+                    out.pop()
+                i = j + 1
+                continue
+        out.append(s[i])
+        i += 1
+    return "".join(out)
+_DMS = re.compile(r"(-?\d+(?:\.\d+)?)\s*°\s*(?:(\d+(?:\.\d+)?)\s*['′]\s*)?(?:(\d+(?:\.\d+)?)\s*(?:''|\"|″)\s*)?")
+
+
+def _plain(s: str) -> str:
+    """LaTeX and the book's symbols to one plain spelling."""
+    s = str(s or "").replace("$", "")
+    for _ in range(3):
+        s = re.sub(r"\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}", r"(\1)/(\2)", s)
+        s = re.sub(r"\\sqrt\{([^{}]*)\}", r"√(\1)", s)
+        s = re.sub(r"\\(?:overline|bar|mathrm|text|operatorname)\{([^{}]*)\}", r"\1", s)
+    for a, b in (("\\approx", "≈"), ("\\simeq", "≈"), ("≃", "≈"), ("\\times", "×"), ("\\cdot", "×"), ("\\pi", "π"),
+                 ("\\circ", "°"), ("^°", "°"), ("−", "-"), ("\\left", ""), ("\\right", ""), ("\\,", " "), ("\\ ", " ")):
+        s = s.replace(a, b)
+    return s
+
+
+def _value(expr: str):
+    """A number written with digits, fractions, √, π, × and powers, exactly as far as floats go; None otherwise."""
+    import ast  # noqa: PLC0415
+    import math  # noqa: PLC0415
+    e = expr.strip().rstrip(".")
+    if not e or re.search(r"[A-Za-z]", e.replace("π", "")):
+        return None
+    e = re.sub(r"√\s*(\d+(?:\.\d+)?)", r"sqrt(\1)", e)
+    e = e.replace("√(", "sqrt(").replace("√", "sqrt").replace("×", "*").replace("^", "**").replace("π", "(pi)")
+    e = re.sub(r"(\d|\))\s*(sqrt|\(pi\)|\()", r"\1*\2", e)   # 2√3, 2(3)
+    try:
+        tree = ast.parse(e, mode="eval")
+    except SyntaxError:
+        return None
+    ok = (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Constant, ast.Call, ast.Name, ast.Load, ast.Add, ast.Sub, ast.Mult,
+          ast.Div, ast.Pow, ast.USub, ast.UAdd)
+    if not all(isinstance(n, ok) for n in ast.walk(tree)) or any(isinstance(n, ast.Name) and n.id not in ("sqrt", "pi") for n in ast.walk(tree)):
+        return None
+    try:
+        v = eval(compile(tree, "<answer>", "eval"), {"__builtins__": {}}, {"sqrt": math.sqrt, "pi": math.pi})   # nosec: AST-checked
+        return float(v) if isinstance(v, (int, float)) else None
+    except (ValueError, ZeroDivisionError, OverflowError, TypeError):
+        return None
+
+
+def _decimals(s: str) -> int:
+    m = re.findall(r"\d+\.(\d+)", s)
+    return min((len(x) for x in m), default=12)
+
+
+def _label(side: str) -> str | None:
+    """A name standing for the value — "σ", "n(0)", "Class A: mean", "m(∠C)" — normalised; None when the text is not
+    one: an expression in letters ("(x - 3)(x - 1)", "2x - 1") never names a value."""
+    side = side.strip()
+    outside = re.sub(r"\([^()]*\)", "", side)
+    if len(side) > 40 or not re.search(r"[A-Za-zσμθαβ∠]", outside) or re.search(r"[+*/^×÷√]|\s-\s|\d", outside):
+        return None
+    return re.sub(r"[^0-9a-zσμθαβ∠()]", "", side.lower())
+
+
+def _quantity(seg: str) -> tuple[set[float], int, str | None] | None:
+    """One quantity's values: every side of an `=` / `≈` chain that is a number (σ = √2.2 ≈ 1.483 is one quantity),
+    or an angle in degrees, minutes and seconds; with the precision shown. None when it is not a number."""
+    seg = seg.strip()
+    m = _DMS.fullmatch(seg) or _DMS.fullmatch(re.sub(r"^[^=≈]*[=≈]\s*", "", seg))
+    if m and m.group(1):
+        v = float(m.group(1)) + float(m.group(2) or 0) / 60 + float(m.group(3) or 0) / 3600
+        lab = re.match(r"^([^=≈]*)[=≈]", seg)
+        return {v}, (6 if m.group(3) else 3), _label(lab.group(1)) if lab else None
+    vals, prec, label = set(), 12, None
+    sides = re.split(r"[=≈]", seg)
+    for k, side in enumerate(sides):
+        side = re.sub(r"(?<=[\d)])\s+[A-Za-z][A-Za-z ]*$", "", side.strip())   # a unit after the number: "1.483 goals"
+        if not side:
+            continue
+        v = _value(side)
+        if v is not None:
+            vals.add(v)
+            prec = min(prec, _decimals(side))
+        elif k == 0 and len(sides) > 1 and _label(side) is not None:
+            label = _label(side)   # a name for the value: "σ", "n(0)", "Class A: mean"
+        else:
+            return None   # an expression in letters is not a number: "(x - 3)(x - 1) = 0" is no "= 0"
+    return (vals, prec, label) if vals else None
+
+
+def _same_quantities(a: str, b: str) -> bool:
+    split = lambda s: [x for x in re.split(r"\s*(?:[,;]|\band\b|\bor\b)\s*(?![^()]*\))", s) if x.strip()]
+    qa, qb = [_quantity(x) for x in split(a)], [_quantity(x) for x in split(b)]
+    if not qa or len(qa) != len(qb) or any(q is None for q in qa + qb):
+        return False
+    def close(x, y):
+        (vx, px, lx), (vy, py, ly) = x, y
+        if lx and ly and lx != ly:   # both name the value, differently: not the same quantity
+            return False
+        tol = 0.5 * 10 ** -min(px, py) + 1e-9 * max(1.0, *(abs(v) for v in vx | vy))
+        return any(abs(u - w) <= tol for u in vx for w in vy)
+    if all(close(x, y) for x, y in zip(qa, qb)):   # in the order written
+        return True
+    # in any order only when nothing longer than one letter names a value ("x = 3 or x = 1"): a "Class A" value is
+    # never matched with a "Class B" one
+    if any(q[2] and len(q[2]) > 1 for q in qa + qb):
+        return False
+    return all(close(x, y) for x, y in zip(sorted(qa, key=lambda q: min(q[0])), sorted(qb, key=lambda q: min(q[0]))))
+
+
+def _same_written(a: str, b: str) -> bool:
+    """The same answer written two ways: asides in words dropped, notation unified, then text or values compared."""
+    pa, pb = _drop_asides(_plain(a)), _drop_asides(_plain(b))
+    num_paren = lambda t: re.sub(r"(?<![A-Za-z])\((-?[\d.]+)\)", r"\1", t)   # \frac{1}{2} → (1)/(2) → 1/2; n(0) kept
+    pa, pb = num_paren(pa), num_paren(pb)
+    if _norm(pa) == _norm(pb):
+        return True
+    return _same_quantities(pa, pb)
+
+
+_NEGATION = re.compile(r"\b(?:not|no|never|neither|nor|none|cannot)\b|n't\b")
+
+
+def _opens_with(short: str, sentence: str) -> bool:
+    """A short answer — a name or a choice, "Class A", "segment DC", "(2)" — and a sentence that opens with it and
+    affirms it: "Class A is more homogeneous, because …" (Tamer, 2026-10-18). Not when the sentence negates it
+    ("Class A is not …") or offers another ("Class A or B")."""
+    sh = re.sub(r"\s+", " ", _drop_asides(_plain(short))).strip().rstrip(".").lower()
+    se = re.sub(r"\s+", " ", _plain(sentence)).strip().lower()
+    if not sh or len(sh.split()) > 5 or "=" in sh or re.search(r"\d", sh.replace("(", "").replace(")", "")) and len(sh) > 4:
+        return False
+    if not (se.startswith(sh) and (len(se) == len(sh) or se[len(sh)] in " ,.:;")):
+        return False
+    claim = re.split(r"\b(?:because|since|as|so)\b|[,;]", se[len(sh):], maxsplit=1)[0]
+    return not _NEGATION.search(claim) and not re.match(r"\s*(?:or|and)\b", se[len(sh):])
+
+
 def same_answer(a: str, b: str) -> bool:
     """Do two final answers say the same thing? Assignments by variable, pairs and sets as sets, numbers by value."""
-    if _same_value(a, b):
+    if _same_value(a, b) or _same_written(a, b) or _opens_with(a, b) or _opens_with(b, a):
         return True
     asg = lambda s: dict(re.findall(r"\b([a-zA-Z])\s*=\s*([^,;]+)", s.replace("$", "")))
     da, db = asg(a), asg(b)
     if da and db and set(da) == set(db):
         return all(_same_value(da[k], db[k]) for k in da)
-    tup = lambda s: {_norm(t) for t in re.findall(r"\([^()]*\)", s.replace("$", ""))}
+    tup = lambda s: {_norm(t) for t in re.findall(r"\([^()]*,[^()]*\)", s.replace("$", ""))}   # pairs only: "(x)" of f(x) is none
     ta, tb = tup(a), tup(b)
     if ta and tb:
         return ta == tb
@@ -457,9 +611,100 @@ def out_path(book: str, slug: str) -> Path:
     return HERE / "teaching" / book / "answers" / f"{slug}.json"
 
 
+COMPARE_VERSION = "same-answer-v2"   # v2: asides in words dropped, notation unified, values and angles compared
+
+
+def rejudge(book: str, dry: bool = False) -> dict:
+    """The stored readings judged again with the current comparison, no model call: only answers marked `disagreed`
+    (a value both readings gave), so an agreement already made is never undone. Each one re-judged says so."""
+    from datetime import datetime, timezone  # noqa: PLC0415
+    out = {"looked_at": 0, "now_agreed": [], "now_flagged": [], "still_disagreed": 0}
+    for f in sorted((HERE / "teaching" / book / "answers").glob("*.json")):
+        doc = json.loads(f.read_text())
+        changed = False
+        for a in doc.get("answers") or []:
+            r = (a.get("checks") or {}).get("resolve_answer")
+            if a.get("status") != "disagreed" or a.get("kind") != "value" or not r:
+                continue
+            out["looked_at"] += 1
+            res = check(a, {"answer": r, "kind": (a.get("checks") or {}).get("resolve_kind")})
+            if res["status"] == "disagreed":
+                out["still_disagreed"] += 1
+                continue
+            out["now_agreed" if res["status"] == "agreed" else "now_flagged"].append(a["ref"])
+            a["checks"] = {**res["checks"], "rejudged": {"from": "disagreed", "by": COMPARE_VERSION,
+                                                         "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}}
+            a["status"] = res["status"]
+            changed = True
+        if changed and not dry:
+            f.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+    return out
+
+
+def judge_generated(book: str, model: str, cap: float, dry: bool = False) -> dict:
+    """The printed-answer check's judge, for generated answers (Tamer, 2026-10-18): each answer still `disagreed`
+    after the comparison goes, with its question and both readings, to a model that decides equivalent, different or
+    unclear (runbook/answers.workflow.js, judge kind 'generated'). Equivalent ones become `agreed`; every verdict is
+    kept on the answer, `checks.judge`. One call per lesson."""
+    from datetime import datetime, timezone  # noqa: PLC0415
+    budget = Budget(cap)
+    out = {"judged": 0, "equivalent": [], "different": 0, "unclear": 0, "no_verdict": 0}
+    for f in sorted((HERE / "teaching" / book / "answers").glob("*.json")):
+        doc = json.loads(f.read_text())
+        todo = [a for a in doc.get("answers") or [] if a.get("status") == "disagreed" and a.get("kind") == "value"
+                and (a.get("checks") or {}).get("resolve_answer")]
+        if not todo:
+            continue
+        q = lambda a: (a.get("question") or {})
+        material = "\n\n".join(
+            f"[{a['ref']}] question: {q(a).get('text') or ''}" + (f" (part {a['part']}: {q(a).get('stem')})" if a.get("part") and q(a).get("stem") else "")
+            + f"\n  first: {a['answer']}\n  second: {a['checks']['resolve_answer']}" for a in todo
+        ) + "\n\nGive one verdict per [ref], ref as shown without the brackets."
+        if dry:
+            out["judged"] += len(todo)
+            continue
+        slug = doc.get("lesson") or f.stem
+        res = workflow(book, "judge", model, budget, f"judge-gen.{slug}", [], judge={"label": f"gen:{slug}", "material": material, "kind": "generated"})
+        verdicts = {v["ref"].strip("[]"): v for v in ((res.get("judge") or {}).get("verdicts") or [])}
+        stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        for a in todo:
+            out["judged"] += 1
+            v = verdicts.get(a["ref"])
+            if not v:
+                out["no_verdict"] += 1
+                continue
+            a["checks"]["judge"] = {**v, "model": model, "at": stamp}
+            if v["verdict"] == "equivalent":
+                a["status"] = "agreed"
+                out["equivalent"].append(a["ref"])
+            else:
+                out[v["verdict"] if v["verdict"] in ("different", "unclear") else "unclear"] += 1
+        f.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+    out["cost_usd"] = round(budget.spent, 4)
+    return out
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
+    jg = sub.add_parser("judge", help="a model judges each remaining disagreement: equivalent ones become agreed")
+    jg.add_argument("book")
+    jg.add_argument("--model", default="sonnet")
+    jg.add_argument("--cap", type=float, default=3.0)
+    jg.add_argument("--dry-run", action="store_true")
+    if argv and argv[0] == "judge":
+        a = ap.parse_args(argv)
+        res = judge_generated(a.book, a.model, a.cap, a.dry_run)
+        print(json.dumps({k: (len(v) if isinstance(v, list) else v) for k, v in res.items()}), file=sys.stderr)
+        return 0
+    rj = sub.add_parser("rejudge", help="judge the stored readings again with the current comparison (no model call)")
+    rj.add_argument("book")
+    rj.add_argument("--dry-run", action="store_true")
+    if argv and argv[0] == "rejudge":
+        a = ap.parse_args(argv)
+        res = rejudge(a.book, a.dry_run)
+        print(json.dumps({k: (len(v) if isinstance(v, list) else v) for k, v in res.items()}), file=sys.stderr)
+        return 0
     for name in ("plan", "run"):
         s = sub.add_parser(name)
         s.add_argument("record", type=Path, help="a lesson's book record (groundtruth/… or book-records/…)")

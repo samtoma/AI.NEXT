@@ -239,7 +239,7 @@ def answer_type(ans: str, marker_kinds: bool = True):
     asg = re.findall(rf"\b([a-zA-Z])\s*=\s*({NUM})", a)
     if asg and re.sub(rf"\b[a-zA-Z]\s*=\s*{NUM}|[,;\s]|\band\b", "", a) == "":
         key = ", ".join(f"{v} = {x}" for v, x in asg)
-        return "short", {"marker": {"kind": "values", "key": key, "variables": [v for v, _ in asg]}}, key
+        return "short", {"marker": {"kind": "values", "key": key, "variables": list(dict.fromkeys(v for v, _ in asg))}}, key   # each once
     pair = re.fullmatch(rf"(?:[A-Za-z]\w*\s*(?:is|=)\s*)?\(\s*({NUM})\s*,\s*({NUM})\s*\)", a)
     if pair:
         key = f"({pair.group(1)}, {pair.group(2)})"
