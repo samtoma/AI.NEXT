@@ -1,0 +1,33 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-4-2:diameter",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-4-2",
+ "parent_question_id": "q:pp3u10-4-2:none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "d",
+   "let": "2 * r"
+  }
+ ],
+ "stem": "In quadrilateral $ABCD$, the points $B$ and $C$ lie on the same side of $AD$, $m(\\angle ABD) = 90^\\circ$ and $m(\\angle ACD) = 90^\\circ$. Given that $AD = {=d}$ cm, the four points lie on one circle. Find the radius of that circle in cm.",
+ "answer": "r",
+ "solution": [
+  "The angles $\\angle ABD$ and $\\angle ACD$ are equal (both $90^\\circ$), they are drawn on the same base $AD$ and on the same side of it.",
+  "So $ABCD$ is a cyclic quadrilateral.",
+  "Since the angle at $B$ in the circle is a right angle standing on $AD$, $AD$ is a diameter of the circle.",
+  "Radius $= {=d} \\div 2 = {=r}$ cm."
+ ],
+ "notes": "No book question was supplied for this objective, so parent_question_id is a placeholder. Text-only, no figure needed."
+}

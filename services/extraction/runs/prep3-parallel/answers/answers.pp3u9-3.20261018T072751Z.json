@@ -1,0 +1,343 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "ae2df8ae6c61ecbd1bccfed9949c3324baf0e0fe074a415611d242e97b3547b3",
+  "generated_sha256": "03538af2ee73800a4c442478da60bda28d6881c77feef47effdf75124ab4d092",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u9-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u9-3:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "A compass keeps a fixed opening (the radius) while its tip stays at the center, so every point it draws is the same distance from the center.",
+      "solution": [
+       "Put the tip of the compass at the center M.",
+       "Set the opening equal to the radius, for example MA.",
+       "Turn the pencil around; the opening does not change.",
+       "So all points drawn are at the same distance from M, which makes a circle."
+      ],
+      "grounded_in": [
+       "pp3u9-3:method-2",
+       "pp3u9-3:rule-1",
+       "pp3u9-3:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The axis of a segment is the straight line perpendicular to it at its midpoint.",
+      "solution": [
+       "Find the midpoint F of the segment.",
+       "Draw the line L perpendicular to the segment through F.",
+       "This line L is the axis of the segment, where L ∩ AB = {F}."
+      ],
+      "grounded_in": [
+       "pp3u9-3:method-6",
+       "pp3u9-3:corollary-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-3",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "The center of the circle is on the axis of the chord AB.",
+       "This is true for any chord of the circle.",
+       "So the center lies on the axis of any chord in it."
+      ],
+      "grounded_in": [
+       "pp3u9-3:method-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "A circle is identified by giving its center and its radius length.",
+      "solution": [
+       "Know the center of the circle.",
+       "Know the radius length.",
+       "Place the compass tip at the center, open it to the radius, and draw the circle."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-1",
+       "pp3u9-3:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-1",
+      "kind": "value",
+      "answer": "An infinite number of points; an infinite number of circles",
+      "solution": [
+       "The plane has an infinite number of points.",
+       "Each chosen point can be a center M, and the circle with radius MA passes through A.",
+       "So an infinite number of circles pass through A."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-3",
+       "pp3u9-3:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-2",
+      "kind": "value",
+      "answer": "On a congruent circle whose center is point A",
+      "solution": [
+       "Equal radii means each center is the same distance from A.",
+       "So the centers lie on a circle with center A and the same radius.",
+       "This circle is congruent to those circles."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:drill-1",
+      "kind": "value",
+      "answer": "An infinite number of circles",
+      "solution": [
+       "Choose a point M at distance 2 cm from A.",
+       "Put the compass tip at M with opening 2 cm and draw the circle; it passes through A.",
+       "Any point on the circle with center A and radius 2 cm can be the center M.",
+       "Keep the arcs.",
+       "The centers are on a congruent circle with center A, so there are an infinite number of circles."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-4",
+       "pp3u9-3:rule-5",
+       "pp3u9-3:method-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-3",
+      "kind": "value",
+      "answer": "The line L has an infinite number of points; an infinite number of circles pass through A and B",
+      "solution": [
+       "L is the axis of AB and has an infinite number of points.",
+       "Each point E on L is a center of a circle passing through A and B.",
+       "So an infinite number of circles pass through A and B."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-6",
+       "pp3u9-3:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-4",
+      "kind": "value",
+      "answer": "1/2 AB",
+      "solution": [
+       "The smallest circle through A and B has AB as its diameter.",
+       "So its radius equals half the length of AB."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:think-5",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+       "Two circles cannot intersect in more than two points."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-9"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:exercise-1",
+      "kind": "explanation",
+      "answer": "No, M cannot be identified: no such point M exists, because A, B and C are collinear and no circle passes through them.",
+      "solution": [
+       "If L1 ∩ L2 = φ, then L1 is parallel to L2.",
+       "This happens when A, B and C are collinear.",
+       "The center M must be on both L1 and L2, but they never meet.",
+       "So there is no point M, and no circle can pass through A, B and C."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-10",
+       "pp3u9-3:rule-11",
+       "pp3u9-3:method-13"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:drill-3",
+      "kind": "drawing",
+      "answer": "Triangle ABC is acute-angled, and the center of the circle is inside the triangle.",
+      "solution": [
+       "Draw AB = 4 cm.",
+       "With the compass tip at A and opening 6 cm draw an arc; with the tip at B and opening 5 cm draw another arc. Their intersection is C.",
+       "Join AC and BC.",
+       "Draw L1, the axis of AB, and L2, the axis of BC.",
+       "Mark M where L1 ∩ L2 = {M}.",
+       "With the tip at M and opening MA, draw the circle through A, B and C.",
+       "The longest side is 6 cm and 6² = 36 is less than 4² + 5² = 41, so all angles are acute.",
+       "The triangle is acute-angled and the center M is inside the triangle."
+      ],
+      "grounded_in": [
+       "pp3u9-3:method-11",
+       "pp3u9-3:method-12",
+       "pp3u9-3:method-13",
+       "pp3u9-3:corollary-1",
+       "pp3u9-3:corollary-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-3:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "The compass keeps a fixed opening (the radius) with its tip at the center, so every point it draws is the same distance from the center. That gives a circle."
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The axis of a segment is the straight line perpendicular to it at its midpoint (its perpendicular bisector). Every point on it is equidistant from the segment's endpoints."
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "Yes. The center is equidistant from the endpoints of any chord, so it lies on the axis (perpendicular bisector) of that chord."
+     },
+     {
+      "ref": "pp3u9-3:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "Give its center and its radius length. You can also give three noncollinear points on it, or two points on it with the center on their axis."
+     },
+     {
+      "ref": "pp3u9-3:think-1",
+      "kind": "explanation",
+      "answer": "The plane has infinitely many points. Infinitely many circles can be drawn through A, one for each chosen center."
+     },
+     {
+      "ref": "pp3u9-3:think-2",
+      "kind": "explanation",
+      "answer": "Their centers lie on a circle whose center is A and whose radius equals that common radius (a circle congruent to them)."
+     },
+     {
+      "ref": "pp3u9-3:drill-1",
+      "kind": "value",
+      "answer": "Infinitely many circles (each center is a point on the circle of radius 2 cm centered at A)."
+     },
+     {
+      "ref": "pp3u9-3:think-3",
+      "kind": "explanation",
+      "answer": "L has infinitely many points. Infinitely many circles can be drawn through A and B, one for each center on L."
+     },
+     {
+      "ref": "pp3u9-3:think-4",
+      "kind": "value",
+      "answer": "$\\frac{1}{2}\\overline{AB}$"
+     },
+     {
+      "ref": "pp3u9-3:think-5",
+      "kind": "explanation",
+      "answer": "No. Two different circles cannot intersect in more than two points."
+     },
+     {
+      "ref": "pp3u9-3:exercise-1",
+      "kind": "explanation",
+      "answer": "No. If $L_1 \\cap L_2 = \\phi$ then $L_1 \\parallel L_2$, which happens when A, B, C are collinear. The axes never meet, so M does not exist and no circle passes through the three points."
+     },
+     {
+      "ref": "pp3u9-3:drill-3",
+      "kind": "explanation",
+      "answer": "Drawing: triangle ABC with AB = 4 cm, BC = 5 cm, CA = 6 cm, plus its circumcircle. The center is where the perpendicular bisectors of two sides meet. Since $6^2 = 36 < 4^2 + 5^2 = 41$, the triangle is acute-angled. The center of the circle is inside the triangle."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u9-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u9-3:drill-2:1",
+      "kind": "value",
+      "answer": "2 circles",
+      "solution": [
+       "Draw AB = 4 cm. Diameter 5 cm, so radius = 5 ÷ 2 = 2.5 cm.",
+       "Draw L, the axis of AB. The center of any circle through A and B lies on L.",
+       "Set the compass opening to 2.5 cm, put the tip at A and draw an arc that cuts L. It cuts L at two points, one on each side of AB. Call them M and M₁.",
+       "The compass opening 2.5 cm is more than half of AB (2 cm), so the arc does cut L.",
+       "Put the tip at M and draw the circle of radius 2.5 cm. It passes through A and B. Do the same at M₁.",
+       "There are 2 possible circles, with centers M and M₁ on the axis of AB on opposite sides of AB."
+      ],
+      "grounded_in": [
+       "pp3u9-3:method-6",
+       "pp3u9-3:method-7",
+       "pp3u9-3:rule-6",
+       "pp3u9-3:rule-8",
+       "pp3u9-3:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:drill-2:2",
+      "kind": "value",
+      "answer": "1 circle (its center is the midpoint of AB and AB is its diameter)",
+      "solution": [
+       "Draw AB = 4 cm. Half of AB = 2 cm.",
+       "The smallest circle through A and B has radius ½AB = 2 cm.",
+       "The given radius 2 cm equals this smallest radius, so only that smallest circle works.",
+       "Its center is F, the midpoint of AB, where the axis L meets AB.",
+       "Put the tip at F, open the compass to 2 cm and draw the circle. It passes through A and B.",
+       "There is only 1 possible circle."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-8",
+       "pp3u9-3:method-6",
+       "pp3u9-3:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-3:drill-2:3",
+      "kind": "value",
+      "answer": "No circle is possible",
+      "solution": [
+       "Draw AB = 4 cm. Diameter 3 cm, so radius = 3 ÷ 2 = 1.5 cm.",
+       "The smallest circle through A and B has radius ½AB = 2 cm.",
+       "1.5 cm is less than 2 cm, so the radius is too small.",
+       "A compass opening of 1.5 cm from A does not reach the axis of AB, so no center can be found.",
+       "No circle with diameter 3 cm passes through A and B, so there is no solution."
+      ],
+      "grounded_in": [
+       "pp3u9-3:rule-8",
+       "pp3u9-3:method-6",
+       "pp3u9-3:rule-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-3:drill-2:1",
+      "kind": "explanation",
+      "answer": "Two solutions: the radius is 2.5 cm, so the center lies on the axis of AB at distance 1.5 cm from the midpoint F of AB, on either side of AB. That gives two circles."
+     },
+     {
+      "ref": "pp3u9-3:drill-2:2",
+      "kind": "explanation",
+      "answer": "One solution: the radius 2 cm is half of AB, so the center is the midpoint F of AB and AB is a diameter. That gives exactly one circle."
+     },
+     {
+      "ref": "pp3u9-3:drill-2:3",
+      "kind": "explanation",
+      "answer": "No solution: the diameter 3 cm is less than AB = 4 cm. The smallest circle through A and B has diameter 4 cm, so no such circle exists."
+     }
+    ]
+   }
+  }
+ ]
+}

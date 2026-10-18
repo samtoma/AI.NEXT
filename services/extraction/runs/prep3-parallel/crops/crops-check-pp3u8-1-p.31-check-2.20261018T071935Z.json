@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "7310ff77ecf17652a93cef6a5198488fc9f37acad6bfcd18967760096b3a6a7e",
+  "generated_sha256": "19c71fd026292691e47c9a51bde23f8bfa929d9a7277653cd563435610819fa8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u8-1:figure-5",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Eight green-yellow cards in two rows of four, fully shown."
+   },
+   {
+    "id": "pp3u8-1:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Spinner is complete. A stray text fragment sits at the left edge and a green swoosh from another element sits at the top right. Both should be trimmed."
+   }
+  ]
+ }
+}

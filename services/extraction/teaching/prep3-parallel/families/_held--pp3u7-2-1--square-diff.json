@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-2-1:square-diff",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-2-1",
+ "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+ "source_page": 18,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "k2",
+   "let": "k * k"
+  },
+  {
+   "require": "p != k",
+   "why": "numerator zero must not coincide with a denominator zero"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the values of $x$ that must be excluded from the domain of the function $n(x)=\\frac{x-{=p}}{x^2-{=k2}}$. Give both values.",
+ "answer": "[k, -k]",
+ "marker": {
+  "kind": "values",
+  "answer": "[{=k}, -{=k}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "solution": [
+  "The domain is R minus the zeroes of the denominator, so solve $x^2-{=k2}=0$.",
+  "$x^2={=k2}$, so $x={=k}$ or $x=-{=k}$ (both roots are needed).",
+  "The domain is $R-\\{{=k},-{=k}\\}$, so the excluded values are ${=k}$ and $-{=k}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:pp3u7-2-1:one-root-only-denominator",
+   "label": "Finds only the positive root of the denominator",
+   "description": "Gives only x = sqrt(k) and loses the negative root."
+  }
+ ],
+ "notes": "Standard: x^2 - k^2 denominator, two excluded values. Numerator zero p avoided equal to k."
+}

@@ -1,0 +1,200 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "4c70971c297e1f9c0cd32278f25491b0c7f486683258845120248191ffb87afb",
+  "generated_sha256": "454bb234d9f74d4a55aa06946ebddcb4c05b7a0e21bb0d209766a71bedf87e17",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u9-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-1-1",
+     "need_kind": "circle_builder (existing) with misconceptions authored",
+     "description": "circle_builder with element radius / diameter / chord fits this objective well: the student drags the ends of a segment to build the named element and the defining properties light up live. The book anchors (finding X and Y from radii and isosceles triangles) are numeric, so the widget would sit beside them as a vocabulary and construction task.",
+     "why": "The objective's misconceptions list is empty. Diagnostics need at least one id from that list, so no valid template can be written. The predicates radius-drawn-as-chord, radius-short, chord-not-through-centre and ends-not-on-circle are ready to map once misconceptions such as 'a radius may start anywhere on the circle', 'any chord is a diameter' or 'a radius stops short of the circle' are added."
+    },
+    {
+     "lo_id": "lo:pp3u9-1-2",
+     "need_kind": "symmetry_folder",
+     "description": "The student would draw lines on a circle (or on a circle plus a figure) and see the reflection. Drawing a line through the centre would show the circle map onto itself. A line that misses the centre would show the image shifted off the circle. Errors diagnosed: only a horizontal or vertical axis is counted, a line not through the centre is taken as an axis, and the number of axes is given as finite.",
+     "why": "circle_builder builds a radius, chord, diameter or tangent. It has no reflection element and no way to test 'any line through the centre'. The objective's misconceptions list is empty as well."
+    },
+    {
+     "lo_id": "lo:pp3u9-1-3",
+     "need_kind": "chord_perpendicular_builder",
+     "description": "The student would drag a chord's midpoint, or the foot of a perpendicular from the centre M, and watch whether the perpendicular from M bisects the chord and whether the line from M to the midpoint is perpendicular. They would then set the length or angle that follows, for example the half-chord from the radius and the distance to the centre. Errors diagnosed: assuming a segment from the centre to a chord is always perpendicular, taking a half-chord as the whole chord, and using the radius in place of the distance from the centre.",
+     "why": "circle_builder and angle_setter cannot construct a perpendicular from the centre or a midpoint relation. The book's anchors (angles of triangle MXY, and X = 45 from the corollaries) need that instrument. The misconceptions list is also empty."
+    }
+   ],
+   "notes": "No templates were produced because every objective in lesson pp3u9-1 has an empty misconceptions list. Diagnostics need at least one id from the objective's own list, and an invented id would be refused (FR-1215). Objective 1 is the one real fit, with circle_builder radius, diameter or chord. Once misconceptions exist, a basic template on lo:pp3u9-1-1 could use parent q:pp3u9-1-1:bk-exercise-5-a and map radius-drawn-as-chord and radius-short for a radius, or chord-not-through-centre for a diameter."
+  },
+  {
+   "lesson": "pp3u9-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-2-1",
+     "need_kind": "point_circle_position",
+     "description": "A circle of radius r about M with a draggable point A and live readout of MA beside r. The student places A inside, on, or outside the circle as asked, and a variant gives MA as an expression such as 2x+1 and asks for the x that puts A on the circle. Errors diagnosed: confusing inside with outside (comparing MA and r the wrong way), and treating 'on the circle' as MA less than r.",
+     "why": "circle_builder constructs radius, chord, diameter and tangent. It has no point-position task and no MA versus r comparison, so using it would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u9-2-2",
+     "need_kind": "circle_builder tangent, blocked by missing misconceptions",
+     "description": "circle_builder with element 'tangent' fits well: the student drags a line until its distance from M equals r. It can fire is-secant (distance less than r) and is-external (distance greater than r). The objective's misconception list is empty, so these predicates cannot be mapped. Please add misconceptions such as 'a line touching the circle's neighbourhood counts as a tangent' (is-external) and 'a line that cuts through the circle is a tangent' (is-secant), then author the template. A separate tool for the tangent-radius right angle (computing lengths and angles) is also missing.",
+     "why": "Diagnostics need a misconception id from this objective's own list, and that list is empty. A valid template cannot be written until Samuel adds the misconceptions."
+    },
+    {
+     "lo_id": "lo:pp3u9-2-3",
+     "need_kind": "two_circle_positioner",
+     "description": "Two circles M (radius r1) and N (radius r2). The student drags N, or sets the distance MN, until the circles are in the named position: distant, touching externally, touching internally, intersecting or concentric. The widget shows MN, r1+r2 and r1-r2 live. Errors diagnosed: using r1+r2 for internal touching (the existing internal-touch-add-radii misconception), swapping intersecting and touching, and forgetting that MN = 0 is concentric.",
+     "why": "No existing kind places two circles. circle_builder works with a single circle about M."
+    },
+    {
+     "lo_id": "lo:pp3u9-2-4",
+     "need_kind": "two_circle_positioner with common tangent and chord",
+     "description": "Same two-circle tool as above, with the line of centres MN, the common tangent and the common chord drawn. The student would find lengths and angles, for example MN = r1 - r2 for internal touching, the right angle between the tangent and the radii, and the line of centres bisecting the common chord at right angles. It would fire the internal-touch-add-radii misconception when the student sets MN = r1 + r2 for internally touching circles.",
+     "why": "No existing kind can emit a predicate that reveals internal-touch-add-radii. circle_builder shows a single circle and cannot represent MN, two radii, or a common chord."
+    }
+   ],
+   "notes": "No templates: circle_builder tangent genuinely fits lo:pp3u9-2-2, but that objective has an empty misconceptions list, so no diagnostic can be mapped. The other three objectives need new kinds."
+  },
+  {
+   "lesson": "pp3u9-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-3-1",
+     "need_kind": "circle_through_points (centre-placer)",
+     "description": "The student is given a point A on a plane. They drag a centre O and a radius handle, and the circle is drawn live. The instrument checks that the circle passes through A. The student builds several circles (a target count, or a 'save circle' button). Circles with the same radius are shown as a set, and their centres light up on a circle about A of that radius. The student sees that A can lie on infinitely many circles, and that equal radii put the centres on a congruent circle about A. Errors it could diagnose: centre placed at A, so the circle does not pass through A (A is mistaken for the centre); radius not equal to OA; only one circle found, so the student thinks it is unique.",
+     "why": "circle_builder has one fixed circle of radius 5 about M, and the student only draws a radius, chord, diameter or tangent on it. The student cannot choose the centre, change the radius, or pick a circle through a given point. Using it would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u9-3-2",
+     "need_kind": "circle_through_points (centre on the axis of AB)",
+     "description": "Points A and B are fixed. The student drags a centre O anywhere in the plane, and the circle with centre O through A is drawn live. The widget shows OA and OB and the axis of AB. The student is asked for a circle through both A and B, and later for one with a given radius or diameter, and for the smallest possible radius (centre at the midpoint of AB). It passes only when OA = OB. Predicates it could report: centre-off-axis (OA ≠ OB, so the circle misses B); radius-too-small (a radius less than AB/2 is impossible, so no circle exists); one-centre-only (a single circle with a given radius, when there are two on either side of AB). Overlaying two saved circles through A and B would show that they meet at only A and B, which addresses mc:pp3u9-3-2:two-circles-share-more-than-two-points. It would also show that the centre lies on the axis of any chord.",
+     "why": "circle_builder cannot place a centre or show the axis of a chord. Its chord and diameter elements are drawn on a fixed circle, so they test the vocabulary of chord and diameter and not the construction of a circle through two points. Mapping them to this objective would be a forced fit."
+    },
+    {
+     "lo_id": "lo:pp3u9-3-3",
+     "need_kind": "circle_through_points (circumcircle of three points)",
+     "description": "The student is given points A, B and C. They construct the circle through all three by dragging a centre O. The widget shows the axes of AB and BC as they drag, and the student places O at their intersection. A second task makes A, B and C collinear, so the axes are parallel and no circle exists. A third task asks where the centre falls for acute, right and obtuse triangles (inside, on the hypotenuse, outside). Predicates it could report: centre-on-one-axis-only (equidistant from two vertices but not the third); centre-at-centroid (the student used the medians instead of the axes); no-circle-for-collinear (the student forced a circle through collinear points).",
+     "why": "circle_builder has a fixed circle and no way to place three points or build the axes of two sides. angle_setter puts three points on a circle that is already given, which is the opposite of constructing the circle from the points. No existing kind has the instrument."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u9-4",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-4-1",
+     "need_kind": "chord_distance_builder",
+     "description": "A circle about M with a draggable chord. The student drags the chord toward or away from the centre. The widget shows the live chord length and the live perpendicular distance from M. Tasks: 'Make a chord longer than AB', 'Make one whose distance is less than AB's', 'Make one equal to AB'. The widget grades the relation (>, <, =) between two chords' lengths and distances. A second variant gives a bound on the distance and asks the student to place the chord to find the range of the chord length.",
+     "why": "circle_builder only grades one element's defining property (radius, chord, diameter, tangent). It has no measure of distance from the centre and cannot compare two chords. The comparison 'longer chord means nearer the centre' is the idea of the lesson, so a chord widget with live length and distance readouts is needed. It would diagnose: reading a larger distance as a longer chord, treating distance as 'along the chord' rather than the perpendicular from M, and confusing > with <."
+    },
+    {
+     "lo_id": "lo:pp3u9-4-2",
+     "need_kind": "chord_distance_builder",
+     "description": "The same instrument with two chords in one circle, or in two congruent circles. The student draws a second chord equal in length to the first. The widget shows that its distance from the centre matches. The student then uses the equal distances to find a missing length or angle, for example the MX=MY situation with a given half-chord.",
+     "why": "No existing kind can hold two chords or show a perpendicular distance. The theorem 'equal chords are equidistant' is only discovered by constructing and comparing two chords. circle_builder's single-element grading would turn this into an answer box in disguise. Errors it would diagnose: assuming equal distances need parallel chords, and halving or doubling the chord when finding the length from the half-chord."
+    },
+    {
+     "lo_id": "lo:pp3u9-4-3",
+     "need_kind": "chord_distance_builder",
+     "description": "The student drags two chords until they are equal distances from the centre. In concentric or intersecting-circle variants the distances are set by MX=MY or MD=ME. The widget reports whether the chord lengths come out equal and shows the half-chord (YD=7 gives AB=14). Anchor tasks: AB from YD, and the angle at A from the angle at B in an isosceles triangle formed by the equal chords.",
+     "why": "The anchor questions (MX=MY, YD=7, so AB=14; MD=ME, angle B=65°, so angle A=50°) are about the converse theorem applied to a figure with two chords and perpendicular distances. circle_builder cannot represent two chords or the distance between a chord and the centre. angle_setter covers inscribed and central angles and does not fit this. Errors it would diagnose: reporting AB=YD, not 2YD; applying the theorem when the distances are not equal; and mixing up the triangle's base angles with its apex angle."
+    }
+   ],
+   "notes": "No templates. circle_builder grades the defining property of a single radius, chord, diameter or tangent. It cannot compare two chords, show a perpendicular distance from the centre, or give the half-chord relation, so using it would be a forced fit. The lesson's objectives also list no misconceptions, so a template would have no valid ids to map in diagnostics."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u9-1-1",
+   "need_kind": "circle_builder (existing) with misconceptions authored",
+   "description": "circle_builder with element radius / diameter / chord fits this objective well: the student drags the ends of a segment to build the named element and the defining properties light up live. The book anchors (finding X and Y from radii and isosceles triangles) are numeric, so the widget would sit beside them as a vocabulary and construction task.",
+   "why": "The objective's misconceptions list is empty. Diagnostics need at least one id from that list, so no valid template can be written. The predicates radius-drawn-as-chord, radius-short, chord-not-through-centre and ends-not-on-circle are ready to map once misconceptions such as 'a radius may start anywhere on the circle', 'any chord is a diameter' or 'a radius stops short of the circle' are added."
+  },
+  {
+   "lo_id": "lo:pp3u9-1-2",
+   "need_kind": "symmetry_folder",
+   "description": "The student would draw lines on a circle (or on a circle plus a figure) and see the reflection. Drawing a line through the centre would show the circle map onto itself. A line that misses the centre would show the image shifted off the circle. Errors diagnosed: only a horizontal or vertical axis is counted, a line not through the centre is taken as an axis, and the number of axes is given as finite.",
+   "why": "circle_builder builds a radius, chord, diameter or tangent. It has no reflection element and no way to test 'any line through the centre'. The objective's misconceptions list is empty as well."
+  },
+  {
+   "lo_id": "lo:pp3u9-1-3",
+   "need_kind": "chord_perpendicular_builder",
+   "description": "The student would drag a chord's midpoint, or the foot of a perpendicular from the centre M, and watch whether the perpendicular from M bisects the chord and whether the line from M to the midpoint is perpendicular. They would then set the length or angle that follows, for example the half-chord from the radius and the distance to the centre. Errors diagnosed: assuming a segment from the centre to a chord is always perpendicular, taking a half-chord as the whole chord, and using the radius in place of the distance from the centre.",
+   "why": "circle_builder and angle_setter cannot construct a perpendicular from the centre or a midpoint relation. The book's anchors (angles of triangle MXY, and X = 45 from the corollaries) need that instrument. The misconceptions list is also empty."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-1",
+   "need_kind": "point_circle_position",
+   "description": "A circle of radius r about M with a draggable point A and live readout of MA beside r. The student places A inside, on, or outside the circle as asked, and a variant gives MA as an expression such as 2x+1 and asks for the x that puts A on the circle. Errors diagnosed: confusing inside with outside (comparing MA and r the wrong way), and treating 'on the circle' as MA less than r.",
+   "why": "circle_builder constructs radius, chord, diameter and tangent. It has no point-position task and no MA versus r comparison, so using it would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-2",
+   "need_kind": "circle_builder tangent, blocked by missing misconceptions",
+   "description": "circle_builder with element 'tangent' fits well: the student drags a line until its distance from M equals r. It can fire is-secant (distance less than r) and is-external (distance greater than r). The objective's misconception list is empty, so these predicates cannot be mapped. Please add misconceptions such as 'a line touching the circle's neighbourhood counts as a tangent' (is-external) and 'a line that cuts through the circle is a tangent' (is-secant), then author the template. A separate tool for the tangent-radius right angle (computing lengths and angles) is also missing.",
+   "why": "Diagnostics need a misconception id from this objective's own list, and that list is empty. A valid template cannot be written until Samuel adds the misconceptions."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-3",
+   "need_kind": "two_circle_positioner",
+   "description": "Two circles M (radius r1) and N (radius r2). The student drags N, or sets the distance MN, until the circles are in the named position: distant, touching externally, touching internally, intersecting or concentric. The widget shows MN, r1+r2 and r1-r2 live. Errors diagnosed: using r1+r2 for internal touching (the existing internal-touch-add-radii misconception), swapping intersecting and touching, and forgetting that MN = 0 is concentric.",
+   "why": "No existing kind places two circles. circle_builder works with a single circle about M."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-4",
+   "need_kind": "two_circle_positioner with common tangent and chord",
+   "description": "Same two-circle tool as above, with the line of centres MN, the common tangent and the common chord drawn. The student would find lengths and angles, for example MN = r1 - r2 for internal touching, the right angle between the tangent and the radii, and the line of centres bisecting the common chord at right angles. It would fire the internal-touch-add-radii misconception when the student sets MN = r1 + r2 for internally touching circles.",
+   "why": "No existing kind can emit a predicate that reveals internal-touch-add-radii. circle_builder shows a single circle and cannot represent MN, two radii, or a common chord."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-1",
+   "need_kind": "circle_through_points (centre-placer)",
+   "description": "The student is given a point A on a plane. They drag a centre O and a radius handle, and the circle is drawn live. The instrument checks that the circle passes through A. The student builds several circles (a target count, or a 'save circle' button). Circles with the same radius are shown as a set, and their centres light up on a circle about A of that radius. The student sees that A can lie on infinitely many circles, and that equal radii put the centres on a congruent circle about A. Errors it could diagnose: centre placed at A, so the circle does not pass through A (A is mistaken for the centre); radius not equal to OA; only one circle found, so the student thinks it is unique.",
+   "why": "circle_builder has one fixed circle of radius 5 about M, and the student only draws a radius, chord, diameter or tangent on it. The student cannot choose the centre, change the radius, or pick a circle through a given point. Using it would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-2",
+   "need_kind": "circle_through_points (centre on the axis of AB)",
+   "description": "Points A and B are fixed. The student drags a centre O anywhere in the plane, and the circle with centre O through A is drawn live. The widget shows OA and OB and the axis of AB. The student is asked for a circle through both A and B, and later for one with a given radius or diameter, and for the smallest possible radius (centre at the midpoint of AB). It passes only when OA = OB. Predicates it could report: centre-off-axis (OA ≠ OB, so the circle misses B); radius-too-small (a radius less than AB/2 is impossible, so no circle exists); one-centre-only (a single circle with a given radius, when there are two on either side of AB). Overlaying two saved circles through A and B would show that they meet at only A and B, which addresses mc:pp3u9-3-2:two-circles-share-more-than-two-points. It would also show that the centre lies on the axis of any chord.",
+   "why": "circle_builder cannot place a centre or show the axis of a chord. Its chord and diameter elements are drawn on a fixed circle, so they test the vocabulary of chord and diameter and not the construction of a circle through two points. Mapping them to this objective would be a forced fit."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-3",
+   "need_kind": "circle_through_points (circumcircle of three points)",
+   "description": "The student is given points A, B and C. They construct the circle through all three by dragging a centre O. The widget shows the axes of AB and BC as they drag, and the student places O at their intersection. A second task makes A, B and C collinear, so the axes are parallel and no circle exists. A third task asks where the centre falls for acute, right and obtuse triangles (inside, on the hypotenuse, outside). Predicates it could report: centre-on-one-axis-only (equidistant from two vertices but not the third); centre-at-centroid (the student used the medians instead of the axes); no-circle-for-collinear (the student forced a circle through collinear points).",
+   "why": "circle_builder has a fixed circle and no way to place three points or build the axes of two sides. angle_setter puts three points on a circle that is already given, which is the opposite of constructing the circle from the points. No existing kind has the instrument."
+  },
+  {
+   "lo_id": "lo:pp3u9-4-1",
+   "need_kind": "chord_distance_builder",
+   "description": "A circle about M with a draggable chord. The student drags the chord toward or away from the centre. The widget shows the live chord length and the live perpendicular distance from M. Tasks: 'Make a chord longer than AB', 'Make one whose distance is less than AB's', 'Make one equal to AB'. The widget grades the relation (>, <, =) between two chords' lengths and distances. A second variant gives a bound on the distance and asks the student to place the chord to find the range of the chord length.",
+   "why": "circle_builder only grades one element's defining property (radius, chord, diameter, tangent). It has no measure of distance from the centre and cannot compare two chords. The comparison 'longer chord means nearer the centre' is the idea of the lesson, so a chord widget with live length and distance readouts is needed. It would diagnose: reading a larger distance as a longer chord, treating distance as 'along the chord' rather than the perpendicular from M, and confusing > with <."
+  },
+  {
+   "lo_id": "lo:pp3u9-4-2",
+   "need_kind": "chord_distance_builder",
+   "description": "The same instrument with two chords in one circle, or in two congruent circles. The student draws a second chord equal in length to the first. The widget shows that its distance from the centre matches. The student then uses the equal distances to find a missing length or angle, for example the MX=MY situation with a given half-chord.",
+   "why": "No existing kind can hold two chords or show a perpendicular distance. The theorem 'equal chords are equidistant' is only discovered by constructing and comparing two chords. circle_builder's single-element grading would turn this into an answer box in disguise. Errors it would diagnose: assuming equal distances need parallel chords, and halving or doubling the chord when finding the length from the half-chord."
+  },
+  {
+   "lo_id": "lo:pp3u9-4-3",
+   "need_kind": "chord_distance_builder",
+   "description": "The student drags two chords until they are equal distances from the centre. In concentric or intersecting-circle variants the distances are set by MX=MY or MD=ME. The widget reports whether the chord lengths come out equal and shows the half-chord (YD=7 gives AB=14). Anchor tasks: AB from YD, and the angle at A from the angle at B in an isosceles triangle formed by the equal chords.",
+   "why": "The anchor questions (MX=MY, YD=7, so AB=14; MD=ME, angle B=65°, so angle A=50°) are about the converse theorem applied to a figure with two chords and perpendicular distances. circle_builder cannot represent two chords or the distance between a chord and the centre. angle_setter covers inscribed and central angles and does not fit this. Errors it would diagnose: reporting AB=YD, not 2YD; applying the theorem when the distances are not equal; and mixing up the triangle's base angles with its apex angle."
+  }
+ ]
+}

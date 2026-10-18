@@ -1,0 +1,144 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "db8f2bf9568532da1887b572d1cb430b0de9ae157359958806dc0d82a1e2e5c0",
+  "generated_sha256": "9a2d68c92d4b73d542bce684a1671f9c7e1c06234711ec30b0d1c608907dfb01",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u3-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u3-1-1",
+     "need_kind": "sort_cards (classification sorter)",
+     "description": "The student drags real data-collection scenarios (a survey the student runs, a school register, a census file, a published report) into 'primary source' or 'secondary source' bins, then matches each source to its advantage (up to date and specific, or cheap and quick). Errors it would diagnose: sorting by how the data looks rather than who collected it, treating a government publication as primary, and treating personal interviews as secondary.",
+     "why": "No existing kind fits. This is a categorical judgement, and the existing instruments are numeric or geometric. A text answer box would only be an answer box in disguise. The lesson also lists no anchor questions and no misconceptions, so there is nothing valid to name as a parent or a diagnostic."
+    },
+    {
+     "lo_id": "lo:pp3u3-1-2",
+     "need_kind": "scenario_matcher (method chooser with trade-off tags)",
+     "description": "The student is given a statistical society (for example, all 40 students in a class, or all 12 million households in a country) with an aim and a time or cost limit. They choose mass population (census) or sample, then tag the advantages and disadvantages that apply (accurate but costly, quick but with sampling error). Society size would be a slider, so the student sees the choice flip as the society grows. Errors it would diagnose: always choosing the sample, always choosing the census, and mixing up the advantages and disadvantages of each method.",
+     "why": "No existing kind fits. bar_builder and number_line_marker grade numbers, not a reasoned choice between methods. Using one here would be a forced fit. The lesson also has no anchor questions or misconceptions to attach."
+    },
+    {
+     "lo_id": "lo:pp3u3-1-3",
+     "need_kind": "sample_selector (population grid with layers)",
+     "description": "The student sees a population drawn as a grid of units, split into coloured layers (for example, grades or genders). There are three tasks. First, pick a sample of a given size by a biased choice, then by a simple random draw, and see which one under-represents a layer. Second, for a layer sample of size n, set how many units to take from each layer. The correct count is layer size ÷ population size × n, and the counts must sum to n. Third, check that the sample's layer proportions match the population's. Errors it would diagnose: equal counts from every layer, taking a count proportional to the wrong total, counts that do not sum to n, and treating a convenient choice as random.",
+     "why": "No existing kind fits. product_builder, ratio_balance and bar_builder cannot represent selecting units from layers or allocating proportional counts. Stretching one would be an answer box in disguise. The lesson also has no anchor questions or misconceptions, so a valid parent_question_id and diagnostics cannot be supplied."
+    }
+   ],
+   "notes": "No templates were written. All three objectives are about data-collection concepts (sources, methods, sample types). None is a numeric or geometric construction that the existing kinds can host. The lesson also supplies no anchor questions and no misconception ids, so a valid parent_question_id and diagnostics could not be filled in honestly. bar_builder covers mean, median, mode and range, which belong to a later lesson in the unit, not this one."
+  },
+  {
+   "lesson": "pp3u3-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u3-2-1:range-build",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "",
+     "tier": "basic",
+     "kind": "bar_builder",
+     "instances": [
+      {
+       "n": 5,
+       "t": 6
+      },
+      {
+       "n": 4,
+       "t": 8
+      },
+      {
+       "n": 6,
+       "t": 3
+      }
+     ],
+     "spec": {
+      "ask": "range",
+      "target": "{=t}",
+      "n": "{=n}"
+     },
+     "stem": "Drag the bars to build a set of ${=n}$ values whose range is ${=t}$. Remember: range = greatest value − smallest value.",
+     "solution": [
+      "The range is the greatest value minus the smallest value.",
+      "Choose a smallest value, for example 1.",
+      "Make the greatest value the smallest plus the target range.",
+      "Place the other values anywhere between them; the range does not change."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+      }
+     ],
+     "notes": "The lesson lists no anchor book questions, so parent_question_id is empty. bar_builder in range mode can only emit off-target, which fires for many reasons (e.g. using the largest value, or the mean, as the range). It is mapped to the equal-means misconception only weakly; the idea that many different sets share a range, and that sets with the same mean can have very different ranges, is shown live by the bars rather than diagnosed."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u3-2-2",
+     "need_kind": "deviation_builder",
+     "description": "The student drags bars for a small data set and sees the mean line, each deviation (x − mean) and each squared deviation drawn as a square on the bar. They must build a set with a given standard deviation, with variance and standard deviation shown step by step. Errors it would diagnose: forgetting to square, dividing by n−1 or not dividing at all, forgetting the square root, and using the range instead.",
+     "why": "bar_builder has no standard deviation ask (it only asks mean, median, mode or range), so the squared-deviation steps cannot be built or graded."
+    },
+    {
+     "lo_id": "lo:pp3u3-2-3",
+     "need_kind": "frequency_table_builder",
+     "description": "The student sets frequencies for values or class centres in a frequency table and sees the mean and standard deviation update, aiming at a target. Errors it would diagnose: using the class limits instead of the centres, ignoring frequencies as weights, and dividing by the number of classes instead of the total frequency.",
+     "why": "No existing kind handles weighted frequency data or grouped class centres."
+    },
+    {
+     "lo_id": "lo:pp3u3-2-4",
+     "need_kind": "distribution_comparer",
+     "description": "Two frequency polygons with equal means are shown, and the student reshapes one by dragging its frequencies so that it is more homogeneous (smaller standard deviation) than the other. The standard deviations show live. Errors it would diagnose: equal means taken as equal dispersion, and the larger standard deviation read as more homogeneous.",
+     "why": "No existing kind draws a frequency polygon or compares the spread of two distributions. bar_builder builds one set at a time and cannot show or grade a comparison."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u3-1-1",
+   "need_kind": "sort_cards (classification sorter)",
+   "description": "The student drags real data-collection scenarios (a survey the student runs, a school register, a census file, a published report) into 'primary source' or 'secondary source' bins, then matches each source to its advantage (up to date and specific, or cheap and quick). Errors it would diagnose: sorting by how the data looks rather than who collected it, treating a government publication as primary, and treating personal interviews as secondary.",
+   "why": "No existing kind fits. This is a categorical judgement, and the existing instruments are numeric or geometric. A text answer box would only be an answer box in disguise. The lesson also lists no anchor questions and no misconceptions, so there is nothing valid to name as a parent or a diagnostic."
+  },
+  {
+   "lo_id": "lo:pp3u3-1-2",
+   "need_kind": "scenario_matcher (method chooser with trade-off tags)",
+   "description": "The student is given a statistical society (for example, all 40 students in a class, or all 12 million households in a country) with an aim and a time or cost limit. They choose mass population (census) or sample, then tag the advantages and disadvantages that apply (accurate but costly, quick but with sampling error). Society size would be a slider, so the student sees the choice flip as the society grows. Errors it would diagnose: always choosing the sample, always choosing the census, and mixing up the advantages and disadvantages of each method.",
+   "why": "No existing kind fits. bar_builder and number_line_marker grade numbers, not a reasoned choice between methods. Using one here would be a forced fit. The lesson also has no anchor questions or misconceptions to attach."
+  },
+  {
+   "lo_id": "lo:pp3u3-1-3",
+   "need_kind": "sample_selector (population grid with layers)",
+   "description": "The student sees a population drawn as a grid of units, split into coloured layers (for example, grades or genders). There are three tasks. First, pick a sample of a given size by a biased choice, then by a simple random draw, and see which one under-represents a layer. Second, for a layer sample of size n, set how many units to take from each layer. The correct count is layer size ÷ population size × n, and the counts must sum to n. Third, check that the sample's layer proportions match the population's. Errors it would diagnose: equal counts from every layer, taking a count proportional to the wrong total, counts that do not sum to n, and treating a convenient choice as random.",
+   "why": "No existing kind fits. product_builder, ratio_balance and bar_builder cannot represent selecting units from layers or allocating proportional counts. Stretching one would be an answer box in disguise. The lesson also has no anchor questions or misconceptions, so a valid parent_question_id and diagnostics cannot be supplied."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-2",
+   "need_kind": "deviation_builder",
+   "description": "The student drags bars for a small data set and sees the mean line, each deviation (x − mean) and each squared deviation drawn as a square on the bar. They must build a set with a given standard deviation, with variance and standard deviation shown step by step. Errors it would diagnose: forgetting to square, dividing by n−1 or not dividing at all, forgetting the square root, and using the range instead.",
+   "why": "bar_builder has no standard deviation ask (it only asks mean, median, mode or range), so the squared-deviation steps cannot be built or graded."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-3",
+   "need_kind": "frequency_table_builder",
+   "description": "The student sets frequencies for values or class centres in a frequency table and sees the mean and standard deviation update, aiming at a target. Errors it would diagnose: using the class limits instead of the centres, ignoring frequencies as weights, and dividing by the number of classes instead of the total frequency.",
+   "why": "No existing kind handles weighted frequency data or grouped class centres."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-4",
+   "need_kind": "distribution_comparer",
+   "description": "Two frequency polygons with equal means are shown, and the student reshapes one by dragging its frequencies so that it is more homogeneous (smaller standard deviation) than the other. The standard deviations show live. Errors it would diagnose: equal means taken as equal dispersion, and the larger standard deviation read as more homogeneous.",
+   "why": "No existing kind draws a frequency polygon or compares the spread of two distributions. bar_builder builds one set at a time and cannot show or grade a comparison."
+  }
+ ]
+}

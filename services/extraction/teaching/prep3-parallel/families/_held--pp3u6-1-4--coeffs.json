@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-4:coeffs",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-4",
+ "parent_question_id": "q:pp3u6-1-4:bk-example-5",
+ "source_page": 9,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "A",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "B",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -3,
+    -1
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "k1",
+   "let": "p*A + q*B"
+  },
+  {
+   "name": "k2",
+   "let": "m*p*A + q*B"
+  },
+  {
+   "require": "k1 > 0",
+   "why": "keep constants positive"
+  }
+ ],
+ "stem": "Find the values of $a$ and $b$ knowing that $({=p}, {=q})$ is the solution of the two equations: $ax+by={=k1}$, ${=m}ax+by={=k2}$. Give your answer in the order $a$, $b$.",
+ "answer": "",
+ "solution": [
+  "$({=p}, {=q})$ satisfies both equations, so substitute $x={=p}$, $y={=q}$.",
+  "First equation: ${=p}a+({=q})b={=k1}$ .... (1)",
+  "Second equation: ${=m*p}a+({=q})b={=k2}$ .... (2)",
+  "Subtracting (1) from (2): ${=(m-1)*p}a={=k2-k1}$, so $a={=A}$.",
+  "Substituting in (1): ${=p}\\times{=A}+({=q})b={=k1}$, so $({=q})b={=k1-p*A}$, hence $b={=B}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=A}, {=B}]",
+  "form": null,
+  "variables": [
+   "a",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "notes": "Standard: book example 5 pattern; both unknowns are coefficients, solved by subtraction. Answer order a, b."
+}

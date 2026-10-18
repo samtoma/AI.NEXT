@@ -1,0 +1,333 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "c08f713171900f3fdeeeeccf8d74698b79ac973d25fc657d4b849a531ed4dc3b",
+  "generated_sha256": "838c08ba7ab68dc337fdac171f8e47b67ef512cb2032ce44df928d6c39aed177",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u6-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u6-1:figure-1",
+    "pp3u6-1:figure-2",
+    "pp3u6-1:figure-3",
+    "pp3u6-1:figure-4",
+    "pp3u6-1:figure-5"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u6-1-1",
+     "question": "pp3u6-1:example-1",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "linear",
+      "coefs": [
+       2,
+       -1
+      ],
+      "domain": [
+       -2,
+       3
+      ],
+      "markers": [
+       {
+        "x": 0,
+        "label": "(0,-1)"
+       },
+       {
+        "x": 2,
+        "label": "(2,3)"
+       }
+      ],
+      "animate": "draw"
+     },
+     "caption": "The solutions of 2x − y = 1 all lie on one straight line through (0, −1) and (2, 3).",
+     "printed_page": 6,
+     "figure_id": "pp3u6-1:figure-2",
+     "src": "pp3u6-1__figure-2.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u6-1-2",
+     "question": "pp3u6-1:example-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 0,
+        "y": -3,
+        "color": "red"
+       },
+       {
+        "x": 2,
+        "y": 1,
+        "label": "(2,1)",
+        "color": "purple"
+       },
+       {
+        "x": 4,
+        "y": 5,
+        "label": "L1",
+        "color": "red"
+       },
+       {
+        "x": 0,
+        "y": 2,
+        "color": "blue"
+       },
+       {
+        "x": 4,
+        "y": 0,
+        "label": "L2",
+        "color": "blue"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        2
+       ],
+       [
+        3,
+        4
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Line L1 (y = 2x − 3) and line L2 (x + 2y = 4) cross at the point (2, 1), the solution.",
+     "printed_page": 6,
+     "figure_id": "pp3u6-1:figure-3",
+     "src": "pp3u6-1__figure-3.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u6-1-2",
+     "question": "pp3u6-1:example-3",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 0,
+        "y": 4,
+        "label": "(0,4)",
+        "color": "red"
+       },
+       {
+        "x": 2,
+        "y": -2,
+        "label": "L1",
+        "color": "red"
+       },
+       {
+        "x": 0,
+        "y": 1.5,
+        "label": "(0,3/2)",
+        "color": "red"
+       },
+       {
+        "x": 1,
+        "y": -1.5,
+        "label": "L2",
+        "color": "red"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        2,
+        3
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "L1 (3x + y = 4) and L2 (2y + 6x = 3) are parallel lines that never meet.",
+     "printed_page": 7,
+     "figure_id": "pp3u6-1:figure-4",
+     "src": "pp3u6-1__figure-4.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u6-1-2",
+     "question": "pp3u6-1:example-3",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 0,
+        "y": 3,
+        "label": "(0,3)",
+        "color": "red"
+       },
+       {
+        "x": 2,
+        "y": 0,
+        "label": "(2,0)",
+        "color": "red"
+       },
+       {
+        "x": 4,
+        "y": -3,
+        "label": "L1 = L2",
+        "color": "red"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "L1 and L2 (3x + 2y = 6) lie on top of each other, so every point of the line is a solution.",
+     "printed_page": 7,
+     "figure_id": "pp3u6-1:figure-5",
+     "src": "pp3u6-1__figure-5.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u6-1:figure-1",
+     "src": "pp3u6-1__figure-1.png",
+     "ref": null,
+     "printed_page": 5,
+     "reason": "A plain rectangle with its sides labelled X cm and Y cm cannot be drawn by any available kind.",
+     "needed_kind": "geo_scene with rectangle/polygon and side labels"
+    }
+   ],
+   "counts": {
+    "visuals": 4,
+    "viz_gaps": 1,
+    "compared": 4
+   }
+  },
+  {
+   "lesson": "pp3u6-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u6-2:figure-1"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u6-2-1",
+     "question": "pp3u6-2:example-1",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       -4,
+       3
+      ],
+      "domain": [
+       -1,
+       5
+      ],
+      "markers": [
+       {
+        "x": 1,
+        "label": "1"
+       },
+       {
+        "x": 3,
+        "label": "3"
+       }
+      ],
+      "reveals": [
+       "vertex",
+       "axis",
+       "roots"
+      ],
+      "animate": "draw"
+     },
+     "caption": "The curve of f(x) = x² − 4x + 3 on [−1, 5] crosses the x-axis at x = 1 and x = 3, so those are the solutions.",
+     "printed_page": 11,
+     "figure_id": "pp3u6-2:figure-1",
+     "src": "pp3u6-2__figure-1.png"
+    }
+   ],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 1,
+    "viz_gaps": 0,
+    "compared": 1
+   }
+  },
+  {
+   "lesson": "pp3u6-3",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 2,
+   "S4 Compare": 2
+  },
+  "per_lesson": {
+   "pp3u6-1": 2,
+   "pp3u6-2": 2
+  },
+  "total": 4
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

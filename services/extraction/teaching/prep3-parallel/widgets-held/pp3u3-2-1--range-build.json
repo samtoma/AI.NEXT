@@ -1,0 +1,41 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u3-2-1:range-build",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "",
+ "tier": "basic",
+ "kind": "bar_builder",
+ "instances": [
+  {
+   "n": 5,
+   "t": 6
+  },
+  {
+   "n": 4,
+   "t": 8
+  },
+  {
+   "n": 6,
+   "t": 3
+  }
+ ],
+ "spec": {
+  "ask": "range",
+  "target": "{=t}",
+  "n": "{=n}"
+ },
+ "stem": "Drag the bars to build a set of ${=n}$ values whose range is ${=t}$. Remember: range = greatest value − smallest value.",
+ "solution": [
+  "The range is the greatest value minus the smallest value.",
+  "Choose a smallest value, for example 1.",
+  "Make the greatest value the smallest plus the target range.",
+  "Place the other values anywhere between them; the range does not change."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+  }
+ ],
+ "notes": "The lesson lists no anchor book questions, so parent_question_id is empty. bar_builder in range mode can only emit off-target, which fires for many reasons (e.g. using the largest value, or the mean, as the range). It is mapped to the equal-means misconception only weakly; the idea that many different sets share a range, and that sets with the same mean can have very different ranges, is shown live by the bars rather than diagnosed."
+}

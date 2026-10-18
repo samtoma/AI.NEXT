@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-3-1:circle-line",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-3-1",
+ "parent_question_id": "q:pp3u6-3-1:bk-mental-math-1",
+ "source_page": 13,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "p - 1"
+   ]
+  },
+  {
+   "name": "d",
+   "let": "p - q"
+  },
+  {
+   "name": "N",
+   "let": "p*p + q*q"
+  }
+ ],
+ "stem": "Solve algebraically, by substitution, the two equations $x - y = {=d}$ and $x^2 + y^2 = {=N}$, where $x, y \\in \\mathbb{R}$. Give the solution set as a list of ordered pairs $(x, y)$.",
+ "solution": [
+  "From the first-degree equation, $x = y + {=d}$.",
+  "Substitute into the second equation: $(y + {=d})^2 + y^2 = {=N}$.",
+  "Expand: $2y^2 + {=2*d}y + {=d*d} = {=N}$, so $2y^2 + {=2*d}y - {=N - d*d} = 0$.",
+  "Divide by 2: $y^2 + {=d}y - {=(N - d*d)/2} = 0$, which factorises as $(y - {=q})(y + {=p}) = 0$.",
+  "So $y = {=q}$ or $y = -{=p}$.",
+  "Then $x = y + {=d}$ gives $x = {=p}$ or $x = -{=q}$.",
+  "The solution set is $\\{({=p}, {=q}), (-{=q}, -{=p})\\}$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "[({=p}, {=q}), (-{=q}, -{=p})]",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Solutions (p,q) and (-q,-p); always two distinct integer pairs since q>=1. Order of pairs should not matter."
+}

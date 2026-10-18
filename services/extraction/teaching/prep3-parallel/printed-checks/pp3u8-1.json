@@ -1,0 +1,313 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u8-1",
+  "source": "book-records/prep3-parallel/pp3u8-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 13,
+      "cost_usd": 0.0472,
+      "calls": [
+        {
+          "call": "check-printed.pp3u8-1",
+          "cost_usd": 0.0372,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u8-1",
+          "cost_usd": 0.01,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u8-1:example-1:1",
+      "record_id": "pp3u8-1:example-1",
+      "part": "1",
+      "type": "worked_example",
+      "page": 31,
+      "printed": "S = {1, 2, 3, 4, 5, 6, 7, 8}, n(S) = 8",
+      "blind": "S = {1, 2, 3, 4, 5, 6, 7, 8}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-5"
+      ],
+      "question_fingerprint": "979bb31abb52aec32601c67de3d37ed9",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:2 A",
+      "record_id": "pp3u8-1:example-1",
+      "part": "2 A",
+      "type": "worked_example",
+      "page": 31,
+      "printed": "A = {2, 4, 6, 8}",
+      "blind": "A = {2, 4, 6, 8}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-5"
+      ],
+      "question_fingerprint": "3d79d0931c5264fb35fe85d6a94d347e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:2 B",
+      "record_id": "pp3u8-1:example-1",
+      "part": "2 B",
+      "type": "worked_example",
+      "page": 31,
+      "printed": "B = {2, 3, 5, 7}",
+      "blind": "B = {2, 3, 5, 7}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-5"
+      ],
+      "question_fingerprint": "89d1dffcde0b9e24e27ec0de9db5c8dc",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:2 C",
+      "record_id": "pp3u8-1:example-1",
+      "part": "2 C",
+      "type": "worked_example",
+      "page": 31,
+      "printed": "C = {4, 8}",
+      "blind": "C = {4, 8}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-5"
+      ],
+      "question_fingerprint": "52fa8ff8fc258d9185f085c472b09335",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:worked-example-1:A",
+      "record_id": "pp3u8-1:worked-example-1",
+      "part": "A",
+      "type": "worked_example",
+      "page": 32,
+      "printed": "$\\frac{1}{8}$",
+      "blind": "A ∩ B = {2}, so P(A ∩ B) = 1/8",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-6"
+      ],
+      "question_fingerprint": "c0e724fc001271fa172e10ee0ed8e7ad",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:worked-example-1:C",
+      "record_id": "pp3u8-1:worked-example-1",
+      "part": "C",
+      "type": "worked_example",
+      "page": 32,
+      "printed": "$P(A\\cap C)=\\frac{1}{4}$; $P(B\\cap C)=0$",
+      "blind": "A ∩ C = {4, 8}, P = 2/8 = 1/4; B ∩ C = ∅, P = 0 (B and C are mutually exclusive)",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-6"
+      ],
+      "question_fingerprint": "b73f4113752716e034cf121ab6216845",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u8-1:worked-example-1:C",
+        "verdict": "equivalent",
+        "reason": "Both give P(A∩C)=1/4 and P(B∩C)=0."
+      },
+      "how": "judged equivalent: Both give P(A∩C)=1/4 and P(B∩C)=0.",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:First",
+      "record_id": "pp3u8-1:example-2",
+      "part": "First",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$S=\\{1,2,3,4,5,6,7,8,9\\}$, $n(S)=9$",
+      "blind": "S = {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "2c51e043e488d2a5f115a35bbd2db36a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Second A",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Second A",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$A=\\{2,4,6,8\\}$, $n(A)=4$",
+      "blind": "A = {2, 4, 6, 8}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "808b756cba7eecd09960c2e147bd8ab7",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Second B",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Second B",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$B=\\{3,6,9\\}$, $n(B)=3$",
+      "blind": "B = {3, 6, 9}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "c29f311b1d8e1031efb27a6a20178ac5",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Second C",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Second C",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$C=\\{7\\}$, $n(C)=1$",
+      "blind": "C = {7}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "ca72ce9bd71fa16126a92087ad65fbfe",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Third a",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Third a",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$\\frac{2}{3}$",
+      "blind": "A ∪ B = {2, 3, 4, 6, 8, 9}, P(A ∪ B) = 6/9 = 2/3",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "2c19836853e38faf021f5815510af35e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Third b",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Third b",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$\\frac{5}{9}$",
+      "blind": "A ∪ C = {2, 4, 6, 7, 8}, P(A ∪ C) = 5/9",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "924df8a6e92586f2dac3ddaa204a36b3",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-2:Third c",
+      "record_id": "pp3u8-1:example-2",
+      "part": "Third c",
+      "type": "worked_example",
+      "page": 33,
+      "printed": "$P(A)+P(B)-P(A\\cap B)=\\frac{2}{3}=P(A\\cup B)$",
+      "blind": "P(A) + P(B) − P(A ∩ B) = 4/9 + 3/9 − 1/9 = 6/9 = 2/3, which equals P(A ∪ B). So P(A ∪ B) = P(A) + P(B) − P(A ∩ B).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u8-1:figure-8"
+      ],
+      "question_fingerprint": "59760e4b0e33619f1e3b120ca15a6221",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u8-1:example-2:Third c",
+        "verdict": "equivalent",
+        "reason": "Both give the sum as 2/3, equal to P(A∪B). The solver's 4/9+3/9−1/9 matches the sample space: A={2,4,6,8}, B={3,6,9}, A∩B={6}."
+      },
+      "how": "judged equivalent: Both give the sum as 2/3, equal to P(A∪B). The solver's 4/9+3/9−1/9 matches the sample space: A={2,4,6,8}, B={3,6,9}, A∩B={6}.",
+      "made": {
+        "at": "2026-10-18T07:17:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

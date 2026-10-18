@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-2-3:inside-sum",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-2-3",
+ "parent_question_id": "lo:pp3u10-2-3",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    4,
+    14
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    4,
+    14
+   ]
+  },
+  {
+   "name": "a",
+   "let": "10 * p"
+  },
+  {
+   "name": "b",
+   "let": "10 * q"
+  }
+ ],
+ "constraints": [],
+ "stem": "Two chords $AB$ and $CD$ intersect at point $E$ inside a circle. The arc $AC$ intercepted by $\\angle AEC$ measures ${=a}^\\circ$ and the arc $BD$ intercepted by its vertical angle $\\angle BED$ measures ${=b}^\\circ$. Find $m\\angle AEC$ in degrees.",
+ "answer": "(a + b) / 2",
+ "solution": [
+  "For two chords intersecting inside a circle, the angle equals half the sum of the intercepted arcs.",
+  "$m\\angle AEC = \\frac{1}{2}({=a} + {=b}) = \\frac{{=a + b}}{2}$.",
+  "$m\\angle AEC = {=(a + b) / 2}^\\circ$."
+ ],
+ "notes": "No book questions were supplied for this objective; parent_question_id is a placeholder (the objective id) and needs a human to assign a real parent. Basic: direct half-sum."
+}

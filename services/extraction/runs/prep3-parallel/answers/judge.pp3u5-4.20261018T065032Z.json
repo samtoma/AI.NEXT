@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "70b98138421d61e88532696571da05b24b056ed3a94ea974bc5c33711da7f4c7",
+  "generated_sha256": "a14d48a22037a9f7c466044bb3228b76ca37ede1e03ed55465c7e0089e06d2c0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u5-4:example-2",
+    "verdict": "equivalent",
+    "reason": "Same slope -3/4 and y-intercept length 5/4."
+   },
+   {
+    "ref": "pp3u5-4:example-3",
+    "verdict": "different",
+    "reason": "y=3x-4 does not pass through (1,2), but y=3x-1 does. The lines have different intercepts."
+   },
+   {
+    "ref": "pp3u5-4:example-4",
+    "verdict": "equivalent",
+    "reason": "2x+7y-22=0 rearranges to y=-2/7 x+22/7."
+   }
+  ]
+ }
+}

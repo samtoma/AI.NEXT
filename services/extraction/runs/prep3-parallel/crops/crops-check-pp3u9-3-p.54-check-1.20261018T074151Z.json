@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "2079c6cf92c3668f62ffb485d116db0e5f28d33fa60c3befe58e9d48b917f007",
+  "generated_sha256": "2a7f37b2ada78518ac993ee040f250dfb46c7c5f2ff0cef63c48767ae051dc8e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-3:figure-1",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Full bicycle photo with both red circles visible."
+   },
+   {
+    "id": "pp3u9-3:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "extend",
+    "bottom": "ok",
+    "note": "Right side cut off: circle M (yellow) and its label M and centre are clipped at the right edge. A stray '.' at top-left is not part of the figure, minor."
+   }
+  ]
+ }
+}

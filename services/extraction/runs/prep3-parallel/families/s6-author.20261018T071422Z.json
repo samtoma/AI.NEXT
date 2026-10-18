@@ -1,0 +1,700 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "b6ae5c294c3185fb6924dcab78b9aed0c55f6c42d8102530ecabb28b28e41940",
+  "generated_sha256": "a188c9d37365f2b350306fe2365f1da86479fbee18148ec14732e04cdef27c6f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u7-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The prompt lists no book questions for lo:pp3u7-1-1, so there is no valid parent_question_id or source_page. There are also no canonical solutions to show the book's method or notation for Z(f). A made-up parent would break the spec."
+    },
+    {
+     "tier": "standard",
+     "reason": "The same gap applies. With no book question or solution to model, I can't tie a standard-tier family to a real parent or to the book's own method and vocabulary."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The same gap applies. I can't tell which twist the book uses for harder exercises on this objective, because no book question was supplied."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u7-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-1-2:quadzero",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-1-2",
+     "parent_question_id": "q:pp3u7-1-2:bk-drill-1-a",
+     "source_page": 16,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      }
+     ],
+     "stem": "Find the set of zeroes of the function $f(x)=x^2-{=p}x$. Give the zeroes as a list of values.",
+     "solution": [
+      "Put $f(x)=0$: $x^2-{=p}x=0$.",
+      "Factorise: $x(x-{=p})=0$.",
+      "$x=0$ gives $x=0$; $x-{=p}=0$ gives $x={=p}$.",
+      "$Z(f)=\\{0, {=p}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[0, {=p}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry point: common factor x, two zeroes. Same skeleton as book drill 1-a."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-1-2:cubiczero",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-1-2",
+     "parent_question_id": "q:pp3u7-1-2:bk-drill-1-d",
+     "source_page": 16,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        "p + 1",
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "m",
+       "let": "p * q"
+      }
+     ],
+     "stem": "Find the set of zeroes of the function $f(x)=x^3-{=s}x^2+{=m}x$. Give the zeroes as a list of values.",
+     "solution": [
+      "Put $f(x)=0$: $x^3-{=s}x^2+{=m}x=0$.",
+      "Take out the common factor $x$: $x(x^2-{=s}x+{=m})=0$.",
+      "Factorise the bracket: $x(x-{=p})(x-{=q})=0$.",
+      "$x=0$, or $x-{=p}=0$, or $x-{=q}=0$.",
+      "$Z(f)=\\{0, {=p}, {=q}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[0, {=p}, {=q}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Two-stage factorisation (common factor then quadratic), three distinct zeroes, as in book 1-a/1-d style."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The 'no zeroes' case is not included as a separate family; mixing it into these would break the single-skeleton rule."
+  },
+  {
+   "lo_id": "lo:pp3u7-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-2-1:exclude-one",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-2-1",
+     "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+     "source_page": 18,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        9
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "The domain of the function $f(x)=\\frac{x+{=p}}{x-{=q}}$ is $R-\\{c\\}$. Find the value of $c$.",
+     "answer": "q",
+     "solution": [
+      "The domain is R minus the set of zeroes of the denominator, so put the denominator equal to zero: $x-{=q}=0$.",
+      "$x={=q}$, so the denominator is zero only at $x={=q}$.",
+      "The domain is $R-\\{{=q}\\}$, so $c={=q}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: one linear denominator. Numerator zero is at -p, never equal to q in sign confusion cases except none; fine."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-2-1:square-diff",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-2-1",
+     "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+     "source_page": 18,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "k2",
+       "let": "k * k"
+      },
+      {
+       "require": "p != k",
+       "why": "numerator zero must not coincide with a denominator zero"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the values of $x$ that must be excluded from the domain of the function $n(x)=\\frac{x-{=p}}{x^2-{=k2}}$. Give both values.",
+     "answer": "[k, -k]",
+     "marker": {
+      "kind": "values",
+      "answer": "[{=k}, -{=k}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "solution": [
+      "The domain is R minus the zeroes of the denominator, so solve $x^2-{=k2}=0$.",
+      "$x^2={=k2}$, so $x={=k}$ or $x=-{=k}$ (both roots are needed).",
+      "The domain is $R-\\{{=k},-{=k}\\}$, so the excluded values are ${=k}$ and $-{=k}$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u7-2-1:one-root-only-denominator",
+       "label": "Finds only the positive root of the denominator",
+       "description": "Gives only x = sqrt(k) and loses the negative root."
+      }
+     ],
+     "notes": "Standard: x^2 - k^2 denominator, two excluded values. Numerator zero p avoided equal to k."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u7-2-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u7-2-2 is empty. Every family needs a parent_question_id that is a real book question of this objective, with a printed page and a canonical solution to model. I won't invent one, and I won't guess the book's method or notation for a common domain."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there is no book question or canonical solution to anchor a parent_question_id or to set the book's typical exercise level."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: with no book questions, I can't tell which twists the book uses in its harder exercises, and I have no valid parent_question_id."
+    }
+   ],
+   "notes": "I wrote no families. The input gave no book questions and no catalogued misconceptions for lo:pp3u7-2-2, and the spec requires each family's parent_question_id to come from that list. Please supply the book questions with their printed pages and solutions. The description says the common domain is R minus the union of the zeroes of the denominators, so I can then write three families, one per tier:\n- Basic: two fractions with linear denominators.\n- Standard: denominators that factorise, or three fractions.\n- Advanced: denominators that are quadratics, or one with no real zeroes."
+  },
+  {
+   "lo_id": "lo:pp3u7-3-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for lo:pp3u7-3-2 is empty. A family needs a parent_question_id from this objective, a source_page, and a canonical solution to follow. With none supplied I would have to invent them, and I can't tell which method the book uses to compare domains and simplest forms."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there are no book questions or canonical solutions for this objective, so no valid parent_question_id exists and the book's typical exercise can't be modelled."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book questions are available to show the harder exercises or the twist the book uses, so a family would be guesswork."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u7-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-1:common-denominator",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        3,
+        7
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        "m - 1"
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        3,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        "a - 1"
+       ]
+      },
+      {
+       "require": "gcd(m - n, a - b) == 1",
+       "why": "result already in simplest form"
+      },
+      {
+       "require": "(a - b) != p * (m - n)",
+       "why": "no common factor with the denominator"
+      }
+     ],
+     "constraints": [],
+     "stem": "Simplify, giving the answer in simplest form: $\\frac{{=m}x+{=a}}{x+{=p}}-\\frac{{=n}x+{=b}}{x+{=p}}$ (the domain is $x\\neq -{=p}$).",
+     "solution": [
+      "The denominators are equal, so subtract the numerators over the common denominator: $\\frac{({=m}x+{=a})-({=n}x+{=b})}{x+{=p}}$.",
+      "Remove the brackets and collect like terms: $({=m}-{=n})x+({=a}-{=b})={=m-n}x+{=a-b}$.",
+      "The result is $\\frac{{=m-n}x+{=a-b}}{x+{=p}}$; it cannot be simplified further, and the domain is $x\\neq -{=p}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=m-n}*x+{=a-b})/(x+{=p})",
+      "form": "simplest",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder and needs a human to set it. Domain appears in the solution; the marker checks only the fraction."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-1:different-denominators",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "require": "b * p - a * q > 0",
+       "why": "constant term of the numerator is positive"
+      }
+     ],
+     "constraints": [],
+     "stem": "Add and give the answer in simplest form: $\\frac{{=a}}{x+{=p}}+\\frac{{=b}}{x-{=q}}$ (the denominator may be left factorised).",
+     "solution": [
+      "The denominators $x+{=p}$ and $x-{=q}$ have no common factor, so the L.C.M. is $(x+{=p})(x-{=q})$.",
+      "Rewrite each fraction over the L.C.M.: $\\frac{{=a}(x-{=q})+{=b}(x+{=p})}{(x+{=p})(x-{=q})}$.",
+      "Expand the numerator: ${=a}x-{=a*q}+{=b}x+{=b*p}={=a+b}x+{=b*p-a*q}$.",
+      "The result is $\\frac{{=a+b}x+{=b*p-a*q}}{(x+{=p})(x-{=q})}$. The numerator has no factor in common with the denominator. The domain is $x\\neq -{=p}$ and $x\\neq {=q}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=a+b}*x+{=b*p-a*q})/((x+{=p})*(x-{=q}))",
+      "form": "simplest",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions supplied; parent_question_id is a placeholder. Numerator constant forced positive so it prints cleanly; no cancellation is possible (numerator at x=-p is -b(p+q), at x=q is a(p+q))."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-1:factorise-first",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        1,
+        "b * p - 1"
+       ]
+      },
+      {
+       "name": "s",
+       "let": "p * p"
+      }
+     ],
+     "constraints": [],
+     "stem": "Subtract and give the answer in simplest form: $\\frac{{=b}}{x-{=p}}-\\frac{{=a}}{x^2-{=s}}$ (the denominator may be left factorised).",
+     "solution": [
+      "Factorise the second denominator: $x^2-{=s}=(x-{=p})(x+{=p})$.",
+      "The L.C.M. of the denominators is $(x-{=p})(x+{=p})$.",
+      "Rewrite the first fraction over the L.C.M.: $\\frac{{=b}(x+{=p})-{=a}}{(x-{=p})(x+{=p})}$.",
+      "Expand the numerator: ${=b}x+{=b*p}-{=a}={=b}x+{=b*p-a}$.",
+      "The result is $\\frac{{=b}x+{=b*p-a}}{(x-{=p})(x+{=p})}$, which cannot be simplified further. The domain is $x\\neq {=p}$ and $x\\neq -{=p}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=b}*x+{=b*p-a})/((x-{=p})*(x+{=p}))",
+      "form": "simplest",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions supplied; parent_question_id is a placeholder. Since a<bp, numerator constant is positive; numerator roots (-(bp-a)/b) never equal ±p (needs a=2bp or a=0), so no cancellation."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list for this objective was empty, so every parent_question_id is the placeholder \"none-available\" and source_page is null. A human must assign real parents. The marker checks the fraction only. The domain is stated in each solution."
+  },
+  {
+   "lo_id": "lo:pp3u7-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-2:mono-product",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-2",
+     "parent_question_id": "q:pp3u7-4-2:none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "n",
+       "let": "a * c"
+      },
+      {
+       "name": "m",
+       "let": "b * d"
+      },
+      {
+       "name": "g",
+       "let": "gcd(n, m)"
+      },
+      {
+       "name": "n1",
+       "let": "n // g"
+      },
+      {
+       "name": "d1",
+       "let": "m // g"
+      },
+      {
+       "name": "nt",
+       "let": "(str(n1) if n1 != 1 else '') + 'xy'"
+      },
+      {
+       "require": "d1 > 1",
+       "why": "answer must stay a fraction"
+      }
+     ],
+     "stem": "Multiply and write the result in simplest form, where $x \\neq 0$ and $y \\neq 0$: $$\\frac{{=a}x^2}{{=b}y}\\times\\frac{{=c}y^2}{{=d}x}$$",
+     "answer": "",
+     "solution": [
+      "Multiply the numerators and the denominators: $\\frac{{=a}x^2\\times {=c}y^2}{{=b}y\\times {=d}x}=\\frac{{=n}x^2y^2}{{=m}xy}$.",
+      "Cancel the common factors $x$ and $y$: $\\frac{{=n}xy}{{=m}}$.",
+      "Divide the numerator and denominator numbers by their HCF {=g}: $\\frac{{=nt}}{{=d1}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=n1}*x*y)/{=d1}",
+      "form": "simplest",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "notes": "No book questions were supplied, so parent_question_id is a placeholder. Domain is stated in the stem, not asked for, because the marker takes a single expression."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-2:factor-product",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-2",
+     "parent_question_id": "q:pp3u7-4-2:none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "sq",
+       "let": "b * b"
+      },
+      {
+       "require": "gcd(c, d) == 1",
+       "why": "keeps the final fraction in lowest terms"
+      }
+     ],
+     "constraints": [
+      "gcd(c, d) == 1"
+     ],
+     "stem": "Multiply and write the result in simplest form, where $x \\neq 0$ and $x \\neq -{=b}$: $$\\frac{x^2-{=sq}}{{=c}x}\\times\\frac{{=d}x}{x+{=b}}$$",
+     "answer": "",
+     "solution": [
+      "Factorise the difference of two squares: $x^2-{=sq}=(x-{=b})(x+{=b})$.",
+      "Write the product: $\\frac{(x-{=b})(x+{=b})\\times {=d}x}{{=c}x\\times(x+{=b})}$.",
+      "Cancel the common factors $x$ and $(x+{=b})$.",
+      "The simplest form is $\\frac{{=d}(x-{=b})}{{=c}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=d}*(x - {=b})/{=c}",
+      "form": "simplest",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "notes": "Placeholder parent id (no book questions given). Domain given in stem."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-4-2:divide-factor",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-4-2",
+     "parent_question_id": "q:pp3u7-4-2:none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "require": "p != q and p != r and q != r",
+       "why": "avoid extra cancelling or squares"
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "t",
+       "let": "p * q"
+      },
+      {
+       "name": "rr",
+       "let": "r * r"
+      }
+     ],
+     "stem": "Divide and write the result in simplest form, where $x \\neq {=r}$, $x \\neq -{=r}$ and $x \\neq -{=q}$: $$\\frac{x^2+{=s}x+{=t}}{x^2-{=rr}}\\div\\frac{x+{=q}}{x-{=r}}$$",
+     "answer": "",
+     "solution": [
+      "Multiply by the reciprocal of the second fraction: $\\frac{x^2+{=s}x+{=t}}{x^2-{=rr}}\\times\\frac{x-{=r}}{x+{=q}}$.",
+      "Factorise: $x^2+{=s}x+{=t}=(x+{=p})(x+{=q})$ and $x^2-{=rr}=(x-{=r})(x+{=r})$.",
+      "Write the product: $\\frac{(x+{=p})(x+{=q})(x-{=r})}{(x-{=r})(x+{=r})(x+{=q})}$.",
+      "Cancel $(x+{=q})$ and $(x-{=r})$.",
+      "The simplest form is $\\frac{x+{=p}}{x+{=r}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "(x + {=p})/(x + {=r})",
+      "form": "simplest",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "notes": "Placeholder parent id (no book questions given). Domain given in stem, since the fraction being divided by must be nonzero too."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were supplied, so parent_question_id and source_page are placeholders. The domain is stated in each stem instead of being asked for, because the single-expression marker cannot also check a domain. All three families are expression type, so there are no mcq distractors or catalogued misconceptions."
+  }
+ ],
+ "revised": []
+}

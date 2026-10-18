@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-3:missing",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-3",
+ "parent_question_id": "q:pp3u3-2-3:none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "randint": [
+    25,
+    50
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    2,
+    4,
+    6,
+    10
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b0",
+   "let": "c - (3*w)//2"
+  },
+  {
+   "name": "b1",
+   "let": "b0 + w"
+  },
+  {
+   "name": "b2",
+   "let": "b1 + w"
+  },
+  {
+   "name": "b3",
+   "let": "b2 + w"
+  },
+  {
+   "name": "b4",
+   "let": "b3 + w"
+  }
+ ],
+ "constraints": [],
+ "stem": "A grouped frequency distribution has these classes: ${=b0} \\le x < {=b1}$ with frequency $f$ (unknown); ${=b1} \\le x < {=b2}$ with frequency ${=3*k}$; ${=b2} \\le x < {=b3}$ with frequency ${=k}$; ${=b3} \\le x < {=b4}$ with frequency ${=k}$. Using the class centres, the mean is ${=c}$. Find $f$ and then calculate the standard deviation.",
+ "answer": "w",
+ "solution": [
+  "The class centres are ${=c-w}$, ${=c}$, ${=c+w}$ and ${=c+2*w}$.",
+  "Mean equation: ${=c-w}f+{=c}\\times{=3*k}+{=c+w}\\times{=k}+{=c+2*w}\\times{=k}={=c}(f+{=5*k})$.",
+  "Simplify: ${=c}f-{=w}f+{=5*k*c+3*k*w}={=c}f+{=5*k*c}$, so ${=w}f={=3*k*w}$ and $f={=3*k}$.",
+  "Total frequency ${=8*k}$. Deviations from the mean ${=c}$: $-{=w}$, $0$, ${=w}$, ${=2*w}$.",
+  "$\\sum f(x-\\bar{x})^2={=3*k}\\times{=w*w}+0+{=k}\\times{=w*w}+{=k}\\times{=4*w*w}={=8*k*w*w}$.",
+  "Variance $={=w*w}$, so the standard deviation is ${=w}$."
+ ],
+ "notes": "Unknown f is solved from the given mean (f=3k). The middle class has frequency 3k and is at the mean, so f is genuinely determined by the other classes. Placeholder parent id."
+}

@@ -1,0 +1,159 @@
+{
+ "book": "prep3-parallel",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "d9aadc33c681cfb831b0f7aa71a5487c68b7b198339644c7441b78739b150c60",
+  "generated_sha256": "015c9c187d72ed840f4364c6ae7f534de974bdcf93a08649310e0f4452a8e43e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u3-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u3-2-1:equal-means-same-dispersion",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "Equal means, so equally spread",
+     "description": "The student finds that two sets have the same mean and concludes that their values are equally spread out, or that the sets are alike.",
+     "signal": "Says two sets with the same mean have the same dispersion, without finding either range.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found that both means are equal, and that part is right: both sets of wages have a mean of LE 200. The slip is in treating the mean as if it also told you how spread out the values are."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at the two sets of wages. Set A is $170, 180, 180, 230, 240$ and set B is $50, 180, 180, 190, 400$. Both add up to $1000$, so both have mean $200$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the values are not equally spread. Set A stays between $170$ and $240$, close to its mean. Set B runs from $50$ up to $400$, far on both sides of $200$. The mean is the same, yet B is clearly more scattered."
+      },
+      {
+       "step": 4,
+       "text_md": "The mean tells you where the centre of the values is. It says nothing about how far the values stretch around that centre. Sets with the same mean can have very different spreads."
+      },
+      {
+       "step": 5,
+       "text_md": "To compare dispersion, find the range of each set as greatest value $-$ smallest value. Compare the two ranges: the bigger range means the more divergent set."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u3-2-1:bk-think-and-discuss-1"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u3-2:rule-7"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The book says 'dispersion' and 'more divergent'; I used both as printed."
+    },
+    {
+     "kind": "evidence",
+     "text": "Remark 'Notice that:' (linking-text-12) has no content, so I did not use it. Remark (3) only supports a possible 'same range means same spread' error, which I left out as the book solves no case that shows it."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence, the remark 'Notice that :', is truncated and names no error, so I could not use it. The brief lists no caution box, no re-solve wrong turn and no wrong options. I added no entries, and the runtime will fall back to the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were added. The runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book writes both 'standard deviation' and 'standard variation' (in the first worked example's formula step), and uses 'sets' for class intervals. Both are kept as printed and need human review."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  }
+ ],
+ "totals": {
+  "objectives": 7,
+  "entries": 1,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 4,
+  "flags": 5
+ }
+}

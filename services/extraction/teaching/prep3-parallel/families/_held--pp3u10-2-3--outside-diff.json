@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-2-3:outside-diff",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-2-3",
+ "parent_question_id": "lo:pp3u10-2-3",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    12,
+    22
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    3,
+    8
+   ]
+  },
+  {
+   "name": "A",
+   "let": "10 * p"
+  },
+  {
+   "name": "B",
+   "let": "10 * q"
+  }
+ ],
+ "constraints": [],
+ "stem": "Two rays $PA$ and $PC$ start at a point $P$ outside a circle and cut it, so that $\\angle APC$ intercepts a far arc of ${=A}^\\circ$ and a near arc of ${=B}^\\circ$. Find $m\\angle APC$ in degrees.",
+ "answer": "(A - B) / 2",
+ "solution": [
+  "For two rays intersecting outside a circle, the angle equals half the difference of the intercepted arcs (larger minus smaller).",
+  "$m\\angle APC = \\frac{1}{2}({=A} - {=B}) = \\frac{{=A - B}}{2}$.",
+  "$m\\angle APC = {=(A - B) / 2}^\\circ$."
+ ],
+ "notes": "Placeholder parent_question_id; no book questions supplied. Standard: outside case, half-difference."
+}

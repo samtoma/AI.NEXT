@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "b462030f0a5172b4ea8ac02c9789ca21c3eb032f9f9d40e856ba36d21597c07c",
+  "generated_sha256": "5b26c2d62585ce937cac9fd59cb8592aa3a94d9419def9f142eae3d36446fc7e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u10-3:example-1",
+    "verdict": "equivalent",
+    "reason": "Both conclude EB = EC (solver's proof relies on an assumed circle, but the final result matches)."
+   },
+   {
+    "ref": "pp3u10-3:example-3",
+    "verdict": "equivalent",
+    "reason": "Both conclude CD = CE."
+   }
+  ]
+ }
+}

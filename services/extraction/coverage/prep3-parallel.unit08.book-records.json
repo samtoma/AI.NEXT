@@ -1,0 +1,277 @@
+{
+  "coverage_version": 1,
+  "line": "book-records",
+  "book": "prep3-parallel",
+  "course_id": "course:prep3-parallel-math-en",
+  "unit": 8,
+  "lessons": [
+    "pp3u8-1",
+    "pp3u8-2"
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 19,
+    "hold": 15,
+    "excepted": 0,
+    "fail": 4
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "The unit's printed pages = pages in a lesson + pages excluded with a reason",
+      "want": 8,
+      "got": 8,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons whose record names its source, offset and the map's pages",
+      "want": 2,
+      "got": 2,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Prompts = prompts filed under exactly one objective",
+      "want": 20,
+      "got": 20,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Prompts and parts filed = asked as book questions + left out with a reason",
+      "want": 50,
+      "got": 50,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "pp3u8-1:think-and-discuss-3: not asked, no answer approved yet",
+        "pp3u8-2:think-1: not asked, no answer approved yet"
+      ]
+    },
+    {
+      "id": "worked_examples",
+      "title": "Worked examples = asked as a question, or kept in the explanation library",
+      "want": 4,
+      "got": 4,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
+      "want": 5,
+      "got": 5,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × 3 tiers = cells with a live question, book or generated",
+      "want": 15,
+      "got": 10,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:pp3u8-1-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u8-1-2 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u8-1-2 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u8-2-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u8-2-2 basic",
+          "detail": "no live question at this tier"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "module_widgets",
+      "title": "The unit = a unit with a live widget question",
+      "want": 1,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "unit 8",
+          "detail": "no live widget question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors = those whose misconception has a refutation",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "The unit's catalogue entries = entries with a refutation",
+      "want": 3,
+      "got": 3,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "figures",
+      "title": "Figures in the records = figures drawn + gaps with a reason",
+      "want": 13,
+      "got": 13,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book pictures standing in for a figure that are not servable = 0",
+      "want": 14,
+      "got": 14,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_reading",
+      "title": "Formulas read twice = agreed + decided in the Maths reading task",
+      "want": 69,
+      "got": 65,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "pp3u8-1:worked-example-1|parts[1].solution[0]|1",
+          "detail": "disagreed: $n(A\\cap B)=1$ / $n\\ (A \\cap C) = 2$"
+        },
+        {
+          "scope": "pp3u8-1:drill-5|parts[1].stem|2",
+          "detail": "disagreed: $P(A\\cap B)=\\ldots$ / $P(A \\cap B) = \\ldots\\ldots$"
+        },
+        {
+          "scope": "pp3u8-2:think-and-discuss-1|text|1",
+          "detail": "disagreed: $A \\cap A' = \\ldots$ / $A \\cap A` = \\ldots\\ldots\\ldots$"
+        },
+        {
+          "scope": "pp3u8-2:think-and-discuss-2|text|2",
+          "detail": "disagreed: $A'=\\{\\ldots\\}$ / $A` = \\{\\ldots\\ldots\\ldots\\ldots\\}$"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misprints_decided",
+      "title": "Misprints and candidates = those a person decided",
+      "want": 3,
+      "got": 2,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "pp3u8-2:figure-2#caption",
+          "detail": "not decided in the Misprints task"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Book questions = distinct prompts asked once, each with one type",
+      "want": 28,
+      "got": 28,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = answers printed in the book + generated answers approved or agreed",
+      "want": 28,
+      "got": 28,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": [],
+      "notes": [
+        "q:pp3u8-1-1:bk-exercise-1-a: held (figure_missing)",
+        "q:pp3u8-1-1:bk-exercise-1-b: held (figure_missing)",
+        "q:pp3u8-1-1:bk-exercise-1-c: held (figure_missing)"
+      ]
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
+      "want": 373,
+      "got": 373,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_served",
+      "title": "The records' statements filed under an objective = statements in the content files",
+      "want": 18,
+      "got": 18,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_checked",
+      "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
+      "want": 24,
+      "got": 24,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    }
+  ],
+  "inputs": {
+    "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
+    "book-records/prep3-parallel/misprint-candidates.json": "8c31caee1356e8056495865ec7daf2cb37f0d2c572305002dcd8e5e22f1040af",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "941c1aac3c315dbfe7d81fe7c4428d8d1d3b2cb889ea295fe31ae492cdd00804",
+    "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
+    "book-records/prep3-parallel/pp3u8-1.json": "0ec98f643d306e875f5ca2d7ac43a1a075a9767e5c25d3f5eed5b4dc4896d087",
+    "book-records/prep3-parallel/pp3u8-2.json": "5b9ccaf9d67b980172a3f3b472eb7e7df2bbb5eca2feb5b94e8f002d2a577205",
+    "book-records/prep3-parallel/maths-reading/pp3u8-1.json": "63f12f950733c64d8e5df0e23814b80617d3c5e63b912f5908d10459027fb987",
+    "book-records/prep3-parallel/maths-reading/pp3u8-2.json": "a66e9359fd672ab6fc6a7e7269d0f58c913f94c57f236fbd2dc8e1120f32017c",
+    "teaching/prep3-parallel/visuals/pp3u8-1.json": "51c3032a349b289767857bf42a11db01d596b8edff3f4056e7fcfbb60825c851",
+    "teaching/prep3-parallel/visuals/pp3u8-2.json": "bd6bc5934fd4306d4f7d1ddb258c4b3edcf22a4d5ed76271caa97282115d6027",
+    "compiled/prep3-parallel/compile-report.json": "5ebaaa320dd205f29dcdae08bc7d450028450eda6b551d898dcd9deee04d3ce2",
+    "compiled/prep3-parallel/generated-questions.json": "f3cca7702ddef4773d8b3125e2c46c733c445524de3196dd89f188448b545381",
+    "compiled/prep3-parallel/misconceptions.json": "4fcd970a1c226b1fc368dcd9007dc227af36c6c764c9df73ee81657b8adca5d4",
+    "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
+    "compiled/prep3-parallel/pp3u3.json": "a8c331c6a2cfe469a59c651b331e79293a31b3fa3fafe7fbd3cdd712e58ebfd8",
+    "compiled/prep3-parallel/pp3u4.json": "93a3d28a26e39b95bbce014dc54d4bde2af382a1476383d7e1d91b3fc7214626",
+    "compiled/prep3-parallel/pp3u5.json": "84823f794880e5f7200db507cb4049f4491742da9f9ba8534fa4e39380ae67e9",
+    "compiled/prep3-parallel/pp3u6.json": "87679f53831d7932fcf302e6ea546be935165d95c4578d52d47b8a3031593a44",
+    "compiled/prep3-parallel/pp3u7.json": "e4aea244ead277beb34d4eb31175a6520ddacd86851aeb1a39ad533cb0c7b9e0",
+    "compiled/prep3-parallel/pp3u8.json": "0b06e7cee0f308f98c63e72b12cee1bd0a84192e87151a770b17692324bc13a8",
+    "compiled/prep3-parallel/pp3u9.json": "0cc7295d5f334f39da9f29e3a5c0a164eed9389f185d589916d23a371f740031",
+    "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
+    "compiled/prep3-parallel/widget-questions.json": "411efc433c6fee5f8451bf39efb8eba895feca614fdbe68fcb8544061aa86062",
+    "compiled/prep3-parallel/content/pp3u8-1.json": "dfe348dc737718fb25db1aa8e30f5da2984e5bd0d2eef760eade413eb86a97ac",
+    "compiled/prep3-parallel/content/pp3u8-2.json": "11208ad712f548075b5fe652d4a30e1fb6e10492d8de52329fae3eef01fa295c"
+  },
+  "exceptions": []
+}

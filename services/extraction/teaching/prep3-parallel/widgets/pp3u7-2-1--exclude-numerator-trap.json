@@ -1,0 +1,37 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-2-1:exclude-numerator-trap",
+ "lo_id": "lo:pp3u7-2-1",
+ "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -3,
+   3
+  ]
+ },
+ "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
+ "solution": [
+  "Only the denominator can make the fraction undefined, so solve $x^2-9=0$.",
+  "$x^2=9$ gives $x=3$ or $x=-3$.",
+  "Mark $-3$ and $3$; the domain is $R-\\{-3,3\\}$.",
+  "$x=1$ makes the numerator zero, so $n(1)=0$ is defined and 1 stays in the domain."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+  },
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator"
+  }
+ ],
+ "notes": "Here the numerator zero 1 is a tempting extra mark, so extra-values is listed first. Marking only 3 fires missed-values (one root only), a named alternative. Marking only 1 may fire neither cleanly and is not separately mapped."
+}

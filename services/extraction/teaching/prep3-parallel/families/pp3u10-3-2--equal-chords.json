@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-2:equal-chords",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-2",
+ "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
+ "source_page": 82,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    5,
+    20
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    5,
+    30
+   ]
+  },
+  {
+   "name": "m",
+   "let": "p * x - q"
+  },
+  {
+   "require": "m >= 20 and m <= 80",
+   "why": "angle is a sensible size"
+  }
+ ],
+ "stem": "In a circle, the chords $AB$ and $CD$ are equal in length. The inscribed angle $\\angle AEB$ stands on the minor arc $AB$ and measures $({=p}x - {=q})^\\circ$. The inscribed angle $\\angle CFD$ stands on the minor arc $CD$ and measures ${=m}^\\circ$. Find the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "Equal chords in the same circle cut off equal minor arcs, so arc $AB$ = arc $CD$.",
+  "Equal arcs give equal inscribed angles: ${=p}x - {=q} = {=m}$.",
+  "${=p}x = {=m + q}$.",
+  "$x = {=x}$."
+ ],
+ "notes": "Basic: one equation from equal chords/arcs -> equal inscribed angles, as in the book's Figure 1. Described in words; no figure needed."
+}

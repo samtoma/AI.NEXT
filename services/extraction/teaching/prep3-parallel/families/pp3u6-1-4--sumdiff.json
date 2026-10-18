@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-4:sumdiff",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-4",
+ "parent_question_id": "q:pp3u6-1-4:bk-example-6",
+ "source_page": 9,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "Two numbers are given by their sum and their difference.",
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "y",
+   "randint": [
+    3,
+    "x - 2"
+   ]
+  },
+  {
+   "name": "s",
+   "let": "x + y"
+  },
+  {
+   "name": "d",
+   "let": "x - y"
+  },
+  {
+   "require": "d > 0",
+   "why": "difference positive"
+  }
+ ],
+ "stem": "The sum of two numbers is ${=s}$ and their difference is ${=d}$. Find the larger number.",
+ "answer": "x",
+ "solution": [
+  "Let the larger number be $x$ and the smaller number be $y$.",
+  "$x+y={=s}$ .... (1)",
+  "$x-y={=d}$ .... (2)",
+  "Adding equations (1) and (2): $2x={=s+d}$",
+  "$x={=x}$",
+  "Substituting in (1): ${=x}+y={=s}$, so $y={=y}$. The larger number is ${=x}$."
+ ],
+ "notes": "Basic: form and solve by addition from a sum/difference word problem."
+}

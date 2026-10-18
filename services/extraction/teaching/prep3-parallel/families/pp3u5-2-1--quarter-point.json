@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-1:quarter-point",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-1",
+ "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-third",
+ "source_page": 62,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -12,
+    0
+   ]
+  },
+  {
+   "name": "dx",
+   "choice": [
+    4,
+    8,
+    12
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -12,
+    0
+   ]
+  },
+  {
+   "name": "dy",
+   "choice": [
+    4,
+    8,
+    12
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + dx"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + dy"
+  },
+  {
+   "name": "cx",
+   "let": "x1 + dx // 2"
+  },
+  {
+   "name": "cy",
+   "let": "y1 + dy // 2"
+  },
+  {
+   "name": "mx",
+   "let": "x1 + dx // 4"
+  },
+  {
+   "name": "my",
+   "let": "y1 + dy // 4"
+  }
+ ],
+ "constraints": [],
+ "stem": "On a perpendicular coordinate plane, $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. $C$ is the midpoint of the straight segment $AB$, and $D$ is the midpoint of the straight segment $AC$. Find the two coordinates of $D$. Write your answer as $(x, y)$.",
+ "solution": [
+  "First find $C$, the midpoint of $AB$.",
+  "$x = \\frac{{=x1} + {=paren(x2)}}{2} = {=cx}$ and $y = \\frac{{=y1} + {=paren(y2)}}{2} = {=cy}$, so $C({=cx}, {=cy})$.",
+  "Now find $D$, the midpoint of $AC$, with $A({=x1}, {=y1})$ and $C({=cx}, {=cy})$.",
+  "$x = \\frac{{=x1} + {=paren(cx)}}{2} = {=mx}$",
+  "$y = \\frac{{=y1} + {=paren(cy)}}{2} = {=my}$",
+  "So $D({=mx}, {=my})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=mx}, {=my})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Two applications of the midpoint rule. dx, dy are multiples of 4 so C and D have whole coordinates."
+}

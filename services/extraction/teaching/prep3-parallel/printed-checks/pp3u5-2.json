@@ -1,0 +1,94 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u5-2",
+  "source": "book-records/prep3-parallel/pp3u5-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 3,
+      "cost_usd": 0.0323,
+      "calls": [
+        {
+          "call": "check-printed.pp3u5-2",
+          "cost_usd": 0.0241,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u5-2",
+          "cost_usd": 0.0082,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u5-2:example-1",
+      "record_id": "pp3u5-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 63,
+      "printed": "$(-1,-5)$",
+      "blind": "C = (-1, -5)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "d460cf34a32b4df304cd6cd0cee0d183",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:12+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-2:example-2",
+      "record_id": "pp3u5-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 63,
+      "printed": "$B(7,-5)$",
+      "blind": "B = (7, -5)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "452eacf17c6c3d403e9ccf95d3bfd214",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:12+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-2:example-3",
+      "record_id": "pp3u5-2:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 64,
+      "printed": "$D(-1, 4)$",
+      "blind": "Intersection of diagonals M = (3/2, -1/2); D = (-1, 4)",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u5-2:figure-5"
+      ],
+      "question_fingerprint": "4f466ffa928e47a55a3b9384cdbf1cb0",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-2:example-3",
+        "verdict": "equivalent",
+        "reason": "Both give D(-1, 4); the solver also states the diagonal intersection M(3/2, -1/2), which is the midpoint of AC and is correct."
+      },
+      "how": "judged equivalent: Both give D(-1, 4); the solver also states the diagonal intersection M(3/2, -1/2), which is the midpoint of AC and is correct.",
+      "made": {
+        "at": "2026-10-18T06:50:12+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

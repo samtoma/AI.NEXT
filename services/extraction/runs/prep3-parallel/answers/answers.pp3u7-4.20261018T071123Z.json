@@ -1,0 +1,389 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "a042a7a3c0cb0161858abdc72041c3245087aff3208d4bf0d528a42aa4585b68",
+  "generated_sha256": "bf236216a6d7eca7f6432e4f00d973278b952b682cb65f446a98c74ac2ff6040",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u7-4:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-4:drill-1",
+      "kind": "value",
+      "answer": "n(x) = (3x-1)/(2x), domain R - {0}",
+      "solution": [
+       "Denominators x and 2x; domain R - {0}.",
+       "L.C.M. = 2x, so (x-2)/x = 2(x-2)/(2x).",
+       "Add: (2x-4+3+x)/(2x).",
+       "= (3x-1)/(2x)."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-3",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-2",
+      "kind": "value",
+      "answer": "n(x) = 2, domain R - {-2}",
+      "solution": [
+       "Common denominator x+2; domain R - {-2}.",
+       "Add numerators: (2x+4)/(x+2).",
+       "Factorise: 2(x+2)/(x+2).",
+       "Cancel: n(x) = 2."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-1",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-3",
+      "kind": "value",
+      "answer": "n(x) = 3(x+1)/(x(x+3)), domain R - {-3, 0}",
+      "solution": [
+       "Factorise: x^2+3x = x(x+3).",
+       "Domain R - {-3, 0}.",
+       "(x+3)/(x(x+3)) = 1/x.",
+       "L.C.M. = x(x+3): n(x) = 2x/(x(x+3)) + (x+3)/(x(x+3)).",
+       "= (3x+3)/(x(x+3)) = 3(x+1)/(x(x+3))."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-3",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-4",
+      "kind": "value",
+      "answer": "n(x) = (x-1)/(x-4), domain R - {-4, 4}",
+      "solution": [
+       "Factorise: x^2-16 = (x-4)(x+4).",
+       "Domain R - {-4, 4}.",
+       "(x+4)/((x-4)(x+4)) = 1/(x-4).",
+       "n(x) = x/(x-4) - 1/(x-4) = (x-1)/(x-4)."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-2",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-5",
+      "kind": "value",
+      "answer": "n(x) = 1/(x-1), domain R - {1}",
+      "solution": [
+       "Common denominator x-1; domain R - {1}.",
+       "Subtract numerators: (3-2)/(x-1).",
+       "n(x) = 1/(x-1)."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-6",
+      "kind": "value",
+      "answer": "n(x) = 1/(x-3), domain R - {3}",
+      "solution": [
+       "Domain R - {3}.",
+       "4/(3-x) = -4/(x-3).",
+       "n(x) = 5/(x-3) - 4/(x-3).",
+       "= 1/(x-3)."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-2",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-7",
+      "kind": "value",
+      "answer": "n(x) = x, domain R - {1}",
+      "solution": [
+       "Domain R - {1}.",
+       "x/(1-x) = -x/(x-1).",
+       "n(x) = (x^2-x)/(x-1) = x(x-1)/(x-1).",
+       "Cancel: n(x) = x."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-2",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-8",
+      "kind": "value",
+      "answer": "n(x) = 4x/((x-2)(x+2)), domain R - {-2, 2}",
+      "solution": [
+       "Domain R - {-2, 2}.",
+       "L.C.M. = (x-2)(x+2).",
+       "Numerator: x(x+2) - x(x-2) = x^2+2x-x^2+2x = 4x.",
+       "n(x) = 4x/((x-2)(x+2))."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-4",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-9",
+      "kind": "value",
+      "answer": "n(x) = (5x-3)/(2x(2x-1)), domain R - {0, 1/2}",
+      "solution": [
+       "Domain R - {0, 1/2}.",
+       "L.C.M. = 2x(2x-1).",
+       "Numerator: (x+3)(2x-1) - x(2x) = 2x^2+5x-3-2x^2 = 5x-3.",
+       "n(x) = (5x-3)/(2x(2x-1))."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-4",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-10",
+      "kind": "value",
+      "answer": "n(x) = (x-4)/((x+1)(x-1)), domain R - {-1, 1}",
+      "solution": [
+       "1-x^2 = -(x^2-1) = -(x-1)(x+1).",
+       "Domain R - {-1, 1}.",
+       "n(x) = 3/(x+1) - (2x+1)/((x-1)(x+1)).",
+       "L.C.M. = (x+1)(x-1): numerator 3(x-1) - (2x+1) = x-4.",
+       "n(x) = (x-4)/((x+1)(x-1))."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-4",
+       "pp3u7-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "The multiplicative inverse of n(x) = (x+2)/(x+5) is its reciprocal n^-1(x) = (x+5)/(x+2), and their product is 1.",
+      "solution": [
+       "Swap numerator and denominator of n(x) to get n^-1(x) = (x+5)/(x+2).",
+       "Domain of n is R - {-5}; domain of n^-1 is R - {-2, -5}.",
+       "Multiply: (x+2)/(x+5) × (x+5)/(x+2) = 1.",
+       "So n(x) × n^-1(x) = 1."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-5",
+       "pp3u7-4:rule-6"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-4:drill-1",
+      "kind": "value",
+      "answer": "n(x) = (3x-1)/(2x), domain R − {0}"
+     },
+     {
+      "ref": "pp3u7-4:drill-2",
+      "kind": "value",
+      "answer": "n(x) = 2, domain R − {-2}"
+     },
+     {
+      "ref": "pp3u7-4:drill-3",
+      "kind": "value",
+      "answer": "n(x) = 3(x+1)/(x(x+3)), domain R − {-3, 0}"
+     },
+     {
+      "ref": "pp3u7-4:drill-4",
+      "kind": "value",
+      "answer": "n(x) = (x-1)/(x-4), domain R − {-4, 4}"
+     },
+     {
+      "ref": "pp3u7-4:drill-5",
+      "kind": "value",
+      "answer": "n(x) = 1/(x-1), domain R − {1}"
+     },
+     {
+      "ref": "pp3u7-4:drill-6",
+      "kind": "value",
+      "answer": "n(x) = 1/(x-3), domain R − {3}"
+     },
+     {
+      "ref": "pp3u7-4:drill-7",
+      "kind": "value",
+      "answer": "n(x) = x, domain R − {1}"
+     },
+     {
+      "ref": "pp3u7-4:drill-8",
+      "kind": "value",
+      "answer": "n(x) = 4x/((x-2)(x+2)), domain R − {-2, 2}"
+     },
+     {
+      "ref": "pp3u7-4:drill-9",
+      "kind": "value",
+      "answer": "n(x) = (5x-3)/(2x(2x-1)), domain R − {0, 1/2}"
+     },
+     {
+      "ref": "pp3u7-4:drill-10",
+      "kind": "value",
+      "answer": "n(x) = (4-x)/((1-x)(1+x)) = (x-4)/((x-1)(x+1)), domain R − {-1, 1}"
+     },
+     {
+      "ref": "pp3u7-4:think-and-discuss-3",
+      "kind": "explanation",
+      "answer": "The multiplicative inverse of n(x) = (x+2)/(x+5) is its reciprocal n^{-1}(x) = (x+5)/(x+2). Domain of n is R − {-5}. Domain of n^{-1} is R − {-2, -5}. Their product is n(x)×n^{-1}(x) = 1."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u7-4:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-4:think-and-discuss-1",
+      "kind": "value",
+      "answer": "a/b + c/b = (a+c)/b and a/b - c/b = (a-c)/b, where b ≠ 0",
+      "solution": [
+       "The two fractions have the same denominator b, with b ≠ 0.",
+       "For a sum, keep the denominator and add the numerators: $\\frac{a}{b}+\\frac{c}{b}=\\frac{a+c}{b}$.",
+       "For a difference, keep the denominator and subtract the numerators: $\\frac{a}{b}-\\frac{c}{b}=\\frac{a-c}{b}$.",
+       "Answer: $\\frac{a+c}{b}$ and $\\frac{a-c}{b}$."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-1",
+       "pp3u7-4:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:think-and-discuss-2",
+      "kind": "value",
+      "answer": "a/b + c/d = (ad+cb)/(bd) and a/b - c/d = (ad-cb)/(bd), where b ≠ 0 and d ≠ 0",
+      "solution": [
+       "The denominators b and d are different, with b ≠ 0 and d ≠ 0.",
+       "Multiply the first numerator by the second denominator and the second numerator by the first denominator: a×d and c×b.",
+       "The new denominator is b×d.",
+       "Sum: $\\frac{a}{b}+\\frac{c}{d}=\\frac{a\\times d+c\\times b}{b\\times d}$.",
+       "Difference: $\\frac{a}{b}-\\frac{c}{d}=\\frac{a\\times d-c\\times b}{b\\times d}$.",
+       "Answer: $\\frac{ad+cb}{bd}$ and $\\frac{ad-cb}{bd}$."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-3",
+       "pp3u7-4:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-11",
+      "kind": "value",
+      "answer": "n(x) = 1, domain R - {0, 1}",
+      "solution": [
+       "Factorise $x^2-x=x(x-1)$ and $x^3-1=(x-1)(x^2+x+1)$.",
+       "$n(x)=\\frac{x^2+x+1}{x}\\times\\frac{x(x-1)}{(x-1)(x^2+x+1)}$.",
+       "The denominators are $x$ and $(x-1)(x^2+x+1)$. Set each factor to zero: $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero.",
+       "Domain = R - {0, 1}.",
+       "Multiply numerators and denominators, then cancel the common factors $x^2+x+1$, $x$ and $(x-1)$.",
+       "Answer: n(x) = 1, domain R - {0, 1}."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-5",
+       "pp3u7-4:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-12",
+      "kind": "value",
+      "answer": "n(x) = (x+3)/x, domain R - {0, 1}",
+      "solution": [
+       "Factorise $x^3-1=(x-1)(x^2+x+1)$ and $x^2-x=x(x-1)$.",
+       "$n(x)=\\frac{(x-1)(x^2+x+1)}{x(x-1)}\\times\\frac{x+3}{x^2+x+1}$.",
+       "The denominators are $x(x-1)$ and $x^2+x+1$. The zeros are $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero.",
+       "Domain = R - {0, 1}.",
+       "Cancel the common factors $(x-1)$ and $(x^2+x+1)$.",
+       "Answer: $n(x)=\\frac{x+3}{x}$, domain R - {0, 1}."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-5",
+       "pp3u7-4:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-13",
+      "kind": "value",
+      "answer": "n(x) = 12/5, domain R - {-3, 5}",
+      "solution": [
+       "Factorise: $3x-15=3(x-5)$, $5x-25=5(x-5)$, $4x+12=4(x+3)$.",
+       "$n(x)=\\frac{3(x-5)}{x+3}\\div\\frac{5(x-5)}{4(x+3)}$.",
+       "The zeros of the denominators and of the second numerator are $x=-3$ (from $x+3$ and $4x+12$) and $x=5$ (from $5x-25$).",
+       "Domain = R - {-3, 5}.",
+       "Multiply by the reciprocal of the second fraction: $\\frac{3(x-5)}{x+3}\\times\\frac{4(x+3)}{5(x-5)}$.",
+       "Cancel $(x-5)$ and $(x+3)$.",
+       "Answer: $n(x)=\\frac{12}{5}$, domain R - {-3, 5}."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-6",
+       "pp3u7-4:example-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-4:drill-14",
+      "kind": "value",
+      "answer": "n(x) = 1, domain R - {-3, -1, 1}",
+      "solution": [
+       "Factorise: $x^2+2x-3=(x+3)(x-1)$ and $x^2-1=(x-1)(x+1)$.",
+       "$n(x)=\\frac{(x+3)(x-1)}{x+3}\\div\\frac{(x-1)(x+1)}{x+1}$.",
+       "The zeros of the denominators and of the second numerator are $x=-3$, $x=-1$ and $x=1$.",
+       "Domain = R - {-3, -1, 1}.",
+       "Multiply by the reciprocal of the second fraction: $\\frac{(x+3)(x-1)}{x+3}\\times\\frac{x+1}{(x-1)(x+1)}$.",
+       "Cancel $(x+3)$, $(x-1)$ and $(x+1)$.",
+       "Answer: n(x) = 1, domain R - {-3, -1, 1}."
+      ],
+      "grounded_in": [
+       "pp3u7-4:rule-6",
+       "pp3u7-4:example-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-4:think-and-discuss-1",
+      "kind": "value",
+      "answer": "a/b + c/b = (a+c)/b ; a/b − c/b = (a−c)/b (with b ≠ 0)"
+     },
+     {
+      "ref": "pp3u7-4:think-and-discuss-2",
+      "kind": "value",
+      "answer": "a/b + c/d = (ad+bc)/(bd) ; a/b − c/d = (ad−bc)/(bd) (with b ≠ 0, d ≠ 0)"
+     },
+     {
+      "ref": "pp3u7-4:drill-11",
+      "kind": "value",
+      "answer": "n(x) = 1; domain R − {0, 1}"
+     },
+     {
+      "ref": "pp3u7-4:drill-12",
+      "kind": "value",
+      "answer": "n(x) = (x+3)/x; domain R − {0, 1}"
+     },
+     {
+      "ref": "pp3u7-4:drill-13",
+      "kind": "value",
+      "answer": "n(x) = 12/5; domain R − {−3, 5}"
+     },
+     {
+      "ref": "pp3u7-4:drill-14",
+      "kind": "value",
+      "answer": "n(x) = (x+1)/(x+1)... simplified: n(x) = (x−1)(x+3)/(x+3) × (x+1)/((x−1)(x+1)) = 1; domain R − {−3, −1, 1}"
+     }
+    ]
+   }
+  }
+ ]
+}

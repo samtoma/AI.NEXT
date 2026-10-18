@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3dc0b3d5a6818bb395347e99cec7a73796598065015ea673189cdc7b80fe357f",
+  "generated_sha256": "bd90e315c35eb365cf087a837abba08d6f086ace3a122722cb0d836ceaa08a6a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-1:example-1",
+      "kind": "value",
+      "answer": "120°  (AC + DB = 180° − 70° = 110°, so AC = 50°, DB = 60°; m(ACD) = 50° + 70° = 120°, assuming the usual figure with C and D in order A, C, D, B on one semicircle)"
+     },
+     {
+      "ref": "pp3u10-1:example-2",
+      "kind": "value",
+      "answer": "9.42 cm"
+     },
+     {
+      "ref": "pp3u10-1:example-3",
+      "kind": "value",
+      "answer": "7 cm  (AC = BD gives equal arcs, subtracting the common arc BC gives arc AB = arc CD, so AB = CD; 3x − 5 = x + 3, x = 4, AB = 7)"
+     }
+    ]
+   }
+  }
+ ]
+}

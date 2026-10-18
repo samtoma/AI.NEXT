@@ -1,0 +1,987 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "ec6e07390bd73382550fd67d6c5b7bcb79cc210fa69a9b649f12233a6ad04441",
+  "generated_sha256": "2575e7423b875696853bebf17e14de1d17a8ce6f2713dbb5bd5c7f22816e4054",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-2:activity-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the lesson only states the theorem and gives no proof method or figures for the other two cases.",
+      "solution": [
+       "The lesson gives no proof for the other two cases, so none can be built from it."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-2:y",
+      "kind": "value",
+      "answer": "y = 70",
+      "solution": [
+       "The inscribed angle is 40°.",
+       "The central angle is twice it: 2 × 40 = 80°.",
+       "So y + 10 = 80.",
+       "y = 70."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-3:Z",
+      "kind": "value",
+      "answer": "Z = 40",
+      "solution": [
+       "The inscribed angle is 70°.",
+       "The central angle is 2 × 70 = 140°.",
+       "3Z + 20 = 140.",
+       "3Z = 120.",
+       "Z = 40."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-4:L",
+      "kind": "value",
+      "answer": "L = 220/3",
+      "solution": [
+       "The inscribed angle is 115°.",
+       "The central angle is 2 × 115 = 230°.",
+       "3L + 10 = 230.",
+       "3L = 220.",
+       "L = 220/3."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-5:x",
+      "kind": "value",
+      "answer": "x = 45",
+      "solution": [
+       "The inscribed angle at C is 45°, so the central angle AMB = 2 × 45 = 90°.",
+       "MA = MB (radii), so the base angles of triangle MAB are equal.",
+       "x = (180 - 90) ÷ 2 = 45."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-6:y",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the figure does not show clearly which angles 25° and 32° are, so y cannot be read reliably.",
+      "solution": [
+       "The positions of the marked angles are not clear from the description."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u10-2:drill-7:Z",
+      "kind": "value",
+      "answer": "Z = 57.5",
+      "solution": [
+       "The central angle is 85°.",
+       "The inscribed angle subtended by the same arc is half of it: 85 ÷ 2 = 42.5°.",
+       "Z - 15 = 42.5.",
+       "Z = 57.5."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-8:L",
+      "kind": "value",
+      "answer": "L = 35",
+      "solution": [
+       "CA is parallel to BM, so angle ABM = angle CAB = 55° (alternate angles).",
+       "MA = MB (radii), so angle MAB = 55°.",
+       "Angle AMB = 180 - 2 × 55 = 70°.",
+       "L = 1/2 × 70 = 35."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-9:x",
+      "kind": "value",
+      "answer": "x = 135",
+      "solution": [
+       "The central angle is twice the inscribed angle: x + 135 = 2x.",
+       "x = 135."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-10:y",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the tick marks in the figure are not clear enough to read y reliably.",
+      "solution": [
+       "The equal-side marks cannot be read from the description."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u10-2:drill-10:Z",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the tick marks in the figure are not clear enough to read Z reliably.",
+      "solution": [
+       "The equal-side marks cannot be read from the description."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u10-2:drill-11:x",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the positions of the marked angles in the figure are not clear enough to read x reliably.",
+      "solution": [
+       "The marked angles cannot be placed from the description."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u10-2:drill-11:y",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the positions of the marked angles in the figure are not clear enough to read y reliably.",
+      "solution": [
+       "The marked angles cannot be placed from the description."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u10-2:drill-12:x",
+      "kind": "value",
+      "answer": "x = 50",
+      "solution": [
+       "BA is a diameter, so the inscribed angle at C is a right angle.",
+       "In triangle ABC the angle sum is 180°.",
+       "x = 180 - 90 - 40 = 50."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-12:y",
+      "kind": "value",
+      "answer": "y = 90",
+      "solution": [
+       "BA is a diameter, so angle C is inscribed in a semicircle.",
+       "An angle in a semicircle is a right angle.",
+       "y = 90."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-4",
+      "kind": "explanation",
+      "answer": "Yes, an inscribed right angle is inscribed in a semicircle, because its subtended arc is 180°.",
+      "solution": [
+       "Let the inscribed angle be 90°.",
+       "Its measure is half the subtended arc: 90 = 1/2 m(arc).",
+       "So m(arc) = 180°.",
+       "An arc of 180° is a semicircle.",
+       "So the angle is inscribed in a semicircle."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4",
+       "pp3u10-2:rule-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-2:activity-2",
+      "kind": "explanation",
+      "answer": "Case 2 (centre M inside the angle): draw diameter CD; then m(∠ACB)=m(∠ACD)+m(∠DCB)=½m(∠AMD)+½m(∠DMB)=½m(∠AMB). Case 3 (centre M outside the angle): draw diameter CD; then m(∠ACB)=m(∠ACD)−m(∠BCD)=½m(∠AMD)−½m(∠BMD)=½m(∠AMB). Each uses the exterior angle of the isosceles triangle MCA or MCB (central angle = 2 × base angle)."
+     },
+     {
+      "ref": "pp3u10-2:drill-2:y",
+      "kind": "value",
+      "answer": "70"
+     },
+     {
+      "ref": "pp3u10-2:drill-3:Z",
+      "kind": "value",
+      "answer": "40"
+     },
+     {
+      "ref": "pp3u10-2:drill-4:L",
+      "kind": "value",
+      "answer": "220/3"
+     },
+     {
+      "ref": "pp3u10-2:drill-5:x",
+      "kind": "value",
+      "answer": "45"
+     },
+     {
+      "ref": "pp3u10-2:drill-6:y",
+      "kind": "value",
+      "answer": "114"
+     },
+     {
+      "ref": "pp3u10-2:drill-7:Z",
+      "kind": "value",
+      "answer": "57.5"
+     },
+     {
+      "ref": "pp3u10-2:drill-8:L",
+      "kind": "value",
+      "answer": "27.5"
+     },
+     {
+      "ref": "pp3u10-2:drill-9:x",
+      "kind": "value",
+      "answer": "135"
+     },
+     {
+      "ref": "pp3u10-2:drill-10:y",
+      "kind": "value",
+      "answer": "40"
+     },
+     {
+      "ref": "pp3u10-2:drill-10:Z",
+      "kind": "value",
+      "answer": "50"
+     },
+     {
+      "ref": "pp3u10-2:drill-11:x",
+      "kind": "value",
+      "answer": "40"
+     },
+     {
+      "ref": "pp3u10-2:drill-11:y",
+      "kind": "value",
+      "answer": "50"
+     },
+     {
+      "ref": "pp3u10-2:drill-12:x",
+      "kind": "value",
+      "answer": "50"
+     },
+     {
+      "ref": "pp3u10-2:drill-12:y",
+      "kind": "value",
+      "answer": "90"
+     },
+     {
+      "ref": "pp3u10-2:think-4",
+      "kind": "explanation",
+      "answer": "Yes. An inscribed right angle is half its subtended arc, so that arc is 2×90°=180°, a semicircle. Its hypotenuse chord is therefore a diameter, so the angle is inscribed in a semicircle."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u10-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:1",
+      "kind": "explanation",
+      "answer": "m(∠BMC) = 120°, because ∠BAC = 60° and the central angle is twice the inscribed angle on the same arc BC.",
+      "solution": [
+       "Triangle ABC is equilateral, so each angle is 60°, so m(∠BAC) = 60°.",
+       "∠BAC is inscribed and ∠BMC is central; both are subtended by arc BC.",
+       "The inscribed angle is half the central angle: m(∠BAC) = ½ m(∠BMC).",
+       "m(∠BMC) = 2 × 60° = 120°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3",
+       "pp3u10-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:2",
+      "kind": "explanation",
+      "answer": "The vertex of ∠BAC is A, and yes, A belongs to the set of points of circle M.",
+      "solution": [
+       "The vertex of ∠BAC is the middle letter, A.",
+       "A is a vertex of the triangle, and the circle passes through the vertices of the triangle.",
+       "So A lies on circle M: Yes."
+      ],
+      "grounded_in": [
+       "pp3u10-2:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:3",
+      "kind": "value",
+      "answer": "AB and AC (rays AB and AC, which contain the chords AB and AC)",
+      "solution": [
+       "The sides of ∠BAC are the two rays from A through B and through C.",
+       "These rays contain the chords AB and AC of the circle."
+      ],
+      "grounded_in": [
+       "pp3u10-2:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:4",
+      "kind": "explanation",
+      "answer": "∠BAC is an inscribed angle subtended by the same arc BC as the central angle ∠BMC.",
+      "solution": [
+       "The vertex A is on the circle.",
+       "Its sides contain the chords AB and AC.",
+       "So ∠BAC is an inscribed angle.",
+       "It is subtended by arc BC, the same arc as the central ∠BMC."
+      ],
+      "grounded_in": [
+       "pp3u10-2:definition-1",
+       "pp3u10-2:rule-1",
+       "pp3u10-2:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:5",
+      "kind": "explanation",
+      "answer": "m(∠BAC) = ½ m(∠BMC): 60° is half of 120°.",
+      "solution": [
+       "m(∠BAC) = 60°.",
+       "m(∠BMC) = 120°.",
+       "60° = ½ × 120°.",
+       "The inscribed angle is half the central angle subtended by the same arc."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-1",
+      "kind": "drawing",
+      "answer": "Infinitely many (as many as we like) inscribed angles can be drawn.",
+      "solution": [
+       "Draw the circle M with the central angle ∠AMB and the arc AB.",
+       "Choose a point C on the circle outside arc AB (the opposite arc). Join CA and CB to get inscribed ∠ACB.",
+       "Choose another point D on the same opposite arc. Join DA and DB to get inscribed ∠ADB.",
+       "Repeat with E, F, ... Each one is subtended by arc AB.",
+       "Each inscribed angle equals half the central angle ∠AMB, so they are all equal.",
+       "There are infinitely many such inscribed angles."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-2",
+       "pp3u10-2:rule-3",
+       "pp3u10-2:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:activity-1:1",
+      "kind": "value",
+      "answer": "m(∠MAC) = m(∠MCA) and m(∠MAB) = m(∠MBA)",
+      "solution": [
+       "MA = MC (radii), so the angles opposite them in triangle MAC are equal: m(∠MAC) = m(∠MCA).",
+       "MA = MB (radii), so in triangle MAB: m(∠MAB) = m(∠MBA).",
+       "These are two pairs of equal angles (30° = 30° and 40° = 40°)."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:activity-1:2",
+      "kind": "value",
+      "answer": "80°",
+      "solution": [
+       "∠BAD is inscribed and ∠BMD is central; both are subtended by arc BD.",
+       "m(∠BMD) = 2 × m(∠BAD).",
+       "m(∠BMD) = 2 × 40° = 80°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:activity-1:3",
+      "kind": "value",
+      "answer": "60°",
+      "solution": [
+       "∠CAD is inscribed and ∠CMD is central; both are subtended by arc CD.",
+       "m(∠CMD) = 2 × m(∠CAD).",
+       "m(∠CMD) = 2 × 30° = 60°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:activity-1:4",
+      "kind": "explanation",
+      "answer": "m(∠BAC) = 70° and m(∠BMC) = 140°, so the inscribed angle is half the central angle on the same arc.",
+      "solution": [
+       "m(∠BAC) = 30° + 40° = 70°.",
+       "m(∠BMC) = m(∠BMD) + m(∠CMD) = 80° + 60° = 140°.",
+       "70° = ½ × 140°.",
+       "So the inscribed angle is half the central angle subtended by the same arc BC."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-1:x",
+      "kind": "value",
+      "answer": "x = 55",
+      "solution": [
+       "The inscribed angle x° and the central angle 110° are subtended by the same arc AB.",
+       "x = ½ × 110.",
+       "x = 55."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-2",
+      "kind": "value",
+      "answer": "y = 70",
+      "solution": [
+       "The central angle is twice the inscribed angle: y + 10 = 2 × 40 = 80.",
+       "y = 80 - 10 = 70."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-3",
+      "kind": "value",
+      "answer": "Z = 40",
+      "solution": [
+       "The central angle is twice the inscribed angle: 3Z + 20 = 2 × 70 = 140.",
+       "3Z = 120.",
+       "Z = 40."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-4",
+      "kind": "value",
+      "answer": "L = 220/3",
+      "solution": [
+       "The inscribed angle 115° is on the minor arc side, so the central angle shown (below M) is the reflex angle on the same arc.",
+       "3L + 10 = 2 × 115 = 230.",
+       "3L = 220.",
+       "L = 220/3."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-5",
+      "kind": "value",
+      "answer": "x = 45",
+      "solution": [
+       "Central ∠AMB and inscribed ∠C = 45° are subtended by arc AB, so m(∠AMB) = 2 × 45° = 90°.",
+       "MA = MB (radii), so the base angles of triangle MAB are equal.",
+       "x = (180° - 90°) ÷ 2 = 45."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-6",
+      "kind": "value",
+      "answer": "y = 114",
+      "solution": [
+       "MB = MC, so m(∠MCB) = 25°.",
+       "MA = MC, so m(∠MCA) = 32°.",
+       "m(∠ACB) = 25° + 32° = 57°.",
+       "Central ∠AMB = 2 × 57° = 114°.",
+       "y = 114."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-7",
+      "kind": "value",
+      "answer": "Z = 62.5",
+      "solution": [
+       "∠AMD = 85° and ∠BMC is vertically opposite, so m(∠BMC) = 85°.",
+       "Central ∠BMA = 180° - 85° = 95° (CA is a straight line through M).",
+       "Inscribed ∠BCA = ½ × 95° = 47.5°.",
+       "Z - 15 = 47.5.",
+       "Z = 62.5."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-8",
+      "kind": "value",
+      "answer": "L = 62.5",
+      "solution": [
+       "CA ∥ BM and AM is a transversal, so m(∠CAM) + m(∠AMB) = 180°.",
+       "m(∠AMB) = 180° - 55° = 125°.",
+       "Inscribed ∠ACB and central ∠AMB are subtended by arc AB.",
+       "L = ½ × 125 = 62.5."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-9",
+      "kind": "value",
+      "answer": "x = 135",
+      "solution": [
+       "C is on the minor arc, so ∠C is subtended by the major arc, and the central angle on that arc is x + 135.",
+       "x + 135 = 2x.",
+       "x = 135."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-10",
+      "kind": "value",
+      "answer": "y = 40, Z = 50",
+      "solution": [
+       "M lies on CA, so CA is a diameter and m(∠ABC) = 90°.",
+       "MA = MB, so m(∠MAB) = m(∠MBA) = 50°, so Z = 50.",
+       "In triangle ABC: y = 180° - 90° - 50° = 40.",
+       "y = 40, Z = 50."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-11",
+      "kind": "value",
+      "answer": "x = 40, y = 40",
+      "solution": [
+       "∠CAB (40°) and ∠CDB are inscribed angles subtended by arc CB, so y = 40.",
+       "AB ∥ CD, so ∠DCA = ∠CAB = 40° (alternate angles); x = 40.",
+       "x = 40, y = 40."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-12",
+      "kind": "value",
+      "answer": "x = 50, y = 90",
+      "solution": [
+       "BA is a diameter, so ∠C is inscribed in a semicircle: y = 90.",
+       "In triangle ABC: x = 180° - 90° - 40° = 50.",
+       "x = 50, y = 90."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-13",
+      "kind": "explanation",
+      "answer": "Both m(∠AMC) and m(∠ADB) equal ½ m(∠AMB), so m(∠AMC) = m(∠ADB).",
+      "solution": [
+       "Draw BM. In triangle MAB: MA = MB and MC ⊥ AB, so MC bisects the vertex angle.",
+       "m(∠AMC) = m(∠BMC) = ½ m(∠AMB) (1).",
+       "Inscribed ∠ADB and central ∠AMB are subtended at arc AB.",
+       "m(∠ADB) = ½ m(∠AMB) (2).",
+       "From (1) and (2): m(∠AMC) = m(∠ADB)."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-2",
+      "kind": "explanation",
+      "answer": "It is an acute angle, because its measure is half an arc less than 180°, so less than 90°.",
+      "solution": [
+       "m(inscribed angle) = ½ m(arc).",
+       "The arc is less than 180°.",
+       "So the angle is less than 90°, which is acute."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:think-3",
+      "kind": "explanation",
+      "answer": "It is an obtuse angle, because its measure is half an arc greater than 180°, so greater than 90°.",
+      "solution": [
+       "m(inscribed angle) = ½ m(arc).",
+       "The arc is greater than 180°.",
+       "So the angle is greater than 90° (and less than 180°), which is obtuse."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:1",
+      "kind": "value",
+      "answer": "x = 45, m(arc AB) = 158°",
+      "solution": [
+       "The angle at B is subtended by arc AC = 92°.",
+       "x + 1 = ½ × 92 = 46, so x = 45.",
+       "m(arc AB) = 360° - (110° + 92°) = 158°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:2",
+      "kind": "value",
+      "answer": "m(∠A) = 70°, m(arc AC) = 100°",
+      "solution": [
+       "∠A is subtended by arc BC = 140°: m(∠A) = ½ × 140° = 70°.",
+       "∠C = 60° is subtended by arc AB: m(arc AB) = 2 × 60° = 120°.",
+       "m(arc AC) = 360° - (140° + 120°) = 100°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:3",
+      "kind": "value",
+      "answer": "m(∠C) = 90°, m(∠B) = 26°",
+      "solution": [
+       "AB is a diameter, so ∠C is in a semicircle: m(∠C) = 90°.",
+       "m(arc AC) = 180° - 128° = 52°.",
+       "m(∠B) = ½ × 52° = 26°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-5",
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:4",
+      "kind": "value",
+      "answer": "60°",
+      "solution": [
+       "The ticks show the three arcs are equal.",
+       "Each arc = 360° ÷ 3 = 120°.",
+       "∠C is subtended by arc AB = 120°.",
+       "m(∠C) = ½ × 120° = 60°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:5",
+      "kind": "value",
+      "answer": "26°",
+      "solution": [
+       "Let m(∠A) = a. From the ticks, EB = BA, so ∠BEA = a.",
+       "∠BED is inscribed on arc BD, so m(arc BD) = 2a.",
+       "m(∠A) = ½[m(arc EC) - m(arc BD)], so a = ½(104 - 2a).",
+       "a = 52 - a, so 2a = 52.",
+       "m(∠EAC) = 26°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-4",
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-14:6",
+      "kind": "value",
+      "answer": "75°",
+      "solution": [
+       "∠ADB = 30° is subtended by arc AB, so m(arc AB) = 60°.",
+       "Arc DA = 90°, so arc DAB = 90° + 60° = 150°.",
+       "∠DCB is subtended by arc DAB.",
+       "m(∠DCB) = ½ × 150° = 75°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:1",
+      "kind": "value",
+      "answer": "x = 87",
+      "solution": [
+       "The chords intersect inside the circle.",
+       "x = ½[114 + 60].",
+       "x = ½ × 174 = 87."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:2",
+      "kind": "value",
+      "answer": "y = 105",
+      "solution": [
+       "The angle between the other pair of rays has arcs 100° and 50°, so it is ½(100 + 50) = 75°.",
+       "y is on a straight line with it, so y = 180° - 75° = 105°.",
+       "Check: the arcs opposite y sum to 360° - 150° = 210°, and ½ × 210 = 105."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:3",
+      "kind": "value",
+      "answer": "z = 100",
+      "solution": [
+       "The chords intersect inside the circle: 115 = ½[130 + z].",
+       "130 + z = 230.",
+       "z = 100."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:4",
+      "kind": "value",
+      "answer": "x = 35",
+      "solution": [
+       "The rays meet outside the circle at A.",
+       "x = ½[100 - 30].",
+       "x = ½ × 70 = 35."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:5",
+      "kind": "value",
+      "answer": "y = 86",
+      "solution": [
+       "The rays meet outside the circle: 28 = ½[y - 30].",
+       "y - 30 = 56.",
+       "y = 86."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-15:6",
+      "kind": "value",
+      "answer": "z = 40",
+      "solution": [
+       "The rays meet outside the circle: 50 = ½[140 - z].",
+       "140 - z = 100.",
+       "z = 40."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-16:A",
+      "kind": "value",
+      "answer": "m(arc BD) = 32°",
+      "solution": [
+       "Rays CB and ED meet at A: m(∠A) = ½[m(arc EC) - m(arc BD)].",
+       "36 = ½[104 - m(arc BD)].",
+       "104 - m(arc BD) = 72.",
+       "m(arc BD) = 32°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-5",
+       "pp3u10-2:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-2:drill-16:B",
+      "kind": "value",
+      "answer": "m(arc DE) = 112°",
+      "solution": [
+       "m(arc DE) + m(arc BC) = 360° - (104° + 32°) = 224°.",
+       "m(arc DE) = m(arc BC), so 2 m(arc DE) = 224°.",
+       "m(arc DE) = 112°."
+      ],
+      "grounded_in": [
+       "pp3u10-2:example-5",
+       "pp3u10-2:example-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:1",
+      "kind": "explanation",
+      "answer": "$m(\\angle BMC)=120^\\circ$: the triangle is equilateral, so each side's arc is one third of the circle, $\\widehat{BC}=360^\\circ/3=120^\\circ$, and the central angle equals its arc."
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:2",
+      "kind": "explanation",
+      "answer": "The vertex of $\\angle BAC$ is A. Yes, A belongs to the set of points of circle M (it lies on the circle)."
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:3",
+      "kind": "explanation",
+      "answer": "The two sides are the rays $\\overrightarrow{AB}$ and $\\overrightarrow{AC}$, which contain the chords $\\overline{AB}$ and $\\overline{AC}$."
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:4",
+      "kind": "explanation",
+      "answer": "$\\angle BAC$ is an inscribed angle (vertex on the circle, sides contain chords) subtended by the same arc $\\widehat{BC}$."
+     },
+     {
+      "ref": "pp3u10-2:think-and-discuss-1:5",
+      "kind": "explanation",
+      "answer": "$m(\\angle BAC)=60^\\circ$ and $m(\\angle BMC)=120^\\circ$, so $m(\\angle BAC)=\\frac{1}{2}m(\\angle BMC)$: the inscribed angle is half the central angle subtended by the same arc."
+     },
+     {
+      "ref": "pp3u10-2:think-1",
+      "kind": "drawing",
+      "answer": "Infinitely many (unlimited) inscribed angles. Drawing: circle M with central $\\angle AMB$, plus several different points C, D, E on the major arc AB, each joined to A and B to give inscribed angles that are all equal (each half of $\\angle AMB$)."
+     },
+     {
+      "ref": "pp3u10-2:activity-1:1",
+      "kind": "explanation",
+      "answer": "$m(\\angle MAC)=m(\\angle MCA)$ (MA = MC, radii) and $m(\\angle MAB)=m(\\angle MBA)$ (MA = MB, radii)."
+     },
+     {
+      "ref": "pp3u10-2:activity-1:2",
+      "kind": "value",
+      "answer": "80"
+     },
+     {
+      "ref": "pp3u10-2:activity-1:3",
+      "kind": "value",
+      "answer": "60"
+     },
+     {
+      "ref": "pp3u10-2:activity-1:4",
+      "kind": "explanation",
+      "answer": "$m(\\angle BAC)=30^\\circ+40^\\circ=70^\\circ$ and $m(\\angle BMC)=140^\\circ$, so $m(\\angle BAC)=\\frac{1}{2}m(\\angle BMC)$: the inscribed angle is half the central angle subtended by the same arc."
+     },
+     {
+      "ref": "pp3u10-2:drill-1:x",
+      "kind": "value",
+      "answer": "55"
+     },
+     {
+      "ref": "pp3u10-2:drill-13",
+      "kind": "explanation",
+      "answer": "In $\\triangle MAB$: MA = MB and $\\overline{MC}\\perp\\overline{AB}$, so $m(\\angle AMC)=m(\\angle BMC)=\\frac{1}{2}m(\\angle AMB)$ (1); inscribed $\\angle ADB$ and central $\\angle AMB$ are subtended at $\\widehat{AB}$, so $m(\\angle ADB)=\\frac{1}{2}m(\\angle AMB)$ (2); from (1) and (2): $m(\\angle AMC)=m(\\angle ADB)$."
+     },
+     {
+      "ref": "pp3u10-2:think-2",
+      "kind": "explanation",
+      "answer": "Acute. The angle is half its arc, and an arc less than a semicircle is less than $180^\\circ$, so the angle is less than $90^\\circ$."
+     },
+     {
+      "ref": "pp3u10-2:think-3",
+      "kind": "explanation",
+      "answer": "Obtuse. The angle is half its arc, and an arc greater than a semicircle is between $180^\\circ$ and $360^\\circ$, so the angle is between $90^\\circ$ and $180^\\circ$."
+     },
+     {
+      "ref": "pp3u10-2:drill-14:1",
+      "kind": "value",
+      "answer": "x = 45, m(arc AB) = 158"
+     },
+     {
+      "ref": "pp3u10-2:drill-14:2",
+      "kind": "value",
+      "answer": "m(∠A) = 70, m(arc AC) = 100"
+     },
+     {
+      "ref": "pp3u10-2:drill-14:3",
+      "kind": "value",
+      "answer": "m(∠C) = 90, m(∠B) = 26"
+     },
+     {
+      "ref": "pp3u10-2:drill-14:4",
+      "kind": "value",
+      "answer": "m(∠C) = 60"
+     },
+     {
+      "ref": "pp3u10-2:drill-14:5",
+      "kind": "value",
+      "answer": "m(∠EAC) = 26"
+     },
+     {
+      "ref": "pp3u10-2:drill-14:6",
+      "kind": "value",
+      "answer": "m(∠DCB) = 75"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:1",
+      "kind": "value",
+      "answer": "87"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:2",
+      "kind": "value",
+      "answer": "75"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:3",
+      "kind": "value",
+      "answer": "100"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:4",
+      "kind": "value",
+      "answer": "35"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:5",
+      "kind": "value",
+      "answer": "86"
+     },
+     {
+      "ref": "pp3u10-2:drill-15:6",
+      "kind": "value",
+      "answer": "40"
+     },
+     {
+      "ref": "pp3u10-2:drill-16:A",
+      "kind": "value",
+      "answer": "32"
+     },
+     {
+      "ref": "pp3u10-2:drill-16:B",
+      "kind": "value",
+      "answer": "112"
+     }
+    ]
+   }
+  }
+ ]
+}

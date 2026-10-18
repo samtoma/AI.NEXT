@@ -1,0 +1,793 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u7-2",
+  "source": "book-records/prep3-parallel/pp3u7-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 20,
+      "cost_usd": 0.3113,
+      "calls": [
+        {
+          "call": "answers.pp3u7-2",
+          "cost_usd": 0.3113,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u7-2:think-and-discuss-1",
+      "record_id": "pp3u7-2:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 17,
+      "question": {
+        "text": "Find the domain of f and p.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "646f7da514fbc9af44f6dc57d5d9f087",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the functions f and p are shown only in the page's diagram, which is not given here.",
+      "solution": [
+        "The functions f and p are not stated in the text provided.",
+        "Without them the zeroes of the denominators cannot be found."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the functions f and p are defined in a diagram/figure that was not provided.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:think-and-discuss-2",
+      "record_id": "pp3u7-2:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 17,
+      "question": {
+        "text": "If $n(x) = \\frac{p(x)}{f(x)}$ can you find the domain of n when you know the domain of each of p and f?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c9f1c94a6eadc629e199bc6d54847192",
+      "kind": "explanation",
+      "answer": "Yes: the domain of n is R minus the set of zeroes of f, that is the values of x where f(x) = 0 are removed.",
+      "solution": [
+        "n(x) = p(x)/f(x) is undefined only where the denominator f(x) = 0.",
+        "So the domain of n is R - z(f), where z(f) is the set of zeroes of f.",
+        "Knowing the domains of p and f, take the common values and remove the zeroes of f."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-1",
+        "pp3u7-2:rule-3",
+        "pp3u7-2:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. The domain of n is the intersection of the domains of p and f, minus the zeroes of f. For polynomials p and f this is R - z(f).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:a",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{x+3}{4}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9775f6215f3836ad333088d8de1413f4",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4",
+      "solution": [
+        "The denominator is 4, which is never zero, so it has no zeroes.",
+        "Domain = R minus the empty set = R.",
+        "n(0) = (0+3)/4 = 3/4.",
+        "n(2) = (2+3)/4 = 5/4.",
+        "n(-2) = (-2+3)/4 = 1/4.",
+        "Answer: domain R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:b",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{x-2}{2x}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e5fcba77958ccd7c397f99d15bfb9d0b",
+      "kind": "value",
+      "answer": "Domain = R - {0}; n(0) is undefined, n(2) = 0, n(-2) = 1",
+      "solution": [
+        "Set the denominator equal to zero: $2x = 0$, so x = 0.",
+        "The set of zeroes is {0}, so domain = R - {0}.",
+        "0 is not in the domain, so n(0) is undefined.",
+        "n(2) = (2-2)/(2×2) = 0/4 = 0.",
+        "n(-2) = (-2-2)/(2×(-2)) = -4/-4 = 1.",
+        "Answer: domain R - {0}; n(0) undefined, n(2) = 0, n(-2) = 1."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R - {0}; n(0) is undefined (0 is not in the domain), n(2) = 0, n(-2) = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:c",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{1}{x+2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "473981a024243d55cd8970ba15f4b3d8",
+      "kind": "value",
+      "answer": "Domain = R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) is undefined",
+      "solution": [
+        "Set the denominator equal to zero: $x+2 = 0$, so x = -2.",
+        "The set of zeroes is {-2}, so domain = R - {-2}.",
+        "n(0) = 1/(0+2) = 1/2.",
+        "n(2) = 1/(2+2) = 1/4.",
+        "-2 is not in the domain, so n(-2) is undefined.",
+        "Answer: domain R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) undefined."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) is undefined (-2 is not in the domain)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:d",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{x^2+9}{x^2-16}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fc8c67eea1388391071efc80fd4b60b0",
+      "kind": "value",
+      "answer": "Domain = R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12",
+      "solution": [
+        "Set the denominator equal to zero: $x^2-16 = 0$, so $x^2 = 16$, so x = 4 or x = -4.",
+        "The set of zeroes is {-4, 4}, so domain = R - {-4, 4}.",
+        "n(0) = (0+9)/(0-16) = -9/16.",
+        "n(2) = (4+9)/(4-16) = 13/(-12) = -13/12.",
+        "n(-2) = (4+9)/(4-16) = -13/12.",
+        "Answer: domain R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:e",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{x^2+1}{x^2-x}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0c350a9d54e4037ac02d0a1eeab7bf04",
+      "kind": "value",
+      "answer": "Domain = R - {0, 1}; n(0) is undefined, n(2) = 5/2, n(-2) = 5/6",
+      "solution": [
+        "Set the denominator equal to zero: $x^2-x = 0$, so $x(x-1) = 0$.",
+        "So x = 0 or x = 1. The set of zeroes is {0, 1}, so domain = R - {0, 1}.",
+        "0 is not in the domain, so n(0) is undefined.",
+        "n(2) = (4+1)/(4-2) = 5/2.",
+        "n(-2) = (4+1)/(4+2) = 5/6.",
+        "Answer: domain R - {0, 1}; n(0) undefined, n(2) = 5/2, n(-2) = 5/6."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R - {0, 1}; n(0) is undefined (0 is not in the domain), n(2) = 5/2, n(-2) = 5/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-1:f",
+      "record_id": "pp3u7-2:drill-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2):",
+        "stem": "$n(x)=\\frac{x^2-1}{x^2+1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ba2aef1eb2a7a85375d0a92624ade6d1",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5",
+      "solution": [
+        "Set the denominator equal to zero: $x^2+1 = 0$, so $x^2 = -1$, which has no real solution.",
+        "The denominator has no zeroes, so domain = R.",
+        "n(0) = (0-1)/(0+1) = -1.",
+        "n(2) = (4-1)/(4+1) = 3/5.",
+        "n(-2) = (4-1)/(4+1) = 3/5.",
+        "Answer: domain R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Domain = R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-2",
+      "record_id": "pp3u7-2:drill-2",
+      "part": null,
+      "type": "exercise",
+      "page": 18,
+      "question": {
+        "text": "If the domain of the function n: $n(x)=\\frac{x-1}{x^2-ax+9}$ is $R-\\{3\\}$ then find the value of a.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ba94113bacd6f5af2b53884642b802fd",
+      "kind": "value",
+      "answer": "a = 6",
+      "solution": [
+        "The domain is R - {3}, so 3 is the zero of the denominator.",
+        "Substitute x = 3: $9 - 3a + 9 = 0$.",
+        "$18 - 3a = 0$, so $3a = 18$.",
+        "a = 6"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a = 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:drill-3",
+      "record_id": "pp3u7-2:drill-3",
+      "part": null,
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain for each of the following:",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3896764f78c9f28f6ab08dcef91ada58",
+      "kind": "value",
+      "answer": "1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}",
+      "solution": [
+        "Method: common domain = R minus the union of the zeroes of all the denominators.",
+        "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+        "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+        "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+        "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+        "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+        "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-4",
+        "pp3u7-2:rule-5",
+        "pp3u7-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "(1) R - {-1, 0}; (2) R - {-1, 0, 1}; (3) R - {-2, 0, 2}; (4) R - {-2, 0, 1, 2, 3}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-1:n1",
+      "record_id": "pp3u7-2:exercise-1",
+      "part": "n1",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_1(x)=\\frac{1}{x}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "983460b14faf66bc9d7c008160dff974",
+      "kind": "value",
+      "answer": "R - {0}",
+      "solution": [
+        "Denominator: x = 0 gives x = 0.",
+        "Domain of $n_1$ is R - {0}.",
+        "(With $n_2$ the common domain is R - {-1, 0}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "R - {0}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-1:n2",
+      "record_id": "pp3u7-2:exercise-1",
+      "part": "n2",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_2(x)=\\frac{2}{x+1}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c5549507d226b18c7319b810d3d9bb4c",
+      "kind": "value",
+      "answer": "R - {-1}",
+      "solution": [
+        "Denominator: $x+1=0$ gives x = -1.",
+        "Domain of $n_2$ is R - {-1}.",
+        "(With $n_1$ the common domain is R - {-1, 0}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "R - {-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-2:n1",
+      "record_id": "pp3u7-2:exercise-2",
+      "part": "n1",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_1(x)=\\frac{3}{x^2-x}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e0e0205ecf4a1699bc2900f18a92501c",
+      "kind": "value",
+      "answer": "R - {0, 1}",
+      "solution": [
+        "Denominator: $x^2-x=x(x-1)=0$.",
+        "x = 0 or x = 1.",
+        "Domain of $n_1$ is R - {0, 1}.",
+        "(With $n_2$ the common domain is R - {-1, 0, 1}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "R - {0, 1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-2:n2",
+      "record_id": "pp3u7-2:exercise-2",
+      "part": "n2",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_2(x)=\\frac{2x-3}{x^2-1}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b054938c3ff06cae5aac1013cada0c3c",
+      "kind": "value",
+      "answer": "R - {-1, 1}",
+      "solution": [
+        "Denominator: $x^2-1=(x-1)(x+1)=0$.",
+        "x = 1 or x = -1.",
+        "Domain of $n_2$ is R - {-1, 1}.",
+        "(With $n_1$ the common domain is R - {-1, 0, 1}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "R - {-1, 1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-3:n1",
+      "record_id": "pp3u7-2:exercise-3",
+      "part": "n1",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_1(x)=\\frac{3}{x-2}$",
+        "notes": "n2 printed without '=' sign."
+      },
+      "needs_page": false,
+      "question_fingerprint": "37719fb888c93cdfd48b030828b1401f",
+      "kind": "value",
+      "answer": "R - {2}",
+      "solution": [
+        "Denominator: $x-2=0$ gives x = 2.",
+        "Domain of $n_1$ is R - {2}.",
+        "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 2}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {2}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-3:n2",
+      "record_id": "pp3u7-2:exercise-3",
+      "part": "n2",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_2(x)=\\frac{5}{x+2}$",
+        "notes": "n2 printed without '=' sign."
+      },
+      "needs_page": false,
+      "question_fingerprint": "7cd48796b08cdc7f699d6e1b481be173",
+      "kind": "value",
+      "answer": "R - {-2}",
+      "solution": [
+        "Denominator: $x+2=0$ gives x = -2.",
+        "Domain of $n_2$ is R - {-2}.",
+        "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 2}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {-2}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-3:n3",
+      "record_id": "pp3u7-2:exercise-3",
+      "part": "n3",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_3(x)=\\frac{x}{x^3-4x}$",
+        "notes": "n2 printed without '=' sign."
+      },
+      "needs_page": false,
+      "question_fingerprint": "519d2c6df27f4647b12722351a385b69",
+      "kind": "value",
+      "answer": "R - {-2, 0, 2}",
+      "solution": [
+        "Denominator: $x^3-4x=x(x-2)(x+2)=0$.",
+        "x = 0, 2 or -2.",
+        "Domain of $n_3$ is R - {-2, 0, 2}.",
+        "Common domain of $n_1,n_2,n_3$ = R - {2} ∩ R - {-2} ∩ R - {-2, 0, 2} = R - {-2, 0, 2}."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {-2, 0, 2}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-4:n1",
+      "record_id": "pp3u7-2:exercise-4",
+      "part": "n1",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_1(x)=\\frac{x^2-4}{x^2-5x+6}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b8b653cd0f3e8ebf921d2dea5fa07f08",
+      "kind": "value",
+      "answer": "R - {2, 3}",
+      "solution": [
+        "Denominator: $x^2-5x+6=(x-2)(x-3)=0$.",
+        "x = 2 or x = 3.",
+        "Domain of $n_1$ is R - {2, 3}.",
+        "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 1, 2, 3}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {2, 3}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-4:n2",
+      "record_id": "pp3u7-2:exercise-4",
+      "part": "n2",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_2(x)=\\frac{3x}{x^2-x}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2cb244baaf6ea683efbf690437f4bf6c",
+      "kind": "value",
+      "answer": "R - {0, 1}",
+      "solution": [
+        "Denominator: $x^2-x=x(x-1)=0$.",
+        "x = 0 or x = 1.",
+        "Domain of $n_2$ is R - {0, 1}.",
+        "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 1, 2, 3}.)"
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {0, 1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u7-2:exercise-4:n3",
+      "record_id": "pp3u7-2:exercise-4",
+      "part": "n3",
+      "type": "exercise",
+      "page": 19,
+      "question": {
+        "text": "Find the common domain of the functions.",
+        "stem": "$n_3(x)=\\frac{x^2-3x-4}{x^2+x-2}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bb8ec83b5efccfdce5e1fe6c3a8a6554",
+      "kind": "value",
+      "answer": "R - {-2, 1}",
+      "solution": [
+        "Denominator: $x^2+x-2=(x+2)(x-1)=0$.",
+        "x = -2 or x = 1.",
+        "Domain of $n_3$ is R - {-2, 1}.",
+        "Common domain of $n_1,n_2,n_3$ = R - ({2,3} ∪ {0,1} ∪ {-2,1}) = R - {-2, 0, 1, 2, 3}."
+      ],
+      "grounded_in": [
+        "pp3u7-2:rule-3",
+        "pp3u7-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "R - {-2, 1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:11:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

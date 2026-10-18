@@ -1,0 +1,81 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-6",
+  "source": "book-records/prep3-parallel/pp3u10-6.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0343,
+      "calls": [
+        {
+          "call": "check-printed.pp3u10-6",
+          "cost_usd": 0.0215,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u10-6",
+          "cost_usd": 0.0128,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u10-6:example-2:A",
+      "record_id": "pp3u10-6:example-2",
+      "part": "A",
+      "type": "worked_example",
+      "page": 96,
+      "printed": "XBYM is a cyclic quadrilateral",
+      "blind": "AB = AC (tangent segments) and MB = MC (radii), so line AM is the axis of BC, hence $AM \\perp BC$ and $m(\\angle BXM)=90^\\circ$. Y is the midpoint of chord BD, so $MY \\perp BD$ and $m(\\angle BYM)=90^\\circ$. The opposite angles X and Y of XBYM sum to $180^\\circ$, so XBYM is cyclic.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-6:figure-12"
+      ],
+      "question_fingerprint": "81936439a5a81c7ba48ac93177144c14",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-6:example-2:A",
+        "verdict": "equivalent",
+        "reason": "Both conclude XBYM is cyclic; the solver's proof is valid."
+      },
+      "how": "judged equivalent: Both conclude XBYM is cyclic; the solver's proof is valid.",
+      "made": {
+        "at": "2026-10-18T08:03:34+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-6:example-2:B",
+      "record_id": "pp3u10-6:example-2",
+      "part": "B",
+      "type": "worked_example",
+      "page": 96,
+      "printed": "$70^\\circ$",
+      "blind": "35°. In the cyclic quadrilateral XBYM, $m(\\angle XBM)=m(\\angle XYM)=35^\\circ$ (both subtend XM). Since $AB \\perp MB$, $m(\\angle ABX)=90^\\circ-35^\\circ=55^\\circ$. In right triangle ABX, $m(\\angle A)=90^\\circ-55^\\circ=35^\\circ$.",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-6:figure-12"
+      ],
+      "question_fingerprint": "67ff7478dc6b14e58f6952f49f61665d",
+      "status": "disagreed",
+      "judge": {
+        "ref": "pp3u10-6:example-2:B",
+        "verdict": "different",
+        "reason": "Printed m(∠A)=70°, solver gets 35°."
+      },
+      "made": {
+        "at": "2026-10-18T08:03:34+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

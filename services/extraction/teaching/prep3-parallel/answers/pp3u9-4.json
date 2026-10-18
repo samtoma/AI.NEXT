@@ -1,0 +1,775 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u9-4",
+  "source": "book-records/prep3-parallel/pp3u9-4.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 20,
+      "cost_usd": 0.5022,
+      "calls": [
+        {
+          "call": "answers.pp3u9-4",
+          "cost_usd": 0.5022,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u9-4:think-and-discuss-1",
+      "record_id": "pp3u9-4:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "What is the relation between the length of the chord and its distance from the center of the circle?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4c1a5bbc9448b32484f91bfd4e31fdce",
+      "kind": "explanation",
+      "answer": "The closer a chord is to the center, the longer it is, and the farther it is from the center, the shorter it is.",
+      "solution": [
+        "Look at the chords from A in the figure and their distances from M.",
+        "The rule says: the closer the chord is from the center, the longer its length is, and vice versa."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "The closer a chord is to the center, the longer it is, and vice versa (longer chord ⇔ smaller distance from the center).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:think-and-discuss-2",
+      "record_id": "pp3u9-4:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "If the chords are equal in length, what can you conclude?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dc03ad08cbbdeb7ed29b3696b24aaf6d",
+      "kind": "explanation",
+      "answer": "Equal chords in a circle are equidistant from the center.",
+      "solution": [
+        "Take chords of equal length in the same circle.",
+        "By the theorem, chords of equal length are equidistant from the center.",
+        "The same holds in congruent circles."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3",
+        "pp3u9-4:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Equal chords in a circle (or in congruent circles) are equidistant from the center.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:think-and-discuss-3",
+      "record_id": "pp3u9-4:think-and-discuss-3",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "If the chords are equidistant from the center of the circle, what do we expect?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4f23b44bfd10200229d1724f67acb5cf",
+      "kind": "explanation",
+      "answer": "We expect the chords to be equal in length.",
+      "solution": [
+        "Take chords at equal distances from the center.",
+        "By the converse of the theorem, chords equidistant from the center(s) are equal in length."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "We expect the chords to be equal in length (converse of the theorem).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-1:1",
+      "record_id": "pp3u9-4:drill-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 58,
+      "question": {
+        "text": "Complete by using the relation (>, <, and =):",
+        "stem": "AB ......... CD",
+        "notes": "Parts labelled by position of three circles; figures are in k14-k16."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9e9278b902a7767ca48996a407732f4a",
+      "kind": "value",
+      "answer": "AB < CD",
+      "solution": [
+        "Read the distances: MX = 5 cm for AB, MY = 3 cm for CD.",
+        "MX > MY, so CD is closer to the center than AB.",
+        "The closer the chord is to the center, the longer it is.",
+        "So CD is longer: AB < CD."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "<",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-1:2",
+      "record_id": "pp3u9-4:drill-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 58,
+      "question": {
+        "text": "Complete by using the relation (>, <, and =):",
+        "stem": "MX ......... MY",
+        "notes": "Parts labelled by position of three circles; figures are in k14-k16."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1af552aee747dde3ac874c066b6a31f8",
+      "kind": "value",
+      "answer": "MX < MY",
+      "solution": [
+        "Read the lengths: AB = 10 cm, CD = 7 cm.",
+        "AB is longer than CD.",
+        "The longer chord is closer to the center.",
+        "So MX < MY."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "<",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-1:3",
+      "record_id": "pp3u9-4:drill-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 58,
+      "question": {
+        "text": "Complete by using the relation (>, <, and =):",
+        "stem": "MX ......... MY",
+        "notes": "Parts labelled by position of three circles; figures are in k14-k16."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1af552aee747dde3ac874c066b6a31f8",
+      "kind": "value",
+      "answer": "MX = MY",
+      "solution": [
+        "Read the lengths: AB = 8 cm and CD = 8 cm.",
+        "The chords are equal in length.",
+        "Equal chords are equidistant from the center.",
+        "So MX = MY."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "=",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-1",
+      "record_id": "pp3u9-4:exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "In the figure opposite MF < ME, Complete: ∵ MF < ME ∴ X + 1 > ......... ; ∵ CD is a chord in circle M ∴ X ≤ ......... i.e: X ∈ ......... ; ∴ CD > ......... X > ......... ∴ CD ≤ ......... Thus ......... < X ≤ .........",
+        "stem": "",
+        "notes": "Question number 2 printed in a circle; the first line is the stem. Blanks as printed."
+      },
+      "needs_page": true,
+      "question_fingerprint": "f61dc3e146dddea9890eac3a453b9768",
+      "kind": "value",
+      "answer": "X+1 > 7; X ≤ 9, X ∈ (6, 9]; CD > 7; X > 6; CD ≤ 10; 6 < X ≤ 9",
+      "solution": [
+        "Read the figure: CD = X+1, AB = 7 cm, radius = 5 cm so diameter = 10 cm.",
+        "MF < ME, so CD is closer to the center than AB, so CD is longer: X+1 > 7, i.e. CD > 7.",
+        "X+1 > 7 gives X > 6.",
+        "CD is a chord, so it is at most the diameter: CD ≤ 10, i.e. X+1 ≤ 10, so X ≤ 9.",
+        "So X ∈ (6, 9].",
+        "Thus 6 < X ≤ 9."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "X + 1 > 7; X ≤ 9; X ∈ ]6, 9]; CD > 7; X > 6; CD ≤ 10; Thus 6 < X ≤ 9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-2:A",
+      "record_id": "pp3u9-4:drill-2",
+      "part": "A",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Study the figure then complete:",
+        "stem": "If: $AB = CD$, then: $MX = \\ldots$; since $ME = \\ldots$, therefore $EX = \\ldots$",
+        "notes": "Answer blanks are dotted lines."
+      },
+      "needs_page": true,
+      "question_fingerprint": "abbc90a2f2bc2e74c6c4459ee79ecc24",
+      "kind": "value",
+      "answer": "MX = MY; ME = MO; EX = OY",
+      "solution": [
+        "AB = CD, so the chords are equidistant from the center: MX = MY.",
+        "ME and MO are radii of the circle, so ME = MO.",
+        "Subtract: ME − MX = MO − MY.",
+        "So EX = OY."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3",
+        "pp3u9-4:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "MX = MY; ME = MO; EX = OY",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-2:B",
+      "record_id": "pp3u9-4:drill-2",
+      "part": "B",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Study the figure then complete:",
+        "stem": "If: $AB = CD$, then: $ME = \\ldots$; therefore $X = \\ldots$ cm, $CD = \\ldots$ cm",
+        "notes": "Answer blanks are dotted lines."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ddf7474594cb3557abb6e0c0411785fd",
+      "kind": "value",
+      "answer": "ME = 6 cm (ME = MO); X = 4 cm; CD = 32 cm",
+      "solution": [
+        "AB = CD, so they are equidistant from the center: ME = MO = 6 cm.",
+        "ME = X + 2 = 6, so X = 4.",
+        "MO ⊥ CD, so O is the midpoint of CD and the half CO = 3X + 4 = 16 cm.",
+        "CD = 2 × 16 = 32 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "ME = 6 cm; X = 4 cm; CD = 32 cm",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-2:C",
+      "record_id": "pp3u9-4:drill-2",
+      "part": "C",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Study the figure then complete:",
+        "stem": "If: $AB = CD$, then: $MX = \\ldots$; in $\\triangle MXY$: since $m(\\angle XMY) = 100^\\circ$, therefore $m(\\angle MXY) = \\ldots^\\circ$",
+        "notes": "Answer blanks are dotted lines."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1985b91f772004384bea54dd873b6759",
+      "kind": "value",
+      "answer": "MX = MY; 40",
+      "solution": [
+        "AB = CD, so MX = MY.",
+        "In triangle MXY, MX = MY, so the base angles are equal: m(∠MXY) = m(∠MYX).",
+        "The angles sum to 180°, so 2·m(∠MXY) = 180° − 100° = 80°.",
+        "m(∠MXY) = 40°."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3",
+        "pp3u9-4:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "MX = MY; m(∠MXY) = 40",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-2:D",
+      "record_id": "pp3u9-4:drill-2",
+      "part": "D",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Study the figure then complete:",
+        "stem": "If: M and N are two congruent circles, $AB = CD$, then: $MX = \\ldots$ and the figure MXYN $\\ldots$",
+        "notes": "Answer blanks are dotted lines."
+      },
+      "needs_page": true,
+      "question_fingerprint": "2dcacfc02cea2fe65e768397a0b3aed9",
+      "kind": "value",
+      "answer": "MX = NY; MXYN is a parallelogram (a rectangle)",
+      "solution": [
+        "The circles are congruent and AB = CD, so the chords are equidistant from the centers: MX = NY.",
+        "MX ⊥ DA and NY ⊥ DA, so MX ∥ NY.",
+        "Two opposite sides MX and NY are equal and parallel.",
+        "So MXYN is a parallelogram (with right angles, a rectangle)."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "MX = NY; the figure MXYN is a rectangle",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-3",
+      "record_id": "pp3u9-4:drill-3",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "In the figure opposite: Triangle ABC is inscribed in circle M, in which $m(\\angle B)=m(\\angle C)$, X is the midpoint of $\\overline{AB}$, $\\overline{MY}\\perp\\overline{AC}$. Prove that: $MX=MY$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "953a9e4e93f68e6459ab16f7af32a675",
+      "kind": "explanation",
+      "answer": "Since ∠B = ∠C, AB = AC, and equal chords are equidistant from the center, so MX = MY.",
+      "solution": [
+        "Given: m(∠B) = m(∠C), X is the midpoint of AB, MY ⊥ AC.",
+        "In triangle ABC, m(∠B) = m(∠C), so AB = AC.",
+        "X is the midpoint of AB, so MX ⊥ AB.",
+        "In circle M, AB = AC with MX ⊥ AB and MY ⊥ AC.",
+        "So MX = MY (theorem). Q.E.D."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3",
+        "pp3u9-4:example-2",
+        "pp3u9-4:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "Since m(∠B) = m(∠C), the sides opposite are equal: AC = AB. X is the midpoint of AB so MX ⟂ AB, and MY ⟂ AC. In the same circle, equal chords AB = AC are equidistant from the center, therefore MX = MY. (Q.E.D.)",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:drill-4",
+      "record_id": "pp3u9-4:drill-4",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Study the figure then complete:",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f6777d27a1782d71bcdfdb06b0c350cd",
+      "kind": "value",
+      "answer": "1) AB = 14 cm; 2) CD = AB = 16, X = 3, EM = 6 cm, AM = 10 cm; 3) m(∠A) = 50°; 4) MX = NY, congruent, AB = AC",
+      "solution": [
+        "1) MX = MY, so AB = CD. MY ⊥ CD, so Y is the midpoint and CD = 2 × 7 = 14. AB = 14 cm.",
+        "2) ME = MF, so CD = AB = 16 cm.",
+        "5X + 1 = 16, so X = 3.",
+        "EM = MF = 2X = 6 cm.",
+        "E is the midpoint of AB, so AE = 8. AM² = ME² + AE² = 36 + 64 = 100, so AM = 10 cm.",
+        "3) MD = ME, so AB = AC (converse). So m(∠C) = m(∠B) = 65°. m(∠A) = 180° − 65° − 65° = 50°.",
+        "4) MN ∥ BC, so the distances from M and N to BC are equal: MX = NY.",
+        "The circles M and N are congruent (the radii MB and NC are marked equal), and A ∈ BC.",
+        "MX = NY, so the chords are equidistant from the centers and equal in length: AB = AC."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-3",
+        "pp3u9-4:rule-5",
+        "pp3u9-4:rule-1",
+        "pp3u9-4:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "1) AB = 14 cm; 2) CD = AB, X = 3, EM = 6 cm, AM = 10 cm; 3) m(∠A) = 50; 4) MX = NY... (MN ∥ BC so MX = NY... the circles are congruent) — see parts: MX = NY? Corrected: MX = NY is not asked; blanks: MX = NY, circles M and N congruent... AB = AC",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-2",
+      "record_id": "pp3u9-4:exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "If: $MX=MY$, $YD=7$ cm. Then: $AB=\\ldots$ cm",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "34929da82ce9aa3a94b895bba6d670df",
+      "kind": "value",
+      "answer": "14",
+      "solution": [
+        "Y is the midpoint of CD and MY ⟂ CD, so CD = 2 × YD.",
+        "CD = 2 × 7 = 14 cm.",
+        "MX = MY, so the chords are equidistant from the center, so AB = CD (converse).",
+        "AB = 14 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-3",
+      "record_id": "pp3u9-4:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "If: $ME=MF$. Then: $CD=\\ldots$, $\\therefore X=\\ldots$, $EM=\\ldots$ cm, $AM=\\ldots$ cm",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f6f91cd79c1a4bd74d1e505c111fd48d",
+      "kind": "value",
+      "answer": "CD = AB, X = 3, EM = 6, AM = 10",
+      "solution": [
+        "ME = MF, so the chords are equidistant from the center, so CD = AB (converse).",
+        "AB = 16 cm, so CD = 16 cm.",
+        "5X + 1 = 16, so 5X = 15, X = 3.",
+        "EM = MF = 2X = 6 cm.",
+        "E is the midpoint of AB, so AE = 8 cm. In the right triangle AEM: AM² = 8² + 6² = 100, so AM = 10 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5",
+        "pp3u9-4:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "CD = AB, X = 3, EM = 6, AM = √292 = 2√73 (≈ 17.09)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-4",
+      "record_id": "pp3u9-4:exercise-4",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "If: $MD=ME$ et $m(\\angle B)=65^\\circ$. Then: $m(\\angle A)=\\ldots^\\circ$",
+        "stem": "",
+        "notes": "'et' is printed (French) for 'and'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "c3728c20fcce4a86e9cc4fdbde03f12d",
+      "kind": "value",
+      "answer": "50",
+      "solution": [
+        "MD = ME, so AB and AC are equidistant from the center.",
+        "So AB = AC (converse).",
+        "In triangle ABC, equal sides give equal angles opposite them, so m(∠C) = m(∠B) = 65°.",
+        "m(∠A) = 180° − 65° − 65° = 50°."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5",
+        "pp3u9-4:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "50",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-5:MX",
+      "record_id": "pp3u9-4:exercise-5",
+      "part": "MX",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "$\\because \\overleftrightarrow{MN}\\parallel\\overleftrightarrow{BC}$, $\\because$ the two circles M and N ........., $A\\in\\overline{BC}$. $\\therefore MX=\\ldots$, $\\therefore AB=\\ldots$",
+        "stem": "$\\therefore MX=\\ldots$",
+        "notes": "Blanks for the second statement are dotted; structure of the parts read from the layout."
+      },
+      "needs_page": false,
+      "question_fingerprint": "8def93d5b36d43a92023f7a56cba77db",
+      "kind": "value",
+      "answer": "NY",
+      "solution": [
+        "MN ∥ BC, and MX and NY are both perpendicular to BC.",
+        "So the distances from M and N to the line BC are equal.",
+        "MX = NY."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "NY",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-5:circles",
+      "record_id": "pp3u9-4:exercise-5",
+      "part": "circles",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "$\\because \\overleftrightarrow{MN}\\parallel\\overleftrightarrow{BC}$, $\\because$ the two circles M and N ........., $A\\in\\overline{BC}$. $\\therefore MX=\\ldots$, $\\therefore AB=\\ldots$",
+        "stem": "the two circles M and N .........",
+        "notes": "Blanks for the second statement are dotted; structure of the parts read from the layout."
+      },
+      "needs_page": false,
+      "question_fingerprint": "457201b8ad0e73c83eac1a7b279b3f9f",
+      "kind": "value",
+      "answer": "congruent",
+      "solution": [
+        "The figure marks the radii NC and MB as equal.",
+        "Circles with equal radii are congruent."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "are congruent",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:exercise-5:AB",
+      "record_id": "pp3u9-4:exercise-5",
+      "part": "AB",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "$\\because \\overleftrightarrow{MN}\\parallel\\overleftrightarrow{BC}$, $\\because$ the two circles M and N ........., $A\\in\\overline{BC}$. $\\therefore MX=\\ldots$, $\\therefore AB=\\ldots$",
+        "stem": "$\\therefore AB=\\ldots$",
+        "notes": "Blanks for the second statement are dotted; structure of the parts read from the layout."
+      },
+      "needs_page": false,
+      "question_fingerprint": "228fd38be1f0442334ae3e7e5201e47b",
+      "kind": "value",
+      "answer": "AC",
+      "solution": [
+        "The circles M and N are congruent and MX = NY.",
+        "So the chords AB and AC are equidistant from the centers.",
+        "By the converse of the theorem, AB = AC."
+      ],
+      "grounded_in": [
+        "pp3u9-4:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "AC",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-4:think-1",
+      "record_id": "pp3u9-4:think-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 62,
+      "question": {
+        "text": "If M and N are two congruent circles and intersecting at A and B. Is $\\overleftrightarrow{AB}$ an axis to $\\overline{MN}$? Explain your answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ea22e76e65ad654187d08daa89b07823",
+      "kind": "explanation",
+      "answer": "Yes, AB is the axis of symmetry of MN, because AB is the perpendicular bisector of MN.",
+      "solution": [
+        "A and B are on both circles, which have equal radii r, so MA = NA = r and MB = NB = r.",
+        "A is equidistant from M and N, and so is B.",
+        "So the line AB is the perpendicular bisector of MN.",
+        "So AB is an axis of symmetry of MN."
+      ],
+      "grounded_in": [
+        "pp3u9-4:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. Both circles are congruent, so MA = MB = NA = NB, so M and N each lie on the perpendicular bisector of AB, which means line MN is perpendicular to AB at its midpoint. Equivalently, AMBN is a rhombus whose diagonals bisect each other perpendicularly, so line AB is the axis of symmetry (perpendicular bisector) of MN.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:28:45+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-3-2:parslope",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-3-2",
+ "parent_question_id": "q:pp3u5-3-2:bk-drill-5",
+ "source_page": 68,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + d"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + m * d"
+  }
+ ],
+ "stem": "The straight line $\\overleftrightarrow{AB}$ passes through the points $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Find the slope of any straight line parallel to $\\overleftrightarrow{AB}$.",
+ "answer": "m",
+ "solution": [
+  "Slope of $\\overleftrightarrow{AB}$ = $\\frac{y_2-y_1}{x_2-x_1}$ = $\\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})}$.",
+  "This equals $\\frac{{=y2 - y1}}{{=x2 - x1}} = {=m}$.",
+  "Parallel lines have equal slopes, so the slope of any line parallel to $\\overleftrightarrow{AB}$ is ${=m}$."
+ ],
+ "constraints": [],
+ "proposed_misconceptions": [],
+ "notes": "Entry skill: compute slope from two points; parallel lines share it. Integer slopes only."
+}

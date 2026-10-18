@@ -1,0 +1,329 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "4bb88e4a1785d5eceada08c326a110d73c9ed0c2aaaa35e64bb3d7dafe0d5f2e",
+  "generated_sha256": "8a1bba97386e197f15c94000ad0df11eb16e56bca6c81ec21602c313e09ea0f3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u10-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-1-2",
+     "need_kind": "arc_length_builder",
+     "description": "A circle with a radius that can be changed and a draggable sector. The student sets the arc measure and the radius, and sees the arc length as the fraction (arc measure / 360) of the circumference. Tasks: build an arc of a stated length, and make two arcs of equal measure on circles of different radii. This would diagnose: using the arc measure as the length, using the fraction of 180 in place of 360, mixing up radius and diameter in the circumference, and thinking equal measure means equal length across circles.",
+     "why": "No existing kind has a length or circumference quantity. angle_setter covers the measure only, and circle_builder covers elements only. An answer box with a figure would not be a construction."
+    },
+    {
+     "lo_id": "lo:pp3u10-1-3",
+     "need_kind": "parallel_chord_arc_builder",
+     "description": "A circle with two draggable parallel chords, or a chord parallel to a tangent. The arcs between the parallels light up live. The student must make the two enclosed arcs equal, or drag a chord until it is parallel to the tangent and the arcs cut off on each side match, then conclude that the chords CE and CF are equal. This would diagnose: thinking the parallel chords are equal in length, comparing the wrong pair of arcs, and not seeing that the tangent point splits the arc.",
+     "why": "circle_builder constructs a single element only. It has no parallelism relation and no arc comparison, so none of the existing kinds can reach the corollaries."
+    },
+    {
+     "lo_id": "lo:pp3u10-1-1",
+     "need_kind": "misconception ids (data, not a widget kind)",
+     "description": "angle_setter with ask=central fits this objective well, for example target 50 for the arc AC in the book's drill 2-2. The student drags the points until the central angle, and so the arc, has the stated measure. The adjacent-arc and semicircle subtraction, for example BC = 180 − 50 = 130, could be done in a second instance. The predicates angle-given-as-arc, other-arc and off-target are available.",
+     "why": "The objective's own misconceptions list is empty, so there is no allowed id to map any predicate to. Diagnostics need at least one entry and a foreign id is refused (FR-1215). A template would be invalid, so I wrote none. Once Samuel adds misconceptions such as an arc taken as half its central angle, or the far arc taken, this template can be written straight away."
+    }
+   ],
+   "notes": "I wrote no templates. All three objectives have an empty own-misconceptions list, but a template needs at least one diagnostic with an id from its own objective's list. I would not invent ids. The gaps record two missing widget kinds (lo:pp3u10-1-2 and lo:pp3u10-1-3). They also record that lo:pp3u10-1-1 has a genuine existing fit (angle_setter, central) that is blocked only by the missing misconceptions."
+  },
+  {
+   "lesson": "pp3u10-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-2-1",
+     "need_kind": "angle_setter (exists) – blocked: objective lists no misconception ids",
+     "description": "angle_setter fits this objective well. For example, {ask:\"inscribed\",target:55} with the stem 'Set the inscribed angle ∠ACB to 55° and read off the central angle', plus a matching {ask:\"central\"} item. The student drags A, B and C and sees the 2:1 arc-to-angle ratio hold. The predicates arc-given-as-angle and other-arc would be mapped for inscribed, and angle-given-as-arc and other-arc for central. The lesson file's misconceptions list for this objective is empty, and a template needs at least one diagnostic with an id from that list. I will not invent ids, because they would be refused (FR-1215).",
+     "why": "Samuel needs to register misconceptions on lo:pp3u10-2-1. Candidates are 'inscribed angle equals the arc', 'inscribed angle equals the central angle', and 'angle measured on the wrong arc'. Then the angle_setter templates can be authored."
+    },
+    {
+     "lo_id": "lo:pp3u10-2-2",
+     "need_kind": "angle_setter (exists) – blocked: objective lists no misconception ids",
+     "description": "angle_setter {ask:\"inscribed\"} with a target of 90 would show that the angle in a semicircle is a right angle. With a 140° arc it would show an inscribed angle of 70°. The student would find that ∠C stays at 90° wherever C sits on the semicircle. It cannot ask for the arc from the angle, nor for the other angle of triangle ABC, so it covers only part of the objective.",
+     "why": "The misconceptions list is empty, so no valid diagnostics can be attached. Once ids are added, a semicircle template is a genuine fit."
+    },
+    {
+     "lo_id": "lo:pp3u10-2-3",
+     "need_kind": "chord_angle_builder (new kind)",
+     "description": "The student would construct two chords crossing inside a circle, or two secants meeting at an external point. The intercepted arcs would be shown live, and the student would set the angle to a target value. For example, the target is 87° with one arc fixed at 114°, and the student drags the second arc until half the sum matches. The same widget would cover the external case: half the difference of the arcs. It would diagnose using the sum where the difference is needed (and the reverse), forgetting to halve, and using only one of the two arcs. The existing angle_setter covers only central and inscribed angles with a vertex on or at the centre of the circle, so it cannot represent the interior or exterior vertex.",
+     "why": "No existing kind models an angle whose vertex is inside or outside the circle. Using angle_setter would be a forced fit, and the misconceptions list is also empty."
+    }
+   ],
+   "notes": "The misconceptions list is empty for all three objectives, so there are no valid ids to map. The schema also requires at least one diagnostic per template, and an id I made up would be refused (FR-1215). So I emitted no templates rather than fake ones. After misconception ids are registered, I'd author an angle_setter inscribed template (target 55, parent bk-drill-1-x) and a central one for lo-1, and a semicircle template (inscribed, target 90) for lo-2. Lo-3 needs a new kind."
+  },
+  {
+   "lesson": "pp3u10-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-3-1",
+     "need_kind": "misconception ids (data gap); the kind angle_setter fits",
+     "description": "angle_setter with {ask:\"inscribed\", target:N} fits this objective well. The student drags A, B and C on the circle, and the same arc AB keeps giving the same inscribed angle wherever C sits. A template would use the anchor q:pp3u10-3-1:bk-think-and-discuss-1-1 (parent), basic tier. It could map arc-given-as-angle and other-arc. Both are plausible errors: the student gives the arc as the angle, or puts C on the wrong arc.",
+     "why": "This objective's own misconceptions list is empty. Each template needs at least one diagnostic, and ids may only come from the objective's own list. Any id I wrote would be invented and refused (FR-1215). So I wrote no template. The list needs filling, for example with 'inscribed angle equals the arc' and 'angles on the same arc differ when the vertex moves'. Then this template can be written."
+    },
+    {
+     "lo_id": "lo:pp3u10-3-3",
+     "need_kind": "concyclic_tester (new kind)",
+     "description": "The student would see a base segment AB and a point C that has an angle ∠ACB. They would then place a fourth point D, by dragging, so that A, B, C and D are concyclic. D must give an equal angle on the same side of AB. The instrument would show the live angle ∠ADB and the circle through A, B and C. It would be graded on the property: equal angles on the same side of the base. It would diagnose these errors: D placed on the opposite side of AB, where the angle is supplementary; D placed with an equal base angle but a different base; D placed by eye, with the angle unequal.",
+     "why": "No existing kind builds this. circle_builder and angle_setter keep the points on a given circle. This objective asks the student to decide whether the points are on a circle. The objective also has no misconceptions list and no anchor question."
+    },
+    {
+     "lo_id": "lo:pp3u10-3-2",
+     "need_kind": "misconception ids (data gap); angle_setter fits only partly",
+     "description": "angle_setter could show equal arcs giving equal inscribed angles. It cannot show two different chords or arcs of equal length side by side. The algebra anchors, such as 5x−40 = 30 + ..., are symbolic and are not a construction. A second arc-and-chord widget would be needed to fit this objective honestly.",
+     "why": "The misconceptions list is empty. The fit is also weak, so I wrote no template for it."
+    }
+   ],
+   "notes": "I produced no templates, because all three objectives have an empty \"misconceptions\" list. A template needs at least one diagnostic, and only ids from the objective's own list are accepted. Writing any id would mean inventing one, so I did not. The best candidate is angle_setter {ask:\"inscribed\", target} for lo:pp3u10-3-1. It maps arc-given-as-angle and other-arc, and off-target should not be mapped. Once the misconception list is supplied, that template can be written straight away."
+  },
+  {
+   "lesson": "pp3u10-4",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-4-1",
+     "need_kind": "cyclic_tester",
+     "description": "The student sees a quadrilateral ABCD with a movable vertex and a chord (the common base) with two angle readouts, and drags a vertex to decide whether the two angles on the same base, in one direction of it, are equal. The circle through three vertices is drawn on request. The student marks 'cyclic' or 'not cyclic' and the instrument checks the property. It would diagnose: comparing angles on opposite sides of the base, comparing angles on different bases, assuming any quadrilateral is cyclic, and treating equal sides rather than equal angles as the test.",
+     "why": "angle_setter fixes A, B, C on a circle and only sets one inscribed or central angle. It cannot present a given quadrilateral and ask whether it is cyclic, and none of its predicates describe this decision. Using it would be a forced fit. Also, this objective has no anchor book question and no misconception ids, so no valid template can be written."
+    },
+    {
+     "lo_id": "lo:pp3u10-4-2",
+     "need_kind": "cyclic_proof_builder",
+     "description": "The student is given a figure with two right angles on one base (for example ∠ABC = ∠ADC = 90° on AC), or with parallel lines giving equal angles. They assemble the proof by choosing which two angles are equal, which base they stand on, and that both lie on one side of it. The instrument checks the logical chain and flags a missing or wrong step. It would diagnose: angles on opposite sides of the base, equal angles that are not on a common base, and using supplementary opposite angles without justification.",
+     "why": "No existing kind builds a geometric argument or a reasoned chain. circle_builder and angle_setter work on a circle that is already given, whereas here the student must prove that the circle exists. A multiple-choice or answer box would be a disguised answer box. This objective also has no anchor question or misconceptions to map."
+    },
+    {
+     "lo_id": "lo:pp3u10-4-3",
+     "need_kind": "circle_deduction_builder",
+     "description": "Starting from a figure already proven cyclic, the student marks the equal angles standing on one chord, or constructs the centre as the intersection of two perpendicular bisectors of chords, or shows two lines are parallel from equal alternate angles. The instrument grades the marked angle pairs or the constructed centre. It would diagnose: marking angles on different chords as equal, placing the centre at the intersection of the diagonals, and choosing angles on opposite arcs.",
+     "why": "circle_builder constructs a single radius, chord, diameter or tangent. It cannot ask for the centre of a circle through given points or for marking equal angle pairs in a figure. angle_setter fixes the circle and the points. Neither fits without stretching, and this objective has no anchor question or misconceptions."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u10-5",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-5-1",
+     "need_kind": "cyclic_quad_builder",
+     "description": "A circle with four draggable vertices A, B, C, D. Angles at all four vertices and the arcs between them show live. The student sets a given interior angle (for example ∠A = 60°) and then places the opposite vertex so ∠C has the required measure. The widget grades the property that opposite angles sum to 180°, not a fixed position. Errors it would diagnose: making opposite angles equal instead of supplementary; giving the arc where the angle was asked for (half or double); using the adjacent angle instead of the opposite one; and setting the angle on the wrong arc.",
+     "why": "angle_setter handles one inscribed or central angle on one arc. It cannot show two opposite angles together or enforce that they sum to 180°. The anchor question (∠A = 60°, so arc BCD = 120°) could be forced into an angle_setter central question. That would only test the 2:1 relation, not the opposite-angle theorem. The lesson's misconception list is also empty, so no diagnostic could be mapped legitimately."
+    },
+    {
+     "lo_id": "lo:pp3u10-5-2",
+     "need_kind": "cyclic_quad_builder (exterior mode)",
+     "description": "The same cyclic quadrilateral with one side extended past a vertex. The student drags the vertices until the exterior angle at C equals a target (for example 75°). The widget shows the interior angle at A live. It grades that the exterior angle equals the opposite interior angle. Errors it would diagnose: taking the exterior angle as equal to the adjacent interior angle; taking it as 180° minus the opposite angle; and using the wrong extended side.",
+     "why": "No existing kind can draw an extended side, an exterior angle or the opposite interior angle. A number-entry version would be an answer box in disguise. The lesson's misconception list is also empty, so no diagnostics can be attached to any widget."
+    },
+    {
+     "lo_id": "lo:pp3u10-5-3",
+     "need_kind": "cyclic_test_builder",
+     "description": "The student is given a quadrilateral with two or three fixed angles and adjusts the remaining vertex or angle until the quadrilateral becomes cyclic. A circle through three vertices is drawn live, and the fourth vertex turns green when it lies on that circle. The student then states which criterion holds: opposite angles supplementary, or exterior angle equal to the interior opposite angle. Errors it would diagnose: testing equal opposite angles instead of supplementary ones; testing adjacent angles; and treating a rectangle-like look as proof.",
+     "why": "No existing kind lets the student test whether four points are concyclic or build the converse. circle_builder constructs radii, chords, diameters and tangents. It does not judge a quadrilateral. The objective also has no anchor question and no misconceptions."
+    }
+   ],
+   "notes": "I authored no templates, for two reasons. (1) All three objectives in this lesson have an empty \"misconceptions\" list. Every template needs at least one diagnostic whose id comes from the objective's own list, so none can be valid. (2) The only kind that comes close is angle_setter, and that is a stretch. It could cover the think-and-discuss item (∠A = 60°, so arc BCD = 120°) as {ask:\"central\", target:120}. That item tests the 2:1 inscribed-angle relation, not the cyclic-quadrilateral theorem, so it would be a forced fit. If Samuel adds misconceptions such as \"opposite angles are equal\" or \"exterior angle equals the adjacent interior angle\", that single item could become a basic angle_setter template. Its likely diagnostics would be angle-given-as-arc and other-arc."
+  },
+  {
+   "lesson": "pp3u10-6",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-6-1",
+     "need_kind": "tangent_pair_builder",
+     "description": "From an external point A the student drags A and the two points of tangency B and C on circle M. The widget shows AB, AC, the angle at A, the angle BMC and the axis AM live. Tasks: place the tangents so that ∠BAC equals a given value, or so that AB equals a given length. The student finds that AB = AC always holds, that ∠BAM = ∠CAM, and that ∠BMC + ∠BAC = 180°. It would diagnose: treating AB and AC as unequal; taking ∠BAC as equal to ∠BMC instead of supplementary; halving or doubling the angle wrongly; and mistaking a secant for a tangent.",
+     "why": "circle_builder with element 'tangent' only tests whether one line touches the circle. It does not show the equality of the two tangent segments or the angle relations. angle_setter handles only inscribed and central angles. Using either would be a forced fit."
+    },
+    {
+     "lo_id": "lo:pp3u10-6-2",
+     "need_kind": "incircle_polygon_builder",
+     "description": "A triangle or quadrilateral is drawn with its inscribed circle. The student drags the three or four points of tangency, or sets the side lengths, so that the tangent segments from each vertex are equal. The widget shows the tangent lengths from each vertex and the perimeter. Tasks: find the missing side or perimeter, and place the centre at the intersection of the angle bisectors. It would diagnose: giving unequal tangent segments from one vertex; computing the perimeter as the sum of only some segments, not twice the tangent sum; and placing the centre at the circumcentre or centroid.",
+     "why": "No existing kind builds a polygon around a circle with tangent-length bookkeeping. polygon_builder is not among the instruments with this behaviour, and circle_builder cannot handle polygons."
+    },
+    {
+     "lo_id": "lo:pp3u10-6-3",
+     "need_kind": "common_tangent_sorter",
+     "description": "Two circles of adjustable radii and centre distance are shown. The student drags the endpoints of a segment to construct a common tangent of a named type, internal or external. The widget shows the number of common tangents for the current position (4, 3, 2, 1 or 0) and the tangent length. Tasks: construct an internal common tangent, then one external; or set the centre distance so the circles have exactly 3 common tangents. It would diagnose: confusing internal with external tangents; wrong tangent length, such as using d without the radii (d² − (r1 ± r2)²); and a wrong count of tangents for the position.",
+     "why": "circle_builder has a single circle about M and checks only the property of one tangent. It cannot show two circles or distinguish internal from external common tangents."
+    },
+    {
+     "lo_id": "lo:pp3u10-6-1",
+     "need_kind": "(misconception catalogue)",
+     "description": "All three objectives in this lesson have an empty 'misconceptions' list. A widget template needs at least one diagnostic with a misconception id from its own objective's list, so no template can be validly written until those misconceptions are authored.",
+     "why": "This blocks any template for this lesson, even if a kind fitted."
+    }
+   ],
+   "notes": "No templates were authored. None of the existing kinds genuinely fits the three objectives (equal tangent segments, an inscribed circle in a polygon, common tangents of two circles). All three objectives also have empty misconception lists, so no diagnostic could cite a valid id. circle_builder's 'tangent' element and angle_setter were considered and rejected as forced fits."
+  },
+  {
+   "lesson": "pp3u10-7",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-7-1",
+     "need_kind": "tangent_chord_angle_setter",
+     "description": "A circle with a tangent at B and a chord BA. The student drags A (and optionally a point C on the tangent) to build the angle of tangency for a stated arc, or to set the arc for a stated angle. The widget shows the arc AB and the tangent-chord angle live, with the inscribed angle on the same arc and the central angle drawn alongside. Asks: 'make the angle of tangency 65°', 'make the arc 230°', and 'make it equal to the inscribed angle on the same arc'. Errors it would diagnose: giving the arc instead of the angle (the angle is half the arc), giving the central angle instead (the angle is half the central angle), using the major arc instead of the minor arc (or the reverse), and treating the tangent-radius right angle as the tangent-chord angle.",
+     "why": "angle_setter only has inscribed and central angles with A, B and C all on the circle. It has no tangent line and no tangent-chord angle, so it cannot show the half-the-arc fact this objective is about. The objective also has no misconception ids to map diagnostics to."
+    },
+    {
+     "lo_id": "lo:pp3u10-7-3",
+     "need_kind": "tangent_converse_checker",
+     "description": "A circle with a chord AB and a line through B. The student drags the line's direction until the angle it makes with the chord equals the inscribed angle on the alternate side. The widget shows both angles live and reports whether the line is tangent. Errors it would diagnose: matching the angle to the wrong arc or side, matching to the central angle instead of the inscribed angle, and making a secant that happens to cross near the equal angle.",
+     "why": "circle_builder with element tangent grades the tangent by its geometry (perpendicular to the radius). It does not use the converse of theorem 5, which compares the chord angle with the alternate inscribed angle. The objective also has no misconception ids."
+    },
+    {
+     "lo_id": "lo:pp3u10-7-2",
+     "need_kind": "none_proof_step_builder",
+     "description": "This objective is a written proof: equal angles of tangency and inscribed angles, together with parallel lines, give a cyclic quadrilateral. A proof-step sequencer or angle-chasing widget would fit, with the student chaining angle equalities. No existing construction widget does this.",
+     "why": "Proof writing is not a construction on any existing instrument. The objective has no anchor questions and no misconception ids, so I am recording it as a gap and not forcing a fit."
+    }
+   ],
+   "notes": "No templates are returned. All three objectives have empty misconception lists, and the schema requires at least one diagnostic per template. The widget kinds also do not model the tangent-chord angle."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u10-1-2",
+   "need_kind": "arc_length_builder",
+   "description": "A circle with a radius that can be changed and a draggable sector. The student sets the arc measure and the radius, and sees the arc length as the fraction (arc measure / 360) of the circumference. Tasks: build an arc of a stated length, and make two arcs of equal measure on circles of different radii. This would diagnose: using the arc measure as the length, using the fraction of 180 in place of 360, mixing up radius and diameter in the circumference, and thinking equal measure means equal length across circles.",
+   "why": "No existing kind has a length or circumference quantity. angle_setter covers the measure only, and circle_builder covers elements only. An answer box with a figure would not be a construction."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-3",
+   "need_kind": "parallel_chord_arc_builder",
+   "description": "A circle with two draggable parallel chords, or a chord parallel to a tangent. The arcs between the parallels light up live. The student must make the two enclosed arcs equal, or drag a chord until it is parallel to the tangent and the arcs cut off on each side match, then conclude that the chords CE and CF are equal. This would diagnose: thinking the parallel chords are equal in length, comparing the wrong pair of arcs, and not seeing that the tangent point splits the arc.",
+   "why": "circle_builder constructs a single element only. It has no parallelism relation and no arc comparison, so none of the existing kinds can reach the corollaries."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-1",
+   "need_kind": "misconception ids (data, not a widget kind)",
+   "description": "angle_setter with ask=central fits this objective well, for example target 50 for the arc AC in the book's drill 2-2. The student drags the points until the central angle, and so the arc, has the stated measure. The adjacent-arc and semicircle subtraction, for example BC = 180 − 50 = 130, could be done in a second instance. The predicates angle-given-as-arc, other-arc and off-target are available.",
+   "why": "The objective's own misconceptions list is empty, so there is no allowed id to map any predicate to. Diagnostics need at least one entry and a foreign id is refused (FR-1215). A template would be invalid, so I wrote none. Once Samuel adds misconceptions such as an arc taken as half its central angle, or the far arc taken, this template can be written straight away."
+  },
+  {
+   "lo_id": "lo:pp3u10-2-1",
+   "need_kind": "angle_setter (exists) – blocked: objective lists no misconception ids",
+   "description": "angle_setter fits this objective well. For example, {ask:\"inscribed\",target:55} with the stem 'Set the inscribed angle ∠ACB to 55° and read off the central angle', plus a matching {ask:\"central\"} item. The student drags A, B and C and sees the 2:1 arc-to-angle ratio hold. The predicates arc-given-as-angle and other-arc would be mapped for inscribed, and angle-given-as-arc and other-arc for central. The lesson file's misconceptions list for this objective is empty, and a template needs at least one diagnostic with an id from that list. I will not invent ids, because they would be refused (FR-1215).",
+   "why": "Samuel needs to register misconceptions on lo:pp3u10-2-1. Candidates are 'inscribed angle equals the arc', 'inscribed angle equals the central angle', and 'angle measured on the wrong arc'. Then the angle_setter templates can be authored."
+  },
+  {
+   "lo_id": "lo:pp3u10-2-2",
+   "need_kind": "angle_setter (exists) – blocked: objective lists no misconception ids",
+   "description": "angle_setter {ask:\"inscribed\"} with a target of 90 would show that the angle in a semicircle is a right angle. With a 140° arc it would show an inscribed angle of 70°. The student would find that ∠C stays at 90° wherever C sits on the semicircle. It cannot ask for the arc from the angle, nor for the other angle of triangle ABC, so it covers only part of the objective.",
+   "why": "The misconceptions list is empty, so no valid diagnostics can be attached. Once ids are added, a semicircle template is a genuine fit."
+  },
+  {
+   "lo_id": "lo:pp3u10-2-3",
+   "need_kind": "chord_angle_builder (new kind)",
+   "description": "The student would construct two chords crossing inside a circle, or two secants meeting at an external point. The intercepted arcs would be shown live, and the student would set the angle to a target value. For example, the target is 87° with one arc fixed at 114°, and the student drags the second arc until half the sum matches. The same widget would cover the external case: half the difference of the arcs. It would diagnose using the sum where the difference is needed (and the reverse), forgetting to halve, and using only one of the two arcs. The existing angle_setter covers only central and inscribed angles with a vertex on or at the centre of the circle, so it cannot represent the interior or exterior vertex.",
+   "why": "No existing kind models an angle whose vertex is inside or outside the circle. Using angle_setter would be a forced fit, and the misconceptions list is also empty."
+  },
+  {
+   "lo_id": "lo:pp3u10-3-1",
+   "need_kind": "misconception ids (data gap); the kind angle_setter fits",
+   "description": "angle_setter with {ask:\"inscribed\", target:N} fits this objective well. The student drags A, B and C on the circle, and the same arc AB keeps giving the same inscribed angle wherever C sits. A template would use the anchor q:pp3u10-3-1:bk-think-and-discuss-1-1 (parent), basic tier. It could map arc-given-as-angle and other-arc. Both are plausible errors: the student gives the arc as the angle, or puts C on the wrong arc.",
+   "why": "This objective's own misconceptions list is empty. Each template needs at least one diagnostic, and ids may only come from the objective's own list. Any id I wrote would be invented and refused (FR-1215). So I wrote no template. The list needs filling, for example with 'inscribed angle equals the arc' and 'angles on the same arc differ when the vertex moves'. Then this template can be written."
+  },
+  {
+   "lo_id": "lo:pp3u10-3-3",
+   "need_kind": "concyclic_tester (new kind)",
+   "description": "The student would see a base segment AB and a point C that has an angle ∠ACB. They would then place a fourth point D, by dragging, so that A, B, C and D are concyclic. D must give an equal angle on the same side of AB. The instrument would show the live angle ∠ADB and the circle through A, B and C. It would be graded on the property: equal angles on the same side of the base. It would diagnose these errors: D placed on the opposite side of AB, where the angle is supplementary; D placed with an equal base angle but a different base; D placed by eye, with the angle unequal.",
+   "why": "No existing kind builds this. circle_builder and angle_setter keep the points on a given circle. This objective asks the student to decide whether the points are on a circle. The objective also has no misconceptions list and no anchor question."
+  },
+  {
+   "lo_id": "lo:pp3u10-3-2",
+   "need_kind": "misconception ids (data gap); angle_setter fits only partly",
+   "description": "angle_setter could show equal arcs giving equal inscribed angles. It cannot show two different chords or arcs of equal length side by side. The algebra anchors, such as 5x−40 = 30 + ..., are symbolic and are not a construction. A second arc-and-chord widget would be needed to fit this objective honestly.",
+   "why": "The misconceptions list is empty. The fit is also weak, so I wrote no template for it."
+  },
+  {
+   "lo_id": "lo:pp3u10-4-1",
+   "need_kind": "cyclic_tester",
+   "description": "The student sees a quadrilateral ABCD with a movable vertex and a chord (the common base) with two angle readouts, and drags a vertex to decide whether the two angles on the same base, in one direction of it, are equal. The circle through three vertices is drawn on request. The student marks 'cyclic' or 'not cyclic' and the instrument checks the property. It would diagnose: comparing angles on opposite sides of the base, comparing angles on different bases, assuming any quadrilateral is cyclic, and treating equal sides rather than equal angles as the test.",
+   "why": "angle_setter fixes A, B, C on a circle and only sets one inscribed or central angle. It cannot present a given quadrilateral and ask whether it is cyclic, and none of its predicates describe this decision. Using it would be a forced fit. Also, this objective has no anchor book question and no misconception ids, so no valid template can be written."
+  },
+  {
+   "lo_id": "lo:pp3u10-4-2",
+   "need_kind": "cyclic_proof_builder",
+   "description": "The student is given a figure with two right angles on one base (for example ∠ABC = ∠ADC = 90° on AC), or with parallel lines giving equal angles. They assemble the proof by choosing which two angles are equal, which base they stand on, and that both lie on one side of it. The instrument checks the logical chain and flags a missing or wrong step. It would diagnose: angles on opposite sides of the base, equal angles that are not on a common base, and using supplementary opposite angles without justification.",
+   "why": "No existing kind builds a geometric argument or a reasoned chain. circle_builder and angle_setter work on a circle that is already given, whereas here the student must prove that the circle exists. A multiple-choice or answer box would be a disguised answer box. This objective also has no anchor question or misconceptions to map."
+  },
+  {
+   "lo_id": "lo:pp3u10-4-3",
+   "need_kind": "circle_deduction_builder",
+   "description": "Starting from a figure already proven cyclic, the student marks the equal angles standing on one chord, or constructs the centre as the intersection of two perpendicular bisectors of chords, or shows two lines are parallel from equal alternate angles. The instrument grades the marked angle pairs or the constructed centre. It would diagnose: marking angles on different chords as equal, placing the centre at the intersection of the diagonals, and choosing angles on opposite arcs.",
+   "why": "circle_builder constructs a single radius, chord, diameter or tangent. It cannot ask for the centre of a circle through given points or for marking equal angle pairs in a figure. angle_setter fixes the circle and the points. Neither fits without stretching, and this objective has no anchor question or misconceptions."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-1",
+   "need_kind": "cyclic_quad_builder",
+   "description": "A circle with four draggable vertices A, B, C, D. Angles at all four vertices and the arcs between them show live. The student sets a given interior angle (for example ∠A = 60°) and then places the opposite vertex so ∠C has the required measure. The widget grades the property that opposite angles sum to 180°, not a fixed position. Errors it would diagnose: making opposite angles equal instead of supplementary; giving the arc where the angle was asked for (half or double); using the adjacent angle instead of the opposite one; and setting the angle on the wrong arc.",
+   "why": "angle_setter handles one inscribed or central angle on one arc. It cannot show two opposite angles together or enforce that they sum to 180°. The anchor question (∠A = 60°, so arc BCD = 120°) could be forced into an angle_setter central question. That would only test the 2:1 relation, not the opposite-angle theorem. The lesson's misconception list is also empty, so no diagnostic could be mapped legitimately."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-2",
+   "need_kind": "cyclic_quad_builder (exterior mode)",
+   "description": "The same cyclic quadrilateral with one side extended past a vertex. The student drags the vertices until the exterior angle at C equals a target (for example 75°). The widget shows the interior angle at A live. It grades that the exterior angle equals the opposite interior angle. Errors it would diagnose: taking the exterior angle as equal to the adjacent interior angle; taking it as 180° minus the opposite angle; and using the wrong extended side.",
+   "why": "No existing kind can draw an extended side, an exterior angle or the opposite interior angle. A number-entry version would be an answer box in disguise. The lesson's misconception list is also empty, so no diagnostics can be attached to any widget."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-3",
+   "need_kind": "cyclic_test_builder",
+   "description": "The student is given a quadrilateral with two or three fixed angles and adjusts the remaining vertex or angle until the quadrilateral becomes cyclic. A circle through three vertices is drawn live, and the fourth vertex turns green when it lies on that circle. The student then states which criterion holds: opposite angles supplementary, or exterior angle equal to the interior opposite angle. Errors it would diagnose: testing equal opposite angles instead of supplementary ones; testing adjacent angles; and treating a rectangle-like look as proof.",
+   "why": "No existing kind lets the student test whether four points are concyclic or build the converse. circle_builder constructs radii, chords, diameters and tangents. It does not judge a quadrilateral. The objective also has no anchor question and no misconceptions."
+  },
+  {
+   "lo_id": "lo:pp3u10-6-1",
+   "need_kind": "tangent_pair_builder",
+   "description": "From an external point A the student drags A and the two points of tangency B and C on circle M. The widget shows AB, AC, the angle at A, the angle BMC and the axis AM live. Tasks: place the tangents so that ∠BAC equals a given value, or so that AB equals a given length. The student finds that AB = AC always holds, that ∠BAM = ∠CAM, and that ∠BMC + ∠BAC = 180°. It would diagnose: treating AB and AC as unequal; taking ∠BAC as equal to ∠BMC instead of supplementary; halving or doubling the angle wrongly; and mistaking a secant for a tangent.",
+   "why": "circle_builder with element 'tangent' only tests whether one line touches the circle. It does not show the equality of the two tangent segments or the angle relations. angle_setter handles only inscribed and central angles. Using either would be a forced fit."
+  },
+  {
+   "lo_id": "lo:pp3u10-6-2",
+   "need_kind": "incircle_polygon_builder",
+   "description": "A triangle or quadrilateral is drawn with its inscribed circle. The student drags the three or four points of tangency, or sets the side lengths, so that the tangent segments from each vertex are equal. The widget shows the tangent lengths from each vertex and the perimeter. Tasks: find the missing side or perimeter, and place the centre at the intersection of the angle bisectors. It would diagnose: giving unequal tangent segments from one vertex; computing the perimeter as the sum of only some segments, not twice the tangent sum; and placing the centre at the circumcentre or centroid.",
+   "why": "No existing kind builds a polygon around a circle with tangent-length bookkeeping. polygon_builder is not among the instruments with this behaviour, and circle_builder cannot handle polygons."
+  },
+  {
+   "lo_id": "lo:pp3u10-6-3",
+   "need_kind": "common_tangent_sorter",
+   "description": "Two circles of adjustable radii and centre distance are shown. The student drags the endpoints of a segment to construct a common tangent of a named type, internal or external. The widget shows the number of common tangents for the current position (4, 3, 2, 1 or 0) and the tangent length. Tasks: construct an internal common tangent, then one external; or set the centre distance so the circles have exactly 3 common tangents. It would diagnose: confusing internal with external tangents; wrong tangent length, such as using d without the radii (d² − (r1 ± r2)²); and a wrong count of tangents for the position.",
+   "why": "circle_builder has a single circle about M and checks only the property of one tangent. It cannot show two circles or distinguish internal from external common tangents."
+  },
+  {
+   "lo_id": "lo:pp3u10-6-1",
+   "need_kind": "(misconception catalogue)",
+   "description": "All three objectives in this lesson have an empty 'misconceptions' list. A widget template needs at least one diagnostic with a misconception id from its own objective's list, so no template can be validly written until those misconceptions are authored.",
+   "why": "This blocks any template for this lesson, even if a kind fitted."
+  },
+  {
+   "lo_id": "lo:pp3u10-7-1",
+   "need_kind": "tangent_chord_angle_setter",
+   "description": "A circle with a tangent at B and a chord BA. The student drags A (and optionally a point C on the tangent) to build the angle of tangency for a stated arc, or to set the arc for a stated angle. The widget shows the arc AB and the tangent-chord angle live, with the inscribed angle on the same arc and the central angle drawn alongside. Asks: 'make the angle of tangency 65°', 'make the arc 230°', and 'make it equal to the inscribed angle on the same arc'. Errors it would diagnose: giving the arc instead of the angle (the angle is half the arc), giving the central angle instead (the angle is half the central angle), using the major arc instead of the minor arc (or the reverse), and treating the tangent-radius right angle as the tangent-chord angle.",
+   "why": "angle_setter only has inscribed and central angles with A, B and C all on the circle. It has no tangent line and no tangent-chord angle, so it cannot show the half-the-arc fact this objective is about. The objective also has no misconception ids to map diagnostics to."
+  },
+  {
+   "lo_id": "lo:pp3u10-7-3",
+   "need_kind": "tangent_converse_checker",
+   "description": "A circle with a chord AB and a line through B. The student drags the line's direction until the angle it makes with the chord equals the inscribed angle on the alternate side. The widget shows both angles live and reports whether the line is tangent. Errors it would diagnose: matching the angle to the wrong arc or side, matching to the central angle instead of the inscribed angle, and making a secant that happens to cross near the equal angle.",
+   "why": "circle_builder with element tangent grades the tangent by its geometry (perpendicular to the radius). It does not use the converse of theorem 5, which compares the chord angle with the alternate inscribed angle. The objective also has no misconception ids."
+  },
+  {
+   "lo_id": "lo:pp3u10-7-2",
+   "need_kind": "none_proof_step_builder",
+   "description": "This objective is a written proof: equal angles of tangency and inscribed angles, together with parallel lines, give a cyclic quadrilateral. A proof-step sequencer or angle-chasing widget would fit, with the student chaining angle equalities. No existing construction widget does this.",
+   "why": "Proof writing is not a construction on any existing instrument. The objective has no anchor questions and no misconception ids, so I am recording it as a gap and not forcing a fit."
+  }
+ ]
+}

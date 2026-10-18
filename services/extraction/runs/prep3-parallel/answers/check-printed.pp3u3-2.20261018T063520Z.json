@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "f85835209288e102fc4b2d72e8727431eeb84a540189ad6590b396258a786891",
+  "generated_sha256": "66af7ebbc2e40706fd78b1d90f24ba4fbd80f5ff33cb89cc62eedcd43577b64b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u3-2:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u3-2:worked-example-1",
+      "kind": "explanation",
+      "answer": "First set: mean ≈ 55.67, range = 60 − 51 = 9. Second set: mean = 54.5, range = 92 − 42 = 50. The means are close, but the second set has the much larger range, so it is more dispersed (less homogeneous) than the first."
+     },
+     {
+      "ref": "pp3u3-2:example-1",
+      "kind": "value",
+      "answer": "σ ≈ 3.286 (mean = 16, Σ(x−x̄)² = 54, σ = √(54/5) = √10.8)"
+     },
+     {
+      "ref": "pp3u3-2:example-2",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the frequency table of defective units is not given in the question text, so the values and frequencies cannot be read."
+     }
+    ]
+   }
+  }
+ ]
+}

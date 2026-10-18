@@ -1,0 +1,846 @@
+{
+  "source_file": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+  "extraction_run": {
+    "extractor": "compile_book_records.py, from book records",
+    "extractor_version": "compile-v3",
+    "schema_version": "book-record-2"
+  },
+  "syllabus_version": "book-record-2",
+  "nodes": [
+    {
+      "id": "module:pp3u4",
+      "kind": "module",
+      "label": "Unit 4 Trigonometry (Trigonometry)",
+      "order_in_parent": 4,
+      "source_page": 49
+    },
+    {
+      "id": "lo:pp3u4-1-1",
+      "kind": "learning_objective",
+      "label": "Convert degrees, minutes, seconds",
+      "description": "Convert angles between degrees, minutes and seconds and decimal degrees, by hand or with the calculator.",
+      "source_page": 49,
+      "syllabus_ref": "Lesson 4-1",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u4-1-2",
+      "kind": "learning_objective",
+      "label": "Compare sides and ratios",
+      "description": "Compare sides of a right angled triangle and ratios of sides to 1 using the symbols >, < or =.",
+      "source_page": 49,
+      "syllabus_ref": "Lesson 4-1",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u4-1-3",
+      "kind": "learning_objective",
+      "label": "Calculate sin, cos, tan",
+      "description": "Calculate sin, cos and tan of an acute angle in a right angled triangle as ratios of the opposite, adjacent and hypotenuse sides, finding a missing side where needed.",
+      "source_page": 50,
+      "syllabus_ref": "Lesson 4-1",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u4-1-4",
+      "kind": "learning_objective",
+      "label": "Prove ratio relationships",
+      "description": "Prove relationships between trigonometrical ratios of acute angles in a right angled triangle.",
+      "source_page": 51,
+      "syllabus_ref": "Lesson 4-1",
+      "order_in_parent": 4
+    },
+    {
+      "id": "lo:pp3u4-2-1",
+      "kind": "learning_objective",
+      "label": "Ratios of 30°, 60°, 45°",
+      "description": "Determine the trigonometric ratios (sin, cos, tan) of the special angles 30°, 60° and 45° from the side ratios of an equilateral triangle and an isosceles right-angled triangle, and state that sin of an angle equals cos of its complementary angle.",
+      "source_page": 52,
+      "syllabus_ref": "Lesson 4-2",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u4-2-2",
+      "kind": "learning_objective",
+      "label": "Evaluate special-angle expressions",
+      "description": "Evaluate and prove expressions involving the ratios of 30°, 45° and 60°, using exact values and the relations sin A = cos of the complementary angle and tan A = sin A / cos A.",
+      "source_page": 53,
+      "syllabus_ref": "Lesson 4-2",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u4-2-3",
+      "kind": "learning_objective",
+      "label": "Ratios of angles by calculator",
+      "description": "Use a calculator to find the trigonometric ratio of a given angle, including angles in degrees, minutes and seconds.",
+      "source_page": 54,
+      "syllabus_ref": "Lesson 4-2",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u4-2-4",
+      "kind": "learning_objective",
+      "label": "Find angle from its ratio",
+      "description": "Find the measure of an angle from its trigonometrical ratio, using the calculator or special-angle values, and apply this to find angles and areas in a triangle.",
+      "source_page": 55,
+      "syllabus_ref": "Lesson 4-2",
+      "order_in_parent": 4
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:pp3u4",
+      "dst": "course:prep3-parallel-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-1-4",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-2-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-2-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-2-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u4",
+      "dst": "lo:pp3u4-2-4",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:pp3u4-1-3",
+      "dst": "lo:pp3u4-2-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-2-1",
+      "dst": "lo:pp3u4-2-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-1-3",
+      "dst": "lo:pp3u4-2-4",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-2-3",
+      "dst": "lo:pp3u4-2-4",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-1-1",
+      "dst": "lo:pp3u4-2-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-1-1",
+      "dst": "lo:pp3u4-2-4",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:pp3u4-1-3:bk-example-1-c",
+      "lo": "lo:pp3u4-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "ABC is a right angled triangle at C, AB = 13 cm, BC = 12 cm. A: Find the length AC. B: Find each of the following: sin A, cos A, tan A, sin B, cos B, tan B. C: Prove that: sin A cos B + cos A sin B = 1. D: Find: 1 + tan² A. Prove that: sin A cos B + cos A sin B = 1",
+      "answer": "1",
+      "solution": [
+        "The right side = $\\sin A\\cos B+\\cos A\\sin B$",
+        "$\\frac{12}{13}\\times\\frac{12}{13}+\\frac{5}{13}\\times\\frac{5}{13}=\\frac{144}{169}+\\frac{25}{169}=\\frac{144+25}{169}=1$"
+      ],
+      "source_page": 51,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u4-1:example-1:C, printed p.51); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "solution_provenance": "book_worked",
+      "hold_reason": "figure_missing"
+    },
+    {
+      "id": "q:pp3u4-2-1:bk-think-and-discuss-1-1",
+      "lo": "lo:pp3u4-2-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "In the figure opposite: ABC is an equilateral triangle of side length 2L, and $\\overline{AD}\\perp\\overline{BC}$. Complete: $m(\\angle B)=\\dots\\dots^\\circ$",
+      "answer": "60",
+      "solution": [
+        "ABC is an equilateral triangle.",
+        "All its angles are equal, so each is 60°.",
+        "m(∠B) = 60°."
+      ],
+      "source_page": 52,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u4-2:think-and-discuss-1:1, printed p.52); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+      "lo": "lo:pp3u4-2-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "In the figure opposite: ABC is an equilateral triangle of side length 2L, and $\\overline{AD}\\perp\\overline{BC}$. Complete: $m(\\angle BAD)=\\dots\\dots^\\circ$",
+      "answer": "30",
+      "solution": [
+        "In triangle ABD the angle at D is 90° and m(∠B) = 60°.",
+        "The angles of a triangle add up to 180°.",
+        "m(∠BAD) = 180° - 90° - 60° = 30°."
+      ],
+      "source_page": 52,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u4-2:think-and-discuss-1:2, printed p.52); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u4-2-1:bk-think-and-discuss-2-1",
+      "lo": "lo:pp3u4-2-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "In the figure opposite: ABC is an isosceles triangle and a right angled triangle at C. The length of each leg is L. Complete: $m(\\angle A) = \\ldots^\\circ$, $m(\\angle B) = \\ldots^\\circ$",
+      "answer": "45, 45",
+      "solution": [
+        "Triangle ABC is isosceles with right angle at C, and AC = BC.",
+        "So the base angles at A and B are equal.",
+        "The angles of a triangle add up to 180°, so each of them is (180° - 90°) ÷ 2 = 45°.",
+        "m(∠A) = 45°, m(∠B) = 45°."
+      ],
+      "source_page": 53,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u4-2:think-and-discuss-2:1, printed p.53); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "45, 45"
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u4-2-2:bk-example-1-b",
+      "lo": "lo:pp3u4-2-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Find the value of the following: $\\dfrac{\\cos^2 60^\\circ + \\cos^2 30^\\circ + \\tan^2 45^\\circ}{\\sin 60^\\circ \\tan 60^\\circ - \\sin 30^\\circ}$",
+      "answer": "2",
+      "solution": [
+        "A: The expression $=\\cos 60^\\circ \\sin 30^\\circ - \\sin 60^\\circ \\tan 60^\\circ + \\cos^2 30^\\circ$",
+        "$=\\frac12\\times\\frac12-\\frac{\\sqrt3}{2}\\times\\sqrt3+(\\frac{\\sqrt3}{2})^2=\\frac14-\\frac32+\\frac34=-\\frac12$",
+        "B: The expression $=\\frac{\\cos^2 60^\\circ+\\cos^2 30^\\circ+\\tan^2 45^\\circ}{\\sin 60^\\circ\\tan 60^\\circ-\\sin 30^\\circ}=\\frac{(\\frac12)^2+(\\frac{\\sqrt3}{2})^2+(1)^2}{\\frac{\\sqrt3}{2}\\times\\sqrt3-(\\frac12)}=\\frac{\\frac14+\\frac34+1}{\\frac32-\\frac12}=\\frac{1+1}{1}=2$"
+      ],
+      "source_page": 54,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u4-2:example-1:B, printed p.54); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u4-2-2:bk-drill-3-3",
+      "lo": "lo:pp3u4-2-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Complete the following: $\\sin 60° + \\cos 30° - \\tan 60° =$ ............",
+      "answer": "0",
+      "solution": [
+        "sin 60° = √3/2.",
+        "cos 30° = √3/2.",
+        "tan 60° = √3.",
+        "√3/2 + √3/2 - √3 = √3 - √3 = 0.",
+        "The value is 0."
+      ],
+      "source_page": 56,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u4-2:drill-3:3, printed p.56); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    }
+  ],
+  "visuals": [
+    {
+      "id": "v:pp3u4-2:bk-think-and-discuss-1-1",
+      "lo": "lo:pp3u4-2-1",
+      "question": "q:pp3u4-2-1:bk-think-and-discuss-1-1",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/prep3-parallel/pp3u4-2__figure-1.png",
+        "alt": "The textbook's diagram for this question, printed on page 52.",
+        "stand_in": true,
+        "native_kind_needed": "triangle scene with right-angle marks and side labels"
+      },
+      "caption": null,
+      "source_page": 52
+    },
+    {
+      "id": "v:pp3u4-2:bk-think-and-discuss-1-2",
+      "lo": "lo:pp3u4-2-1",
+      "question": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/prep3-parallel/pp3u4-2__figure-1.png",
+        "alt": "The textbook's diagram for this question, printed on page 52.",
+        "stand_in": true,
+        "native_kind_needed": "triangle scene with right-angle marks and side labels"
+      },
+      "caption": null,
+      "source_page": 52
+    },
+    {
+      "id": "v:pp3u4-2:bk-think-and-discuss-2-1",
+      "lo": "lo:pp3u4-2-1",
+      "question": "q:pp3u4-2-1:bk-think-and-discuss-2-1",
+      "kind": "book_image",
+      "spec": {
+        "src": "/book-figures/prep3-parallel/pp3u4-2__figure-3.png",
+        "alt": "The textbook's diagram for this question, printed on page 53.",
+        "stand_in": true,
+        "native_kind_needed": null
+      },
+      "caption": null,
+      "source_page": 53
+    },
+    {
+      "id": "v:pp3u4-2:figure-5",
+      "lo": "lo:pp3u4-2-1",
+      "question": null,
+      "kind": "trig_triangle",
+      "spec": {
+        "angleDeg": 30,
+        "emphasize": "sin",
+        "sides": {
+          "opp": "1",
+          "adj": "√3",
+          "hyp": "2"
+        },
+        "animate": "ratio-highlight"
+      },
+      "caption": "A right triangle with a 30° angle: opposite side 1, adjacent side √3, hypotenuse 2.",
+      "source_page": 55
+    }
+  ],
+  "explanation_entries": [
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-1",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $m(\\angle C) > m(\\angle A)$ then $AB \\ldots\\ldots BC$"
+        },
+        {
+          "step": 1,
+          "text_md": "The right angle is at B, so AC is the hypotenuse."
+        },
+        {
+          "step": 2,
+          "text_md": "AB is the side opposite angle C, and BC is the side opposite angle A."
+        },
+        {
+          "step": 3,
+          "text_md": "In a triangle the larger angle has the larger opposite side."
+        },
+        {
+          "step": 4,
+          "text_md": "m(∠C) > m(∠A), so AB > BC."
+        },
+        {
+          "step": 5,
+          "text_md": "Answer: >"
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-2",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$\\frac{AB}{AC} \\ldots\\ldots 1$"
+        },
+        {
+          "step": 1,
+          "text_md": "AC is the hypotenuse, the longest side of the right-angled triangle."
+        },
+        {
+          "step": 2,
+          "text_md": "So AB is smaller than AC."
+        },
+        {
+          "step": 3,
+          "text_md": "Then AB/AC is less than 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Answer: <"
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-3",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$\\frac{AC}{BC} \\ldots\\ldots 1$"
+        },
+        {
+          "step": 1,
+          "text_md": "AC is the hypotenuse, so AC > BC."
+        },
+        {
+          "step": 2,
+          "text_md": "A numerator bigger than the denominator gives a ratio bigger than 1."
+        },
+        {
+          "step": 3,
+          "text_md": "So AC/BC > 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Answer: >"
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-4",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$\\frac{AB}{AC} \\div \\frac{BC}{AC} \\ldots\\ldots \\frac{AB}{BC}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Divide fractions: (AB/AC) ÷ (BC/AC) = (AB/AC) × (AC/BC)."
+        },
+        {
+          "step": 2,
+          "text_md": "AC cancels, leaving AB/BC."
+        },
+        {
+          "step": 3,
+          "text_md": "Answer: ="
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-5",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$\\frac{AB}{AC} + \\frac{BC}{AC} \\ldots\\ldots 1$"
+        },
+        {
+          "step": 1,
+          "text_md": "Add the fractions: (AB + BC)/AC."
+        },
+        {
+          "step": 2,
+          "text_md": "In a triangle the sum of two sides is greater than the third side, so AB + BC > AC."
+        },
+        {
+          "step": 3,
+          "text_md": "So (AB + BC)/AC > 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Answer: >"
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-2:bk-think-and-discuss-6",
+      "lo": "lo:pp3u4-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$\\frac{(AB)^2}{(AC)^2} + \\frac{(BC)^2}{(AC)^2} \\ldots\\ldots 1$"
+        },
+        {
+          "step": 1,
+          "text_md": "Add the fractions: (AB² + BC²)/AC²."
+        },
+        {
+          "step": 2,
+          "text_md": "The triangle is right-angled at B, so AB² + BC² = AC² (Pythagoras)."
+        },
+        {
+          "step": 3,
+          "text_md": "So the sum is AC²/AC² = 1."
+        },
+        {
+          "step": 4,
+          "text_md": "Answer: ="
+        }
+      ],
+      "source_page": 49,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-1:bk-drill-2-a",
+      "lo": "lo:pp3u4-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Write each of the following angles in degrees, minutes and seconds. $34.6^\\circ$"
+        },
+        {
+          "step": 1,
+          "text_md": "Keep the whole degrees: $34^\\circ$"
+        },
+        {
+          "step": 2,
+          "text_md": "Fraction of a degree: $0.6^\\circ = 0.6 \\times 60' = 36'$"
+        },
+        {
+          "step": 3,
+          "text_md": "No fraction of a minute is left, so seconds = 0"
+        },
+        {
+          "step": 4,
+          "text_md": "The angle is $34^\\circ 36' 0''$, that is $34^\\circ 36'$"
+        }
+      ],
+      "source_page": 50,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-1:bk-drill-2-b",
+      "lo": "lo:pp3u4-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Write each of the following angles in degrees, minutes and seconds. $78.08^\\circ$"
+        },
+        {
+          "step": 1,
+          "text_md": "Keep the whole degrees: $78^\\circ$"
+        },
+        {
+          "step": 2,
+          "text_md": "$0.08^\\circ = 0.08 \\times 60' = 4.8'$, so minutes = 4"
+        },
+        {
+          "step": 3,
+          "text_md": "$0.8' = 0.8 \\times 60'' = 48''$"
+        },
+        {
+          "step": 4,
+          "text_md": "The angle is $78^\\circ 4' 48''$"
+        }
+      ],
+      "source_page": 50,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-1:bk-drill-2-c",
+      "lo": "lo:pp3u4-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Write each of the following angles in degrees, minutes and seconds. $56.18^\\circ$"
+        },
+        {
+          "step": 1,
+          "text_md": "Keep the whole degrees: $56^\\circ$"
+        },
+        {
+          "step": 2,
+          "text_md": "$0.18^\\circ = 0.18 \\times 60' = 10.8'$, so minutes = 10"
+        },
+        {
+          "step": 3,
+          "text_md": "$0.8' = 0.8 \\times 60'' = 48''$"
+        },
+        {
+          "step": 4,
+          "text_md": "The angle is $56^\\circ 10' 48''$"
+        }
+      ],
+      "source_page": 50,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-1:bk-drill-2-d",
+      "lo": "lo:pp3u4-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Write each of the following angles in degrees, minutes and seconds. $83.246^\\circ$"
+        },
+        {
+          "step": 1,
+          "text_md": "Keep the whole degrees: $83^\\circ$"
+        },
+        {
+          "step": 2,
+          "text_md": "$0.246^\\circ = 0.246 \\times 60' = 14.76'$, so minutes = 14"
+        },
+        {
+          "step": 3,
+          "text_md": "$0.76' = 0.76 \\times 60'' = 45.6''$"
+        },
+        {
+          "step": 4,
+          "text_md": "The angle is $83^\\circ 14' 45.6''$ (about $83^\\circ 14' 46''$)"
+        }
+      ],
+      "source_page": 50,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-1-3:bk-example-1",
+      "lo": "lo:pp3u4-1-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "ABC is a right angled triangle at C, AB = 13 cm, BC = 12 cm. A: Find the length AC. B: Find each of the following: sin A, cos A, tan A, sin B, cos B, tan B. C: Prove that: sin A cos B + cos A sin B = 1. D: Find: 1 + tan² A."
+        },
+        {
+          "step": 1,
+          "text_md": "Since ABC is a right angled triangle at C, therefore $(AC)^2=(AB)^2-(BC)^2$"
+        },
+        {
+          "step": 2,
+          "text_md": "$(AC)^2=(13)^2-(12)^2=(13+12)(13-12)=25$"
+        },
+        {
+          "step": 3,
+          "text_md": "$AC=5$ cm"
+        }
+      ],
+      "source_page": 51,
+      "generated_by": "book (book_worked: pp3u4-1:example-1, printed p.51); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-1:bk-think-and-discuss-1-3",
+      "lo": "lo:pp3u4-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "In the figure opposite: ABC is an equilateral triangle of side length 2L, and $\\overline{AD}\\perp\\overline{BC}$. Complete: $BD=\\dots\\dots$ and $AD=\\dots\\dots$ (by L)"
+        },
+        {
+          "step": 1,
+          "text_md": "AD ⊥ BC in the equilateral triangle, so D is the midpoint of BC."
+        },
+        {
+          "step": 2,
+          "text_md": "BC = 2L, so BD = L."
+        },
+        {
+          "step": 3,
+          "text_md": "The side lengths are in the ratio BD : AB : AD = 1 : 2 : √3, and AB = 2L."
+        },
+        {
+          "step": 4,
+          "text_md": "So AD = √3 L."
+        },
+        {
+          "step": 5,
+          "text_md": "BD = L and AD = √3 L."
+        }
+      ],
+      "source_page": 52,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-1:bk-think-and-discuss-1-4",
+      "lo": "lo:pp3u4-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "In the figure opposite: ABC is an equilateral triangle of side length 2L, and $\\overline{AD}\\perp\\overline{BC}$. Complete: $BD:AB:AD=\\dots\\dots:\\dots\\dots:\\dots\\dots$"
+        },
+        {
+          "step": 1,
+          "text_md": "BD = L, AB = 2L and AD = √3 L."
+        },
+        {
+          "step": 2,
+          "text_md": "Divide each length by L."
+        },
+        {
+          "step": 3,
+          "text_md": "BD : AB : AD = 1 : 2 : √3."
+        }
+      ],
+      "source_page": 52,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-1:bk-think-and-discuss-2-3",
+      "lo": "lo:pp3u4-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "In the figure opposite: ABC is an isosceles triangle and a right angled triangle at C. The length of each leg is L. Complete: $AC : BC : AB = \\ldots : \\ldots : \\ldots$ ; $\\therefore (AB)^2 = 2L^2$ ; $\\therefore AB = \\sqrt{2}\\,L$"
+        },
+        {
+          "step": 1,
+          "text_md": "(AB)^2 = 2L^2, so AB = √2 L."
+        },
+        {
+          "step": 2,
+          "text_md": "AC = L, BC = L and AB = √2 L."
+        },
+        {
+          "step": 3,
+          "text_md": "Divide each length by L."
+        },
+        {
+          "step": 4,
+          "text_md": "AC : BC : AB = 1 : 1 : √2."
+        }
+      ],
+      "source_page": 53,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-2:bk-example-1",
+      "lo": "lo:pp3u4-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the value of the following:"
+        },
+        {
+          "step": 1,
+          "text_md": "A: The expression $=\\cos 60^\\circ \\sin 30^\\circ - \\sin 60^\\circ \\tan 60^\\circ + \\cos^2 30^\\circ$"
+        },
+        {
+          "step": 2,
+          "text_md": "$=\\frac12\\times\\frac12-\\frac{\\sqrt3}{2}\\times\\sqrt3+(\\frac{\\sqrt3}{2})^2=\\frac14-\\frac32+\\frac34=-\\frac12$"
+        },
+        {
+          "step": 3,
+          "text_md": "B: The expression $=\\frac{\\cos^2 60^\\circ+\\cos^2 30^\\circ+\\tan^2 45^\\circ}{\\sin 60^\\circ\\tan 60^\\circ-\\sin 30^\\circ}=\\frac{(\\frac12)^2+(\\frac{\\sqrt3}{2})^2+(1)^2}{\\frac{\\sqrt3}{2}\\times\\sqrt3-(\\frac12)}=\\frac{\\frac14+\\frac34+1}{\\frac32-\\frac12}=\\frac{1+1}{1}=2$"
+        }
+      ],
+      "source_page": 54,
+      "generated_by": "book (book_worked: pp3u4-2:example-1, printed p.54); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-3:bk-example-2",
+      "lo": "lo:pp3u4-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the following trigonometrical ratios: $\\sin 43^\\circ$, $\\cos 53^\\circ 28'$, $\\tan 64^\\circ 37' 49''$. Rounding the result to the nearest four decimal numbers."
+        },
+        {
+          "step": 1,
+          "text_md": "Start: sin 43 = ; $\\sin 43^\\circ \\simeq 0.6820$"
+        },
+        {
+          "step": 2,
+          "text_md": "Start: cos 53 [°'\"] 28 [°'\"] = ; $\\cos 53^\\circ 28' \\simeq 0.5953$"
+        },
+        {
+          "step": 3,
+          "text_md": "Start: tan 64 [°'\"] 37 [°'\"] 49 [°'\"] = ; Tan $64^\\circ 37' 49'' \\simeq 2.1089$"
+        }
+      ],
+      "source_page": 54,
+      "generated_by": "book (book_worked: pp3u4-2:example-2, printed p.54); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-4:bk-example-3",
+      "lo": "lo:pp3u4-2-4",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $m(\\angle E)$ in each of the following: $\\sin E = 0.6$, $\\cos E = 0.6217$, $\\tan E = 1.0823$"
+        },
+        {
+          "step": 1,
+          "text_md": "∵ $\\sin E = 0.6$ ∴ $m(\\angle E) = 36^\\circ 52' 12''$ (keys: SHIFT, sin, 0.6 =, °′″)"
+        },
+        {
+          "step": 2,
+          "text_md": "∵ $\\cos E = 0.6217$ ∴ $m(\\angle E) = 51^\\circ 33' 35''$ (keys: SHIFT, cos, 0.6217 =, °′″)"
+        },
+        {
+          "step": 3,
+          "text_md": "∵ $\\tan E = 1.0823$ ∴ $m(\\angle E) = 47^\\circ 15' 48''$ (keys: SHIFT, tan, 1.0823 =, °′″)"
+        }
+      ],
+      "source_page": 55,
+      "generated_by": "book (book_worked: pp3u4-2:example-3, printed p.55); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u4-2-4:bk-example-4",
+      "lo": "lo:pp3u4-2-4",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Connecting with Geometry: ABC is an isosceles triangle in which AB = AC = 8 cm and BC = 12 cm. Find: First: $m(\\angle B)$. Second: The area of the surface of the triangle to the nearest two decimal numbers."
+        },
+        {
+          "step": 1,
+          "text_md": "Draw $\\overrightarrow{AD} \\perp \\overline{BC}$"
+        },
+        {
+          "step": 2,
+          "text_md": "∵ The triangle ABC is an isosceles triangle."
+        }
+      ],
+      "source_page": 55,
+      "generated_by": "book (book_worked: pp3u4-2:example-4, printed p.55); compile_book_records.py compile-v3"
+    }
+  ],
+  "external_node_refs": [
+    "course:prep3-parallel-math-en"
+  ]
+}

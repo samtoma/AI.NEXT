@@ -1,0 +1,98 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u4-2",
+  "source": "book-records/prep3-parallel/pp3u4-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 3,
+      "cost_usd": 0.0329,
+      "calls": [
+        {
+          "call": "check-printed.pp3u4-2",
+          "cost_usd": 0.0231,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u4-2",
+          "cost_usd": 0.0098,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u4-2:example-1:A",
+      "record_id": "pp3u4-2:example-1",
+      "part": "A",
+      "type": "worked_example",
+      "page": 54,
+      "printed": "$\\frac{1}{2}$",
+      "blind": "-1/2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "aafb761368574779f6d4dbf9586de7b2",
+      "status": "disagreed",
+      "judge": {
+        "ref": "pp3u4-2:example-1:A",
+        "verdict": "different",
+        "reason": "Printed 1/2 vs solver -1/2 (the sign differs; direct computation gives 1/4 - 3/2 + 3/4 = -1/2)."
+      },
+      "made": {
+        "at": "2026-10-18T06:42:11+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u4-2:example-1:B",
+      "record_id": "pp3u4-2:example-1",
+      "part": "B",
+      "type": "worked_example",
+      "page": 54,
+      "printed": "$2$",
+      "blind": "2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "49a86d0ff480beb41ae2bb51b39f3a53",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:42:11+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u4-2:example-2",
+      "record_id": "pp3u4-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 54,
+      "printed": "sin 43° ≈ 0.6820; cos 53° 28' ≈ 0.5953; tan 64° 37' 49'' ≈ 2.1089",
+      "blind": "sin 43° = 0.6820, cos 53°28' = 0.5953, tan 64°37'49'' = 2.1089",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u4-2:figure-4"
+      ],
+      "question_fingerprint": "34882d33661eb1f7660370edf8baf135",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u4-2:example-2",
+        "verdict": "equivalent",
+        "reason": "All three values match: 0.6820, 0.5953, 2.1089."
+      },
+      "how": "judged equivalent: All three values match: 0.6820, 0.5953, 2.1089.",
+      "made": {
+        "at": "2026-10-18T06:42:11+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

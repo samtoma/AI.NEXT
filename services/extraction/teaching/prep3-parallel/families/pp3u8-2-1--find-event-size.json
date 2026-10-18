@@ -1,0 +1,42 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-2-1:find-event-size",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-2-1",
+ "parent_question_id": "q:pp3u8-2-1:bk-think-and-discuss-2",
+ "source_page": 35,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A bag contains marbles of different colours; one marble is drawn at random. Event A is drawing a red marble.",
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    20,
+    25,
+    50
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    3,
+    "n // 2 - 1"
+   ]
+  },
+  {
+   "name": "q",
+   "let": "(n - r) / n"
+  }
+ ],
+ "stem": "A bag contains {=n} marbles, some of them red. A marble is drawn at random. The probability that the marble drawn is not red is ${=fixed(q, 2)}$. How many red marbles are in the bag?",
+ "answer": "r",
+ "solution": [
+  "Let $A$ be drawing a red marble. Then $A'$ is drawing a marble that is not red, and $P(A')={=fixed(q, 2)}$.",
+  "$P(A)=1-P(A')=1-{=fixed(q, 2)}={=fixed(1 - q, 2)}$.",
+  "$n(A)=P(A)\\times n(S)={=fixed(1 - q, 2)}\\times {=n}={=r}$.",
+  "There are {=r} red marbles."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Reverse use of the complement rule; q has at most 2 decimals for n in 20,25,50."
+}

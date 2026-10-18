@@ -1,0 +1,432 @@
+{
+  "coverage_version": 1,
+  "line": "book-records",
+  "book": "prep3-parallel",
+  "course_id": "course:prep3-parallel-math-en",
+  "unit": 4,
+  "lessons": [
+    "pp3u4-1",
+    "pp3u4-2"
+  ],
+  "status": "RED",
+  "summary": {
+    "checks": 19,
+    "hold": 13,
+    "excepted": 0,
+    "fail": 6
+  },
+  "checks": [
+    {
+      "id": "pages",
+      "title": "The unit's printed pages = pages in a lesson + pages excluded with a reason",
+      "want": 8,
+      "got": 8,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "lesson_provenance",
+      "title": "Lessons = lessons whose record names its source, offset and the map's pages",
+      "want": 2,
+      "got": 2,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_mapped_once",
+      "title": "Prompts = prompts filed under exactly one objective",
+      "want": 19,
+      "got": 19,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "mapped_items_accounted",
+      "title": "Prompts and parts filed = asked as book questions + left out with a reason",
+      "want": 42,
+      "got": 42,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "worked_examples",
+      "title": "Worked examples = asked as a question, or kept in the explanation library",
+      "want": 5,
+      "got": 5,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "objective_evidence",
+      "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
+      "want": 8,
+      "got": 3,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:pp3u4-1-1",
+          "detail": "lacks a book question"
+        },
+        {
+          "scope": "lo:pp3u4-1-2",
+          "detail": "lacks a statement, a book question, a worked example or exercise"
+        },
+        {
+          "scope": "lo:pp3u4-1-4",
+          "detail": "lacks a statement, a book question, two kinds of evidence, a worked example or exercise"
+        },
+        {
+          "scope": "lo:pp3u4-2-3",
+          "detail": "lacks a statement, a book question"
+        },
+        {
+          "scope": "lo:pp3u4-2-4",
+          "detail": "lacks a book question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "tier_floor",
+      "title": "Objectives × 3 tiers = cells with a live question, book or generated",
+      "want": 24,
+      "got": 4,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "lo:pp3u4-1-1 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-1 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-2 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-2 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-2 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-3 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-3 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-3 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-4 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-4 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-1-4 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-1 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-2 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-3 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-3 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-3 advanced",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-4 basic",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-4 standard",
+          "detail": "no live question at this tier"
+        },
+        {
+          "scope": "lo:pp3u4-2-4 advanced",
+          "detail": "no live question at this tier"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "module_widgets",
+      "title": "The unit = a unit with a live widget question",
+      "want": 1,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "unit 4",
+          "detail": "no live widget question"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "distractor_refutations",
+      "title": "Tagged distractors = those whose misconception has a refutation",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misconception_refutations",
+      "title": "The unit's catalogue entries = entries with a refutation",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "figures",
+      "title": "Figures in the records = figures drawn + gaps with a reason",
+      "want": 12,
+      "got": 12,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "book_pictures",
+      "title": "Book pictures standing in for a figure that are not servable = 0",
+      "want": 3,
+      "got": 3,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "maths_reading",
+      "title": "Formulas read twice = agreed + decided in the Maths reading task",
+      "want": 110,
+      "got": 89,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "pp3u4-1:convention-1|claim|0",
+          "detail": "disagreed: $35^\\circ 24' 42''$ / $35^\\circ, 24', 42''$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-1|parts[0].stem|0",
+          "detail": "disagreed: $m(\\angle B)=\\dots\\dots^\\circ$ / $m(\\angle B) = \\ldots\\ldots\\ldots^\\circ$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-1|parts[1].stem|0",
+          "detail": "disagreed: $m(\\angle BAD)=\\dots\\dots^\\circ$ / $m(\\angle BAD) = \\ldots\\ldots\\ldots^\\circ$"
+        },
+        {
+          "scope": "pp3u4-2:drill-1|text|0",
+          "detail": "disagreed: $\\sin 30^\\circ=\\cos\\dots\\dots^\\circ$ / $\\sin 30^\\circ = \\cos \\ldots\\ldots^\\circ$"
+        },
+        {
+          "scope": "pp3u4-2:drill-1|text|1",
+          "detail": "disagreed: $\\tan 30^\\circ=\\frac{1}{\\dots}$ / $\\tan 30^\\circ = \\frac{1}{\\ldots}$"
+        },
+        {
+          "scope": "pp3u4-2:drill-1|text|2",
+          "detail": "disagreed: $\\cos 30^\\circ=\\sin\\dots\\dots^\\circ$ / $\\cos 30^\\circ = \\sin \\ldots\\ldots^\\circ$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-2|parts[0].stem|0",
+          "detail": "disagreed: $m(\\angle A) = \\ldots^\\circ$ / $m(\\angle A) = ........^{\\circ}$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-2|parts[0].stem|1",
+          "detail": "disagreed: $m(\\angle B) = \\ldots^\\circ$ / $m(\\angle B) = ........^{\\circ}$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-2|parts[1].stem|0",
+          "detail": "disagreed: $\\because (AB)^2 = (AC)^2 + \\ldots$ / $\\because (AB)^2 = (AC)^2 + ........$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-2|parts[1].stem|1",
+          "detail": "disagreed: $\\therefore (AB)^2 = L^2 + \\ldots$ / $\\therefore (AB)^2 = L^2 + ........$"
+        },
+        {
+          "scope": "pp3u4-2:think-and-discuss-2|parts[2].stem|0",
+          "detail": "disagreed: $AC : BC : AB = \\ldots : \\ldots : \\ldots$ / $AC : BC : AB = ........ : ........ : ........$"
+        },
+        {
+          "scope": "pp3u4-2:example-1|solution[2]|0",
+          "detail": "disagreed: $=\\frac{\\cos^2 60^\\circ+\\cos^2 30^\\circ+\\tan^2 45^\\circ}{\\sin 60^\\circ\\tan 60^\\circ-\\sin 30^\\circ}=\\frac{(\\frac12)^2+(\\frac{\\sqrt3}{2})^2+(1)^2}{\\frac{\\sqrt3}{2}\\times\\sqrt3-(\\frac12)}=\\frac{\\frac14+\\frac34+1}{\\frac32-\\frac12}=\\frac{1+1}{1}=2$ / $\\frac{\\cos^2 60^\\circ + \\cos^2 30\\ ^\\circ + \\tan^2 45^\\circ}{\\sin 60^\\circ \\tan 60^\\circ - \\sin 30^\\circ} = \\frac{\\left(\\frac{1}{2}\\right)^2 + \\left(\\frac{\\sqrt{3}}{2}\\right)^2 + (1)^2}{\\frac{\\sqrt{3}}{2} \\times \\sqrt{3} - \\left(\\frac{1}{2}\\right)} = \\frac{\\frac{1}{4} + \\frac{3}{4} + 1}{\\frac{3}{2} - \\frac{1}{2}} = \\frac{1+1}{1} = 2$"
+        },
+        {
+          "scope": "pp3u4-2:example-2|solution[0]|0",
+          "detail": "disagreed: $\\sin 43^\\circ \\simeq 0.6820$ / $\\sin 43^\\circ \\simeq 0{,}6820$"
+        },
+        {
+          "scope": "pp3u4-2:example-2|solution[1]|0",
+          "detail": "disagreed: $\\cos 53^\\circ 28' \\simeq 0.5953$ / $\\cos 53^\\circ 28' \\simeq 0{,}5953$"
+        },
+        {
+          "scope": "pp3u4-2:example-2|solution[2]|0",
+          "detail": "disagreed: $64^\\circ 37' 49'' \\simeq 2.1089$ / $64^\\circ 37' 49'' \\simeq 2{,}1089$"
+        },
+        {
+          "scope": "pp3u4-2:linking-text-8|text|0",
+          "detail": "disagreed: $\\therefore m(\\angle B) = 41° 24' 35''$ / $\\therefore m(\\angle B) = 41^\\circ\\ 24'\\ 35''$"
+        },
+        {
+          "scope": "pp3u4-2:linking-text-9|text|5",
+          "detail": "disagreed: $^2$ / $\\simeq 31.75\\text{cm}^2$"
+        },
+        {
+          "scope": "pp3u4-2:linking-text-10|text|2",
+          "detail": "disagreed: $\\therefore AD = 8\\sin(41°24'35'')$ / $\\therefore AD = 8 \\sin (41^\\circ\\ 24'\\ 35'')$"
+        },
+        {
+          "scope": "pp3u4-2:linking-text-10|text|3",
+          "detail": "disagreed: $=\\frac12\\times BC\\times AD$ / $ABC = \\frac{1}{2} \\times BC \\times AD$"
+        },
+        {
+          "scope": "pp3u4-2:linking-text-10|text|5",
+          "detail": "disagreed: $=\\frac12\\times12\\times8\\sin(41°24'35'')\\simeq 31.75$ / $ABC = \\frac{1}{2} \\times 12 \\times 8 \\sin (41^\\circ\\ 24'\\ 35'') \\simeq 31.75$"
+        },
+        {
+          "scope": "pp3u4-2:drill-3|parts[2].stem|0",
+          "detail": "disagreed: $\\sin 60° + \\cos 30° - \\tan 60° =$ / $\\sin 60^\\circ + \\cos 30^\\circ - \\text{Tan } 60^\\circ =$"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "misprints_decided",
+      "title": "Misprints and candidates = those a person decided",
+      "want": 5,
+      "got": 0,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "pp3u4-2:think-and-discuss-1#quote",
+          "detail": "not decided in the Misprints task"
+        },
+        {
+          "scope": "pp3u4-2:rule-5#quote",
+          "detail": "not decided in the Misprints task"
+        },
+        {
+          "scope": "pp3u4-2:rule-6#claim",
+          "detail": "not decided in the Misprints task"
+        },
+        {
+          "scope": "pp3u4-2:example-2#stem",
+          "detail": "not decided in the Misprints task"
+        },
+        {
+          "scope": "pp3u4-2:figure-6#caption",
+          "detail": "not decided in the Misprints task"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
+      "id": "items_typed_once",
+      "title": "Book questions = distinct prompts asked once, each with one type",
+      "want": 6,
+      "got": 6,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "solution_sources",
+      "title": "Book questions = answers printed in the book + generated answers approved or agreed",
+      "want": 6,
+      "got": 6,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "notation",
+      "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
+      "want": 222,
+      "got": 222,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_served",
+      "title": "The records' statements filed under an objective = statements in the content files",
+      "want": 14,
+      "got": 14,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "statements_checked",
+      "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
+      "want": 20,
+      "got": 19,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "item pp3u4-2:rule-6",
+          "detail": "the check could not confirm it says what the page prints: Page says 'supplementary angle'. The claim adds '(complementary)', which is not printed."
+        }
+      ],
+      "excepted_scopes": []
+    }
+  ],
+  "inputs": {
+    "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
+    "book-records/prep3-parallel/misprint-candidates.json": "fd74dd034a898f25d54a7290bf00ca988f32e96983a321aa34a8146e14e47f16",
+    "groundtruth/prep3-parallel/misprint-decisions.json": "7c4cea29b356525aa2236851e337d6a76b50f738daa1f5584d035c7dde34ab9c",
+    "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
+    "book-records/prep3-parallel/pp3u4-1.json": "b2b1f04ca5ac4643d07b22ed9be0a2e9646a9865bc6e0fc82b112a09b88406b3",
+    "book-records/prep3-parallel/pp3u4-2.json": "3677185baf944b12a3497576c8974635ad8e28eca1791dd5af30f3fc7499b77a",
+    "book-records/prep3-parallel/maths-reading/pp3u4-1.json": "75f0d7ceeef72931888e2b6bf4b519f29f39e240197f45158f272f13842ec8ee",
+    "book-records/prep3-parallel/maths-reading/pp3u4-2.json": "dcdf235d93fb8d4a9a2c335764cc7c836b199c491dbb182a5fa5df2d6509dac6",
+    "teaching/prep3-parallel/visuals/pp3u4-1.json": "f4c29208210088b05d2f45941579d5fcbbcb8c979f891152d2025ac285f4a00e",
+    "teaching/prep3-parallel/visuals/pp3u4-2.json": "3c94292ac2b2d674060c2e6b867b5a7a15c965a621c701ecc1a9c53ee033a43b",
+    "compiled/prep3-parallel/compile-report.json": "32eee6195b5cb0a4557230fbbb98d6a017b50e51be2da894540980b835f21c11",
+    "compiled/prep3-parallel/generated-questions.json": "43bc47efe2578717913e982b1e049f24ebc643da683177f5f59981874e4f826f",
+    "compiled/prep3-parallel/misconceptions.json": "cf703c2a19995a3f7b80b04a999d391bc54d8cc49978e5b33e987c5ea1bafed8",
+    "compiled/prep3-parallel/pp3u1.json": "ad630800a1d48b4f04b9476ffa583bdceac579aec0d92d32aeafe633980f8230",
+    "compiled/prep3-parallel/pp3u2.json": "c21206f0ced67528e76ff40bb13501b951548e4718adb3903f51538dd6ba5c1f",
+    "compiled/prep3-parallel/pp3u3.json": "a8c331c6a2cfe469a59c651b331e79293a31b3fa3fafe7fbd3cdd712e58ebfd8",
+    "compiled/prep3-parallel/pp3u4.json": "93a3d28a26e39b95bbce014dc54d4bde2af382a1476383d7e1d91b3fc7214626",
+    "compiled/prep3-parallel/review-stamps.json": "a4b6c3ce14db2d545c7f232ea6546b08a7d01d0a72896961b39eee3844048423",
+    "compiled/prep3-parallel/content/pp3u4-1.json": "4f9b546e6682dee1f25079f3523b0b2a910d582b6ea333a45615525d8c301e38",
+    "compiled/prep3-parallel/content/pp3u4-2.json": "7253d9db2786671ad49cb6891682c4de8adc9642795d92fa2b8578a4155932ac"
+  },
+  "exceptions": []
+}

@@ -1,0 +1,302 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "2b05980b1593a5963a82f18e3156a97513d9ed9c7a8a8f4534802cc4e3620468",
+  "generated_sha256": "1d7225202cb02e190977412433651b4857938a93f874a60f87cbd814b7d707a7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u7-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-3:think-and-discuss-1",
+      "kind": "value",
+      "answer": "R - {-1, 1}",
+      "solution": [
+       "Factorize the numerator: $x^2+x=x(x+1)$.",
+       "Factorize the denominator: $x^2-1=(x+1)(x-1)$.",
+       "The denominator is zero when $x=-1$ or $x=1$.",
+       "The domain of n is R - {-1, 1}."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-2",
+      "kind": "value",
+      "answer": "(x + 1) ≠ 0, where x doesn't take the value -1",
+      "solution": [
+       "$n(x)=\\frac{x(x+1)}{(x+1)(x-1)}$.",
+       "The common factor is $(x+1)$.",
+       "$x+1\\neq 0$, so x does not take the value $-1$."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-3",
+      "kind": "value",
+      "answer": "x/(x - 1)",
+      "solution": [
+       "$n(x)=\\frac{x(x+1)}{(x+1)(x-1)}$.",
+       "Remove the common factor $(x+1)$.",
+       "The simplest form is $\\frac{x}{x-1}$."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-3",
+       "pp3u7-3:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "No, the domain of n stays R - {-1, 1} because it is found before removing the common factor.",
+      "solution": [
+       "The domain is found before cancelling: R - {-1, 1}.",
+       "Cancelling $(x+1)$ does not change the domain of n.",
+       "So the domain stays R - {-1, 1}, even though the simplest form $\\frac{x}{x-1}$ looks as if it only excludes 1."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-2",
+       "pp3u7-3:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-6",
+      "kind": "value",
+      "answer": "n1(x) = 1/(x-3), domain R - {-3, 3}; n2(x) = 1/(x-3), domain R - {3}",
+      "solution": [
+       "$n_1(x)=\\frac{x+3}{(x+3)(x-3)}$; the denominator is zero at $x=-3,3$, so the domain is R - {-3, 3}.",
+       "Cancel $(x+3)$: $n_1(x)=\\frac{1}{x-3}$.",
+       "$n_2(x)=\\frac{2}{2(x-3)}$; the denominator is zero only at $x=3$, so the domain is R - {3}.",
+       "Cancel 2: $n_2(x)=\\frac{1}{x-3}$."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-2",
+       "pp3u7-3:method-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-7",
+      "kind": "value",
+      "answer": "n1(x) = x/(x+2), domain R - {-2}; n2(x) = x/(x+2), domain R - {-2}",
+      "solution": [
+       "$n_1(x)=\\frac{2x}{2(x+2)}$; the denominator is zero at $x=-2$, so the domain is R - {-2}.",
+       "Cancel 2: $n_1(x)=\\frac{x}{x+2}$.",
+       "$n_2(x)=\\frac{x(x+2)}{(x+2)^2}$; the domain is R - {-2}.",
+       "Cancel $(x+2)$: $n_2(x)=\\frac{x}{x+2}$."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-2",
+       "pp3u7-3:method-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-8",
+      "kind": "explanation",
+      "answer": "In (1) n1 ≠ n2 because their domains are different; in (2) n1 = n2 because the domains and the simplest forms are the same.",
+      "solution": [
+       "Two fractions are equal only if their domains are equal and they have the same values on that domain.",
+       "(1) Both reduce to $\\frac{1}{x-3}$, but the domain of $n_1$ is R - {-3, 3} and the domain of $n_2$ is R - {3}. The domains differ, so $n_1\\neq n_2$.",
+       "They take the same values only on the common domain R - {-3, 3}.",
+       "(2) Both reduce to $\\frac{x}{x+2}$ and both domains are R - {-2}, so $n_1=n_2$."
+      ],
+      "grounded_in": [
+       "pp3u7-3:definition-3",
+       "pp3u7-3:example-2",
+       "pp3u7-3:example-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-3:think-and-discuss-1",
+      "kind": "value",
+      "answer": "R - {-1, 1}"
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-2",
+      "kind": "value",
+      "answer": "x + 1; x doesn't take the value -1 (x + 1 ≠ 0)"
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-3",
+      "kind": "value",
+      "answer": "x/(x - 1)"
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-4",
+      "kind": "explanation",
+      "answer": "No, the domain of n stays R - {-1, 1} because it is found before cancelling the common factor."
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-6",
+      "kind": "value",
+      "answer": "n1(x) = 1/(x - 3), domain of n1 = R - {-3, 3}; n2(x) = 1/(x - 3), domain of n2 = R - {3}"
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-7",
+      "kind": "value",
+      "answer": "n1(x) = x/(x + 2), domain of n1 = R - {-2}; n2(x) = x/(x + 2), domain of n2 = R - {-2}"
+     },
+     {
+      "ref": "pp3u7-3:think-and-discuss-8",
+      "kind": "explanation",
+      "answer": "(1) No: both reduce to $\\frac{1}{x-3}$ but the domains differ (R - {-3, 3} and R - {3}), so $n_1 \\neq n_2$; they take equal values on the common domain R - {-3, 3}. (2) Yes: both reduce to $\\frac{x}{x+2}$ and both domains are R - {-2}, so $n_1 = n_2$."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u7-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-3:think-and-discuss-5",
+      "kind": "value",
+      "answer": "(1) n1(x) = 1/(x-3), domain R-{-3,3}; n2(x) = 1/(x-3), domain R-{3}... see steps. (2) n1(x) = x/(x+2), domain R-{-2}; n2(x) = x/(x+2), domain R-{-2}",
+      "solution": [
+       "Case 1: factorize n1: (x+3)/((x+3)(x-3)). The denominator is zero at x = -3 and x = 3, so the domain of n1 is R-{-3, 3}.",
+       "Cancel (x+3): n1(x) = 1/(x-3).",
+       "Factorize n2: 2/(2(x-3)). The denominator is zero at x = 3, so the domain of n2 is R-{3}.",
+       "Cancel 2: n2(x) = 1/(x-3). (The book's linking text writes the domain of n2 as R-{-3}. Working from the printed fraction 2/(2x-6) gives R-{3}.)",
+       "Case 2: factorize n1: 2x/(2(x+2)). Domain of n1 is R-{-2}. Cancel 2: n1(x) = x/(x+2).",
+       "Factorize n2: x(x+2)/(x+2)^2. Domain of n2 is R-{-2}. Cancel (x+2): n2(x) = x/(x+2).",
+       "Answer: (1) both reduce to 1/(x-3), with domain of n1 = R-{-3, 3} and domain of n2 = R-{3}. (2) both reduce to x/(x+2), with domain R-{-2} for each."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-2",
+       "pp3u7-3:method-3",
+       "pp3u7-3:example-1",
+       "pp3u7-3:linking-text-3",
+       "pp3u7-3:linking-text-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:drill-1:1",
+      "kind": "value",
+      "answer": "2x - 1",
+      "solution": [
+       "Factorize the numerator: 4x^2 - 2x = 2x(2x - 1).",
+       "The denominator is 2x, and x ≠ 0 is given.",
+       "Cancel the common factor 2x.",
+       "The simplest form is 2x - 1."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:drill-1:2",
+      "kind": "value",
+      "answer": "R-{-2, -1, 2}",
+      "solution": [
+       "n1(x) = (x-2)/((x-2)(x+2)). The denominator is zero at x = 2 and x = -2, so the domain of n1 is R-{-2, 2}.",
+       "n2(x) = 1/(x+1). The denominator is zero at x = -1, so the domain of n2 is R-{-1}.",
+       "The common domain is R-{-2, -1, 2}."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-2",
+       "pp3u7-3:example-3",
+       "pp3u7-3:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:drill-1:3",
+      "kind": "value",
+      "answer": "a = 3",
+      "solution": [
+       "n1 and n2 have the same denominator x - 2, so they are equal when the numerators are equal.",
+       "1 + a = 4.",
+       "a = 4 - 1 = 3."
+      ],
+      "grounded_in": [
+       "pp3u7-3:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:drill-1:4",
+      "kind": "value",
+      "answer": "a = 4",
+      "solution": [
+       "Factorize the numerator: x^2 - 4x + 4 = (x-2)^2.",
+       "The simplest form is (x-2)/(x+2), so after cancelling (x-2) the denominator must be (x-2)(x+2).",
+       "So x^2 - a = (x-2)(x+2) = x^2 - 4.",
+       "a = 4."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-1",
+       "pp3u7-3:method-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-3:drill-1:5",
+      "kind": "value",
+      "answer": "k = 7",
+      "solution": [
+       "The domain of n1 = -7/(x+2) excludes x = -2.",
+       "The domain of n2 = x/(x-k) excludes x = k.",
+       "The common domain is R-{-2, 7}, so the excluded values are -2 and 7.",
+       "Since -2 comes from n1, k = 7."
+      ],
+      "grounded_in": [
+       "pp3u7-3:method-2",
+       "pp3u7-3:definition-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-3:think-and-discuss-5",
+      "kind": "explanation",
+      "answer": "(1) $n_1(x)=\\frac{x+3}{(x+3)(x-3)}=\\frac{1}{x-3}$, domain $R-\\{-3,3\\}$; $n_2(x)=\\frac{2}{2(x-3)}=\\frac{1}{x-3}$, domain $R-\\{3\\}$ (the page prints $R-\\{-3\\}$, which looks like a misprint). (2) $n_1(x)=\\frac{2x}{2(x+2)}=\\frac{x}{x+2}$, domain $R-\\{-2\\}$; $n_2(x)=\\frac{x(x+2)}{(x+2)^2}=\\frac{x}{x+2}$, domain $R-\\{-2\\}$."
+     },
+     {
+      "ref": "pp3u7-3:drill-1:1",
+      "kind": "value",
+      "answer": "2x - 1"
+     },
+     {
+      "ref": "pp3u7-3:drill-1:2",
+      "kind": "value",
+      "answer": "R - {-2, -1, 2}"
+     },
+     {
+      "ref": "pp3u7-3:drill-1:3",
+      "kind": "value",
+      "answer": "3"
+     },
+     {
+      "ref": "pp3u7-3:drill-1:4",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u7-3:drill-1:5",
+      "kind": "value",
+      "answer": "7"
+     }
+    ]
+   }
+  }
+ ]
+}

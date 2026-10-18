@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-1:arc-from-x",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-1",
+ "parent_question_id": "q:pp3u10-1-1:bk-drill-2-2",
+ "source_page": 66,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "s",
+   "let": "a + b"
+  },
+  {
+   "name": "x",
+   "randint": [
+    "ceil(140/s)",
+    "floor(179/s)"
+   ]
+  },
+  {
+   "name": "c",
+   "let": "180 - s * x"
+  },
+  {
+   "require": "c >= 1 and c <= 40",
+   "why": "clean constant"
+  }
+ ],
+ "stem": "$AB$ is a diameter of the circle $M$, and $D$ is a point on the circle. $m(\\angle AMD)=({=a}x)^\\circ$ and $m(\\angle DMB)=({=b}x+{=c})^\\circ$. Find $m(\\overset{\\frown}{AD})$ in degrees.",
+ "answer": "a * x",
+ "solution": [
+  "$AB$ is a diameter, so $\\angle AMD$ and $\\angle DMB$ lie on a straight angle and add up to $180^\\circ$.",
+  "${=a}x + ({=b}x + {=c}) = 180$, so ${=s}x = {=180 - c}$.",
+  "$x = {=x}$.",
+  "The measure of an arc equals the measure of its central angle: $m(\\overset{\\frown}{AD}) = m(\\angle AMD) = {=a} \\times {=x} = {=a*x}^\\circ$."
+ ],
+ "notes": "Book's figure 7 method, with no second radius. Diagram described in words."
+}

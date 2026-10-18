@@ -1,0 +1,97 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u3-2",
+  "source": "book-records/prep3-parallel/pp3u3-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 3,
+      "cost_usd": 0.1697,
+      "calls": [
+        {
+          "call": "check-printed.pp3u3-2",
+          "cost_usd": 0.1597,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u3-2",
+          "cost_usd": 0.01,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u3-2:worked-example-1",
+      "record_id": "pp3u3-2:worked-example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 42,
+      "printed": "the second set is more divergent than the first set",
+      "blind": "First set: mean ≈ 55.67, range = 60 − 51 = 9. Second set: mean = 54.5, range = 92 − 42 = 50. The means are close, but the second set has the much larger range, so it is more dispersed (less homogeneous) than the first.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "0dc6ced9ab77b69ef0991234bcf12b9f",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u3-2:worked-example-1",
+        "verdict": "equivalent",
+        "reason": "Both conclude the second set is more dispersed than the first; the solver's range comparison (50 vs 9) supports this."
+      },
+      "how": "judged equivalent: Both conclude the second set is more dispersed than the first; the solver's range comparison (50 vs 9) supports this.",
+      "made": {
+        "at": "2026-10-18T06:35:32+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u3-2:example-1",
+      "record_id": "pp3u3-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 43,
+      "printed": "$\\sigma \\simeq 3.286$",
+      "blind": "σ ≈ 3.286 (mean = 16, Σ(x−x̄)² = 54, σ = √(54/5) = √10.8)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "cb83c25eaca8763f822e656b5e1ed97c",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u3-2:example-1",
+        "verdict": "equivalent",
+        "reason": "Both give σ ≈ 3.286; √10.8 ≈ 3.286."
+      },
+      "how": "judged equivalent: Both give σ ≈ 3.286; √10.8 ≈ 3.286.",
+      "made": {
+        "at": "2026-10-18T06:35:32+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u3-2:example-2",
+      "record_id": "pp3u3-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 44,
+      "printed": "$\\simeq 1.428$ units",
+      "blind": "CANNOT ANSWER: the frequency table of defective units is not given in the question text, so the values and frequencies cannot be read.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "9704502db938f8f9bf2b7a531ce09ba0",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the frequency table of defective units is not given in the question text, so the values and frequencies cannot be read.",
+      "made": {
+        "at": "2026-10-18T06:35:32+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

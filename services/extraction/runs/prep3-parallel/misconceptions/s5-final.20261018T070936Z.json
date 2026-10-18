@@ -1,0 +1,306 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "1cc64cf0babd77a3d81765a6d606522cdf2ee41d267b41be50550d340deb33e7",
+  "generated_sha256": "1c76c68c952d1a4ba6ff1aecf64e703a0bb17b0fc194e552b06e38f07f6c8586",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u6-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence and no entries were added; the runtime falls back to the canonical solution."
+    },
+    {
+     "kind": "terminology",
+     "text": "The canonical solution uses 'solution set', 'ordered pair', 'straight line L' and 'every point ∈ L'. These were kept as printed and no new terms were introduced."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-2",
+   "entries": [
+    {
+     "id": "mc:pp3u6-1-2:assume-intersect",
+     "lo_id": "lo:pp3u6-1-2",
+     "label": "Expects two lines to always meet at one point",
+     "description": "The student assumes every pair of equations has exactly one solution and looks for a single intersection point even when the lines have equal slopes.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are expecting the two lines to cross somewhere, which is true for many pairs, like $y = 2x - 3$ and $x + 2y = 4$, which meet at $(2, 1)$. But two lines do not have to cross."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $3x + y = 4$ and $2y + 6x = 3$. Write them as $y = 4 - 3x$ and $y = \\frac{3 - 6x}{2}$. The first passes through $(0, 4)$ and $(2, -2)$. The second passes through $(0, \\frac{3}{2})$ and $(1, -\\frac{3}{2})$."
+      },
+      {
+       "step": 3,
+       "text_md": "Both lines have slope $-3$, so they go down at the same steepness. They stay the same distance apart and never meet, so $L_1 \\cap L_2 = \\phi$."
+      },
+      {
+       "step": 4,
+       "text_md": "A solution has to lie on both lines. If the lines never meet, no point lies on both, so there is no solution."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you look for a crossing point, compare the slopes. Different slopes give one intersection point. Equal slopes mean the lines are parallel or coincide, and you must check which."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:assume-intersect"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:assume-intersect",
+       "question_id": "q:pp3u6-1-2:g001-lines-",
+       "text": "Exactly one solution: the lines meet at one point",
+       "tagged": "mc:pp3u6-1-2:assume-intersect"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The math checks out. Both lines in the 3x+y=4 and 2y+6x=3 example have slope -3, and the points given satisfy their equations. It matches the book's no-solution example and its L1∩L2=φ conclusion. It argues against the 'always one crossing' belief, and it cites no question ids, pages or figures."
+     }
+    },
+    {
+     "id": "mc:pp3u6-1-2:parallel-coincide-swap",
+     "lo_id": "lo:pp3u6-1-2",
+     "label": "Calls parallel lines coincident",
+     "description": "The student sees two lines with the same slope and decides they give infinitely many solutions, without checking whether they are the same line or different parallel lines.",
+     "signal": null,
+     "kind": "generated_distractor",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You noticed the lines have the same slope, which is a good start. But equal slopes alone do not tell you whether the lines are the same line or two separate lines."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $3x + y = 4$ and $2y + 6x = 3$. Both have slope $-3$. The first passes through $(0, 4)$ and the second through $(0, \\frac{3}{2})$, so they are different lines."
+      },
+      {
+       "step": 3,
+       "text_md": "Check the point $(0, 4)$ in the second equation: $2(4) + 6(0) = 8$, not $3$. A point on $L_1$ is not on $L_2$, so the lines never share a point and there is no solution."
+      },
+      {
+       "step": 4,
+       "text_md": "Compare this with $3x + 2y = 6$ and $2y = 6 - 3x$. Rewriting the second gives $3x + 2y = 6$, which is exactly the first equation. Here every point of one line is on the other, so there are infinitely many solutions."
+      },
+      {
+       "step": 5,
+       "text_md": "When the slopes match, put both equations in the same form. If they are identical, the lines coincide and there are infinitely many solutions. If only the constant differs, the lines are parallel and the solution set is empty."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:parallel-coincide-swap"
+      }
+     ],
+     "covers": [
+      {
+       "origin": "S6",
+       "ref": "tpl:pp3u6-1-2:lines-relate#mc:pp3u6-1-2:parallel-coincide-swap",
+       "question_id": "q:pp3u6-1-2:g001-lines-",
+       "text": "Infinitely many solutions: the two lines coincide",
+       "tagged": "mc:pp3u6-1-2:parallel-coincide-swap"
+      }
+     ],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation is correct. (0,4) gives 2(4)+6(0)=8, not 3, so the lines are different parallels. The coincident example 3x+2y=6 and 2y=6-3x matches the book. It targets the error of assuming equal slopes means coincident. The step 5 wording 'identical' is slightly loose, since proportional equations also coincide, but it is acceptable."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:pp3u6-1-2",
+     "origin": "S6",
+     "ref": "tpl:pp3u6-1-2:lines-relate#untagged",
+     "question_id": "q:pp3u6-1-2:g001-lines-",
+     "text": "The solution set is $\\{(0, 0)\\}$",
+     "tagged": null,
+     "reason": "no named error: The option encodes no nameable error from the available evidence."
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The book printed no caution boxes or remarks for this objective, and no re-solve wrong turns were supplied. The two entries rest only on the deliberately written wrong options."
+    },
+    {
+     "kind": "other",
+     "text": "D0 ($\\{(0,0)\\}$) was left unassigned because its stem is not shown and no error could be named honestly."
+    },
+    {
+     "kind": "terminology",
+     "text": "The refutations use 'coincide' and 'parallel', which the book uses, and 'slope', which appears in the parallel-lines worked example. The refutations also say 'the same form', which is the author's wording and not necessarily the book's."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a method remark (the curve of f(x) = ax^2 + bx + c with a ≠ 0). It names no error, there is no caution box and there are no wrong options. Any entry would be invented, so none was written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a remark defining the quadratic function and its corresponding equation. It names no error, and there are no caution boxes, wrong options or re-solve wrong turns. I added no entries. The runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "other",
+     "text": "No distractors or widget predicates were supplied, so there are no assignments."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-2-3",
+   "entries": [
+    {
+     "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
+     "lo_id": "lo:pp3u6-2-3",
+     "label": "Keeps the negative solution as an answer",
+     "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
+     "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
+      },
+      {
+       "step": 2,
+       "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
+      },
+      {
+       "step": 3,
+       "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
+      },
+      {
+       "step": 4,
+       "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u6-2-3:bk-example-3"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Both roots (-2.59 and 116.5465116) match the canonical solution. The refutation rejects the negative distance for the context and lands on about 116.55 m, as the book does. It argues against this specific error and adds no outside method. It cites no question ids, pages or review history."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no error is supported. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u6-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  }
+ ],
+ "totals": {
+  "objectives": 9,
+  "entries": 3,
+  "dropped": 0,
+  "stripped": 1,
+  "skipped": 1,
+  "flags": 11
+ }
+}

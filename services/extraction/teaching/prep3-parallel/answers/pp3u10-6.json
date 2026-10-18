@@ -1,0 +1,769 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-6",
+  "source": "book-records/prep3-parallel/pp3u10-6.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 19,
+      "cost_usd": 0.5956,
+      "calls": [
+        {
+          "call": "answers.pp3u10-6",
+          "cost_usd": 0.5956,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u10-6:think-and-discuss-1",
+      "record_id": "pp3u10-6:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 93,
+      "question": {
+        "text": "What is the relation between the two tangents drawn at the two ends of a chord of a circle that does not pass through its center?",
+        "stem": "",
+        "notes": "Single unnumbered prompt."
+      },
+      "needs_page": false,
+      "question_fingerprint": "9c1042d647232a345ca63c88622678e5",
+      "kind": "explanation",
+      "answer": "The two tangents meet at a point outside the circle, and the two tangent segments are equal in length (CA = CB).",
+      "solution": [
+        "Draw a chord AB that does not pass through the centre M, and draw the tangents at A and B.",
+        "Since the chord is not a diameter, the tangents are not parallel. They meet at a point C outside the circle.",
+        "CA and CB are two tangent segments drawn from the outside point C.",
+        "By Theorem 4, the two tangent segments from an outside point are equal, so CA = CB.",
+        "So the relation is that the tangents intersect, and the segments CA and CB are equal."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-1"
+      ],
+      "checks": {
+        "resolve_answer": "The two tangents intersect at a point C outside the circle, and the two tangent segments are equal in length (CA = CB), so triangle CAB is isosceles. They are not parallel.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:think-1",
+      "record_id": "pp3u10-6:think-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 94,
+      "question": {
+        "text": "In the opposite figure: Why is line MA the axis of BC?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5dc3701ea4400a1b8e508ef4b52ea0d5",
+      "kind": "explanation",
+      "answer": "Because both A and M are at equal distances from B and C, so the line MA is the axis of symmetry of the chord BC (Corollary 1).",
+      "solution": [
+        "AB and AC are tangent segments from A, so AB = AC (Theorem 4).",
+        "MB = MC because they are radii of the same circle.",
+        "So A is equally far from B and C, and M is equally far from B and C.",
+        "Triangles ABM and ACM are congruent (angles B and C are 90°, MB = MC, AM common side).",
+        "The line through M and A is therefore the axis of symmetry of BC.",
+        "So MA is the axis of BC (it is perpendicular to BC and bisects it)."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-1"
+      ],
+      "checks": {
+        "resolve_answer": "Because AB = AC (tangent segments from A) and MB = MC (radii), both A and M are equidistant from B and C, so both lie on the perpendicular bisector of BC. Hence line MA is the axis of symmetry of BC (MA ⊥ BC and passes through the midpoint D of BC).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:think-2",
+      "record_id": "pp3u10-6:think-2",
+      "part": null,
+      "type": "open_prompt",
+      "page": 94,
+      "question": {
+        "text": "Why does ray AM bisect ∠BAC?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "131c7cd908d997a3e411e74dfc0ee7d1",
+      "kind": "explanation",
+      "answer": "Because AB = AC (tangent segments) and MB = MC (radii), line AM is the axis of symmetry of BC, so it bisects ∠BAC.",
+      "solution": [
+        "AB and AC are two tangent segments from A, so AB = AC (Theorem 4).",
+        "MB and MC are radii of the same circle, so MB = MC.",
+        "So both A and M are equidistant from B and C. The line AM is the axis of symmetry of the chord BC.",
+        "The two sides of the figure on either side of AM match, so ∠BAM = ∠CAM.",
+        "Hence ray AM bisects ∠BAC."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-1",
+        "pp3u10-6:corollary-2"
+      ],
+      "checks": {
+        "resolve_answer": "AB = AC (tangent segments), MB = MC (radii) and AM is common, so triangles ABM and ACM are congruent (SSS). Hence $m(\\angle BAM)=m(\\angle CAM)$, so ray AM bisects ∠BAC.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:think-3",
+      "record_id": "pp3u10-6:think-3",
+      "part": null,
+      "type": "open_prompt",
+      "page": 94,
+      "question": {
+        "text": "Why does ray MA bisect ∠BMC?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ac581b2aa5a55727df3d0cb44bf04c26",
+      "kind": "explanation",
+      "answer": "Because AM is the axis of symmetry of BC, ray MA bisects ∠BMC, so ∠AMB = ∠AMC.",
+      "solution": [
+        "AB = AC (tangent segments) and MB = MC (radii).",
+        "Line AM is the axis of symmetry of the chord BC.",
+        "The reflection in AM swaps B and C and keeps M and A fixed. So it swaps radius MB with radius MC.",
+        "So ∠AMB = ∠AMC.",
+        "Hence ray MA bisects ∠BMC."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-1",
+        "pp3u10-6:corollary-2"
+      ],
+      "checks": {
+        "resolve_answer": "Triangles ABM and ACM are congruent (SSS: AB = AC, MB = MC, AM common), so $m(\\angle AMB)=m(\\angle AMC)$. Hence ray MA bisects ∠BMC.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-1:1",
+      "record_id": "pp3u10-6:drill-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "In each of the following figures, $\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to the circle M. Find the value of the symbol used in measuring:",
+        "stem": "Figure 1",
+        "notes": "Drill has three figures numbered 1-3, recorded as parts."
+      },
+      "needs_page": true,
+      "question_fingerprint": "4907e16cefb8f56cdff5a7f598ea5052",
+      "kind": "value",
+      "answer": "x = 65, y = 65, z = 65",
+      "solution": [
+        "AB and AC are tangent segments, so AB = AC.",
+        "In triangle ABC, m(∠A) = 50°, so x = (180° - 50°) ÷ 2 = 65°.",
+        "The radii MC and MB are perpendicular to the tangents, so m(∠C) = m(∠B) = 90°.",
+        "In quadrilateral ACMB, m(∠CMB) = 360° - 90° - 90° - 50° = 130°.",
+        "Line MA bisects ∠CMB (Corollary 2), so y = z = 130° ÷ 2 = 65°.",
+        "x = 65, y = 65, z = 65."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-2"
+      ],
+      "checks": {
+        "resolve_answer": "x = 65, y = 65, z = 65",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-1:2",
+      "record_id": "pp3u10-6:drill-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "In each of the following figures, $\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to the circle M. Find the value of the symbol used in measuring:",
+        "stem": "Figure 2",
+        "notes": "Drill has three figures numbered 1-3, recorded as parts."
+      },
+      "needs_page": true,
+      "question_fingerprint": "62ec7581f19a074959dbda88aa7a8eb3",
+      "kind": "value",
+      "answer": "x = 35, y = 55, z = 55",
+      "solution": [
+        "MA passes through the centre and the intersection point of the tangents, so it bisects ∠A (Corollary 2).",
+        "So x = 35°.",
+        "MC is a radius and AC a tangent, so m(∠MCA) = 90°.",
+        "In triangle MCA, y = 180° - 90° - 35° = 55°.",
+        "MA also bisects ∠CMB, so z = y = 55°.",
+        "x = 35, y = 55, z = 55."
+      ],
+      "grounded_in": [
+        "pp3u10-6:corollary-2"
+      ],
+      "checks": {
+        "resolve_answer": "x = 35, y = 55, z = 55",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-1:3",
+      "record_id": "pp3u10-6:drill-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "In each of the following figures, $\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to the circle M. Find the value of the symbol used in measuring:",
+        "stem": "Figure 3",
+        "notes": "Drill has three figures numbered 1-3, recorded as parts."
+      },
+      "needs_page": true,
+      "question_fingerprint": "3ad074f8058e69f6e092c56cf65a4b89",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: Figure 3 gives no angle or length measure, so x, y and z cannot be found.",
+      "solution": [
+        "The figure only shows AC = AB (tick marks) and the symbols x, y and z.",
+        "No numerical measure is given, so no value can be calculated."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: figure 3 gives no numerical angle measure, so x, y, z cannot be found.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-2",
+      "record_id": "pp3u10-6:drill-2",
+      "part": null,
+      "type": "exercise",
+      "page": 96,
+      "question": {
+        "text": "Prove that $\\overrightarrow{CB}$ bisects $\\angle ACD$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a668acaa0e81f7467261f3e79563da8a",
+      "kind": "explanation",
+      "answer": "∠ACB = ∠BCD, so ray CB bisects ∠ACD.",
+      "solution": [
+        "AB and AC are tangent segments from A, so AB = AC.",
+        "In triangle ABC, AB = AC, so m(∠ACB) = m(∠ABC).",
+        "AB ∥ CD and CB is a transversal, so m(∠ABC) = m(∠BCD) (alternate angles).",
+        "So m(∠ACB) = m(∠BCD).",
+        "Hence ray CB bisects ∠ACD."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "AB ∥ CD, so $m(\\angle BCD)=\\frac12 m(\\angle BMD)=65^\\circ$ (inscribed angle on arc BD). Then $m(\\angle CBA)=m(\\angle BCD)=65^\\circ$ (alternate angles). AB = AC, so $m(\\angle ACB)=m(\\angle ABC)=65^\\circ$. Therefore $m(\\angle ACB)=m(\\angle BCD)=65^\\circ$, so ray CB bisects ∠ACD.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-3",
+      "record_id": "pp3u10-6:drill-3",
+      "part": null,
+      "type": "exercise",
+      "page": 96,
+      "question": {
+        "text": "Find $m(\\angle A)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4abcf2a006216d322a68f3789e142ff3",
+      "kind": "value",
+      "answer": "50°",
+      "solution": [
+        "AB is a tangent and MB is a radius, so m(∠ABM) = 90°.",
+        "AB ∥ CD, so MB ⟂ CD. MB is then the axis of symmetry of the chord CD.",
+        "So m(∠BMC) = m(∠BMD) = 130°.",
+        "AC is a tangent and MC is a radius, so m(∠ACM) = 90°.",
+        "In quadrilateral ABMC: m(∠A) = 360° − (90° + 90° + 130°).",
+        "m(∠A) = 50°."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:corollary-1",
+        "pp3u10-6:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "50°",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-4",
+      "record_id": "pp3u10-6:drill-4",
+      "part": null,
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "In the opposite figure: M and N are two circles touching externally at A. The line L is a common tangent for both of them at A, C ∈ L. Two other tangents were drawn from C to the two circles M and N touching them at D and E respectively, $\\overline{CM} \\cap \\overline{DA} = \\{X\\}$ and $\\overline{CN} \\cap \\overline{AE} = \\{Y\\}$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "aa9821c86437c8fc2fdfbd44562bada1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the given data of the figure; the questions are in the following parts (the number of cyclic quadrilaterals, and the proof CD = CA = CE).",
+      "solution": [
+        "The text states the given data only and asks nothing to calculate.",
+        "See the answers to the next two parts."
+      ],
+      "grounded_in": [
+        "pp3u10-6:corollary-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this part is only the setup of the figure; the questions are in the following parts.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-5",
+      "record_id": "pp3u10-6:drill-5",
+      "part": null,
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "What is the number of cyclic quadrilaterals in the opposite figure? and what are they?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "25cb19fbe7c350f4f4d5bffec5d19fe3",
+      "kind": "value",
+      "answer": "4 cyclic quadrilaterals: CDMA, CEN A (E is the point labelled F in the figure), CXAY, XYNM",
+      "solution": [
+        "CD and CA are tangents to circle M, so m(∠CDM) = m(∠CAM) = 90°.",
+        "In CDMA the opposite angles D and A add to 180°, so CDMA is cyclic.",
+        "In the same way, m(∠CEN) = m(∠CAN) = 90°, so CEN A is cyclic.",
+        "CM is the axis of DA, so m(∠CXA) = 90°. CN is the axis of AE, so m(∠CYA) = 90°.",
+        "In CXAY the angles at X and Y add to 180°, so CXAY is cyclic.",
+        "In the cyclic CXAY, m(∠CXY) = m(∠CAY), and m(∠CAY) = m(∠CNA) (each is 90° - ∠ACN).",
+        "So the exterior angle at X of XYNM equals the opposite interior angle at N, so XYNM is cyclic.",
+        "There are 4 cyclic quadrilaterals: CDMA, CEN A, CXAY, XYNM."
+      ],
+      "grounded_in": [
+        "pp3u10-6:corollary-1",
+        "pp3u10-6:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "3 cyclic quadrilaterals: CDMA (∠D = ∠CAM = 90°), CENA (∠E = ∠CAN = 90°), and CXAY (∠CXA = ∠CYA = 90°).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-6",
+      "record_id": "pp3u10-6:drill-6",
+      "part": null,
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Prove that: $CD = CA = CE$, and explain this geometrically.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3fe8306ca1ab03400bef3ed1f9c6327d",
+      "kind": "explanation",
+      "answer": "CD = CA and CE = CA because they are pairs of tangent segments, so CD = CA = CE. Geometrically, D, A and E lie on a circle with centre C and radius CA.",
+      "solution": [
+        "CD and CA are two tangent segments drawn from C to circle M, so CD = CA.",
+        "CE and CA are two tangent segments drawn from C to circle N, so CE = CA.",
+        "So CD = CA = CE.",
+        "Geometrically, C is the same distance from D, A and E.",
+        "So the circle with centre C and radius CA passes through D, A and E."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "CD and CA are tangent segments from C to circle M, so CD = CA. CA and CE are tangent segments from C to circle N, so CA = CE. Hence CD = CA = CE. Geometrically, C is the centre of a circle passing through D, A and E, and ∠DAE = 90° (CXAY is a rectangle since CM ⊥ DA, CN ⊥ AE and CM ⊥ CN). So DE is a diameter of that circle with C its midpoint.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:think-4",
+      "record_id": "pp3u10-6:think-4",
+      "part": null,
+      "type": "open_prompt",
+      "page": 97,
+      "question": {
+        "text": "Is the center of the inscribed circle for any triangle the intersection point of the bisectors of its interior angles? Explain your answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dab9b6a341af59a9b6b90763542c991f",
+      "kind": "explanation",
+      "answer": "Yes, the centre of the inscribed circle of any triangle is the intersection point of the bisectors of its interior angles.",
+      "solution": [
+        "The inscribed circle touches all three sides, so each side is a tangent to the circle.",
+        "At each vertex, the two sides are two tangents drawn from that outside point.",
+        "The line through the centre M and the vertex bisects the angle between the two tangents.",
+        "So M lies on the bisector of each interior angle of the triangle.",
+        "Hence M is the intersection point of the bisectors of the interior angles."
+      ],
+      "grounded_in": [
+        "pp3u10-6:corollary-2",
+        "pp3u10-6:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. The centre of the inscribed circle is equidistant from the sides (the radii to the points of tangency are equal), so it lies on the bisector of each interior angle. Hence it is the intersection point of the bisectors of the triangle's interior angles.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-7:1",
+      "record_id": "pp3u10-6:drill-7",
+      "part": "1",
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "Find the value of the symbol used in measuring:",
+        "stem": "Figure 1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ad88a2bcaa431c0e8d6fd70ae290f66a",
+      "kind": "value",
+      "answer": "x = 12, y = 8",
+      "solution": [
+        "AB and AC are tangent segments from A, so AB = AC = 12 cm.",
+        "So x = 12.",
+        "MB is a radius, so m(∠MBA) = 90°.",
+        "In right triangle MBA: MA² = 5² + 12² = 169, so MA = 13 cm.",
+        "D is on the circle, so MD = 5 cm.",
+        "y = DA = 13 - 5 = 8.",
+        "x = 12, y = 8."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 12, y = 8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-7:2",
+      "record_id": "pp3u10-6:drill-7",
+      "part": "2",
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "Find the value of the symbol used in measuring:",
+        "stem": "Figure 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "075a50cc4b5d62cc35cd27de0de04cd8",
+      "kind": "value",
+      "answer": "x = 9, y = 17",
+      "solution": [
+        "The tangent segments from A to the circles are equal, so AD = AC = AB = 15 cm (read from the figure).",
+        "2x - 3 = 15, so 2x = 18 and x = 9.",
+        "y - 2 = 15, so y = 17.",
+        "x = 9, y = 17."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = 9, y = 17",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-7:3",
+      "record_id": "pp3u10-6:drill-7",
+      "part": "3",
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "Find the value of the symbol used in measuring:",
+        "stem": "Figure 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bc99d82753c5a2c60cc548c7e9669300",
+      "kind": "value",
+      "answer": "x = 4, y = 3",
+      "solution": [
+        "The sides are AC = 5 cm, AB = 6 cm, BC = 7 cm (read from the figure).",
+        "The circle is inscribed in the triangle, so the two tangent segments from each vertex are equal.",
+        "Let the tangent length from A be z: z + y = 5, z + x = 6, x + y = 7.",
+        "Adding: 2(x + y + z) = 18, so x + y + z = 9.",
+        "z = 9 - 7 = 2, y = 9 - 6 = 3, x = 9 - 5 = 4.",
+        "x = 4, y = 3."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:definition-1",
+        "pp3u10-6:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = 6, y = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:exercise-1",
+      "record_id": "pp3u10-6:exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "In the opposite figure: Prove that: AB = CD",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d91c816a89ca80bea30b4bd47b338dd5",
+      "kind": "explanation",
+      "answer": "AB = CD, because FA = FC and FB = FD, and adding gives AB = CD.",
+      "solution": [
+        "AB and CD are common internal tangents that meet at F, which lies between A and B and between C and D.",
+        "FA and FC are tangent segments from F to circle M, so FA = FC.",
+        "FB and FD are tangent segments from F to circle N, so FB = FD.",
+        "By addition: FA + FB = FC + FD.",
+        "So AB = CD."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:definition-2",
+        "pp3u10-6:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "Let the internal tangents meet at F. Tangent segments from F to circle M: FA = FC; to circle N: FB = FD. Adding: FA + FB = FC + FD, and F lies between A and B and between C and D, so AB = CD.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:exercise-2",
+      "record_id": "pp3u10-6:exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "In the opposite figure: Prove that: AB = CD",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d91c816a89ca80bea30b4bd47b338dd5",
+      "kind": "explanation",
+      "answer": "AB = CD, because FA = FC and FB = FD, and subtracting gives AB = CD.",
+      "solution": [
+        "AB and CD are common external tangents whose rays meet at F; B is between F and A, D is between F and C.",
+        "FA and FC are tangent segments from F to circle M, so FA = FC.",
+        "FB and FD are tangent segments from F to circle N, so FB = FD.",
+        "By subtraction: FA - FB = FC - FD.",
+        "So AB = CD."
+      ],
+      "grounded_in": [
+        "pp3u10-6:rule-1",
+        "pp3u10-6:definition-3",
+        "pp3u10-6:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Let the external tangents meet at F. Tangents from F to circle M: FA = FC; to circle N: FB = FD. Subtracting: FA − FB = FC − FD, so AB = CD.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-6:drill-8",
+      "record_id": "pp3u10-6:drill-8",
+      "part": null,
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "In the opposite figure: $\\overleftrightarrow{AB}$ is a common tangent to the two circles M and N externally at A and B respectively. Their two radii lengths are 17 cm and 8 cm respecively. If MN = 41 cm, Find the length of $\\overline{AB}$",
+        "stem": "",
+        "notes": "Printed 'respecively' (spelling slip)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1f67fd3ba6dcba40b7428ec2cd69f355",
+      "kind": "value",
+      "answer": "40",
+      "solution": [
+        "MA and NB are radii to the tangent line AB, so MA ⊥ AB and NB ⊥ AB, so MA ∥ NB.",
+        "Draw NH ⊥ MA with H on MA. Then ABNH is a rectangle, so AB = NH and AH = NB = 8 cm.",
+        "MH = 17 - 8 = 9 cm.",
+        "In right triangle MHN: NH² = 41² - 9² = 1681 - 81 = 1600.",
+        "NH = 40 cm, so AB = 40 cm."
+      ],
+      "grounded_in": [
+        "pp3u10-6:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "40 cm",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T08:01:10+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

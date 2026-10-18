@@ -1,0 +1,250 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "2f7f603b326b298de7a9de3a28b9c18950b9a50c3a6e51cb2a87904f95c10d8f",
+  "generated_sha256": "13e36838f7d6769a062ad24d9e7f05861ea1d14be556383f395b7078a5715e29",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u7-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-1-1",
+     "need_kind": "function_evaluator (or curve_sketcher with a polynomial fn)",
+     "description": "The student drags a point along the graph of a polynomial function, or sets x with a slider. The widget shows f(x) as a live number and as the height of the point above the x-axis. The task is to find every x at which f(x)=0, and then to say that Z(f) is the set of those x. The student would see that a zero is where the graph meets the axis and the value is 0. The widget could report: a value evaluated at the wrong x, f(x) read as x, a missed zero, and a negative root taken as positive.",
+     "why": "No existing kind evaluates a polynomial. The objective is evaluating f at given values of x and naming the zeroes, so a number line or grid would only be an answer box. The objective also lists no misconceptions, so no diagnostic could be mapped yet."
+    },
+    {
+     "lo_id": "lo:pp3u7-1-2",
+     "need_kind": "curve_sketcher with cubic and quartic fn, or a root-and-multiplicity builder",
+     "description": "For f(x)=x^3-4x^2, x^2-2x+1 and x^4-x^2, the student places the zeroes of the factored form and sees the graph touch or cross the x-axis. A repeated root like x=1 touches the axis, a factor x^2 gives a touch at 0, and a function with no real zeroes never meets the axis. This would diagnose: dividing out x and losing the zero at 0, counting a repeated root twice, giving only the positive root of x^2-1, flipping the sign of a root, and claiming no zeroes when there are some.",
+     "why": "A number_line_marker would only repeat an answer the student has already worked out on paper. The construction that carries the mathematics is factor, then zero-product, then graph. No existing kind builds that, and the lesson lists no misconception ids to attach diagnostics to."
+    }
+   ],
+   "notes": "No templates are returned because the lesson's misconception lists are empty and every template needs at least one diagnostic. number_line_marker (points mode) was considered for the set of zeroes. It was rejected as an answer box in disguise, and its contract was truncated in the brief."
+  },
+  {
+   "lesson": "pp3u7-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-1:exclude-square-denominator",
+     "lo_id": "lo:pp3u7-2-1",
+     "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       2
+      ]
+     },
+     "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+     "solution": [
+      "The domain is R minus the zeroes of the denominator, so set the denominator equal to zero: $x^2-4=0$.",
+      "Then $x^2=4$, so $x=2$ or $x=-2$ (a square has two roots).",
+      "Mark both $-2$ and $2$; the domain is $R-\\{-2,2\\}$.",
+      "The numerator's zero ($x=-1$) does not matter for the domain."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "missed-values",
+       "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator"
+      },
+      {
+       "predicate": "extra-values",
+       "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+      }
+     ],
+     "notes": "Likeliest error first: marking only 2 (or only -2) fires missed-values -> one root only. Marking the numerator zero -1 alongside the correct values fires extra-values; marking only -1 may fire a different predicate (off-target or both), which is deliberately not mapped. sign-flipped is not mapped: no listed misconception on this objective covers it."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-1:exclude-numerator-trap",
+     "lo_id": "lo:pp3u7-2-1",
+     "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -3,
+       3
+      ]
+     },
+     "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
+     "solution": [
+      "Only the denominator can make the fraction undefined, so solve $x^2-9=0$.",
+      "$x^2=9$ gives $x=3$ or $x=-3$.",
+      "Mark $-3$ and $3$; the domain is $R-\\{-3,3\\}$.",
+      "$x=1$ makes the numerator zero, so $n(1)=0$ is defined and 1 stays in the domain."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "extra-values",
+       "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+      },
+      {
+       "predicate": "missed-values",
+       "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator"
+      }
+     ],
+     "notes": "Here the numerator zero 1 is a tempting extra mark, so extra-values is listed first. Marking only 3 fires missed-values (one root only), a named alternative. Marking only 1 may fire neither cleanly and is not separately mapped."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-2-1",
+     "need_kind": "parameter_solver (or equation-condition builder)",
+     "description": "The anchor asks for the parameter $a$ so that the domain of $\\frac{x-1}{x^2-ax+9}$ is $R-\\{3\\}$. The student would adjust a coefficient and watch the denominator's graph/zeroes and the excluded points on the number line update live. The goal is to make the denominator have exactly the one zero at 3 (a repeated root). Errors diagnosed: choosing $a$ giving two excluded values, taking $a=3$ or $a=-6$ (sign slip), or excluding the numerator's zero.",
+     "why": "number_line_marker grades a marked set, not a coefficient the student tunes. Asking for $a$ would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u7-2-2",
+     "need_kind": "number_line_marker with union of excluded sets (or a multi-fraction domain builder)",
+     "description": "The student would see two or more fractions, each with its own denominator, and mark the union of all excluded zeroes on a number line. This would show that the common domain removes the zeroes of every denominator. Errors diagnosed: marking only one fraction's zeroes, marking the intersection instead of the union, and marking numerator zeroes.",
+     "why": "number_line_marker points mode could technically grade this set. However, this objective has no anchor book question to serve as parent_question_id and no misconceptions to map, so any template would be forced. It needs an anchor question and misconceptions added to the lesson file first."
+    }
+   ],
+   "notes": "Two number_line_marker templates for lo:pp3u7-2-1 (excluded values of a fraction). The 2-1 parameter question and all of 2-2 are recorded as gaps."
+  },
+  {
+   "lesson": "pp3u7-3",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-3-2:common-domain-exclusions",
+     "lo_id": "lo:pp3u7-3-2",
+     "parent_question_id": "q:pp3u7-3-1:bk-drill-1-4",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "instances": [
+      {
+       "a": 2,
+       "a2": 4
+      },
+      {
+       "a": 3,
+       "a2": 9
+      },
+      {
+       "a": 4,
+       "a2": 16
+      }
+     ],
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       "{=a}"
+      ]
+     },
+     "stem": "Let $n_1(x)=\\frac{x^2-{=a2}}{x-{=a}}$ and $n_2(x)=x+{=a}$. Both reduce to $x+{=a}$. Mark on the number line the value of $x$ that is excluded from the common domain, so the two functions are not equal there.",
+     "solution": [
+      "Factorize the numerator: $x^2-{=a2}=(x-{=a})(x+{=a})$.",
+      "The denominator $x-{=a}$ is zero when $x={=a}$, so $x={=a}$ is outside the domain of $n_1$.",
+      "$n_2(x)=x+{=a}$ is defined for every real number, so the common domain is $\\mathbb{R}-\\{{=a}\\}$.",
+      "Mark $x={=a}$: the simplest forms agree, but the domains differ, so $n_1\\neq n_2$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "missed-values",
+       "misconception_id": "mc:pp3u7-3-2:same-simplest-form-means-equal"
+      }
+     ],
+     "notes": "Lesson 3-2 has no anchor book question; parent is the nearest anchor in the lesson (bk-drill-1-4). Empty or incomplete marking means the student compared only the simplest forms. sign-flipped (marking -a, reading x-a=0 as x=-a) and extra-values have no misconception in this objective's list, so they are left unmapped. Targets use the instance field a as a number in the list."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-3-1",
+     "need_kind": "fraction_reducer (factor-and-cancel builder)",
+     "description": "The student sees an algebraic fraction and builds the factorized numerator and denominator from factor tiles such as (x-2), (x+3), 2. They then cancel matching factors by dragging them together and write down the excluded values before cancelling. The result shows the simplest form and the domain $\\mathbb{R}-\\{\\dots\\}$. The widget would diagnose cancelling terms rather than factors (for example $\\frac{x+2}{x+3}$ read as $\\frac{2}{3}$), cancelling without stating the domain, reading the excluded value with the wrong sign, and leaving a common factor uncancelled.",
+     "why": "No existing kind builds or cancels factors. number_line_marker covers only the domain-exclusion step, and the objective has no misconception ids in its list to diagnose against. area_model factor handles the wrong kind of factoring."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u7-4",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-4-1",
+     "need_kind": "fraction_combiner (algebraic-fraction builder)",
+     "description": "The student would build the sum or difference of two algebraic fractions in steps. First they factorise each denominator. Then they pick the L.C.M. from the factors, with each factor shown as a tile. Next they scale each numerator by the factor its denominator is missing. Finally they combine the numerators and cancel. Live, the instrument would show the domain exclusions (values that make a denominator zero). It would also test the result numerically against the original expression at sample x values. It could diagnose these errors: adding numerators and denominators separately; using the product of the denominators instead of the L.C.M.; not distributing the minus sign over the second numerator in a subtraction; scaling the denominator but not the numerator; and leaving out the excluded values.",
+     "why": "No existing kind fits. number_line_marker could show the domain, but that is only a side aspect of the objective. The core skill is symbolic manipulation, so using any other kind would be an answer box in disguise. Also, the lesson file gives no anchor question and no misconceptions for this objective. Without them, a template can have neither a valid parent_question_id nor a diagnostic mapping."
+    },
+    {
+     "lo_id": "lo:pp3u7-4-2",
+     "need_kind": "fraction_cancel_board (factorise-and-cancel widget)",
+     "description": "The student would factorise the numerators and denominators of a product of algebraic fractions into tiles. They would flip the second fraction when the operation is division. Then they would drag matching factors from the numerator side to the denominator side to cancel them. Only identical whole factors would cancel, and a term inside a sum would refuse to cancel. The instrument would show the domain, including the values that make the divisor zero, and compare the result with the original at sample x values. It could diagnose these errors: cancelling a term instead of a factor, such as (x+2)/(x+3) → 2/3; not inverting the second fraction when dividing; inverting the first fraction; forgetting to exclude the values that make the divisor zero; and stopping before the simplest form.",
+     "why": "No existing kind fits. area_model {expand/factor} covers factorising a single quadratic, but not cancelling across fractions or reciprocal division. The lesson file also gives no anchor question and no misconceptions for this objective, so a valid template with parent_question_id and diagnostics is not possible."
+    }
+   ],
+   "notes": "I authored no templates. The lesson file lists no anchor questions and no misconceptions for either objective. A template needs a parent_question_id and at least one diagnostic, and a diagnostic's misconception id must come from the objective's own list. An empty list makes both impossible. Separately, none of the existing widget kinds fits adding, subtracting, multiplying or dividing algebraic fractions. Both gaps above would need a new kind."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u7-1-1",
+   "need_kind": "function_evaluator (or curve_sketcher with a polynomial fn)",
+   "description": "The student drags a point along the graph of a polynomial function, or sets x with a slider. The widget shows f(x) as a live number and as the height of the point above the x-axis. The task is to find every x at which f(x)=0, and then to say that Z(f) is the set of those x. The student would see that a zero is where the graph meets the axis and the value is 0. The widget could report: a value evaluated at the wrong x, f(x) read as x, a missed zero, and a negative root taken as positive.",
+   "why": "No existing kind evaluates a polynomial. The objective is evaluating f at given values of x and naming the zeroes, so a number line or grid would only be an answer box. The objective also lists no misconceptions, so no diagnostic could be mapped yet."
+  },
+  {
+   "lo_id": "lo:pp3u7-1-2",
+   "need_kind": "curve_sketcher with cubic and quartic fn, or a root-and-multiplicity builder",
+   "description": "For f(x)=x^3-4x^2, x^2-2x+1 and x^4-x^2, the student places the zeroes of the factored form and sees the graph touch or cross the x-axis. A repeated root like x=1 touches the axis, a factor x^2 gives a touch at 0, and a function with no real zeroes never meets the axis. This would diagnose: dividing out x and losing the zero at 0, counting a repeated root twice, giving only the positive root of x^2-1, flipping the sign of a root, and claiming no zeroes when there are some.",
+   "why": "A number_line_marker would only repeat an answer the student has already worked out on paper. The construction that carries the mathematics is factor, then zero-product, then graph. No existing kind builds that, and the lesson lists no misconception ids to attach diagnostics to."
+  },
+  {
+   "lo_id": "lo:pp3u7-2-1",
+   "need_kind": "parameter_solver (or equation-condition builder)",
+   "description": "The anchor asks for the parameter $a$ so that the domain of $\\frac{x-1}{x^2-ax+9}$ is $R-\\{3\\}$. The student would adjust a coefficient and watch the denominator's graph/zeroes and the excluded points on the number line update live. The goal is to make the denominator have exactly the one zero at 3 (a repeated root). Errors diagnosed: choosing $a$ giving two excluded values, taking $a=3$ or $a=-6$ (sign slip), or excluding the numerator's zero.",
+   "why": "number_line_marker grades a marked set, not a coefficient the student tunes. Asking for $a$ would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u7-2-2",
+   "need_kind": "number_line_marker with union of excluded sets (or a multi-fraction domain builder)",
+   "description": "The student would see two or more fractions, each with its own denominator, and mark the union of all excluded zeroes on a number line. This would show that the common domain removes the zeroes of every denominator. Errors diagnosed: marking only one fraction's zeroes, marking the intersection instead of the union, and marking numerator zeroes.",
+   "why": "number_line_marker points mode could technically grade this set. However, this objective has no anchor book question to serve as parent_question_id and no misconceptions to map, so any template would be forced. It needs an anchor question and misconceptions added to the lesson file first."
+  },
+  {
+   "lo_id": "lo:pp3u7-3-1",
+   "need_kind": "fraction_reducer (factor-and-cancel builder)",
+   "description": "The student sees an algebraic fraction and builds the factorized numerator and denominator from factor tiles such as (x-2), (x+3), 2. They then cancel matching factors by dragging them together and write down the excluded values before cancelling. The result shows the simplest form and the domain $\\mathbb{R}-\\{\\dots\\}$. The widget would diagnose cancelling terms rather than factors (for example $\\frac{x+2}{x+3}$ read as $\\frac{2}{3}$), cancelling without stating the domain, reading the excluded value with the wrong sign, and leaving a common factor uncancelled.",
+   "why": "No existing kind builds or cancels factors. number_line_marker covers only the domain-exclusion step, and the objective has no misconception ids in its list to diagnose against. area_model factor handles the wrong kind of factoring."
+  },
+  {
+   "lo_id": "lo:pp3u7-4-1",
+   "need_kind": "fraction_combiner (algebraic-fraction builder)",
+   "description": "The student would build the sum or difference of two algebraic fractions in steps. First they factorise each denominator. Then they pick the L.C.M. from the factors, with each factor shown as a tile. Next they scale each numerator by the factor its denominator is missing. Finally they combine the numerators and cancel. Live, the instrument would show the domain exclusions (values that make a denominator zero). It would also test the result numerically against the original expression at sample x values. It could diagnose these errors: adding numerators and denominators separately; using the product of the denominators instead of the L.C.M.; not distributing the minus sign over the second numerator in a subtraction; scaling the denominator but not the numerator; and leaving out the excluded values.",
+   "why": "No existing kind fits. number_line_marker could show the domain, but that is only a side aspect of the objective. The core skill is symbolic manipulation, so using any other kind would be an answer box in disguise. Also, the lesson file gives no anchor question and no misconceptions for this objective. Without them, a template can have neither a valid parent_question_id nor a diagnostic mapping."
+  },
+  {
+   "lo_id": "lo:pp3u7-4-2",
+   "need_kind": "fraction_cancel_board (factorise-and-cancel widget)",
+   "description": "The student would factorise the numerators and denominators of a product of algebraic fractions into tiles. They would flip the second fraction when the operation is division. Then they would drag matching factors from the numerator side to the denominator side to cancel them. Only identical whole factors would cancel, and a term inside a sum would refuse to cancel. The instrument would show the domain, including the values that make the divisor zero, and compare the result with the original at sample x values. It could diagnose these errors: cancelling a term instead of a factor, such as (x+2)/(x+3) → 2/3; not inverting the second fraction when dividing; inverting the first fraction; forgetting to exclude the values that make the divisor zero; and stopping before the simplest form.",
+   "why": "No existing kind fits. area_model {expand/factor} covers factorising a single quadratic, but not cancelling across fractions or reciprocal division. The lesson file also gives no anchor question and no misconceptions for this objective, so a valid template with parent_question_id and diagnostics is not possible."
+  }
+ ]
+}

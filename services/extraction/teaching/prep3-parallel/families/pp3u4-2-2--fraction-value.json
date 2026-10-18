@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-2:fraction-value",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-2",
+ "parent_question_id": "q:pp3u4-2-2:bk-example-1-b",
+ "source_page": 54,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "let": "m * t - 1"
+  }
+ ],
+ "stem": "Find the value of the following: $\\dfrac{\\cos^2 60^\\circ + \\cos^2 30^\\circ + {=k}\\tan^2 45^\\circ}{{=m}\\left(\\sin 60^\\circ \\tan 60^\\circ - \\sin 30^\\circ\\right)}$",
+ "solution": [
+  "Numerator: $\\left(\\frac12\\right)^2+\\left(\\frac{\\sqrt3}{2}\\right)^2+{=k}(1)^2=\\frac14+\\frac34+{=k}={=k + 1}$.",
+  "Bracket: $\\sin 60^\\circ\\tan 60^\\circ-\\sin 30^\\circ=\\frac{\\sqrt3}{2}\\times\\sqrt3-\\frac12=\\frac32-\\frac12=1$.",
+  "Denominator: ${=m}\\times 1={=m}$.",
+  "The value is $\\frac{{=k + 1}}{{=m}}={=t}$."
+ ],
+ "answer": "t",
+ "proposed_misconceptions": [],
+ "notes": "Advanced: modelled on book example 1-b. Numerator = 1 + k, bracket = 1, so k = m*t - 1 makes the answer t whole."
+}

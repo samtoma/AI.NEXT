@@ -1,0 +1,1002 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u8-1",
+  "source": "book-records/prep3-parallel/pp3u8-1.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 26,
+      "cost_usd": 0.469,
+      "calls": [
+        {
+          "call": "answers.pp3u8-1",
+          "cost_usd": 0.469,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u8-1:think-and-discuss-1",
+      "record_id": "pp3u8-1:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 30,
+      "question": {
+        "text": "Sample space (S) = { ...., ...., ...., ....., ...., .....}.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "32088f99244b36dd412121bbff8cb4c5",
+      "kind": "value",
+      "answer": "{1, 2, 3, 4, 5, 6}",
+      "solution": [
+        "A regular dice has six faces.",
+        "The faces show 1, 2, 3, 4, 5, 6.",
+        "S = {1, 2, 3, 4, 5, 6}, n(S) = 6."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:convention-1"
+      ],
+      "checks": {
+        "resolve_answer": "S = {1, 2, 3, 4, 5, 6}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:think-and-discuss-2",
+      "record_id": "pp3u8-1:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 30,
+      "question": {
+        "text": "The event of having 7 is .......... and the event is called .......... and the probability of appearance = ..............",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3b842cc335b2abe3c1ee954bb109b934",
+      "kind": "value",
+      "answer": "φ (empty set); impossible event; 0",
+      "solution": [
+        "7 is not in S, so no outcome gives 7.",
+        "The event is the empty set φ and n(φ) = 0.",
+        "It is an impossible event.",
+        "P = 0/6 = 0."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "The event is ∅ (empty set); it is an impossible event; probability = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:think-and-discuss-3",
+      "record_id": "pp3u8-1:think-and-discuss-3",
+      "part": null,
+      "type": "activity",
+      "page": 30,
+      "question": {
+        "text": "The event of getting a number less than 9 is .............. and the event is called .......... and the probability of appearance = ..........",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "67ff88f884fe986a4173ad89f70fec90",
+      "kind": "value",
+      "answer": "{1, 2, 3, 4, 5, 6} (= S); certain event; 1",
+      "solution": [
+        "Every number on the dice is less than 9.",
+        "The event is {1, 2, 3, 4, 5, 6} = S, so n = 6.",
+        "It is a certain event.",
+        "P = 6/6 = 1."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "The event is {1, 2, 3, 4, 5, 6} = S; it is a certain event; probability = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:think-and-discuss-4",
+      "record_id": "pp3u8-1:think-and-discuss-4",
+      "part": null,
+      "type": "activity",
+      "page": 30,
+      "question": {
+        "text": "The event of getting a prime even number is .............. and it is a subset of ........ and the probability of occurrance = fraction with blank numerator and denominator",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1cd8da8874d8fa4561c4ac2e941885ec",
+      "kind": "value",
+      "answer": "{2}; S; 1/6",
+      "solution": [
+        "The prime numbers in S are 2, 3, 5.",
+        "The only even one is 2.",
+        "The event is {2}, a subset of S.",
+        "P = n(A)/n(S) = 1/6."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "{2}; it is a subset of S; probability = 1/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-1:A",
+      "record_id": "pp3u8-1:drill-1",
+      "part": "A",
+      "type": "exercise",
+      "page": 30,
+      "question": {
+        "text": "A box contains 3 white balls and 4 red balls. If a ball is randomly drawn, then calculate the probability that the ball drawn is...... :",
+        "stem": "white.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8e8687a00a44ab0536312d45a21a5768",
+      "kind": "value",
+      "answer": "3/7",
+      "solution": [
+        "n(S) = 3 + 4 = 7.",
+        "n(white) = 3.",
+        "P(white) = 3/7."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "3/7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-1:B",
+      "record_id": "pp3u8-1:drill-1",
+      "part": "B",
+      "type": "exercise",
+      "page": 30,
+      "question": {
+        "text": "A box contains 3 white balls and 4 red balls. If a ball is randomly drawn, then calculate the probability that the ball drawn is...... :",
+        "stem": "white or red.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a185dd28c95da7aa6c315dff1c42f84d",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "n(S) = 7.",
+        "White or red balls: 3 + 4 = 7, so n = 7.",
+        "P = 7/7 = 1."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-1:C",
+      "record_id": "pp3u8-1:drill-1",
+      "part": "C",
+      "type": "exercise",
+      "page": 30,
+      "question": {
+        "text": "A box contains 3 white balls and 4 red balls. If a ball is randomly drawn, then calculate the probability that the ball drawn is...... :",
+        "stem": "blue.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c7c955a558a75126604a9d9f7bd2e7e7",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "n(S) = 7.",
+        "There are no blue balls, so n(blue) = 0.",
+        "P(blue) = 0/7 = 0."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:exercise-1:A",
+      "record_id": "pp3u8-1:exercise-1",
+      "part": "A",
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "The opposite figure is a spinner divided into eight equal colored sectors. Find the probability that the indicater stops on:",
+        "stem": "the green color.",
+        "notes": "Numbered 2 in the book's circled numbering; continues the Drill from previous page but is a new numbered question."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9e51ad0b92cf2a9f448a5e665118c859",
+      "kind": "value",
+      "answer": "3/8",
+      "solution": [
+        "The spinner has 8 equal sectors, so $n(S)=8$.",
+        "Count the green sectors: top-right, right-lower and bottom-left, so $n(A)=3$.",
+        "$P(A)=\\frac{n(A)}{n(S)}=\\frac{3}{8}$.",
+        "The probability of green is 3/8."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:convention-1"
+      ],
+      "checks": {
+        "resolve_answer": "3/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:exercise-1:B",
+      "record_id": "pp3u8-1:exercise-1",
+      "part": "B",
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "The opposite figure is a spinner divided into eight equal colored sectors. Find the probability that the indicater stops on:",
+        "stem": "the yellow color.",
+        "notes": "Numbered 2 in the book's circled numbering; continues the Drill from previous page but is a new numbered question."
+      },
+      "needs_page": true,
+      "question_fingerprint": "85575065eeff95de703419876d6a0cdc",
+      "kind": "value",
+      "answer": "1/4",
+      "solution": [
+        "$n(S)=8$.",
+        "Count the yellow sectors: right-upper and bottom-right, so $n(B)=2$.",
+        "$P(B)=\\frac{2}{8}=\\frac{1}{4}$.",
+        "The probability of yellow is 1/4."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:convention-1"
+      ],
+      "checks": {
+        "resolve_answer": "1/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:exercise-1:C",
+      "record_id": "pp3u8-1:exercise-1",
+      "part": "C",
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "The opposite figure is a spinner divided into eight equal colored sectors. Find the probability that the indicater stops on:",
+        "stem": "the blue color.",
+        "notes": "Numbered 2 in the book's circled numbering; continues the Drill from previous page but is a new numbered question."
+      },
+      "needs_page": true,
+      "question_fingerprint": "07e5dfe9e4285d450cef85e4560a734e",
+      "kind": "value",
+      "answer": "1/8",
+      "solution": [
+        "$n(S)=8$.",
+        "There is one blue sector (left-lower), so $n(C)=1$.",
+        "$P(C)=\\frac{1}{8}$.",
+        "The probability of blue is 1/8."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:convention-1"
+      ],
+      "checks": {
+        "resolve_answer": "1/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:3 A",
+      "record_id": "pp3u8-1:example-1",
+      "part": "3 A",
+      "type": "worked_example",
+      "page": 31,
+      "question": {
+        "text": "A set of identical cards numbered from 1 to 8 with no repetition mixed up and well, if a card is drawn randomly. (1) write down the sample space. (2) write down the following events: A Event A: The drawn card has an even number. B Event B: The drawn card has a prime number. C Event C: The drawn card has a number divisible by 4. (3) Use Venn diagram to calculate the probability of: A occurring A and B together. B occurring A and C together. C occurring B and C together.",
+        "stem": "occurring A and B together.",
+        "notes": "Example continues on next page (part 3 solution not yet printed)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "eabd268c244e09902c06a3dea89466fa",
+      "kind": "value",
+      "answer": "1/8",
+      "solution": [
+        "$A=\\{2,4,6,8\\}$ and $B=\\{2,3,5,7\\}$.",
+        "$A\\cap B=\\{2\\}$, so $n(A\\cap B)=1$.",
+        "$n(S)=8$.",
+        "$P(A\\cap B)=\\frac{1}{8}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:example-1",
+        "pp3u8-1:definition-1",
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "1/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:3 B",
+      "record_id": "pp3u8-1:example-1",
+      "part": "3 B",
+      "type": "worked_example",
+      "page": 31,
+      "question": {
+        "text": "A set of identical cards numbered from 1 to 8 with no repetition mixed up and well, if a card is drawn randomly. (1) write down the sample space. (2) write down the following events: A Event A: The drawn card has an even number. B Event B: The drawn card has a prime number. C Event C: The drawn card has a number divisible by 4. (3) Use Venn diagram to calculate the probability of: A occurring A and B together. B occurring A and C together. C occurring B and C together.",
+        "stem": "occurring A and C together.",
+        "notes": "Example continues on next page (part 3 solution not yet printed)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "2ccb2a7ba551b67d58cd32df1fbd9719",
+      "kind": "value",
+      "answer": "1/4",
+      "solution": [
+        "$A=\\{2,4,6,8\\}$ and $C=\\{4,8\\}$.",
+        "$A\\cap C=\\{4,8\\}$, so $n(A\\cap C)=2$.",
+        "$P(A\\cap C)=\\frac{2}{8}=\\frac{1}{4}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:example-1",
+        "pp3u8-1:definition-1",
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "1/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:example-1:3 C",
+      "record_id": "pp3u8-1:example-1",
+      "part": "3 C",
+      "type": "worked_example",
+      "page": 31,
+      "question": {
+        "text": "A set of identical cards numbered from 1 to 8 with no repetition mixed up and well, if a card is drawn randomly. (1) write down the sample space. (2) write down the following events: A Event A: The drawn card has an even number. B Event B: The drawn card has a prime number. C Event C: The drawn card has a number divisible by 4. (3) Use Venn diagram to calculate the probability of: A occurring A and B together. B occurring A and C together. C occurring B and C together.",
+        "stem": "occurring B and C together.",
+        "notes": "Example continues on next page (part 3 solution not yet printed)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "f82eb55b7311641cf5bc155b2c7f1eaf",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "$B=\\{2,3,5,7\\}$ and $C=\\{4,8\\}$ have no common element.",
+        "$B\\cap C=\\phi$, so $n(B\\cap C)=0$ (B and C are mutually exclusive).",
+        "$P(B\\cap C)=\\frac{0}{8}=0$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:example-1",
+        "pp3u8-1:definition-2",
+        "pp3u8-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:worked-example-1:B",
+      "record_id": "pp3u8-1:worked-example-1",
+      "part": "B",
+      "type": "worked_example",
+      "page": 32,
+      "question": {
+        "text": "Use the venn diagram opposite and find: A the probability of the occurrence of events A and B together; B (as printed) ...; C the probability of the occurrence of the events A and C together, and of B and C together.",
+        "stem": "(printed letter B marks the working lines for A∩B)",
+        "notes": "Printed only as circled 3 (no 'Example' word); the intro line is labelled A in the printed layout. Venn diagram values read from figure. Letter B badge sits on the working line of the first question; verify layout."
+      },
+      "needs_page": true,
+      "question_fingerprint": "fdfc14b1443c93a8dba73d064baabf82",
+      "kind": "value",
+      "answer": "1/8",
+      "solution": [
+        "In the Venn diagram the shaded overlap of A and B contains only 2.",
+        "$A\\cap B=\\{2\\}$, so $n(A\\cap B)=1$.",
+        "$n(S)=8$, so $P(A\\cap B)=\\frac{1}{8}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:worked-example-1",
+        "pp3u8-1:definition-1",
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "A ∩ B = {2}, n(A ∩ B) = 1, P(A ∩ B) = 1/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-2",
+      "record_id": "pp3u8-1:drill-2",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Write down the sample space.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "757d448626f861996b3ce5153755c3a4",
+      "kind": "value",
+      "answer": "S = {1, 2, 3, 4, 5, 6}",
+      "solution": [
+        "A regular dice is rolled once.",
+        "The possible upper faces are 1, 2, 3, 4, 5, 6.",
+        "S = {1, 2, 3, 4, 5, 6}."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:convention-1"
+      ],
+      "checks": {
+        "resolve_answer": "S = {1, 2, 3, 4, 5, 6}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-3:A",
+      "record_id": "pp3u8-1:drill-3",
+      "part": "A",
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Write the following events:",
+        "stem": "A = the event of getting an even number.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d90853eabd66291af1f3f30de0cd557d",
+      "kind": "value",
+      "answer": "A = {2, 4, 6}",
+      "solution": [
+        "The sample space of a dice is $S=\\{1,2,3,4,5,6\\}$.",
+        "Pick the even numbers: 2, 4, 6.",
+        "$A=\\{2,4,6\\}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "A = {2, 4, 6}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-3:B",
+      "record_id": "pp3u8-1:drill-3",
+      "part": "B",
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Write the following events:",
+        "stem": "B = the event of getting an odd number.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1d2479c75844372487a35b2f663fbe92",
+      "kind": "value",
+      "answer": "B = {1, 3, 5}",
+      "solution": [
+        "$S=\\{1,2,3,4,5,6\\}$.",
+        "Pick the odd numbers: 1, 3, 5.",
+        "$B=\\{1,3,5\\}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "B = {1, 3, 5}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-3:C",
+      "record_id": "pp3u8-1:drill-3",
+      "part": "C",
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Write the following events:",
+        "stem": "C = the event of getting an a prime even number.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f8e3e09b79504a1b7d49e03f15a1c286",
+      "kind": "value",
+      "answer": "C = {2}",
+      "solution": [
+        "$S=\\{1,2,3,4,5,6\\}$.",
+        "The even numbers are 2, 4, 6.",
+        "The only prime among them is 2.",
+        "$C=\\{2\\}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "C = {2}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-4:A",
+      "record_id": "pp3u8-1:drill-4",
+      "part": "A",
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Find the following probabilities of :",
+        "stem": "The occurrence of two events A and B together.",
+        "notes": "Possible misprint(s), field not recorded: C → B"
+      },
+      "needs_page": true,
+      "question_fingerprint": "5144fe870cb4e1b3e2c1ff9981099b98",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "$A=\\{2,4,6\\}$ and $B=\\{1,3,5\\}$.",
+        "They have no common element, so $A\\cap B=\\phi$.",
+        "$P(A\\cap B)=\\frac{0}{6}=0$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:definition-2",
+        "pp3u8-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-4:C",
+      "record_id": "pp3u8-1:drill-4",
+      "part": "C",
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Find the following probabilities of :",
+        "stem": "The occurrence of two events A and C together.",
+        "notes": "Possible misprint(s), field not recorded: C → B"
+      },
+      "needs_page": true,
+      "question_fingerprint": "04e6aeaec5ae81769e6a2fd6c36c6b79",
+      "kind": "value",
+      "answer": "1/6",
+      "solution": [
+        "$A=\\{2,4,6\\}$ and $C=\\{2\\}$.",
+        "$A\\cap C=\\{2\\}$, so $n(A\\cap C)=1$.",
+        "$n(S)=6$, so $P(A\\cap C)=\\frac{1}{6}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:definition-1",
+        "pp3u8-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "1/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-5:A",
+      "record_id": "pp3u8-1:drill-5",
+      "part": "A",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "If A and B are two events in the sample space of a random experiment complete :",
+        "stem": "$P(A)=0.2$, $P(B)=0.6$, $P(A\\cap B)=0.3$, $P(A\\cup B)=\\ldots$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "abee65346cb279808a1982f4c8a919d7",
+      "kind": "value",
+      "answer": "0.5",
+      "solution": [
+        "P(A ∪ B) = P(A) + P(B) − P(A ∩ B).",
+        "= 0.2 + 0.6 − 0.3.",
+        "= 0.5."
+      ],
+      "grounded_in": [
+        "pp3u8-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the data is inconsistent, because P(A∩B) = 0.3 is greater than P(A) = 0.2. The formula would give 0.2 + 0.6 − 0.3 = 0.5.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-5:B",
+      "record_id": "pp3u8-1:drill-5",
+      "part": "B",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "If A and B are two events in the sample space of a random experiment complete :",
+        "stem": "$P(A)=0.55$, $P(B)=\\frac{3}{10}$, $P(A\\cap B)=\\ldots$, $P(A\\cup B)=\\frac{13}{20}$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "19cd92fb000ad5808544f6abbe708c12",
+      "kind": "value",
+      "answer": "1/5",
+      "solution": [
+        "P(B) = 3/10 = 0.3 and P(A ∪ B) = 13/20 = 0.65.",
+        "P(A ∪ B) = P(A) + P(B) − P(A ∩ B).",
+        "0.65 = 0.55 + 0.3 − P(A ∩ B).",
+        "P(A ∩ B) = 0.85 − 0.65 = 0.2.",
+        "P(A ∩ B) = 0.2 = 1/5."
+      ],
+      "grounded_in": [
+        "pp3u8-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(A∩B) = 0.2 (1/5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-5:C",
+      "record_id": "pp3u8-1:drill-5",
+      "part": "C",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "If A and B are two events in the sample space of a random experiment complete :",
+        "stem": "$P(A)=\\ldots$, $P(B)=\\frac{1}{4}$, $P(A\\cap B)=$ zero, $P(A\\cup B)=0.9$",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "71c7b39cc0faea71343ae8ad4441c56c",
+      "kind": "value",
+      "answer": "0.65",
+      "solution": [
+        "P(A ∩ B) = 0, so A and B are mutually exclusive.",
+        "P(A ∪ B) = P(A) + P(B).",
+        "0.9 = P(A) + 1/4 = P(A) + 0.25.",
+        "P(A) = 0.9 − 0.25 = 0.65 (= 13/20)."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-4",
+        "pp3u8-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "P(A) = 0.65 (13/20)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-6:A",
+      "record_id": "pp3u8-1:drill-6",
+      "part": "A",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "use the venn opposite diagram to find:",
+        "stem": "$P(A\\cap B)$, $P(A\\cup B)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "272116fe12e818496b3d6ec8814b2758",
+      "kind": "value",
+      "answer": "P(A ∩ B) = 1/10, P(A ∪ B) = 3/5",
+      "solution": [
+        "Read the diagram: $A=\\{1,3,4,7\\}$, $B=\\{2,5,7\\}$, $C=\\{6,9,12\\}$, and 8 is outside the ovals. $S=\\{1,2,3,4,5,6,7,8,9,12\\}$, $n(S)=10$.",
+        "$A\\cap B=\\{7\\}$, so $P(A\\cap B)=\\frac{1}{10}$.",
+        "$P(A)=\\frac{4}{10}$, $P(B)=\\frac{3}{10}$.",
+        "$P(A\\cup B)=\\frac{4}{10}+\\frac{3}{10}-\\frac{1}{10}=\\frac{6}{10}=\\frac{3}{5}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:rule-1",
+        "pp3u8-1:definition-1",
+        "pp3u8-1:definition-4",
+        "pp3u8-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(A∩B) = 1/10, P(A∪B) = 3/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-6:B",
+      "record_id": "pp3u8-1:drill-6",
+      "part": "B",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "use the venn opposite diagram to find:",
+        "stem": "$P(A\\cap C)$, $P(A\\cup C)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b60998349d5662f1b2e630958157124a",
+      "kind": "value",
+      "answer": "P(A ∩ C) = 0, P(A ∪ C) = 7/10",
+      "solution": [
+        "$A=\\{1,3,4,7\\}$, $C=\\{6,9,12\\}$, $n(S)=10$.",
+        "A and C are separate, so $A\\cap C=\\phi$ and $P(A\\cap C)=0$.",
+        "They are mutually exclusive, so $P(A\\cup C)=P(A)+P(C)=\\frac{4}{10}+\\frac{3}{10}=\\frac{7}{10}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:definition-2",
+        "pp3u8-1:rule-3",
+        "pp3u8-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "P(A∩C) = 0, P(A∪C) = 7/10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u8-1:drill-6:C",
+      "record_id": "pp3u8-1:drill-6",
+      "part": "C",
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "use the venn opposite diagram to find:",
+        "stem": "$P(B\\cap C)$, $P(B\\cup C)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3de33e0887978b3744831187ee78eb4f",
+      "kind": "value",
+      "answer": "P(B ∩ C) = 0, P(B ∪ C) = 3/5",
+      "solution": [
+        "$B=\\{2,5,7\\}$, $C=\\{6,9,12\\}$, $n(S)=10$.",
+        "B and C are separate, so $B\\cap C=\\phi$ and $P(B\\cap C)=0$.",
+        "They are mutually exclusive, so $P(B\\cup C)=\\frac{3}{10}+\\frac{3}{10}=\\frac{6}{10}=\\frac{3}{5}$."
+      ],
+      "grounded_in": [
+        "pp3u8-1:definition-2",
+        "pp3u8-1:rule-3",
+        "pp3u8-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "P(B∩C) = 0, P(B∪C) = 3/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:16:44+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

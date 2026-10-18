@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:find-mean",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Four students' scores; the greatest score is hidden but the range is given.",
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "da",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "db",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "R",
+   "randint": [
+    12,
+    25
+   ]
+  },
+  {
+   "require": "R > max(da, db)",
+   "why": "fourth score is the greatest"
+  },
+  {
+   "require": "(da + db + R) % 4 == 0",
+   "why": "whole-number mean"
+  },
+  {
+   "name": "x",
+   "let": "s + R"
+  }
+ ],
+ "stem": "Four students' scores have a range of ${=R}$. The smallest score is ${=s}$, and two other scores are ${=s+da}$ and ${=s+db}$. The fourth score is the greatest. Find the mean of the four scores.",
+ "answer": "(s + s + da + s + db + x) / 4",
+ "solution": [
+  "Greatest score $=$ smallest $+$ range $= {=s} + {=R} = {=x}$.",
+  "Sum of the scores $= {=s} + {=s+da} + {=s+db} + {=x} = {=s+s+da+s+db+x}$.",
+  "Mean $= {=s+s+da+s+db+x} \\div 4 = {=(s+s+da+s+db+x)/4}$."
+ ],
+ "constraints": [],
+ "proposed_misconceptions": [],
+ "notes": "Placeholder parent. Answer is whole by require."
+}

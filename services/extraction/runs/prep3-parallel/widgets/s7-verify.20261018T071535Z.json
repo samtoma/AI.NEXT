@@ -1,0 +1,64 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "534d7544396eec25ff121b9d9220290bd8808900ba309b476e3140a7b6c5285a",
+  "generated_sha256": "aa6465187c4babd708bdc8cbe02836a007a4fe4604fcfed7fcb7be437ae9f90b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u7-2-1:w001",
+   "template_sha": "f320189a103afcaa62023d915fd2b1f6b380d40309cae98679121a7bcb2de0b5",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     3
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap -3 and 3. Both are whole numbers within the range, 2 targets (within 1–4).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "A student who excludes numerator zeroes would mark x=1 instead of ±3, so the marks would be {1}. That does fire extra-values, because 1 is not in the answer set. But it would also fire missed-values, and extra-values fires on any stray mark, such as a sign error or a guessed value. It is not specific to this misconception, so the diagnosis is not safe."
+    },
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "A student who finds only the positive root marks {3} and leaves out -3. That is a strict subset of the answer set, with no extra marks, so missed-values fires. This is the typical result of the one-root-only-denominator error for x²=9."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-1:w002",
+   "template_sha": "6223adf4f2a0fbf49b7e6f8c6012551a322c10b642488e47a19132924ce10528",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap x=-2 and x=2 (denominator x^2-4=0). Both are whole numbers inside the range, 2 targets.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "A student who finds only the positive root marks {2} and omits -2. Part of the answer set is unmarked, so the predicate fires, and this is the one-root-only error."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "A student who sets the numerator to zero marks x=-1, which is not in the answer set, so the predicate fires. It may also fire with missed-values, but extra-values fits this misconception."
+    }
+   ]
+  }
+ ]
+}

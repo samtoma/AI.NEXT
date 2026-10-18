@@ -1,0 +1,35 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u5-4-1:draw-from-general-form-basic",
+ "lo_id": "lo:pp3u5-4-1",
+ "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 0.5,
+  "b": 2
+ },
+ "stem": "Represent the relation $x - 2y + 4 = 0$ graphically by dragging two points. Then read the slope of the line and the length of the part of the y-axis between the origin and the line.",
+ "solution": [
+  "Isolate $y$: $2y = x + 4$, so $y = \\frac{1}{2}x + 2$.",
+  "The slope is $m = \\frac{1}{2}$ (also $-\\frac{a}{b} = -\\frac{1}{-2}$).",
+  "The y-intercept is $b = 2$: the line crosses the y-axis at (0, 2), so the length is 2.",
+  "Plot (0, 2), then go 2 right and 1 up to get (2, 3), and draw the line through them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  },
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  }
+ ],
+ "notes": "m=1/2 is allowed (reciprocal of a whole number). Reading the coefficient of x as the slope and c as the intercept gives m=1, b=4, which usually fires off-target. slope-inverted (m=2, from mixing a and b) is not mapped, since it does not cleanly match either misconception. Any two points on the correct line are accepted."
+}

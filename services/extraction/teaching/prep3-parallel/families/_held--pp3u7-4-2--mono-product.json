@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-2:mono-product",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-2",
+ "parent_question_id": "q:pp3u7-4-2:none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "n",
+   "let": "a * c"
+  },
+  {
+   "name": "m",
+   "let": "b * d"
+  },
+  {
+   "name": "g",
+   "let": "gcd(n, m)"
+  },
+  {
+   "name": "n1",
+   "let": "n // g"
+  },
+  {
+   "name": "d1",
+   "let": "m // g"
+  },
+  {
+   "name": "nt",
+   "let": "(str(n1) if n1 != 1 else '') + 'xy'"
+  },
+  {
+   "require": "d1 > 1",
+   "why": "answer must stay a fraction"
+  }
+ ],
+ "stem": "Multiply and write the result in simplest form, where $x \\neq 0$ and $y \\neq 0$: $$\\frac{{=a}x^2}{{=b}y}\\times\\frac{{=c}y^2}{{=d}x}$$",
+ "answer": "",
+ "solution": [
+  "Multiply the numerators and the denominators: $\\frac{{=a}x^2\\times {=c}y^2}{{=b}y\\times {=d}x}=\\frac{{=n}x^2y^2}{{=m}xy}$.",
+  "Cancel the common factors $x$ and $y$: $\\frac{{=n}xy}{{=m}}$.",
+  "Divide the numerator and denominator numbers by their HCF {=g}: $\\frac{{=nt}}{{=d1}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=n1}*x*y)/{=d1}",
+  "form": "simplest",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "notes": "No book questions were supplied, so parent_question_id is a placeholder. Domain is stated in the stem, not asked for, because the marker takes a single expression."
+}

@@ -4,54 +4,385 @@
   "sample_per_family": 3,
   "families": [
     {
-      "family_id": "tpl:pp3u2-1-2:add-both",
-      "spec_sha": "f90dbeeb7dc4c47fe7e2f48afa8cc43db05b5d414a73768de3cc061aebd3b7df",
+      "family_id": "tpl:pp3u10-1-1:arc-from-x",
+      "spec_sha": "25fd1135909442cf97077bf0af4d743c2df066f1a2ccb77d1fd79fd96d3272f2",
       "kind": "family",
-      "lo_id": "lo:pp3u2-1-2",
-      "tier": "basic",
+      "lo_id": "lo:pp3u10-1-1",
+      "tier": "standard",
       "answer_type": "numeric",
       "context": null,
-      "parent_question_id": "q:pp3u2-1-2:bk-example-1",
+      "parent_question_id": "q:pp3u10-1-1:bk-drill-2-2",
       "instances_available": 10,
       "instances": [
         {
-          "instance_id": "q:pp3u2-1-2:g004-add-bo",
+          "instance_id": "q:pp3u10-1-1:g001-arc-fr",
           "blind": {
-            "instance_id": "q:pp3u2-1-2:g004-add-bo",
-            "stem": "The number $3$ is added to each of the two terms of the ratio $7 : 3$. Find the sum of the two terms of the new ratio.",
-            "stem_sha": "a4abb0f5c81ee33f",
+            "instance_id": "q:pp3u10-1-1:g001-arc-fr",
+            "stem": "$AB$ is a diameter of the circle $M$, and $D$ is a point on the circle. $m(\\angle AMD)=(2x)^\\circ$ and $m(\\angle DMB)=(4x+6)^\\circ$. Find $m(\\overset{\\frown}{AD})$ in degrees.",
+            "stem_sha": "4684ef1304edad67",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "16",
+            "correct_answer": "58",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Add $3$ to the first term: $7 + 3 = 10$."
+                "text_md": "$AB$ is a diameter, so $\\angle AMD$ and $\\angle DMB$ lie on a straight angle and add up to $180^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Add $3$ to the second term: $3 + 3 = 6$."
+                "text_md": "$2x + (4x + 6) = 180$, so $6x = 174$."
               },
               {
                 "step": 3,
-                "text_md": "The new ratio is $10 : 6$. (Adding a number to both terms changes the ratio.)"
+                "text_md": "$x = 29$."
               },
               {
                 "step": 4,
-                "text_md": "The sum of its two terms is $10 + 6 = 16$."
+                "text_md": "The measure of an arc equals the measure of its central angle: $m(\\overset{\\frown}{AD}) = m(\\angle AMD) = 2 \\times 29 = 58^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-1-2:g006-add-bo",
+          "instance_id": "q:pp3u10-1-1:g006-arc-fr",
           "blind": {
-            "instance_id": "q:pp3u2-1-2:g006-add-bo",
-            "stem": "The number $8$ is added to each of the two terms of the ratio $5 : 6$. Find the sum of the two terms of the new ratio.",
-            "stem_sha": "248e40c30b24cddc",
+            "instance_id": "q:pp3u10-1-1:g006-arc-fr",
+            "stem": "$AB$ is a diameter of the circle $M$, and $D$ is a point on the circle. $m(\\angle AMD)=(2x)^\\circ$ and $m(\\angle DMB)=(2x+8)^\\circ$. Find $m(\\overset{\\frown}{AD})$ in degrees.",
+            "stem_sha": "90eb0722b6f20e7e",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "86",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$AB$ is a diameter, so $\\angle AMD$ and $\\angle DMB$ lie on a straight angle and add up to $180^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "$2x + (2x + 8) = 180$, so $4x = 172$."
+              },
+              {
+                "step": 3,
+                "text_md": "$x = 43$."
+              },
+              {
+                "step": 4,
+                "text_md": "The measure of an arc equals the measure of its central angle: $m(\\overset{\\frown}{AD}) = m(\\angle AMD) = 2 \\times 43 = 86^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-1-1:g008-arc-fr",
+          "blind": {
+            "instance_id": "q:pp3u10-1-1:g008-arc-fr",
+            "stem": "$AB$ is a diameter of the circle $M$, and $D$ is a point on the circle. $m(\\angle AMD)=(4x)^\\circ$ and $m(\\angle DMB)=(4x+4)^\\circ$. Find $m(\\overset{\\frown}{AD})$ in degrees.",
+            "stem_sha": "8f0bad41ac4ce3ca",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "88",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$AB$ is a diameter, so $\\angle AMD$ and $\\angle DMB$ lie on a straight angle and add up to $180^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "$4x + (4x + 4) = 180$, so $8x = 176$."
+              },
+              {
+                "step": 3,
+                "text_md": "$x = 22$."
+              },
+              {
+                "step": 4,
+                "text_md": "The measure of an arc equals the measure of its central angle: $m(\\overset{\\frown}{AD}) = m(\\angle AMD) = 4 \\times 22 = 88^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-1-1:major-arc",
+      "spec_sha": "0f7032a7a9d10c0d916b8817aef269c9f6910b6356587607e043aa335d943433",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-1-1",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-1-1:bk-drill-2-4",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-1-1:g005-major-",
+          "blind": {
+            "instance_id": "q:pp3u10-1-1:g005-major-",
+            "stem": "$AB$ is a diameter of the circle $M$. The points $D$ and $C$ lie on the circle on opposite sides of $AB$, with $m(\\angle AMD)=(3x)^\\circ$, $m(\\angle DMB)=(4x+12)^\\circ$ and $m(\\angle AMC)=(3x)^\\circ$. Find $m(\\overset{\\frown}{DBC})$, the arc from $D$ to $C$ that passes through $B$, in degrees.",
+            "stem_sha": "c2ddf2bdb3d67119",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "216",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle AMD$ and $\\angle DMB$ lie on a straight angle: $3x + (4x + 12) = 180$, so $7x = 168$ and $x = 24$."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\overset{\\frown}{AD}) = 72^\\circ$ and $m(\\overset{\\frown}{AC}) = m(\\angle AMC) = 3 \\times 24 = 72^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "Arc $DAC$ is made of the adjacent arcs $AD$ and $AC$: $72 + 72 = 144^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so $m(\\overset{\\frown}{DBC}) = 360 - 144 = 216^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-1-1:g006-major-",
+          "blind": {
+            "instance_id": "q:pp3u10-1-1:g006-major-",
+            "stem": "$AB$ is a diameter of the circle $M$. The points $D$ and $C$ lie on the circle on opposite sides of $AB$, with $m(\\angle AMD)=(2x)^\\circ$, $m(\\angle DMB)=(2x+20)^\\circ$ and $m(\\angle AMC)=(3x)^\\circ$. Find $m(\\overset{\\frown}{DBC})$, the arc from $D$ to $C$ that passes through $B$, in degrees.",
+            "stem_sha": "144ddeee245caf99",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "160",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle AMD$ and $\\angle DMB$ lie on a straight angle: $2x + (2x + 20) = 180$, so $4x = 160$ and $x = 40$."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\overset{\\frown}{AD}) = 80^\\circ$ and $m(\\overset{\\frown}{AC}) = m(\\angle AMC) = 3 \\times 40 = 120^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "Arc $DAC$ is made of the adjacent arcs $AD$ and $AC$: $80 + 120 = 200^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so $m(\\overset{\\frown}{DBC}) = 360 - 200 = 160^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-1-1:g010-major-",
+          "blind": {
+            "instance_id": "q:pp3u10-1-1:g010-major-",
+            "stem": "$AB$ is a diameter of the circle $M$. The points $D$ and $C$ lie on the circle on opposite sides of $AB$, with $m(\\angle AMD)=(2x)^\\circ$, $m(\\angle DMB)=(5x+26)^\\circ$ and $m(\\angle AMC)=(2x)^\\circ$. Find $m(\\overset{\\frown}{DBC})$, the arc from $D$ to $C$ that passes through $B$, in degrees.",
+            "stem_sha": "db06c31ef3d1bdc4",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "272",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle AMD$ and $\\angle DMB$ lie on a straight angle: $2x + (5x + 26) = 180$, so $7x = 154$ and $x = 22$."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\overset{\\frown}{AD}) = 44^\\circ$ and $m(\\overset{\\frown}{AC}) = m(\\angle AMC) = 2 \\times 22 = 44^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "Arc $DAC$ is made of the adjacent arcs $AD$ and $AC$: $44 + 44 = 88^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so $m(\\overset{\\frown}{DBC}) = 360 - 88 = 272^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-1-3:tanchord",
+      "spec_sha": "aa2fa059d78116e995b32c6277c6728a87e2dc038d8c2bc6b2dc48b14b3dc78f",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-1-3",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-1-3:bk-drill-7-4",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-1-3:g001-tancho",
+          "blind": {
+            "instance_id": "q:pp3u10-1-3:g001-tancho",
+            "stem": "A circle has a tangent at the point C, parallel to the chord $\\overline{AB}$. If m(arc AC) = $(3x + 55)^\\circ$ and m(arc BC) = $(4x + 47)^\\circ$, where each of these arcs is the smaller arc, find in degrees the measure of the arc AB that does not contain C.",
+            "stem_sha": "5c227bd5d34b54db",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "202",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Since the tangent at C is parallel to $\\overline{AB}$, the arcs between them are equal: m(arc AC) = m(arc BC)."
+              },
+              {
+                "step": 2,
+                "text_md": "$3x + 55 = 4x + 47$, so $1x = 8$ and $x = 8$."
+              },
+              {
+                "step": 3,
+                "text_md": "m(arc AC) = m(arc BC) = $79^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so m(arc AB) $= 360 - 79 - 79 = 202^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-1-3:g002-tancho",
+          "blind": {
+            "instance_id": "q:pp3u10-1-3:g002-tancho",
+            "stem": "A circle has a tangent at the point C, parallel to the chord $\\overline{AB}$. If m(arc AC) = $(2x + 65)^\\circ$ and m(arc BC) = $(3x + 61)^\\circ$, where each of these arcs is the smaller arc, find in degrees the measure of the arc AB that does not contain C.",
+            "stem_sha": "91ac5d7fd46cd4b9",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "214",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Since the tangent at C is parallel to $\\overline{AB}$, the arcs between them are equal: m(arc AC) = m(arc BC)."
+              },
+              {
+                "step": 2,
+                "text_md": "$2x + 65 = 3x + 61$, so $1x = 4$ and $x = 4$."
+              },
+              {
+                "step": 3,
+                "text_md": "m(arc AC) = m(arc BC) = $73^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so m(arc AB) $= 360 - 73 - 73 = 214^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-1-3:g006-tancho",
+          "blind": {
+            "instance_id": "q:pp3u10-1-3:g006-tancho",
+            "stem": "A circle has a tangent at the point C, parallel to the chord $\\overline{AB}$. If m(arc AC) = $(3x + 51)^\\circ$ and m(arc BC) = $(4x + 47)^\\circ$, where each of these arcs is the smaller arc, find in degrees the measure of the arc AB that does not contain C.",
+            "stem_sha": "79ce080e988c6575",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "234",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Since the tangent at C is parallel to $\\overline{AB}$, the arcs between them are equal: m(arc AC) = m(arc BC)."
+              },
+              {
+                "step": 2,
+                "text_md": "$3x + 51 = 4x + 47$, so $1x = 4$ and $x = 4$."
+              },
+              {
+                "step": 3,
+                "text_md": "m(arc AC) = m(arc BC) = $63^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "The whole circle is $360^\\circ$, so m(arc AB) $= 360 - 63 - 63 = 234^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-2-1:algebra-base",
+      "spec_sha": "3e14b0f379d2123ad779331168d45faf8d945fc3487c9c6e3c39f2f05812ddc4",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-2-1",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-2-1:bk-drill-5-x",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-2-1:g003-algebr",
+          "blind": {
+            "instance_id": "q:pp3u10-2-1:g003-algebr",
+            "stem": "M is the centre of a circle, and A, B and C are points on the circle with C on the major arc AB. The inscribed angle $\\angle ACB = (x + 8)^\\circ$ and the central angle $\\angle AMB = (3x - 9)^\\circ$, both subtended by the arc AB. Find the measure of $\\angle MAB$ in degrees.",
+            "stem_sha": "8bc39c271f6973b4",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "57",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "The inscribed angle is half the central angle subtended by the same arc, so $3x - 9 = 2(x + 8)$."
+              },
+              {
+                "step": 2,
+                "text_md": "$3x - 9 = 2x + 16$, so $x = 25$."
+              },
+              {
+                "step": 3,
+                "text_md": "The inscribed angle is $x + 8 = 33^\\circ$, so the central angle $\\angle AMB = 2 \\times 33 = 66^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "MA = MB (radii), so the base angles of triangle MAB are equal."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle MAB = (180 - 66) \\div 2 = 57^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-2-1:g004-algebr",
+          "blind": {
+            "instance_id": "q:pp3u10-2-1:g004-algebr",
+            "stem": "M is the centre of a circle, and A, B and C are points on the circle with C on the major arc AB. The inscribed angle $\\angle ACB = (x + 14)^\\circ$ and the central angle $\\angle AMB = (3x - 21)^\\circ$, both subtended by the arc AB. Find the measure of $\\angle MAB$ in degrees.",
+            "stem_sha": "fb664b027bbabb2a",
             "answer_format": {
               "type": "number"
             }
@@ -61,29 +392,425 @@
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Add $8$ to the first term: $5 + 8 = 13$."
+                "text_md": "The inscribed angle is half the central angle subtended by the same arc, so $3x - 21 = 2(x + 14)$."
               },
               {
                 "step": 2,
-                "text_md": "Add $8$ to the second term: $6 + 8 = 14$."
+                "text_md": "$3x - 21 = 2x + 28$, so $x = 49$."
               },
               {
                 "step": 3,
-                "text_md": "The new ratio is $13 : 14$. (Adding a number to both terms changes the ratio.)"
+                "text_md": "The inscribed angle is $x + 14 = 63^\\circ$, so the central angle $\\angle AMB = 2 \\times 63 = 126^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "The sum of its two terms is $13 + 14 = 27$."
+                "text_md": "MA = MB (radii), so the base angles of triangle MAB are equal."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle MAB = (180 - 126) \\div 2 = 27^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-1-2:g009-add-bo",
+          "instance_id": "q:pp3u10-2-1:g009-algebr",
           "blind": {
-            "instance_id": "q:pp3u2-1-2:g009-add-bo",
-            "stem": "The number $3$ is added to each of the two terms of the ratio $5 : 9$. Find the sum of the two terms of the new ratio.",
-            "stem_sha": "cd062e13eae1a0e1",
+            "instance_id": "q:pp3u10-2-1:g009-algebr",
+            "stem": "M is the centre of a circle, and A, B and C are points on the circle with C on the major arc AB. The inscribed angle $\\angle ACB = (x + 12)^\\circ$ and the central angle $\\angle AMB = (3x - 25)^\\circ$, both subtended by the arc AB. Find the measure of $\\angle MAB$ in degrees.",
+            "stem_sha": "581a65e7c8b2de0c",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "29",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "The inscribed angle is half the central angle subtended by the same arc, so $3x - 25 = 2(x + 12)$."
+              },
+              {
+                "step": 2,
+                "text_md": "$3x - 25 = 2x + 24$, so $x = 49$."
+              },
+              {
+                "step": 3,
+                "text_md": "The inscribed angle is $x + 12 = 61^\\circ$, so the central angle $\\angle AMB = 2 \\times 61 = 122^\\circ$."
+              },
+              {
+                "step": 4,
+                "text_md": "MA = MB (radii), so the base angles of triangle MAB are equal."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle MAB = (180 - 122) \\div 2 = 29^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-2-2:inscribed-half",
+      "spec_sha": "9e2d9d81d5297afe1f25247b28a43f112cffbf8c2fa6dd65ed10fcd372245744",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-2-2",
+      "tier": "basic",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-2-2:bk-drill-14-2",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-2-2:g002-inscri",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g002-inscri",
+            "stem": "In a circle, $\\angle ABC$ is an inscribed angle and the arc $AC$ that it subtends measures $82^\\circ$. Find $m(\\angle ABC)$ in degrees.",
+            "stem_sha": "14a97927105cd4a6",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "41",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "An inscribed angle is half the measure of the arc it subtends."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\angle ABC) = \\frac{1}{2} \\times 82^\\circ = 41^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-2-2:g006-inscri",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g006-inscri",
+            "stem": "In a circle, $\\angle ABC$ is an inscribed angle and the arc $AC$ that it subtends measures $34^\\circ$. Find $m(\\angle ABC)$ in degrees.",
+            "stem_sha": "a29294c3198ed0ca",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "17",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "An inscribed angle is half the measure of the arc it subtends."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\angle ABC) = \\frac{1}{2} \\times 34^\\circ = 17^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-2-2:g009-inscri",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g009-inscri",
+            "stem": "In a circle, $\\angle ABC$ is an inscribed angle and the arc $AC$ that it subtends measures $120^\\circ$. Find $m(\\angle ABC)$ in degrees.",
+            "stem_sha": "1e6d1d296ba9f63d",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "60",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "An inscribed angle is half the measure of the arc it subtends."
+              },
+              {
+                "step": 2,
+                "text_md": "$m(\\angle ABC) = \\frac{1}{2} \\times 120^\\circ = 60^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-2-2:triangle-arcs",
+      "spec_sha": "250d82c75602a4ec12b042ed2c7928f1d8927a35189fb54b9212b6d3287c8143",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-2-2",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-2-2:bk-drill-14-2",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-2-2:g006-triang",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g006-triang",
+            "stem": "Triangle $ABC$ is inscribed in a circle. The arc $BC$ (not containing $A$) measures $100^\\circ$ and $m(\\angle C) = 45^\\circ$. Find $m(\\text{arc } AC)$ in degrees, the arc not containing $B$.",
+            "stem_sha": "e6bc28d63a993bfd",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "170",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle C$ is subtended by arc $AB$, so $m(\\text{arc } AB) = 2 \\times 45^\\circ = 90^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs $AB$, $BC$, $AC$ make the whole circle, $360^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$m(\\text{arc } AC) = 360^\\circ - (100^\\circ + 90^\\circ) = 170^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-2-2:g007-triang",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g007-triang",
+            "stem": "Triangle $ABC$ is inscribed in a circle. The arc $BC$ (not containing $A$) measures $140^\\circ$ and $m(\\angle C) = 57^\\circ$. Find $m(\\text{arc } AC)$ in degrees, the arc not containing $B$.",
+            "stem_sha": "7acd746acb24b18f",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "106",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle C$ is subtended by arc $AB$, so $m(\\text{arc } AB) = 2 \\times 57^\\circ = 114^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs $AB$, $BC$, $AC$ make the whole circle, $360^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$m(\\text{arc } AC) = 360^\\circ - (140^\\circ + 114^\\circ) = 106^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-2-2:g010-triang",
+          "blind": {
+            "instance_id": "q:pp3u10-2-2:g010-triang",
+            "stem": "Triangle $ABC$ is inscribed in a circle. The arc $BC$ (not containing $A$) measures $140^\\circ$ and $m(\\angle C) = 40^\\circ$. Find $m(\\text{arc } AC)$ in degrees, the arc not containing $B$.",
+            "stem_sha": "ba03e95786243c60",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "140",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle C$ is subtended by arc $AB$, so $m(\\text{arc } AB) = 2 \\times 40^\\circ = 80^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs $AB$, $BC$, $AC$ make the whole circle, $360^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$m(\\text{arc } AC) = 360^\\circ - (140^\\circ + 80^\\circ) = 140^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-3-1:two-arcs-triangle",
+      "spec_sha": "b5235ff4bd26b295ed8c9cf0e7913606a5dbc3b11f8abb58a6a1b61e9b12af1c",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-3-1",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-3-1:bk-drill-1-3",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-3-1:g005-two-ar",
+          "blind": {
+            "instance_id": "q:pp3u10-3-1:g005-two-ar",
+            "stem": "The points $A$, $B$, $C$ and $D$ lie on a circle, in this order around the circle. Draw the chords $AC$, $BD$, $AD$ and $CD$. Given that $m(\\angle ABD) = 41^\\circ$ and $m(\\angle CBD) = 27^\\circ$, find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "e42334a0250e31cd",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "112",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle CAD$ and $\\angle CBD$ are inscribed angles including the same arc $CD$, so $m(\\angle CAD) = m(\\angle CBD) = 27^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "$\\angle ACD$ and $\\angle ABD$ are inscribed angles including the same arc $AD$, so $m(\\angle ACD) = m(\\angle ABD) = 41^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "In $\\triangle ACD$: $m(\\angle ADC) = 180^\\circ - 27^\\circ - 41^\\circ = 112^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-3-1:g008-two-ar",
+          "blind": {
+            "instance_id": "q:pp3u10-3-1:g008-two-ar",
+            "stem": "The points $A$, $B$, $C$ and $D$ lie on a circle, in this order around the circle. Draw the chords $AC$, $BD$, $AD$ and $CD$. Given that $m(\\angle ABD) = 26^\\circ$ and $m(\\angle CBD) = 59^\\circ$, find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "bcafd5ddb89b29b0",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "95",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle CAD$ and $\\angle CBD$ are inscribed angles including the same arc $CD$, so $m(\\angle CAD) = m(\\angle CBD) = 59^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "$\\angle ACD$ and $\\angle ABD$ are inscribed angles including the same arc $AD$, so $m(\\angle ACD) = m(\\angle ABD) = 26^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "In $\\triangle ACD$: $m(\\angle ADC) = 180^\\circ - 59^\\circ - 26^\\circ = 95^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-3-1:g009-two-ar",
+          "blind": {
+            "instance_id": "q:pp3u10-3-1:g009-two-ar",
+            "stem": "The points $A$, $B$, $C$ and $D$ lie on a circle, in this order around the circle. Draw the chords $AC$, $BD$, $AD$ and $CD$. Given that $m(\\angle ABD) = 51^\\circ$ and $m(\\angle CBD) = 55^\\circ$, find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "677849b4cfc00d90",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "74",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle CAD$ and $\\angle CBD$ are inscribed angles including the same arc $CD$, so $m(\\angle CAD) = m(\\angle CBD) = 55^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "$\\angle ACD$ and $\\angle ABD$ are inscribed angles including the same arc $AD$, so $m(\\angle ACD) = m(\\angle ABD) = 51^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "In $\\triangle ACD$: $m(\\angle ADC) = 180^\\circ - 55^\\circ - 51^\\circ = 74^\\circ$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-3-2:equal-chords",
+      "spec_sha": "0b339b3ce7b546c33fd87a1c26db60743395edc44ae87a0b91a1ab8f5845d939",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-3-2",
+      "tier": "basic",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-3-2:g001-equal-",
+          "blind": {
+            "instance_id": "q:pp3u10-3-2:g001-equal-",
+            "stem": "In a circle, the chords $AB$ and $CD$ are equal in length. The inscribed angle $\\angle AEB$ stands on the minor arc $AB$ and measures $(4x - 22)^\\circ$. The inscribed angle $\\angle CFD$ stands on the minor arc $CD$ and measures $22^\\circ$. Find the value of $x$.",
+            "stem_sha": "fd8b48731f463b00",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "11",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Equal chords in the same circle cut off equal minor arcs, so arc $AB$ = arc $CD$."
+              },
+              {
+                "step": 2,
+                "text_md": "Equal arcs give equal inscribed angles: $4x - 22 = 22$."
+              },
+              {
+                "step": 3,
+                "text_md": "$4x = 44$."
+              },
+              {
+                "step": 4,
+                "text_md": "$x = 11$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-3-2:g004-equal-",
+          "blind": {
+            "instance_id": "q:pp3u10-3-2:g004-equal-",
+            "stem": "In a circle, the chords $AB$ and $CD$ are equal in length. The inscribed angle $\\angle AEB$ stands on the minor arc $AB$ and measures $(4x - 23)^\\circ$. The inscribed angle $\\angle CFD$ stands on the minor arc $CD$ and measures $29^\\circ$. Find the value of $x$.",
+            "stem_sha": "2012ca69e546100c",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "13",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Equal chords in the same circle cut off equal minor arcs, so arc $AB$ = arc $CD$."
+              },
+              {
+                "step": 2,
+                "text_md": "Equal arcs give equal inscribed angles: $4x - 23 = 29$."
+              },
+              {
+                "step": 3,
+                "text_md": "$4x = 52$."
+              },
+              {
+                "step": 4,
+                "text_md": "$x = 13$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-3-2:g010-equal-",
+          "blind": {
+            "instance_id": "q:pp3u10-3-2:g010-equal-",
+            "stem": "In a circle, the chords $AB$ and $CD$ are equal in length. The inscribed angle $\\angle AEB$ stands on the minor arc $AB$ and measures $(3x - 24)^\\circ$. The inscribed angle $\\angle CFD$ stands on the minor arc $CD$ and measures $36^\\circ$. Find the value of $x$.",
+            "stem_sha": "d89c0cde77fc5f39",
             "answer_format": {
               "type": "number"
             }
@@ -93,19 +820,19 @@
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Add $3$ to the first term: $5 + 3 = 8$."
+                "text_md": "Equal chords in the same circle cut off equal minor arcs, so arc $AB$ = arc $CD$."
               },
               {
                 "step": 2,
-                "text_md": "Add $3$ to the second term: $9 + 3 = 12$."
+                "text_md": "Equal arcs give equal inscribed angles: $3x - 24 = 36$."
               },
               {
                 "step": 3,
-                "text_md": "The new ratio is $8 : 12$. (Adding a number to both terms changes the ratio.)"
+                "text_md": "$3x = 60$."
               },
               {
                 "step": 4,
-                "text_md": "The sum of its two terms is $8 + 12 = 20$."
+                "text_md": "$x = 20$."
               }
             ]
           }
@@ -113,132 +840,120 @@
       ]
     },
     {
-      "family_id": "tpl:pp3u2-2-1:added-number",
-      "spec_sha": "7a3b3b15229239e5c8bef8d6dc8eb66f16bcf0551489ed133c302e409e9ab7d7",
+      "family_id": "tpl:pp3u10-3-2:isosceles",
+      "spec_sha": "cb92f43b3e1c41240b4e0fba85e12a93de443316663c3481a3a47ad44837694b",
       "kind": "family",
-      "lo_id": "lo:pp3u2-2-1",
+      "lo_id": "lo:pp3u10-3-2",
       "tier": "advanced",
       "answer_type": "numeric",
       "context": null,
-      "parent_question_id": "q:pp3u2-2-1:bk-example-3",
+      "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
       "instances_available": 10,
       "instances": [
         {
-          "instance_id": "q:pp3u2-2-1:g001-added-",
+          "instance_id": "q:pp3u10-3-2:g003-isosce",
           "blind": {
-            "instance_id": "q:pp3u2-2-1:g001-added-",
-            "stem": "Find the number that if added to each of the numbers $1$, $10$, $5$ and $20$, in this order, the results become proportional.",
-            "stem_sha": "d4b0568fa54b2c50",
+            "instance_id": "q:pp3u10-3-2:g003-isosce",
+            "stem": "Triangle $ABC$ is inscribed in a circle, and the minor arcs $AB$ and $AC$ (not containing the other vertices) are equal. Given $\\angle ACB = (5x - 9)^\\circ$ and $\\angle ABC = (4x + 3)^\\circ$, find the measure of $\\angle BAC$ in degrees.",
+            "stem_sha": "29b3c7f13137e5d9",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "5",
+            "correct_answer": "78",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Let the number be $x$. Then $1+x$, $10+x$, $5+x$, $20+x$ are proportional, so $\\frac{1+x}{10+x}=\\frac{5+x}{20+x}$."
+                "text_md": "$\\angle ACB$ stands on arc $AB$ and $\\angle ABC$ stands on arc $AC$. The arcs are equal, so the inscribed angles are equal (triangle $ABC$ is isosceles with $AB = AC$)."
               },
               {
                 "step": 2,
-                "text_md": "Product of extremes = product of means: $(10+x)(5+x)=(1+x)(20+x)$."
+                "text_md": "$5x - 9 = 4x + 3$."
               },
               {
                 "step": 3,
-                "text_md": "Expand: $50+15x+x^2=20+21x+x^2$."
+                "text_md": "$1x = 12$, so $x = 12$."
               },
               {
                 "step": 4,
-                "text_md": "The $x^2$ terms cancel: $15x-21x=20-50$, so $(-6)x=-30$."
+                "text_md": "$\\angle ABC = \\angle ACB = 4\\times12 + 3 = 51^\\circ$."
               },
               {
                 "step": 5,
-                "text_md": "$x=\\frac{-30}{-6}=5$."
-              },
-              {
-                "step": 6,
-                "text_md": "Check: $6$, $15$, $10$, $25$ give $\\frac{6}{15}=\\frac{10}{25}$. The number is 5."
+                "text_md": "Angles of a triangle sum to $180^\\circ$: $\\angle BAC = 180 - 2\\times51 = 78^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-2-1:g004-added-",
+          "instance_id": "q:pp3u10-3-2:g006-isosce",
           "blind": {
-            "instance_id": "q:pp3u2-2-1:g004-added-",
-            "stem": "Find the number that if added to each of the numbers $6$, $16$, $10$ and $24$, in this order, the results become proportional.",
-            "stem_sha": "1380184696ca5c69",
+            "instance_id": "q:pp3u10-3-2:g006-isosce",
+            "stem": "Triangle $ABC$ is inscribed in a circle, and the minor arcs $AB$ and $AC$ (not containing the other vertices) are equal. Given $\\angle ACB = (7x - 21)^\\circ$ and $\\angle ABC = (4x + 6)^\\circ$, find the measure of $\\angle BAC$ in degrees.",
+            "stem_sha": "18608b84271b0d9b",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "4",
+            "correct_answer": "96",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Let the number be $x$. Then $6+x$, $16+x$, $10+x$, $24+x$ are proportional, so $\\frac{6+x}{16+x}=\\frac{10+x}{24+x}$."
+                "text_md": "$\\angle ACB$ stands on arc $AB$ and $\\angle ABC$ stands on arc $AC$. The arcs are equal, so the inscribed angles are equal (triangle $ABC$ is isosceles with $AB = AC$)."
               },
               {
                 "step": 2,
-                "text_md": "Product of extremes = product of means: $(16+x)(10+x)=(6+x)(24+x)$."
+                "text_md": "$7x - 21 = 4x + 6$."
               },
               {
                 "step": 3,
-                "text_md": "Expand: $160+26x+x^2=144+30x+x^2$."
+                "text_md": "$3x = 27$, so $x = 9$."
               },
               {
                 "step": 4,
-                "text_md": "The $x^2$ terms cancel: $26x-30x=144-160$, so $(-4)x=-16$."
+                "text_md": "$\\angle ABC = \\angle ACB = 4\\times9 + 6 = 42^\\circ$."
               },
               {
                 "step": 5,
-                "text_md": "$x=\\frac{-16}{-4}=4$."
-              },
-              {
-                "step": 6,
-                "text_md": "Check: $10$, $20$, $14$, $28$ give $\\frac{10}{20}=\\frac{14}{28}$. The number is 4."
+                "text_md": "Angles of a triangle sum to $180^\\circ$: $\\angle BAC = 180 - 2\\times42 = 96^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-2-1:g009-added-",
+          "instance_id": "q:pp3u10-3-2:g009-isosce",
           "blind": {
-            "instance_id": "q:pp3u2-2-1:g009-added-",
-            "stem": "Find the number that if added to each of the numbers $2$, $10$, $8$ and $22$, in this order, the results become proportional.",
-            "stem_sha": "74c891402c2aedc8",
+            "instance_id": "q:pp3u10-3-2:g009-isosce",
+            "stem": "Triangle $ABC$ is inscribed in a circle, and the minor arcs $AB$ and $AC$ (not containing the other vertices) are equal. Given $\\angle ACB = (6x - 14)^\\circ$ and $\\angle ABC = (4x + 8)^\\circ$, find the measure of $\\angle BAC$ in degrees.",
+            "stem_sha": "d55c5093caae1362",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "6",
+            "correct_answer": "76",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Let the number be $x$. Then $2+x$, $10+x$, $8+x$, $22+x$ are proportional, so $\\frac{2+x}{10+x}=\\frac{8+x}{22+x}$."
+                "text_md": "$\\angle ACB$ stands on arc $AB$ and $\\angle ABC$ stands on arc $AC$. The arcs are equal, so the inscribed angles are equal (triangle $ABC$ is isosceles with $AB = AC$)."
               },
               {
                 "step": 2,
-                "text_md": "Product of extremes = product of means: $(10+x)(8+x)=(2+x)(22+x)$."
+                "text_md": "$6x - 14 = 4x + 8$."
               },
               {
                 "step": 3,
-                "text_md": "Expand: $80+18x+x^2=44+24x+x^2$."
+                "text_md": "$2x = 22$, so $x = 11$."
               },
               {
                 "step": 4,
-                "text_md": "The $x^2$ terms cancel: $18x-24x=44-80$, so $(-6)x=-36$."
+                "text_md": "$\\angle ABC = \\angle ACB = 4\\times11 + 8 = 52^\\circ$."
               },
               {
                 "step": 5,
-                "text_md": "$x=\\frac{-36}{-6}=6$."
-              },
-              {
-                "step": 6,
-                "text_md": "Check: $8$, $16$, $14$, $28$ give $\\frac{8}{16}=\\frac{14}{28}$. The number is 6."
+                "text_md": "Angles of a triangle sum to $180^\\circ$: $\\angle BAC = 180 - 2\\times52 = 76^\\circ$."
               }
             ]
           }
@@ -246,108 +961,132 @@
       ]
     },
     {
-      "family_id": "tpl:pp3u2-3-1:findx-word",
-      "spec_sha": "e04df2bacfc6818ec2d74d1cc1c87a05723988a20e38f970ba54927f5fca29cb",
+      "family_id": "tpl:pp3u10-5-1:diameter-arc",
+      "spec_sha": "9b874651b7f95182b36d9c2f975e982fefb9d64a922827211aebede054c2e7ba",
       "kind": "family",
-      "lo_id": "lo:pp3u2-3-1",
+      "lo_id": "lo:pp3u10-5-1",
       "tier": "advanced",
       "answer_type": "numeric",
-      "context": "A car moves at a uniform velocity, so the distance covered (d) in kilometres is directly proportional to the time (t) in hours.",
-      "parent_question_id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
+      "context": null,
+      "parent_question_id": "q:pp3u10-5-1:bk-drill-2-c",
       "instances_available": 10,
       "instances": [
         {
-          "instance_id": "q:pp3u2-3-1:g001-findx-",
+          "instance_id": "q:pp3u10-5-1:g003-diamet",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g001-findx-",
-            "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $14$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $70$ km. Give the number of hours as your answer.",
-            "stem_sha": "9c41dcc3677c3695",
+            "instance_id": "q:pp3u10-5-1:g003-diamet",
+            "stem": "$ABCD$ is a cyclic quadrilateral (its vertices are in this order on the circle) in which $\\overline{AB}$ is a diameter, $m(\\angle DAB) = 70^\\circ$ and $m(\\widehat{CD}) = 70^\\circ$. Find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "00d0638527d2e28b",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "50",
+            "correct_answer": "125",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$\\overline{AB}$ is a diameter, so the angle $\\angle ADB$ in the semicircle is $90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute: $14 = m \\times 10$, so $m = \\frac{14}{10} = \\frac{7}{5}$."
+                "text_md": "In $\\triangle ABD$: $m(\\angle ABD) = 90^\\circ - 70^\\circ = 20^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $d = \\frac{7}{5}t$."
+                "text_md": "$\\angle CBD$ is inscribed in arc $CD$, so $m(\\angle CBD) = \\frac{1}{2} \\times 70^\\circ = 35^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "Put $d = 70$: $70 = \\frac{7}{5}t$, so $t = 70 \\times \\frac{5}{7} = 50$ hours."
+                "text_md": "$m(\\angle ABC) = 20^\\circ + 35^\\circ = 55^\\circ$."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle B$ and $\\angle D$ are opposite angles of the cyclic quadrilateral, so they are supplementary."
+              },
+              {
+                "step": 6,
+                "text_md": "$m(\\angle ADC) = 180^\\circ - 55^\\circ = 125^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-1:g003-findx-",
+          "instance_id": "q:pp3u10-5-1:g008-diamet",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g003-findx-",
-            "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $26$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $130$ km. Give the number of hours as your answer.",
-            "stem_sha": "7ea0b42bc2ff1b65",
+            "instance_id": "q:pp3u10-5-1:g008-diamet",
+            "stem": "$ABCD$ is a cyclic quadrilateral (its vertices are in this order on the circle) in which $\\overline{AB}$ is a diameter, $m(\\angle DAB) = 65^\\circ$ and $m(\\widehat{CD}) = 70^\\circ$. Find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "b90086de2185af60",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "50",
+            "correct_answer": "120",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$\\overline{AB}$ is a diameter, so the angle $\\angle ADB$ in the semicircle is $90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute: $26 = m \\times 10$, so $m = \\frac{26}{10} = \\frac{13}{5}$."
+                "text_md": "In $\\triangle ABD$: $m(\\angle ABD) = 90^\\circ - 65^\\circ = 25^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $d = \\frac{13}{5}t$."
+                "text_md": "$\\angle CBD$ is inscribed in arc $CD$, so $m(\\angle CBD) = \\frac{1}{2} \\times 70^\\circ = 35^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "Put $d = 130$: $130 = \\frac{13}{5}t$, so $t = 130 \\times \\frac{5}{13} = 50$ hours."
+                "text_md": "$m(\\angle ABC) = 25^\\circ + 35^\\circ = 60^\\circ$."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle B$ and $\\angle D$ are opposite angles of the cyclic quadrilateral, so they are supplementary."
+              },
+              {
+                "step": 6,
+                "text_md": "$m(\\angle ADC) = 180^\\circ - 60^\\circ = 120^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-1:g006-findx-",
+          "instance_id": "q:pp3u10-5-1:g009-diamet",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g006-findx-",
-            "stem": "A car moves at a uniform velocity, so the distance covered $d$ (in kilometres) is directly proportional to the time $t$ (in hours), $d \\propto t$. The car covers $45$ km in $10$ hours. Find the relation between $d$ and $t$, then find the time in hours the car needs to cover $90$ km. Give the number of hours as your answer.",
-            "stem_sha": "90d85981a4aba8b1",
+            "instance_id": "q:pp3u10-5-1:g009-diamet",
+            "stem": "$ABCD$ is a cyclic quadrilateral (its vertices are in this order on the circle) in which $\\overline{AB}$ is a diameter, $m(\\angle DAB) = 85^\\circ$ and $m(\\widehat{CD}) = 70^\\circ$. Find $m(\\angle ADC)$ in degrees.",
+            "stem_sha": "00c2c38ce75abd13",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "20",
+            "correct_answer": "140",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $d \\propto t$, then $d = mt$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$\\overline{AB}$ is a diameter, so the angle $\\angle ADB$ in the semicircle is $90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute: $45 = m \\times 10$, so $m = \\frac{45}{10} = \\frac{9}{2}$."
+                "text_md": "In $\\triangle ABD$: $m(\\angle ABD) = 90^\\circ - 85^\\circ = 5^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $d = \\frac{9}{2}t$."
+                "text_md": "$\\angle CBD$ is inscribed in arc $CD$, so $m(\\angle CBD) = \\frac{1}{2} \\times 70^\\circ = 35^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "Put $d = 90$: $90 = \\frac{9}{2}t$, so $t = 90 \\times \\frac{2}{9} = 20$ hours."
+                "text_md": "$m(\\angle ABC) = 5^\\circ + 35^\\circ = 40^\\circ$."
+              },
+              {
+                "step": 5,
+                "text_md": "$\\angle B$ and $\\angle D$ are opposite angles of the cyclic quadrilateral, so they are supplementary."
+              },
+              {
+                "step": 6,
+                "text_md": "$m(\\angle ADC) = 180^\\circ - 40^\\circ = 140^\\circ$."
               }
             ]
           }
@@ -355,108 +1094,108 @@
       ]
     },
     {
-      "family_id": "tpl:pp3u2-3-1:findy",
-      "spec_sha": "a2cf9f57539800f9e2e82c9a8293573eb8b42b83fa53975436839b286df7e756",
+      "family_id": "tpl:pp3u10-6-1:centre-angle",
+      "spec_sha": "e232104fd74e9d9c41c7c2bc4baf46b27a01c34b3b0a6fde46d4ad24f9011bfc",
       "kind": "family",
-      "lo_id": "lo:pp3u2-3-1",
+      "lo_id": "lo:pp3u10-6-1",
       "tier": "standard",
       "answer_type": "numeric",
       "context": null,
-      "parent_question_id": "q:pp3u2-3-1:bk-example-1-second",
+      "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
       "instances_available": 10,
       "instances": [
         {
-          "instance_id": "q:pp3u2-3-1:g002-findy",
+          "instance_id": "q:pp3u10-6-1:g003-centre",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g002-findy",
-            "stem": "If $y \\propto x$ and $y = 14$ when $x = 49$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 35$. Give the value of $y$ as your answer.",
-            "stem_sha": "65c20ad736d6116e",
+            "instance_id": "q:pp3u10-6-1:g003-centre",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$, where $B$ and $C$ are the points of tangency. If $m(\\angle ABC) = 53^\\circ$, find $m(\\angle BMC)$.",
+            "stem_sha": "f4eaa0415ae6d778",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "10",
+            "correct_answer": "106",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$AB = AC$ because they are tangent segments from $A$, so triangle $ABC$ is isosceles and $m(\\angle ACB) = m(\\angle ABC) = 53^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute the values of $x$ and $y$: $14 = 49 \\times m$, so $m = \\frac{14}{49} = \\frac{2}{7}$."
+                "text_md": "$m(\\angle BAC) = 180^\\circ - 2 \\times 53^\\circ = 74^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y = \\frac{2}{7}x$."
+                "text_md": "The radii $MB$ and $MC$ are perpendicular to the tangents, so $m(\\angle MBA) = m(\\angle MCA) = 90^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "When $x = 35$: $y = \\frac{2}{7} \\times 35 = 10$."
+                "text_md": "In quadrilateral $ABMC$: $m(\\angle BMC) = 360^\\circ - 90^\\circ - 90^\\circ - 74^\\circ = 106^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-1:g003-findy",
+          "instance_id": "q:pp3u10-6-1:g005-centre",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g003-findy",
-            "stem": "If $y \\propto x$ and $y = 10$ when $x = 35$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 77$. Give the value of $y$ as your answer.",
-            "stem_sha": "7ac61ab1338639d5",
+            "instance_id": "q:pp3u10-6-1:g005-centre",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$, where $B$ and $C$ are the points of tangency. If $m(\\angle ABC) = 64^\\circ$, find $m(\\angle BMC)$.",
+            "stem_sha": "08ee48520eeb70e8",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "22",
+            "correct_answer": "128",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$AB = AC$ because they are tangent segments from $A$, so triangle $ABC$ is isosceles and $m(\\angle ACB) = m(\\angle ABC) = 64^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute the values of $x$ and $y$: $10 = 35 \\times m$, so $m = \\frac{10}{35} = \\frac{2}{7}$."
+                "text_md": "$m(\\angle BAC) = 180^\\circ - 2 \\times 64^\\circ = 52^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y = \\frac{2}{7}x$."
+                "text_md": "The radii $MB$ and $MC$ are perpendicular to the tangents, so $m(\\angle MBA) = m(\\angle MCA) = 90^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "When $x = 77$: $y = \\frac{2}{7} \\times 77 = 22$."
+                "text_md": "In quadrilateral $ABMC$: $m(\\angle BMC) = 360^\\circ - 90^\\circ - 90^\\circ - 52^\\circ = 128^\\circ$."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-1:g005-findy",
+          "instance_id": "q:pp3u10-6-1:g010-centre",
           "blind": {
-            "instance_id": "q:pp3u2-3-1:g005-findy",
-            "stem": "If $y \\propto x$ and $y = 32$ when $x = 56$, find first: the relation between $x$ and $y$; second: the value of $y$ when $x = 49$. Give the value of $y$ as your answer.",
-            "stem_sha": "cb076554450aea3f",
+            "instance_id": "q:pp3u10-6-1:g010-centre",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$, where $B$ and $C$ are the points of tangency. If $m(\\angle ABC) = 63^\\circ$, find $m(\\angle BMC)$.",
+            "stem_sha": "733ee9787a874257",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "28",
+            "correct_answer": "126",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto x$, then $y = mx$ (where $m$ is a constant $\\neq 0$)."
+                "text_md": "$AB = AC$ because they are tangent segments from $A$, so triangle $ABC$ is isosceles and $m(\\angle ACB) = m(\\angle ABC) = 63^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute the values of $x$ and $y$: $32 = 56 \\times m$, so $m = \\frac{32}{56} = \\frac{4}{7}$."
+                "text_md": "$m(\\angle BAC) = 180^\\circ - 2 \\times 63^\\circ = 54^\\circ$."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y = \\frac{4}{7}x$."
+                "text_md": "The radii $MB$ and $MC$ are perpendicular to the tangents, so $m(\\angle MBA) = m(\\angle MCA) = 90^\\circ$."
               },
               {
                 "step": 4,
-                "text_md": "When $x = 49$: $y = \\frac{4}{7} \\times 49 = 28$."
+                "text_md": "In quadrilateral $ABMC$: $m(\\angle BMC) = 360^\\circ - 90^\\circ - 90^\\circ - 54^\\circ = 126^\\circ$."
               }
             ]
           }
@@ -464,131 +1203,22 @@
       ]
     },
     {
-      "family_id": "tpl:pp3u2-3-2:find-x-from-y",
-      "spec_sha": "9add06c9e2863af83317c67e2062ba26851c7f3725c691259258ac4b6b488dad",
+      "family_id": "tpl:pp3u10-6-1:chord-length",
+      "spec_sha": "d24db65fd8f9097e6c2137d1ad9cfa9a54a72a20d88174ba3cb038641630402a",
       "kind": "family",
-      "lo_id": "lo:pp3u2-3-2",
-      "tier": "standard",
-      "answer_type": "numeric",
-      "context": null,
-      "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
-      "instances_available": 10,
-      "instances": [
-        {
-          "instance_id": "q:pp3u2-3-2:g003-find-x",
-          "blind": {
-            "instance_id": "q:pp3u2-3-2:g003-find-x",
-            "stem": "If $y \\propto \\frac{1}{x}$ and $y=9$ when $x=8$, find the relation between $x$ and $y$, then find the value of $x$ when $y=12$.",
-            "stem_sha": "9d7eb887c3df5712",
-            "answer_format": {
-              "type": "number"
-            }
-          },
-          "sealed": {
-            "correct_answer": "6",
-            "canonical_solution": [
-              {
-                "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
-              },
-              {
-                "step": 2,
-                "text_md": "Substitute $y=9$ and $x=8$: $9=\\frac{m}{8}$, so $m=9\\times 8=72$."
-              },
-              {
-                "step": 3,
-                "text_md": "The relation is $y=\\frac{72}{x}$."
-              },
-              {
-                "step": 4,
-                "text_md": "When $y=12$: $12=\\frac{72}{x}$, so $x=\\frac{72}{12}=6$."
-              }
-            ]
-          }
-        },
-        {
-          "instance_id": "q:pp3u2-3-2:g009-find-x",
-          "blind": {
-            "instance_id": "q:pp3u2-3-2:g009-find-x",
-            "stem": "If $y \\propto \\frac{1}{x}$ and $y=6$ when $x=4$, find the relation between $x$ and $y$, then find the value of $x$ when $y=3$.",
-            "stem_sha": "f911de9e4eb99344",
-            "answer_format": {
-              "type": "number"
-            }
-          },
-          "sealed": {
-            "correct_answer": "8",
-            "canonical_solution": [
-              {
-                "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
-              },
-              {
-                "step": 2,
-                "text_md": "Substitute $y=6$ and $x=4$: $6=\\frac{m}{4}$, so $m=6\\times 4=24$."
-              },
-              {
-                "step": 3,
-                "text_md": "The relation is $y=\\frac{24}{x}$."
-              },
-              {
-                "step": 4,
-                "text_md": "When $y=3$: $3=\\frac{24}{x}$, so $x=\\frac{24}{3}=8$."
-              }
-            ]
-          }
-        },
-        {
-          "instance_id": "q:pp3u2-3-2:g010-find-x",
-          "blind": {
-            "instance_id": "q:pp3u2-3-2:g010-find-x",
-            "stem": "If $y \\propto \\frac{1}{x}$ and $y=6$ when $x=4$, find the relation between $x$ and $y$, then find the value of $x$ when $y=12$.",
-            "stem_sha": "b61f4edd62fffcdf",
-            "answer_format": {
-              "type": "number"
-            }
-          },
-          "sealed": {
-            "correct_answer": "2",
-            "canonical_solution": [
-              {
-                "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x}$, then $y=\\frac{m}{x}$ where $m$ is a non-zero constant."
-              },
-              {
-                "step": 2,
-                "text_md": "Substitute $y=6$ and $x=4$: $6=\\frac{m}{4}$, so $m=6\\times 4=24$."
-              },
-              {
-                "step": 3,
-                "text_md": "The relation is $y=\\frac{24}{x}$."
-              },
-              {
-                "step": 4,
-                "text_md": "When $y=12$: $12=\\frac{24}{x}$, so $x=\\frac{24}{12}=2$."
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "family_id": "tpl:pp3u2-3-2:squared-var",
-      "spec_sha": "379338680e544ce6eb5b9e15cb188c1cedaf8c0f9961ef7555396e70b2da80b9",
-      "kind": "family",
-      "lo_id": "lo:pp3u2-3-2",
+      "lo_id": "lo:pp3u10-6-1",
       "tier": "advanced",
       "answer_type": "numeric",
       "context": null,
-      "parent_question_id": "q:pp3u2-3-2:bk-example-2-second",
-      "instances_available": 10,
+      "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
+      "instances_available": 6,
       "instances": [
         {
-          "instance_id": "q:pp3u2-3-2:g001-square",
+          "instance_id": "q:pp3u10-6-1:g001-chord-",
           "blind": {
-            "instance_id": "q:pp3u2-3-2:g001-square",
-            "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=3$ when $x=4$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
-            "stem_sha": "5b371b1b16b1263e",
+            "instance_id": "q:pp3u10-6-1:g001-chord-",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$ whose radius is $30$ cm, where $B$ and $C$ are the points of tangency. If $MA = 50$ cm, find the length of the chord $\\overline{BC}$ in cm.",
+            "stem_sha": "846ff781ba7ea18f",
             "answer_format": {
               "type": "number"
             }
@@ -598,83 +1228,325 @@
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                "text_md": "$MB$ is a radius and $AB$ a tangent, so $m(\\angle MBA) = 90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute $y=3$ and $x=4$: $3=\\frac{m}{16}$, so $m=3\\times 16=48$."
+                "text_md": "In the right triangle $MBA$: $AB = \\sqrt{50^2 - 30^2} = 40$ cm."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y=\\frac{48}{x^{2}}$."
+                "text_md": "The line $MA$ passes through the centre and the intersection point of the tangents, so it is the axis of the chord $BC$: it is perpendicular to $BC$ and bisects it at $N$."
               },
               {
                 "step": 4,
-                "text_md": "When $x=1$: $y=\\frac{48}{1}=48$."
+                "text_md": "Area of triangle $MBA$: $\\frac{1}{2} \\times MB \\times AB = \\frac{1}{2} \\times MA \\times BN$, so $BN = \\frac{30 \\times 40}{50} = 24$ cm."
+              },
+              {
+                "step": 5,
+                "text_md": "$BC = 2 \\times BN = 48$ cm."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-2:g006-square",
+          "instance_id": "q:pp3u10-6-1:g002-chord-",
           "blind": {
-            "instance_id": "q:pp3u2-3-2:g006-square",
-            "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=2$ when $x=3$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
-            "stem_sha": "f7e1e1637c588234",
+            "instance_id": "q:pp3u10-6-1:g002-chord-",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$ whose radius is $45$ cm, where $B$ and $C$ are the points of tangency. If $MA = 75$ cm, find the length of the chord $\\overline{BC}$ in cm.",
+            "stem_sha": "3f6b121bfd4bcb5d",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "18",
+            "correct_answer": "72",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                "text_md": "$MB$ is a radius and $AB$ a tangent, so $m(\\angle MBA) = 90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute $y=2$ and $x=3$: $2=\\frac{m}{9}$, so $m=2\\times 9=18$."
+                "text_md": "In the right triangle $MBA$: $AB = \\sqrt{75^2 - 45^2} = 60$ cm."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y=\\frac{18}{x^{2}}$."
+                "text_md": "The line $MA$ passes through the centre and the intersection point of the tangents, so it is the axis of the chord $BC$: it is perpendicular to $BC$ and bisects it at $N$."
               },
               {
                 "step": 4,
-                "text_md": "When $x=1$: $y=\\frac{18}{1}=18$."
+                "text_md": "Area of triangle $MBA$: $\\frac{1}{2} \\times MB \\times AB = \\frac{1}{2} \\times MA \\times BN$, so $BN = \\frac{45 \\times 60}{75} = 36$ cm."
+              },
+              {
+                "step": 5,
+                "text_md": "$BC = 2 \\times BN = 72$ cm."
               }
             ]
           }
         },
         {
-          "instance_id": "q:pp3u2-3-2:g009-square",
+          "instance_id": "q:pp3u10-6-1:g005-chord-",
           "blind": {
-            "instance_id": "q:pp3u2-3-2:g009-square",
-            "stem": "If $y \\propto \\frac{1}{x^{2}}$ and $y=19$ when $x=3$, find the relation between $x$ and $y$, then find the value of $y$ when $x=1$.",
-            "stem_sha": "ddda8790f3f01285",
+            "instance_id": "q:pp3u10-6-1:g005-chord-",
+            "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$ whose radius is $20$ cm, where $B$ and $C$ are the points of tangency. If $MA = 25$ cm, find the length of the chord $\\overline{BC}$ in cm.",
+            "stem_sha": "31b79d2b0940de3f",
             "answer_format": {
               "type": "number"
             }
           },
           "sealed": {
-            "correct_answer": "171",
+            "correct_answer": "24",
             "canonical_solution": [
               {
                 "step": 1,
-                "text_md": "Since $y \\propto \\frac{1}{x^{2}}$, then $y=\\frac{m}{x^{2}}$ where $m$ is a non-zero constant."
+                "text_md": "$MB$ is a radius and $AB$ a tangent, so $m(\\angle MBA) = 90^\\circ$."
               },
               {
                 "step": 2,
-                "text_md": "Substitute $y=19$ and $x=3$: $19=\\frac{m}{9}$, so $m=19\\times 9=171$."
+                "text_md": "In the right triangle $MBA$: $AB = \\sqrt{25^2 - 20^2} = 15$ cm."
               },
               {
                 "step": 3,
-                "text_md": "The relation is $y=\\frac{171}{x^{2}}$."
+                "text_md": "The line $MA$ passes through the centre and the intersection point of the tangents, so it is the axis of the chord $BC$: it is perpendicular to $BC$ and bisects it at $N$."
               },
               {
                 "step": 4,
-                "text_md": "When $x=1$: $y=\\frac{171}{1}=171$."
+                "text_md": "Area of triangle $MBA$: $\\frac{1}{2} \\times MB \\times AB = \\frac{1}{2} \\times MA \\times BN$, so $BN = \\frac{20 \\times 15}{25} = 12$ cm."
+              },
+              {
+                "step": 5,
+                "text_md": "$BC = 2 \\times BN = 24$ cm."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-6-3:internal-len",
+      "spec_sha": "9eeb7d075d0c1a4f5a84ccdaf047dc4e8b0eb99e0f131534ece09aa60b03edd0",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-6-3",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-6-3:bk-drill-7-1",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-6-3:g002-intern",
+          "blind": {
+            "instance_id": "q:pp3u10-6-3:g002-intern",
+            "stem": "Two circles with centres $M$ and $N$ lie outside each other. Their radii are $3$ cm and $12$ cm, and $MN = 17$ cm. A common internal tangent touches the circle with centre $M$ at $A$ and the circle with centre $N$ at $B$. Find the length of $AB$ in cm.",
+            "stem_sha": "fdd03ceeeaf32376",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "8",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "MA and NB are radii drawn to the points of tangency, so MA ⟂ AB and NB ⟂ AB, with MA = 3 cm and NB = 12 cm."
+              },
+              {
+                "step": 2,
+                "text_md": "Draw through N a line parallel to AB meeting MA extended at C. Then ABNC is a rectangle, so AC = NB = 12 cm and NC = AB."
+              },
+              {
+                "step": 3,
+                "text_md": "MC = MA + AC = 3 + 12 = 15 cm, and m(∠MCN) = 90°."
+              },
+              {
+                "step": 4,
+                "text_md": "In right triangle MCN: NC² = MN² − MC² = 17² − 15² = 289 − 225 = 64."
+              },
+              {
+                "step": 5,
+                "text_md": "So NC = 8 cm, and AB = NC = 8 cm."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-6-3:g005-intern",
+          "blind": {
+            "instance_id": "q:pp3u10-6-3:g005-intern",
+            "stem": "Two circles with centres $M$ and $N$ lie outside each other. Their radii are $4$ cm and $2$ cm, and $MN = 10$ cm. A common internal tangent touches the circle with centre $M$ at $A$ and the circle with centre $N$ at $B$. Find the length of $AB$ in cm.",
+            "stem_sha": "1f2667e95cf46546",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "8",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "MA and NB are radii drawn to the points of tangency, so MA ⟂ AB and NB ⟂ AB, with MA = 4 cm and NB = 2 cm."
+              },
+              {
+                "step": 2,
+                "text_md": "Draw through N a line parallel to AB meeting MA extended at C. Then ABNC is a rectangle, so AC = NB = 2 cm and NC = AB."
+              },
+              {
+                "step": 3,
+                "text_md": "MC = MA + AC = 4 + 2 = 6 cm, and m(∠MCN) = 90°."
+              },
+              {
+                "step": 4,
+                "text_md": "In right triangle MCN: NC² = MN² − MC² = 10² − 6² = 100 − 36 = 64."
+              },
+              {
+                "step": 5,
+                "text_md": "So NC = 8 cm, and AB = NC = 8 cm."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-6-3:g006-intern",
+          "blind": {
+            "instance_id": "q:pp3u10-6-3:g006-intern",
+            "stem": "Two circles with centres $M$ and $N$ lie outside each other. Their radii are $2$ cm and $22$ cm, and $MN = 25$ cm. A common internal tangent touches the circle with centre $M$ at $A$ and the circle with centre $N$ at $B$. Find the length of $AB$ in cm.",
+            "stem_sha": "fbc2582757d06289",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "7",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "MA and NB are radii drawn to the points of tangency, so MA ⟂ AB and NB ⟂ AB, with MA = 2 cm and NB = 22 cm."
+              },
+              {
+                "step": 2,
+                "text_md": "Draw through N a line parallel to AB meeting MA extended at C. Then ABNC is a rectangle, so AC = NB = 22 cm and NC = AB."
+              },
+              {
+                "step": 3,
+                "text_md": "MC = MA + AC = 2 + 22 = 24 cm, and m(∠MCN) = 90°."
+              },
+              {
+                "step": 4,
+                "text_md": "In right triangle MCN: NC² = MN² − MC² = 25² − 24² = 625 − 576 = 49."
+              },
+              {
+                "step": 5,
+                "text_md": "So NC = 7 cm, and AB = NC = 7 cm."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:pp3u10-7-1:arc-chain",
+      "spec_sha": "773c9c5f24f6076993a8a0f89e13caf37e773b98276d13dc84ba09874ede027c",
+      "kind": "family",
+      "lo_id": "lo:pp3u10-7-1",
+      "tier": "advanced",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:pp3u10-7-1:bk-drill-3-3",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:pp3u10-7-1:g004-arc-ch",
+          "blind": {
+            "instance_id": "q:pp3u10-7-1:g004-arc-ch",
+            "stem": "A, B and C are three points on a circle. The line AD is tangent to the circle at A, with D on the same side of A as B, so that angle BAD is the angle of tangency on the arc AB that does not contain C. The arc BC that does not contain A measures $140^\\circ$, and the inscribed angle $\\angle ABC$ measures $45^\\circ$. Calculate $m(\\angle BAD)$ in degrees.",
+            "stem_sha": "b4dab3854b798f92",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "65",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle ABC$ is an inscribed angle on arc AC, so $m(\\widehat{AC})=2\\times45=90^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs AB, BC and CA make a whole circle, so $m(\\widehat{AB})=360-140-90=130^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$\\angle BAD$ is an angle of tangency on arc AB, so it is half that arc: $m(\\angle BAD)=\\frac{1}{2}\\times130$."
+              },
+              {
+                "step": 4,
+                "text_md": "$m(\\angle BAD)=65^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-7-1:g005-arc-ch",
+          "blind": {
+            "instance_id": "q:pp3u10-7-1:g005-arc-ch",
+            "stem": "A, B and C are three points on a circle. The line AD is tangent to the circle at A, with D on the same side of A as B, so that angle BAD is the angle of tangency on the arc AB that does not contain C. The arc BC that does not contain A measures $80^\\circ$, and the inscribed angle $\\angle ABC$ measures $80^\\circ$. Calculate $m(\\angle BAD)$ in degrees.",
+            "stem_sha": "0225d17e72c291a4",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "60",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle ABC$ is an inscribed angle on arc AC, so $m(\\widehat{AC})=2\\times80=160^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs AB, BC and CA make a whole circle, so $m(\\widehat{AB})=360-80-160=120^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$\\angle BAD$ is an angle of tangency on arc AB, so it is half that arc: $m(\\angle BAD)=\\frac{1}{2}\\times120$."
+              },
+              {
+                "step": 4,
+                "text_md": "$m(\\angle BAD)=60^\\circ$."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:pp3u10-7-1:g007-arc-ch",
+          "blind": {
+            "instance_id": "q:pp3u10-7-1:g007-arc-ch",
+            "stem": "A, B and C are three points on a circle. The line AD is tangent to the circle at A, with D on the same side of A as B, so that angle BAD is the angle of tangency on the arc AB that does not contain C. The arc BC that does not contain A measures $140^\\circ$, and the inscribed angle $\\angle ABC$ measures $41^\\circ$. Calculate $m(\\angle BAD)$ in degrees.",
+            "stem_sha": "c092ef208940238c",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "69",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "$\\angle ABC$ is an inscribed angle on arc AC, so $m(\\widehat{AC})=2\\times41=82^\\circ$."
+              },
+              {
+                "step": 2,
+                "text_md": "The three arcs AB, BC and CA make a whole circle, so $m(\\widehat{AB})=360-140-82=138^\\circ$."
+              },
+              {
+                "step": 3,
+                "text_md": "$\\angle BAD$ is an angle of tangency on arc AB, so it is half that arc: $m(\\angle BAD)=\\frac{1}{2}\\times138$."
+              },
+              {
+                "step": 4,
+                "text_md": "$m(\\angle BAD)=69^\\circ$."
               }
             ]
           }

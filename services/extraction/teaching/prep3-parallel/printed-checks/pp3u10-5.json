@@ -1,0 +1,134 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-5",
+  "source": "book-records/prep3-parallel/pp3u10-5.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 4,
+      "cost_usd": 0.0335,
+      "calls": [
+        {
+          "call": "check-printed.pp3u10-5",
+          "cost_usd": 0.0225,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u10-5",
+          "cost_usd": 0.011,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u10-5:example-1:First",
+      "record_id": "pp3u10-5:example-1",
+      "part": "First",
+      "type": "worked_example",
+      "page": 89,
+      "printed": "$m(\\angle A)=40^\\circ$",
+      "blind": "40",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-5:figure-6"
+      ],
+      "question_fingerprint": "586f8e97c81d9e189935145e7c12c43b",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-5:example-1:First",
+        "verdict": "equivalent",
+        "reason": "Both give 40°."
+      },
+      "how": "judged equivalent: Both give 40°.",
+      "made": {
+        "at": "2026-10-18T08:03:21+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-5:example-1:Second",
+      "record_id": "pp3u10-5:example-1",
+      "part": "Second",
+      "type": "worked_example",
+      "page": 89,
+      "printed": "$m(\\angle D)=110^\\circ$",
+      "blind": "110",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-5:figure-6"
+      ],
+      "question_fingerprint": "ebeae43f6c64b2d72ad32d2037824421",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-5:example-1:Second",
+        "verdict": "equivalent",
+        "reason": "Both give 110°."
+      },
+      "how": "judged equivalent: Both give 110°.",
+      "made": {
+        "at": "2026-10-18T08:03:21+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-5:example-2",
+      "record_id": "pp3u10-5:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 90,
+      "printed": "$30^\\circ$",
+      "blind": "30",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-5:figure-12"
+      ],
+      "question_fingerprint": "78c8699fd28866354d7f1c7114f2f4b4",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-5:example-2",
+        "verdict": "equivalent",
+        "reason": "Both give 30°."
+      },
+      "how": "judged equivalent: Both give 30°.",
+      "made": {
+        "at": "2026-10-18T08:03:21+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-5:example-3",
+      "record_id": "pp3u10-5:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 92,
+      "printed": "XYDC is a cyclic quadrilateral",
+      "blind": "Since AB is a diameter, $\\angle ACB = 90^\\circ$, so $m(\\angle ABC) = 90^\\circ - m(\\angle CAB)$. In right triangle ABX (BX tangent, so $\\angle ABX = 90^\\circ$), $m(\\angle X) = 90^\\circ - m(\\angle CAB)$. So $m(\\angle X) = m(\\angle ABC)$. ABCD is cyclic, so $m(\\angle ABC) + m(\\angle ADC) = 180^\\circ$, i.e. the exterior angle $\\angle CDY$ at D equals $\\angle ABC$. Hence the exterior angle at D equals the interior opposite angle at X, so XYDC is cyclic.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-5:figure-21"
+      ],
+      "question_fingerprint": "a1180d9f2c2ca683d9ea60c007e386e7",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-5:example-3",
+        "verdict": "equivalent",
+        "reason": "Both conclude XYDC is cyclic; the solver's proof reaches the printed conclusion."
+      },
+      "how": "judged equivalent: Both conclude XYDC is cyclic; the solver's proof reaches the printed conclusion.",
+      "made": {
+        "at": "2026-10-18T08:03:21+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

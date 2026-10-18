@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:end-point",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "ax",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "ay",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "mx",
+   "randint": [
+    -3,
+    6
+   ]
+  },
+  {
+   "name": "my",
+   "randint": [
+    -3,
+    6
+   ]
+  },
+  {
+   "require": "ax != mx or ay != my",
+   "why": "A and M must differ so B differs from A"
+  },
+  {
+   "name": "bx",
+   "let": "2 * mx - ax"
+  },
+  {
+   "name": "by",
+   "let": "2 * my - ay"
+  }
+ ],
+ "stem": "$M({=mx}, {=my})$ is the midpoint of $\\overline{AB}$, where $A({=ax}, {=ay})$. Find the coordinates of point $B$.",
+ "solution": [
+  "Let $B(x, y)$. By the midpoint formula, $\\left(\\frac{{={ax}}+x}{2}, \\frac{{={ay}}+y}{2}\\right) = ({=mx}, {=my})$.",
+  "For the x-coordinate: $\\frac{{={ax}}+x}{2} = {=mx}$, so ${={ax}}+x = {=2*mx}$ and $x = {=bx}$.",
+  "For the y-coordinate: $\\frac{{={ay}}+y}{2} = {=my}$, so ${={ay}}+y = {=2*my}$ and $y = {=by}$.",
+  "So $B({=bx}, {=by})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=bx}, {=by})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder 'none'."
+}

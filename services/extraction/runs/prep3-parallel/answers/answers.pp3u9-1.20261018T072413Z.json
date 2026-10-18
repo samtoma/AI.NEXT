@@ -1,0 +1,752 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3cf0f7a388c4376e062ed4f5279d3e17ff795190e4f1d1183fffb415675ce50f",
+  "generated_sha256": "a9702eb8c7ede792633d726a2ce6a2eefb0cee7cf77b4faf0191c03a2e6a124e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u9-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u9-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "Fix a point as the centre and mark points at the same distance from it all the way round.",
+      "solution": [
+       "A circle is the set of points at a constant distance from a fixed point (definition-1).",
+       "Fix a peg at the centre spot of the field.",
+       "Tie a rope to the peg. Its length is the radius.",
+       "Keep the rope tight and walk round the peg, marking the ground at each step.",
+       "The marked points are all the same distance from the centre, so they form the circle."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-1",
+       "pp3u9-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "I can save water by using only the amount I need and not wasting it.",
+      "solution": [
+       "This is an open question, so there is no single fixed answer.",
+       "Close the tap while brushing teeth or washing hands.",
+       "Repair leaking taps and pipes.",
+       "Do not waste water when washing cars or watering plants.",
+       "Tell family and friends to save water too."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "pp3u9-1:drill-4",
+      "kind": "value",
+      "answer": "Infinite (unlimited) number of diameters",
+      "solution": [
+       "A diameter is a chord passing through the centre (definition-6).",
+       "Infinitely many straight lines pass through the centre.",
+       "Each of these lines gives a diameter.",
+       "So a circle has an infinite number of diameters."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-6",
+       "pp3u9-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-5",
+      "kind": "value",
+      "answer": "AC; BM; AC; AC. So AM + MC > AC, AM + BM > AC, AB > AC.",
+      "solution": [
+       "In triangle AMC, the sum of two sides is greater than the third side: AM + MC > AC.",
+       "CM = BM (radii), so replace MC by BM.",
+       "Thus AM + BM > AC.",
+       "AM + BM = AB because M lies on AB.",
+       "So AB > AC, and the blanks are AC, BM, AC, AC."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-6",
+       "pp3u9-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-4",
+      "kind": "value",
+      "answer": "diameter = 2r, perimeter = 2πr, area = πr²",
+      "solution": [
+       "The diameter passes through the centre and is made of two radii, so it is r + r = 2r.",
+       "The perimeter of a circle is 2πr.",
+       "The area of a circle is πr²."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-1:1",
+      "kind": "drawing",
+      "answer": "A circle M drawn with compasses on transparent paper.",
+      "solution": [
+       "Put the compass point on a point M and mark it as the centre.",
+       "Open the compass to any radius.",
+       "Turn the compass in one full turn on the transparent paper.",
+       "This gives circle M."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-1",
+       "pp3u9-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-1:2",
+      "kind": "drawing",
+      "answer": "A straight line L1 through M, cutting the circle into two arcs.",
+      "solution": [
+       "Place a ruler so that its edge passes through the centre M.",
+       "Draw the straight line L1 across the whole circle.",
+       "L1 meets the circle at two points and divides it into two arcs."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-1:3",
+      "kind": "explanation",
+      "answer": "The two parts of the circle on either side of L1 coincide exactly.",
+      "solution": [
+       "Fold the paper along L1.",
+       "One part of the circle falls exactly on the other part.",
+       "So L1 is an axis of symmetry of the circle."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-1:4",
+      "kind": "explanation",
+      "answer": "In every case the two parts coincide, so every line through the centre is an axis of symmetry.",
+      "solution": [
+       "Draw L2, L3, L4, ... each passing through M.",
+       "Fold the paper along each line in turn.",
+       "Each time the two parts of the circle coincide exactly.",
+       "So any straight line through the centre is an axis of symmetry of the circle."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:think-1",
+      "kind": "value",
+      "answer": "Infinite (unlimited) number of axes of symmetry",
+      "solution": [
+       "Any straight line passing through the centre is an axis of symmetry (rule-5).",
+       "Infinitely many lines pass through the centre.",
+       "So the circle has an infinite number of axes of symmetry."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-10",
+      "kind": "value",
+      "answer": "2 cm or 14 cm. Yes, there is another answer.",
+      "solution": [
+       "Draw the line through M perpendicular to both chords. It bisects each chord (rule-7).",
+       "For AB = 12: half is 6 cm. The distance from M is √(10² − 6²) = √64 = 8 cm.",
+       "For CD = 16: half is 8 cm. The distance from M is √(10² − 8²) = √36 = 6 cm.",
+       "If the chords are on the same side of M, the distance between them is 8 − 6 = 2 cm.",
+       "If the chords are on opposite sides of M, the distance is 8 + 6 = 14 cm.",
+       "Both positions are possible, so the answer is 2 cm or 14 cm."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7",
+       "pp3u9-1:rule-6",
+       "pp3u9-1:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:think-2",
+      "kind": "explanation",
+      "answer": "The longer chord AB is closer to the centre.",
+      "solution": [
+       "The perpendicular from M to a chord bisects it (rule-7).",
+       "A longer chord has a longer half-chord.",
+       "The distance from M to the chord is √(r² − (half chord)²).",
+       "A longer half-chord makes this distance smaller.",
+       "So AB, the longer chord, is closer to the centre."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "Fix a peg at the centre point, tie a rope of length equal to the radius to it, and walk around keeping the rope taut, marking the ground (e.g. with lime) to trace the circle."
+     },
+     {
+      "ref": "pp3u9-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Open answer: e.g. close taps when not in use, fix leaks, use water-saving irrigation, avoid wasting water when washing, reuse water."
+     },
+     {
+      "ref": "pp3u9-1:drill-4",
+      "kind": "explanation",
+      "answer": "Infinitely many diameters (every chord through the centre is a diameter)."
+     },
+     {
+      "ref": "pp3u9-1:drill-5",
+      "kind": "explanation",
+      "answer": "AM + MC > AC; AM + BM > AC; so AB > AC (since AM + BM = AB)."
+     },
+     {
+      "ref": "pp3u9-1:exercise-4",
+      "kind": "value",
+      "answer": "diameter = 2r; perimeter = 2πr; area = πr²"
+     },
+     {
+      "ref": "pp3u9-1:activity-1:1",
+      "kind": "drawing",
+      "answer": "A circle M drawn with compasses on transparent paper, with its centre M marked."
+     },
+     {
+      "ref": "pp3u9-1:activity-1:2",
+      "kind": "drawing",
+      "answer": "A straight line L1 through centre M, cutting the circle into two arcs (two semicircles)."
+     },
+     {
+      "ref": "pp3u9-1:activity-1:3",
+      "kind": "explanation",
+      "answer": "The two parts of the circle on either side of L1 coincide exactly, so L1 is an axis of symmetry."
+     },
+     {
+      "ref": "pp3u9-1:activity-1:4",
+      "kind": "explanation",
+      "answer": "In every case the two parts coincide when folded, so every straight line through the centre is an axis of symmetry of the circle."
+     },
+     {
+      "ref": "pp3u9-1:think-1",
+      "kind": "explanation",
+      "answer": "Infinitely many axes of symmetry (every straight line through the centre)."
+     },
+     {
+      "ref": "pp3u9-1:drill-10",
+      "kind": "explanation",
+      "answer": "The distance is 2 cm (chords on the same side of the centre) since the distances from M are 8 cm (AB, half = 6) and 6 cm (CD, half = 8). Yes, another answer: 14 cm when the chords are on opposite sides of the centre (8 + 6)."
+     },
+     {
+      "ref": "pp3u9-1:think-2",
+      "kind": "explanation",
+      "answer": "The longer chord AB is closer to the centre: with half-chord h and radius r, the distance d = $\\sqrt{r^2 - h^2}$, so the larger the chord, the smaller the distance."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u9-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u9-1:drill-1:1",
+      "kind": "value",
+      "answer": "{D, C}",
+      "solution": [
+       "The line AB crosses the circle at two points, D and C.",
+       "The circle is the set of points on the circle, so the common points are D and C.",
+       "Answer: {D, C}."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-1",
+       "pp3u9-1:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-1:2",
+      "kind": "value",
+      "answer": "segment DC",
+      "solution": [
+       "The surface of the circle is the circle together with its inside points.",
+       "The line AB is inside the surface only between D and C.",
+       "Answer: the line segment DC."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-1:3",
+      "kind": "value",
+      "answer": "the set of points inside the circle (the surface of circle M)",
+      "solution": [
+       "M is the centre, so it is not on the circle.",
+       "The centre is inside the circle.",
+       "Answer: M ∈ the set of points inside the circle, so it also lies on the surface of circle M."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-1",
+       "pp3u9-1:definition-3"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-2",
+      "kind": "drawing",
+      "answer": "Draw the 9 missing chords: AC, AD, AE, BC, BD, BE, CD, CE, DE (AB is already drawn).",
+      "solution": [
+       "A chord is a segment whose end points are two points on the circle.",
+       "The 5 points A, B, C, D, E give 10 pairs of points.",
+       "AB is already drawn.",
+       "With a ruler draw segments AC, AD and AE.",
+       "Draw segments BC, BD and BE.",
+       "Draw segments CD, CE and DE.",
+       "All 10 chords are now drawn."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-5"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-3",
+      "kind": "value",
+      "answer": "AB",
+      "solution": [
+       "A diameter is a chord that passes through the centre M.",
+       "In the figure AB passes through M, but AC does not.",
+       "Answer: AB."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:a",
+      "kind": "value",
+      "answer": "X = 100",
+      "solution": [
+       "MA = MB (radii), so triangle MAB is isosceles.",
+       "The angle at B equals the angle at A, which is 40°.",
+       "X = 180 - 40 - 40 = 100."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:b",
+      "kind": "value",
+      "answer": "Y = 20",
+      "solution": [
+       "The reflex angle at M is 220°, so the angle BMA = 360 - 220 = 140°.",
+       "MA = MB (radii), so the angles at B and A are equal.",
+       "Y = (180 - 140) ÷ 2 = 20."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:c",
+      "kind": "value",
+      "answer": "X = 54, Y = 72",
+      "solution": [
+       "E, D and A lie on one line, and MD = DA (marked equal), so triangle MDA is isosceles.",
+       "The angle at M is 27°, so the angle at A is also 27°.",
+       "X is the exterior angle at D of triangle MDA, so X = 27 + 27 = 54.",
+       "ME = MD (radii), so in triangle MED the angle at E equals the angle at D, which is 54°.",
+       "Y = 180 - 54 - 54 = 72."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:d",
+      "kind": "value",
+      "answer": "X = 110, Y = 35",
+      "solution": [
+       "MB = MC (radii), so triangle MBC is isosceles.",
+       "The angle at B is 35°, so the angle at C is also 35°.",
+       "The angle at M in triangle MBC is X = 180 - 35 - 35 = 110.",
+       "The angle at M in triangle MAB is also marked X, so it is 110°.",
+       "MA = MB (radii), so Y = (180 - 110) ÷ 2 = 35."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:e",
+      "kind": "value",
+      "answer": "X = 80, Y = 50",
+      "solution": [
+       "MC = MD (radii), so triangle MCD is isosceles.",
+       "The angle at C is 50°, so the angle at D is also 50°.",
+       "X = 180 - 50 - 50 = 80.",
+       "AB = CD (marked equal) and the other sides are radii, so triangle MAB is congruent to triangle MCD (SSS).",
+       "So the angle AMB = 80°, and the base angles are equal.",
+       "Y = (180 - 80) ÷ 2 = 50."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4",
+       "pp3u9-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:f",
+      "kind": "value",
+      "answer": "X = 20, Y = 90",
+      "solution": [
+       "MD = MA (radii), so triangle MDA is isosceles.",
+       "The angle at D is 20°, so X = the angle at A = 20.",
+       "The angle AMC is the exterior angle of triangle MDA at M, so it is 20 + 20 = 40°.",
+       "In triangle MCA, the angle at A is 50° and the angle at M is 40°.",
+       "Y = 180 - 50 - 40 = 90."
+      ],
+      "grounded_in": [
+       "pp3u9-1:definition-4",
+       "pp3u9-1:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-6",
+      "kind": "explanation",
+      "answer": "NC > NA, because NC + MC > MN and MC = MA.",
+      "solution": [
+       "Draw the radius MC. In triangle NMC the sum of two sides is greater than the third side: NC + MC > MN.",
+       "MC = MA (radii).",
+       "So NC + MA > MN.",
+       "A lies on MN, so MN = MA + NA.",
+       "So NC + MA > MA + NA.",
+       "Subtract MA from both sides: NC > NA (Q.E.D.)."
+      ],
+      "grounded_in": [
+       "pp3u9-1:example-1",
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-2:1",
+      "kind": "explanation",
+      "answer": "The straight line through the centre and the midpoint of a chord is perpendicular to that chord.",
+      "solution": [
+       "In figure 1, line L passes through the centre M and C, the midpoint of chord BA.",
+       "L is perpendicular to chord BA.",
+       "So the straight line through the centre and the midpoint of any chord is perpendicular to the chord."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-2:2",
+      "kind": "explanation",
+      "answer": "The straight line through the centre and perpendicular to a chord bisects that chord.",
+      "solution": [
+       "In figure 2, line L passes through the centre M and is perpendicular to chord BA at C.",
+       "Then BC = CA.",
+       "So the straight line through the centre perpendicular to a chord bisects the chord."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:activity-2:3",
+      "kind": "explanation",
+      "answer": "The perpendicular bisector of any chord of a circle passes through the centre of the circle.",
+      "solution": [
+       "In figure 3, line L is perpendicular to chord BA and bisects it (BC = CA).",
+       "L also passes through the centre M.",
+       "So the perpendicular bisector of any chord passes through the centre."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:A",
+      "kind": "value",
+      "answer": "40°",
+      "solution": [
+       "MC ⟂ AB, so the angle at C is 90°.",
+       "C is the midpoint of AB, so the line MC is perpendicular to AB and the angle CMA = the angle CMB = 50°.",
+       "In triangle MCA: m(∠MAC) = 180 - 90 - 50 = 40°."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6",
+       "pp3u9-1:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:B",
+      "kind": "value",
+      "answer": "120°",
+      "solution": [
+       "E is the midpoint of chord CA, so ME ⟂ CA and the angle at E is 90°.",
+       "D is the midpoint of chord AB, so MD ⟂ AB and the angle at D is 90°.",
+       "The angle at A is 60°.",
+       "The four angles of quadrilateral MEAD add up to 360°.",
+       "m(∠DME) = 360 - 90 - 90 - 60 = 120°."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:C",
+      "kind": "value",
+      "answer": "5 cm",
+      "solution": [
+       "MC ⟂ AB, so C is the midpoint of AB.",
+       "BC = 8 ÷ 2 = 4 cm.",
+       "In right triangle MCB: MB² = MC² + BC² = 9 + 16 = 25.",
+       "MB = 5 cm."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:D",
+      "kind": "value",
+      "answer": "16 cm",
+      "solution": [
+       "In right triangle MXA: AX² = MA² - MX² = 100 - 36 = 64.",
+       "AX = 8 cm.",
+       "MX ⟂ AB, so X is the midpoint of AB.",
+       "AB = 2 × 8 = 16 cm."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:E",
+      "kind": "value",
+      "answer": "20 cm",
+      "solution": [
+       "CD is a diameter, so MD ⟂ AB at E means E is the midpoint of AB.",
+       "AE = 10 ÷ 2 = 5 cm.",
+       "In right triangle MEA the angle at M is 30°, so the angle at A is 60° and the side opposite 30° is half the hypotenuse: AE = MA ÷ 2.",
+       "MA = 10 cm, so the radius is 10 cm.",
+       "CD = 2 × 10 = 20 cm."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-7",
+       "pp3u9-1:definition-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-7:F",
+      "kind": "value",
+      "answer": "X = 45",
+      "solution": [
+       "MD ⟂ AB, so D is the midpoint of AB.",
+       "M is the centre, so M is the midpoint of the diameter AC.",
+       "In triangle ABC, M and D are midpoints of AC and AB, so MD ∥ CB.",
+       "MD ⟂ AB, so CB ⟂ AB and the angle at B is 90°.",
+       "2X = 90, so X = 45."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6",
+       "pp3u9-1:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-8",
+      "kind": "value",
+      "answer": "96 cm²",
+      "solution": [
+       "C is the midpoint of AB, so MC ⟂ AB.",
+       "AC = 24 ÷ 2 = 12 cm.",
+       "In right triangle MCA: MC² = 13² - 12² = 25, so MC = 5 cm.",
+       "MD = 13 cm (radius), so CD = 13 - 5 = 8 cm.",
+       "MD ⟂ AB, so CD is the height of triangle ADB.",
+       "Area = 1/2 × 24 × 8 = 96 cm²."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-9",
+      "kind": "explanation",
+      "answer": "Fig (2): MA = MB = MC = MD, ML = MX = MY = MZ, AB = CD, and the end parts DL = XA = BY = CZ. Fig (1): CL = ZA and BY = XA.",
+      "solution": [
+       "Fig (2): the chords through M are diameters of the outer circle, so MA = MB = MC = MD (radii).",
+       "The points L, X, Y, Z are on the inner circle, so ML = MX = MY = MZ (radii).",
+       "Subtracting the inner radii from the outer radii gives the equal end parts: DL, XA, BY and CZ are all equal.",
+       "Fig (1): draw MN perpendicular to chord CA. In the larger circle NC = NA, and in the smaller circle NL = NZ (corollary).",
+       "Subtracting gives CL = ZA.",
+       "In the same way, a perpendicular from M to chord BA gives BY = XA."
+      ],
+      "grounded_in": [
+       "pp3u9-1:example-2",
+       "pp3u9-1:rule-7",
+       "pp3u9-1:definition-4"
+      ]
+     },
+     {
+      "ref": "pp3u9-1:drill-11",
+      "kind": "value",
+      "answer": "m(∠XMY) = 120°, m(∠MXY) = 20°, m(∠MYX) = 40°",
+      "solution": [
+       "MX ⟂ AB and MY ⟂ AC, so X and Y are the midpoints of AB and AC.",
+       "In triangle ABC, m(∠C) = 180 - 60 - 70 = 50°.",
+       "XY ∥ BC, so m(∠AXY) = 70° and m(∠AYX) = 50°.",
+       "m(∠MXY) = 90 - 70 = 20° and m(∠MYX) = 90 - 50 = 40°.",
+       "m(∠XMY) = 180 - 20 - 40 = 120°.",
+       "Check with quadrilateral AXMY: 360 - 90 - 90 - 60 = 120°."
+      ],
+      "grounded_in": [
+       "pp3u9-1:rule-6",
+       "pp3u9-1:example-4"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-1:drill-1:1",
+      "kind": "value",
+      "answer": "{D, C}"
+     },
+     {
+      "ref": "pp3u9-1:drill-1:2",
+      "kind": "value",
+      "answer": "segment DC (the chord $\\overline{DC}$)"
+     },
+     {
+      "ref": "pp3u9-1:drill-1:3",
+      "kind": "explanation",
+      "answer": "M ∈ the surface of circle M (the interior points of the circle)"
+     },
+     {
+      "ref": "pp3u9-1:drill-2",
+      "kind": "drawing",
+      "answer": "Join every pair of the five points on the circle with a segment: AB (already drawn), AC, AD, AE, BC, BD, BE, CD, CE, DE (10 chords in all)."
+     },
+     {
+      "ref": "pp3u9-1:drill-3",
+      "kind": "value",
+      "answer": "$\\overline{AB}$ (it passes through the centre M)"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:a",
+      "kind": "value",
+      "answer": "X = 100"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:b",
+      "kind": "value",
+      "answer": "Y = 20"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:c",
+      "kind": "value",
+      "answer": "X = 54, Y = 72"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:d",
+      "kind": "value",
+      "answer": "X = 35, Y = 72.5"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:e",
+      "kind": "value",
+      "answer": "X = 80, Y = 50"
+     },
+     {
+      "ref": "pp3u9-1:exercise-5:f",
+      "kind": "value",
+      "answer": "X = 20, Y = 40"
+     },
+     {
+      "ref": "pp3u9-1:drill-6",
+      "kind": "explanation",
+      "answer": "A lies between M and N, so MN = MA + NA. In triangle MNC: MC + NC > MN = MA + NA. Since MC = MA (radii), NC > NA. (Q.E.D.)"
+     },
+     {
+      "ref": "pp3u9-1:activity-2:1",
+      "kind": "explanation",
+      "answer": "The straight line through the centre and the midpoint of a chord is perpendicular to that chord."
+     },
+     {
+      "ref": "pp3u9-1:activity-2:2",
+      "kind": "explanation",
+      "answer": "The straight line through the centre and perpendicular to a chord bisects that chord."
+     },
+     {
+      "ref": "pp3u9-1:activity-2:3",
+      "kind": "explanation",
+      "answer": "The perpendicular bisector of any chord of a circle passes through the centre of the circle."
+     },
+     {
+      "ref": "pp3u9-1:drill-7:A",
+      "kind": "value",
+      "answer": "40°"
+     },
+     {
+      "ref": "pp3u9-1:drill-7:B",
+      "kind": "value",
+      "answer": "120°"
+     },
+     {
+      "ref": "pp3u9-1:drill-7:C",
+      "kind": "value",
+      "answer": "5 cm"
+     },
+     {
+      "ref": "pp3u9-1:drill-7:D",
+      "kind": "value",
+      "answer": "16 cm"
+     },
+     {
+      "ref": "pp3u9-1:drill-7:E",
+      "kind": "value",
+      "answer": "20 cm"
+     },
+     {
+      "ref": "pp3u9-1:drill-7:F",
+      "kind": "value",
+      "answer": "X = 45"
+     },
+     {
+      "ref": "pp3u9-1:drill-8",
+      "kind": "value",
+      "answer": "96 cm²"
+     },
+     {
+      "ref": "pp3u9-1:drill-9",
+      "kind": "explanation",
+      "answer": "Fig (2): the lines through M are diameters, so all radii are equal (MA = MB = MC = MD and ML = MX = MY = MZ), AB = CD and LZ = XY, and subtracting inner from outer radii gives AX = BY = CZ = DL. Fig (1): the perpendicular from M to each chord bisects both the chord of the larger circle and the chord of the smaller circle, so CL = ZA and BY = XA, and MA = MB = MC (radii)."
+     },
+     {
+      "ref": "pp3u9-1:drill-10",
+      "kind": "value",
+      "answer": "2 cm (chords on the same side of the centre). Yes, another answer: 14 cm if the chords are on opposite sides of the centre, since the distances from M are 6 cm (for CD) and 8 cm (for AB)."
+     },
+     {
+      "ref": "pp3u9-1:drill-11",
+      "kind": "value",
+      "answer": "m(∠XMY) = 120°, m(∠MXY) = 20°, m(∠MYX) = 40°"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,672 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "0bc1a32f438b201d793e09e889dae54e1c0b0213c81dd2b0270bc8ff25fdf64a",
+  "generated_sha256": "3428aa62adda5f3a04e47dfaa8d0b072d02a2d142d912e9743f36d5e0be13bea",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "The arc AB that lies inside angle AMB is the minor arc AB, written $\\overset{\\frown}{AB}$.",
+      "solution": [
+       "The sides MA and MB of angle AMB cut the circle into two arcs.",
+       "The smaller arc, between A and B inside the angle, is the minor arc.",
+       "It is written $\\overset{\\frown}{AB}$."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-1",
+       "pp3u10-1:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The arc ACB that lies outside angle AMB, through point C, is the major arc ACB, written $\\overset{\\frown}{ACB}$.",
+      "solution": [
+       "The sides of angle AMB cut the circle into two arcs.",
+       "The larger arc, passing through C, is the major arc.",
+       "It is written $\\overset{\\frown}{ACB}$ (three letters so it is not confused with the minor arc)."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-1",
+      "kind": "explanation",
+      "answer": "The points of arc AB lie inside angle AMB (in its interior, between its two sides).",
+      "solution": [
+       "Arc AB is opposite to the central angle AMB.",
+       "Its points lie in the interior of angle AMB, between rays MA and MB.",
+       "So arc AB is the minor arc."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-2",
+      "kind": "explanation",
+      "answer": "The points of arc ACB lie inside the reflex angle AMB, which is outside the angle AMB.",
+      "solution": [
+       "Arc ACB is opposite to the central reflex angle AMB.",
+       "Its points lie in the interior of the reflex angle, outside angle AMB.",
+       "So arc ACB is the major arc."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-3",
+      "kind": "explanation",
+      "answer": "AB is a diameter, and arc AB is congruent to arc ACB; each is a semicircle of measure 180°.",
+      "solution": [
+       "If angle AMB is a straight angle, then A, M, B lie on one line.",
+       "So AB is a diameter of circle M.",
+       "Arc AB and arc ACB are congruent.",
+       "Each is called a semicircle, with measure 180°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-2",
+       "pp3u10-1:rule-6",
+       "pp3u10-1:rule-7"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-4",
+      "kind": "explanation",
+      "answer": "No, arc AB is not congruent to arc EF: they have equal measure (50°) but lie in circles of different radii, so arc EF is longer (twice the length of arc AB).",
+      "solution": [
+       "The measure of each arc equals its central angle, so $m(\\overset{\\frown}{AB}) = m(\\overset{\\frown}{EF}) = 50^\\circ$.",
+       "The circles are different (radii 7 cm and 14 cm), so the arcs have different lengths.",
+       "Length of $\\overset{\\frown}{AB}=\\frac{50}{360}\\times 2\\times\\frac{22}{7}\\times 7$.",
+       "Length of $\\overset{\\frown}{EF}=\\frac{50}{360}\\times 2\\times\\frac{22}{7}\\times 14$, which is twice as long.",
+       "Deduction: equal measure gives equal length only in the same circle (or congruent circles), so the arcs are not congruent."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-9",
+       "pp3u10-1:rule-10",
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-4",
+      "kind": "value",
+      "answer": "$\\overset{\\frown}{AB}$ and $\\overset{\\frown}{CD}$",
+      "solution": [
+       "In circle M, angle AMB and angle CMD are marked equal.",
+       "The measure of an arc equals its central angle.",
+       "So $m(\\overset{\\frown}{AB}) = m(\\overset{\\frown}{CD})$."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-5",
+      "kind": "value",
+      "answer": "$\\overset{\\frown}{AB}$ and $\\overset{\\frown}{CD}$",
+      "solution": [
+       "The arcs AB and CD have equal measures in the same circle M.",
+       "In the same circle, equal arc measures give equal arc lengths.",
+       "So the length of $\\overset{\\frown}{AB}$ = the length of $\\overset{\\frown}{CD}$."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-10"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-6",
+      "kind": "drawing",
+      "answer": "Draw chords AB and CD in circle M; they are equal in length.",
+      "solution": [
+       "Arcs AB and CD have equal measures in the same circle M.",
+       "Draw chord AB joining A and B.",
+       "Draw chord CD joining C and D.",
+       "By corollary (2), AB = CD."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-11"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-1:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "The minor arc AB is the arc whose points lie inside angle AMB (the smaller arc, less than a semicircle); it is written $\\overset{\\frown}{AB}$."
+     },
+     {
+      "ref": "pp3u10-1:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The major arc ACB is the larger arc, with its points inside the reflex angle AMB (outside angle AMB), more than a semicircle; it is written $\\overset{\\frown}{ACB}$ using a third point C."
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-1",
+      "kind": "explanation",
+      "answer": "The points of arc AB lie in the interior of angle AMB (on the circle, between its sides)."
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-2",
+      "kind": "explanation",
+      "answer": "The points of arc ACB lie in the interior of the reflex angle AMB, i.e. outside the (non-reflex) angle AMB."
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-3",
+      "kind": "explanation",
+      "answer": "AB is a diameter, so arc AB and arc ACB are congruent; each is a semicircle with measure 180°."
+     },
+     {
+      "ref": "pp3u10-1:open-prompt-4",
+      "kind": "explanation",
+      "answer": "No. Arc AB and arc EF have equal measure (50°) but lie in circles of different radii (7 cm and 14 cm), so their lengths differ (EF is twice AB) and they are not congruent. Equal measure does not give equal length in different circles."
+     },
+     {
+      "ref": "pp3u10-1:drill-4",
+      "kind": "explanation",
+      "answer": "$m(\\widehat{AB}) = m(\\widehat{CD})$ (arcs AB and CD, since angles AMB and CMD are equal)."
+     },
+     {
+      "ref": "pp3u10-1:drill-5",
+      "kind": "explanation",
+      "answer": "Arc AB and arc CD (in the same circle M they have equal measure, so equal length)."
+     },
+     {
+      "ref": "pp3u10-1:drill-6",
+      "kind": "drawing",
+      "answer": "Circle M with chords AB and CD drawn, marked with equal tick marks to show AB = CD (they subtend equal arcs)."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u10-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-1:exercise-1",
+      "kind": "drawing",
+      "answer": "Arc AB is the part of the circle from A (bottom) to B (lower right); arc BC is the part from B to C (right). They are adjacent arcs and together make arc ABC.",
+      "solution": [
+       "Find the points A (bottom), B (lower right) and C (right) on the circle.",
+       "Trace the arc of the circle that goes from A to B and label it arc AB.",
+       "Trace the arc that goes on from B to C and label it arc BC (a different colour helps).",
+       "The arcs AB and BC meet only at B, so they are adjacent arcs.",
+       "Together they form arc ABC, so m(AB) + m(BC) = m(ABC) and m(AB) = m(ABC) − m(BC)."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-3",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-1:1",
+      "kind": "value",
+      "answer": "m(AD) = 40°, m(AC) = 60°",
+      "solution": [
+       "The measure of an arc equals the measure of its central angle.",
+       "m(arc AD) = m(∠AMD) = 40°.",
+       "m(arc AC) = m(∠AMC) = 60°.",
+       "So m(AD) = 40° and m(AC) = 60°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-1:2",
+      "kind": "value",
+      "answer": "100",
+      "solution": [
+       "CA and AD are adjacent arcs, so add their measures.",
+       "m(CAD) = m(CA) + m(AD).",
+       "= 60° + 40°.",
+       "= 100°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-8",
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-1:3",
+      "kind": "value",
+      "answer": "m(BC) = m(ACB) − m(AC) = 180° − 60° = 120°",
+      "solution": [
+       "AB is a diameter, so arc ACB is a semicircle (Why?) and its measure is 180°.",
+       "m(ACB) = m(AC) + m(CB), so m(BC) = m(ACB) − m(AC).",
+       "m(BC) = 180° − 60°.",
+       "m(BC) = 120°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-2",
+       "pp3u10-1:rule-7",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-1:4",
+      "kind": "value",
+      "answer": "m(DCB) = 360° − m(DB) = 360° − 140° = 220°",
+      "solution": [
+       "The arc DCB is the circle minus arc DB, so m(DCB) = measure of circle − m(DB).",
+       "m(DB) = m(AB) − m(AD) = 180° − 40° = 140°.",
+       "The measure of the circle is 360°.",
+       "m(DCB) = 360° − 140° = 220°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-7",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:1",
+      "kind": "value",
+      "answer": "25",
+      "solution": [
+       "AB is a diameter, so ∠DMA and ∠DMB are on a straight angle and add up to 180°.",
+       "4x + (3x + 5) = 180.",
+       "7x = 175.",
+       "x = 25."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-2",
+       "pp3u10-1:rule-6"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:2",
+      "kind": "value",
+      "answer": "50",
+      "solution": [
+       "m(AC) = m(∠AMC) = 2x°.",
+       "x = 25, so 2 × 25 = 50.",
+       "m(AC) = 50°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:3",
+      "kind": "value",
+      "answer": "100°",
+      "solution": [
+       "m(AD) = m(∠DMA) = 4x°.",
+       "4 × 25 = 100.",
+       "m(AD) = 100°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:4",
+      "kind": "value",
+      "answer": "130",
+      "solution": [
+       "Arc ACB is a semicircle, so its measure is 180°.",
+       "m(BC) = 180° − m(AC).",
+       "= 180° − 50°.",
+       "m(BC) = 130°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-7",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:5",
+      "kind": "value",
+      "answer": "150°",
+      "solution": [
+       "CA and AD are adjacent arcs.",
+       "m(CAD) = m(CA) + m(AD).",
+       "= 50° + 100°.",
+       "= 150°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:6",
+      "kind": "value",
+      "answer": "210°",
+      "solution": [
+       "CB and BD are adjacent arcs.",
+       "m(BD) = m(∠DMB) = 3x + 5 = 80°.",
+       "m(CBD) = m(CB) + m(BD).",
+       "= 130° + 80° = 210°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-8",
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:7",
+      "kind": "value",
+      "answer": "260°",
+      "solution": [
+       "Arc ACD goes from A through C and B to D, so it is the whole circle minus arc AD.",
+       "m(ACD) = 360° − m(AD).",
+       "= 360° − 100°.",
+       "= 260°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-7",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-2:8",
+      "kind": "value",
+      "answer": "310°",
+      "solution": [
+       "Arc ADC goes from A through D and B to C, so it is the whole circle minus arc AC.",
+       "m(ADC) = 360° − m(AC).",
+       "= 360° − 50°.",
+       "= 310°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-7",
+       "pp3u10-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 1",
+      "kind": "value",
+      "answer": "m(AB) = m(∠AMB) = 50°",
+      "solution": [
+       "The measure of an arc equals the measure of its central angle.",
+       "m(AB) = m(∠AMB) = 50°."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 2",
+      "kind": "value",
+      "answer": "7 and 6.11 (= 55/9) cm",
+      "solution": [
+       "The radius of the minor circle is 7 cm.",
+       "Length of AB = 50/360 × 2 × 22/7 × 7.",
+       "= 50/360 × 44.",
+       "= 55/9 ≈ 6.11 cm."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-9",
+       "pp3u10-1:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 3",
+      "kind": "value",
+      "answer": "50/360 × 44 = 55/9 ≈ 6.11 cm",
+      "solution": [
+       "m(CD) = m(∠CMD) = 50°, the same circle with radius 7 cm.",
+       "Length of CD = 50/360 × (2 × 22/7 × 7).",
+       "= 50/360 × 44.",
+       "= 55/9 ≈ 6.11 cm."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-9",
+       "pp3u10-1:rule-10"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 4",
+      "kind": "value",
+      "answer": "congruent to",
+      "solution": [
+       "Both arcs are in the same circle with equal measure, 50°.",
+       "Their lengths are equal (6.11 cm).",
+       "So arc AB is congruent to arc CD."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-10"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 1",
+      "kind": "value",
+      "answer": "m(EF) = m(∠EMF) = 50°, length of EF = 50/360 × 88 = 110/9 ≈ 12.22 cm",
+      "solution": [
+       "m(EF) = m(∠EMF) = 50°, because the central angle is the same angle AMB.",
+       "The circumference of the major circle is 2 × 22/7 × 14 = 88 cm.",
+       "Length of EF = 50/360 × 88.",
+       "= 110/9 ≈ 12.22 cm."
+      ],
+      "grounded_in": [
+       "pp3u10-1:definition-2",
+       "pp3u10-1:rule-9"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 2",
+      "kind": "value",
+      "answer": "50/360 × 88 = 110/9 ≈ 12.22 cm",
+      "solution": [
+       "m(XY) = m(∠CMD) = 50°.",
+       "The circumference of the major circle is 88 cm.",
+       "Length of XY = 50/360 × 88.",
+       "= 110/9 ≈ 12.22 cm."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-9"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 3",
+      "kind": "value",
+      "answer": "congruent to",
+      "solution": [
+       "Arcs EF and XY are in the same circle and have equal measure, 50°.",
+       "Their lengths are equal (12.22 cm).",
+       "So arc EF is congruent to arc XY."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-10"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-7:1",
+      "kind": "value",
+      "answer": "m(arc FB) = m(arc EA)",
+      "solution": [
+       "AB and EF are parallel chords.",
+       "The arcs between two parallel chords are equal.",
+       "The arcs between them are arc FB (left) and arc EA (right).",
+       "So m(FB) = m(EA)."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-12"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-7:2",
+      "kind": "value",
+      "answer": "m(arc BC) = m(arc AC)",
+      "solution": [
+       "The tangent CD is parallel to chord AB.",
+       "The arcs between a chord and a parallel tangent are equal.",
+       "The arcs between them are arc BC and arc AC.",
+       "So m(BC) = m(AC)."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-13"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-7:3",
+      "kind": "value",
+      "answer": "m(arc FC)",
+      "solution": [
+       "Add (1) and (2): m(FB) + m(BC) = m(EA) + m(AC).",
+       "m(EA) + m(AC) = m(EC), and m(FB) + m(BC) = m(FC).",
+       "So m(EC) = m(FC)."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-8",
+       "pp3u10-1:rule-12",
+       "pp3u10-1:rule-13"
+      ]
+     },
+     {
+      "ref": "pp3u10-1:drill-7:4",
+      "kind": "value",
+      "answer": "CF",
+      "solution": [
+       "m(arc EC) = m(arc FC).",
+       "In the same circle, equal arcs have equal chords.",
+       "So CE = CF."
+      ],
+      "grounded_in": [
+       "pp3u10-1:rule-11"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-1:exercise-1",
+      "kind": "drawing",
+      "answer": "Circle M with points A, B, C in order; arc AB drawn from A to B and arc BC drawn from B to C, adjacent arcs sharing B, together forming arc ABC."
+     },
+     {
+      "ref": "pp3u10-1:drill-1:1",
+      "kind": "value",
+      "answer": "m(AD) = 40°, m(AC) = 60°"
+     },
+     {
+      "ref": "pp3u10-1:drill-1:2",
+      "kind": "value",
+      "answer": "m(CAD) = m(CA) + m(AD) = 60 + 40 = 100°"
+     },
+     {
+      "ref": "pp3u10-1:drill-1:3",
+      "kind": "value",
+      "answer": "m(BC) = m(ACB) - m(AC) = 180° - 60° = 120° (Why? Because AB is a diameter, so arc ACB is a semicircle, measure 180°)"
+     },
+     {
+      "ref": "pp3u10-1:drill-1:4",
+      "kind": "value",
+      "answer": "m(DCB) = measure of circle - m(DB) = 360 - 140 = 220° (m(DB) = 180° - 40° = 140°)"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:1",
+      "kind": "value",
+      "answer": "x = 25"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:2",
+      "kind": "value",
+      "answer": "50"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:3",
+      "kind": "value",
+      "answer": "100°"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:4",
+      "kind": "value",
+      "answer": "130"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:5",
+      "kind": "value",
+      "answer": "150°"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:6",
+      "kind": "value",
+      "answer": "210°"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:7",
+      "kind": "value",
+      "answer": "260°"
+     },
+     {
+      "ref": "pp3u10-1:drill-2:8",
+      "kind": "value",
+      "answer": "310°"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 1",
+      "kind": "value",
+      "answer": "m(AB) = m(∠AMB) = 50°"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 2",
+      "kind": "value",
+      "answer": "length of AB = 50/360 × 2 × 22/7 × 7 = 55/9 ≈ 6.11 cm"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 3",
+      "kind": "value",
+      "answer": "length of CD = 50/360 × 44 = 55/9 ≈ 6.11 cm"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the minor circle 4",
+      "kind": "value",
+      "answer": "congruent to (arc AB is congruent to arc CD)"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 1",
+      "kind": "value",
+      "answer": "m(EF) = m(∠EMF) = 50°, length of EF = 50/360 × 88 = 110/9 ≈ 12.22 cm"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 2",
+      "kind": "value",
+      "answer": "length of XY = 50/360 × 88 = 110/9 ≈ 12.22 cm"
+     },
+     {
+      "ref": "pp3u10-1:drill-3:In the major circle 3",
+      "kind": "value",
+      "answer": "congruent to (arc EF is congruent to arc XY)"
+     },
+     {
+      "ref": "pp3u10-1:drill-7:1",
+      "kind": "value",
+      "answer": "m(arc AE) = m(arc BF)"
+     },
+     {
+      "ref": "pp3u10-1:drill-7:2",
+      "kind": "value",
+      "answer": "m(arc AC) = m(arc BC)"
+     },
+     {
+      "ref": "pp3u10-1:drill-7:3",
+      "kind": "value",
+      "answer": "m(arc CF)"
+     },
+     {
+      "ref": "pp3u10-1:drill-7:4",
+      "kind": "value",
+      "answer": "CF"
+     }
+    ]
+   }
+  }
+ ]
+}

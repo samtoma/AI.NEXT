@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3560fcb137e8d0358e933717983ba12d90585408fc8980f30960bb6daaa5e825",
+  "generated_sha256": "0200cad440f818f09de06b16c311c980a7d28c3b95f24ebcfc62483952c3dec5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u4-2:example-1:A",
+    "verdict": "different",
+    "reason": "Printed 1/2 vs solver -1/2 (the sign differs; direct computation gives 1/4 - 3/2 + 3/4 = -1/2)."
+   },
+   {
+    "ref": "pp3u4-2:example-2",
+    "verdict": "equivalent",
+    "reason": "All three values match: 0.6820, 0.5953, 2.1089."
+   }
+  ]
+ }
+}

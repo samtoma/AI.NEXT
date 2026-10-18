@@ -1,0 +1,251 @@
+{
+ "book": "prep3-parallel",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "371e7a215b988c217e09568b50842c0fb3ef18a5e91ed5188cd7c019e7d89107",
+  "generated_sha256": "0e30f9ab47f624faeadf5640e392b7f96adcf32001cfd7e884d9139052d8dd07",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u7-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u7-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Removes the zeroes of the numerator instead of the denominator",
+     "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+     "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1,1\\}$ instead of $R$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
+      },
+      {
+       "step": 2,
+       "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
+      },
+      {
+       "step": 4,
+       "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
+      },
+      {
+       "step": 5,
+       "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u7-2:rule-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:pp3u7-2-1:one-root-only-denominator",
+     "lo_id": "lo:pp3u7-2-1",
+     "label": "Finds only the positive root of the denominator",
+     "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
+     "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
+      },
+      {
+       "step": 2,
+       "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
+      },
+      {
+       "step": 3,
+       "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4,4\\}$, so the domain is $R-\\{-4,4\\}$."
+      },
+      {
+       "step": 4,
+       "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u7-2:rule-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only one remark was supplied; both entries are inferred from it plus the book's worked examples, not from a printed caution or a deliberately written wrong option."
+    },
+    {
+     "kind": "terminology",
+     "text": "Used 'zeroes of the denominator' and 'R minus the set of zeroes' as in the remark."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-3-2",
+   "entries": [
+    {
+     "id": "mc:pp3u7-3-2:same-simplest-form-means-equal",
+     "lo_id": "lo:pp3u7-3-2",
+     "label": "Same simplest form, so the fractions are equal",
+     "description": "The student simplifies both fractions, sees the same result, and concludes they are equal without comparing their domains.",
+     "signal": "States $n_1=n_2$ because both reduce to the same fraction, with no domains found, or with different domains ignored.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You simplified both fractions correctly and found the same result. That is half of the test. Two fractions are equal only when the simplest forms match and the domains match as well."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $n_1(x)=\\frac{x^2-4}{x^2+x-6}$ and $n_2(x)=\\frac{x^3-x^2-6x}{x^3-9x}$. Both reduce to $\\frac{x+2}{x+3}$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the domain of $n_1$ is $\\mathbb{R}-\\{-3,2\\}$, and the domain of $n_2$ is $\\mathbb{R}-\\{-3,0,3\\}$. For example, $x=0$ is allowed in $n_1$ but not in $n_2$. They are not defined on the same set of numbers, so $n_1\\neq n_2$."
+      },
+      {
+       "step": 4,
+       "text_md": "Likewise $\\frac{x+3}{(x+3)(x-3)}$ and $\\frac{2}{2(x-3)}$ both reduce to $\\frac{1}{x-3}$. The first excludes $-3$ and $3$, the second excludes only $3$. So they are not equal."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, find the domain of each fraction from its original denominator, and compare the domains as well as the simplest forms. If the simplest forms match but the domains differ, they are not equal. They take the same values only on the common domain, which excludes every number excluded by either one."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u7-3:linking-text-3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u7-3-2:bk-example-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were supplied, so there are no assignments. I wrote only one entry, since the only evidence is the one remark. I did not write a separate entry for taking the domain from the simplified form, as no source flags it directly."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-4-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written and the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u7-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 8,
+  "entries": 3,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 1,
+  "flags": 8
+ }
+}

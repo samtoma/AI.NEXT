@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "d63fea87216cf24e578682dad09cf38d1d5c0dd903a95d8b87888f13948fe649",
+  "generated_sha256": "0e0f31a3faf8e2fae0f66d7e14cd9dc0cc6d997da4a059615647300a487702ae",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u10-1:example-1",
+    "verdict": "equivalent",
+    "reason": "Both give 120°."
+   },
+   {
+    "ref": "pp3u10-1:example-3",
+    "verdict": "equivalent",
+    "reason": "Both give AB = 7 cm."
+   }
+  ]
+ }
+}

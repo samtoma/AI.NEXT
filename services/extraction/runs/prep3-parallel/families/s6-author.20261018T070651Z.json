@@ -1,0 +1,939 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "e77a2e6fe8c4e422fd1cc962bbde7875ed21286d53a79c3a8acf5d26626282c4",
+  "generated_sha256": "96ce677f2016c351026759ba9d925c6aab509e2d23a33a1a5a342f5e274160cc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u6-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for this objective, so there is no valid parent_question_id or source_page and no book solution to model the method on."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions were supplied for this objective, so there is no valid parent_question_id or source_page and no book solution to model the method on."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions were supplied for this objective, so there is no valid parent_question_id or source_page and no book solution to model the method on."
+    }
+   ],
+   "notes": "The book question list for lo:pp3u6-1-1 was empty. Supply the book questions and their canonical solutions, and the three tiers can be written."
+  },
+  {
+   "lo_id": "lo:pp3u6-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-2:meet-point",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-2",
+     "parent_question_id": "q:pp3u6-1-2:bk-exercise-2",
+     "source_page": 6,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x0",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "y0",
+       "randint": [
+        "x0 + 1",
+        7
+       ]
+      },
+      {
+       "name": "a",
+       "let": "y0 - x0"
+      },
+      {
+       "name": "b",
+       "let": "y0 + x0"
+      }
+     ],
+     "constraints": [],
+     "stem": "Solve the two equations graphically by drawing both lines on the same graph: $L_1 : y = x + {=a}$ and $L_2 : y = {=b} - x$. Write the coordinates $(x, y)$ of the point where the two lines meet.",
+     "answer": "",
+     "solution": [
+      "For $L_1$: $y = x + {=a}$. Put $x = 0$, then $y = {=a}$, so $(0, {=a})$ is on $L_1$. Put $x = 1$, then $y = {=a + 1}$, so $(1, {=a + 1})$ is on $L_1$. Draw $L_1$ through these points.",
+      "For $L_2$: $y = {=b} - x$. Put $x = 0$, then $y = {=b}$, so $(0, {=b})$ is on $L_2$. Put $x = 1$, then $y = {=b - 1}$, so $(1, {=b - 1})$ is on $L_2$. Draw $L_2$ through these points.",
+      "The two lines meet at the point $({=x0}, {=y0})$.",
+      "Check: ${=x0} + {=a} = {=y0}$ and ${=b} - {=x0} = {=y0}$.",
+      "The solution is $({=x0}, {=y0})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x0}, {=y0})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry-point: both lines have unit slope, intersection at integer point with positive intercepts."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-2:lines-relate",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-2",
+     "parent_question_id": "q:pp3u6-1-2:bk-example-3-first",
+     "source_page": 7,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "case",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "ic",
+       "let": "c + e * (1 - case)"
+      },
+      {
+       "name": "n",
+       "let": "m * ic"
+      },
+      {
+       "name": "ma",
+       "let": "m * a"
+      },
+      {
+       "name": "opts",
+       "let": "['No solution: the lines are parallel and never meet', 'Infinitely many solutions: the two lines coincide']"
+      },
+      {
+       "name": "d1",
+       "let": "opts[1 - case]"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find graphically the solution set of the equations $L_1 : {=a}x + y = {=c}$ and $L_2 : {=ma}x + {=m}y = {=n}$. Which statement is correct?",
+     "solution": [
+      "Put $L_1$ in the form $y = {=c} - {=a}x$. Put $x = 0$, then $y = {=c}$, so $(0, {=c})$ is on $L_1$. Put $x = 1$, then $y = {=c - a}$, so $(1, {=c - a})$ is on $L_1$. Draw $L_1$.",
+      "Put $L_2$ in the form $y = {=ic} - {=a}x$ (divide by ${=m}$). Put $x = 0$, then $y = {=ic}$, so $(0, {=ic})$ is on $L_2$. Put $x = 1$, then $y = {=ic - a}$, so $(1, {=ic - a})$ is on $L_2$. Draw $L_2$.",
+      "Both lines have slope $-{=a}$, so they never cross at a single point.",
+      "The lines are drawn: they are the same line or different parallel lines, according to their points. Here $L_1$ passes through $(0, {=c})$ and $L_2$ passes through $(0, {=ic})$.",
+      "So the correct statement is: {=opts[case]}."
+     ],
+     "choices": {
+      "correct": "{=opts[case]}",
+      "distractors": [
+       {
+        "text": "{=d1}",
+        "misconception_id": "mc:pp3u6-1-2:parallel-coincide-swap"
+       },
+       {
+        "text": "Exactly one solution: the lines meet at one point",
+        "misconception_id": "mc:pp3u6-1-2:assume-intersect"
+       },
+       {
+        "text": "The solution set is $\\{(0, 0)\\}$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u6-1-2:parallel-coincide-swap",
+       "label": "Confuses parallel with coincident lines",
+       "description": "Cannot tell from the graph whether two same-slope lines are different (no solution) or the same line (infinitely many)."
+      },
+      {
+       "id": "mc:pp3u6-1-2:assume-intersect",
+       "label": "Assumes two lines always meet in one point",
+       "description": "Expects a single intersection point even when the lines have equal slopes."
+      }
+     ],
+     "notes": "Second equation is m times the first, with the constant either m times c (coincide) or shifted (parallel). Twist: the second line looks different."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-3:add-subtract",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-3",
+     "parent_question_id": "q:pp3u6-1-3:bk-drill-3-b",
+     "source_page": 8,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        "p - 1"
+       ]
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "d",
+       "let": "p - q"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find algebraically the solution of the two equations $x+y={=s}$ (1) and $x-y={=d}$ (2). Write the answer as an ordered pair $(x, y)$.",
+     "solution": [
+      "$x + y = {=s}$ ... (1) and $x - y = {=d}$ ... (2).",
+      "Adding (1) and (2) omits $y$: $2x = {=s} + {=d} = {=s+d}$.",
+      "So $x = {=p}$.",
+      "Substituting in (1): ${=p} + y = {=s}$, so $y = {=q}$.",
+      "The solution is $({=p}, {=q})$, and the two equations have exactly one solution."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=p}, {=q})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: coefficients of y are opposite, so adding eliminates y directly. x>y>0 so all numbers positive."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-3:multiply-both",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-3",
+     "parent_question_id": "q:pp3u6-1-3:bk-example-4",
+     "source_page": 8,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "x0",
+       "choice": [
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "y0",
+       "choice": [
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a * x0 + b * y0"
+      },
+      {
+       "name": "f",
+       "let": "d * x0 - e * y0"
+      },
+      {
+       "name": "m",
+       "let": "a * e + b * d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find algebraically, by omitting one variable, the solution of the two equations ${=a}x+{=b}y={=c}$ (1) and ${=d}x-{=e}y={=f}$ (2). Write the answer as an ordered pair $(x, y)$.",
+     "solution": [
+      "${=a}x + {=b}y = {=c}$ ... (1) and ${=d}x - {=e}y = {=f}$ ... (2).",
+      "To omit $y$, multiply (1) by ${=e}$ and (2) by ${=b}$: ${=a*e}x + {=b*e}y = {=c*e}$ (3) and ${=b*d}x - {=b*e}y = {=b*f}$ (4).",
+      "Adding (3) and (4): ${=m}x = {=c*e+b*f}$.",
+      "So $x = {=x0}$.",
+      "Substituting in (1): ${=a}({=x0}) + {=b}y = {=c}$, so ${=b}y = {=c - a*x0}$ and $y = {=y0}$.",
+      "The solution is $({=x0}, {=y0})$, and the two equations have exactly one solution."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x0}, {=y0})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: both equations must be multiplied; negative solutions and a negative right-hand side possible. Determinant -(ae+bd) is never zero so always exactly one solution."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-4:sumdiff",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-4",
+     "parent_question_id": "q:pp3u6-1-4:bk-example-6",
+     "source_page": 9,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "Two numbers are given by their sum and their difference.",
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        10,
+        40
+       ]
+      },
+      {
+       "name": "y",
+       "randint": [
+        3,
+        "x - 2"
+       ]
+      },
+      {
+       "name": "s",
+       "let": "x + y"
+      },
+      {
+       "name": "d",
+       "let": "x - y"
+      },
+      {
+       "require": "d > 0",
+       "why": "difference positive"
+      }
+     ],
+     "stem": "The sum of two numbers is ${=s}$ and their difference is ${=d}$. Find the larger number.",
+     "answer": "x",
+     "solution": [
+      "Let the larger number be $x$ and the smaller number be $y$.",
+      "$x+y={=s}$ .... (1)",
+      "$x-y={=d}$ .... (2)",
+      "Adding equations (1) and (2): $2x={=s+d}$",
+      "$x={=x}$",
+      "Substituting in (1): ${=x}+y={=s}$, so $y={=y}$. The larger number is ${=x}$."
+     ],
+     "notes": "Basic: form and solve by addition from a sum/difference word problem."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-4:coeffs",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-4",
+     "parent_question_id": "q:pp3u6-1-4:bk-example-5",
+     "source_page": 9,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "A",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "B",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        -3,
+        -1
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "k1",
+       "let": "p*A + q*B"
+      },
+      {
+       "name": "k2",
+       "let": "m*p*A + q*B"
+      },
+      {
+       "require": "k1 > 0",
+       "why": "keep constants positive"
+      }
+     ],
+     "stem": "Find the values of $a$ and $b$ knowing that $({=p}, {=q})$ is the solution of the two equations: $ax+by={=k1}$, ${=m}ax+by={=k2}$. Give your answer in the order $a$, $b$.",
+     "answer": "",
+     "solution": [
+      "$({=p}, {=q})$ satisfies both equations, so substitute $x={=p}$, $y={=q}$.",
+      "First equation: ${=p}a+({=q})b={=k1}$ .... (1)",
+      "Second equation: ${=m*p}a+({=q})b={=k2}$ .... (2)",
+      "Subtracting (1) from (2): ${=(m-1)*p}a={=k2-k1}$, so $a={=A}$.",
+      "Substituting in (1): ${=p}\\times{=A}+({=q})b={=k1}$, so $({=q})b={=k1-p*A}$, hence $b={=B}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=A}, {=B}]",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "notes": "Standard: book example 5 pattern; both unknowns are coefficients, solved by subtraction. Answer order a, b."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-1:table-roots",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-1",
+     "parent_question_id": "q:pp3u6-2-1:bk-example-1",
+     "source_page": 10,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        "p + 1",
+        "p + 3"
+       ]
+      },
+      {
+       "name": "ys",
+       "let": "[x*x - (p+q)*x + p*q for x in range(p-1, p+5)]"
+      }
+     ],
+     "constraints": [],
+     "stem": "The table gives some ordered pairs of the function $f$ where $f(x) = x^2 - {=p+q}x + {=p*q}$ in the interval $[{=p-1}, {=p+4}]$: $f({=p-1}) = {=ys[0]}$, $f({=p}) = {=ys[1]}$, $f({=p+1}) = {=ys[2]}$, $f({=p+2}) = {=ys[3]}$, $f({=p+3}) = {=ys[4]}$, $f({=p+4}) = {=ys[5]}$. Plot these points and draw the curve through them. From the drawing, find the solution set of the equation $x^2 - {=p+q}x + {=p*q} = 0$.",
+     "solution": [
+      "Plot the points $({=p-1}, {=ys[0]})$, $({=p}, {=ys[1]})$, $({=p+1}, {=ys[2]})$, $({=p+2}, {=ys[3]})$, $({=p+3}, {=ys[4]})$, $({=p+4}, {=ys[5]})$ on the coordinate plane and draw a smooth curve through them.",
+      "The solutions of the equation are the x-coordinates of the points where the curve meets the x-axis (where $y = 0$).",
+      "The curve meets the x-axis at the points $({=p}, 0)$ and $({=q}, 0)$.",
+      "Thus, the solution set of the equation is $\\{{=p}, {=q}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=p}, {=q}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: table of values is given; student plots, reads x-intercepts. Roots p<q positive integers, both inside the table range (q-p<=3 so q<=p+3)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-1:rearrange",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-1",
+     "parent_question_id": "q:pp3u6-2-1:bk-example-1",
+     "source_page": 10,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        -3,
+        -1
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        "1 - p",
+        "5"
+       ]
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "c",
+       "let": "-p*q"
+      },
+      {
+       "name": "lo",
+       "let": "p - 1"
+      },
+      {
+       "name": "hi",
+       "let": "q + 1"
+      },
+      {
+       "name": "flo",
+       "let": "lo*lo - s*lo - c"
+      },
+      {
+       "name": "fhi",
+       "let": "hi*hi - s*hi - c"
+      },
+      {
+       "name": "f0",
+       "let": "-c"
+      },
+      {
+       "require": "s > 0 and c > 0",
+       "why": "keep the printed equation free of negative signs"
+      }
+     ],
+     "constraints": [],
+     "stem": "Solve graphically the equation $x^2 = {=s}x + {=c}$ by drawing the function $f$ in the interval $[{=lo}, {=hi}]$. Write the solution set.",
+     "solution": [
+      "Move all terms to one side: $x^2 - {=s}x - {=c} = 0$. So draw the graph of $f(x) = x^2 - {=s}x - {=c}$ in the interval $[{=lo}, {=hi}]$.",
+      "Find ordered pairs with $x \\in [{=lo}, {=hi}]$ and put them in a table, for example $f({=lo}) = {=flo}$, $f(0) = {=f0}$, $f({=p}) = 0$, $f({=q}) = 0$, $f({=hi}) = {=fhi}$ (and the other integers of the interval).",
+      "Plot the points and draw a smooth curve through them.",
+      "The curve meets the x-axis at the points $({=p}, 0)$ and $({=q}, 0)$.",
+      "Thus, the solution set of the equation is $\\{{=p}, {=q}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=p}, {=q}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: equation not in the form f(x)=0; student must rearrange first. Roots p in [-3,-1], q in [1-p,5] so s>0 and c>0; p<q, both inside the interval. Equation x^2 = s x + c with s=p+q, c=-pq."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-2:factorise-monic",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-2",
+     "parent_question_id": "q:pp3u6-2-2:bk-think-and-discuss-1-4",
+     "source_page": 10,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "require": "p != 0",
+       "why": "nonzero root"
+      },
+      {
+       "name": "q",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "q == p or q == 0"
+      },
+      {
+       "name": "b",
+       "let": "-(p + q)"
+      },
+      {
+       "name": "c",
+       "let": "p * q"
+      },
+      {
+       "require": "abs(b) >= 2",
+       "why": "keep the x term with a coefficient other than 0 or 1"
+      },
+      {
+       "name": "sb",
+       "let": "'+' if b > 0 else '-'"
+      },
+      {
+       "name": "sc",
+       "let": "'+' if c > 0 else '-'"
+      },
+      {
+       "name": "sp",
+       "let": "'-' if p > 0 else '+'"
+      },
+      {
+       "name": "sq",
+       "let": "'-' if q > 0 else '+'"
+      }
+     ],
+     "stem": "Solve the equation $x^2 {=sb} {=abs(b)}x {=sc} {=abs(c)} = 0$ by factorising the left side. Write the solution set (give the two roots).",
+     "solution": [
+      "Find two numbers whose product is ${=c}$ and whose sum is ${=b}$: they are ${=-p}$ and ${=-q}$.",
+      "Factorise the left side: $(x {=sp} {=abs(p)})(x {=sq} {=abs(q)}) = 0$.",
+      "Either $x {=sp} {=abs(p)} = 0$, so $x = {=p}$, or $x {=sq} {=abs(q)} = 0$, so $x = {=q}$.",
+      "The solution set is $\\{{=p}, {=q}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=p}, {=q}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Monic quadratic with integer distinct nonzero roots; factorising method as in book question. Roots given in any order."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-2:factorise-lead",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-2",
+     "parent_question_id": "q:pp3u6-2-2:bk-think-and-discuss-1-4",
+     "source_page": 10,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "require": "gcd(r, a) == 1",
+       "why": "root r/a is a non-integer fraction in lowest terms"
+      },
+      {
+       "name": "s",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "B",
+       "let": "a * s + r"
+      },
+      {
+       "name": "C",
+       "let": "r * s"
+      }
+     ],
+     "stem": "Solve the equation ${=a}x^2 - {=B}x + {=C} = 0$ by factorising the left side. Write the solution set, giving any non-whole root as a fraction in simplest form.",
+     "solution": [
+      "The left side has a leading coefficient ${=a}$, so look for a factorisation $({=a}x - {=r})(x - {=s})$.",
+      "Check: ${=a}x^2 - {=a*s}x - {=r}x + {=C} = {=a}x^2 - {=B}x + {=C}$, which is correct.",
+      "So $({=a}x - {=r})(x - {=s}) = 0$.",
+      "Either ${=a}x - {=r} = 0$, so $x = \\frac{{=r}}{{=a}}$, or $x - {=s} = 0$, so $x = {=s}$.",
+      "The solution set is $\\{\\frac{{=r}}{{=a}}, {=s}\\}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=r}/{=a}, {=s}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Non-monic quadratic, one fractional root. Factorising only. Roots any order."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-2-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The BOOK QUESTIONS list for lo:pp3u6-2-3 is empty. Every family needs a real parent_question_id and source_page from this objective, and I have no book solutions to model the method, notation, rounding convention or contexts on. Inventing a parent id or a context would be fabrication."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there is no book question or canonical solution to model the book's typical exercise on, and no parent_question_id or source_page I can cite honestly."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: without any book question I cannot tell which twist the book uses for its harder exercises, such as rejecting a negative root in a real-life context. I also have no parent id to cite."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-3-1:circle-line",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-3-1",
+     "parent_question_id": "q:pp3u6-3-1:bk-mental-math-1",
+     "source_page": 13,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        "p - 1"
+       ]
+      },
+      {
+       "name": "d",
+       "let": "p - q"
+      },
+      {
+       "name": "N",
+       "let": "p*p + q*q"
+      }
+     ],
+     "stem": "Solve algebraically, by substitution, the two equations $x - y = {=d}$ and $x^2 + y^2 = {=N}$, where $x, y \\in \\mathbb{R}$. Give the solution set as a list of ordered pairs $(x, y)$.",
+     "solution": [
+      "From the first-degree equation, $x = y + {=d}$.",
+      "Substitute into the second equation: $(y + {=d})^2 + y^2 = {=N}$.",
+      "Expand: $2y^2 + {=2*d}y + {=d*d} = {=N}$, so $2y^2 + {=2*d}y - {=N - d*d} = 0$.",
+      "Divide by 2: $y^2 + {=d}y - {=(N - d*d)/2} = 0$, which factorises as $(y - {=q})(y + {=p}) = 0$.",
+      "So $y = {=q}$ or $y = -{=p}$.",
+      "Then $x = y + {=d}$ gives $x = {=p}$ or $x = -{=q}$.",
+      "The solution set is $\\{({=p}, {=q}), (-{=q}, -{=p})\\}$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "[({=p}, {=q}), (-{=q}, -{=p})]",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Solutions (p,q) and (-q,-p); always two distinct integer pairs since q>=1. Order of pairs should not matter."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-3-1:product-line",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-3-1",
+     "parent_question_id": "q:pp3u6-3-1:bk-mental-math-1",
+     "source_page": 13,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        7
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        "a + 1",
+        8
+       ]
+      },
+      {
+       "name": "s",
+       "let": "2*(a + c)"
+      },
+      {
+       "name": "P",
+       "let": "2*a*c"
+      }
+     ],
+     "stem": "Solve algebraically, by substitution, the two equations $2x + y = {=s}$ and $xy = {=P}$, where $x, y \\in \\mathbb{R}$. Give the solution set as a list of ordered pairs $(x, y)$.",
+     "solution": [
+      "From the first-degree equation, $y = {=s} - 2x$.",
+      "Substitute into the second equation: $x({=s} - 2x) = {=P}$.",
+      "Rearrange: $2x^2 - {=s}x + {=P} = 0$, and divide by 2: $x^2 - {=a + c}x + {=a*c} = 0$.",
+      "Factorise: $(x - {=a})(x - {=c}) = 0$, so $x = {=a}$ or $x = {=c}$.",
+      "Then $y = {=s} - 2x$ gives $y = {=2*c}$ when $x = {=a}$, and $y = {=2*a}$ when $x = {=c}$.",
+      "The solution set is $\\{({=a}, {=2*c}), ({=c}, {=2*a})\\}$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "[({=a}, {=2*c}), ({=c}, {=2*a})]",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Solutions (a,2c) and (c,2a), a<c distinct, so two distinct pairs. Check: 2a+2c=s, a*2c=P."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-3-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions are listed for this objective, so there is no valid parent_question_id or source_page, and no canonical solution to model the book's method."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions are listed for this objective, so there is no valid parent_question_id or source_page, and no canonical solution to model the book's method."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions are listed for this objective, so there is no valid parent_question_id or source_page, and no canonical solution to model the book's method."
+    }
+   ],
+   "notes": "The book-question list is empty. I did not invent a parent id or guess the book's solving method. Supply the objective's book questions and solutions and I can write the three tiers."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-2:algebr",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-2",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    5,
+    20
+   ]
+  },
+  {
+   "name": "q",
+   "let": "x + p"
+  },
+  {
+   "name": "r",
+   "let": "2 * x + p"
+  }
+ ],
+ "stem": "$ABCD$ is a cyclic quadrilateral. The side $CD$ is produced to $E$. If $m(\\angle ADE) = (2x + {=p})^\\circ$ and $m(\\angle ABC) = (x + {=q})^\\circ$, find $m(\\angle ABC)$ in degrees.",
+ "answer": "r",
+ "solution": [
+  "$\\angle ADE$ is the exterior angle at $D$, so it equals the interior angle at the opposite vertex $B$.",
+  "So $2x + {=p} = x + {=q}$.",
+  "Subtract $x$ and ${=p}$: $x = {=x}$.",
+  "Then $m(\\angle ABC) = {=x} + {=q} = {=r}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "x = q - p. No parent book question available."
+}

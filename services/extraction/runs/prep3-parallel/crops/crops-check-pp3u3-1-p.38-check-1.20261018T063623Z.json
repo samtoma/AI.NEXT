@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "3c697955b64dad9a79cab53d44fbe126dfcd12b3b04912bde87c56b3bbee2197",
+  "generated_sha256": "38dc7e85b5840e066450bf4b356251b25eec2262c98df623ee0a6f15e27e8a9d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u3-1:figure-1",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete clip-art of woman at computer."
+   },
+   {
+    "id": "pp3u3-1:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Text 'according to the aim' at top is not part of the figure."
+   },
+   {
+    "id": "pp3u3-1:figure-3",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete clip-art scene."
+   }
+  ]
+ }
+}

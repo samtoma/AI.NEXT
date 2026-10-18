@@ -1,0 +1,348 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "baf2d1db4a84d3da7c7dafd80a885018d5818116d4a02cd4e394ba9972caf6b8",
+  "generated_sha256": "af1bfd787dfce5cccca70302979862dc5191d80ae9ca8dee37152e3d7bbe5104",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u5-1-1:general-pts",
+   "spec_sha": "fbd0608659c1ca65db0157174f673a6bd64776d1e7a52d58c86b08c2c5a60ba3",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-1-1:g001-genera",
+     "stem_sha": "3b471e97badc2431",
+     "answer": {
+      "value": "10"
+     },
+     "working": "dx=-6, dy=8; sqrt(36+64)=10"
+    },
+    {
+     "instance_id": "q:pp3u5-1-1:g008-genera",
+     "stem_sha": "daac305f26dcc28b",
+     "answer": {
+      "value": "15"
+     },
+     "working": "dx=12, dy=9; sqrt(144+81)=15"
+    },
+    {
+     "instance_id": "q:pp3u5-1-1:g009-genera",
+     "stem_sha": "e9290a1f32a3c6ac",
+     "answer": {
+      "value": "13"
+     },
+     "working": "dx=-5, dy=12; sqrt(25+144)=13"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys (10, 15, 13) are correct, and each worked solution follows the right-triangle/Pythagoras method. No options were given, so there are no distractors to judge. The only flaw is cosmetic: parentheses around a single number, such as |14-(2)|.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-1-1:perimeter-tri",
+   "spec_sha": "5658bdc97e67e4e45c079ca4425f2117ca12bd6aa92855ff953f032500e07c75",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-1-1:g002-perime",
+     "stem_sha": "9c35952783e10ed9",
+     "answer": {
+      "value": "36"
+     },
+     "working": "AB=12 (horizontal), BC=9 (vertical), AC=sqrt(144+81)=15. Perimeter=36."
+    },
+    {
+     "instance_id": "q:pp3u5-1-1:g008-perime",
+     "stem_sha": "951eb22bc80b507a",
+     "answer": {
+      "value": "12"
+     },
+     "working": "AB=3, BC=4, AC=sqrt(9+16)=5. Perimeter=12."
+    },
+    {
+     "instance_id": "q:pp3u5-1-1:g010-perime",
+     "stem_sha": "9f3f176129ef4a3e",
+     "answer": {
+      "value": "24"
+     },
+     "working": "AB=8, BC=6, AC=sqrt(64+36)=10. Perimeter=24."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. The keys are 36, 12 and 24. The side lengths are 12, 9, 15 for g002; 3, 4, 5 for g008; and 8, 6, 10 for g010. Each worked solution reaches its key correctly. The right angle at B follows from AB being horizontal and BC vertical. No wrong options were provided, so there are no distractors to judge. The question is a plain coordinate problem with no word context."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-1-2:righttri",
+   "spec_sha": "7d15e87a0eae6619e274b30d94333880085ca0f084041b3850e4b36ecac1a4f9",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-1-2:g003-rightt",
+     "stem_sha": "1c555d6584ddc10f",
+     "answer": {
+      "value": "20"
+     },
+     "working": "AB²=20, AC²=80, BC²=100; 20+80=100 so right angle at A. Area=½·√20·√80=½·40=20."
+    },
+    {
+     "instance_id": "q:pp3u5-1-2:g008-rightt",
+     "stem_sha": "68355111b9d6276b",
+     "answer": {
+      "value": "15"
+     },
+     "working": "AB²=10, AC²=90, BC²=100; 10+90=100 so right angle at A. Area=½·√10·√90=½·30=15."
+    },
+    {
+     "instance_id": "q:pp3u5-1-2:g009-rightt",
+     "stem_sha": "a55bb00841e1d5c1",
+     "answer": {
+      "value": "1"
+     },
+     "working": "AB²=2, AC²=2, BC²=4; 2+2=4 so right angle at A. Area=½·√2·√2=1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances.\n- g003: AB²=20, AC²=80, BC²=100, so the triangle is right angled at A. Area = ½·√1600 = 20.\n- g008: AB²=10, AC²=90, BC²=100. Area = ½·30 = 15.\n- g009: AB²=2, AC²=2, BC²=4. Area = 1.\nThe keys match the stems and the steps are correct. No wrong options were provided, so there are no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-2-1:midpoint-ends",
+   "spec_sha": "3df92bdf54999569c3f479567269d1fb85a08bd3fd61c73ce87f5071770f6d19",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-2-1:g002-midpoi",
+     "stem_sha": "086a0d53d0760bac",
+     "answer": {
+      "plain": "(-3, 0)"
+     },
+     "working": "((-7+1)/2, (-2+2)/2) = (-3, 0)"
+    },
+    {
+     "instance_id": "q:pp3u5-2-1:g004-midpoi",
+     "stem_sha": "5ee6b1916021efda",
+     "answer": {
+      "plain": "(7, 6)"
+     },
+     "working": "((2+12)/2, (1+11)/2) = (7, 6)"
+    },
+    {
+     "instance_id": "q:pp3u5-2-1:g007-midpoi",
+     "stem_sha": "2512c8711abf0a1d",
+     "answer": {
+      "plain": "(5, -6)"
+     },
+     "working": "((1+9)/2, (-8-4)/2) = (5, -6)"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances with the midpoint formula. g002: (-7+1)/2 = -3 and (-2+2)/2 = 0, so (-3, 0). g004: (2+12)/2 = 7 and (1+11)/2 = 6, so (7, 6). g007: (1+9)/2 = 5 and (-8-4)/2 = -6, so (5, -6). Each key matches its answer_check, and each solution's steps are correct. The instances have no multiple-choice options, so there are no distractors to check. The stem wording \"perpendicular coordinate plane\" and \"straight segment\" is a little odd but clear. The numbers are realistic."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-2-1:quarter-point",
+   "spec_sha": "c4aab0e08b42baf2ab84ccdbb59a25e2dca7100c0ea7c13a926b94dc705fe7ad",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-2-1:g002-quarte",
+     "stem_sha": "b5966c4252be4633",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-2-1:g003-quarte",
+     "stem_sha": "d1ad78a025f25094",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-2-1:g009-quarte",
+     "stem_sha": "ec2460a4444cc556",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key is correct: g002 (-4,-8), g003 (-11,-9), g009 (-5,-6). The family has no options, so no distractors were judged. The worked steps are correct and use the book's midpoint method twice. The wording \"perpendicular coordinate plane\" and \"straight segment\" is slightly unusual but not ambiguous.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-3-2:equalslope",
+   "spec_sha": "5476b70cfe8a02b448476f90e018f5b5c256e3c223a9b455c513c069caf78c7d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-3-2:g005-equals",
+     "stem_sha": "0c2ed0dadcad8fb0",
+     "answer": {
+      "value": "10"
+     },
+     "working": "slope AB = 4/2 = 2; (k-4)/3 = 2 → k = 10"
+    },
+    {
+     "instance_id": "q:pp3u5-3-2:g006-equals",
+     "stem_sha": "51af5b380f0008c0",
+     "answer": {
+      "value": "-12"
+     },
+     "working": "slope AB = -3/1 = -3; k/4 = -3 → k = -12"
+    },
+    {
+     "instance_id": "q:pp3u5-3-2:g009-equals",
+     "stem_sha": "f580e4448beb1387",
+     "answer": {
+      "value": "-7"
+     },
+     "working": "slope AB = -3/1 = -3; (k-5)/4 = -3 → k = -7"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances (k = 10, −12, −7) and each matches its key. The steps are correct and use the book's method of equal slopes for parallel lines. No options were provided, so there were no distractors to judge. The stems have no word-problem context.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-3-2:parslope",
+   "spec_sha": "db0c82189f1e0b7cbc623ceb04a75c943e874a2bbe29a8911f294e30bbbc8800",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-3-2:g001-parslo",
+     "stem_sha": "27b27a67d5b00d3f",
+     "answer": {
+      "value": "4"
+     },
+     "working": "slope = (9-5)/(2-1) = 4; parallel lines share the slope."
+    },
+    {
+     "instance_id": "q:pp3u5-3-2:g006-parslo",
+     "stem_sha": "09e884121f7bda3a",
+     "answer": {
+      "value": "4"
+     },
+     "working": "slope = (7-(-1))/(3-1) = 8/2 = 4."
+    },
+    {
+     "instance_id": "q:pp3u5-3-2:g008-parslo",
+     "stem_sha": "f48c43e63fea8646",
+     "answer": {
+      "value": "1"
+     },
+     "working": "slope = (3-2)/(4-3) = 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options were provided, so there are no distractors to judge. All three keys check out arithmetically (4, 4, 1). The worked solutions apply the slope formula and then the parallel-slope rule correctly."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-4-1:findk-advanced",
+   "spec_sha": "8357871f3928622a15d3a78afbb677405aa071d1c04d4b494ab9c0e17072cd9e",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-4-1:g002-findk-",
+     "stem_sha": "38e978bd45194380",
+     "answer": {
+      "value": "-12"
+     },
+     "working": "4y = -kx + 12, slope = -k/4 = 3, so k = -12"
+    },
+    {
+     "instance_id": "q:pp3u5-4-1:g007-findk-",
+     "stem_sha": "ca0b617762118f54",
+     "answer": {
+      "value": "4"
+     },
+     "working": "2y = -kx + 4, slope = -k/2 = -2, so k = 4"
+    },
+    {
+     "instance_id": "q:pp3u5-4-1:g008-findk-",
+     "stem_sha": "2ca2d234b6949c90",
+     "answer": {
+      "value": "-15"
+     },
+     "working": "5y = -kx + 5, slope = -k/5 = 3, so k = -15"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No files were named, so I read none. I verified all three instances by hand: k = -12, 4 and -15 are correct, and each solution is correct step by step. The family has no options, so there are no distractors.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-4-1:slope-standard",
+   "spec_sha": "6e9b362726452b5bbbc613b20a5cba2194edda19223ca2a67c1d031e96046c44",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-4-1:g001-slope-",
+     "stem_sha": "eb26f856274aca1e",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "3y = -3x + 18 → y = -x + 6; slope = -1"
+    },
+    {
+     "instance_id": "q:pp3u5-4-1:g003-slope-",
+     "stem_sha": "f381e51366174045",
+     "answer": {
+      "value": "4"
+     },
+     "working": "4y = 16x + 12 → y = 4x + 3; slope = 4"
+    },
+    {
+     "instance_id": "q:pp3u5-4-1:g004-slope-",
+     "stem_sha": "fb23359c291f3900",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "2y = -6x + 4 → y = -3x + 2; slope = -3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options were provided, so distractors_ok is true by default. I checked all three keys (−1, 4, −3) and they are correct. The worked solutions are correct. The only blemish is g001 step 2, which writes \"y = −1x + 6\" instead of \"y = −x + 6\"."
+   }
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-1-2:overlap-range",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-1-2",
+ "parent_question_id": "q:pp3u8-1-2:bk-worked-example-1-b",
+ "source_page": 32,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    8,
+    10,
+    12
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    4,
+    "N - 2"
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    "a - 1"
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a - b + 1"
+  },
+  {
+   "name": "f",
+   "let": "frac(c, N)"
+  },
+  {
+   "require": "c >= 1 and c < N",
+   "why": "overlap non-empty and proper"
+  }
+ ],
+ "stem": "Let $S=\\{1, 2, \\dots, {=N}\\}$ be the sample space of choosing a number at random. Event $A$ is the numbers from 1 to {=a}, and event $B$ is the numbers from {=b} to {=N}. Draw the Venn diagram and find the probability of the occurrence of $A$ and $B$ together, $P(A\\cap B)$. Write the answer as a fraction in its simplest form (for example 1/4).",
+ "answer": "str(numerator(f)) + \"/\" + str(denominator(f))",
+ "solution": [
+  "$A\\cap B$ is the set of numbers in both events: the numbers from {=b} to {=a}.",
+  "So $n(A\\cap B)={=c}$.",
+  "$n(S)={=N}$, so $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{{=c}}{{=N}}=\\frac{{=numerator(f)}}{{=denominator(f)}}$ in simplest form."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Answer is a string like 3/8 (lowest terms; denominator never 1 since c<N). Sets are listed explicitly so no ambiguity."
+}

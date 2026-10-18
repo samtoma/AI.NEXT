@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "06fcb58266c1f8ee72e42a4d2b8f8049fe1478a839a2a23568e4a152b08056c0",
+  "generated_sha256": "67cee03b02523e9d176dff6c75d0aab6c2bc6f0d264707185210f2edc3a30ccb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-6:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-6:example-2:A",
+      "kind": "explanation",
+      "answer": "AB = AC (tangent segments) and MB = MC (radii), so line AM is the axis of BC, hence $AM \\perp BC$ and $m(\\angle BXM)=90^\\circ$. Y is the midpoint of chord BD, so $MY \\perp BD$ and $m(\\angle BYM)=90^\\circ$. The opposite angles X and Y of XBYM sum to $180^\\circ$, so XBYM is cyclic."
+     },
+     {
+      "ref": "pp3u10-6:example-2:B",
+      "kind": "value",
+      "answer": "35°. In the cyclic quadrilateral XBYM, $m(\\angle XBM)=m(\\angle XYM)=35^\\circ$ (both subtend XM). Since $AB \\perp MB$, $m(\\angle ABX)=90^\\circ-35^\\circ=55^\\circ$. In right triangle ABX, $m(\\angle A)=90^\\circ-55^\\circ=35^\\circ$."
+     }
+    ]
+   }
+  }
+ ]
+}

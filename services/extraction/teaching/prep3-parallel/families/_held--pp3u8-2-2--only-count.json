@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-2-2:only-count",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-2-2",
+ "parent_question_id": "q:pp3u8-2-2:bk-drill-2-1",
+ "source_page": 37,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": "A student is chosen at random from a group; A is the event that the student reads Al-Akhbar newspaper and B the event that the student reads Al-Ahram newspaper.",
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    20,
+    24,
+    30,
+    40,
+    50
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    8,
+    "s // 2"
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    "a - 3"
+   ]
+  },
+  {
+   "name": "d",
+   "let": "a - b"
+  },
+  {
+   "name": "g",
+   "let": "gcd(d, s)"
+  },
+  {
+   "name": "p",
+   "let": "d // g"
+  },
+  {
+   "name": "q",
+   "let": "s // g"
+  },
+  {
+   "require": "q > 1",
+   "why": "answer must be a proper fraction"
+  }
+ ],
+ "stem": "A student is chosen at random from {=s} students. Let A be the event that the student reads Al-Akhbar newspaper and B the event that the student reads Al-Ahram newspaper. Given n(A) = {=a} and n(A ∩ B) = {=b}, find the probability that the student reads Al-Akhbar newspaper only. Write the answer as a fraction in its simplest form, like 3/8.",
+ "answer": "str(p) + \"/\" + str(q)",
+ "solution": [
+  "Reading Al-Akhbar only is the event A - B.",
+  "Since (A - B) ∪ (A ∩ B) = A, n(A - B) = n(A) - n(A ∩ B) = {=a} - {=b} = {=d}.",
+  "P(A - B) = n(A - B) / n(S) = {=d}/{=s}.",
+  "In simplest form the probability is {=p}/{=q}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: given n(S), n(A), n(A∩B) as in the book's Venn diagram (S=40, A=18, A∩B=8). Answer string is simplest-form p/q; q>1 always since a-b<s. Answer expression is formatted via str; if the engine needs a different formatting hook, use p and q."
+}

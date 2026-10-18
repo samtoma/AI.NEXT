@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "c4df2a313106d09642a21379b972fbada2247873a991f9e87b4baa02d1e54f70",
+  "generated_sha256": "c512b74de6127aea5f0b1c9fb024e6fe77924a016855a214e705be7c58c48c18",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u6-3:example-1",
+    "verdict": "equivalent",
+    "reason": "Same solution set {(0,-1), (-1/2, 0)}; only notation of the fraction differs."
+   }
+  ]
+ }
+}

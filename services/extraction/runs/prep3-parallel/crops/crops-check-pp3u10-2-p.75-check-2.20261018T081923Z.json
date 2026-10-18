@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "b6c428800cb2bb2c12c1bb43b027daf00f6d378dbf84c744ed704037647b0251",
+  "generated_sha256": "a00485bdee17adcea7a603eea9926da39c2dee774a4795c246d60797b654411c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u10-2:figure-23",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Gray box fragment (another element) at the top-left edge; figure complete."
+   },
+   {
+    "id": "pp3u10-2:figure-24",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "extend",
+    "bottom": "trim",
+    "note": "3x° label is cut off at right edge; text fragment 'ACB' at bottom-left is not part of figure."
+   }
+  ]
+ }
+}

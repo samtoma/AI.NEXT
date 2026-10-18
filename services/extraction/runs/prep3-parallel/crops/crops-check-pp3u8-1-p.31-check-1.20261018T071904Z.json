@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "25451a87cc468ebfbec0f2c7fff6c11defd6ddef56e1f8bcd0229a9c68a8e94b",
+  "generated_sha256": "878e142e48c36e5226341a031d8a101f1fec7496f8695a303129546b41bc44b3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u8-1:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Spinner is complete, but a stray text glyph sits at the top-left edge and part of a green banner shape at the top-right corner."
+   },
+   {
+    "id": "pp3u8-1:figure-4",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Venn diagram is complete."
+   },
+   {
+    "id": "pp3u8-1:figure-5",
+    "shows_figure": false,
+    "ok": false,
+    "left": "extend",
+    "top": "extend",
+    "right": "extend",
+    "bottom": "extend",
+    "note": "The crop is a tiny blank sliver and does not show the eight cards."
+   }
+  ]
+ }
+}

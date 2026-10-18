@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-2:equal-arcs",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-2",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    60,
+    90,
+    120,
+    180
+   ]
+  },
+  {
+   "name": "r1",
+   "choice": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "r2",
+   "choice": [
+    18,
+    24,
+    30,
+    36
+   ]
+  },
+  {
+   "name": "a1",
+   "let": "m * r1 / 180"
+  },
+  {
+   "name": "a2",
+   "let": "m * r2 / 180"
+  }
+ ],
+ "stem": "In a circle of radius ${=r1}$ cm, an arc of measure ${=m}^\\circ$ has length ${=a1}\\pi$ cm. Find the length of the arc of the same measure ${=m}^\\circ$ in a circle of radius ${=r2}$ cm. Give the answer in terms of $\\pi$.",
+ "answer": "",
+ "solution": [
+  "Both arcs have the same measure, so each is the fraction $\\frac{{=m}}{360}$ of its own circle.",
+  "Circumference of the second circle $=2\\pi\\times {=r2} = {=2*r2}\\pi$ cm.",
+  "Arc length $=\\frac{{=m}}{360}\\times {=2*r2}\\pi = {=a2}\\pi$ cm.",
+  "Check: arcs of equal measure have lengths in the ratio of the radii: ${=a1}\\pi : {=a2}\\pi = {=r1} : {=r2}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=a2}*pi",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book question supplied; parent_question_id empty. Compares equal-measure arcs in different circles. All a1, a2 are whole numbers."
+}

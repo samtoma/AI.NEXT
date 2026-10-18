@@ -1,0 +1,133 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "beb4ac7991ff5b07a1fbdb0ff157aaff4165961fbf0147c69b1b87d3cf666933",
+  "generated_sha256": "8f6ed567e28ed49a45daea4c4a2d662e820fe97ba6dbd1a4c91e61d3528f6356",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u6-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u6-1-2",
+     "need_kind": "line_drawer (existing) – blocked by missing misconceptions",
+     "description": "line_drawer in equation mode genuinely fits: the student draws L1 and L2 and reads the intersection, for example y = 2x − 3 and x + 2y = 4 giving (2, 1), and the parallel pair 3x + y = 4 and 2y + 6x = 3. It would report slope-sign-flipped, slope-inverted, intercept-wrong and vertical-line. A second form would use a multi-line instrument with two lines and an intersection-point tap.",
+     "why": "The objective's misconceptions list is empty, so no valid diagnostic misconception id exists. An invented id would be refused (FR-1215). Samuel needs to add misconceptions for this objective, for example rearranging x + 2y = 4 incorrectly, or reading the intercept as the solution. Then the template can be written. Note also that line_drawer shows only one line at a time, so the two-line intersection reading is not covered."
+    },
+    {
+     "lo_id": "lo:pp3u6-1-3",
+     "need_kind": "equation_manipulator (step-wise algebra balance)",
+     "description": "The student applies legal operations to a pair of equations: multiply an equation by a constant, then add or subtract the two, or substitute one into the other. The widget checks that each step keeps the solution set, and the target is a single-variable equation. It would diagnose errors such as subtracting only one side, failing to multiply every term, sign errors when subtracting, and substituting back into the same equation.",
+     "why": "No existing kind models symbolic manipulation of equations. number_line_marker and pair_plotter would only be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u6-1-4",
+     "need_kind": "equation_former (word problem to system)",
+     "description": "The student builds a system from a word problem or from a known solution. An example is the two-digit number with digit sum 11 whose reversal is 27 more than the number, or finding a and b given that (3, −1) is the solution. They choose variables and place the terms to form each equation, and the widget checks that the system has the target solution. Errors it would diagnose include 10x + y written as x + y, a reversed-digit equation built backwards, and substitution of (x, y) in the wrong order.",
+     "why": "No existing kind covers translating words into equations. The only fit would be an answer box."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u6-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u6-2-1",
+     "need_kind": "curve_sketcher (quadratic), with x-axis crossings readable",
+     "description": "The student sets a, b, c, or drags the vertex and a point, to draw f(x) = x^2 - 4x + 3 on [-1, 5]. The widget then asks for the solution set by marking the x-intercepts. curve_sketcher {fn:quadratic} appears in the spec list and would genuinely fit. It would need to report errors such as reading the y-intercept (3) as a root, reading the vertex as a root, a curve opening the wrong way, or a missed second root.",
+     "why": "The contract I received does not list curve_sketcher's predicates or can_emit, so I cannot map diagnostics to any predicate. The objective also has no misconceptions, and every template needs at least one diagnostic with a valid misconception id. Samuel needs to supply the curve_sketcher contract and add misconceptions for this objective."
+    },
+    {
+     "lo_id": "lo:pp3u6-2-2",
+     "need_kind": "area_model (factor mode) for quadratics",
+     "description": "The student arranges x^2, the x-strips and the unit squares into a rectangle to factorise x^2 - 4x + 3 as (x - 1)(x - 3). They then read the roots from the two factors. This would show factorising as a construction. It would diagnose sign errors, such as reading (x - 1) as the root x = -1, and picking factors whose product is right but whose sum is wrong.",
+     "why": "area_model {mode:'factor', a, b} is only in the spec list, with no predicates given, and it is unclear whether it handles a negative middle term. The objective has no misconceptions, so no diagnostic could be valid. Samuel needs to confirm area_model's contract and add misconceptions for this objective. Completing the square probably needs a separate kind."
+    },
+    {
+     "lo_id": "lo:pp3u6-2-3",
+     "need_kind": "A context-check widget (a quadratic word problem with a feasibility check on each root)",
+     "description": "The student solves a real-life quadratic, such as a rectangle whose side is x and whose area is given, with the formula. They then accept or reject each root against the situation, for example a negative length. This would fire a diagnostic for mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context when a negative root is kept. It would also record a rounding error.",
+     "why": "number_line_marker in points mode could take the kept roots, with extra-values mapped to the misconception. It would only be an answer box on a number line, though. It would not construct or test the idea of rejecting a root because of the context. That is a forced fit, so I am recording it as a gap instead."
+    }
+   ],
+   "notes": "No templates were authored. Objectives 1 and 2 have empty misconception lists, so a diagnostic with a valid id is impossible. For objective 3, the only available kinds are a stretch."
+  },
+  {
+   "lesson": "pp3u6-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u6-3-1",
+     "need_kind": "system_solver (substitution stepper)",
+     "description": "The student is given a linear equation and a quadratic equation, for example x + y = 10 and x² − y² = 40. They build the substitution step by step: pick which variable to isolate, then drop the expression into the second equation. The widget expands and simplifies the result live. They then solve the resulting one-variable equation and pair each root with its partner value from the linear equation. A graph panel shows the line and the conic, with the intersection points lighting up as the student's solutions are confirmed. It could diagnose: substituting into the linear equation instead of the quadratic; sign or expansion errors such as (10 − y)² expanded as 100 − y²; stopping after finding x and forgetting the matching y; reporting only one root of the quadratic; and giving the solution set as separate values instead of ordered pairs.",
+     "why": "No existing kind fits. line_drawer and pair_plotter test one line or point, and the quadratic cannot be built in them. number_line_marker would only be an answer box for the values of x. The lesson's skill is algebraic manipulation, not construction on an instrument. The objective also lists no misconceptions, so a diagnostic mapping would have no valid ids."
+    },
+    {
+     "lo_id": "lo:pp3u6-3-2",
+     "need_kind": "rectangle_constraint_explorer",
+     "description": "The student is given a perimeter and an area, for example P = 20 cm and A = 24 cm². They drag a rectangle's sides and see the length, width, perimeter and area update live. Two constraint indicators light up as each is met: one for the first-degree equation (l + w = P/2) and one for the second-degree equation (l × w = A). The student finds the one rectangle, up to swapping length and width, that satisfies both. They then write the two equations and solve them by substitution. It could diagnose: using the perimeter as l + w without halving it; treating the two dimensions as equal; matching only one constraint; and giving a single dimension rather than both.",
+     "why": "No existing kind fits. polygon_builder area mode checks area only, not a perimeter and area pair together, and it has no live coupling to equation forming. Forcing this into pair_plotter or number_line_marker would just be an answer box. The objective also lists no misconceptions, so no diagnostics can be mapped yet."
+    }
+   ],
+   "notes": "Both objectives have empty misconception lists, so every diagnostic would have to cite an id that is not on the objective's own list, and the refusal rule (FR-1215) would reject it. The anchor question for lo:pp3u6-3-1 is a numeric question about the x − y factorisation. It does not fit any existing instrument without becoming an answer box. lo:pp3u6-3-2 has no anchor question, so no template could name a valid parent. Samuel should add misconceptions and a rectangle anchor question before any widget is authored."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u6-1-2",
+   "need_kind": "line_drawer (existing) – blocked by missing misconceptions",
+   "description": "line_drawer in equation mode genuinely fits: the student draws L1 and L2 and reads the intersection, for example y = 2x − 3 and x + 2y = 4 giving (2, 1), and the parallel pair 3x + y = 4 and 2y + 6x = 3. It would report slope-sign-flipped, slope-inverted, intercept-wrong and vertical-line. A second form would use a multi-line instrument with two lines and an intersection-point tap.",
+   "why": "The objective's misconceptions list is empty, so no valid diagnostic misconception id exists. An invented id would be refused (FR-1215). Samuel needs to add misconceptions for this objective, for example rearranging x + 2y = 4 incorrectly, or reading the intercept as the solution. Then the template can be written. Note also that line_drawer shows only one line at a time, so the two-line intersection reading is not covered."
+  },
+  {
+   "lo_id": "lo:pp3u6-1-3",
+   "need_kind": "equation_manipulator (step-wise algebra balance)",
+   "description": "The student applies legal operations to a pair of equations: multiply an equation by a constant, then add or subtract the two, or substitute one into the other. The widget checks that each step keeps the solution set, and the target is a single-variable equation. It would diagnose errors such as subtracting only one side, failing to multiply every term, sign errors when subtracting, and substituting back into the same equation.",
+   "why": "No existing kind models symbolic manipulation of equations. number_line_marker and pair_plotter would only be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u6-1-4",
+   "need_kind": "equation_former (word problem to system)",
+   "description": "The student builds a system from a word problem or from a known solution. An example is the two-digit number with digit sum 11 whose reversal is 27 more than the number, or finding a and b given that (3, −1) is the solution. They choose variables and place the terms to form each equation, and the widget checks that the system has the target solution. Errors it would diagnose include 10x + y written as x + y, a reversed-digit equation built backwards, and substitution of (x, y) in the wrong order.",
+   "why": "No existing kind covers translating words into equations. The only fit would be an answer box."
+  },
+  {
+   "lo_id": "lo:pp3u6-2-1",
+   "need_kind": "curve_sketcher (quadratic), with x-axis crossings readable",
+   "description": "The student sets a, b, c, or drags the vertex and a point, to draw f(x) = x^2 - 4x + 3 on [-1, 5]. The widget then asks for the solution set by marking the x-intercepts. curve_sketcher {fn:quadratic} appears in the spec list and would genuinely fit. It would need to report errors such as reading the y-intercept (3) as a root, reading the vertex as a root, a curve opening the wrong way, or a missed second root.",
+   "why": "The contract I received does not list curve_sketcher's predicates or can_emit, so I cannot map diagnostics to any predicate. The objective also has no misconceptions, and every template needs at least one diagnostic with a valid misconception id. Samuel needs to supply the curve_sketcher contract and add misconceptions for this objective."
+  },
+  {
+   "lo_id": "lo:pp3u6-2-2",
+   "need_kind": "area_model (factor mode) for quadratics",
+   "description": "The student arranges x^2, the x-strips and the unit squares into a rectangle to factorise x^2 - 4x + 3 as (x - 1)(x - 3). They then read the roots from the two factors. This would show factorising as a construction. It would diagnose sign errors, such as reading (x - 1) as the root x = -1, and picking factors whose product is right but whose sum is wrong.",
+   "why": "area_model {mode:'factor', a, b} is only in the spec list, with no predicates given, and it is unclear whether it handles a negative middle term. The objective has no misconceptions, so no diagnostic could be valid. Samuel needs to confirm area_model's contract and add misconceptions for this objective. Completing the square probably needs a separate kind."
+  },
+  {
+   "lo_id": "lo:pp3u6-2-3",
+   "need_kind": "A context-check widget (a quadratic word problem with a feasibility check on each root)",
+   "description": "The student solves a real-life quadratic, such as a rectangle whose side is x and whose area is given, with the formula. They then accept or reject each root against the situation, for example a negative length. This would fire a diagnostic for mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context when a negative root is kept. It would also record a rounding error.",
+   "why": "number_line_marker in points mode could take the kept roots, with extra-values mapped to the misconception. It would only be an answer box on a number line, though. It would not construct or test the idea of rejecting a root because of the context. That is a forced fit, so I am recording it as a gap instead."
+  },
+  {
+   "lo_id": "lo:pp3u6-3-1",
+   "need_kind": "system_solver (substitution stepper)",
+   "description": "The student is given a linear equation and a quadratic equation, for example x + y = 10 and x² − y² = 40. They build the substitution step by step: pick which variable to isolate, then drop the expression into the second equation. The widget expands and simplifies the result live. They then solve the resulting one-variable equation and pair each root with its partner value from the linear equation. A graph panel shows the line and the conic, with the intersection points lighting up as the student's solutions are confirmed. It could diagnose: substituting into the linear equation instead of the quadratic; sign or expansion errors such as (10 − y)² expanded as 100 − y²; stopping after finding x and forgetting the matching y; reporting only one root of the quadratic; and giving the solution set as separate values instead of ordered pairs.",
+   "why": "No existing kind fits. line_drawer and pair_plotter test one line or point, and the quadratic cannot be built in them. number_line_marker would only be an answer box for the values of x. The lesson's skill is algebraic manipulation, not construction on an instrument. The objective also lists no misconceptions, so a diagnostic mapping would have no valid ids."
+  },
+  {
+   "lo_id": "lo:pp3u6-3-2",
+   "need_kind": "rectangle_constraint_explorer",
+   "description": "The student is given a perimeter and an area, for example P = 20 cm and A = 24 cm². They drag a rectangle's sides and see the length, width, perimeter and area update live. Two constraint indicators light up as each is met: one for the first-degree equation (l + w = P/2) and one for the second-degree equation (l × w = A). The student finds the one rectangle, up to swapping length and width, that satisfies both. They then write the two equations and solve them by substitution. It could diagnose: using the perimeter as l + w without halving it; treating the two dimensions as equal; matching only one constraint; and giving a single dimension rather than both.",
+   "why": "No existing kind fits. polygon_builder area mode checks area only, not a perimeter and area pair together, and it has no live coupling to equation forming. Forcing this into pair_plotter or number_line_marker would just be an answer box. The objective also lists no misconceptions, so no diagnostics can be mapped yet."
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-1:complement",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-1",
+ "parent_question_id": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+ "source_page": 52,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    5,
+    6,
+    9,
+    10,
+    15
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    "s - 2"
+   ],
+   "resample_while": "2 * a == s"
+  },
+  {
+   "name": "b",
+   "let": "s - a"
+  },
+  {
+   "name": "x",
+   "let": "90 // s"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $\\sin {=a}x^\\circ=\\cos {=b}x^\\circ$, where ${=a}x^\\circ$ and ${=b}x^\\circ$ are acute angles, find the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "The sine of an angle equals the cosine of its complementary angle.",
+  "So ${=a}x^\\circ$ and ${=b}x^\\circ$ are complementary: ${=a}x+{=b}x=90$.",
+  "${=s}x=90$, so $x=90\\div{=s}={=x}$.",
+  "Check: ${=a}x={=a * x}^\\circ$ and ${=b}x={=b * x}^\\circ$, which add up to 90°."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Complementary-angle rule sin θ = cos(90° − θ). x = 90/s always whole; both angles acute."
+}

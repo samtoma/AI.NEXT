@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-1:position",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-1",
+ "parent_question_id": "q:pp3u9-2-1:bk-drill-2-1",
+ "source_page": 47,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "ma",
+   "let": "r - d if k == 0 else (r if k == 1 else r + d)"
+  },
+  {
+   "name": "opts",
+   "let": "['inside the circle', 'on the circle', 'outside the circle']"
+  }
+ ],
+ "constraints": [],
+ "stem": "M is the centre of a circle whose radius is $r = {=r}$ cm. A is a point with $MA = {=ma}$ cm. What is the position of A with respect to the circle?",
+ "solution": [
+  "Compare MA with the radius: $MA = {=ma}$ cm and $r = {=r}$ cm.",
+  "If MA < r the point is inside the circle; if MA = r it is on the circle; if MA > r it is outside the circle.",
+  "So A is {=opts[k]}."
+ ],
+ "choices": {
+  "correct": "{=opts[k]}",
+  "distractors": [
+   {
+    "text": "{=opts[(k+1)%3]}",
+    "misconception_id": null
+   },
+   {
+    "text": "{=opts[(k+2)%3]}",
+    "misconception_id": null
+   },
+   {
+    "text": "at the centre of the circle",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: compare MA with r. Options are shuffled by the engine presumably; stem numbers vary the instances."
+}

@@ -1,0 +1,35 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u5-4-1:draw-from-general-form-advanced",
+ "lo_id": "lo:pp3u5-4-1",
+ "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+ "tier": "advanced",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": -0.5,
+  "b": -1
+ },
+ "stem": "Represent the relation $x + 2y + 2 = 0$ graphically by dragging two points. Find the slope and the length of the part of the y-axis between the origin and the line.",
+ "solution": [
+  "Isolate $y$: $2y = -x - 2$, so $y = -\\frac{1}{2}x - 1$.",
+  "The slope is $m = -\\frac{1}{2}$.",
+  "The line crosses the y-axis at (0, -1), so the length is 1.",
+  "Plot (0, -1) and (2, -2), then draw the line through them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  },
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  }
+ ],
+ "notes": "m=-1/2 and b=-1 are within the instrument's limits. Taking a/b gives m=1/2, so slope-sign-flipped. Reading the coefficient of x and c gives m=1, b=2, which is off-target. The negative intercept also tests that length is positive."
+}

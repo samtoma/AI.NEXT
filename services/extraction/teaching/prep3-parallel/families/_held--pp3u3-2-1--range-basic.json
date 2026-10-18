@@ -1,0 +1,38 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:range-basic",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(5, 60)",
+    "k": 5
+   }
+  },
+  {
+   "name": "hi",
+   "let": "max(v)"
+  },
+  {
+   "name": "lo",
+   "let": "min(v)"
+  }
+ ],
+ "stem": "Find the range of the set of values: ${=v[0]}$, ${=v[1]}$, ${=v[2]}$, ${=v[3]}$, ${=v[4]}$.",
+ "answer": "hi - lo",
+ "solution": [
+  "The greatest value is ${=hi}$.",
+  "The smallest value is ${=lo}$.",
+  "Range = greatest value $-$ smallest value $= {=hi} - {=lo} = {=hi - lo}$."
+ ],
+ "constraints": [],
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder."
+}

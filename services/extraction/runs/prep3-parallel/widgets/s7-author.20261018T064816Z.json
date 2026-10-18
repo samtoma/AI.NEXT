@@ -1,0 +1,126 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "b5b51fffaecce506643218e9f81b1b52983988b87886d40f80b32a561e9325f1",
+  "generated_sha256": "2999d5c70b945c491208cc61095497c48b4cda0c846d25314359e2bc5a6a5cb4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u4-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u4-1-1",
+     "need_kind": "dms_converter",
+     "description": "The student sets an angle on a dial with three linked fields (degrees, minutes, seconds) beside a decimal-degree readout. The task is to build a given decimal angle such as 35.15° as D° M′ S″, or the reverse. The widget would show carries live: 60 seconds turns into 1 minute, and 60 minutes turns into 1 degree. It could diagnose treating minutes as hundredths (35°15′ read as 35.15°), dividing by 100 instead of 60, and forgetting to carry.",
+     "why": "No existing kind has a sexagesimal unit. number_line_marker could only mark a decimal value, which turns the task into an answer box."
+    },
+    {
+     "lo_id": "lo:pp3u4-1-2",
+     "need_kind": "side_ratio_comparer",
+     "description": "The student drags the vertices of a right triangle. Each of the ratios opposite/hypotenuse and adjacent/hypotenuse is shown against 1 on a number line. The student has to choose <, > or = for each, or build a triangle where a stated comparison holds. They would find that the hypotenuse is always the longest side, so sin and cos are always less than 1, and that tan can be above or below 1 depending on the angle. It could diagnose thinking a ratio is larger when the denominator is larger, and thinking a leg can be longer than the hypotenuse.",
+     "why": "triangle_ratio grades one target ratio and has no way to report a comparison with 1 or with another side. The sin and cos targets it accepts are already limited to below 1, so using it here would only restate the answer."
+    },
+    {
+     "lo_id": "lo:pp3u4-1-4",
+     "need_kind": "identity_checker",
+     "description": "The student fills in a ratio identity such as sin A cos B + cos A sin B = 1. They pick, from labelled sides of a right triangle, the substitution for each term. A live numeric check on several triangles shows whether both sides stay equal. It could diagnose swapping which angle's opposite side is used (A against B), inverting a ratio, and a final line that does not follow from a² + b² = c².",
+     "why": "Proof is a sequence of algebraic steps. None of the existing kinds can construct or check one."
+    },
+    {
+     "lo_id": "lo:pp3u4-1-3",
+     "need_kind": "triangle_ratio (blocked: no misconceptions)",
+     "description": "triangle_ratio fits this objective. For example, ask tan with target 2.4 for the 5-12-13 triangle, and ask sin with target 0.6. I did not write a template because the lesson file lists no misconceptions for lo:pp3u4-1-3. A template needs at least one diagnostic, and the id has to come from that objective's own list.",
+     "why": "Once that list holds ids such as used-cosine or ratio-inverted, I can write the template straight away."
+    }
+   ],
+   "notes": "I returned no templates. The misconceptions list is empty for all four objectives. Every template needs at least one diagnostic, and ids from outside the objective's own list are refused (FR-1215), so I would have had to invent ids. Only lo:pp3u4-1-3 has a genuine fit (triangle_ratio, anchor q:pp3u4-1-3:bk-example-1-c). Its planned diagnostics are: for tan, ratio-inverted first, then used-sine and used-cosine. For sin, used-cosine first, then used-tangent. For cos, used-sine first, then used-tangent. Once misconceptions are added to the lesson file, I can generate it. The other three objectives are recorded as gaps."
+  },
+  {
+   "lesson": "pp3u4-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u4-2-1",
+     "need_kind": "triangle_ratio (exists) — blocked: no misconception ids",
+     "description": "triangle_ratio fits this objective well. Instances would be sin = 0.5 (30°, from half an equilateral triangle), cos = 0.5 (60°) and tan = 1 (45°, the isosceles right triangle). The student drags the legs until the live ratio matches, so she finds that the 1 : 2 side ratio gives sin 30° whatever the size. The widget can report used-sine, used-cosine, used-tangent and ratio-inverted. I did not write the templates because every objective in this lesson has an empty misconceptions list. Each template needs at least one diagnostic, and I may only use ids from that objective's own list.",
+     "why": "The kind fits, but there is no valid misconception id to attach. Inventing one would be refused (FR-1215). Please add misconceptions such as 'confuses sin and cos of the special angles' and 'inverts the ratio', then I can author the three instances."
+    },
+    {
+     "lo_id": "lo:pp3u4-2-2",
+     "need_kind": "exact_value_expression_builder",
+     "description": "The student would assemble an expression such as sin 60° + cos 30° − tan 60° from exact-value tiles (1/2, √2/2, √3/2, 1, √3) and see the running exact total. It would diagnose using a wrong exact value, swapping the sin 30° and sin 60° values, and sign or squaring slips.",
+     "why": "This objective is exact symbolic evaluation. None of the existing kinds builds or tests surds, and triangle_ratio is graded on decimal ratios. Using it here would be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u4-2-3",
+     "need_kind": "calculator_keypad_trainer",
+     "description": "The student would key a degrees-minutes-seconds angle into a simulated scientific calculator. The widget would check the mode (DEG or RAD) and the entry sequence, and flag a wrong angle mode or a DMS value keyed as a decimal.",
+     "why": "This is a procedural skill on a device. No existing kind models calculator entry."
+    },
+    {
+     "lo_id": "lo:pp3u4-2-4",
+     "need_kind": "inverse_ratio_angle_setter",
+     "description": "The student would be given a ratio such as sin θ = 0.6 and drag a right triangle's angle until the ratio matches. The widget would read off θ to the nearest degree or minute. It would diagnose using the wrong function, using the complementary angle, and inverting the ratio.",
+     "why": "triangle_ratio is graded on the ratio, not on the angle, and it caps targets (sin and cos below 1, tan at most 12). It cannot ask for the angle itself, so using it here would be a stretch."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u4-1-1",
+   "need_kind": "dms_converter",
+   "description": "The student sets an angle on a dial with three linked fields (degrees, minutes, seconds) beside a decimal-degree readout. The task is to build a given decimal angle such as 35.15° as D° M′ S″, or the reverse. The widget would show carries live: 60 seconds turns into 1 minute, and 60 minutes turns into 1 degree. It could diagnose treating minutes as hundredths (35°15′ read as 35.15°), dividing by 100 instead of 60, and forgetting to carry.",
+   "why": "No existing kind has a sexagesimal unit. number_line_marker could only mark a decimal value, which turns the task into an answer box."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-2",
+   "need_kind": "side_ratio_comparer",
+   "description": "The student drags the vertices of a right triangle. Each of the ratios opposite/hypotenuse and adjacent/hypotenuse is shown against 1 on a number line. The student has to choose <, > or = for each, or build a triangle where a stated comparison holds. They would find that the hypotenuse is always the longest side, so sin and cos are always less than 1, and that tan can be above or below 1 depending on the angle. It could diagnose thinking a ratio is larger when the denominator is larger, and thinking a leg can be longer than the hypotenuse.",
+   "why": "triangle_ratio grades one target ratio and has no way to report a comparison with 1 or with another side. The sin and cos targets it accepts are already limited to below 1, so using it here would only restate the answer."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-4",
+   "need_kind": "identity_checker",
+   "description": "The student fills in a ratio identity such as sin A cos B + cos A sin B = 1. They pick, from labelled sides of a right triangle, the substitution for each term. A live numeric check on several triangles shows whether both sides stay equal. It could diagnose swapping which angle's opposite side is used (A against B), inverting a ratio, and a final line that does not follow from a² + b² = c².",
+   "why": "Proof is a sequence of algebraic steps. None of the existing kinds can construct or check one."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-3",
+   "need_kind": "triangle_ratio (blocked: no misconceptions)",
+   "description": "triangle_ratio fits this objective. For example, ask tan with target 2.4 for the 5-12-13 triangle, and ask sin with target 0.6. I did not write a template because the lesson file lists no misconceptions for lo:pp3u4-1-3. A template needs at least one diagnostic, and the id has to come from that objective's own list.",
+   "why": "Once that list holds ids such as used-cosine or ratio-inverted, I can write the template straight away."
+  },
+  {
+   "lo_id": "lo:pp3u4-2-1",
+   "need_kind": "triangle_ratio (exists) — blocked: no misconception ids",
+   "description": "triangle_ratio fits this objective well. Instances would be sin = 0.5 (30°, from half an equilateral triangle), cos = 0.5 (60°) and tan = 1 (45°, the isosceles right triangle). The student drags the legs until the live ratio matches, so she finds that the 1 : 2 side ratio gives sin 30° whatever the size. The widget can report used-sine, used-cosine, used-tangent and ratio-inverted. I did not write the templates because every objective in this lesson has an empty misconceptions list. Each template needs at least one diagnostic, and I may only use ids from that objective's own list.",
+   "why": "The kind fits, but there is no valid misconception id to attach. Inventing one would be refused (FR-1215). Please add misconceptions such as 'confuses sin and cos of the special angles' and 'inverts the ratio', then I can author the three instances."
+  },
+  {
+   "lo_id": "lo:pp3u4-2-2",
+   "need_kind": "exact_value_expression_builder",
+   "description": "The student would assemble an expression such as sin 60° + cos 30° − tan 60° from exact-value tiles (1/2, √2/2, √3/2, 1, √3) and see the running exact total. It would diagnose using a wrong exact value, swapping the sin 30° and sin 60° values, and sign or squaring slips.",
+   "why": "This objective is exact symbolic evaluation. None of the existing kinds builds or tests surds, and triangle_ratio is graded on decimal ratios. Using it here would be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u4-2-3",
+   "need_kind": "calculator_keypad_trainer",
+   "description": "The student would key a degrees-minutes-seconds angle into a simulated scientific calculator. The widget would check the mode (DEG or RAD) and the entry sequence, and flag a wrong angle mode or a DMS value keyed as a decimal.",
+   "why": "This is a procedural skill on a device. No existing kind models calculator entry."
+  },
+  {
+   "lo_id": "lo:pp3u4-2-4",
+   "need_kind": "inverse_ratio_angle_setter",
+   "description": "The student would be given a ratio such as sin θ = 0.6 and drag a right triangle's angle until the ratio matches. The widget would read off θ to the nearest degree or minute. It would diagnose using the wrong function, using the complementary angle, and inverting the ratio.",
+   "why": "triangle_ratio is graded on the ratio, not on the angle, and it caps targets (sin and cos below 1, tan at most 12). It cannot ask for the angle itself, so using it here would be a stretch."
+  }
+ ]
+}

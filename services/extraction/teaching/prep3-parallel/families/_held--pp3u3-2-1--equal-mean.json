@@ -1,0 +1,84 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:equal-mean",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    20,
+    40
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "p - 1"
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    4,
+    12
+   ],
+   "resample_while": "r == p"
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    "r - 1"
+   ]
+  },
+  {
+   "name": "ans",
+   "let": "'Set A' if p > r else 'Set B'"
+  },
+  {
+   "name": "other",
+   "let": "'Set B' if p > r else 'Set A'"
+  }
+ ],
+ "stem": "Set A: ${=m-p}$, ${=m-q}$, ${=m+q}$, ${=m+p}$. Set B: ${=m-r}$, ${=m-s}$, ${=m+s}$, ${=m+r}$. Both sets have mean ${=m}$. Which set has the greater dispersion (is more spread out)?",
+ "answer": "",
+ "solution": [
+  "Range of Set A $= {=m+p} - {=m-p} = {=2*p}$.",
+  "Range of Set B $= {=m+r} - {=m-r} = {=2*r}$.",
+  "The means are equal, so we compare the ranges: the greater range means greater dispersion. So {=ans} is more spread out."
+ ],
+ "choices": {
+  "correct": "{=ans}",
+  "distractors": [
+   {
+    "text": "{=other}",
+    "misconception_id": null
+   },
+   {
+    "text": "Both are equally spread out, because the means are equal",
+    "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+   },
+   {
+    "text": "It cannot be decided without more information",
+    "misconception_id": null
+   }
+  ]
+ },
+ "constraints": [],
+ "proposed_misconceptions": [],
+ "notes": "Both sets have mean m by symmetry. Placeholder parent."
+}

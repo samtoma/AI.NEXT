@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-3-2:center-gap",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-3-2",
+ "parent_question_id": "q:pp3u9-3-2:bk-think-5",
+ "source_page": 55,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "d",
+   "let": "6 * k"
+  },
+  {
+   "name": "r",
+   "let": "5 * k"
+  },
+  {
+   "name": "x",
+   "let": "4 * k"
+  }
+ ],
+ "constraints": [],
+ "stem": "A and B are two points with $AB = {=d}$ cm. Two different circles, each of radius ${=r}$ cm, pass through A and B. What is the distance in cm between the centers of the two circles?",
+ "answer": "2 * x",
+ "solution": [
+  "The centers of both circles lie on the axis of the chord AB, and the axis meets AB at its midpoint M, with $AM = {=d // 2}$ cm.",
+  "Each center O satisfies $OA = {=r}$ cm, so $OM^2 = {=r}^2 - {=d // 2}^2 = {=r*r - (d//2)*(d//2)}$, giving $OM = {=x}$ cm.",
+  "The two circles meet only at A and B, so their centers are on opposite sides of AB, each ${=x}$ cm from M.",
+  "The distance between the centers is ${=x} + {=x} = {=2*x}$ cm."
+ ],
+ "notes": "Uses Pythagoras with 3-4-5 multiples; requires prior Pythagoras knowledge. The two centers are the two points on the axis at distance r from A.",
+ "proposed_misconceptions": []
+}

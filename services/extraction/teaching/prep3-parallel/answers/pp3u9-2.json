@@ -1,0 +1,1709 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u9-2",
+  "source": "book-records/prep3-parallel/pp3u9-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 45,
+      "cost_usd": 0.7971,
+      "calls": [
+        {
+          "call": "answers.pp3u9-2",
+          "cost_usd": 0.7971,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u9-2:think-and-discuss-1",
+      "record_id": "pp3u9-2:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 46,
+      "question": {
+        "text": "How can you determine the position of the points: A, B, and C with respect to circle M ?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ad242e6b7d14aaac5270a861215998ff",
+      "kind": "explanation",
+      "answer": "Compare the distance from M to each point (MA, MB, MC) with the radius r.",
+      "solution": [
+        "Measure or find MA, MB and MC.",
+        "Compare each with the radius r.",
+        "If the distance is more than r the point is outside; equal to r, on the circle; less than r, inside."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-1",
+        "pp3u9-2:rule-2",
+        "pp3u9-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Compare the distance from M to each point with the radius r: A is outside since MA > r, B is on the circle since MB = r, C is inside since MC < r.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:think-and-discuss-2",
+      "record_id": "pp3u9-2:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 46,
+      "question": {
+        "text": "What is the relation between (MA, r), (MB , r) and (MC , r) ?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ca06c4a9963e46fffb570b29c4f65da8",
+      "kind": "value",
+      "answer": "MA > r, MB = r, MC < r",
+      "solution": [
+        "A is outside the circle, so MA > r.",
+        "B is on the circle, so MB = r.",
+        "C is inside the circle, so MC < r.",
+        "Answer: MA > r, MB = r, MC < r."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-1",
+        "pp3u9-2:rule-2",
+        "pp3u9-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "MA > r (A outside), MB = r (B on the circle), MC < r (C inside).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-1:1",
+      "record_id": "pp3u9-2:drill-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "If M circle with radius length = 4 cm and A is a point in its plane, Complete:",
+        "stem": "IF: MA = 4 cm, then A is ............... circle M, because ..........",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "db78d990d41b0054b5acc559e04590f7",
+      "kind": "value",
+      "answer": "on; MA = r",
+      "solution": [
+        "r = 4 cm and MA = 4 cm.",
+        "So MA = r.",
+        "Answer: A is on circle M, because MA = r."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "On circle M, because MA = r = 4 cm.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-1:2",
+      "record_id": "pp3u9-2:drill-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "If M circle with radius length = 4 cm and A is a point in its plane, Complete:",
+        "stem": "IF: $MA = 2\\sqrt{3}$ cm, then A is .............circle M, because ..........",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "79cc39c30641e6acc580be56e0c512b3",
+      "kind": "value",
+      "answer": "inside; MA < r",
+      "solution": [
+        "$2\\sqrt{3}=\\sqrt{12}$.",
+        "$\\sqrt{12}<\\sqrt{16}=4$, so MA < r.",
+        "Answer: A is inside circle M, because MA < r."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Inside circle M, because $MA = 2\\sqrt{3} \\approx 3.46 < 4$ (since $\\sqrt{12} < \\sqrt{16}$), so MA < r.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-1:3",
+      "record_id": "pp3u9-2:drill-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "If M circle with radius length = 4 cm and A is a point in its plane, Complete:",
+        "stem": "IF: $MA = 3\\sqrt{2}$ cm, then A is ............. circle M, because ..........",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "911d54071f11cbce696d7e125256d985",
+      "kind": "value",
+      "answer": "outside; MA > r",
+      "solution": [
+        "$3\\sqrt{2}=\\sqrt{18}$.",
+        "$\\sqrt{18}>\\sqrt{16}=4$, so MA > r.",
+        "Answer: A is outside circle M, because MA > r."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Outside circle M, because $MA = 3\\sqrt{2} = \\sqrt{18} > 4 = r$, so MA > r.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-1:4",
+      "record_id": "pp3u9-2:drill-1",
+      "part": "4",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "If M circle with radius length = 4 cm and A is a point in its plane, Complete:",
+        "stem": "IF: MA = zero, then A is...............circle M and represented by ........................",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2b1a82fca16bb53c71297a1c1209cd95",
+      "kind": "value",
+      "answer": "inside; the point M (the centre)",
+      "solution": [
+        "MA = 0 and 0 < 4, so MA < r.",
+        "A is inside the circle.",
+        "MA = 0 means A coincides with M.",
+        "Answer: A is inside circle M and is represented by the point M (the centre)."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Inside circle M, and A is represented by the centre M itself (A coincides with M).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-2:1",
+      "record_id": "pp3u9-2:drill-2",
+      "part": "1",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "From the previous example, find the value of X in the following cases:",
+        "stem": "MA = 2x + 1, point A on the circle.",
+        "notes": "Numbered 1, 2 in the drill, treated as parts of one drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c9a2e4b0dc7c8e8439e3dc3fa17dae40",
+      "kind": "value",
+      "answer": "x = 2",
+      "solution": [
+        "A is on the circle, so MA = r = 5.",
+        "2x + 1 = 5.",
+        "2x = 4.",
+        "x = 2."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-2",
+        "pp3u9-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-2:2",
+      "record_id": "pp3u9-2:drill-2",
+      "part": "2",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "From the previous example, find the value of X in the following cases:",
+        "stem": "MA = 8x – 27, point A inside the circle.",
+        "notes": "Numbered 1, 2 in the drill, treated as parts of one drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "3233d347ee2294b7efacb0c5c1e293ff",
+      "kind": "value",
+      "answer": "x < 4",
+      "solution": [
+        "A is inside the circle, so MA < 5.",
+        "8x - 27 < 5.",
+        "8x < 32.",
+        "x < 4."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-3",
+        "pp3u9-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "27/8 < x < 4 (from 0 < 8x - 27 < 5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:think-1",
+      "record_id": "pp3u9-2:think-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 47,
+      "question": {
+        "text": "In each of the following cases, Find $L \\cap$ surface of circle M.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "72c139dee4a205dabd7bd998ad9f5250",
+      "kind": "value",
+      "answer": "Case 1 (L outside): ϕ; Case 2 (L secant): the segment CD; Case 3 (L tangent): {A}",
+      "solution": [
+        "Case 1: L is outside the circle, so it meets the circle surface nowhere: ϕ.",
+        "Case 2: L is a secant meeting the circle at C and D, so it meets the surface in the chord CD.",
+        "Case 3: L is tangent at A, so it meets the surface only at A: {A}."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-4",
+        "pp3u9-2:rule-5",
+        "pp3u9-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "Case 1 (L outside): L ∩ surface of circle M = ϕ (empty set). Case 2 (secant): L ∩ surface = the segment CD. Case 3 (tangent): L ∩ surface = {A}.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-3:1",
+      "record_id": "pp3u9-2:drill-3",
+      "part": "1",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "If M circle with radius length 7 cm and $\\overline{MA} \\perp L$ where $A \\in L$. Complete the following:",
+        "stem": "If $MA = 4\\sqrt{3}$ cm. Then the straight line L .................",
+        "notes": "Page does not continue the previous page's drill; it is a new drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "b877777ec6bc479fabf538b5db0a886d",
+      "kind": "value",
+      "answer": "is a secant to the circle M",
+      "solution": [
+        "r = 7, and MA = 4√3 = √48.",
+        "7 = √49, and √48 < √49, so MA < r.",
+        "MA < r, so L is a secant to the circle."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "Since $4\\sqrt3=\\sqrt{48}<7$, MA < r, so L is a secant to circle M (intersects it at two points).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-3:2",
+      "record_id": "pp3u9-2:drill-3",
+      "part": "2",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "If M circle with radius length 7 cm and $\\overline{MA} \\perp L$ where $A \\in L$. Complete the following:",
+        "stem": "If $MA = 3\\sqrt{7}$ cm. Then the straight line L .................",
+        "notes": "Page does not continue the previous page's drill; it is a new drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "8d5e4ffea9c5123d3dba88c062de97fb",
+      "kind": "value",
+      "answer": "is outside circle M",
+      "solution": [
+        "r = 7, and MA = 3√7 = √63.",
+        "7 = √49, and √63 > √49, so MA > r.",
+        "MA > r, so L is outside the circle."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Since $3\\sqrt7=\\sqrt{63}<7$, MA < r, so L is a secant to circle M.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-3:3",
+      "record_id": "pp3u9-2:drill-3",
+      "part": "3",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "If M circle with radius length 7 cm and $\\overline{MA} \\perp L$ where $A \\in L$. Complete the following:",
+        "stem": "If $2MA - 5 = 9$. Then the straight line L .................",
+        "notes": "Page does not continue the previous page's drill; it is a new drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "f596ce8b4976c73f87ffcf45d2bbefbb",
+      "kind": "value",
+      "answer": "is tangent to circle M",
+      "solution": [
+        "2MA - 5 = 9, so 2MA = 14.",
+        "MA = 7 = r.",
+        "MA = r, so L is a tangent to the circle."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "MA = 7 = r, so L is a tangent to circle M at A.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-3:4",
+      "record_id": "pp3u9-2:drill-3",
+      "part": "4",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "If M circle with radius length 7 cm and $\\overline{MA} \\perp L$ where $A \\in L$. Complete the following:",
+        "stem": "If the straight line L intersects circle M and MA = 3X -5. Then $X \\in$ .................",
+        "notes": "Page does not continue the previous page's drill; it is a new drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "4f990322cae2d63a9651d685571d98b0",
+      "kind": "value",
+      "answer": "X < 4",
+      "solution": [
+        "L intersects the circle, so L is a secant and MA < 7.",
+        "3X - 5 < 7.",
+        "3X < 12.",
+        "X < 4."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "X ∈ [5/3, 4), i.e. 0 ≤ 3X - 5 < 7 (5/3 < X < 4 if MA > 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-3:5",
+      "record_id": "pp3u9-2:drill-3",
+      "part": "5",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "If M circle with radius length 7 cm and $\\overline{MA} \\perp L$ where $A \\in L$. Complete the following:",
+        "stem": "If the straight line L tangent to circle M and $MA = X^2 - 2$. Then $X \\in$ .................",
+        "notes": "Page does not continue the previous page's drill; it is a new drill."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c8eed536d41777ce74eeda0d50b68181",
+      "kind": "value",
+      "answer": "X ∈ {3, -3}",
+      "solution": [
+        "L is tangent, so MA = r = 7.",
+        "X² - 2 = 7.",
+        "X² = 9.",
+        "X = 3 or X = -3."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "X ∈ {3, -3}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:think-2:First",
+      "record_id": "pp3u9-2:think-2",
+      "part": "First",
+      "type": "open_prompt",
+      "page": 48,
+      "question": {
+        "text": "How many tangents can be drawn to circle M ? First: from a point on the circle. Second: from a point outside the circle.",
+        "stem": "from a point on the circle.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bce36a9db95c21456fe92670e136851d",
+      "kind": "value",
+      "answer": "1 (one tangent only)",
+      "solution": [
+        "A tangent at a point on the circle is perpendicular to the radius at that point.",
+        "Only one line is perpendicular to the radius at that point.",
+        "Answer: one tangent."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7",
+        "pp3u9-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "1 (exactly one tangent, perpendicular to the radius at that point)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:think-2:Second",
+      "record_id": "pp3u9-2:think-2",
+      "part": "Second",
+      "type": "open_prompt",
+      "page": 48,
+      "question": {
+        "text": "How many tangents can be drawn to circle M ? First: from a point on the circle. Second: from a point outside the circle.",
+        "stem": "from a point outside the circle.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4848b31015183fdf6412ef25dae75759",
+      "kind": "value",
+      "answer": "2 (two tangents)",
+      "solution": [
+        "From a point outside the circle, two lines can touch the circle, one on each side.",
+        "Answer: two tangents."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:think-3",
+      "record_id": "pp3u9-2:think-3",
+      "part": null,
+      "type": "open_prompt",
+      "page": 48,
+      "question": {
+        "text": "What is the relation between the two drawn tangents to the circle from the two end points of any diameter in it ?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6082f7b8982f6172f27aa94f10f3b065",
+      "kind": "explanation",
+      "answer": "The two tangents are parallel.",
+      "solution": [
+        "Each tangent is perpendicular to the radius (the diameter) at its end point.",
+        "So both tangents are perpendicular to the same diameter.",
+        "Two lines perpendicular to the same line are parallel.",
+        "Answer: the two tangents are parallel."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7",
+        "pp3u9-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "The two tangents are parallel, because both are perpendicular to the same diameter.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:A",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "A",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "$m(\\angle AMB) = \\ldots$ (figure: angle 125° at B)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "e3a55909806d87c7391481c0a31fe52e",
+      "kind": "value",
+      "answer": "35",
+      "solution": [
+        "The 125° angle at B is the exterior angle of the triangle at B, so m(∠MBA) = 180° - 125° = 55°.",
+        "AB is a tangent, so MA ⊥ AB and m(∠MAB) = 90°.",
+        "m(∠AMB) = 180° - 90° - 55° = 35°."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "35",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:B",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "B",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "$m(\\angle ADB) = \\ldots$ (figure: angle 30° at B)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "2af72d82d60a3087faa773b759469d7a",
+      "kind": "value",
+      "answer": "30",
+      "solution": [
+        "AB is a tangent, so MA ⊥ AB and m(∠MAB) = 90°.",
+        "B, M, D are on one line and m(∠B) = 30°, so m(∠AMB) = 90° - 30° = 60°.",
+        "MA = MD (radii), so ∠MAD = ∠MDA.",
+        "∠AMB is an exterior angle of triangle AMD, so 60° = 2 × m(∠ADB).",
+        "m(∠ADB) = 30°."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "30",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:C",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "C",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "$m(\\angle AME) = \\ldots$ (figure: angle 50° at B)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "11ce6122b2b3be7e8c6a27f6eef9b462",
+      "kind": "value",
+      "answer": "130",
+      "solution": [
+        "AB is a tangent, so AB ⊥ AD and triangle BAD has a right angle at A.",
+        "m(∠D) = 90° - 50° = 40°.",
+        "E is the midpoint of chord CD (tick marks), so ME ⊥ CD.",
+        "In triangle MED: m(∠EMD) = 90° - 40° = 50°.",
+        "A, M, D are on the diameter, so m(∠AME) = 180° - 50° = 130°."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "130",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:D",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "D",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "$DB = \\ldots$ cm (figure: radius 6 cm, BA = 8 cm)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "0bb09868340c6dbae35a3f92dae02c17",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "AB is a tangent, so MA ⊥ AB and triangle MAB has a right angle at A.",
+        "MB² = 6² + 8² = 100, so MB = 10 cm.",
+        "D is on the circle and on MB, so MD = 6 cm.",
+        "DB = 10 - 6 = 4 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:E",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "E",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "Perimeter $\\triangle ABC = \\ldots$ cm (figure: 60°, AD = 10 cm)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1a799f83615cdd60d8ab706ff61dff5b",
+      "kind": "value",
+      "answer": "60",
+      "solution": [
+        "AB is a tangent at D and CD is a diameter, so CD ⊥ AB.",
+        "CA = CB (tick marks) and m(∠A) = 60°, so m(∠B) = 60° and the triangle is equilateral.",
+        "CD ⊥ AB bisects AB (isosceles triangle), so AB = 2 × AD = 20 cm.",
+        "Each side is 20 cm.",
+        "Perimeter = 3 × 20 = 60 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "60",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-4:F",
+      "record_id": "pp3u9-2:drill-4",
+      "part": "F",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "M circle is in each of the following figures and $\\overleftrightarrow{AB}$ is a tangent: Complete:",
+        "stem": "Perimeter of the figure $ABMD = \\ldots$ cm (figure: 3 cm, 5 cm, 12 cm)",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "3c7b7f6f48a7efc42d36e57bc111ecc5",
+      "kind": "value",
+      "answer": "32",
+      "solution": [
+        "MA is a radius = 5 cm, and AB is a tangent, so MA ⊥ AB.",
+        "MB² = 5² + 12² = 169, so MB = 13 cm.",
+        "MD ⊥ AC at D (3 cm), so in right triangle MDA: AD² = 25 - 9 = 16, AD = 4 cm.",
+        "Perimeter of ABMD = AB + BM + MD + DA = 12 + 13 + 3 + 4 = 32 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "32",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-5:A",
+      "record_id": "pp3u9-2:drill-5",
+      "part": "A",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "In each of the following figures, explain why $\\overleftrightarrow{AB}$ is a tangent to circle M:",
+        "stem": "Figure with angles 54° and 36°, points M, A, B",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "657a598c390c9a609fc648c35c59b5d4",
+      "kind": "explanation",
+      "answer": "MA ⊥ AB at A, the end of radius MA, so AB is a tangent.",
+      "solution": [
+        "In triangle MAB: m(∠AMB) = 54° and m(∠B) = 36°.",
+        "m(∠MAB) = 180° - 54° - 36° = 90°.",
+        "So AB ⊥ MA at A, the endpoint of radius MA on the circle.",
+        "Therefore AB is a tangent to the circle M at A."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-8",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "In triangle MAB, m(∠B)=36° and m(∠M)=54°, so m(∠MAB)=180°-90°=90°; thus AB ⊥ MA at A, a point on the circle, so AB is a tangent.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-5:B",
+      "record_id": "pp3u9-2:drill-5",
+      "part": "B",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "In each of the following figures, explain why $\\overleftrightarrow{AB}$ is a tangent to circle M:",
+        "stem": "Figure with M, A, C, B and tick marks",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "059eb259e37188bcb98c3006a77f224f",
+      "kind": "explanation",
+      "answer": "m(∠MAB) = 90°, so AB ⊥ MA at A and AB is a tangent. (Figure read from tick marks; verify.)",
+      "solution": [
+        "Reading the tick marks: CM = CA = CB, with M, C, B on one line.",
+        "CM = CA, so m(∠CMA) = m(∠CAM) = x.",
+        "CA = CB, so m(∠CAB) = m(∠CBA) = y.",
+        "In triangle MAB: 2x + 2y = 180°, so x + y = 90°.",
+        "m(∠MAB) = x + y = 90°, so AB ⊥ MA at A.",
+        "Therefore AB is a tangent to the circle at A."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-8",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "From the tick marks, C is the midpoint of AB and MC = AC = CB, so the median MC equals half of AB; hence m(∠MAB)=90°, AB ⊥ MA at A, so AB is a tangent. (Figure reading uncertain.)",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-5:C",
+      "record_id": "pp3u9-2:drill-5",
+      "part": "C",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "In each of the following figures, explain why $\\overleftrightarrow{AB}$ is a tangent to circle M:",
+        "stem": "Figure with M, A, B, D, right angle at B and tick marks",
+        "notes": "Figure details read from image; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "dbd2cc2a99b9e435ec0798ce9c0f7166",
+      "kind": "explanation",
+      "answer": "MA ∥ DB and DB ⊥ AB, so MA ⊥ AB at A and AB is a tangent. (Figure read from marks; verify.)",
+      "solution": [
+        "MD = MA (radii), so ∠MDA = ∠MAD.",
+        "The marks show ∠MDA = ∠ADB, so ∠MAD = ∠ADB (alternate angles), so MA ∥ DB.",
+        "DB ⊥ AB at B (right angle), so MA ⊥ AB at A.",
+        "MA is a radius with A on the circle, so AB is a tangent to the circle at A."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-8",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "MA ∥ DB and DB ⊥ AB (right angle at B), so MA ⊥ AB at A, a point on the circle; hence AB is a tangent to circle M.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:activity-1",
+      "record_id": "pp3u9-2:activity-1",
+      "part": null,
+      "type": "activity",
+      "page": 49,
+      "question": {
+        "text": "Draw a circle with center M and with an appropriate radius length = $r_1$ cm.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "61f7e755318e27f0fd6780d539e98d11",
+      "kind": "drawing",
+      "answer": "A circle with centre M and radius r_1 cm.",
+      "solution": [
+        "Mark a point M.",
+        "Set the compass opening to r_1 cm.",
+        "Put the compass point on M and draw the full circle."
+      ],
+      "grounded_in": [
+        "pp3u9-2:objective-3"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with centre M and radius r_1 cm.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:activity-2",
+      "record_id": "pp3u9-2:activity-2",
+      "part": null,
+      "type": "activity",
+      "page": 49,
+      "question": {
+        "text": "Draw one of the axes of symmetry of circle M. Let it be the straight line L as in the figure opposite.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "470e9a43554ae5d5b8de227faef70eff",
+      "kind": "drawing",
+      "answer": "A straight line L through the centre M, drawn across the circle and extended on both sides.",
+      "solution": [
+        "Draw the circle with centre M and radius r1.",
+        "Place a ruler on the centre M.",
+        "Draw a straight line through M that cuts the circle at two points (a diameter) and extend it a little outside the circle on both sides, with arrows.",
+        "Label it L; it is an axis of symmetry of the circle."
+      ],
+      "grounded_in": [
+        "pp3u9-2:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "Draw a straight line L passing through the centre M of the circle (a diameter line extended on both sides), which is an axis of symmetry.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:unlabelled-activity-1",
+      "record_id": "pp3u9-2:unlabelled-activity-1",
+      "part": null,
+      "type": "activity",
+      "page": 50,
+      "question": {
+        "text": "On a transparent paper draw a circle with center N and with an appropriate radius length = r_2 cm where r_2 < r_1.",
+        "stem": "",
+        "notes": "Step 3 of a numbered activity sequence; subscripts read from small print."
+      },
+      "needs_page": false,
+      "question_fingerprint": "6b243d2f2eb0fff23e5890fb34ae7aa1",
+      "kind": "drawing",
+      "answer": "A circle with centre N and radius r_2 cm, with r_2 < r_1, on transparent paper.",
+      "solution": [
+        "On the transparent paper mark a point N.",
+        "Choose r_2 smaller than r_1.",
+        "Set the compass to r_2 and draw the circle with centre N."
+      ],
+      "grounded_in": [
+        "pp3u9-2:objective-3"
+      ],
+      "checks": {
+        "resolve_answer": "On transparent paper, a circle with centre N and radius r_2 < r_1.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:unlabelled-activity-2",
+      "record_id": "pp3u9-2:unlabelled-activity-2",
+      "part": null,
+      "type": "activity",
+      "page": 50,
+      "question": {
+        "text": "Put the transparent paper where point N belongs to the straight line l.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d41feab03910516aca31195c645c2a51",
+      "kind": "drawing",
+      "answer": "Place the transparent paper so that N lies on the straight line l.",
+      "solution": [
+        "Take the transparent paper with circle N.",
+        "Lay it over the drawing of circle M and line l.",
+        "Slide it until the point N is on line l."
+      ],
+      "grounded_in": [
+        "pp3u9-2:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "The transparent paper is placed so that centre N lies on the line l (the line through M), so the line of centres passes through both M and N.",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:activity-3",
+      "record_id": "pp3u9-2:activity-3",
+      "part": null,
+      "type": "activity",
+      "page": 50,
+      "question": {
+        "text": "Move the transparent paper towards circle M where N remains ∈ L to see different positions of the two circles. Measure the two circles in relation to each other. Measure length of MN in each case. What is the relation between the length of MN (the distance between the centers of the two circles M and N), r_1 + r_2 or r_1 - r_2 in each position.",
+        "stem": "",
+        "notes": "Printed 'Mesure' and 'L' (capital) for the line; transcribed meaning."
+      },
+      "needs_page": false,
+      "question_fingerprint": "3a8e5527a9ad64748e6d19c8980296f2",
+      "kind": "explanation",
+      "answer": "The position of the circles depends on how MN compares with r_1 + r_2 and r_1 - r_2.",
+      "solution": [
+        "MN > r_1 + r_2: the circles are distant.",
+        "MN = r_1 + r_2: touching externally.",
+        "r_1 - r_2 < MN < r_1 + r_2: intersecting.",
+        "MN = r_1 - r_2: touching internally.",
+        "0 < MN < r_1 - r_2: circle N is inside circle M.",
+        "MN = 0: concentric."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-9",
+        "pp3u9-2:rule-10",
+        "pp3u9-2:convention-1",
+        "pp3u9-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "If MN > r_1 + r_2, the circles are distant. If MN = r_1 + r_2, they touch externally. If r_1 - r_2 < MN < r_1 + r_2, they intersect. If MN = r_1 - r_2, they touch internally. If 0 < MN < r_1 - r_2, N is inside M. If MN = 0, they are concentric.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-6:1",
+      "record_id": "pp3u9-2:drill-6",
+      "part": "1",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "If M and N are two circles on the plane, their two radii are r_1 and r_2 respectively where r_1 > r_2. Complete:",
+        "stem": "If $MN > r_1 + r_2$, then $M \\cap N = \\ldots$, surface of circle M ∩ surface of circle N = ......... and the two circles are distant.",
+        "notes": "Items 1-3 are circled numbers inside one Drill; recorded as parts. Notes: printed 'distant' as is."
+      },
+      "needs_page": false,
+      "question_fingerprint": "79ab7eb3aa6ff53e0b5c95a0a6ef3c08",
+      "kind": "value",
+      "answer": "M ∩ N = ϕ; surface of M ∩ surface of N = ϕ",
+      "solution": [
+        "MN > r_1 + r_2, so the circles are distant and have no common point.",
+        "Their surfaces do not meet either.",
+        "Answer: ϕ and ϕ."
+      ],
+      "grounded_in": [
+        "pp3u9-2:objective-3",
+        "pp3u9-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "$M \\cap N = \\phi$, surface of circle M ∩ surface of circle N = $\\phi$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-6:2",
+      "record_id": "pp3u9-2:drill-6",
+      "part": "2",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "If M and N are two circles on the plane, their two radii are r_1 and r_2 respectively where r_1 > r_2. Complete:",
+        "stem": "If $MN = r_1 + r_2$, then $M \\cap N = \\ldots$, surface of circle M ∩ surface of circle N = ......... and the two circles are touching externally.",
+        "notes": "Items 1-3 are circled numbers inside one Drill; recorded as parts. Notes: printed 'distant' as is."
+      },
+      "needs_page": false,
+      "question_fingerprint": "ccd941ab264de218c575b158451e427a",
+      "kind": "value",
+      "answer": "M ∩ N = {A}; surface of M ∩ surface of N = {A}",
+      "solution": [
+        "MN = r_1 + r_2, so the circles touch externally at one point A.",
+        "The surfaces share only that point.",
+        "Answer: {A} and {A}."
+      ],
+      "grounded_in": [
+        "pp3u9-2:objective-3",
+        "pp3u9-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "$M \\cap N = \\{A\\}$, surface of circle M ∩ surface of circle N = $\\{A\\}$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-6:3",
+      "record_id": "pp3u9-2:drill-6",
+      "part": "3",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "If M and N are two circles on the plane, their two radii are r_1 and r_2 respectively where r_1 > r_2. Complete:",
+        "stem": "If $r_1 - r_2 < MN < r_1 + r_2$, then $M \\cap N = \\ldots$, surface of circle M ∩ surface of circle N = the surface of the yellow area and the two circles are intersecting.",
+        "notes": "Items 1-3 are circled numbers inside one Drill; recorded as parts. Notes: printed 'distant' as is."
+      },
+      "needs_page": false,
+      "question_fingerprint": "e08b7c46b3babbe59a675fb7a0dd9746",
+      "kind": "value",
+      "answer": "M ∩ N = {A, B}",
+      "solution": [
+        "The circles intersect at the two points A and B.",
+        "Answer: M ∩ N = {A, B}."
+      ],
+      "grounded_in": [
+        "pp3u9-2:objective-3",
+        "pp3u9-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "$M \\cap N = \\{A, B\\}$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:1",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "1",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "m(∠BMN) = ......... °",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e1a19c6d2e05a661e1aae5c878c07086",
+      "kind": "value",
+      "answer": "50",
+      "solution": [
+        "The circles touch internally at A, so A is on line MN and MN ⊥ AB.",
+        "So m(∠MAB) = 90°.",
+        "In triangle ABM: m(∠B) = 40°, so m(∠BMA) = 90° - 40° = 50°.",
+        "N is on ray MA, so m(∠BMN) = 50°."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-11",
+        "pp3u9-2:example-4"
+      ],
+      "checks": {
+        "resolve_answer": "50",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:2",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "2",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "BC = ......... cm",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f855ef59e4a434301719a1e054b97b9c",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+        "Reading the figure: MN = 5 cm, MC = 3 cm and NC ⊥ MB at C (NC is the radius of N to the tangent point on MB).",
+        "In right triangle MCN: NC² = 25 - 9 = 16, so NC = 4 cm = radius of N.",
+        "Circles touch internally: MN = r1 - r2, so 5 = r1 - 4 and r1 = 9 cm.",
+        "MB = r1 = 9 cm.",
+        "BC = MB - MC = 9 - 3 = 6 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-9",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:3",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "3",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "BC = ......... cm",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f855ef59e4a434301719a1e054b97b9c",
+      "kind": "value",
+      "answer": "4√10",
+      "solution": [
+        "The circles touch externally, so A is on MN and MN = 8 + 5 = 13 cm.",
+        "BC is a common tangent, so MC ⊥ BC and NB ⊥ BC, so MC ∥ NB.",
+        "Draw NE ⊥ MC at E: NE = BC and ME = 8 - 5 = 3 cm.",
+        "In right triangle MEN: NE² = 13² - 3² = 160.",
+        "BC = √160 = 4√10 cm (about 12.65)."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-11",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "4√10 (≈ 12.65)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:4",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "4",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "m(∠MDN) = ......... °",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "790913cc6a4d75d47f34f037f1015959",
+      "kind": "value",
+      "answer": "90",
+      "solution": [
+        "Radii read from the figure: M is 3 cm, N is 2 cm, D is 1 cm; circles touch two by two.",
+        "Touching externally, distance between centres = sum of radii: MN = 3 + 2 = 5, MD = 3 + 1 = 4, DN = 1 + 2 = 3.",
+        "3² + 4² = 9 + 16 = 25 = 5², so m(∠MDN) = 90° (converse of Pythagoras)."
+      ],
+      "grounded_in": [
+        "pp3u9-2:example-3",
+        "pp3u9-2:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "90",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:5",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "5",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "m(∠EMN) = ......... °",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1da38e06942e724c84341003ef70d3b2",
+      "kind": "value",
+      "answer": "110",
+      "solution": [
+        "The circles touch internally at A, so A is on line MN and MN ⊥ AB: m(∠MAB) = 90°.",
+        "E is the midpoint of chord DC (tick marks), so ME ⊥ BD and m(∠MEB) = 90°.",
+        "m(∠B) = 70°.",
+        "In quadrilateral MEBA: m(∠EMA) = 360° - (90° + 90° + 70°) = 110°.",
+        "N is on ray MA, so m(∠EMN) = 110°."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-11",
+        "pp3u9-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "110",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-7:6",
+      "record_id": "pp3u9-2:drill-7",
+      "part": "6",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "In each of the following figures the circles are touching two-by-two. Use the information of each figure and complete:",
+        "stem": "MB = ....... cm, NC = ....... cm",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "952db273d9c9d013885f7e3fa635843b",
+      "kind": "value",
+      "answer": "MB = 12 cm, NC = √105 cm",
+      "solution": [
+        "Circles touch externally with radii 8 and 5, so MN = 13 cm.",
+        "MB is tangent to circle N at B, so NB ⊥ MB, with NB = 5.",
+        "MB² = 13² - 5² = 144, so MB = 12 cm.",
+        "NC is tangent to circle M at C, so MC ⊥ NC, with MC = 8.",
+        "NC² = 13² - 8² = 105, so NC = √105 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7",
+        "pp3u9-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "MB = 12 cm, NC = √105 cm",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-5",
+      "record_id": "pp3u9-2:example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 52,
+      "question": {
+        "text": "M and N are two intersecting circles at A and B, segment CD is a diameter in circle M and ray CX is a tangent to the circle M at C where ray CX ∩ ray BA = {E}, line MN ∩ segment AB = {F}. Prove that: m(∠DMN) = m(∠CEB).",
+        "stem": "",
+        "notes": "Solution continues on next page, none printed here."
+      },
+      "needs_page": false,
+      "question_fingerprint": "599b4220360158a4c1aa6002cf34ccd3",
+      "kind": "explanation",
+      "answer": "m(∠DMN) = m(∠CEB), proved using the tangent and the line of centers.",
+      "solution": [
+        "CX is a tangent at C, so CX ⊥ CD, so m(∠ECM) = 90°.",
+        "Line MN is the line of centers of the intersecting circles, so MN ⊥ AB at F, so m(∠EFM) = 90°.",
+        "In quadrilateral ECMF the angles at C and F are 90°, so m(∠CEF) + m(∠CMF) = 180°.",
+        "F is on ray EB, so ∠CEF is ∠CEB; F is on ray MN, so ∠CMF is ∠CMN.",
+        "C, M, D are collinear, so m(∠DMN) + m(∠CMN) = 180°.",
+        "So m(∠DMN) = 180° − m(∠CMN) = m(∠CEB)."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-7",
+        "pp3u9-2:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "CE is tangent to circle M at C, so CE ⊥ CD, i.e. the angle between CD and CE is 90°. MN is the line of centres, so MN ⊥ AB at F, hence MN ⊥ EB. Line CD (through M) and line MN meet at M, and line CE and line EB meet at E, with CD ⊥ CE and MN ⊥ EB. Angles whose sides are respectively perpendicular are equal (or in quadrilateral CMFE the angles at C and F are 90°, so ∠CMF + ∠CEF = 180°, and ∠DMN is supplementary to ∠CMF). Hence m(∠DMN) = m(∠CEB).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-8:A",
+      "record_id": "pp3u9-2:drill-8",
+      "part": "A",
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "In each of the following figures M and N are two intersecting circles at A and B. Complete:",
+        "stem": "AB = .......... cm",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f4a0e3ce328aee0bf1efa1b46d6012fa",
+      "kind": "value",
+      "answer": "10",
+      "solution": [
+        "The line of centers MN is perpendicular to the common chord AB and bisects it, so AB = 2 × DB and ∠MDB = 90°.",
+        "In right triangle MDB: MB = 10 cm and m(∠DMB) = 30°.",
+        "The side opposite 30° is half the hypotenuse: DB = 5 cm.",
+        "AB = 2 × 5 = 10 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-8:B",
+      "record_id": "pp3u9-2:drill-8",
+      "part": "B",
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "In each of the following figures M and N are two intersecting circles at A and B. Complete:",
+        "stem": "L = ..........",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e9681dcf5e7effe8b627aca7fd24de1a",
+      "kind": "value",
+      "answer": "L = 20",
+      "solution": [
+        "MN ⊥ AB (line of centers ⊥ common chord).",
+        "The segment from M to the midpoint of the chord is perpendicular to the chord (tick marks).",
+        "The angle between two lines equals the angle between lines perpendicular to them, so the angle at M equals the 52° between AB and the chord.",
+        "3L - 8 = 52.",
+        "3L = 60.",
+        "L = 20."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "L = 20",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:open-prompt-1",
+      "record_id": "pp3u9-2:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 53,
+      "question": {
+        "text": "Why ?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "812aeef9f1a23599deaeacf147b06214",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the statement that 'Why ?' refers to is not given, so the question cannot be identified.",
+      "solution": [
+        "Only the word 'Why ?' is printed, with no statement or figure attached.",
+        "The statement to justify is not given."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the question 'Why ?' does not state which claim it refers to, and the page text gives no context for it.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u9-2:drill-9",
+      "record_id": "pp3u9-2:drill-9",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "In the figure opposite: M and N are two intersecting circles at A, B, MN ∩ AB = {C}, AM = 6 cm, AN = 8 cm and MA ⊥ AN. Find the length of AB.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ebda4b395030317928f4c869864e1cd9",
+      "kind": "value",
+      "answer": "AB = 9.6 cm",
+      "solution": [
+        "MA ⊥ AN, so triangle MAN has a right angle at A.",
+        "MN² = 6² + 8² = 100, so MN = 10 cm.",
+        "The line of centers MN ⊥ AB, so AC ⊥ MN in the right triangle.",
+        "AC × MN = AM × AN, so AC × 10 = 6 × 8 = 48 and AC = 4.8 cm.",
+        "MN bisects the common chord, so AB = 2 × AC = 9.6 cm."
+      ],
+      "grounded_in": [
+        "pp3u9-2:rule-12",
+        "pp3u9-2:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "AB = 9.6 cm (MN = 10, AC = 6×8/10 = 4.8)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:27:51+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

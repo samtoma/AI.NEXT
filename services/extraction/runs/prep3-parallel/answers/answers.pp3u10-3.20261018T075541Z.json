@@ -1,0 +1,444 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "5bd6fdd8c0ec7ff6b735557d8eaf6c82f8c9b4b6d236a4847eac9bc10a1cd40d",
+  "generated_sha256": "7757b694961af238ec14c27235abae6e249cd19face175b9463bf19baea5d920",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-3:think-1",
+      "kind": "explanation",
+      "answer": "No. Two chords that do not meet inside the circle and cut off equal arcs need not be parallel, because they can meet outside the circle.",
+      "solution": [
+       "Equal arcs give equal chords, as in example-3: AD = BE because the arcs are equal.",
+       "Chords that do not cross inside the circle either do not meet at all (parallel) or meet outside the circle.",
+       "In example-3, the equal chords AD and BE meet at the point C outside the circle.",
+       "So these chords are not parallel, and equal arcs alone do not make the chords parallel.",
+       "Answer: No, not always."
+      ],
+      "grounded_in": [
+       "pp3u10-3:example-3",
+       "pp3u10-3:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:think-2",
+      "kind": "explanation",
+      "answer": "An angle has exactly one bisector, so ∠BEC has one bisector.",
+      "solution": [
+       "A bisector of an angle is the ray from its vertex that divides the angle into two equal angles.",
+       "Only one such ray exists, because it must make each part half of m(∠BEC).",
+       "So ∠BEC has exactly one bisector.",
+       "Answer: 1."
+      ],
+      "grounded_in": [
+       "pp3u10-3:example-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-3:think-1",
+      "kind": "explanation",
+      "answer": "No. Chords subtended by congruent arcs are equal in length, but equal chords that do not meet inside the circle need not be parallel (e.g. the equal non-parallel legs of an isosceles trapezoid inscribed in a circle). Only chords that cut off (intercept between them) equal arcs are parallel."
+     },
+     {
+      "ref": "pp3u10-3:think-2",
+      "kind": "explanation",
+      "answer": "1. An angle has exactly one bisector, because there is only one ray inside the angle that divides it into two equal angles."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u10-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:1",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "∠AEB, ∠ADB and ∠ACB all have their sides passing through A and B.",
+       "They are inscribed angles and they all face the arc AB.",
+       "So they include the same arc AB."
+      ],
+      "grounded_in": [
+       "pp3u10-3:theorem-2",
+       "pp3u10-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:2",
+      "kind": "value",
+      "answer": "m(∠AEB) = 50°, m(∠ADB) = 50°, m(∠ACB) = 50°. They are all equal.",
+      "solution": [
+       "An inscribed angle is half the arc it includes.",
+       "m(∠AEB) = 1/2 × 100° = 50°.",
+       "m(∠ADB) = 1/2 × 100° = 50°.",
+       "m(∠ACB) = 1/2 × 100° = 50°.",
+       "We notice that the three angles are equal, 50° each."
+      ],
+      "grounded_in": [
+       "pp3u10-3:worked-example-1",
+       "pp3u10-3:theorem-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:3",
+      "kind": "explanation",
+      "answer": "Yes, inscribed angles that include arcs of equal measure (in the same circle or congruent circles) are equal in measure.",
+      "solution": [
+       "Each inscribed angle equals half the measure of the arc it includes.",
+       "If the two arcs have equal measures, their halves are equal.",
+       "So the two inscribed angles are equal in measure."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-1",
+       "pp3u10-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-1:1",
+      "kind": "value",
+      "answer": "m(∠C) = 50°, m(∠B) = 25°",
+      "solution": [
+       "∠C and the 50° angle at A are inscribed angles including the same arc.",
+       "So m(∠C) = 50°.",
+       "∠B and the 25° angle at D are inscribed angles including the same arc.",
+       "So m(∠B) = 25°.",
+       "m(∠C) = 50°, m(∠B) = 25°."
+      ],
+      "grounded_in": [
+       "pp3u10-3:theorem-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-1:2",
+      "kind": "value",
+      "answer": "m(∠C) = 70°, m(∠BDC) = 90°",
+      "solution": [
+       "∠C and the 70° angle at D both include the same arc AB.",
+       "So m(∠C) = 70°.",
+       "The 20° angle is ∠ADC, since it includes arc AC, the same arc as ∠ABC.",
+       "m(∠BDC) = 70° + 20° = 90°.",
+       "m(∠C) = 70°, m(∠BDC) = 90°."
+      ],
+      "grounded_in": [
+       "pp3u10-3:theorem-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-1:3",
+      "kind": "value",
+      "answer": "m(∠BED) = 20°, m(∠ABE) = 117°",
+      "solution": [
+       "∠BED and ∠BCD both include arc BD, so m(∠BED) = m(∠BCD) = 20°.",
+       "In △ABE, the angle at A is 43° and ∠AEB = ∠BED = 20°.",
+       "m(∠ABE) = 180° − 43° − 20° = 117°.",
+       "m(∠BED) = 20°, m(∠ABE) = 117°."
+      ],
+      "grounded_in": [
+       "pp3u10-3:theorem-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-2",
+      "kind": "explanation",
+      "answer": "m(∠EBC) = m(∠FBD), proved by using equal inscribed angles at A and vertical angles.",
+      "solution": [
+       "In circle M, ∠EBC and ∠EAC are inscribed angles including the same arc EC.",
+       "So m(∠EBC) = m(∠EAC) (1).",
+       "In circle N, ∠FBD and ∠FAD are inscribed angles including the same arc FD.",
+       "So m(∠FBD) = m(∠FAD) (2).",
+       "∠EAC and ∠FAD are vertical angles, so m(∠EAC) = m(∠FAD) (3).",
+       "From (1), (2) and (3): m(∠EBC) = m(∠FBD) (Q.E.D.)."
+      ],
+      "grounded_in": [
+       "pp3u10-3:theorem-2",
+       "pp3u10-3:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-3:1",
+      "kind": "value",
+      "answer": "x = 14",
+      "solution": [
+       "The 30° angle at F and the angle at B include arcs that are equal in measure (the ticks on arcs FD and CA).",
+       "So the two inscribed angles are equal: 5x − 40 = 30.",
+       "5x = 70.",
+       "x = 14."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-1",
+       "pp3u10-3:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-3:2",
+      "kind": "value",
+      "answer": "y = 10",
+      "solution": [
+       "BA ∥ DC, so the arcs between the parallel chords are equal: arc BD = arc AC.",
+       "Arc AC = 50° (the 50° marked at the arc).",
+       "So arc BD = 50°.",
+       "∠BED is inscribed on arc BD, so (3y − 5)° = 1/2 × 50° = 25°.",
+       "3y = 30.",
+       "y = 10."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-1",
+       "pp3u10-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-3:3",
+      "kind": "value",
+      "answer": "z = 25",
+      "solution": [
+       "Both angles include arcs of equal measure (the same central angle at M).",
+       "In the two circles, equal arcs give equal inscribed angles.",
+       "So 2z + 6 = 56.",
+       "2z = 50.",
+       "z = 25."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-4",
+      "kind": "explanation",
+      "answer": "△ACE is isosceles because m(∠ACE) = m(∠CAE), so EA = EC.",
+      "solution": [
+       "AB = CD, so m(arc AB) = m(arc CD).",
+       "Arc AB = arc AC + arc CB and arc CD = arc CA + arc AD.",
+       "Subtract arc AC from both sides: m(arc CB) = m(arc AD).",
+       "∠CAB includes arc CB and ∠ACD includes arc AD.",
+       "So m(∠CAE) = m(∠ACE).",
+       "In △ACE, equal angles mean EA = EC, so the triangle is isosceles (Q.E.D.)."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-1",
+       "pp3u10-3:example-3",
+       "pp3u10-3:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-5",
+      "kind": "explanation",
+      "answer": "m(∠AEB) = m(∠AEC), because they include equal arcs AB and AC.",
+      "solution": [
+       "AB = AC, so m(arc AB) = m(arc AC).",
+       "∠AEB is inscribed and includes arc AB.",
+       "∠AEC is inscribed and includes arc AC.",
+       "Inscribed angles on equal arcs are equal.",
+       "So m(∠AEB) = m(∠AEC) (Q.E.D.)."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-1",
+       "pp3u10-3:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:1",
+      "kind": "explanation",
+      "answer": "No: the angles on the same base are not equal.",
+      "solution": [
+       "AD ∥ BC, so m(∠ADB) = m(∠DBC) = 38°.",
+       "In △AED: m(∠DAE) = 180° − 76° − 38° = 66°.",
+       "On base AD... ∠ADB = 38° but ∠ACB = ∠DAC = 66°, not equal.",
+       "Equal angles on one base and one side are not found, so no circle passes through A, B, C, D."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5",
+       "pp3u10-3:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:2",
+      "kind": "explanation",
+      "answer": "Yes: ∠ABD and ∠ACD are equal and on the same base AD and the same side.",
+      "solution": [
+       "In △ADE: m(∠AED) = 180° − 85° = 95° and m(∠ADE) = 60°, so m(∠DAC) = 25°.",
+       "DA = DC, so m(∠DCA) = m(∠DAC) = 25°.",
+       "m(∠ABD) = 25°.",
+       "So m(∠ACD) = m(∠ABD) = 25°, both drawn on base AD and on one side of it.",
+       "So A, B, C, D lie on one circle."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5",
+       "pp3u10-3:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:3",
+      "kind": "explanation",
+      "answer": "Yes: ∠DAC and ∠DBC are equal and on the same base DC and the same side.",
+      "solution": [
+       "EA = ED, so m(∠EDA) = m(∠EAD).",
+       "EB = EC, so m(∠EBC) = m(∠ECB).",
+       "AD ∥ BC, so m(∠DAC) = m(∠ACB) and m(∠ADB) = m(∠DBC).",
+       "So m(∠DAC) = m(∠ACB) = m(∠EBC) = m(∠DBC).",
+       "So m(∠DAC) = m(∠DBC), both drawn on base DC and on one side of it.",
+       "So A, B, C, D lie on one circle."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5",
+       "pp3u10-3:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:4",
+      "kind": "explanation",
+      "answer": "Yes: ∠ADB and ∠ACB are equal and on the same base AB and the same side.",
+      "solution": [
+       "In the rectangle, AD = BC, AB is common and m(∠DAB) = m(∠CBA) = 90°.",
+       "So △DAB and △CBA are congruent, so m(∠ADB) = m(∠ACB).",
+       "Both are drawn on base AB and on one side of it.",
+       "So A, B, C, D lie on one circle."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5",
+       "pp3u10-3:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:5",
+      "kind": "explanation",
+      "answer": "Yes: ∠ADB and ∠ACB are equal and on the same base AB and the same side.",
+      "solution": [
+       "In the square, AD = BC, AB is common and m(∠DAB) = m(∠CBA) = 90°.",
+       "So △DAB and △CBA are congruent, so m(∠ADB) = m(∠ACB) = 45°.",
+       "Both are drawn on base AB and on one side of it.",
+       "So A, B, C, D lie on one circle."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5",
+       "pp3u10-3:example-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-3:drill-6:6",
+      "kind": "explanation",
+      "answer": "No: in a general parallelogram the angles on one base are not equal.",
+      "solution": [
+       "In a parallelogram AD ∥ BC but AD = BC with no right angles, so ∠ADB and ∠ACB are not equal in general.",
+       "There are no two equal angles drawn on one base and on one side of it.",
+       "So a circle does not pass through A, B, C, D."
+      ],
+      "grounded_in": [
+       "pp3u10-3:rule-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:1",
+      "kind": "explanation",
+      "answer": "Yes. ∠AEB, ∠ADB and ∠ACB are all inscribed angles that include (subtend) the same arc AB."
+     },
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:2",
+      "kind": "value",
+      "answer": "m(∠AEB) = 50°, m(∠ADB) = 50°, m(∠ACB) = 50°. They are all equal, because each is half of m(arc AB) = 100°."
+     },
+     {
+      "ref": "pp3u10-3:think-and-discuss-1:3",
+      "kind": "explanation",
+      "answer": "Yes. Each inscribed angle is half the measure of the arc it subtends. In the same circle or in congruent circles, equal arcs give equal halves, so the angles are equal."
+     },
+     {
+      "ref": "pp3u10-3:drill-1:1",
+      "kind": "value",
+      "answer": "m(∠C) = 50°; m(∠B) = 25°"
+     },
+     {
+      "ref": "pp3u10-3:drill-1:2",
+      "kind": "value",
+      "answer": "m(∠C) = 70°; m(∠BDC) = 90°"
+     },
+     {
+      "ref": "pp3u10-3:drill-1:3",
+      "kind": "value",
+      "answer": "m(∠BED) = 20°; m(∠ABE) = 117°"
+     },
+     {
+      "ref": "pp3u10-3:drill-2",
+      "kind": "explanation",
+      "answer": "In circle M, ∠EBC and ∠EAC are inscribed angles subtending the same arc EC, so m(∠EBC) = m(∠EAC). ∠EAC and ∠FAD are vertical angles, so m(∠EAC) = m(∠FAD). In circle N, ∠FAD and ∠FBD are inscribed angles subtending the same arc FD, so m(∠FAD) = m(∠FBD). Hence m(∠EBC) = m(∠FBD)."
+     },
+     {
+      "ref": "pp3u10-3:drill-3:1",
+      "kind": "value",
+      "answer": "x = 14"
+     },
+     {
+      "ref": "pp3u10-3:drill-3:2",
+      "kind": "value",
+      "answer": "y = 10"
+     },
+     {
+      "ref": "pp3u10-3:drill-3:3",
+      "kind": "value",
+      "answer": "z = 25"
+     },
+     {
+      "ref": "pp3u10-3:drill-4",
+      "kind": "explanation",
+      "answer": "AB = CD, so m(arc AB) = m(arc CD). Subtracting the common arc between them gives m(arc AD) = m(arc CB). Therefore the inscribed angles subtending these arcs are equal: m(∠ACD) = m(∠CAB), that is m(∠ACE) = m(∠CAE). So in triangle ACE, EA = EC and the triangle is isosceles."
+     },
+     {
+      "ref": "pp3u10-3:drill-5",
+      "kind": "explanation",
+      "answer": "AB = AC, so m(arc AB) = m(arc AC) (equal chords give equal arcs). ∠AEB and ∠AEC are inscribed angles subtending these equal arcs, so m(∠AEB) = m(∠AEC)."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:1",
+      "kind": "explanation",
+      "answer": "No. ∠DAC = 180° − 76° − 38° = 66°, which is not equal to ∠DBC = 38°. The angles on the same base are not equal, so the four points are not concyclic."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:2",
+      "kind": "explanation",
+      "answer": "Yes. In triangle ADE, ∠EAD = 85° − 60° = 25°. Since DA = DC, ∠DCA = 25°. ∠DCA and ∠DBA are both 25°, drawn on the base DA and on the same side of it. So the four points lie on one circle."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:3",
+      "kind": "explanation",
+      "answer": "Yes. EB = EC gives ∠EBC = ∠ECB. AD ∥ BC gives ∠ADB = ∠DBC. So ∠ADB = ∠ACB, both drawn on the base AB and on the same side of it (it is an isosceles trapezium). So the four points lie on one circle."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:4",
+      "kind": "explanation",
+      "answer": "Yes. A rectangle has opposite angles that are right angles, so they are supplementary (90° + 90° = 180°). Equivalently, ∠ADB = ∠ACB. So a circle passes through A, B, C and D."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:5",
+      "kind": "explanation",
+      "answer": "Yes. A square is a rectangle, so its opposite angles are supplementary (90° + 90° = 180°). Equivalently, ∠ADB = ∠ACB = 45°. So a circle passes through A, B, C and D."
+     },
+     {
+      "ref": "pp3u10-3:drill-6:6",
+      "kind": "explanation",
+      "answer": "No. In a parallelogram that is not a rectangle, opposite angles are equal but not supplementary (they are not 90° each), so ∠ADB ≠ ∠ACB. No circle passes through all four points."
+     }
+    ]
+   }
+  }
+ ]
+}

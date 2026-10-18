@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "4a36e9ffa75eafb77b8c988e728ed62271dca33f441b270a98d03eb69977d41e",
+  "generated_sha256": "8cbf5795d10dfc68beb7519331d6bde44b501c9e4bb0e224a26f55ced4fc16a4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u10-1:figure-6",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   },
+   {
+    "id": "pp3u10-1:figure-7",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "A small stray mark at the far left edge near y≈140 is not part of the figure. The figure itself is complete."
+   }
+  ]
+ }
+}

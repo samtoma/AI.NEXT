@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "b2d01ec417ff1f936f399b81f567886548e42223d3f33af3fd572cd0a7cbdb7e",
+  "generated_sha256": "49c4c5684dc732b85ce26ac6ae9aa63912e926caf1bde42773c631549b3daf54",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u10-3:figure-10",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "extend",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Top cut: the circled number badge '1' is clipped at the top edge, and the circle top at E is close to the edge. The rest of the figure is complete."
+   },
+   {
+    "id": "pp3u10-3:figure-12",
+    "shows_figure": true,
+    "ok": false,
+    "left": "extend",
+    "top": "extend",
+    "right": "extend",
+    "bottom": "ok",
+    "note": "The crop is cut on the left, top and right. The outer circle and label (2z+6) run off the right and top edges, and the left side of the badge and circle is clipped. The answer line is present."
+   }
+  ]
+ }
+}

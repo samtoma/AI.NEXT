@@ -1,0 +1,72 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "c8f9659a5e04722d7765f1972db31ed31f2be7248884cf75d6291f4525af3163",
+  "generated_sha256": "8d9508bb78bc7bdfc26f32427f9db11f44efe15e1e3e0edbbec81bd09cb50f71",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u6-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u6-3:mental-math-1",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "Factor the second equation: $x^2 - y^2 = (x+y)(x-y)$.",
+       "Substitute $x + y = 10$: $10(x-y) = 40$.",
+       "Divide both sides by 10: $x - y = 4$.",
+       "The answer is $x - y = 4$."
+      ],
+      "grounded_in": [
+       "pp3u6-3:objective-1",
+       "pp3u6-3:linking-text-1"
+      ]
+     },
+     {
+      "ref": "pp3u6-3:example-2",
+      "kind": "value",
+      "answer": "3 cm and 4 cm",
+      "solution": [
+       "Let the length be $x$ and the width be $y$.",
+       "Perimeter: $2(x+y) = 14$, so $x + y = 7$ (first degree).",
+       "Area: $xy = 12$ (second degree).",
+       "From the first equation: $y = 7 - x$.",
+       "Substitute in the second: $x(7-x) = 12$, so $7x - x^2 = 12$.",
+       "Rearrange: $x^2 - 7x + 12 = 0$, so $(x-3)(x-4) = 0$.",
+       "$x = 3$ or $x = 4$.",
+       "When $x = 3$, $y = 4$. When $x = 4$, $y = 3$.",
+       "The dimensions are 3 cm and 4 cm."
+      ],
+      "grounded_in": [
+       "pp3u6-3:objective-2",
+       "pp3u6-3:example-2",
+       "pp3u6-3:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u6-3:mental-math-1",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u6-3:example-2",
+      "kind": "value",
+      "answer": "3 cm and 4 cm (length = 4 cm, width = 3 cm)"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,227 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "dc692bb55c0bc9501e72146b50d0269db6667af48c2228a0219ca5117a20d640",
+  "generated_sha256": "072a2fa5761be86555d49b4ed0ab669ed595d2768de68e9c233fb2b2130c7759",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u3-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u3-2:think-and-discuss-1",
+      "kind": "value",
+      "answer": "Set A: LE 200, Set B: LE 200",
+      "solution": [
+       "Mean = total of values / their number.",
+       "Set A: (170+180+180+230+240)/5 = 1000/5 = 200.",
+       "Set B: (50+180+180+190+400)/5 = 1000/5 = 200.",
+       "Both means equal LE 200."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The two sets have the same mean (LE 200), median and mode (LE 180), but set B is more dispersed (range 350) than set A (range 70).",
+      "solution": [
+       "The means are equal: 200 for both sets.",
+       "Range of A = 240 - 170 = 70.",
+       "Range of B = 400 - 50 = 350.",
+       "The range of B is larger, so B's wages differ more.",
+       "So B is more dispersed; A is more homogeneous."
+      ],
+      "grounded_in": [
+       "pp3u3-2:definition-3",
+       "pp3u3-2:rule-2",
+       "pp3u3-2:rule-4",
+       "pp3u3-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:exercise-2",
+      "kind": "value",
+      "answer": "Class A: mean = 30, σ ≈ 10.724; Class B: mean = 30, σ ≈ 10.954",
+      "solution": [
+       "Centres of sets: 5, 15, 25, 35, 45.",
+       "Class A frequencies 2, 5, 11, 15, 7; Σk = 40.",
+       "Σxk = 10+75+275+525+315 = 1200, so mean = 1200/40 = 30.",
+       "x - mean: -25, -15, -5, 5, 15; squares: 625, 225, 25, 25, 225.",
+       "Multiply by k: 1250, 1125, 275, 375, 1575; sum = 4600.",
+       "σ = √(4600/40) = √115 ≈ 10.724.",
+       "Class B frequencies 2, 3, 18, 7, 10; Σk = 40.",
+       "Σxk = 10+45+450+245+450 = 1200, so mean = 30.",
+       "Squares × k: 1250, 675, 450, 175, 2250; sum = 4800.",
+       "σ = √(4800/40) = √120 ≈ 10.954.",
+       "Answer: both means are 30; σ(A) ≈ 10.724, σ(B) ≈ 10.954."
+      ],
+      "grounded_in": [
+       "pp3u3-2:definition-5",
+       "pp3u3-2:rule-9",
+       "pp3u3-2:example-3",
+       "pp3u3-2:convention-5",
+       "pp3u3-2:convention-6"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:exercise-3",
+      "kind": "value",
+      "answer": "Class A",
+      "solution": [
+       "Both classes have mean 30.",
+       "σ of A ≈ 10.724; σ of B ≈ 10.954.",
+       "The set with the larger standard deviation is more dispersed.",
+       "A has the smaller standard deviation, so it is more homogeneous.",
+       "Answer: Class A."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-11",
+       "pp3u3-2:definition-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u3-2:think-and-discuss-1",
+      "kind": "value",
+      "answer": "Set A: LE 200, Set B: LE 200"
+     },
+     {
+      "ref": "pp3u3-2:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Both sets have the same mean (LE 200), median and mode (LE 180), but the range of A is $240-170=70$ while the range of B is $400-50=350$. So set B is more dispersed (less homogeneous) than set A; the mean alone doesn't show the difference."
+     },
+     {
+      "ref": "pp3u3-2:exercise-2",
+      "kind": "value",
+      "answer": "Class A: mean = 30, σ = √115 ≈ 10.72; Class B: mean = 30, σ = √120 ≈ 10.95"
+     },
+     {
+      "ref": "pp3u3-2:exercise-3",
+      "kind": "explanation",
+      "answer": "Class A is more homogeneous, because its standard deviation (≈ 10.72) is smaller than that of class B (≈ 10.95) while the means are equal (30)."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u3-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u3-2:drill-1",
+      "kind": "value",
+      "answer": "σ ≈ 1.483 goals",
+      "solution": [
+       "Σk = 1+4+6+9+5+3+2 = 30.",
+       "Σxk = 0+4+12+27+20+15+12 = 90, so the mean = 90/30 = 3.",
+       "Deviations x − 3: −3, −2, −1, 0, 1, 2, 3. Squares: 9, 4, 1, 0, 1, 4, 9.",
+       "Multiply by k: 9, 16, 6, 0, 5, 12, 18. Σ(x−x̄)²k = 66.",
+       "σ = √(66/30) = √2.2 ≈ 1.483.",
+       "The standard deviation is about 1.483 goals."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-9",
+       "pp3u3-2:definition-5",
+       "pp3u3-2:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:drill-2",
+      "kind": "explanation",
+      "answer": "Parts 1–3 are answered in exercise-1, exercise-2 and exercise-3: mean 30 for both classes, σ ≈ 10.72 (A) and ≈ 10.95 (B), and class A is more homogeneous.",
+      "solution": [
+       "Part 1: draw one frequency polygon for each class in the same figure (see exercise-1).",
+       "Part 2: both means are 30; σ_A ≈ 10.72 and σ_B ≈ 10.95 (see exercise-2).",
+       "Part 3: class A has the smaller standard deviation, so class A is more homogeneous."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-11",
+       "pp3u3-2:rule-9"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:exercise-1",
+      "kind": "drawing",
+      "answer": "One figure with two frequency polygons, A and B, plotted at the set centres 5, 15, 25, 35, 45.",
+      "solution": [
+       "Find the centres of the sets: 5, 15, 25, 35, 45. Add 0 frequency at the centres −5 and 55 to close the polygons.",
+       "Draw the horizontal axis for marks (centres 5 to 45) and the vertical axis for the number of students (0 to 20).",
+       "Class A points: (−5,0), (5,2), (15,5), (25,11), (35,15), (45,7), (55,0). Join them with straight lines.",
+       "Class B points: (−5,0), (5,2), (15,3), (25,18), (35,7), (45,10), (55,0). Join them with straight lines in another colour.",
+       "Label the polygons A and B in the same figure."
+      ],
+      "grounded_in": [
+       "pp3u3-2:example-3",
+       "pp3u3-2:objective-4"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:exercise-2",
+      "kind": "value",
+      "answer": "Class A: mean = 30, σ ≈ 10.72. Class B: mean = 30, σ ≈ 10.95",
+      "solution": [
+       "The centres are 5, 15, 25, 35, 45 and Σk = 40 for each class.",
+       "Class A: Σxk = 10+75+275+525+315 = 1200, so the mean = 1200/40 = 30.",
+       "Class A deviations: −25, −15, −5, 5, 15. Squares: 625, 225, 25, 25, 225.",
+       "Class A: Σ(x−x̄)²k = 1250+1125+275+375+1575 = 4600, so σ = √(4600/40) = √115 ≈ 10.72.",
+       "Class B: Σxk = 10+45+450+245+450 = 1200, so the mean = 30.",
+       "Class B: Σ(x−x̄)²k = 1250+675+450+175+2250 = 4800, so σ = √(4800/40) = √120 ≈ 10.95.",
+       "Class A: mean = 30, σ ≈ 10.72. Class B: mean = 30, σ ≈ 10.95."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-9",
+       "pp3u3-2:definition-5",
+       "pp3u3-2:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u3-2:exercise-3",
+      "kind": "explanation",
+      "answer": "Class A is more homogeneous.",
+      "solution": [
+       "The two means are equal (30), so the standard deviations can be compared.",
+       "σ_A ≈ 10.72 and σ_B ≈ 10.95.",
+       "The set with the larger standard deviation is more dispersed, so class B is more dispersed.",
+       "Class A has the smaller standard deviation, so class A is more homogeneous in getting marks."
+      ],
+      "grounded_in": [
+       "pp3u3-2:rule-11",
+       "pp3u3-2:definition-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u3-2:drill-1",
+      "kind": "value",
+      "answer": "σ ≈ 1.483 goals (mean = 90/30 = 3, Σ(x−x̄)²k = 66, σ = √(66/30) = √2.2)"
+     },
+     {
+      "ref": "pp3u3-2:drill-2",
+      "kind": "explanation",
+      "answer": "Centres 5, 15, 25, 35, 45. Class A: mean = 30, σ = √115 ≈ 10.72. Class B: mean = 30, σ = √120 ≈ 10.95. The means are equal, so class A, which has the smaller σ, is more homogeneous."
+     },
+     {
+      "ref": "pp3u3-2:exercise-1",
+      "kind": "drawing",
+      "answer": "One figure with the class centres 5, 15, 25, 35, 45 (marks) on the horizontal axis and frequency on the vertical axis. Class A polygon through (5,2), (15,5), (25,11), (35,15), (45,7). Class B polygon through (5,2), (15,3), (25,18), (35,7), (45,10). Each polygon is closed to the axis at centres −5 and 55 with frequency 0."
+     }
+    ]
+   }
+  }
+ ]
+}

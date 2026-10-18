@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "447750ab9dee6ecbdf2811e8a0b853d35b340e7fe949c56728cb91a0b30fb731",
+  "generated_sha256": "cf1b2c9d55d26d7fb37691d37b868a348bcaa52fae080fdd372b275ee84249bc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-4:figure-9",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Left edge contains stray page text fragments (\"),\", \"...\", \"... cm,\", \"... cm\") that are not part of the figure."
+   },
+   {
+    "id": "pp3u9-4:figure-10",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "A stray \"100°\" at the bottom-left, outside the circle, looks like page text rather than part of the figure. The figure itself is complete."
+   }
+  ]
+ }
+}

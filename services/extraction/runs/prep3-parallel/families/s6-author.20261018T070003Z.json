@@ -1,0 +1,1279 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "20f60a1419af5cb856a2f117125d135e64e58456b346f66376022423b93de1be",
+  "generated_sha256": "c0bd6d42af10c2996ed4f77dd797ca1bcec63876af72c4132558a36f18768b9b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u5-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-1-1:general-pts",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-1-1",
+     "parent_question_id": "q:pp3u5-1-1:bk-think-and-discuss-3",
+     "source_page": 58,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "T",
+       "let": "[[3,4,5],[5,12,13],[6,8,10],[8,15,17],[9,12,15]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "o",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "sx",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "sy",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "dx",
+       "let": "T[i][o]"
+      },
+      {
+       "name": "dy",
+       "let": "T[i][1-o]"
+      },
+      {
+       "name": "h",
+       "let": "T[i][2]"
+      },
+      {
+       "name": "x1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + sx*dx"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + sy*dy"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the distance between the points $A({=x1}, {=y1})$, $B({=x2}, {=y2})$. Give the answer in unit length.",
+     "answer": "h",
+     "solution": [
+      "Draw the right triangle AKB with the right angle at K, where K is the point with the x-coordinate of one point and the y-coordinate of the other.",
+      "$AK=|{=x2}-({=x1})|={=dx}$ and $KB=|{=y2}-({=y1})|={=dy}$.",
+      "$(AB)^2=({=dx})^2+({=dy})^2={=dx*dx}+{=dy*dy}={=h*h}$",
+      "AB = {=h} unit length."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Pythagorean triples keep the distance a whole number; signs and positions vary. Follows book Q3 method."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-1-1:perimeter-tri",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-1-1",
+     "parent_question_id": "q:pp3u5-1-1:bk-think-and-discuss-3",
+     "source_page": 58,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "T",
+       "let": "[[3,4,5],[5,12,13],[6,8,10],[8,15,17],[9,12,15]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "o",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "sx",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "sy",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "dx",
+       "let": "T[i][o]"
+      },
+      {
+       "name": "dy",
+       "let": "T[i][1-o]"
+      },
+      {
+       "name": "h",
+       "let": "T[i][2]"
+      },
+      {
+       "name": "x1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + sx*dx"
+      },
+      {
+       "name": "y3",
+       "let": "y1 + sy*dy"
+      },
+      {
+       "name": "p",
+       "let": "dx + dy + h"
+      }
+     ],
+     "constraints": [],
+     "stem": "The vertices of a triangle are $A({=x1}, {=y1})$, $B({=x2}, {=y1})$ and $C({=x2}, {=y3})$. Find the perimeter of triangle $ABC$ in unit length.",
+     "answer": "p",
+     "solution": [
+      "A and B have the same y-coordinate, so use the difference of the x-coordinates: $AB=|{=x2}-({=x1})|={=dx}$.",
+      "B and C have the same x-coordinate, so use the difference of the y-coordinates: $BC=|{=y3}-({=y1})|={=dy}$.",
+      "The angle at B is a right angle, so $(AC)^2=({=dx})^2+({=dy})^2={=dx*dx}+{=dy*dy}={=h*h}$ and AC = {=h}.",
+      "Perimeter $={=dx}+{=dy}+{=h}={=p}$ unit length."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Multi-step: two axis-parallel distances, then the distance rule, then sum. Whole-number sides via Pythagorean triples."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-1-2:righttri",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-1-2",
+     "parent_question_id": "q:pp3u5-1-2:bk-example-1",
+     "source_page": 59,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "h",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "name": "l",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "require": "(k*(a*a+b*b)) % 2 == 0",
+       "why": "area must be a whole number"
+      }
+     ],
+     "constraints": [],
+     "stem": "The points are $A({=h}, {=l})$, $B({=h+a}, {=l+b})$ and $C({=h-k*b}, {=l+k*a})$. Use the distance rule to prove that triangle $ABC$ is right angled at $A$, then find its area in square units.",
+     "answer": "k*(a*a+b*b)//2",
+     "solution": [
+      "$AB=\\sqrt{({=a})^2+({=b})^2}=\\sqrt{{=a*a+b*b}}$, so $AB^2={=a*a+b*b}$.",
+      "$AC=\\sqrt{({=-k*b})^2+({=k*a})^2}=\\sqrt{{=k*k*(a*a+b*b)}}$, so $AC^2={=k*k*(a*a+b*b)}$.",
+      "$BC=\\sqrt{({=-k*b-a})^2+({=k*a-b})^2}$, so $BC^2={=(k*b+a)**2+(k*a-b)**2}$.",
+      "$AB^2+AC^2={=a*a+b*b}+{=k*k*(a*a+b*b)}={=(1+k*k)*(a*a+b*b)}=BC^2$.",
+      "By the converse of the Pythagorean theorem, triangle $ABC$ is right angled at $A$.",
+      "Area $=\\frac{1}{2}\\times AB\\times AC=\\frac{1}{2}\\times\\sqrt{{=a*a+b*b}}\\times\\sqrt{{=k*k*(a*a+b*b)}}={=k*(a*a+b*b)//2}$ square units."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Right angle at A by construction (AC is AB rotated 90 degrees and scaled by k). Evenness required so area is whole."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-1-2:classify",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-1-2",
+     "parent_question_id": "q:pp3u5-1-2:bk-example-1",
+     "source_page": 59,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "h",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "name": "l",
+       "randint": [
+        -3,
+        3
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Use the distance rule to decide which description fits $ABCD$ best, where $A({=h}, {=l})$, $B({=h+p}, {=l+q})$, $C({=h+p+q}, {=l+p+q})$ and $D({=h+q}, {=l+p})$.",
+     "answer": "A rhombus that is not a square",
+     "choices": {
+      "correct": "A rhombus that is not a square",
+      "distractors": [
+       {
+        "text": "A square",
+        "misconception_id": "mc:pp3u5-1-2:equal-sides-enough-for-square"
+       },
+       {
+        "text": "A rectangle that is not a square",
+        "misconception_id": null
+       },
+       {
+        "text": "A parallelogram that is neither a rhombus nor a rectangle",
+        "misconception_id": null
+       }
+      ]
+     },
+     "solution": [
+      "$AB=\\sqrt{({=p})^2+({=q})^2}=\\sqrt{{=p*p+q*q}}$.",
+      "$BC=\\sqrt{({=q})^2+({=p})^2}=\\sqrt{{=p*p+q*q}}$.",
+      "$CD=\\sqrt{({=-p})^2+({=-q})^2}=\\sqrt{{=p*p+q*q}}$.",
+      "$DA=\\sqrt{({=-q})^2+({=-p})^2}=\\sqrt{{=p*p+q*q}}$.",
+      "All four sides are equal, so $ABCD$ is a rhombus. To see whether it is a square, compare the diagonals.",
+      "$AC=\\sqrt{({=p+q})^2+({=p+q})^2}=\\sqrt{{=2*(p+q)**2}}$ and $BD=\\sqrt{({=q-p})^2+({=p-q})^2}=\\sqrt{{=2*(p-q)**2}}$.",
+      "$AC\\neq BD$, so the figure is not a rectangle and not a square. $ABCD$ is a rhombus that is not a square."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Rhombus built from u=(p,q), v=(q,p), p!=q, p,q>0 so diagonals always differ and angle is not right."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for lo:pp3u5-1-3, so there is no valid parent_question_id. There are also no canonical solutions to model the book's method and notation on. Inventing a parent id or a method would break the spec."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions were supplied for lo:pp3u5-1-3, so there is no valid parent_question_id. There are also no canonical solutions to model the book's method and notation on. Inventing a parent id or a method would break the spec."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions were supplied for lo:pp3u5-1-3, so there is no valid parent_question_id. There are also no canonical solutions to model the book's method and notation on. Inventing a parent id or a method would break the spec."
+    }
+   ],
+   "notes": "The book-question list for this objective is empty and no misconceptions are catalogued. A family needs a real parent_question_id and the book's own solution method, so I wrote none. Please re-run with the objective's book questions supplied."
+  },
+  {
+   "lo_id": "lo:pp3u5-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-1:midpoint-ends",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-1",
+     "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-third",
+     "source_page": 62,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -8,
+        4
+       ]
+      },
+      {
+       "name": "dx",
+       "choice": [
+        2,
+        4,
+        6,
+        8,
+        10
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -8,
+        4
+       ]
+      },
+      {
+       "name": "dy",
+       "choice": [
+        2,
+        4,
+        6,
+        8,
+        10
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + dx"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + dy"
+      },
+      {
+       "name": "mx",
+       "let": "x1 + dx // 2"
+      },
+      {
+       "name": "my",
+       "let": "y1 + dy // 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "On a perpendicular coordinate plane, find the two coordinates of the midpoint $C$ of the straight segment $AB$: $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Write your answer as $(x, y)$.",
+     "solution": [
+      "$A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+      "$x = \\frac{{=x1} + {=paren(x2)}}{2} = {=mx}$",
+      "$y = \\frac{{=y1} + {=paren(y2)}}{2} = {=my}$",
+      "The midpoint is $C({=mx}, {=my})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=mx}, {=my})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Endpoints may include negatives; sums are always even so the midpoint has whole coordinates. Same skeleton as the book's third item."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-1:quarter-point",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-1",
+     "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-third",
+     "source_page": 62,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -12,
+        0
+       ]
+      },
+      {
+       "name": "dx",
+       "choice": [
+        4,
+        8,
+        12
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -12,
+        0
+       ]
+      },
+      {
+       "name": "dy",
+       "choice": [
+        4,
+        8,
+        12
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + dx"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + dy"
+      },
+      {
+       "name": "cx",
+       "let": "x1 + dx // 2"
+      },
+      {
+       "name": "cy",
+       "let": "y1 + dy // 2"
+      },
+      {
+       "name": "mx",
+       "let": "x1 + dx // 4"
+      },
+      {
+       "name": "my",
+       "let": "y1 + dy // 4"
+      }
+     ],
+     "constraints": [],
+     "stem": "On a perpendicular coordinate plane, $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. $C$ is the midpoint of the straight segment $AB$, and $D$ is the midpoint of the straight segment $AC$. Find the two coordinates of $D$. Write your answer as $(x, y)$.",
+     "solution": [
+      "First find $C$, the midpoint of $AB$.",
+      "$x = \\frac{{=x1} + {=paren(x2)}}{2} = {=cx}$ and $y = \\frac{{=y1} + {=paren(y2)}}{2} = {=cy}$, so $C({=cx}, {=cy})$.",
+      "Now find $D$, the midpoint of $AC$, with $A({=x1}, {=y1})$ and $C({=cx}, {=cy})$.",
+      "$x = \\frac{{=x1} + {=paren(cx)}}{2} = {=mx}$",
+      "$y = \\frac{{=y1} + {=paren(cy)}}{2} = {=my}$",
+      "So $D({=mx}, {=my})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=mx}, {=my})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Two applications of the midpoint rule. dx, dy are multiples of 4 so C and D have whole coordinates."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-2:midpoint",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-2",
+     "parent_question_id": "q:pp3u5-2-2:bk-example-1",
+     "source_page": 63,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "mx",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "my",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "dx",
+       "randint": [
+        1,
+        7
+       ]
+      },
+      {
+       "name": "dy",
+       "randint": [
+        1,
+        7
+       ]
+      },
+      {
+       "name": "x1",
+       "let": "mx - dx"
+      },
+      {
+       "name": "x2",
+       "let": "mx + dx"
+      },
+      {
+       "name": "y1",
+       "let": "my + dy"
+      },
+      {
+       "name": "y2",
+       "let": "my - dy"
+      }
+     ],
+     "constraints": [],
+     "stem": "If C is the midpoint of $\\overline{AB}$ and A({=x1}, {=y1}), B({=x2}, {=y2}), find the coordinates of C.",
+     "answer": "({=mx}, {=my})",
+     "solution": [
+      "Use $M\\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$ with A({=x1}, {=y1}), B({=x2}, {=y2}).",
+      "$x=\\frac{{=x1}+({=x2})}{2}=\\frac{{=x1+x2}}{2}={=mx}$",
+      "$y=\\frac{{=y1}+({=y2})}{2}=\\frac{{=y1+y2}}{2}={=my}$",
+      "C({=mx}, {=my})"
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=mx}, {=my})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Endpoints built symmetric about the midpoint so all sums are even and the answer is an integer point. Mixed signs throughout."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-2:endpoint",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-2",
+     "parent_question_id": "q:pp3u5-2-2:bk-example-1",
+     "source_page": 63,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -8,
+        8
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -8,
+        8
+       ]
+      },
+      {
+       "name": "mx",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "my",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "2 * mx - x1"
+      },
+      {
+       "name": "y2",
+       "let": "2 * my - y1"
+      },
+      {
+       "require": "x2 != x1 or y2 != y1",
+       "why": "A and B must be different points"
+      },
+      {
+       "require": "abs(x2) <= 14 and abs(y2) <= 14",
+       "why": "keep numbers small"
+      }
+     ],
+     "constraints": [],
+     "stem": "C({=mx}, {=my}) is the midpoint of $\\overline{AB}$ and A({=x1}, {=y1}). Find the coordinates of B.",
+     "answer": "({=x2}, {=y2})",
+     "solution": [
+      "Let B be (x, y). Use $M\\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$ with the midpoint C({=mx}, {=my}).",
+      "$\\frac{{=x1}+x}{2}={=mx}$, so ${=x1}+x={=2*mx}$ and $x={=2*mx}-({=x1})={=x2}$",
+      "$\\frac{{=y1}+y}{2}={=my}$, so ${=y1}+y={=2*my}$ and $y={=2*my}-({=y1})={=y2}$",
+      "B({=x2}, {=y2})"
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x2}, {=y2})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Reverse use of the book's midpoint formula: the midpoint and one end are given. Always integer answer."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:end-point",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "ax",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "ay",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "mx",
+       "randint": [
+        -3,
+        6
+       ]
+      },
+      {
+       "name": "my",
+       "randint": [
+        -3,
+        6
+       ]
+      },
+      {
+       "require": "ax != mx or ay != my",
+       "why": "A and M must differ so B differs from A"
+      },
+      {
+       "name": "bx",
+       "let": "2 * mx - ax"
+      },
+      {
+       "name": "by",
+       "let": "2 * my - ay"
+      }
+     ],
+     "stem": "$M({=mx}, {=my})$ is the midpoint of $\\overline{AB}$, where $A({=ax}, {=ay})$. Find the coordinates of point $B$.",
+     "solution": [
+      "Let $B(x, y)$. By the midpoint formula, $\\left(\\frac{{={ax}}+x}{2}, \\frac{{={ay}}+y}{2}\\right) = ({=mx}, {=my})$.",
+      "For the x-coordinate: $\\frac{{={ax}}+x}{2} = {=mx}$, so ${={ax}}+x = {=2*mx}$ and $x = {=bx}$.",
+      "For the y-coordinate: $\\frac{{={ay}}+y}{2} = {=my}$, so ${={ay}}+y = {=2*my}$ and $y = {=by}$.",
+      "So $B({=bx}, {=by})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=bx}, {=by})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder 'none'."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:parallelogram",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "ax",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "ay",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "bx",
+       "randint": [
+        -4,
+        5
+       ]
+      },
+      {
+       "name": "by",
+       "randint": [
+        -4,
+        5
+       ]
+      },
+      {
+       "name": "cx",
+       "randint": [
+        -4,
+        6
+       ]
+      },
+      {
+       "name": "cy",
+       "randint": [
+        -4,
+        6
+       ]
+      },
+      {
+       "require": "(bx-ax)*(cy-ay)-(by-ay)*(cx-ax) != 0",
+       "why": "A, B, C must not be collinear"
+      },
+      {
+       "name": "dx",
+       "let": "ax + cx - bx"
+      },
+      {
+       "name": "dy",
+       "let": "ay + cy - by"
+      }
+     ],
+     "stem": "$ABCD$ is a parallelogram where $A({=ax}, {=ay})$, $B({=bx}, {=by})$ and $C({=cx}, {=cy})$. Find the coordinates of the vertex $D$.",
+     "solution": [
+      "The diagonals of a parallelogram bisect each other, so the midpoint of $\\overline{AC}$ is the midpoint of $\\overline{BD}$.",
+      "Midpoint of $\\overline{AC}$ = $\\left(\\frac{{={ax}}+{={cx}}}{2}, \\frac{{={ay}}+{={cy}}}{2}\\right)$.",
+      "Let $D(x, y)$. Then $\\frac{{={bx}}+x}{2} = \\frac{{={ax+cx}}}{2}$, so $x = {=dx}$.",
+      "Also $\\frac{{={by}}+y}{2} = \\frac{{={ay+cy}}}{2}$, so $y = {=dy}$.",
+      "So $D({=dx}, {=dy})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=dx}, {=dy})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions supplied; parent placeholder."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:diagonals",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "ax",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "ay",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "bx",
+       "randint": [
+        -4,
+        5
+       ]
+      },
+      {
+       "name": "by",
+       "randint": [
+        -4,
+        5
+       ]
+      },
+      {
+       "name": "mx",
+       "randint": [
+        -2,
+        5
+       ]
+      },
+      {
+       "name": "my",
+       "randint": [
+        -2,
+        5
+       ]
+      },
+      {
+       "require": "(bx-ax)*(my-ay)-(by-ay)*(mx-ax) != 0",
+       "why": "A, B, M must not be collinear"
+      },
+      {
+       "name": "cx",
+       "let": "2 * mx - ax"
+      },
+      {
+       "name": "cy",
+       "let": "2 * my - ay"
+      },
+      {
+       "name": "dx",
+       "let": "2 * mx - bx"
+      },
+      {
+       "name": "dy",
+       "let": "2 * my - by"
+      }
+     ],
+     "stem": "$ABCD$ is a parallelogram where $A({=ax}, {=ay})$ and $B({=bx}, {=by})$, and its diagonals intersect at $M({=mx}, {=my})$. Find the coordinates of the vertex $D$.",
+     "solution": [
+      "The diagonals of a parallelogram bisect each other, so $M$ is the midpoint of $\\overline{AC}$ and of $\\overline{BD}$.",
+      "Let $D(x, y)$. Since $M$ is the midpoint of $\\overline{BD}$: $\\frac{{={bx}}+x}{2} = {=mx}$, so $x = {=dx}$.",
+      "Also $\\frac{{={by}}+y}{2} = {=my}$, so $y = {=dy}$.",
+      "So $D({=dx}, {=dy})$. (Similarly $C({=cx}, {=cy})$.)"
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=dx}, {=dy})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book questions supplied; parent placeholder. A is given as a distractor-free extra datum; D needs only B and M."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were listed, so parent_question_id is the placeholder \"none\" and source_page null; reviewer should reassign."
+  },
+  {
+   "lo_id": "lo:pp3u5-3-1",
+   "families": [],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-3-2:parslope",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-3-2",
+     "parent_question_id": "q:pp3u5-3-2:bk-drill-5",
+     "source_page": 68,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + d"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + m * d"
+      }
+     ],
+     "stem": "The straight line $\\overleftrightarrow{AB}$ passes through the points $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Find the slope of any straight line parallel to $\\overleftrightarrow{AB}$.",
+     "answer": "m",
+     "solution": [
+      "Slope of $\\overleftrightarrow{AB}$ = $\\frac{y_2-y_1}{x_2-x_1}$ = $\\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})}$.",
+      "This equals $\\frac{{=y2 - y1}}{{=x2 - x1}} = {=m}$.",
+      "Parallel lines have equal slopes, so the slope of any line parallel to $\\overleftrightarrow{AB}$ is ${=m}$."
+     ],
+     "constraints": [],
+     "proposed_misconceptions": [],
+     "notes": "Entry skill: compute slope from two points; parallel lines share it. Integer slopes only."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-3-2:equalslope",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-3-2",
+     "parent_question_id": "q:pp3u5-3-2:bk-drill-6",
+     "source_page": 68,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "y1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "x3",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "y3",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "e",
+       "choice": [
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + d"
+      },
+      {
+       "name": "y2",
+       "let": "y1 + m * d"
+      },
+      {
+       "name": "x4",
+       "let": "x3 + e"
+      },
+      {
+       "name": "k",
+       "let": "y3 + m * e"
+      }
+     ],
+     "stem": "If $\\overleftrightarrow{AB}\\parallel\\overleftrightarrow{CD}$ where $A({=x1}, {=y1})$, $B({=x2}, {=y2})$, $C({=x3}, {=y3})$ and $D({=x4}, k)$, find the value of $k$.",
+     "answer": "k",
+     "solution": [
+      "Slope of $\\overleftrightarrow{AB}$ = $\\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})} = {=m}$.",
+      "Slope of $\\overleftrightarrow{CD}$ = $\\frac{k - ({=y3})}{{=x4} - ({=x3})} = \\frac{k - ({=y3})}{{=e}}$.",
+      "The lines are parallel, so their slopes are equal: $\\frac{k - ({=y3})}{{=e}} = {=m}$.",
+      "Then $k - ({=y3}) = {=m * e}$, so $k = {=k}$."
+     ],
+     "constraints": [],
+     "proposed_misconceptions": [],
+     "notes": "Equal slopes to find an unknown coordinate; slope of AB is an integer, e is nonzero."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-3-3",
+   "families": [],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-4-1:slope-standard",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-4-1",
+     "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+     "source_page": 70,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "a",
+       "let": "-m * b"
+      },
+      {
+       "name": "d",
+       "let": "b * e"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the slope of the straight line whose equation is ${=a}x + {=b}y = {=d}$.",
+     "answer": "m",
+     "solution": [
+      "Write the equation in the form $y = mx + b$ by isolating $y$: ${=b}y = {=-a}x + {=d}$.",
+      "Divide both sides by ${=b}$: $y = {=m}x + {=e}$.",
+      "The slope is the coefficient of $x$, so $m = {=m}$. (Check with $m = -\\frac{a}{b}$.)"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Slope is always a whole number. Second step: -a is positive/negative as appropriate; displayed as a signed number value in the 'isolating' step, equation reads ${=b}y = {=-a}x + {=d}$ (a plain value, a negative prints with minus then a plus sign precedes; reviewer: '+ -' not present since the term is -a x placed first and d is positive, but -a x with negative coefficient reads 'y = -3x + 6', fine)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-4-1:findk-advanced",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-4-1",
+     "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+     "source_page": 70,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "k",
+       "let": "-m * b"
+      },
+      {
+       "name": "d",
+       "let": "b * e"
+      }
+     ],
+     "constraints": [],
+     "stem": "The straight line $kx + {=b}y = {=d}$ has slope ${=m}$. Find the value of $k$.",
+     "answer": "k",
+     "solution": [
+      "Write the equation in the form $y = mx + b$: ${=b}y = -kx + {=d}$, so $y = -\\frac{k}{{=b}}x + {=e}$.",
+      "The slope is $-\\frac{k}{{=b}}$, and it equals ${=m}$: $-\\frac{k}{{=b}} = {=m}$.",
+      "Multiply both sides by ${=b}$: $-k = {=m * b}$.",
+      "Therefore $k = {=k}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses m = -a/b backwards. Answer k = -m*b, whole number, nonzero. Stem unambiguous: k is the coefficient of x."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-4-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for lo:pp3u5-4-2 is empty. Every family needs a parent_question_id that is a book question of this objective, and I also have no canonical solution to model the method and notation on. I did not invent a parent id or guess the book's method."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book questions or canonical solutions were supplied. A family without a valid parent and a book method to follow would be unverifiable."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason. The advanced cases (slope from a perpendicular line, or from a bisected segment's mid-point) also depend on exactly how the book handles them, and none of that was provided."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

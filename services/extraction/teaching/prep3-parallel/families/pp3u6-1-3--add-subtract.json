@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-3:add-subtract",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-3",
+ "parent_question_id": "q:pp3u6-1-3:bk-drill-3-b",
+ "source_page": 8,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "p - 1"
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "d",
+   "let": "p - q"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find algebraically the solution of the two equations $x+y={=s}$ (1) and $x-y={=d}$ (2). Write the answer as an ordered pair $(x, y)$.",
+ "solution": [
+  "$x + y = {=s}$ ... (1) and $x - y = {=d}$ ... (2).",
+  "Adding (1) and (2) omits $y$: $2x = {=s} + {=d} = {=s+d}$.",
+  "So $x = {=p}$.",
+  "Substituting in (1): ${=p} + y = {=s}$, so $y = {=q}$.",
+  "The solution is $({=p}, {=q})$, and the two equations have exactly one solution."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=p}, {=q})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: coefficients of y are opposite, so adding eliminates y directly. x>y>0 so all numbers positive."
+}

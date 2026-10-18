@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "bd7a0c40ef10434ac6afb672288853873da8d97d5a61c349db0d7ac1dcb131af",
+  "generated_sha256": "5d84580324897cb9996cb6abb16ccace781304f8d06fab26cf174660a32f3a97",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-2:figure-21",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   },
+   {
+    "id": "pp3u9-2:figure-22",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "A fragment of the instruction text is visible at the top edge. It is not part of the figure."
+   },
+   {
+    "id": "pp3u9-2:figure-23",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   }
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-1-2:quadzero",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-1-2",
+ "parent_question_id": "q:pp3u7-1-2:bk-drill-1-a",
+ "source_page": 16,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  }
+ ],
+ "stem": "Find the set of zeroes of the function $f(x)=x^2-{=p}x$. Give the zeroes as a list of values.",
+ "solution": [
+  "Put $f(x)=0$: $x^2-{=p}x=0$.",
+  "Factorise: $x(x-{=p})=0$.",
+  "$x=0$ gives $x=0$; $x-{=p}=0$ gives $x={=p}$.",
+  "$Z(f)=\\{0, {=p}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[0, {=p}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point: common factor x, two zeroes. Same skeleton as book drill 1-a."
+}

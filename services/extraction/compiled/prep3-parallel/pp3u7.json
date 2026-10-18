@@ -1,0 +1,1610 @@
+{
+  "source_file": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+  "extraction_run": {
+    "extractor": "compile_book_records.py, from book records",
+    "extractor_version": "compile-v3",
+    "schema_version": "book-record-2"
+  },
+  "syllabus_version": "book-record-2",
+  "nodes": [
+    {
+      "id": "module:pp3u7",
+      "kind": "module",
+      "label": "Unit 2 Algebraic Fractional Functions and the operations on them (Algebra)",
+      "order_in_parent": 7,
+      "source_page": 15
+    },
+    {
+      "id": "lo:pp3u7-1-1",
+      "kind": "learning_objective",
+      "label": "Define set of zeroes",
+      "description": "Evaluate a polynomial function at given values of x and state the set of zeroes Z(f) as the values of x for which f(x)=0.",
+      "source_page": 15,
+      "syllabus_ref": "Lesson 2-1",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u7-1-2",
+      "kind": "learning_objective",
+      "label": "Find set of zeroes",
+      "description": "Find the set of zeroes Z(f) of a polynomial function by putting f(x) = 0 and solving the resulting equation for x, including cases with no zeroes.",
+      "source_page": 15,
+      "syllabus_ref": "Lesson 2-1",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u7-2-1",
+      "kind": "learning_objective",
+      "label": "Domain of algebraic fraction",
+      "description": "Determine the domain of an algebraic fractional function as R minus the set of zeroes of the denominator, and evaluate the function at given values.",
+      "source_page": 17,
+      "syllabus_ref": "Lesson 2-2",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u7-2-2",
+      "kind": "learning_objective",
+      "label": "Common domain of fractions",
+      "description": "Calculate the common domain of two or more algebraic fractions as R minus the union of the zeroes of their denominators.",
+      "source_page": 18,
+      "syllabus_ref": "Lesson 2-2",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u7-3-1",
+      "kind": "learning_objective",
+      "label": "Reducing algebraic fractions with domain",
+      "description": "Reduce an algebraic fraction to its simplest form by factorizing numerator and denominator, and state its domain before cancelling common factors.",
+      "source_page": 20,
+      "syllabus_ref": "Lesson 2-3",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u7-3-2",
+      "kind": "learning_objective",
+      "label": "Equality of two algebraic fractions",
+      "description": "Determine whether two algebraic fractions are equal by comparing their domains and their simplest forms, and find the common domain when they are not equal.",
+      "source_page": 21,
+      "syllabus_ref": "Lesson 2-3",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u7-4-1",
+      "kind": "learning_objective",
+      "label": "Add and subtract algebraic fractions",
+      "description": "Add and subtract algebraic fractions with common or different denominators, factorising denominators, using the L.C.M., giving the result in simplest form with its domain.",
+      "source_page": 24,
+      "syllabus_ref": "Lesson 2-4",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u7-4-2",
+      "kind": "learning_objective",
+      "label": "Multiply and divide algebraic fractions",
+      "description": "Multiply and divide algebraic fractions by factorising and cancelling, dividing by multiplying by the multiplicative inverse (reciprocal) of the second, giving the simplest form and the domain.",
+      "source_page": 27,
+      "syllabus_ref": "Lesson 2-4",
+      "order_in_parent": 2
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:pp3u7",
+      "dst": "course:prep3-parallel-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-2-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-2-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-3-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-3-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-4-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u7",
+      "dst": "lo:pp3u7-4-2",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:pp3u7-1-2",
+      "dst": "lo:pp3u7-2-1",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:pp3u7-1-2:bk-drill-1-a",
+      "lo": "lo:pp3u7-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the set of zeroes of the following functions : $f(x)=x^3-4x^2$",
+      "answer": "\\{0, 4\\}",
+      "solution": [
+        "Put $f(x)=0$: $x^3-4x^2=0$.",
+        "Factorise: $x^2(x-4)=0$.",
+        "$x^2=0$ gives $x=0$; $x-4=0$ gives $x=4$.",
+        "$Z(f)=\\{0, 4\\}$."
+      ],
+      "source_page": 16,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-1:drill-1:a, printed p.16); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{0, 4\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-1-2:bk-drill-1-b",
+      "lo": "lo:pp3u7-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the set of zeroes of the following functions : $f(x)=x^2-2x+1$",
+      "answer": "\\{1\\}",
+      "solution": [
+        "Put $f(x)=0$: $x^2-2x+1=0$.",
+        "Factorise: $(x-1)^2=0$.",
+        "So $x=1$.",
+        "$Z(f)=\\{1\\}$."
+      ],
+      "source_page": 16,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-1:drill-1:b, printed p.16); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{1\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-1-2:bk-drill-1-d",
+      "lo": "lo:pp3u7-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the set of zeroes of the following functions : $f(x)=x^4-x^2$",
+      "answer": "\\{-1, 0, 1\\}",
+      "solution": [
+        "Put $f(x)=0$: $x^4-x^2=0$.",
+        "Factorise: $x^2(x^2-1)=0$.",
+        "$x^2=0$ gives $x=0$.",
+        "$x^2=1$ gives $x=\\pm1$.",
+        "$Z(f)=\\{-1, 0, 1\\}$."
+      ],
+      "source_page": 16,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-1:drill-1:d, printed p.16); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{-1, 0, 1\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-2-1:bk-drill-2",
+      "lo": "lo:pp3u7-2-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "If the domain of the function n: $n(x)=\\frac{x-1}{x^2-ax+9}$ is $R-\\{3\\}$ then find the value of a.",
+      "answer": "a = 6",
+      "solution": [
+        "The domain is R - {3}, so 3 is the zero of the denominator.",
+        "Substitute x = 3: $9 - 3a + 9 = 0$.",
+        "$18 - 3a = 0$, so $3a = 18$.",
+        "a = 6"
+      ],
+      "source_page": 18,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-2, printed p.18); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "a = 6",
+          "variables": [
+            "a"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-drill-1-3",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Complete the following: if $n_1(x)=\\frac{1+a}{x-2}$, $n_2(x)=\\frac{4}{x-2}$ and $n_1(x)=n_2(x)$ then $a=$ ............",
+      "answer": "a = 3",
+      "solution": [
+        "n1 and n2 have the same denominator x - 2, so they are equal when the numerators are equal.",
+        "1 + a = 4.",
+        "a = 4 - 1 = 3."
+      ],
+      "source_page": 23,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-3:drill-1:3, printed p.23); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "a = 3",
+          "variables": [
+            "a"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-drill-1-4",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Complete the following: If the simplest form of the algebraical fraction $n(x)=\\frac{x^2-4x+4}{x^2-a}$ is $n(x)=\\frac{x-2}{x+2}$ then $a=$ ..........",
+      "answer": "a = 4",
+      "solution": [
+        "Factorize the numerator: x^2 - 4x + 4 = (x-2)^2.",
+        "The simplest form is (x-2)/(x+2), so after cancelling (x-2) the denominator must be (x-2)(x+2).",
+        "So x^2 - a = (x-2)(x+2) = x^2 - 4.",
+        "a = 4."
+      ],
+      "source_page": 23,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-3:drill-1:4, printed p.23); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "a = 4",
+          "variables": [
+            "a"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-drill-1-5",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Complete the following: If $n_1(x)=\\frac{-7}{x+2}$, $n_2(x)=\\frac{x}{x-k}$ and the common domain of two function $n_1, n_2$ is $\\mathbb{R}-\\{-2, 7\\}$ then $k=$ ............",
+      "answer": "k = 7",
+      "solution": [
+        "The domain of n1 = -7/(x+2) excludes x = -2.",
+        "The domain of n2 = x/(x-k) excludes x = k.",
+        "The common domain is R-{-2, 7}, so the excluded values are -2 and 7.",
+        "Since -2 comes from n1, k = 7."
+      ],
+      "source_page": 23,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-3:drill-1:5, printed p.23); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "k = 7",
+          "variables": [
+            "k"
+          ]
+        }
+      },
+      "verified": true
+    }
+  ],
+  "visuals": [],
+  "explanation_entries": [
+    {
+      "id": "expl:pp3u7-1-2:bk-example-1",
+      "lo": "lo:pp3u7-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find Z(f) for each of the following polynomials: (1) $f_1(x)=2x-4$ (2) $f_2(x)=x^2-9$ (3) $f_3(x)=5$ (4) $f_4(x)=0$ (5) $f_5(x)=x^2+4$ (6) $f_6(x)=x^6-32x$ (7) $f_7(x)=x^2+x+1$"
+        },
+        {
+          "step": 1,
+          "text_md": "put $f_1(x)=0$, $\\therefore 2x-4=0$"
+        },
+        {
+          "step": 2,
+          "text_md": "i.e. $2x=4$, $\\therefore x=2$"
+        },
+        {
+          "step": 3,
+          "text_md": "$\\therefore Z(f_1)=\\{2\\}$"
+        }
+      ],
+      "source_page": 15,
+      "generated_by": "book (book_worked: pp3u7-1:example-1, printed p.15); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-1-2:bk-drill-1-e",
+      "lo": "lo:pp3u7-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the set of zeroes of the following functions : $f(x)=x^2-x+1$"
+        },
+        {
+          "step": 1,
+          "text_md": "Put $f(x)=0$: $x^2-x+1=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "It cannot be factorised, so use the quadratic rule with $a=1$, $b=-1$, $c=1$."
+        },
+        {
+          "step": 3,
+          "text_md": "$b^2-4ac=1-4=-3$."
+        },
+        {
+          "step": 4,
+          "text_md": "$x=\\frac{1\\pm\\sqrt{-3}}{2}\\notin\\mathbb{R}$."
+        },
+        {
+          "step": 5,
+          "text_md": "There is no real solution, so $Z(f)=\\phi$."
+        }
+      ],
+      "source_page": 16,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-1:bk-drill-1-a",
+      "lo": "lo:pp3u7-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2): $n(x)=\\frac{x+3}{4}$"
+        },
+        {
+          "step": 1,
+          "text_md": "The denominator is 4, which is never zero, so it has no zeroes."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain = R minus the empty set = R."
+        },
+        {
+          "step": 3,
+          "text_md": "n(0) = (0+3)/4 = 3/4."
+        },
+        {
+          "step": 4,
+          "text_md": "n(2) = (2+3)/4 = 5/4."
+        },
+        {
+          "step": 5,
+          "text_md": "n(-2) = (-2+3)/4 = 1/4."
+        },
+        {
+          "step": 6,
+          "text_md": "Answer: domain R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4."
+        }
+      ],
+      "source_page": 18,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-1:bk-drill-1-d",
+      "lo": "lo:pp3u7-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2): $n(x)=\\frac{x^2+9}{x^2-16}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Set the denominator equal to zero: $x^2-16 = 0$, so $x^2 = 16$, so x = 4 or x = -4."
+        },
+        {
+          "step": 2,
+          "text_md": "The set of zeroes is {-4, 4}, so domain = R - {-4, 4}."
+        },
+        {
+          "step": 3,
+          "text_md": "n(0) = (0+9)/(0-16) = -9/16."
+        },
+        {
+          "step": 4,
+          "text_md": "n(2) = (4+9)/(4-16) = 13/(-12) = -13/12."
+        },
+        {
+          "step": 5,
+          "text_md": "n(-2) = (4+9)/(4-16) = -13/12."
+        },
+        {
+          "step": 6,
+          "text_md": "Answer: domain R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12."
+        }
+      ],
+      "source_page": 18,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-1:bk-drill-1-f",
+      "lo": "lo:pp3u7-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2): $n(x)=\\frac{x^2-1}{x^2+1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Set the denominator equal to zero: $x^2+1 = 0$, so $x^2 = -1$, which has no real solution."
+        },
+        {
+          "step": 2,
+          "text_md": "The denominator has no zeroes, so domain = R."
+        },
+        {
+          "step": 3,
+          "text_md": "n(0) = (0-1)/(0+1) = -1."
+        },
+        {
+          "step": 4,
+          "text_md": "n(2) = (4-1)/(4+1) = 3/5."
+        },
+        {
+          "step": 5,
+          "text_md": "n(-2) = (4-1)/(4+1) = 3/5."
+        },
+        {
+          "step": 6,
+          "text_md": "Answer: domain R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5."
+        }
+      ],
+      "source_page": 18,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-example-1",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $n_1$, $n_2$ are two algebraic fractions where $n_1(x)=\\frac{1}{x-1}$, $n_2(x)=\\frac{3}{x^2-4}$ then calculate the common domain of $n_1$, $n_2$"
+        },
+        {
+          "step": 1,
+          "text_md": "Let $m_1$ the domain of $n_1$, $m_2$ the domain of $n_2$."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\therefore m_1=R-\\{1\\}$, $m_2=R-\\{-2, 2\\}$ then the common domain of the two fractions $n_1, n_2=m_1\\cap m_2$"
+        },
+        {
+          "step": 3,
+          "text_md": "where: $m_1\\cap m_2=\\{(R-\\{1\\})\\cap\\{R-\\{-2, 2\\}\\}=R-\\{-2, 1, 2\\}$"
+        }
+      ],
+      "source_page": 18,
+      "generated_by": "book (book_worked: pp3u7-2:example-1, printed p.18); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-1-n1",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_1(x)=\\frac{1}{x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: x = 0 gives x = 0."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain of $n_1$ is R - {0}."
+        },
+        {
+          "step": 3,
+          "text_md": "(With $n_2$ the common domain is R - {-1, 0}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-1-n2",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_2(x)=\\frac{2}{x+1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x+1=0$ gives x = -1."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain of $n_2$ is R - {-1}."
+        },
+        {
+          "step": 3,
+          "text_md": "(With $n_1$ the common domain is R - {-1, 0}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-2-n1",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_1(x)=\\frac{3}{x^2-x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^2-x=x(x-1)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = 0 or x = 1."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_1$ is R - {0, 1}."
+        },
+        {
+          "step": 4,
+          "text_md": "(With $n_2$ the common domain is R - {-1, 0, 1}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-2-n2",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_2(x)=\\frac{2x-3}{x^2-1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^2-1=(x-1)(x+1)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = 1 or x = -1."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_2$ is R - {-1, 1}."
+        },
+        {
+          "step": 4,
+          "text_md": "(With $n_1$ the common domain is R - {-1, 0, 1}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-3-n1",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_1(x)=\\frac{3}{x-2}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x-2=0$ gives x = 2."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain of $n_1$ is R - {2}."
+        },
+        {
+          "step": 3,
+          "text_md": "(Common domain of $n_1, n_2, n_3$ is R - {-2, 0, 2}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-3-n2",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_2(x)=\\frac{5}{x+2}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x+2=0$ gives x = -2."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain of $n_2$ is R - {-2}."
+        },
+        {
+          "step": 3,
+          "text_md": "(Common domain of $n_1, n_2, n_3$ is R - {-2, 0, 2}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-3-n3",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_3(x)=\\frac{x}{x^3-4x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^3-4x=x(x-2)(x+2)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = 0, 2 or -2."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_3$ is R - {-2, 0, 2}."
+        },
+        {
+          "step": 4,
+          "text_md": "Common domain of $n_1, n_2, n_3$ = R - {2} ∩ R - {-2} ∩ R - {-2, 0, 2} = R - {-2, 0, 2}."
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-4-n1",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_1(x)=\\frac{x^2-4}{x^2-5x+6}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^2-5x+6=(x-2)(x-3)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = 2 or x = 3."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_1$ is R - {2, 3}."
+        },
+        {
+          "step": 4,
+          "text_md": "(Common domain of $n_1, n_2, n_3$ is R - {-2, 0, 1, 2, 3}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-4-n2",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_2(x)=\\frac{3x}{x^2-x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^2-x=x(x-1)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = 0 or x = 1."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_2$ is R - {0, 1}."
+        },
+        {
+          "step": 4,
+          "text_md": "(Common domain of $n_1, n_2, n_3$ is R - {-2, 0, 1, 2, 3}.)"
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-2-2:bk-exercise-4-n3",
+      "lo": "lo:pp3u7-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the common domain of the functions. $n_3(x)=\\frac{x^2-3x-4}{x^2+x-2}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominator: $x^2+x-2=(x+2)(x-1)=0$."
+        },
+        {
+          "step": 2,
+          "text_md": "x = -2 or x = 1."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain of $n_3$ is R - {-2, 1}."
+        },
+        {
+          "step": 4,
+          "text_md": "Common domain of $n_1, n_2, n_3$ = R - ({2, 3} ∪ {0, 1} ∪ {-2, 1}) = R - {-2, 0, 1, 2, 3}."
+        }
+      ],
+      "source_page": 19,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-think-and-discuss-1",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The domain of n = .........."
+        },
+        {
+          "step": 1,
+          "text_md": "Factorize the numerator: $x^2+x=x(x+1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Factorize the denominator: $x^2-1=(x+1)(x-1)$."
+        },
+        {
+          "step": 3,
+          "text_md": "The denominator is zero when $x=-1$ or $x=1$."
+        },
+        {
+          "step": 4,
+          "text_md": "The domain of n is R - {-1, 1}."
+        }
+      ],
+      "source_page": 20,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-think-and-discuss-3",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The algebraic fraction in the simplest form after removing the common factor = ............"
+        },
+        {
+          "step": 1,
+          "text_md": "$n(x)=\\frac{x(x+1)}{(x+1)(x-1)}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Remove the common factor $(x+1)$."
+        },
+        {
+          "step": 3,
+          "text_md": "The simplest form is $\\frac{x}{x-1}$."
+        }
+      ],
+      "source_page": 20,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-example-1",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $n(x)=\\frac{x^3+x^2-6x}{x^4-13x^2+36}$ then reduce n(x) in the simplest form showing the domain of n."
+        },
+        {
+          "step": 1,
+          "text_md": "$n(x)=\\frac{x^3+x^2-6x}{x^4-13x^2+36}=\\frac{x(x^2+x-6)}{(x^2-4)(x^2-9)}=\\frac{x(x+3)(x-2)}{(x+2)(x-2)(x+3)(x-3)}$"
+        },
+        {
+          "step": 2,
+          "text_md": "the domain of n(x) = $R-\\{-3, -2, 2, 3\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$n(x)=\\frac{x}{(x+2)(x-3)}$ then cancel $(x+3)$, $(x-2)$ from the numerator and denominator."
+        }
+      ],
+      "source_page": 21,
+      "generated_by": "book (book_worked: pp3u7-3:example-1, printed p.21); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-think-and-discuss-6",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$n_1(x)=\\frac{x+3}{x^2-9}$ , $n_2(x)=\\frac{2}{2x-6}$"
+        },
+        {
+          "step": 1,
+          "text_md": "$n_1(x)=\\frac{x+3}{(x+3)(x-3)}$; the denominator is zero at $x=-3, 3$, so the domain is R - {-3, 3}."
+        },
+        {
+          "step": 2,
+          "text_md": "Cancel $(x+3)$: $n_1(x)=\\frac{1}{x-3}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$n_2(x)=\\frac{2}{2(x-3)}$; the denominator is zero only at $x=3$, so the domain is R - {3}."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel 2: $n_2(x)=\\frac{1}{x-3}$."
+        }
+      ],
+      "source_page": 21,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-think-and-discuss-7",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "$n_1(x)=\\frac{2x}{2x+4}$ , $n_2(x)=\\frac{x^2+2x}{x^2+4x+4}$"
+        },
+        {
+          "step": 1,
+          "text_md": "$n_1(x)=\\frac{2x}{2(x+2)}$; the denominator is zero at $x=-2$, so the domain is R - {-2}."
+        },
+        {
+          "step": 2,
+          "text_md": "Cancel 2: $n_1(x)=\\frac{x}{x+2}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$n_2(x)=\\frac{x(x+2)}{(x+2)^2}$; the domain is R - {-2}."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel $(x+2)$: $n_2(x)=\\frac{x}{x+2}$."
+        }
+      ],
+      "source_page": 21,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-2:bk-example-2",
+      "lo": "lo:pp3u7-3-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $n_1(x)=\\frac{x^2}{x^3-x^2}$, $n_2(x)=\\frac{x^3+x^2+x}{x^4-x}$ prove that: $n_1=n_2$"
+        },
+        {
+          "step": 1,
+          "text_md": "$n_1(x)=\\frac{x^2}{x^3-x^2}=\\frac{x^2}{x^2(x-1)}$, therefore $n_1(x)=\\frac{1}{x-1}$"
+        },
+        {
+          "step": 2,
+          "text_md": "the domain of $n_1 = \\mathbb{R}-\\{0, 1\\}$ (1)"
+        },
+        {
+          "step": 3,
+          "text_md": "$n_2(x)=\\frac{x^3+x^2+x}{x^4-x}=\\frac{x(x^2+x+1)}{x(x^3-1)}=\\frac{x(x^2+x+1)}{x(x-1)(x^2+x+1)}$, therefore $n_2(x)=\\frac{1}{x-1}$"
+        },
+        {
+          "step": 4,
+          "text_md": "the domain of $n_2 = \\mathbb{R}-\\{0, 1\\}$ (2)"
+        },
+        {
+          "step": 5,
+          "text_md": "from (1) and (2): since the domain of $n_1$ = the domain of $n_2$, $n_1(x)=n_2(x)$ for each $x\\in\\mathbb{R}-\\{0, 1\\}$"
+        },
+        {
+          "step": 6,
+          "text_md": "therefore $n_1=n_2$"
+        }
+      ],
+      "source_page": 22,
+      "generated_by": "book (book_worked: pp3u7-3:example-2, printed p.22); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-2:bk-example-3",
+      "lo": "lo:pp3u7-3-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $n_1(x)=\\frac{x^2-4}{x^2+x-6}$, $n_2(x)=\\frac{x^3-x^2-6x}{x^3-9x}$ prove that $n_1(x)=n_2(x)$ for the values of x which belong to the common domain and find the domain."
+        },
+        {
+          "step": 1,
+          "text_md": "$n_1(x)=\\frac{x^2-4}{x^2+x-6}=\\frac{(x+2)(x-2)}{(x+3)(x-2)}=\\frac{x+2}{x+3}$"
+        },
+        {
+          "step": 2,
+          "text_md": "the domain of $n_1 = \\mathbb{R}-\\{-3, 2\\}$ (1)"
+        },
+        {
+          "step": 3,
+          "text_md": "$\\because n_2(x)=\\frac{x^3-x^2-6x}{x^3-9x}=\\frac{x(x-3)(x+2)}{x(x+3)(x-3)}=\\frac{x+2}{x+3}$"
+        },
+        {
+          "step": 4,
+          "text_md": "and the domain of $n_2=\\mathbb{R}-\\{-3, 0, 3\\}$ (2)"
+        },
+        {
+          "step": 5,
+          "text_md": "from (1) and (2)"
+        },
+        {
+          "step": 6,
+          "text_md": "we notice that: $n_1(x)$, $n_2(x)$ are reduced to the same fraction $\\frac{x+2}{x+3}$, but the domain of $n_1\\neq$ domain of $n_2$ so $n_1\\neq n_2$."
+        },
+        {
+          "step": 7,
+          "text_md": "we can say that: $n_1(x)=n_2(x)$ take the same values if x belongs to the common domain for the two functions $n_1, n_2$ $\\mathbb{R}-\\{-3, 0, 2, 3\\}$."
+        }
+      ],
+      "source_page": 22,
+      "generated_by": "book (book_worked: pp3u7-3:example-3, printed p.22); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-drill-1-1",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Complete the following: The simplest from of the function $f(x)=\\frac{4x^2-2x}{2x}$, $x\\neq 0$ is ............"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorize the numerator: 4x^2 - 2x = 2x(2x - 1)."
+        },
+        {
+          "step": 2,
+          "text_md": "The denominator is 2x, and x ≠ 0 is given."
+        },
+        {
+          "step": 3,
+          "text_md": "Cancel the common factor 2x."
+        },
+        {
+          "step": 4,
+          "text_md": "The simplest form is 2x - 1."
+        }
+      ],
+      "source_page": 23,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-3-1:bk-drill-1-2",
+      "lo": "lo:pp3u7-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Complete the following: The common domain of the function $n_1, n_2$ where $n_1(x)=\\frac{x-2}{x^2-4}$, $n_2(x)=\\frac{1}{x+1}$ is ............"
+        },
+        {
+          "step": 1,
+          "text_md": "n1(x) = (x-2)/((x-2)(x+2)). The denominator is zero at x = 2 and x = -2, so the domain of n1 is R-{-2, 2}."
+        },
+        {
+          "step": 2,
+          "text_md": "n2(x) = 1/(x+1). The denominator is zero at x = -1, so the domain of n2 is R-{-1}."
+        },
+        {
+          "step": 3,
+          "text_md": "The common domain is R-{-2, -1, 2}."
+        }
+      ],
+      "source_page": 23,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-example-1",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $n_1(x)=\\frac{x}{x^2+2x}$, $n_2(x)=\\frac{x+2}{x^2-4}$. Find $n(x)=n_1(x)+n_2(x)$ show the domain of n."
+        },
+        {
+          "step": 1,
+          "text_md": "$n(x)=n_1(x)+n_2(x)$"
+        },
+        {
+          "step": 2,
+          "text_md": "$n(x)=\\frac{x}{x^2+2x}+\\frac{x+2}{x^2-4}=\\frac{x}{x(x+2)}+\\frac{x+2}{(x-2)(x+2)}$"
+        },
+        {
+          "step": 3,
+          "text_md": "domain $n=\\mathbb{R}-\\{-2, 0, 2\\}$"
+        },
+        {
+          "step": 4,
+          "text_md": "$n(x)=\\frac{1}{x+2}+\\frac{1}{x-2}=\\frac{x-2+x+2}{(x+2)(x-2)}=\\frac{2x}{(x+2)(x-2)}$"
+        }
+      ],
+      "source_page": 25,
+      "generated_by": "book (book_worked: pp3u7-4:example-1, printed p.25); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-example-2",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find: $n(x)$ in the simplest form showing the domain of n where: $n(x)=\\frac{3x-4}{x^2-5x+6}+\\frac{2x+6}{x^2+x-6}$"
+        },
+        {
+          "step": 1,
+          "text_md": "$n(x)=\\frac{3x-4}{(x-2)(x-3)}+\\frac{2(x+3)}{(x-2)(x+3)}$"
+        },
+        {
+          "step": 2,
+          "text_md": "domain $n=\\mathbb{R}-\\{-3, 2, 3\\}$"
+        },
+        {
+          "step": 3,
+          "text_md": "$n(x)=\\frac{3x-4}{(x-2)(x-3)}+\\frac{2}{x-2}$"
+        },
+        {
+          "step": 4,
+          "text_md": "L.C.M. of denominators $=(x-3)(x-2)$ by multiplying the two terms of the second fraction in $(x-3)$"
+        },
+        {
+          "step": 5,
+          "text_md": "$n(x)=\\frac{3x-4}{(x-2)(x-3)}+\\frac{2(x-3)}{(x-2)(x-3)}=\\frac{3x-4+2x-6}{(x-2)(x-3)}$"
+        },
+        {
+          "step": 6,
+          "text_md": "$=\\frac{5x-10}{(x-2)(x-3)}=\\frac{5(x-2)}{(x-2)(x-3)}=\\frac{5}{x-3}$"
+        },
+        {
+          "step": 7,
+          "text_md": "$n(x)=\\frac{12}{12x^2-3}+\\frac{2}{-4x^2+2x}$"
+        },
+        {
+          "step": 8,
+          "text_md": "$=\\frac{12}{12x^2-3}+\\frac{2}{-(4x^2-2x)}$ (descending order) according to the powers of x"
+        },
+        {
+          "step": 9,
+          "text_md": "$=\\frac{12}{3(4x^2-1)}-\\frac{2}{2x(2x-1)}=\\frac{4}{(2x+1)(2x-1)}-\\frac{1}{x(2x-1)}$ (Factorize)"
+        },
+        {
+          "step": 10,
+          "text_md": "domain $n=\\mathbb{R}-\\{\\frac{-1}{2}, 0, \\frac{1}{2}\\}$"
+        },
+        {
+          "step": 11,
+          "text_md": "L.C.M of denominators $=x(2x+1)(2x-1)$"
+        },
+        {
+          "step": 12,
+          "text_md": "$n(x)=\\frac{4x}{x(2x+1)(2x-1)}-\\frac{2x+1}{x(2x+1)(2x-1)}$"
+        },
+        {
+          "step": 13,
+          "text_md": "$n(x)=\\frac{4x-(2x+1)}{x(2x+1)(2x-1)}=\\frac{4x-2x-1}{x(2x+1)(2x-1)}$"
+        },
+        {
+          "step": 14,
+          "text_md": "$=\\frac{2x-1}{x(2x+1)(2x-1)}=\\frac{1}{x(2x+1)}$"
+        },
+        {
+          "step": 15,
+          "text_md": "$n(0)$ does not exist because zero $\\notin$ the function domain of n"
+        },
+        {
+          "step": 16,
+          "text_md": "$n(-1)=\\frac{1}{-1\\times(-2+1)}=\\frac{1}{-1\\times-1}=1$"
+        }
+      ],
+      "source_page": 25,
+      "generated_by": "book (book_worked: pp3u7-4:example-2, printed p.25); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-1",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x-2}{x}+\\frac{3+x}{2x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Denominators x and 2x; domain R - {0}."
+        },
+        {
+          "step": 2,
+          "text_md": "L.C.M. = 2x, so (x-2)/x = 2(x-2)/(2x)."
+        },
+        {
+          "step": 3,
+          "text_md": "Add: (2x-4+3+x)/(2x)."
+        },
+        {
+          "step": 4,
+          "text_md": "= (3x-1)/(2x)."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-2",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{2x}{x+2}+\\frac{4}{x+2}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Common denominator x+2; domain R - {-2}."
+        },
+        {
+          "step": 2,
+          "text_md": "Add numerators: (2x+4)/(x+2)."
+        },
+        {
+          "step": 3,
+          "text_md": "Factorise: 2(x+2)/(x+2)."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel: n(x) = 2."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-3",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{2}{x+3}+\\frac{x+3}{x^2+3x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorise: x^2+3x = x(x+3)."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain R - {-3, 0}."
+        },
+        {
+          "step": 3,
+          "text_md": "(x+3)/(x(x+3)) = 1/x."
+        },
+        {
+          "step": 4,
+          "text_md": "L.C.M. = x(x+3): n(x) = 2x/(x(x+3)) + (x+3)/(x(x+3))."
+        },
+        {
+          "step": 5,
+          "text_md": "= (3x+3)/(x(x+3)) = 3(x+1)/(x(x+3))."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-4",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x}{x-4}-\\frac{x+4}{x^2-16}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorise: x^2-16 = (x-4)(x+4)."
+        },
+        {
+          "step": 2,
+          "text_md": "Domain R - {-4, 4}."
+        },
+        {
+          "step": 3,
+          "text_md": "(x+4)/((x-4)(x+4)) = 1/(x-4)."
+        },
+        {
+          "step": 4,
+          "text_md": "n(x) = x/(x-4) - 1/(x-4) = (x-1)/(x-4)."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-5",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{3}{x-1}-\\frac{2}{x-1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Common denominator x-1; domain R - {1}."
+        },
+        {
+          "step": 2,
+          "text_md": "Subtract numerators: (3-2)/(x-1)."
+        },
+        {
+          "step": 3,
+          "text_md": "n(x) = 1/(x-1)."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-6",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{5}{x-3}+\\frac{4}{3-x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Domain R - {3}."
+        },
+        {
+          "step": 2,
+          "text_md": "4/(3-x) = -4/(x-3)."
+        },
+        {
+          "step": 3,
+          "text_md": "n(x) = 5/(x-3) - 4/(x-3)."
+        },
+        {
+          "step": 4,
+          "text_md": "= 1/(x-3)."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-7",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x^2}{x-1}+\\frac{x}{1-x}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Domain R - {1}."
+        },
+        {
+          "step": 2,
+          "text_md": "x/(1-x) = -x/(x-1)."
+        },
+        {
+          "step": 3,
+          "text_md": "n(x) = (x^2-x)/(x-1) = x(x-1)/(x-1)."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel: n(x) = x."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-8",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x}{x-2}-\\frac{x}{x+2}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Domain R - {-2, 2}."
+        },
+        {
+          "step": 2,
+          "text_md": "L.C.M. = (x-2)(x+2)."
+        },
+        {
+          "step": 3,
+          "text_md": "Numerator: x(x+2) - x(x-2) = x^2+2x-x^2+2x = 4x."
+        },
+        {
+          "step": 4,
+          "text_md": "n(x) = 4x/((x-2)(x+2))."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-1:bk-drill-9",
+      "lo": "lo:pp3u7-4-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x+3}{2x}-\\frac{x}{2x-1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Domain R - {0, 1/2}."
+        },
+        {
+          "step": 2,
+          "text_md": "L.C.M. = 2x(2x-1)."
+        },
+        {
+          "step": 3,
+          "text_md": "Numerator: (x+3)(2x-1) - x(2x) = 2x^2+5x-3-2x^2 = 5x-3."
+        },
+        {
+          "step": 4,
+          "text_md": "n(x) = (5x-3)/(2x(2x-1))."
+        }
+      ],
+      "source_page": 26,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-2:bk-example-4",
+      "lo": "lo:pp3u7-4-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $f(x)=\\frac{x+1}{x^2-x-2}\\times\\frac{x^2+3x-10}{3x^2+16x+5}$ then find $f(x)$ in the simplest form and identify its domain, then find $f(0)$, $f(-1)$ if possible."
+        },
+        {
+          "step": 1,
+          "text_md": "$f(x)=\\frac{x+1}{(x-2)(x+1)}\\times\\frac{(x+5)(x-2)}{(3x+1)(x+5)}$"
+        },
+        {
+          "step": 2,
+          "text_md": "$=\\frac{(x+1)(x+5)(x-2)}{(x-2)(x+1)(3x+1)(x+5)}=\\frac{1}{3x+1}$ (The simplest form)"
+        },
+        {
+          "step": 3,
+          "text_md": "the domain $f=\\mathbb{R}-\\{-5, -1, -\\frac{1}{3}, 2\\}$, $f(0)=1$"
+        },
+        {
+          "step": 4,
+          "text_md": "$f(-1)$ it is not exist because $-1\\notin$ the domain of $f$."
+        }
+      ],
+      "source_page": 27,
+      "generated_by": "book (book_worked: pp3u7-4:example-4, printed p.27); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-2:bk-example-5",
+      "lo": "lo:pp3u7-4-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "If $f(x)=\\frac{x^2-9}{2x^2+3x}\\div\\frac{3x^2+6x-45}{4x^2-9}$, then find n(x) in the simplest form showing the domain of n."
+        },
+        {
+          "step": 1,
+          "text_md": "$n(x)=\\frac{x^2-9}{2x^2+3x}\\div\\frac{3(x^2+2x-15)}{4x^2-9}$, so $n(x)=\\frac{(x+3)(x-3)}{x(2x+3)}\\div\\frac{3(x+5)(x-3)}{(2x+3)(2x-3)}$"
+        },
+        {
+          "step": 2,
+          "text_md": "domain of n = $\\mathbb{R}-\\{0, -\\frac{3}{2}, \\frac{3}{2}, -5, 3\\}$"
+        },
+        {
+          "step": 3,
+          "text_md": "$n(x)=\\frac{(x+3)(x-3)}{x(2x+3)}\\times\\frac{(2x+3)(2x-3)}{3(x+5)(x-3)}$"
+        },
+        {
+          "step": 4,
+          "text_md": "$=\\frac{(x+3)(x-3)(2x+3)(2x-3)}{3x(2x+3)(x+5)(x-3)}=\\frac{(x+3)(2x-3)}{3x(x+5)}$"
+        }
+      ],
+      "source_page": 28,
+      "generated_by": "book (book_worked: pp3u7-4:example-5, printed p.28); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-2:bk-drill-11",
+      "lo": "lo:pp3u7-4-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{x^2+x+1}{x}\\times\\frac{x^2-x}{x^3-1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorise $x^2-x=x(x-1)$ and $x^3-1=(x-1)(x^2+x+1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "$n(x)=\\frac{x^2+x+1}{x}\\times\\frac{x(x-1)}{(x-1)(x^2+x+1)}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The denominators are $x$ and $(x-1)(x^2+x+1)$. Set each factor to zero: $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero."
+        },
+        {
+          "step": 4,
+          "text_md": "Domain = R - {0, 1}."
+        },
+        {
+          "step": 5,
+          "text_md": "Multiply numerators and denominators, then cancel the common factors $x^2+x+1$, $x$ and $(x-1)$."
+        },
+        {
+          "step": 6,
+          "text_md": "Answer: n(x) = 1, domain R - {0, 1}."
+        }
+      ],
+      "source_page": 28,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-2:bk-drill-12",
+      "lo": "lo:pp3u7-4-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{x^3-1}{x^2-x}\\times\\frac{x+3}{x^2+x+1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorise $x^3-1=(x-1)(x^2+x+1)$ and $x^2-x=x(x-1)$."
+        },
+        {
+          "step": 2,
+          "text_md": "$n(x)=\\frac{(x-1)(x^2+x+1)}{x(x-1)}\\times\\frac{x+3}{x^2+x+1}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The denominators are $x(x-1)$ and $x^2+x+1$. The zeros are $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero."
+        },
+        {
+          "step": 4,
+          "text_md": "Domain = R - {0, 1}."
+        },
+        {
+          "step": 5,
+          "text_md": "Cancel the common factors $(x-1)$ and $(x^2+x+1)$."
+        },
+        {
+          "step": 6,
+          "text_md": "Answer: $n(x)=\\frac{x+3}{x}$, domain R - {0, 1}."
+        }
+      ],
+      "source_page": 28,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u7-4-2:bk-drill-13",
+      "lo": "lo:pp3u7-4-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{3x-15}{x+3}\\div\\frac{5x-25}{4x+12}$"
+        },
+        {
+          "step": 1,
+          "text_md": "Factorise: $3x-15=3(x-5)$, $5x-25=5(x-5)$, $4x+12=4(x+3)$."
+        },
+        {
+          "step": 2,
+          "text_md": "$n(x)=\\frac{3(x-5)}{x+3}\\div\\frac{5(x-5)}{4(x+3)}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The zeros of the denominators and of the second numerator are $x=-3$ (from $x+3$ and $4x+12$) and $x=5$ (from $5x-25$)."
+        },
+        {
+          "step": 4,
+          "text_md": "Domain = R - {-3, 5}."
+        },
+        {
+          "step": 5,
+          "text_md": "Multiply by the reciprocal of the second fraction: $\\frac{3(x-5)}{x+3}\\times\\frac{4(x+3)}{5(x-5)}$."
+        },
+        {
+          "step": 6,
+          "text_md": "Cancel $(x-5)$ and $(x+3)$."
+        },
+        {
+          "step": 7,
+          "text_md": "Answer: $n(x)=\\frac{12}{5}$, domain R - {-3, 5}."
+        }
+      ],
+      "source_page": 28,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    }
+  ],
+  "external_node_refs": [
+    "course:prep3-parallel-math-en"
+  ]
+}

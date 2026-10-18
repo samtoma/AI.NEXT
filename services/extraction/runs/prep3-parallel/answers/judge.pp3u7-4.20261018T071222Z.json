@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "e98acd0047a194d114a21f53d2413610880918893d93310ab3ed053a3551ce46",
+  "generated_sha256": "3f41af54d26cf36b9df32cb68a563bb399cd0f6e02b92a02219fe06cf9c8e8dc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u7-4:example-1",
+    "verdict": "equivalent",
+    "reason": "Same simplified function and same domain R−{−2,0,2}."
+   },
+   {
+    "ref": "pp3u7-4:example-2",
+    "verdict": "equivalent",
+    "reason": "Same 5/(x−3) and same domain R−{−3,2,3}."
+   },
+   {
+    "ref": "pp3u7-4:example-4",
+    "verdict": "equivalent",
+    "reason": "Same function, domain, f(0)=1, and f(−1) undefined since −1 is excluded."
+   }
+  ]
+ }
+}

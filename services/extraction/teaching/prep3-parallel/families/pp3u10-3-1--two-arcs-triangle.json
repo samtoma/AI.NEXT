@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-1:two-arcs-triangle",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-1",
+ "parent_question_id": "q:pp3u10-3-1:bk-drill-1-3",
+ "source_page": 80,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    20,
+    70
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    20,
+    70
+   ]
+  },
+  {
+   "name": "r",
+   "let": "180 - p - q"
+  }
+ ],
+ "constraints": [
+  "p + q < 160"
+ ],
+ "stem": "The points $A$, $B$, $C$ and $D$ lie on a circle, in this order around the circle. Draw the chords $AC$, $BD$, $AD$ and $CD$. Given that $m(\\angle ABD) = {=q}^\\circ$ and $m(\\angle CBD) = {=p}^\\circ$, find $m(\\angle ADC)$ in degrees.",
+ "answer": "r",
+ "solution": [
+  "$\\angle CAD$ and $\\angle CBD$ are inscribed angles including the same arc $CD$, so $m(\\angle CAD) = m(\\angle CBD) = {=p}^\\circ$.",
+  "$\\angle ACD$ and $\\angle ABD$ are inscribed angles including the same arc $AD$, so $m(\\angle ACD) = m(\\angle ABD) = {=q}^\\circ$.",
+  "In $\\triangle ACD$: $m(\\angle ADC) = 180^\\circ - {=p}^\\circ - {=q}^\\circ = {=r}^\\circ$."
+ ],
+ "notes": "Text-only two-step: same-arc equality twice, then triangle angle sum (as in book drill 1-3). Order A,B,C,D on circle makes B and A on the same side of CD, and B and C on the same side of AD, so the equalities hold. Any p+q<180 is geometrically valid.",
+ "proposed_misconceptions": []
+}

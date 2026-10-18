@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-3:internal-len",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-3",
+ "parent_question_id": "q:pp3u10-6-3:bk-drill-7-1",
+ "source_page": 98,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [6, 8, 10], [9, 12, 15]]"
+  },
+  {
+   "name": "t",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "w",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "s",
+   "let": "T[t][w]"
+  },
+  {
+   "name": "q",
+   "let": "T[t][1 - w]"
+  },
+  {
+   "name": "d",
+   "let": "T[t][2]"
+  },
+  {
+   "name": "r1",
+   "randint": [
+    1,
+    "s - 1"
+   ]
+  },
+  {
+   "name": "r2",
+   "let": "s - r1"
+  },
+  {
+   "require": "r1 != r2",
+   "why": "radii should differ"
+  }
+ ],
+ "constraints": [
+  "d > s",
+  "q > 0"
+ ],
+ "stem": "Two circles with centres $M$ and $N$ lie outside each other. Their radii are ${=r1}$ cm and ${=r2}$ cm, and $MN = {=d}$ cm. A common internal tangent touches the circle with centre $M$ at $A$ and the circle with centre $N$ at $B$. Find the length of $AB$ in cm.",
+ "answer": "q",
+ "solution": [
+  "MA and NB are radii drawn to the points of tangency, so MA ⟂ AB and NB ⟂ AB, with MA = {=r1} cm and NB = {=r2} cm.",
+  "Draw through N a line parallel to AB meeting MA extended at C. Then ABNC is a rectangle, so AC = NB = {=r2} cm and NC = AB.",
+  "MC = MA + AC = {=r1} + {=r2} = {=s} cm, and m(∠MCN) = 90°.",
+  "In right triangle MCN: NC² = MN² − MC² = {=d}² − {=s}² = {=d*d} − {=s*s} = {=q*q}.",
+  "So NC = {=q} cm, and AB = NC = {=q} cm."
+ ],
+ "notes": "Common internal tangent length = sqrt(d^2-(r1+r2)^2), using the book's radius perpendicular to tangent and Pythagoras. Pythagorean triples keep the answer whole. Figure is not given; circles are described in words.",
+ "proposed_misconceptions": []
+}

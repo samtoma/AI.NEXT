@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "00a0799aa91f45ff23d9a652ee3a85d5f469fd7b2bf6cf579dce40c224dae7fa",
+  "generated_sha256": "c28213af9bba9f0f829bd270e45f9b2a95dfc96c2342c5f6180d0a270afba8ec",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u9-4:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-4:example-1:First",
+      "kind": "explanation",
+      "answer": "AB = AC, so MX = MY (equal chords are equidistant from the center). MD = ME (radii). So XD = MD − MX = ME − MY = YE."
+     },
+     {
+      "ref": "pp3u9-4:example-1:Second",
+      "kind": "explanation",
+      "answer": "X is the midpoint of AB, so MX ⊥ AB. MY ⊥ AC, so m(∠MXB) = m(∠MYC) = 90°. MX = MY (equal chords), so in triangle MXY, m(∠MXY) = m(∠MYX) (base angles). Subtracting equal angles from 90° gives m(∠YXB) = m(∠XYC)."
+     }
+    ]
+   }
+  }
+ ]
+}

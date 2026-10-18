@@ -1,0 +1,601 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-7",
+  "source": "book-records/prep3-parallel/pp3u10-7.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 15,
+      "cost_usd": 0.5293,
+      "calls": [
+        {
+          "call": "answers.pp3u10-7",
+          "cost_usd": 0.5293,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u10-7:think-and-discuss-1",
+      "record_id": "pp3u10-7:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 100,
+      "question": {
+        "text": "Does the measure of the resulted inscribed angles increase such as $\\angle ABC_1$ and $\\angle ABC_2$, ......",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0d324cb60becc032cf6b87e244104226",
+      "kind": "explanation",
+      "answer": "Yes, the inscribed angles increase as BC moves away from BA.",
+      "solution": [
+        "An inscribed angle is half the measure of the arc between its sides.",
+        "As BC moves away from BA, the arc AC1, then AC2, and so on gets larger.",
+        "So the inscribed angles ∠ABC1, ∠ABC2, ... get larger.",
+        "Answer: yes, they increase."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2",
+        "pp3u10-7:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. As $\\overrightarrow{BC}$ rotates away from $\\overrightarrow{BA}$, the intercepted arc grows, so the inscribed angle grows: $m(\\angle ABC_1) < m(\\angle ABC_2) < \\dots$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:think-and-discuss-2",
+      "record_id": "pp3u10-7:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 100,
+      "question": {
+        "text": "Do the mesures of $m(\\widehat{AC_1})$ and $m(\\widehat{AC_2})$ increase, ......... ?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "df2eca830d9cb1d2431aed565b3bba4a",
+      "kind": "explanation",
+      "answer": "Yes, the arcs AC1, AC2, ... increase as BC moves away from BA.",
+      "solution": [
+        "Each new position of BC cuts off a larger arc starting from A.",
+        "So the measures of arc AC1, then arc AC2, and so on, increase.",
+        "Their halves, the inscribed angles, increase too.",
+        "Answer: yes, they increase."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2",
+        "pp3u10-7:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. The arcs increase: $m(\\widehat{AC_1}) < m(\\widehat{AC_2}) < \\dots$, because the inscribed angle is half its arc.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:think-and-discuss-3",
+      "record_id": "pp3u10-7:think-and-discuss-3",
+      "part": null,
+      "type": "activity",
+      "page": 100,
+      "question": {
+        "text": "If $\\overrightarrow{BC}$ and $\\overrightarrow{BD}$ are congruent, what do you notice?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "63c3739aa53e6d331568cf20d8bf3687",
+      "kind": "explanation",
+      "answer": "The inscribed angle becomes the angle of tangency ∠ABD, which is the largest and equals half the arc between its sides.",
+      "solution": [
+        "When ray BC coincides with the tangent ray BD, the side of the angle is a tangent.",
+        "The angle ∠ABD is then the angle of tangency, a special case of the tangent angle.",
+        "Its measure is half the arc between its two sides: $m(\\angle ABD)=\\frac{1}{2}m(\\widehat{AB})$.",
+        "It equals the inscribed angle on the same arc.",
+        "Answer: the angle of tangency is the limit of the increasing inscribed angles and equals half its arc."
+      ],
+      "grounded_in": [
+        "pp3u10-7:definition-1",
+        "pp3u10-7:rule-2",
+        "pp3u10-7:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "When $\\overrightarrow{BC}$ coincides with the tangent $\\overrightarrow{BD}$, the inscribed angle becomes the angle of tangency $\\angle ABD$. It is the largest of these angles and is still half the measure of the arc between its sides, $m(\\angle ABD)=\\frac{1}{2}m(\\widehat{AB})$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-1:1",
+      "record_id": "pp3u10-7:drill-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "In each of the following figures, calculate $m(\\angle ABC)$.",
+        "stem": "Circle with chord AB, tangent BC at B; arc marked 230°.",
+        "notes": "Figure values read from the image; verify. Drill not numbered."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c07471fbd202e47c9f4c1bd3f2759f63",
+      "kind": "value",
+      "answer": "65",
+      "solution": [
+        "The major arc AB is 230°, so the minor arc AB on the right is $360-230=130$°.",
+        "Angle ABC is an angle of tangency, so its arc is the minor arc AB = 130°.",
+        "$m(\\angle ABC)=\\frac{1}{2}\\times130$",
+        "$m(\\angle ABC)=65$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "65",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-1:2",
+      "record_id": "pp3u10-7:drill-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "In each of the following figures, calculate $m(\\angle ABC)$.",
+        "stem": "Circle with centre M, AB a diameter, tangent BC at B.",
+        "notes": "Figure values read from the image; verify. Drill not numbered."
+      },
+      "needs_page": true,
+      "question_fingerprint": "6bda673112da1f035c281af99ff3d0e9",
+      "kind": "value",
+      "answer": "90",
+      "solution": [
+        "AB is a diameter, so arc AB is a semicircle = 180°.",
+        "$m(\\angle ABC)=\\frac{1}{2}m(\\widehat{AB})=\\frac{1}{2}\\times180$",
+        "$m(\\angle ABC)=90$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "90",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-1:3",
+      "record_id": "pp3u10-7:drill-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "In each of the following figures, calculate $m(\\angle ABC)$.",
+        "stem": "Circle with inscribed triangle DAB marked with equal-side ticks (equilateral), tangent line through B with C on right.",
+        "notes": "Figure values read from the image; verify. Drill not numbered."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1b30a2caa0e3494dfe0fb8dd0211a638",
+      "kind": "value",
+      "answer": "60",
+      "solution": [
+        "The three sides of triangle DAB are equal, so the three arcs are equal: each is $360\\div3=120$°.",
+        "Arc AB = 120°.",
+        "$m(\\angle ABC)=\\frac{1}{2}\\times120$",
+        "$m(\\angle ABC)=60$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "60",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-2:1",
+      "record_id": "pp3u10-7:drill-2",
+      "part": "1",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "In each of the following figures: line BC is tangent to the circle. Find the value of the symbol used in measuring.",
+        "stem": "Find x or y from figure 1",
+        "notes": "Drill with figures numbered 1-3 (sub-figures); each asks for symbols x, y."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9926d08be6bacac51c9772935b3ddd71",
+      "kind": "value",
+      "answer": "x = 70, y = 140",
+      "solution": [
+        "x is the angle of tangency at B on chord BA; the inscribed angle D on the same arc AB is 70°.",
+        "By theorem 5, $x=m(\\angle D)=70$.",
+        "y° is marked on arc AB (read from the figure); the inscribed angle D is half arc AB.",
+        "$y=2\\times70=140$.",
+        "x = 70, y = 140."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-3",
+        "pp3u10-7:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 70, y = 140 (y read as the arc AB = 2 × 70)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-2:2",
+      "record_id": "pp3u10-7:drill-2",
+      "part": "2",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "In each of the following figures: line BC is tangent to the circle. Find the value of the symbol used in measuring.",
+        "stem": "Find x or y from figure 2",
+        "notes": "Drill with figures numbered 1-3 (sub-figures); each asks for symbols x, y."
+      },
+      "needs_page": true,
+      "question_fingerprint": "57aaef6aa39c466befc6b357d5ea85ba",
+      "kind": "value",
+      "answer": "x = 60, y = 60",
+      "solution": [
+        "From the figure AD passes through the centre, so arc AD = 180° (read from the figure; verify).",
+        "30° is the inscribed angle at A on arc DB, so arc DB = 60°.",
+        "Arc AB = $180-60=120$°.",
+        "x is the angle of tangency on arc AB: $x=\\frac{1}{2}\\times120=60$.",
+        "y is the inscribed angle at E on the same arc AB, so $y=x=60$.",
+        "x = 60, y = 60."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-2",
+        "pp3u10-7:rule-3",
+        "pp3u10-7:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 60, y = 60",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-2:3",
+      "record_id": "pp3u10-7:drill-2",
+      "part": "3",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "In each of the following figures: line BC is tangent to the circle. Find the value of the symbol used in measuring.",
+        "stem": "Find x or y from figure 3",
+        "notes": "Drill with figures numbered 1-3 (sub-figures); each asks for symbols x, y."
+      },
+      "needs_page": true,
+      "question_fingerprint": "91adeb6ac94d2973698bc1770435953d",
+      "kind": "value",
+      "answer": "x = 65, y = 65",
+      "solution": [
+        "M is the centre and 25° is $m(\\angle MAB)$ (read from the figure; verify).",
+        "MA = MB (radii), so $m(\\angle MBA)=25$°.",
+        "In triangle MAB: $m(\\angle AMB)=180-25-25=130$°.",
+        "Angle D is inscribed on arc AB: $y=\\frac{1}{2}\\times130=65$.",
+        "x is the angle of tangency on the same arc AB, so $x=y=65$.",
+        "x = 65, y = 65."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-4",
+        "pp3u10-7:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = 65, y = 65",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-3:1",
+      "record_id": "pp3u10-7:drill-3",
+      "part": "1",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "With the assistance of the given figures, complete:",
+        "stem": "$m(\\angle ADC) = \\ldots$°",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7386e8fa732a833673ecfd76d8070705",
+      "kind": "value",
+      "answer": "80",
+      "solution": [
+        "Line AB is tangent at A and chord AC is the chord of tangency, so the 100° angle is an angle of tangency.",
+        "The inscribed angle ADC is on the chord AC on the other side.",
+        "The angle of tangency is supplementary to that inscribed angle.",
+        "$m(\\angle ADC)=180-100=80$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-5",
+        "pp3u10-7:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "80",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-3:2",
+      "record_id": "pp3u10-7:drill-3",
+      "part": "2",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "With the assistance of the given figures, complete:",
+        "stem": "$m(\\angle BAC) = \\ldots$°",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e6e171b7d61f8063d4f68455bee9d611",
+      "kind": "value",
+      "answer": "70",
+      "solution": [
+        "AB and AC are tangents; the angle at D (125°) is inscribed on the minor arc BC.",
+        "So the major arc BC = $2\\times125=250$°.",
+        "Minor arc BC = $360-250=110$°.",
+        "Angle ABC is an angle of tangency: $\\frac{1}{2}\\times110=55$°; likewise $m(\\angle ACB)=55$°.",
+        "In triangle ABC: $m(\\angle BAC)=180-55-55=70$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-1",
+        "pp3u10-7:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "70",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-3:3",
+      "record_id": "pp3u10-7:drill-3",
+      "part": "3",
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "With the assistance of the given figures, complete:",
+        "stem": "$m(\\angle BAD) = \\ldots$°",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fddd862fe3faec27742a9f49f1bfcaf0",
+      "kind": "value",
+      "answer": "50",
+      "solution": [
+        "Arc CB = 120° (from the figure).",
+        "$m(\\angle CBA)=70$° is inscribed, so arc CA = 140°.",
+        "Arc AB = $360-120-140=100$°.",
+        "Angle BAD is an angle of tangency on arc AB: $m(\\angle BAD)=\\frac{1}{2}\\times100=50$°."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-1",
+        "pp3u10-7:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "50",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-4:1",
+      "record_id": "pp3u10-7:drill-4",
+      "part": "1",
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "In each of the following shapes show that line AD is a tangent to the circle passing through the vertices of the triangle ABC.",
+        "stem": "Figure 1: m(∠DAB)=130°, angle at B = 65°, tick marks on AC and CB.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e8de7d36c649de0ae92e8658a049cf9c",
+      "kind": "explanation",
+      "answer": "The angle between AC... m(∠C)=50° and the angle on the other side of AB from ∠DAB is 180−130=50°, equal to ∠C, so AD is tangent.",
+      "solution": [
+        "AC = CB, so $m(\\angle CAB)=m(\\angle B)=65$°.",
+        "$m(\\angle C)=180-65-65=50$°.",
+        "D and C are on the same side of AB, so the angle between ray AD's opposite ray and AB is $180-130=50$°, on the alternate side from C.",
+        "This angle equals $m(\\angle C)=50$°.",
+        "By the converse of theorem 5, AD is a tangent to the circle."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-7",
+        "pp3u10-7:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "CA = CB, so $m(\\angle CAB)=m(\\angle B)=65°$. Then $m(\\angle DAC)=130°-65°=65°=m(\\angle B)$. The angle between AD and chord AC equals the inscribed angle B in the alternate side, so AD is tangent (converse of theorem 5).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-4:2",
+      "record_id": "pp3u10-7:drill-4",
+      "part": "2",
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "In each of the following shapes show that line AD is a tangent to the circle passing through the vertices of the triangle ABC.",
+        "stem": "Figure 2: m(∠DAB)=75°, angle at A inside triangle = 60°, angle C = 5x°, angle B = 3x°.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c94f2d35342744eca6cc3c9183431d02",
+      "kind": "explanation",
+      "answer": "x = 15, so m(∠C)=75° = m(∠DAB), hence AD is a tangent.",
+      "solution": [
+        "Sum of angles of triangle ABC: $60+5x+3x=180$.",
+        "$8x=120$, so $x=15$.",
+        "$m(\\angle C)=5\\times15=75$°.",
+        "$m(\\angle DAB)=75$° and D is on the opposite side of AB from C.",
+        "So $m(\\angle DAB)=m(\\angle C)$; by the converse of theorem 5, AD is a tangent."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "$5x+3x+60=180$, so $x=15$ and $m(\\angle C)=75°$. Since $m(\\angle DAB)=75°=m(\\angle C)$, AD is tangent to the circle (converse of theorem 5).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u10-7:drill-4:3",
+      "record_id": "pp3u10-7:drill-4",
+      "part": "3",
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "In each of the following shapes show that line AD is a tangent to the circle passing through the vertices of the triangle ABC.",
+        "stem": "Figure 3: m(∠DAB)=60°, AC = 3 cm, CB = 6 cm.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "17130647bf1a274cf1c4f92eda5d4eb9",
+      "kind": "explanation",
+      "answer": "m(∠C)=60° = m(∠DAB), hence AD is a tangent (assuming the mark at A is a right angle CAB).",
+      "solution": [
+        "The mark at A shows $m(\\angle CAB)=90$° (read from the figure; verify).",
+        "In the right triangle, AC = 3 cm is half the hypotenuse CB = 6 cm, so $m(\\angle B)=30$°.",
+        "$m(\\angle C)=180-90-30=60$°.",
+        "$m(\\angle DAB)=60$° and D is on the opposite side of AB from C.",
+        "So $m(\\angle DAB)=m(\\angle C)$; by the converse of theorem 5, AD is a tangent."
+      ],
+      "grounded_in": [
+        "pp3u10-7:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "$\\cos C = AC/CB = 3/6$, so $m(\\angle C)=60°$ (the triangle is right-angled at A, since $AC^2+AB^2=BC^2$). Since $m(\\angle DAB)=60°=m(\\angle C)$, AD is tangent to the circle (converse of theorem 5).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T08:02:18+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

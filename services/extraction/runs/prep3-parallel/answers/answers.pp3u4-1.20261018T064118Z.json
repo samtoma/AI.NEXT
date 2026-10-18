@@ -1,0 +1,381 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "4fe95a2aaab635eb985df44e7c718a67fe98bd2a2ac6f7f28fffb159b08d2f18",
+  "generated_sha256": "a04630235f55e53202c54373272f0002e87cd87850d1243848bf0973c3d5f082",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u4-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u4-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": ">",
+      "solution": [
+       "The right angle is at B, so AC is the hypotenuse.",
+       "AB is the side opposite angle C, and BC is the side opposite angle A.",
+       "In a triangle the larger angle has the larger opposite side.",
+       "m(∠C) > m(∠A), so AB > BC.",
+       "Answer: >"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-2",
+      "kind": "value",
+      "answer": "<",
+      "solution": [
+       "AC is the hypotenuse, the longest side of the right-angled triangle.",
+       "So AB is smaller than AC.",
+       "Then AB/AC is less than 1.",
+       "Answer: <"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-3",
+      "kind": "value",
+      "answer": ">",
+      "solution": [
+       "AC is the hypotenuse, so AC > BC.",
+       "A numerator bigger than the denominator gives a ratio bigger than 1.",
+       "So AC/BC > 1.",
+       "Answer: >"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-4",
+      "kind": "value",
+      "answer": "=",
+      "solution": [
+       "Divide fractions: (AB/AC) ÷ (BC/AC) = (AB/AC) × (AC/BC).",
+       "AC cancels, leaving AB/BC.",
+       "Answer: ="
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-5",
+      "kind": "value",
+      "answer": ">",
+      "solution": [
+       "Add the fractions: (AB + BC)/AC.",
+       "In a triangle the sum of two sides is greater than the third side, so AB + BC > AC.",
+       "So (AB + BC)/AC > 1.",
+       "Answer: >"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-6",
+      "kind": "value",
+      "answer": "=",
+      "solution": [
+       "Add the fractions: (AB² + BC²)/AC².",
+       "The triangle is right-angled at B, so AB² + BC² = AC² (Pythagoras).",
+       "So the sum is AC²/AC² = 1.",
+       "Answer: ="
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-3:First",
+      "kind": "value",
+      "answer": "sin∠CAD = 3/5, cos∠CAD = 4/5, tan∠CAD = 3/4",
+      "solution": [
+       "The triangle is isosceles (AB = AC) and AD ⊥ BC, so D is the midpoint of BC.",
+       "DC = 12 ÷ 2 = 6 cm.",
+       "Triangle ADC is right-angled at D, with AC = 10 cm as hypotenuse.",
+       "AD² = 10² − 6² = 64, so AD = 8 cm.",
+       "For ∠CAD: opposite = DC = 6, adjacent = AD = 8, hypotenuse = AC = 10.",
+       "sin = 6/10 = 3/5, cos = 8/10 = 4/5, tan = 6/8 = 3/4.",
+       "Answer: sin = 3/5, cos = 4/5, tan = 3/4."
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-2",
+       "pp3u4-1:definition-3",
+       "pp3u4-1:definition-4",
+       "pp3u4-1:definition-5",
+       "pp3u4-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-3:Second A",
+      "kind": "explanation",
+      "answer": "The intended identity is sin²C + cos²C = 1, and it is true: (4/5)² + (3/5)² = 1. As printed (sin²C + sin²C) it gives 32/25, so it looks like a misprint.",
+      "solution": [
+       "D is the midpoint of BC, so DC = 6 cm and AD = 8 cm (as in the first part).",
+       "In right triangle ADC at D: sin C = AD/AC = 8/10 = 4/5.",
+       "cos C = DC/AC = 6/10 = 3/5.",
+       "The printed sin²C + sin²C = 2 × 16/25 = 32/25, which is not 1, so the 'second' term must be cos²C.",
+       "sin²C + cos²C = 16/25 + 9/25 = 25/25.",
+       "= 1, which is what we had to prove."
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-3",
+       "pp3u4-1:definition-4",
+       "pp3u4-1:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-3:Second B",
+      "kind": "explanation",
+      "answer": "sin B + cos C = 4/5 + 3/5 = 7/5, which is greater than 1.",
+      "solution": [
+       "AB = AC, so ∠B = ∠C. D is the midpoint of BC, so DB = DC = 6 cm and AD = 8 cm.",
+       "In right triangle ABD at D: sin B = AD/AB = 8/10 = 4/5.",
+       "In right triangle ADC at D: cos C = DC/AC = 6/10 = 3/5.",
+       "sin B + cos C = 4/5 + 3/5 = 7/5.",
+       "7/5 = 1.4 > 1, so sin B + cos C > 1."
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-3",
+       "pp3u4-1:definition-4",
+       "pp3u4-1:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u4-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": ">"
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-2",
+      "kind": "value",
+      "answer": "<"
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-3",
+      "kind": "value",
+      "answer": ">"
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-4",
+      "kind": "value",
+      "answer": "="
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-5",
+      "kind": "value",
+      "answer": ">"
+     },
+     {
+      "ref": "pp3u4-1:think-and-discuss-6",
+      "kind": "value",
+      "answer": "="
+     },
+     {
+      "ref": "pp3u4-1:drill-3:First",
+      "kind": "value",
+      "answer": "sin(∠CAD) = 3/5, cos(∠CAD) = 4/5, tan(∠CAD) = 3/4"
+     },
+     {
+      "ref": "pp3u4-1:drill-3:Second A",
+      "kind": "explanation",
+      "answer": "As printed, $\\sin^2 C+\\sin^2 C = 2\\cdot\\frac{16}{25} = \\frac{32}{25} \\ne 1$, so it is probably a typo for $\\sin^2 C+\\cos^2 C$. In right triangle ADC, D is the midpoint of BC, so DC = 6 and AD = 8. Then $\\sin C=\\frac{8}{10}=\\frac45$ and $\\cos C=\\frac{6}{10}=\\frac35$. So $\\sin^2 C+\\cos^2 C=\\frac{16}{25}+\\frac{9}{25}=1$."
+     },
+     {
+      "ref": "pp3u4-1:drill-3:Second B",
+      "kind": "explanation",
+      "answer": "Since AB = AC, ∠B = ∠C. In right triangle ADB, $\\sin B=\\frac{AD}{AB}=\\frac{8}{10}=\\frac45$. In right triangle ADC, $\\cos C=\\frac{DC}{AC}=\\frac{6}{10}=\\frac35$. So $\\sin B+\\cos C=\\frac45+\\frac35=\\frac75>1$."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u4-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u4-1:drill-1:A",
+      "kind": "value",
+      "answer": "76.2667°",
+      "solution": [
+       "$1' = \\frac{1}{60}$ degree, so $16' = \\frac{16}{60} = 0.2667^\\circ$",
+       "Add to the degrees: $76 + 0.2667 = 76.2667$",
+       "The angle is $76.2667^\\circ$ (to 4 decimal places)"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-1:B",
+      "kind": "value",
+      "answer": "45.0656°",
+      "solution": [
+       "$3' = \\frac{3}{60} = 0.05^\\circ$",
+       "$56'' = \\frac{56}{60}' = 0.9333'$, and $0.9333' = \\frac{0.9333}{60} = 0.015556^\\circ$",
+       "Add: $45 + 0.05 + 0.015556 = 45.065556$",
+       "The angle is $45.0656^\\circ$ (to 4 decimal places)"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-1:C",
+      "kind": "value",
+      "answer": "85.6356°",
+      "solution": [
+       "$38' = \\frac{38}{60} = 0.633333^\\circ$",
+       "$8'' = \\frac{8}{60}' = 0.1333'$, and $0.1333' = \\frac{0.1333}{60} = 0.002222^\\circ$",
+       "Add: $85 + 0.633333 + 0.002222 = 85.635556$",
+       "The angle is $85.6356^\\circ$ (to 4 decimal places)"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-1:D",
+      "kind": "value",
+      "answer": "65.4453°",
+      "solution": [
+       "$26' = \\frac{26}{60} = 0.433333^\\circ$",
+       "$43'' = \\frac{43}{60}' = 0.71667'$, and $0.71667' = \\frac{0.71667}{60} = 0.011944^\\circ$",
+       "Add: $65 + 0.433333 + 0.011944 = 65.445278$",
+       "The angle is $65.4453^\\circ$ (to 4 decimal places)"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-2:A",
+      "kind": "value",
+      "answer": "34° 36' 0''",
+      "solution": [
+       "Keep the whole degrees: $34^\\circ$",
+       "Fraction of a degree: $0.6^\\circ = 0.6 \\times 60' = 36'$",
+       "No fraction of a minute is left, so seconds = 0",
+       "The angle is $34^\\circ 36' 0''$, that is $34^\\circ 36'$"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-2:B",
+      "kind": "value",
+      "answer": "78° 4' 48''",
+      "solution": [
+       "Keep the whole degrees: $78^\\circ$",
+       "$0.08^\\circ = 0.08 \\times 60' = 4.8'$, so minutes = 4",
+       "$0.8' = 0.8 \\times 60'' = 48''$",
+       "The angle is $78^\\circ 4' 48''$"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-2:C",
+      "kind": "value",
+      "answer": "56° 10' 48''",
+      "solution": [
+       "Keep the whole degrees: $56^\\circ$",
+       "$0.18^\\circ = 0.18 \\times 60' = 10.8'$, so minutes = 10",
+       "$0.8' = 0.8 \\times 60'' = 48''$",
+       "The angle is $56^\\circ 10' 48''$"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     },
+     {
+      "ref": "pp3u4-1:drill-2:D",
+      "kind": "value",
+      "answer": "83° 14' 45.6''",
+      "solution": [
+       "Keep the whole degrees: $83^\\circ$",
+       "$0.246^\\circ = 0.246 \\times 60' = 14.76'$, so minutes = 14",
+       "$0.76' = 0.76 \\times 60'' = 45.6''$",
+       "The angle is $83^\\circ 14' 45.6''$ (about $83^\\circ 14' 46''$)"
+      ],
+      "grounded_in": [
+       "pp3u4-1:definition-1",
+       "pp3u4-1:convention-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u4-1:drill-1:A",
+      "kind": "value",
+      "answer": "76.2667° (76 + 16/60 = 76.26666…°)"
+     },
+     {
+      "ref": "pp3u4-1:drill-1:B",
+      "kind": "value",
+      "answer": "45.0656° (45 + 0.05 + 0.015556 = 45.065556°)"
+     },
+     {
+      "ref": "pp3u4-1:drill-1:C",
+      "kind": "value",
+      "answer": "85.6356° (85 + 0.633333 + 0.002222 = 85.635556°)"
+     },
+     {
+      "ref": "pp3u4-1:drill-1:D",
+      "kind": "value",
+      "answer": "65.4453° (65 + 0.433333 + 0.011944 = 65.445278°)"
+     },
+     {
+      "ref": "pp3u4-1:drill-2:A",
+      "kind": "value",
+      "answer": "34° 36' 0''"
+     },
+     {
+      "ref": "pp3u4-1:drill-2:B",
+      "kind": "value",
+      "answer": "78° 4' 48''"
+     },
+     {
+      "ref": "pp3u4-1:drill-2:C",
+      "kind": "value",
+      "answer": "56° 10' 48''"
+     },
+     {
+      "ref": "pp3u4-1:drill-2:D",
+      "kind": "value",
+      "answer": "83° 14' 45.6''"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "f78555eac719311945af3a4a8b6b554d21942b41a3b663845ab2f9c596e2a8a8",
+  "generated_sha256": "c61dd85b9381ca6ba2f5f173d0db86497e283d53fde87b3949c7cd52d451d41d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u9-2:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u9-2:example-1",
+      "kind": "value",
+      "answer": "x > 4"
+     },
+     {
+      "ref": "pp3u9-2:example-2",
+      "kind": "explanation",
+      "answer": "MX = 5 (radius), MY = MZ + ZY = 5 + 8 = 13. Since $MX^2 + XY^2 = 25 + 144 = 169 = MY^2$, triangle MXY is right-angled at X, so MX ⊥ XY at X on the circle; hence line XY is a tangent to circle M at X."
+     },
+     {
+      "ref": "pp3u9-2:example-3:A",
+      "kind": "explanation",
+      "answer": "MN = 13 = r1 + r2, so the two circles are touching externally."
+     },
+     {
+      "ref": "pp3u9-2:example-3:B",
+      "kind": "explanation",
+      "answer": "MN = 5 = r1 - r2, so the two circles are touching internally."
+     },
+     {
+      "ref": "pp3u9-2:example-3:C",
+      "kind": "explanation",
+      "answer": "MN = 3 < r1 - r2 = 5, so circle N lies inside circle M (no common points, not concentric)."
+     },
+     {
+      "ref": "pp3u9-2:example-3:D",
+      "kind": "explanation",
+      "answer": "MN = 0, so the two circles are concentric (N inside M)."
+     },
+     {
+      "ref": "pp3u9-2:example-3:E",
+      "kind": "explanation",
+      "answer": "r1 - r2 = 5 < MN = 10 < r1 + r2 = 13, so the two circles are intersecting at two points."
+     },
+     {
+      "ref": "pp3u9-2:example-3:F",
+      "kind": "explanation",
+      "answer": "MN = 15 > r1 + r2 = 13, so the two circles are distant (outside each other)."
+     },
+     {
+      "ref": "pp3u9-2:example-4",
+      "kind": "value",
+      "answer": "12"
+     }
+    ]
+   }
+  }
+ ]
+}

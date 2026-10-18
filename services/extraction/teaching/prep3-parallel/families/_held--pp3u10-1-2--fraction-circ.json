@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-2:fraction-circ",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-2",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    45,
+    60,
+    72,
+    90,
+    120,
+    180
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "C",
+   "let": "c * 360 / m"
+  }
+ ],
+ "stem": "The circumference of a circle is ${=C}$ cm. Find the length of an arc of this circle whose measure is ${=m}^\\circ$, in cm.",
+ "answer": "c",
+ "solution": [
+  "The arc is the fraction $\\frac{{=m}}{360}$ of the whole circle, so its length is that fraction of the circumference.",
+  "Arc length $=\\frac{{=m}}{360}\\times {=C} = {=c}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No book question was supplied for this objective, so parent_question_id is empty. Whole-number answers by construction: C = c*360/m is always an integer for the m values chosen."
+}

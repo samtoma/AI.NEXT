@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "dadce3c73129186c265934e625efeb4fb19b2978037f0e8d3807ec43ae177761",
+  "generated_sha256": "151cfc85dc23d9903e5b3e7e6fd49735f0302dddf90498e4ed287a35e6366ec1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-3:figure-3",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure with A, A1, A2, A3."
+   },
+   {
+    "id": "pp3u9-3:figure-4",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "trim",
+    "bottom": "trim",
+    "note": "Figure is complete, but the crop includes stray text. A purple fragment sits at the top. Paragraph text ('ass', 'nd') is along the right edge. More text ('and', 'sses through point B') is at the bottom."
+   }
+  ]
+ }
+}

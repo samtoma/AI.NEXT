@@ -1,0 +1,78 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u7-3",
+  "source": "book-records/prep3-parallel/pp3u7-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0297,
+      "calls": [
+        {
+          "call": "check-printed.pp3u7-3",
+          "cost_usd": 0.0187,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u7-3",
+          "cost_usd": 0.011,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u7-3:example-1",
+      "record_id": "pp3u7-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 21,
+      "printed": "$n(x)=\\frac{x}{(x+2)(x-3)}$, domain $R-\\{-3,-2,2,3\\}$",
+      "blind": "$n(x)=\\frac{x(x+3)(x-2)}{(x-2)(x+2)(x-3)(x+3)}=\\frac{x}{(x+2)(x-3)}$, domain of $n=\\mathbb{R}-\\{-3,-2,2,3\\}$",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "82c5a21a82b1cbddf15c478fa5b1241c",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-3:example-1",
+        "verdict": "equivalent",
+        "reason": "Same simplified form x/((x+2)(x-3)) and same domain R−{−3,−2,2,3}."
+      },
+      "how": "judged equivalent: Same simplified form x/((x+2)(x-3)) and same domain R−{−3,−2,2,3}.",
+      "made": {
+        "at": "2026-10-18T07:12:14+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u7-3:example-2",
+      "record_id": "pp3u7-3:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 22,
+      "printed": "$n_1=n_2$",
+      "blind": "$n_1(x)=\\frac{x^2}{x^2(x-1)}=\\frac{1}{x-1}$, domain $\\mathbb{R}-\\{0,1\\}$. $n_2(x)=\\frac{x(x^2+x+1)}{x(x-1)(x^2+x+1)}=\\frac{1}{x-1}$, domain $\\mathbb{R}-\\{0,1\\}$ (since $x^2+x+1$ has no real zeros). Same domain and same simplest form, so $n_1=n_2$.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "7b2db13a8a5768d50d9eedb4f9cbb784",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-3:example-2",
+        "verdict": "equivalent",
+        "reason": "Solver shows both reduce to 1/(x−1) with domain R−{0,1}, concluding n1=n2 as printed."
+      },
+      "how": "judged equivalent: Solver shows both reduce to 1/(x−1) with domain R−{0,1}, concluding n1=n2 as printed.",
+      "made": {
+        "at": "2026-10-18T07:12:14+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

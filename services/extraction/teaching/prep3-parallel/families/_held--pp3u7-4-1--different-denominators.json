@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-1:different-denominators",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "require": "b * p - a * q > 0",
+   "why": "constant term of the numerator is positive"
+  }
+ ],
+ "constraints": [],
+ "stem": "Add and give the answer in simplest form: $\\frac{{=a}}{x+{=p}}+\\frac{{=b}}{x-{=q}}$ (the denominator may be left factorised).",
+ "solution": [
+  "The denominators $x+{=p}$ and $x-{=q}$ have no common factor, so the L.C.M. is $(x+{=p})(x-{=q})$.",
+  "Rewrite each fraction over the L.C.M.: $\\frac{{=a}(x-{=q})+{=b}(x+{=p})}{(x+{=p})(x-{=q})}$.",
+  "Expand the numerator: ${=a}x-{=a*q}+{=b}x+{=b*p}={=a+b}x+{=b*p-a*q}$.",
+  "The result is $\\frac{{=a+b}x+{=b*p-a*q}}{(x+{=p})(x-{=q})}$. The numerator has no factor in common with the denominator. The domain is $x\\neq -{=p}$ and $x\\neq {=q}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=a+b}*x+{=b*p-a*q})/((x+{=p})*(x-{=q}))",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions supplied; parent_question_id is a placeholder. Numerator constant forced positive so it prints cleanly; no cancellation is possible (numerator at x=-p is -b(p+q), at x=q is a(p+q))."
+}

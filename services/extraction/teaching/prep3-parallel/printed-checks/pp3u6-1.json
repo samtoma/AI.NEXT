@@ -1,0 +1,162 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u6-1",
+  "source": "book-records/prep3-parallel/pp3u6-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 6,
+      "cost_usd": 0.0419,
+      "calls": [
+        {
+          "call": "check-printed.pp3u6-1",
+          "cost_usd": 0.0321,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u6-1",
+          "cost_usd": 0.0098,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u6-1:example-2",
+      "record_id": "pp3u6-1:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 6,
+      "printed": "$\\{(2, 1)\\}$",
+      "blind": "{(2, 1)}",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u6-1:figure-3"
+      ],
+      "question_fingerprint": "9be7c0c8f4190b5b5f6fe772688657a8",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u6-1:example-3:First",
+      "record_id": "pp3u6-1:example-3",
+      "part": "First",
+      "type": "worked_example",
+      "page": 7,
+      "printed": "No solution (L1 ∥ L2); solution set is empty, $L_1\\cap L_2=\\phi$",
+      "blind": "Empty set (the lines are parallel, no solution)",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u6-1:figure-4",
+        "pp3u6-1:figure-5"
+      ],
+      "question_fingerprint": "f0bdca29bb1cfe88cfd277686197c7be",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u6-1:example-3:First",
+        "verdict": "equivalent",
+        "reason": "Both say the lines are parallel and the solution set is empty."
+      },
+      "how": "judged equivalent: Both say the lines are parallel and the solution set is empty.",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u6-1:example-3:Second",
+      "record_id": "pp3u6-1:example-3",
+      "part": "Second",
+      "type": "worked_example",
+      "page": 7,
+      "printed": "Infinite number of solutions; solution set is $\\{(x,y): y=3-\\frac{3}{2}x\\}$",
+      "blind": "The two lines coincide, so there are infinitely many solutions: every point on the line $3x+2y=6$, e.g. (0, 3), (2, 0).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u6-1:figure-4",
+        "pp3u6-1:figure-5"
+      ],
+      "question_fingerprint": "f0124e15a526eb7cd5814d444089c809",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u6-1:example-3:Second",
+        "verdict": "equivalent",
+        "reason": "Both say the lines coincide, so the solutions are all points on the line, and 3x+2y=6 is the same as y=3-3x/2."
+      },
+      "how": "judged equivalent: Both say the lines coincide, so the solutions are all points on the line, and 3x+2y=6 is the same as y=3-3x/2.",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u6-1:example-4",
+      "record_id": "pp3u6-1:example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 8,
+      "printed": "$\\{(2,1)\\}$",
+      "blind": "{(2, 1)}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "ad7049ffad825d089bb591cd044a918e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u6-1:example-5",
+      "record_id": "pp3u6-1:example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 9,
+      "printed": "$a=2$, $b=1$",
+      "blind": "a = 2, b = 1",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "e536b83203c437b7924ef4e7c2dfdf29",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u6-1:example-6",
+      "record_id": "pp3u6-1:example-6",
+      "part": null,
+      "type": "worked_example",
+      "page": 9,
+      "printed": "47",
+      "blind": "47",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "5ba1ff9382363d015f4f3f67c05a983d",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:02:58+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-2:meet-point",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-2",
+ "parent_question_id": "q:pp3u6-1-2:bk-exercise-2",
+ "source_page": 6,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "y0",
+   "randint": [
+    "x0 + 1",
+    7
+   ]
+  },
+  {
+   "name": "a",
+   "let": "y0 - x0"
+  },
+  {
+   "name": "b",
+   "let": "y0 + x0"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve the two equations graphically by drawing both lines on the same graph: $L_1 : y = x + {=a}$ and $L_2 : y = {=b} - x$. Write the coordinates $(x, y)$ of the point where the two lines meet.",
+ "answer": "",
+ "solution": [
+  "For $L_1$: $y = x + {=a}$. Put $x = 0$, then $y = {=a}$, so $(0, {=a})$ is on $L_1$. Put $x = 1$, then $y = {=a + 1}$, so $(1, {=a + 1})$ is on $L_1$. Draw $L_1$ through these points.",
+  "For $L_2$: $y = {=b} - x$. Put $x = 0$, then $y = {=b}$, so $(0, {=b})$ is on $L_2$. Put $x = 1$, then $y = {=b - 1}$, so $(1, {=b - 1})$ is on $L_2$. Draw $L_2$ through these points.",
+  "The two lines meet at the point $({=x0}, {=y0})$.",
+  "Check: ${=x0} + {=a} = {=y0}$ and ${=b} - {=x0} = {=y0}$.",
+  "The solution is $({=x0}, {=y0})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, {=y0})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point: both lines have unit slope, intersection at integer point with positive intercepts."
+}

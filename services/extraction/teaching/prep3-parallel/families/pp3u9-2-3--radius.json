@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-3:radius",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-3",
+ "parent_question_id": "q:pp3u9-2-3:bk-example-3-b",
+ "source_page": 51,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "r1",
+   "randint": [
+    6,
+    15
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "mn",
+   "let": "r1 + r2 if k == 0 else r1 - r2"
+  }
+ ],
+ "stem": "{=\"Two circles M and N are touching externally.\" if k == 0 else \"Two circles M and N are touching internally, and N is the smaller circle.\"} The radius length of circle M is ${=r1}$ cm and $MN = {=mn}$ cm. Find the radius length of circle N in cm.",
+ "answer": "r2",
+ "solution": [
+  "{=\"Since the two circles are touching externally, $MN = r_1 + r_2$.\" if k == 0 else \"Since the two circles are touching internally, $MN = r_1 - r_2$, where $r_1$ is the larger radius.\"}",
+  "{=\"$r_2 = MN - r_1 = \" + str(mn) + \" - \" + str(r1) + \" = \" + str(r2) + \"$ cm.\" if k == 0 else \"$r_2 = r_1 - MN = \" + str(r1) + \" - \" + str(mn) + \" = \" + str(r2) + \"$ cm.\"}"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Uses the book's conditions MN = r1 + r2 (external) and MN = r1 - r2 (internal) in reverse. Answer is a whole number 2-5."
+}

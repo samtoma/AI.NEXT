@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "f47f3585f1d5bcc5dcd4d65d86dc91b265d7220ca0a05851ebdf3beab4604460",
+  "generated_sha256": "7305380a810ae0264695ed60d13511ef5b97d718e0d8b19e84591fe6e9a6fca4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u5-1:figure-4",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "extend",
+    "note": "The y' axis label and arrow are cut off at the bottom edge."
+   },
+   {
+    "id": "pp3u5-1:figure-5",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Stray text 'rigin' from the surrounding paragraph is inside the crop on the left."
+   }
+  ]
+ }
+}

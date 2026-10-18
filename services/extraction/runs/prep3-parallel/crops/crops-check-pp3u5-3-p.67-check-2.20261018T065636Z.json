@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "422c65f35878419408c4346bf49f0ee39c14c79005bad8857b7ffebad5d6c75d",
+  "generated_sha256": "028250e8e195472d1cc856891415ea4be400c18e197ed9c2a0f362ea30743143",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u5-3:figure-6",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Stray partial glyph at top edge (above y axis) and a stray 'f' at far left belong to surrounding text, not the figure."
+   },
+   {
+    "id": "pp3u5-3:figure-7",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Full grid with quadrilateral ABCD and all labels visible."
+   }
+  ]
+ }
+}

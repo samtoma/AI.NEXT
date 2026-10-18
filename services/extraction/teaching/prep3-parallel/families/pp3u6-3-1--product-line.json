@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-3-1:product-line",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-3-1",
+ "parent_question_id": "q:pp3u6-3-1:bk-mental-math-1",
+ "source_page": 13,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    7
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    "a + 1",
+    8
+   ]
+  },
+  {
+   "name": "s",
+   "let": "2*(a + c)"
+  },
+  {
+   "name": "P",
+   "let": "2*a*c"
+  }
+ ],
+ "stem": "Solve algebraically, by substitution, the two equations $2x + y = {=s}$ and $xy = {=P}$, where $x, y \\in \\mathbb{R}$. Give the solution set as a list of ordered pairs $(x, y)$.",
+ "solution": [
+  "From the first-degree equation, $y = {=s} - 2x$.",
+  "Substitute into the second equation: $x({=s} - 2x) = {=P}$.",
+  "Rearrange: $2x^2 - {=s}x + {=P} = 0$, and divide by 2: $x^2 - {=a + c}x + {=a*c} = 0$.",
+  "Factorise: $(x - {=a})(x - {=c}) = 0$, so $x = {=a}$ or $x = {=c}$.",
+  "Then $y = {=s} - 2x$ gives $y = {=2*c}$ when $x = {=a}$, and $y = {=2*a}$ when $x = {=c}$.",
+  "The solution set is $\\{({=a}, {=2*c}), ({=c}, {=2*a})\\}$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "[({=a}, {=2*c}), ({=c}, {=2*a})]",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Solutions (a,2c) and (c,2a), a<c distinct, so two distinct pairs. Check: 2a+2c=s, a*2c=P."
+}

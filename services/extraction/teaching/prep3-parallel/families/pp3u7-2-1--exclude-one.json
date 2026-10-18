@@ -1,0 +1,37 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-2-1:exclude-one",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-2-1",
+ "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+ "source_page": 18,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    9
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "The domain of the function $f(x)=\\frac{x+{=p}}{x-{=q}}$ is $R-\\{c\\}$. Find the value of $c$.",
+ "answer": "q",
+ "solution": [
+  "The domain is R minus the set of zeroes of the denominator, so put the denominator equal to zero: $x-{=q}=0$.",
+  "$x={=q}$, so the denominator is zero only at $x={=q}$.",
+  "The domain is $R-\\{{=q}\\}$, so $c={=q}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: one linear denominator. Numerator zero is at -p, never equal to q in sign confusion cases except none; fine."
+}

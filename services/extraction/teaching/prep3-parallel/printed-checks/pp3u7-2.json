@@ -1,0 +1,54 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u7-2",
+  "source": "book-records/prep3-parallel/pp3u7-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 1,
+      "cost_usd": 0.0185,
+      "calls": [
+        {
+          "call": "check-printed.pp3u7-2",
+          "cost_usd": 0.0114,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u7-2",
+          "cost_usd": 0.0071,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u7-2:example-1",
+      "record_id": "pp3u7-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 18,
+      "printed": "$R-\\{-2,1,2\\}$",
+      "blind": "R - {1, 2, -2}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "f4d1bd1e2387fe25fc8d60bc11aa815e",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-2:example-1",
+        "verdict": "equivalent",
+        "reason": "Both are R minus the set {-2, 1, 2}; only the order of elements differs."
+      },
+      "how": "judged equivalent: Both are R minus the set {-2, 1, 2}; only the order of elements differs.",
+      "made": {
+        "at": "2026-10-18T07:12:02+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

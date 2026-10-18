@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-2-2:factorise-lead",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-2-2",
+ "parent_question_id": "q:pp3u6-2-2:bk-think-and-discuss-1-4",
+ "source_page": 10,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "require": "gcd(r, a) == 1",
+   "why": "root r/a is a non-integer fraction in lowest terms"
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "B",
+   "let": "a * s + r"
+  },
+  {
+   "name": "C",
+   "let": "r * s"
+  }
+ ],
+ "stem": "Solve the equation ${=a}x^2 - {=B}x + {=C} = 0$ by factorising the left side. Write the solution set, giving any non-whole root as a fraction in simplest form.",
+ "solution": [
+  "The left side has a leading coefficient ${=a}$, so look for a factorisation $({=a}x - {=r})(x - {=s})$.",
+  "Check: ${=a}x^2 - {=a*s}x - {=r}x + {=C} = {=a}x^2 - {=B}x + {=C}$, which is correct.",
+  "So $({=a}x - {=r})(x - {=s}) = 0$.",
+  "Either ${=a}x - {=r} = 0$, so $x = \\frac{{=r}}{{=a}}$, or $x - {=s} = 0$, so $x = {=s}$.",
+  "The solution set is $\\{\\frac{{=r}}{{=a}}, {=s}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=r}/{=a}, {=s}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Non-monic quadratic, one fractional root. Factorising only. Roots any order."
+}

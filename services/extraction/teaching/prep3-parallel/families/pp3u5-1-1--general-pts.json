@@ -1,0 +1,90 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-1-1:general-pts",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-1-1",
+ "parent_question_id": "q:pp3u5-1-1:bk-think-and-discuss-3",
+ "source_page": 58,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[3,4,5],[5,12,13],[6,8,10],[8,15,17],[9,12,15]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "o",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "sx",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sy",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "dx",
+   "let": "T[i][o]"
+  },
+  {
+   "name": "dy",
+   "let": "T[i][1-o]"
+  },
+  {
+   "name": "h",
+   "let": "T[i][2]"
+  },
+  {
+   "name": "x1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + sx*dx"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + sy*dy"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the distance between the points $A({=x1}, {=y1})$, $B({=x2}, {=y2})$. Give the answer in unit length.",
+ "answer": "h",
+ "solution": [
+  "Draw the right triangle AKB with the right angle at K, where K is the point with the x-coordinate of one point and the y-coordinate of the other.",
+  "$AK=|{=x2}-({=x1})|={=dx}$ and $KB=|{=y2}-({=y1})|={=dy}$.",
+  "$(AB)^2=({=dx})^2+({=dy})^2={=dx*dx}+{=dy*dy}={=h*h}$",
+  "AB = {=h} unit length."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Pythagorean triples keep the distance a whole number; signs and positions vary. Follows book Q3 method."
+}

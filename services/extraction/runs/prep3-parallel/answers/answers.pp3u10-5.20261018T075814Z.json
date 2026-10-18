@@ -1,0 +1,526 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "9c82fd4eefafd5c79f7cb5a359b8282a00ef7056c6c7028ac481f524de77e735",
+  "generated_sha256": "a62e55a76c39bbc0a94fa8863b25d946f30e336154849cf1c4faa621aaf05a61",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-5:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-5:think-1",
+      "kind": "explanation",
+      "answer": "A quadrilateral is cyclic if two opposite angles are supplementary, or if an exterior angle at a vertex equals the interior angle at the opposite vertex.",
+      "solution": [
+       "Case 1: if two opposite angles of a quadrilateral are supplementary (their sum is $180^\\circ$), then the quadrilateral is cyclic (converse of theorem 3).",
+       "Case 2: if the exterior angle at a vertex of a quadrilateral equals the interior angle at the opposite vertex, then the quadrilateral is cyclic (corollary).",
+       "These are the two cases the lesson gives.",
+       "So a quadrilateral is cyclic in these two cases only: supplementary opposite angles, or an exterior angle equal to the interior opposite angle."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3",
+       "pp3u10-5:rule-4"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-5:think-1",
+      "kind": "explanation",
+      "answer": "A quadrilateral is cyclic if: (1) two opposite angles are supplementary (sum 180°); (2) an exterior angle at a vertex equals the interior angle at the opposite vertex; (3) two adjacent vertices see the opposite side (equal angles on the same side of it) — i.e. two equal angles drawn on the same base on the same side, e.g. $m(\\angle ABD)=m(\\angle ACD)$; (4) a side subtends a right angle at the other two vertices (equal-angle special case, the side is a diameter); also, equivalently, there exists a point equidistant from all four vertices (the perpendicular bisectors of the sides meet at one point)."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u10-5:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:1",
+      "kind": "value",
+      "answer": "120",
+      "solution": [
+       "∠A is an inscribed angle in arc BCD.",
+       "m(∠A) = 1/2 m(arc BCD), so m(arc BCD) = 2 × 60°.",
+       "m(arc BCD) = 120°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:2",
+      "kind": "value",
+      "answer": "240",
+      "solution": [
+       "Arc BCD and arc BAD together make the whole circle, 360°.",
+       "m(arc BAD) = 360° - 120° = 240°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:3",
+      "kind": "value",
+      "answer": "120",
+      "solution": [
+       "∠BCD is inscribed in arc BAD.",
+       "m(∠BCD) = 1/2 × 240° = 120°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:4",
+      "kind": "value",
+      "answer": "100",
+      "solution": [
+       "∠B and ∠D are opposite angles of the cyclic quadrilateral, so they are supplementary.",
+       "m(∠D) = 180° - 80° = 100°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The sum of two opposite angles in a cyclic quadrilateral is 180°, so they are supplementary.",
+      "solution": [
+       "From the examples: 60° + 120° = 180° and 80° + 100° = 180°.",
+       "So each two opposite angles add up to 180°.",
+       "This is Theorem 3."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-1:1",
+      "kind": "value",
+      "answer": "x = 33, y = 15/4",
+      "solution": [
+       "∠B and ∠D are opposite angles, so they are supplementary.",
+       "(2x + 7) + 107 = 180",
+       "2x = 66, so x = 33.",
+       "Then m(∠C) = 5 × 33 = 165°.",
+       "∠A and ∠C are opposite, so 4y + 165 = 180.",
+       "4y = 15, so y = 15/4 (= 3.75).",
+       "x = 33, y = 15/4."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-1:2",
+      "kind": "value",
+      "answer": "x = 50, y = 40",
+      "solution": [
+       "∠B and ∠D are opposite angles, so (x + 15) + 115 = 180.",
+       "x = 50.",
+       "Then m(∠A) = 2x = 100°.",
+       "∠A and ∠C are opposite, so 100 + 2y = 180.",
+       "2y = 80, so y = 40.",
+       "x = 50, y = 40."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-1:3",
+      "kind": "value",
+      "answer": "x = 55, y = 55",
+      "solution": [
+       "CB is a diameter, so ∠CAB = 90° and ∠CDB = 90°.",
+       "The quadrilateral with vertices C, D, A, B is cyclic.",
+       "∠DCB and ∠DAB are opposite angles, so 70 + 2x = 180.",
+       "2x = 110, so x = 55.",
+       "DA = AB, so ∠ADB = ∠ABD = (180 - 110)/2 = 35°.",
+       "∠CDA = 90° + 35° = 125°.",
+       "∠CDA and ∠ABC are opposite angles, so y = 180° - 125° = 55°.",
+       "x = 55, y = 55."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1",
+       "pp3u10-5:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-2:A",
+      "kind": "value",
+      "answer": "40°",
+      "solution": [
+       "ABCD is cyclic, so ∠A and ∠C are opposite and supplementary.",
+       "m(∠DAB) = 180° - 70° = 110°.",
+       "In △ABD: m(∠ABD) = 180° - 110° - 30° = 40°.",
+       "m(∠ABD) = 40°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-2:B",
+      "kind": "value",
+      "answer": "60°",
+      "solution": [
+       "The central angle at M facing arc DCB is 2x°.",
+       "∠A is inscribed in arc DCB, so m(∠A) = 1/2 × 2x° = x°.",
+       "∠C = 2x°, and ∠A and ∠C are opposite angles of the cyclic quadrilateral.",
+       "x + 2x = 180, so x = 60.",
+       "m(∠A) = 60°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-2:C",
+      "kind": "value",
+      "answer": "m(∠A) = 80°, m(∠B) = 40°, m(∠C) = 100°, m(∠D) = 140°",
+      "solution": [
+       "m(∠A) = 80° (given).",
+       "∠A and ∠C are opposite, so m(∠C) = 180° - 80° = 100°.",
+       "AB is a diameter, so m(∠ADB) = 90°.",
+       "In △ABD: m(∠ABD) = 90° - 80° = 10°.",
+       "The 60° is the measure of arc CD, so the inscribed ∠CBD = 1/2 × 60° = 30°.",
+       "m(∠B) = 30° + 10° = 40°.",
+       "∠B and ∠D are opposite, so m(∠D) = 180° - 40° = 140°.",
+       "Angles: A = 80°, B = 40°, C = 100°, D = 140°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1",
+       "pp3u10-5:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-2:D",
+      "kind": "value",
+      "answer": "m(∠A) = 95°, m(∠B) = 152°, m(∠C) = 85°, m(∠D) = 28°",
+      "solution": [
+       "Reading the figure, ∠A = 95° and ∠ADC = 28° (the figure is hard to read, so verify against the book).",
+       "∠A and ∠C are opposite, so m(∠C) = 180° - 95° = 85°.",
+       "∠B and ∠D are opposite, so m(∠B) = 180° - 28° = 152°.",
+       "Angles: A = 95°, B = 152°, C = 85°, D = 28°."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-3:1",
+      "kind": "value",
+      "answer": "x = 75, y = 80",
+      "solution": [
+       "The exterior angle at C is equal to the interior angle at the opposite vertex A.",
+       "x = m(∠A) = 75.",
+       "The exterior angle at B is equal to the interior angle at the opposite vertex D.",
+       "y = m(∠D) = 80.",
+       "x = 75, y = 80."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-3:2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the markings in figure 2 (which angle is 156°, which chords are equal) cannot be read reliably from the page.",
+      "solution": [
+       "The rays at C and the tick marks are unclear in the figure.",
+       "Without knowing which angle each mark belongs to, x and y cannot be found."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-3:3",
+      "kind": "value",
+      "answer": "x = 60, y = 115",
+      "solution": [
+       "∠A and ∠C are opposite angles of the cyclic quadrilateral.",
+       "x = 180° - 120° = 60.",
+       "∠B and ∠D are opposite angles, with ∠B = 65°.",
+       "y = 180° - 65° = 115.",
+       "x = 60, y = 115."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-4",
+      "kind": "explanation",
+      "answer": "In each figure two opposite angles add up to 180°, so ABCD is cyclic.",
+      "solution": [
+       "Figure 1: m(∠A) + m(∠C) = 97° + 83° = 180°, so ABCD is cyclic.",
+       "Figure 2: m(∠B) = 180° - 50° - 35° = 95° (angles of △ABC).",
+       "m(∠B) + m(∠D) = 95° + 85° = 180°, so ABCD is cyclic.",
+       "Figure 3: DC = DA, so m(∠DAC) = m(∠DCA) = 40°.",
+       "m(∠D) = 180° - 80° = 100°.",
+       "m(∠B) + m(∠D) = 80° + 100° = 180°, so ABCD is cyclic."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-5",
+      "kind": "explanation",
+      "answer": "∠B + ∠D = 95° + 85° = 180°, so ABCD is cyclic.",
+      "solution": [
+       "In △ABC: m(∠B) = 180° - 50° - 35° = 95°.",
+       "m(∠D) = 85° (given).",
+       "m(∠B) + m(∠D) = 180°.",
+       "Two opposite angles are supplementary, so ABCD is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-6",
+      "kind": "explanation",
+      "answer": "∠B + ∠D = 80° + 100° = 180°, so ABCD is cyclic.",
+      "solution": [
+       "DC = DA, so △DCA is isosceles.",
+       "m(∠DAC) = m(∠DCA) = 40°.",
+       "m(∠D) = 180° - 40° - 40° = 100°.",
+       "m(∠B) = 80° (given).",
+       "m(∠B) + m(∠D) = 180°, so ABCD is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-7",
+      "kind": "explanation",
+      "answer": "In each figure the exterior angle equals the interior angle at the opposite vertex, so ABCD is cyclic.",
+      "solution": [
+       "Figure 1: m(∠DAB) = 180° - 86° = 94°.",
+       "The exterior angle at C is 94°, which equals the interior angle at the opposite vertex A, so ABCD is cyclic.",
+       "Figure 2: DA = AB, so m(∠ADB) = m(∠ABD) = 30°.",
+       "m(∠A) = 180° - 60° = 120°.",
+       "The exterior angle at C is 120°, which equals the interior angle at the opposite vertex A, so ABCD is cyclic.",
+       "Figure 3: CF bisects the angle, so m(∠ECF) = m(∠FCD) = 53°.",
+       "The exterior angle at C is 53° + 53° = 106°.",
+       "DA ∥ CB, so m(∠A) = 180° - 74° = 106°.",
+       "The exterior angle at C equals the interior angle at A, so ABCD is cyclic."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-8",
+      "kind": "explanation",
+      "answer": "The exterior angle at C (120°) equals the interior angle A (120°), so ABCD is cyclic.",
+      "solution": [
+       "DA = AB, so m(∠ADB) = m(∠ABD) = 30°.",
+       "m(∠A) = 180° - 30° - 30° = 120°.",
+       "The exterior angle at C is 120°.",
+       "It equals the interior angle at the opposite vertex A.",
+       "So ABCD is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-9",
+      "kind": "explanation",
+      "answer": "The exterior angle at C (106°) equals the interior angle A (106°), so ABCD is cyclic.",
+      "solution": [
+       "The marks show ∠ECF = ∠FCD = 53°.",
+       "The exterior angle at C is 53° + 53° = 106°.",
+       "DA ∥ CB, so ∠A and ∠B are supplementary.",
+       "m(∠A) = 180° - 74° = 106°.",
+       "The exterior angle at C equals the interior angle at the opposite vertex A.",
+       "So ABCD is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-10:prove",
+      "kind": "explanation",
+      "answer": "The third altitude BF also passes through X, the meeting point of the other two, so the three perpendiculars meet at one point.",
+      "solution": [
+       "Let AE and CD meet at X.",
+       "In BDXE: m(∠BDX) = m(∠BEX) = 90°, so their sum is 180°.",
+       "So BDXE is a cyclic quadrilateral (converse of theorem 3).",
+       "D and E both see AC at 90°, so ADEC is cyclic.",
+       "In BDXE, ∠XBE and ∠XDE are inscribed on arc XE, so they are equal.",
+       "In ADEC, ∠EDC and ∠EAC are inscribed on arc EC, so they are equal.",
+       "So m(∠XBE) = m(∠EAC).",
+       "In △AEC: m(∠EAC) + m(∠ECA) = 90°.",
+       "Let BX meet AC at F. Then m(∠FBC) + m(∠FCB) = 90°.",
+       "So m(∠BFC) = 90°, and BF ⊥ AC.",
+       "BF is the third perpendicular and passes through X.",
+       "So the three perpendiculars meet at one point."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3",
+       "pp3u10-5:rule-1",
+       "pp3u10-5:example-3"
+      ]
+     },
+     {
+      "ref": "pp3u10-5:drill-10:cyclic quadrilaterals",
+      "kind": "value",
+      "answer": "6: AFXD, CFXE, BDXE, ADEC, AFEB, BDFC",
+      "solution": [
+       "The three altitudes make right angles at D, E and F.",
+       "Two opposite right angles give 90° + 90° = 180°.",
+       "So AFXD, CFXE and BDXE are cyclic.",
+       "D and E see AC at 90°, so ADEC is cyclic.",
+       "F and E see AB at 90°, so AFEB is cyclic.",
+       "D and F see BC at 90°, so BDFC is cyclic.",
+       "The number of cyclic quadrilaterals is 6."
+      ],
+      "grounded_in": [
+       "pp3u10-5:rule-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:1",
+      "kind": "value",
+      "answer": "120"
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:2",
+      "kind": "value",
+      "answer": "240 (arc BAD = 360° - 120° = 240°)"
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:3",
+      "kind": "value",
+      "answer": "120"
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-1:4",
+      "kind": "value",
+      "answer": "100"
+     },
+     {
+      "ref": "pp3u10-5:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "The sum of two opposite angles of a cyclic quadrilateral is always 180° (they are supplementary)."
+     },
+     {
+      "ref": "pp3u10-5:drill-1:1",
+      "kind": "value",
+      "answer": "x = 33, y = 15/4"
+     },
+     {
+      "ref": "pp3u10-5:drill-1:2",
+      "kind": "value",
+      "answer": "x = 50, y = 40"
+     },
+     {
+      "ref": "pp3u10-5:drill-1:3",
+      "kind": "value",
+      "answer": "x = 55, y = 55"
+     },
+     {
+      "ref": "pp3u10-5:drill-2:A",
+      "kind": "value",
+      "answer": "40°"
+     },
+     {
+      "ref": "pp3u10-5:drill-2:B",
+      "kind": "value",
+      "answer": "60°"
+     },
+     {
+      "ref": "pp3u10-5:drill-2:C",
+      "kind": "value",
+      "answer": "m(∠A) = 80°, m(∠B) = 40°, m(∠C) = 100°, m(∠D) = 140°"
+     },
+     {
+      "ref": "pp3u10-5:drill-2:D",
+      "kind": "value",
+      "answer": "m(∠A) = 95°, m(∠B) = 152°, m(∠C) = 85°, m(∠D) = 28°"
+     },
+     {
+      "ref": "pp3u10-5:drill-3:1",
+      "kind": "value",
+      "answer": "x = 75, y = 80"
+     },
+     {
+      "ref": "pp3u10-5:drill-3:2",
+      "kind": "value",
+      "answer": "x = 120, y = 60"
+     },
+     {
+      "ref": "pp3u10-5:drill-3:3",
+      "kind": "value",
+      "answer": "x = 60, y = 115"
+     },
+     {
+      "ref": "pp3u10-5:drill-4",
+      "kind": "explanation",
+      "answer": "1) m(∠A)+m(∠C) = 97°+83° = 180°, opposite angles supplementary, so ABCD is cyclic. 2) In triangle ABC (or via ∠D = 85° and ∠B = 180°-50°-35° = 95°): m(∠D)+m(∠B) = 85°+95° = 180°, so ABCD is cyclic. 3) CD = DA... with the equal sides and angles (40° at C, 80° at B) the opposite angles B and D sum to 180° (∠D = 100°), so ABCD is cyclic."
+     },
+     {
+      "ref": "pp3u10-5:drill-5",
+      "kind": "explanation",
+      "answer": "m(∠D) = 85° and m(∠B) = 180° - (50° + 35°) = 95°, so m(∠B) + m(∠D) = 180°; opposite angles are supplementary, so ABCD is a cyclic quadrilateral (converse of theorem 3)."
+     },
+     {
+      "ref": "pp3u10-5:drill-6",
+      "kind": "explanation",
+      "answer": "From the equal sides and the given 40° and 80° angles, m(∠D) = 100° (isosceles triangle with base angles 40°), and m(∠B) = 80°, so m(∠B) + m(∠D) = 180°; hence ABCD is a cyclic quadrilateral (converse of theorem 3)."
+     },
+     {
+      "ref": "pp3u10-5:drill-7",
+      "kind": "explanation",
+      "answer": "1) Exterior angle at A = 86° so interior ∠A = 94° = exterior angle at C (94°) ... the exterior angle at A (86°) equals interior ∠C (180°-94° = 86°), so the figure is cyclic (corollary converse). 2) Exterior angle at C = 120° equals the interior opposite angle at A (found from the isosceles triangle with 30°: 120°), so it is cyclic. 3) DA ∥ CB, so ∠ADC... with exterior angle at C (53°+53° = 106°) equal to interior opposite angle at A (180°-74° = 106°), so it is cyclic."
+     },
+     {
+      "ref": "pp3u10-5:drill-8",
+      "kind": "explanation",
+      "answer": "Exterior angle at C = 120° equals the interior angle at the opposite vertex A (which is 120°, from the equal sides and the 30° angle), so ABCD is a cyclic quadrilateral (corollary converse)."
+     },
+     {
+      "ref": "pp3u10-5:drill-9",
+      "kind": "explanation",
+      "answer": "Since DA ∥ CB, ∠A = 180° - 74° = 106°. The exterior angle at C is 53° + 53° = 106° (CF bisects it) and equals the interior opposite angle A, so ABCD is a cyclic quadrilateral (corollary converse)."
+     },
+     {
+      "ref": "pp3u10-5:drill-10:prove",
+      "kind": "explanation",
+      "answer": "Let BF ⟂ AC and AE ⟂ BC meet at X. Since ∠XFC... ∠AEB = ∠AFB = 90°, so A, F, E, B lie on a circle with diameter AB; hence ∠FBE... With CD ⟂ AB similarly, quadrilaterals BDXE and ADXF are cyclic (opposite right angles), giving angle equalities that show CD passes through X, i.e. the three altitudes are concurrent at X."
+     },
+     {
+      "ref": "pp3u10-5:drill-10:cyclic quadrilaterals",
+      "kind": "explanation",
+      "answer": "There are 3 cyclic quadrilaterals (those with two opposite right angles): AFXD... more precisely AFXD, BDXE and CEXF (with the 90° angles at the feet of the altitudes), and also ABEF, BCFD, ACED (on diameters AB, BC, AC) if counted: 6 in total."
+     }
+    ]
+   }
+  }
+ ]
+}

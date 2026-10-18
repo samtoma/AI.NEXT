@@ -1,0 +1,120 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u5-3",
+  "source": "book-records/prep3-parallel/pp3u5-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 4,
+      "cost_usd": 0.1696,
+      "calls": [
+        {
+          "call": "check-printed.pp3u5-3",
+          "cost_usd": 0.0235,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u5-3",
+          "cost_usd": 0.1461,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u5-3:example-1",
+      "record_id": "pp3u5-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 66,
+      "printed": "$1.494534405$",
+      "blind": "1.4945",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "4037120481c95847fd6f24f8a4097677",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-3:example-1",
+        "verdict": "equivalent",
+        "reason": "1.4945 is the printed 1.494534405 rounded to 4 decimals."
+      },
+      "how": "judged equivalent: 1.4945 is the printed 1.494534405 rounded to 4 decimals.",
+      "made": {
+        "at": "2026-10-18T06:50:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-3:example-2",
+      "record_id": "pp3u5-3:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 66,
+      "printed": "$56^\\circ 4' 13''$",
+      "blind": "56° 4' 14''",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "d612f69f0bc54a8e8b6914edace1a82d",
+      "status": "disagreed",
+      "judge": {
+        "ref": "pp3u5-3:example-2",
+        "verdict": "different",
+        "reason": "Seconds differ: 13'' printed vs 14'' from solver."
+      },
+      "made": {
+        "at": "2026-10-18T06:50:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-3:example-3",
+      "record_id": "pp3u5-3:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 67,
+      "printed": "The two straight lines are parallel",
+      "blind": "Slope through (-3,-2),(4,5) is 7/7 = 1; the other slope is tan 45° = 1. The slopes are equal, so the lines are parallel.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "7ae04e54cb57975446485ef208730ee8",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-3:example-3",
+        "verdict": "equivalent",
+        "reason": "Both conclude the lines are parallel; solver shows slopes both equal 1."
+      },
+      "how": "judged equivalent: Both conclude the lines are parallel; solver shows slopes both equal 1.",
+      "made": {
+        "at": "2026-10-18T06:50:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-3:example-6",
+      "record_id": "pp3u5-3:example-6",
+      "part": null,
+      "type": "worked_example",
+      "page": 69,
+      "printed": "$A = -1$",
+      "blind": "A = -1",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "7167343f3c79a4ca67eecd4050593f9e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

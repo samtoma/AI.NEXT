@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-4-2:equalang",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-4-2",
+ "parent_question_id": "q:pp3u10-4-2:none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    20
+   ]
+  },
+  {
+   "name": "r",
+   "let": "p - 1"
+  },
+  {
+   "name": "s",
+   "let": "x + q"
+  }
+ ],
+ "stem": "$ABCD$ is a cyclic quadrilateral, and $B$ and $C$ lie on the same side of $AD$. Given that $m(\\angle ABD) = ({=p}x + {=q})^\\circ$ and $m(\\angle ACD) = ({=r}x + {=s})^\\circ$, find the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "$ABCD$ is cyclic, so the angles $\\angle ABD$ and $\\angle ACD$ drawn on the same base $AD$ and on the same side of it are equal.",
+  "${=p}x + {=q} = {=r}x + {=s}$.",
+  "$x = {=s} - {=q} = {=x}$."
+ ],
+ "notes": "Placeholder parent_question_id: none supplied. Text-only."
+}

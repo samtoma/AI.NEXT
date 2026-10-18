@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-1:major-arc",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-1",
+ "parent_question_id": "q:pp3u10-1-1:bk-drill-2-4",
+ "source_page": 66,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "s",
+   "let": "a + b"
+  },
+  {
+   "name": "x",
+   "randint": [
+    "ceil(140/s)",
+    "floor(179/s)"
+   ]
+  },
+  {
+   "name": "c",
+   "let": "180 - s * x"
+  },
+  {
+   "require": "c >= 1 and c <= 40",
+   "why": "clean constant"
+  }
+ ],
+ "stem": "$AB$ is a diameter of the circle $M$. The points $D$ and $C$ lie on the circle on opposite sides of $AB$, with $m(\\angle AMD)=({=a}x)^\\circ$, $m(\\angle DMB)=({=b}x+{=c})^\\circ$ and $m(\\angle AMC)=({=k}x)^\\circ$. Find $m(\\overset{\\frown}{DBC})$, the arc from $D$ to $C$ that passes through $B$, in degrees.",
+ "answer": "360 - (a + k) * x",
+ "solution": [
+  "$\\angle AMD$ and $\\angle DMB$ lie on a straight angle: ${=a}x + ({=b}x + {=c}) = 180$, so ${=s}x = {=180 - c}$ and $x = {=x}$.",
+  "$m(\\overset{\\frown}{AD}) = {=a*x}^\\circ$ and $m(\\overset{\\frown}{AC}) = m(\\angle AMC) = {=k} \\times {=x} = {=k*x}^\\circ$.",
+  "Arc $DAC$ is made of the adjacent arcs $AD$ and $AC$: ${=a*x} + {=k*x} = {=(a+k)*x}^\\circ$.",
+  "The whole circle is $360^\\circ$, so $m(\\overset{\\frown}{DBC}) = 360 - {=(a+k)*x} = {=360-(a+k)*x}^\\circ$."
+ ],
+ "notes": "Extends book figure 7 (C and D on opposite sides of diameter AB). Check: arc DBC = DB + BC = (bx+c) + (180-kx) = 360-(a+k)x."
+}

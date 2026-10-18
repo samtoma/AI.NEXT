@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-4:calc-inverse",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-4",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "f",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "angs",
+   "let": "[20, 30, 40, 50, 60, 70]"
+  },
+  {
+   "name": "T",
+   "let": "[[0.3420, 0.5, 0.6428, 0.7660, 0.8660, 0.9397], [0.9397, 0.8660, 0.7660, 0.6428, 0.5, 0.3420], [0.3640, 0.5774, 0.8391, 1.1918, 1.7321, 2.7475]]"
+  },
+  {
+   "name": "names",
+   "let": "[\"sin\", \"cos\", \"tan\"]"
+  },
+  {
+   "name": "nm",
+   "let": "names[f]"
+  },
+  {
+   "name": "r",
+   "let": "T[f][i]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Use a calculator to find the acute angle $\\theta$, to the nearest degree, if ${=nm} \\theta = {=r}$.",
+ "answer": "angs[i]",
+ "solution": [
+  "Use the inverse function on the calculator: $\\theta = {=nm}^{-1}({=r})$.",
+  "Reading the display and rounding to the nearest degree gives $\\theta = {=angs[i]}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied, so parent_question_id is a placeholder. Ratios are 4 d.p. values of exact whole-degree angles, so the calculator answer is unambiguous."
+}

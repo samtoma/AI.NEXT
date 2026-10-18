@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "1f6fda12e486b15198a45736a48b7fe4734a803660fc976cc1356f50f3fd1075",
+  "generated_sha256": "5fba8bd1febe4ecbda1517d2961b18232a55c2e31e2fc946a80c9b634f44b0e8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u4-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u4-1:example-1:A",
+      "kind": "value",
+      "answer": "AC = 5 cm"
+     },
+     {
+      "ref": "pp3u4-1:example-1:B",
+      "kind": "value",
+      "answer": "sin A = 12/13, cos A = 5/13, tan A = 12/5, sin B = 5/13, cos B = 12/13, tan B = 5/12"
+     },
+     {
+      "ref": "pp3u4-1:example-1:C",
+      "kind": "explanation",
+      "answer": "sin A cos B + cos A sin B = (12/13)(12/13) + (5/13)(5/13) = 144/169 + 25/169 = 169/169 = 1."
+     },
+     {
+      "ref": "pp3u4-1:example-1:D",
+      "kind": "value",
+      "answer": "169/25"
+     }
+    ]
+   }
+  }
+ ]
+}

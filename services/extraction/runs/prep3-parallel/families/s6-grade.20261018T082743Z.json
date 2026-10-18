@@ -1,0 +1,159 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "f5bb1001a7658cd74ec3a6a1c30b26bc30a46e88cfb0133f1b937315d7f2702b",
+  "generated_sha256": "0555290aad9eac1a04b812bd927e54775a34b4b39a77974cee671ddca60e5f50",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u8-1-3:advanced-multiples",
+   "spec_sha": "ee7bd4d4818d3055e7c912f808d079af800ef1e89b7eaf40f3ac882b576119ef",
+   "answers": [
+    {
+     "instance_id": "q:pp3u8-1-3:g003-advanc",
+     "stem_sha": "ca8e1cfc47e5255c",
+     "answer": {
+      "plain": "1/3"
+     },
+     "working": "n(A)=12, n(B)=10, n(A∩B)=multiples of 30=2; union=20; 20/60=1/3"
+    },
+    {
+     "instance_id": "q:pp3u8-1-3:g004-advanc",
+     "stem_sha": "6ccfc841eaaa0990",
+     "answer": {
+      "plain": "2/3"
+     },
+     "working": "n(A)=18, n(B)=12, n(A∩B)=multiples of 6=6; union=24; 24/36=2/3"
+    },
+    {
+     "instance_id": "q:pp3u8-1-3:g009-advanc",
+     "stem_sha": "c51a390aa7fe6248",
+     "answer": {
+      "plain": "2/3"
+     },
+     "working": "n(A)=30, n(B)=20, n(A∩B)=10; union=40; 40/60=2/3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked the arithmetic for all three instances and each key is correct. g003 gives 20/60 = 1/3. g004 gives 24/36 = 2/3. g009 gives 40/60 = 2/3. Every key is fully simplified, and each solution applies P(A)+P(B)−P(A∩B) correctly, using the LCM for the intersection. No options were provided, so there were no distractors to check."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u8-1-3:basic-formula",
+   "spec_sha": "586dde9fc053c9b14a1ef3a93b855a52a89809cfbd176bdc32c74268bfce58f5",
+   "answers": [
+    {
+     "instance_id": "q:pp3u8-1-3:g003-basic-",
+     "stem_sha": "d8c682cd18ab2259",
+     "answer": {
+      "plain": "9/11"
+     },
+     "working": "P(A∪B)=4/11+7/11-2/11=9/11"
+    },
+    {
+     "instance_id": "q:pp3u8-1-3:g007-basic-",
+     "stem_sha": "83a04c52f8731b99",
+     "answer": {
+      "plain": "11/18"
+     },
+     "working": "7/18+5/18-1/18=11/18"
+    },
+    {
+     "instance_id": "q:pp3u8-1-3:g010-basic-",
+     "stem_sha": "662295672a0cfe79",
+     "answer": {
+      "plain": "9/10"
+     },
+     "working": "5/10+5/10-1/10=9/10"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family has no options, so distractors_ok is true. All three keys check out. 4/11+7/11−2/11 = 9/11. 7/18+5/18−1/18 = 11/18. 5/10+5/10−1/10 = 9/10. Each key matches its answer_check, and none reduces further, so the \"simplest\" form holds. The intersection never exceeds either single probability, and every union is at most 1, so the numbers are valid. The solutions apply the addition formula correctly. Minor point: g010 gives 5/10 unreduced in the stem, which is slightly unnatural but not wrong."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u8-2-1:find-event-size",
+   "spec_sha": "f7e66e3c0650155fb3e4383a9a0621090257d225988ca4a8df784e10be3e4457",
+   "answers": [
+    {
+     "instance_id": "q:pp3u8-2-1:g001-find-e",
+     "stem_sha": "c122a030e6bf46e4",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u8-2-1:g002-find-e",
+     "stem_sha": "c3cd4a264f4425ff",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u8-2-1:g003-find-e",
+     "stem_sha": "f87e01a31734ea5d",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were provided, so there are no distractors to judge. In all three instances the key is correct (8, 4 and 12) and is a count, as the stem asks. Each worked solution applies the complement rule, then multiplies P(A) by n(S).",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u8-2-1:multiples-comp",
+   "spec_sha": "cf4868a56fe72388b2d6f4b48386617472adb3ccdb66e41f29e69b3a235ec852",
+   "answers": [
+    {
+     "instance_id": "q:pp3u8-2-1:g001-multip",
+     "stem_sha": "4b71c4f0d7733291",
+     "answer": {
+      "value": "0.80"
+     },
+     "working": "Multiples of 5 up to 50: 10. P(A)=10/50=0.2, P(A')=0.8"
+    },
+    {
+     "instance_id": "q:pp3u8-2-1:g005-multip",
+     "stem_sha": "95cf2d3600e7941b",
+     "answer": {
+      "value": "0.50"
+     },
+     "working": "Multiples of 2: 25. P(A)=0.5, P(A')=0.5"
+    },
+    {
+     "instance_id": "q:pp3u8-2-1:g007-multip",
+     "stem_sha": "2bc2b81ac93ea198",
+     "answer": {
+      "value": "0.90"
+     },
+     "working": "Multiples of 10: 5. P(A)=0.1, P(A')=0.9"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances check out: n(A)=10, 25 and 5, giving P(A')=0.80, 0.50 and 0.90. Each key is a 2-decimal-place decimal, as the stem asks. The family has no options, so there are no distractors to judge. The solutions use the complement method step by step.",
+    "distractors": []
+   }
+  }
+ ]
+}

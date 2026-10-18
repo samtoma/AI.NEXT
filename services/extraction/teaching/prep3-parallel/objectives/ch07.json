@@ -1,0 +1,618 @@
+{
+ "format": "ainext.s1-result/1",
+ "book": "prep3-parallel",
+ "chapter": 7,
+ "module": "module:pp3u7",
+ "run": "runs/prep3-parallel/objectives/s1-ch07.20261017T093144Z.json",
+ "prompts_version": "s1-v5",
+ "status": "awaiting_g1",
+ "lessons": [
+  {
+   "slug": "pp3u7-1",
+   "objectives": [
+    {
+     "id": "lo:pp3u7-1-1",
+     "n": 1,
+     "label": "Define set of zeroes",
+     "statement": "Evaluate a polynomial function at given values of x and state the set of zeroes Z(f) as the values of x for which f(x)=0.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-1:definition-2",
+       "printed_page": 15,
+       "quote": "is called the set of zeroes of the function f",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-1:think-and-discuss-1",
+       "printed_page": 15,
+       "quote": "calculate: $f(0)$, $f(1)$, and $f(2)$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-1:think-and-discuss-1"
+     ],
+     "worked_examples": [],
+     "confidence": "single",
+     "terms": [
+      "polynomial function",
+      "set of zeroes",
+      "zero"
+     ],
+     "failures": [],
+     "fingerprint": "78ed5bc0c2cef271dba3a28097c74c60"
+    },
+    {
+     "id": "lo:pp3u7-1-2",
+     "n": 2,
+     "label": "Find set of zeroes",
+     "statement": "Find the set of zeroes Z(f) of a polynomial function by putting f(x) = 0 and solving the resulting equation for x, including cases with no zeroes.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-1:method-1",
+       "printed_page": 15,
+       "quote": "put f(x) = 0 and solve the resulting equation",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE1",
+       "anchor": "pp3u7-1:example-1",
+       "printed_page": 15,
+       "quote": "put x^6 - 32x = 0",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-1:drill-1:a",
+       "printed_page": 16,
+       "quote": "Find the set of zeroes of the following functions",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-1:drill-1:a",
+      "pp3u7-1:drill-1:b",
+      "pp3u7-1:drill-1:c",
+      "pp3u7-1:drill-1:d",
+      "pp3u7-1:drill-1:e",
+      "pp3u7-1:drill-1:f"
+     ],
+     "worked_examples": [
+      "pp3u7-1:example-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "polynomial function",
+      "set of zeroes",
+      "equation"
+     ],
+     "failures": [],
+     "fingerprint": "0ab8b8e081e27805a5193eb9c110e598"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-2",
+   "objectives": [
+    {
+     "id": "lo:pp3u7-2-1",
+     "n": 1,
+     "label": "Domain of algebraic fraction",
+     "statement": "Determine the domain of an algebraic fractional function as R minus the set of zeroes of the denominator, and evaluate the function at given values.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-2:rule-3",
+       "printed_page": 17,
+       "quote": "the domain of an algebraic fractional function = R - the set of zeroes of the denominator",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-2:drill-1:d",
+       "printed_page": 18,
+       "quote": "$n(x)=\\frac{x^2+9}{x^2-16}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-2:drill-2",
+       "printed_page": 18,
+       "quote": "is $R-\\{3\\}$ then find the value of a",
+       "contained": true,
+       "present": true,
+       "supports": false,
+       "dropped": "the evidence check says it does not support the objective: Exercise involves domain concepts but asks only to find parameter 'a' given the domain form. It does not ask the student to evaluate the function at given values, which is part of the objective's requirement."
+      }
+     ],
+     "exercise_items": [
+      "pp3u7-2:think-and-discuss-1",
+      "pp3u7-2:think-and-discuss-2",
+      "pp3u7-2:drill-1:a",
+      "pp3u7-2:drill-1:b",
+      "pp3u7-2:drill-1:c",
+      "pp3u7-2:drill-1:d",
+      "pp3u7-2:drill-1:e",
+      "pp3u7-2:drill-1:f",
+      "pp3u7-2:drill-2"
+     ],
+     "worked_examples": [],
+     "confidence": "agreed",
+     "terms": [
+      "algebraic fractional function",
+      "domain",
+      "zeroes of the denominator",
+      "denominator"
+     ],
+     "failures": [],
+     "fingerprint": "b8968905429b3a5732b96e4092e75e43"
+    },
+    {
+     "id": "lo:pp3u7-2-2",
+     "n": 2,
+     "label": "Common domain of fractions",
+     "statement": "Calculate the common domain of two or more algebraic fractions as R minus the union of the zeroes of their denominators.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-2:rule-4",
+       "printed_page": 18,
+       "quote": "$R-(X_1\\cup X_2)$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE2",
+       "anchor": "pp3u7-2:example-1",
+       "printed_page": 18,
+       "quote": "$R-\\{-2,1,2\\}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-2:exercise-3:n3",
+       "printed_page": 19,
+       "quote": "$n_3(x)=\\frac{x}{x^3-4x}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-2:drill-3",
+      "pp3u7-2:exercise-1:n1",
+      "pp3u7-2:exercise-1:n2",
+      "pp3u7-2:exercise-2:n1",
+      "pp3u7-2:exercise-2:n2",
+      "pp3u7-2:exercise-3:n1",
+      "pp3u7-2:exercise-3:n2",
+      "pp3u7-2:exercise-3:n3",
+      "pp3u7-2:exercise-4:n1",
+      "pp3u7-2:exercise-4:n2",
+      "pp3u7-2:exercise-4:n3"
+     ],
+     "worked_examples": [
+      "pp3u7-2:example-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "common domain",
+      "algebraic fractions",
+      "union",
+      "zeroes of the denominator"
+     ],
+     "failures": [],
+     "fingerprint": "7c7272e9ecc1d73585a824743ad63116"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-3",
+   "objectives": [
+    {
+     "id": "lo:pp3u7-3-1",
+     "n": 1,
+     "label": "Reducing algebraic fractions with domain",
+     "statement": "Reduce an algebraic fraction to its simplest form by factorizing numerator and denominator, and state its domain before cancelling common factors.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-3:method-1",
+       "printed_page": 20,
+       "quote": "factorize both the numerator and denominator perfectly",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE3",
+       "anchor": "pp3u7-3:example-1",
+       "printed_page": 21,
+       "quote": "reduce n(x) in the simplest form showing the domain of n",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-3:definition-1",
+       "printed_page": 20,
+       "quote": "Putting the algebraic fraction in the simplest form is called reducing the algebraic fraction.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "pp3u7-3:method-2",
+       "printed_page": 20,
+       "quote": "identify the domain of the algebraic fraction before removing the common factors",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-3:think-and-discuss-1",
+      "pp3u7-3:think-and-discuss-2",
+      "pp3u7-3:think-and-discuss-3",
+      "pp3u7-3:think-and-discuss-4",
+      "pp3u7-3:think-and-discuss-5",
+      "pp3u7-3:think-and-discuss-6",
+      "pp3u7-3:think-and-discuss-7",
+      "pp3u7-3:drill-1:1",
+      "pp3u7-3:drill-1:4"
+     ],
+     "worked_examples": [
+      "pp3u7-3:example-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "algebraic fraction",
+      "simplest form",
+      "numerator",
+      "denominator",
+      "domain",
+      "factorizing",
+      "common factor"
+     ],
+     "failures": [],
+     "fingerprint": "7fdf55357dc7b73c375630d6ffb6676c"
+    },
+    {
+     "id": "lo:pp3u7-3-2",
+     "n": 2,
+     "label": "Equality of two algebraic fractions",
+     "statement": "Determine whether two algebraic fractions are equal by comparing their domains and their simplest forms, and find the common domain when they are not equal.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-3:definition-3",
+       "printed_page": 22,
+       "quote": "the domain of n1 = the domain of n2",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE4",
+       "anchor": "pp3u7-3:example-2",
+       "printed_page": 22,
+       "quote": "since the domain of $n_1$ = the domain of $n_2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE5",
+       "anchor": "pp3u7-3:example-3",
+       "printed_page": 22,
+       "quote": "the domain of $n_1\\neq$ domain of $n_2$ so $n_1\\neq n_2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-3:think-and-discuss-8",
+       "printed_page": 21,
+       "quote": "Does $n_1=n_2$ in each case? Explain your answer.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-3:think-and-discuss-8",
+      "pp3u7-3:drill-1:2",
+      "pp3u7-3:drill-1:3",
+      "pp3u7-3:drill-1:5"
+     ],
+     "worked_examples": [
+      "pp3u7-3:example-2",
+      "pp3u7-3:example-3"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "algebraic fraction",
+      "equal",
+      "domain",
+      "common domain",
+      "simplest form"
+     ],
+     "failures": [],
+     "fingerprint": "c6426ecb0fa589b6b743e8dae406d16e"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-4",
+   "objectives": [
+    {
+     "id": "lo:pp3u7-4-1",
+     "n": 1,
+     "label": "Add and subtract algebraic fractions",
+     "statement": "Add and subtract algebraic fractions with common or different denominators, factorising denominators, using the L.C.M., giving the result in simplest form with its domain.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "pp3u7-4:heading-2",
+       "printed_page": 24,
+       "quote": "First : Adding and subtracting the algebraic fractions",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE7",
+       "anchor": "pp3u7-4:example-2",
+       "printed_page": 25,
+       "quote": "L.C.M. of denominators $=(x-3)(x-2)$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE6",
+       "anchor": "pp3u7-4:example-1",
+       "printed_page": 25,
+       "quote": "domain $n=\\mathbb{R}-\\{-2,0,2\\}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-4:drill-4",
+       "printed_page": 26,
+       "quote": "$n(x)=\\frac{x}{x-4}-\\frac{x+4}{x^2-16}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-4:think-and-discuss-1",
+      "pp3u7-4:think-and-discuss-2",
+      "pp3u7-4:drill-1",
+      "pp3u7-4:drill-2",
+      "pp3u7-4:drill-3",
+      "pp3u7-4:drill-4",
+      "pp3u7-4:drill-5",
+      "pp3u7-4:drill-6",
+      "pp3u7-4:drill-7",
+      "pp3u7-4:drill-8",
+      "pp3u7-4:drill-9",
+      "pp3u7-4:drill-10"
+     ],
+     "worked_examples": [
+      "pp3u7-4:example-1",
+      "pp3u7-4:example-2"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "algebraic fraction",
+      "denominator",
+      "factorising",
+      "L.C.M.",
+      "simplest form",
+      "domain"
+     ],
+     "failures": [],
+     "fingerprint": "921ae51ea2f003a3e883690285524b3a"
+    },
+    {
+     "id": "lo:pp3u7-4-2",
+     "n": 2,
+     "label": "Multiply and divide algebraic fractions",
+     "statement": "Multiply and divide algebraic fractions by factorising and cancelling, dividing by multiplying by the multiplicative inverse (reciprocal) of the second, giving the simplest form and the domain.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "pp3u7-4:heading-3",
+       "printed_page": 27,
+       "quote": "Multiplying and dividing the algebraic fractions",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "pp3u7-4:rule-5",
+       "printed_page": 27,
+       "quote": "domain $\\mathbb{R}-(Z(f_2)\\cup Z(f_4))$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "definition",
+       "anchor": "pp3u7-4:rule-6",
+       "printed_page": 27,
+       "quote": "multiplying the first by the reciprocal of the second",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE8",
+       "anchor": "pp3u7-4:example-4",
+       "printed_page": 27,
+       "quote": "$=\\frac{1}{3x+1}$ (The simplest form)",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE9",
+       "anchor": "pp3u7-4:example-5",
+       "printed_page": 28,
+       "quote": "domain of n = $\\mathbb{R}-\\{0,-\\frac{3}{2},\\frac{3}{2},-5,3\\}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "pp3u7-4:drill-13",
+       "printed_page": 28,
+       "quote": "$n(x)=\\frac{3x-15}{x+3}\\div\\frac{5x-25}{4x+12}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "pp3u7-4:think-and-discuss-3",
+      "pp3u7-4:drill-11",
+      "pp3u7-4:drill-12",
+      "pp3u7-4:drill-13",
+      "pp3u7-4:drill-14"
+     ],
+     "worked_examples": [
+      "pp3u7-4:example-4",
+      "pp3u7-4:example-5"
+     ],
+     "confidence": "merged",
+     "terms": [
+      "algebraic fraction",
+      "factorising",
+      "multiplicative inverse",
+      "reciprocal",
+      "simplest form",
+      "domain"
+     ],
+     "failures": [],
+     "fingerprint": "2e2032d7a8b1f9708268550ea0a44d30"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "src": "lo:pp3u7-1-2",
+   "dst": "lo:pp3u7-2-1",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "pp3u7-2:rule-3",
+     "printed_page": 17,
+     "quote": "the domain of an algebraic fractional function = R - the set of zeroes of the denominator"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "pp3u7-2:drill-1:e",
+     "printed_page": 18,
+     "quote": "Identify the domain of each of the following algebraic fractional function"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The rule uses 'the set of zeroes of the denominator', so finding the domain requires solving denominator = 0 (the zeroes method). The exercise x^2-x requires this step."
+   },
+   "key": "lo:pp3u7-1-2->lo:pp3u7-2-1",
+   "backward": false,
+   "fingerprint": "7d3c39729de9111ab06d238fe6bebd43"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "x->x",
+   "src": "x",
+   "dst": "x",
+   "why": "x",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Neither objective belongs to this book, and no text is shown to check."
+   }
+  }
+ ],
+ "decisions": [
+  {
+   "key": "single:lo:pp3u7-1-1",
+   "kind": "single",
+   "lesson": "pp3u7-1",
+   "objective": "lo:pp3u7-1-1",
+   "detail": "lo:pp3u7-1-1 'Evaluate a polynomial function at given values of x and state the set of zeroes Z(f) as the values of x for which f(x)=0.': only finder A found it"
+  },
+  {
+   "key": "term:r - set",
+   "kind": "terminology",
+   "lesson": "pp3u7-2",
+   "objective": "lo:pp3u7-2-1",
+   "detail": "R - set: Set difference notation R minus a set; some curricula write R \\ {…}."
+  },
+  {
+   "key": "term:factorising",
+   "kind": "terminology",
+   "lesson": "pp3u7-4",
+   "objective": "lo:pp3u7-4-1",
+   "detail": "factorising: this book never prints it"
+  }
+ ],
+ "failures": [],
+ "warnings": [
+  "pp3u7-1: objectives are not numbered in the order the book practises them (rule 6)",
+  "pp3u7-2: objectives are not numbered in the order the book practises them (rule 6)"
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "1aa598ddd5af1c141b49663aecfdda6625f33f630bb144f3228c815919fe6dba",
+  "generated_sha256": "3ee59a93522b6f465c6e979e952307af4e07283e4133ab58d15c3a0fda93b4dc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-2:figure-22",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Top edge includes the bottom of an instruction line of text ('of each figure and complete :'), which is not part of the figure. Other edges are fine and all six figures with captions are complete."
+   }
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-1-2:righttri",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-1-2",
+ "parent_question_id": "q:pp3u5-1-2:bk-example-1",
+ "source_page": 59,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "h",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "name": "l",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "require": "(k*(a*a+b*b)) % 2 == 0",
+   "why": "area must be a whole number"
+  }
+ ],
+ "constraints": [],
+ "stem": "The points are $A({=h}, {=l})$, $B({=h+a}, {=l+b})$ and $C({=h-k*b}, {=l+k*a})$. Use the distance rule to prove that triangle $ABC$ is right angled at $A$, then find its area in square units.",
+ "answer": "k*(a*a+b*b)//2",
+ "solution": [
+  "$AB=\\sqrt{({=a})^2+({=b})^2}=\\sqrt{{=a*a+b*b}}$, so $AB^2={=a*a+b*b}$.",
+  "$AC=\\sqrt{({=-k*b})^2+({=k*a})^2}=\\sqrt{{=k*k*(a*a+b*b)}}$, so $AC^2={=k*k*(a*a+b*b)}$.",
+  "$BC=\\sqrt{({=-k*b-a})^2+({=k*a-b})^2}$, so $BC^2={=(k*b+a)**2+(k*a-b)**2}$.",
+  "$AB^2+AC^2={=a*a+b*b}+{=k*k*(a*a+b*b)}={=(1+k*k)*(a*a+b*b)}=BC^2$.",
+  "By the converse of the Pythagorean theorem, triangle $ABC$ is right angled at $A$.",
+  "Area $=\\frac{1}{2}\\times AB\\times AC=\\frac{1}{2}\\times\\sqrt{{=a*a+b*b}}\\times\\sqrt{{=k*k*(a*a+b*b)}}={=k*(a*a+b*b)//2}$ square units."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Right angle at A by construction (AC is AB rotated 90 degrees and scaled by k). Evenness required so area is whole."
+}

@@ -1,0 +1,153 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "c1c0e22138a038658284d4913794410401b2e764c926ee66e032d952f03fbaa4",
+  "generated_sha256": "5dccd11f76b286d9bd66adff2c68a83c6e671338b1f37720cdf34f3b35d8cc4a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u3-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u3-2-1",
+   "entries": [
+    {
+     "id": "mc:pp3u3-2-1:equal-means-same-dispersion",
+     "lo_id": "lo:pp3u3-2-1",
+     "label": "Equal means, so equally spread",
+     "description": "The student finds that two sets have the same mean and concludes that their values are equally spread out, or that the sets are alike.",
+     "signal": "Says two sets with the same mean have the same dispersion, without finding either range.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found that both means are equal, and that part is right: both sets of wages have a mean of LE 200. The slip is in treating the mean as if it also told you how spread out the values are."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at the two sets of wages. Set A is $170, 180, 180, 230, 240$ and set B is $50, 180, 180, 190, 400$. Both add up to $1000$, so both have mean $200$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the values are not equally spread. Set A stays between $170$ and $240$, close to its mean. Set B runs from $50$ up to $400$, far on both sides of $200$. The mean is the same, yet B is clearly more scattered."
+      },
+      {
+       "step": 4,
+       "text_md": "The mean tells you where the centre of the values is. It says nothing about how far the values stretch around that centre. Sets with the same mean can have very different spreads."
+      },
+      {
+       "step": 5,
+       "text_md": "To compare dispersion, find the range of each set as greatest value $-$ smallest value. Compare the two ranges: the bigger range means the more divergent set."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:pp3u3-2-1:bk-think-and-discuss-1"
+      },
+      {
+       "type": "remark",
+       "ref": "pp3u3-2:rule-7"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked the arithmetic. Set A sums to 1000 and set B sums to 1000, so both means are 200, as in the book's worked example. The ranges are 70 and 350, and the refutation's description of the spreads (170–240 against 50–400) is correct. It speaks directly to the error of treating equal means as equal spread. Its closing step uses the book's range method, greatest minus smallest, and says the bigger range means the more divergent set. It uses no references the student can't see and teaches nothing beyond the book. The signal describes the error accurately."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only remark (pp3u3-2:linking-text-17) reads just 'Notice that :' with no content, so it supports no specific error. There are no caution boxes, no wrong options and no widget predicates for this objective, so I added no entries."
+    },
+    {
+     "kind": "evidence",
+     "text": "Possible errors, such as stopping at the variance $\\sqrt{}$-less value 10.8 or forgetting to square the deviations, are plausible but have no evidence in the material supplied. I did not write them up."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. No entries were added, and the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u3-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  }
+ ],
+ "totals": {
+  "objectives": 7,
+  "entries": 1,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 4,
+  "flags": 3
+ }
+}

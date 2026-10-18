@@ -1,0 +1,776 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "68027071ba689809062d9ed6ea6fc6162231e62634d8089febc4acd55bb9198a",
+  "generated_sha256": "84d353c508210599e50095a3ff2805f5bc5e72bf4d93923260522cb358a45e2f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u9-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-1-1:secant-radii",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-1-1",
+     "parent_question_id": "q:pp3u9-1-1:bk-exercise-5-c",
+     "source_page": 41,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        12,
+        40
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "M is the centre of a circle. D and E are two points on the circle, and the straight line ED is extended outside the circle to a point A, so that D lies between E and A. The length DA is equal to the radius MD, and the measure of angle $MAD$ is ${=p}^\\circ$. Find the measure of angle $AME$ in degrees.",
+     "answer": "180 - 3 * p",
+     "solution": [
+      "Since $DA = MD$, triangle $MDA$ is isosceles, so angle $AMD$ = angle $MAD$ = ${=p}^\\circ$.",
+      "The exterior angle at $D$ of triangle $MDA$ equals the sum of the two opposite angles, so angle $MDE$ = ${=p}$ + ${=p}$ = ${=2*p}^\\circ$.",
+      "$ME = MD$ (radii), so triangle $MED$ is isosceles and angle $MED$ = angle $MDE$ = ${=2*p}^\\circ$.",
+      "Angle $DME$ = 180 - ${=2*p}$ - ${=2*p}$ = ${=180-4*p}^\\circ$.",
+      "Since $D$ lies between $E$ and $A$, angle $AME$ = angle $AMD$ + angle $DME$ = ${=p}$ + ${=180-4*p}$ = ${=180-3*p}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Text-only version of book 5-c (figure not shown); asks for the whole angle AME. Check: angles of triangle MAE are p, 2p, 180-3p, sum 180. p in 12..40 keeps 4p<180."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u9-1-2 is empty. Each family needs a real parent_question_id and source_page from this objective, and I have no book question or canonical solution to model the method on. Inventing a parent would break provenance."
+    },
+    {
+     "tier": "standard",
+     "reason": "The book question list is empty, so there is no parent question, source page or typical-exercise model to base a standard family on."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The book question list is empty, so there is no parent question, source page or harder-exercise model to base an advanced family on."
+    }
+   ],
+   "notes": "I wrote no families. The objective has no book questions and no catalogued misconceptions, so there is nothing to cite as parent_question_id or to base the book's method on. Please supply the book's questions for this objective, and I can write the families then. One possible mcq family would ask which lines through a circle are axes of symmetry (any line through the centre), with distractors such as \"only diameters at 0° and 90°\" and \"only the radius\"."
+  },
+  {
+   "lo_id": "lo:pp3u9-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-1-3:half-chord",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-1-3",
+     "parent_question_id": "q:pp3u9-1-3:bk-drill-7-f",
+     "source_page": 43,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        3,
+        15
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "In circle $M$, $\\overline{AB}$ is a chord and $D$ is a point on $\\overline{AB}$ such that $\\overline{MD}\\perp\\overline{AB}$. If $AD = {=a}$ cm, find the length of $\\overline{AB}$ in cm.",
+     "answer": "2 * a",
+     "solution": [
+      "$M$ is the centre and $\\overline{MD}\\perp\\overline{AB}$, so $\\overline{MD}$ bisects the chord $\\overline{AB}$.",
+      "Hence $D$ is the midpoint of $\\overline{AB}$.",
+      "$AB = 2 \\times AD = 2 \\times {=a} = {=2*a}$ cm."
+     ],
+     "notes": "Basic: the perpendicular from the centre to a chord bisects it. Stated in words, no diagram needed."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-1:position",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-1",
+     "parent_question_id": "q:pp3u9-2-1:bk-drill-2-1",
+     "source_page": 47,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        4,
+        12
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "ma",
+       "let": "r - d if k == 0 else (r if k == 1 else r + d)"
+      },
+      {
+       "name": "opts",
+       "let": "['inside the circle', 'on the circle', 'outside the circle']"
+      }
+     ],
+     "constraints": [],
+     "stem": "M is the centre of a circle whose radius is $r = {=r}$ cm. A is a point with $MA = {=ma}$ cm. What is the position of A with respect to the circle?",
+     "solution": [
+      "Compare MA with the radius: $MA = {=ma}$ cm and $r = {=r}$ cm.",
+      "If MA < r the point is inside the circle; if MA = r it is on the circle; if MA > r it is outside the circle.",
+      "So A is {=opts[k]}."
+     ],
+     "choices": {
+      "correct": "{=opts[k]}",
+      "distractors": [
+       {
+        "text": "{=opts[(k+1)%3]}",
+        "misconception_id": null
+       },
+       {
+        "text": "{=opts[(k+2)%3]}",
+        "misconception_id": null
+       },
+       {
+        "text": "at the centre of the circle",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: compare MA with r. Options are shuffled by the engine presumably; stem numbers vary the instances."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-1:unknown-both",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-1",
+     "parent_question_id": "q:pp3u9-2-1:bk-drill-2-1",
+     "source_page": 47,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        3,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        "a - 1"
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "e",
+       "let": "(a - c) * x + b"
+      }
+     ],
+     "constraints": [],
+     "stem": "M is the centre of a circle of radius $r = {=c}x + {=e}$ cm. The point A lies on the circle and $MA = {=a}x + {=b}$ cm. Find the value of $x$.",
+     "answer": "x",
+     "solution": [
+      "A is on the circle, so MA = r.",
+      "${=a}x + {=b} = {=c}x + {=e}$.",
+      "Collect the x terms: ${=a-c}x = {=e-b}$.",
+      "$x = {=x}$.",
+      "Check: $MA = {=a*x+b}$ cm and $r = {=c*x+e}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: unknown on both sides, point on circle so MA = r. x integer by construction."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-2:tangent-chord-perimeter",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-2",
+     "parent_question_id": "q:pp3u9-2-2:bk-drill-4-f",
+     "source_page": 49,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        3,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "let": "5 * k"
+      },
+      {
+       "name": "t",
+       "let": "12 * k"
+      },
+      {
+       "name": "mb",
+       "let": "13 * k"
+      },
+      {
+       "name": "d",
+       "let": "s * k"
+      },
+      {
+       "name": "h",
+       "let": "(7 - s) * k"
+      }
+     ],
+     "constraints": [],
+     "stem": "$M$ is the centre of a circle of radius ${=r}$ cm. $\\overleftrightarrow{AB}$ is a tangent to the circle at $A$ and $AB = {=t}$ cm. $AC$ is a chord of the circle and $D$ is its midpoint, with $MD = {=d}$ cm. Find the perimeter of the figure $ABMD$ in cm.",
+     "answer": "t + mb + d + h",
+     "solution": [
+      "$MA$ is a radius, $MA = {=r}$ cm, and $\\overleftrightarrow{AB}$ is a tangent, so $MA \\perp AB$ and triangle $MAB$ has a right angle at $A$.",
+      "$MB^2 = {=r}^2 + {=t}^2 = {=r*r + t*t}$, so $MB = {=mb}$ cm.",
+      "$D$ is the midpoint of the chord $AC$, so $MD \\perp AC$ and triangle $MDA$ has a right angle at $D$.",
+      "$AD^2 = {=r}^2 - {=d}^2 = {=r*r - d*d}$, so $AD = {=h}$ cm.",
+      "Perimeter of $ABMD = AB + BM + MD + DA = {=t} + {=mb} + {=d} + {=h} = {=t + mb + d + h}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: two right triangles (tangent-radius, then chord midpoint-perpendicular), as in book 4-f. Triples are scaled 3-4-5 and 5-12-13, so all lengths are whole numbers. Self-contained stem, no figure needed."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced gap was requested first; one family written. Other tiers not attempted."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-3:radius",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-3",
+     "parent_question_id": "q:pp3u9-2-3:bk-example-3-b",
+     "source_page": 51,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "r1",
+       "randint": [
+        6,
+        15
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "mn",
+       "let": "r1 + r2 if k == 0 else r1 - r2"
+      }
+     ],
+     "stem": "{=\"Two circles M and N are touching externally.\" if k == 0 else \"Two circles M and N are touching internally, and N is the smaller circle.\"} The radius length of circle M is ${=r1}$ cm and $MN = {=mn}$ cm. Find the radius length of circle N in cm.",
+     "answer": "r2",
+     "solution": [
+      "{=\"Since the two circles are touching externally, $MN = r_1 + r_2$.\" if k == 0 else \"Since the two circles are touching internally, $MN = r_1 - r_2$, where $r_1$ is the larger radius.\"}",
+      "{=\"$r_2 = MN - r_1 = \" + str(mn) + \" - \" + str(r1) + \" = \" + str(r2) + \"$ cm.\" if k == 0 else \"$r_2 = r_1 - MN = \" + str(r1) + \" - \" + str(mn) + \" = \" + str(r2) + \"$ cm.\"}"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses the book's conditions MN = r1 + r2 (external) and MN = r1 - r2 (internal) in reverse. Answer is a whole number 2-5."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-3:possible",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-3",
+     "parent_question_id": "q:pp3u9-2-3:bk-example-3-e",
+     "source_page": 51,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r2",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "r1",
+       "randint": [
+        "r2 + 2",
+        "15"
+       ]
+      },
+      {
+       "name": "lo",
+       "let": "r1 - r2"
+      },
+      {
+       "name": "hi",
+       "let": "r1 + r2"
+      },
+      {
+       "name": "n",
+       "let": "hi - lo - 1"
+      }
+     ],
+     "stem": "Two circles M and N have radius lengths ${=r1}$ cm and ${=r2}$ cm. They are intersecting, and the length of MN is a whole number of centimetres. How many different values can MN take?",
+     "answer": "n",
+     "solution": [
+      "Since the circles intersect, $r_1 - r_2 < MN < r_1 + r_2$.",
+      "$r_1 - r_2 = {=r1} - {=r2} = {=lo}$ and $r_1 + r_2 = {=r1} + {=r2} = {=hi}$, so ${=lo} < MN < {=hi}$.",
+      "The whole numbers strictly between {=lo} and {=hi} are {=lo+1} to {=hi-1}, which is {=n} values."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Count of integers strictly between r1-r2 and r1+r2 = 2*r2-1 (excludes touching cases). r1 >= r2+2 so lower bound >= 2."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-2-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-4:chord-half",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-4",
+     "parent_question_id": "q:pp3u9-2-4:bk-drill-8-a",
+     "source_page": 53,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        3,
+        15
+       ]
+      }
+     ],
+     "stem": "$M$ and $N$ are two circles intersecting at $A$ and $B$. The line of centers $MN$ meets the common chord $AB$ at $D$, and $AD = {=a}$ cm. Find the length of $AB$, in cm.",
+     "answer": "2 * a",
+     "solution": [
+      "The line of centers $MN$ is perpendicular to the common chord $AB$ and bisects it.",
+      "So $D$ is the midpoint of $AB$ and $AB = 2 \\times AD$.",
+      "$AB = 2 \\times {=a} = {=2*a}$ cm."
+     ],
+     "notes": "Entry point of the book's first drill: line of centers bisects the common chord."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-2-4:centres-dist",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-2-4",
+     "parent_question_id": "q:pp3u9-2-4:bk-drill-8-a",
+     "source_page": 53,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "h",
+       "choice": [
+        12,
+        24
+       ]
+      },
+      {
+       "name": "rs",
+       "let": "[13, 15, 20] if h == 12 else [25, 26, 30]"
+      },
+      {
+       "name": "r",
+       "choice": "rs"
+      },
+      {
+       "name": "s",
+       "choice": "rs",
+       "resample_while": "s == r"
+      },
+      {
+       "name": "m",
+       "let": "isqrt(r * r - h * h)"
+      },
+      {
+       "name": "n",
+       "let": "isqrt(s * s - h * h)"
+      },
+      {
+       "require": "m * m + h * h == r * r and n * n + h * h == s * s",
+       "why": "clean right triangles"
+      }
+     ],
+     "constraints": [],
+     "stem": "Two circles with centres $M$ and $N$ intersect at $A$ and $B$, with the centres on opposite sides of the common chord $AB$. The radius of circle $M$ is ${=r}$ cm, the radius of circle $N$ is ${=s}$ cm, and $AB = {=2*h}$ cm. Find the distance $MN$ between the centres, in cm.",
+     "answer": "m + n",
+     "solution": [
+      "The line of centers $MN$ is perpendicular to the common chord $AB$ and bisects it at $D$, so $AD = {=2*h}\\div 2 = {=h}$ cm.",
+      "In right triangle $MDA$: $MD^2 = {=r}^2 - {=h}^2 = {=r*r-h*h}$, so $MD = {=m}$ cm.",
+      "In right triangle $NDA$: $ND^2 = {=s}^2 - {=h}^2 = {=s*s-h*h}$, so $ND = {=n}$ cm.",
+      "The centres are on opposite sides of $AB$, so $MN = MD + ND = {=m} + {=n} = {=m+n}$ cm."
+     ],
+     "notes": "Pythagoras in two right triangles formed by the line of centers and the half chord; triples (5,12,13),(9,12,15),(16,12,20),(7,24,25),(10,24,26),(18,24,30). Opposite-sides condition stated in stem."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-3-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for lo:pp3u9-3-1 is empty. Every family needs a parent_question_id and source_page from a book question of this objective, and I have no canonical solution to model. I won't invent a parent or a method."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions or canonical solutions were supplied for this objective, so there is no parent question or source page to cite. Writing a family would mean guessing the book's method and vocabulary."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions were supplied, so I can't tell what the book's harder exercises or twists look like for this objective. A family would have no honest parent and no model solution."
+    }
+   ],
+   "notes": "I wrote no families. The input lists no book questions for lo:pp3u9-3-1 and no catalogued misconceptions. The spec requires parent_question_id to name a real book question of this objective, and the rules say not to teach a technique the book doesn't use. If you re-run with the objective's book questions, I can write basic, standard and advanced families. The topic is feasible: for a given point A, choose centers and radii so the circles pass through A, and state that infinitely many exist. Equal radii put the centers on a circle centered at A."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-2:count-circles",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-2",
+     "parent_question_id": "q:pp3u9-3-2:bk-think-and-discuss-3",
+     "source_page": 54,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "d",
+       "choice": [
+        6,
+        8,
+        10,
+        12,
+        14
+       ]
+      },
+      {
+       "name": "case",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "let": "d / 2 - 1 if case == 0 else (d / 2 if case == 1 else d / 2 + e)"
+      },
+      {
+       "name": "h",
+       "let": "d / 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "A and B are two points with $AB = {=d}$ cm. How many different circles of radius ${=r}$ cm pass through both A and B?",
+     "answer": "2 if r > h else (1 if r == h else 0)",
+     "solution": [
+      "The center of any circle through A and B lies on the axis of the chord AB, and its distance from A must equal the radius ${=r}$ cm.",
+      "The axis of AB passes through the midpoint of AB, which is ${=h}$ cm from A, so the center is at least ${=h}$ cm from A.",
+      "Draw an arc of radius ${=r}$ cm with center A; the centers are the points where it meets the axis of AB.",
+      "Compare ${=r}$ with ${=h}$ (half of AB): this gives the number of meeting points, so the number of circles is {=(2 if r > h else (1 if r == h else 0))}."
+     ],
+     "notes": "Cases: r<AB/2 gives 0, r=AB/2 gives 1 (AB is a diameter), r>AB/2 gives 2. All values clean.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-2:center-gap",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-2",
+     "parent_question_id": "q:pp3u9-3-2:bk-think-5",
+     "source_page": 55,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "d",
+       "let": "6 * k"
+      },
+      {
+       "name": "r",
+       "let": "5 * k"
+      },
+      {
+       "name": "x",
+       "let": "4 * k"
+      }
+     ],
+     "constraints": [],
+     "stem": "A and B are two points with $AB = {=d}$ cm. Two different circles, each of radius ${=r}$ cm, pass through A and B. What is the distance in cm between the centers of the two circles?",
+     "answer": "2 * x",
+     "solution": [
+      "The centers of both circles lie on the axis of the chord AB, and the axis meets AB at its midpoint M, with $AM = {=d // 2}$ cm.",
+      "Each center O satisfies $OA = {=r}$ cm, so $OM^2 = {=r}^2 - {=d // 2}^2 = {=r*r - (d//2)*(d//2)}$, giving $OM = {=x}$ cm.",
+      "The two circles meet only at A and B, so their centers are on opposite sides of AB, each ${=x}$ cm from M.",
+      "The distance between the centers is ${=x} + {=x} = {=2*x}$ cm."
+     ],
+     "notes": "Uses Pythagoras with 3-4-5 multiples; requires prior Pythagoras knowledge. The two centers are the two points on the axis at distance r from A.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-3-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions or canonical solutions were supplied for this objective. Every family needs a parent_question_id that is a book question of the objective, and I have none to cite. I also have no printed method to model, so I would be guessing the book's construction steps and vocabulary."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason as basic. The book question list is empty, so there is no valid parent and no book method to follow."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason as basic. With no book question to anchor a harder twist, any family would be invented. That includes the collinear-points explanation and the circumcenter position for acute, right and obtuse triangles."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-4-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for lo:pp3u9-4-1 is empty. Every family needs a parent_question_id and source_page from a real book question of this objective, and there are none to cite. There are also no canonical solutions to show the book's method or notation for chord length versus distance from the center. Writing a family anyway would mean inventing a parent and guessing the method."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same blocker: no book questions or canonical solutions are supplied for this objective, so I cannot name a parent question or tell what the book's typical exercise looks like."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same blocker: no book questions or canonical solutions are supplied, so I cannot tell what the book's harder exercises (for example finding a range of a value from a chord and distance comparison) look like. I would be guessing the twist and the parent."
+    }
+   ],
+   "notes": "The book questions and catalogued misconceptions were both empty, so there was nothing to anchor a family to. Re-run once the book questions for pp3u9-4-1 are supplied. The families would then cover comparing chord lengths with their distances from the center (longer chord means shorter distance, equal chords mean equal distances) and finding the range of a value from such a comparison."
+  },
+  {
+   "lo_id": "lo:pp3u9-4-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for lo:pp3u9-4-2. A family needs a valid parent_question_id and source_page, and it must follow the book's own method and notation. I have neither, so any family would use an invented parent and unverified method."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions or canonical solutions were supplied. I can't set a real parent or confirm what a typical exercise looks like, so I can't fill this tier honestly."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions or canonical solutions were supplied. I can't tell which twists or multi-step patterns the book uses for its harder exercises, and I have no valid parent_question_id."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-4-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-4-3:equal-dist",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-4-3",
+     "parent_question_id": "q:pp3u9-4-3:bk-exercise-2",
+     "source_page": 61,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "d",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "L",
+       "randint": [
+        6,
+        24
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "In a circle with center $M$, $\\overline{AB}$ and $\\overline{CD}$ are two chords. $MX\\perp\\overline{AB}$ at $X$ and $MY\\perp\\overline{CD}$ at $Y$, where $MX=MY={=d}$ cm and $CD={=L}$ cm. Then $AB=\\ldots$ cm",
+     "answer": "L",
+     "solution": [
+      "MX and MY are the distances from the center M to the chords AB and CD.",
+      "MX = MY = {=d} cm, so the two chords are equidistant from the center.",
+      "By the converse of the theorem, AB = CD.",
+      "AB = {=L} cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: direct use of the converse, no figure needed (the distances are given in words)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-4-3:solve-halves",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-4-3",
+     "parent_question_id": "q:pp3u9-4-3:bk-exercise-4",
+     "source_page": 61,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        4,
+        12
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "let": "x - p"
+      },
+      {
+       "name": "e",
+       "let": "2*x + p"
+      }
+     ],
+     "constraints": [
+      "q >= 1"
+     ],
+     "stem": "In a circle with center $M$, $\\overline{AB}$ and $\\overline{AC}$ are two chords. $MD\\perp\\overline{AB}$ at $D$ and $ME\\perp\\overline{AC}$ at $E$, and $MD=ME$. If $AD=(2x+{=p})$ cm and $AE=(3x-{=q})$ cm, find the length of $\\overline{AB}$ in cm.",
+     "answer": "2*e",
+     "solution": [
+      "MD = ME, so the chords AB and AC are equidistant from the center, so AB = AC (converse).",
+      "D and E are the midpoints of AB and AC (a perpendicular from the center bisects the chord), so AD = AE.",
+      "2x + {=p} = 3x − {=q}, so x = {=x}.",
+      "AD = 2 × {=x} + {=p} = {=e} cm.",
+      "AB = 2 × AD = {=2*e} cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: converse, then half-chords equal, solve linear equation, double. q=x-p guarantees AD=AE=e at the chosen x; AE = 3x-q = 2x+p."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

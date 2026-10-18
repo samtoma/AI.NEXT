@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-4:right-tri",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-4",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "A",
+   "let": "[3, 5, 8, 7, 20]"
+  },
+  {
+   "name": "H",
+   "let": "[5, 13, 17, 25, 29]"
+  },
+  {
+   "name": "ang",
+   "let": "[53, 67, 62, 74, 46]"
+  },
+  {
+   "name": "adj",
+   "let": "A[t] * k"
+  },
+  {
+   "name": "hyp",
+   "let": "H[t] * k"
+  }
+ ],
+ "constraints": [],
+ "stem": "In triangle $ABC$, $\\angle B = 90^\\circ$, $AB = {=adj}$ cm and $AC = {=hyp}$ cm. Find the measure of $\\angle A$ to the nearest degree.",
+ "answer": "ang[t]",
+ "solution": [
+  "$AB$ is adjacent to $A$ and $AC$ is the hypotenuse, so $\\cos A = \\frac{{=adj}}{{=hyp}}$.",
+  "$A = \\cos^{-1}\\left(\\frac{{=adj}}{{=hyp}}\\right) = {=ang[t]}^\\circ$ to the nearest degree."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Pythagorean-triple multiples; none of the exact angles is near a .5 rounding boundary."
+}

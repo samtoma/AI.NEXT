@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "a07058e8a2da0319c392cbe84d1a0b920eed676f13fd26b067bccde720907f23",
+  "generated_sha256": "c0c56f7219a8eb43934af7767062fb475bfd508c6c7ea83f46d4618f2e9a7b57",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u5-2:example-3",
+    "verdict": "equivalent",
+    "reason": "Both give D(-1, 4); the solver also states the diagonal intersection M(3/2, -1/2), which is the midpoint of AC and is correct."
+   }
+  ]
+ }
+}

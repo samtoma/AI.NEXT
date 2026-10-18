@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-2:tangent-chord-perimeter",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-2",
+ "parent_question_id": "q:pp3u9-2-2:bk-drill-4-f",
+ "source_page": 49,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    3,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "let": "5 * k"
+  },
+  {
+   "name": "t",
+   "let": "12 * k"
+  },
+  {
+   "name": "mb",
+   "let": "13 * k"
+  },
+  {
+   "name": "d",
+   "let": "s * k"
+  },
+  {
+   "name": "h",
+   "let": "(7 - s) * k"
+  }
+ ],
+ "constraints": [],
+ "stem": "$M$ is the centre of a circle of radius ${=r}$ cm. $\\overleftrightarrow{AB}$ is a tangent to the circle at $A$ and $AB = {=t}$ cm. $AC$ is a chord of the circle and $D$ is its midpoint, with $MD = {=d}$ cm. Find the perimeter of the figure $ABMD$ in cm.",
+ "answer": "t + mb + d + h",
+ "solution": [
+  "$MA$ is a radius, $MA = {=r}$ cm, and $\\overleftrightarrow{AB}$ is a tangent, so $MA \\perp AB$ and triangle $MAB$ has a right angle at $A$.",
+  "$MB^2 = {=r}^2 + {=t}^2 = {=r*r + t*t}$, so $MB = {=mb}$ cm.",
+  "$D$ is the midpoint of the chord $AC$, so $MD \\perp AC$ and triangle $MDA$ has a right angle at $D$.",
+  "$AD^2 = {=r}^2 - {=d}^2 = {=r*r - d*d}$, so $AD = {=h}$ cm.",
+  "Perimeter of $ABMD = AB + BM + MD + DA = {=t} + {=mb} + {=d} + {=h} = {=t + mb + d + h}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: two right triangles (tangent-radius, then chord midpoint-perpendicular), as in book 4-f. Triples are scaled 3-4-5 and 5-12-13, so all lengths are whole numbers. Self-contained stem, no figure needed."
+}

@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-3-2:count-circles",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-3-2",
+ "parent_question_id": "q:pp3u9-3-2:bk-think-and-discuss-3",
+ "source_page": 54,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "choice": [
+    6,
+    8,
+    10,
+    12,
+    14
+   ]
+  },
+  {
+   "name": "case",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "let": "d / 2 - 1 if case == 0 else (d / 2 if case == 1 else d / 2 + e)"
+  },
+  {
+   "name": "h",
+   "let": "d / 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "A and B are two points with $AB = {=d}$ cm. How many different circles of radius ${=r}$ cm pass through both A and B?",
+ "answer": "2 if r > h else (1 if r == h else 0)",
+ "solution": [
+  "The center of any circle through A and B lies on the axis of the chord AB, and its distance from A must equal the radius ${=r}$ cm.",
+  "The axis of AB passes through the midpoint of AB, which is ${=h}$ cm from A, so the center is at least ${=h}$ cm from A.",
+  "Draw an arc of radius ${=r}$ cm with center A; the centers are the points where it meets the axis of AB.",
+  "Compare ${=r}$ with ${=h}$ (half of AB): this gives the number of meeting points, so the number of circles is {=(2 if r > h else (1 if r == h else 0))}."
+ ],
+ "notes": "Cases: r<AB/2 gives 0, r=AB/2 gives 1 (AB is a diameter), r>AB/2 gives 2. All values clean.",
+ "proposed_misconceptions": []
+}

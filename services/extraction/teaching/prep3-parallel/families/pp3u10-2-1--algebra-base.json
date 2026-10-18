@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-2-1:algebra-base",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-2-1",
+ "parent_question_id": "q:pp3u10-2-1:bk-drill-5-x",
+ "source_page": 73,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    5,
+    15
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    5,
+    25
+   ]
+  },
+  {
+   "name": "x",
+   "let": "2*p + q"
+  },
+  {
+   "name": "ins",
+   "let": "x + p"
+  },
+  {
+   "name": "cen",
+   "let": "2*ins"
+  },
+  {
+   "require": "ins < 80",
+   "why": "central angle stays below 160 so the base angle is clean and positive"
+  }
+ ],
+ "stem": "M is the centre of a circle, and A, B and C are points on the circle with C on the major arc AB. The inscribed angle $\\angle ACB = (x + {=p})^\\circ$ and the central angle $\\angle AMB = (3x - {=q})^\\circ$, both subtended by the arc AB. Find the measure of $\\angle MAB$ in degrees.",
+ "answer": "90 - ins",
+ "solution": [
+  "The inscribed angle is half the central angle subtended by the same arc, so $3x - {=q} = 2(x + {=p})$.",
+  "$3x - {=q} = 2x + {=2*p}$, so $x = {=x}$.",
+  "The inscribed angle is $x + {=p} = {=ins}^\\circ$, so the central angle $\\angle AMB = 2 \\times {=ins} = {=cen}^\\circ$.",
+  "MA = MB (radii), so the base angles of triangle MAB are equal.",
+  "$\\angle MAB = (180 - {=cen}) \\div 2 = {=90 - ins}^\\circ$."
+ ],
+ "notes": "Twist on book drill 5 (isosceles triangle MAB with central angle double the inscribed angle), with the angles given as algebraic expressions. Stem is text-only; C on the major arc is stated so the central angle is 2 x inscribed. Inscribed angle is always below 80, so the answer is a positive whole number."
+}

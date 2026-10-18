@@ -1,0 +1,177 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "398fc2c47664d417676671a7315c5f3bddd1885a98d6397a47ff8873d67a6a38",
+  "generated_sha256": "975f24146624c82f71e5eb94056d4653bb5b92fb0cba97ad25a8394a8001092e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u5-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:First",
+      "kind": "value",
+      "answer": "(4, 6)",
+      "solution": [
+       "A(2, 6) and B(6, 6) have the same y, so AB is parallel to the x-axis.",
+       "x = (2+6)/2 = 4",
+       "y = (6+6)/2 = 6",
+       "The midpoint is C(4, 6)."
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:Second",
+      "kind": "value",
+      "answer": "(-2, -3)",
+      "solution": [
+       "A(-2, -5) and B(-2, -1) have the same x, so AB is parallel to the y-axis.",
+       "x = (-2-2)/2 = -2",
+       "y = (-5-1)/2 = -3",
+       "The midpoint is C(-2, -3)."
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:Third",
+      "kind": "value",
+      "answer": "(3, 4)",
+      "solution": [
+       "A(1, 2) and B(5, 6).",
+       "x = (1+5)/2 = 3",
+       "y = (2+6)/2 = 4",
+       "The midpoint is C(3, 4)."
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-1",
+       "pp3u5-2:rule-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:First",
+      "kind": "value",
+      "answer": "(4, 6)"
+     },
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:Second",
+      "kind": "value",
+      "answer": "(-2, -3)"
+     },
+     {
+      "ref": "pp3u5-2:think-and-discuss-1:Third",
+      "kind": "value",
+      "answer": "(3, 4)"
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u5-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u5-2:drill-1:1",
+      "kind": "value",
+      "answer": "(4, 2)",
+      "solution": [
+       "Use $M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$ with A(2, 4), B(6, 0).",
+       "$x=\\frac{2+6}{2}=4$",
+       "$y=\\frac{4+0}{2}=2$",
+       "C(4, 2)"
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-2:drill-1:2",
+      "kind": "value",
+      "answer": "(2, 0)",
+      "solution": [
+       "Use the midpoint formula with A(7, -5), B(-3, 5).",
+       "$x=\\frac{7-3}{2}=2$",
+       "$y=\\frac{-5+5}{2}=0$",
+       "C(2, 0)"
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-2:drill-1:3",
+      "kind": "value",
+      "answer": "(0, 0)",
+      "solution": [
+       "Use the midpoint formula with A(-3, 6), B(3, -6).",
+       "$x=\\frac{-3+3}{2}=0$",
+       "$y=\\frac{6-6}{2}=0$",
+       "C(0, 0)"
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-2:drill-1:4",
+      "kind": "value",
+      "answer": "(3, -3)",
+      "solution": [
+       "Use the midpoint formula with A(7, -6), B(-1, 0).",
+       "$x=\\frac{7-1}{2}=3$",
+       "$y=\\frac{-6+0}{2}=-3$",
+       "C(3, -3)"
+      ],
+      "grounded_in": [
+       "pp3u5-2:rule-2",
+       "pp3u5-2:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-2:drill-1:1",
+      "kind": "value",
+      "answer": "(4, 2)"
+     },
+     {
+      "ref": "pp3u5-2:drill-1:2",
+      "kind": "value",
+      "answer": "(2, 0)"
+     },
+     {
+      "ref": "pp3u5-2:drill-1:3",
+      "kind": "value",
+      "answer": "(0, 0)"
+     },
+     {
+      "ref": "pp3u5-2:drill-1:4",
+      "kind": "value",
+      "answer": "(3, -3)"
+     }
+    ]
+   }
+  }
+ ]
+}

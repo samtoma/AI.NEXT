@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3eb093a3ecbe11167ad5bdf17cb41accce6ab472fda621ef137b836a776061ad",
+  "generated_sha256": "bce7dae19ddecf09ee68b5f9157f8aa923535a190a5015959d09f8ab571cd9fb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u5-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-3:example-1",
+      "kind": "value",
+      "answer": "1.4945"
+     },
+     {
+      "ref": "pp3u5-3:example-2",
+      "kind": "value",
+      "answer": "56° 4' 14''"
+     },
+     {
+      "ref": "pp3u5-3:example-3",
+      "kind": "explanation",
+      "answer": "Slope through (-3,-2),(4,5) is 7/7 = 1; the other slope is tan 45° = 1. The slopes are equal, so the lines are parallel."
+     },
+     {
+      "ref": "pp3u5-3:example-6",
+      "kind": "value",
+      "answer": "A = -1"
+     }
+    ]
+   }
+  }
+ ]
+}

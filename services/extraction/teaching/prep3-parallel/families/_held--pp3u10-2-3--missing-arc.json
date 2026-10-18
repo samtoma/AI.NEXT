@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-2-3:missing-arc",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-2-3",
+ "parent_question_id": "lo:pp3u10-2-3",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    40,
+    100
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "let": "10 * p"
+  },
+  {
+   "name": "b",
+   "let": "2 * t - a"
+  },
+  {
+   "require": "b >= 20 and b <= 200",
+   "why": "keep the missing arc sensible"
+  }
+ ],
+ "constraints": [],
+ "stem": "Two chords $AB$ and $CD$ intersect inside a circle at $E$. $m\\angle AEC = {=t}^\\circ$, and the arc $AC$ measures ${=a}^\\circ$. Find the measure in degrees of the arc $BD$ intercepted by the vertical angle $\\angle BED$.",
+ "answer": "b",
+ "solution": [
+  "The angle formed by two chords is half the sum of its intercepted arcs: ${=t} = \\frac{1}{2}({=a} + m\\widehat{BD})$.",
+  "Multiply both sides by 2: ${=a} + m\\widehat{BD} = {=2 * t}$.",
+  "$m\\widehat{BD} = {=2 * t} - {=a} = {=b}^\\circ$."
+ ],
+ "notes": "Placeholder parent_question_id; no book questions supplied. Advanced: reverse the formula to find an arc."
+}

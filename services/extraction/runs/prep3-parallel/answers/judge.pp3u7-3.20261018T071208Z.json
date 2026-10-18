@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "5f0770218ca15110a92408c57efacd44da68d897208e8bbaafad582575aaa809",
+  "generated_sha256": "66f0ab9b9381d735395ab8fc3cb78d2c064ee0b501d5736c019cddf79ad17aaa",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u7-3:example-1",
+    "verdict": "equivalent",
+    "reason": "Same simplified form x/((x+2)(x-3)) and same domain R−{−3,−2,2,3}."
+   },
+   {
+    "ref": "pp3u7-3:example-2",
+    "verdict": "equivalent",
+    "reason": "Solver shows both reduce to 1/(x−1) with domain R−{0,1}, concluding n1=n2 as printed."
+   }
+  ]
+ }
+}

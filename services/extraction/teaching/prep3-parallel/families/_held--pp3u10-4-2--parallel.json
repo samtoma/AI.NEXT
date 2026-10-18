@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-4-2:parallel",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-4-2",
+ "parent_question_id": "q:pp3u10-4-2:none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    5,
+    25
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    5,
+    30
+   ]
+  },
+  {
+   "name": "r",
+   "let": "x + q"
+  },
+  {
+   "name": "ang",
+   "let": "2 * x + q"
+  }
+ ],
+ "stem": "In quadrilateral $ABCD$, $\\overline{AD} \\parallel \\overline{BC}$, and $A$ and $B$ lie on the same side of $\\overleftrightarrow{DC}$. Given that $m(\\angle ACB) = (2x + {=q})^\\circ$ and $m(\\angle DBC) = (x + {=r})^\\circ$, and that $ABCD$ is a cyclic quadrilateral, find $m(\\angle DAC)$ in degrees.",
+ "answer": "ang",
+ "solution": [
+  "Since $\\overline{AD} \\parallel \\overline{BC}$ with transversal $AC$, the alternate angles are equal: $m(\\angle DAC) = m(\\angle ACB) = (2x + {=q})^\\circ$.",
+  "$ABCD$ is cyclic, so $\\angle DAC$ and $\\angle DBC$, drawn on the same base $DC$ and on the same side of it, are equal.",
+  "$2x + {=q} = x + {=r}$, so $x = {=r} - {=q} = {=x}$.",
+  "$m(\\angle DAC) = 2({=x}) + {=q} = {=ang}^\\circ$."
+ ],
+ "notes": "Placeholder parent_question_id: none supplied. Text-only; uses parallel lines then equal angles on same base."
+}

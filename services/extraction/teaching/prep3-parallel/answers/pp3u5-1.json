@@ -1,0 +1,516 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u5-1",
+  "source": "book-records/prep3-parallel/pp3u5-1.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 13,
+      "cost_usd": 0.2674,
+      "calls": [
+        {
+          "call": "answers.pp3u5-1",
+          "cost_usd": 0.2674,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u5-1:think-and-discuss-1",
+      "record_id": "pp3u5-1:think-and-discuss-1",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "Find the distance between the points $A(3, 0)$, $B(-1, 0)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f3f30bbf9472dee384bc9d7ebe27e38e",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "A and B are both on the x-axis, so use the difference of the x-coordinates.",
+        "$AB=|-1-3|$",
+        "$=|-4|$",
+        "AB = 4 unit length."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:think-and-discuss-2",
+      "record_id": "pp3u5-1:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "Find the distance between the points $C(0, -3)$, $D(0, -1)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a49cdb54a4ee62ad859ec212fb3c6c42",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "C and D are both on the y-axis, so use the difference of the y-coordinates.",
+        "$CD=|-3-(-1)|=|-3+1|$",
+        "$=|-2|$",
+        "CD = 2 unit length."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:think-and-discuss-3",
+      "record_id": "pp3u5-1:think-and-discuss-3",
+      "part": null,
+      "type": "activity",
+      "page": 58,
+      "question": {
+        "text": "Find the distance between the points $M(3, 2)$, $N(7, 5)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5d080ef09b145493e1bfc2a1636bd109",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+        "Draw the right triangle MKN with the right angle at K.",
+        "$MK=|7-3|=4$ and $NK=|5-2|=3$.",
+        "$(MN)^2=(MK)^2+(KN)^2=3^2+4^2=9+16=25$",
+        "MN = 5 unit length."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-3",
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-1:1",
+      "record_id": "pp3u5-1:drill-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "If A, B, C and D are four given points in the perpendicular coordinate plane, mention the conditions which make those points vertices for each of the following geometrical shapes:",
+        "stem": "Paralleogram",
+        "notes": "Part 1 printed as 'Paralleogram'? Page prints 'Paralleogram'-like word; actually printed 'Paralleogram' read as 'Parallelogram'; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "de00dd7c236d822a146815f84fd5922d",
+      "kind": "explanation",
+      "answer": "ABCD is a parallelogram if both pairs of opposite sides are equal in length: AB = CD and BC = DA.",
+      "solution": [
+        "Use the distance rule $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$ to find AB, BC, CD and DA.",
+        "Check that AB = CD.",
+        "Check that BC = DA.",
+        "If both pairs of opposite sides are equal, ABCD is a parallelogram."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4",
+        "pp3u5-1:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "Parallelogram: both pairs of opposite sides are equal in length (AB = CD and BC = DA), or the two diagonals bisect each other (the midpoints of AC and BD coincide).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-1:2",
+      "record_id": "pp3u5-1:drill-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "If A, B, C and D are four given points in the perpendicular coordinate plane, mention the conditions which make those points vertices for each of the following geometrical shapes:",
+        "stem": "Rectangle",
+        "notes": "Part 1 printed as 'Paralleogram'? Page prints 'Paralleogram'-like word; actually printed 'Paralleogram' read as 'Parallelogram'; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ff5261bcccf14053e5d00517cb6f0b2b",
+      "kind": "explanation",
+      "answer": "ABCD is a rectangle if it is a parallelogram (AB = CD and BC = DA) and its diagonals are equal in length: AC = BD.",
+      "solution": [
+        "Use the distance rule to find AB, BC, CD and DA.",
+        "Show AB = CD and BC = DA, so ABCD is a parallelogram.",
+        "Find the diagonals AC and BD with the distance rule.",
+        "Show AC = BD.",
+        "A parallelogram with equal diagonals is a rectangle."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4",
+        "pp3u5-1:example-1",
+        "pp3u5-1:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "Rectangle: it is a parallelogram (opposite sides equal, AB = CD and BC = DA) and the two diagonals are equal in length (AC = BD). Equivalently, one angle is a right angle, which can be checked with the converse of the Pythagorean theorem.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-1:3",
+      "record_id": "pp3u5-1:drill-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "If A, B, C and D are four given points in the perpendicular coordinate plane, mention the conditions which make those points vertices for each of the following geometrical shapes:",
+        "stem": "rhombus",
+        "notes": "Part 1 printed as 'Paralleogram'? Page prints 'Paralleogram'-like word; actually printed 'Paralleogram' read as 'Parallelogram'; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9d15cb0ce00c24515682b57291548481",
+      "kind": "explanation",
+      "answer": "ABCD is a rhombus if all four sides are equal in length: AB = BC = CD = DA (its diagonals are not equal, otherwise it is a square).",
+      "solution": [
+        "Use the distance rule to find AB, BC, CD and DA.",
+        "Show AB = BC = CD = DA.",
+        "Find the diagonals AC and BD.",
+        "If AC ≠ BD, the figure is a rhombus and not a square."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4",
+        "pp3u5-1:example-1",
+        "pp3u5-1:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "Rhombus: all four sides are equal in length (AB = BC = CD = DA). Equivalently, it is a parallelogram whose diagonals are perpendicular.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-1:4",
+      "record_id": "pp3u5-1:drill-1",
+      "part": "4",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "If A, B, C and D are four given points in the perpendicular coordinate plane, mention the conditions which make those points vertices for each of the following geometrical shapes:",
+        "stem": "Square",
+        "notes": "Part 1 printed as 'Paralleogram'? Page prints 'Paralleogram'-like word; actually printed 'Paralleogram' read as 'Parallelogram'; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "981f452715398dc5c3aaf191a74093c9",
+      "kind": "explanation",
+      "answer": "ABCD is a square if all four sides are equal (AB = BC = CD = DA) and the two diagonals are equal (AC = BD).",
+      "solution": [
+        "Use the distance rule to find AB, BC, CD and DA.",
+        "Show AB = BC = CD = DA, so ABCD is a rhombus.",
+        "Find the diagonals AC and BD.",
+        "Show AC = BD.",
+        "A figure with four equal sides and equal diagonals is a square."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4",
+        "pp3u5-1:example-1",
+        "pp3u5-1:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "Square: all four sides are equal (AB = BC = CD = DA) and the two diagonals are equal (AC = BD). This makes it a rhombus with equal diagonals, which is also a rectangle with equal adjacent sides.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:AB",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "AB",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$AB=\\sqrt{(1-4)^2+(1-3)^2}=\\ldots$",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "9c7a0d784505b76c1dfb74ff36b195fd",
+      "kind": "value",
+      "answer": "√13",
+      "solution": [
+        "$AB=\\sqrt{(1-4)^2+(1-3)^2}$",
+        "$=\\sqrt{(-3)^2+(-2)^2}$",
+        "$=\\sqrt{9+4}=\\sqrt{13}$",
+        "AB = √13."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "√13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:BC",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "BC",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$BC=\\sqrt{(-5-1)^2+(-3-1)^2}=\\ldots$",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "3c8f734d3963ee8c6b7968e32b15c39f",
+      "kind": "value",
+      "answer": "2√13",
+      "solution": [
+        "$BC=\\sqrt{(-5-1)^2+(-3-1)^2}$",
+        "$=\\sqrt{(-6)^2+(-4)^2}$",
+        "$=\\sqrt{36+16}=\\sqrt{52}$",
+        "$\\sqrt{52}=\\sqrt{4\\times13}=2\\sqrt{13}$",
+        "BC = 2√13."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "√52 = 2√13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:AC",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "AC",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$AC=\\sqrt{(-5-4)^2+(-3-3)^2}=\\ldots$",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "e5e27bb89500a963ad74c486f8347447",
+      "kind": "value",
+      "answer": "3√13",
+      "solution": [
+        "$AC=\\sqrt{(-5-4)^2+(-3-3)^2}$",
+        "$=\\sqrt{(-9)^2+(-6)^2}$",
+        "$=\\sqrt{81+36}=\\sqrt{117}$",
+        "$\\sqrt{117}=\\sqrt{9\\times13}=3\\sqrt{13}$",
+        "AC = 3√13."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "√117 = 3√13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:AB + BC",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "AB + BC",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$\\therefore AB+BC=\\ldots+\\ldots=\\ldots$",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "39101f3403a096747683b18f1af12981",
+      "kind": "value",
+      "answer": "AB + BC = √13 + 2√13 = 3√13",
+      "solution": [
+        "Use AB = √13 and BC = 2√13.",
+        "$AB+BC=\\sqrt{13}+2\\sqrt{13}$",
+        "$=3\\sqrt{13}$"
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "√13 + 2√13 = 3√13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:AB + ... = AC",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "AB + ... = AC",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$\\because AB+\\ldots=AC$",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "02e98b5bad34664207765d141c7d96e2",
+      "kind": "value",
+      "answer": "BC",
+      "solution": [
+        "AB + BC = 3√13.",
+        "AC = 3√13.",
+        "So the blank is BC: AB + BC = AC."
+      ],
+      "grounded_in": [
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "BC (AB + BC = AC)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u5-1:drill-2:conclusion",
+      "record_id": "pp3u5-1:drill-2",
+      "part": "conclusion",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Prove that the points A(4, 3), B(1, 1) and C(-5, -3) are collinear. Complete the working.",
+        "stem": "$\\therefore$ The points A, B and C are collinear.",
+        "notes": "Blanks to fill. Printed formulas read from a low-resolution image; verify. Printed 'Complete :' instruction."
+      },
+      "needs_page": false,
+      "question_fingerprint": "d26e676cecef66ae62e3da4ff2f64a25",
+      "kind": "explanation",
+      "answer": "The points A, B and C are collinear, because AB + BC = AC.",
+      "solution": [
+        "AB + BC = 3√13 and AC = 3√13.",
+        "The sum of two distances equals the third distance, AB + BC = AC.",
+        "So the points A, B and C are collinear."
+      ],
+      "grounded_in": [
+        "pp3u5-1:objective-3",
+        "pp3u5-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Since AB + BC = AC (3√13), the points A, B and C are collinear.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-18T06:49:16+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,3988 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "prep3-parallel",
+ "chapter": 10,
+ "module": "module:pp3u10",
+ "packet_sha256": "0ec6dd6a5f4e384bd98caa3f8116af619c68418a212eadbcb945eb608ae83ec4",
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "cf071e534c91242e6b21827ddc9f835208a2558c2c231c7bb92d739f002a1a44",
+  "generated_sha256": "07b4ab8559eb284dfcc587f4c1b624d6edec3da224d5d961b9fe066b708ff04d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 0,
+ "lessons": [
+  {
+   "slug": "pp3u10-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Measure arcs from central angles",
+       "statement": "Determine the measure of an arc (minor, major, semicircle) from its central angle, and find adjacent arc measures by adding or subtracting arcs.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-1:definition-2",
+         "printed_page": 64,
+         "quote": "The measure of the arc is the measure of the central angle opposite to it."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 66,
+         "quote": "$5x+70^\\circ+6x=180^\\circ$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-2:7",
+         "printed_page": 66,
+         "quote": "$m(\\widehat{ACD})=\\ldots$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:exercise-1",
+        "pp3u10-1:drill-1:1",
+        "pp3u10-1:drill-1:2",
+        "pp3u10-1:drill-1:3",
+        "pp3u10-1:drill-1:4",
+        "pp3u10-1:drill-2:1",
+        "pp3u10-1:drill-2:2",
+        "pp3u10-1:drill-2:3",
+        "pp3u10-1:drill-2:4",
+        "pp3u10-1:drill-2:5",
+        "pp3u10-1:drill-2:6",
+        "pp3u10-1:drill-2:7",
+        "pp3u10-1:drill-2:8"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Calculate arc length",
+       "statement": "Calculate the length of an arc as the fraction measure of the arc over measure of the circle times the circumference.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-1:rule-9",
+         "printed_page": 66,
+         "quote": "Arc length = (measure of the arc / measure of the circle)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 66,
+         "quote": "$=\\dfrac{108}{360}\\times 2\\times 3.14\\times 5=9.42$ cm."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-3:In the minor circle 2",
+         "printed_page": 67,
+         "quote": "length of $\\overset{\\frown}{AB} = \\frac{50}{360}"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:drill-3:In the minor circle 1",
+        "pp3u10-1:drill-3:In the minor circle 2",
+        "pp3u10-1:drill-3:In the minor circle 3",
+        "pp3u10-1:drill-3:In the minor circle 4",
+        "pp3u10-1:drill-3:In the major circle 1",
+        "pp3u10-1:drill-3:In the major circle 2",
+        "pp3u10-1:drill-3:In the major circle 3",
+        "pp3u10-1:open-prompt-4"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Relate arcs and chords",
+       "statement": "Use the corollaries on equal arcs, equal chords and parallel chords or tangents to identify equal arcs and chords and to prove arcs or chords equal.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-1:rule-11",
+         "printed_page": 68,
+         "quote": "their chords are equal in length, and conversely"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 69,
+         "quote": "∴ m(AB) = m(DC) ∴ AB = CD"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-7:3",
+         "printed_page": 69,
+         "quote": "By adding the two sides of (1) and (2)"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:drill-4",
+        "pp3u10-1:drill-5",
+        "pp3u10-1:drill-6",
+        "pp3u10-1:drill-7:1",
+        "pp3u10-1:drill-7:2",
+        "pp3u10-1:drill-7:3",
+        "pp3u10-1:drill-7:4"
+       ],
+       "worked_examples": [
+        "WE3",
+        "WE4"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Measure arcs from central angles",
+       "statement": "Determine the measure of an arc as the measure of its central angle, and find the measures of adjacent arcs, semicircles and the circle by adding or subtracting.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "definition-2",
+         "printed_page": 64,
+         "quote": "The measure of the arc is the measure of the central angle opposite to it."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 66,
+         "quote": "$5x+70^\\circ+6x=180^\\circ$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-1:1",
+         "printed_page": 65,
+         "quote": "Complete: $m(\\overset{\\frown}{AD}) = \\ldots\\ldots^\\circ$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:think-and-discuss-1",
+        "pp3u10-1:think-and-discuss-2",
+        "pp3u10-1:open-prompt-1",
+        "pp3u10-1:open-prompt-2",
+        "pp3u10-1:open-prompt-3",
+        "pp3u10-1:exercise-1",
+        "pp3u10-1:drill-1:1",
+        "pp3u10-1:drill-1:2",
+        "pp3u10-1:drill-1:3",
+        "pp3u10-1:drill-1:4",
+        "pp3u10-1:drill-2:1",
+        "pp3u10-1:drill-2:2",
+        "pp3u10-1:drill-2:3",
+        "pp3u10-1:drill-2:4",
+        "pp3u10-1:drill-2:5",
+        "pp3u10-1:drill-2:6",
+        "pp3u10-1:drill-2:7",
+        "pp3u10-1:drill-2:8"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Calculate arc length",
+       "statement": "Calculate the length of an arc as the fraction (measure of the arc / measure of the circle) of the circumference, and compare arcs of equal measure in different circles.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "rule-9",
+         "printed_page": 66,
+         "quote": "Arc length = (measure of the arc / measure of the circle) × circumference of the circle."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 66,
+         "quote": "$=\\dfrac{108}{360}\\times 2\\times 3.14\\times 5=9.42$ cm."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-3:In the minor circle 2",
+         "printed_page": 67,
+         "quote": "length of $\\overset{\\frown}{AB} = \\frac{50}{360}\\times 2\\times\\frac{22}{7}\\times\\ldots\\ldots = \\ldots\\ldots$ cm"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:drill-3:In the minor circle 1",
+        "pp3u10-1:drill-3:In the minor circle 2",
+        "pp3u10-1:drill-3:In the minor circle 3",
+        "pp3u10-1:drill-3:In the minor circle 4",
+        "pp3u10-1:drill-3:In the major circle 1",
+        "pp3u10-1:drill-3:In the major circle 2",
+        "pp3u10-1:drill-3:In the major circle 3",
+        "pp3u10-1:open-prompt-4"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Relate arcs, chords and parallels",
+       "statement": "Use the corollaries on equal arcs, equal chords and parallel chords or tangents to prove arcs or chords are equal and to find unknown lengths.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "rule-11",
+         "printed_page": 68,
+         "quote": "their chords are equal in length"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 69,
+         "quote": "∴ m(AB) = m(DC) ∴ AB = CD"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-1:drill-7:1",
+         "printed_page": 69,
+         "quote": "Complete the following to prove that CE = CF"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-1:drill-4",
+        "pp3u10-1:drill-5",
+        "pp3u10-1:drill-6",
+        "pp3u10-1:drill-7:1",
+        "pp3u10-1:drill-7:2",
+        "pp3u10-1:drill-7:3",
+        "pp3u10-1:drill-7:4"
+       ],
+       "worked_examples": [
+        "WE3",
+        "WE4"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine the measure of an arc as the measure of its central angle, and find the measures of adjacent arcs, semicircles and the circle by adding or subtracting.",
+      "label": "Measure arcs from central angles",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-1:definition-2",
+        "printed_page": 64,
+        "quote": "The measure of the arc is the measure of the central angle opposite to it."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 66,
+        "quote": "$5x+70^\\circ+6x=180^\\circ$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-1:drill-1:1",
+        "printed_page": 65,
+        "quote": "Complete: $m(\\overset{\\frown}{AD}) = \\ldots\\ldots^\\circ$"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-1:think-and-discuss-1",
+       "pp3u10-1:think-and-discuss-2",
+       "pp3u10-1:open-prompt-1",
+       "pp3u10-1:open-prompt-2",
+       "pp3u10-1:open-prompt-3",
+       "pp3u10-1:exercise-1",
+       "pp3u10-1:drill-1:1",
+       "pp3u10-1:drill-1:2",
+       "pp3u10-1:drill-1:3",
+       "pp3u10-1:drill-1:4",
+       "pp3u10-1:drill-2:1",
+       "pp3u10-1:drill-2:2",
+       "pp3u10-1:drill-2:3",
+       "pp3u10-1:drill-2:4",
+       "pp3u10-1:drill-2:5",
+       "pp3u10-1:drill-2:6",
+       "pp3u10-1:drill-2:7",
+       "pp3u10-1:drill-2:8"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "central angle",
+       "measure of an arc",
+       "minor arc",
+       "major arc",
+       "semicircle",
+       "adjacent arcs"
+      ],
+      "term_flags": [
+       {
+        "term": "measure of an arc",
+        "why": "The book gives an arc a degree measure equal to its central angle; other curricula call this the arc's angular measure or arc degree, distinct from arc length."
+       },
+       {
+        "term": "major circle / minor circle",
+        "why": "Used in the drills to mean the circle containing the major or minor arc; this phrasing is unusual elsewhere."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the length of an arc as the fraction (measure of the arc / measure of the circle) of the circumference, and compare arcs of equal measure in different circles.",
+      "label": "Calculate arc length",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "rule-9",
+        "printed_page": 66,
+        "quote": "Arc length = (measure of the arc / measure of the circle) × circumference of the circle."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 66,
+        "quote": "$=\\dfrac{108}{360}\\times 2\\times 3.14\\times 5=9.42$ cm."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-1:drill-3:In the minor circle 2",
+        "printed_page": 67,
+        "quote": "length of $\\overset{\\frown}{AB} = \\frac{50}{360}\\times 2\\times\\frac{22}{7}\\times\\ldots\\ldots = \\ldots\\ldots$ cm"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-1:drill-3:In the minor circle 1",
+       "pp3u10-1:drill-3:In the minor circle 2",
+       "pp3u10-1:drill-3:In the minor circle 3",
+       "pp3u10-1:drill-3:In the minor circle 4",
+       "pp3u10-1:drill-3:In the major circle 1",
+       "pp3u10-1:drill-3:In the major circle 2",
+       "pp3u10-1:drill-3:In the major circle 3",
+       "pp3u10-1:open-prompt-4"
+      ],
+      "worked_examples": [
+       "WE2"
+      ],
+      "terms": [
+       "arc length",
+       "measure of the arc",
+       "measure of the circle",
+       "circumference"
+      ],
+      "term_flags": [
+       {
+        "term": "measure of the circle",
+        "why": "The book means 360 degrees; other curricula say full angle or 360° rotation."
+       }
+      ]
+     },
+     {
+      "statement": "Use the corollaries on equal arcs, equal chords and parallel chords or tangents to prove arcs or chords are equal and to find unknown lengths.",
+      "label": "Relate arcs, chords and parallels",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-1:rule-11",
+        "printed_page": 68,
+        "quote": "their chords are equal in length, and conversely"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 69,
+        "quote": "∴ m(AB) = m(DC) ∴ AB = CD"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-1:drill-7:1",
+        "printed_page": 69,
+        "quote": "Complete the following to prove that CE = CF"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-1:drill-4",
+       "pp3u10-1:drill-5",
+       "pp3u10-1:drill-6",
+       "pp3u10-1:drill-7:1",
+       "pp3u10-1:drill-7:2",
+       "pp3u10-1:drill-7:3",
+       "pp3u10-1:drill-7:4"
+      ],
+      "worked_examples": [
+       "WE3",
+       "WE4"
+      ],
+      "terms": [
+       "equal arcs",
+       "chord",
+       "parallel chords",
+       "tangent",
+       "corollary"
+      ],
+      "term_flags": [
+       {
+        "term": "corollary",
+        "why": "The book uses this for results following from the arc-chord theorem; some curricula call them theorems or properties."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The definition directly states that arc measure equals the central angle, which is the core concept the objective requires."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates finding adjacent arc measures by adding them (AC + CD + DB = 180°) and calculating their sum."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise provides blanks for students to find arc measures, practicing the skill of determining arc measures."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": false,
+      "supports": false,
+      "note": "The anchor 'rule-9' does not exist in the lesson packet as stated."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates the arc length formula and its application: (108/360) × circumference, showing how to calculate arc length."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to calculate arc length using the fractional formula with different radius values, practicing the required skill."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The corollary statement introduces the relationship between equal arcs and equal chords, which is fundamental to the proofs the objective requires."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates using the equal arcs/equal chords corollary in a proof to establish that AB = CD and find the length."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to complete a proof using parallel chords and tangent properties to prove equality, practicing the required proof skills."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Inscribed and central angle relation",
+       "statement": "Calculate the measure of an inscribed angle or of the central angle subtended by the same arc, using the theorem that the inscribed angle is half the central angle.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-2:rule-3",
+         "printed_page": 72,
+         "quote": "The measure of the inscribed angle is half the measure of the central angle"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 74,
+         "quote": "$m(\\angle BDC)=\\frac{1}{2}m(\\angle BMC)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:activity-1:2",
+         "printed_page": 72,
+         "quote": "find $m(\\angle BMD)$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:think-and-discuss-1:1",
+        "pp3u10-2:think-and-discuss-1:2",
+        "pp3u10-2:think-and-discuss-1:3",
+        "pp3u10-2:think-and-discuss-1:4",
+        "pp3u10-2:think-and-discuss-1:5",
+        "pp3u10-2:think-1",
+        "pp3u10-2:activity-1:1",
+        "pp3u10-2:activity-1:2",
+        "pp3u10-2:activity-1:3",
+        "pp3u10-2:activity-1:4",
+        "pp3u10-2:activity-2",
+        "pp3u10-2:drill-1:x",
+        "pp3u10-2:drill-2:y",
+        "pp3u10-2:drill-3:Z",
+        "pp3u10-2:drill-4:L",
+        "pp3u10-2:drill-5:x",
+        "pp3u10-2:drill-6:y",
+        "pp3u10-2:drill-7:Z",
+        "pp3u10-2:drill-8:L",
+        "pp3u10-2:drill-9:x",
+        "pp3u10-2:drill-10:y",
+        "pp3u10-2:drill-10:Z",
+        "pp3u10-2:drill-11:x",
+        "pp3u10-2:drill-11:y",
+        "pp3u10-2:drill-12:x",
+        "pp3u10-2:drill-12:y",
+        "pp3u10-2:drill-13"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Inscribed angle and arc measure",
+       "statement": "Calculate an inscribed angle from its subtended arc, find arc measures from angles, and show that an angle in a semicircle is a right angle.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-2:rule-4",
+         "printed_page": 75,
+         "quote": "half the measure of the subtended arc"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 75,
+         "quote": "$\\because m(\\angle ACB)=\\frac{1}{2}m(\\widehat{AB})$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:drill-14:3",
+         "printed_page": 76,
+         "quote": "arc BC marked 128°"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:think-2",
+        "pp3u10-2:think-3",
+        "pp3u10-2:think-4",
+        "pp3u10-2:drill-14:1",
+        "pp3u10-2:drill-14:2",
+        "pp3u10-2:drill-14:3",
+        "pp3u10-2:drill-14:4",
+        "pp3u10-2:drill-14:5",
+        "pp3u10-2:drill-14:6"
+       ],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Angles from intersecting chords and rays",
+       "statement": "Calculate the angle formed by two chords intersecting inside a circle, or by two rays intersecting outside it, using half the sum or half the difference of the intercepted arcs.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 78,
+         "quote": "$\\frac{1}{2}$[m(arc CE) - m(arc BD)]"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 76,
+         "quote": "m(∠AEC) = ½ [m(arc AC) + m(arc BD)]"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:drill-15:4",
+         "printed_page": 77,
+         "quote": "x° at A"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:drill-15:1",
+        "pp3u10-2:drill-15:2",
+        "pp3u10-2:drill-15:3",
+        "pp3u10-2:drill-15:4",
+        "pp3u10-2:drill-15:5",
+        "pp3u10-2:drill-15:6",
+        "pp3u10-2:drill-16:A",
+        "pp3u10-2:drill-16:B"
+       ],
+       "worked_examples": [
+        "WE7",
+        "WE8",
+        "WE9"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Inscribed and central angles",
+       "statement": "Calculate the measure of an inscribed angle or of the central angle subtended by the same arc, using the theorem that the inscribed angle is half the central angle.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-2:rule-3",
+         "printed_page": 72,
+         "quote": "The measure of the inscribed angle is half the measure of the central angle"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 74,
+         "quote": "$m(\\angle BDC)=\\frac{1}{2}m(\\angle BMC)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:activity-1:2",
+         "printed_page": 72,
+         "quote": "find $m(\\angle BMD)$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:think-and-discuss-1:1",
+        "pp3u10-2:think-and-discuss-1:2",
+        "pp3u10-2:think-and-discuss-1:3",
+        "pp3u10-2:think-and-discuss-1:4",
+        "pp3u10-2:think-and-discuss-1:5",
+        "pp3u10-2:think-1",
+        "pp3u10-2:activity-1:1",
+        "pp3u10-2:activity-1:2",
+        "pp3u10-2:activity-1:3",
+        "pp3u10-2:activity-1:4",
+        "pp3u10-2:activity-2",
+        "pp3u10-2:drill-1:x",
+        "pp3u10-2:drill-2:y",
+        "pp3u10-2:drill-3:Z",
+        "pp3u10-2:drill-4:L",
+        "pp3u10-2:drill-5:x",
+        "pp3u10-2:drill-6:y",
+        "pp3u10-2:drill-7:Z",
+        "pp3u10-2:drill-8:L",
+        "pp3u10-2:drill-9:x",
+        "pp3u10-2:drill-10:y",
+        "pp3u10-2:drill-10:Z",
+        "pp3u10-2:drill-11:x",
+        "pp3u10-2:drill-11:y",
+        "pp3u10-2:drill-12:x",
+        "pp3u10-2:drill-12:y",
+        "pp3u10-2:drill-13"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Inscribed angle and its arc",
+       "statement": "Calculate an inscribed angle from its subtended arc (or the arc from the angle), including the right angle in a semicircle.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-2:rule-4",
+         "printed_page": 75,
+         "quote": "The measure of an inscribed angle is half the measure of the subtended arc"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 75,
+         "quote": "m(\\angle ACB)=\\frac{1}{2}m(\\widehat{AB})"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:drill-14:3",
+         "printed_page": 76,
+         "quote": "arc BC marked 128°"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:think-2",
+        "pp3u10-2:think-3",
+        "pp3u10-2:think-4",
+        "pp3u10-2:drill-14:1",
+        "pp3u10-2:drill-14:2",
+        "pp3u10-2:drill-14:3",
+        "pp3u10-2:drill-14:4",
+        "pp3u10-2:drill-14:5",
+        "pp3u10-2:drill-14:6"
+       ],
+       "worked_examples": [
+        "WE6"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Angles between intersecting chords",
+       "statement": "Calculate the angle formed by two chords or secants intersecting inside or outside a circle, and the arcs it subtends, as half the sum or half the difference of the arcs.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 76,
+         "quote": "Well known problem (1)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 78,
+         "quote": "m(∠EXC) = $\\frac{1}{2}$[m(arc CE) + m(arc BD)]"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-2:drill-15:1",
+         "printed_page": 77,
+         "quote": "find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-2:drill-15:1",
+        "pp3u10-2:drill-15:2",
+        "pp3u10-2:drill-15:3",
+        "pp3u10-2:drill-15:4",
+        "pp3u10-2:drill-15:5",
+        "pp3u10-2:drill-15:6",
+        "pp3u10-2:drill-16:A",
+        "pp3u10-2:drill-16:B"
+       ],
+       "worked_examples": [
+        "WE7",
+        "WE8",
+        "WE9"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the measure of an inscribed angle or of the central angle subtended by the same arc, using the theorem that the inscribed angle is half the central angle.",
+      "label": "Inscribed and central angle relation",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-2:rule-3",
+        "printed_page": 72,
+        "quote": "The measure of the inscribed angle is half the measure of the central angle"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 74,
+        "quote": "$m(\\angle BDC)=\\frac{1}{2}m(\\angle BMC)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-2:activity-1:2",
+        "printed_page": 72,
+        "quote": "find $m(\\angle BMD)$"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-2:think-and-discuss-1:1",
+       "pp3u10-2:think-and-discuss-1:2",
+       "pp3u10-2:think-and-discuss-1:3",
+       "pp3u10-2:think-and-discuss-1:4",
+       "pp3u10-2:think-and-discuss-1:5",
+       "pp3u10-2:think-1",
+       "pp3u10-2:activity-1:1",
+       "pp3u10-2:activity-1:2",
+       "pp3u10-2:activity-1:3",
+       "pp3u10-2:activity-1:4",
+       "pp3u10-2:activity-2",
+       "pp3u10-2:drill-1:x",
+       "pp3u10-2:drill-2:y",
+       "pp3u10-2:drill-3:Z",
+       "pp3u10-2:drill-4:L",
+       "pp3u10-2:drill-5:x",
+       "pp3u10-2:drill-6:y",
+       "pp3u10-2:drill-7:Z",
+       "pp3u10-2:drill-8:L",
+       "pp3u10-2:drill-9:x",
+       "pp3u10-2:drill-10:y",
+       "pp3u10-2:drill-10:Z",
+       "pp3u10-2:drill-11:x",
+       "pp3u10-2:drill-11:y",
+       "pp3u10-2:drill-12:x",
+       "pp3u10-2:drill-12:y",
+       "pp3u10-2:drill-13"
+      ],
+      "worked_examples": [
+       "WE5"
+      ],
+      "terms": [
+       "inscribed angle",
+       "central angle",
+       "subtended arc",
+       "measure"
+      ]
+     },
+     {
+      "statement": "Calculate an inscribed angle from its subtended arc, find arc measures from angles, and show that an angle in a semicircle is a right angle.",
+      "label": "Inscribed angle and arc measure",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-2:rule-4",
+        "printed_page": 75,
+        "quote": "half the measure of the subtended arc"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE6",
+        "printed_page": 75,
+        "quote": "$\\because m(\\angle ACB)=\\frac{1}{2}m(\\widehat{AB})$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-2:drill-14:3",
+        "printed_page": 76,
+        "quote": "arc BC marked 128°"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-2:think-2",
+       "pp3u10-2:think-3",
+       "pp3u10-2:think-4",
+       "pp3u10-2:drill-14:1",
+       "pp3u10-2:drill-14:2",
+       "pp3u10-2:drill-14:3",
+       "pp3u10-2:drill-14:4",
+       "pp3u10-2:drill-14:5",
+       "pp3u10-2:drill-14:6"
+      ],
+      "worked_examples": [
+       "WE6"
+      ],
+      "terms": [
+       "inscribed angle",
+       "subtended arc",
+       "arc",
+       "semicircle",
+       "right angle"
+      ]
+     },
+     {
+      "statement": "Calculate the angle formed by two chords intersecting inside a circle, or by two rays intersecting outside it, using half the sum or half the difference of the intercepted arcs.",
+      "label": "Angles from intersecting chords and rays",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE9",
+        "printed_page": 78,
+        "quote": "$\\frac{1}{2}$[m(arc CE) - m(arc BD)]"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 76,
+        "quote": "m(∠AEC) = ½ [m(arc AC) + m(arc BD)]"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-2:drill-15:4",
+        "printed_page": 77,
+        "quote": "x° at A"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-2:drill-15:1",
+       "pp3u10-2:drill-15:2",
+       "pp3u10-2:drill-15:3",
+       "pp3u10-2:drill-15:4",
+       "pp3u10-2:drill-15:5",
+       "pp3u10-2:drill-15:6",
+       "pp3u10-2:drill-16:A",
+       "pp3u10-2:drill-16:B"
+      ],
+      "worked_examples": [
+       "WE7",
+       "WE8",
+       "WE9"
+      ],
+      "terms": [
+       "chord",
+       "secant",
+       "intercepted arc",
+       "arc",
+       "angle between two chords"
+      ],
+      "term_flags": [
+       {
+        "term": "subtended arc",
+        "why": "Other curricula may say 'intercepted arc' or 'arc opposite the angle'."
+       },
+       {
+        "term": "m(arc AB)",
+        "why": "Arc measure notation; other curricula may write it as the arc's angular measure or use a different arc symbol."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The anchored text contains the exact theorem: 'The measure of the inscribed angle is half the measure of the central angle, subtended by the same arc.' This definition/theorem statement directly defines the relationship the objective requires."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates the calculation: $m(\\angle BDC)=\\frac{1}{2}m(\\angle BMC)$ is shown in the proof section. The example walks through finding a specific angle measure using this theorem, demonstrating the skill."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise contains the exact quote 'find $m(\\angle BMD)$' and asks students to calculate an angle measure from a given figure. This makes students practice the calculation skill stated in the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The corollary explicitly states: 'The measure of an inscribed angle is half the measure of the subtended arc.' This definition directly covers the relationship needed for the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example explicitly uses $m(\\angle ACB)=\\frac{1}{2}m(\\widehat{AB})$ to calculate the inscribed angle from the subtended arc, demonstrating this key skill of the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise gives an arc measure (128°) and asks students to find angle measures, directly practicing the skill of calculating angles from arcs as stated in the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The worked example uses the formula $\\frac{1}{2}[m(\\text{arc CE}) - m(\\text{arc BD})]$ to calculate an angle formed by rays intersecting outside the circle, demonstrating the half-difference method."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates the formula $m(\\angle AEC) = \\frac{1}{2}[m(\\text{arc AC}) + m(\\text{arc BD})]$ for two chords intersecting inside a circle, showing the half-sum method."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to find angle x at point A (outside the circle) given arc measures, requiring them to apply the half-difference formula for angles formed by intersecting lines outside a circle."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-3",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Find the measures of inscribed angles subtended by the same arc, and use their equality to solve for unknown angles and prove relations (e.g. equal segments).",
+       "label": "Inscribed angles on same arc",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:theorem-2",
+         "printed_page": 79,
+         "quote": "all inscribed angles subtended by the same arc are equal in measure"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 79,
+         "quote": "m(∠C) = m(∠D) = m(∠E)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 80,
+         "quote": "$m(\\angle B)=m(\\angle D)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:think-and-discuss-1:2",
+         "printed_page": 79,
+         "quote": "Find m(∠AEB), m(∠ADB), m(∠ACB)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-1:1",
+         "printed_page": 80,
+         "quote": "m(∠C) = ... °"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:think-and-discuss-1:1",
+        "pp3u10-3:think-and-discuss-1:2",
+        "pp3u10-3:drill-1:1",
+        "pp3u10-3:drill-1:2",
+        "pp3u10-3:drill-1:3",
+        "pp3u10-3:drill-2"
+       ],
+       "worked_examples": [
+        "WE10",
+        "WE11"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Use equal arcs (and equal chords) in the same or congruent circles to show inscribed angles are equal, and the converse, to calculate unknowns and prove triangles isosceles.",
+       "label": "Equal arcs, equal angles",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:rule-1",
+         "printed_page": 81,
+         "quote": "subtended by arcs of equal measures are equal"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 83,
+         "quote": "$m(\\widehat{AD})=m(\\widehat{BE})$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-4",
+         "printed_page": 83,
+         "quote": "the triangle ACE is an isosceles triangle"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-3:1",
+         "printed_page": 82,
+         "quote": "find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:think-and-discuss-1:3",
+        "pp3u10-3:think-1",
+        "pp3u10-3:drill-3:1",
+        "pp3u10-3:drill-3:2",
+        "pp3u10-3:drill-3:3",
+        "pp3u10-3:drill-4",
+        "pp3u10-3:drill-5",
+        "pp3u10-3:think-2"
+       ],
+       "worked_examples": [
+        "WE12"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Decide whether four points lie on one circle by checking that two equal angles are drawn on the same base and on the same side of it.",
+       "label": "Show points are concyclic",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:rule-5",
+         "printed_page": 84,
+         "quote": "their vertices lie on an arc of a circle"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 84,
+         "quote": "have one circle passing through them"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-6:1",
+         "printed_page": 84,
+         "quote": "Which of the following figures can have a circle passing through"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:drill-6:1",
+        "pp3u10-3:drill-6:2",
+        "pp3u10-3:drill-6:3",
+        "pp3u10-3:drill-6:4",
+        "pp3u10-3:drill-6:5",
+        "pp3u10-3:drill-6:6"
+       ],
+       "worked_examples": [
+        "WE13"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the measures of inscribed angles subtended by the same arc, or by arcs of equal measure, and find unknown values from them",
+       "label": "Angles on the same arc",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 79,
+         "quote": "m(∠C) = m(∠D) = m(∠E)"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:theorem-2",
+         "printed_page": 79,
+         "quote": "all inscribed angles subtended by the same arc are equal in measure"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-3:1",
+         "printed_page": 82,
+         "quote": "find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:think-and-discuss-1:1",
+        "pp3u10-3:think-and-discuss-1:2",
+        "pp3u10-3:think-and-discuss-1:3",
+        "pp3u10-3:drill-1:1",
+        "pp3u10-3:drill-1:2",
+        "pp3u10-3:drill-1:3",
+        "pp3u10-3:drill-3:1",
+        "pp3u10-3:drill-3:2",
+        "pp3u10-3:drill-3:3"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Prove equal angles, isosceles triangles and equal segments in a circle using inscribed angles on equal arcs and chords",
+       "label": "Prove using inscribed angles",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 80,
+         "quote": "In △EBC"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 83,
+         "quote": "∴ $m(\\angle B)=m(\\angle A)$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:rule-1",
+         "printed_page": 81,
+         "quote": "inscribed angles subtended by arcs of equal measures are equal"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-4",
+         "printed_page": 83,
+         "quote": "the triangle ACE is an isosceles triangle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:drill-2",
+        "pp3u10-3:think-1",
+        "pp3u10-3:drill-4",
+        "pp3u10-3:drill-5",
+        "pp3u10-3:think-2"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Determine whether four points lie on one circle by comparing equal angles drawn on the same base and on the same side of it",
+       "label": "Test for concyclic points",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 84,
+         "quote": "have one circle passing through them"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-3:rule-5",
+         "printed_page": 84,
+         "quote": "their vertices lie on an arc of a circle"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-3:drill-6:1",
+         "printed_page": 84,
+         "quote": "Mention the reason"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-3:drill-6:1",
+        "pp3u10-3:drill-6:2",
+        "pp3u10-3:drill-6:3",
+        "pp3u10-3:drill-6:4",
+        "pp3u10-3:drill-6:5",
+        "pp3u10-3:drill-6:6"
+       ],
+       "worked_examples": [
+        "WE13"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Find the measures of inscribed angles subtended by the same arc, and use their equality to solve for unknown angles and prove relations (e.g. equal segments).",
+      "label": "Inscribed angles on the same arc",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1",
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-3:theorem-2",
+        "printed_page": 79,
+        "quote": "all inscribed angles subtended by the same arc are equal in measure"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE10",
+        "printed_page": 79,
+        "quote": "m(∠C) = m(∠D) = m(∠E)"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 80,
+        "quote": "$m(\\angle B)=m(\\angle D)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-3:think-and-discuss-1:2",
+        "printed_page": 79,
+        "quote": "Find m(∠AEB), m(∠ADB), m(∠ACB)"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-3:think-and-discuss-1:1",
+       "pp3u10-3:think-and-discuss-1:2",
+       "pp3u10-3:drill-1:1",
+       "pp3u10-3:drill-1:2",
+       "pp3u10-3:drill-1:3",
+       "pp3u10-3:drill-2"
+      ],
+      "worked_examples": [
+       "WE10",
+       "WE11"
+      ],
+      "terms": [
+       "inscribed angle",
+       "subtended",
+       "arc",
+       "measure",
+       "chord"
+      ],
+      "term_flags": [
+       {
+        "term": "subtended",
+        "why": "Other curricula may say 'standing on' an arc or 'angles in the same segment'."
+       },
+       {
+        "term": "inscribed angle",
+        "why": "Often called 'angle at the circumference'."
+       }
+      ]
+     },
+     {
+      "statement": "Use equal arcs (and equal chords) in the same or congruent circles to show inscribed angles are equal, and the converse, to calculate unknowns and prove triangles isosceles.",
+      "label": "Equal arcs, equal angles",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B1",
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-3:rule-1",
+        "printed_page": 81,
+        "quote": "subtended by arcs of equal measures are equal"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE12",
+        "printed_page": 83,
+        "quote": "$m(\\widehat{AD})=m(\\widehat{BE})$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-3:drill-4",
+        "printed_page": 83,
+        "quote": "the triangle ACE is an isosceles triangle"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-3:drill-3:1",
+        "printed_page": 82,
+        "quote": "find the value of the symbol used in measuring"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-3:think-and-discuss-1:3",
+       "pp3u10-3:think-1",
+       "pp3u10-3:drill-3:1",
+       "pp3u10-3:drill-3:2",
+       "pp3u10-3:drill-3:3",
+       "pp3u10-3:drill-4",
+       "pp3u10-3:drill-5",
+       "pp3u10-3:think-2"
+      ],
+      "worked_examples": [
+       "WE12"
+      ],
+      "terms": [
+       "arc",
+       "congruent circles",
+       "chord",
+       "inscribed angle",
+       "isosceles triangle"
+      ],
+      "term_flags": [
+       {
+        "term": "congruent circles",
+        "why": "Equal-radius circles; other curricula may say 'equal circles'."
+       }
+      ]
+     },
+     {
+      "statement": "Decide whether four points lie on one circle by checking that two equal angles are drawn on the same base and on the same side of it.",
+      "label": "Show points are concyclic",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-3:rule-5",
+        "printed_page": 84,
+        "quote": "their vertices lie on an arc of a circle"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE13",
+        "printed_page": 84,
+        "quote": "have one circle passing through them"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-3:drill-6:1",
+        "printed_page": 84,
+        "quote": "Which of the following figures can have a circle passing through"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-3:drill-6:1",
+       "pp3u10-3:drill-6:2",
+       "pp3u10-3:drill-6:3",
+       "pp3u10-3:drill-6:4",
+       "pp3u10-3:drill-6:5",
+       "pp3u10-3:drill-6:6"
+      ],
+      "worked_examples": [
+       "WE13"
+      ],
+      "terms": [
+       "concyclic",
+       "base",
+       "circle passing through points"
+      ],
+      "term_flags": [
+       {
+        "term": "concyclic",
+        "why": "Other curricula may say 'cyclic quadrilateral' or 'points on a circle'."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The anchored text contains the exact meaning of the quote: 'all inscribed angles subtended by the same arc are equal in measure' is stated as an intro/definition."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The formula m(∠C) = m(∠D) = m(∠E) appears both in the 'R.T.P.' and conclusion of the worked example, demonstrating the skill."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The equation m(∠B)=m(∠D) appears in the proof and is used to prove equal segments (EB=EC), directly supporting the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to find measures of inscribed angles subtended by the same arc, which directly practices the objective skill."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The anchored text states the rule that inscribed angles subtended by arcs of equal measures are equal, which is the intro/definition for this objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates using equal chords (AD=BE) to establish equal arcs and inscribed angles, then proving a relation (CD=CE)."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks to prove triangle ACE is isosceles using equal chords, directly practicing the objective's skill of proving triangles isosceles."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks to find unknown angle values, which practices the 'calculate unknowns' aspect of the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The anchored text states the converse theorem defining when vertices lie on a circle given equal angles on the same base, which is the core intro for this objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked example demonstrates the method of deciding four points lie on a circle by checking equal angles on the same base and side."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks to decide which figures allow a circle through four points, directly practicing the objective skill."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-4",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Determine whether a given quadrilateral is a cyclic quadrilateral by showing that two angles drawn on the same base and in one direction of it are equal, and explain the answer.",
+       "label": "Identify cyclic quadrilaterals",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-4:definition-1",
+         "printed_page": 85,
+         "quote": "four vertices belong to one circle"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-4:notice-2",
+         "printed_page": 85,
+         "quote": "a circle can be drawn passing through the points X, Y, Z and L"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-1:1",
+         "printed_page": 86,
+         "quote": "Which of the following figures is a cyclic quadrilateral?"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 86,
+         "quote": "Figure AXBY is a cyclic quadrilateral"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-4:think-and-discuss-1",
+        "pp3u10-4:drill-1:1",
+        "pp3u10-4:drill-1:2",
+        "pp3u10-4:drill-1:3",
+        "pp3u10-4:drill-1:4",
+        "pp3u10-4:drill-1:5",
+        "pp3u10-4:think-1"
+       ],
+       "worked_examples": [
+        "WE14"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Prove that a figure is a cyclic quadrilateral and use equal inscribed angles, parallel lines and bisectors in the proof to deduce further angle equalities or parallel lines.",
+       "label": "Prove cyclic quadrilateral properties",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 87,
+         "quote": "BXYC is a cyclic quadrilateral"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-2:First",
+         "printed_page": 87,
+         "quote": "Prove that: AXYM is a cyclic quadrilateral."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-3:Second",
+         "printed_page": 87,
+         "quote": "$\\overline{EF} \\parallel \\overline{BC}$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-4:drill-2:First",
+        "pp3u10-4:drill-2:Second",
+        "pp3u10-4:drill-2:Third",
+        "pp3u10-4:drill-3:First",
+        "pp3u10-4:drill-3:Second"
+       ],
+       "worked_examples": [
+        "WE15"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Identify cyclic quadrilaterals",
+       "statement": "Determine whether a given quadrilateral is a cyclic quadrilateral by checking whether two angles drawn on the same base and in one direction of it are equal, and explain the answer.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "definition-1",
+         "printed_page": 85,
+         "quote": "a quadrilateral figure whose four vertices belong to one circle"
+        },
+        {
+         "kind": "intro",
+         "anchor": "notice-2",
+         "printed_page": 85,
+         "quote": "they are two drawn angles on the base YZ and in one direction of it"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-1:1",
+         "printed_page": 86,
+         "quote": "Which of the following figures is a cyclic quadrilateral?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:think-and-discuss-1",
+         "printed_page": 85,
+         "quote": "Can a circle be drawn passing through the vertices of the quadrilateral ABCD?"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-4:think-and-discuss-1",
+        "pp3u10-4:drill-1:1",
+        "pp3u10-4:drill-1:2",
+        "pp3u10-4:drill-1:3",
+        "pp3u10-4:drill-1:4",
+        "pp3u10-4:drill-1:5"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "label": "Prove a figure is cyclic",
+       "statement": "Prove that a figure is a cyclic quadrilateral by showing two equal angles (such as two right angles, or angles from parallel lines) on the same base and in one direction of it.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 86,
+         "quote": "Figure AXBY is a cyclic quadrilateral"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 87,
+         "quote": "BXYC is a cyclic quadrilateral"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-2:First",
+         "printed_page": 87,
+         "quote": "Prove that: AXYM is a cyclic quadrilateral."
+        },
+        {
+         "kind": "intro",
+         "anchor": "printed-objective-1",
+         "printed_page": 85,
+         "quote": "Identifying when the shape is cyclic quadrilateral."
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-4:drill-2:First",
+        "pp3u10-4:drill-3:First"
+       ],
+       "worked_examples": [
+        "WE14",
+        "WE15"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Use cyclic property in deductions",
+       "statement": "Use a proven cyclic quadrilateral and its circle to deduce equal angles, parallel lines and the location of the centre of the circle through its vertices.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 87,
+         "quote": "m(\\angle XBY) = m(\\angle XCY)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-2:Second",
+         "printed_page": 87,
+         "quote": "m(\\angle MXY) = m(\\angle MCY)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-4:drill-3:Second",
+         "printed_page": 87,
+         "quote": "\\overline{EF} \\parallel \\overline{BC}"
+        },
+        {
+         "kind": "intro",
+         "anchor": "notice-2",
+         "printed_page": 85,
+         "quote": "a circle can be drawn passing through the points X, Y, Z and L"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-4:think-1",
+        "pp3u10-4:drill-2:Second",
+        "pp3u10-4:drill-2:Third",
+        "pp3u10-4:drill-3:Second"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine whether a given quadrilateral is a cyclic quadrilateral by checking whether two angles drawn on the same base and in one direction of it are equal, and explain the answer.",
+      "label": "Identify cyclic quadrilaterals",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "definition-1",
+        "printed_page": 85,
+        "quote": "a quadrilateral figure whose four vertices belong to one circle"
+       },
+       {
+        "kind": "intro",
+        "anchor": "notice-2",
+        "printed_page": 85,
+        "quote": "they are two drawn angles on the base YZ and in one direction of it"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-4:drill-1:1",
+        "printed_page": 86,
+        "quote": "Which of the following figures is a cyclic quadrilateral?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-4:think-and-discuss-1",
+        "printed_page": 85,
+        "quote": "Can a circle be drawn passing through the vertices of the quadrilateral ABCD?"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-4:think-and-discuss-1",
+       "pp3u10-4:drill-1:1",
+       "pp3u10-4:drill-1:2",
+       "pp3u10-4:drill-1:3",
+       "pp3u10-4:drill-1:4",
+       "pp3u10-4:drill-1:5"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "cyclic quadrilateral",
+       "base",
+       "circle",
+       "vertices",
+       "angle"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Prove that a figure is a cyclic quadrilateral by showing two equal angles (such as two right angles, or angles from parallel lines) on the same base and in one direction of it.",
+      "label": "Prove a figure is cyclic",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE14",
+        "printed_page": 86,
+        "quote": "Figure AXBY is a cyclic quadrilateral"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE15",
+        "printed_page": 87,
+        "quote": "BXYC is a cyclic quadrilateral"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-4:drill-2:First",
+        "printed_page": 87,
+        "quote": "Prove that: AXYM is a cyclic quadrilateral."
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-4:drill-2:First",
+       "pp3u10-4:drill-3:First"
+      ],
+      "worked_examples": [
+       "WE14",
+       "WE15"
+      ],
+      "terms": [
+       "cyclic quadrilateral",
+       "right angle",
+       "parallel lines",
+       "base",
+       "bisector"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Use a proven cyclic quadrilateral and its circle to deduce equal angles, parallel lines and the location of the centre of the circle through its vertices.",
+      "label": "Use cyclic property in deductions",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE15",
+        "printed_page": 87,
+        "quote": "m(\\angle XBY) = m(\\angle XCY)"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-4:drill-2:Second",
+        "printed_page": 87,
+        "quote": "m(\\angle MXY) = m(\\angle MCY)"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-4:drill-3:Second",
+        "printed_page": 87,
+        "quote": "\\overline{EF} \\parallel \\overline{BC}"
+       },
+       {
+        "kind": "intro",
+        "anchor": "notice-2",
+        "printed_page": 85,
+        "quote": "a circle can be drawn passing through the points X, Y, Z and L"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-4:think-1",
+       "pp3u10-4:drill-2:Second",
+       "pp3u10-4:drill-2:Third",
+       "pp3u10-4:drill-3:Second"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "cyclic quadrilateral",
+       "centre",
+       "parallel lines",
+       "equal angles",
+       "circle"
+      ],
+      "term_flags": [
+       {
+        "term": "m(∠ABC)",
+        "why": "Angle measure is written m(∠...) in this book; other curricula write ∠ABC or the measure of angle ABC."
+       },
+       {
+        "term": "drawn angle on the base in one direction",
+        "why": "Book's phrasing for angles subtending the same chord on the same side; other curricula say 'angles in the same segment'."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": false,
+      "supports": false,
+      "note": "Anchor definition-1 does not exist in the lesson packet"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": false,
+      "supports": false,
+      "note": "Anchor notice-2 does not exist in the lesson packet"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise presents the exact question about cyclic quadrilaterals and requires explanation, matching the objective's requirement to determine and explain"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks whether a circle can be drawn through vertices (equivalent to determining if cyclic) and requires explanation with given angle measurements to test"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates proving AXBY is cyclic by showing two equal right angles (90°) on base AY in one direction"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Worked example proves BXYC is cyclic by showing m(∠CXY) = m(∠CBY) are equal angles on base CY in one direction"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to prove AXYM is a cyclic quadrilateral given midpoints and circle center, providing practice in the proof method"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Worked example uses proven cyclic quadrilateral BXYC to deduce the equal angles m(∠XBY) = m(∠XCY)"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks to prove equal angles m(∠MXY) = m(∠MCY) using the cyclic quadrilateral properties"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise uses cyclic quadrilateral ABCD to deduce parallel lines (EF ∥ BC), directly addressing the parallel lines aspect of the objective"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": false,
+      "supports": false,
+      "note": "Anchor notice-2 does not exist in the lesson packet"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-5",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate unknown angles in a cyclic quadrilateral using the fact that each two opposite angles are supplementary.",
+       "label": "Opposite angles of cyclic quadrilateral",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-1",
+         "printed_page": 88,
+         "quote": "each two opposite angles are supplementary"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 89,
+         "quote": "$m(\\angle A) + m(\\angle C) = 180^\\circ$ (theorem)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-1:1",
+         "printed_page": 89,
+         "quote": "find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:think-and-discuss-1:1",
+        "pp3u10-5:think-and-discuss-1:2",
+        "pp3u10-5:think-and-discuss-1:3",
+        "pp3u10-5:think-and-discuss-1:4",
+        "pp3u10-5:think-and-discuss-2",
+        "pp3u10-5:drill-1:1",
+        "pp3u10-5:drill-1:2",
+        "pp3u10-5:drill-1:3",
+        "pp3u10-5:drill-2:A",
+        "pp3u10-5:drill-2:B",
+        "pp3u10-5:drill-2:C",
+        "pp3u10-5:drill-2:D"
+       ],
+       "worked_examples": [
+        "WE16"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Calculate angle measures using the corollary that the exterior angle at a vertex of a cyclic quadrilateral equals the interior angle at the opposite vertex.",
+       "label": "Exterior angle of cyclic quadrilateral",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-2",
+         "printed_page": 90,
+         "quote": "exterior angle at a vertex of a cyclic quadrilateral"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE17",
+         "printed_page": 90,
+         "quote": "(Corollary)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-3:1",
+         "printed_page": 90,
+         "quote": "exterior angle at C is x°"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:drill-3:1",
+        "pp3u10-5:drill-3:2",
+        "pp3u10-5:drill-3:3"
+       ],
+       "worked_examples": [
+        "WE17"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Prove that a quadrilateral is cyclic using the converse of theorem 3 (supplementary opposite angles) or equal exterior and opposite interior angles.",
+       "label": "Prove a quadrilateral cyclic",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-3",
+         "printed_page": 90,
+         "quote": "If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE18",
+         "printed_page": 92,
+         "quote": "XYDC is a cyclic quadrilateral"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-4",
+         "printed_page": 91,
+         "quote": "prove that ABCD is a cyclic quadrilateral"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:drill-4",
+        "pp3u10-5:drill-5",
+        "pp3u10-5:drill-6",
+        "pp3u10-5:drill-7",
+        "pp3u10-5:drill-8",
+        "pp3u10-5:drill-9",
+        "pp3u10-5:think-1",
+        "pp3u10-5:drill-10:prove",
+        "pp3u10-5:drill-10:cyclic quadrilaterals"
+       ],
+       "worked_examples": [
+        "WE18"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate unknown angles and arcs in a cyclic quadrilateral using the property that opposite angles are supplementary.",
+       "label": "Opposite angles of cyclic quadrilateral",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-1",
+         "printed_page": 88,
+         "quote": "each two opposite angles are supplementary"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 89,
+         "quote": "$m(\\angle A) + m(\\angle C) = 180^\\circ$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-1:1",
+         "printed_page": 89,
+         "quote": "find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:think-and-discuss-1:1",
+        "pp3u10-5:think-and-discuss-1:2",
+        "pp3u10-5:think-and-discuss-1:3",
+        "pp3u10-5:think-and-discuss-1:4",
+        "pp3u10-5:think-and-discuss-2",
+        "pp3u10-5:drill-1:1",
+        "pp3u10-5:drill-1:2",
+        "pp3u10-5:drill-1:3",
+        "pp3u10-5:drill-2:A",
+        "pp3u10-5:drill-2:B",
+        "pp3u10-5:drill-2:C",
+        "pp3u10-5:drill-2:D"
+       ],
+       "worked_examples": [
+        "WE16"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate angles using the exterior angle of a cyclic quadrilateral being equal to the interior opposite angle.",
+       "label": "Exterior angle of cyclic quadrilateral",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-2",
+         "printed_page": 90,
+         "quote": "exterior angle at a vertex of a cyclic quadrilateral"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE17",
+         "printed_page": 90,
+         "quote": "m(∠CBE) = m(∠CDA) = 85° (Corollary)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-3:1",
+         "printed_page": 90,
+         "quote": "exterior angle at C is x°"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:drill-3:1",
+        "pp3u10-5:drill-3:2",
+        "pp3u10-5:drill-3:3"
+       ],
+       "worked_examples": [
+        "WE17"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Prove that a quadrilateral is cyclic using supplementary opposite angles or an exterior angle equal to the interior opposite angle, and state the cases.",
+       "label": "Prove a quadrilateral is cyclic",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-5:rule-3",
+         "printed_page": 90,
+         "quote": "If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE18",
+         "printed_page": 92,
+         "quote": "XYDC is a cyclic quadrilateral"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-5:drill-4",
+         "printed_page": 91,
+         "quote": "prove that ABCD is a cyclic quadrilateral"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-5:drill-4",
+        "pp3u10-5:drill-5",
+        "pp3u10-5:drill-6",
+        "pp3u10-5:drill-7",
+        "pp3u10-5:drill-8",
+        "pp3u10-5:drill-9",
+        "pp3u10-5:think-1",
+        "pp3u10-5:drill-10:prove",
+        "pp3u10-5:drill-10:cyclic quadrilaterals"
+       ],
+       "worked_examples": [
+        "WE18"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate unknown angles (and arcs) in a cyclic quadrilateral using the fact that each two opposite angles are supplementary.",
+      "label": "Opposite angles of cyclic quadrilateral",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-5:rule-1",
+        "printed_page": 88,
+        "quote": "each two opposite angles are supplementary"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE16",
+        "printed_page": 89,
+        "quote": "$m(\\angle A) + m(\\angle C) = 180^\\circ$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-5:drill-1:1",
+        "printed_page": 89,
+        "quote": "find the value of the symbol used in measuring"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-5:think-and-discuss-1:1",
+       "pp3u10-5:think-and-discuss-1:2",
+       "pp3u10-5:think-and-discuss-1:3",
+       "pp3u10-5:think-and-discuss-1:4",
+       "pp3u10-5:think-and-discuss-2",
+       "pp3u10-5:drill-1:1",
+       "pp3u10-5:drill-1:2",
+       "pp3u10-5:drill-1:3",
+       "pp3u10-5:drill-2:A",
+       "pp3u10-5:drill-2:B",
+       "pp3u10-5:drill-2:C",
+       "pp3u10-5:drill-2:D"
+      ],
+      "worked_examples": [
+       "WE16"
+      ],
+      "terms": [
+       "cyclic quadrilateral",
+       "opposite angles",
+       "supplementary angles",
+       "arc"
+      ],
+      "term_flags": [
+       {
+        "term": "supplementary",
+        "why": "Other curricula may say angles that sum to 180° or add up to a straight angle."
+       },
+       {
+        "term": "cyclic quadrilateral",
+        "why": "Sometimes called an inscribed quadrilateral or concyclic quadrilateral."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate angle measures using the corollary that the exterior angle at a vertex of a cyclic quadrilateral equals the interior angle at the opposite vertex.",
+      "label": "Exterior angle of cyclic quadrilateral",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-5:rule-2",
+        "printed_page": 90,
+        "quote": "exterior angle at a vertex of a cyclic quadrilateral"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE17",
+        "printed_page": 90,
+        "quote": "m(∠CBE) = m(∠CDA) = 85° (Corollary)"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-5:drill-3:1",
+        "printed_page": 90,
+        "quote": "exterior angle at C is x°"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-5:drill-3:1",
+       "pp3u10-5:drill-3:2",
+       "pp3u10-5:drill-3:3"
+      ],
+      "worked_examples": [
+       "WE17"
+      ],
+      "terms": [
+       "exterior angle",
+       "interior angle",
+       "corollary",
+       "cyclic quadrilateral"
+      ],
+      "term_flags": [
+       {
+        "term": "corollary",
+        "why": "Used here for a result following from the theorem; other curricula may call it a property or theorem."
+       }
+      ]
+     },
+     {
+      "statement": "Prove that a quadrilateral is cyclic using the converse (supplementary opposite angles) or an exterior angle equal to the interior opposite angle.",
+      "label": "Prove a quadrilateral is cyclic",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-5:rule-3",
+        "printed_page": 90,
+        "quote": "If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE18",
+        "printed_page": 92,
+        "quote": "XYDC is a cyclic quadrilateral"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-5:drill-4",
+        "printed_page": 91,
+        "quote": "prove that ABCD is a cyclic quadrilateral"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-5:drill-4",
+       "pp3u10-5:drill-5",
+       "pp3u10-5:drill-6",
+       "pp3u10-5:drill-7",
+       "pp3u10-5:drill-8",
+       "pp3u10-5:drill-9",
+       "pp3u10-5:think-1",
+       "pp3u10-5:drill-10:prove",
+       "pp3u10-5:drill-10:cyclic quadrilaterals"
+      ],
+      "worked_examples": [
+       "WE18"
+      ],
+      "terms": [
+       "cyclic quadrilateral",
+       "supplementary angles",
+       "exterior angle",
+       "converse"
+      ],
+      "term_flags": [
+       {
+        "term": "converse",
+        "why": "Reverse statement of a theorem; wording may differ across curricula."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'each two opposite angles are supplementary' appears exactly in the definition. As a definition/theorem, it directly states the key property needed for the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$m(\\angle A) + m(\\angle C) = 180^\\circ$' is present. The worked example demonstrates calculating angle A in a cyclic quadrilateral using the supplementary property."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'find the value of the symbol used in measuring' is present. This exercise asks students to find unknown angles in a cyclic quadrilateral, practicing the skill in the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote phrase appears in the corollary definition. This states the key property relating exterior and interior opposite angles needed for the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$m(\\angle CBE) = m(\\angle CDA) = 85°$ (Corollary)' is present. The worked example demonstrates using the corollary to calculate angle measures."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'exterior angle at C is x°' is present. The exercise requires students to find exterior angle measures in a cyclic quadrilateral, practicing the skill."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic' is present exactly. This is the converse theorem needed to prove cyclic quadrilaterals."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'XYDC is a cyclic quadrilateral' appears in the conclusion. The worked example demonstrates proving a quadrilateral is cyclic using the exterior angle property."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'prove that ABCD is a cyclic quadrilateral' is present. This exercise requires students to practice proving quadrilaterals are cyclic."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-6",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Apply the theorem that two tangent segments drawn to a circle from an outside point are equal in length to find unknown lengths and angle measures.",
+       "label": "Equal tangent segments theorem",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-6:rule-1",
+         "printed_page": 93,
+         "quote": "The two tangent segments drawn to a circle from a point outside it are equal in length."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE19",
+         "printed_page": 95,
+         "quote": "∵ XA and XB are two tangent segments ∴ XA = XB"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:drill-1:1",
+         "printed_page": 95,
+         "quote": "Find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:think-and-discuss-1",
+        "pp3u10-6:drill-1:1",
+        "pp3u10-6:drill-1:2",
+        "pp3u10-6:drill-1:3",
+        "pp3u10-6:drill-2",
+        "pp3u10-6:drill-3",
+        "pp3u10-6:drill-4",
+        "pp3u10-6:drill-5",
+        "pp3u10-6:drill-6"
+       ],
+       "worked_examples": [
+        "WE19"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Use the corollaries (line through the center and the intersection point of the tangents is the axis of the chord of tangency and bisects the angles) to prove relations and find angle measures.",
+       "label": "Tangent theorem corollaries",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-6:corollary-2",
+         "printed_page": 94,
+         "quote": "bisects the angle between these two tangents"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 96,
+         "quote": "$\\overleftrightarrow{AM}$ is the axis of $\\overline{BC}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:think-2",
+         "printed_page": 94,
+         "quote": "Why does ray AM bisect ∠BAC?"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:think-1",
+        "pp3u10-6:think-2",
+        "pp3u10-6:think-3"
+       ],
+       "worked_examples": [
+        "WE20"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Use the properties of a circle inscribed in a polygon to calculate the perimeter and area of the polygon and the position of the center.",
+       "label": "Circle inscribed in polygon",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-6:definition-1",
+         "printed_page": 97,
+         "quote": "touches all of its sides internally"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 97,
+         "quote": "AX = AL"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:think-4",
+         "printed_page": 97,
+         "quote": "Is the center of the inscribed circle for any triangle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:think-4"
+       ],
+       "worked_examples": [
+        "WE21"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Solve problems on common internal and external tangents of two circles, including finding unknown values and the length of a common tangent.",
+       "label": "Common tangents of circles",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-6:definition-3",
+         "printed_page": 98,
+         "quote": "common external tangent to the two circles"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:drill-8",
+         "printed_page": 99,
+         "quote": "Find the length of $\\overline{AB}$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:drill-7:1",
+        "pp3u10-6:drill-7:2",
+        "pp3u10-6:drill-7:3",
+        "pp3u10-6:exercise-1",
+        "pp3u10-6:exercise-2",
+        "pp3u10-6:drill-8"
+       ],
+       "worked_examples": [],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Tangent segments from a point",
+       "statement": "Use the equality of the two tangent segments drawn from a point outside a circle, and the corollaries (axis of the chord of tangency, bisected angles), to find angle measures and prove relations.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "rule-1",
+         "printed_page": 93,
+         "quote": "are equal in length"
+        },
+        {
+         "kind": "intro",
+         "anchor": "corollary-2",
+         "printed_page": 94,
+         "quote": "bisects the angle between these two tangents"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE19",
+         "printed_page": 95,
+         "quote": "XA and XB are two tangent segments"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 96,
+         "quote": "AB and AC are two tangent segments to the circle M at B and C"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:drill-1:1",
+         "printed_page": 95,
+         "quote": "are two tangent segments to the circle M"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:think-and-discuss-1",
+        "pp3u10-6:think-1",
+        "pp3u10-6:think-2",
+        "pp3u10-6:think-3",
+        "pp3u10-6:drill-1:1",
+        "pp3u10-6:drill-1:2",
+        "pp3u10-6:drill-1:3",
+        "pp3u10-6:drill-2",
+        "pp3u10-6:drill-3",
+        "pp3u10-6:drill-4",
+        "pp3u10-6:drill-5",
+        "pp3u10-6:drill-6"
+       ],
+       "worked_examples": [
+        "WE19",
+        "WE20"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Inscribed circle of a polygon",
+       "statement": "Use the circle inscribed in a polygon, whose sides touch it, with equal tangent segments to find perimeters and areas, and identify the centre of a triangle's inscribed circle.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "definition-1",
+         "printed_page": 97,
+         "quote": "touches all of its sides internally"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 97,
+         "quote": "AX = AL"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:think-4",
+         "printed_page": 97,
+         "quote": "inscribed circle for any triangle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:think-4"
+       ],
+       "worked_examples": [
+        "WE21"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Common tangents of two circles",
+       "statement": "Distinguish common internal and common external tangents of two circles and calculate the length of a common tangent or prove equal tangent lengths.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "definition-2",
+         "printed_page": 98,
+         "quote": "common internal tangent"
+        },
+        {
+         "kind": "definition",
+         "anchor": "definition-3",
+         "printed_page": 98,
+         "quote": "common external tangent"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-6:drill-8",
+         "printed_page": 99,
+         "quote": "a common tangent to the two circles M and N"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-6:drill-7:1",
+        "pp3u10-6:drill-7:2",
+        "pp3u10-6:drill-7:3",
+        "pp3u10-6:exercise-1",
+        "pp3u10-6:exercise-2",
+        "pp3u10-6:drill-8"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Use the equality of the two tangent segments drawn to a circle from a point outside it, and the corollaries (the line through the centre and the intersection point of the tangents is the axis of the chord of tangency and bisects the angle between the tangents), to find unknown lengths and angle measures and to prove relations.",
+      "label": "Tangent segments from a point outside a circle",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-6:rule-1",
+        "printed_page": 93,
+        "quote": "The two tangent segments drawn to a circle from a point outside it are equal in length."
+       },
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-6:corollary-2",
+        "printed_page": 94,
+        "quote": "bisects the angle between these two tangents"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE19",
+        "printed_page": 95,
+        "quote": "∵ XA and XB are two tangent segments ∴ XA = XB"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE20",
+        "printed_page": 96,
+        "quote": "$\\overleftrightarrow{AM}$ is the axis of $\\overline{BC}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-6:drill-1:1",
+        "printed_page": 95,
+        "quote": "Find the value of the symbol used in measuring"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-6:think-and-discuss-1",
+       "pp3u10-6:think-1",
+       "pp3u10-6:think-2",
+       "pp3u10-6:think-3",
+       "pp3u10-6:drill-1:1",
+       "pp3u10-6:drill-1:2",
+       "pp3u10-6:drill-1:3",
+       "pp3u10-6:drill-2",
+       "pp3u10-6:drill-3",
+       "pp3u10-6:drill-4",
+       "pp3u10-6:drill-5",
+       "pp3u10-6:drill-6"
+      ],
+      "worked_examples": [
+       "WE19",
+       "WE20"
+      ],
+      "terms": [
+       "tangent segment",
+       "tangent",
+       "circle",
+       "axis of a chord",
+       "chord of tangency",
+       "bisects",
+       "angle"
+      ],
+      "term_flags": [
+       {
+        "term": "axis of a chord",
+        "why": "Other curricula call this the perpendicular bisector of the chord."
+       },
+       {
+        "term": "chord of tangency",
+        "why": "Other curricula may say chord of contact."
+       }
+      ]
+     },
+     {
+      "statement": "Use the circle inscribed in a polygon (touching all of its sides internally) and equal tangent segments to find the perimeter and area of the polygon and the position of the centre.",
+      "label": "Circle inscribed in a polygon",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-6:definition-1",
+        "printed_page": 97,
+        "quote": "touches all of its sides internally"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE21",
+        "printed_page": 97,
+        "quote": "AX = AL"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-6:think-4",
+        "printed_page": 97,
+        "quote": "Is the center of the inscribed circle for any triangle"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-6:think-4"
+      ],
+      "worked_examples": [
+       "WE21"
+      ],
+      "terms": [
+       "inscribed circle",
+       "polygon",
+       "perimeter",
+       "area",
+       "centre",
+       "tangent segment"
+      ],
+      "term_flags": [
+       {
+        "term": "inscribed circle",
+        "why": "Often called the incircle in other curricula."
+       }
+      ]
+     },
+     {
+      "statement": "Distinguish common internal and common external tangents of two circles, and solve problems finding unknown values and the length of a common tangent.",
+      "label": "Common tangents of two circles",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "definition-2",
+        "printed_page": 98,
+        "quote": "common internal tangent"
+       },
+       {
+        "kind": "definition",
+        "anchor": "pp3u10-6:definition-3",
+        "printed_page": 98,
+        "quote": "common external tangent to the two circles"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-6:drill-8",
+        "printed_page": 99,
+        "quote": "Find the length of $\\overline{AB}$"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-6:drill-7:1",
+       "pp3u10-6:drill-7:2",
+       "pp3u10-6:drill-7:3",
+       "pp3u10-6:exercise-1",
+       "pp3u10-6:exercise-2",
+       "pp3u10-6:drill-8"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "common internal tangent",
+       "common external tangent",
+       "common tangent",
+       "circle"
+      ],
+      "term_flags": [
+       {
+        "term": "common internal tangent",
+        "why": "Other curricula may call it a transverse common tangent."
+       },
+       {
+        "term": "common external tangent",
+        "why": "Other curricula may call it a direct common tangent."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quoted phrase about equal tangent segments is present in the theorem statement. For a definition kind, it correctly states the key equality property the objective uses."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The exact phrase 'bisects the angle between these two tangents' is in the anchored text. This definition correctly explains one of the corollaries mentioned in the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The logical statement '∵ XA and XB are two tangent segments ∴ XA = XB' appears in the proof. As a worked example, it demonstrates using the equality of tangent segments to solve a problem."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The statement '$\\overleftrightarrow{AM}$ is the axis of $\\overline{BC}$' is in the anchored text. This worked example demonstrates applying the corollary about the line through the center being the axis of the chord of tangency."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'Find the value of the symbol used in measuring' is in the anchored text. This exercise makes students practice finding unknown values with tangent segments."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'touches all of its sides internally' is in the definition. This definition correctly explains the core concept of an inscribed circle that the objective uses."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The statement 'AX = AL' is in the anchored text. This worked example demonstrates using equal tangent segments with an inscribed circle."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The question about the inscribed circle's center and angle bisectors is in the anchored text. This exercise requires students to think about the position of the inscribed circle's center."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": false,
+      "supports": false,
+      "note": "The anchor (definition-2) does not exist in the lesson packet, so no text is available to assess."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'common external tangent to the two circles' is in the anchored text. This definition explains a type of tangent that the objective asks students to distinguish."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'Find the length of $\\overline{AB}$' is in the anchored text. This exercise makes students practice finding the length of a common tangent to two circles."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u10-7",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the measure of an angle of tangency (or an unknown arc) using the fact that it is half the measure of the arc between its sides, and equals the inscribed angle on the same arc or half the central angle.",
+       "label": "Calculate angles of tangency",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-7:rule-2",
+         "printed_page": 100,
+         "quote": "$m(\\angle ABC)=\\frac{1}{2}m(\\widehat{AB})$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-7:rule-3",
+         "printed_page": 101,
+         "quote": "The measure of the angle of tangency is equal to the measure of the inscribed angle"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-1:1",
+         "printed_page": 101,
+         "quote": "calculate $m(\\angle ABC)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-2:1",
+         "printed_page": 102,
+         "quote": "line BC is tangent to the circle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-7:drill-1:1",
+        "pp3u10-7:drill-1:2",
+        "pp3u10-7:drill-1:3",
+        "pp3u10-7:drill-2:1",
+        "pp3u10-7:drill-2:2",
+        "pp3u10-7:drill-2:3",
+        "pp3u10-7:drill-3:1",
+        "pp3u10-7:drill-3:2",
+        "pp3u10-7:drill-3:3",
+        "pp3u10-7:think-and-discuss-1",
+        "pp3u10-7:think-and-discuss-2",
+        "pp3u10-7:think-and-discuss-3"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Prove that a quadrilateral is cyclic by using the equality of the angle of tangency with the inscribed angle together with parallel lines.",
+       "label": "Prove cyclic quadrilaterals",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE22",
+         "printed_page": 102,
+         "quote": "XYCA is a cyclic quadrilateral"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-7:rule-5",
+         "printed_page": 102,
+         "quote": "The angle of tangency is supplementary to the inscribed angle"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE22"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Show that a line is a tangent to a circle by applying the converse of theorem 5 (angle with the chord equals the inscribed angle in the alternate side).",
+       "label": "Prove a line is tangent",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u10-7:rule-7",
+         "printed_page": 103,
+         "quote": "then this ray is a tangent to the circle"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 103,
+         "quote": "AD is a tangent to the circle passing through the points A, X and Y"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-4:1",
+         "printed_page": 103,
+         "quote": "show that line AD is a tangent to the circle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-7:drill-4:1",
+        "pp3u10-7:drill-4:2",
+        "pp3u10-7:drill-4:3"
+       ],
+       "worked_examples": [
+        "WE23"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Angle of tangency measure",
+       "statement": "Calculate the measure of an angle of tangency as half the measure of the arc between its sides (or equal to the inscribed angle or half the central angle on the same arc).",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-7:rule-2",
+         "printed_page": 100,
+         "quote": "m(∠ABC) = 1/2 m(arc AB)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-1:1",
+         "printed_page": 101,
+         "quote": "calculate $m(\\angle ABC)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-2:1",
+         "printed_page": 102,
+         "quote": "Find the value of the symbol used in measuring"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-7:think-and-discuss-1",
+        "pp3u10-7:think-and-discuss-2",
+        "pp3u10-7:think-and-discuss-3",
+        "pp3u10-7:drill-1:1",
+        "pp3u10-7:drill-1:2",
+        "pp3u10-7:drill-1:3",
+        "pp3u10-7:drill-2:1",
+        "pp3u10-7:drill-2:2",
+        "pp3u10-7:drill-2:3",
+        "pp3u10-7:drill-3:1",
+        "pp3u10-7:drill-3:2",
+        "pp3u10-7:drill-3:3"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "label": "Prove cyclic using tangency",
+       "statement": "Prove that a quadrilateral is cyclic by using the equality of the angle of tangency and the inscribed angle together with parallel lines.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE22",
+         "printed_page": 102,
+         "quote": "XYCA is a cyclic quadrilateral"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-7:rule-3",
+         "printed_page": 101,
+         "quote": "equal to the measure of the inscribed angle subtended by the same arc"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE22"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Prove a line is tangent",
+       "statement": "Show that a line is a tangent to a circle by applying the converse of theorem 5, i.e. that the angle with the chord equals the inscribed angle in the alternate side.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 103,
+         "quote": "AD is a tangent to the circle passing through the points A, X and Y"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u10-7:drill-4:1",
+         "printed_page": 103,
+         "quote": "show that line AD is a tangent to the circle"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u10-7:rule-7",
+         "printed_page": 103,
+         "quote": "then this ray is a tangent to the circle"
+        }
+       ],
+       "exercise_items": [
+        "pp3u10-7:drill-4:1",
+        "pp3u10-7:drill-4:2",
+        "pp3u10-7:drill-4:3"
+       ],
+       "worked_examples": [
+        "WE23"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the measure of an angle of tangency (or an unknown arc) using the fact that it is half the measure of the arc between its sides, and equals the inscribed angle on the same arc or half the central angle.",
+      "label": "Calculate angles of tangency",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-7:rule-2",
+        "printed_page": 100,
+        "quote": "$m(\\angle ABC)=\\frac{1}{2}m(\\widehat{AB})$"
+       },
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-7:rule-3",
+        "printed_page": 101,
+        "quote": "The measure of the angle of tangency is equal to the measure of the inscribed angle"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-7:drill-1:1",
+        "printed_page": 101,
+        "quote": "calculate $m(\\angle ABC)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-7:drill-2:1",
+        "printed_page": 102,
+        "quote": "line BC is tangent to the circle"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-7:think-and-discuss-1",
+       "pp3u10-7:think-and-discuss-2",
+       "pp3u10-7:think-and-discuss-3",
+       "pp3u10-7:drill-1:1",
+       "pp3u10-7:drill-1:2",
+       "pp3u10-7:drill-1:3",
+       "pp3u10-7:drill-2:1",
+       "pp3u10-7:drill-2:2",
+       "pp3u10-7:drill-2:3",
+       "pp3u10-7:drill-3:1",
+       "pp3u10-7:drill-3:2",
+       "pp3u10-7:drill-3:3"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "angle of tangency",
+       "arc",
+       "inscribed angle",
+       "central angle",
+       "tangent",
+       "circle"
+      ],
+      "term_flags": [
+       {
+        "term": "angle of tangency",
+        "why": "Other curricula call it the tangent-chord angle or the angle between a tangent and a chord."
+       }
+      ]
+     },
+     {
+      "statement": "Prove that a quadrilateral is cyclic by using the equality of the angle of tangency with the inscribed angle together with parallel lines.",
+      "label": "Prove cyclic quadrilaterals",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE22",
+        "printed_page": 102,
+        "quote": "XYCA is a cyclic quadrilateral"
+       },
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-7:rule-5",
+        "printed_page": 102,
+        "quote": "The angle of tangency is supplementary to the inscribed angle"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE22"
+      ],
+      "terms": [
+       "cyclic quadrilateral",
+       "angle of tangency",
+       "inscribed angle",
+       "parallel lines",
+       "supplementary"
+      ],
+      "term_flags": [
+       {
+        "term": "angle of tangency",
+        "why": "Other curricula call it the tangent-chord angle."
+       }
+      ]
+     },
+     {
+      "statement": "Show that a line is a tangent to a circle by applying the converse of theorem 5 (angle with the chord equals the inscribed angle in the alternate side).",
+      "label": "Prove a line is tangent",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u10-7:rule-7",
+        "printed_page": 103,
+        "quote": "then this ray is a tangent to the circle"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE23",
+        "printed_page": 103,
+        "quote": "AD is a tangent to the circle passing through the points A, X and Y"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u10-7:drill-4:1",
+        "printed_page": 103,
+        "quote": "show that line AD is a tangent to the circle"
+       }
+      ],
+      "exercise_items": [
+       "pp3u10-7:drill-4:1",
+       "pp3u10-7:drill-4:2",
+       "pp3u10-7:drill-4:3"
+      ],
+      "worked_examples": [
+       "WE23"
+      ],
+      "terms": [
+       "tangent",
+       "chord",
+       "inscribed angle",
+       "converse",
+       "alternate side"
+      ],
+      "term_flags": [
+       {
+        "term": "alternate side",
+        "why": "Other curricula say 'alternate segment' (alternate segment theorem)."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false,
+      "note": "Rule-5 defines supplementary relationships between angles of tangency and inscribed angles, but the objective specifies using equality combined with parallel lines—a different method."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 0,
+  "batches": 0,
+  "mappers": [],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:pp3u10-1-1",
+    "dst": "lo:pp3u10-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 66,
+      "quote": "Find the length of $\\widehat{AB}$"
+     }
+    ],
+    "reason": "Arc length uses the arc measure."
+   },
+   {
+    "kind": "x",
+    "src": "lo:pp3u10-1-1",
+    "dst": "lo:pp3u10-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 69,
+      "quote": "∴ m(AB) = m(DC) ∴ AB = CD"
+     }
+    ],
+    "reason": "Subtracting adjacent arcs is used in the proof."
+   },
+   {
+    "src": "lo:pp3u10-1-1",
+    "dst": "lo:pp3u10-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE6",
+      "printed_page": 75,
+      "quote": "$4x+5x+3x=360^\\circ$"
+     }
+    ],
+    "reason": "Arc sums to 360 are used to find the arc, then the inscribed angle."
+   },
+   {
+    "src": "lo:pp3u10-2-1",
+    "dst": "lo:pp3u10-2-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-2:linking-text-6",
+      "printed_page": 75,
+      "quote": "m(∠C) = 1/2 m(∠AMB)"
+     }
+    ],
+    "reason": "The corollary derives from the central-angle theorem."
+   },
+   {
+    "src": "lo:pp3u10-2-2",
+    "dst": "lo:pp3u10-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 76,
+      "quote": "= ½ m(arc AC) + ½ m(arc BD)"
+     }
+    ],
+    "reason": "The proof uses inscribed angle equal to half of its arc."
+   },
+   {
+    "src": "lo:pp3u10-2-2",
+    "dst": "lo:pp3u10-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 79,
+      "quote": "m(∠C) = $\\frac{1}{2}$ m(arc AB)"
+     }
+    ],
+    "reason": "Equality of angles is proved from half the arc."
+   },
+   {
+    "src": "lo:pp3u10-3-1",
+    "dst": "lo:pp3u10-3-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-3:rule-5",
+      "printed_page": 84,
+      "quote": "The converse of theorem 2"
+     }
+    ],
+    "reason": "The converse of theorem 2 is the criterion."
+   },
+   {
+    "src": "lo:pp3u10-3-1",
+    "dst": "lo:pp3u10-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE12",
+      "printed_page": 83,
+      "quote": "∴ $m(\\angle B)=m(\\angle A)$"
+     }
+    ],
+    "reason": "Angles on the same arc are equal in the proofs."
+   },
+   {
+    "src": "lo:pp3u10-3-3",
+    "dst": "lo:pp3u10-4-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-4:notice-2",
+      "printed_page": 85,
+      "quote": "they are two drawn angles on the base YZ and in one direction of it"
+     }
+    ],
+    "reason": "Same criterion applied to quadrilaterals."
+   },
+   {
+    "src": "lo:pp3u10-4-1",
+    "dst": "lo:pp3u10-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE14",
+      "printed_page": 86,
+      "quote": "They are two drawn angles on the base AY and in one direction of it."
+     }
+    ],
+    "reason": "Proof uses the equal angles criterion."
+   },
+   {
+    "src": "lo:pp3u10-3-1",
+    "dst": "lo:pp3u10-4-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE15",
+      "printed_page": 87,
+      "quote": "both inscribed angles common at arc CD"
+     }
+    ],
+    "reason": "Equal angles on the same arc used."
+   },
+   {
+    "src": "lo:pp3u10-2-2",
+    "dst": "lo:pp3u10-5-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-5:linking-text-3",
+      "printed_page": 88,
+      "quote": "m(∠A) = 1/2 m(arc BCD)"
+     }
+    ],
+    "reason": "The proof uses inscribed angle half arc."
+   },
+   {
+    "src": "lo:pp3u10-5-1",
+    "dst": "lo:pp3u10-5-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-5:linking-text-4",
+      "printed_page": 90,
+      "quote": "The supplements of one angle is equal in measure"
+     }
+    ],
+    "reason": "Corollary follows from supplementary opposite angles."
+   },
+   {
+    "src": "lo:pp3u10-5-1",
+    "dst": "lo:pp3u10-5-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-5:rule-3",
+      "printed_page": 90,
+      "quote": "Converse of theorem 3"
+     }
+    ],
+    "reason": "Converse of the supplementary theorem."
+   },
+   {
+    "src": "lo:pp3u10-5-1",
+    "dst": "lo:pp3u10-6-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE19",
+      "printed_page": 95,
+      "quote": "∴ $m(\\angle DAB)=180^\\circ-125^\\circ=55^\\circ$ (theorem)"
+     }
+    ],
+    "reason": "Cyclic quadrilateral theorem used with tangent segments."
+   },
+   {
+    "src": "lo:pp3u10-4-2",
+    "dst": "lo:pp3u10-6-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE20",
+      "printed_page": 96,
+      "quote": "XBYM is a cyclic quadrilateral. (Q.E.D 1)"
+     }
+    ],
+    "reason": "Proving cyclic by right angles is used."
+   },
+   {
+    "src": "lo:pp3u10-2-2",
+    "dst": "lo:pp3u10-7-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-7:linking-text-4",
+      "printed_page": 101,
+      "quote": "∠D is an inscribed angle ∴ $m(\\angle D)=\\frac{1}{2}m(\\widehat{AB})$"
+     }
+    ],
+    "reason": "Proof uses the inscribed angle measure."
+   },
+   {
+    "src": "lo:pp3u10-7-1",
+    "dst": "lo:pp3u10-7-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 102,
+      "quote": "∴ $m(\\angle DBA) = m(\\angle C)$"
+     }
+    ],
+    "reason": "Tangent angle equality used."
+   },
+   {
+    "src": "lo:pp3u10-5-3",
+    "dst": "lo:pp3u10-7-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 102,
+      "quote": "XYCA is a cyclic quadrilateral. (Q.E.D.)"
+     }
+    ],
+    "reason": "Exterior angle criterion concludes cyclic."
+   },
+   {
+    "src": "lo:pp3u10-7-1",
+    "dst": "lo:pp3u10-7-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-7:rule-7",
+      "printed_page": 103,
+      "quote": "Converse of theorem 5"
+     }
+    ],
+    "reason": "Converse of theorem 5."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "Uses the given arc measure directly; no reliance on arc-measure derivation shown."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Subtracts arc BC from equal arcs, using arc addition/subtraction."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Sums arcs to 360° and uses arc measures to find the inscribed angle."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Inscribed angle = half central angle is used to derive the arc relation."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Uses inscribed angle = half arc for the two angles of the triangle."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "Uses inscribed angle = half arc to show equality."
+    },
+    {
+     "i": 6,
+     "verdict": "REJECTED",
+     "note": "The converse statement does not refer back to the inscribed-angle-equality objective."
+    },
+    {
+     "i": 7,
+     "verdict": "REJECTED",
+     "note": "Passes from equal arcs to equal inscribed angles; does not rely on same-arc inscribed angle equality of 3-1 specifically."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "The same test is applied to a quadrilateral."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Uses the same-base, same-direction equal angles criterion."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "Explicitly uses inscribed angles common in the same arc."
+    },
+    {
+     "i": 11,
+     "verdict": "CONFIRMED",
+     "note": "Proof uses inscribed angle = half arc."
+    },
+    {
+     "i": 12,
+     "verdict": "REJECTED",
+     "note": "The exterior-angle corollary uses supplements, not calculations from opposite-angle supplementary use explicitly."
+    },
+    {
+     "i": 13,
+     "verdict": "CONFIRMED",
+     "note": "The converse of the supplementary-opposite-angles theorem."
+    },
+    {
+     "i": 14,
+     "verdict": "CONFIRMED",
+     "note": "Uses the cyclic quadrilateral opposite angles supplementary theorem as a step."
+    },
+    {
+     "i": 15,
+     "verdict": "CONFIRMED",
+     "note": "Proves a cyclic quadrilateral using two right angles on the same base, as a step."
+    },
+    {
+     "i": 16,
+     "verdict": "CONFIRMED",
+     "note": "Uses the inscribed angle = half arc."
+    },
+    {
+     "i": 17,
+     "verdict": "CONFIRMED",
+     "note": "Uses angle of tangency = inscribed angle."
+    },
+    {
+     "i": 18,
+     "verdict": "CONFIRMED",
+     "note": "Uses exterior angle equals interior opposite angle to conclude cyclic."
+    },
+    {
+     "i": 19,
+     "verdict": "UNCLEAR",
+     "note": "The converse is related to the tangency angle, but the text does not show reliance on the calculation objective."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 14,
+   "S1 Reconcile": 7,
+   "S1 Evidence": 7,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "pp3u10-1": 4,
+   "pp3u10-2": 4,
+   "pp3u10-3": 4,
+   "pp3u10-4": 4,
+   "pp3u10-5": 4,
+   "pp3u10-6": 4,
+   "pp3u10-7": 4
+  },
+  "total": 30
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

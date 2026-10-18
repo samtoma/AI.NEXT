@@ -1,0 +1,1537 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "prep3-parallel",
+ "chapter": 6,
+ "module": "module:pp3u6",
+ "packet_sha256": "1ae09f97ee943edc033c1abc95ab6207ae6783461deb02322f6a3daf6fff619e",
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "1a86cb65c4c1fcddbc49f7b1af86614721512895c000b8d77c0050889982d152",
+  "generated_sha256": "ef23bd2f1393b798321d2b07270bbc2e7f9e08fcf3d42016312cc070cfcd7cd4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 0,
+ "lessons": [
+  {
+   "slug": "pp3u6-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Find ordered-pair solutions of a first-degree equation in two variables by writing it in the form y = ... or x = ... and substituting values, and represent its solution set as a straight line.",
+       "label": "Solutions of two-variable equation",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-1:method-1",
+         "printed_page": 5,
+         "quote": "y = 15 - x"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 5,
+         "quote": "$(0, -1)$ is a solution of the equation"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:open-prompt-2",
+         "printed_page": 6,
+         "quote": "Tell another four solutions for this equation?"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:think-and-discuss-1",
+        "pp3u6-1:open-prompt-1",
+        "pp3u6-1:open-prompt-2"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Solve two first-degree equations in two variables graphically by drawing both lines and reading the solution set from the intersection point, identifying when the lines are parallel or coincide.",
+       "label": "Solve simultaneous equations graphically",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "pp3u6-1:heading-2",
+         "printed_page": 5,
+         "quote": "Solving equations of the first degree in two variables graphically"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 6,
+         "quote": "$L_1 \\cap L_2$ is the point $(2, 1)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:drill-2:2",
+         "printed_page": 7,
+         "quote": "Graphically find the solution set"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:drill-1",
+        "pp3u6-1:exercise-1",
+        "pp3u6-1:exercise-2",
+        "pp3u6-1:drill-2:1",
+        "pp3u6-1:drill-2:2"
+       ],
+       "worked_examples": [
+        "WE2",
+        "WE3"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Solve two first-degree equations in two variables algebraically by substitution or by omitting (eliminating) one variable, and state the number of solutions.",
+       "label": "Solve simultaneous equations algebraically",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u6-1:rule-2",
+         "printed_page": 8,
+         "quote": "removing one of the two variables"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 8,
+         "quote": "Substitution method"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:drill-3:A",
+         "printed_page": 8,
+         "quote": "Find algebraically, the solution set"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:drill-3:A",
+        "pp3u6-1:drill-3:B",
+        "pp3u6-1:drill-4:A",
+        "pp3u6-1:drill-4:B",
+        "pp3u6-1:drill-4:C"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Form and solve a pair of first-degree equations in two variables from a given solution or word problem to find unknown coefficients or numbers.",
+       "label": "Apply simultaneous equations",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-1:table-1",
+         "printed_page": 9,
+         "quote": "x + 10 y"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 9,
+         "quote": "(3, -1) is the solution of the two equations"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 9,
+         "quote": "the number is 47"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE5",
+        "WE6"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Find solutions of one equation",
+       "statement": "Find ordered pairs that satisfy a first-degree equation in two variables by expressing one variable in terms of the other, and show that the solution set is infinite.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 5,
+         "quote": "every point ∈ L is a solution to the equation"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-1:definition-2",
+         "printed_page": 5,
+         "quote": "finding an ordered pair of real numbers that satisfies the equation"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:open-prompt-2",
+         "printed_page": 6,
+         "quote": "Tell another four solutions for this equation?"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:think-and-discuss-1",
+        "pp3u6-1:open-prompt-1",
+        "pp3u6-1:open-prompt-2"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Solve pairs graphically",
+       "statement": "Determine the solution set of two first-degree equations in two variables graphically by drawing both lines and reading the intersection, or identifying parallel or coincident lines.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 6,
+         "quote": "The solution set of the two equations is $\\{(2, 1)\\}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 7,
+         "quote": "Find graphically the solution set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:exercise-1",
+         "printed_page": 6,
+         "quote": "$2x + y = 0$, $x + 2y = 3$"
+        },
+        {
+         "kind": "heading",
+         "anchor": "pp3u6-1:heading-2",
+         "printed_page": 5,
+         "quote": "Solving equations of the first degree in two variables graphically"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:drill-1",
+        "pp3u6-1:exercise-1",
+        "pp3u6-1:exercise-2",
+        "pp3u6-1:drill-2:1",
+        "pp3u6-1:drill-2:2"
+       ],
+       "worked_examples": [
+        "WE2",
+        "WE3"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Solve pairs algebraically",
+       "statement": "Calculate the solution set of two first-degree equations in two variables algebraically by substitution or by omitting one variable, and determine the number of solutions.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 8,
+         "quote": "Substitution method"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-1:rule-2",
+         "printed_page": 8,
+         "quote": "removing one of the two variables"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:drill-3:A",
+         "printed_page": 8,
+         "quote": "Find algebraically, the solution set"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-1:drill-4:C",
+         "printed_page": 8,
+         "quote": "$9x+6y=24$, $3x+2y=8$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-1:drill-3:A",
+        "pp3u6-1:drill-3:B",
+        "pp3u6-1:drill-4:A",
+        "pp3u6-1:drill-4:B",
+        "pp3u6-1:drill-4:C"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Apply simultaneous equations",
+       "statement": "Form two first-degree equations from given conditions (a known solution or a word problem about digits) and solve them to find unknown values.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 9,
+         "quote": "(3, -1) is the solution of the two equations"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 9,
+         "quote": "Consider that the units digit is $x$ and the tens digit is $y$."
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-1:table-1",
+         "printed_page": 9,
+         "quote": "The sum after reversing digits"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE5",
+        "WE6"
+       ],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Find ordered-pair solutions of a first-degree equation in two variables by writing it in the form y = ... or x = ... and substituting values, and represent its solution set as a straight line.",
+      "label": "Solutions of two-variable equation",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-1:method-1",
+        "printed_page": 5,
+        "quote": "y = 15 - x"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 5,
+        "quote": "every point ∈ L is a solution to the equation"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-1:open-prompt-2",
+        "printed_page": 6,
+        "quote": "Tell another four solutions for this equation?"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-1:think-and-discuss-1",
+       "pp3u6-1:open-prompt-1",
+       "pp3u6-1:open-prompt-2"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "first degree equation",
+       "ordered pair",
+       "solution set",
+       "straight line"
+      ]
+     },
+     {
+      "statement": "Solve two first-degree equations in two variables graphically by drawing both lines and reading the solution set from the intersection point, identifying when the lines are parallel or coincide.",
+      "label": "Solve simultaneous equations graphically",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "pp3u6-1:heading-2",
+        "printed_page": 5,
+        "quote": "Solving equations of the first degree in two variables graphically"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 6,
+        "quote": "$L_1 \\cap L_2$ is the point $(2, 1)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-1:drill-2:2",
+        "printed_page": 7,
+        "quote": "Graphically find the solution set"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-1:drill-1",
+       "pp3u6-1:exercise-1",
+       "pp3u6-1:exercise-2",
+       "pp3u6-1:drill-2:1",
+       "pp3u6-1:drill-2:2"
+      ],
+      "worked_examples": [
+       "WE2",
+       "WE3"
+      ],
+      "terms": [
+       "solution set",
+       "intersection",
+       "parallel",
+       "coincide"
+      ]
+     },
+     {
+      "statement": "Solve two first-degree equations in two variables algebraically by substitution or by omitting (eliminating) one variable, and state the number of solutions.",
+      "label": "Solve simultaneous equations algebraically",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u6-1:rule-2",
+        "printed_page": 8,
+        "quote": "removing one of the two variables"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 8,
+        "quote": "Substitution method"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-1:drill-3:A",
+        "printed_page": 8,
+        "quote": "Find algebraically, the solution set"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-1:drill-3:A",
+       "pp3u6-1:drill-3:B",
+       "pp3u6-1:drill-4:A",
+       "pp3u6-1:drill-4:B",
+       "pp3u6-1:drill-4:C"
+      ],
+      "worked_examples": [
+       "WE4"
+      ],
+      "terms": [
+       "substitution method",
+       "omitting a variable",
+       "solution set"
+      ],
+      "term_flags": [
+       {
+        "term": "omitting a variable",
+        "why": "Other curricula call this elimination."
+       }
+      ]
+     },
+     {
+      "statement": "Form and solve a pair of first-degree equations in two variables from a given solution or word problem to find unknown coefficients or numbers.",
+      "label": "Apply simultaneous equations",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-1:table-1",
+        "printed_page": 9,
+        "quote": "x + 10 y"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 9,
+        "quote": "(3, -1) is the solution of the two equations"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE6",
+        "printed_page": 9,
+        "quote": "the number is 47"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE5",
+       "WE6"
+      ],
+      "terms": [
+       "units digit",
+       "tens digit",
+       "first degree equation"
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'y = 15 - x' appears in anchored text. Intro correctly presents the form y = ... required by the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'every point ∈ L is a solution to the equation' is present in anchored text. Worked example demonstrates finding ordered pairs by substitution and representing the solution set as a straight line."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote is present exactly. Exercise asks student to practice finding ordered-pair solutions."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote present in anchored text (with 'First:' prefix). Heading names the section where graphical solving is taught, which supports the objective's topic."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$L_1 \\cap L_2$ is the point $(2, 1)$' is in anchored text. Worked example demonstrates solving two equations graphically by finding the intersection point of both lines."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote is present. Exercise asks students to practice solving two equations graphically."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'removing one of the two variables' is in anchored text. Definition correctly explains the elimination method stated in the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'Substitution method' is in anchored text. Worked example demonstrates both substitution and elimination (omitting) methods for solving two equations algebraically."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote is present. Exercise asks students to practice solving equations algebraically."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'x + 10 y' appears in anchored text table. Intro establishes notation for forming equations from word problems about two-digit numbers."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '(3, -1) is the solution of the two equations' is in anchored text. Worked example demonstrates finding unknown coefficients given a known solution to the equations."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'the number is 47' is in anchored text. Worked example demonstrates forming and solving a system of equations from a word problem to find unknown numbers."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u6-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Solve graphically using curve",
+       "statement": "Draw the graph of a quadratic function in a given interval and read the solution set of ax^2+bx+c=0 from the x-coordinates where the curve meets the x-axis.",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "pp3u6-2:heading-2",
+         "printed_page": 10,
+         "quote": "First: the graphical solution:"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-2:method-2",
+         "printed_page": 10,
+         "quote": "points of intersection of the function curve with the x-axis"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 10,
+         "quote": "Thus, the solution set of the equation is {1 , 3}"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:drill-1",
+         "printed_page": 11,
+         "quote": "from the drawing find the solution set of the equation"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-2:drill-1",
+        "pp3u6-2:drill-2"
+       ],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Solve by factorising",
+       "statement": "Solve a quadratic equation by factorising and completing the square, giving the solution set.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-2:prior-knowledge-1",
+         "printed_page": 10,
+         "quote": "You have previously solved this equation by factorizing."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:think-and-discuss-1:4",
+         "printed_page": 10,
+         "quote": "The solution set is"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:think-and-discuss-2",
+         "printed_page": 11,
+         "quote": "using the idea of completing the square"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-2:think-and-discuss-1:1",
+        "pp3u6-2:think-and-discuss-1:2",
+        "pp3u6-2:think-and-discuss-1:3",
+        "pp3u6-2:think-and-discuss-1:4",
+        "pp3u6-2:think-and-discuss-2"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "label": "Apply the quadratic formula",
+       "statement": "Solve a quadratic equation algebraically using the quadratic formula, rounding the solutions, and reject solutions that do not fit a real situation.",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "pp3u6-2:heading-3",
+         "printed_page": 11,
+         "quote": "The algebraic solution by using the general rule"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u6-2:rule-1",
+         "printed_page": 12,
+         "quote": "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 12,
+         "quote": "$\\therefore a=3, b=-5, c=1$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 12,
+         "quote": "(refused) why ?"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Solve graphically",
+       "statement": "Draw the graph of a quadratic function f(x) = ax^2 + bx + c in a given interval and read the solution set of the equation from the x-coordinates of the points where the curve meets the x-axis.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 10,
+         "quote": "the function curve f intersects the x-axis in two points"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:drill-1",
+         "printed_page": 11,
+         "quote": "from the drawing find the solution set of the equation"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-2:method-2",
+         "printed_page": 10,
+         "quote": "Identify the set of x coordinates of the points of intersection of the function curve with the x-axis"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-2:drill-1",
+        "pp3u6-2:drill-2"
+       ],
+       "worked_examples": [
+        "WE7"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Solve by factorising or completing square",
+       "statement": "Solve a quadratic equation by factorizing the left side or by completing the square, and write the solution set.",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:think-and-discuss-1:1",
+         "printed_page": 10,
+         "quote": "we factorize the left side of the equation"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-2:think-and-discuss-2",
+         "printed_page": 11,
+         "quote": "using the idea of completing the square"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-2:prior-knowledge-1",
+         "printed_page": 10,
+         "quote": "You have previously solved this equation by factorizing."
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-2:think-and-discuss-1:1",
+        "pp3u6-2:think-and-discuss-1:2",
+        "pp3u6-2:think-and-discuss-1:3",
+        "pp3u6-2:think-and-discuss-1:4",
+        "pp3u6-2:think-and-discuss-2"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "label": "Use the quadratic formula",
+       "statement": "Solve a quadratic equation algebraically using the general rule (quadratic formula), rounding the solutions, and reject a solution that does not fit a real-life context.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 12,
+         "quote": "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 12,
+         "quote": "(refused) why ?"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-2:rule-1",
+         "printed_page": 12,
+         "quote": "given by the quadratic formula"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Draw the graph of a quadratic function f(x) = ax^2 + bx + c in a given interval and read the solution set of the equation from the x-coordinates of the points where the curve meets the x-axis.",
+      "label": "Solve graphically",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "pp3u6-2:heading-2",
+        "printed_page": 10,
+        "quote": "First: the graphical solution:"
+       },
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-2:method-2",
+        "printed_page": 10,
+        "quote": "points of intersection of the function curve with the x-axis"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 10,
+        "quote": "Thus, the solution set of the equation is {1 , 3}"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-2:drill-1",
+        "printed_page": 11,
+        "quote": "from the drawing find the solution set of the equation"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-2:drill-1",
+       "pp3u6-2:drill-2"
+      ],
+      "worked_examples": [
+       "WE7"
+      ],
+      "terms": [
+       "quadratic function",
+       "curve",
+       "x-axis",
+       "solution set",
+       "interval"
+      ],
+      "term_flags": [
+       {
+        "term": "solution set",
+        "why": "Other curricula may say 'roots' or 'zeros' of the equation."
+       },
+       {
+        "term": "equation of second degree",
+        "why": "Other curricula call this a quadratic equation."
+       }
+      ]
+     },
+     {
+      "statement": "Solve a quadratic equation by factorizing the left side or by completing the square, and write the solution set.",
+      "label": "Solve by factorising or completing square",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-2:prior-knowledge-1",
+        "printed_page": 10,
+        "quote": "You have previously solved this equation by factorizing."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-2:think-and-discuss-1:1",
+        "printed_page": 10,
+        "quote": "we factorize the left side of the equation"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-2:think-and-discuss-2",
+        "printed_page": 11,
+        "quote": "using the idea of completing the square"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-2:think-and-discuss-1:1",
+       "pp3u6-2:think-and-discuss-1:2",
+       "pp3u6-2:think-and-discuss-1:3",
+       "pp3u6-2:think-and-discuss-1:4",
+       "pp3u6-2:think-and-discuss-2"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "factorize",
+       "completing the square",
+       "solution set"
+      ],
+      "term_flags": [
+       {
+        "term": "factorize",
+        "why": "Other curricula say 'factorise' or 'factor'."
+       }
+      ]
+     },
+     {
+      "statement": "Solve a quadratic equation algebraically using the general rule (quadratic formula), rounding the solutions, and reject a solution that does not fit a real-life context.",
+      "label": "Use the general rule (quadratic formula)",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "pp3u6-2:heading-3",
+        "printed_page": 11,
+        "quote": "The algebraic solution by using the general rule"
+       },
+       {
+        "kind": "definition",
+        "anchor": "pp3u6-2:rule-1",
+        "printed_page": 12,
+        "quote": "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE8",
+        "printed_page": 12,
+        "quote": "$\\therefore a=3, b=-5, c=1$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE9",
+        "printed_page": 12,
+        "quote": "(refused) why ?"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE8",
+       "WE9"
+      ],
+      "terms": [
+       "general rule",
+       "quadratic formula",
+       "coefficients",
+       "rounding"
+      ],
+      "term_flags": [
+       {
+        "term": "general rule",
+        "why": "The book's name for the quadratic formula."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading 'First: the graphical solution:' names the topic of graphical solution to equations, which is the teaching section for this objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro text defines the method: x-coordinates of intersection points give the solution. Directly explains the skill stated in the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates the complete skill: drawing a quadratic graph and identifying solution set {1, 3} from x-intercepts."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to draw a quadratic function and find solution set from the drawing—the exact skill of the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Intro text references factorizing as a method to solve equations, which is part of the objective's stated methods."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Exercise guides students through factorizing the left side of a quadratic equation to solve it—a core method in the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise guides students through completing the square to solve an equation—the second method explicitly stated in the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading names the topic 'algebraic solution by using the general rule', which is the section teaching this objective's skill."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Definition states the quadratic formula explicitly, which is the 'general rule' the objective requires students to use."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates applying the quadratic formula and rounding solutions to two decimal places, as required by the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates the complete objective: using the quadratic formula, rounding (to nearest hundred), and rejecting the negative solution because it doesn't fit the real-life context of horizontal distance."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u6-3",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Solve algebraically two equations in two variables, one of the first degree and one of the second degree, by substitution to find the solution set.",
+       "label": "Solve linear-quadratic systems",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-3:linking-text-1",
+         "printed_page": 13,
+         "quote": "by the substitution method"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 13,
+         "quote": "Substituting in second equation."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-3:mental-math-1",
+         "printed_page": 13,
+         "quote": "$x^2 - y^2 = 40$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-3:mental-math-1"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Form two equations, one of the first degree and one of the second degree, from a word problem about a rectangle's perimeter and area and solve them to find its dimensions.",
+       "label": "Solve rectangle dimension problems",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 13,
+         "quote": "A rectangle of a perimeter 14 cm and area 12 cm$^2$."
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-3:linking-text-1",
+         "printed_page": 13,
+         "quote": "as shown in the following examples"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE11"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Solve algebraically two equations in two variables, one of the first degree and one of the second degree, by substitution and state the solution set.",
+       "label": "Solve by substitution",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 13,
+         "quote": "Find algebraically the solution set of the two equations"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-3:linking-text-1",
+         "printed_page": 13,
+         "quote": "by the substitution method"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u6-3:mental-math-1",
+         "printed_page": 13,
+         "quote": "$x^2 - y^2 = 40$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u6-3:mental-math-1"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Solve a word problem about a rectangle's perimeter and area by forming one first-degree and one second-degree equation and finding its two dimensions.",
+       "label": "Solve rectangle dimension problems",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 13,
+         "quote": "Find its two dimensions."
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u6-3:printed-objective-1",
+         "printed_page": 13,
+         "quote": "one of them is of the first degree and the other of the second degree"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE11"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Solve algebraically two equations in two variables, one of the first degree and one of the second degree, by substitution and state the solution set.",
+      "label": "Solve by substitution",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-3:linking-text-1",
+        "printed_page": 13,
+        "quote": "by the substitution method"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE10",
+        "printed_page": 13,
+        "quote": "Find algebraically the solution set of the two equations"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u6-3:mental-math-1",
+        "printed_page": 13,
+        "quote": "$x^2 - y^2 = 40$"
+       }
+      ],
+      "exercise_items": [
+       "pp3u6-3:mental-math-1"
+      ],
+      "worked_examples": [
+       "WE10"
+      ],
+      "terms": [
+       "first degree",
+       "second degree",
+       "substitution method",
+       "solution set"
+      ],
+      "term_flags": [
+       {
+        "term": "first degree",
+        "why": "Other curricula say 'linear'."
+       },
+       {
+        "term": "second degree",
+        "why": "Other curricula say 'quadratic'."
+       }
+      ]
+     },
+     {
+      "statement": "Solve a word problem about a rectangle's perimeter and area by forming one first-degree and one second-degree equation and finding its two dimensions.",
+      "label": "Solve rectangle dimension problems",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 13,
+        "quote": "A rectangle of a perimeter 14 cm and area 12 cm$^2$."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 13,
+        "quote": "Find its two dimensions."
+       },
+       {
+        "kind": "intro",
+        "anchor": "pp3u6-3:printed-objective-1",
+        "printed_page": 13,
+        "quote": "one of them is of the first degree and the other of the second degree"
+       }
+      ],
+      "exercise_items": [],
+      "worked_examples": [
+       "WE11"
+      ],
+      "terms": [
+       "perimeter",
+       "area",
+       "dimensions",
+       "first degree",
+       "second degree"
+      ],
+      "term_flags": [
+       {
+        "term": "first degree",
+        "why": "Other curricula say 'linear'."
+       },
+       {
+        "term": "second degree",
+        "why": "Other curricula say 'quadratic'."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": false,
+      "note": "Exercise asks for x - y, not to solve the system and state the solution set"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false,
+      "note": "Only problem statement shown, not the worked solution"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false,
+      "note": "Only the question shown, not the worked solution demonstrating the skill"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 0,
+  "batches": 0,
+  "mappers": [],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:pp3u6-1-1",
+    "dst": "lo:pp3u6-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 6,
+      "quote": "By putting $x = 0$ ∴ $y = -3$ ∴ $(0, -3)$ is a solution of this equation"
+     }
+    ],
+    "reason": "Graphical solving draws each line by finding ordered pairs by substitution."
+   },
+   {
+    "src": "lo:pp3u6-1-1",
+    "dst": "lo:pp3u6-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 8,
+      "quote": "From the equation (1), $y=2x-3$"
+     }
+    ],
+    "reason": "Algebraic substitution writes one equation in the form y = ..."
+   },
+   {
+    "src": "lo:pp3u6-1-3",
+    "dst": "lo:pp3u6-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 9,
+      "quote": "Subtracting both sides of equation (1) from both sides of equation (2) we get: $6a=12$"
+     }
+    ],
+    "reason": "Solving the formed pair uses elimination."
+   },
+   {
+    "src": "lo:pp3u6-1-3",
+    "dst": "lo:pp3u6-3-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u6-3:linking-text-1",
+      "printed_page": 13,
+      "quote": "by the substitution method as shown in the following examples"
+     }
+    ],
+    "reason": "Substitution method is applied to the first/second degree pair."
+   },
+   {
+    "src": "lo:pp3u6-2-2",
+    "dst": "lo:pp3u6-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE10",
+      "printed_page": 13,
+      "quote": "so $7x(2x+1) = 0$"
+     }
+    ],
+    "reason": "The resulting quadratic is solved by factorizing."
+   },
+   {
+    "src": "lo:pp3u6-3-1",
+    "dst": "lo:pp3u6-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 13,
+      "quote": "A rectangle of a perimeter 14 cm and area 12 cm$^2$. Find its two dimensions."
+     }
+    ],
+    "reason": "The perimeter/area system is solved by substitution."
+   },
+   {
+    "src": "lo:pp3u6-1-1",
+    "dst": "lo:pp3u6-3-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u6-1:think-and-discuss-1",
+      "printed_page": 5,
+      "quote": "x + y = 15"
+     }
+    ],
+    "reason": "The perimeter gives a first-degree equation x + y = half perimeter, as shown earlier."
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u6-2-2",
+    "anchor": "pp3u6-2:prior-knowledge-1",
+    "printed_page": 10,
+    "quote": "You have previously solved this equation by factorizing.",
+    "note": "Factorizing quadratics taught earlier."
+   },
+   {
+    "dst": "lo:pp3u6-2-1",
+    "anchor": "pp3u6-2:linking-text-1",
+    "printed_page": 10,
+    "quote": "We have reperesented graphically the quadratic function f"
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Graphical solution uses substituting values to find points on each line, as a step."
+    },
+    {
+     "i": 1,
+     "verdict": "REJECTED",
+     "note": "Rewriting as y=2x-3 is isolating a variable for substitution; it's weak, but the method isn't recalled as finding ordered pairs/line. Not shown to rely on 1-1."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Uses elimination and substitution to solve the system formed."
+    },
+    {
+     "i": 3,
+     "verdict": "UNCLEAR",
+     "note": "Substitution method is mentioned but not explicitly referring back to the linear-system objective."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Factorizing the quadratic 7x(2x+1)=0 is used as a step."
+    },
+    {
+     "i": 5,
+     "verdict": "REJECTED",
+     "note": "Anchored text is just the problem statement; no reliance on 3-1 shown."
+    },
+    {
+     "i": 6,
+     "verdict": "REJECTED",
+     "note": "Text derives x+y=15 but doesn't show use of solving linear equations by substituting values; only forming an equation."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 6,
+   "S1 Reconcile": 3,
+   "S1 Evidence": 3,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "pp3u6-1": 4,
+   "pp3u6-2": 4,
+   "pp3u6-3": 4
+  },
+  "total": 14
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

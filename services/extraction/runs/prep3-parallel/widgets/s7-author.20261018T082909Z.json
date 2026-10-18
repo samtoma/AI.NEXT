@@ -1,0 +1,90 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7-v7",
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ed230f08ec96811f4eaa45379aabb16441ac259c0b6b19e018a7b0cfb19de1cf",
+  "args_sha256": "a87d3f602121eda6f20669faced362a64cf2c7ba8da5acf58f040c12377eb179",
+  "generated_sha256": "5d503904d13ca6f2192c1479be9df94c605fa95376766d75806f0a5dc697a8ae",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u8-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u8-1-1",
+     "need_kind": "sample_space (outcome-grid / event selector)",
+     "description": "The student would build the sample space of an experiment, such as a die or the box of 3 white and 4 red balls, and select the outcomes that make up an event such as 'even number'. The grader would accept any selection that equals the event set, and would show P(A) = n(A)/n(S) updating live. Errors it could diagnose: selecting the whole event as one outcome, or an event with elements missing or extra. These would map to mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set.",
+     "why": "The contract I was given was truncated before sample_space's predicates and can_emit rules, so I could not map diagnostics to it. No visible kind fits: bar_builder and number_line_marker would only be an answer box in disguise."
+    },
+    {
+     "lo_id": "lo:pp3u8-1-2",
+     "need_kind": "venn_builder (mode shade, target = A∩B)",
+     "description": "The student would shade the intersection region of two events on a Venn diagram, including the case where the events are mutually exclusive and the intersection is empty. The grader would be the region shaded, not a number. An empty-intersection variant would test mc:pp3u8-1-2:mutually-exclusive-meaning-confused. The likely error to catch is shading the union, or one whole set, instead of the overlap.",
+     "why": "venn_builder is named in the spec fields, but its predicates and can_emit rules are not in the contract I received, so I could not safely map diagnostics."
+    },
+    {
+     "lo_id": "lo:pp3u8-1-3",
+     "need_kind": "venn_builder (mode counts, or shade with target = A∪B)",
+     "description": "The student would shade or fill the regions of A∪B and see that the overlap is counted once. The check would be that the total of the filled regions equals P(A) + P(B) − P(A∩B). A student who adds n(A) + n(B) would see the overlap counted twice. That error maps to mc:pp3u8-1-3:add-without-subtracting-overlap.",
+     "why": "Same as 1-2: venn_builder exists but its predicate list was not visible, so a template would risk refused diagnostics."
+    }
+   ],
+   "notes": "The contract text was truncated after number_line_marker, so the predicates for venn_builder and sample_space were unavailable. Re-run this lesson with the full contract. venn_builder is the likely fit for objectives 1-2 and 1-3, and sample_space for 1-1."
+  },
+  {
+   "lesson": "pp3u8-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u8-2-1",
+     "need_kind": "venn_builder (shade mode) or sample_space; a complement-shading construction",
+     "description": "The student shades the complement A' of A inside S. A Venn diagram with a rectangle for S would work, and so would a grid of outcomes where she taps the outcomes that are not in A. For S = {1..7} and A = {2, 4, 6}, she selects the elements of A' = {1, 3, 5, 7}. A second step has her read off P(A') = 1 − P(A). The errors it would diagnose are: leaving out the elements of S that are in neither set, shading A itself instead of A', and shading only part of A'. None of these maps to a listed misconception for this objective.",
+     "why": "A venn_builder shade mode with a single set looks like a genuine fit. But the kind's predicate list and can_emit rules were truncated in the contract I received, so I can't map diagnostics to predicates I can't see. The objective has no own misconception of its own to map to either. Samuel should confirm which predicates venn_builder emits for one set."
+    },
+    {
+     "lo_id": "lo:pp3u8-2-2",
+     "need_kind": "venn_builder in counts or shade mode, two overlapping sets",
+     "description": "The student fills in or shades the 'A only' region (A − B) of a two-set Venn diagram, given counts such as 40 students with 10 in A ∩ B. Any shading of the region A minus the overlap is correct. Shading all of A fires the own misconception 'Counts the whole set A when asked for A only' (mc:pp3u8-2-2:only-means-whole-set). A second item has her compute P(A only) from the counts, with (A − B) ∪ (A ∩ B) = A as the check.",
+     "why": "This fits venn_builder well, and the 'only means whole set' error is exactly what shading all of A would reveal. The predicate names for venn_builder were cut off in the contract. I will not invent a predicate such as 'shaded-whole-set', because it might never fire or might be refused. Please supply the venn_builder predicates and can_emit so I can add this template."
+    }
+   ],
+   "notes": "The contract was truncated after number_line_marker, so the contracts for venn_builder, sample_space and the later kinds were not visible. I authored no templates rather than guess predicates. Once the venn_builder predicates are available, the two lesson-wide candidates are a shade-the-complement item for lo:pp3u8-2-1 and a shade-'A only' item for lo:pp3u8-2-2. The 'A only' item would map the whole-set-shaded predicate to mc:pp3u8-2-2:only-means-whole-set."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u8-1-1",
+   "need_kind": "sample_space (outcome-grid / event selector)",
+   "description": "The student would build the sample space of an experiment, such as a die or the box of 3 white and 4 red balls, and select the outcomes that make up an event such as 'even number'. The grader would accept any selection that equals the event set, and would show P(A) = n(A)/n(S) updating live. Errors it could diagnose: selecting the whole event as one outcome, or an event with elements missing or extra. These would map to mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set.",
+   "why": "The contract I was given was truncated before sample_space's predicates and can_emit rules, so I could not map diagnostics to it. No visible kind fits: bar_builder and number_line_marker would only be an answer box in disguise."
+  },
+  {
+   "lo_id": "lo:pp3u8-1-2",
+   "need_kind": "venn_builder (mode shade, target = A∩B)",
+   "description": "The student would shade the intersection region of two events on a Venn diagram, including the case where the events are mutually exclusive and the intersection is empty. The grader would be the region shaded, not a number. An empty-intersection variant would test mc:pp3u8-1-2:mutually-exclusive-meaning-confused. The likely error to catch is shading the union, or one whole set, instead of the overlap.",
+   "why": "venn_builder is named in the spec fields, but its predicates and can_emit rules are not in the contract I received, so I could not safely map diagnostics."
+  },
+  {
+   "lo_id": "lo:pp3u8-1-3",
+   "need_kind": "venn_builder (mode counts, or shade with target = A∪B)",
+   "description": "The student would shade or fill the regions of A∪B and see that the overlap is counted once. The check would be that the total of the filled regions equals P(A) + P(B) − P(A∩B). A student who adds n(A) + n(B) would see the overlap counted twice. That error maps to mc:pp3u8-1-3:add-without-subtracting-overlap.",
+   "why": "Same as 1-2: venn_builder exists but its predicate list was not visible, so a template would risk refused diagnostics."
+  },
+  {
+   "lo_id": "lo:pp3u8-2-1",
+   "need_kind": "venn_builder (shade mode) or sample_space; a complement-shading construction",
+   "description": "The student shades the complement A' of A inside S. A Venn diagram with a rectangle for S would work, and so would a grid of outcomes where she taps the outcomes that are not in A. For S = {1..7} and A = {2, 4, 6}, she selects the elements of A' = {1, 3, 5, 7}. A second step has her read off P(A') = 1 − P(A). The errors it would diagnose are: leaving out the elements of S that are in neither set, shading A itself instead of A', and shading only part of A'. None of these maps to a listed misconception for this objective.",
+   "why": "A venn_builder shade mode with a single set looks like a genuine fit. But the kind's predicate list and can_emit rules were truncated in the contract I received, so I can't map diagnostics to predicates I can't see. The objective has no own misconception of its own to map to either. Samuel should confirm which predicates venn_builder emits for one set."
+  },
+  {
+   "lo_id": "lo:pp3u8-2-2",
+   "need_kind": "venn_builder in counts or shade mode, two overlapping sets",
+   "description": "The student fills in or shades the 'A only' region (A − B) of a two-set Venn diagram, given counts such as 40 students with 10 in A ∩ B. Any shading of the region A minus the overlap is correct. Shading all of A fires the own misconception 'Counts the whole set A when asked for A only' (mc:pp3u8-2-2:only-means-whole-set). A second item has her compute P(A only) from the counts, with (A − B) ∪ (A ∩ B) = A as the check.",
+   "why": "This fits venn_builder well, and the 'only means whole set' error is exactly what shading all of A would reveal. The predicate names for venn_builder were cut off in the contract. I will not invent a predicate such as 'shaded-whole-set', because it might never fire or might be refused. Please supply the venn_builder predicates and can_emit so I can add this template."
+  }
+ ]
+}

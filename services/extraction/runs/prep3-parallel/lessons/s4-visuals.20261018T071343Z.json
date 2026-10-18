@@ -1,0 +1,78 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "a082e5945d4ca0acc95986f57dd7ccd35588f10dd0ecc206be4d2bca76b16664",
+  "generated_sha256": "f32879ef853c4f0d349a8575e8459c60cdecd373df274f1a339545003ff9ec3e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u7-1",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "pp3u7-2",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "pp3u7-3",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "pp3u7-4",
+   "mode": "visuals",
+   "rerun_figures": [],
+   "visuals": [],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 0,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {},
+  "per_lesson": {},
+  "total": 0
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

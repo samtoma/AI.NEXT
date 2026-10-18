@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-3:discrete",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-3",
+ "parent_question_id": "q:pp3u3-2-3:none",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    4,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "A data set has this frequency distribution: the value ${=m-d}$ occurs ${=k}$ times, the value ${=m}$ occurs ${=6*k}$ times and the value ${=m+d}$ occurs ${=k}$ times. Calculate the standard deviation.",
+ "answer": "d // 2",
+ "solution": [
+  "Total frequency: $\\sum f = {=k}+{=6*k}+{=k} = {=8*k}$.",
+  "Mean: $\\bar{x}=\\frac{\\sum fx}{\\sum f}=\\frac{{=8*k*m}}{{=8*k}}={=m}$.",
+  "Deviations from the mean are $-{=d}$, $0$ and ${=d}$, so $\\sum f(x-\\bar{x})^2={=k}\\times{=d*d}+{=k}\\times{=d*d}={=2*k*d*d}$.",
+  "Variance $=\\frac{{=2*k*d*d}}{{=8*k}}={=d*d/4}$.",
+  "Standard deviation $=\\sqrt{{=d*d/4}}={=d//2}$."
+ ],
+ "notes": "Population SD (divide by sum f). Symmetric design gives mean m and SD d/2 exactly. No book question list was supplied, so parent_question_id is a placeholder."
+}

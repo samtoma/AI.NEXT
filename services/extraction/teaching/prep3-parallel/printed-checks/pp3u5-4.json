@@ -1,0 +1,143 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u5-4",
+  "source": "book-records/prep3-parallel/pp3u5-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 5,
+      "cost_usd": 0.0266,
+      "calls": [
+        {
+          "call": "check-printed.pp3u5-4",
+          "cost_usd": 0.0156,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u5-4",
+          "cost_usd": 0.011,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u5-4:example-1:A",
+      "record_id": "pp3u5-4:example-1",
+      "part": "A",
+      "type": "worked_example",
+      "page": 70,
+      "printed": "$\\frac{1}{2}$",
+      "blind": "1/2",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u5-4:figure-1"
+      ],
+      "question_fingerprint": "a77a5ef67e81a1135802498ae42c114c",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:37+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-4:example-1:B",
+      "record_id": "pp3u5-4:example-1",
+      "part": "B",
+      "type": "worked_example",
+      "page": 70,
+      "printed": "2",
+      "blind": "2",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u5-4:figure-1"
+      ],
+      "question_fingerprint": "59693350f1c500bb4fdd51e6b6594601",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:37+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-4:example-2",
+      "record_id": "pp3u5-4:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 71,
+      "printed": "slope $-\\frac{3}{4}$; y-intercept length $\\frac{5}{4}$",
+      "blind": "slope = -3/4, y-intercept length = 5/4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "5fdb15c94cecd3bba5c0552d2d8eff0a",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-4:example-2",
+        "verdict": "equivalent",
+        "reason": "Same slope -3/4 and y-intercept length 5/4."
+      },
+      "how": "judged equivalent: Same slope -3/4 and y-intercept length 5/4.",
+      "made": {
+        "at": "2026-10-18T06:50:37+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-4:example-3",
+      "record_id": "pp3u5-4:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 71,
+      "printed": "$y = 3x - 4$",
+      "blind": "y = 3x - 1",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "12c263db17dd58848bc83a574ea68d5d",
+      "status": "disagreed",
+      "judge": {
+        "ref": "pp3u5-4:example-3",
+        "verdict": "different",
+        "reason": "y=3x-4 does not pass through (1,2), but y=3x-1 does. The lines have different intercepts."
+      },
+      "made": {
+        "at": "2026-10-18T06:50:37+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-4:example-4",
+      "record_id": "pp3u5-4:example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 72,
+      "printed": "$2x + 7y - 22 = 0$",
+      "blind": "y = -2/7 x + 22/7",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "834ce34b5fe84f15e2c2af0988d8f8dc",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-4:example-4",
+        "verdict": "equivalent",
+        "reason": "2x+7y-22=0 rearranges to y=-2/7 x+22/7."
+      },
+      "how": "judged equivalent: 2x+7y-22=0 rearranges to y=-2/7 x+22/7.",
+      "made": {
+        "at": "2026-10-18T06:50:37+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

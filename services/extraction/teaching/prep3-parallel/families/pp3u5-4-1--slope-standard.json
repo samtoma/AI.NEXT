@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-4-1:slope-standard",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-4-1",
+ "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+ "source_page": 70,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "let": "-m * b"
+  },
+  {
+   "name": "d",
+   "let": "b * e"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the slope of the straight line whose equation is ${=a}x + {=b}y = {=d}$.",
+ "answer": "m",
+ "solution": [
+  "Write the equation in the form $y = mx + b$ by isolating $y$: ${=b}y = {=-a}x + {=d}$.",
+  "Divide both sides by ${=b}$: $y = {=m}x + {=e}$.",
+  "The slope is the coefficient of $x$, so $m = {=m}$. (Check with $m = -\\frac{a}{b}$.)"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Slope is always a whole number. Second step: -a is positive/negative as appropriate; displayed as a signed number value in the 'isolating' step, equation reads ${=b}y = {=-a}x + {=d}$ (a plain value, a negative prints with minus then a plus sign precedes; reviewer: '+ -' not present since the term is -a x placed first and d is positive, but -a x with negative coefficient reads 'y = -3x + 6', fine)."
+}

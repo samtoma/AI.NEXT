@@ -1,0 +1,1291 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "fdb17bf281370967b0302cbceaa4cdcbe082ab61b56fd461c53b4a0bcb42bff8",
+  "generated_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u5-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u5-1:figure-1",
+    "pp3u5-1:figure-2",
+    "pp3u5-1:figure-3",
+    "pp3u5-1:figure-4",
+    "pp3u5-1:figure-5",
+    "pp3u5-1:figure-6",
+    "pp3u5-1:figure-7",
+    "pp3u5-1:figure-8"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u5-1-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       4
+      ],
+      "yRange": [
+       -3,
+       3
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 0,
+        "label": "B"
+       },
+       {
+        "x": 3,
+        "y": 0,
+        "label": "A"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "B(-1, 0) and A(3, 0) sit on the x-axis, 4 units apart.",
+     "printed_page": 58,
+     "figure_id": "pp3u5-1:figure-1",
+     "src": "pp3u5-1__figure-1.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u5-1-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       3
+      ],
+      "yRange": [
+       -4,
+       2
+      ],
+      "points": [
+       {
+        "x": 0,
+        "y": -1,
+        "label": "D"
+       },
+       {
+        "x": 0,
+        "y": -3,
+        "label": "C"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "D(0, -1) and C(0, -3) sit on the y-axis, 2 units apart.",
+     "printed_page": 58,
+     "figure_id": "pp3u5-1:figure-2",
+     "src": "pp3u5-1__figure-2.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u5-1-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -1,
+       8
+      ],
+      "yRange": [
+       -1,
+       8
+      ],
+      "points": [
+       {
+        "x": 3,
+        "y": 2,
+        "label": "M"
+       },
+       {
+        "x": 7,
+        "y": 5,
+        "label": "N"
+       },
+       {
+        "x": 7,
+        "y": 2,
+        "label": "K"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        0,
+        2
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "M(3, 2) and N(7, 5) are joined, with K(7, 2) making a right triangle whose legs are the horizontal and vertical differences.",
+     "printed_page": 58,
+     "figure_id": "pp3u5-1:figure-3",
+     "src": "pp3u5-1__figure-3.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u5-1-2",
+     "question": "pp3u5-1:example-1",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -8,
+       4
+      ],
+      "yRange": [
+       -2,
+       10
+      ],
+      "points": [
+       {
+        "x": 2,
+        "y": 4,
+        "label": "A"
+       },
+       {
+        "x": -3,
+        "y": 0,
+        "label": "B"
+       },
+       {
+        "x": -7,
+        "y": 5,
+        "label": "C"
+       },
+       {
+        "x": -2,
+        "y": 9,
+        "label": "D"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Quadrilateral ABCD joined in order through A(2, 4), B(-3, 0), C(-7, 5) and D(-2, 9).",
+     "printed_page": 60,
+     "figure_id": "pp3u5-1:figure-6",
+     "src": "pp3u5-1__figure-6.png"
+    },
+    {
+     "n": 5,
+     "lo": "lo:pp3u5-1-2",
+     "question": "pp3u5-1:example-2",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -4,
+       4
+      ],
+      "yRange": [
+       -5,
+       6
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 4,
+        "label": "A"
+       },
+       {
+        "x": -1,
+        "y": -2,
+        "label": "B"
+       },
+       {
+        "x": 2,
+        "y": -3,
+        "label": "C"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        0
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Triangle ABC with A(1, 4), B(-1, -2) and C(2, -3).",
+     "printed_page": 60,
+     "figure_id": "pp3u5-1:figure-7",
+     "src": "pp3u5-1__figure-7.png"
+    },
+    {
+     "n": 6,
+     "lo": "lo:pp3u5-1-3",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 4,
+        "y": 3,
+        "label": "A"
+       },
+       {
+        "x": 1,
+        "y": 1,
+        "label": "B"
+       },
+       {
+        "x": -5,
+        "y": -3,
+        "label": "C"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A(4, 3), B(1, 1) and C(-5, -3) all lie along one straight line.",
+     "printed_page": 61,
+     "figure_id": "pp3u5-1:figure-8",
+     "src": "pp3u5-1__figure-8.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u5-1:figure-4",
+     "src": "pp3u5-1__figure-4.png",
+     "ref": null,
+     "printed_page": 59,
+     "reason": "Points have symbolic coordinates (x1, y1), (x2, y2), with leg labels x2 − x1, y2 − y1, feet A, B and a shaded triangle; no kind draws symbolic coordinates or shading.",
+     "needed_kind": "coordinate_plot with symbolic (letter) coordinates, segment length labels and shaded triangle"
+    },
+    {
+     "figure_id": "pp3u5-1:figure-5",
+     "src": "pp3u5-1__figure-5.png",
+     "ref": null,
+     "printed_page": 59,
+     "reason": "Right triangle with symbolic vertices (x1, 0), M(x1, y1) and leg labels x1, y1, shaded; not drawable with numeric coordinates.",
+     "needed_kind": "coordinate_plot with symbolic (letter) coordinates, segment length labels and shaded triangle"
+    }
+   ],
+   "counts": {
+    "visuals": 6,
+    "viz_gaps": 2,
+    "compared": 6
+   }
+  },
+  {
+   "lesson": "pp3u5-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u5-2:figure-1",
+    "pp3u5-2:figure-2",
+    "pp3u5-2:figure-3",
+    "pp3u5-2:figure-4",
+    "pp3u5-2:figure-5"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u5-2-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 2,
+        "y": 6,
+        "label": "A"
+       },
+       {
+        "x": 6,
+        "y": 6,
+        "label": "B"
+       },
+       {
+        "x": 4,
+        "y": 6,
+        "label": "C"
+       },
+       {
+        "x": 2,
+        "y": 0,
+        "label": "2"
+       },
+       {
+        "x": 4,
+        "y": 0,
+        "label": "4"
+       },
+       {
+        "x": 6,
+        "y": 0,
+        "label": "6"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        0,
+        3
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        1,
+        5
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A(2, 6) and B(6, 6) are joined by a horizontal segment, and the midpoint C is at x = 4.",
+     "printed_page": 62,
+     "figure_id": "pp3u5-2:figure-1",
+     "src": "pp3u5-2__figure-1.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u5-2-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": -2,
+        "y": -1,
+        "label": "B"
+       },
+       {
+        "x": -2,
+        "y": -3,
+        "label": "C"
+       },
+       {
+        "x": -2,
+        "y": -5,
+        "label": "A"
+       },
+       {
+        "x": 0,
+        "y": -1,
+        "label": "-1"
+       },
+       {
+        "x": 0,
+        "y": -3,
+        "label": "-3"
+       },
+       {
+        "x": 0,
+        "y": -5,
+        "label": "-5"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        2
+       ],
+       [
+        0,
+        3
+       ],
+       [
+        1,
+        4
+       ],
+       [
+        2,
+        5
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "B(-2, -1) and A(-2, -5) are joined by a vertical segment, and the midpoint C is at y = -3.",
+     "printed_page": 62,
+     "figure_id": "pp3u5-2:figure-2",
+     "src": "pp3u5-2__figure-2.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u5-2-1",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 1,
+        "y": 2,
+        "label": "A"
+       },
+       {
+        "x": 3,
+        "y": 4,
+        "label": "C"
+       },
+       {
+        "x": 5,
+        "y": 6,
+        "label": "B"
+       },
+       {
+        "x": 1,
+        "y": 0,
+        "label": "1"
+       },
+       {
+        "x": 3,
+        "y": 0,
+        "label": "3"
+       },
+       {
+        "x": 5,
+        "y": 0,
+        "label": "5"
+       },
+       {
+        "x": 0,
+        "y": 2,
+        "label": "2"
+       },
+       {
+        "x": 0,
+        "y": 4,
+        "label": "4"
+       },
+       {
+        "x": 0,
+        "y": 6,
+        "label": "6"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        2
+       ],
+       [
+        0,
+        3
+       ],
+       [
+        1,
+        4
+       ],
+       [
+        2,
+        5
+       ],
+       [
+        0,
+        6
+       ],
+       [
+        1,
+        7
+       ],
+       [
+        2,
+        8
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A(1, 2) and B(5, 6) are joined by a slanted segment, and its midpoint C is at (3, 4).",
+     "printed_page": 62,
+     "figure_id": "pp3u5-2:figure-3",
+     "src": "pp3u5-2__figure-3.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u5-2:figure-4",
+     "src": "pp3u5-2__figure-4.png",
+     "ref": null,
+     "printed_page": 63,
+     "reason": "Symbolic derivation figure with algebraic coordinates (x1;y1), (x;y), (x2;y2), labelled side lengths like x − x1, and shaded right triangles; no numeric values to plot and no kind draws algebraic labels or shaded triangles.",
+     "needed_kind": "geometry diagram with symbolic point labels, labelled legs and shaded triangles"
+    },
+    {
+     "figure_id": "pp3u5-2:figure-5",
+     "src": "pp3u5-2__figure-5.png",
+     "ref": "pp3u5-2:example-3",
+     "printed_page": 64,
+     "reason": "the spec does not match the figure: Image contains additional geometry not specified: red quadrilateral, point D, and extra segments beyond the three-point triangle (A, B, C) defined in spec",
+     "rejected_spec": {
+      "kind": "coordinate_plot",
+      "spec": {
+       "xRange": [
+        -6,
+        6
+       ],
+       "yRange": [
+        -6,
+        6
+       ],
+       "points": [
+        {
+         "x": 3,
+         "y": 2,
+         "label": "A"
+        },
+        {
+         "x": 4,
+         "y": -5,
+         "label": "B"
+        },
+        {
+         "x": 0,
+         "y": -3,
+         "label": "C"
+        }
+       ],
+       "segments": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         2
+        ],
+        [
+         0,
+         2
+        ]
+       ],
+       "animate": "plot-sequence",
+       "interactive": false
+      }
+     }
+    }
+   ],
+   "counts": {
+    "visuals": 3,
+    "viz_gaps": 2,
+    "compared": 4
+   }
+  },
+  {
+   "lesson": "pp3u5-3",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u5-3:figure-1",
+    "pp3u5-3:figure-2",
+    "pp3u5-3:figure-3",
+    "pp3u5-3:figure-4",
+    "pp3u5-3:figure-5",
+    "pp3u5-3:figure-6",
+    "pp3u5-3:figure-7",
+    "pp3u5-3:figure-8"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u5-3-1",
+     "question": null,
+     "kind": "geo_scene",
+     "spec": {
+      "elements": [
+       {
+        "type": "segment",
+        "from": [
+         -1,
+         0
+        ],
+        "to": [
+         6,
+         0
+        ],
+        "label": "x",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         0,
+         -3
+        ],
+        "to": [
+         0,
+         4
+        ],
+        "label": "y",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         -0.5,
+         -2.5
+        ],
+        "to": [
+         5,
+         3
+        ],
+        "step": 2
+       },
+       {
+        "type": "point",
+        "x": 3,
+        "y": 1,
+        "label": "(3, 1)",
+        "step": 3
+       },
+       {
+        "type": "point",
+        "x": 4,
+        "y": 2,
+        "label": "(4, 2)",
+        "step": 3
+       },
+       {
+        "type": "angle",
+        "at": [
+         2,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 45,
+        "label": "θ",
+        "step": 4
+       }
+      ],
+      "animate": "sequence"
+     },
+     "caption": "A line rising to the right through (3, 1) and (4, 2), with the acute angle it makes with the x-axis marked.",
+     "printed_page": 65,
+     "figure_id": "pp3u5-3:figure-1",
+     "src": "pp3u5-3__figure-1.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:pp3u5-3-1",
+     "question": null,
+     "kind": "geo_scene",
+     "spec": {
+      "elements": [
+       {
+        "type": "segment",
+        "from": [
+         -1,
+         0
+        ],
+        "to": [
+         6,
+         0
+        ],
+        "label": "x",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         0,
+         -1
+        ],
+        "to": [
+         0,
+         5
+        ],
+        "label": "y",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         -0.5,
+         4.5
+        ],
+        "to": [
+         5,
+         -1
+        ],
+        "step": 2
+       },
+       {
+        "type": "point",
+        "x": 4,
+        "y": 0,
+        "label": "(4, 0)",
+        "step": 3
+       },
+       {
+        "type": "point",
+        "x": 2,
+        "y": 2,
+        "label": "(2, 2)",
+        "step": 3
+       },
+       {
+        "type": "angle",
+        "at": [
+         4,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 135,
+        "label": "θ",
+        "step": 4
+       }
+      ],
+      "animate": "sequence"
+     },
+     "caption": "A line falling to the right through (4, 0) and (2, 2), with the obtuse angle it makes with the positive x-axis marked.",
+     "printed_page": 65,
+     "figure_id": "pp3u5-3:figure-2",
+     "src": "pp3u5-3__figure-2.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:pp3u5-3-2",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 3,
+        "label": "(-1, 3)"
+       },
+       {
+        "x": 2,
+        "y": 3,
+        "label": "(2, 3)"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A horizontal line at y = 3 through (-1, 3) and (2, 3).",
+     "printed_page": 65,
+     "figure_id": "pp3u5-3:figure-3",
+     "src": "pp3u5-3__figure-3.png"
+    },
+    {
+     "n": 4,
+     "lo": "lo:pp3u5-3-2",
+     "question": null,
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 2,
+        "y": -1,
+        "label": "(2, -1)"
+       },
+       {
+        "x": 2,
+        "y": 3,
+        "label": "(2, 3)"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "A vertical line at x = 2 through (2, -1) and (2, 3).",
+     "printed_page": 65,
+     "figure_id": "pp3u5-3:figure-4",
+     "src": "pp3u5-3__figure-4.png"
+    },
+    {
+     "n": 5,
+     "lo": "lo:pp3u5-3-2",
+     "question": "pp3u5-3:think-and-discuss-2",
+     "kind": "geo_scene",
+     "spec": {
+      "elements": [
+       {
+        "type": "segment",
+        "from": [
+         -5,
+         0
+        ],
+        "to": [
+         5,
+         0
+        ],
+        "label": "x",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         0,
+         -3
+        ],
+        "to": [
+         0,
+         4
+        ],
+        "label": "y",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         -3,
+         -1
+        ],
+        "to": [
+         1,
+         3
+        ],
+        "label": "L2",
+        "step": 2
+       },
+       {
+        "type": "segment",
+        "from": [
+         -0.5,
+         -1.5
+        ],
+        "to": [
+         3.5,
+         2.5
+        ],
+        "label": "L1",
+        "step": 2
+       },
+       {
+        "type": "angle",
+        "at": [
+         -2,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 45,
+        "label": "E1",
+        "step": 3
+       },
+       {
+        "type": "angle",
+        "at": [
+         1,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 45,
+        "label": "E2",
+        "step": 3
+       }
+      ],
+      "animate": "sequence"
+     },
+     "caption": "Two parallel lines L1 and L2 sloping up to the right, each making a positive angle with the positive x-axis, marked E1 and E2.",
+     "printed_page": 67,
+     "figure_id": "pp3u5-3:figure-6",
+     "src": "pp3u5-3__figure-6.png"
+    },
+    {
+     "n": 6,
+     "lo": "lo:pp3u5-3-2",
+     "question": "pp3u5-3:example-4",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -6,
+       6
+      ],
+      "yRange": [
+       -6,
+       6
+      ],
+      "points": [
+       {
+        "x": 2,
+        "y": 3,
+        "label": "A"
+       },
+       {
+        "x": 6,
+        "y": 2,
+        "label": "B"
+       },
+       {
+        "x": -2,
+        "y": -2,
+        "label": "C"
+       },
+       {
+        "x": -2,
+        "y": 1,
+        "label": "D"
+       }
+      ],
+      "segments": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        3
+       ],
+       [
+        3,
+        0
+       ]
+      ],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Quadrilateral ABCD with A(2, 3), B(6, 2), C(-2, -2) and D(-2, 1) plotted and joined.",
+     "printed_page": 67,
+     "figure_id": "pp3u5-3:figure-7",
+     "src": "pp3u5-3__figure-7.png"
+    },
+    {
+     "n": 7,
+     "lo": "lo:pp3u5-3-3",
+     "question": "pp3u5-3:think-and-discuss-5",
+     "kind": "geo_scene",
+     "spec": {
+      "elements": [
+       {
+        "type": "segment",
+        "from": [
+         -5,
+         0
+        ],
+        "to": [
+         5,
+         0
+        ],
+        "label": "x",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         0,
+         -2
+        ],
+        "to": [
+         0,
+         5
+        ],
+        "label": "y",
+        "step": 1
+       },
+       {
+        "type": "segment",
+        "from": [
+         -4,
+         -1
+        ],
+        "to": [
+         1,
+         4
+        ],
+        "label": "L1",
+        "step": 2
+       },
+       {
+        "type": "segment",
+        "from": [
+         -1.5,
+         4
+        ],
+        "to": [
+         3,
+         -0.5
+        ],
+        "label": "L2",
+        "step": 2
+       },
+       {
+        "type": "point",
+        "x": -0.5,
+        "y": 2.5,
+        "label": "C",
+        "step": 3
+       },
+       {
+        "type": "point",
+        "x": -3,
+        "y": 0,
+        "label": "A",
+        "step": 3
+       },
+       {
+        "type": "point",
+        "x": 2,
+        "y": 0,
+        "label": "B",
+        "step": 3
+       },
+       {
+        "type": "point",
+        "x": 0,
+        "y": 0,
+        "label": "F",
+        "step": 3
+       },
+       {
+        "type": "angle",
+        "at": [
+         -3,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 45,
+        "label": "E",
+        "step": 4
+       },
+       {
+        "type": "angle",
+        "at": [
+         2,
+         0
+        ],
+        "fromDeg": 0,
+        "toDeg": 135,
+        "label": "J",
+        "step": 4
+       },
+       {
+        "type": "angle",
+        "at": [
+         -0.5,
+         2.5
+        ],
+        "fromDeg": 225,
+        "toDeg": 315,
+        "label": "90°",
+        "step": 5
+       }
+      ],
+      "animate": "sequence"
+     },
+     "caption": "Two perpendicular lines L1 and L2 meeting at C, with angle E where L1 meets the x-axis and angle J where L2 meets it.",
+     "printed_page": 68,
+     "figure_id": "pp3u5-3:figure-8",
+     "src": "pp3u5-3__figure-8.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u5-3:figure-5",
+     "src": "pp3u5-3__figure-5.png",
+     "ref": null,
+     "printed_page": 65,
+     "reason": "A circular diagram showing anticlockwise (+) and clockwise (−) rotation direction with arrows; none of the kinds can show rotation direction arrows.",
+     "needed_kind": "rotation_direction_diagram (circle with signed rotation arrows)"
+    }
+   ],
+   "counts": {
+    "visuals": 7,
+    "viz_gaps": 1,
+    "compared": 7
+   }
+  },
+  {
+   "lesson": "pp3u5-4",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u5-4:figure-1"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u5-4-1",
+     "question": "pp3u5-4:example-1",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "linear",
+      "coefs": [
+       0.5,
+       2
+      ],
+      "domain": [
+       -5,
+       3
+      ],
+      "markers": [
+       {
+        "x": -4,
+        "label": "(-4, 0)"
+       },
+       {
+        "x": 0,
+        "label": "B(0, 2)"
+       }
+      ],
+      "animate": "draw"
+     },
+     "caption": "The line x - 2y + 4 = 0 is y = x/2 + 2; it crosses the x-axis at (-4, 0) and the y-axis at B(0, 2).",
+     "printed_page": 70,
+     "figure_id": "pp3u5-4:figure-1",
+     "src": "pp3u5-4__figure-1.png"
+    }
+   ],
+   "viz_gaps": [],
+   "counts": {
+    "visuals": 1,
+    "viz_gaps": 0,
+    "compared": 1
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 4,
+   "S4 Compare": 4
+  },
+  "per_lesson": {
+   "pp3u5-1": 2,
+   "pp3u5-2": 2,
+   "pp3u5-3": 2,
+   "pp3u5-4": 2
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

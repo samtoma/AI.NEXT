@@ -1,0 +1,77 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u5-1",
+  "source": "book-records/prep3-parallel/pp3u5-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0254,
+      "calls": [
+        {
+          "call": "check-printed.pp3u5-1",
+          "cost_usd": 0.0166,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u5-1",
+          "cost_usd": 0.0088,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u5-1:example-1",
+      "record_id": "pp3u5-1:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 59,
+      "printed": "ABCD is a square",
+      "blind": "AB = BC = CD = DA = $\\sqrt{41}$ (all sides equal, so a rhombus), and diagonals AC = BD = $\\sqrt{82}$ (equal), so ABCD is a square.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u5-1:figure-6"
+      ],
+      "question_fingerprint": "b03493c16c9859beeb48432cd29d2c42",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u5-1:example-1",
+        "verdict": "equivalent",
+        "reason": "Both conclude ABCD is a square; the solver's side lengths (√41) and diagonals (√82) check out."
+      },
+      "how": "judged equivalent: Both conclude ABCD is a square; the solver's side lengths (√41) and diagonals (√82) check out.",
+      "made": {
+        "at": "2026-10-18T06:50:02+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u5-1:example-2",
+      "record_id": "pp3u5-1:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 60,
+      "printed": "10 square units",
+      "blind": "AB² = 40, BC² = 10, AC² = 50. Since AB² + BC² = AC², the triangle is right angled at B. Area = 1/2 × $\\sqrt{40}$ × $\\sqrt{10}$ = 10 square units.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u5-1:figure-7"
+      ],
+      "question_fingerprint": "937c683998197678f18c4e365570246a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T06:50:02+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "bd09431e3cdb081c8d6a32decfeae13999056653ccfda285c4d1e9901b51680e",
+  "generated_sha256": "5ee5c4ab4dbd0238042388dbb8d99fff7d74c4c1cb147456e139717cf36af4c0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-1:figure-5",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Orange box fragment at top-left is not part of the figure."
+   },
+   {
+    "id": "pp3u9-1:figure-6",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Orange box fragment at bottom is not part of the figure."
+   }
+  ]
+ }
+}

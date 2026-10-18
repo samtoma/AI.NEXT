@@ -1,0 +1,76 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-2-2:factorise-monic",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-2-2",
+ "parent_question_id": "q:pp3u6-2-2:bk-think-and-discuss-1-4",
+ "source_page": 10,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "require": "p != 0",
+   "why": "nonzero root"
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == p or q == 0"
+  },
+  {
+   "name": "b",
+   "let": "-(p + q)"
+  },
+  {
+   "name": "c",
+   "let": "p * q"
+  },
+  {
+   "require": "abs(b) >= 2",
+   "why": "keep the x term with a coefficient other than 0 or 1"
+  },
+  {
+   "name": "sb",
+   "let": "'+' if b > 0 else '-'"
+  },
+  {
+   "name": "sc",
+   "let": "'+' if c > 0 else '-'"
+  },
+  {
+   "name": "sp",
+   "let": "'-' if p > 0 else '+'"
+  },
+  {
+   "name": "sq",
+   "let": "'-' if q > 0 else '+'"
+  }
+ ],
+ "stem": "Solve the equation $x^2 {=sb} {=abs(b)}x {=sc} {=abs(c)} = 0$ by factorising the left side. Write the solution set (give the two roots).",
+ "solution": [
+  "Find two numbers whose product is ${=c}$ and whose sum is ${=b}$: they are ${=-p}$ and ${=-q}$.",
+  "Factorise the left side: $(x {=sp} {=abs(p)})(x {=sq} {=abs(q)}) = 0$.",
+  "Either $x {=sp} {=abs(p)} = 0$, so $x = {=p}$, or $x {=sq} {=abs(q)} = 0$, so $x = {=q}$.",
+  "The solution set is $\\{{=p}, {=q}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=p}, {=q}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Monic quadratic with integer distinct nonzero roots; factorising method as in book question. Roots given in any order."
+}

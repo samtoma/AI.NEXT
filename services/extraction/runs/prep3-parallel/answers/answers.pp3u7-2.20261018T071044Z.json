@@ -1,0 +1,445 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "0aadb38ef4248ccbf833d0aec3dda69bde7b7ef0b31ef566ec87c035fd4968db",
+  "generated_sha256": "5e659d1905b400f99c075f915e97ace3e34243b215b288c23f17047ea82249fd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u7-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-2:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the functions f and p are shown only in the page's diagram, which is not given here.",
+      "solution": [
+       "The functions f and p are not stated in the text provided.",
+       "Without them the zeroes of the denominators cannot be found."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Yes: the domain of n is R minus the set of zeroes of f, that is the values of x where f(x) = 0 are removed.",
+      "solution": [
+       "n(x) = p(x)/f(x) is undefined only where the denominator f(x) = 0.",
+       "So the domain of n is R - z(f), where z(f) is the set of zeroes of f.",
+       "Knowing the domains of p and f, take the common values and remove the zeroes of f."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-1",
+       "pp3u7-2:rule-3",
+       "pp3u7-2:definition-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-2",
+      "kind": "value",
+      "answer": "a = 6",
+      "solution": [
+       "The domain is R - {3}, so 3 is the zero of the denominator.",
+       "Substitute x = 3: $9 - 3a + 9 = 0$.",
+       "$18 - 3a = 0$, so $3a = 18$.",
+       "a = 6"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-1:n1",
+      "kind": "value",
+      "answer": "R - {0}",
+      "solution": [
+       "Denominator: x = 0 gives x = 0.",
+       "Domain of $n_1$ is R - {0}.",
+       "(With $n_2$ the common domain is R - {-1, 0}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-1:n2",
+      "kind": "value",
+      "answer": "R - {-1}",
+      "solution": [
+       "Denominator: $x+1=0$ gives x = -1.",
+       "Domain of $n_2$ is R - {-1}.",
+       "(With $n_1$ the common domain is R - {-1, 0}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-2:n1",
+      "kind": "value",
+      "answer": "R - {0, 1}",
+      "solution": [
+       "Denominator: $x^2-x=x(x-1)=0$.",
+       "x = 0 or x = 1.",
+       "Domain of $n_1$ is R - {0, 1}.",
+       "(With $n_2$ the common domain is R - {-1, 0, 1}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-2:n2",
+      "kind": "value",
+      "answer": "R - {-1, 1}",
+      "solution": [
+       "Denominator: $x^2-1=(x-1)(x+1)=0$.",
+       "x = 1 or x = -1.",
+       "Domain of $n_2$ is R - {-1, 1}.",
+       "(With $n_1$ the common domain is R - {-1, 0, 1}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n1",
+      "kind": "value",
+      "answer": "R - {2}",
+      "solution": [
+       "Denominator: $x-2=0$ gives x = 2.",
+       "Domain of $n_1$ is R - {2}.",
+       "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 2}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n2",
+      "kind": "value",
+      "answer": "R - {-2}",
+      "solution": [
+       "Denominator: $x+2=0$ gives x = -2.",
+       "Domain of $n_2$ is R - {-2}.",
+       "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 2}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n3",
+      "kind": "value",
+      "answer": "R - {-2, 0, 2}",
+      "solution": [
+       "Denominator: $x^3-4x=x(x-2)(x+2)=0$.",
+       "x = 0, 2 or -2.",
+       "Domain of $n_3$ is R - {-2, 0, 2}.",
+       "Common domain of $n_1,n_2,n_3$ = R - {2} ∩ R - {-2} ∩ R - {-2, 0, 2} = R - {-2, 0, 2}."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n1",
+      "kind": "value",
+      "answer": "R - {2, 3}",
+      "solution": [
+       "Denominator: $x^2-5x+6=(x-2)(x-3)=0$.",
+       "x = 2 or x = 3.",
+       "Domain of $n_1$ is R - {2, 3}.",
+       "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 1, 2, 3}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n2",
+      "kind": "value",
+      "answer": "R - {0, 1}",
+      "solution": [
+       "Denominator: $x^2-x=x(x-1)=0$.",
+       "x = 0 or x = 1.",
+       "Domain of $n_2$ is R - {0, 1}.",
+       "(Common domain of $n_1,n_2,n_3$ is R - {-2, 0, 1, 2, 3}.)"
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n3",
+      "kind": "value",
+      "answer": "R - {-2, 1}",
+      "solution": [
+       "Denominator: $x^2+x-2=(x+2)(x-1)=0$.",
+       "x = -2 or x = 1.",
+       "Domain of $n_3$ is R - {-2, 1}.",
+       "Common domain of $n_1,n_2,n_3$ = R - ({2,3} ∪ {0,1} ∪ {-2,1}) = R - {-2, 0, 1, 2, 3}."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-2:think-and-discuss-1",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the functions f and p are defined in a diagram/figure that was not provided."
+     },
+     {
+      "ref": "pp3u7-2:think-and-discuss-2",
+      "kind": "explanation",
+      "answer": "Yes. The domain of n is the intersection of the domains of p and f, minus the zeroes of f. For polynomials p and f this is R - z(f)."
+     },
+     {
+      "ref": "pp3u7-2:drill-2",
+      "kind": "value",
+      "answer": "a = 6"
+     },
+     {
+      "ref": "pp3u7-2:exercise-1:n1",
+      "kind": "value",
+      "answer": "R - {0}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-1:n2",
+      "kind": "value",
+      "answer": "R - {-1}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-2:n1",
+      "kind": "value",
+      "answer": "R - {0, 1}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-2:n2",
+      "kind": "value",
+      "answer": "R - {-1, 1}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n1",
+      "kind": "value",
+      "answer": "R - {2}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n2",
+      "kind": "value",
+      "answer": "R - {-2}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-3:n3",
+      "kind": "value",
+      "answer": "R - {-2, 0, 2}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n1",
+      "kind": "value",
+      "answer": "R - {2, 3}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n2",
+      "kind": "value",
+      "answer": "R - {0, 1}"
+     },
+     {
+      "ref": "pp3u7-2:exercise-4:n3",
+      "kind": "value",
+      "answer": "R - {-2, 1}"
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u7-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u7-2:drill-1:a",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4",
+      "solution": [
+       "The denominator is 4, which is never zero, so it has no zeroes.",
+       "Domain = R minus the empty set = R.",
+       "n(0) = (0+3)/4 = 3/4.",
+       "n(2) = (2+3)/4 = 5/4.",
+       "n(-2) = (-2+3)/4 = 1/4.",
+       "Answer: domain R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-1:b",
+      "kind": "value",
+      "answer": "Domain = R - {0}; n(0) is undefined, n(2) = 0, n(-2) = 1",
+      "solution": [
+       "Set the denominator equal to zero: $2x = 0$, so x = 0.",
+       "The set of zeroes is {0}, so domain = R - {0}.",
+       "0 is not in the domain, so n(0) is undefined.",
+       "n(2) = (2-2)/(2×2) = 0/4 = 0.",
+       "n(-2) = (-2-2)/(2×(-2)) = -4/-4 = 1.",
+       "Answer: domain R - {0}; n(0) undefined, n(2) = 0, n(-2) = 1."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-1:c",
+      "kind": "value",
+      "answer": "Domain = R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) is undefined",
+      "solution": [
+       "Set the denominator equal to zero: $x+2 = 0$, so x = -2.",
+       "The set of zeroes is {-2}, so domain = R - {-2}.",
+       "n(0) = 1/(0+2) = 1/2.",
+       "n(2) = 1/(2+2) = 1/4.",
+       "-2 is not in the domain, so n(-2) is undefined.",
+       "Answer: domain R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) undefined."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-1:d",
+      "kind": "value",
+      "answer": "Domain = R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12",
+      "solution": [
+       "Set the denominator equal to zero: $x^2-16 = 0$, so $x^2 = 16$, so x = 4 or x = -4.",
+       "The set of zeroes is {-4, 4}, so domain = R - {-4, 4}.",
+       "n(0) = (0+9)/(0-16) = -9/16.",
+       "n(2) = (4+9)/(4-16) = 13/(-12) = -13/12.",
+       "n(-2) = (4+9)/(4-16) = -13/12.",
+       "Answer: domain R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-1:e",
+      "kind": "value",
+      "answer": "Domain = R - {0, 1}; n(0) is undefined, n(2) = 5/2, n(-2) = 5/6",
+      "solution": [
+       "Set the denominator equal to zero: $x^2-x = 0$, so $x(x-1) = 0$.",
+       "So x = 0 or x = 1. The set of zeroes is {0, 1}, so domain = R - {0, 1}.",
+       "0 is not in the domain, so n(0) is undefined.",
+       "n(2) = (4+1)/(4-2) = 5/2.",
+       "n(-2) = (4+1)/(4+2) = 5/6.",
+       "Answer: domain R - {0, 1}; n(0) undefined, n(2) = 5/2, n(-2) = 5/6."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-1:f",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5",
+      "solution": [
+       "Set the denominator equal to zero: $x^2+1 = 0$, so $x^2 = -1$, which has no real solution.",
+       "The denominator has no zeroes, so domain = R.",
+       "n(0) = (0-1)/(0+1) = -1.",
+       "n(2) = (4-1)/(4+1) = 3/5.",
+       "n(-2) = (4-1)/(4+1) = 3/5.",
+       "Answer: domain R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-3",
+       "pp3u7-2:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u7-2:drill-3",
+      "kind": "value",
+      "answer": "1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}",
+      "solution": [
+       "Method: common domain = R minus the union of the zeroes of all the denominators.",
+       "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+       "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+       "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+       "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+       "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+       "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "grounded_in": [
+       "pp3u7-2:rule-4",
+       "pp3u7-2:rule-5",
+       "pp3u7-2:example-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-2:drill-1:a",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = 3/4, n(2) = 5/4, n(-2) = 1/4"
+     },
+     {
+      "ref": "pp3u7-2:drill-1:b",
+      "kind": "value",
+      "answer": "Domain = R - {0}; n(0) is undefined (0 is not in the domain), n(2) = 0, n(-2) = 1"
+     },
+     {
+      "ref": "pp3u7-2:drill-1:c",
+      "kind": "value",
+      "answer": "Domain = R - {-2}; n(0) = 1/2, n(2) = 1/4, n(-2) is undefined (-2 is not in the domain)"
+     },
+     {
+      "ref": "pp3u7-2:drill-1:d",
+      "kind": "value",
+      "answer": "Domain = R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12"
+     },
+     {
+      "ref": "pp3u7-2:drill-1:e",
+      "kind": "value",
+      "answer": "Domain = R - {0, 1}; n(0) is undefined (0 is not in the domain), n(2) = 5/2, n(-2) = 5/6"
+     },
+     {
+      "ref": "pp3u7-2:drill-1:f",
+      "kind": "value",
+      "answer": "Domain = R; n(0) = -1, n(2) = 3/5, n(-2) = 3/5"
+     },
+     {
+      "ref": "pp3u7-2:drill-3",
+      "kind": "value",
+      "answer": "(1) R - {-1, 0}; (2) R - {-1, 0, 1}; (3) R - {-2, 0, 2}; (4) R - {-2, 0, 1, 2, 3}"
+     }
+    ]
+   }
+  }
+ ]
+}

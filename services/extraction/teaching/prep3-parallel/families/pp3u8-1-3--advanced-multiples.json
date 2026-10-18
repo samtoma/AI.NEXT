@@ -1,0 +1,93 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-1-3:advanced-multiples",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-1-3",
+ "parent_question_id": "q:pp3u8-1-3:bk-drill-6-a",
+ "source_page": 34,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A number is chosen at random from the whole numbers 1 to N; every number is equally likely.",
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    20,
+    24,
+    30,
+    36,
+    40,
+    48,
+    60
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "m < n",
+   "why": "distinct events, ordered"
+  },
+  {
+   "name": "l",
+   "let": "lcm(m, n)"
+  },
+  {
+   "name": "na",
+   "let": "N // m"
+  },
+  {
+   "name": "nb",
+   "let": "N // n"
+  },
+  {
+   "name": "nc",
+   "let": "N // l"
+  },
+  {
+   "name": "u",
+   "let": "na + nb - nc"
+  },
+  {
+   "name": "g",
+   "let": "gcd(u, N)"
+  },
+  {
+   "require": "u < N and nc >= 1",
+   "why": "proper fraction and a real overlap"
+  }
+ ],
+ "constraints": [],
+ "stem": "A number is chosen at random from the whole numbers $1$ to ${=N}$. Let $A$ be the event 'the number is a multiple of ${=m}$' and $B$ the event 'the number is a multiple of ${=n}$'. Find $P(A\\cup B)$, giving your answer as a fraction in its simplest form.",
+ "solution": [
+  "$n(S)={=N}$. The multiples of ${=m}$ give $n(A)={=na}$, so $P(A)=\\frac{{=na}}{{=N}}$.",
+  "The multiples of ${=n}$ give $n(B)={=nb}$, so $P(B)=\\frac{{=nb}}{{=N}}$.",
+  "$A\\cap B$ is the numbers that are multiples of both ${=m}$ and ${=n}$, i.e. multiples of ${=l}$: $n(A\\cap B)={=nc}$, so $P(A\\cap B)=\\frac{{=nc}}{{=N}}$.",
+  "$P(A\\cup B)=\\frac{{=na}}{{=N}}+\\frac{{=nb}}{{=N}}-\\frac{{=nc}}{{=N}}=\\frac{{=u}}{{=N}}$.",
+  "In simplest form $P(A\\cup B)=\\frac{{=u // g}}{{=N // g}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=u // g}/{=N // g}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Student must find the overlap (multiples of lcm) and subtract it. Floor counts via //. N chosen so overlaps exist."
+}

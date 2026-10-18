@@ -1,0 +1,30 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-1:centre-angle",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-1",
+ "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
+ "source_page": 95,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    50,
+    80
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$, where $B$ and $C$ are the points of tangency. If $m(\\angle ABC) = {=x}^\\circ$, find $m(\\angle BMC)$.",
+ "answer": "2 * x",
+ "solution": [
+  "$AB = AC$ because they are tangent segments from $A$, so triangle $ABC$ is isosceles and $m(\\angle ACB) = m(\\angle ABC) = {=x}^\\circ$.",
+  "$m(\\angle BAC) = 180^\\circ - 2 \\times {=x}^\\circ = {=180 - 2*x}^\\circ$.",
+  "The radii $MB$ and $MC$ are perpendicular to the tangents, so $m(\\angle MBA) = m(\\angle MCA) = 90^\\circ$.",
+  "In quadrilateral $ABMC$: $m(\\angle BMC) = 360^\\circ - 90^\\circ - 90^\\circ - {=180 - 2*x}^\\circ = {=2*x}^\\circ$."
+ ],
+ "notes": "Text-only; no figure needed. x in 50..80 gives angle A between 20 and 80. Answer in degrees (number only)."
+}

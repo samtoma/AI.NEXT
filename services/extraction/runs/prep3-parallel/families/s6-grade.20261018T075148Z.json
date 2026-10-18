@@ -1,0 +1,535 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "76db0e5dad80cd233fec55e5923482f5ac5f7bed6afeb063cfd9a093be0b1a46",
+  "generated_sha256": "36ff370ad17434a28ab2e623dd7618ce5bb76ffe9da4555b37aa39f320fb61e0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u9-1-1:secant-radii",
+   "spec_sha": "c66d33ff395da1ca56da97507f09df0e1c18d9c2da6ace90bd585f00f6d43a36",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-1-1:g005-secant",
+     "stem_sha": "48445d2e0bb193db",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-1-1:g007-secant",
+     "stem_sha": "4e247f27db96a04c",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-1-1:g008-secant",
+     "stem_sha": "b407652e17302f36",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "AME = 180 - 3x. The keys 93 (x=29), 84 (x=32) and 72 (x=36) all match. Each worked step is valid, and x < 45° keeps the configuration valid. No options were given, so there are no distractors to judge."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-1-3:half-chord",
+   "spec_sha": "cb504f558c077aba57da863b3bd2f7aaa96c1b3ecbc6304940d7971101ebb077",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-1-3:g002-half-c",
+     "stem_sha": "0485eae1f6789d04",
+     "answer": {
+      "value": "10"
+     },
+     "working": "The perpendicular from the center to a chord bisects it, so AB = 2·AD = 2·5 = 10."
+    },
+    {
+     "instance_id": "q:pp3u9-1-3:g004-half-c",
+     "stem_sha": "5211411417951e10",
+     "answer": {
+      "value": "12"
+     },
+     "working": "AB = 2·AD = 2·6 = 12."
+    },
+    {
+     "instance_id": "q:pp3u9-1-3:g009-half-c",
+     "stem_sha": "1291480e7354ce0a",
+     "answer": {
+      "value": "26"
+     },
+     "working": "AB = 2·AD = 2·13 = 26."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were provided, so there are no distractors to judge. The keys 10, 12 and 26 each equal 2×AD. \"Circle M\" means M is the centre, and the solution says so explicitly. A perpendicular from the centre bisects the chord, so the method is the book's. The numbers are realistic and the question is unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-1:position",
+   "spec_sha": "afe4c9125d583f6e29233db6627d1e1ffa9ba0bab6a2cabb34e2747b485e07c6",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-1:g004-positi",
+     "stem_sha": "c32683f7e301b94c",
+     "answer": {
+      "choice": "C",
+      "choice_text": "on the circle"
+     },
+     "working": "MA = 9 equals r = 9, so A is on the circle."
+    },
+    {
+     "instance_id": "q:pp3u9-2-1:g008-positi",
+     "stem_sha": "3d1f005d04a28a06",
+     "answer": {
+      "choice": "D",
+      "choice_text": "inside the circle"
+     },
+     "working": "MA = 6 is less than r = 7, so A is inside the circle."
+    },
+    {
+     "instance_id": "q:pp3u9-2-1:g010-positi",
+     "stem_sha": "b39bd312a0a6cf7e",
+     "answer": {
+      "choice": "A",
+      "choice_text": "outside the circle"
+     },
+     "working": "MA = 9 is greater than r = 8, so A is outside the circle."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances have the right key. In each one MA > 0, so \"at the centre\" is wrong. The other two position options are wrong by the comparison of MA and r. The solutions apply the MA vs r rule correctly. No misconception tags were shown, so every wrong option is judged only on whether it is wrong. The stem is clear for Grade prep-3.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u9-2-1:g004-positi",
+      "option": "A inside the circle",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g004-positi",
+      "option": "B at the centre",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g004-positi",
+      "option": "D outside the circle",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g008-positi",
+      "option": "A outside the circle",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g008-positi",
+      "option": "B on the circle",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g008-positi",
+      "option": "C at the centre",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g010-positi",
+      "option": "B on the circle",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g010-positi",
+      "option": "C at the centre",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-2-1:g010-positi",
+      "option": "D inside the circle",
+      "verdict": "UNTAGGED_OK"
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-1:unknown-both",
+   "spec_sha": "f9ff616704e8994f364471a7a2283d406d59f13cac736180ac076dae891109c1",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-1:g001-unknow",
+     "stem_sha": "f726df1207e9f2da",
+     "answer": {
+      "value": "4"
+     },
+     "working": "MA = r: 2x+5 = 3x+1 → x=4"
+    },
+    {
+     "instance_id": "q:pp3u9-2-1:g003-unknow",
+     "stem_sha": "ac5d972005a2c848",
+     "answer": {
+      "value": "2"
+     },
+     "working": "2x+6 = 3x+4 → x=2"
+    },
+    {
+     "instance_id": "q:pp3u9-2-1:g007-unknow",
+     "stem_sha": "37f6e8d26b6e7918",
+     "answer": {
+      "value": "5"
+     },
+     "working": "3x+11 = 5x+1 → 2x=10 → x=5"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by substituting x back in: x=4, 2 and 5, with MA = r = 13, 10 and 26 cm. The family has no options, so there are no distractors to judge. The key is x, which is what the stem asks for. The solutions follow MA = r, then collect the x terms, correctly. The \"1x\" in the g001 and g003 steps is slightly awkward but correct."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-2:tangent-chord-perimeter",
+   "spec_sha": "bb16949aabf4a67b6c4eb109ea597f3fb99dada55adead8f3284e65cb8b0d227",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-2:g002-tangen",
+     "stem_sha": "bbda38587d8a53d8",
+     "answer": {
+      "value": "192"
+     },
+     "working": "BM=√(30²+72²)=√6084=78; AD=√(30²−18²)=24; perimeter=72+78+18+24=192"
+    },
+    {
+     "instance_id": "q:pp3u9-2-2:g004-tangen",
+     "stem_sha": "6be84aef8b2810c1",
+     "answer": {
+      "value": "160"
+     },
+     "working": "BM=√(25²+60²)=65; AD=√(25²−20²)=15; perimeter=60+65+20+15=160"
+    },
+    {
+     "instance_id": "q:pp3u9-2-2:g006-tangen",
+     "stem_sha": "3d7c77c74bf85000",
+     "answer": {
+      "value": "96"
+     },
+     "working": "BM=√(15²+36²)=39; AD=√(15²−12²)=9; perimeter=36+39+12+9=96"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were given. I checked the arithmetic for all three instances. The Pythagorean triples are 30-72-78 with 18-24-30, 25-60-65 with 15-20-25, and 15-36-39 with 9-12-15. The perimeters are 192, 160 and 96, and they match the keys. The quadrilateral A-B-M-D has sides AB, BM, MD and DA, as the solutions use. The tangent-radius and chord-midpoint perpendicularity steps are correct. The stem refers to \"the figure ABMD\", which probably relies on a diagram, but it is still understandable."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-3:possible",
+   "spec_sha": "d408983ffc664755c326f809703d7c195fd440866545b529cc68e7c6e22167ab",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-3:g002-possib",
+     "stem_sha": "9f6c9863b8741cd6",
+     "answer": {
+      "value": "9"
+     },
+     "working": "10<MN<20, integers 11..19 = 9"
+    },
+    {
+     "instance_id": "q:pp3u9-2-3:g009-possib",
+     "stem_sha": "14af03e17118fb82",
+     "answer": {
+      "value": "11"
+     },
+     "working": "4<MN<16, integers 5..15 = 11"
+    },
+    {
+     "instance_id": "q:pp3u9-2-3:g010-possib",
+     "stem_sha": "cd247447f5e5c306",
+     "answer": {
+      "value": "11"
+     },
+     "working": "2<MN<14, integers 3..13 = 11"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand, and each key matches its worked solution. In each, the strict inequality r1-r2 < MN < r1+r2 gives the count of whole numbers. For radii 15 and 5, MN runs from 11 to 19, which is 9 values. For radii 10 and 6, it runs from 5 to 15, which is 11 values. For radii 8 and 6, it runs from 3 to 13, which is 11 values. No options were given, so there are no distractors to judge. The stems are unambiguous.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-3:radius",
+   "spec_sha": "7dfaeb558ded28cee6f3a74087b7d9cd30a13b4936cb7e66264007a536a25b79",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-3:g002-radius",
+     "stem_sha": "7f350a8392c11ad2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-2-3:g004-radius",
+     "stem_sha": "27b29a928ac41d02",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-2-3:g007-radius",
+     "stem_sha": "0d654cac5b7bfcd5",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were given, so there are no distractors to judge. The keys 4, 2 and 4 are correct under the internal-tangency relation MN = r₁ − r₂ and the external-tangency relation MN = r₁ + r₂. The stems are unambiguous and the worked solutions are correct.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-4:centres-dist",
+   "spec_sha": "19294478838d30bdbc57210e24c638f79a4fe92dced95966c5b73e6242ce6239",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-4:g005-centre",
+     "stem_sha": "d49629d6be24d3d2",
+     "answer": {
+      "value": "25"
+     },
+     "working": "Half chord 24. Distances to AB: √(900−576)=18 and √(625−576)=7. Centres on opposite sides, so MN=18+7=25."
+    },
+    {
+     "instance_id": "q:pp3u9-2-4:g006-centre",
+     "stem_sha": "81992bb2fad04b3a",
+     "answer": {
+      "value": "25"
+     },
+     "working": "Half chord 24. Distances to AB: √(625−576)=7 and √(900−576)=18. Opposite sides, so MN=25."
+    },
+    {
+     "instance_id": "q:pp3u9-2-4:g008-centre",
+     "stem_sha": "2ce40d62449dd674",
+     "answer": {
+      "value": "14"
+     },
+     "working": "Half chord 12. Distances to AB: √(169−144)=5 and √(225−144)=9. Opposite sides, so MN=14."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic and it holds in all three instances. The keys are 25, 25 and 14, and each is a plain number as the stem asks. The 30/25/48 geometry is valid, since the half-chord of 24 is less than both radii. g005 and g006 swap the radii and give the same answer, so they are near-duplicates, but that is not an error. No wrong options were provided, so there were no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-2-4:chord-half",
+   "spec_sha": "3fe79d3028b43abe2b5db7040b677139937a536863f63255608c7fab75888ac6",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-2-4:g006-chord-",
+     "stem_sha": "303eedd0c02d0eac",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-2-4:g008-chord-",
+     "stem_sha": "e261c60152981704",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-2-4:g009-chord-",
+     "stem_sha": "897a231e20eb5006",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options are listed, so distractors_ok is true. The line of centers of two intersecting circles is the perpendicular bisector of the common chord, so AB = 2 × AD. The keys 22, 10 and 26 follow from that. The stem does not say D is the midpoint, but this is the property the question tests. I did not open any files, since none were named.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-3-2:center-gap",
+   "spec_sha": "3e3b2908b8ed3ab49e8b880c174df3c21c90db0f7895bc244b843a51f553b1e9",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-3-2:g001-center",
+     "stem_sha": "e6ab6f53576dfeea",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Half chord 3; distance from midpoint to center = sqrt(25-9)=4; centers on opposite sides: 8"
+    },
+    {
+     "instance_id": "q:pp3u9-3-2:g003-center",
+     "stem_sha": "e84faa675cc89106",
+     "answer": {
+      "value": "16"
+     },
+     "working": "Half chord 6; sqrt(100-36)=8; total 16"
+    },
+    {
+     "instance_id": "q:pp3u9-3-2:g004-center",
+     "stem_sha": "65be888d01d23262",
+     "answer": {
+      "value": "32"
+     },
+     "working": "Half chord 12; sqrt(400-144)=16; total 32"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family shows no wrong options, so distractors_ok is true by default. I checked the arithmetic for all three instances. Each uses a Pythagorean triple (3-4-5, 6-8-10, 12-16-20), so the keys 8, 16 and 32 are correct. The stems are unambiguous. Step 3 of each solution is slightly terse. Its stated reason is that the circles \"meet only at A and B\", but the real reason is that the centers must be distinct points on the axis at equal distance from M. The conclusion is still correct."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-3-2:count-circles",
+   "spec_sha": "c26c563dac5dab4463b54aeabd1b51348df89ba46d63a74b81b2b6dd834f4a7d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-3-2:g004-count-",
+     "stem_sha": "5ca037d188299f2b",
+     "answer": {
+      "value": "0"
+     },
+     "working": "Radius 2 < AB/2 = 3, so chord of 6 can't fit in circle of diameter 4. No circles."
+    },
+    {
+     "instance_id": "q:pp3u9-3-2:g009-count-",
+     "stem_sha": "139732bc71c798e5",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Radius 7 > 3, centre on perpendicular bisector at distance sqrt(49-9) from midpoint, two sides give 2 circles."
+    },
+    {
+     "instance_id": "q:pp3u9-3-2:g010-count-",
+     "stem_sha": "bf6ed5ac43b70ed4",
+     "answer": {
+      "value": "1"
+     },
+     "working": "Radius 4 = AB/2, AB is a diameter; centre is midpoint only, so 1 circle."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The keys are correct. Radius 2 is less than half of AB (3), so there are 0 circles. Radius 7 is greater than 3, so there are 2. Radius 4 equals half of AB (4), so there is 1, the circle with AB as diameter. The family shows no answer options, so there were no distractors to check. The solutions are correct, though step 4 only says to compare the numbers and doesn't state the rule, which is that radius < half gives 0, equal gives 1 and greater gives 2. I opened no files because the task named none."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-4-3:equal-dist",
+   "spec_sha": "8d21153e130c3d0e047f69f3586b7045708a6353dee46eb95837da821f118636",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-4-3:g006-equal-",
+     "stem_sha": "bf93b900f6c9a8bc",
+     "answer": {
+      "value": "8"
+     },
+     "working": "MX=MY means the chords are equidistant from the center, so they are equal. AB=CD=8."
+    },
+    {
+     "instance_id": "q:pp3u9-4-3:g008-equal-",
+     "stem_sha": "71f485291b3d119a",
+     "answer": {
+      "value": "18"
+     },
+     "working": "MX=MY means the chords are equidistant from the center, so they are equal. AB=CD=18."
+    },
+    {
+     "instance_id": "q:pp3u9-4-3:g009-equal-",
+     "stem_sha": "f5e1b218ccd566a3",
+     "answer": {
+      "value": "10"
+     },
+     "working": "MX=MY means the chords are equidistant from the center, so they are equal. AB=CD=10."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options are listed for this family, so distractors_ok is true by default. The theorem applies directly: chords equidistant from the center are equal, so AB = CD in each instance. The keys 8, 18 and 10 match the stems. The numbers are realistic, because each distance is less than half its chord's radius-compatible limit (the radius is √20, √145 and √181 respectively). The solution steps are correct."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-4-3:solve-halves",
+   "spec_sha": "6b478f0516fc9057d45f241d2b99b839053fccab43c9c524ae92d611ecefc610",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-4-3:g004-solve-",
+     "stem_sha": "cd6696521b658426",
+     "answer": {
+      "value": "52"
+     },
+     "working": "Equal distances from center mean equal chords, so AD=AE. 2x+2=3x-10 gives x=12, AD=26, AB=2AD=52."
+    },
+    {
+     "instance_id": "q:pp3u9-4-3:g007-solve-",
+     "stem_sha": "44cf34422375049b",
+     "answer": {
+      "value": "30"
+     },
+     "working": "AD=AE. 2x+3=3x-3 gives x=6, AD=15, AB=30."
+    },
+    {
+     "instance_id": "q:pp3u9-4-3:g009-solve-",
+     "stem_sha": "de57411347a544a0",
+     "answer": {
+      "value": "34"
+     },
+     "working": "AD=AE. 2x+1=3x-7 gives x=8, AD=17, AB=34."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three instances and the keys are correct: 52, 30 and 34. No wrong options were provided, so there is nothing to judge there. Step 1 (AB = AC by the converse) isn't needed to reach the answer, but it isn't wrong. The stem asks for AB in cm and the key is a plain number, which matches."
+   }
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "6cae7da86a6bc4216ce27e2a7ccd85a7dced2ed26efb6fcb8b9da4d0c2bf9e64",
+  "generated_sha256": "fd6d08f94e846b4f621d400e192fa7b86e13a28218f4b44c999ca4b110b6a43d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-3:figure-5",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "extend",
+    "bottom": "ok",
+    "note": "Stray '.' and 'd' from neighbouring text at left; pink L2 line runs off the right edge."
+   },
+   {
+    "id": "pp3u9-3:figure-6",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Yellow/grey band along the bottom is not part of the figure."
+   }
+  ]
+ }
+}

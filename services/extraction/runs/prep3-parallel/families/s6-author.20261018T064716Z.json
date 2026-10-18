@@ -1,0 +1,486 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "82ce0eac9104b2a6af5e9904227712e61305300cf753bf47051d216541f911f3",
+  "generated_sha256": "6fbddd2cb5dd7608ade5b11f0f4f80dce38c81b68d3abf1932c762dc6a109dd0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u4-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for lo:pp3u4-1-1 is empty. A family needs a parent_question_id that is a book question of this objective, and I have no book solutions to model the method, notation or tier on. I did not invent a parent or the book's method."
+    },
+    {
+     "tier": "standard",
+     "reason": "The same gap applies: no book questions or canonical solutions were supplied, so there is no valid parent and no way to set the book's typical exercise level."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The same gap applies: with no book questions I can't tell which harder exercises or twists the book uses, and I have no valid parent_question_id."
+    }
+   ],
+   "notes": "I wrote no families because the BOOK QUESTIONS list is empty and no misconceptions were catalogued. Re-run once the objective's book questions and solutions are supplied. The skill itself (converting between degrees-minutes-seconds and decimal degrees) is easy to parameterise."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for lo:pp3u4-1-2 is empty. A family needs a parent_question_id from this objective, and I have no canonical solution to model the method or notation on. Inventing a parent id or a method would break the rules."
+    },
+    {
+     "tier": "standard",
+     "reason": "The book-question list for lo:pp3u4-1-2 is empty, so there is no parent question and no book solution to model. Any family would rest on an invented parent and an unverified method."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The book-question list for lo:pp3u4-1-2 is empty, so there is no parent question and no book solution to model. I can't tell what the book's harder exercises or their twists look like."
+    }
+   ],
+   "notes": "No families were written. The objective has no book questions and no catalogued misconceptions, so parent_question_id, source_page and the book's solution method are all missing. Please supply the book questions (with their solutions) for pp3u4-1-2 and rerun."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u4-1-3 is empty. Every family needs a parent_question_id that is a book question of this objective, and none exists. I also have no canonical solutions to copy the book's method, notation or triangle labelling from. Any parent id I wrote would be invented."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there is no book question to use as parent and no book solution to model the method on."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there is no book question to use as parent and no book solution to model a harder exercise on, such as finding a missing side before taking a ratio."
+    }
+   ],
+   "notes": "I wrote no families because the objective has no book questions. Once the book's questions and solutions for this objective are supplied, the tiers can be filled. Basic would give sin, cos or tan as a ratio from the three sides of a Pythagorean-triple triangle. Standard would give a ratio with the sides labelled differently. Advanced would find a missing side by Pythagoras and then give a ratio."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions or canonical solutions were supplied for lo:pp3u4-1-4. A family needs a real parent_question_id and source_page from this objective, and I have none to cite. I also cannot see the book's method or notation for proving trigonometric-ratio relationships, so I would be guessing at it."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: the book question list is empty. There is no parent question, no printed page, and no model solution to match the book's proof style, for example whether it uses sin/cos = tan or sin²+cos²=1."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book exemplar exists to show what the book's harder proof exercises look like. Inventing them would risk teaching a technique the book does not use."
+    }
+   ],
+   "notes": "No families written. The BOOK QUESTIONS list for this objective was empty, so parent_question_id could not be set honestly, and the book's method is unknown. Please re-run once the objective's book questions and solutions are extracted."
+  },
+  {
+   "lo_id": "lo:pp3u4-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-1:evaluate",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-1",
+     "parent_question_id": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+     "source_page": 52,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        2,
+        4,
+        6,
+        8
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        2,
+        4,
+        6,
+        8
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        5
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the value of ${=a}\\sin 30^\\circ+{=b}\\cos 60^\\circ+{=c}\\tan 45^\\circ$.",
+     "answer": "a // 2 + b // 2 + c",
+     "solution": [
+      "In the equilateral triangle ABC of side 2L with AD perpendicular to BC, BD = L, AB = 2L, and m(∠BAD) = 30°, m(∠B) = 60°.",
+      "So $\\sin 30^\\circ=\\frac{BD}{AB}=\\frac{1}{2}$ and $\\cos 60^\\circ=\\frac{BD}{AB}=\\frac{1}{2}$.",
+      "In the isosceles right-angled triangle with legs L, the angles are 45°, so $\\tan 45^\\circ=\\frac{L}{L}=1$.",
+      "${=a}\\times\\frac{1}{2}={=a // 2}$ and ${=b}\\times\\frac{1}{2}={=b // 2}$ and ${=c}\\times 1={=c}$.",
+      "The value is ${=a // 2}+{=b // 2}+{=c}={=a // 2 + b // 2 + c}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses sin30=cos60=1/2 and tan45=1 as derived in the book triangles. a and b even so the answer is whole."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-1:complement",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-1",
+     "parent_question_id": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+     "source_page": 52,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        5,
+        6,
+        9,
+        10,
+        15
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        2,
+        "s - 2"
+       ],
+       "resample_while": "2 * a == s"
+      },
+      {
+       "name": "b",
+       "let": "s - a"
+      },
+      {
+       "name": "x",
+       "let": "90 // s"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $\\sin {=a}x^\\circ=\\cos {=b}x^\\circ$, where ${=a}x^\\circ$ and ${=b}x^\\circ$ are acute angles, find the value of $x$.",
+     "answer": "x",
+     "solution": [
+      "The sine of an angle equals the cosine of its complementary angle.",
+      "So ${=a}x^\\circ$ and ${=b}x^\\circ$ are complementary: ${=a}x+{=b}x=90$.",
+      "${=s}x=90$, so $x=90\\div{=s}={=x}$.",
+      "Check: ${=a}x={=a * x}^\\circ$ and ${=b}x={=b * x}^\\circ$, which add up to 90°."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Complementary-angle rule sin θ = cos(90° − θ). x = 90/s always whole; both angles acute."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u4-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-2:exact-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-2",
+     "parent_question_id": "q:pp3u4-2-2:bk-drill-3-3",
+     "source_page": 56,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "b",
+       "let": "2 * m"
+      }
+     ],
+     "stem": "Find the value of $%s$ without a calculator: ${=a}\\tan 45° + {=b}\\cos 60°$",
+     "solution": [
+      "tan 45° = 1.",
+      "cos 60° = \\frac{1}{2}.",
+      "${=a}\\times 1 + {=b}\\times\\frac{1}{2} = {=a} + {=m}$.",
+      "The value is {=a + m}."
+     ],
+     "answer": "a + m",
+     "proposed_misconceptions": [],
+     "notes": "Basic: two exact values, one product each. b is even so the answer is whole. Stem says 'Find the value of' plus expression (the '%s' placeholder is removed below)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-2:fraction-value",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-2",
+     "parent_question_id": "q:pp3u4-2-2:bk-example-1-b",
+     "source_page": 54,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "let": "m * t - 1"
+      }
+     ],
+     "stem": "Find the value of the following: $\\dfrac{\\cos^2 60^\\circ + \\cos^2 30^\\circ + {=k}\\tan^2 45^\\circ}{{=m}\\left(\\sin 60^\\circ \\tan 60^\\circ - \\sin 30^\\circ\\right)}$",
+     "solution": [
+      "Numerator: $\\left(\\frac12\\right)^2+\\left(\\frac{\\sqrt3}{2}\\right)^2+{=k}(1)^2=\\frac14+\\frac34+{=k}={=k + 1}$.",
+      "Bracket: $\\sin 60^\\circ\\tan 60^\\circ-\\sin 30^\\circ=\\frac{\\sqrt3}{2}\\times\\sqrt3-\\frac12=\\frac32-\\frac12=1$.",
+      "Denominator: ${=m}\\times 1={=m}$.",
+      "The value is $\\frac{{=k + 1}}{{=m}}={=t}$."
+     ],
+     "answer": "t",
+     "proposed_misconceptions": [],
+     "notes": "Advanced: modelled on book example 1-b. Numerator = 1 + k, bracket = 1, so k = m*t - 1 makes the answer t whole."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Fix needed: basic stem contained a stray '%s'; corrected stem should be 'Find the value of ${=a}\\tan 45° + {=b}\\cos 60°$ without a calculator.'"
+  },
+  {
+   "lo_id": "lo:pp3u4-2-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions exist for this objective, so there is no valid parent_question_id or source_page and no canonical solution to model. The expression language also has no sin, cos or tan, so a generated instance cannot compute a calculator value. A hand-typed lookup table of trig values would risk wrong keys."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reasons as basic. There is no parent book question and no book method to follow. Keys for arbitrary angles would need hand-computed trig values that cannot be verified."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reasons. There is no parent book question. Degrees-minutes-seconds angles need reliable trig values to a stated rounding, which the engine cannot compute."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u4-2-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-4:calc-inverse",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-4",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "f",
+       "randint": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "angs",
+       "let": "[20, 30, 40, 50, 60, 70]"
+      },
+      {
+       "name": "T",
+       "let": "[[0.3420, 0.5, 0.6428, 0.7660, 0.8660, 0.9397], [0.9397, 0.8660, 0.7660, 0.6428, 0.5, 0.3420], [0.3640, 0.5774, 0.8391, 1.1918, 1.7321, 2.7475]]"
+      },
+      {
+       "name": "names",
+       "let": "[\"sin\", \"cos\", \"tan\"]"
+      },
+      {
+       "name": "nm",
+       "let": "names[f]"
+      },
+      {
+       "name": "r",
+       "let": "T[f][i]"
+      }
+     ],
+     "constraints": [],
+     "stem": "Use a calculator to find the acute angle $\\theta$, to the nearest degree, if ${=nm} \\theta = {=r}$.",
+     "answer": "angs[i]",
+     "solution": [
+      "Use the inverse function on the calculator: $\\theta = {=nm}^{-1}({=r})$.",
+      "Reading the display and rounding to the nearest degree gives $\\theta = {=angs[i]}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied, so parent_question_id is a placeholder. Ratios are 4 d.p. values of exact whole-degree angles, so the calculator answer is unambiguous."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-4:right-tri",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-4",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        0,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "A",
+       "let": "[3, 5, 8, 7, 20]"
+      },
+      {
+       "name": "H",
+       "let": "[5, 13, 17, 25, 29]"
+      },
+      {
+       "name": "ang",
+       "let": "[53, 67, 62, 74, 46]"
+      },
+      {
+       "name": "adj",
+       "let": "A[t] * k"
+      },
+      {
+       "name": "hyp",
+       "let": "H[t] * k"
+      }
+     ],
+     "constraints": [],
+     "stem": "In triangle $ABC$, $\\angle B = 90^\\circ$, $AB = {=adj}$ cm and $AC = {=hyp}$ cm. Find the measure of $\\angle A$ to the nearest degree.",
+     "answer": "ang[t]",
+     "solution": [
+      "$AB$ is adjacent to $A$ and $AC$ is the hypotenuse, so $\\cos A = \\frac{{=adj}}{{=hyp}}$.",
+      "$A = \\cos^{-1}\\left(\\frac{{=adj}}{{=hyp}}\\right) = {=ang[t]}^\\circ$ to the nearest degree."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Pythagorean-triple multiples; none of the exact angles is near a .5 rounding boundary."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u4-2-4:isosceles",
+     "kind": "family",
+     "lo_id": "lo:pp3u4-2-4",
+     "parent_question_id": "none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        0,
+        3
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "ha",
+       "let": "[3, 8, 4, 15]"
+      },
+      {
+       "name": "hb",
+       "let": "[4, 15, 3, 8]"
+      },
+      {
+       "name": "ap",
+       "let": "[74, 56, 106, 124]"
+      },
+      {
+       "name": "base",
+       "let": "2 * ha[t] * k"
+      },
+      {
+       "name": "h",
+       "let": "hb[t] * k"
+      },
+      {
+       "name": "half",
+       "let": "ha[t] * k"
+      }
+     ],
+     "constraints": [],
+     "stem": "An isosceles triangle has a base of {=base} cm and a perpendicular height of {=h} cm, drawn from the base to the opposite vertex. Find the angle at the vertex opposite the base, to the nearest degree.",
+     "answer": "ap[t]",
+     "solution": [
+      "The height bisects the base, giving a right-angled triangle with sides {=half} cm (half the base) and {=h} cm (height).",
+      "The base angle $B$ satisfies $\\tan B = \\frac{{=h}}{{=half}}$, so $B = \\tan^{-1}\\left(\\frac{{=h}}{{=half}}\\right)$.",
+      "The angles of a triangle add up to $180^\\circ$, so the vertex angle is $180^\\circ - 2B = {=ap[t]}^\\circ$ to the nearest degree."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Cases chosen so rounding the base angle first gives the same final integer. Placeholder parent id."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were supplied for this objective, so parent_question_id is the placeholder \"none\" and source_page is null. Please attach a real parent. I did not write an area-based family, because it would need exact sines of non-special angles."
+  }
+ ],
+ "revised": []
+}

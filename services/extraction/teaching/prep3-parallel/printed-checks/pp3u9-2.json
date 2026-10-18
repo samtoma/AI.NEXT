@@ -1,0 +1,265 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u9-2",
+  "source": "book-records/prep3-parallel/pp3u9-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 9,
+      "cost_usd": 0.0466,
+      "calls": [
+        {
+          "call": "check-printed.pp3u9-2",
+          "cost_usd": 0.03,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u9-2",
+          "cost_usd": 0.0166,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u9-2:example-1",
+      "record_id": "pp3u9-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 47,
+      "printed": "$X > 4$",
+      "blind": "x > 4",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u9-2:figure-3"
+      ],
+      "question_fingerprint": "398cde8bcdbb44baf64bb72916e62f80",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-2",
+      "record_id": "pp3u9-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 48,
+      "printed": "XY is a tangent to circle M at X",
+      "blind": "MX = 5 (radius), MY = MZ + ZY = 5 + 8 = 13. Since $MX^2 + XY^2 = 25 + 144 = 169 = MY^2$, triangle MXY is right-angled at X, so MX ⊥ XY at X on the circle; hence line XY is a tangent to circle M at X.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-9"
+      ],
+      "question_fingerprint": "504a4774399b392d5ce7b12fd3f42983",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-2",
+        "verdict": "equivalent",
+        "reason": "Both conclude XY is tangent to circle M at X; solver proves it via the converse of Pythagoras."
+      },
+      "how": "judged equivalent: Both conclude XY is tangent to circle M at X; solver proves it via the converse of Pythagoras.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:A",
+      "record_id": "pp3u9-2:example-3",
+      "part": "A",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "touching externally",
+      "blind": "MN = 13 = r1 + r2, so the two circles are touching externally.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "246f254b5566db5c34b999824ccbd303",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:A",
+        "verdict": "equivalent",
+        "reason": "Both say touching externally."
+      },
+      "how": "judged equivalent: Both say touching externally.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:B",
+      "record_id": "pp3u9-2:example-3",
+      "part": "B",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "touching internally",
+      "blind": "MN = 5 = r1 - r2, so the two circles are touching internally.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "38649710a635d830a6840f6ce77061dd",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:B",
+        "verdict": "equivalent",
+        "reason": "Both say touching internally."
+      },
+      "how": "judged equivalent: Both say touching internally.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:C",
+      "record_id": "pp3u9-2:example-3",
+      "part": "C",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "circle N is inside circle M",
+      "blind": "MN = 3 < r1 - r2 = 5, so circle N lies inside circle M (no common points, not concentric).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "92b2e96ea814190fb10ff7e4052bb614",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:C",
+        "verdict": "equivalent",
+        "reason": "Both say circle N lies inside circle M."
+      },
+      "how": "judged equivalent: Both say circle N lies inside circle M.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:D",
+      "record_id": "pp3u9-2:example-3",
+      "part": "D",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "concentric",
+      "blind": "MN = 0, so the two circles are concentric (N inside M).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "d07f57196c1bff060e0ca1ec7ec897cc",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:D",
+        "verdict": "equivalent",
+        "reason": "Both say concentric; the solver's added note that N is inside M is consistent."
+      },
+      "how": "judged equivalent: Both say concentric; the solver's added note that N is inside M is consistent.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:E",
+      "record_id": "pp3u9-2:example-3",
+      "part": "E",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "intersecting",
+      "blind": "r1 - r2 = 5 < MN = 10 < r1 + r2 = 13, so the two circles are intersecting at two points.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "dde1c48156b5e50069953266c4e46487",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:E",
+        "verdict": "equivalent",
+        "reason": "Both say the circles intersect."
+      },
+      "how": "judged equivalent: Both say the circles intersect.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-3:F",
+      "record_id": "pp3u9-2:example-3",
+      "part": "F",
+      "type": "worked_example",
+      "page": 51,
+      "printed": "distant",
+      "blind": "MN = 15 > r1 + r2 = 13, so the two circles are distant (outside each other).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-2:figure-19",
+        "pp3u9-2:figure-20"
+      ],
+      "question_fingerprint": "2eaf054d8beecf19ef2babedaec1b69d",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-3:F",
+        "verdict": "equivalent",
+        "reason": "Both say the circles are distant, i.e. outside each other."
+      },
+      "how": "judged equivalent: Both say the circles are distant, i.e. outside each other.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-2:example-4",
+      "record_id": "pp3u9-2:example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 52,
+      "printed": "AB = 12 cm",
+      "blind": "12",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u9-2:figure-21"
+      ],
+      "question_fingerprint": "ee1ef2b3b91910f8afdfb38b617c76ea",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-2:example-4",
+        "verdict": "equivalent",
+        "reason": "Both give AB = 12 cm."
+      },
+      "how": "judged equivalent: Both give AB = 12 cm.",
+      "made": {
+        "at": "2026-10-18T07:28:59+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

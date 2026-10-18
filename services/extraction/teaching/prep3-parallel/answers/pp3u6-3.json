@@ -1,0 +1,107 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u6-3",
+  "source": "book-records/prep3-parallel/pp3u6-3.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 2,
+      "cost_usd": 0.0308,
+      "calls": [
+        {
+          "call": "answers.pp3u6-3",
+          "cost_usd": 0.0308,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u6-3:mental-math-1",
+      "record_id": "pp3u6-3:mental-math-1",
+      "part": null,
+      "type": "exercise",
+      "page": 13,
+      "question": {
+        "text": "If $x + y = 10$ and $x^2 - y^2 = 40$ then find $x - y$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d2ab4ffe351d1fdd489fd491aef3d159",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "Factor the second equation: $x^2 - y^2 = (x+y)(x-y)$.",
+        "Substitute $x + y = 10$: $10(x-y) = 40$.",
+        "Divide both sides by 10: $x - y = 4$.",
+        "The answer is $x - y = 4$."
+      ],
+      "grounded_in": [
+        "pp3u6-3:objective-1",
+        "pp3u6-3:linking-text-1"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:02:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-3:example-2",
+      "record_id": "pp3u6-3:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 13,
+      "question": {
+        "text": "A rectangle of a perimeter 14 cm and area 12 cm$^2$. Find its two dimensions.",
+        "stem": "",
+        "notes": "Solution continues on next page; none printed here."
+      },
+      "needs_page": false,
+      "question_fingerprint": "acfefcb0d4e29c7a85ec0879a7203ccd",
+      "kind": "value",
+      "answer": "3 cm and 4 cm",
+      "solution": [
+        "Let the length be $x$ and the width be $y$.",
+        "Perimeter: $2(x+y) = 14$, so $x + y = 7$ (first degree).",
+        "Area: $xy = 12$ (second degree).",
+        "From the first equation: $y = 7 - x$.",
+        "Substitute in the second: $x(7-x) = 12$, so $7x - x^2 = 12$.",
+        "Rearrange: $x^2 - 7x + 12 = 0$, so $(x-3)(x-4) = 0$.",
+        "$x = 3$ or $x = 4$.",
+        "When $x = 3$, $y = 4$. When $x = 4$, $y = 3$.",
+        "The dimensions are 3 cm and 4 cm."
+      ],
+      "grounded_in": [
+        "pp3u6-3:objective-2",
+        "pp3u6-3:example-2",
+        "pp3u6-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3 cm and 4 cm (length = 4 cm, width = 3 cm)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:02:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

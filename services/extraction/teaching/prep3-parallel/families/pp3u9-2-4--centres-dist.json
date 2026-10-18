@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-4:centres-dist",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-4",
+ "parent_question_id": "q:pp3u9-2-4:bk-drill-8-a",
+ "source_page": 53,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "h",
+   "choice": [
+    12,
+    24
+   ]
+  },
+  {
+   "name": "rs",
+   "let": "[13, 15, 20] if h == 12 else [25, 26, 30]"
+  },
+  {
+   "name": "r",
+   "choice": "rs"
+  },
+  {
+   "name": "s",
+   "choice": "rs",
+   "resample_while": "s == r"
+  },
+  {
+   "name": "m",
+   "let": "isqrt(r * r - h * h)"
+  },
+  {
+   "name": "n",
+   "let": "isqrt(s * s - h * h)"
+  },
+  {
+   "require": "m * m + h * h == r * r and n * n + h * h == s * s",
+   "why": "clean right triangles"
+  }
+ ],
+ "constraints": [],
+ "stem": "Two circles with centres $M$ and $N$ intersect at $A$ and $B$, with the centres on opposite sides of the common chord $AB$. The radius of circle $M$ is ${=r}$ cm, the radius of circle $N$ is ${=s}$ cm, and $AB = {=2*h}$ cm. Find the distance $MN$ between the centres, in cm.",
+ "answer": "m + n",
+ "solution": [
+  "The line of centers $MN$ is perpendicular to the common chord $AB$ and bisects it at $D$, so $AD = {=2*h}\\div 2 = {=h}$ cm.",
+  "In right triangle $MDA$: $MD^2 = {=r}^2 - {=h}^2 = {=r*r-h*h}$, so $MD = {=m}$ cm.",
+  "In right triangle $NDA$: $ND^2 = {=s}^2 - {=h}^2 = {=s*s-h*h}$, so $ND = {=n}$ cm.",
+  "The centres are on opposite sides of $AB$, so $MN = MD + ND = {=m} + {=n} = {=m+n}$ cm."
+ ],
+ "notes": "Pythagoras in two right triangles formed by the line of centers and the half chord; triples (5,12,13),(9,12,15),(16,12,20),(7,24,25),(10,24,26),(18,24,30). Opposite-sides condition stated in stem."
+}

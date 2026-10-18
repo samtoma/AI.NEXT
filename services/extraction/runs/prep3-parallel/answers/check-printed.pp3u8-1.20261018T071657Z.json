@@ -1,0 +1,87 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "a355a0f24696ea9813d76cd7bb74a16bec4e685e7b8d5e7e65960bfb44968e32",
+  "generated_sha256": "40f3e203232f1f1b49df3a6d9835d1e7c3498c75d0d7a1487218c3832a652ab8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u8-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u8-1:example-1:1",
+      "kind": "value",
+      "answer": "S = {1, 2, 3, 4, 5, 6, 7, 8}"
+     },
+     {
+      "ref": "pp3u8-1:example-1:2 A",
+      "kind": "value",
+      "answer": "A = {2, 4, 6, 8}"
+     },
+     {
+      "ref": "pp3u8-1:example-1:2 B",
+      "kind": "value",
+      "answer": "B = {2, 3, 5, 7}"
+     },
+     {
+      "ref": "pp3u8-1:example-1:2 C",
+      "kind": "value",
+      "answer": "C = {4, 8}"
+     },
+     {
+      "ref": "pp3u8-1:worked-example-1:A",
+      "kind": "value",
+      "answer": "A ∩ B = {2}, so P(A ∩ B) = 1/8"
+     },
+     {
+      "ref": "pp3u8-1:worked-example-1:C",
+      "kind": "value",
+      "answer": "A ∩ C = {4, 8}, P = 2/8 = 1/4; B ∩ C = ∅, P = 0 (B and C are mutually exclusive)"
+     },
+     {
+      "ref": "pp3u8-1:example-2:First",
+      "kind": "value",
+      "answer": "S = {1, 2, 3, 4, 5, 6, 7, 8, 9}"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Second A",
+      "kind": "value",
+      "answer": "A = {2, 4, 6, 8}"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Second B",
+      "kind": "value",
+      "answer": "B = {3, 6, 9}"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Second C",
+      "kind": "value",
+      "answer": "C = {7}"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Third a",
+      "kind": "value",
+      "answer": "A ∪ B = {2, 3, 4, 6, 8, 9}, P(A ∪ B) = 6/9 = 2/3"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Third b",
+      "kind": "value",
+      "answer": "A ∪ C = {2, 4, 6, 7, 8}, P(A ∪ C) = 5/9"
+     },
+     {
+      "ref": "pp3u8-1:example-2:Third c",
+      "kind": "explanation",
+      "answer": "P(A) + P(B) − P(A ∩ B) = 4/9 + 3/9 − 1/9 = 6/9 = 2/3, which equals P(A ∪ B). So P(A ∪ B) = P(A) + P(B) − P(A ∩ B)."
+     }
+    ]
+   }
+  }
+ ]
+}

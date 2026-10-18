@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-4-1:findk-advanced",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-4-1",
+ "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+ "source_page": 70,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "let": "-m * b"
+  },
+  {
+   "name": "d",
+   "let": "b * e"
+  }
+ ],
+ "constraints": [],
+ "stem": "The straight line $kx + {=b}y = {=d}$ has slope ${=m}$. Find the value of $k$.",
+ "answer": "k",
+ "solution": [
+  "Write the equation in the form $y = mx + b$: ${=b}y = -kx + {=d}$, so $y = -\\frac{k}{{=b}}x + {=e}$.",
+  "The slope is $-\\frac{k}{{=b}}$, and it equals ${=m}$: $-\\frac{k}{{=b}} = {=m}$.",
+  "Multiply both sides by ${=b}$: $-k = {=m * b}$.",
+  "Therefore $k = {=k}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Uses m = -a/b backwards. Answer k = -m*b, whole number, nonzero. Stem unambiguous: k is the coefficient of x."
+}

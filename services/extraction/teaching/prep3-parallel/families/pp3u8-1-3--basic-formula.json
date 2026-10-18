@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-1-3:basic-formula",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-1-3",
+ "parent_question_id": "q:pp3u8-1-3:bk-drill-6-a",
+ "source_page": 34,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    8,
+    20
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "u",
+   "let": "a + b - c"
+  },
+  {
+   "require": "gcd(u, d) == 1 and u < d",
+   "why": "answer is a proper fraction already in lowest terms"
+  }
+ ],
+ "constraints": [],
+ "stem": "$A$ and $B$ are two events, with $P(A)=\\frac{{=a}}{{=d}}$, $P(B)=\\frac{{=b}}{{=d}}$ and $P(A\\cap B)=\\frac{{=c}}{{=d}}$. Find $P(A\\cup B)$.",
+ "solution": [
+  "Use $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+  "$P(A\\cup B)=\\frac{{=a}}{{=d}}+\\frac{{=b}}{{=d}}-\\frac{{=c}}{{=d}}$.",
+  "$P(A\\cup B)=\\frac{{=u}}{{=d}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=u}/{=d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: apply the formula with given probabilities. Answer already in lowest terms by require."
+}

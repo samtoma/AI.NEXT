@@ -1,0 +1,54 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u6-3",
+  "source": "book-records/prep3-parallel/pp3u6-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 1,
+      "cost_usd": 0.017,
+      "calls": [
+        {
+          "call": "check-printed.pp3u6-3",
+          "cost_usd": 0.0099,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u6-3",
+          "cost_usd": 0.0071,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u6-3:example-1",
+      "record_id": "pp3u6-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 13,
+      "printed": "$\\{(0,-1), (\\frac{-1}{2}, 0)\\}$",
+      "blind": "{(0, -1), (-1/2, 0)}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "9a85a723d82ca93432fb30d20d42824a",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u6-3:example-1",
+        "verdict": "equivalent",
+        "reason": "Same solution set {(0,-1), (-1/2, 0)}; only notation of the fraction differs."
+      },
+      "how": "judged equivalent: Same solution set {(0,-1), (-1/2, 0)}; only notation of the fraction differs.",
+      "made": {
+        "at": "2026-10-18T07:03:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

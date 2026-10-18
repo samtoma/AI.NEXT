@@ -1,0 +1,287 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u6-2",
+  "source": "book-records/prep3-parallel/pp3u6-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 7,
+      "cost_usd": 0.0916,
+      "calls": [
+        {
+          "call": "answers.pp3u6-2",
+          "cost_usd": 0.0916,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "pp3u6-2:think-and-discuss-1:1",
+      "record_id": "pp3u6-2:think-and-discuss-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 10,
+      "question": {
+        "text": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks.",
+        "stem": "$(x - \\ldots)(x \\ldots 1) = 0$",
+        "notes": "Fill-in-the-blank steps; part labels 1-4 are my own ordering, not printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "00758372a1e84526e095a0cc6883a2cd",
+      "kind": "value",
+      "answer": "(x - 3)(x - 1) = 0",
+      "solution": [
+        "Find two numbers with product 3 and sum -4: they are -3 and -1.",
+        "So $x^2-4x+3=(x-3)(x-1)$.",
+        "The blanks are 3 and the sign -: $(x-3)(x-1)=0$."
+      ],
+      "grounded_in": [
+        "pp3u6-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$(x - 3)(x - 1) = 0$, i.e. first blank 3, second blank \"-\"",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:think-and-discuss-1:2",
+      "record_id": "pp3u6-2:think-and-discuss-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 10,
+      "question": {
+        "text": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks.",
+        "stem": "$\\therefore x - \\ldots = 0$ or $(x-1)=0$",
+        "notes": "Fill-in-the-blank steps; part labels 1-4 are my own ordering, not printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "448cfc9ea18955497ddeefef6cc67e1b",
+      "kind": "value",
+      "answer": "x - 3 = 0",
+      "solution": [
+        "A product is zero when one factor is zero.",
+        "The first factor is $x-3$.",
+        "So $x-3=0$ or $x-1=0$."
+      ],
+      "grounded_in": [
+        "pp3u6-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3 (so $x - 3 = 0$)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:think-and-discuss-1:3",
+      "record_id": "pp3u6-2:think-and-discuss-1",
+      "part": "3",
+      "type": "exercise",
+      "page": 10,
+      "question": {
+        "text": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks.",
+        "stem": "$\\therefore x = \\ldots$ or $x = \\ldots$",
+        "notes": "Fill-in-the-blank steps; part labels 1-4 are my own ordering, not printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "21d745cfdac885ec15b7103e5b972be2",
+      "kind": "value",
+      "answer": "x = 3 or x = 1",
+      "solution": [
+        "From $x-3=0$, $x=3$.",
+        "From $x-1=0$, $x=1$."
+      ],
+      "grounded_in": [
+        "pp3u6-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3 or x = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:think-and-discuss-1:4",
+      "record_id": "pp3u6-2:think-and-discuss-1",
+      "part": "4",
+      "type": "exercise",
+      "page": 10,
+      "question": {
+        "text": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks.",
+        "stem": "$\\therefore$ The solution set is $\\{\\ldots , \\ldots\\}$",
+        "notes": "Fill-in-the-blank steps; part labels 1-4 are my own ordering, not printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "ec26d0d7a47939990b0c87178c9e3372",
+      "kind": "value",
+      "answer": "{3, 1}",
+      "solution": [
+        "The roots are 3 and 1.",
+        "This matches the graph's x-axis intersections (1,0) and (3,0).",
+        "The solution set is {3, 1}."
+      ],
+      "grounded_in": [
+        "pp3u6-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "{3, 1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:drill-1",
+      "record_id": "pp3u6-2:drill-1",
+      "part": null,
+      "type": "exercise",
+      "page": 11,
+      "question": {
+        "text": "Draw the graphical form of the function f where $f(x) = x^2 + 2x + 1$ in the interval $[-4, 2]$ and from the drawing find the solution set of the equation: $x^2 + 2x + 1 = 0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9156f2bc6bdf3332c24465ffdcd07174",
+      "kind": "value",
+      "answer": "{-1}",
+      "solution": [
+        "Make a table for x in [-4, 2]: f(-4)=9, f(-3)=4, f(-2)=1, f(-1)=0, f(0)=1, f(1)=4, f(2)=9.",
+        "Plot the points (-4,9), (-3,4), (-2,1), (-1,0), (0,1), (1,4), (2,9).",
+        "Draw a smooth curve through them; it opens upward with its lowest point at (-1,0).",
+        "The curve touches the x-axis at one point only, (-1,0).",
+        "The solution set is {-1}."
+      ],
+      "grounded_in": [
+        "pp3u6-2:method-1",
+        "pp3u6-2:method-2",
+        "pp3u6-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "Parabola opening upward through (-4,9), (-3,4), (-2,1), (-1,0), (0,1), (1,4), (2,9), touching the x-axis only at its vertex (-1,0). Solution set: {-1}",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:drill-2",
+      "record_id": "pp3u6-2:drill-2",
+      "part": null,
+      "type": "exercise",
+      "page": 11,
+      "question": {
+        "text": "Draw the graphical form of the function f where $f(x) = -x^2 + 6x - 11$ in the interval $[0, 6]$ and from the drawing find the solution set of the equation: $x^2 - 6x + 11 = 0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8883475206ae7ed30113b2179d99ac2f",
+      "kind": "value",
+      "answer": "∅ (empty set)",
+      "solution": [
+        "Make a table for x in [0, 6]: f(0)=-11, f(1)=-6, f(2)=-3, f(3)=-2, f(4)=-3, f(5)=-6, f(6)=-11.",
+        "Plot the points (0,-11), (1,-6), (2,-3), (3,-2), (4,-3), (5,-6), (6,-11).",
+        "Draw a smooth curve through them; it opens downward with its highest point at (3,-2), below the x-axis.",
+        "The curve does not meet the x-axis.",
+        "$x^2-6x+11=0$ is the same equation as $-x^2+6x-11=0$, so it has no real roots.",
+        "The solution set is ∅."
+      ],
+      "grounded_in": [
+        "pp3u6-2:method-1",
+        "pp3u6-2:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "Parabola opening downward through (0,-11), (1,-6), (2,-3), (3,-2), (4,-3), (5,-6), (6,-11), vertex (3,-2), entirely below the x-axis so it never meets it. Solution set: empty set {} (no real solutions)",
+        "resolve_kind": "drawing",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "pp3u6-2:think-and-discuss-2",
+      "record_id": "pp3u6-2:think-and-discuss-2",
+      "part": null,
+      "type": "activity",
+      "page": 11,
+      "question": {
+        "text": "Solving the equation $x^2 - 6x + 7 = 0$ using the idea of completing the square. Complete: since $x^2 - 6x + 9 + 7 - 9 = 0$; therefore $(x - \\ldots)^2 - 2 = 0$, i.e. $(x - \\ldots)^2 = 2$; $x - \\ldots = \\sqrt{2}$ or $x - \\ldots = -\\sqrt{2}$; $x = \\ldots + \\sqrt{2}$ or $x = \\ldots - \\sqrt{2}$; therefore $x = \\ldots \\pm \\sqrt{2}$",
+        "stem": "",
+        "notes": "Fill-in blanks printed as dots."
+      },
+      "needs_page": false,
+      "question_fingerprint": "47cd6544d3b6b9e27f3ffcad6874f95f",
+      "kind": "value",
+      "answer": "x = 3 ± √2 (all blanks are 3)",
+      "solution": [
+        "Half of -6 is -3, and 9 is its square, so $x^2-6x+9=(x-3)^2$.",
+        "$7-9=-2$, so $(x-3)^2-2=0$.",
+        "$(x-3)^2=2$.",
+        "$x-3=\\sqrt2$ or $x-3=-\\sqrt2$.",
+        "$x=3+\\sqrt2$ or $x=3-\\sqrt2$.",
+        "So $x=3\\pm\\sqrt2$."
+      ],
+      "grounded_in": [
+        "pp3u6-2:objective-2"
+      ],
+      "checks": {
+        "resolve_answer": "All blanks are 3: $(x-3)^2-2=0$; $(x-3)^2=2$; $x-3=\\sqrt{2}$ or $x-3=-\\sqrt{2}$; $x=3+\\sqrt{2}$ or $x=3-\\sqrt{2}$; therefore $x=3\\pm\\sqrt{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-18T07:02:34+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

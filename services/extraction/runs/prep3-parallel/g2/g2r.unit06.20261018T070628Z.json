@@ -1,0 +1,52 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "prep3-parallel",
+ "chapter": 6,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "083ad0d209918b1af668f3b4d108895ea8deb45234298a53a619a8e3f17ca149",
+ "keys": [
+  "pp3u6-2:WE1"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 0
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "35ebea2b878cf315ae3a4c0f1aa13e9f127dad5faeddd97c4c2e68f2849307e1",
+  "generated_sha256": "ccc5f114c3572b03fa0485eaddb8bddb382626606f453c0aaecbf3ea82558873",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "pp3u6-2:WE1",
+   "state": "held",
+   "rec": {
+    "key": "pp3u6-2:WE1",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "$x=(5\\pm\\sqrt{13})/6$, $\\sqrt{13}=3.6056$, so $x=1.434\\to1.43$ and $0.232\\to0.23$. The book rounds $\\sqrt{13}$ to 3.61 first and gets 1.44, which is wrong to 2 d.p.",
+    "own_value": "{1.43, 0.23}",
+    "defect": "Premature rounding of $\\sqrt{13}$ to 3.61 gives 1.44. The correct value to two decimal places is 1.43. The printed answer {1.44, 0.23} is wrong."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "exclude": 1
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage G2R --run <runId>"
+ }
+}

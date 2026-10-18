@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-1:chord-length",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-1",
+ "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
+ "source_page": 95,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "sw",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "r",
+   "let": "15 * m if sw == 0 else 20 * m"
+  },
+  {
+   "name": "t",
+   "let": "20 * m if sw == 0 else 15 * m"
+  },
+  {
+   "name": "d",
+   "let": "25 * m"
+  }
+ ],
+ "constraints": [],
+ "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$ whose radius is ${=r}$ cm, where $B$ and $C$ are the points of tangency. If $MA = {=d}$ cm, find the length of the chord $\\overline{BC}$ in cm.",
+ "answer": "24 * m",
+ "solution": [
+  "$MB$ is a radius and $AB$ a tangent, so $m(\\angle MBA) = 90^\\circ$.",
+  "In the right triangle $MBA$: $AB = \\sqrt{{=d}^2 - {=r}^2} = {=t}$ cm.",
+  "The line $MA$ passes through the centre and the intersection point of the tangents, so it is the axis of the chord $BC$: it is perpendicular to $BC$ and bisects it at $N$.",
+  "Area of triangle $MBA$: $\\frac{1}{2} \\times MB \\times AB = \\frac{1}{2} \\times MA \\times BN$, so $BN = \\frac{{=r} \\times {=t}}{{=d}} = {=r*t/d}$ cm.",
+  "$BC = 2 \\times BN = {=24*m}$ cm."
+ ],
+ "notes": "Radius/tangent swap gives same chord 24m. Whole-number answers: 24, 48, 72. Uses Pythagoras, area, and axis-of-chord corollary."
+}

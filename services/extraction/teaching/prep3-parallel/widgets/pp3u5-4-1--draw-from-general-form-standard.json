@@ -1,0 +1,35 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u5-4-1:draw-from-general-form-standard",
+ "lo_id": "lo:pp3u5-4-1",
+ "parent_question_id": "q:pp3u5-4-1:bk-example-1-b",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": -2,
+  "b": 3
+ },
+ "stem": "Represent the relation $2x + y - 3 = 0$ graphically by dragging two points. State the slope and the length of the y-intercept.",
+ "solution": [
+  "Isolate $y$: $y = -2x + 3$.",
+  "The slope is $m = -2$, and $-\\frac{a}{b} = -\\frac{2}{1} = -2$ agrees.",
+  "The y-intercept is $b = 3$, so the line passes through (0, 3).",
+  "Plot (0, 3) and (1, 1), then draw the line through them."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:pp3u5-4-1:slope-drops-minus-sign"
+  },
+  {
+   "predicate": "intercept-wrong",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  },
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+  }
+ ],
+ "notes": "Dropping the minus gives m=2, which fires slope-sign-flipped. Reading b=-3 (the constant as it is written) gives intercept-wrong if the slope is right."
+}

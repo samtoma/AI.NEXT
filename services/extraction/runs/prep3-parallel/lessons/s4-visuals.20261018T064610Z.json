@@ -1,0 +1,219 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "0c4fbed491f8d0e9a08b1e68eba4ab12af1d5a4b4fbdaf1c8f8a121af9ed3320",
+  "generated_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u4-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u4-1:figure-1",
+    "pp3u4-1:figure-2",
+    "pp3u4-1:figure-3",
+    "pp3u4-1:figure-4",
+    "pp3u4-1:figure-5"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u4-1:figure-1",
+     "src": "pp3u4-1__figure-1.png",
+     "ref": "pp3u4-1:think-and-discuss-1",
+     "printed_page": 49,
+     "reason": "Plain right triangle ABC (right angle at B) with no angle or side values; no kind draws a labelled triangle with a right-angle mark and no marked acute angle.",
+     "needed_kind": "triangle scene with labelled vertices and right-angle mark"
+    },
+    {
+     "figure_id": "pp3u4-1:figure-2",
+     "src": "pp3u4-1__figure-2.png",
+     "ref": null,
+     "printed_page": 49,
+     "reason": "Circular protractor ring with degree labels every 10° around the full circle and two axes; geo_scene cannot draw a graduated degree scale.",
+     "needed_kind": "protractor / angle-measure dial with degree scale"
+    },
+    {
+     "figure_id": "pp3u4-1:figure-3",
+     "src": "pp3u4-1__figure-3.png",
+     "ref": null,
+     "printed_page": 50,
+     "reason": "Photo of a scientific calculator; not a parametric figure.",
+     "needed_kind": "calculator image / photo (static image)"
+    },
+    {
+     "figure_id": "pp3u4-1:figure-4",
+     "src": "pp3u4-1__figure-4.png",
+     "ref": null,
+     "printed_page": 50,
+     "reason": "the spec does not match the figure: Angle θ is not marked or labeled on the triangle. Side labels use descriptive text ('opposite', 'adjacent', 'hypotenuse') instead of vertex notation ('AB', 'BC', 'AC') as specified in the spec.",
+     "rejected_spec": {
+      "kind": "trig_triangle",
+      "spec": {
+       "angleDeg": "θ",
+       "emphasize": "sin",
+       "sides": {
+        "opp": "AB",
+        "adj": "BC",
+        "hyp": "AC"
+       },
+       "animate": "ratio-highlight"
+      }
+     }
+    },
+    {
+     "figure_id": "pp3u4-1:figure-5",
+     "src": "pp3u4-1__figure-5.png",
+     "ref": "pp3u4-1:example-1",
+     "printed_page": 51,
+     "reason": "the spec does not match the figure: Angle θ is not clearly marked or labeled on the triangle, despite being required by the spec (angleDeg='θ'). The side values (12 cm, 13 cm) are correct, but the angle designation is missing.",
+     "rejected_spec": {
+      "kind": "trig_triangle",
+      "spec": {
+       "angleDeg": "θ",
+       "emphasize": "cos",
+       "sides": {
+        "adj": "12 cm",
+        "hyp": "13 cm"
+       },
+       "animate": "ratio-highlight"
+      }
+     }
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 5,
+    "compared": 2
+   }
+  },
+  {
+   "lesson": "pp3u4-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u4-2:figure-1",
+    "pp3u4-2:figure-2",
+    "pp3u4-2:figure-3",
+    "pp3u4-2:figure-4",
+    "pp3u4-2:figure-5",
+    "pp3u4-2:figure-6",
+    "pp3u4-2:figure-7"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:pp3u4-2-1",
+     "question": null,
+     "kind": "trig_triangle",
+     "spec": {
+      "angleDeg": 30,
+      "emphasize": "sin",
+      "sides": {
+       "opp": "1",
+       "adj": "√3",
+       "hyp": "2"
+      },
+      "animate": "ratio-highlight"
+     },
+     "caption": "A right triangle with a 30° angle: opposite side 1, adjacent side √3, hypotenuse 2.",
+     "printed_page": 55,
+     "figure_id": "pp3u4-2:figure-5",
+     "src": "pp3u4-2__figure-5.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u4-2:figure-1",
+     "src": "pp3u4-2__figure-1.png",
+     "ref": "pp3u4-2:think-and-discuss-1",
+     "printed_page": 52,
+     "reason": "Equilateral triangle with an altitude, right-angle mark at D and side labels; no kind draws a general triangle with a right-angle mark.",
+     "needed_kind": "triangle scene with right-angle marks and side labels"
+    },
+    {
+     "figure_id": "pp3u4-2:figure-2",
+     "src": "pp3u4-2__figure-2.png",
+     "ref": null,
+     "printed_page": 52,
+     "reason": "Shows both the 30° and the 60° angle labels; trig_triangle marks only one acute angle.",
+     "needed_kind": "trig_triangle with both acute angles labelled"
+    },
+    {
+     "figure_id": "pp3u4-2:figure-4",
+     "src": "pp3u4-2__figure-4.png",
+     "ref": "pp3u4-2:example-2",
+     "printed_page": 54,
+     "reason": "A photo of a scientific calculator, no mathematical content to plot.",
+     "needed_kind": "calculator illustration or image display"
+    },
+    {
+     "figure_id": "pp3u4-2:figure-6",
+     "src": "pp3u4-2__figure-6.png",
+     "ref": null,
+     "printed_page": 55,
+     "reason": "Calculator key sequence (SHIFT, sin, value, =, DMS key giving 33°); not a plot or geometric figure.",
+     "needed_kind": "calculator key-sequence display"
+    },
+    {
+     "figure_id": "pp3u4-2:figure-7",
+     "src": "pp3u4-2__figure-7.png",
+     "ref": "pp3u4-2:example-4",
+     "printed_page": 55,
+     "reason": "Isosceles triangle with altitude, right-angle mark, equal-side ticks and lengths; a triangle scene.",
+     "needed_kind": "triangle scene with side labels and right-angle marks"
+    },
+    {
+     "figure_id": "pp3u4-2:figure-3",
+     "src": "pp3u4-2__figure-3.png",
+     "ref": "pp3u4-2:think-and-discuss-2",
+     "printed_page": 53,
+     "reason": "the spec does not match the figure: Missing angle label 'θ' at the triangle vertex. The spec requires angleDeg:'θ' but the angle is not labeled in the image.",
+     "rejected_spec": {
+      "kind": "trig_triangle",
+      "spec": {
+       "angleDeg": "θ",
+       "emphasize": "tan",
+       "sides": {
+        "opp": "L",
+        "adj": "L"
+       },
+       "animate": "ratio-highlight"
+      }
+     }
+    }
+   ],
+   "counts": {
+    "visuals": 1,
+    "viz_gaps": 6,
+    "compared": 2
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 2,
+   "S4 Compare": 2
+  },
+  "per_lesson": {
+   "pp3u4-1": 2,
+   "pp3u4-2": 2
+  },
+  "total": 4
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

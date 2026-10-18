@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "96f4b4068bd7bbaaf7ebd11105a4e97ba166c7c1a5d460c8dbd08f990b424f1f",
+  "generated_sha256": "317232a54a9d8003ce809e8f5aa913aac5f04eeb61c0c4068182375032d89636",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-4:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-4:example-2:First",
+      "kind": "explanation",
+      "answer": "Since $\\overline{XY}\\parallel\\overline{AD}$, $m(\\angle CXY)=m(\\angle CAD)$ (corresponding angles). In the cyclic quadrilateral ABCD, $m(\\angle CAD)=m(\\angle CBD)$ (both on base CD, same side). So $m(\\angle CXY)=m(\\angle CBY)$, i.e. $m(\\angle YXC)=m(\\angle YBC)$. These are two angles on the base YC, in the same direction of it, so BXYC is a cyclic quadrilateral. This answer is based on the standard figure, which I couldn't see."
+     },
+     {
+      "ref": "pp3u10-4:example-2:Second",
+      "kind": "explanation",
+      "answer": "From the First part, BXYC is cyclic. $\\angle XBY$ and $\\angle XCY$ are drawn on the same base XY and in the same direction of it, and both are inscribed in the circle through B, X, Y, C. So $m(\\angle XBY)=m(\\angle XCY)$. This answer is based on the standard figure, which I couldn't see."
+     }
+    ]
+   }
+  }
+ ]
+}

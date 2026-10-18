@@ -1,0 +1,1596 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "6b9f1ae960a766d219a6f4e9a9442fe19b6dfc1ec680c2a7e9e4dc52a0c406d9",
+  "generated_sha256": "df9bf8fbfb0a2bc7395a63ce81e3e997abec0246fc37602fc008459a092c7cb8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u10-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-1:arc-from-x",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-1",
+     "parent_question_id": "q:pp3u10-1-1:bk-drill-2-2",
+     "source_page": 66,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "s",
+       "let": "a + b"
+      },
+      {
+       "name": "x",
+       "randint": [
+        "ceil(140/s)",
+        "floor(179/s)"
+       ]
+      },
+      {
+       "name": "c",
+       "let": "180 - s * x"
+      },
+      {
+       "require": "c >= 1 and c <= 40",
+       "why": "clean constant"
+      }
+     ],
+     "stem": "$AB$ is a diameter of the circle $M$, and $D$ is a point on the circle. $m(\\angle AMD)=({=a}x)^\\circ$ and $m(\\angle DMB)=({=b}x+{=c})^\\circ$. Find $m(\\overset{\\frown}{AD})$ in degrees.",
+     "answer": "a * x",
+     "solution": [
+      "$AB$ is a diameter, so $\\angle AMD$ and $\\angle DMB$ lie on a straight angle and add up to $180^\\circ$.",
+      "${=a}x + ({=b}x + {=c}) = 180$, so ${=s}x = {=180 - c}$.",
+      "$x = {=x}$.",
+      "The measure of an arc equals the measure of its central angle: $m(\\overset{\\frown}{AD}) = m(\\angle AMD) = {=a} \\times {=x} = {=a*x}^\\circ$."
+     ],
+     "notes": "Book's figure 7 method, with no second radius. Diagram described in words."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-1:major-arc",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-1",
+     "parent_question_id": "q:pp3u10-1-1:bk-drill-2-4",
+     "source_page": 66,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "s",
+       "let": "a + b"
+      },
+      {
+       "name": "x",
+       "randint": [
+        "ceil(140/s)",
+        "floor(179/s)"
+       ]
+      },
+      {
+       "name": "c",
+       "let": "180 - s * x"
+      },
+      {
+       "require": "c >= 1 and c <= 40",
+       "why": "clean constant"
+      }
+     ],
+     "stem": "$AB$ is a diameter of the circle $M$. The points $D$ and $C$ lie on the circle on opposite sides of $AB$, with $m(\\angle AMD)=({=a}x)^\\circ$, $m(\\angle DMB)=({=b}x+{=c})^\\circ$ and $m(\\angle AMC)=({=k}x)^\\circ$. Find $m(\\overset{\\frown}{DBC})$, the arc from $D$ to $C$ that passes through $B$, in degrees.",
+     "answer": "360 - (a + k) * x",
+     "solution": [
+      "$\\angle AMD$ and $\\angle DMB$ lie on a straight angle: ${=a}x + ({=b}x + {=c}) = 180$, so ${=s}x = {=180 - c}$ and $x = {=x}$.",
+      "$m(\\overset{\\frown}{AD}) = {=a*x}^\\circ$ and $m(\\overset{\\frown}{AC}) = m(\\angle AMC) = {=k} \\times {=x} = {=k*x}^\\circ$.",
+      "Arc $DAC$ is made of the adjacent arcs $AD$ and $AC$: ${=a*x} + {=k*x} = {=(a+k)*x}^\\circ$.",
+      "The whole circle is $360^\\circ$, so $m(\\overset{\\frown}{DBC}) = 360 - {=(a+k)*x} = {=360-(a+k)*x}^\\circ$."
+     ],
+     "notes": "Extends book figure 7 (C and D on opposite sides of diameter AB). Check: arc DBC = DB + BC = (bx+c) + (180-kx) = 360-(a+k)x."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-2:fraction-circ",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        45,
+        60,
+        72,
+        90,
+        120,
+        180
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "C",
+       "let": "c * 360 / m"
+      }
+     ],
+     "stem": "The circumference of a circle is ${=C}$ cm. Find the length of an arc of this circle whose measure is ${=m}^\\circ$, in cm.",
+     "answer": "c",
+     "solution": [
+      "The arc is the fraction $\\frac{{=m}}{360}$ of the whole circle, so its length is that fraction of the circumference.",
+      "Arc length $=\\frac{{=m}}{360}\\times {=C} = {=c}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book question was supplied for this objective, so parent_question_id is empty. Whole-number answers by construction: C = c*360/m is always an integer for the m values chosen."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-2:arc-radius",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        90,
+        180,
+        270
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "let": "7 * k"
+      },
+      {
+       "name": "L",
+       "let": "11 * k * m / 90"
+      }
+     ],
+     "stem": "A circle has radius ${=r}$ cm. Find the length of an arc of this circle whose measure is ${=m}^\\circ$, in cm. Take $\\pi=\\frac{22}{7}$.",
+     "answer": "L",
+     "solution": [
+      "Circumference $=2\\pi r = 2\\times\\frac{22}{7}\\times {=r} = {=44*k}$ cm.",
+      "The arc is the fraction $\\frac{{=m}}{360}$ of the circle.",
+      "Arc length $=\\frac{{=m}}{360}\\times {=44*k} = {=L}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book question supplied; parent_question_id empty. r is a multiple of 7 and m a multiple of 90 so the answer is a whole number."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-2:equal-arcs",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        60,
+        90,
+        120,
+        180
+       ]
+      },
+      {
+       "name": "r1",
+       "choice": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "r2",
+       "choice": [
+        18,
+        24,
+        30,
+        36
+       ]
+      },
+      {
+       "name": "a1",
+       "let": "m * r1 / 180"
+      },
+      {
+       "name": "a2",
+       "let": "m * r2 / 180"
+      }
+     ],
+     "stem": "In a circle of radius ${=r1}$ cm, an arc of measure ${=m}^\\circ$ has length ${=a1}\\pi$ cm. Find the length of the arc of the same measure ${=m}^\\circ$ in a circle of radius ${=r2}$ cm. Give the answer in terms of $\\pi$.",
+     "answer": "",
+     "solution": [
+      "Both arcs have the same measure, so each is the fraction $\\frac{{=m}}{360}$ of its own circle.",
+      "Circumference of the second circle $=2\\pi\\times {=r2} = {=2*r2}\\pi$ cm.",
+      "Arc length $=\\frac{{=m}}{360}\\times {=2*r2}\\pi = {=a2}\\pi$ cm.",
+      "Check: arcs of equal measure have lengths in the ratio of the radii: ${=a1}\\pi : {=a2}\\pi = {=r1} : {=r2}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=a2}*pi",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "No book question supplied; parent_question_id empty. Compares equal-measure arcs in different circles. All a1, a2 are whole numbers."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list was empty, so parent_question_id is left blank and source_page is null. Reviewers should attach a parent. The numeric basic and standard families give whole-number answers by construction. The advanced expression family has an empty \"answer\" field because expression families use the marker."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-3:parlegs",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-3",
+     "parent_question_id": "q:pp3u10-1-3:bk-drill-7-4",
+     "source_page": 69,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a + 1 + x % 2"
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        8
+       ]
+      },
+      {
+       "name": "b",
+       "let": "d + (c - a) * x"
+      },
+      {
+       "name": "len",
+       "let": "a * x + b"
+      }
+     ],
+     "constraints": [],
+     "stem": "$\\overline{AB}$ and $\\overline{CD}$ are two parallel chords in a circle, and the points A, B, D, C lie on the circle in this order. If $AC = ({=a}x + {=b})$ cm and $BD = ({=c}x + {=d})$ cm, find the length of $\\overline{BD}$ in cm.",
+     "answer": "len",
+     "solution": [
+      "Since $\\overline{AB} \\parallel \\overline{CD}$, the arcs between them are equal: m(arc AC) = m(arc BD).",
+      "In the same circle, equal arcs have equal chords, so $AC = BD$.",
+      "${=a}x + {=b} = {=c}x + {=d}$, so ${=c - a}x = {=b - d}$ and $x = {=x}$.",
+      "$BD = {=c} \\times {=x} + {=d} = {=len}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Legs of an isosceles trapezoid inscribed in a circle. c-a is 1 or 2, so x is a whole number; b-d=(c-a)x."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-1-3:tanchord",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-1-3",
+     "parent_question_id": "q:pp3u10-1-3:bk-drill-7-4",
+     "source_page": 69,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        60,
+        85
+       ]
+      },
+      {
+       "name": "x",
+       "randint": [
+        3,
+        9
+       ]
+      },
+      {
+       "name": "a",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a + 1 + x % 2"
+      },
+      {
+       "name": "b",
+       "let": "m - a * x"
+      },
+      {
+       "name": "d",
+       "let": "m - c * x"
+      },
+      {
+       "name": "ans",
+       "let": "360 - 2 * m"
+      }
+     ],
+     "constraints": [],
+     "stem": "A circle has a tangent at the point C, parallel to the chord $\\overline{AB}$. If m(arc AC) = $({=a}x + {=b})^\\circ$ and m(arc BC) = $({=c}x + {=d})^\\circ$, where each of these arcs is the smaller arc, find in degrees the measure of the arc AB that does not contain C.",
+     "answer": "ans",
+     "solution": [
+      "Since the tangent at C is parallel to $\\overline{AB}$, the arcs between them are equal: m(arc AC) = m(arc BC).",
+      "${=a}x + {=b} = {=c}x + {=d}$, so ${=c - a}x = {=b - d}$ and $x = {=x}$.",
+      "m(arc AC) = m(arc BC) = ${=m}^\\circ$.",
+      "The whole circle is $360^\\circ$, so m(arc AB) $= 360 - {=m} - {=m} = {=ans}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "b-d=(c-a)x so x whole; both arcs equal m (60-85) so below 180. c-a is 1 or 2; c x<=54 so d>0."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-1:algebra-base",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-1",
+     "parent_question_id": "q:pp3u10-2-1:bk-drill-5-x",
+     "source_page": 73,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        5,
+        15
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        5,
+        25
+       ]
+      },
+      {
+       "name": "x",
+       "let": "2*p + q"
+      },
+      {
+       "name": "ins",
+       "let": "x + p"
+      },
+      {
+       "name": "cen",
+       "let": "2*ins"
+      },
+      {
+       "require": "ins < 80",
+       "why": "central angle stays below 160 so the base angle is clean and positive"
+      }
+     ],
+     "stem": "M is the centre of a circle, and A, B and C are points on the circle with C on the major arc AB. The inscribed angle $\\angle ACB = (x + {=p})^\\circ$ and the central angle $\\angle AMB = (3x - {=q})^\\circ$, both subtended by the arc AB. Find the measure of $\\angle MAB$ in degrees.",
+     "answer": "90 - ins",
+     "solution": [
+      "The inscribed angle is half the central angle subtended by the same arc, so $3x - {=q} = 2(x + {=p})$.",
+      "$3x - {=q} = 2x + {=2*p}$, so $x = {=x}$.",
+      "The inscribed angle is $x + {=p} = {=ins}^\\circ$, so the central angle $\\angle AMB = 2 \\times {=ins} = {=cen}^\\circ$.",
+      "MA = MB (radii), so the base angles of triangle MAB are equal.",
+      "$\\angle MAB = (180 - {=cen}) \\div 2 = {=90 - ins}^\\circ$."
+     ],
+     "notes": "Twist on book drill 5 (isosceles triangle MAB with central angle double the inscribed angle), with the angles given as algebraic expressions. Stem is text-only; C on the major arc is stated so the central angle is 2 x inscribed. Inscribed angle is always below 80, so the answer is a positive whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-2:inscribed-half",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-2",
+     "parent_question_id": "q:pp3u10-2-2:bk-drill-14-2",
+     "source_page": 76,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "h",
+       "randint": [
+        15,
+        80
+       ]
+      },
+      {
+       "name": "arc",
+       "let": "2 * h"
+      }
+     ],
+     "stem": "In a circle, $\\angle ABC$ is an inscribed angle and the arc $AC$ that it subtends measures ${=arc}^\\circ$. Find $m(\\angle ABC)$ in degrees.",
+     "answer": "h",
+     "solution": [
+      "An inscribed angle is half the measure of the arc it subtends.",
+      "$m(\\angle ABC) = \\frac{1}{2} \\times {=arc}^\\circ = {=h}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry-point skill: inscribed angle = half its arc. Arc always even so answer is whole."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-2:triangle-arcs",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-2",
+     "parent_question_id": "q:pp3u10-2-2:bk-drill-14-2",
+     "source_page": 76,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "choice": [
+        80,
+        100,
+        120,
+        140,
+        160
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        25,
+        65
+       ]
+      },
+      {
+       "name": "r",
+       "let": "2 * q"
+      },
+      {
+       "name": "s",
+       "let": "360 - p - 2 * q"
+      },
+      {
+       "require": "s >= 40 and s <= 180",
+       "why": "third arc must be a sensible size"
+      }
+     ],
+     "stem": "Triangle $ABC$ is inscribed in a circle. The arc $BC$ (not containing $A$) measures ${=p}^\\circ$ and $m(\\angle C) = {=q}^\\circ$. Find $m(\\text{arc } AC)$ in degrees, the arc not containing $B$.",
+     "answer": "s",
+     "solution": [
+      "$\\angle C$ is subtended by arc $AB$, so $m(\\text{arc } AB) = 2 \\times {=q}^\\circ = {=r}^\\circ$.",
+      "The three arcs $AB$, $BC$, $AC$ make the whole circle, $360^\\circ$.",
+      "$m(\\text{arc } AC) = 360^\\circ - ({=p}^\\circ + {=r}^\\circ) = {=s}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Mirrors book 14-2: double the inscribed angle to get its arc, then subtract from 360. Arc AB is the one opposite C."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-3:inside-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-3",
+     "parent_question_id": "lo:pp3u10-2-3",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        4,
+        14
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        4,
+        14
+       ]
+      },
+      {
+       "name": "a",
+       "let": "10 * p"
+      },
+      {
+       "name": "b",
+       "let": "10 * q"
+      }
+     ],
+     "constraints": [],
+     "stem": "Two chords $AB$ and $CD$ intersect at point $E$ inside a circle. The arc $AC$ intercepted by $\\angle AEC$ measures ${=a}^\\circ$ and the arc $BD$ intercepted by its vertical angle $\\angle BED$ measures ${=b}^\\circ$. Find $m\\angle AEC$ in degrees.",
+     "answer": "(a + b) / 2",
+     "solution": [
+      "For two chords intersecting inside a circle, the angle equals half the sum of the intercepted arcs.",
+      "$m\\angle AEC = \\frac{1}{2}({=a} + {=b}) = \\frac{{=a + b}}{2}$.",
+      "$m\\angle AEC = {=(a + b) / 2}^\\circ$."
+     ],
+     "notes": "No book questions were supplied for this objective; parent_question_id is a placeholder (the objective id) and needs a human to assign a real parent. Basic: direct half-sum."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-3:outside-diff",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-3",
+     "parent_question_id": "lo:pp3u10-2-3",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        12,
+        22
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        3,
+        8
+       ]
+      },
+      {
+       "name": "A",
+       "let": "10 * p"
+      },
+      {
+       "name": "B",
+       "let": "10 * q"
+      }
+     ],
+     "constraints": [],
+     "stem": "Two rays $PA$ and $PC$ start at a point $P$ outside a circle and cut it, so that $\\angle APC$ intercepts a far arc of ${=A}^\\circ$ and a near arc of ${=B}^\\circ$. Find $m\\angle APC$ in degrees.",
+     "answer": "(A - B) / 2",
+     "solution": [
+      "For two rays intersecting outside a circle, the angle equals half the difference of the intercepted arcs (larger minus smaller).",
+      "$m\\angle APC = \\frac{1}{2}({=A} - {=B}) = \\frac{{=A - B}}{2}$.",
+      "$m\\angle APC = {=(A - B) / 2}^\\circ$."
+     ],
+     "notes": "Placeholder parent_question_id; no book questions supplied. Standard: outside case, half-difference."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-3:missing-arc",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-3",
+     "parent_question_id": "lo:pp3u10-2-3",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        40,
+        100
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        3,
+        9
+       ]
+      },
+      {
+       "name": "a",
+       "let": "10 * p"
+      },
+      {
+       "name": "b",
+       "let": "2 * t - a"
+      },
+      {
+       "require": "b >= 20 and b <= 200",
+       "why": "keep the missing arc sensible"
+      }
+     ],
+     "constraints": [],
+     "stem": "Two chords $AB$ and $CD$ intersect inside a circle at $E$. $m\\angle AEC = {=t}^\\circ$, and the arc $AC$ measures ${=a}^\\circ$. Find the measure in degrees of the arc $BD$ intercepted by the vertical angle $\\angle BED$.",
+     "answer": "b",
+     "solution": [
+      "The angle formed by two chords is half the sum of its intercepted arcs: ${=t} = \\frac{1}{2}({=a} + m\\widehat{BD})$.",
+      "Multiply both sides by 2: ${=a} + m\\widehat{BD} = {=2 * t}$.",
+      "$m\\widehat{BD} = {=2 * t} - {=a} = {=b}^\\circ$."
+     ],
+     "notes": "Placeholder parent_question_id; no book questions supplied. Advanced: reverse the formula to find an arc."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were listed for this objective, so parent_question_id and source_page are placeholders (objective id, null). A human should link each family to a real book question. Distractors/misconceptions were not needed (all numeric)."
+  },
+  {
+   "lo_id": "lo:pp3u10-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-1:two-arcs-triangle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-1",
+     "parent_question_id": "q:pp3u10-3-1:bk-drill-1-3",
+     "source_page": 80,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        20,
+        70
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        20,
+        70
+       ]
+      },
+      {
+       "name": "r",
+       "let": "180 - p - q"
+      }
+     ],
+     "constraints": [
+      "p + q < 160"
+     ],
+     "stem": "The points $A$, $B$, $C$ and $D$ lie on a circle, in this order around the circle. Draw the chords $AC$, $BD$, $AD$ and $CD$. Given that $m(\\angle ABD) = {=q}^\\circ$ and $m(\\angle CBD) = {=p}^\\circ$, find $m(\\angle ADC)$ in degrees.",
+     "answer": "r",
+     "solution": [
+      "$\\angle CAD$ and $\\angle CBD$ are inscribed angles including the same arc $CD$, so $m(\\angle CAD) = m(\\angle CBD) = {=p}^\\circ$.",
+      "$\\angle ACD$ and $\\angle ABD$ are inscribed angles including the same arc $AD$, so $m(\\angle ACD) = m(\\angle ABD) = {=q}^\\circ$.",
+      "In $\\triangle ACD$: $m(\\angle ADC) = 180^\\circ - {=p}^\\circ - {=q}^\\circ = {=r}^\\circ$."
+     ],
+     "notes": "Text-only two-step: same-arc equality twice, then triangle angle sum (as in book drill 1-3). Order A,B,C,D on circle makes B and A on the same side of CD, and B and C on the same side of AD, so the equalities hold. Any p+q<180 is geometrically valid.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-2:equal-chords",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-2",
+     "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
+     "source_page": 82,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        5,
+        20
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        5,
+        30
+       ]
+      },
+      {
+       "name": "m",
+       "let": "p * x - q"
+      },
+      {
+       "require": "m >= 20 and m <= 80",
+       "why": "angle is a sensible size"
+      }
+     ],
+     "stem": "In a circle, the chords $AB$ and $CD$ are equal in length. The inscribed angle $\\angle AEB$ stands on the minor arc $AB$ and measures $({=p}x - {=q})^\\circ$. The inscribed angle $\\angle CFD$ stands on the minor arc $CD$ and measures ${=m}^\\circ$. Find the value of $x$.",
+     "answer": "x",
+     "solution": [
+      "Equal chords in the same circle cut off equal minor arcs, so arc $AB$ = arc $CD$.",
+      "Equal arcs give equal inscribed angles: ${=p}x - {=q} = {=m}$.",
+      "${=p}x = {=m + q}$.",
+      "$x = {=x}$."
+     ],
+     "notes": "Basic: one equation from equal chords/arcs -> equal inscribed angles, as in the book's Figure 1. Described in words; no figure needed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-2:isosceles",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-2",
+     "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
+     "source_page": 82,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        5,
+        15
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        1,
+        10
+       ]
+      },
+      {
+       "name": "p",
+       "let": "r + d"
+      },
+      {
+       "name": "q",
+       "let": "d * x - s"
+      },
+      {
+       "name": "e",
+       "let": "r * x + s"
+      },
+      {
+       "name": "a",
+       "let": "180 - 2 * e"
+      },
+      {
+       "require": "q > 0 and e >= 30 and e <= 80",
+       "why": "positive constant, sensible angles"
+      }
+     ],
+     "stem": "Triangle $ABC$ is inscribed in a circle, and the minor arcs $AB$ and $AC$ (not containing the other vertices) are equal. Given $\\angle ACB = ({=p}x - {=q})^\\circ$ and $\\angle ABC = ({=r}x + {=s})^\\circ$, find the measure of $\\angle BAC$ in degrees.",
+     "answer": "a",
+     "solution": [
+      "$\\angle ACB$ stands on arc $AB$ and $\\angle ABC$ stands on arc $AC$. The arcs are equal, so the inscribed angles are equal (triangle $ABC$ is isosceles with $AB = AC$).",
+      "${=p}x - {=q} = {=r}x + {=s}$.",
+      "${=d}x = {=q + s}$, so $x = {=x}$.",
+      "$\\angle ABC = \\angle ACB = {=r}\\times{=x} + {=s} = {=e}^\\circ$.",
+      "Angles of a triangle sum to $180^\\circ$: $\\angle BAC = 180 - 2\\times{=e} = {=a}^\\circ$."
+     ],
+     "notes": "Advanced: equal arcs give equal angles, solve for x, prove isosceles, then angle sum. Check: p*x-q = r*x+s = e."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-3-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for lo:pp3u10-3-3, so there is no valid parent_question_id or source_page, and no canonical solution to model the method on. I did not fabricate a parent."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: the book-question list is empty, so no parent question or book solution exists to anchor the family."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book questions exist to anchor the harder twist. Without a canonical solution I cannot tell which twist the book itself uses."
+    }
+   ],
+   "notes": "Resubmit with at least one book question (id, page, canonical solution) for this objective. Families can then be written. The planned skeletons are: basic, two equal angles on the same side of a shared base, so concyclic; standard, a mix of equal and unequal angles, or opposite sides, with a concyclic or not decision; advanced, angles found from a figure's other angle facts before deciding."
+  },
+  {
+   "lo_id": "lo:pp3u10-4-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for lo:pp3u10-4-1 is empty. No valid parent_question_id or source_page exists, and there are no canonical solutions to show the book's method, vocabulary, or figure style for cyclic-quadrilateral tests. An invented parent id would fail the check. Guessing the method would risk teaching a technique the book does not use."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason as basic. There is no book question to anchor the family and no book solution to model the 'two equal angles on the same base and in one direction' argument. No misconceptions are catalogued either."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason as basic. With no book questions, I cannot tell what the book's harder exercises look like, so I cannot set an honest advanced tier or a parent."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:diameter",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "d",
+       "let": "2 * r"
+      }
+     ],
+     "stem": "In quadrilateral $ABCD$, the points $B$ and $C$ lie on the same side of $AD$, $m(\\angle ABD) = 90^\\circ$ and $m(\\angle ACD) = 90^\\circ$. Given that $AD = {=d}$ cm, the four points lie on one circle. Find the radius of that circle in cm.",
+     "answer": "r",
+     "solution": [
+      "The angles $\\angle ABD$ and $\\angle ACD$ are equal (both $90^\\circ$), they are drawn on the same base $AD$ and on the same side of it.",
+      "So $ABCD$ is a cyclic quadrilateral.",
+      "Since the angle at $B$ in the circle is a right angle standing on $AD$, $AD$ is a diameter of the circle.",
+      "Radius $= {=d} \\div 2 = {=r}$ cm."
+     ],
+     "notes": "No book question was supplied for this objective, so parent_question_id is a placeholder. Text-only, no figure needed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:equalang",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "choice": [
+        3,
+        4
+       ]
+      },
+      {
+       "name": "x",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        20
+       ]
+      },
+      {
+       "name": "r",
+       "let": "p - 1"
+      },
+      {
+       "name": "s",
+       "let": "x + q"
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral, and $B$ and $C$ lie on the same side of $AD$. Given that $m(\\angle ABD) = ({=p}x + {=q})^\\circ$ and $m(\\angle ACD) = ({=r}x + {=s})^\\circ$, find the value of $x$.",
+     "answer": "x",
+     "solution": [
+      "$ABCD$ is cyclic, so the angles $\\angle ABD$ and $\\angle ACD$ drawn on the same base $AD$ and on the same side of it are equal.",
+      "${=p}x + {=q} = {=r}x + {=s}$.",
+      "$x = {=s} - {=q} = {=x}$."
+     ],
+     "notes": "Placeholder parent_question_id: none supplied. Text-only."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:parallel",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        5,
+        25
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        5,
+        30
+       ]
+      },
+      {
+       "name": "r",
+       "let": "x + q"
+      },
+      {
+       "name": "ang",
+       "let": "2 * x + q"
+      }
+     ],
+     "stem": "In quadrilateral $ABCD$, $\\overline{AD} \\parallel \\overline{BC}$, and $A$ and $B$ lie on the same side of $\\overleftrightarrow{DC}$. Given that $m(\\angle ACB) = (2x + {=q})^\\circ$ and $m(\\angle DBC) = (x + {=r})^\\circ$, and that $ABCD$ is a cyclic quadrilateral, find $m(\\angle DAC)$ in degrees.",
+     "answer": "ang",
+     "solution": [
+      "Since $\\overline{AD} \\parallel \\overline{BC}$ with transversal $AC$, the alternate angles are equal: $m(\\angle DAC) = m(\\angle ACB) = (2x + {=q})^\\circ$.",
+      "$ABCD$ is cyclic, so $\\angle DAC$ and $\\angle DBC$, drawn on the same base $DC$ and on the same side of it, are equal.",
+      "$2x + {=q} = x + {=r}$, so $x = {=r} - {=q} = {=x}$.",
+      "$m(\\angle DAC) = 2({=x}) + {=q} = {=ang}^\\circ$."
+     ],
+     "notes": "Placeholder parent_question_id: none supplied. Text-only; uses parallel lines then equal angles on same base."
+    }
+   ],
+   "infeasible": [],
+   "notes": "No book questions were listed for this objective, so parent_question_id is the placeholder \"q:pp3u10-4-2:none\" and source_page is null. Please re-map them before use."
+  },
+  {
+   "lo_id": "lo:pp3u10-4-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u10-4-3 is empty. A family needs a real parent_question_id and source_page, and it needs the book's own method and notation as a model. I have none of these, and the objective description alone doesn't give them. I did not invent a parent. The circle-geometry method, such as which cyclic-quadrilateral theorems the book uses, would be guesswork."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions or canonical solutions were provided for this objective, so there is no parent_question_id, source_page or book method to follow. Writing a family without them risks teaching a technique the book does not use."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions or canonical solutions were provided, so there is no honest parent and no book twist to model. Parallel-line and circle-centre deductions need the book's exact reasoning chain, and I can't invent it."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-5-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-1:diameter-arc",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-1",
+     "parent_question_id": "q:pp3u10-5-1:bk-drill-2-c",
+     "source_page": 89,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85
+       ]
+      },
+      {
+       "name": "c",
+       "choice": [
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+       ]
+      },
+      {
+       "require": "c < 2 * a",
+       "why": "arc CD must be smaller than arc BCD = 2a"
+      },
+      {
+       "name": "h",
+       "let": "c / 2"
+      },
+      {
+       "name": "d",
+       "let": "90 - a"
+      },
+      {
+       "name": "b",
+       "let": "c / 2 + 90 - a"
+      },
+      {
+       "name": "ans",
+       "let": "180 - b"
+      }
+     ],
+     "constraints": [],
+     "stem": "$ABCD$ is a cyclic quadrilateral (its vertices are in this order on the circle) in which $\\overline{AB}$ is a diameter, $m(\\angle DAB) = {=a}^\\circ$ and $m(\\widehat{CD}) = {=c}^\\circ$. Find $m(\\angle ADC)$ in degrees.",
+     "answer": "ans",
+     "solution": [
+      "$\\overline{AB}$ is a diameter, so the angle $\\angle ADB$ in the semicircle is $90^\\circ$.",
+      "In $\\triangle ABD$: $m(\\angle ABD) = 90^\\circ - {=a}^\\circ = {=d}^\\circ$.",
+      "$\\angle CBD$ is inscribed in arc $CD$, so $m(\\angle CBD) = \\frac{1}{2} \\times {=c}^\\circ = {=h}^\\circ$.",
+      "$m(\\angle ABC) = {=d}^\\circ + {=h}^\\circ = {=b}^\\circ$.",
+      "$\\angle B$ and $\\angle D$ are opposite angles of the cyclic quadrilateral, so they are supplementary.",
+      "$m(\\angle ADC) = 180^\\circ - {=b}^\\circ = {=ans}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Modelled on bk-drill-2-c (diameter, arc CD, find all angles), asking only for angle D. Text-only description; consistent configuration requires c < 2a (arc BC>0). Answers are whole numbers."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-5-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:direct",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "randint": [
+        50,
+        130
+       ]
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The side $BA$ is produced to $E$. If $m(\\angle BCD) = {=c}^\\circ$, find $m(\\angle DAE)$ in degrees.",
+     "answer": "c",
+     "solution": [
+      "$\\angle DAE$ is the exterior angle of the cyclic quadrilateral at vertex $A$.",
+      "The exterior angle at a vertex equals the interior angle at the opposite vertex, and the vertex opposite $A$ is $C$.",
+      "So $m(\\angle DAE) = m(\\angle BCD) = {=c}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is empty; reviewer please attach one."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:algebr",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        10,
+        40
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        5,
+        20
+       ]
+      },
+      {
+       "name": "q",
+       "let": "x + p"
+      },
+      {
+       "name": "r",
+       "let": "2 * x + p"
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The side $CD$ is produced to $E$. If $m(\\angle ADE) = (2x + {=p})^\\circ$ and $m(\\angle ABC) = (x + {=q})^\\circ$, find $m(\\angle ABC)$ in degrees.",
+     "answer": "r",
+     "solution": [
+      "$\\angle ADE$ is the exterior angle at $D$, so it equals the interior angle at the opposite vertex $B$.",
+      "So $2x + {=p} = x + {=q}$.",
+      "Subtract $x$ and ${=p}$: $x = {=x}$.",
+      "Then $m(\\angle ABC) = {=x} + {=q} = {=r}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "x = q - p. No parent book question available."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:twosteps",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        20,
+        35
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "e",
+       "let": "2 * x - d"
+      },
+      {
+       "name": "ext",
+       "let": "4 * x - d"
+      },
+      {
+       "name": "ans",
+       "let": "180 - ext"
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The side $BA$ is produced to $E$. If $m(\\angle DAE) = (4x - {=d})^\\circ$ and $m(\\angle BCD) = (2x + {=e})^\\circ$, find $m(\\angle DAB)$ in degrees.",
+     "answer": "ans",
+     "solution": [
+      "$\\angle DAE$ is the exterior angle at $A$, so it equals the interior angle at the opposite vertex $C$.",
+      "So $4x - {=d} = 2x + {=e}$, which gives $2x = {=e + d}$ and $x = {=x}$.",
+      "Then $m(\\angle DAE) = 4({=x}) - {=d} = {=ext}^\\circ$.",
+      "$\\angle DAB$ and $\\angle DAE$ lie on a straight line, so $m(\\angle DAB) = 180^\\circ - {=ext}^\\circ = {=ans}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "e + d = 2x. Angle DAB between 50 and 130. No parent book question available."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The list of book questions for this objective was empty. I left parent_question_id as \"\" and source_page as null on all three families. A reviewer needs to attach a real parent. No distractors or misconceptions are used, because all three families are numeric."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u10-5-3 is empty. No parent_question_id or source_page exists to cite. No canonical solution shows the book's method or notation for proving a quadrilateral is cyclic. I did not invent a parent or guess the book's wording."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason as basic. There is no book question or worked solution to model a standard exercise on, and no valid parent_question_id."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason as basic. There is no book question or worked solution to model an advanced exercise on, and no valid parent_question_id."
+    }
+   ],
+   "notes": "No families were written. The task supplied no book questions and no catalogued misconceptions for this objective. The spec requires each family's parent_question_id to be a book question of this objective, so I could not honestly cite one. The objective itself is feasible. Once the objective's book questions and solutions are supplied, I can write the three tiers. They would be: opposite angles that sum to 180° proves the quadrilateral is cyclic; an exterior angle equal to the interior opposite angle proves it; and a multi-step angle-chasing proof."
+  },
+  {
+   "lo_id": "lo:pp3u10-6-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-1:centre-angle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-1",
+     "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
+     "source_page": 95,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        50,
+        80
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$, where $B$ and $C$ are the points of tangency. If $m(\\angle ABC) = {=x}^\\circ$, find $m(\\angle BMC)$.",
+     "answer": "2 * x",
+     "solution": [
+      "$AB = AC$ because they are tangent segments from $A$, so triangle $ABC$ is isosceles and $m(\\angle ACB) = m(\\angle ABC) = {=x}^\\circ$.",
+      "$m(\\angle BAC) = 180^\\circ - 2 \\times {=x}^\\circ = {=180 - 2*x}^\\circ$.",
+      "The radii $MB$ and $MC$ are perpendicular to the tangents, so $m(\\angle MBA) = m(\\angle MCA) = 90^\\circ$.",
+      "In quadrilateral $ABMC$: $m(\\angle BMC) = 360^\\circ - 90^\\circ - 90^\\circ - {=180 - 2*x}^\\circ = {=2*x}^\\circ$."
+     ],
+     "notes": "Text-only; no figure needed. x in 50..80 gives angle A between 20 and 80. Answer in degrees (number only)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-1:chord-length",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-1",
+     "parent_question_id": "q:pp3u10-6-1:bk-drill-1-1",
+     "source_page": 95,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "sw",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "r",
+       "let": "15 * m if sw == 0 else 20 * m"
+      },
+      {
+       "name": "t",
+       "let": "20 * m if sw == 0 else 15 * m"
+      },
+      {
+       "name": "d",
+       "let": "25 * m"
+      }
+     ],
+     "constraints": [],
+     "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments drawn from the point $A$ to the circle $M$ whose radius is ${=r}$ cm, where $B$ and $C$ are the points of tangency. If $MA = {=d}$ cm, find the length of the chord $\\overline{BC}$ in cm.",
+     "answer": "24 * m",
+     "solution": [
+      "$MB$ is a radius and $AB$ a tangent, so $m(\\angle MBA) = 90^\\circ$.",
+      "In the right triangle $MBA$: $AB = \\sqrt{{=d}^2 - {=r}^2} = {=t}$ cm.",
+      "The line $MA$ passes through the centre and the intersection point of the tangents, so it is the axis of the chord $BC$: it is perpendicular to $BC$ and bisects it at $N$.",
+      "Area of triangle $MBA$: $\\frac{1}{2} \\times MB \\times AB = \\frac{1}{2} \\times MA \\times BN$, so $BN = \\frac{{=r} \\times {=t}}{{=d}} = {=r*t/d}$ cm.",
+      "$BC = 2 \\times BN = {=24*m}$ cm."
+     ],
+     "notes": "Radius/tangent swap gives same chord 24m. Whole-number answers: 24, 48, 72. Uses Pythagoras, area, and axis-of-chord corollary."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-6-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions or canonical solutions were supplied for this objective. A family needs a parent_question_id from that list, so it cannot be anchored. The book's own method, notation and figure style for inscribed circles are also unknown, and I won't invent them."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: the book question list is empty, so there is no parent question or model solution. Any family would rest on a guessed method."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book question exists to model a harder, multi-step exercise on. I won't invent a twist the book may not use."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-6-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-3:internal-len",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-3",
+     "parent_question_id": "q:pp3u10-6-3:bk-drill-7-1",
+     "source_page": 98,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "T",
+       "let": "[[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [6, 8, 10], [9, 12, 15]]"
+      },
+      {
+       "name": "t",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "w",
+       "randint": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "s",
+       "let": "T[t][w]"
+      },
+      {
+       "name": "q",
+       "let": "T[t][1 - w]"
+      },
+      {
+       "name": "d",
+       "let": "T[t][2]"
+      },
+      {
+       "name": "r1",
+       "randint": [
+        1,
+        "s - 1"
+       ]
+      },
+      {
+       "name": "r2",
+       "let": "s - r1"
+      },
+      {
+       "require": "r1 != r2",
+       "why": "radii should differ"
+      }
+     ],
+     "constraints": [
+      "d > s",
+      "q > 0"
+     ],
+     "stem": "Two circles with centres $M$ and $N$ lie outside each other. Their radii are ${=r1}$ cm and ${=r2}$ cm, and $MN = {=d}$ cm. A common internal tangent touches the circle with centre $M$ at $A$ and the circle with centre $N$ at $B$. Find the length of $AB$ in cm.",
+     "answer": "q",
+     "solution": [
+      "MA and NB are radii drawn to the points of tangency, so MA ⟂ AB and NB ⟂ AB, with MA = {=r1} cm and NB = {=r2} cm.",
+      "Draw through N a line parallel to AB meeting MA extended at C. Then ABNC is a rectangle, so AC = NB = {=r2} cm and NC = AB.",
+      "MC = MA + AC = {=r1} + {=r2} = {=s} cm, and m(∠MCN) = 90°.",
+      "In right triangle MCN: NC² = MN² − MC² = {=d}² − {=s}² = {=d*d} − {=s*s} = {=q*q}.",
+      "So NC = {=q} cm, and AB = NC = {=q} cm."
+     ],
+     "notes": "Common internal tangent length = sqrt(d^2-(r1+r2)^2), using the book's radius perpendicular to tangent and Pythagoras. Pythagorean triples keep the answer whole. Figure is not given; circles are described in words.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-7-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-1:arc-chain",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-1",
+     "parent_question_id": "q:pp3u10-7-1:bk-drill-3-3",
+     "source_page": 102,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "choice": [
+        80,
+        100,
+        120,
+        140
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        40,
+        80
+       ]
+      },
+      {
+       "name": "arcab",
+       "let": "360 - c - 2 * b"
+      },
+      {
+       "require": "arcab >= 60 and arcab <= 160",
+       "why": "keeps arc AB a clean minor arc"
+      },
+      {
+       "name": "ans",
+       "let": "arcab / 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "A, B and C are three points on a circle. The line AD is tangent to the circle at A, with D on the same side of A as B, so that angle BAD is the angle of tangency on the arc AB that does not contain C. The arc BC that does not contain A measures ${=c}^\\circ$, and the inscribed angle $\\angle ABC$ measures ${=b}^\\circ$. Calculate $m(\\angle BAD)$ in degrees.",
+     "answer": "ans",
+     "solution": [
+      "$\\angle ABC$ is an inscribed angle on arc AC, so $m(\\widehat{AC})=2\\times{=b}={=2*b}^\\circ$.",
+      "The three arcs AB, BC and CA make a whole circle, so $m(\\widehat{AB})=360-{=c}-{=2*b}={=arcab}^\\circ$.",
+      "$\\angle BAD$ is an angle of tangency on arc AB, so it is half that arc: $m(\\angle BAD)=\\frac{1}{2}\\times{=arcab}$.",
+      "$m(\\angle BAD)={=ans}^\\circ$."
+     ],
+     "notes": "Generalises book drill 3-3 (arc 120, inscribed 70 -> 50). Stem describes the figure in words; c+2b<=300 ensures arc AB>=60.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-7-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for lo:pp3u10-7-2 is empty. Every family needs a real parent_question_id, source_page and canonical solution to model, and I have none. The proof method (tangent-chord angle equal to the inscribed angle, plus parallel lines) also depends on a figure the book prints. Without the book's own method and notation I would be inventing it."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book questions or canonical solutions are provided, so there is no valid parent and no book method to follow."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book questions or canonical solutions are provided, so there is no valid parent and no book method to follow."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-7-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. There are also no canonical solutions to model the method on. The theorem 5 converse, with its exact wording and notation, would have to be guessed."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: the book question list is empty. A family built without a parent or model solution would invent its own method and notation, which the rules forbid."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book question exists to mark what the book's harder exercises or twists look like. Any 'advanced' family would be invented."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

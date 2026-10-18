@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "4aac0961f96a6fb868476a45d4a8055435b77eec80759977cbec03020b315629",
+  "generated_sha256": "80cc943fe37e4d51c32de046da7eaddc0cc653b27644dfc28bac3ebadf1d6399",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u10-2:figure-1",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   },
+   {
+    "id": "pp3u10-2:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "extend",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Circle top is cut off at the top edge. Bottom contains a faint grey smudge/background from the page, not part of the figure."
+   }
+  ]
+ }
+}

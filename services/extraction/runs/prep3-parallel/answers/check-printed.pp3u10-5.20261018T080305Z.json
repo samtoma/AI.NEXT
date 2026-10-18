@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "f739564aaae52c4eaef5fbe21a91f1aeca96a399aec822a64d9af584f7c57ed0",
+  "generated_sha256": "0141140cce49421696c60bb70cdbaf083a29c6304b08329e042221d358ad015a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-5:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-5:example-1:First",
+      "kind": "value",
+      "answer": "40"
+     },
+     {
+      "ref": "pp3u10-5:example-1:Second",
+      "kind": "value",
+      "answer": "110"
+     },
+     {
+      "ref": "pp3u10-5:example-2",
+      "kind": "value",
+      "answer": "30"
+     },
+     {
+      "ref": "pp3u10-5:example-3",
+      "kind": "explanation",
+      "answer": "Since AB is a diameter, $\\angle ACB = 90^\\circ$, so $m(\\angle ABC) = 90^\\circ - m(\\angle CAB)$. In right triangle ABX (BX tangent, so $\\angle ABX = 90^\\circ$), $m(\\angle X) = 90^\\circ - m(\\angle CAB)$. So $m(\\angle X) = m(\\angle ABC)$. ABCD is cyclic, so $m(\\angle ABC) + m(\\angle ADC) = 180^\\circ$, i.e. the exterior angle $\\angle CDY$ at D equals $\\angle ABC$. Hence the exterior angle at D equals the interior opposite angle at X, so XYDC is cyclic."
+     }
+    ]
+   }
+  }
+ ]
+}

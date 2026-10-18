@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-1:midpoint-ends",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-1",
+ "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-third",
+ "source_page": 62,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -8,
+    4
+   ]
+  },
+  {
+   "name": "dx",
+   "choice": [
+    2,
+    4,
+    6,
+    8,
+    10
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -8,
+    4
+   ]
+  },
+  {
+   "name": "dy",
+   "choice": [
+    2,
+    4,
+    6,
+    8,
+    10
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + dx"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + dy"
+  },
+  {
+   "name": "mx",
+   "let": "x1 + dx // 2"
+  },
+  {
+   "name": "my",
+   "let": "y1 + dy // 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "On a perpendicular coordinate plane, find the two coordinates of the midpoint $C$ of the straight segment $AB$: $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Write your answer as $(x, y)$.",
+ "solution": [
+  "$A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+  "$x = \\frac{{=x1} + {=paren(x2)}}{2} = {=mx}$",
+  "$y = \\frac{{=y1} + {=paren(y2)}}{2} = {=my}$",
+  "The midpoint is $C({=mx}, {=my})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=mx}, {=my})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Endpoints may include negatives; sums are always even so the midpoint has whole coordinates. Same skeleton as the book's third item."
+}

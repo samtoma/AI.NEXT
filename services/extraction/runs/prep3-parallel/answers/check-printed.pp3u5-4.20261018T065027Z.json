@@ -1,0 +1,47 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "c65c641fccf7353bb73d48419aa84822306a9e41aed72cc8945745c152a1afc8",
+  "generated_sha256": "da7d8307946d232e4ead9cd671eb337af974eebfbab1569279a39fc0c004983b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u5-4:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-4:example-1:A",
+      "kind": "value",
+      "answer": "1/2"
+     },
+     {
+      "ref": "pp3u5-4:example-1:B",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "pp3u5-4:example-2",
+      "kind": "value",
+      "answer": "slope = -3/4, y-intercept length = 5/4"
+     },
+     {
+      "ref": "pp3u5-4:example-3",
+      "kind": "value",
+      "answer": "y = 3x - 1"
+     },
+     {
+      "ref": "pp3u5-4:example-4",
+      "kind": "value",
+      "answer": "y = -2/7 x + 22/7"
+     }
+    ]
+   }
+  }
+ ]
+}

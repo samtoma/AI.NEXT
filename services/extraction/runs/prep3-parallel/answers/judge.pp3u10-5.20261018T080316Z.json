@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "417b53fd11c09212e62d5f2d13027efc39d3849f1eb032173ea2821c00a42b48",
+  "generated_sha256": "36bef5b906b8364416bb636af8bfdffed97706829694add448c7ce4667457ad1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u10-5:example-1:First",
+    "verdict": "equivalent",
+    "reason": "Both give 40°."
+   },
+   {
+    "ref": "pp3u10-5:example-1:Second",
+    "verdict": "equivalent",
+    "reason": "Both give 110°."
+   },
+   {
+    "ref": "pp3u10-5:example-2",
+    "verdict": "equivalent",
+    "reason": "Both give 30°."
+   },
+   {
+    "ref": "pp3u10-5:example-3",
+    "verdict": "equivalent",
+    "reason": "Both conclude XYDC is cyclic; the solver's proof reaches the printed conclusion."
+   }
+  ]
+ }
+}

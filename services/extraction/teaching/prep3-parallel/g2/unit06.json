@@ -1,0 +1,70 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 6,
+ "from_runs": {
+  "run": "runs/prep3-parallel/g2/g2r.unit06.20261018T070628Z.json"
+ },
+ "by": null,
+ "items": {
+  "pp3u6-2:WE1": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "$x=(5\\pm\\sqrt{13})/6$, $\\sqrt{13}=3.6056$, so $x=1.434\\to1.43$ and $0.232\\to0.23$. The book rounds $\\sqrt{13}$ to 3.61 first and gets 1.44, which is wrong to 2 d.p.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "Premature rounding of $\\sqrt{13}$ to 3.61 gives 1.44. The correct value to two decimal places is 1.43. The printed answer {1.44, 0.23} is wrong.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 1,
+  "recommended": 1,
+  "unanswered": [],
+  "by_verdict": {
+   "exclude": 1
+  },
+  "by_class": {
+   "book error": 1
+  },
+  "by_confidence": {
+   "high": 1
+  },
+  "live": [],
+  "live_question_ids": [],
+  "not_live": {},
+  "low_confidence": [],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "pp3u6-2:WE1"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "held": 1
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ },
+ "questions": {
+  "pp3u6-2:WE1": {
+   "question": "q:pp3u6-2-3:bk-example-2",
+   "book_ref": "pp3u6-2:example-2",
+   "facts": {
+    "stem": "Find the solution set of the equation $3x^2=5x-1$ rounding the results to two decimal places.",
+    "answer": "\\{1.44, 0.23\\}",
+    "hold_reason": "answer_mismatch"
+   }
+  }
+ },
+ "line": "book-records (book_record_g2.py)"
+}

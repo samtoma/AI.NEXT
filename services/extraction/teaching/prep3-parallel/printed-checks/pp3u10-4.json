@@ -1,0 +1,82 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-4",
+  "source": "book-records/prep3-parallel/pp3u10-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0291,
+      "calls": [
+        {
+          "call": "check-printed.pp3u10-4",
+          "cost_usd": 0.0188,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u10-4",
+          "cost_usd": 0.0103,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u10-4:example-2:First",
+      "record_id": "pp3u10-4:example-2",
+      "part": "First",
+      "type": "worked_example",
+      "page": 87,
+      "printed": "Q.E.D 1",
+      "blind": "Since $\\overline{XY}\\parallel\\overline{AD}$, $m(\\angle CXY)=m(\\angle CAD)$ (corresponding angles). In the cyclic quadrilateral ABCD, $m(\\angle CAD)=m(\\angle CBD)$ (both on base CD, same side). So $m(\\angle CXY)=m(\\angle CBY)$, i.e. $m(\\angle YXC)=m(\\angle YBC)$. These are two angles on the base YC, in the same direction of it, so BXYC is a cyclic quadrilateral. This answer is based on the standard figure, which I couldn't see.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-4:figure-11"
+      ],
+      "question_fingerprint": "8bf5441c1468f3720e47dfecbde8c718",
+      "status": "cannot_answer",
+      "judge": {
+        "ref": "pp3u10-4:example-2:First",
+        "verdict": "unclear",
+        "reason": "Printed answer is only 'Q.E.D 1' with no content, so the proof can't be compared; the solver does prove BXYC is cyclic, which is what the part asks."
+      },
+      "note": "the judge could not decide: Printed answer is only 'Q.E.D 1' with no content, so the proof can't be compared; the solver does prove BXYC is cyclic, which is what the part asks.",
+      "made": {
+        "at": "2026-10-18T08:03:05+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-4:example-2:Second",
+      "record_id": "pp3u10-4:example-2",
+      "part": "Second",
+      "type": "worked_example",
+      "page": 87,
+      "printed": "Q.E.D 2",
+      "blind": "From the First part, BXYC is cyclic. $\\angle XBY$ and $\\angle XCY$ are drawn on the same base XY and in the same direction of it, and both are inscribed in the circle through B, X, Y, C. So $m(\\angle XBY)=m(\\angle XCY)$. This answer is based on the standard figure, which I couldn't see.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-4:figure-11"
+      ],
+      "question_fingerprint": "1fe95c2940e37a0c378ae5df22a0a2b3",
+      "status": "cannot_answer",
+      "judge": {
+        "ref": "pp3u10-4:example-2:Second",
+        "verdict": "unclear",
+        "reason": "Printed answer is only 'Q.E.D 2' with no content, so the proof can't be compared; the solver does prove the angle equality, which is what the part asks."
+      },
+      "note": "the judge could not decide: Printed answer is only 'Q.E.D 2' with no content, so the proof can't be compared; the solver does prove the angle equality, which is what the part asks.",
+      "made": {
+        "at": "2026-10-18T08:03:05+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

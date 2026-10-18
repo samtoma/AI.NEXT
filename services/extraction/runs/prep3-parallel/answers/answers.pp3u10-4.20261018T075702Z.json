@@ -1,0 +1,270 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "ddd63ed96a5199e8dfa9c4856712b9913aac8149d48c88e2e2fd3c05d31df5e6",
+  "generated_sha256": "c7e056cec99bef6cd4d4fae03fdecd5808a4be8519e62342b53ea877f2292fb5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-4:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u10-4:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "Yes, a circle can be drawn, because m(∠ADB) = m(∠ACB) = 58° on the base AB in one direction of it.",
+      "solution": [
+       "Angle CED is an exterior angle of triangle AED, so m(∠CED) = m(∠CAD) + m(∠ADE).",
+       "93° = 35° + m(∠ADB), so m(∠ADB) = 58°.",
+       "Also m(∠ACB) = 58°.",
+       "So m(∠ADB) = m(∠ACB) = 58°.",
+       "They are two drawn angles on the base AB, and C and D are on the same side of AB (one direction).",
+       "Therefore ABCD is a cyclic quadrilateral, so a circle can pass through A, B, C and D."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2",
+       "pp3u10-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-1:1",
+      "kind": "explanation",
+      "answer": "Yes, Figure 1 is a cyclic quadrilateral because m(∠DAC) = m(∠DBC) = 50°.",
+      "solution": [
+       "The diagonals are perpendicular at E, so in triangle ADE: m(∠DAC) = 90° − 40° = 50°.",
+       "m(∠DBC) = 50° (given in the figure).",
+       "So m(∠DAC) = m(∠DBC) = 50°.",
+       "They are two drawn angles on the base DC and in one direction of it.",
+       "Therefore Figure 1 is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-1:2",
+      "kind": "explanation",
+      "answer": "No, Figure 2 is not a cyclic quadrilateral.",
+      "solution": [
+       "The figure gives m(∠CAB) = 90°, m(∠ACB) = 40° and m(∠ABC) = 50°.",
+       "No two angles are shown to be equal on the same base and in one direction of it.",
+       "So Figure 2 cannot be shown to be cyclic.",
+       "Figure 2 is not a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-1:3",
+      "kind": "explanation",
+      "answer": "No, Figure 3 is not a cyclic quadrilateral because m(∠DAC) = 40° but m(∠DBC) = 41°.",
+      "solution": [
+       "DA ∥ CB, so m(∠DBC) = m(∠ADB) = 41° (alternate angles).",
+       "In triangle ADE: m(∠DAC) = 180° − 41° − 99° = 40°.",
+       "On the base DC, m(∠DAC) = 40° and m(∠DBC) = 41° are not equal.",
+       "So Figure 3 is not a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-1:4",
+      "kind": "explanation",
+      "answer": "No, Figure 4 is not a cyclic quadrilateral.",
+      "solution": [
+       "Figure 4 is a parallelogram whose angles are not right angles.",
+       "In it, m(∠DAC) = m(∠ACB) (alternate angles).",
+       "For it to be cyclic we would need m(∠DAC) = m(∠DBC) on the base DC.",
+       "That would make the diagonals equal, which holds only for a rectangle.",
+       "Figure 4 is not a rectangle, so it is not cyclic."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-1:5",
+      "kind": "explanation",
+      "answer": "Yes, Figure 5 is a cyclic quadrilateral.",
+      "solution": [
+       "DA ∥ CB and DC = AB, so Figure 5 is an isosceles trapezium and m(∠DCB) = m(∠ABC).",
+       "In triangles DCB and ABC: DC = AB, CB is common and m(∠DCB) = m(∠ABC).",
+       "So the triangles are congruent, and m(∠CDB) = m(∠CAB).",
+       "They are two drawn angles on the base CB and in one direction of it.",
+       "Therefore Figure 5 is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:think-1",
+      "kind": "explanation",
+      "answer": "The centre is the midpoint of AY, because AY is a diameter of the circle through A, X, B and Y.",
+      "solution": [
+       "From the example, m(∠AXY) = 90° and m(∠ABY) = 90°.",
+       "An inscribed angle of 90° stands on a diameter.",
+       "So the base AY is a diameter of the circle passing through A, X, B and Y.",
+       "The centre of a circle lies at the midpoint of its diameter.",
+       "So the centre is the midpoint of AY."
+      ],
+      "grounded_in": [
+       "pp3u10-4:example-1",
+       "pp3u10-4:definition-1"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-2:First",
+      "kind": "explanation",
+      "answer": "AXYM is a cyclic quadrilateral because m(∠AXM) = m(∠AYM) = 90°.",
+      "solution": [
+       "X is the midpoint of AB and M is the centre, so MX ⊥ AB and m(∠AXM) = 90°.",
+       "Y is the midpoint of AC, so MY ⊥ AC and m(∠AYM) = 90°.",
+       "So m(∠AXM) = m(∠AYM) = 90°.",
+       "They are two drawn angles on the base AM and in one direction of it.",
+       "Therefore AXYM is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:example-1",
+       "pp3u10-4:notice-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-2:Second",
+      "kind": "explanation",
+      "answer": "m(∠MXY) = m(∠MCY), proved below.",
+      "solution": [
+       "AXYM is cyclic (First), so m(∠MXY) = m(∠MAY), as both are inscribed on the arc MY.",
+       "MA = MC (radii of circle M), so m(∠MAC) = m(∠MCA).",
+       "Y lies on AC, so m(∠MAY) = m(∠MAC) and m(∠MCA) = m(∠MCY).",
+       "So m(∠MXY) = m(∠MCY)."
+      ],
+      "grounded_in": [
+       "pp3u10-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-2:Third",
+      "kind": "explanation",
+      "answer": "AM is a diameter of the circle through A, X, Y and M, because the inscribed angle AXM is 90°.",
+      "solution": [
+       "AXYM is cyclic, so one circle passes through A, X, Y and M.",
+       "m(∠AXM) = 90° (MX ⊥ AB), and it is an inscribed angle in that circle on the base AM.",
+       "An inscribed angle of 90° stands on a diameter.",
+       "So AM is a diameter of that circle."
+      ],
+      "grounded_in": [
+       "pp3u10-4:example-1",
+       "pp3u10-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-3:First",
+      "kind": "explanation",
+      "answer": "AEFD is a cyclic quadrilateral because m(∠EAF) = m(∠EDF).",
+      "solution": [
+       "m(∠BAC) = m(∠BDC), since both are inscribed on the arc BC.",
+       "AE bisects ∠BAC, so m(∠EAF) = ½ m(∠BAC).",
+       "DF bisects ∠BDC, so m(∠EDF) = ½ m(∠BDC).",
+       "So m(∠EAF) = m(∠EDF).",
+       "They are two drawn angles on the base EF and in one direction of it.",
+       "Therefore AEFD is a cyclic quadrilateral."
+      ],
+      "grounded_in": [
+       "pp3u10-4:notice-2",
+       "pp3u10-4:example-2"
+      ]
+     },
+     {
+      "ref": "pp3u10-4:drill-3:Second",
+      "kind": "explanation",
+      "answer": "EF ∥ BC, because the corresponding angles AFE and ACB are equal.",
+      "solution": [
+       "AEFD is cyclic (First), so m(∠AFE) = m(∠ADE), as both are inscribed on the arc AE.",
+       "m(∠ADB) = m(∠ACB), since both are inscribed on the arc AB of circle ABCD.",
+       "So m(∠AFE) = m(∠ACB).",
+       "These are corresponding angles for lines EF and BC with transversal AC.",
+       "Therefore EF ∥ BC."
+      ],
+      "grounded_in": [
+       "pp3u10-4:example-2",
+       "pp3u10-4:notice-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-4:think-and-discuss-1",
+      "kind": "explanation",
+      "answer": "Yes. In triangle AED, m(∠AED) = 180° - 93° = 87°, so m(∠ADB) = 180° - 35° - 87° = 58°. Then m(∠ADB) = m(∠ACB) = 58°, and they are two drawn angles on the base AB and in one direction of it. So ABCD is cyclic and a circle can pass through its vertices."
+     },
+     {
+      "ref": "pp3u10-4:drill-1:1",
+      "kind": "explanation",
+      "answer": "Yes, Figure 1 is cyclic. The diagonals are perpendicular, so in right triangle AED, m(∠DAC) = 90° - 40° = 50°. This equals m(∠DBC) = 50°, and they are two angles on the base DC and in one direction of it."
+     },
+     {
+      "ref": "pp3u10-4:drill-1:2",
+      "kind": "explanation",
+      "answer": "No, Figure 2 is not cyclic. Point A lies on side DB, so D, A and B are collinear and DCBA is not a quadrilateral. The figure is just triangle DCB, so it has no circle through four vertices."
+     },
+     {
+      "ref": "pp3u10-4:drill-1:3",
+      "kind": "explanation",
+      "answer": "No, Figure 3 is not cyclic. Since DA ∥ CB, m(∠DBC) = m(∠ADB) = 41°. In triangle CEB, m(∠ACB) = 180° - 99° - 41° = 40°. So m(∠ADB) = 41° ≠ m(∠ACB) = 40° on the base AB, and the angles are not equal."
+     },
+     {
+      "ref": "pp3u10-4:drill-1:4",
+      "kind": "explanation",
+      "answer": "No, Figure 4 is not cyclic. It is a parallelogram that is not a rectangle, so its opposite angles are not supplementary and its angles on a common base are not equal."
+     },
+     {
+      "ref": "pp3u10-4:drill-1:5",
+      "kind": "explanation",
+      "answer": "Yes, Figure 5 is cyclic. It is an isosceles trapezium (DA ∥ CB with DC = AB), so its base angles are equal, so m(∠C) = m(∠B) and m(∠D) = m(∠A). The angles on each base are equal, so the figure is cyclic."
+     },
+     {
+      "ref": "pp3u10-4:think-1",
+      "kind": "explanation",
+      "answer": "The centre is the midpoint of AY. The angles AXY and ABY are both right angles, so AY is a diameter of the circle through A, X, B and Y. The centre is therefore the midpoint of AY."
+     },
+     {
+      "ref": "pp3u10-4:drill-2:First",
+      "kind": "explanation",
+      "answer": "X is the midpoint of AB, so MX ⊥ AB and m(∠AXM) = 90°. Y is the midpoint of AC, so MY ⊥ AC and m(∠AYM) = 90°. These are two equal angles on the base AM and in one direction of it, so AXYM is a cyclic quadrilateral."
+     },
+     {
+      "ref": "pp3u10-4:drill-2:Second",
+      "kind": "explanation",
+      "answer": "AXYM is cyclic, so m(∠MXY) = m(∠MAY) (both on the base MY). MA = MC (radii), so m(∠MAC) = m(∠MCA). Since Y lies on AC, m(∠MAY) = m(∠MCY). Therefore m(∠MXY) = m(∠MCY)."
+     },
+     {
+      "ref": "pp3u10-4:drill-2:Third",
+      "kind": "explanation",
+      "answer": "In the circle through A, X, Y and M, the inscribed angle ∠AXM = 90° stands on the chord AM. An inscribed angle of 90° stands on a diameter, so AM is a diameter of that circle. The same holds for ∠AYM = 90°."
+     },
+     {
+      "ref": "pp3u10-4:drill-3:First",
+      "kind": "explanation",
+      "answer": "m(∠BAC) = m(∠BDC) because both are inscribed angles on arc BC. Their halves are equal, so m(∠EAF) = m(∠EDF). These are two angles on the base EF and in one direction of it, so AEFD is a cyclic quadrilateral."
+     },
+     {
+      "ref": "pp3u10-4:drill-3:Second",
+      "kind": "explanation",
+      "answer": "AEFD is cyclic, so m(∠AFE) = m(∠ADE) = m(∠ADB) (both on the base AE). Also m(∠ADB) = m(∠ACB) (both inscribed on arc AB). So m(∠AFE) = m(∠ACB). These are corresponding angles for EF and BC with transversal AC, so EF ∥ BC."
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -39,9 +39,13 @@
     "lesson_unit": null,
     "answer_rules": null,
     "lesson_titles": {
-      "pp3u2-1": "Ratio",
-      "pp3u2-2": "Proportion",
-      "pp3u2-3": "Direct Variation and Inverse Variation"
+      "pp3u10-1": "Central Angle and Measuring Arcs",
+      "pp3u10-2": "The relation between the inscribed and central angles subtended by the same arc",
+      "pp3u10-3": "Inscribed Angles Subtended by the Same Arc",
+      "pp3u10-4": "Cyclic Quadrilaterals",
+      "pp3u10-5": "Properties of Cyclic Quadrilaterals",
+      "pp3u10-6": "The relation between the tangents of a circle",
+      "pp3u10-7": "Angle of Tangency"
     },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
@@ -590,104 +594,200 @@
   },
   "objectives": [
     {
-      "lo_id": "lo:pp3u2-1-1",
-      "label": "Ratio notation and terms",
-      "description": "Write the ratio between two numbers a and b as a to b, a:b or a/b, and name its antecedent, consequent and two terms.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
-      "anchor_questions": [],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u2-1-2",
-      "label": "Properties of ratio",
-      "description": "Apply the properties of ratio: decide whether a ratio is changed when both terms are multiplied by a fixed non-zero amount or have a real number added to them.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "lo_id": "lo:pp3u10-1-1",
+      "label": "Measure arcs from central angles",
+      "description": "Determine the measure of an arc as the measure of its central angle, and find the measures of adjacent arcs, semicircles and the circle by adding or subtracting.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
       "anchor_questions": [
         {
-          "id": "q:pp3u2-1-2:bk-drill-1",
-          "stem": "Find the positive number which if we add its square to each of the two terms of ratio $5 : 11$ it becomes $3 : 5$.",
-          "type": "numeric",
-          "answer": "2"
+          "id": "q:pp3u10-1-1:bk-drill-1-1",
+          "stem": "Complete: $m(\\overset{\\frown}{AD}) = \\ldots\\ldots^\\circ$, $m(\\overset{\\frown}{AC}) = \\ldots\\ldots^\\circ$",
+          "type": "short",
+          "answer": "40°, 60°"
         },
         {
-          "id": "q:pp3u2-1-2:bk-example-1",
-          "stem": "Find the number which if added to the two terms of ratio $7 : 11$ it will be $2 : 3$",
-          "type": "short",
-          "answer": "x = 1"
+          "id": "q:pp3u10-1-1:bk-drill-2-1",
+          "stem": "In the opposite figure: AB is a diameter of the circle M, study the figure, then complete: $x=\\ldots$",
+          "type": "numeric",
+          "answer": "25"
+        },
+        {
+          "id": "q:pp3u10-1-1:bk-drill-2-2",
+          "stem": "In the opposite figure: AB is a diameter of the circle M, study the figure, then complete: $m(\\widehat{AC})=\\ldots^\\circ$",
+          "type": "numeric",
+          "answer": "50"
+        },
+        {
+          "id": "q:pp3u10-1-1:bk-drill-2-4",
+          "stem": "In the opposite figure: AB is a diameter of the circle M, study the figure, then complete: $m(\\widehat{BC})=\\ldots^\\circ$",
+          "type": "numeric",
+          "answer": "130"
         }
       ],
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u2-2-1",
-      "label": "What is a proportion?",
-      "description": "Use the equality of two ratios and the product of extremes equals the product of means to find the first, second, third or fourth proportional, or an unknown number that makes quantities proportional.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "lo_id": "lo:pp3u10-1-2",
+      "label": "Calculate arc length",
+      "description": "Calculate the length of an arc as the fraction (measure of the arc / measure of the circle) of the circumference, and compare arcs of equal measure in different circles.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-1-3",
+      "label": "Relate arcs, chords and parallels",
+      "description": "Use the corollaries on equal arcs, equal chords and parallel chords or tangents to prove arcs or chords are equal and to find unknown lengths.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
       "anchor_questions": [
         {
-          "id": "q:pp3u2-2-1:bk-drill-1-a",
-          "stem": "Drill question 1. Find the second proportional of the numbers $2, \\ldots\\ldots, 4, 6$",
-          "type": "numeric",
-          "answer": "3"
-        },
-        {
-          "id": "q:pp3u2-2-1:bk-drill-1-b",
-          "stem": "Drill question 1. Find the third proportional of the numbers $8, 6, \\ldots\\ldots, 12$",
-          "type": "numeric",
-          "answer": "16"
-        },
-        {
-          "id": "q:pp3u2-2-1:bk-example-2",
-          "stem": "Find the fourth proportional for the numbers 4, 12, 16",
-          "type": "numeric",
-          "answer": "48"
-        },
-        {
-          "id": "q:pp3u2-2-1:bk-example-3",
-          "stem": "Find the number that if added to the numbers 3, 5, 8 and 12 it becomes proportional.",
+          "id": "q:pp3u10-1-3:bk-drill-7-4",
+          "stem": "In the opposite figure: M is a circle, $\\overleftrightarrow{CD}$ is a tangent to the circle at C, $\\overline{AB}$ and $\\overline{EF}$ are two chords of the circle where $\\overline{AB} \\parallel \\overline{EF} \\parallel \\overleftrightarrow{CD}$. Complete the following to prove that CE = CF. Solution with blanks: ∵ AB // EF ∴ m(arc ......) = m(arc ......) (1); ∵ The tangent CD // AB ∴ m(arc ......) = m(arc ......) (2); By adding the two sides of (1) and (2) ∴ m(EC) = m(arc ......) ∴ CE = ........ ∴ CE = ........",
           "type": "short",
-          "answer": "x = 2"
+          "answer": "CF"
         }
       ],
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u2-2-2",
-      "label": "Use properties of proportion",
-      "description": "Find the value of a ratio of expressions, and prove identities, from a/b = c/d by substituting a = mc, b = md or by using the properties of proportion.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
-      "anchor_questions": [],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u2-2-3",
-      "label": "Work with continued proportional",
-      "description": "Find the middle proportional between two numbers and prove relations for quantities in continued proportional using b^2 = ac.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
-      "anchor_questions": [],
-      "misconceptions": []
-    },
-    {
-      "lo_id": "lo:pp3u2-3-1",
-      "label": "Solve direct variation problems",
-      "description": "Determine the relation y = mx for a direct variation y ∝ x, find the constant m, and calculate unknown values of y or x.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "lo_id": "lo:pp3u10-2-1",
+      "label": "Inscribed and central angle relation",
+      "description": "Calculate the measure of an inscribed angle or of the central angle subtended by the same arc, using the theorem that the inscribed angle is half the central angle.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
       "anchor_questions": [
         {
-          "id": "q:pp3u2-3-1:bk-example-1-second",
-          "stem": "If $y \\propto x$ then $y = 14$ when $x = 42$, then find first: the relation between x and y; second: find the value of y when $x = 60$. find the value of y when x = 60",
+          "id": "q:pp3u10-2-1:bk-drill-1-x",
+          "stem": "M is a circle. In each of the following figures, find the value of the symbol used in measuring: x = ............ x = ............",
           "type": "short",
-          "answer": "y = 20"
+          "answer": "x = 55"
         },
         {
-          "id": "q:pp3u2-3-1:bk-think-and-discuss-1-b",
-          "stem": "A car moves at a uniform velocity (V) 15 m/sec. If the covered distance (d) in meter in a time (t) per second to give the relation: $d = vt$. Does the graphical representation pass through the origin point (0, 0)?",
+          "id": "q:pp3u10-2-1:bk-drill-12-x",
+          "stem": "Find the values of x and y. x = ............",
+          "type": "short",
+          "answer": "x = 50"
+        },
+        {
+          "id": "q:pp3u10-2-1:bk-drill-12-y",
+          "stem": "Find the values of x and y. y = ............",
+          "type": "short",
+          "answer": "y = 90"
+        },
+        {
+          "id": "q:pp3u10-2-1:bk-drill-2-y",
+          "stem": "Find the value of y. y = ............",
+          "type": "short",
+          "answer": "y = 70"
+        },
+        {
+          "id": "q:pp3u10-2-1:bk-drill-3-z",
+          "stem": "Find the value of Z. Z = ............",
+          "type": "short",
+          "answer": "Z = 40"
+        },
+        {
+          "id": "q:pp3u10-2-1:bk-drill-4-l",
+          "stem": "Find the value of L. L = ............",
+          "type": "short",
+          "answer": "L = 220/3"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-2-2",
+      "label": "Inscribed angle and arc measure",
+      "description": "Calculate an inscribed angle from its subtended arc, find arc measures from angles, and show that an angle in a semicircle is a right angle.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-2-2:bk-drill-14-2",
+          "stem": "Study each of the following figures, then complete: Circle with triangle ABC, arc marked 140°, angle at C 60°. Complete: m(∠A) = ......; m(arc AC) = ......",
+          "type": "short",
+          "answer": "70°, 100°"
+        },
+        {
+          "id": "q:pp3u10-2-2:bk-drill-14-3",
+          "stem": "Study each of the following figures, then complete: Circle with diameter AB, centre M, point C on circle, arc BC marked 128°. Complete: m(∠C) = ......; m(∠B) = ......",
+          "type": "short",
+          "answer": "90°, 26°"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-2-3",
+      "label": "Angles from intersecting chords and rays",
+      "description": "Calculate the angle formed by two chords intersecting inside a circle, or by two rays intersecting outside it, using half the sum or half the difference of the intercepted arcs.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-2-3:bk-drill-15-1",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with chords; points D, A, B, C; arc 114°, arc 60°, angle x° inside. X = ............",
+          "type": "short",
+          "answer": "x = 87"
+        },
+        {
+          "id": "q:pp3u10-2-3:bk-drill-15-3",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with points A, C, B, D; arc 130°, angle 115° inside, z° near C–B. Z = ............",
+          "type": "short",
+          "answer": "z = 100"
+        },
+        {
+          "id": "q:pp3u10-2-3:bk-drill-15-4",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with points E, D, C, B, A (A outside); 100° arc, 30° arc, x° at A. X = ............",
+          "type": "short",
+          "answer": "x = 35"
+        },
+        {
+          "id": "q:pp3u10-2-3:bk-drill-15-5",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with points E, D, C, B, A (A outside); y° arc near E, 30° arc, 28° at A. Y = ............",
+          "type": "short",
+          "answer": "y = 86"
+        },
+        {
+          "id": "q:pp3u10-2-3:bk-drill-15-6",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with points E, D, C, B, A (A outside); 140° arc, z° arc near D, 50° at A. Z = ............",
+          "type": "short",
+          "answer": "z = 40"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-3-1",
+      "label": "Inscribed angles on the same arc",
+      "description": "Find the measures of inscribed angles subtended by the same arc, and use their equality to solve for unknown angles and prove relations (e.g. equal segments).",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-3-1:bk-drill-1-1",
+          "stem": "Study each of the following figures, then complete: m(∠C) = ... °; m(∠B) = ... ° (figure 1)",
+          "type": "short",
+          "answer": "50°, 25°"
+        },
+        {
+          "id": "q:pp3u10-3-1:bk-drill-1-2",
+          "stem": "Study each of the following figures, then complete: m(∠C) = ... °; m(∠BDC) = ... ° (figure 2)",
+          "type": "short",
+          "answer": "70°, 90°"
+        },
+        {
+          "id": "q:pp3u10-3-1:bk-drill-1-3",
+          "stem": "Study each of the following figures, then complete: m(∠BED) = ... °; m(∠ABE) = ... ° (figure 3)",
+          "type": "short",
+          "answer": "20°, 117°"
+        },
+        {
+          "id": "q:pp3u10-3-1:bk-think-and-discuss-1-1",
+          "stem": "In the opposite figure: m(arc AB) = 100°. Do the inscribed angles ∠AEB, ∠ADB et ∠ACB include the same arc?",
           "type": "short",
           "answer": "Yes"
         }
@@ -695,59 +795,262 @@
       "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u2-3-2",
-      "label": "Solve inverse variation problems",
-      "description": "Determine the relation y = m/x for an inverse variation y ∝ 1/x, find the constant m, and calculate unknown values of y or x, including with a squared variable.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "lo_id": "lo:pp3u10-3-2",
+      "label": "Equal arcs, equal angles",
+      "description": "Use equal arcs (and equal chords) in the same or congruent circles to show inscribed angles are equal, and the converse, to calculate unknowns and prove triangles isosceles.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
       "anchor_questions": [
         {
-          "id": "q:pp3u2-3-2:bk-example-2-second",
-          "stem": "If $y \\propto \\frac{1}{x}$ and $y=3$ when $x=2$. First: find the relation between x and y. Second: find the value of y when $x=1.5$. find the value of y when x = 1.5",
+          "id": "q:pp3u10-3-2:bk-drill-3-1",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Figure 1: $x = \\ldots$ with angle $(5x-40)^\\circ$ at B and $30^\\circ$ at F.",
           "type": "short",
-          "answer": "y = 4"
+          "answer": "x = 14"
+        },
+        {
+          "id": "q:pp3u10-3-2:bk-drill-3-2",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Figure 2: $y = \\ldots$ with angle $(3y-5)^\\circ$ at E and $50^\\circ$ at A.",
+          "type": "short",
+          "answer": "y = 10"
+        },
+        {
+          "id": "q:pp3u10-3-2:bk-drill-3-3",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Figure 3: $z = \\ldots$ with angle $(2z+6)^\\circ$ at B and $56^\\circ$ at E.",
+          "type": "short",
+          "answer": "z = 25"
         }
       ],
-      "misconceptions": [
-        {
-          "id": "mc:pp3u2-3-2:ignores-the-square",
-          "lo_id": "lo:pp3u2-3-2",
-          "label": "Leaves out the square in inverse variation with the square",
-          "description": "When h varies inversely as the square of r, the student uses $h=\\frac{m}{r}$ and does not square the radius.",
-          "own": true
-        },
-        {
-          "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
-          "lo_id": "lo:pp3u2-3-2",
-          "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
-          "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows.",
-          "own": true
-        }
-      ]
+      "misconceptions": []
     },
     {
-      "lo_id": "lo:pp3u2-3-3",
-      "label": "Distinguish direct from inverse variation",
-      "description": "Determine from a table of x and y values whether the relation is a direct variation, an inverse variation or neither, giving the reason.",
-      "module": "module:pp3u2",
-      "module_label": "Unit 2 Ratio, proportion, Direct Variation and Inverse Variation (Algebra)",
+      "lo_id": "lo:pp3u10-3-3",
+      "label": "Show points are concyclic",
+      "description": "Decide whether four points lie on one circle by checking that two equal angles are drawn on the same base and on the same side of it.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
       "anchor_questions": [],
-      "misconceptions": [
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-4-1",
+      "label": "Identify cyclic quadrilaterals",
+      "description": "Determine whether a given quadrilateral is a cyclic quadrilateral by checking whether two angles drawn on the same base and in one direction of it are equal, and explain the answer.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-4-2",
+      "label": "Prove a figure is cyclic",
+      "description": "Prove that a figure is a cyclic quadrilateral by showing two equal angles (such as two right angles, or angles from parallel lines) on the same base and in one direction of it.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-4-3",
+      "label": "Use cyclic property in deductions",
+      "description": "Use a proven cyclic quadrilateral and its circle to deduce equal angles, parallel lines and the location of the centre of the circle through its vertices.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-5-1",
+      "label": "Opposite angles of cyclic quadrilateral",
+      "description": "Calculate unknown angles (and arcs) in a cyclic quadrilateral using the fact that each two opposite angles are supplementary.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
         {
-          "id": "mc:pp3u2-3-2:ignores-the-square",
-          "lo_id": "lo:pp3u2-3-2",
-          "label": "Leaves out the square in inverse variation with the square",
-          "description": "When h varies inversely as the square of r, the student uses $h=\\frac{m}{r}$ and does not square the radius.",
-          "own": false
+          "id": "q:pp3u10-5-1:bk-drill-1-1",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Cyclic quadrilateral ABCD with angles at A = 4y°, D = 107°, C = 5x°, B = (2x + 7)°. X = ........ , Y = ........",
+          "type": "short",
+          "answer": "x = 33, y = 15/4"
         },
         {
-          "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
-          "lo_id": "lo:pp3u2-3-2",
-          "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
-          "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows.",
-          "own": false
+          "id": "q:pp3u10-5-1:bk-drill-1-2",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Cyclic quadrilateral ABCD with angles D = 115°, A = 2x°, C = 2y°, B = (x + 15)°. X = ........ , Y = ........",
+          "type": "short",
+          "answer": "x = 50, y = 40"
+        },
+        {
+          "id": "q:pp3u10-5-1:bk-drill-1-3",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring: Circle with centre M, diagonal CA/BD through M; angle at C = 70°, angle at A = 2x°, angle at B = y°, tick marks on equal chords. X = ........ , Y = ........",
+          "type": "short",
+          "answer": "x = 55, y = 55"
+        },
+        {
+          "id": "q:pp3u10-5-1:bk-drill-2-c",
+          "stem": "With the assistance of the given figures, find with proof: Figure with 60° at top near C/D, 80° near A, M on BA; measures of figure's angles ABCD",
+          "type": "short",
+          "answer": "80°, 40°, 100°, 140°"
+        },
+        {
+          "id": "q:pp3u10-5-1:bk-drill-2-d",
+          "stem": "With the assistance of the given figures, find with proof: Figure with 95° at A, 28° at D, arrows marking parallel lines; measures of figure's angles ABCD",
+          "type": "short",
+          "answer": "95°, 152°, 85°, 28°"
+        },
+        {
+          "id": "q:pp3u10-5-1:bk-think-and-discuss-1-1",
+          "stem": "In the opposite figure: complete the blanks. m(∠A) = 60°, then m(arc BCD) = .........°",
+          "type": "numeric",
+          "answer": "120"
         }
-      ]
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-5-2",
+      "label": "Exterior angle of cyclic quadrilateral",
+      "description": "Calculate angle measures using the corollary that the exterior angle at a vertex of a cyclic quadrilateral equals the interior angle at the opposite vertex.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-5-2:bk-drill-3-1",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring. Figure 1: cyclic quadrilateral ABCD, angle at D = 80°, angle at A = 75°, exterior angle at C is x° (with E on extension of DC), exterior angle at B is y° (F on extension of AB downward). Find x and y.",
+          "type": "short",
+          "answer": "x = 75, y = 80"
+        },
+        {
+          "id": "q:pp3u10-5-2:bk-drill-3-3",
+          "stem": "In each of the following figures, find the value of the symbol used in measuring. Figure 3: circle with points A, B, C, D, x° at C, y° at D, 120° at A, 65° at B with exterior rays E and F. Find x and y.",
+          "type": "short",
+          "answer": "x = 60, y = 115"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-5-3",
+      "label": "Prove a quadrilateral is cyclic",
+      "description": "Prove that a quadrilateral is cyclic using the converse (supplementary opposite angles) or an exterior angle equal to the interior opposite angle.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-6-1",
+      "label": "Tangent segments from a point outside a circle",
+      "description": "Use the equality of the two tangent segments drawn to a circle from a point outside it, and the corollaries (the line through the centre and the intersection point of the tangents is the axis of the chord of tangency and bisects the angle between the tangents), to find unknown lengths and angle measures and to prove relations.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-6-1:bk-drill-1-1",
+          "stem": "In each of the following figures, $\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to the circle M. Find the value of the symbol used in measuring: Figure 1",
+          "type": "short",
+          "answer": "x = 65, y = 65, z = 65"
+        },
+        {
+          "id": "q:pp3u10-6-1:bk-drill-1-2",
+          "stem": "In each of the following figures, $\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to the circle M. Find the value of the symbol used in measuring: Figure 2",
+          "type": "short",
+          "answer": "x = 35, y = 55, z = 55"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-6-2",
+      "label": "Circle inscribed in a polygon",
+      "description": "Use the circle inscribed in a polygon (touching all of its sides internally) and equal tangent segments to find the perimeter and area of the polygon and the position of the centre.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-6-3",
+      "label": "Common tangents of two circles",
+      "description": "Distinguish common internal and common external tangents of two circles, and solve problems finding unknown values and the length of a common tangent.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-6-3:bk-drill-7-1",
+          "stem": "Find the value of the symbol used in measuring: Figure 1",
+          "type": "short",
+          "answer": "x = 12, y = 8"
+        },
+        {
+          "id": "q:pp3u10-6-3:bk-drill-7-2",
+          "stem": "Find the value of the symbol used in measuring: Figure 2",
+          "type": "short",
+          "answer": "x = 9, y = 17"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-7-1",
+      "label": "Calculate angles of tangency",
+      "description": "Calculate the measure of an angle of tangency (or an unknown arc) using the fact that it is half the measure of the arc between its sides, and equals the inscribed angle on the same arc or half the central angle.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [
+        {
+          "id": "q:pp3u10-7-1:bk-drill-1-1",
+          "stem": "In each of the following figures, calculate $m(\\angle ABC)$. Circle with chord AB, tangent BC at B; arc marked 230°.",
+          "type": "numeric",
+          "answer": "65"
+        },
+        {
+          "id": "q:pp3u10-7-1:bk-drill-1-2",
+          "stem": "In each of the following figures, calculate $m(\\angle ABC)$. Circle with centre M, AB a diameter, tangent BC at B.",
+          "type": "numeric",
+          "answer": "90"
+        },
+        {
+          "id": "q:pp3u10-7-1:bk-drill-1-3",
+          "stem": "In each of the following figures, calculate $m(\\angle ABC)$. Circle with inscribed triangle DAB marked with equal-side ticks (equilateral), tangent line through B with C on right.",
+          "type": "numeric",
+          "answer": "60"
+        },
+        {
+          "id": "q:pp3u10-7-1:bk-drill-2-2",
+          "stem": "In each of the following figures: line BC is tangent to the circle. Find the value of the symbol used in measuring. Find x or y from figure 2",
+          "type": "short",
+          "answer": "x = 60, y = 60"
+        },
+        {
+          "id": "q:pp3u10-7-1:bk-drill-2-3",
+          "stem": "In each of the following figures: line BC is tangent to the circle. Find the value of the symbol used in measuring. Find x or y from figure 3",
+          "type": "short",
+          "answer": "x = 65, y = 65"
+        },
+        {
+          "id": "q:pp3u10-7-1:bk-drill-3-1",
+          "stem": "With the assistance of the given figures, complete: $m(\\angle ADC) = \\ldots$°",
+          "type": "numeric",
+          "answer": "80"
+        }
+      ],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-7-2",
+      "label": "Prove cyclic quadrilaterals",
+      "description": "Prove that a quadrilateral is cyclic by using the equality of the angle of tangency with the inscribed angle together with parallel lines.",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
+    },
+    {
+      "lo_id": "lo:pp3u10-7-3",
+      "label": "Prove a line is tangent",
+      "description": "Show that a line is a tangent to a circle by applying the converse of theorem 5 (angle with the chord equals the inscribed angle in the alternate side).",
+      "module": "module:pp3u10",
+      "module_label": "Unit 5 Angles and Arcs in the circle (Geometry)",
+      "anchor_questions": [],
+      "misconceptions": []
     }
   ]
 }

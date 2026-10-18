@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-4:isosceles",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-4",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "ha",
+   "let": "[3, 8, 4, 15]"
+  },
+  {
+   "name": "hb",
+   "let": "[4, 15, 3, 8]"
+  },
+  {
+   "name": "ap",
+   "let": "[74, 56, 106, 124]"
+  },
+  {
+   "name": "base",
+   "let": "2 * ha[t] * k"
+  },
+  {
+   "name": "h",
+   "let": "hb[t] * k"
+  },
+  {
+   "name": "half",
+   "let": "ha[t] * k"
+  }
+ ],
+ "constraints": [],
+ "stem": "An isosceles triangle has a base of {=base} cm and a perpendicular height of {=h} cm, drawn from the base to the opposite vertex. Find the angle at the vertex opposite the base, to the nearest degree.",
+ "answer": "ap[t]",
+ "solution": [
+  "The height bisects the base, giving a right-angled triangle with sides {=half} cm (half the base) and {=h} cm (height).",
+  "The base angle $B$ satisfies $\\tan B = \\frac{{=h}}{{=half}}$, so $B = \\tan^{-1}\\left(\\frac{{=h}}{{=half}}\\right)$.",
+  "The angles of a triangle add up to $180^\\circ$, so the vertex angle is $180^\\circ - 2B = {=ap[t]}^\\circ$ to the nearest degree."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Cases chosen so rounding the base angle first gives the same final integer. Placeholder parent id."
+}

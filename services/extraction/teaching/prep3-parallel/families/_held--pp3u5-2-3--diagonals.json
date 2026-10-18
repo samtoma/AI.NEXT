@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:diagonals",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "ax",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "ay",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "bx",
+   "randint": [
+    -4,
+    5
+   ]
+  },
+  {
+   "name": "by",
+   "randint": [
+    -4,
+    5
+   ]
+  },
+  {
+   "name": "mx",
+   "randint": [
+    -2,
+    5
+   ]
+  },
+  {
+   "name": "my",
+   "randint": [
+    -2,
+    5
+   ]
+  },
+  {
+   "require": "(bx-ax)*(my-ay)-(by-ay)*(mx-ax) != 0",
+   "why": "A, B, M must not be collinear"
+  },
+  {
+   "name": "cx",
+   "let": "2 * mx - ax"
+  },
+  {
+   "name": "cy",
+   "let": "2 * my - ay"
+  },
+  {
+   "name": "dx",
+   "let": "2 * mx - bx"
+  },
+  {
+   "name": "dy",
+   "let": "2 * my - by"
+  }
+ ],
+ "stem": "$ABCD$ is a parallelogram where $A({=ax}, {=ay})$ and $B({=bx}, {=by})$, and its diagonals intersect at $M({=mx}, {=my})$. Find the coordinates of the vertex $D$.",
+ "solution": [
+  "The diagonals of a parallelogram bisect each other, so $M$ is the midpoint of $\\overline{AC}$ and of $\\overline{BD}$.",
+  "Let $D(x, y)$. Since $M$ is the midpoint of $\\overline{BD}$: $\\frac{{={bx}}+x}{2} = {=mx}$, so $x = {=dx}$.",
+  "Also $\\frac{{={by}}+y}{2} = {=my}$, so $y = {=dy}$.",
+  "So $D({=dx}, {=dy})$. (Similarly $C({=cx}, {=cy})$.)"
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=dx}, {=dy})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions supplied; parent placeholder. A is given as a distractor-free extra datum; D needs only B and M."
+}

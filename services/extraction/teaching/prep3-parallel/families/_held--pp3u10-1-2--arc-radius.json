@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-2:arc-radius",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-2",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    90,
+    180,
+    270
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "let": "7 * k"
+  },
+  {
+   "name": "L",
+   "let": "11 * k * m / 90"
+  }
+ ],
+ "stem": "A circle has radius ${=r}$ cm. Find the length of an arc of this circle whose measure is ${=m}^\\circ$, in cm. Take $\\pi=\\frac{22}{7}$.",
+ "answer": "L",
+ "solution": [
+  "Circumference $=2\\pi r = 2\\times\\frac{22}{7}\\times {=r} = {=44*k}$ cm.",
+  "The arc is the fraction $\\frac{{=m}}{360}$ of the circle.",
+  "Arc length $=\\frac{{=m}}{360}\\times {=44*k} = {=L}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No book question supplied; parent_question_id empty. r is a multiple of 7 and m a multiple of 90 so the answer is a whole number."
+}

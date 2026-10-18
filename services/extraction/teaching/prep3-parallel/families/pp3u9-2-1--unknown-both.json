@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-1:unknown-both",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-1",
+ "parent_question_id": "q:pp3u9-2-1:bk-drill-2-1",
+ "source_page": 47,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    "a - 1"
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "e",
+   "let": "(a - c) * x + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "M is the centre of a circle of radius $r = {=c}x + {=e}$ cm. The point A lies on the circle and $MA = {=a}x + {=b}$ cm. Find the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "A is on the circle, so MA = r.",
+  "${=a}x + {=b} = {=c}x + {=e}$.",
+  "Collect the x terms: ${=a-c}x = {=e-b}$.",
+  "$x = {=x}$.",
+  "Check: $MA = {=a*x+b}$ cm and $r = {=c*x+e}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: unknown on both sides, point on circle so MA = r. x integer by construction."
+}

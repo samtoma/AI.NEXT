@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-1-1:cards-union",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-1-1",
+ "parent_question_id": "q:pp3u8-1-1:bk-example-1-3-a",
+ "source_page": 31,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Identical cards numbered from 1 to N, mixed well, one card drawn at random.",
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    20,
+    24,
+    30,
+    36,
+    40
+   ]
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "let": "[2, 2, 3, 3, 4, 4][i]"
+  },
+  {
+   "name": "k",
+   "let": "[3, 5, 4, 5, 5, 3][i]"
+  },
+  {
+   "name": "nA",
+   "let": "N // m"
+  },
+  {
+   "name": "nB",
+   "let": "N // k"
+  },
+  {
+   "name": "L",
+   "let": "lcm(m, k)"
+  },
+  {
+   "name": "nAB",
+   "let": "N // L"
+  },
+  {
+   "name": "u",
+   "let": "nA + nB - nAB"
+  },
+  {
+   "require": "u < N",
+   "why": "probability less than 1"
+  }
+ ],
+ "constraints": [],
+ "stem": "A set of identical cards numbered from 1 to {=N} with no repetition is mixed up well, and a card is drawn randomly. Let A be the event that the drawn card has a number divisible by {=m}, and B the event that the drawn card has a number divisible by {=k}. Use a Venn diagram to calculate the probability that A or B occurs (the card is in A or in B or in both). Write the answer as a fraction in its simplest form.",
+ "answer": "str(Fraction(u, N))",
+ "solution": [
+  "The sample space is $S=\\{1, 2, \\ldots, {=N}\\}$, so $n(S)={=N}$.",
+  "$n(A)={=nA}$ (numbers divisible by {=m}) and $n(B)={=nB}$ (numbers divisible by {=k}).",
+  "Numbers divisible by both {=m} and {=k} are the multiples of {=L}, so $n(A\\cap B)={=nAB}$.",
+  "In the Venn diagram the common part is counted once: $n(A\\cup B)={=nA}+{=nB}-{=nAB}={=u}$.",
+  "$P(A\\cup B)=\\frac{n(A\\cup B)}{n(S)}=\\frac{{=u}}{{=N}}$, which in simplest form is the answer."
+ ],
+ "notes": "Union via Venn diagram (book draws Venn for intersections). Answer is Fraction string, simplest form; stem asks for it. Basic and standard tiers not requested."
+}

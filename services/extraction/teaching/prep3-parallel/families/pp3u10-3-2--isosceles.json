@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-2:isosceles",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-2",
+ "parent_question_id": "q:pp3u10-3-2:bk-drill-3-1",
+ "source_page": 82,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    5,
+    15
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    10
+   ]
+  },
+  {
+   "name": "p",
+   "let": "r + d"
+  },
+  {
+   "name": "q",
+   "let": "d * x - s"
+  },
+  {
+   "name": "e",
+   "let": "r * x + s"
+  },
+  {
+   "name": "a",
+   "let": "180 - 2 * e"
+  },
+  {
+   "require": "q > 0 and e >= 30 and e <= 80",
+   "why": "positive constant, sensible angles"
+  }
+ ],
+ "stem": "Triangle $ABC$ is inscribed in a circle, and the minor arcs $AB$ and $AC$ (not containing the other vertices) are equal. Given $\\angle ACB = ({=p}x - {=q})^\\circ$ and $\\angle ABC = ({=r}x + {=s})^\\circ$, find the measure of $\\angle BAC$ in degrees.",
+ "answer": "a",
+ "solution": [
+  "$\\angle ACB$ stands on arc $AB$ and $\\angle ABC$ stands on arc $AC$. The arcs are equal, so the inscribed angles are equal (triangle $ABC$ is isosceles with $AB = AC$).",
+  "${=p}x - {=q} = {=r}x + {=s}$.",
+  "${=d}x = {=q + s}$, so $x = {=x}$.",
+  "$\\angle ABC = \\angle ACB = {=r}\\times{=x} + {=s} = {=e}^\\circ$.",
+  "Angles of a triangle sum to $180^\\circ$: $\\angle BAC = 180 - 2\\times{=e} = {=a}^\\circ$."
+ ],
+ "notes": "Advanced: equal arcs give equal angles, solve for x, prove isosceles, then angle sum. Check: p*x-q = r*x+s = e."
+}

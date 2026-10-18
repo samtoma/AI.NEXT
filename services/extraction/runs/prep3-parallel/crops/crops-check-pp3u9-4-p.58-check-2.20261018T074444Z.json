@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "d63d35a83adf22cd2dfe03e5c7c9b6ea94245e9a4004b158dcd97f67c70395ef",
+  "generated_sha256": "2081b8590cbe9c823b02cdcb37c3aeffeb12af09521e836c655813ddf83dec07",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-4:figure-1",
+    "shows_figure": true,
+    "ok": false,
+    "left": "extend",
+    "top": "ok",
+    "right": "trim",
+    "bottom": "ok",
+    "note": "Label D is cut off at the left edge. The right edge includes part of another graphic (a red ball and a blue strip) that is not part of the figure."
+   },
+   {
+    "id": "pp3u9-4:figure-2",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   },
+   {
+    "id": "pp3u9-4:figure-3",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   }
+  ]
+ }
+}

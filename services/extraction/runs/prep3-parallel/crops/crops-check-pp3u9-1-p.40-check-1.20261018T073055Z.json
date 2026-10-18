@@ -1,0 +1,57 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "ff995be221e07b37209414c526f16b7205aa9df06704b64118961254cbe1af61",
+  "generated_sha256": "94a8eebc5469bab0417dbd6908b4daef9ba6c0de5e894ced327cadacb419b8cd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-1:figure-4",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "complete"
+   },
+   {
+    "id": "pp3u9-1:figure-5",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "orange/yellow shape fragment at top-left corner is not part of figure"
+   },
+   {
+    "id": "pp3u9-1:figure-6",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "orange banner fragment at bottom is not part of figure"
+   },
+   {
+    "id": "pp3u9-1:figure-7",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "complete; faint background tint at bottom is negligible"
+   }
+  ]
+ }
+}

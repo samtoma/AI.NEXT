@@ -1,0 +1,401 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "6ad05933d26160d66dd874e8ef44725f35bb30df39238fe461c2c4262c801e6b",
+  "generated_sha256": "1adaaa4b23a3803652c8e09f03780a1182084ec845e2ae20dc2faeceb3b27cee",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u6-1-2:lines-relate",
+   "spec_sha": "8efb5ad37a2cc0b69c76ac65985172b02366eed9596642860b1bacee9f552a4e",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-2:g002-lines-",
+     "stem_sha": "e1e8f722746d4bd5",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Infinitely many solutions: the two lines coincide"
+     },
+     "working": "L2 = 2*L1 (4x+2y=8 is 2*(2x+y=4)), so same line; coincide."
+    },
+    {
+     "instance_id": "q:pp3u6-1-2:g006-lines-",
+     "stem_sha": "624470309afad566",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Infinitely many solutions: the two lines coincide"
+     },
+     "working": "4x+2y=6 is 2*(2x+y=3), same line; coincide."
+    },
+    {
+     "instance_id": "q:pp3u6-1-2:g008-lines-",
+     "stem_sha": "23213599a8c12074",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Infinitely many solutions: the two lines coincide"
+     },
+     "working": "8x+4y=12 is 4*(2x+y=3)? 4*3=12, yes, same line; coincide."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "In all three instances L2 is a scalar multiple of L1, so the lines coincide and the key is correct. The scale factors (2, 2, 4) match the \"divide by\" steps. Step 4 is generic, but it names the shared point and reaches the key. The untagged distractor {(0,0)} is wrong in every case, because (0,0) satisfies neither equation (0 ≠ 4 and 0 ≠ 3). The tagged distractors fit their misconceptions: \"exactly one solution\" is assume-intersect, and \"no solution, parallel\" is parallel-coincide-swap.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u6-1-2:g002-lines-",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g002-lines-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g002-lines-",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g006-lines-",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g006-lines-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g006-lines-",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g008-lines-",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g008-lines-",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u6-1-2:g008-lines-",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR"
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-1-3:add-subtract",
+   "spec_sha": "22aa3da274a531884f737b09e9cfe994c2e818a7492b1923e077cf6c3fb5a36d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-3:g001-add-su",
+     "stem_sha": "fc52d004fb0364bb",
+     "answer": {
+      "plain": "(6, 3)"
+     },
+     "working": "Add: 2x=12, x=6; y=9-6=3"
+    },
+    {
+     "instance_id": "q:pp3u6-1-3:g008-add-su",
+     "stem_sha": "730a65dfd1c26385",
+     "answer": {
+      "plain": "(3, 2)"
+     },
+     "working": "Add: 2x=6, x=3; y=5-3=2"
+    },
+    {
+     "instance_id": "q:pp3u6-1-3:g010-add-su",
+     "stem_sha": "1e26d71e7991261a",
+     "answer": {
+      "plain": "(7, 2)"
+     },
+     "working": "Add: 2x=14, x=7; y=9-7=2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options. Checked all three instances: (6,3), (3,2) and (7,2) each satisfy both equations. Each key matches answer_check and the asked ordered-pair form. The worked steps (add the equations, then substitute) are correct. The phrase \"omits y\" is slightly odd wording, but it is mathematically fine."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-1-3:multiply-both",
+   "spec_sha": "7f9947a808dc634e0d9bade9b6ddb79b7549dd207bb0fbe9813e990b2bfb9778",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-3:g002-multip",
+     "stem_sha": "98a27711487dab97",
+     "answer": {
+      "plain": "(4, -4)"
+     },
+     "working": "3*(1)+(2): 21x=84, x=4; y=(16-24)/2=-4"
+    },
+    {
+     "instance_id": "q:pp3u6-1-3:g007-multip",
+     "stem_sha": "e082f0b3476d8ff0",
+     "answer": {
+      "plain": "(-1, -2)"
+     },
+     "working": "(2)/4: x-y=1; substitute x=y+1 into (1): 9y+3=-15, y=-2, x=-1"
+    },
+    {
+     "instance_id": "q:pp3u6-1-3:g010-multip",
+     "stem_sha": "04d9ffda51b23611",
+     "answer": {
+      "plain": "(-3, 4)"
+     },
+     "working": "2*(2): 4x-8y=-44; (1)-that: 14y=56, y=4; x=-3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by substitution and by redoing the elimination steps; every key is correct. There are no options. The multipliers are not minimal but are valid. Each key is an ordered pair matching its answer_check."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-1-4:sumdiff",
+   "spec_sha": "7439490c313d411bc7047a486d550865a64dc81e4997db1e5c26c5c9b697da0a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-4:g002-sumdif",
+     "stem_sha": "e9e100b1aa2755d8",
+     "answer": {
+      "value": "28"
+     },
+     "working": "(53+3)/2=28"
+    },
+    {
+     "instance_id": "q:pp3u6-1-4:g008-sumdif",
+     "stem_sha": "fc13b2d867ee1652",
+     "answer": {
+      "value": "38"
+     },
+     "working": "(74+2)/2=38"
+    },
+    {
+     "instance_id": "q:pp3u6-1-4:g009-sumdif",
+     "stem_sha": "c64280868e9fc1ce",
+     "answer": {
+      "value": "40"
+     },
+     "working": "(73+7)/2=40"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family lists no wrong options. I checked the arithmetic for each instance. For 53 and 3, 56/2 = 28 and y = 25. For 74 and 2, 76/2 = 38 and y = 36. For 73 and 7, 80/2 = 40 and y = 33. Each sum and difference have the same parity, so the answers are whole numbers. The stem asks for the larger number and each key gives it. The solutions use the standard addition-of-equations method and check by substitution.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-1:rearrange",
+   "spec_sha": "e1e3ac06896d8c1b712e9bb8e6dc6226d3404f235d3e0512b3a3e41a3ff124fc",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-1:g001-rearra",
+     "stem_sha": "db1b6194f0d9835a",
+     "answer": {
+      "plain": "[-2, 3]"
+     },
+     "working": "Graph y=x^2 and y=x+6 on [-3,4]; they intersect where x^2-x-6=0, (x-3)(x+2)=0, so x=-2 and x=3, both in the interval."
+    },
+    {
+     "instance_id": "q:pp3u6-2-1:g002-rearra",
+     "stem_sha": "9710fdefe3ce151c",
+     "answer": {
+      "plain": "[-2, 4]"
+     },
+     "working": "Graph y=x^2 and y=2x+8 on [-3,5]; intersections where x^2-2x-8=0, (x-4)(x+2)=0, so x=-2 and x=4, both in the interval."
+    },
+    {
+     "instance_id": "q:pp3u6-2-1:g004-rearra",
+     "stem_sha": "21575e84e94936c2",
+     "answer": {
+      "plain": "[-3, 4]"
+     },
+     "working": "Graph y=x^2 and y=x+12 on [-4,5]; intersections where x^2-x-12=0, (x-4)(x+3)=0, so x=-3 and x=4, both in the interval."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. The roots are correct: x²−x−6 gives −2 and 3, x²−2x−8 gives −2 and 4, and x²−x−12 gives −3 and 4. Every tabulated value is also correct, for example f(−3)=6, f(4)=6, f(−3)=7, f(5)=7, f(−4)=8 and f(5)=8. Each root lies inside its stated interval. The keys match answer_check and the set-notation answer. There are no options, so there are no distractors to judge. One cosmetic issue: the stems write the coefficient \"1x\" instead of \"x\". That is unnatural but not wrong."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-1:table-roots",
+   "spec_sha": "d1ef58c8f337cdc777d1ddab580c447305bda7418c7532e5d4470c0cf4684b65",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-1:g004-table-",
+     "stem_sha": "259f42dc92edbebd",
+     "answer": {
+      "plain": "[1, 3]"
+     },
+     "working": "Curve crosses x-axis where f=0: points (1,0) and (3,0). Check: x^2-4x+3=(x-1)(x-3)."
+    },
+    {
+     "instance_id": "q:pp3u6-2-1:g007-table-",
+     "stem_sha": "8627a8f0c22fb269",
+     "answer": {
+      "plain": "[3, 6]"
+     },
+     "working": "Table shows f(3)=0 and f(6)=0, so the curve crosses the x-axis at x=3 and x=6. Check: (x-3)(x-6)."
+    },
+    {
+     "instance_id": "q:pp3u6-2-1:g009-table-",
+     "stem_sha": "4bb3c4ffb6084936",
+     "answer": {
+      "plain": "[3, 5]"
+     },
+     "working": "Table shows f(3)=0 and f(5)=0, so the curve crosses the x-axis at x=3 and x=5. Check: (x-3)(x-5)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Checked all three instances: the listed f-values match the formulas, and the roots (1,3), (3,6) and (3,5) match each key and answer_check. The family has no answer options, so there are no distractors. The stem says \"the table\" but lists the values inline, which is acceptable.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-2:factorise-monic",
+   "spec_sha": "e4cdb6d732a340863b839e826380e95adb8b628ea6744dcac3f31347b7552c7d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-2:g001-factor",
+     "stem_sha": "1866eb8e1a8dfbf9",
+     "answer": {
+      "plain": "[1, 5]"
+     },
+     "working": "(x-1)(x-5)=0, so x=1 or 5"
+    },
+    {
+     "instance_id": "q:pp3u6-2-2:g003-factor",
+     "stem_sha": "877c1f666c43da91",
+     "answer": {
+      "plain": "[-6, 1]"
+     },
+     "working": "(x+6)(x-1)=0, so x=-6 or 1"
+    },
+    {
+     "instance_id": "q:pp3u6-2-2:g005-factor",
+     "stem_sha": "f98b2dd53afd49ac",
+     "answer": {
+      "plain": "[-1, 4]"
+     },
+     "working": "(x-4)(x+1)=0, so x=4 or -1"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The instances have no options, so there are no distractors to judge. I checked all three by hand, and each key matches its equation and its worked solution.\n- g001: x²-6x+5 = (x-1)(x-5), so the roots are 1 and 5.\n- g003: x²+5x-6 = (x+6)(x-1), so the roots are -6 and 1.\n- g005: x²-3x-4 = (x-4)(x+1), so the roots are 4 and -1.\nIn each, the product and sum pairs in step 1 are right, and the factorisation and root steps follow from them. The keys are the root pairs the stems ask for, and they match the answer_check lists. The stems are plain equations with no word problem, so context is fine. The task named no files, so I did not read any."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-3-1:circle-line",
+   "spec_sha": "f9ceaedfa530766bb1f7361f48216f6c12a406041d771b87585a74eab46a813b",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-3-1:g007-circle",
+     "stem_sha": "a2c79b1dcc9d6fc5",
+     "answer": {
+      "plain": "[(4, 1), (-1, -4)]"
+     },
+     "working": "x=y+3; (y+3)^2+y^2=17 → y^2+3y-4=0 → y=1 or -4; x=4 or -1."
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g008-circle",
+     "stem_sha": "7f9f72b1b59cd296",
+     "answer": {
+      "plain": "[(9, 8), (-8, -9)]"
+     },
+     "working": "x=y+1; (y+1)^2+y^2=145 → y^2+y-72=0 → y=8 or -9; x=9 or -8."
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g009-circle",
+     "stem_sha": "4fa0b94bb52b5e8a",
+     "answer": {
+      "plain": "[(4, 2), (-2, -4)]"
+     },
+     "working": "x=y+2; (y+2)^2+y^2=20 → y^2+2y-8=0 → y=2 or -4; x=4 or -2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "I checked all three instances by substitution, and the keys are correct. g007 gives (4,1) and (-1,-4), g008 gives (9,8) and (-8,-9), and g009 gives (4,2) and (-2,-4). The factorisations are right. The family has no wrong options, so distractors_ok is vacuously true. Each key lists the pairs in the form the stem asks for. The one problem is g008 step 4, which prints \"y^2 + 1y - 72\". A coefficient of 1 should not be written, so the template needs to drop the \"1\" before the y. That is a presentation flaw, not a maths error, but I marked solution_ok false because the cost of a rewrite is low."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-3-1:product-line",
+   "spec_sha": "9d36dab751ef985e3a495738f6b6783bea2d60cfb239311df4cfe866c0a149a3",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-3-1:g008-produc",
+     "stem_sha": "9911854acb4cfc8d",
+     "answer": {
+      "plain": "[(7, 16), (8, 14)]"
+     },
+     "working": "y=30-2x; x(30-2x)=112 → x^2-15x+56=0 → (x-7)(x-8)=0 → x=7,8; y=16,14"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g009-produc",
+     "stem_sha": "7d5b52d8912c15d8",
+     "answer": {
+      "plain": "[(5, 12), (6, 10)]"
+     },
+     "working": "y=22-2x; x(22-2x)=60 → x^2-11x+30=0 → (x-5)(x-6)=0 → x=5,6; y=12,10"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g010-produc",
+     "stem_sha": "1c5bb842ce54e2e4",
+     "answer": {
+      "plain": "[(2, 6), (3, 4)]"
+     },
+     "working": "y=10-2x; x(10-2x)=12 → x^2-5x+6=0 → (x-2)(x-3)=0 → x=2,3; y=6,4"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by substituting the pairs back into both equations, and each pair satisfies them. The worked steps are correct, and the key matches answer_check. The family has no options.",
+    "distractors": []
+   }
+  }
+ ]
+}

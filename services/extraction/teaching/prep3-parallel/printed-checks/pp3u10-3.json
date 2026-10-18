@@ -1,0 +1,82 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-3",
+  "source": "book-records/prep3-parallel/pp3u10-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0292,
+      "calls": [
+        {
+          "call": "check-printed.pp3u10-3",
+          "cost_usd": 0.0201,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u10-3",
+          "cost_usd": 0.0091,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u10-3:example-1",
+      "record_id": "pp3u10-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 80,
+      "printed": "EB = EC",
+      "blind": "Assuming A, B, C, D lie on the circle (the figure is not available, so this is assumed): $\\angle B$ and $\\angle C$ are inscribed angles subtended by the same arc $AD$, so $m(\\angle B)=m(\\angle C)$, i.e. $m(\\angle ABD)... $ in $\\triangle EBC$, $m(\\angle B)=m(\\angle C)$. Hence $\\triangle EBC$ is isosceles and $EB=EC$.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-3:figure-6"
+      ],
+      "question_fingerprint": "83b334e23469f8be067f138cedc204b8",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-3:example-1",
+        "verdict": "equivalent",
+        "reason": "Both conclude EB = EC (solver's proof relies on an assumed circle, but the final result matches)."
+      },
+      "how": "judged equivalent: Both conclude EB = EC (solver's proof relies on an assumed circle, but the final result matches).",
+      "made": {
+        "at": "2026-10-18T08:02:53+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-3:example-3",
+      "record_id": "pp3u10-3:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 83,
+      "printed": "$CD=CE$",
+      "blind": "Since chords $AD=BE$ in the same circle, their arcs are equal, so the inscribed angles $\\angle ABD$ and $\\angle BAE$ are equal. Hence in $\\triangle CAB$, $m(\\angle CAB)=m(\\angle CBA)$, so $CA=CB$. Then $CD=CA-AD$ and $CE=CB-BE$ with $AD=BE$, so $CD=CE$.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u10-3:figure-13"
+      ],
+      "question_fingerprint": "cc8a3c4052251deb80207929892bbabc",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-3:example-3",
+        "verdict": "equivalent",
+        "reason": "Both conclude CD = CE."
+      },
+      "how": "judged equivalent: Both conclude CD = CE.",
+      "made": {
+        "at": "2026-10-18T08:02:53+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

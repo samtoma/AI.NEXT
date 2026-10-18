@@ -1,0 +1,297 @@
+{
+ "book": "prep3-parallel",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "fa673bd42bccd7f7e949d46832783b55604d6472c145c3df9fb095073f9410c8",
+  "generated_sha256": "ba322482644947732c3476f69826118c6bc58ecf09a5b014bf67b25abd61044c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:pp3u9-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. Runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [
+    {
+     "lo": "lo:pp3u9-2-1",
+     "origin": "S6",
+     "ref": "tpl:pp3u9-2-1:position#untagged",
+     "question_id": "q:pp3u9-2-1:g001-positi",
+     "text": "at the centre of the circle",
+     "tagged": null,
+     "reason": "no named error: The option text alone doesn't say which question it is wrong for. No caution, remark or re-solve wrong turn supports a specific error, so I can't name one honestly."
+    },
+    {
+     "lo": "lo:pp3u9-2-1",
+     "origin": "S6",
+     "ref": "tpl:pp3u9-2-1:position#untagged",
+     "question_id": "q:pp3u9-2-1:g001-positi",
+     "text": "outside the circle",
+     "tagged": null,
+     "reason": "no named error: Same reason: any of the four positions can be the wrong answer depending on MA and r, so choosing 'outside' doesn't point to one diagnosable error."
+    },
+    {
+     "lo": "lo:pp3u9-2-1",
+     "origin": "S6",
+     "ref": "tpl:pp3u9-2-1:position#untagged",
+     "question_id": "q:pp3u9-2-1:g001-positi",
+     "text": "inside the circle",
+     "tagged": null,
+     "reason": "no named error: Same reason: 'inside the circle' encodes no single named error without knowing the intended correct position."
+    },
+    {
+     "lo": "lo:pp3u9-2-1",
+     "origin": "S6",
+     "ref": "tpl:pp3u9-2-1:position#untagged",
+     "question_id": "q:pp3u9-2-1:g002-positi",
+     "text": "on the circle",
+     "tagged": null,
+     "reason": "no named error: Same reason: 'on the circle' encodes no single named error without knowing the intended correct position."
+    }
+   ],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "There is no caution, remark or re-solve wrong turn for this objective. The four distractors are only position labels from a generated family, and each label could be the wrong answer for different values of MA and r. So I wrote no entries and the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I wrote no entries; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-2-4",
+   "entries": [
+    {
+     "id": "mc:pp3u9-2-4:internal-touch-add-radii",
+     "lo_id": "lo:pp3u9-2-4",
+     "label": "Adds the radii when the circles touch internally",
+     "description": "The student takes the distance between the centres as the sum of the radii even though the circles touch from inside.",
+     "signal": "For radii 10 cm and 6 cm touching internally, uses MN = 16 cm and gets a much smaller AB than 12 cm (e.g. 24 = 1/2 × 16 × AB gives AB = 3 cm).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using $MN = 10 + 6$, which is right when two circles touch from outside. You were right that the point of contact lies on the line of centers, and that is the key fact."
+      },
+      {
+       "step": 2,
+       "text_md": "When the circles touch internally, the small circle sits inside the big one. Both centers lie on the same line through $A$, on the same side of $A$. $M$ is 10 cm from $A$ and $N$ is only 6 cm from $A$, so $N$ lies between $M$ and $A$."
+      },
+      {
+       "step": 3,
+       "text_md": "So the gap between the centers is what is left of the big radius: $MN = 10 - 6 = 4$ cm. Using 16 would put $N$ beyond $A$, outside the big circle."
+      },
+      {
+       "step": 4,
+       "text_md": "The wrong base changes the answer. With $MN = 16$, $24 = \\tfrac12 \\times 16 \\times AB$ gives $AB = 3$ cm. With $MN = 4$, $24 = \\tfrac12 \\times 4 \\times AB$ gives $AB = 12$ cm."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you use $MN$, ask whether the circles touch externally (add the radii) or internally (subtract them)."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "distractor",
+       "ref": "expl:pp3u9-2-4:bk-example-4"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is real. The book's example 4 asks 'why?' for MN = 10 − 6, so adding the radii is the likely slip. The refutation is correct and follows the book's method. A lies on MN, N lies between M and A, MN = 4, and 24 = ½·4·AB gives AB = 12. Its counter-computation (MN = 16 gives AB = 3) is arithmetically right. It names no question id, page, figure or review history, and it adds nothing beyond the book."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-3-2",
+   "entries": [
+    {
+     "id": "mc:pp3u9-3-2:two-circles-share-more-than-two-points",
+     "lo_id": "lo:pp3u9-3-2",
+     "label": "Thinks two circles through A and B can meet at a third point",
+     "description": "The student believes that two different circles drawn through the same two points A and B can also cross or touch at more than two points.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that many circles pass through both $A$ and $B$, so they all share those two points. The doubt is whether two of them could share a third point as well."
+      },
+      {
+       "step": 2,
+       "text_md": "The center of every circle through $A$ and $B$ lies on the axis of the chord $AB$. Different centers on that axis give different circles, and all of them meet at $A$ and $B$."
+      },
+      {
+       "step": 3,
+       "text_md": "Suppose a circle also went through a third point $C$. Its center would then lie on the axis of $AB$ and on the axis of the chord $AC$, and those two axes cross in only one point. So there is only one possible center and only one circle."
+      },
+      {
+       "step": 4,
+       "text_md": "Two different circles therefore cannot intersect in more than two points. When two circles pass through $A$ and $B$, those two points are all they share."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "pp3u9-3:rule-9"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error matches the book's question and rule that two circles cannot intersect in more than two points. The refutation uses the book's axis-of-chord idea (the center lies on the axis of any chord). A third common point C would force the center onto both the axis of AB and the axis of AC. Those axes meet in one point, so there is one circle. This is mathematically correct, consistent with the canonical answer No, and targets this error. It names no question ids, pages, figures or review history."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": [
+    "no canonical solution for this objective — skipped, nothing authored"
+   ],
+   "skipped": true
+  },
+  {
+   "lo": "lo:pp3u9-4-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. The runtime falls back to the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:pp3u9-4-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is one remark about the distance of a chord from the centre (the distance is MX, where X is the midpoint of the chord). It records no wrong turn or caution, so I wrote no entries. There were no distractors or widget predicates to assign."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 13,
+  "entries": 2,
+  "dropped": 0,
+  "stripped": 4,
+  "skipped": 3,
+  "flags": 8
+ }
+}

@@ -1,0 +1,200 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "oracle",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "c52bf760ed37bb97f92564da9fd3777fb61cc6801bbf8c96794b140d722a4a61",
+  "generated_sha256": "72f4593e829cf4e4a7ca5a80210467910fd430eae34bf747895588e02124258c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u3-1",
+   "mode": "oracle",
+   "oracle": {
+    "tally": {
+     "claims": 16,
+     "questions": 0,
+     "worked_examples_kept_as_teaching": 0,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u3-1-1",
+       "claims": 2,
+       "items": 0
+      },
+      {
+       "lo": "lo:pp3u3-1-2",
+       "claims": 7,
+       "items": 0
+      },
+      {
+       "lo": "lo:pp3u3-1-3",
+       "claims": 7,
+       "items": 0
+      }
+     ]
+    },
+    "verdict": "RED",
+    "subheadings": [
+     {
+      "anchor": "pp3u3-1:heading-1",
+      "status": "thin",
+      "missing_items": [
+       "Printed objectives (resources, methods, how to select a sample, types of samples)",
+       "Key terms list (primary resources, secondary resources, method of mass population, method of sample, biased choice, random choice sample, random sample, layer sample)",
+       "Intro statement that data collection is a key phase for accurate statistical inference and decision making"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-2",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-1:heading-3",
+      "status": "MISSING",
+      "missing_items": [
+       "Method is determined by aim and size of the statistical society",
+       "Example: students of a school as a statistical society whose value is the student"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-4",
+      "status": "thin",
+      "missing_items": [
+       "Disadvantages: needs long time, great efforts, costs much money"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-5",
+      "status": "MISSING",
+      "missing_items": [
+       "Method depends on selecting a sample from the statistical society it represents",
+       "Research is conducted on the sample and outcomes are generalized to the whole society"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-6",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-1:heading-7",
+      "status": "MISSING",
+      "missing_items": [
+       "Introductory heading on how to select samples and the conditions required for a sample"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-8",
+      "status": "thin",
+      "missing_items": [
+       "Example: analyzing a maths lesson test using only a group of students who studied the topic is not random selection"
+      ]
+     },
+     {
+      "anchor": "pp3u3-1:heading-9",
+      "status": "thin",
+      "missing_items": [
+       "Lead-in that simple random and layer samples are the most important types of random samples",
+       "Instruction to repeat pressing = so numbers appear successively",
+       "Layer sample example: 400 persons, male:female 3:2, sample of 50, so 30 males and 20 females chosen randomly",
+       "Reference to MOE website for more exercises"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "lesson": "pp3u3-2",
+   "mode": "oracle",
+   "oracle": {
+    "tally": {
+     "claims": 29,
+     "questions": 0,
+     "worked_examples_kept_as_teaching": 5,
+     "by_objective": [
+      {
+       "lo": "lo:pp3u3-2-1",
+       "claims": 9,
+       "items": 2
+      },
+      {
+       "lo": "lo:pp3u3-2-2",
+       "claims": 7,
+       "items": 1
+      },
+      {
+       "lo": "lo:pp3u3-2-3",
+       "claims": 11,
+       "items": 2
+      },
+      {
+       "lo": "lo:pp3u3-2-4",
+       "claims": 1,
+       "items": 0
+      }
+     ]
+    },
+    "verdict": "RED",
+    "subheadings": [
+     {
+      "anchor": "pp3u3-2:heading-1",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-2:heading-2",
+      "status": "thin",
+      "missing_items": [
+       "prior-knowledge-1: central tendency recap (mean, median, mode)",
+       "linking-text-2: computed means of sets A and B (LE 200 each)",
+       "linking-text-4/5: mean, median and mode comparison (median = mode = LE 180 for both sets)",
+       "linking-text-7 to 10: observation that equal central tendency can hide different spread, set B is more divergent than set A, so dispersion must be considered when comparing sets"
+      ]
+     },
+     {
+      "anchor": "pp3u3-2:heading-3",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-2:heading-4",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-2:heading-5",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-2:heading-6",
+      "status": "covered"
+     },
+     {
+      "anchor": "pp3u3-2:heading-7",
+      "status": "covered"
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S8 Oracle": 2
+  },
+  "per_lesson": {
+   "pp3u3-1": 1,
+   "pp3u3-2": 1
+  },
+  "total": 2
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "508ad39edd2bb2f3283707903026368e321b693ae9894605536d4e97455d8d43",
+  "generated_sha256": "a4ee0c07bdc7822e26ed71f1a86e29b9d6129fea8733f3128baae6c0e59ce8b3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u5-1:example-1",
+    "verdict": "equivalent",
+    "reason": "Both conclude ABCD is a square; the solver's side lengths (√41) and diagonals (√82) check out."
+   }
+  ]
+ }
+}

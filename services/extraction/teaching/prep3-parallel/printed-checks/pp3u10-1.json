@@ -1,0 +1,103 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u10-1",
+  "source": "book-records/prep3-parallel/pp3u10-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 3,
+      "cost_usd": 0.0282,
+      "calls": [
+        {
+          "call": "check-printed.pp3u10-1",
+          "cost_usd": 0.0199,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u10-1",
+          "cost_usd": 0.0083,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u10-1:example-1",
+      "record_id": "pp3u10-1:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 66,
+      "printed": "$120^\\circ$",
+      "blind": "120°  (AC + DB = 180° − 70° = 110°, so AC = 50°, DB = 60°; m(ACD) = 50° + 70° = 120°, assuming the usual figure with C and D in order A, C, D, B on one semicircle)",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-1:figure-6"
+      ],
+      "question_fingerprint": "88bc608eb123be5d82dbf005d9b640f7",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-1:example-1",
+        "verdict": "equivalent",
+        "reason": "Both give 120°."
+      },
+      "how": "judged equivalent: Both give 120°.",
+      "made": {
+        "at": "2026-10-18T08:02:29+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-1:example-2",
+      "record_id": "pp3u10-1:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 66,
+      "printed": "9.42 cm",
+      "blind": "9.42 cm",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-1:figure-8"
+      ],
+      "question_fingerprint": "5cacf4b4dad16d96489f2713de5c4672",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T08:02:29+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u10-1:example-3",
+      "record_id": "pp3u10-1:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 69,
+      "printed": "AB = 7 cm",
+      "blind": "7 cm  (AC = BD gives equal arcs, subtracting the common arc BC gives arc AB = arc CD, so AB = CD; 3x − 5 = x + 3, x = 4, AB = 7)",
+      "blind_kind": "value",
+      "figures": [
+        "pp3u10-1:figure-18"
+      ],
+      "question_fingerprint": "d3fe91c121e37d67fe0befaff321c991",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u10-1:example-3",
+        "verdict": "equivalent",
+        "reason": "Both give AB = 7 cm."
+      },
+      "how": "judged equivalent: Both give AB = 7 cm.",
+      "made": {
+        "at": "2026-10-18T08:02:29+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

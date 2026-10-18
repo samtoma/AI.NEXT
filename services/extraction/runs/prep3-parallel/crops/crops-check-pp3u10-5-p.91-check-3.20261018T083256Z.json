@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "620ff3678b791e46ffd83bc443d1a4ad1aa47f43d09a7bbee429bab11025243d",
+  "generated_sha256": "6ed2e3dd79bf9d6ed52b43572213270795f2753b05875a3a5fb2b1ea37b0c1ef",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u10-5:figure-16",
+    "shows_figure": true,
+    "ok": false,
+    "left": "extend",
+    "top": "extend",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "D label clipped at top; C label at left vertex missing/cut."
+   },
+   {
+    "id": "pp3u10-5:figure-17",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Stray text 'eral' from paragraph at left."
+   },
+   {
+    "id": "pp3u10-5:figure-18",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete."
+   }
+  ]
+ }
+}

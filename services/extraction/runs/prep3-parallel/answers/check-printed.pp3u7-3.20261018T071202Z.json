@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "da4d2ebe046d8fc74111f26b52221069c4effd5287d4d41540d64d724007aee5",
+  "generated_sha256": "2e32bdc219e743a3e8660c39e514436f39689143faab238c75dfb781b0f2edba",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u7-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u7-3:example-1",
+      "kind": "explanation",
+      "answer": "$n(x)=\\frac{x(x+3)(x-2)}{(x-2)(x+2)(x-3)(x+3)}=\\frac{x}{(x+2)(x-3)}$, domain of $n=\\mathbb{R}-\\{-3,-2,2,3\\}$"
+     },
+     {
+      "ref": "pp3u7-3:example-2",
+      "kind": "explanation",
+      "answer": "$n_1(x)=\\frac{x^2}{x^2(x-1)}=\\frac{1}{x-1}$, domain $\\mathbb{R}-\\{0,1\\}$. $n_2(x)=\\frac{x(x^2+x+1)}{x(x-1)(x^2+x+1)}=\\frac{1}{x-1}$, domain $\\mathbb{R}-\\{0,1\\}$ (since $x^2+x+1$ has no real zeros). Same domain and same simplest form, so $n_1=n_2$."
+     }
+    ]
+   }
+  }
+ ]
+}

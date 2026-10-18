@@ -1,0 +1,493 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "c15c95407ad01db9248d297a56e3358f6a7461c1a5bd86b1afcaddc1d849806c",
+  "generated_sha256": "40045abb52aa933fb5235dd89fdafe8873889b2d82c3cf62ca0ff67253643744",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u3-1-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions. Every family needs a parent_question_id that is a book question of this objective, and the list is empty. I have no printed page or canonical solution to model, and I was given no book text on which sources the book calls primary or secondary. A made-up parent id would fail validation. Inventing the book's classifications would risk blind-solver disagreement."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no parent book question, no source page, and no book wording or method to follow."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no parent book question or book model for harder exercises. Please supply the book questions or the lesson text for pp3u3-1-1 and I will write the families."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-1-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions (the list is empty). Each family needs a real parent_question_id and source_page from this objective, and there are no canonical solutions to model the method or vocabulary on. Inventing a parent would be fabrication."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book questions, no parent, no printed solution, and no catalogued misconceptions. I cannot match the book's own method and wording for stating the advantages and disadvantages of mass population versus samples."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there is no book question to anchor a harder variant, and no book twist to copy."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for lo:pp3u3-1-3 is empty, so there is no parent_question_id to cite. There is also no canonical solution that shows the book's method or vocabulary for biased, simple random and layer samples. A family written without them would guess the book's notation and method."
+    },
+    {
+     "tier": "standard",
+     "reason": "The list of book questions for lo:pp3u3-1-3 is empty, so there is no parent_question_id to cite. There is also no canonical solution that shows how the book allocates units to each layer. A family written without them would guess the book's method."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The list of book questions for lo:pp3u3-1-3 is empty, so there is no parent_question_id to cite. There is also no book exercise to show what a harder multi-step or twist question looks like for this objective. A family written without them would guess the book's method."
+    }
+   ],
+   "notes": "No book questions, canonical solutions or misconceptions were supplied for this objective. The spec requires a parent_question_id from that list and says to stay inside the book's own method, so I wrote no families. Once the book's questions for pp3u3-1-3 are supplied, I can write all three tiers. The likely shapes are:\n- basic: classify a sampling method as biased, simple random or layer.\n- standard: the layer-sample allocation sample × layer / population.\n- advanced: allocation across several layers with a requirement to check the sum."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:range-basic",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "v",
+       "sample": {
+        "from": "range(5, 60)",
+        "k": 5
+       }
+      },
+      {
+       "name": "hi",
+       "let": "max(v)"
+      },
+      {
+       "name": "lo",
+       "let": "min(v)"
+      }
+     ],
+     "stem": "Find the range of the set of values: ${=v[0]}$, ${=v[1]}$, ${=v[2]}$, ${=v[3]}$, ${=v[4]}$.",
+     "answer": "hi - lo",
+     "solution": [
+      "The greatest value is ${=hi}$.",
+      "The smallest value is ${=lo}$.",
+      "Range = greatest value $-$ smallest value $= {=hi} - {=lo} = {=hi - lo}$."
+     ],
+     "constraints": [],
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:equal-mean",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        20,
+        40
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        4,
+        12
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        "p - 1"
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        4,
+        12
+       ],
+       "resample_while": "r == p"
+      },
+      {
+       "name": "s",
+       "randint": [
+        1,
+        "r - 1"
+       ]
+      },
+      {
+       "name": "ans",
+       "let": "'Set A' if p > r else 'Set B'"
+      },
+      {
+       "name": "other",
+       "let": "'Set B' if p > r else 'Set A'"
+      }
+     ],
+     "stem": "Set A: ${=m-p}$, ${=m-q}$, ${=m+q}$, ${=m+p}$. Set B: ${=m-r}$, ${=m-s}$, ${=m+s}$, ${=m+r}$. Both sets have mean ${=m}$. Which set has the greater dispersion (is more spread out)?",
+     "answer": "",
+     "solution": [
+      "Range of Set A $= {=m+p} - {=m-p} = {=2*p}$.",
+      "Range of Set B $= {=m+r} - {=m-r} = {=2*r}$.",
+      "The means are equal, so we compare the ranges: the greater range means greater dispersion. So {=ans} is more spread out."
+     ],
+     "choices": {
+      "correct": "{=ans}",
+      "distractors": [
+       {
+        "text": "{=other}",
+        "misconception_id": null
+       },
+       {
+        "text": "Both are equally spread out, because the means are equal",
+        "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+       },
+       {
+        "text": "It cannot be decided without more information",
+        "misconception_id": null
+       }
+      ]
+     },
+     "constraints": [],
+     "proposed_misconceptions": [],
+     "notes": "Both sets have mean m by symmetry. Placeholder parent."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:find-mean",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "none-available",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Four students' scores; the greatest score is hidden but the range is given.",
+     "params": [
+      {
+       "name": "s",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "da",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "db",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "R",
+       "randint": [
+        12,
+        25
+       ]
+      },
+      {
+       "require": "R > max(da, db)",
+       "why": "fourth score is the greatest"
+      },
+      {
+       "require": "(da + db + R) % 4 == 0",
+       "why": "whole-number mean"
+      },
+      {
+       "name": "x",
+       "let": "s + R"
+      }
+     ],
+     "stem": "Four students' scores have a range of ${=R}$. The smallest score is ${=s}$, and two other scores are ${=s+da}$ and ${=s+db}$. The fourth score is the greatest. Find the mean of the four scores.",
+     "answer": "(s + s + da + s + db + x) / 4",
+     "solution": [
+      "Greatest score $=$ smallest $+$ range $= {=s} + {=R} = {=x}$.",
+      "Sum of the scores $= {=s} + {=s+da} + {=s+db} + {=x} = {=s+s+da+s+db+x}$.",
+      "Mean $= {=s+s+da+s+db+x} \\div 4 = {=(s+s+da+s+db+x)/4}$."
+     ],
+     "constraints": [],
+     "proposed_misconceptions": [],
+     "notes": "Placeholder parent. Answer is whole by require."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list for this objective was empty, so parent_question_id is the placeholder \"none-available\" and source_page is null in all three families. Please map them to real book questions if any exist."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for lo:pp3u3-2-2 is empty. Every family needs a parent_question_id that is a book question of this objective, and there isn't one. There is also no canonical solution to copy the method from. The book's convention is unknown: does it divide the sum of squared deviations by n (population) or by n-1? Does it show the variance step? How does it round? A wrong guess would give wrong keys to students."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same blocker: there is no parent book question and no book solution showing the standard-deviation method and its rounding convention. I won't invent a parent id or a technique the book may not use."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same blocker. I can't tell which harder twists the book uses, such as grouped data, comparing two sets, or finding a missing value. With no book question to anchor on, any advanced family would be a guess."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:discrete",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:none",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        2,
+        4,
+        6
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "A data set has this frequency distribution: the value ${=m-d}$ occurs ${=k}$ times, the value ${=m}$ occurs ${=6*k}$ times and the value ${=m+d}$ occurs ${=k}$ times. Calculate the standard deviation.",
+     "answer": "d // 2",
+     "solution": [
+      "Total frequency: $\\sum f = {=k}+{=6*k}+{=k} = {=8*k}$.",
+      "Mean: $\\bar{x}=\\frac{\\sum fx}{\\sum f}=\\frac{{=8*k*m}}{{=8*k}}={=m}$.",
+      "Deviations from the mean are $-{=d}$, $0$ and ${=d}$, so $\\sum f(x-\\bar{x})^2={=k}\\times{=d*d}+{=k}\\times{=d*d}={=2*k*d*d}$.",
+      "Variance $=\\frac{{=2*k*d*d}}{{=8*k}}={=d*d/4}$.",
+      "Standard deviation $=\\sqrt{{=d*d/4}}={=d//2}$."
+     ],
+     "notes": "Population SD (divide by sum f). Symmetric design gives mean m and SD d/2 exactly. No book question list was supplied, so parent_question_id is a placeholder."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:grouped",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:none",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "randint": [
+        25,
+        50
+       ]
+      },
+      {
+       "name": "w",
+       "choice": [
+        2,
+        4,
+        6,
+        10
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "b0",
+       "let": "c - (3*w)//2"
+      },
+      {
+       "name": "b1",
+       "let": "b0 + w"
+      },
+      {
+       "name": "b2",
+       "let": "b1 + w"
+      },
+      {
+       "name": "b3",
+       "let": "b2 + w"
+      },
+      {
+       "name": "b4",
+       "let": "b3 + w"
+      }
+     ],
+     "constraints": [],
+     "stem": "The table shows a grouped frequency distribution. Class ${=b0} \\le x < {=b1}$: frequency ${=3*k}$. Class ${=b1} \\le x < {=b2}$: frequency ${=3*k}$. Class ${=b2} \\le x < {=b3}$: frequency ${=k}$. Class ${=b3} \\le x < {=b4}$: frequency ${=k}$. Using the centres of the classes, calculate the standard deviation.",
+     "answer": "w",
+     "solution": [
+      "The class centres are ${=c-w}$, ${=c}$, ${=c+w}$ and ${=c+2*w}$, with total frequency ${=8*k}$.",
+      "Mean: $\\sum fx={=3*k}\\times{=c-w}+{=3*k}\\times{=c}+{=k}\\times{=c+w}+{=k}\\times{=c+2*w}={=8*k*c}$, so $\\bar{x}=\\frac{{=8*k*c}}{{=8*k}}={=c}$.",
+      "Deviations from the mean: $-{=w}$, $0$, ${=w}$, ${=2*w}$.",
+      "$\\sum f(x-\\bar{x})^2={=3*k}\\times{=w*w}+0+{=k}\\times{=w*w}+{=k}\\times{=4*w*w}={=8*k*w*w}$.",
+      "Variance $=\\frac{{=8*k*w*w}}{{=8*k}}={=w*w}$, so the standard deviation is $\\sqrt{{=w*w}}={=w}$."
+     ],
+     "notes": "Population SD. Centres spaced w apart with offsets -1,0,1,2 and freqs 3k,3k,k,k give mean c, SD w. Placeholder parent id."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:missing",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:none",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "randint": [
+        25,
+        50
+       ]
+      },
+      {
+       "name": "w",
+       "choice": [
+        2,
+        4,
+        6,
+        10
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "b0",
+       "let": "c - (3*w)//2"
+      },
+      {
+       "name": "b1",
+       "let": "b0 + w"
+      },
+      {
+       "name": "b2",
+       "let": "b1 + w"
+      },
+      {
+       "name": "b3",
+       "let": "b2 + w"
+      },
+      {
+       "name": "b4",
+       "let": "b3 + w"
+      }
+     ],
+     "constraints": [],
+     "stem": "A grouped frequency distribution has these classes: ${=b0} \\le x < {=b1}$ with frequency $f$ (unknown); ${=b1} \\le x < {=b2}$ with frequency ${=3*k}$; ${=b2} \\le x < {=b3}$ with frequency ${=k}$; ${=b3} \\le x < {=b4}$ with frequency ${=k}$. Using the class centres, the mean is ${=c}$. Find $f$ and then calculate the standard deviation.",
+     "answer": "w",
+     "solution": [
+      "The class centres are ${=c-w}$, ${=c}$, ${=c+w}$ and ${=c+2*w}$.",
+      "Mean equation: ${=c-w}f+{=c}\\times{=3*k}+{=c+w}\\times{=k}+{=c+2*w}\\times{=k}={=c}(f+{=5*k})$.",
+      "Simplify: ${=c}f-{=w}f+{=5*k*c+3*k*w}={=c}f+{=5*k*c}$, so ${=w}f={=3*k*w}$ and $f={=3*k}$.",
+      "Total frequency ${=8*k}$. Deviations from the mean ${=c}$: $-{=w}$, $0$, ${=w}$, ${=2*w}$.",
+      "$\\sum f(x-\\bar{x})^2={=3*k}\\times{=w*w}+0+{=k}\\times{=w*w}+{=k}\\times{=4*w*w}={=8*k*w*w}$.",
+      "Variance $={=w*w}$, so the standard deviation is ${=w}$."
+     ],
+     "notes": "Unknown f is solved from the given mean (f=3k). The middle class has frequency 3k and is at the mean, so f is genuinely determined by the other classes. Placeholder parent id."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list was empty, so parent_question_id is a placeholder (q:pp3u3-2-3:none) and source_page is null. Reviewers should re-point them. Standard deviation is the population form (divide by Σf)."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions, so there is no parent_question_id or source_page to anchor a family to. There are no canonical solutions to show the book's method, notation or frequency-polygon conventions. I did not invent a parent."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: the list of book questions for lo:pp3u3-2-4 is empty. A family needs a real parent question and the book's own solution skeleton. Without them I would be guessing how the book computes standard deviation and compares homogeneity."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there are no book questions or solutions to model a harder exercise on. Any twist would be invented rather than taken from the book. The objective also has no catalogued misconceptions to attach to distractors."
+    }
+   ],
+   "notes": "I wrote no families. The book-question list for this objective was empty, and the spec requires each family to name a real book question of the objective as its parent. Please supply the book questions and solutions for lo:pp3u3-2-4, and I can write the basic, standard and advanced families."
+  }
+ ],
+ "revised": []
+}

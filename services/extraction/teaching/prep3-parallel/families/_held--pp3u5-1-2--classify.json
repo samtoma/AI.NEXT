@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-1-2:classify",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-1-2",
+ "parent_question_id": "q:pp3u5-1-2:bk-example-1",
+ "source_page": 59,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "h",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "name": "l",
+   "randint": [
+    -3,
+    3
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Use the distance rule to decide which description fits $ABCD$ best, where $A({=h}, {=l})$, $B({=h+p}, {=l+q})$, $C({=h+p+q}, {=l+p+q})$ and $D({=h+q}, {=l+p})$.",
+ "answer": "A rhombus that is not a square",
+ "choices": {
+  "correct": "A rhombus that is not a square",
+  "distractors": [
+   {
+    "text": "A square",
+    "misconception_id": "mc:pp3u5-1-2:equal-sides-enough-for-square"
+   },
+   {
+    "text": "A rectangle that is not a square",
+    "misconception_id": null
+   },
+   {
+    "text": "A parallelogram that is neither a rhombus nor a rectangle",
+    "misconception_id": null
+   }
+  ]
+ },
+ "solution": [
+  "$AB=\\sqrt{({=p})^2+({=q})^2}=\\sqrt{{=p*p+q*q}}$.",
+  "$BC=\\sqrt{({=q})^2+({=p})^2}=\\sqrt{{=p*p+q*q}}$.",
+  "$CD=\\sqrt{({=-p})^2+({=-q})^2}=\\sqrt{{=p*p+q*q}}$.",
+  "$DA=\\sqrt{({=-q})^2+({=-p})^2}=\\sqrt{{=p*p+q*q}}$.",
+  "All four sides are equal, so $ABCD$ is a rhombus. To see whether it is a square, compare the diagonals.",
+  "$AC=\\sqrt{({=p+q})^2+({=p+q})^2}=\\sqrt{{=2*(p+q)**2}}$ and $BD=\\sqrt{({=q-p})^2+({=p-q})^2}=\\sqrt{{=2*(p-q)**2}}$.",
+  "$AC\\neq BD$, so the figure is not a rectangle and not a square. $ABCD$ is a rhombus that is not a square."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Rhombus built from u=(p,q), v=(q,p), p!=q, p,q>0 so diagonals always differ and angle is not right."
+}

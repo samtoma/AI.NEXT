@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-3:grouped",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-3",
+ "parent_question_id": "q:pp3u3-2-3:none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "randint": [
+    25,
+    50
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    2,
+    4,
+    6,
+    10
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b0",
+   "let": "c - (3*w)//2"
+  },
+  {
+   "name": "b1",
+   "let": "b0 + w"
+  },
+  {
+   "name": "b2",
+   "let": "b1 + w"
+  },
+  {
+   "name": "b3",
+   "let": "b2 + w"
+  },
+  {
+   "name": "b4",
+   "let": "b3 + w"
+  }
+ ],
+ "constraints": [],
+ "stem": "The table shows a grouped frequency distribution. Class ${=b0} \\le x < {=b1}$: frequency ${=3*k}$. Class ${=b1} \\le x < {=b2}$: frequency ${=3*k}$. Class ${=b2} \\le x < {=b3}$: frequency ${=k}$. Class ${=b3} \\le x < {=b4}$: frequency ${=k}$. Using the centres of the classes, calculate the standard deviation.",
+ "answer": "w",
+ "solution": [
+  "The class centres are ${=c-w}$, ${=c}$, ${=c+w}$ and ${=c+2*w}$, with total frequency ${=8*k}$.",
+  "Mean: $\\sum fx={=3*k}\\times{=c-w}+{=3*k}\\times{=c}+{=k}\\times{=c+w}+{=k}\\times{=c+2*w}={=8*k*c}$, so $\\bar{x}=\\frac{{=8*k*c}}{{=8*k}}={=c}$.",
+  "Deviations from the mean: $-{=w}$, $0$, ${=w}$, ${=2*w}$.",
+  "$\\sum f(x-\\bar{x})^2={=3*k}\\times{=w*w}+0+{=k}\\times{=w*w}+{=k}\\times{=4*w*w}={=8*k*w*w}$.",
+  "Variance $=\\frac{{=8*k*w*w}}{{=8*k}}={=w*w}$, so the standard deviation is $\\sqrt{{=w*w}}={=w}$."
+ ],
+ "notes": "Population SD. Centres spaced w apart with offsets -1,0,1,2 and freqs 3k,3k,k,k give mean c, SD w. Placeholder parent id."
+}

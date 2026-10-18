@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-1:diameter-arc",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-1",
+ "parent_question_id": "q:pp3u10-5-1:bk-drill-2-c",
+ "source_page": 89,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90
+   ]
+  },
+  {
+   "require": "c < 2 * a",
+   "why": "arc CD must be smaller than arc BCD = 2a"
+  },
+  {
+   "name": "h",
+   "let": "c / 2"
+  },
+  {
+   "name": "d",
+   "let": "90 - a"
+  },
+  {
+   "name": "b",
+   "let": "c / 2 + 90 - a"
+  },
+  {
+   "name": "ans",
+   "let": "180 - b"
+  }
+ ],
+ "constraints": [],
+ "stem": "$ABCD$ is a cyclic quadrilateral (its vertices are in this order on the circle) in which $\\overline{AB}$ is a diameter, $m(\\angle DAB) = {=a}^\\circ$ and $m(\\widehat{CD}) = {=c}^\\circ$. Find $m(\\angle ADC)$ in degrees.",
+ "answer": "ans",
+ "solution": [
+  "$\\overline{AB}$ is a diameter, so the angle $\\angle ADB$ in the semicircle is $90^\\circ$.",
+  "In $\\triangle ABD$: $m(\\angle ABD) = 90^\\circ - {=a}^\\circ = {=d}^\\circ$.",
+  "$\\angle CBD$ is inscribed in arc $CD$, so $m(\\angle CBD) = \\frac{1}{2} \\times {=c}^\\circ = {=h}^\\circ$.",
+  "$m(\\angle ABC) = {=d}^\\circ + {=h}^\\circ = {=b}^\\circ$.",
+  "$\\angle B$ and $\\angle D$ are opposite angles of the cyclic quadrilateral, so they are supplementary.",
+  "$m(\\angle ADC) = 180^\\circ - {=b}^\\circ = {=ans}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on bk-drill-2-c (diameter, arc CD, find all angles), asking only for angle D. Text-only description; consistent configuration requires c < 2a (arc BC>0). Answers are whole numbers."
+}

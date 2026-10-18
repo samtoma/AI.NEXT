@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-2:divide-factor",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-2",
+ "parent_question_id": "q:pp3u7-4-2:none",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "require": "p != q and p != r and q != r",
+   "why": "avoid extra cancelling or squares"
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "t",
+   "let": "p * q"
+  },
+  {
+   "name": "rr",
+   "let": "r * r"
+  }
+ ],
+ "stem": "Divide and write the result in simplest form, where $x \\neq {=r}$, $x \\neq -{=r}$ and $x \\neq -{=q}$: $$\\frac{x^2+{=s}x+{=t}}{x^2-{=rr}}\\div\\frac{x+{=q}}{x-{=r}}$$",
+ "answer": "",
+ "solution": [
+  "Multiply by the reciprocal of the second fraction: $\\frac{x^2+{=s}x+{=t}}{x^2-{=rr}}\\times\\frac{x-{=r}}{x+{=q}}$.",
+  "Factorise: $x^2+{=s}x+{=t}=(x+{=p})(x+{=q})$ and $x^2-{=rr}=(x-{=r})(x+{=r})$.",
+  "Write the product: $\\frac{(x+{=p})(x+{=q})(x-{=r})}{(x-{=r})(x+{=r})(x+{=q})}$.",
+  "Cancel $(x+{=q})$ and $(x-{=r})$.",
+  "The simplest form is $\\frac{x+{=p}}{x+{=r}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(x + {=p})/(x + {=r})",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "notes": "Placeholder parent id (no book questions given). Domain given in stem, since the fraction being divided by must be nonzero too."
+}

@@ -1,0 +1,121 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "17ec4a43b42d49362298767e6d949ade01dacb788f463b6bde53bbe6aa352d21",
+  "generated_sha256": "44efac47bf3fe09f4e44095ed2a99d05eea1bcf57ef1cf125cc79393c19f545a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u7-1-2:cubiczero",
+   "spec_sha": "fb9f58bdf615869657f58232b62904acd4ed5412475a20df242d963410b3a8f2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-1-2:g001-cubicz",
+     "stem_sha": "af1f89cad96fc13b",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u7-1-2:g002-cubicz",
+     "stem_sha": "e0a0a9086d643540",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u7-1-2:g003-cubicz",
+     "stem_sha": "2d07d2a2f923378d",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances check out. The factorisations and the zero sets are correct. The keys match answer_check. The family has no wrong options.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-1-2:quadzero",
+   "spec_sha": "f8b8bf124cb1381a84506a7c36e73403b9181ca5146ad0d1c45df31c4b106097",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-1-2:g001-quadze",
+     "stem_sha": "a17ea9380382ebda",
+     "answer": {
+      "plain": "[0, 3]"
+     },
+     "working": "x(x-3)=0 so x=0 or 3"
+    },
+    {
+     "instance_id": "q:pp3u7-1-2:g007-quadze",
+     "stem_sha": "73e60fd4b7a55026",
+     "answer": {
+      "plain": "[0, 9]"
+     },
+     "working": "x(x-9)=0 so x=0 or 9"
+    },
+    {
+     "instance_id": "q:pp3u7-1-2:g008-quadze",
+     "stem_sha": "5314b80ff66093e6",
+     "answer": {
+      "plain": "[0, 5]"
+     },
+     "working": "x(x-5)=0 so x=0 or 5"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were provided, so there are no distractors to judge. The keys are correct. Each polynomial factorises as x(x−k), giving zeroes 0 and k. The answer_check values match the keys. Minor wording flaws: step 3 says \"x=0 gives x=0\", which is circular. Z(f) is used without being defined."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-2-1:exclude-one",
+   "spec_sha": "6899e81b5b359334d872882ede4fd5727d881d484055fc6f7eb0a118c431a4ac",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-2-1:g001-exclud",
+     "stem_sha": "4c574b11eccc2bd2",
+     "answer": {
+      "value": "9"
+     },
+     "working": "Denominator x-9=0 gives x=9, excluded from domain."
+    },
+    {
+     "instance_id": "q:pp3u7-2-1:g003-exclud",
+     "stem_sha": "ac79852c9d5a0e3b",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Denominator x-4=0 gives x=4, excluded from domain."
+    },
+    {
+     "instance_id": "q:pp3u7-2-1:g008-exclud",
+     "stem_sha": "de6f2a7872c8a1a3",
+     "answer": {
+      "value": "7"
+     },
+     "working": "Denominator x-7=0 gives x=7, excluded from domain."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options were provided, so distractors are vacuously fine. Keys 9, 4 and 7 are correct for the denominators x-9, x-4 and x-7. The numerators never vanish at the excluded value, so there is no cancellation. The worked solutions are correct and follow the book's method."
+   }
+  }
+ ]
+}

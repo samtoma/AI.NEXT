@@ -1,0 +1,65 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "prep3-parallel",
+ "chapter": 3,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 1,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/tdeif/Developer/Noor/services/extraction/work/prep3-parallel/packets/sw-ch03",
+  "stage": "SW",
+  "shards_sha256": "326beabf9aef0484d382acb1291f9de4283740be8d11451d31e3c3a674b49316",
+  "files": 5
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "0712a89bcacea1fe76e798de952524985bbbf362199ffe8243bc811f2e373128",
+  "generated_sha256": "4032ae6ed0051352fee24a7ef0a0c918515bd78bbf460a880008ce540c78d0f9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-1:bk-worked-example-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-2:bk-example-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-3:bk-example-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-3:bk-example-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage SW --run <runId>"
+ }
+}

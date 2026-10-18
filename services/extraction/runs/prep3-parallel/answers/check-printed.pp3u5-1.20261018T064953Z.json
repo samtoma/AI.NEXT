@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "e468ff21a4232a2e5047e8d4c9156d9116dd68eecf713f11754f2d35463cc614",
+  "generated_sha256": "ab225b57d702b1fa0a6bb5a52bebfdb79d57e5bc7034a5ded5470559baeae9d9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u5-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-1:example-1",
+      "kind": "explanation",
+      "answer": "AB = BC = CD = DA = $\\sqrt{41}$ (all sides equal, so a rhombus), and diagonals AC = BD = $\\sqrt{82}$ (equal), so ABCD is a square."
+     },
+     {
+      "ref": "pp3u5-1:example-2",
+      "kind": "explanation",
+      "answer": "AB² = 40, BC² = 10, AC² = 50. Since AB² + BC² = AC², the triangle is right angled at B. Area = 1/2 × $\\sqrt{40}$ × $\\sqrt{10}$ = 10 square units."
+     }
+    ]
+   }
+  }
+ ]
+}

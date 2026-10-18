@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "7ba1748baca4989926ed7061c4f5310269b9403ea3b49ee7eb92ef1d2ebbd5d3",
+  "generated_sha256": "e6fcd9c62f4efafe453f462abe4a2cb3a707da953e8e0b7bb42fec34bbf2b49c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-2:figure-7",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Small stray pink fragment at the bottom edge, not part of the figure."
+   },
+   {
+    "id": "pp3u9-2:figure-8",
+    "shows_figure": false,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Crop is blank; the figure is not shown."
+   },
+   {
+    "id": "pp3u9-2:figure-9",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Full figure with all labels."
+   }
+  ]
+ }
+}

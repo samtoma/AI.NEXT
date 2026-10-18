@@ -1,0 +1,294 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "26fffde917f04a50c79d19c64ca466475031e5b5e8536d816873754aca89e14c",
+  "generated_sha256": "05612cdbe8cae2b92315d3d71bf2dbc52d6bdeb5a645fe0aa8f8fdf4b0069643",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u5-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u5-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "A and B are both on the x-axis, so use the difference of the x-coordinates.",
+       "$AB=|-1-3|$",
+       "$=|-4|$",
+       "AB = 4 unit length."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-1"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:think-and-discuss-2",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "C and D are both on the y-axis, so use the difference of the y-coordinates.",
+       "$CD=|-3-(-1)|=|-3+1|$",
+       "$=|-2|$",
+       "CD = 2 unit length."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-2"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:think-and-discuss-3",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+       "Draw the right triangle MKN with the right angle at K.",
+       "$MK=|7-3|=4$ and $NK=|5-2|=3$.",
+       "$(MN)^2=(MK)^2+(KN)^2=3^2+4^2=9+16=25$",
+       "MN = 5 unit length."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-3",
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB",
+      "kind": "value",
+      "answer": "√13",
+      "solution": [
+       "$AB=\\sqrt{(1-4)^2+(1-3)^2}$",
+       "$=\\sqrt{(-3)^2+(-2)^2}$",
+       "$=\\sqrt{9+4}=\\sqrt{13}$",
+       "AB = √13."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:BC",
+      "kind": "value",
+      "answer": "2√13",
+      "solution": [
+       "$BC=\\sqrt{(-5-1)^2+(-3-1)^2}$",
+       "$=\\sqrt{(-6)^2+(-4)^2}$",
+       "$=\\sqrt{36+16}=\\sqrt{52}$",
+       "$\\sqrt{52}=\\sqrt{4\\times13}=2\\sqrt{13}$",
+       "BC = 2√13."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AC",
+      "kind": "value",
+      "answer": "3√13",
+      "solution": [
+       "$AC=\\sqrt{(-5-4)^2+(-3-3)^2}$",
+       "$=\\sqrt{(-9)^2+(-6)^2}$",
+       "$=\\sqrt{81+36}=\\sqrt{117}$",
+       "$\\sqrt{117}=\\sqrt{9\\times13}=3\\sqrt{13}$",
+       "AC = 3√13."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB + BC",
+      "kind": "value",
+      "answer": "AB + BC = √13 + 2√13 = 3√13",
+      "solution": [
+       "Use AB = √13 and BC = 2√13.",
+       "$AB+BC=\\sqrt{13}+2\\sqrt{13}$",
+       "$=3\\sqrt{13}$"
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB + ... = AC",
+      "kind": "value",
+      "answer": "BC",
+      "solution": [
+       "AB + BC = 3√13.",
+       "AC = 3√13.",
+       "So the blank is BC: AB + BC = AC."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-2:conclusion",
+      "kind": "explanation",
+      "answer": "The points A, B and C are collinear, because AB + BC = AC.",
+      "solution": [
+       "AB + BC = 3√13 and AC = 3√13.",
+       "The sum of two distances equals the third distance, AB + BC = AC.",
+       "So the points A, B and C are collinear."
+      ],
+      "grounded_in": [
+       "pp3u5-1:objective-3",
+       "pp3u5-1:rule-4"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-1:think-and-discuss-1",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "pp3u5-1:think-and-discuss-2",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "pp3u5-1:think-and-discuss-3",
+      "kind": "value",
+      "answer": "5"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB",
+      "kind": "value",
+      "answer": "√13"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:BC",
+      "kind": "value",
+      "answer": "√52 = 2√13"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AC",
+      "kind": "value",
+      "answer": "√117 = 3√13"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB + BC",
+      "kind": "value",
+      "answer": "√13 + 2√13 = 3√13"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:AB + ... = AC",
+      "kind": "value",
+      "answer": "BC (AB + BC = AC)"
+     },
+     {
+      "ref": "pp3u5-1:drill-2:conclusion",
+      "kind": "explanation",
+      "answer": "Since AB + BC = AC (3√13), the points A, B and C are collinear."
+     }
+    ]
+   }
+  },
+  {
+   "label": "pp3u5-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u5-1:drill-1:1",
+      "kind": "explanation",
+      "answer": "ABCD is a parallelogram if both pairs of opposite sides are equal in length: AB = CD and BC = DA.",
+      "solution": [
+       "Use the distance rule $\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$ to find AB, BC, CD and DA.",
+       "Check that AB = CD.",
+       "Check that BC = DA.",
+       "If both pairs of opposite sides are equal, ABCD is a parallelogram."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4",
+       "pp3u5-1:objective-2"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-1:2",
+      "kind": "explanation",
+      "answer": "ABCD is a rectangle if it is a parallelogram (AB = CD and BC = DA) and its diagonals are equal in length: AC = BD.",
+      "solution": [
+       "Use the distance rule to find AB, BC, CD and DA.",
+       "Show AB = CD and BC = DA, so ABCD is a parallelogram.",
+       "Find the diagonals AC and BD with the distance rule.",
+       "Show AC = BD.",
+       "A parallelogram with equal diagonals is a rectangle."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4",
+       "pp3u5-1:example-1",
+       "pp3u5-1:objective-2"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-1:3",
+      "kind": "explanation",
+      "answer": "ABCD is a rhombus if all four sides are equal in length: AB = BC = CD = DA (its diagonals are not equal, otherwise it is a square).",
+      "solution": [
+       "Use the distance rule to find AB, BC, CD and DA.",
+       "Show AB = BC = CD = DA.",
+       "Find the diagonals AC and BD.",
+       "If AC ≠ BD, the figure is a rhombus and not a square."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4",
+       "pp3u5-1:example-1",
+       "pp3u5-1:objective-2"
+      ]
+     },
+     {
+      "ref": "pp3u5-1:drill-1:4",
+      "kind": "explanation",
+      "answer": "ABCD is a square if all four sides are equal (AB = BC = CD = DA) and the two diagonals are equal (AC = BD).",
+      "solution": [
+       "Use the distance rule to find AB, BC, CD and DA.",
+       "Show AB = BC = CD = DA, so ABCD is a rhombus.",
+       "Find the diagonals AC and BD.",
+       "Show AC = BD.",
+       "A figure with four equal sides and equal diagonals is a square."
+      ],
+      "grounded_in": [
+       "pp3u5-1:rule-4",
+       "pp3u5-1:example-1",
+       "pp3u5-1:objective-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u5-1:drill-1:1",
+      "kind": "explanation",
+      "answer": "Parallelogram: both pairs of opposite sides are equal in length (AB = CD and BC = DA), or the two diagonals bisect each other (the midpoints of AC and BD coincide)."
+     },
+     {
+      "ref": "pp3u5-1:drill-1:2",
+      "kind": "explanation",
+      "answer": "Rectangle: it is a parallelogram (opposite sides equal, AB = CD and BC = DA) and the two diagonals are equal in length (AC = BD). Equivalently, one angle is a right angle, which can be checked with the converse of the Pythagorean theorem."
+     },
+     {
+      "ref": "pp3u5-1:drill-1:3",
+      "kind": "explanation",
+      "answer": "Rhombus: all four sides are equal in length (AB = BC = CD = DA). Equivalently, it is a parallelogram whose diagonals are perpendicular."
+     },
+     {
+      "ref": "pp3u5-1:drill-1:4",
+      "kind": "explanation",
+      "answer": "Square: all four sides are equal (AB = BC = CD = DA) and the two diagonals are equal (AC = BD). This makes it a rhombus with equal diagonals, which is also a rectangle with equal adjacent sides."
+     }
+    ]
+   }
+  }
+ ]
+}

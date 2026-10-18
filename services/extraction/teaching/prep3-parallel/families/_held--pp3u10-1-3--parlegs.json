@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-3:parlegs",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-3",
+ "parent_question_id": "q:pp3u10-1-3:bk-drill-7-4",
+ "source_page": 69,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a + 1 + x % 2"
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    8
+   ]
+  },
+  {
+   "name": "b",
+   "let": "d + (c - a) * x"
+  },
+  {
+   "name": "len",
+   "let": "a * x + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "$\\overline{AB}$ and $\\overline{CD}$ are two parallel chords in a circle, and the points A, B, D, C lie on the circle in this order. If $AC = ({=a}x + {=b})$ cm and $BD = ({=c}x + {=d})$ cm, find the length of $\\overline{BD}$ in cm.",
+ "answer": "len",
+ "solution": [
+  "Since $\\overline{AB} \\parallel \\overline{CD}$, the arcs between them are equal: m(arc AC) = m(arc BD).",
+  "In the same circle, equal arcs have equal chords, so $AC = BD$.",
+  "${=a}x + {=b} = {=c}x + {=d}$, so ${=c - a}x = {=b - d}$ and $x = {=x}$.",
+  "$BD = {=c} \\times {=x} + {=d} = {=len}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Legs of an isosceles trapezoid inscribed in a circle. c-a is 1 or 2, so x is a whole number; b-d=(c-a)x."
+}

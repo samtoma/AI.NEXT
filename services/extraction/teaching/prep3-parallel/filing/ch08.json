@@ -1,0 +1,464 @@
+{
+ "format": "ainext.filing/1",
+ "book": "prep3-parallel",
+ "chapter": 8,
+ "made": "2026-10-18",
+ "made_by": "book_record_filing.py accept (file-v1)",
+ "run": "runs/prep3-parallel/filing/filing-ch08.20261018T071606Z.json",
+ "lessons": [
+  {
+   "slug": "pp3u8-1",
+   "title": "Operations on events",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u8-1:objective-1",
+     "label": "Sample space and probability",
+     "description": "Write the sample space and events of a random experiment as sets and calculate the probability P(A) = n(A)/n(S)."
+    },
+    {
+     "n": 2,
+     "id": "pp3u8-1:objective-2",
+     "label": "Intersection and mutually exclusive",
+     "description": "Determine the intersection A ∩ B of two events using a Venn diagram, calculate its probability, and identify mutually exclusive events."
+    },
+    {
+     "n": 3,
+     "id": "pp3u8-1:objective-3",
+     "label": "Union of events",
+     "description": "Determine the union A ∪ B of two events and calculate its probability using P(A ∪ B) = P(A) + P(B) − P(A ∩ B), including for mutually exclusive events."
+    }
+   ],
+   "entries": [
+    {
+     "key": "pp3u8-1:figure-1",
+     "type": "figure",
+     "page": 30,
+     "text": "Picture of a dice showing faces 4, 3 and 1.",
+     "A": {
+      "objective": 1,
+      "why": "A dice picture illustrates the random experiment whose sample space is written."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Dice picture introduces the random experiment whose sample space is written."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "69fe8d58947fa307"
+    },
+    {
+     "key": "pp3u8-1:convention-1",
+     "type": "convention",
+     "page": 30,
+     "text": "n(A) is the number of elements of the event A, n(S) is the number of elements of sample space S, and P(A) is the probability of occurring event A.",
+     "A": {
+      "objective": 1,
+      "why": "Defines n(A), n(S) and P(A) used in P(A)=n(A)/n(S)."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines n(A), n(S) and P(A), the notation for P(A) = n(A)/n(S)."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "8fd0020215b82a83"
+    },
+    {
+     "key": "pp3u8-1:figure-2",
+     "type": "figure",
+     "page": 30,
+     "text": "Number line of probability: impossible event at 0 (0%); less likely at 1/4 (25%); equally likely as unlikely at 1/2 (50%); more likely at 3/4 (75%); certain event at 1 (100%).",
+     "A": {
+      "objective": 1,
+      "why": "Probability number line shows the range of values of P(A)."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Probability number line gives the meaning of probability values from 0 to 1."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "a4a3aa132e068595"
+    },
+    {
+     "key": "pp3u8-1:figure-3",
+     "type": "figure",
+     "page": 31,
+     "text": "Spinner circle divided into eight equal sectors with a pointer; colours going clockwise from the top: green, yellow, green, yellow, (bottom) green, yellow? read from image: top-right green, right-upper yellow, right-lower green, bottom-right yellow, bottom-left green, left-lower blue, left-upper peach (light orange), top-left orange. Pointer stops in the peach sector.",
+     "A": {
+      "objective": 1,
+      "why": "Spinner experiment is used to write sample space and events."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Spinner is a random experiment whose sample space and events are written as sets."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "17ba227fabb41ccd"
+    },
+    {
+     "key": "pp3u8-1:figure-4",
+     "type": "figure",
+     "page": 31,
+     "text": "Venn diagram in a rectangle labelled E: two overlapping circles B (left) and A (right); the overlap is shaded and labelled with an arrow 'B ∩ A'.",
+     "A": {
+      "objective": 2,
+      "why": "Venn diagram with shaded overlap shows the intersection B ∩ A."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Shaded overlap labelled B ∩ A illustrates the intersection of two events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "983d0780f895e171"
+    },
+    {
+     "key": "pp3u8-1:caution-1",
+     "type": "caution",
+     "page": 31,
+     "text": "Note that: It is said that an event occurred if the outcome of the experiment is an element of the elements of the set expressing this event.",
+     "A": {
+      "objective": 1,
+      "why": "Explains when an event occurs, based on the outcome being an element of the event set."
+     },
+     "B": {
+      "objective": 1,
+      "why": "States when an event occurs, based on the outcome being an element of the event set."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "abd5ea6df0d964b5"
+    },
+    {
+     "key": "pp3u8-1:figure-5",
+     "type": "figure",
+     "page": 31,
+     "text": "Eight identical plain green-yellow cards in two rows of four, no numbers shown.",
+     "A": {
+      "objective": 1,
+      "why": "Identical cards form the experiment whose sample space and events are written."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Cards for a random experiment, used to set up the sample space and events."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "3124ecccbc76139b"
+    },
+    {
+     "key": "pp3u8-1:figure-6",
+     "type": "figure",
+     "page": 32,
+     "text": "Venn diagram in rectangle S with circle B and circle A; intersection of A and B shaded yellow containing 2; B only contains 3, 5, 7; A only contains 6, 8 and 4 (4 and 8 inside a smaller oval C inside A); points marked x. Read from figure; verify.",
+     "A": {
+      "objective": 2,
+      "why": "Venn diagram with shaded intersection of A and B and an event C, used for intersection and exclusivity."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Venn diagram with shaded intersection of A and B, and the smaller oval C inside A."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "6e7914170efae1ba"
+    },
+    {
+     "key": "pp3u8-1:notice-1",
+     "type": "rule",
+     "page": 32,
+     "text": "The two events B and C cannot occur at the same time so we say A and B are mutually exclusive events.",
+     "A": {
+      "objective": 2,
+      "why": "States that events which cannot occur together are mutually exclusive."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Explains that events which cannot occur together are mutually exclusive."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "4e192fe9f6add178"
+    },
+    {
+     "key": "pp3u8-1:definition-3",
+     "type": "definition",
+     "page": 32,
+     "text": "A set of events is mutually exclusive if every pair of them is mutually exclusive.",
+     "A": {
+      "objective": 2,
+      "why": "Extends mutually exclusive to a set of events."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Defines a set of mutually exclusive events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "e8b05b438d6ab26e"
+    },
+    {
+     "key": "pp3u8-1:figure-7",
+     "type": "figure",
+     "page": 32,
+     "text": "Two separate (non-overlapping) ovals labelled A (yellow) and B (green), showing mutually exclusive events.",
+     "A": {
+      "objective": 2,
+      "why": "Separate ovals illustrate mutually exclusive events."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Non-overlapping ovals show mutually exclusive events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "40b143d78ceace58"
+    },
+    {
+     "key": "pp3u8-1:figure-8",
+     "type": "figure",
+     "page": 33,
+     "text": "Venn diagram inside rectangle S with two overlapping circles. Left circle labelled B contains 3, 9 and the overlap 6 (shaded yellow); right circle labelled A contains 2, 4, 8 and the overlap 6. Outside both circles: 5, 1, and 7 which is circled in green and labelled C.",
+     "A": {
+      "objective": 2,
+      "why": "Venn diagram with overlap 6 and disjoint C is used to find intersections and mutually exclusive events."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Venn diagram with overlap 6 and separate C is used to find the intersection and mutually exclusive events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "ad53d12591e74b21"
+    },
+    {
+     "key": "pp3u8-1:figure-9",
+     "type": "figure",
+     "page": 34,
+     "text": "Venn diagram in a rectangle labelled S with two separate (disjoint) ovals labelled A and B.",
+     "A": {
+      "objective": 2,
+      "why": "Disjoint ovals show mutually exclusive events A and B."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Disjoint ovals A and B show mutually exclusive events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "c10689d48c2a52ce"
+    },
+    {
+     "key": "pp3u8-1:definition-5",
+     "type": "definition",
+     "page": 34,
+     "text": "Remark: if A and B are mutually exclusive events from sample space S (as in the figure), then the following hold.",
+     "A": {
+      "objective": 2,
+      "why": "Remark on properties of mutually exclusive events, about their intersection."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Remark on properties of mutually exclusive events, starting with the empty intersection."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "fa585d6586f6fcb9"
+    },
+    {
+     "key": "pp3u8-1:rule-2",
+     "type": "rule",
+     "page": 34,
+     "text": "For mutually exclusive events, A ∩ B is the empty set. $A \\cap B = \\phi$",
+     "A": {
+      "objective": 2,
+      "why": "Mutually exclusive events have an empty intersection."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Mutually exclusive events have A ∩ B = φ."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "f791bbacab610271"
+    },
+    {
+     "key": "pp3u8-1:rule-3",
+     "type": "rule",
+     "page": 34,
+     "text": "P(A ∩ B) = (number of elements of φ)/(number of elements of S) = Zero/(number of elements of S) = Zero. $P(A \\cap B)=\\frac{n(\\phi)}{n(S)}=\\frac{0}{n(S)}=0$",
+     "A": {
+      "objective": 2,
+      "why": "Shows the probability of the intersection of mutually exclusive events is zero."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Probability of the intersection of mutually exclusive events is zero."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "0cf7d5519ea54af2"
+    },
+    {
+     "key": "pp3u8-1:figure-10",
+     "type": "figure",
+     "page": 34,
+     "text": "Venn diagram in rectangle S with overlapping ovals A and B and a separate oval C. A only: 1, 3, 4; overlap A∩B: 7; B only: 2, 5; outside ovals: 8; C contains 6, 9, 12. C is disjoint from A and B.",
+     "A": {
+      "objective": 2,
+      "why": "Venn diagram with overlap A∩B and disjoint C practises intersection and mutually exclusive events."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Venn diagram with disjoint C and overlapping A, B illustrates intersection and mutually exclusive events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "5adc44c1cbdbcf94"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u8-2",
+   "title": "Complementary event and the difference between two events",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u8-2:objective-1",
+     "label": "Complementary event and its probability",
+     "description": "Determine the complementary event A` of an event A in a sample space S (A ∪ A` = S, A ∩ A` = φ) and calculate P(A`) using P(A`) = 1 - P(A)."
+    },
+    {
+     "n": 2,
+     "id": "pp3u8-2:objective-2",
+     "label": "Difference between two events",
+     "description": "Calculate the probability of the difference between two events, A - B (the occurrence of A only), from set counts or a Venn diagram, using (A - B) ∪ (A ∩ B) = A."
+    }
+   ],
+   "entries": [
+    {
+     "key": "pp3u8-2:figure-1",
+     "type": "figure",
+     "page": 35,
+     "text": "Venn diagram: rectangle labelled S containing an oval labelled A; the region outside the oval is labelled A`.",
+     "A": {
+      "objective": 1,
+      "why": "Venn diagram shows A and its complement A` in S."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Venn diagram showing A in S with A` as the region outside it."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "6500044bc30bba41"
+    },
+    {
+     "key": "pp3u8-2:rule-1",
+     "type": "rule",
+     "page": 35,
+     "text": "The event and the complementary event are two mutually exclusive events.",
+     "A": {
+      "objective": 1,
+      "why": "States that an event and its complement are mutually exclusive, part of the complementary event."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Says an event and its complement are mutually exclusive (A ∩ A` = φ)."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "5bab1836c5064953"
+    },
+    {
+     "key": "pp3u8-2:table-1",
+     "type": "table",
+     "page": 35,
+     "text": "Drill table to complete: events A and A`, probabilities, and their sum; some cells given, others blank. event A, event A`, P (A), P (A`), P (A) + P (A`) / {2, 4, 6}, , , , / , {3, 6}, , , / {5}, , , , / {1, 2, 3, 4, 5, 6}, , , ,",
+     "A": {
+      "objective": 1,
+      "why": "Drill on A, A`, P(A), P(A`) and their sum of 1."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Drill table on A, A`, P(A), P(A`) and their sum, which is 1."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "0ab623c66efd7461"
+    },
+    {
+     "key": "pp3u8-2:figure-2",
+     "type": "figure",
+     "page": 36,
+     "text": "Venn diagram in rectangle S with two overlapping ovals labelled B (left) and A (right). Left-only region 7, intersection 8, right-only region 10, outside both ovals 15. Values read from the figure; verify.",
+     "A": {
+      "objective": 2,
+      "why": "Venn diagram with set counts used to find the probability of A - B."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Venn diagram with counts used to find the probability of A - B."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "c6a175c37d541f75"
+    },
+    {
+     "key": "pp3u8-2:definition-2",
+     "type": "definition",
+     "page": 36,
+     "text": "The set A - B (reading Al Akhbar only, not the other newspaper) is read as 'A difference B'. $A-B$",
+     "A": {
+      "objective": 2,
+      "why": "Defines A - B as A only, read 'A difference B'."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Defines A - B as 'A difference B', reading Al Akhbar only."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "f666ed8aed37b88f"
+    },
+    {
+     "key": "pp3u8-2:figure-3",
+     "type": "figure",
+     "page": 36,
+     "text": "Venn diagram in rectangle S with two overlapping ovals, B (left) and A (right). The part of A outside B is shaded blue and labelled A - B.",
+     "A": {
+      "objective": 2,
+      "why": "Shaded Venn diagram showing A - B as the part of A outside B."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Venn diagram shading A - B, the part of A outside B."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d04dd9a077ca78b5"
+    },
+    {
+     "key": "pp3u8-2:rule-3",
+     "type": "rule",
+     "page": 37,
+     "text": "Note that (A - B) ∪ (A ∩ B) = A (the symbol between the two brackets is not clearly printed). $(A - B) \\cup (A \\cap B) = A$",
+     "A": {
+      "objective": 2,
+      "why": "Gives (A - B) ∪ (A ∩ B) = A for the difference of two events."
+     },
+     "B": {
+      "objective": 2,
+      "why": "States (A - B) ∪ (A ∩ B) = A, the identity for the difference of two events."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "9ae22b62469fb911"
+    }
+   ]
+  }
+ ]
+}

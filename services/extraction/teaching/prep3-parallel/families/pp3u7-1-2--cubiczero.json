@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-1-2:cubiczero",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-1-2",
+ "parent_question_id": "q:pp3u7-1-2:bk-drill-1-d",
+ "source_page": 16,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    "p + 1",
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "m",
+   "let": "p * q"
+  }
+ ],
+ "stem": "Find the set of zeroes of the function $f(x)=x^3-{=s}x^2+{=m}x$. Give the zeroes as a list of values.",
+ "solution": [
+  "Put $f(x)=0$: $x^3-{=s}x^2+{=m}x=0$.",
+  "Take out the common factor $x$: $x(x^2-{=s}x+{=m})=0$.",
+  "Factorise the bracket: $x(x-{=p})(x-{=q})=0$.",
+  "$x=0$, or $x-{=p}=0$, or $x-{=q}=0$.",
+  "$Z(f)=\\{0, {=p}, {=q}\\}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[0, {=p}, {=q}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Two-stage factorisation (common factor then quadratic), three distinct zeroes, as in book 1-a/1-d style."
+}

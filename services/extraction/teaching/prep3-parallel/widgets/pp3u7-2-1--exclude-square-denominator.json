@@ -1,0 +1,37 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-2-1:exclude-square-denominator",
+ "lo_id": "lo:pp3u7-2-1",
+ "parent_question_id": "q:pp3u7-2-1:bk-drill-2",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -2,
+   2
+  ]
+ },
+ "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+ "solution": [
+  "The domain is R minus the zeroes of the denominator, so set the denominator equal to zero: $x^2-4=0$.",
+  "Then $x^2=4$, so $x=2$ or $x=-2$ (a square has two roots).",
+  "Mark both $-2$ and $2$; the domain is $R-\\{-2,2\\}$.",
+  "The numerator's zero ($x=-1$) does not matter for the domain."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "missed-values",
+   "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator"
+  },
+  {
+   "predicate": "extra-values",
+   "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+  }
+ ],
+ "notes": "Likeliest error first: marking only 2 (or only -2) fires missed-values -> one root only. Marking the numerator zero -1 alongside the correct values fires extra-values; marking only -1 may fire a different predicate (off-target or both), which is deliberately not mapped. sign-flipped is not mapped: no listed misconception on this objective covers it."
+}

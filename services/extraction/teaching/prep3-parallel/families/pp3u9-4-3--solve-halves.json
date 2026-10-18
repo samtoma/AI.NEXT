@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-4-3:solve-halves",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-4-3",
+ "parent_question_id": "q:pp3u9-4-3:bk-exercise-4",
+ "source_page": 61,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "let": "x - p"
+  },
+  {
+   "name": "e",
+   "let": "2*x + p"
+  }
+ ],
+ "constraints": [
+  "q >= 1"
+ ],
+ "stem": "In a circle with center $M$, $\\overline{AB}$ and $\\overline{AC}$ are two chords. $MD\\perp\\overline{AB}$ at $D$ and $ME\\perp\\overline{AC}$ at $E$, and $MD=ME$. If $AD=(2x+{=p})$ cm and $AE=(3x-{=q})$ cm, find the length of $\\overline{AB}$ in cm.",
+ "answer": "2*e",
+ "solution": [
+  "MD = ME, so the chords AB and AC are equidistant from the center, so AB = AC (converse).",
+  "D and E are the midpoints of AB and AC (a perpendicular from the center bisects the chord), so AD = AE.",
+  "2x + {=p} = 3x − {=q}, so x = {=x}.",
+  "AD = 2 × {=x} + {=p} = {=e} cm.",
+  "AB = 2 × AD = {=2*e} cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: converse, then half-chords equal, solve linear equation, double. q=x-p guarantees AD=AE=e at the chosen x; AE = 3x-q = 2x+p."
+}

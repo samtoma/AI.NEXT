@@ -1,0 +1,929 @@
+{
+  "source_file": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+  "extraction_run": {
+    "extractor": "compile_book_records.py, from book records",
+    "extractor_version": "compile-v3",
+    "schema_version": "book-record-2"
+  },
+  "syllabus_version": "book-record-2",
+  "nodes": [
+    {
+      "id": "module:pp3u6",
+      "kind": "module",
+      "label": "Unit 1 Equations (Algebra)",
+      "order_in_parent": 6,
+      "source_page": 5
+    },
+    {
+      "id": "lo:pp3u6-1-1",
+      "kind": "learning_objective",
+      "label": "Solutions of two-variable equation",
+      "description": "Find ordered-pair solutions of a first-degree equation in two variables by writing it in the form y = ... or x = ... and substituting values, and represent its solution set as a straight line.",
+      "source_page": 5,
+      "syllabus_ref": "Lesson 1-1",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u6-1-2",
+      "kind": "learning_objective",
+      "label": "Solve simultaneous equations graphically",
+      "description": "Solve two first-degree equations in two variables graphically by drawing both lines and reading the solution set from the intersection point, identifying when the lines are parallel or coincide.",
+      "source_page": 5,
+      "syllabus_ref": "Lesson 1-1",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u6-1-3",
+      "kind": "learning_objective",
+      "label": "Solve simultaneous equations algebraically",
+      "description": "Solve two first-degree equations in two variables algebraically by substitution or by omitting (eliminating) one variable, and state the number of solutions.",
+      "source_page": 8,
+      "syllabus_ref": "Lesson 1-1",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u6-1-4",
+      "kind": "learning_objective",
+      "label": "Apply simultaneous equations",
+      "description": "Form and solve a pair of first-degree equations in two variables from a given solution or word problem to find unknown coefficients or numbers.",
+      "source_page": 9,
+      "syllabus_ref": "Lesson 1-1",
+      "order_in_parent": 4
+    },
+    {
+      "id": "lo:pp3u6-2-1",
+      "kind": "learning_objective",
+      "label": "Solve graphically",
+      "description": "Draw the graph of a quadratic function f(x) = ax^2 + bx + c in a given interval and read the solution set of the equation from the x-coordinates of the points where the curve meets the x-axis.",
+      "source_page": 10,
+      "syllabus_ref": "Lesson 1-2",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u6-2-2",
+      "kind": "learning_objective",
+      "label": "Solve by factorising or completing square",
+      "description": "Solve a quadratic equation by factorizing the left side or by completing the square, and write the solution set.",
+      "source_page": 10,
+      "syllabus_ref": "Lesson 1-2",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u6-2-3",
+      "kind": "learning_objective",
+      "label": "Use the general rule (quadratic formula)",
+      "description": "Solve a quadratic equation algebraically using the general rule (quadratic formula), rounding the solutions, and reject a solution that does not fit a real-life context.",
+      "source_page": 11,
+      "syllabus_ref": "Lesson 1-2",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u6-3-1",
+      "kind": "learning_objective",
+      "label": "Solve by substitution",
+      "description": "Solve algebraically two equations in two variables, one of the first degree and one of the second degree, by substitution and state the solution set.",
+      "source_page": 13,
+      "syllabus_ref": "Lesson 1-3",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u6-3-2",
+      "kind": "learning_objective",
+      "label": "Solve rectangle dimension problems",
+      "description": "Solve a word problem about a rectangle's perimeter and area by forming one first-degree and one second-degree equation and finding its two dimensions.",
+      "source_page": 13,
+      "syllabus_ref": "Lesson 1-3",
+      "order_in_parent": 2
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:pp3u6",
+      "dst": "course:prep3-parallel-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-1-4",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-2-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-2-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-2-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-3-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u6",
+      "dst": "lo:pp3u6-3-2",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:pp3u6-1-1",
+      "dst": "lo:pp3u6-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u6-1-3",
+      "dst": "lo:pp3u6-1-4",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u6-2-2",
+      "dst": "lo:pp3u6-3-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u6-1-3",
+      "dst": "lo:pp3u6-3-1",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:pp3u6-1-2:bk-example-2",
+      "lo": "lo:pp3u6-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the solution set of the following two equations graphically: $L_1 : y = 2x - 3$, $L_2 : x + 2y = 4$",
+      "answer": "\\{(2, 1)\\}",
+      "solution": [
+        "In the equation $y = 2x - 3$",
+        "By putting $x = 0$ ∴ $y = -3$ ∴ $(0, -3)$ is a solution of this equation",
+        "By putting $x = 4$ ∴ $y = 5$ ∴ $(4, 5)$ is a solution of this equation",
+        "Thus: $L_1$ in the opposite figure represents the solution set of this of equation (1)",
+        "By putting the equation $x + 2y = 4$ int the form $x = 4 - 2y$",
+        "By putting $y = 0$ ∴ $x = 4$ ∴ $(4, 0)$ is a solution of this equation",
+        "By putting $y = 1$ ∴ $x = 2$ ∴ $(2, 1)$ is a solution of this equation",
+        "This: $L_2$ in the opposite figure represents the solution set of the equation (2)",
+        "In the figure $L_1 \\cap L_2$ is the point $(2, 1)$",
+        "∴ The solution set of the two equations is $\\{(2, 1)\\}$"
+      ],
+      "source_page": 6,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-1:example-2, printed p.6); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(2, 1)\\}",
+          "variables": []
+        }
+      },
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-2:bk-exercise-1",
+      "lo": "lo:pp3u6-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$2x + y = 0$, $x + 2y = 3$",
+      "answer": "\\{(-1, 2)\\}",
+      "solution": [
+        "Write $2x + y = 0$ as $y = -2x$.",
+        "$x = 0$ gives $y = 0$, so $(0, 0)$; $x = 1$ gives $y = -2$, so $(1, -2)$. Draw line $L_1$ through them.",
+        "Write $x + 2y = 3$ as $x = 3 - 2y$.",
+        "$y = 0$ gives $x = 3$, so $(3, 0)$; $y = 1$ gives $x = 1$, so $(1, 1)$. Draw line $L_2$ through them.",
+        "The lines meet at the point $(-1, 2)$.",
+        "Check: $2(-1) + 2 = 0$ and $-1 + 2(2) = 3$.",
+        "The solution set is $\\{(-1, 2)\\}$."
+      ],
+      "source_page": 6,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:exercise-1, printed p.6); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(-1, 2)\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-2:bk-exercise-2",
+      "lo": "lo:pp3u6-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$y = 3x - 1$, $x - y + 1 = 0$",
+      "answer": "\\{(1, 2)\\}",
+      "solution": [
+        "Line $L_1$: $y = 3x - 1$. $x = 0$ gives $y = -1$, so $(0, -1)$; $x = 1$ gives $y = 2$, so $(1, 2)$. Draw $L_1$ through them.",
+        "Line $L_2$: $x - y + 1 = 0$ is $y = x + 1$. $x = 0$ gives $y = 1$, so $(0, 1)$; $x = 1$ gives $y = 2$, so $(1, 2)$. Draw $L_2$ through them.",
+        "The lines meet at the point $(1, 2)$.",
+        "Check: $3(1) - 1 = 2$ and $1 - 2 + 1 = 0$.",
+        "The solution set is $\\{(1, 2)\\}$."
+      ],
+      "source_page": 6,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:exercise-2, printed p.6); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(1, 2)\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-2:bk-example-3-first",
+      "lo": "lo:pp3u6-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find graphically the solution set for each pair of the following equations: $3x+y=4$ (1), $2y+6x=3$ (2)",
+      "answer": "No",
+      "solution": [
+        "Put the equation (1) in the form $y=4-3x$",
+        "By putting $x=0$, $y=4$, thus $(0, 4)$ is a solution of the equation",
+        "By putting $x=2$, $y=-2$, thus $(2, -2)$ is a solution of the equation",
+        "$L_1$ represents a solution set of the equation (1)",
+        "By putting the equation (2) in the form $y=\\frac{3-6x}{2}$",
+        "By putting $x=0$, $y=\\frac{3}{2}$, thus $(0, \\frac{3}{2})$ is a solution of the equation",
+        "By putting $x=1$, $y=\\frac{-3}{2}$, thus $(1, \\frac{-3}{2})$ is a solution of the equation",
+        "and $L_2$ is a solution of the equation (2)",
+        "$\\because L_1\\cap L_2=\\phi$ $\\therefore$ No solution for the two equations together.",
+        "i.e there is no solution of the two equations (1), (2) when $L_1 \\parallel L_2$",
+        "From the Analytical Geometry: the slope of $L_1=\\frac{-3}{1}=-3$, the slope of $L_2=\\frac{-6}{2}=-3$, $\\therefore L_1\\parallel L_2$"
+      ],
+      "source_page": 7,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-1:example-3:First, printed p.7); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-3:bk-example-4",
+      "lo": "lo:pp3u6-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the solution set of the two equations $2x-y=3$ (1), $x+2y=4$ (2)",
+      "answer": "\\{(2, 1)\\}",
+      "solution": [
+        "Substitution method: From the equation (1), $y=2x-3$",
+        "By substitution in the equation (2): $\\therefore x+2(2x-3)=4$",
+        "thus: $x+4x-6=4$, $\\therefore 5x=10$, $\\therefore x=2$",
+        "Substituting in equation (1): $\\therefore y=2\\times2-3$, $\\therefore y=1$",
+        "$\\therefore$ The common solution set of the two equations $=\\{(2, 1)\\}$",
+        "Another solution (Omitting method): Omitting one of the two variables in the two equations (by adding or subtracting) to get a third equation in one variable, and by solving the resulted equation we find the value of this variable.",
+        "$2x-y=3$ (1), $x+2y=4$ (2)",
+        "By multiplying the two sides of the equation (1) $\\times 2$: $\\therefore 4x-2y=6$ (3)",
+        "Adding (2) and (3): $\\therefore 5x=10$, $\\therefore x=2$",
+        "Substituting in (1): $\\therefore 2\\times2-y=3$, $\\therefore y=1$",
+        "$\\therefore$ The common solution set of the two equations is $=\\{(2, 1)\\}$."
+      ],
+      "source_page": 8,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-1:example-4, printed p.8); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(2, 1)\\}",
+          "variables": []
+        }
+      },
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-3:bk-drill-3-a",
+      "lo": "lo:pp3u6-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find algebraically, the solution set of each pair of the following equations: $3x+4y=24$, $x-2y+2=0$",
+      "answer": "\\{(4, 3)\\}",
+      "solution": [
+        "$3x + 4y = 24$ ... (1) and $x - 2y + 2 = 0$ ... (2).",
+        "From (2): $x = 2y - 2$.",
+        "Substitute in (1): $3(2y - 2) + 4y = 24$.",
+        "$6y - 6 + 4y = 24$, so $10y = 30$ and $y = 3$.",
+        "Substitute in $x = 2y - 2$: $x = 2 \\times 3 - 2 = 4$.",
+        "The solution set is {(4, 3)}."
+      ],
+      "source_page": 8,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:drill-3:A, printed p.8); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(4, 3)\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-3:bk-drill-3-b",
+      "lo": "lo:pp3u6-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find algebraically, the solution set of each pair of the following equations: $3x+2y=4$, $x-3y=5$",
+      "answer": "\\{(2, -1)\\}",
+      "solution": [
+        "$3x + 2y = 4$ ... (1) and $x - 3y = 5$ ... (2).",
+        "From (2): $x = 5 + 3y$.",
+        "Substitute in (1): $3(5 + 3y) + 2y = 4$.",
+        "$15 + 9y + 2y = 4$, so $11y = -11$ and $y = -1$.",
+        "Substitute in $x = 5 + 3y$: $x = 5 - 3 = 2$.",
+        "The solution set is {(2, -1)}."
+      ],
+      "source_page": 8,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:drill-3:B, printed p.8); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{(2, -1)\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-4:bk-example-5",
+      "lo": "lo:pp3u6-1-4",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Find the values of $a$, $b$ knowing that $(3, -1)$ is the solution of the two equations: $ax+by-5=0$, $3ax+by=17$",
+      "answer": "a = 2, b = 1",
+      "solution": [
+        "∵ (3, -1) is the solution of the two equations",
+        "∴ (3, -1) is the solution of the equations $ax+by-5=0$",
+        "∴ $3a-b-5=0$ i.e.: $3a-b=5$ (1)",
+        "(3, -1) is the solution of the equations $3ax+by=17$",
+        "∴ $9a-b=17$ (2)",
+        "Subtracting both sides of equation (1) from both sides of equation (2) we get: $6a=12$ ∴ $a=2$",
+        "Substituting in equation (1): $3\\times2-b=5$ ∴ $b=1$"
+      ],
+      "source_page": 9,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-1:example-5, printed p.9); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "a = 2, b = 1",
+          "variables": [
+            "a",
+            "b"
+          ]
+        }
+      },
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-4:bk-example-6",
+      "lo": "lo:pp3u6-1-4",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "A two-digit number of sum of its digits is 11. If the two digits are reversed, then the resulted number is 27 more than the original number. What is the original number ?",
+      "answer": "47",
+      "solution": [
+        "Consider that the units digit is $x$ and the tens digit is $y$.",
+        "∴ $x+y=11$ .... (1)",
+        "The resulted number after reversed its two digits - the original number = 27",
+        "∴ $(y+10x)-(x+10y)=27$ ∴ $y+10x-x-10y=27$",
+        "∴ $9x-9y=27$ by dividing by 9 ∴ $x-y=3$ ....... (2)",
+        "By adding both equations (1) and (2): ∴ $2x=14$ ∴ $x=7$",
+        "substituting in the equation ....... (1): ∴ $7+y=11$ ∴ $y=4$",
+        "∴ the number is 47"
+      ],
+      "source_page": 9,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-1:example-6, printed p.9); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-2-2:bk-think-and-discuss-1-4",
+      "lo": "lo:pp3u6-2-2",
+      "tier": "basic",
+      "type": "short",
+      "stem": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks. $\\therefore$ The solution set is $\\{\\ldots , \\ldots\\}$",
+      "answer": "\\{3, 1\\}",
+      "solution": [
+        "The roots are 3 and 1.",
+        "This matches the graph's x-axis intersections (1, 0) and (3, 0).",
+        "The solution set is {3, 1}."
+      ],
+      "source_page": 10,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-2:think-and-discuss-1:4, printed p.10); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{3, 1\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-2-1:bk-example-1",
+      "lo": "lo:pp3u6-2-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Draw the graphical representation of the function f where $f(x) = x^2 - 4x + 3$ in the interval $[-1, 5]$. From the drawing, find the solution set of the equation $x^2 - 4x + 3 = 0$",
+      "answer": "\\{1, 3\\}",
+      "solution": [
+        "Identify some ordered pairs (x, y) which belong to the function f, whose first projection $x \\in [-1, 5]$: $f(-1)=8$, $f(0)=3$, $f(1)=0$, $f(2)=-1$, $f(3)=0$, $f(4)=3$, $f(5)=8$",
+        "Put the ordered pairs in a table as follows (table).",
+        "Plot on the coordinate plane the points which represent these ordered pairs, then draw a curve passing through these points.",
+        "From the drawing we find that the function curve f intersects the x-axis in two points (3, 0), (1, 0), the two numbers 1, 3 are called the two roots of the equation $x^2 - 4x + 3 = 0$.",
+        "Thus, the solution set of the equation is {1 , 3}"
+      ],
+      "source_page": 10,
+      "source": "seed",
+      "source_note": "The book's own worked example (pp3u6-2:example-1, printed p.10); answer printed in the book. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{1, 3\\}",
+          "variables": []
+        }
+      },
+      "solution_provenance": "book_worked",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-3-1:bk-mental-math-1",
+      "lo": "lo:pp3u6-3-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "If $x + y = 10$ and $x^2 - y^2 = 40$ then find $x - y$.",
+      "answer": "4",
+      "solution": [
+        "Factor the second equation: $x^2 - y^2 = (x+y)(x-y)$.",
+        "Substitute $x + y = 10$: $10(x-y) = 40$.",
+        "Divide both sides by 10: $x - y = 4$.",
+        "The answer is $x - y = 4$."
+      ],
+      "source_page": 13,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-3:mental-math-1, printed p.13); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    }
+  ],
+  "visuals": [
+    {
+      "id": "v:pp3u6-1:figure-2",
+      "lo": "lo:pp3u6-1-1",
+      "question": null,
+      "kind": "function_graph",
+      "spec": {
+        "fn": "linear",
+        "coefs": [
+          2,
+          -1
+        ],
+        "domain": [
+          -2,
+          3
+        ],
+        "markers": [
+          {
+            "x": 0,
+            "label": "(0, -1)"
+          },
+          {
+            "x": 2,
+            "label": "(2, 3)"
+          }
+        ],
+        "animate": "draw"
+      },
+      "caption": "The solutions of 2x − y = 1 all lie on one straight line through (0, −1) and (2, 3).",
+      "source_page": 6
+    },
+    {
+      "id": "v:pp3u6-1:figure-3",
+      "lo": "lo:pp3u6-1-2",
+      "question": "q:pp3u6-1-2:bk-example-2",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -6,
+          6
+        ],
+        "yRange": [
+          -6,
+          6
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": -3,
+            "color": "red"
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "label": "(2, 1)",
+            "color": "purple"
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "label": "L1",
+            "color": "red"
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "label": "L2",
+            "color": "blue"
+          }
+        ],
+        "segments": [
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "animate": "plot-sequence",
+        "interactive": false
+      },
+      "caption": "Line L1 (y = 2x − 3) and line L2 (x + 2y = 4) cross at the point (2, 1), the solution.",
+      "source_page": 6
+    },
+    {
+      "id": "v:pp3u6-1:figure-4",
+      "lo": "lo:pp3u6-1-2",
+      "question": "q:pp3u6-1-2:bk-example-3-first",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -6,
+          6
+        ],
+        "yRange": [
+          -6,
+          6
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 4,
+            "label": "(0, 4)",
+            "color": "red"
+          },
+          {
+            "x": 2,
+            "y": -2,
+            "label": "L1",
+            "color": "red"
+          },
+          {
+            "x": 0,
+            "y": 1.5,
+            "label": "(0, 3/2)",
+            "color": "red"
+          },
+          {
+            "x": 1,
+            "y": -1.5,
+            "label": "L2",
+            "color": "red"
+          }
+        ],
+        "segments": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "animate": "plot-sequence",
+        "interactive": false
+      },
+      "caption": "L1 (3x + y = 4) and L2 (2y + 6x = 3) are parallel lines that never meet.",
+      "source_page": 7
+    },
+    {
+      "id": "v:pp3u6-1:figure-5",
+      "lo": "lo:pp3u6-1-2",
+      "question": "q:pp3u6-1-2:bk-example-3-first",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -6,
+          6
+        ],
+        "yRange": [
+          -6,
+          6
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 3,
+            "label": "(0, 3)",
+            "color": "red"
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "label": "(2, 0)",
+            "color": "red"
+          },
+          {
+            "x": 4,
+            "y": -3,
+            "label": "L1 = L2",
+            "color": "red"
+          }
+        ],
+        "segments": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "animate": "plot-sequence",
+        "interactive": false
+      },
+      "caption": "L1 and L2 (3x + 2y = 6) lie on top of each other, so every point of the line is a solution.",
+      "source_page": 7
+    },
+    {
+      "id": "v:pp3u6-2:figure-1",
+      "lo": "lo:pp3u6-2-1",
+      "question": "q:pp3u6-2-1:bk-example-1",
+      "kind": "function_graph",
+      "spec": {
+        "fn": "quadratic",
+        "coefs": [
+          1,
+          -4,
+          3
+        ],
+        "domain": [
+          -1,
+          5
+        ],
+        "markers": [
+          {
+            "x": 1,
+            "label": "1"
+          },
+          {
+            "x": 3,
+            "label": "3"
+          }
+        ],
+        "reveals": [
+          "vertex",
+          "axis",
+          "roots"
+        ],
+        "animate": "draw"
+      },
+      "caption": "The curve of f(x) = x² − 4x + 3 on [−1, 5] crosses the x-axis at x = 1 and x = 3, so those are the solutions.",
+      "source_page": 11
+    }
+  ],
+  "explanation_entries": [
+    {
+      "id": "expl:pp3u6-1-1:bk-example-1",
+      "lo": "lo:pp3u6-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the solution set of the equation $2x-y=1$"
+        },
+        {
+          "step": 1,
+          "text_md": "Write the equation in the form $y = 2x - 1$"
+        },
+        {
+          "step": 2,
+          "text_md": "By putting $x = 0$ ∴ $y = -1$ ∴ $(0, -1)$ is a solution of the equation"
+        },
+        {
+          "step": 3,
+          "text_md": "By putting $x = 2$ ∴ $y = 3$ ∴ $(2, 3)$ is a solution of the equation"
+        },
+        {
+          "step": 4,
+          "text_md": "And by drawing the straight line L passing throught the two represented points of the two ordered pairs $(0, -1)$, $(2, 3)$."
+        },
+        {
+          "step": 5,
+          "text_md": "We find that every point ∈ L is a solution to the equation."
+        },
+        {
+          "step": 6,
+          "text_md": "i.e for the equation $2x - y = 1$ their is an infinite number of solutions"
+        }
+      ],
+      "source_page": 5,
+      "generated_by": "book (book_worked: pp3u6-1:example-1, printed p.5); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u6-1-2:bk-example-3",
+      "lo": "lo:pp3u6-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find graphically the solution set for each pair of the following equations:"
+        },
+        {
+          "step": 1,
+          "text_md": "By putting the equation (2) in the form of $2y=6-3x$"
+        },
+        {
+          "step": 2,
+          "text_md": "i.e. $3X+2Y=6$ is the same as equation (1); the graph shown illustrates the graphical representation of the two equations by two coincident straight lines."
+        },
+        {
+          "step": 3,
+          "text_md": "We say that: The two equations (1) and (2) have an infinite number of solutions. The solution set is $\\{(x, y): y=3-\\frac{3}{2}x\\}$"
+        }
+      ],
+      "source_page": 7,
+      "generated_by": "book (book_worked: pp3u6-1:example-3, printed p.7); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u6-2-2:bk-think-and-discuss-1-1",
+      "lo": "lo:pp3u6-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks. $(x - \\ldots)(x \\ldots 1) = 0$"
+        },
+        {
+          "step": 1,
+          "text_md": "Find two numbers with product 3 and sum -4: they are -3 and -1."
+        },
+        {
+          "step": 2,
+          "text_md": "So $x^2-4x+3=(x-3)(x-1)$."
+        },
+        {
+          "step": 3,
+          "text_md": "The blanks are 3 and the sign -: $(x-3)(x-1)=0$."
+        }
+      ],
+      "source_page": 10,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u6-2-2:bk-think-and-discuss-1-3",
+      "lo": "lo:pp3u6-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "To solve the equation $x^2 - 4x + 3 = 0$, we factorize the left side of the equation to be: fill in the blanks. $\\therefore x = \\ldots$ or $x = \\ldots$"
+        },
+        {
+          "step": 1,
+          "text_md": "From $x-3=0$, $x=3$."
+        },
+        {
+          "step": 2,
+          "text_md": "From $x-1=0$, $x=1$."
+        }
+      ],
+      "source_page": 10,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u6-2-3:bk-example-3",
+      "lo": "lo:pp3u6-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "In a disk throwing race the path way of the disk to one of the players follows the relation : $y=-0.043x^2+4.9x+13$ where x represents the horizontal distance in meters, y represents the disk height from the floor surface. Find the horizontal distance at which the disk falls to the nearset hundred."
+        },
+        {
+          "step": 1,
+          "text_md": "$\\because a=-0.043, b=4.9, c=13$"
+        },
+        {
+          "step": 2,
+          "text_md": "$\\therefore x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}=\\frac{-(4.9)\\pm\\sqrt{(4.9)^2-4\\times(-0.043)\\times13}}{2\\times(-0.043)}$"
+        },
+        {
+          "step": 3,
+          "text_md": "$=\\frac{(-4.9)\\pm\\sqrt{26.246}}{-0.086}=\\frac{-4.9\\pm5.123}{-0.086}$"
+        },
+        {
+          "step": 4,
+          "text_md": "$\\therefore x=\\frac{-4.9+5.123}{-0.086}=-2.59$ (refused) why ?"
+        },
+        {
+          "step": 5,
+          "text_md": "or $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters"
+        },
+        {
+          "step": 6,
+          "text_md": "$\\therefore$ The horizontal distance where the disk lands is 116.55 meters"
+        }
+      ],
+      "source_page": 12,
+      "generated_by": "book (book_worked: pp3u6-2:example-3, printed p.12); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u6-3-1:bk-example-1",
+      "lo": "lo:pp3u6-3-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find algebraically the solution set of the two equations: $y + 2x + 1 = 0$, $4x^2 + y^2 - 3xy = 1$"
+        },
+        {
+          "step": 1,
+          "text_md": "From the first equation: $y = -(2x+1)$. Substituting in second equation."
+        },
+        {
+          "step": 2,
+          "text_md": "$4x^2 + [-(2x+1)]^2 - 3x[-(2x+1)] = 1$"
+        },
+        {
+          "step": 3,
+          "text_md": "$same$"
+        },
+        {
+          "step": 4,
+          "text_md": "$14x^2 + 7x = 0$, so $7x(2x+1) = 0$"
+        },
+        {
+          "step": 5,
+          "text_md": "$x = 0$ or $2x + 1 = 0$, i.e. $x = \\frac{-1}{2}$"
+        },
+        {
+          "step": 6,
+          "text_md": "Substituting for the values of x in first equation:"
+        },
+        {
+          "step": 7,
+          "text_md": "When $x = 0$: $y = -(0+1) = -1$"
+        },
+        {
+          "step": 8,
+          "text_md": "When $x = \\frac{-1}{2}$: $y = -(2 \\times \\frac{-1}{2} + 1) = 0$"
+        },
+        {
+          "step": 9,
+          "text_md": "The solution set is: $\\{(0, -1), (\\frac{-1}{2}, 0)\\}$"
+        }
+      ],
+      "source_page": 13,
+      "generated_by": "book (book_worked: pp3u6-3:example-1, printed p.13); compile_book_records.py compile-v3"
+    }
+  ],
+  "external_node_refs": [
+    "course:prep3-parallel-math-en"
+  ]
+}

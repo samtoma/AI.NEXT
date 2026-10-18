@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-2-2:triangle-arcs",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-2-2",
+ "parent_question_id": "q:pp3u10-2-2:bk-drill-14-2",
+ "source_page": 76,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    80,
+    100,
+    120,
+    140,
+    160
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    25,
+    65
+   ]
+  },
+  {
+   "name": "r",
+   "let": "2 * q"
+  },
+  {
+   "name": "s",
+   "let": "360 - p - 2 * q"
+  },
+  {
+   "require": "s >= 40 and s <= 180",
+   "why": "third arc must be a sensible size"
+  }
+ ],
+ "stem": "Triangle $ABC$ is inscribed in a circle. The arc $BC$ (not containing $A$) measures ${=p}^\\circ$ and $m(\\angle C) = {=q}^\\circ$. Find $m(\\text{arc } AC)$ in degrees, the arc not containing $B$.",
+ "answer": "s",
+ "solution": [
+  "$\\angle C$ is subtended by arc $AB$, so $m(\\text{arc } AB) = 2 \\times {=q}^\\circ = {=r}^\\circ$.",
+  "The three arcs $AB$, $BC$, $AC$ make the whole circle, $360^\\circ$.",
+  "$m(\\text{arc } AC) = 360^\\circ - ({=p}^\\circ + {=r}^\\circ) = {=s}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Mirrors book 14-2: double the inscribed angle to get its arc, then subtract from 360. Arc AB is the one opposite C."
+}

@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "ecf6cd1b3e2f4ca74aca190b3a9978954edfd64c9fc0c54e84a35df4a671e3e5",
+  "generated_sha256": "79ce7899645d83a0b6607e9f9ec6ad9519699cac0ec5f3802bf515e86ba2f758",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u5-1:figure-1",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Stray letter 'e' of paragraph text at left edge beside the X label."
+   },
+   {
+    "id": "pp3u5-1:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "trim",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Strip of the previous figure's grid at top; stray 'e' of paragraph text at left."
+   },
+   {
+    "id": "pp3u5-1:figure-3",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure."
+   }
+  ]
+ }
+}

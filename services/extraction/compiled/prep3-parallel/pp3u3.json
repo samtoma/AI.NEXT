@@ -1,0 +1,302 @@
+{
+  "source_file": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+  "extraction_run": {
+    "extractor": "compile_book_records.py, from book records",
+    "extractor_version": "compile-v3",
+    "schema_version": "book-record-2"
+  },
+  "syllabus_version": "book-record-2",
+  "nodes": [
+    {
+      "id": "module:pp3u3",
+      "kind": "module",
+      "label": "Unit 3 Statistics (Statistics)",
+      "order_in_parent": 3,
+      "source_page": 38
+    },
+    {
+      "id": "lo:pp3u3-1-1",
+      "kind": "learning_objective",
+      "label": "Resources of collecting data",
+      "description": "Distinguish primary resources from secondary resources of collecting data and state the advantages of each.",
+      "source_page": 38,
+      "syllabus_ref": "Lesson 3-1",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u3-1-2",
+      "kind": "learning_objective",
+      "label": "Methods of collecting data",
+      "description": "Identify the method of collecting data (method of mass population or method of samples) suited to the aim and size of the statistical society, stating its advantages and disadvantages.",
+      "source_page": 38,
+      "syllabus_ref": "Lesson 3-1",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u3-1-3",
+      "kind": "learning_objective",
+      "label": "Selecting types of samples",
+      "description": "Select a sample using a biased choice, a simple random sample or a layer sample, and decide how many units to take from each layer.",
+      "source_page": 40,
+      "syllabus_ref": "Lesson 3-1",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u3-2-1",
+      "kind": "learning_objective",
+      "label": "Range as dispersion",
+      "description": "Calculate the range of a set of values (greatest value minus smallest value) and use it, with the mean, to compare the dispersion of two sets.",
+      "source_page": 41,
+      "syllabus_ref": "Lesson 3-2",
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:pp3u3-2-2",
+      "kind": "learning_objective",
+      "label": "Standard deviation of values",
+      "description": "Calculate the standard deviation of a set of values using the mean and the squared deviations from the mean.",
+      "source_page": 43,
+      "syllabus_ref": "Lesson 3-2",
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:pp3u3-2-3",
+      "kind": "learning_objective",
+      "label": "Standard deviation of frequency distributions",
+      "description": "Calculate the mean and standard deviation of a frequency distribution, including grouped sets using the centres of the sets.",
+      "source_page": 44,
+      "syllabus_ref": "Lesson 3-2",
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:pp3u3-2-4",
+      "kind": "learning_objective",
+      "label": "Compare homogeneity by standard deviation",
+      "description": "Decide which of two distributions is more homogeneous by comparing their standard deviations (the larger standard deviation is more dispersed), representing them with a frequency polygon.",
+      "source_page": 47,
+      "syllabus_ref": "Lesson 3-2",
+      "order_in_parent": 4
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:pp3u3",
+      "dst": "course:prep3-parallel-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-2-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-2-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-2-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:pp3u3",
+      "dst": "lo:pp3u3-2-4",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:pp3u3-2-3",
+      "dst": "lo:pp3u3-2-4",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u3-2-2",
+      "dst": "lo:pp3u3-2-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u3-2-1",
+      "dst": "lo:pp3u3-2-4",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [],
+  "visuals": [],
+  "explanation_entries": [
+    {
+      "id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+      "lo": "lo:pp3u3-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Find the mean to the wages of the two sets A and B."
+        },
+        {
+          "step": 1,
+          "text_md": "Mean = total of values / their number."
+        },
+        {
+          "step": 2,
+          "text_md": "Set A: (170+180+180+230+240)/5 = 1000/5 = 200."
+        },
+        {
+          "step": 3,
+          "text_md": "Set B: (50+180+180+190+400)/5 = 1000/5 = 200."
+        },
+        {
+          "step": 4,
+          "text_md": "Both means equal LE 200."
+        }
+      ],
+      "source_page": 41,
+      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u3-2-1:bk-worked-example-1",
+      "lo": "lo:pp3u3-2-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Compare the two sets above: First set: 51, 53, 55, 57, 58, 60; Second set: 42, 45, 47, 49, 52, 92"
+        },
+        {
+          "step": 1,
+          "text_md": "The range of the first set $= 60 - 51 = 9$"
+        },
+        {
+          "step": 2,
+          "text_md": "The range of the second set $= 92 - 42 = 50$"
+        },
+        {
+          "step": 3,
+          "text_md": "So the second set is more divergent than the first set"
+        }
+      ],
+      "source_page": 42,
+      "generated_by": "book (book_worked: pp3u3-2:worked-example-1, printed p.42); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u3-2-2:bk-example-1",
+      "lo": "lo:pp3u3-2-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Calculate the standard deviation for the values: 12, 13, 16, 18, 21"
+        },
+        {
+          "step": 1,
+          "text_md": "To calculate the standard deviation, form the table opposite the mean of a set of values."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\bar{x}=\\dfrac{\\text{Total of these values}}{\\text{Their numbers}}$"
+        },
+        {
+          "step": 3,
+          "text_md": "$\\therefore \\bar{x}=\\dfrac{\\sum x}{n}$"
+        },
+        {
+          "step": 4,
+          "text_md": "$\\bar{x}=\\dfrac{12+13+16+18+21}{5}=\\dfrac{80}{5}=16$"
+        },
+        {
+          "step": 5,
+          "text_md": "Since the standard deviation $\\sigma=\\sqrt{\\dfrac{\\sum (x-\\bar{x})^2}{n}}$"
+        },
+        {
+          "step": 6,
+          "text_md": "$\\therefore$ The standard deviation $\\sigma=\\sqrt{\\dfrac{54}{5}}=\\sqrt{10.8}=\\simeq 3.286$"
+        }
+      ],
+      "source_page": 43,
+      "generated_by": "book (book_worked: pp3u3-2:example-1, printed p.43); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u3-2-3:bk-example-2",
+      "lo": "lo:pp3u3-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The following are the frequency distribution for a number of defective units which found in 100 boxes of manufactured units (table). Find the standard deviation to the defective units."
+        },
+        {
+          "step": 1,
+          "text_md": "Consider the number of defetive units (x) and the number of the corresponding boxes (k) to calculate the standard deviation to the defective units form the following table (see table)."
+        },
+        {
+          "step": 2,
+          "text_md": "The mean $\\bar{x}=\\dfrac{\\sum x\\times k}{\\sum k}=\\dfrac{300}{100}=3$"
+        },
+        {
+          "step": 3,
+          "text_md": "The standard variation $\\sigma=\\sqrt{\\dfrac{\\sum (x-\\bar{x})^2 k}{\\sum k}}$"
+        },
+        {
+          "step": 4,
+          "text_md": "$=\\sqrt{\\dfrac{204}{100}}\\simeq 1.428$ units"
+        }
+      ],
+      "source_page": 44,
+      "generated_by": "book (book_worked: pp3u3-2:example-2, printed p.44); compile_book_records.py compile-v3"
+    },
+    {
+      "id": "expl:pp3u3-2-3:bk-example-3",
+      "lo": "lo:pp3u3-2-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "The following frequency distribution shows the marks of 40 students in an exam (table). Find the standard deviation for this distribution."
+        },
+        {
+          "step": 1,
+          "text_md": "1: Find the centers of sets x. Then: The center of the first set = (0+4)/2 = 2; the center of the second set = (4+8)/2 = 6; and then record them in the third column."
+        },
+        {
+          "step": 2,
+          "text_md": "2: Multiply the centers of sets × its corresponding frequencies: i.e. x × k and record in the fourth column. Then find the mean $\\bar{x} = \\frac{\\sum xk}{\\sum k}$"
+        },
+        {
+          "step": 3,
+          "text_md": "3: Find the deviation of the center of each set (x) from the mean i.e. find $(x - \\bar{x})$"
+        },
+        {
+          "step": 4,
+          "text_md": "4: Find squares of deviations of the center of each set from the mean: i.e $(x-\\bar{x})^2$"
+        },
+        {
+          "step": 5,
+          "text_md": "5: Find the product of the square deviation of the center of each set from the mean × frequency of this set; i.e. $(x-\\bar{x})^2 \\times k$"
+        },
+        {
+          "step": 6,
+          "text_md": "6: Calculate the standard deviation $\\sigma = \\sqrt{\\frac{\\sum (x-\\bar{x})^2 k}{\\sum k}}$"
+        }
+      ],
+      "source_page": 45,
+      "generated_by": "book (book_worked: pp3u3-2:example-3, printed p.45); compile_book_records.py compile-v3"
+    }
+  ],
+  "external_node_refs": [
+    "course:prep3-parallel-math-en"
+  ]
+}

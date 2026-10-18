@@ -1,0 +1,135 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "prep3-parallel",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "7137f7209d33629350a1391af71ae212a3b38c85458be34a5e3d959530af6409",
+  "args_sha256": "4c31c299643c929922abc216b1e95176829bf99bda8effaf47b145b23b02a57d",
+  "generated_sha256": "4b43709eebb457188e92de15b66163666676d3d0e6371cefc0de97ee9c4ef8c4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "pp3u3-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u3-1:figure-1",
+    "pp3u3-1:figure-2",
+    "pp3u3-1:figure-3",
+    "pp3u3-1:figure-4"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u3-1:figure-1",
+     "src": "pp3u3-1__figure-1.png",
+     "ref": null,
+     "printed_page": 38,
+     "reason": "Clip-art illustration of a woman at a computer; it shows no data, only an idea (secondary resources). The bar chart on the screen has no readable values.",
+     "needed_kind": "illustration/image display"
+    },
+    {
+     "figure_id": "pp3u3-1:figure-2",
+     "src": "pp3u3-1__figure-2.png",
+     "ref": null,
+     "printed_page": 38,
+     "reason": "Photo of a crowd of students; it shows no quantitative data.",
+     "needed_kind": "illustration/image display"
+    },
+    {
+     "figure_id": "pp3u3-1:figure-3",
+     "src": "pp3u3-1__figure-3.png",
+     "ref": null,
+     "printed_page": 38,
+     "reason": "Clip-art scene of people surveying and a woman at a computer; it is not a mathematical figure.",
+     "needed_kind": "illustration/image display"
+    },
+    {
+     "figure_id": "pp3u3-1:figure-4",
+     "src": "pp3u3-1__figure-4.png",
+     "ref": null,
+     "printed_page": 40,
+     "reason": "Calculator key sequence (ON, SHIFT, Ran#, =) and a display reading 0.624. No existing kind draws this.",
+     "needed_kind": "calculator key-sequence display"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 4,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "pp3u3-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "pp3u3-2:figure-1",
+    "pp3u3-2:figure-2",
+    "pp3u3-2:figure-3",
+    "pp3u3-2:figure-4"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "pp3u3-2:figure-1",
+     "src": "pp3u3-2__figure-1.png",
+     "ref": null,
+     "printed_page": 46,
+     "reason": "Calculator key sequence and Stat menu screen, not a data or geometry figure; none of the kinds can draw it.",
+     "needed_kind": "calculator_screen / key-sequence illustration"
+    },
+    {
+     "figure_id": "pp3u3-2:figure-2",
+     "src": "pp3u3-2__figure-2.png",
+     "ref": null,
+     "printed_page": 46,
+     "reason": "Calculator key presses and an X/FREQ entry table screen; not drawable by any kind.",
+     "needed_kind": "calculator_screen / key-sequence illustration"
+    },
+    {
+     "figure_id": "pp3u3-2:figure-3",
+     "src": "pp3u3-2__figure-3.png",
+     "ref": null,
+     "printed_page": 46,
+     "reason": "Calculator key presses and an X/FREQ table screen; not drawable by any kind.",
+     "needed_kind": "calculator_screen / key-sequence illustration"
+    },
+    {
+     "figure_id": "pp3u3-2:figure-4",
+     "src": "pp3u3-2__figure-4.png",
+     "ref": null,
+     "printed_page": 46,
+     "reason": "Calculator key presses and a screen showing the standard deviation result 4.521061822; not drawable by any kind.",
+     "needed_kind": "calculator_screen / key-sequence illustration"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 4,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 2
+  },
+  "per_lesson": {
+   "pp3u3-1": 1,
+   "pp3u3-2": 1
+  },
+  "total": 2
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book prep3-parallel --by phase",
+  "by_lesson": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

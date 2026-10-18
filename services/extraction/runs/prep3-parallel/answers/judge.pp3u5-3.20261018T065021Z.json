@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "a41e4532c33ac25d5e9ea05f7274e504e30353e021c21dbc8c21ef3ded2d22c3",
+  "generated_sha256": "1e8d232a29f7d767e7344332eb6459f95c2c1ed8079f8191c2ca3d9a8246badb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u5-3:example-1",
+    "verdict": "equivalent",
+    "reason": "1.4945 is the printed 1.494534405 rounded to 4 decimals."
+   },
+   {
+    "ref": "pp3u5-3:example-2",
+    "verdict": "different",
+    "reason": "Seconds differ: 13'' printed vs 14'' from solver."
+   },
+   {
+    "ref": "pp3u5-3:example-3",
+    "verdict": "equivalent",
+    "reason": "Both conclude the lines are parallel; solver shows slopes both equal 1."
+   }
+  ]
+ }
+}

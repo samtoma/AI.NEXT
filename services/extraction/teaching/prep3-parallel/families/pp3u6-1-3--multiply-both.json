@@ -1,0 +1,102 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-3:multiply-both",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-3",
+ "parent_question_id": "q:pp3u6-1-3:bk-example-4",
+ "source_page": 8,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "x0",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "y0",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a * x0 + b * y0"
+  },
+  {
+   "name": "f",
+   "let": "d * x0 - e * y0"
+  },
+  {
+   "name": "m",
+   "let": "a * e + b * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find algebraically, by omitting one variable, the solution of the two equations ${=a}x+{=b}y={=c}$ (1) and ${=d}x-{=e}y={=f}$ (2). Write the answer as an ordered pair $(x, y)$.",
+ "solution": [
+  "${=a}x + {=b}y = {=c}$ ... (1) and ${=d}x - {=e}y = {=f}$ ... (2).",
+  "To omit $y$, multiply (1) by ${=e}$ and (2) by ${=b}$: ${=a*e}x + {=b*e}y = {=c*e}$ (3) and ${=b*d}x - {=b*e}y = {=b*f}$ (4).",
+  "Adding (3) and (4): ${=m}x = {=c*e+b*f}$.",
+  "So $x = {=x0}$.",
+  "Substituting in (1): ${=a}({=x0}) + {=b}y = {=c}$, so ${=b}y = {=c - a*x0}$ and $y = {=y0}$.",
+  "The solution is $({=x0}, {=y0})$, and the two equations have exactly one solution."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, {=y0})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: both equations must be multiplied; negative solutions and a negative right-hand side possible. Determinant -(ae+bd) is never zero so always exactly one solution."
+}

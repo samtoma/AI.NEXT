@@ -1,0 +1,121 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u7-4",
+  "source": "book-records/prep3-parallel/pp3u7-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 4,
+      "cost_usd": 0.035,
+      "calls": [
+        {
+          "call": "check-printed.pp3u7-4",
+          "cost_usd": 0.0248,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u7-4",
+          "cost_usd": 0.0102,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u7-4:example-1",
+      "record_id": "pp3u7-4:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 25,
+      "printed": "$n(x)=\\frac{2x}{(x+2)(x-2)}$, domain $\\mathbb{R}-\\{-2,0,2\\}$",
+      "blind": "n(x) = 2x/(x^2-4) = 2x/((x-2)(x+2)); domain R − {0, 2, -2}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "2d7ffb603e640355234f3f03795132f1",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-4:example-1",
+        "verdict": "equivalent",
+        "reason": "Same simplified function and same domain R−{−2,0,2}."
+      },
+      "how": "judged equivalent: Same simplified function and same domain R−{−2,0,2}.",
+      "made": {
+        "at": "2026-10-18T07:12:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u7-4:example-2",
+      "record_id": "pp3u7-4:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 25,
+      "printed": "$n(x)=\\frac{5}{x-3}$, domain $\\mathbb{R}-\\{-3,2,3\\}$",
+      "blind": "n(x) = 5/(x-3); domain R − {2, 3, -3}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "79bfe7bf281b2aa42e29a6f851386e2b",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-4:example-2",
+        "verdict": "equivalent",
+        "reason": "Same 5/(x−3) and same domain R−{−3,2,3}."
+      },
+      "how": "judged equivalent: Same 5/(x−3) and same domain R−{−3,2,3}.",
+      "made": {
+        "at": "2026-10-18T07:12:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u7-4:example-4",
+      "record_id": "pp3u7-4:example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 27,
+      "printed": "$f(x)=\\frac{1}{3x+1}$; domain $\\mathbb{R}-\\{-5,-1,-\\frac13,2\\}$; $f(0)=1$; $f(-1)$ does not exist",
+      "blind": "f(x) = 1/(3x+1); domain R − {-5, -1, -1/3, 2}; f(0) = 1; f(-1) is not possible because -1 is not in the domain",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "24ef38977f900faea7df48967a34e3d1",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u7-4:example-4",
+        "verdict": "equivalent",
+        "reason": "Same function, domain, f(0)=1, and f(−1) undefined since −1 is excluded."
+      },
+      "how": "judged equivalent: Same function, domain, f(0)=1, and f(−1) undefined since −1 is excluded.",
+      "made": {
+        "at": "2026-10-18T07:12:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u7-4:example-5",
+      "record_id": "pp3u7-4:example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 28,
+      "printed": "$n(x)=\\frac{(x+3)(2x-3)}{3x(x+5)}$, domain $\\mathbb{R}-\\{0,-\\frac{3}{2},\\frac{3}{2},-5,3\\}$",
+      "blind": "n(x) = (x+3)(2x-3)/(3x(x+5)); domain R − {-5, -3/2, 0, 3/2, 3}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "503f858b8523b7f3dc6305315579cada",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-18T07:12:27+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

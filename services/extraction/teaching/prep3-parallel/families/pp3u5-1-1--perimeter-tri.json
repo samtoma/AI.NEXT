@@ -1,0 +1,94 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-1-1:perimeter-tri",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-1-1",
+ "parent_question_id": "q:pp3u5-1-1:bk-think-and-discuss-3",
+ "source_page": 58,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[3,4,5],[5,12,13],[6,8,10],[8,15,17],[9,12,15]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "o",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "sx",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "sy",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "dx",
+   "let": "T[i][o]"
+  },
+  {
+   "name": "dy",
+   "let": "T[i][1-o]"
+  },
+  {
+   "name": "h",
+   "let": "T[i][2]"
+  },
+  {
+   "name": "x1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + sx*dx"
+  },
+  {
+   "name": "y3",
+   "let": "y1 + sy*dy"
+  },
+  {
+   "name": "p",
+   "let": "dx + dy + h"
+  }
+ ],
+ "constraints": [],
+ "stem": "The vertices of a triangle are $A({=x1}, {=y1})$, $B({=x2}, {=y1})$ and $C({=x2}, {=y3})$. Find the perimeter of triangle $ABC$ in unit length.",
+ "answer": "p",
+ "solution": [
+  "A and B have the same y-coordinate, so use the difference of the x-coordinates: $AB=|{=x2}-({=x1})|={=dx}$.",
+  "B and C have the same x-coordinate, so use the difference of the y-coordinates: $BC=|{=y3}-({=y1})|={=dy}$.",
+  "The angle at B is a right angle, so $(AC)^2=({=dx})^2+({=dy})^2={=dx*dx}+{=dy*dy}={=h*h}$ and AC = {=h}.",
+  "Perimeter $={=dx}+{=dy}+{=h}={=p}$ unit length."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Multi-step: two axis-parallel distances, then the distance rule, then sum. Whole-number sides via Pythagorean triples."
+}

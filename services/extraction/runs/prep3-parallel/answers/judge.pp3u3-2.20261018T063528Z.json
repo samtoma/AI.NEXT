@@ -1,0 +1,27 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3bc815408eb1f62ea784408953945a18010417b3d5279193e6e2372a2e02601a",
+  "generated_sha256": "a25853ec5ffa1e6a0407f493379a4308bb644f382fe83a692b102f3d6beda8a5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "pp3u3-2:worked-example-1",
+    "verdict": "equivalent",
+    "reason": "Both conclude the second set is more dispersed than the first; the solver's range comparison (50 vs 9) supports this."
+   },
+   {
+    "ref": "pp3u3-2:example-1",
+    "verdict": "equivalent",
+    "reason": "Both give σ ≈ 3.286; √10.8 ≈ 3.286."
+   }
+  ]
+ }
+}

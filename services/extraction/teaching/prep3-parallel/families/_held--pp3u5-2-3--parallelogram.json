@@ -1,0 +1,84 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:parallelogram",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "ax",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "ay",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "bx",
+   "randint": [
+    -4,
+    5
+   ]
+  },
+  {
+   "name": "by",
+   "randint": [
+    -4,
+    5
+   ]
+  },
+  {
+   "name": "cx",
+   "randint": [
+    -4,
+    6
+   ]
+  },
+  {
+   "name": "cy",
+   "randint": [
+    -4,
+    6
+   ]
+  },
+  {
+   "require": "(bx-ax)*(cy-ay)-(by-ay)*(cx-ax) != 0",
+   "why": "A, B, C must not be collinear"
+  },
+  {
+   "name": "dx",
+   "let": "ax + cx - bx"
+  },
+  {
+   "name": "dy",
+   "let": "ay + cy - by"
+  }
+ ],
+ "stem": "$ABCD$ is a parallelogram where $A({=ax}, {=ay})$, $B({=bx}, {=by})$ and $C({=cx}, {=cy})$. Find the coordinates of the vertex $D$.",
+ "solution": [
+  "The diagonals of a parallelogram bisect each other, so the midpoint of $\\overline{AC}$ is the midpoint of $\\overline{BD}$.",
+  "Midpoint of $\\overline{AC}$ = $\\left(\\frac{{={ax}}+{={cx}}}{2}, \\frac{{={ay}}+{={cy}}}{2}\\right)$.",
+  "Let $D(x, y)$. Then $\\frac{{={bx}}+x}{2} = \\frac{{={ax+cx}}}{2}$, so $x = {=dx}$.",
+  "Also $\\frac{{={by}}+y}{2} = \\frac{{={ay+cy}}}{2}$, so $y = {=dy}$.",
+  "So $D({=dx}, {=dy})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=dx}, {=dy})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions supplied; parent placeholder."
+}

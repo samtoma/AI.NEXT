@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-1:factorise-first",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    "b * p - 1"
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p * p"
+  }
+ ],
+ "constraints": [],
+ "stem": "Subtract and give the answer in simplest form: $\\frac{{=b}}{x-{=p}}-\\frac{{=a}}{x^2-{=s}}$ (the denominator may be left factorised).",
+ "solution": [
+  "Factorise the second denominator: $x^2-{=s}=(x-{=p})(x+{=p})$.",
+  "The L.C.M. of the denominators is $(x-{=p})(x+{=p})$.",
+  "Rewrite the first fraction over the L.C.M.: $\\frac{{=b}(x+{=p})-{=a}}{(x-{=p})(x+{=p})}$.",
+  "Expand the numerator: ${=b}x+{=b*p}-{=a}={=b}x+{=b*p-a}$.",
+  "The result is $\\frac{{=b}x+{=b*p-a}}{(x-{=p})(x+{=p})}$, which cannot be simplified further. The domain is $x\\neq {=p}$ and $x\\neq -{=p}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=b}*x+{=b*p-a})/((x-{=p})*(x+{=p}))",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions supplied; parent_question_id is a placeholder. Since a<bp, numerator constant is positive; numerator roots (-(bp-a)/b) never equal ±p (needs a=2bp or a=0), so no cancellation."
+}

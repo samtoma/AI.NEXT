@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-1:common-denominator",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-1",
+ "parent_question_id": "none-available",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    3,
+    7
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    "m - 1"
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    "a - 1"
+   ]
+  },
+  {
+   "require": "gcd(m - n, a - b) == 1",
+   "why": "result already in simplest form"
+  },
+  {
+   "require": "(a - b) != p * (m - n)",
+   "why": "no common factor with the denominator"
+  }
+ ],
+ "constraints": [],
+ "stem": "Simplify, giving the answer in simplest form: $\\frac{{=m}x+{=a}}{x+{=p}}-\\frac{{=n}x+{=b}}{x+{=p}}$ (the domain is $x\\neq -{=p}$).",
+ "solution": [
+  "The denominators are equal, so subtract the numerators over the common denominator: $\\frac{({=m}x+{=a})-({=n}x+{=b})}{x+{=p}}$.",
+  "Remove the brackets and collect like terms: $({=m}-{=n})x+({=a}-{=b})={=m-n}x+{=a-b}$.",
+  "The result is $\\frac{{=m-n}x+{=a-b}}{x+{=p}}$; it cannot be simplified further, and the domain is $x\\neq -{=p}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=m-n}*x+{=a-b})/(x+{=p})",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder and needs a human to set it. Domain appears in the solution; the marker checks only the fraction."
+}

@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-2-3:possible",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-2-3",
+ "parent_question_id": "q:pp3u9-2-3:bk-example-3-e",
+ "source_page": 51,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r2",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "r1",
+   "randint": [
+    "r2 + 2",
+    "15"
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "r1 - r2"
+  },
+  {
+   "name": "hi",
+   "let": "r1 + r2"
+  },
+  {
+   "name": "n",
+   "let": "hi - lo - 1"
+  }
+ ],
+ "stem": "Two circles M and N have radius lengths ${=r1}$ cm and ${=r2}$ cm. They are intersecting, and the length of MN is a whole number of centimetres. How many different values can MN take?",
+ "answer": "n",
+ "solution": [
+  "Since the circles intersect, $r_1 - r_2 < MN < r_1 + r_2$.",
+  "$r_1 - r_2 = {=r1} - {=r2} = {=lo}$ and $r_1 + r_2 = {=r1} + {=r2} = {=hi}$, so ${=lo} < MN < {=hi}$.",
+  "The whole numbers strictly between {=lo} and {=hi} are {=lo+1} to {=hi-1}, which is {=n} values."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Count of integers strictly between r1-r2 and r1+r2 = 2*r2-1 (excludes touching cases). r1 >= r2+2 so lower bound >= 2."
+}

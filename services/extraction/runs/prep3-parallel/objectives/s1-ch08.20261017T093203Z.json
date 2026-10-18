@@ -1,0 +1,1015 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "prep3-parallel",
+ "chapter": 8,
+ "module": "module:pp3u8",
+ "packet_sha256": "0d132fbbc5c4a93f530b6dfd81c1daddb8dc05492785f7729e6c5ba22a9bfaea",
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "d07b698570a50ca0dad74338149664b4248aa67d7d4783ba8358a206b2f79451",
+  "generated_sha256": "b3427ce77e58b7be01f1bea62058609e48d1a521ed28401a6647d1870304954f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 0,
+ "lessons": [
+  {
+   "slug": "pp3u8-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the probability of an event as n(A)/n(S) by writing the sample space and listing the elements of events.",
+       "label": "Probability of an event",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u8-1:rule-1",
+         "printed_page": 30,
+         "quote": "P(A) = n(A)/n(S)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 31,
+         "quote": "S = {1, 2, 3, 4, 5, 6, 7, 8}, n(S) = 8"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-1:A",
+         "printed_page": 30,
+         "quote": "calculate the probability that the ball drawn is"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:think-and-discuss-1",
+        "pp3u8-1:think-and-discuss-2",
+        "pp3u8-1:think-and-discuss-3",
+        "pp3u8-1:think-and-discuss-4",
+        "pp3u8-1:drill-1:A",
+        "pp3u8-1:drill-1:B",
+        "pp3u8-1:drill-1:C",
+        "pp3u8-1:exercise-1:A",
+        "pp3u8-1:exercise-1:B",
+        "pp3u8-1:exercise-1:C",
+        "pp3u8-1:drill-2",
+        "pp3u8-1:drill-3:A",
+        "pp3u8-1:drill-3:B",
+        "pp3u8-1:drill-3:C"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine the intersection A ∩ B of two events using a Venn diagram, calculate its probability, and identify mutually exclusive events.",
+       "label": "Intersection and mutually exclusive",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-1",
+         "printed_page": 31,
+         "quote": "the events A and B occur together"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-2",
+         "printed_page": 32,
+         "quote": "$A\\cap B=\\phi$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 32,
+         "quote": "The probability of the occurrence of events A and B together"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-4:A",
+         "printed_page": 32,
+         "quote": "The occurrence of two events A and B together"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:drill-4:A",
+        "pp3u8-1:drill-4:C"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Determine the union A ∪ B of events and calculate its probability, using P(A ∪ B) = P(A) + P(B) − P(A ∩ B) and the mutually exclusive case.",
+       "label": "Union of events",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-4",
+         "printed_page": 32,
+         "quote": "occurrence of at least one event"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 33,
+         "quote": "$P(A)+P(B)-P(A\\cap B)=P(A\\cup B)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-5:A",
+         "printed_page": 34,
+         "quote": "$P(A\\cup B)=\\ldots$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:drill-5:A",
+        "pp3u8-1:drill-5:B",
+        "pp3u8-1:drill-5:C",
+        "pp3u8-1:drill-6:A",
+        "pp3u8-1:drill-6:B",
+        "pp3u8-1:drill-6:C"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Write the sample space and events of a random experiment as sets and calculate the probability P(A) = n(A)/n(S).",
+       "label": "Sample space and probability",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u8-1:rule-1",
+         "printed_page": 30,
+         "quote": "P(A) = n(A)/n(S)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-1:A",
+         "printed_page": 30,
+         "quote": "calculate the probability that the ball drawn is"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 31,
+         "quote": "S = {1, 2, 3, 4, 5, 6, 7, 8}, n(S) = 8"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:think-and-discuss-1",
+        "pp3u8-1:think-and-discuss-2",
+        "pp3u8-1:think-and-discuss-3",
+        "pp3u8-1:think-and-discuss-4",
+        "pp3u8-1:drill-1:A",
+        "pp3u8-1:drill-1:B",
+        "pp3u8-1:drill-1:C",
+        "pp3u8-1:exercise-1:A",
+        "pp3u8-1:exercise-1:B",
+        "pp3u8-1:exercise-1:C",
+        "pp3u8-1:drill-2",
+        "pp3u8-1:drill-3:A",
+        "pp3u8-1:drill-3:B",
+        "pp3u8-1:drill-3:C"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine the intersection A ∩ B of two events, using a Venn diagram, and calculate its probability, identifying mutually exclusive events.",
+       "label": "Intersection and mutually exclusive",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-1",
+         "printed_page": 31,
+         "quote": "the events A and B occur together"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 32,
+         "quote": "The probability of the occurrence of events A and B together means $A\\cap B$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-4:A",
+         "printed_page": 32,
+         "quote": "The occurrence of two events A and B together"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-2",
+         "printed_page": 32,
+         "quote": "A and B are mutually exclusive events if"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:drill-4:A",
+        "pp3u8-1:drill-4:C"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Determine the union A ∪ B of two events and calculate its probability using P(A ∪ B) = P(A) + P(B) − P(A ∩ B), including for mutually exclusive events.",
+       "label": "Union of events",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:definition-4",
+         "printed_page": 32,
+         "quote": "the occurrence of the two events A or B or both"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 33,
+         "quote": "$P(A)+P(B)-P(A\\cap B)=P(A\\cup B)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-1:drill-5:A",
+         "printed_page": 34,
+         "quote": "$P(A\\cup B)=\\ldots$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-1:rule-4",
+         "printed_page": 34,
+         "quote": "P(A ∪ B) = P(A) + P(B)"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-1:drill-5:A",
+        "pp3u8-1:drill-5:B",
+        "pp3u8-1:drill-5:C",
+        "pp3u8-1:drill-6:A",
+        "pp3u8-1:drill-6:B",
+        "pp3u8-1:drill-6:C"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Write the sample space and events of a random experiment as sets and calculate the probability P(A) = n(A)/n(S).",
+      "label": "Sample space and probability",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "pp3u8-1:rule-1",
+        "printed_page": 30,
+        "quote": "P(A) = n(A)/n(S)"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 31,
+        "quote": "S = {1, 2, 3, 4, 5, 6, 7, 8}, n(S) = 8"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-1:drill-1:A",
+        "printed_page": 30,
+        "quote": "calculate the probability that the ball drawn is"
+       }
+      ],
+      "exercise_items": [
+       "pp3u8-1:think-and-discuss-1",
+       "pp3u8-1:think-and-discuss-2",
+       "pp3u8-1:think-and-discuss-3",
+       "pp3u8-1:think-and-discuss-4",
+       "pp3u8-1:drill-1:A",
+       "pp3u8-1:drill-1:B",
+       "pp3u8-1:drill-1:C",
+       "pp3u8-1:exercise-1:A",
+       "pp3u8-1:exercise-1:B",
+       "pp3u8-1:exercise-1:C",
+       "pp3u8-1:drill-2",
+       "pp3u8-1:drill-3:A",
+       "pp3u8-1:drill-3:B",
+       "pp3u8-1:drill-3:C"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "sample space",
+       "event",
+       "probability",
+       "random experiment",
+       "set"
+      ]
+     },
+     {
+      "statement": "Determine the intersection A ∩ B of two events using a Venn diagram, calculate its probability, and identify mutually exclusive events.",
+      "label": "Intersection and mutually exclusive",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-1:definition-1",
+        "printed_page": 31,
+        "quote": "the events A and B occur together"
+       },
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-1:definition-2",
+        "printed_page": 32,
+        "quote": "A and B are mutually exclusive events if"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 32,
+        "quote": "The probability of the occurrence of events A and B together means $A\\cap B$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-1:drill-4:A",
+        "printed_page": 32,
+        "quote": "The occurrence of two events A and B together"
+       }
+      ],
+      "exercise_items": [
+       "pp3u8-1:drill-4:A",
+       "pp3u8-1:drill-4:C"
+      ],
+      "worked_examples": [
+       "WE2"
+      ],
+      "terms": [
+       "intersection",
+       "Venn diagram",
+       "mutually exclusive events",
+       "empty set"
+      ]
+     },
+     {
+      "statement": "Determine the union A ∪ B of two events and calculate its probability using P(A ∪ B) = P(A) + P(B) − P(A ∩ B), including for mutually exclusive events.",
+      "label": "Union of events",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-1:definition-4",
+        "printed_page": 32,
+        "quote": "the occurrence of the two events A or B or both"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 33,
+        "quote": "$P(A)+P(B)-P(A\\cap B)=P(A\\cup B)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-1:drill-5:A",
+        "printed_page": 34,
+        "quote": "$P(A\\cup B)=\\ldots$"
+       },
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-1:rule-4",
+        "printed_page": 34,
+        "quote": "P(A ∪ B) = P(A) + P(B)"
+       }
+      ],
+      "exercise_items": [
+       "pp3u8-1:drill-5:A",
+       "pp3u8-1:drill-5:B",
+       "pp3u8-1:drill-5:C",
+       "pp3u8-1:drill-6:A",
+       "pp3u8-1:drill-6:B",
+       "pp3u8-1:drill-6:C"
+      ],
+      "worked_examples": [
+       "WE3"
+      ],
+      "terms": [
+       "union",
+       "mutually exclusive events",
+       "intersection",
+       "probability"
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote and formula P(A)=n(A)/n(S) both present in text. Intro/definition correctly explains the formula the objective requires."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote S={1,2,3,4,5,6,7,8}, n(S)=8 is present. Worked example demonstrates writing sample space as a set and calculating probabilities, directly supporting the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'calculate the probability that the ball drawn is' present. Exercise makes students practise calculating probability from a sample space."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'the events A and B occur together' present. Definition explains what A∩B means, supporting intersection determination."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'A and B are mutually exclusive events if' present. Definition correctly explains mutually exclusive events condition A∩B=∅."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'The probability of the occurrence of events A and B together means A∩B' present. Worked example uses Venn diagram to find intersection probability."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'The occurrence of two events A and B together' present. Exercise makes students calculate intersection probabilities."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'the occurrence of the two events A or B or both' present. Definition explains what A∪B means, supporting union determination."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Formula P(A)+P(B)-P(A∩B)=P(A∪B) shown in conclusion. Worked example demonstrates the union probability formula calculation."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Expression P(A∪B)=... present. Exercise requires calculating P(A∪B) using the formula."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Formula P(A∪B)=P(A)+P(B) present. Definition/rule states the special case for mutually exclusive events."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "pp3u8-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Determine the complementary event A` of an event A in a sample space S and use A ∪ A` = S and A ∩ A` = φ.",
+       "label": "Find complementary event",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-2:definition-1",
+         "printed_page": 35,
+         "quote": "A` is the complementary event to event A"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-2:think-and-discuss-2",
+         "printed_page": 35,
+         "quote": "then $A'=\\{\\ldots\\}$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-2:think-and-discuss-1",
+        "pp3u8-2:think-and-discuss-2",
+        "pp3u8-2:drill-1"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Calculate the probability of the complementary event using P(A`) = 1 - P(A).",
+       "label": "Probability of complementary event",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "pp3u8-2:linking-text-3",
+         "printed_page": 36,
+         "quote": "P (A`) = 1 - P (A)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 36,
+         "quote": "$P(A')=1-P(A)=1-\\frac{9}{20}=\\frac{11}{20}$"
+        }
+       ],
+       "exercise_items": [],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the probability of the difference between two events A - B (A only, not B) from a Venn diagram situation.",
+       "label": "Difference of two events",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-2:definition-3",
+         "printed_page": 37,
+         "quote": "the occurrence of the event A only"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-2:drill-2:1",
+         "printed_page": 37,
+         "quote": "the student reads Al - Akhbar newspaper only"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-2:think-1",
+        "pp3u8-2:drill-2:1",
+        "pp3u8-2:drill-2:2",
+        "pp3u8-2:drill-2:3"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Determine the complementary event A` of an event A in a sample space S and calculate P(A`) using P(A`) = 1 - P(A).",
+       "label": "Complementary event and probability",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 36,
+         "quote": "$P(A')=1-P(A)=1-\\frac{9}{20}=\\frac{11}{20}$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-2:definition-1",
+         "printed_page": 35,
+         "quote": "A` is the complementary event to event A"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-2:think-and-discuss-2",
+         "printed_page": 35,
+         "quote": "then $A'=\\{\\ldots\\}$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u8-2:rule-2",
+         "printed_page": 36,
+         "quote": "$P(A)+P(A')=P(S)=1$"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-2:think-and-discuss-1",
+        "pp3u8-2:think-and-discuss-2",
+        "pp3u8-2:drill-1"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Calculate the probability of an event, including reading both newspapers (A ∩ B), from counts n(A), n(B), n(A ∩ B) and n(S).",
+       "label": "Probability from set counts",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 36,
+         "quote": "$P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{8}{40}=\\frac{1}{5}$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "pp3u8-2:linking-text-4",
+         "printed_page": 36,
+         "quote": "reading Al Akhbar only but not other newspaper"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-2:think-1"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Calculate the probability of the difference between two events, A - B (the occurrence of A only), and use (A - B) ∪ (A ∩ B) = A.",
+       "label": "Difference between two events",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-2:drill-2:1",
+         "printed_page": 37,
+         "quote": "the probability that the student reads Al - Akhbar newspaper only"
+        },
+        {
+         "kind": "definition",
+         "anchor": "pp3u8-2:definition-3",
+         "printed_page": 37,
+         "quote": "A-B is the event of the occurrence of A and the non-occurrence of B"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "pp3u8-2:drill-2:3",
+         "printed_page": 37,
+         "quote": "reads Al - Akhbar only or Al - Ahram only"
+        }
+       ],
+       "exercise_items": [
+        "pp3u8-2:drill-2:1",
+        "pp3u8-2:drill-2:2",
+        "pp3u8-2:drill-2:3"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine the complementary event A` of an event A in a sample space S (A ∪ A` = S, A ∩ A` = φ) and calculate P(A`) using P(A`) = 1 - P(A).",
+      "label": "Complementary event and its probability",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-2:definition-1",
+        "printed_page": 35,
+        "quote": "A` is the complementary event to event A"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-2:think-and-discuss-2",
+        "printed_page": 35,
+        "quote": "then $A'=\\{\\ldots\\}$"
+       },
+       {
+        "kind": "intro",
+        "anchor": "pp3u8-2:rule-2",
+        "printed_page": 36,
+        "quote": "$P(A)+P(A')=P(S)=1$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 36,
+        "quote": "$P(A')=1-P(A)=1-\\frac{9}{20}=\\frac{11}{20}$"
+       }
+      ],
+      "exercise_items": [
+       "pp3u8-2:think-and-discuss-1",
+       "pp3u8-2:think-and-discuss-2",
+       "pp3u8-2:drill-1"
+      ],
+      "worked_examples": [
+       "WE4"
+      ],
+      "terms": [
+       "complementary event",
+       "sample space",
+       "union",
+       "intersection",
+       "empty set",
+       "probability"
+      ]
+     },
+     {
+      "statement": "Calculate the probability of the difference between two events, A - B (the occurrence of A only), from set counts or a Venn diagram, using (A - B) ∪ (A ∩ B) = A.",
+      "label": "Difference between two events",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B2",
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "pp3u8-2:definition-3",
+        "printed_page": 37,
+        "quote": "A-B is the event of the occurrence of A and the non-occurrence of B"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-2:drill-2:1",
+        "printed_page": 37,
+        "quote": "the probability that the student reads Al - Akhbar newspaper only"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "pp3u8-2:drill-2:3",
+        "printed_page": 37,
+        "quote": "reads Al - Akhbar only or Al - Ahram only"
+       }
+      ],
+      "exercise_items": [
+       "pp3u8-2:think-1",
+       "pp3u8-2:drill-2:1",
+       "pp3u8-2:drill-2:2",
+       "pp3u8-2:drill-2:3"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "difference of two events",
+       "event",
+       "intersection",
+       "union",
+       "Venn diagram",
+       "probability"
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 0,
+  "batches": 0,
+  "mappers": [],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:pp3u8-1-1",
+    "dst": "lo:pp3u8-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 31,
+      "quote": "A = {2, 4, 6, 8}"
+     },
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 32,
+      "quote": "the probability of the occurrence of events A and B together"
+     }
+    ],
+    "reason": "Intersection probability uses events as sets and P=n/n(S)."
+   },
+   {
+    "src": "lo:pp3u8-1-2",
+    "dst": "lo:pp3u8-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 33,
+      "quote": "$A\\cap B=\\{6\\}$, so $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{1}{9}$"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u8-1:linking-text-5",
+      "printed_page": 34,
+      "quote": "P(A ∪ B) = P(A) + P(B) - P(A ∩ B) but (A ∩ B) = zero"
+     }
+    ],
+    "reason": "Union formula uses P(A∩B) and mutually exclusive case."
+   },
+   {
+    "src": "lo:pp3u8-1-1",
+    "dst": "lo:pp3u8-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE4",
+      "printed_page": 36,
+      "quote": "$P(A)=\\frac{n(A)}{n(S)}=\\frac{18}{40}=\\frac{9}{20}$"
+     }
+    ],
+    "reason": "Complement probability uses P(A)=n(A)/n(S)."
+   },
+   {
+    "src": "lo:pp3u8-1-2",
+    "dst": "lo:pp3u8-2-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u8-2:rule-1",
+      "printed_page": 35,
+      "quote": "The event and the complementary event are two mutually exclusive events."
+     }
+    ],
+    "reason": "Complement relies on mutually exclusive events/intersection empty."
+   },
+   {
+    "src": "lo:pp3u8-1-2",
+    "dst": "lo:pp3u8-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u8-2:rule-3",
+      "printed_page": 37,
+      "quote": "(A - B) ∪ (A ∩ B) = A"
+     },
+     {
+      "kind": "exercise",
+      "anchor": "pp3u8-2:drill-2:1",
+      "printed_page": 37,
+      "quote": "the probability that the student reads Al - Akhbar newspaper only"
+     }
+    ],
+    "reason": "Difference uses A∩B counts."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "WE1 writes sample space and events as sets with n(S), then uses Venn diagram for intersection; relies on LO1 skills. WE2 refers to A∩B."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Example uses A∩B={6} and P(A∩B) in the union formula; mutually exclusive case with A∩B empty."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Computes P(A)=n(A)/n(S) and uses it in P(A')=1-P(A)."
+    },
+    {
+     "i": 3,
+     "verdict": "UNCLEAR",
+     "note": "The text states complementary events are mutually exclusive, which links to the mutually exclusive idea, but does not show the complement method relying on the intersection objective."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Rule (A-B)∪(A∩B)=A uses the intersection A∩B, and the exercise uses the earlier A∩B count."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 4,
+   "S1 Reconcile": 2,
+   "S1 Evidence": 2,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "pp3u8-1": 4,
+   "pp3u8-2": 4
+  },
+  "total": 10
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book prep3-parallel --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

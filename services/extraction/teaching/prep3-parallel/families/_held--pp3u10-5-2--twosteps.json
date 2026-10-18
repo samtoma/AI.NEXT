@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-2:twosteps",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-2",
+ "parent_question_id": "",
+ "source_page": null,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    20,
+    35
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "e",
+   "let": "2 * x - d"
+  },
+  {
+   "name": "ext",
+   "let": "4 * x - d"
+  },
+  {
+   "name": "ans",
+   "let": "180 - ext"
+  }
+ ],
+ "stem": "$ABCD$ is a cyclic quadrilateral. The side $BA$ is produced to $E$. If $m(\\angle DAE) = (4x - {=d})^\\circ$ and $m(\\angle BCD) = (2x + {=e})^\\circ$, find $m(\\angle DAB)$ in degrees.",
+ "answer": "ans",
+ "solution": [
+  "$\\angle DAE$ is the exterior angle at $A$, so it equals the interior angle at the opposite vertex $C$.",
+  "So $4x - {=d} = 2x + {=e}$, which gives $2x = {=e + d}$ and $x = {=x}$.",
+  "Then $m(\\angle DAE) = 4({=x}) - {=d} = {=ext}^\\circ$.",
+  "$\\angle DAB$ and $\\angle DAE$ lie on a straight line, so $m(\\angle DAB) = 180^\\circ - {=ext}^\\circ = {=ans}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "e + d = 2x. Angle DAB between 50 and 130. No parent book question available."
+}

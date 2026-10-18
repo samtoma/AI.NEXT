@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "d508a4dbd7c852aa10208bd22bd76d94f58193728b2485e34a7682355d7ba839",
+  "generated_sha256": "5f9f453ae6f35235dd2514c076763d2e257a44c361fe2e814f6dfbe54b5f69bd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u10-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u10-3:example-1",
+      "kind": "explanation",
+      "answer": "Assuming A, B, C, D lie on the circle (the figure is not available, so this is assumed): $\\angle B$ and $\\angle C$ are inscribed angles subtended by the same arc $AD$, so $m(\\angle B)=m(\\angle C)$, i.e. $m(\\angle ABD)... $ in $\\triangle EBC$, $m(\\angle B)=m(\\angle C)$. Hence $\\triangle EBC$ is isosceles and $EB=EC$."
+     },
+     {
+      "ref": "pp3u10-3:example-3",
+      "kind": "explanation",
+      "answer": "Since chords $AD=BE$ in the same circle, their arcs are equal, so the inscribed angles $\\angle ABD$ and $\\angle BAE$ are equal. Hence in $\\triangle CAB$, $m(\\angle CAB)=m(\\angle CBA)$, so $CA=CB$. Then $CD=CA-AD$ and $CE=CB-BE$ with $AD=BE$, so $CD=CE$."
+     }
+    ]
+   }
+  }
+ ]
+}

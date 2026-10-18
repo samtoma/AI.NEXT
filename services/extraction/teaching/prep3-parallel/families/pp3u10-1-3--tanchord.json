@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-1-3:tanchord",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-1-3",
+ "parent_question_id": "q:pp3u10-1-3:bk-drill-7-4",
+ "source_page": 69,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    60,
+    85
+   ]
+  },
+  {
+   "name": "x",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a + 1 + x % 2"
+  },
+  {
+   "name": "b",
+   "let": "m - a * x"
+  },
+  {
+   "name": "d",
+   "let": "m - c * x"
+  },
+  {
+   "name": "ans",
+   "let": "360 - 2 * m"
+  }
+ ],
+ "constraints": [],
+ "stem": "A circle has a tangent at the point C, parallel to the chord $\\overline{AB}$. If m(arc AC) = $({=a}x + {=b})^\\circ$ and m(arc BC) = $({=c}x + {=d})^\\circ$, where each of these arcs is the smaller arc, find in degrees the measure of the arc AB that does not contain C.",
+ "answer": "ans",
+ "solution": [
+  "Since the tangent at C is parallel to $\\overline{AB}$, the arcs between them are equal: m(arc AC) = m(arc BC).",
+  "${=a}x + {=b} = {=c}x + {=d}$, so ${=c - a}x = {=b - d}$ and $x = {=x}$.",
+  "m(arc AC) = m(arc BC) = ${=m}^\\circ$.",
+  "The whole circle is $360^\\circ$, so m(arc AB) $= 360 - {=m} - {=m} = {=ans}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "b-d=(c-a)x so x whole; both arcs equal m (60-85) so below 180. c-a is 1 or 2; c x<=54 so d>0."
+}

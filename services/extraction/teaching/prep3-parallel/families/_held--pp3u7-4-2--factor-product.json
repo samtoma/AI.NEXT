@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-4-2:factor-product",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-4-2",
+ "parent_question_id": "q:pp3u7-4-2:none",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "sq",
+   "let": "b * b"
+  },
+  {
+   "require": "gcd(c, d) == 1",
+   "why": "keeps the final fraction in lowest terms"
+  }
+ ],
+ "constraints": [
+  "gcd(c, d) == 1"
+ ],
+ "stem": "Multiply and write the result in simplest form, where $x \\neq 0$ and $x \\neq -{=b}$: $$\\frac{x^2-{=sq}}{{=c}x}\\times\\frac{{=d}x}{x+{=b}}$$",
+ "answer": "",
+ "solution": [
+  "Factorise the difference of two squares: $x^2-{=sq}=(x-{=b})(x+{=b})$.",
+  "Write the product: $\\frac{(x-{=b})(x+{=b})\\times {=d}x}{{=c}x\\times(x+{=b})}$.",
+  "Cancel the common factors $x$ and $(x+{=b})$.",
+  "The simplest form is $\\frac{{=d}(x-{=b})}{{=c}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=d}*(x - {=b})/{=c}",
+  "form": "simplest",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "notes": "Placeholder parent id (no book questions given). Domain given in stem."
+}

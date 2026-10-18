@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-2:endpoint",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-2",
+ "parent_question_id": "q:pp3u5-2-2:bk-example-1",
+ "source_page": 63,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -8,
+    8
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -8,
+    8
+   ]
+  },
+  {
+   "name": "mx",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "my",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "2 * mx - x1"
+  },
+  {
+   "name": "y2",
+   "let": "2 * my - y1"
+  },
+  {
+   "require": "x2 != x1 or y2 != y1",
+   "why": "A and B must be different points"
+  },
+  {
+   "require": "abs(x2) <= 14 and abs(y2) <= 14",
+   "why": "keep numbers small"
+  }
+ ],
+ "constraints": [],
+ "stem": "C({=mx}, {=my}) is the midpoint of $\\overline{AB}$ and A({=x1}, {=y1}). Find the coordinates of B.",
+ "answer": "({=x2}, {=y2})",
+ "solution": [
+  "Let B be (x, y). Use $M\\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$ with the midpoint C({=mx}, {=my}).",
+  "$\\frac{{=x1}+x}{2}={=mx}$, so ${=x1}+x={=2*mx}$ and $x={=2*mx}-({=x1})={=x2}$",
+  "$\\frac{{=y1}+y}{2}={=my}$, so ${=y1}+y={=2*my}$ and $y={=2*my}-({=y1})={=y2}$",
+  "B({=x2}, {=y2})"
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x2}, {=y2})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Reverse use of the book's midpoint formula: the midpoint and one end are given. Always integer answer."
+}

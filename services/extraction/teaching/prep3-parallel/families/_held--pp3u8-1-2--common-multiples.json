@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-1-2:common-multiples",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-1-2",
+ "parent_question_id": "q:pp3u8-1-2:bk-drill-4-c",
+ "source_page": 32,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "N",
+   "choice": [
+    20,
+    24,
+    30
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    3,
+    5,
+    6
+   ]
+  },
+  {
+   "require": "p != q and q % p != 0 and p % q != 0",
+   "why": "neither set contained in the other"
+  },
+  {
+   "name": "m",
+   "let": "lcm(p, q)"
+  },
+  {
+   "name": "c",
+   "let": "N // m"
+  },
+  {
+   "name": "f",
+   "let": "frac(c, N)"
+  },
+  {
+   "require": "c >= 1 and c < N",
+   "why": "overlap non-empty"
+  }
+ ],
+ "stem": "A number is chosen at random from $S=\\{1, 2, \\dots, {=N}\\}$. Event $A$ is 'the number is a multiple of {=p}' and event $B$ is 'the number is a multiple of {=q}'. Find $P(A\\cap B)$, the probability of the occurrence of $A$ and $B$ together. Write the answer as a fraction in its simplest form (for example 1/4).",
+ "answer": "str(numerator(f)) + \"/\" + str(denominator(f))",
+ "solution": [
+  "A number is in $A\\cap B$ when it is a multiple of both {=p} and {=q}, that is a multiple of {=m}.",
+  "The multiples of {=m} in $S$ number {=c}, so $n(A\\cap B)={=c}$.",
+  "$n(S)={=N}$, so $P(A\\cap B)=\\frac{{=c}}{{=N}}=\\frac{{=numerator(f)}}{{=denominator(f)}}$ in simplest form."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist: build A∩B from rules, via common multiples (lcm). Pairs with p dividing q excluded. Answer string like 1/6."
+}

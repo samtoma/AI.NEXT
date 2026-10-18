@@ -1,0 +1,32 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-1-1:secant-radii",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-1-1",
+ "parent_question_id": "q:pp3u9-1-1:bk-exercise-5-c",
+ "source_page": 41,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    12,
+    40
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "M is the centre of a circle. D and E are two points on the circle, and the straight line ED is extended outside the circle to a point A, so that D lies between E and A. The length DA is equal to the radius MD, and the measure of angle $MAD$ is ${=p}^\\circ$. Find the measure of angle $AME$ in degrees.",
+ "answer": "180 - 3 * p",
+ "solution": [
+  "Since $DA = MD$, triangle $MDA$ is isosceles, so angle $AMD$ = angle $MAD$ = ${=p}^\\circ$.",
+  "The exterior angle at $D$ of triangle $MDA$ equals the sum of the two opposite angles, so angle $MDE$ = ${=p}$ + ${=p}$ = ${=2*p}^\\circ$.",
+  "$ME = MD$ (radii), so triangle $MED$ is isosceles and angle $MED$ = angle $MDE$ = ${=2*p}^\\circ$.",
+  "Angle $DME$ = 180 - ${=2*p}$ - ${=2*p}$ = ${=180-4*p}^\\circ$.",
+  "Since $D$ lies between $E$ and $A$, angle $AME$ = angle $AMD$ + angle $DME$ = ${=p}$ + ${=180-4*p}$ = ${=180-3*p}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Text-only version of book 5-c (figure not shown); asks for the whole angle AME. Check: angles of triangle MAE are p, 2p, 180-3p, sum 180. p in 12..40 keeps 4p<180."
+}

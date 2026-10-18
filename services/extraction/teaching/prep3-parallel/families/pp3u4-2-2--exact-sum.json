@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-2:exact-sum",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-2",
+ "parent_question_id": "q:pp3u4-2-2:bk-drill-3-3",
+ "source_page": 56,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "let": "2 * m"
+  }
+ ],
+ "stem": "Find the value of $%s$ without a calculator: ${=a}\\tan 45° + {=b}\\cos 60°$",
+ "solution": [
+  "tan 45° = 1.",
+  "cos 60° = \\frac{1}{2}.",
+  "${=a}\\times 1 + {=b}\\times\\frac{1}{2} = {=a} + {=m}$.",
+  "The value is {=a + m}."
+ ],
+ "answer": "a + m",
+ "proposed_misconceptions": [],
+ "notes": "Basic: two exact values, one product each. b is even so the answer is whole. Stem says 'Find the value of' plus expression (the '%s' placeholder is removed below)."
+}

@@ -1,0 +1,97 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-3-2:equalslope",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-3-2",
+ "parent_question_id": "q:pp3u5-3-2:bk-drill-6",
+ "source_page": 68,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "x3",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "y3",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "e",
+   "choice": [
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + d"
+  },
+  {
+   "name": "y2",
+   "let": "y1 + m * d"
+  },
+  {
+   "name": "x4",
+   "let": "x3 + e"
+  },
+  {
+   "name": "k",
+   "let": "y3 + m * e"
+  }
+ ],
+ "stem": "If $\\overleftrightarrow{AB}\\parallel\\overleftrightarrow{CD}$ where $A({=x1}, {=y1})$, $B({=x2}, {=y2})$, $C({=x3}, {=y3})$ and $D({=x4}, k)$, find the value of $k$.",
+ "answer": "k",
+ "solution": [
+  "Slope of $\\overleftrightarrow{AB}$ = $\\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})} = {=m}$.",
+  "Slope of $\\overleftrightarrow{CD}$ = $\\frac{k - ({=y3})}{{=x4} - ({=x3})} = \\frac{k - ({=y3})}{{=e}}$.",
+  "The lines are parallel, so their slopes are equal: $\\frac{k - ({=y3})}{{=e}} = {=m}$.",
+  "Then $k - ({=y3}) = {=m * e}$, so $k = {=k}$."
+ ],
+ "constraints": [],
+ "proposed_misconceptions": [],
+ "notes": "Equal slopes to find an unknown coordinate; slope of AB is an integer, e is nonzero."
+}

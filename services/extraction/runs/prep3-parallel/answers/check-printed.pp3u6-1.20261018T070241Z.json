@@ -1,0 +1,52 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "129ace779c24ce9fda11d02edadffb8f72302c389b2a9c3a08648c1cbd8d6bce",
+  "args_sha256": "3c18436ee9d453b17dc1573a6cc341173cf9d093adb4548072c7d9cd2a0cc390",
+  "generated_sha256": "172cc2c2ceced56e1262c28bab9ae3415af5c5d8a4dced4dffc593c47987e3f1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u6-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u6-1:example-2",
+      "kind": "value",
+      "answer": "{(2, 1)}"
+     },
+     {
+      "ref": "pp3u6-1:example-3:First",
+      "kind": "value",
+      "answer": "Empty set (the lines are parallel, no solution)"
+     },
+     {
+      "ref": "pp3u6-1:example-3:Second",
+      "kind": "explanation",
+      "answer": "The two lines coincide, so there are infinitely many solutions: every point on the line $3x+2y=6$, e.g. (0, 3), (2, 0)."
+     },
+     {
+      "ref": "pp3u6-1:example-4",
+      "kind": "value",
+      "answer": "{(2, 1)}"
+     },
+     {
+      "ref": "pp3u6-1:example-5",
+      "kind": "value",
+      "answer": "a = 2, b = 1"
+     },
+     {
+      "ref": "pp3u6-1:example-6",
+      "kind": "value",
+      "answer": "47"
+     }
+    ]
+   }
+  }
+ ]
+}

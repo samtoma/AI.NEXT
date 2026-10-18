@@ -1,0 +1,127 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "b74a07ac1e14de572a6325fc7042dd32f27f7b0e173dfb3a689cffb4b5505a88",
+  "generated_sha256": "ae5dc578b7da11f6d687a27d248603b2d650ab30689e24b89f2f385145b94634",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u3-2-3:discrete",
+   "spec_sha": "e21d497f5b11739a25b3e01283c24d02b7fdab53162c52e22ee5565f583efa8c",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g001-discre",
+     "stem_sha": "0316041621ffffa3",
+     "answer": {
+      "value": "2"
+     },
+     "working": "n=16, mean=19. Sum of squared deviations = 2*16+2*16 = 64. Population variance = 64/16 = 4, so sd = 2."
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g002-discre",
+     "stem_sha": "9728b65a1230c1fc",
+     "answer": {
+      "value": "3"
+     },
+     "working": "n=24, mean=24. Sum of squared deviations = 3*36+3*36 = 216. Population variance = 216/24 = 9, so sd = 3."
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g003-discre",
+     "stem_sha": "bc159e344863594a",
+     "answer": {
+      "value": "1"
+     },
+     "working": "n=24, mean=27. Sum of squared deviations = 3*4+3*4 = 24. Population variance = 24/24 = 1, so sd = 1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances. The sums, means, variances and standard deviations match the keys: 2, 3 and 1. The family has no options, so there are no distractors to check. The solutions use the population standard deviation (divide by Σf), which is the usual method for a frequency distribution at this level.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-3:grouped",
+   "spec_sha": "c81adb13c65090dce23204dca2f0a09625a1eee03f379ab84581fe230b1a2806",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g001-groupe",
+     "stem_sha": "1a75c3bd9cb4c05f",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Centres 37,39,41,43; n=16; mean=624/16=39; sum f d^2=24+0+8+32=64; var=4; sd=2"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g007-groupe",
+     "stem_sha": "63d6175dd2866623",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Centres 42,44,46,48; mean 44; deviations -2,0,2,4; sum f d^2=64; var=4; sd=2"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g008-groupe",
+     "stem_sha": "439e58a2e2ec84a0",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Centres 29,31,33,35; n=24; mean=744/24=31; sum f d^2=36+0+12+48=96; var=4; sd=2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances.\n\n- g001: Σfx = 624, n = 16, mean 39. Σf(x−x̄)² = 64, variance 4, SD 2.\n- g007: Σfx = 704, n = 16, mean 44. The deviations are the same, so Σf(x−x̄)² = 64 and SD = 2.\n- g008: Σfx = 744, n = 24, mean 31. Σf(x−x̄)² = 96, variance 4, SD 2.\n\nThe family has no wrong options, so there are no distractors to check. The stems say \"centres of the classes\" and ask for the standard deviation. The population formula is used, which is the usual one at this level. The three instances share the same shape and differ only in the numbers, which is acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-3:missing",
+   "spec_sha": "abf17e347f4ac4b5bd88ad752ddeef955c3d5291797f51d735843b241d5fde2b",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g003-missin",
+     "stem_sha": "a209ff2a35b2460c",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Centres 28,30,32,34; mean eq gives f=3, N=8; Σfx²=7232; var=904-900=4"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g007-missin",
+     "stem_sha": "77940655025c5ff1",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Centres 40,44,48,52; f=3, N=8; variance 16"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g008-missin",
+     "stem_sha": "3e955fd92afba1a3",
+     "answer": {
+      "value": "10"
+     },
+     "working": "Centres 16,26,36,46; f=3, N=8; variance 100"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances. Each gives f=3 and total frequency 8. The sums of squared deviations are 32, 128 and 800, so the variances are 4, 16 and 100. The standard deviations are 2, 4 and 10, which match the keys. The stem asks for f and then the standard deviation, and the key is the standard deviation, so the form is right. The family has no options, so there are no distractors to check.",
+    "distractors": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "0d39b6f4942d97e939a6d17c15514181feefffc21758bbf54ba3fafc62b28b2e",
+  "generated_sha256": "4cf262d7d2c891e7ec264e6374f625e6fdf01f9039cdddbe94b589d5d043f269",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-4:figure-1",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "extend",
+    "bottom": "ok",
+    "note": "Label A is clipped at right edge"
+   },
+   {
+    "id": "pp3u9-4:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Fragments of text from the line above are visible along the top"
+   },
+   {
+    "id": "pp3u9-4:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "extend",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Circle and D label are cut at left edge"
+   },
+   {
+    "id": "pp3u9-4:figure-4",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": ""
+   }
+  ]
+ }
+}

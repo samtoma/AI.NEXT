@@ -39,9 +39,10 @@
     "lesson_unit": null,
     "answer_rules": null,
     "lesson_titles": {
-      "pp3u2-1": "Ratio",
-      "pp3u2-2": "Proportion",
-      "pp3u2-3": "Direct Variation and Inverse Variation"
+      "pp3u7-1": "Set of zeroes of a polynomial function",
+      "pp3u7-2": "Algebraic fractional function",
+      "pp3u7-3": "Equality of two Algebraic fractions",
+      "pp3u7-4": "Operations on Algebraic fractions"
     },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
@@ -53,5 +54,122 @@
     }
   },
   "mode": "verify",
-  "widgets": []
+  "widgets": [
+    {
+      "question_id": "q:pp3u7-2-1:w001",
+      "template_id": "wt:pp3u7-2-1:exclude-numerator-trap",
+      "template_sha": "f320189a103afcaa62023d915fd2b1f6b380d40309cae98679121a7bcb2de0b5",
+      "lo_id": "lo:pp3u7-2-1",
+      "kind": "number_line_marker",
+      "spec": {
+        "mode": "points",
+        "range": [
+          -6,
+          6
+        ],
+        "targets": [
+          -3,
+          3
+        ]
+      },
+      "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
+      "instrument": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number line; the answer is a SET and is graded as one (1–4 targets). The other mode is {\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range.",
+      "reading_fields": {
+        "mode": "'points' or 'interval'",
+        "targets": "every value to mark (points mode)",
+        "from": "left end (interval)",
+        "to": "right end (interval)",
+        "openFrom": "true if the left end is excluded",
+        "openTo": "true if the right end is excluded"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "missed-values",
+            "extra-values",
+            "sign-flipped"
+          ],
+          "interval": [
+            "endpoint-inclusion-wrong",
+            "interval-wrong"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "extra-values",
+          "predicate_meaning": "Marked values that the answer set does not contain",
+          "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+          "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
+          "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values."
+        },
+        {
+          "predicate": "missed-values",
+          "predicate_meaning": "Part of the answer set was not marked",
+          "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
+          "misconception_label": "Finds only the positive root of the denominator",
+          "misconception_description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u7-2-1:w002",
+      "template_id": "wt:pp3u7-2-1:exclude-square-denominator",
+      "template_sha": "6223adf4f2a0fbf49b7e6f8c6012551a322c10b642488e47a19132924ce10528",
+      "lo_id": "lo:pp3u7-2-1",
+      "kind": "number_line_marker",
+      "spec": {
+        "mode": "points",
+        "range": [
+          -6,
+          6
+        ],
+        "targets": [
+          -2,
+          2
+        ]
+      },
+      "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+      "instrument": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number line; the answer is a SET and is graded as one (1–4 targets). The other mode is {\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range.",
+      "reading_fields": {
+        "mode": "'points' or 'interval'",
+        "targets": "every value to mark (points mode)",
+        "from": "left end (interval)",
+        "to": "right end (interval)",
+        "openFrom": "true if the left end is excluded",
+        "openTo": "true if the right end is excluded"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "missed-values",
+            "extra-values",
+            "sign-flipped"
+          ],
+          "interval": [
+            "endpoint-inclusion-wrong",
+            "interval-wrong"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "missed-values",
+          "predicate_meaning": "Part of the answer set was not marked",
+          "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
+          "misconception_label": "Finds only the positive root of the denominator",
+          "misconception_description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
+        },
+        {
+          "predicate": "extra-values",
+          "predicate_meaning": "Marked values that the answer set does not contain",
+          "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+          "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
+          "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values."
+        }
+      ]
+    }
+  ]
 }

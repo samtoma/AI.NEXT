@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u8-2-1:multiples-comp",
+ "kind": "family",
+ "lo_id": "lo:pp3u8-2-1",
+ "parent_question_id": "q:pp3u8-2-1:bk-think-and-discuss-2",
+ "source_page": 35,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    20,
+    25,
+    50
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    4,
+    5,
+    10
+   ]
+  },
+  {
+   "require": "n % m == 0",
+   "why": "m divides n"
+  },
+  {
+   "name": "k",
+   "let": "n // m"
+  },
+  {
+   "name": "d",
+   "let": "n - k"
+  }
+ ],
+ "stem": "Let $S=\\{1, 2, 3, \\ldots, {=n}\\}$ be the sample space of choosing a number at random, and let $A$ be the event of choosing a multiple of {=m}. Find $P(A')$. Write the answer as a decimal with 2 decimal places.",
+ "answer": "fixed(d / n, 2)",
+ "solution": [
+  "$A$ contains the multiples of {=m} in $S$, so $n(A)={=k}$ and $n(S)={=n}$.",
+  "$P(A)=\\frac{{=k}}{{=n}}$.",
+  "$P(A')=1-P(A)=1-\\frac{{=k}}{{=n}}=\\frac{{=d}}{{=n}}$.",
+  "As a decimal, $P(A')={=fixed(d / n, 2)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "n in 20,25,50 so answer terminates within 2 decimals."
+}

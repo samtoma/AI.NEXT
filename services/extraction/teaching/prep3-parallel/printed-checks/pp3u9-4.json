@@ -1,0 +1,82 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u9-4",
+  "source": "book-records/prep3-parallel/pp3u9-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-18",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 2,
+      "cost_usd": 0.0287,
+      "calls": [
+        {
+          "call": "check-printed.pp3u9-4",
+          "cost_usd": 0.0191,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.pp3u9-4",
+          "cost_usd": 0.0096,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "pp3u9-4:example-1:First",
+      "record_id": "pp3u9-4:example-1",
+      "part": "First",
+      "type": "worked_example",
+      "page": 60,
+      "printed": "$XD = YE$",
+      "blind": "AB = AC, so MX = MY (equal chords are equidistant from the center). MD = ME (radii). So XD = MD − MX = ME − MY = YE.",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-4:figure-12"
+      ],
+      "question_fingerprint": "c3c8236b2305ece7f8f9759e848dfd1b",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-4:example-1:First",
+        "verdict": "equivalent",
+        "reason": "Both prove XD = YE; the solver's proof reaches the same conclusion."
+      },
+      "how": "judged equivalent: Both prove XD = YE; the solver's proof reaches the same conclusion.",
+      "made": {
+        "at": "2026-10-18T07:29:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "pp3u9-4:example-1:Second",
+      "record_id": "pp3u9-4:example-1",
+      "part": "Second",
+      "type": "worked_example",
+      "page": 60,
+      "printed": "$m(\\angle YXB) = m(\\angle XYC)$",
+      "blind": "X is the midpoint of AB, so MX ⊥ AB. MY ⊥ AC, so m(∠MXB) = m(∠MYC) = 90°. MX = MY (equal chords), so in triangle MXY, m(∠MXY) = m(∠MYX) (base angles). Subtracting equal angles from 90° gives m(∠YXB) = m(∠XYC).",
+      "blind_kind": "explanation",
+      "figures": [
+        "pp3u9-4:figure-12"
+      ],
+      "question_fingerprint": "6dddf4adffb422385c3bce2e6125a501",
+      "status": "agreed",
+      "judge": {
+        "ref": "pp3u9-4:example-1:Second",
+        "verdict": "equivalent",
+        "reason": "Both prove m(∠YXB) = m(∠XYC); the solver's proof reaches the same conclusion."
+      },
+      "how": "judged equivalent: Both prove m(∠YXB) = m(∠XYC); the solver's proof reaches the same conclusion.",
+      "made": {
+        "at": "2026-10-18T07:29:09+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

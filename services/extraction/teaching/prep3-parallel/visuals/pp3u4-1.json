@@ -1,0 +1,107 @@
+{
+  "format": "ainext.teaching-visuals/1",
+  "book": "prep3-parallel",
+  "lesson": "pp3u4-1",
+  "source": "book-records/prep3-parallel/pp3u4-1.json",
+  "visuals": [],
+  "gaps": [
+    {
+      "figure": "pp3u4-1:figure-1",
+      "for_item": "pp3u4-1:think-and-discuss-1",
+      "reason": "Plain right triangle ABC (right angle at B) with no angle or side values; no kind draws a labelled triangle with a right-angle mark and no marked acute angle.",
+      "needed_kind": "triangle scene with labelled vertices and right-angle mark",
+      "page": 49,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+      }
+    },
+    {
+      "figure": "pp3u4-1:figure-2",
+      "for_item": null,
+      "reason": "Circular protractor ring with degree labels every 10° around the full circle and two axes; geo_scene cannot draw a graduated degree scale.",
+      "needed_kind": "protractor / angle-measure dial with degree scale",
+      "page": 49,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+      }
+    },
+    {
+      "figure": "pp3u4-1:figure-3",
+      "for_item": null,
+      "reason": "Photo of a scientific calculator; not a parametric figure.",
+      "needed_kind": "calculator image / photo (static image)",
+      "page": 50,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+      }
+    },
+    {
+      "figure": "pp3u4-1:figure-4",
+      "for_item": null,
+      "reason": "the spec does not match the figure: Angle θ is not marked or labeled on the triangle. Side labels use descriptive text ('opposite', 'adjacent', 'hypotenuse') instead of vertex notation ('AB', 'BC', 'AC') as specified in the spec.",
+      "needed_kind": null,
+      "page": 50,
+      "rejected_spec": {
+        "kind": "trig_triangle",
+        "spec": {
+          "angleDeg": "θ",
+          "emphasize": "sin",
+          "sides": {
+            "opp": "AB",
+            "adj": "BC",
+            "hyp": "AC"
+          },
+          "animate": "ratio-highlight"
+        }
+      },
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+      }
+    },
+    {
+      "figure": "pp3u4-1:figure-5",
+      "for_item": "pp3u4-1:example-1",
+      "reason": "the spec does not match the figure: Angle θ is not clearly marked or labeled on the triangle, despite being required by the spec (angleDeg='θ'). The side values (12 cm, 13 cm) are correct, but the angle designation is missing.",
+      "needed_kind": null,
+      "page": 51,
+      "rejected_spec": {
+        "kind": "trig_triangle",
+        "spec": {
+          "angleDeg": "θ",
+          "emphasize": "cos",
+          "sides": {
+            "adj": "12 cm",
+            "hyp": "13 cm"
+          },
+          "animate": "ratio-highlight"
+        }
+      },
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "at": "2026-10-18T06:46:52+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
+      "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660",
+      "counts": {
+        "visuals": 0,
+        "viz_gaps": 5,
+        "compared": 2
+      }
+    }
+  ]
+}

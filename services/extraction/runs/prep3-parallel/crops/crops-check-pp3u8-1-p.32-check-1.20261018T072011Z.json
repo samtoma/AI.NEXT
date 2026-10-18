@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "d16248309bb687e20f50c51eb1c3626c36d9b9c9694d2fff981489b0927e6da6",
+  "generated_sha256": "cb9784ef158fa0b24b4010bfee9d6e4e4be9eff6ea93b8b5cf1f522ccb45732d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u8-1:figure-6",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete Venn diagram"
+   },
+   {
+    "id": "pp3u8-1:figure-7",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "trim",
+    "bottom": "ok",
+    "note": "A sliver of a pink decorative shape at right edge is not part of the figure"
+   }
+  ]
+ }
+}

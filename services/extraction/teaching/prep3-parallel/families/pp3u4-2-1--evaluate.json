@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-1:evaluate",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-1",
+ "parent_question_id": "q:pp3u4-2-1:bk-think-and-discuss-1-2",
+ "source_page": 52,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    2,
+    4,
+    6,
+    8
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    4,
+    6,
+    8
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    5
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the value of ${=a}\\sin 30^\\circ+{=b}\\cos 60^\\circ+{=c}\\tan 45^\\circ$.",
+ "answer": "a // 2 + b // 2 + c",
+ "solution": [
+  "In the equilateral triangle ABC of side 2L with AD perpendicular to BC, BD = L, AB = 2L, and m(∠BAD) = 30°, m(∠B) = 60°.",
+  "So $\\sin 30^\\circ=\\frac{BD}{AB}=\\frac{1}{2}$ and $\\cos 60^\\circ=\\frac{BD}{AB}=\\frac{1}{2}$.",
+  "In the isosceles right-angled triangle with legs L, the angles are 45°, so $\\tan 45^\\circ=\\frac{L}{L}=1$.",
+  "${=a}\\times\\frac{1}{2}={=a // 2}$ and ${=b}\\times\\frac{1}{2}={=b // 2}$ and ${=c}\\times 1={=c}$.",
+  "The value is ${=a // 2}+{=b // 2}+{=c}={=a // 2 + b // 2 + c}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Uses sin30=cos60=1/2 and tan45=1 as derived in the book triangles. a and b even so the answer is whole."
+}

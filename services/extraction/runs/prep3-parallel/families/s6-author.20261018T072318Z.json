@@ -1,0 +1,564 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "14ffa9a0ca2eaaa68d5a30bde9b61cfafcfdd8001f858875ae2b273705fae02e",
+  "generated_sha256": "3eba3a13fe6b5e01621d803cf3499c22356a50af949a01e634983066ba62e5c7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u8-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-1-1:cards-union",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-1-1",
+     "parent_question_id": "q:pp3u8-1-1:bk-example-1-3-a",
+     "source_page": 31,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Identical cards numbered from 1 to N, mixed well, one card drawn at random.",
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        20,
+        24,
+        30,
+        36,
+        40
+       ]
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "m",
+       "let": "[2, 2, 3, 3, 4, 4][i]"
+      },
+      {
+       "name": "k",
+       "let": "[3, 5, 4, 5, 5, 3][i]"
+      },
+      {
+       "name": "nA",
+       "let": "N // m"
+      },
+      {
+       "name": "nB",
+       "let": "N // k"
+      },
+      {
+       "name": "L",
+       "let": "lcm(m, k)"
+      },
+      {
+       "name": "nAB",
+       "let": "N // L"
+      },
+      {
+       "name": "u",
+       "let": "nA + nB - nAB"
+      },
+      {
+       "require": "u < N",
+       "why": "probability less than 1"
+      }
+     ],
+     "constraints": [],
+     "stem": "A set of identical cards numbered from 1 to {=N} with no repetition is mixed up well, and a card is drawn randomly. Let A be the event that the drawn card has a number divisible by {=m}, and B the event that the drawn card has a number divisible by {=k}. Use a Venn diagram to calculate the probability that A or B occurs (the card is in A or in B or in both). Write the answer as a fraction in its simplest form.",
+     "answer": "str(Fraction(u, N))",
+     "solution": [
+      "The sample space is $S=\\{1, 2, \\ldots, {=N}\\}$, so $n(S)={=N}$.",
+      "$n(A)={=nA}$ (numbers divisible by {=m}) and $n(B)={=nB}$ (numbers divisible by {=k}).",
+      "Numbers divisible by both {=m} and {=k} are the multiples of {=L}, so $n(A\\cap B)={=nAB}$.",
+      "In the Venn diagram the common part is counted once: $n(A\\cup B)={=nA}+{=nB}-{=nAB}={=u}$.",
+      "$P(A\\cup B)=\\frac{n(A\\cup B)}{n(S)}=\\frac{{=u}}{{=N}}$, which in simplest form is the answer."
+     ],
+     "notes": "Union via Venn diagram (book draws Venn for intersections). Answer is Fraction string, simplest form; stem asks for it. Basic and standard tiers not requested."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u8-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-1-2:overlap-range",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-1-2",
+     "parent_question_id": "q:pp3u8-1-2:bk-worked-example-1-b",
+     "source_page": 32,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        8,
+        10,
+        12
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        4,
+        "N - 2"
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        "a - 1"
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a - b + 1"
+      },
+      {
+       "name": "f",
+       "let": "frac(c, N)"
+      },
+      {
+       "require": "c >= 1 and c < N",
+       "why": "overlap non-empty and proper"
+      }
+     ],
+     "stem": "Let $S=\\{1, 2, \\dots, {=N}\\}$ be the sample space of choosing a number at random. Event $A$ is the numbers from 1 to {=a}, and event $B$ is the numbers from {=b} to {=N}. Draw the Venn diagram and find the probability of the occurrence of $A$ and $B$ together, $P(A\\cap B)$. Write the answer as a fraction in its simplest form (for example 1/4).",
+     "answer": "str(numerator(f)) + \"/\" + str(denominator(f))",
+     "solution": [
+      "$A\\cap B$ is the set of numbers in both events: the numbers from {=b} to {=a}.",
+      "So $n(A\\cap B)={=c}$.",
+      "$n(S)={=N}$, so $P(A\\cap B)=\\frac{n(A\\cap B)}{n(S)}=\\frac{{=c}}{{=N}}=\\frac{{=numerator(f)}}{{=denominator(f)}}$ in simplest form."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Answer is a string like 3/8 (lowest terms; denominator never 1 since c<N). Sets are listed explicitly so no ambiguity."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-1-2:common-multiples",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-1-2",
+     "parent_question_id": "q:pp3u8-1-2:bk-drill-4-c",
+     "source_page": 32,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        20,
+        24,
+        30
+       ]
+      },
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        3,
+        5,
+        6
+       ]
+      },
+      {
+       "require": "p != q and q % p != 0 and p % q != 0",
+       "why": "neither set contained in the other"
+      },
+      {
+       "name": "m",
+       "let": "lcm(p, q)"
+      },
+      {
+       "name": "c",
+       "let": "N // m"
+      },
+      {
+       "name": "f",
+       "let": "frac(c, N)"
+      },
+      {
+       "require": "c >= 1 and c < N",
+       "why": "overlap non-empty"
+      }
+     ],
+     "stem": "A number is chosen at random from $S=\\{1, 2, \\dots, {=N}\\}$. Event $A$ is 'the number is a multiple of {=p}' and event $B$ is 'the number is a multiple of {=q}'. Find $P(A\\cap B)$, the probability of the occurrence of $A$ and $B$ together. Write the answer as a fraction in its simplest form (for example 1/4).",
+     "answer": "str(numerator(f)) + \"/\" + str(denominator(f))",
+     "solution": [
+      "A number is in $A\\cap B$ when it is a multiple of both {=p} and {=q}, that is a multiple of {=m}.",
+      "The multiples of {=m} in $S$ number {=c}, so $n(A\\cap B)={=c}$.",
+      "$n(S)={=N}$, so $P(A\\cap B)=\\frac{{=c}}{{=N}}=\\frac{{=numerator(f)}}{{=denominator(f)}}$ in simplest form."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist: build A∩B from rules, via common multiples (lcm). Pairs with p dividing q excluded. Answer string like 1/6."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u8-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-1-3:basic-formula",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-1-3",
+     "parent_question_id": "q:pp3u8-1-3:bk-drill-6-a",
+     "source_page": 34,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "d",
+       "randint": [
+        8,
+        20
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        3,
+        7
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        3,
+        7
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "u",
+       "let": "a + b - c"
+      },
+      {
+       "require": "gcd(u, d) == 1 and u < d",
+       "why": "answer is a proper fraction already in lowest terms"
+      }
+     ],
+     "constraints": [],
+     "stem": "$A$ and $B$ are two events, with $P(A)=\\frac{{=a}}{{=d}}$, $P(B)=\\frac{{=b}}{{=d}}$ and $P(A\\cap B)=\\frac{{=c}}{{=d}}$. Find $P(A\\cup B)$.",
+     "solution": [
+      "Use $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
+      "$P(A\\cup B)=\\frac{{=a}}{{=d}}+\\frac{{=b}}{{=d}}-\\frac{{=c}}{{=d}}$.",
+      "$P(A\\cup B)=\\frac{{=u}}{{=d}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=u}/{=d}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: apply the formula with given probabilities. Answer already in lowest terms by require."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-1-3:advanced-multiples",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-1-3",
+     "parent_question_id": "q:pp3u8-1-3:bk-drill-6-a",
+     "source_page": 34,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "A number is chosen at random from the whole numbers 1 to N; every number is equally likely.",
+     "params": [
+      {
+       "name": "N",
+       "choice": [
+        20,
+        24,
+        30,
+        36,
+        40,
+        48,
+        60
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "n",
+       "choice": [
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "require": "m < n",
+       "why": "distinct events, ordered"
+      },
+      {
+       "name": "l",
+       "let": "lcm(m, n)"
+      },
+      {
+       "name": "na",
+       "let": "N // m"
+      },
+      {
+       "name": "nb",
+       "let": "N // n"
+      },
+      {
+       "name": "nc",
+       "let": "N // l"
+      },
+      {
+       "name": "u",
+       "let": "na + nb - nc"
+      },
+      {
+       "name": "g",
+       "let": "gcd(u, N)"
+      },
+      {
+       "require": "u < N and nc >= 1",
+       "why": "proper fraction and a real overlap"
+      }
+     ],
+     "constraints": [],
+     "stem": "A number is chosen at random from the whole numbers $1$ to ${=N}$. Let $A$ be the event 'the number is a multiple of ${=m}$' and $B$ the event 'the number is a multiple of ${=n}$'. Find $P(A\\cup B)$, giving your answer as a fraction in its simplest form.",
+     "solution": [
+      "$n(S)={=N}$. The multiples of ${=m}$ give $n(A)={=na}$, so $P(A)=\\frac{{=na}}{{=N}}$.",
+      "The multiples of ${=n}$ give $n(B)={=nb}$, so $P(B)=\\frac{{=nb}}{{=N}}$.",
+      "$A\\cap B$ is the numbers that are multiples of both ${=m}$ and ${=n}$, i.e. multiples of ${=l}$: $n(A\\cap B)={=nc}$, so $P(A\\cap B)=\\frac{{=nc}}{{=N}}$.",
+      "$P(A\\cup B)=\\frac{{=na}}{{=N}}+\\frac{{=nb}}{{=N}}-\\frac{{=nc}}{{=N}}=\\frac{{=u}}{{=N}}$.",
+      "In simplest form $P(A\\cup B)=\\frac{{=u // g}}{{=N // g}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=u // g}/{=N // g}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Student must find the overlap (multiples of lcm) and subtract it. Floor counts via //. N chosen so overlaps exist."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u8-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-2-1:multiples-comp",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-2-1",
+     "parent_question_id": "q:pp3u8-2-1:bk-think-and-discuss-2",
+     "source_page": 35,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        20,
+        25,
+        50
+       ]
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        4,
+        5,
+        10
+       ]
+      },
+      {
+       "require": "n % m == 0",
+       "why": "m divides n"
+      },
+      {
+       "name": "k",
+       "let": "n // m"
+      },
+      {
+       "name": "d",
+       "let": "n - k"
+      }
+     ],
+     "stem": "Let $S=\\{1, 2, 3, \\ldots, {=n}\\}$ be the sample space of choosing a number at random, and let $A$ be the event of choosing a multiple of {=m}. Find $P(A')$. Write the answer as a decimal with 2 decimal places.",
+     "answer": "fixed(d / n, 2)",
+     "solution": [
+      "$A$ contains the multiples of {=m} in $S$, so $n(A)={=k}$ and $n(S)={=n}$.",
+      "$P(A)=\\frac{{=k}}{{=n}}$.",
+      "$P(A')=1-P(A)=1-\\frac{{=k}}{{=n}}=\\frac{{=d}}{{=n}}$.",
+      "As a decimal, $P(A')={=fixed(d / n, 2)}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "n in 20,25,50 so answer terminates within 2 decimals."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-2-1:find-event-size",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-2-1",
+     "parent_question_id": "q:pp3u8-2-1:bk-think-and-discuss-2",
+     "source_page": 35,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A bag contains marbles of different colours; one marble is drawn at random. Event A is drawing a red marble.",
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        20,
+        25,
+        50
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        3,
+        "n // 2 - 1"
+       ]
+      },
+      {
+       "name": "q",
+       "let": "(n - r) / n"
+      }
+     ],
+     "stem": "A bag contains {=n} marbles, some of them red. A marble is drawn at random. The probability that the marble drawn is not red is ${=fixed(q, 2)}$. How many red marbles are in the bag?",
+     "answer": "r",
+     "solution": [
+      "Let $A$ be drawing a red marble. Then $A'$ is drawing a marble that is not red, and $P(A')={=fixed(q, 2)}$.",
+      "$P(A)=1-P(A')=1-{=fixed(q, 2)}={=fixed(1 - q, 2)}$.",
+      "$n(A)=P(A)\\times n(S)={=fixed(1 - q, 2)}\\times {=n}={=r}$.",
+      "There are {=r} red marbles."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Reverse use of the complement rule; q has at most 2 decimals for n in 20,25,50."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u8-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u8-2-2:only-count",
+     "kind": "family",
+     "lo_id": "lo:pp3u8-2-2",
+     "parent_question_id": "q:pp3u8-2-2:bk-drill-2-1",
+     "source_page": 37,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A student is chosen at random from a group; A is the event that the student reads Al-Akhbar newspaper and B the event that the student reads Al-Ahram newspaper.",
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        20,
+        24,
+        30,
+        40,
+        50
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        8,
+        "s // 2"
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        "a - 3"
+       ]
+      },
+      {
+       "name": "d",
+       "let": "a - b"
+      },
+      {
+       "name": "g",
+       "let": "gcd(d, s)"
+      },
+      {
+       "name": "p",
+       "let": "d // g"
+      },
+      {
+       "name": "q",
+       "let": "s // g"
+      },
+      {
+       "require": "q > 1",
+       "why": "answer must be a proper fraction"
+      }
+     ],
+     "stem": "A student is chosen at random from {=s} students. Let A be the event that the student reads Al-Akhbar newspaper and B the event that the student reads Al-Ahram newspaper. Given n(A) = {=a} and n(A ∩ B) = {=b}, find the probability that the student reads Al-Akhbar newspaper only. Write the answer as a fraction in its simplest form, like 3/8.",
+     "answer": "str(p) + \"/\" + str(q)",
+     "solution": [
+      "Reading Al-Akhbar only is the event A - B.",
+      "Since (A - B) ∪ (A ∩ B) = A, n(A - B) = n(A) - n(A ∩ B) = {=a} - {=b} = {=d}.",
+      "P(A - B) = n(A - B) / n(S) = {=d}/{=s}.",
+      "In simplest form the probability is {=p}/{=q}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: given n(S), n(A), n(A∩B) as in the book's Venn diagram (S=40, A=18, A∩B=8). Answer string is simplest-form p/q; q>1 always since a-b<s. Answer expression is formatted via str; if the engine needs a different formatting hook, use p and q."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

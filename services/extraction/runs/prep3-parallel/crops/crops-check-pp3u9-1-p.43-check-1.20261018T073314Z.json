@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "6b29a967a559fafe0bd2939d7a32038988b634e2b8ef16b88c1457aadf5eb3f4",
+  "generated_sha256": "4dd9e8431641287945a3593531b93279c537f4184f14e6eaed8bacc34a128b5b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "pp3u9-1:figure-19",
+    "shows_figure": false,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Crop shows only a faint blue/white grid pattern, not the circle with chord and 50° angle. Figure is missing from the crop."
+   },
+   {
+    "id": "pp3u9-1:figure-20",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Circle, chord CA, E, M, D, B and 60° angle are all present. Fragments of text from the line above (descenders) and a blue icon piece are visible along the top edge and should be trimmed."
+   }
+  ]
+ }
+}
