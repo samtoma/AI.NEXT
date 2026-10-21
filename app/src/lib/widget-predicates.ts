@@ -26,6 +26,8 @@ export const WIDGET_PREDICATES = {
     "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
     "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
     "off-target": "Neither coordinate matches, with no recognisable pattern",
+    "missing-points": "Some of the points asked for were not plotted",
+    "extra-points": "Plotted points that were not asked for, with no recognisable pattern",
   },
   product_builder: {
     "reversed-pairs": "Built Y×X — the pairs are the right numbers in the wrong order",
@@ -138,6 +140,16 @@ export const WIDGET_PREDICATES = {
     "not-a-rectangle": "The placed tiles do not tile a rectangle: a gap, a stray tile, or more than one x² tile",
     "off-target": "A valid rectangle whose terms match neither the target sum nor its product",
   },
+  arrow_builder: {
+    "arrows-reversed": "Arrows drawn the wrong way round — from the second element of a pair to the first",
+    "extra-arrows": "Arrows for pairs that are not in the relation",
+    "missing-arrows": "Some pairs of the relation have no arrow",
+  },
+  region_shader: {
+    "region-swapped": "The two intervals exchanged — the first belongs along x, the second along y",
+    "edge-inclusion-wrong": "The right rectangle with a wrong edge included or excluded — solid is ≤, dashed is <",
+    "off-target": "The rectangle does not match the region asked for",
+  },
 } as const;
 
 export type WidgetKind = keyof typeof WIDGET_PREDICATES;
@@ -158,13 +170,26 @@ export type WidgetKind = keyof typeof WIDGET_PREDICATES;
  * "not quite" where a refutation was promised.
  */
 export const WIDGET_CAN_EMIT = {
-  pair_plotter: ["swapped-coordinates", "wrong-quadrant", "off-target"],
-  product_builder: ["reversed-pairs", "missing-pairs"],
+  pair_plotter: {
+    by: "targets",
+    cases: {
+      "(absent)": ["swapped-coordinates", "wrong-quadrant", "off-target"],
+      "(present)": ["swapped-coordinates", "wrong-quadrant", "extra-points", "missing-points"],
+    },
+  },
+  product_builder: {
+    by: "mode",
+    cases: {
+      "(absent)": ["reversed-pairs", "missing-pairs"],
+      relation: ["reversed-pairs", "extra-pairs", "missing-pairs"],
+    },
+  },
   line_drawer: {
     by: "mode",
     cases: {
       points: ["points-swapped", "off-target"],
       equation: ["vertical-line", "intercept-wrong", "slope-sign-flipped", "slope-inverted", "off-target"],
+      system: ["vertical-line", "intercept-wrong", "slope-sign-flipped", "slope-inverted", "off-target"],
     },
   },
   circle_builder: {
@@ -292,6 +317,8 @@ export const WIDGET_CAN_EMIT = {
     },
   },
   area_model: ["missing-cross-term", "middle-term-sign", "constant-sign", "not-a-rectangle", "off-target"],
+  arrow_builder: ["arrows-reversed", "extra-arrows", "missing-arrows"],
+  region_shader: ["region-swapped", "edge-inclusion-wrong", "off-target"],
 } as const;
 
 type EmitNode = readonly string[] | { readonly by: string; readonly cases: Readonly<Record<string, EmitNode>> };

@@ -37,6 +37,8 @@ import { SolidScaler } from "./SolidScaler";
 import { BoxPlotBuilder } from "./BoxPlotBuilder";
 import { VennBuilder } from "./VennBuilder";
 import { AreaModel } from "./AreaModel";
+import { ArrowBuilder } from "./ArrowBuilder";
+import { RegionShader } from "./RegionShader";
 
 export { MATH_WIDGETS } from "@/lib/widget-payloads";
 
@@ -76,7 +78,9 @@ export function renderMathWidget(
     case "pair_plotter":
       return (
         <PairPlotter
-          prompt={w.prompt} target={w.target}
+          prompt={w.prompt}
+          {...("targets" in w ? { targets: w.targets, join: w.join } : { target: w.target })}
+          grid={w.grid}
           studentName={studentName} pronoun={pronoun} onResult={onOutcome}
         />
       );
@@ -84,19 +88,26 @@ export function renderMathWidget(
     case "product_builder":
       return (
         <ProductBuilder
-          prompt={w.prompt} X={w.X} Y={w.Y} studentName={studentName} onResult={onOutcome}
+          prompt={w.prompt} X={w.X} Y={w.Y}
+          {...("mode" in w ? { mode: w.mode, pairs: w.pairs } : {})}
+          studentName={studentName} onResult={onOutcome}
         />
       );
 
     case "line_drawer":
       return w.mode === "points" ? (
         <LineDrawer
-          prompt={w.prompt} mode="points" through={w.through}
+          prompt={w.prompt} mode="points" through={w.through} grid={w.grid}
+          studentName={studentName} onResult={onOutcome}
+        />
+      ) : w.mode === "system" ? (
+        <LineDrawer
+          prompt={w.prompt} mode="system" lines={w.lines} grid={w.grid}
           studentName={studentName} onResult={onOutcome}
         />
       ) : (
         <LineDrawer
-          prompt={w.prompt} mode="equation" m={w.m} b={w.b}
+          prompt={w.prompt} mode="equation" m={w.m} b={w.b} grid={w.grid}
           studentName={studentName} onResult={onOutcome}
         />
       );
@@ -165,7 +176,7 @@ export function renderMathWidget(
     case "curve_sketcher":
       return (
         <CurveSketcher
-          prompt={w.prompt} fn={w.fn} coefs={w.coefs}
+          prompt={w.prompt} fn={w.fn} coefs={w.coefs} grid={w.grid}
           studentName={studentName} onResult={onOutcome}
         />
       );
@@ -221,6 +232,22 @@ export function renderMathWidget(
       return (
         <AreaModel
           prompt={w.prompt} mode={w.mode} a={w.a} b={w.b}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "arrow_builder":
+      return (
+        <ArrowBuilder
+          prompt={w.prompt} X={w.X} Y={w.Y} pairs={w.pairs}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
+
+    case "region_shader":
+      return (
+        <RegionShader
+          prompt={w.prompt} x={w.x} y={w.y} open={w.open} grid={w.grid}
           studentName={studentName} onResult={onOutcome}
         />
       );

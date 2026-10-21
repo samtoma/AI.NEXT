@@ -90,7 +90,9 @@ export const CURVE_COEF_COUNT: Record<CurveFn, number> = {
  * is 0..360 rather than a signed lattice — and hyperbola/exponential get more
  * headroom because a branch or a tail leaves a −5..5 frame almost at once.
  */
-export const CURVE_PLANE: Record<CurveFn, { x: [number, number]; y: [number, number] }> = {
+export type CurvePlane = { x: [number, number]; y: [number, number] };
+
+export const CURVE_PLANE: Record<CurveFn, CurvePlane> = {
   linear: { x: [-5, 5], y: [-5, 5] },
   quadratic: { x: [-5, 5], y: [-5, 5] },
   hyperbola: { x: [-6, 6], y: [-6, 6] },
@@ -211,9 +213,10 @@ const MIN_COVER = 0.7;
 /** The tolerance pair `gradeCurve` grades this family against, for a message
  *  that wants to quote it (the original "within the 0.9 tolerance" line).
  *  Linear and quadratic are the exact original literals — see `gradeCurve`. */
-export function tolFor(fn: CurveFn): { TOL: number; VLT: number } {
-  if (fn === "linear" || fn === "quadratic") return { TOL: 0.9, VLT: 0.7 };
-  const [yLo, yHi] = CURVE_PLANE[fn].y;
+export function tolFor(fn: CurveFn, plane?: CurvePlane): { TOL: number; VLT: number } {
+  // a spec's own `grid` (grid.ts) is a different plane: its tolerance scales with ITS span, as every other family's does
+  if ((fn === "linear" || fn === "quadratic") && !plane) return { TOL: 0.9, VLT: 0.7 };
+  const [yLo, yHi] = (plane ?? CURVE_PLANE[fn]).y;
   return { TOL: (yHi - yLo) * 0.09, VLT: (yHi - yLo) * 0.07 };
 }
 
@@ -275,14 +278,15 @@ function meanErrorAgainst(
  * `stroke` is plane-space points, `BREAK`-separated when the gesture was
  * lifted and resumed (multi-branch families only).
  */
-export function gradeCurve(fn: CurveFn, coefs: readonly number[], stroke: readonly Pt[]): CurveGrade {
-  const [lo, hi] = CURVE_PLANE[fn].x;
-  const [yLo, yHi] = CURVE_PLANE[fn].y;
+export function gradeCurve(fn: CurveFn, coefs: readonly number[], stroke: readonly Pt[], plane?: CurvePlane): CurveGrade {
+  // `plane`: the spec's own `grid` (a parabola on the book's [−1, 5]); absent, the family's plane, unchanged
+  const [lo, hi] = (plane ?? CURVE_PLANE[fn]).x;
+  const [yLo, yHi] = (plane ?? CURVE_PLANE[fn]).y;
   // Linear and quadratic keep the ORIGINAL literals — 0.9 and 0.7 over a
   // Y-span of 10 — rather than a value re-derived from the span, so a float
   // rounding difference can never move `worst <= TOL` across its boundary
   // for a spec that shipped before this module existed.
-  const { TOL, VLT } = tolFor(fn);
+  const { TOL, VLT } = tolFor(fn, plane);
 
   const segments = splitSegments(stroke);
   let covered = 0;
@@ -394,7 +398,7 @@ export function gradeCurve(fn: CurveFn, coefs: readonly number[], stroke: readon
     v = "wrong";
     pred = "off-target";
     const [a, q] = coefs;
-    const domain = CURVE_PLANE[fn].x;
+    const domain = (plane ?? CURVE_PLANE[fn]).x;
     const shiftHypothesis = (x: number) => evalCurve(fn, [a, q + bias], x);
     const shiftResid = meanErrorAgainst(shiftHypothesis, segments, domain);
     const flippedHypothesis = (x: number) => evalCurve(fn, [-a, q], x);

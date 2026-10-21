@@ -27,6 +27,8 @@ export type CircleElement = "radius" | "chord" | "diameter" | "tangent";
 export type BarStat = "mean" | "median" | "mode" | "range";
 export type RuleKind = "sum" | "diff" | "product" | "same" | "first" | "second";
 export type RuleOp = "eq" | "ne" | "lt" | "le" | "gt" | "ge";
+import { isDefaultGrid, lineReachable, onGrid, onStep, parseGrid, type Grid } from "../components/student/widgets/grid.ts";
+
 export type CurveFn =
   | "linear" | "quadratic" | "hyperbola" | "exponential" | "sine" | "cosine" | "tangent";
 export type PolygonShape =
@@ -39,10 +41,13 @@ export type VennTarget =
 export type VennRegionCounts = Partial<Record<"a" | "b" | "c" | "ab" | "ac" | "bc" | "abc" | "n", number>>;
 
 export type MathWidget =
-  | { name: "pair_plotter"; prompt: string; target: [number, number] }
+  | { name: "pair_plotter"; prompt: string; target: [number, number]; grid?: Grid }
+  | { name: "pair_plotter"; prompt: string; targets: [number, number][]; join: boolean; grid?: Grid }
   | { name: "product_builder"; prompt: string; X: number[]; Y: number[] }
-  | { name: "line_drawer"; prompt: string; mode: "points"; through: [[number, number], [number, number]] }
-  | { name: "line_drawer"; prompt: string; mode: "equation"; m: number; b: number }
+  | { name: "product_builder"; prompt: string; mode: "relation"; X: number[]; Y: number[]; pairs: [number, number][] }
+  | { name: "line_drawer"; prompt: string; mode: "points"; through: [[number, number], [number, number]]; grid?: Grid }
+  | { name: "line_drawer"; prompt: string; mode: "equation"; m: number; b: number; grid?: Grid }
+  | { name: "line_drawer"; prompt: string; mode: "system"; lines: [{ m: number; b: number }, { m: number; b: number }]; grid?: Grid }
   | { name: "circle_builder"; prompt: string; element: CircleElement }
   | { name: "angle_setter"; prompt: string; ask: "central" | "inscribed"; target: number }
   | { name: "triangle_ratio"; prompt: string; ask: "sin" | "cos" | "tan"; target: number }
@@ -51,7 +56,7 @@ export type MathWidget =
   | { name: "number_line_marker"; prompt: string; mode: "interval"; range: [number, number]; from: number; to: number; openFrom: boolean; openTo: boolean }
   | { name: "ratio_balance"; prompt: string; mode: "direct" | "inverse"; a: number; b: number; c: number }
   | { name: "sample_space"; prompt: string; rows: number; cols: number; rule: { kind: RuleKind; op: RuleOp; value: number } }
-  | { name: "curve_sketcher"; prompt: string; fn: CurveFn; coefs: number[] }
+  | { name: "curve_sketcher"; prompt: string; fn: CurveFn; coefs: number[]; grid?: Grid }
   | { name: "polygon_builder"; prompt: string; mode: "construct"; shape: PolygonShape }
   | { name: "polygon_builder"; prompt: string; mode: "midsegment"; triangle: [[number, number], [number, number], [number, number]]; apex: 0 | 1 | 2 }
   | { name: "polygon_builder"; prompt: string; mode: "area"; shape: "triangle" | "quadrilateral"; target: number }
@@ -62,7 +67,12 @@ export type MathWidget =
       name: "venn_builder"; prompt: string; sets: 2 | 3; labels: string[]; mode: "counts";
       total?: number; regions: VennRegionCounts; clues?: { a?: number; b?: number; c?: number };
     }
-  | { name: "area_model"; prompt: string; mode: "expand" | "factor"; a: number; b: number };
+  | { name: "area_model"; prompt: string; mode: "expand" | "factor"; a: number; b: number }
+  | { name: "arrow_builder"; prompt: string; X: (number | string)[]; Y: (number | string)[]; pairs: [number | string, number | string][] }
+  | {
+      name: "region_shader"; prompt: string; x: [number, number]; y: [number, number];
+      open: { left: boolean; right: boolean; bottom: boolean; top: boolean }; grid?: Grid;
+    };
 
 /** Every maths widget name the dispatcher answers to. */
 export const MATH_WIDGETS = [
@@ -71,6 +81,8 @@ export const MATH_WIDGETS = [
   "ratio_balance", "sample_space", "curve_sketcher",
   "polygon_builder", "solid_scaler", "box_plot_builder",
   "venn_builder", "area_model",
+  // book widgets (Tamer 2026-10-21) — new kinds, Samuel's to accept (decision 11)
+  "arrow_builder", "region_shader",
 ] as const;
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -224,6 +236,25 @@ export function parseMathWidget(
 ): MathWidget | null {
   switch (name) {
     case "pair_plotter": {
+      // `grid` and `targets` (Tamer 2026-10-21) are additions: a spec without
+      // them is read exactly as before
+      const grid = parseGrid(props.grid);
+      if (!grid) return null;
+      const extra = isDefaultGrid(grid) ? {} : { grid };
+      if (props.targets !== undefined) {
+        if (!Array.isArray(props.targets) || props.targets.length < 2 || props.targets.length > 8) return null;
+        const ts = props.targets.map((t) => (Array.isArray(t) && t.length === 2 && isNum(t[0]) && isNum(t[1]) ? [t[0], t[1]] as [number, number] : null));
+        if (ts.some((t) => !t || !onGrid(grid, t))) return null;
+        const keys = new Set(ts.map((t) => `${t![0]},${t![1]}`));
+        if (keys.size !== ts.length) return null;
+        return { name, prompt: str(props.prompt, "Plot the points"), targets: ts as [number, number][], join: props.join === true, ...extra };
+      }
+      if (!isDefaultGrid(grid)) {
+        const t = Array.isArray(props.target) && props.target.length === 2 && isNum(props.target[0]) && isNum(props.target[1])
+          ? [props.target[0], props.target[1]] as [number, number] : null;
+        if (!t || !onGrid(grid, t)) return null;
+        return { name, prompt: str(props.prompt, "Plot the point"), target: t, grid };
+      }
       const target = intPair(props.target, 5);
       if (!target) return null;
       // The widget grades ONE exact point. A prompt that does not name it
@@ -247,6 +278,19 @@ export function parseMathWidget(
       // The grid draws one cell per pair; past this it stops being readable on
       // a phone and starts being a wall.
       if (X.length > 4 || Y.length > 4) return null;
+      if (props.mode === "relation") {
+        // a relation: its pairs are a non-empty subset of X×Y, none twice
+        const ps = Array.isArray(props.pairs) ? props.pairs : null;
+        if (!ps || ps.length === 0) return null;
+        const ok = ps.every((q) => Array.isArray(q) && q.length === 2 && (X as unknown[]).includes(q[0]) && (Y as unknown[]).includes(q[1]));
+        if (!ok || new Set(ps.map((q) => `${q[0]},${q[1]}`)).size !== ps.length) return null;
+        return {
+          name, mode: "relation",
+          prompt: str(props.prompt, "Tap the pairs of the relation"),
+          X: X as number[], Y: Y as number[], pairs: ps as [number, number][],
+        };
+      }
+      if (props.mode !== undefined) return null;
       return {
         name,
         prompt: str(props.prompt, "Tap all the pairs of X×Y"),
@@ -256,8 +300,34 @@ export function parseMathWidget(
     }
 
     case "line_drawer": {
-      const mode = oneOf(props.mode, ["equation", "points"] as const);
+      const mode = oneOf(props.mode, ["equation", "points", "system"] as const);
       if (!mode) return null;
+      const grid = parseGrid(props.grid);
+      if (!grid) return null;
+      if (!isDefaultGrid(grid) || mode === "system") {
+        // On a spec's own grid (or a two-line board) a line is reachable when
+        // two grid points lie on it (grid.ts) — the handles sit on grid points.
+        const extra = isDefaultGrid(grid) ? {} : { grid };
+        const line = (v: unknown) => {
+          const o = v as { m?: unknown; b?: unknown } | null;
+          return o && isNum(o.m) && isNum(o.b) && lineReachable(grid, o.m, o.b) ? { m: o.m, b: o.b } : null;
+        };
+        if (mode === "system") {
+          if (!Array.isArray(props.lines) || props.lines.length !== 2) return null;
+          const [l0, l1] = [line(props.lines[0]), line(props.lines[1])];
+          if (!l0 || !l1) return null;
+          return { name, mode, prompt: str(props.prompt, "Draw both lines"), lines: [l0, l1], ...extra };
+        }
+        if (mode === "equation") {
+          const l = line(props);
+          return l ? { name, mode, prompt: str(props.prompt, "Draw the line"), m: l.m, b: l.b, grid } : null;
+        }
+        if (!Array.isArray(props.through) || props.through.length !== 2) return null;
+        const pts = props.through.map((t) => (Array.isArray(t) && t.length === 2 && isNum(t[0]) && isNum(t[1]) ? [t[0], t[1]] as [number, number] : null));
+        if (!pts[0] || !pts[1] || !onGrid(grid, pts[0]) || !onGrid(grid, pts[1])) return null;
+        if (pts[0][0] === pts[1][0] && pts[0][1] === pts[1][1]) return null;
+        return { name, mode, prompt: str(props.prompt, "Draw the line through both points"), through: [pts[0], pts[1]], grid };
+      }
       if (mode === "points") {
         if (!Array.isArray(props.through) || props.through.length !== 2) return null;
         const a = intPair(props.through[0], 5);
@@ -400,6 +470,24 @@ export function parseMathWidget(
       if (!fn) return null;
       const coefs = nums(props.coefs, CURVE_COEF_COUNT[fn]);
       if (!coefs) return null;
+      const grid = parseGrid(props.grid);
+      if (!grid) return null;
+      if (!isDefaultGrid(grid)) {
+        // A spec's own plane (grid.ts): linear and quadratic only — the other
+        // families are drawn on planes fixed by their period or asymptote —
+        // and most of the curve must be on it, or the sketch cannot cover it.
+        if (fn !== "linear" && fn !== "quadratic") return null;
+        if (fn === "quadratic" && coefs[0] === 0) return null;
+        if (coefs.some((k) => Math.abs(k) > 20)) return null;
+        let inside = 0;
+        for (let i = 0; i <= 40; i++) {
+          const x = grid.x[0] + ((grid.x[1] - grid.x[0]) * i) / 40;
+          const y = fn === "linear" ? coefs[0] * x + coefs[1] : coefs[0] * x * x + coefs[1] * x + coefs[2];
+          if (y >= grid.y[0] && y <= grid.y[1]) inside++;
+        }
+        if (inside < 0.7 * 41) return null;
+        return { name, fn, coefs, grid, prompt: str(props.prompt, "Sketch the curve") };
+      }
       if (!curveReachable(fn, coefs)) return null;
       return { name, fn, coefs, prompt: str(props.prompt, "Sketch the curve") };
     }
@@ -538,6 +626,46 @@ export function parseMathWidget(
       return {
         name, mode: "counts", sets, labels, total, regions, clues,
         prompt: str(props.prompt, "Fill in every region, including neither"),
+      };
+    }
+
+    case "arrow_builder": {
+      // The book's relations pair numbers with numbers and students with books:
+      // an element is a number or a short word. Seven a side keeps every pill a
+      // finger's width; twelve arrows keeps the drawing readable.
+      const el = (v: unknown) => isNum(v) || (typeof v === "string" && v.trim() !== "" && v.length <= 12);
+      const { X, Y, pairs } = props;
+      if (!Array.isArray(X) || !Array.isArray(Y) || !Array.isArray(pairs)) return null;
+      if (X.length < 1 || Y.length < 1 || X.length > 7 || Y.length > 7) return null;
+      if (![...X, ...Y].every(el)) return null;
+      if (new Set(X.map(String)).size !== X.length || new Set(Y.map(String)).size !== Y.length) return null;
+      if (pairs.length < 1 || pairs.length > 12) return null;
+      const inSet = (set: unknown[], v: unknown) => set.some((s) => String(s) === String(v));
+      if (!pairs.every((q) => Array.isArray(q) && q.length === 2 && inSet(X, q[0]) && inSet(Y, q[1]))) return null;
+      if (new Set(pairs.map((q) => `${q[0]}\u0000${q[1]}`)).size !== pairs.length) return null;
+      return {
+        name, prompt: str(props.prompt, "Draw the relation as an arrow diagram"),
+        X: X as (number | string)[], Y: Y as (number | string)[], pairs: pairs as [number | string, number | string][],
+      };
+    }
+
+    case "region_shader": {
+      // X × Y for two intervals, each end on the board's grid and the
+      // rectangle a real one (width and height); `open` names excluded edges.
+      const grid = parseGrid(props.grid);
+      if (!grid) return null;
+      const iv = (v: unknown, lo: number, hi: number, step: number): [number, number] | null =>
+        Array.isArray(v) && v.length === 2 && isNum(v[0]) && isNum(v[1]) && v[0] < v[1] &&
+        v[0] >= lo && v[1] <= hi && onStep(v[0], step) && onStep(v[1], step) ? [v[0], v[1]] : null;
+      const x = iv(props.x, grid.x[0], grid.x[1], grid.sx);
+      const y = iv(props.y, grid.y[0], grid.y[1], grid.sy);
+      if (!x || !y) return null;
+      const o = (props.open ?? {}) as Record<string, unknown>;
+      if (typeof o !== "object" || Array.isArray(o)) return null;
+      const open = { left: o.left === true, right: o.right === true, bottom: o.bottom === true, top: o.top === true };
+      return {
+        name, prompt: str(props.prompt, "Shade the region"), x, y, open,
+        ...(isDefaultGrid(grid) ? {} : { grid }),
       };
     }
 

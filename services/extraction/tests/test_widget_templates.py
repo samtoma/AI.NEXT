@@ -203,6 +203,55 @@ class Reachability(unittest.TestCase):
         ("area_model", {"mode": "expand", "a": 0, "b": 0}), ("area_model", {"mode": "expand", "a": 5, "b": 1}),
         ("area_model", {"mode": "expand", "a": 1.5, "b": 1}), ("area_model", {"mode": "multiply", "a": 1, "b": 1}),
     ]
+    # The grid and the three new modes (Tamer 2026-10-21): app/src/components/student/widgets/grid.ts and the
+    # parseMathWidget branches for `grid`, `targets`, mode "system" and mode "relation". Every case decided alike.
+    H = {"x": [-4, 4], "y": [-4, 4], "step": 0.5}
+    GRID_CASES = [
+        ("pair_plotter", {"target": [3, 2.5], "grid": H}), ("pair_plotter", {"target": [3, 2.25], "grid": H}),
+        ("pair_plotter", {"target": [3, 2], "grid": {"x": [-10, 10], "y": [-10, 10], "step": 0.5}}),
+        ("pair_plotter", {"targets": [[2, 3], [6, 2], [-2, -2], [-2, 1]], "grid": {"x": [-3, 7], "y": [-3, 4]}}),
+        ("pair_plotter", {"targets": [[2, 3], [9, 2]], "grid": {"x": [-3, 7], "y": [-3, 4]}}),
+        ("pair_plotter", {"targets": [[1, 1], [1, 1]]}), ("pair_plotter", {"targets": [[5, 4], [15, 7], [25, 3]],
+                                                                         "grid": {"x": [0, 60], "y": [0, 10], "step": [5, 1]}}),
+        ("line_drawer", {"mode": "equation", "m": 0, "b": 2.5, "grid": H}),
+        ("line_drawer", {"mode": "equation", "m": 0, "b": 2.25, "grid": H}),
+        ("line_drawer", {"mode": "equation", "m": -1.5, "b": 3, "grid": {"x": [-2, 4], "y": [-4, 6]}}),
+        ("line_drawer", {"mode": "system", "lines": [{"m": 2, "b": -3}, {"m": -0.5, "b": 2}]}),
+        ("line_drawer", {"mode": "system", "lines": [{"m": -3, "b": 5}, {"m": -3, "b": 8}],
+                         "grid": {"x": [-2, 4], "y": [-6, 10]}}),
+        ("line_drawer", {"mode": "system", "lines": [{"m": -3, "b": 5}]}),
+        ("line_drawer", {"mode": "points", "through": [[0.5, 1], [2, 3]], "grid": H}),
+        ("curve_sketcher", {"fn": "quadratic", "coefs": [1, -4, 3], "grid": {"x": [-1, 5], "y": [-2, 9]}}),
+        ("curve_sketcher", {"fn": "quadratic", "coefs": [-1, 6, -11], "grid": {"x": [0, 6], "y": [-12, 0]}}),
+        ("curve_sketcher", {"fn": "quadratic", "coefs": [1, -4, 3], "grid": {"x": [-1, 5], "y": [20, 30]}}),
+        ("curve_sketcher", {"fn": "hyperbola", "coefs": [2, 0], "grid": {"x": [-4, 4], "y": [-4, 4]}}),
+        ("product_builder", {"mode": "relation", "X": [-1, 1, 2], "Y": [2, 4, 6, 8], "pairs": [[-1, 2], [1, 6], [2, 8]]}),
+        ("product_builder", {"mode": "relation", "X": [1], "Y": [2], "pairs": [[2, 1]]}),
+        ("product_builder", {"mode": "relation", "X": [1], "Y": [2], "pairs": []}),
+        ("product_builder", {"mode": "sideways", "X": [1], "Y": [2]}),
+        # the two new kinds
+        ("arrow_builder", {"X": [-1, 1, 2], "Y": [2, 4, 6, 8], "pairs": [[-1, 2], [1, 6], [2, 8]]}),
+        ("arrow_builder", {"X": ["Ali", "Mona"], "Y": ["Science", "Art"], "pairs": [["Ali", "Art"], ["Mona", "Art"]]}),
+        ("arrow_builder", {"X": [1, 2], "Y": [3], "pairs": [[3, 1]]}),
+        ("arrow_builder", {"X": [1, 1], "Y": [3], "pairs": [[1, 3]]}),
+        ("arrow_builder", {"X": [1, 2, 3, 4, 5, 6, 7, 8], "Y": [3], "pairs": [[1, 3]]}),
+        ("arrow_builder", {"X": [1], "Y": [3], "pairs": []}),
+        ("region_shader", {"x": [-2, 3], "y": [-2, 3]}),
+        ("region_shader", {"x": [-2, 3], "y": [-2, 3], "open": {"left": True}}),
+        ("region_shader", {"x": [-2, 7], "y": [-2, 3]}),
+        ("region_shader", {"x": [3, -2], "y": [-2, 3]}),
+        ("region_shader", {"x": [-1.5, 3], "y": [-2, 3], "grid": {"x": [-4, 4], "y": [-4, 4], "step": 0.5}}),
+        ("region_shader", {"x": [-1.5, 3], "y": [-2, 3]}),
+    ]
+
+    @unittest.skipUnless(shutil.which("node"), "node is not installed")
+    def test_the_grid_and_the_new_modes_agree_with_the_apps_typescript(self):
+        app = self.app_accepts(self.GRID_CASES)
+        for (kind, spec), accepted in zip(self.GRID_CASES, app):
+            self.assertEqual(GW.reachability(kind, spec) == [], accepted,
+                             f"{kind} {spec}: pipeline {GW.reachability(kind, spec)}, app accepts={accepted}")
+        self.assertEqual({a for a in app}, {True, False})
+
     # the one new-kind rule the pipeline adds (a clue must be its set's size; the app accepts any whole clue)
     STRICTER = [
         ("venn_builder", {"sets": 2, "labels": ["French", "German"], "mode": "counts", "total": 20,
@@ -264,11 +313,14 @@ class Reachability(unittest.TestCase):
         import widget_spec as W
         wf = (EX / "runbook" / "widgets.workflow.js").read_text()
         rules = wf[wf.index("Spec fields per kind"):wf.index("const AUTHOR_RULES")]
+        # the kinds proposed with the book widgets are offered to that author only (GW.PROPOSED_KINDS)
+        bw = (EX / "runbook" / "widgets-book.workflow.js").read_text()
+        book_rules = bw[bw.index("Spec fields per kind"):bw.index("const AUTHOR_RULES")]
         for kind in W.contract()["kinds"]:
             self.assertTrue(GW.INSTRUMENTS.get(kind), kind)
             self.assertTrue(GW.READING_FIELDS.get(kind), kind)
             self.assertNotIn("unknown widget kind", " ".join(GW.reachability(kind, {})), kind)
-            self.assertIn(f"{kind} {{", rules, kind)
+            self.assertIn(f"{kind} {{", book_rules if kind in GW.PROPOSED_KINDS else rules, kind)
 
     @staticmethod
     def docs_line(docs: str, key: str) -> tuple[str, dict, str]:
@@ -910,7 +962,9 @@ class OpeningHandles(unittest.TestCase):
 
     def test_the_pipeline_knows_where_the_app_opens_its_handles(self):
         src = (REPO / "app" / "src" / "components" / "student" / "widgets" / "LineDrawer.tsx").read_text()
-        m = re.search(r"useState<\[Pt, Pt\]>\(\[\s*\{ x: (-?\d+), y: (-?\d+) \},\s*\{ x: (-?\d+), y: (-?\d+) \},?\s*\]\)", src)
+        # the default grid's opening pair, in LineDrawer.tsx `opening` (a spec's own grid opens elsewhere, and
+        # opening_collisions does not apply to it)
+        m = re.search(r"isDefaultGrid\(g\) \? \[\{ x: (-?\d+), y: (-?\d+) \}, \{ x: (-?\d+), y: (-?\d+) \}\]", src)
         self.assertIsNotNone(m, "LineDrawer.tsx no longer opens its handles with a literal pair — re-read it")
         a, b, c, d = map(int, m.groups())
         self.assertEqual(GW.OPENING_HANDLES["line_drawer"], ((a, b), (c, d)))

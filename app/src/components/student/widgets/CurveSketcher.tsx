@@ -69,12 +69,15 @@ export function CurveSketcher({
   prompt,
   fn,
   coefs,
+  grid,
   studentName,
   onResult,
 }: {
   prompt: string;
   fn: CurveFn;
   coefs: number[];
+  /** the spec's own plane (grid.ts; Tamer 2026-10-21): the book's interval, a curve reaching past ±5 */
+  grid?: { x: [number, number]; y: [number, number] };
   /** The signed-in student's display name, narrated into the [live event]
    *  line below in place of the retired "Omar" demo persona (FR-2602,
    *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
@@ -84,7 +87,7 @@ export function CurveSketcher({
 }) {
   const who = studentName?.trim() || "the student";
   const multiSegment = MULTI_BRANCH.has(fn);
-  const plane = CURVE_PLANE[fn];
+  const plane = grid ? { x: grid.x, y: grid.y } : CURVE_PLANE[fn];
   const W = 290;
   const H = 290;
   const p = useMemo(() => makePlane(plane.x, plane.y, W, H, 18), [plane.x, plane.y]);
@@ -108,10 +111,10 @@ export function CurveSketcher({
 
   const score = useCallback(() => {
     if (fired.current || stroke.length < 4) return;
-    const g = gradeCurve(fn, coefs, stroke);
+    const g = gradeCurve(fn, coefs, stroke, grid ? plane : undefined);
     fired.current = true;
     const want = describeCurve(fn, coefs);
-    const { TOL } = tolFor(fn);
+    const { TOL } = tolFor(fn, grid ? plane : undefined);
 
     let msg: string;
     let streamNote: string;

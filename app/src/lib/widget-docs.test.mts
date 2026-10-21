@@ -45,6 +45,7 @@ test("the mapping covers all ten units and adds none that do not exist", () => {
 const NON_NATIONAL_WIDGETS = [
   "polygon_builder", "solid_scaler", "box_plot_builder",
   "venn_builder", "area_model",
+  "arrow_builder", "region_shader",
 ];
 
 test("every built National widget is documented to at least one unit", () => {

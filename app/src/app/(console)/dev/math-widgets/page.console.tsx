@@ -33,6 +33,67 @@ interface Case {
 }
 
 const CASES: Case[] = [
+  // ---- the grid option and the new modes (book widgets, Tamer 2026-10-21) — each on a book exercise's numbers
+  {
+    unit: "u1", module: "Grid and new modes — book exercises",
+    name: "line_drawer",
+    props: { prompt: "Represent graphically f(x) = 2½", mode: "equation", m: 0, b: 2.5, grid: { x: [-4, 4], y: [-4, 4], step: 0.5 } },
+    teaches: "a half-step grid: the handles land on halves, so y = 2½ can be drawn (pp3u1-4 drill 5, part 4)",
+  },
+  {
+    unit: "u1", module: "Grid and new modes — book exercises",
+    name: "pair_plotter",
+    props: { prompt: "Plot the point A(3, 5/2)", target: [3, 2.5], grid: { x: [-4, 4], y: [-4, 4], step: 0.5 } },
+    teaches: "a point with a half in it (pp3u1-1 exercise 2)",
+  },
+  {
+    unit: "u1", module: "Grid and new modes — book exercises",
+    name: "product_builder",
+    props: { prompt: "a R b means b = 2a + 4. Tap the pairs of R.", mode: "relation", X: [-1, 1, 2], Y: [2, 4, 6, 8], pairs: [[-1, 2], [1, 6], [2, 8]] },
+    teaches: "a relation as a subset of X × Y: a pair the rule leaves out is its own error (pp3u1-2 example 1)",
+  },
+  {
+    unit: "u5", module: "Grid and new modes — book exercises",
+    name: "pair_plotter",
+    props: { prompt: "Represent the points A(2, 3), B(6, 2), C(−2, −2) and D(−2, 1)", targets: [[2, 3], [6, 2], [-2, -2], [-2, 1]], grid: { x: [-3, 7], y: [-3, 4] } },
+    teaches: "several points on one board, graded as a set; B is past the old ±5 (pp3u5-3 example 4)",
+  },
+  {
+    unit: "u3", module: "Grid and new modes — book exercises",
+    name: "pair_plotter",
+    props: { prompt: "Plot the frequency polygon: (5, 4), (15, 7), (25, 9), (35, 6), (45, 3)", targets: [[5, 4], [15, 7], [25, 9], [35, 6], [45, 3]], join: true, grid: { x: [0, 50], y: [0, 10], step: [5, 1] } },
+    teaches: "axes counting in fives, and the polygon joined through the points (pp3u3-2 exercise 1)",
+  },
+  {
+    unit: "u6", module: "Grid and new modes — book exercises",
+    name: "line_drawer",
+    props: { prompt: "Find graphically the solution set: y = 2x − 3 and x + 2y = 4", mode: "system", lines: [{ m: 2, b: -3 }, { m: -0.5, b: 2 }] },
+    teaches: "two lines on one board; the crossing is the solution set (pp3u6-1 example 2)",
+  },
+  {
+    unit: "u1", module: "New kinds — book exercises",
+    name: "arrow_builder",
+    props: { prompt: "a R b means «b = 2a + 4». Draw R as an arrow diagram.", X: [-1, 1, 2], Y: [2, 4, 6, 8], pairs: [[-1, 2], [1, 6], [2, 8]] },
+    teaches: "drawing a relation, arrow by arrow (pp3u1-2 example 1)",
+  },
+  {
+    unit: "u1", module: "New kinds — book exercises",
+    name: "arrow_builder",
+    props: { prompt: "On X = {−2, −1, 0, 1, 2}, a R b means «a is the additive inverse of b». Draw R.", X: [-2, -1, 0, 1, 2], Y: [-2, -1, 0, 1, 2], pairs: [[-2, 2], [-1, 1], [0, 0], [1, -1], [2, -2]] },
+    teaches: "a relation ON a set, where an arrow can be drawn the wrong way round (pp3u1-2 example 2)",
+  },
+  {
+    unit: "u1", module: "New kinds — book exercises",
+    name: "region_shader",
+    props: { prompt: "If X = [−2, 3], shade the location which represents X × X.", x: [-2, 3], y: [-2, 3] },
+    teaches: "a product of intervals as a region, each edge included or excluded (pp3u1-1 drill 4)",
+  },
+  {
+    unit: "u6", module: "Grid and new modes — book exercises",
+    name: "curve_sketcher",
+    props: { prompt: "Draw f(x) = x² − 4x + 3 in the interval [−1, 5]", fn: "quadratic", coefs: [1, -4, 3], grid: { x: [-1, 5], y: [-2, 9] } },
+    teaches: "the book's own interval, reaching 8 (pp3u6-2 example 1)",
+  },
   {
     unit: "u1", module: "Unit 1 — Relations and Functions",
     name: "product_builder",

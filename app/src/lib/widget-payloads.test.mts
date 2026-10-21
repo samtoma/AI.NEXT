@@ -51,6 +51,8 @@ test("every registered name accepts at least one payload", () => {
     box_plot_builder: { data: [2, 4, 4, 5, 6, 7, 9] },
     venn_builder: { sets: 2, labels: ["Football", "Chess"], mode: "shade", target: "aOnly" },
     area_model: { mode: "expand", a: 2, b: -3 },
+    arrow_builder: { X: [-1, 1, 2], Y: [2, 4, 6, 8], pairs: [[-1, 2], [1, 6], [2, 8]] },
+    region_shader: { x: [-2, 3], y: [-2, 3] },
   };
   for (const name of MATH_WIDGETS) {
     assert.ok(samples[name], `no sample payload for registered widget ${name}`);

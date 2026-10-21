@@ -45,7 +45,7 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's7b-v1'
+const PROMPTS_VERSION = 's7b-v3'   // v2: the grid option and the new modes (several points, relation, system); v3: arrow_builder, region_shader
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'verify', 'args.mode must be "author" or "verify"')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config')
@@ -71,8 +71,11 @@ const TEMPLATE_RULES = `A BOOK WIDGET TEMPLATE (format "ainext.widget-template/1
   "notes": "…"
 }
 No "instances": one template per exercise part.
-Spec fields per kind (the app's validator): pair_plotter {target:[x,y]}; product_builder {X:[…],Y:[…]};
-line_drawer {mode:"equation",m,b} or {mode:"points",through:[[x1,y1],[x2,y2]]}; circle_builder {element};
+Spec fields per kind (the app's validator): pair_plotter {target:[x,y]} or {targets:[[x,y],…],join?} (2–8 points,
+graded as a set; join draws the polygon through them, a frequency polygon); product_builder {X:[…],Y:[…]} or
+{mode:"relation",X,Y,pairs:[[a,b],…]} (a subset of X×Y the stem's rule gives — the stem states the rule, never the
+pairs); line_drawer {mode:"equation",m,b} or {mode:"points",through:[[x1,y1],[x2,y2]]} or
+{mode:"system",lines:[{m,b},{m,b}]} (two lines on one board: "find the solution set graphically"); circle_builder {element};
 angle_setter {ask:"central"|"inscribed",target}; triangle_ratio {ask:"sin"|"cos"|"tan",target};
 bar_builder {ask:"mean"|"median"|"mode"|"range",target,n}; number_line_marker {mode:"points",range:[lo,hi],
 targets:[…]} or {mode:"interval",range,from,to,openFrom,openTo}; ratio_balance {mode:"direct"|"inverse",a,b,c};
@@ -81,15 +84,24 @@ sample_space {rows,cols,rule:{kind,op,value}}; curve_sketcher {fn:"linear"|"quad
 {mode:"midsegment",triangle:[[x,y],[x,y],[x,y]],apex} or {mode:"area",shape:"triangle"|"quadrilateral",target};
 solid_scaler {solid,ask:"volume"|"area",ratio,dims?}; box_plot_builder {data:[…]};
 venn_builder {sets,labels:[…],mode:"shade",target} or {sets,labels,mode:"counts",regions:{…},total?,clues?};
-area_model {mode:"expand"|"factor",a,b}.`
+area_model {mode:"expand"|"factor",a,b}; arrow_builder {X:[…],Y:[…],pairs:[[a,b],…]} (the student DRAWS the
+relation's arrows; X and Y numbers or short words, the stem gives the rule or the pairs);
+region_shader {x:[lo,hi],y:[lo,hi],open?:{left,right,bottom,top},grid?} (the student marks X × Y for two
+intervals, each edge included or excluded — "the location which represents X × X").
+THE GRID: pair_plotter, line_drawer and curve_sketcher (linear, quadratic) take an optional
+"grid":{"x":[lo,hi],"y":[lo,hi],"step":s or [sx,sy]} — use it whenever the book's numbers are off the default −5..5
+whole-step board: a half (step 0.5), a point or line past ±5, an interval the book names ([−1, 5]), axes counting
+in fives. The ends of each range sit on its step; at most 16 steps an axis. Keep the book's numbers: a grid that
+fits them, never numbers that fit the grid.`
 
 const AUTHOR_RULES = `RULES:
 - START FROM THE BOOK'S EXERCISES, not from a misconception. For each exercise part decide: is building the
   answer on one existing kind EXACTLY what the part asks the student to do? ("Represent graphically
   f(x) = x + 2" on line_drawer: yes. "Find X × Y" on product_builder: yes. "Identify the quadrant of A": no —
   that is a reading, not a construction.) If you are stretching, it is not a widget: record a gap.
-- Stay inside the instrument's limits (given per kind). A part whose answer the instrument cannot reach
-  (a non-lattice point, a fractional intercept) is a GAP with that reason — never change the book's numbers.
+- Stay inside the instrument's limits (given per kind). Where the book's numbers are off the default board, give
+  the widget a GRID that holds them (see THE GRID). A part no grid can reach is a GAP with that reason — never
+  change the book's numbers.
 - THE KEY. Where a part has "book_answer", the spec must agree with it exactly. Otherwise the spec is read off
   the stem itself (f(x) = 3x is m = 3, b = 0). Never a value you had to guess.
 - Grade the property, not a position (FR-1205): in line_drawer "equation" mode any two points on the line are

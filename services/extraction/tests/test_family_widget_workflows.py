@@ -264,7 +264,8 @@ class Widgets(unittest.TestCase):
 
     def test_author_one_call_per_lesson_and_an_invented_kind_becomes_a_gap(self):
         args = GW.author_args(self.book, self.graph, "course:us-g10-math-en")
-        self.assertEqual(set(args["contract"]), set(GW.W.contract()["kinds"]))
+        # every kind but the ones proposed with the book widgets, which S7's own author is not offered
+        self.assertEqual(set(args["contract"]), set(GW.W.contract()["kinds"]) - GW.PROPOSED_KINDS)
         tpl = json.loads((FIX / "widget-templates" / "g10m8s3-1-2--gradient-line.json").read_text())
         venn = dict(tpl, id="wt:g10m8s3-1-2:venn", kind="zz_unapproved_kind")   # no contract has it
         out = run_workflow(WIDGETS_WF, args, {

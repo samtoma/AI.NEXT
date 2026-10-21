@@ -12,6 +12,10 @@
  * "you swapped the points". A target with x = y is its own swap; that is
  * still a swap under the pairing, and the other point decides.
  *
+ * Equation mode's diagnosis lives here too (`gradeLineEquation`), so the
+ * SYSTEM mode (two lines on one board, Tamer 2026-10-21: "find the solution
+ * set graphically") diagnoses each of its lines by exactly the same rules.
+ *
  * Pure, so it is tested without rendering (`lib/widget-line-drawer-grade.test.mts`);
  * `widget-emission.test.mts` reads this file as part of the widget.
  */
@@ -31,7 +35,8 @@ const at = (p: LinePt, t: readonly [number, number]) => p.x === t[0] && p.y === 
 const atSwap = (p: LinePt, t: readonly [number, number]) => p.x === t[1] && p.y === t[0];
 
 export function gradeLinePoints(
-  pts: readonly [LinePt, LinePt],
+  /** the board's handles: the first two are this line's */
+  pts: readonly LinePt[],
   through: LineTarget,
   /** whether the student has moved each handle at all */
   moved: readonly [boolean, boolean]
@@ -45,4 +50,52 @@ export function gradeLinePoints(
     (atSwap(pts[0], t0) && atSwap(pts[1], t1)) || (atSwap(pts[0], t1) && atSwap(pts[1], t0));
   if (bothMoved && bothSwapped) pred = "points-swapped";
   return { ok: false, predicate: pred };
+}
+
+const close = (u: number, v: number) => Math.abs(u - v) < 1e-6;
+
+/** A drawn line (m null when vertical) against y = tm·x + tb: `ok` or equation mode's predicate. */
+export function gradeLineEquation(m: number | null, b: number | null, tm: number, tb: number): string {
+  if (m === null) return "vertical-line";
+  if (close(m, tm) && close(b ?? 0, tb)) return OK;
+  if (close(m, tm)) return "intercept-wrong";
+  if (tm !== 0 && close(m, -tm)) return "slope-sign-flipped";
+  if (tm !== 0 && m !== 0 && close(m, 1 / tm)) return "slope-inverted";
+  return "off-target";
+}
+
+export type DrawnLine = { m: number | null; b: number | null };
+export type TargetLine = { m: number; b: number };
+
+export interface SystemGrade {
+  ok: boolean;
+  /** `ok`, or the first wrong line's predicate */
+  predicate: string;
+  /** per drawn line: its predicate against the target it was paired with */
+  each: [string, string];
+  /** which target each drawn line was paired with */
+  pairing: [number, number];
+}
+
+/**
+ * Two drawn lines against two target lines, in either order: the pairing
+ * that gets more lines right (the drawn order on a tie).
+ */
+export function gradeSystem(drawn: readonly [DrawnLine, DrawnLine], targets: readonly [TargetLine, TargetLine]): SystemGrade {
+  const g = (i: number, j: number) => gradeLineEquation(drawn[i].m, drawn[i].b, targets[j].m, targets[j].b);
+  const straight: [string, string] = [g(0, 0), g(1, 1)];
+  const crossed: [string, string] = [g(0, 1), g(1, 0)];
+  const score = (e: [string, string]) => e.filter((x) => x === OK).length;
+  const [each, pairing] = score(crossed) > score(straight)
+    ? [crossed, [1, 0] as [number, number]]
+    : [straight, [0, 1] as [number, number]];
+  const wrong = each.find((x) => x !== OK);
+  return { ok: !wrong, predicate: wrong ?? OK, each, pairing };
+}
+
+/** Where two lines meet: a point, "parallel" (no common point), or "same" (every point). */
+export function meeting(a: TargetLine, b: TargetLine): [number, number] | "parallel" | "same" {
+  if (close(a.m, b.m)) return close(a.b, b.b) ? "same" : "parallel";
+  const x = (b.b - a.b) / (a.m - b.m);
+  return [x, a.m * x + a.b];
 }

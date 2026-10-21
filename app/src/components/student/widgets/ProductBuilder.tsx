@@ -13,6 +13,7 @@ import {
   WIDGET_PROMPT,
   WIDGET_RESULT,
 } from "./WidgetShell";
+import { gradeProduct, gradeRelation } from "./product-builder-grade";
 
 /**
  * {{widget:product_builder:{"X":[1,2],"Y":[3,4,5],"prompt":"Tap all pairs of X×Y"}}}
@@ -21,6 +22,14 @@ import {
  * n(X)×n(Y) correct pairs + up to 3 decoys (reversed pairs and friends).
  * Live counter shows n(X)×n(Y); Check grades against exact set equality and
  * reports the outcome back into the chat stream once.
+ *
+ * {{widget:product_builder:{"mode":"relation","X":[-1,1,2],"Y":[2,4,6,8],"pairs":[[-1,2],[1,6],[2,8]],"prompt":"a R b means b = 2a + 4: tap the pairs of R"}}}
+ *
+ * RELATION MODE (Tamer 2026-10-21): the answer is a subset of X×Y chosen by a
+ * rule the prompt states. Every pair of X×Y is on the board (plus the reversed
+ * decoys), no total is shown — counting the pairs is part of the question —
+ * and a pair the rule leaves out is its own error, `extra-pairs`
+ * (product-builder-grade.ts).
  */
 
 type Pair = [number, number];
@@ -36,12 +45,17 @@ function stableShuffle(pairs: Pair[]): Pair[] {
 export function ProductBuilder({
   X,
   Y,
+  mode = "product",
+  pairs,
   prompt,
   studentName,
   onResult,
 }: {
   X: number[];
   Y: number[];
+  /** "relation": the answer is `pairs`, a subset of X×Y */
+  mode?: "product" | "relation";
+  pairs?: Pair[];
   prompt: string;
   /** The signed-in student's display name, narrated into the [live event]
    *  line below in place of the retired "Omar" demo persona (FR-2602,
@@ -51,11 +65,22 @@ export function ProductBuilder({
   onResult: (outcome: WidgetOutcome) => void;
 }) {
   const who = studentName?.trim() || "the student";
+  const relation = mode === "relation" && Array.isArray(pairs);
   const { candidates, correctSet, setX, setY } = useMemo(() => {
     const xs = [...new Set(X)].slice(0, 4);
     const ys = [...new Set(Y)].slice(0, 4);
-    const correct: Pair[] = xs.flatMap((x) => ys.map((y) => [x, y] as Pair));
+    const product: Pair[] = xs.flatMap((x) => ys.map((y) => [x, y] as Pair));
+    const correct: Pair[] = relation ? pairs!.filter((q) => product.some((r) => key(r) === key(q))) : product;
     const cSet = new Set(correct.map(key));
+    if (relation) {
+      // the whole of X×Y is the board; the decoys are the answer's pairs turned round
+      const decoys: Pair[] = [];
+      for (const [a, b] of correct) {
+        const r: Pair = [b, a];
+        if (decoys.length < 3 && !product.some((q) => key(q) === key(r)) && !decoys.some((d) => key(d) === key(r))) decoys.push(r);
+      }
+      return { candidates: stableShuffle([...product, ...decoys]), correctSet: cSet, setX: xs, setY: ys };
+    }
     // decoys: reversed pairs first (the classic X×Y ≠ Y×X trap), then X×X pairs
     const decoys: Pair[] = [];
     const push = (p: Pair) => {
@@ -75,7 +100,7 @@ export function ProductBuilder({
       setX: xs,
       setY: ys,
     };
-  }, [X, Y]);
+  }, [X, Y, relation, pairs]);
 
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [checked, setChecked] = useState(false);
@@ -98,16 +123,30 @@ export function ProductBuilder({
     const missed = [...correctSet].filter((k) => !selected.has(k));
     const ok = wrongPicks.length === 0 && missed.length === 0;
     const setStr = `{${setX.join(",")}}×{${setY.join(",")}}`;
+    if (relation) {
+      const inProduct = (k: string) => setX.some((x) => setY.some((y) => key([x, y]) === k));
+      const outside = wrongPicks.filter(inProduct);
+      const pred = gradeRelation(wrongPicks.length - outside.length, outside.length, missed.length);
+      onResult({
+        correct: pred === OK,
+        predicate: pred,
+        given: [...selected].join(" "),
+        detail: pred === OK
+          ? `✓ ${who} picked exactly the ${n} pairs of the relation from ${setStr}`
+          : `✗ ${who}'s relation from ${setStr} had mistakes — ${[
+              outside.length ? `picked ${outside.join(", ")}, which the rule does not give` : "",
+              wrongPicks.length > outside.length ? `picked ${wrongPicks.filter((k) => !inProduct(k)).join(", ")}, not in X×Y at all (reversed order?)` : "",
+              missed.length ? `missed ${missed.join(", ")}` : "",
+            ].filter(Boolean).join("; ")}`,
+      });
+      return;
+    }
     onResult({
       correct: ok,
       // Picking pairs that are not in X×Y almost always means (y, x) — the
       // decoys this widget adds are the reversed pairs, so a wrong pick is
       // evidence of order confusion rather than of random tapping.
-      predicate: ok
-        ? OK
-        : wrongPicks.length
-        ? "reversed-pairs"
-        : "missing-pairs",
+      predicate: gradeProduct(wrongPicks.length, missed.length),
       given: `${n - missed.length} of ${n} pairs`,
       detail: ok
         ? `✓ ${who} built X×Y correctly: all ${n} pairs of ${setStr} (n(X)×n(Y)=${setX.length}×${setY.length}=${n})`
@@ -163,13 +202,19 @@ export function ProductBuilder({
         <p className={WIDGET_PROMPT}>{prompt}</p>
 
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className={cx(BADGE, "bg-card-warm text-ink")}>
-            n(X)×n(Y) = {setX.length}×{setY.length} ={" "}
-            <strong className="font-extrabold">{n}</strong>
-          </span>
-          <span className={cx(BADGE, "bg-card text-ink")}>
-            selected {selected.size} / {n}
-          </span>
+          {relation ? (
+            <span className={cx(BADGE, "bg-card text-ink")}>selected {selected.size}</span>
+          ) : (
+            <>
+              <span className={cx(BADGE, "bg-card-warm text-ink")}>
+                n(X)×n(Y) = {setX.length}×{setY.length} ={" "}
+                <strong className="font-extrabold">{n}</strong>
+              </span>
+              <span className={cx(BADGE, "bg-card text-ink")}>
+                selected {selected.size} / {n}
+              </span>
+            </>
+          )}
         </div>
 
         <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -207,8 +252,10 @@ export function ProductBuilder({
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT[allGood ? "correct" : "wrong"])}>
             <span className="font-display text-[13.5px] font-bold">
               {allGood
-                ? `Well done — X×Y complete, all ${n} pairs ✓`
-                : "Check the marks — first from X, second from Y. Order matters!"}
+                ? relation ? `Well done — exactly the ${n} pairs of the relation ✓` : `Well done — X×Y complete, all ${n} pairs ✓`
+                : relation
+                  ? "Check each pair against the rule — the first from X, the second from Y."
+                  : "Check the marks — first from X, second from Y. Order matters!"}
             </span>
           </div>
         )}

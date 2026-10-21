@@ -157,6 +157,8 @@ const COMPONENT: Record<string, string> = {
   sample_space: "SampleSpace.tsx", curve_sketcher: "CurveSketcher.tsx", polygon_builder: "PolygonBuilder.tsx",
   solid_scaler: "SolidScaler.tsx", box_plot_builder: "BoxPlotBuilder.tsx", venn_builder: "VennBuilder.tsx",
   area_model: "AreaModel.tsx",
+  arrow_builder: "ArrowBuilder.tsx",
+  region_shader: "RegionShader.tsx",
 };
 const gradingSource = (kind: string): string => {
   const main = readFileSync(WIDGETS + COMPONENT[kind], "utf8");
@@ -175,11 +177,11 @@ test("the table never claims a predicate the widget's code cannot produce", () =
 });
 
 test("a declared predicate no case lists is never emitted — named here, so it cannot happen quietly", () => {
-  // ProductBuilder.check() reports every wrong pick as reversed-pairs (its decoys ARE the reversed pairs), so
-  // extra-pairs is vocabulary no product_builder question can fire; NumberLineMarker.check() starts from
-  // "off-target" but every wrong answer in either mode is re-named (number-line-grade.ts, or the interval
-  // branch), so off-target never leaves it. Change this list only with the code.
-  const NEVER: Record<string, string[]> = { product_builder: ["extra-pairs"], number_line_marker: ["off-target"] };
+  // NumberLineMarker.check() starts from "off-target" but every wrong answer in either mode is re-named
+  // (number-line-grade.ts, or the interval branch), so off-target never leaves it. (product_builder's
+  // extra-pairs was on this list until its relation mode, 2026-10-21, where a pair the rule leaves out is
+  // exactly that.) Change this list only with the code.
+  const NEVER: Record<string, string[]> = { number_line_marker: ["off-target"] };
   for (const kind of Object.keys(WIDGET_PREDICATES)) {
     const listed = new Set(leaves((WIDGET_CAN_EMIT as Record<string, Node>)[kind]));
     const unlisted = predicatesFor(kind).filter((p) => p !== OK && !listed.has(p)).sort();
@@ -197,6 +199,10 @@ test("canEmit reads the stored spec the way the widget does", () => {
   assert.ok(canEmit("venn_builder", { mode: "counts", sets: 2, clues: { a: 12 } })!.includes("overlap-counted-twice"));
   assert.ok(!canEmit("venn_builder", { mode: "counts", sets: 2 })!.includes("overlap-counted-twice"));
   assert.deepEqual(canEmit("pair_plotter", { target: [3, 2] }), ["swapped-coordinates", "wrong-quadrant", "off-target"]);
+  assert.ok(canEmit("pair_plotter", { targets: [[3, 2], [1, 1]] })!.includes("missing-points"));
+  assert.ok(!canEmit("product_builder", { X: [1], Y: [2] })!.includes("extra-pairs"));
+  assert.ok(canEmit("product_builder", { mode: "relation", X: [1], Y: [2], pairs: [[1, 2]] })!.includes("extra-pairs"));
+  assert.ok(canEmit("line_drawer", { mode: "system", lines: [] })!.includes("intercept-wrong"));
   assert.equal(canEmit("line_drawer", { mode: "sideways" }), null);
   assert.equal(canEmit("no_such_widget", {}), null);
 });

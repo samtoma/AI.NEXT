@@ -95,6 +95,16 @@ const DOCS: Record<string, WidgetDoc> = {
     name: "venn_builder",
     line: `{{widget:venn_builder:{"prompt":"Shade A only","sets":2,"labels":["Football","Chess"],"mode":"shade","target":"aOnly"}}} — a real 2- or 3-circle Venn diagram; the student taps the region(s) that make the named target true. target ∈ union | intersection | aOnly | bOnly | cOnly | complementA | complementB | complementC | neither — cOnly/complementC need sets:3. The other mode fills in counts instead of shading: {"mode":"counts","sets":2,"labels":["French","German"],"total":20,"regions":{"a":8,"b":5,"ab":4,"n":3},"clues":{"a":12,"b":9}} — "regions" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the set count needs) and must sum to "total" when you give one; "clues" are the word problem's raw, PRE-overlap set sizes, which is what lets the widget name "counted the overlap twice" as the specific mistake it is.`,
   },
+  // Book widgets (Tamer 2026-10-21): two new kinds, Samuel's to accept (decision 11). Like the G10 kinds above,
+  // never added to BY_UNIT, so every lesson prompt stays byte-identical; the S7 book-widget author is told of them.
+  arrow_builder: {
+    name: "arrow_builder",
+    line: `{{widget:arrow_builder:{"prompt":"a R b means b = 2a + 4. Draw R as an arrow diagram.","X":[-1,1,2],"Y":[2,4,6,8],"pairs":[[-1,2],[1,6],[2,8]]}}} — the student DRAWS a relation as an arrow diagram: taps an element of X, then where it goes in Y. Graded as a set against "pairs" (the relation itself), so the stem must give the relation — by its rule or its pairs — and the board never shows it. X and Y are numbers or short words, 1–7 each; at most 12 pairs. A relation ON a set (X equal to Y) is the one case where an arrow can be drawn the wrong way round, and that is named on its own.`,
+  },
+  region_shader: {
+    name: "region_shader",
+    line: `{{widget:region_shader:{"prompt":"X = [-2, 3]. Shade the region that represents X x X.","x":[-2,3],"y":[-2,3]}}} — the student marks a rectangle of the plane, X × Y for two intervals: drags two opposite corners onto the grid and sets each edge included (solid) or excluded (dashed), as a number line's filled and hollow ends. "x" and "y" are the two intervals; "open" names the excluded edges ({"left":true} for (a, b], and so on); both intervals' ends must be on the board (−5..5 whole steps, or the spec's own grid).`,
+  },
   area_model: {
     name: "area_model",
     line: `{{widget:area_model:{"prompt":"Expand (x + 2)(x - 3) with the tiles","mode":"expand","a":2,"b":-3}}} — algebra tiles as a grid the student builds: one x² tile anchored, x-tiles run out along its top and left edges (the "a" and "b" signs — negative tiles are hatched AND marked "−", never colour alone), and the block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation of FOIL: the cross term is something the student places, not a step they recite.`,

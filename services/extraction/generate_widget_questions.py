@@ -397,12 +397,28 @@ VENN_REGION_KEYS = {2: ("a", "b", "ab", "n"), 3: ("a", "b", "c", "ab", "ac", "bc
 # built "points" questions expecting the LINE to be graded, and mapped slope predicates
 # that points mode can never emit. What each mode can emit is the contract's can_emit
 # table, sent beside this text (author_args, verify_args).
+# the grid option every plane kind takes (grid.ts), appended to each one's instrument (book widgets, 2026-10-21)
+GRID_DOC = (" GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes "
+            "\"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, "
+            "for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the "
+            "ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.")
+
 INSTRUMENTS = {
     "pair_plotter": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. "
-        "Target coordinates must be whole numbers in −5..5.",
+        "Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point "
+        "(\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the "
+        "student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): "
+        "{\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on "
+        "and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x "
+        "order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point "
+        "a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected)." + GRID_DOC,
     "product_builder": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added "
         "automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X "
-        "and Y are non-empty lists of numbers.",
+        "and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],"
+        "\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board and the student taps the "
+        "subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is "
+        "shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned "
+        "round) or missing-pairs.",
     "line_drawer": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line "
         "through them is drawn, with its equation updating live. In \"equation\" mode any two points on the "
         "correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the "
@@ -412,7 +428,7 @@ INSTRUMENTS = {
         "points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode "
         "neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — "
         "the two handles open there, so the widget would start half-answered and a handle the student never "
-        "moved could not be told from one she placed.",
+        "moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points." + GRID_DOC,
     "circle_builder": "Spec example {\"element\":\"chord\"} — a circle of radius 5 about M; the student drags both ends of a "
         "segment to construct the named element. element ∈ radius | chord | diameter | tangent. Every "
         "construction with the right PROPERTY is accepted (a chord has dozens of correct answers), and the "
@@ -465,7 +481,7 @@ INSTRUMENTS = {
         "Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the "
         "student to lift their finger and draw each branch separately. Drawing straight through where the "
         "curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", "
-        "which is the point — an asymptote is a boundary the curve approaches and never crosses.",
+        "which is the point — an asymptote is a boundary the curve approaches and never crosses. On its own GRID (linear and quadratic only) the board is that range — draw a parabola over the book's interval, {\"fn\":\"quadratic\",\"coefs\":[1,-4,3],\"grid\":{\"x\":[-1,5],\"y\":[-2,9]}} — coefficients within ±20, most of the curve on the board, and the tolerance scales with its height." + GRID_DOC,
     "polygon_builder": "Spec example {\"mode\":\"construct\",\"shape\":\"rhombus\"} — the student drags 3 or 4 vertices on a lattice "
         "into the named shape; graded on its PROPERTIES (side lengths, parallel sides, right angles), so "
         "every valid figure is accepted. shape (triangle) ∈ scalene | isosceles | right; shape "
@@ -514,6 +530,9 @@ INSTRUMENTS = {
         "differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). "
         "Prefer this over an explanation of FOIL: the cross term is something the student places, not a step "
         "they recite.",
+    # book widgets (Tamer 2026-10-21): two new kinds, Samuel's to accept (decision 11)
+    "arrow_builder": "Spec example {\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — the student DRAWS a relation as an arrow diagram: taps an element of X, then where it goes in Y. Graded as a set against \"pairs\" (the relation itself), so the stem must give the relation — by its rule or its pairs — and the board never shows it. X and Y are numbers or short words, 1–7 each; at most 12 pairs. A relation ON a set (X equal to Y) is the one case where an arrow can be drawn the wrong way round, and that is named on its own.",
+    "region_shader": "Spec example {\"x\":[-2,3],\"y\":[-2,3]} — the student marks a rectangle of the plane, X × Y for two intervals: drags two opposite corners onto the grid and sets each edge included (solid) or excluded (dashed), as a number line's filled and hollow ends. \"x\" and \"y\" are the two intervals; \"open\" names the excluded edges ({\"left\":true} for (a, b], and so on); both intervals' ends must be on the board (−5..5 whole steps, or the spec's own grid).",
 }
 
 
@@ -534,10 +553,81 @@ def _intpair(v, lim) -> list | None:
     return [a, b]
 
 
+# THE GRID (app/src/components/student/widgets/grid.ts; Tamer 2026-10-21): an optional `grid` on a plane widget's
+# spec — {"x": [lo, hi], "y": [lo, hi], "step": s | [sx, sy]} — absent, the old −5..5 lattice in whole steps.
+GRID_MAX_STEPS = 16
+
+
+def _on_step(v, step) -> bool:
+    k = v / step
+    return abs(k - round(k)) < 1e-7
+
+
+def _grid(raw):
+    """grid.ts `parseGrid`: (x, y, sx, sy), the default when absent, None when malformed."""
+    if raw is None:
+        return ((-5, 5), (-5, 5), 1, 1)
+    if not isinstance(raw, dict):
+        return None
+    rng = lambda v: tuple(v) if isinstance(v, list) and len(v) == 2 and all(_isnum(t) for t in v) and v[0] < v[1] else None  # noqa: E731
+    x, y = rng(raw.get("x")), rng(raw.get("y"))
+    step = raw.get("step", 1)
+    sx, sy = (step if isinstance(step, list) and len(step) == 2 else [step, step])
+    if not x or not y or not _isnum(sx) or not _isnum(sy) or sx <= 0 or sy <= 0:
+        return None
+    if not all(_on_step(v, sx) for v in x) or not all(_on_step(v, sy) for v in y):
+        return None
+    if (x[1] - x[0]) / sx > GRID_MAX_STEPS + 1e-9 or (y[1] - y[0]) / sy > GRID_MAX_STEPS + 1e-9:
+        return None
+    return (x, y, sx, sy)
+
+
+def _is_default_grid(g) -> bool:
+    return g == ((-5, 5), (-5, 5), 1, 1)
+
+
+def _on_grid(g, p) -> bool:
+    (x0, x1), (y0, y1), sx, sy = g
+    return (isinstance(p, list) and len(p) == 2 and _isnum(p[0]) and _isnum(p[1]) and x0 - 1e-9 <= p[0] <= x1 + 1e-9
+            and y0 - 1e-9 <= p[1] <= y1 + 1e-9 and _on_step(p[0], sx) and _on_step(p[1], sy))
+
+
+def _line_on_grid(g, m, b) -> bool:
+    """grid.ts `lineReachable`: two grid points lie on y = m·x + b."""
+    (x0, x1), (y0, y1), sx, sy = g
+    n, k = 0, round(x0 / sx)   # x0 is on the step (_grid)
+    while k * sx <= x1 + 1e-9:
+        y = m * k * sx + b
+        if y0 - 1e-9 <= y <= y1 + 1e-9 and _on_step(y, sy):
+            n += 1
+            if n >= 2:
+                return True
+        k += 1
+    return False
+
+
+def _label(v) -> str:
+    """An arrow_builder element as the app compares it (String(v)): 2 and 2.0 are both "2"."""
+    return f"{v:g}" if _isnum(v) else str(v)
+
+
 def reachability(kind: str, spec: dict) -> list[str]:
     """Why the app would refuse this (kind, spec), or [] if it renders and can be answered."""
     s = spec if isinstance(spec, dict) else {}
+    if kind in ("pair_plotter", "line_drawer", "curve_sketcher"):
+        g = _grid(s.get("grid"))
+        if g is None:
+            return ["grid must be {x: [lo, hi], y: [lo, hi], step}: ends on the step, at most 16 steps an axis"]
     if kind == "pair_plotter":
+        if s.get("targets") is not None:
+            ts = s["targets"]
+            if not isinstance(ts, list) or not 2 <= len(ts) <= 8:
+                return ["targets must list 2 to 8 points"]
+            if not all(_on_grid(g, t) for t in ts):
+                return ["every target must be a point of the grid"]
+            return ["a target is listed twice"] if len({tuple(t) for t in ts}) != len(ts) else []
+        if not _is_default_grid(g):
+            return [] if _on_grid(g, s.get("target")) else ["target must be a point of the grid"]
         return [] if _intpair(s.get("target"), 5) else ["target must be a whole-number pair within ±5"]
     if kind == "product_builder":
         X, Y = s.get("X"), s.get("Y")
@@ -545,7 +635,31 @@ def reachability(kind: str, spec: dict) -> list[str]:
             return ["X and Y must be non-empty lists"]
         if not all(_isnum(v) for v in X + Y):
             return ["X and Y hold numbers only"]
-        return ["at most 4 elements in X and in Y"] if len(X) > 4 or len(Y) > 4 else []
+        if len(X) > 4 or len(Y) > 4:
+            return ["at most 4 elements in X and in Y"]
+        if s.get("mode") == "relation":
+            ps = s.get("pairs")
+            if not isinstance(ps, list) or not ps:
+                return ["a relation lists its pairs"]
+            if not all(isinstance(q, list) and len(q) == 2 and q[0] in X and q[1] in Y for q in ps):
+                return ["every pair of the relation is in X×Y"]
+            return ["a pair is listed twice"] if len({tuple(q) for q in ps}) != len(ps) else []
+        return [] if s.get("mode") is None else ["mode must be 'relation' or absent"]
+    if kind == "line_drawer" and (not _is_default_grid(g) or s.get("mode") == "system"):
+        mode = s.get("mode")
+        line = lambda o: isinstance(o, dict) and _isnum(o.get("m")) and _isnum(o.get("b")) and _line_on_grid(g, o["m"], o["b"])  # noqa: E731
+        if mode == "system":
+            ls = s.get("lines")
+            return [] if isinstance(ls, list) and len(ls) == 2 and all(line(o) for o in ls) else \
+                ["lines must be two {m, b}, each through two grid points"]
+        if mode == "equation":
+            return [] if line(s) else ["the line must pass through two grid points"]
+        if mode == "points":
+            t = s.get("through")
+            if not isinstance(t, list) or len(t) != 2 or not all(_on_grid(g, q) for q in t):
+                return ["both points must be points of the grid"]
+            return ["the two points coincide"] if t[0] == t[1] else []
+        return ["mode must be 'equation', 'points' or 'system'"]
     if kind == "line_drawer":
         mode = s.get("mode")
         if mode == "points":
@@ -649,7 +763,46 @@ def reachability(kind: str, spec: dict) -> list[str]:
         want = CURVE_COEF_COUNT[fn]
         if not isinstance(coefs, list) or len(coefs) != want or not all(_isnum(k) for k in coefs):
             return [f"a {fn} curve takes {want} coefs, all numbers"]
+        if not _is_default_grid(g):
+            # widget-payloads.ts: a spec's own plane takes linear and quadratic only, and most of the curve is on it
+            if fn not in ("linear", "quadratic"):
+                return ["a grid of its own is for linear and quadratic curves only"]
+            if fn == "quadratic" and coefs[0] == 0:
+                return ["a quadratic needs a ≠ 0"]
+            if any(abs(k) > 20 for k in coefs):
+                return ["on a grid of its own every coefficient is within ±20"]
+            (x0, x1), (y0, y1), _, _ = g
+            xs = [x0 + (x1 - x0) * i / 40 for i in range(41)]
+            ys = [coefs[0] * x + coefs[1] if fn == "linear" else coefs[0] * x * x + coefs[1] * x + coefs[2] for x in xs]
+            return [] if sum(y0 <= y <= y1 for y in ys) >= 0.7 * 41 else ["most of the curve is off the grid"]
         return _curve_reachable(fn, coefs)
+    if kind == "arrow_builder":
+        # widget-payloads.ts: numbers or short words, 1–7 a side, none twice; 1–12 pairs from X to Y, none twice
+        X, Y, ps = s.get("X"), s.get("Y"), s.get("pairs")
+        el = lambda v: _isnum(v) or (_is_str(v) and v.strip() != "" and len(v) <= 12)  # noqa: E731
+        if not isinstance(X, list) or not isinstance(Y, list) or not isinstance(ps, list):
+            return ["X, Y and pairs must be lists"]
+        if not 1 <= len(X) <= 7 or not 1 <= len(Y) <= 7 or not all(el(v) for v in X + Y):
+            return ["X and Y hold 1 to 7 numbers or short words each"]
+        if len({_label(v) for v in X}) != len(X) or len({_label(v) for v in Y}) != len(Y):
+            return ["an element is listed twice"]
+        if not 1 <= len(ps) <= 12:
+            return ["a relation of 1 to 12 pairs"]
+        xs, ys = {_label(v) for v in X}, {_label(v) for v in Y}
+        if not all(isinstance(q, list) and len(q) == 2 and _label(q[0]) in xs and _label(q[1]) in ys for q in ps):
+            return ["every pair runs from an element of X to an element of Y"]
+        return ["a pair is listed twice"] if len({(_label(a), _label(b)) for a, b in ps}) != len(ps) else []
+    if kind == "region_shader":
+        g = _grid(s.get("grid"))
+        if g is None:
+            return ["grid must be {x: [lo, hi], y: [lo, hi], step}: ends on the step, at most 16 steps an axis"]
+        (gx0, gx1), (gy0, gy1), sx, sy = g
+        iv = lambda v, lo, hi, st: isinstance(v, list) and len(v) == 2 and all(_isnum(t) for t in v) and v[0] < v[1] \
+            and v[0] >= lo and v[1] <= hi and _on_step(v[0], st) and _on_step(v[1], st)  # noqa: E731
+        if not iv(s.get("x"), gx0, gx1, sx) or not iv(s.get("y"), gy0, gy1, sy):
+            return ["x and y must be intervals [lo, hi] with both ends on the board"]
+        o = s.get("open", {})
+        return [] if isinstance(o, dict) else ["open names the excluded edges: {left, right, bottom, top}"]
     if kind == "polygon_builder":
         return _polygon_reachable(s)
     if kind == "solid_scaler":
@@ -684,8 +837,11 @@ OPENING_HANDLES = {"line_drawer": ((-3, -2), (1, 1))}
 
 
 def opening_collisions(kind: str, spec: dict) -> list[str]:
-    """Why this (kind, spec) puts a target on an opening handle ([] when it does not). Stricter than the app."""
+    """Why this (kind, spec) puts a target on an opening handle ([] when it does not). Stricter than the app.
+    On a grid of its own the handles open elsewhere (LineDrawer.tsx `opening`), never at these two."""
     s = spec if isinstance(spec, dict) else {}
+    if s.get("grid") is not None:
+        return []
     handles = OPENING_HANDLES.get(kind)
     if not handles or kind != "line_drawer" or s.get("mode") != "points" or not isinstance(s.get("through"), list):
         return []
@@ -1252,10 +1408,14 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False,
 # (migration 032), whose targets were the negatives of the values their stems and
 # solutions exclude.
 READING_FIELDS = {
-    "pair_plotter": {"target": "[x, y], the point the question asks for"},
-    "product_builder": {"X": "the set X as a list", "Y": "the set Y as a list"},
-    "line_drawer": {"mode": "'equation' or 'points'", "m": "gradient (equation mode)", "b": "y-intercept "
-                    "(equation mode)", "through": "[[x1, y1], [x2, y2]] (points mode)"},
+    "pair_plotter": {"target": "[x, y], the point the question asks for (one point)",
+                     "targets": "every point the question asks for, as [x, y] pairs (several points)"},
+    "product_builder": {"X": "the set X as a list", "Y": "the set Y as a list",
+                        "pairs": "only if the question asks for a relation (a rule picks some pairs of X×Y): every "
+                                 "pair the rule gives, as [a, b]"},
+    "line_drawer": {"mode": "'equation', 'points' or 'system' (two lines on one board)", "m": "gradient (equation mode)",
+                    "b": "y-intercept (equation mode)", "through": "[[x1, y1], [x2, y2]] (points mode)",
+                    "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"},
     "circle_builder": {"element": "radius | chord | diameter | tangent"},
     "angle_setter": {"ask": "'central' or 'inscribed' — which angle the target is", "target": "degrees"},
     "triangle_ratio": {"ask": "sin | cos | tan", "target": "the ratio's value"},
@@ -1294,6 +1454,11 @@ READING_FIELDS = {
                               "as {a, b(, c)}"},
     "area_model": {"a": "the target is (x + a)(x + b): a, a whole number (to factorise, read it from the "
                         "factors)", "b": "b, likewise"},
+    "arrow_builder": {"X": "the first set, as a list", "Y": "the second set, as a list (the same as X for a relation on X)",
+                      "pairs": "every pair of the relation, as [a, b] — worked out from the rule when the question gives one"},
+    "region_shader": {"x": "the interval along x as [lo, hi]", "y": "the interval along y as [lo, hi]",
+                      "open": "the excluded ends as {left, right, bottom, top} booleans: true where the interval's "
+                              "bracket is round (the end is not included)"},
 }
 
 
@@ -1334,12 +1499,20 @@ def reading_agrees(kind: str, spec: dict, reading: dict) -> tuple[bool, str]:
         return False, "no reading of the stem"
     r, s = {k: _reading_value(v) for k, v in reading.items()}, spec
     try:
-        if kind == "pair_plotter":
+        pts = lambda v: sorted((float(a), float(b)) for a, b in v)  # noqa: E731  (a set of points, compared as one)
+        if kind == "pair_plotter" and s.get("targets") is not None:
+            ok = pts(r["targets"]) == pts(s["targets"])
+        elif kind == "pair_plotter":
             ok = len(r["target"]) == 2 and all(_near(x, y) for x, y in zip(r["target"], s["target"]))
         elif kind == "product_builder":
             ok = sorted(r["X"]) == sorted(s["X"]) and sorted(r["Y"]) == sorted(s["Y"])
+            if s.get("mode") == "relation":
+                ok = ok and pts(r["pairs"]) == pts(s["pairs"])
         elif kind == "line_drawer":
-            if s["mode"] == "equation":
+            if s["mode"] == "system":
+                ok = r.get("mode") == "system" and sorted((float(o["m"]), float(o["b"])) for o in r["lines"]) == \
+                    sorted((float(o["m"]), float(o["b"])) for o in s["lines"])
+            elif s["mode"] == "equation":
                 ok = r.get("mode") == "equation" and _near(r["m"], s["m"]) and _near(r["b"], s["b"])
             else:
                 ok = r.get("mode") == "points" and sorted(map(tuple, r["through"])) == sorted(map(tuple, s["through"]))
@@ -1367,6 +1540,14 @@ def reading_agrees(kind: str, spec: dict, reading: dict) -> tuple[bool, str]:
             want = set(_event_cells(rows, cols, rule))
             got = {tuple(int(v) for v in c) for c in r["event"]}
             ok = int(r.get("rows", rows)) == rows and int(r.get("cols", cols)) == cols and got == want
+        elif kind == "arrow_builder":
+            lab = lambda vs: sorted(_label(v) for v in vs)  # noqa: E731
+            ok = lab(r["X"]) == lab(s["X"]) and lab(r["Y"]) == lab(s["Y"]) and \
+                sorted((_label(a), _label(b)) for a, b in r["pairs"]) == sorted((_label(a), _label(b)) for a, b in s["pairs"])
+        elif kind == "region_shader":
+            edges = lambda o: {e: bool((o or {}).get(e)) for e in ("left", "right", "bottom", "top")}  # noqa: E731
+            ok = all(_near(a, b) for a, b in zip(r["x"], s["x"])) and all(_near(a, b) for a, b in zip(r["y"], s["y"])) \
+                and edges(r.get("open")) == edges(s.get("open"))
         elif kind == "curve_sketcher":
             ok = r["fn"] == s["fn"] and len(r["coefs"]) == len(s["coefs"]) and \
                 all(_near(x, y) for x, y in zip(r["coefs"], s["coefs"]))
@@ -1852,6 +2033,12 @@ def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: 
     }
 
 
+# Kinds proposed with the book widgets (Tamer 2026-10-21) and not yet accepted by Samuel (decision 11): only the
+# book-widget author (runbook/widgets-book.workflow.js) is offered them; S7's own author never is, so its prompt and
+# its packet are exactly what they were until he takes them in.
+PROPOSED_KINDS = {"arrow_builder", "region_shader"}
+
+
 def author_args(book, graph, course: str, figures: dict | None = None) -> dict:
     """args for widgets.workflow.js (mode author): objectives, anchors, reachable misconceptions, the contract.
     `figures` (question id -> image files, assemble_misconceptions.figures_by_question): an anchor whose
@@ -1878,7 +2065,7 @@ def author_args(book, graph, course: str, figures: dict | None = None) -> dict:
                                         for i, m in sorted(mcs.items()) if m["lo_id"] in closure]})
     # W1: what each mode / ask / element / fn can actually emit travels with the predicates (s7-v7)
     contract = {k: {"predicates": v["predicates"], "can_emit": v.get("can_emit"), "instrument": INSTRUMENTS.get(k, "")}
-                for k, v in W.contract()["kinds"].items()}
+                for k, v in W.contract()["kinds"].items() if k not in PROPOSED_KINDS}
     return book_config.workflow_args(book, extra={"mode": "author", "course_id": course,
                                                   "contract": contract, "objectives": objs})
 

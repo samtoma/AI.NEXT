@@ -43,6 +43,8 @@ const FILES: Record<string, string> = {
   box_plot_builder: "BoxPlotBuilder.tsx",
   venn_builder: "VennBuilder.tsx",
   area_model: "AreaModel.tsx",
+  arrow_builder: "ArrowBuilder.tsx",
+  region_shader: "RegionShader.tsx",
 };
 
 /**
@@ -51,6 +53,8 @@ const FILES: Record<string, string> = {
  * set grading, and its `sign-flipped` diagnosis, moved out to be testable).
  */
 const HELPERS: Record<string, string[]> = {
+  pair_plotter: ["pair-plotter-grade.ts"],
+  product_builder: ["product-builder-grade.ts"],
   line_drawer: ["line-drawer-grade.ts"],
   number_line_marker: ["number-line-grade.ts"],
   polygon_builder: ["polygon-grade.ts"],
@@ -59,6 +63,8 @@ const HELPERS: Record<string, string[]> = {
   curve_sketcher: ["curve-sketcher-grade.ts"],
   venn_builder: ["venn-builder-grade.ts"],
   area_model: ["area-model-grade.ts"],
+  arrow_builder: ["arrow-builder-grade.ts"],
+  region_shader: ["region-shader-grade.ts"],
 };
 
 /**

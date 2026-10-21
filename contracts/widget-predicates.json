@@ -43,14 +43,27 @@
       "predicates": {
         "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
         "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
-        "off-target": "Neither coordinate matches, with no recognisable pattern"
+        "off-target": "Neither coordinate matches, with no recognisable pattern",
+        "missing-points": "Some of the points asked for were not plotted",
+        "extra-points": "Plotted points that were not asked for, with no recognisable pattern"
       },
-      "can_emit": [
-        "swapped-coordinates",
-        "wrong-quadrant",
-        "off-target"
-      ],
-      "can_emit_source": "PairPlotter.tsx pick()"
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "can_emit_source": "PairPlotter.tsx + pair-plotter-grade.ts (one target; a set of targets)"
     },
     "product_builder": {
       "predicates": {
@@ -58,11 +71,21 @@
         "missing-pairs": "An incomplete product: some pairs of X×Y were not selected",
         "extra-pairs": "Selected pairs that are not in X×Y at all"
       },
-      "can_emit": [
-        "reversed-pairs",
-        "missing-pairs"
-      ],
-      "can_emit_source": "ProductBuilder.tsx check() — a wrong pick is always reported as reversed-pairs, so extra-pairs is never emitted"
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "(absent)": [
+            "reversed-pairs",
+            "missing-pairs"
+          ],
+          "relation": [
+            "reversed-pairs",
+            "extra-pairs",
+            "missing-pairs"
+          ]
+        }
+      },
+      "can_emit_source": "ProductBuilder.tsx check() + product-builder-grade.ts — the whole product: a wrong pick is always reported as reversed-pairs, so extra-pairs is never emitted; relation mode: a pair of X×Y the rule leaves out is extra-pairs"
     },
     "line_drawer": {
       "predicates": {
@@ -86,10 +109,17 @@
             "slope-sign-flipped",
             "slope-inverted",
             "off-target"
+          ],
+          "system": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
           ]
         }
       },
-      "can_emit_source": "LineDrawer.tsx check() + line-drawer-grade.ts (points mode)"
+      "can_emit_source": "LineDrawer.tsx check() + line-drawer-grade.ts (points mode; equation and system modes)"
     },
     "circle_builder": {
       "predicates": {
@@ -570,6 +600,32 @@
         "off-target"
       ],
       "can_emit_source": "area-model-grade.ts gradeAreaModel() — expand and factor are graded alike"
+    },
+    "arrow_builder": {
+      "predicates": {
+        "arrows-reversed": "Arrows drawn the wrong way round — from the second element of a pair to the first",
+        "extra-arrows": "Arrows for pairs that are not in the relation",
+        "missing-arrows": "Some pairs of the relation have no arrow"
+      },
+      "can_emit": [
+        "arrows-reversed",
+        "extra-arrows",
+        "missing-arrows"
+      ],
+      "can_emit_source": "ArrowBuilder.tsx check() + arrow-builder-grade.ts"
+    },
+    "region_shader": {
+      "predicates": {
+        "region-swapped": "The two intervals exchanged — the first belongs along x, the second along y",
+        "edge-inclusion-wrong": "The right rectangle with a wrong edge included or excluded — solid is ≤, dashed is <",
+        "off-target": "The rectangle does not match the region asked for"
+      },
+      "can_emit": [
+        "region-swapped",
+        "edge-inclusion-wrong",
+        "off-target"
+      ],
+      "can_emit_source": "RegionShader.tsx check() + region-shader-grade.ts"
     }
   }
 }

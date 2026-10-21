@@ -122,6 +122,60 @@ Open questions:
 - **Whether the tutor actually uses the tasks, and keeps to "no second
   question", is untested:** it needs a live lesson turn.
 
+## Widget grid and three new modes — PROPOSAL for Samuel (2026-10-21)
+
+Tamer: "implement those changes" — the widget gaps the book's exercises hit across Units 1, 2, 3, 5 and 6. Built on
+this prototype branch; **the widget contract is Samuel's** (ADR-0009, decision 11), so this is a proposal to accept or
+change, not a decision. Every change is additive: a stored widget without the new fields renders, grades and emits
+exactly as before (tests pin it), and no new KIND was added.
+
+| Change | Kinds | New predicates | Book exercises it unlocks |
+|---|---|---|---|
+| `grid: {x, y, step}` — range and step of the board (≤ 16 steps an axis) | pair_plotter, line_drawer, curve_sketcher (linear, quadratic) | — | y = 2½ and rational points (U1), the trapezoid's B(6, 2) (U5), lines with intercept 1.5 or 8 and parabolas reaching ±11 (U6), axes in fives (U2 d = 15t, U3 frequency polygon) |
+| `targets: [[x, y], …]`, `join` — several points graded as a set | pair_plotter | `missing-points`, `extra-points` | U1 "represent these pairs", U5 example 4, U3 frequency polygon |
+| `mode: "system", lines: [{m, b}, {m, b}]` — two lines, the crossing read off | line_drawer | — (equation mode's, per line) | U6 lesson 1: 2 worked examples, 2 drills |
+| `mode: "relation", pairs` — a subset of X×Y by a rule | product_builder | `extra-pairs` now emitted | U1 lessons 2-1, 2-2 |
+
+- App: `components/student/widgets/grid.ts`, `pair-plotter-grade.ts`, `product-builder-grade.ts`, `line-drawer-grade.ts`
+  (`gradeLineEquation`, `gradeSystem`, `meeting`), the four components, `widget-payloads.ts`, the contract in both
+  copies (`contracts/widget-predicates.json`, `lib/widget-predicates.ts`). Harness: `/dev/math-widgets`, "Grid and new
+  modes — book exercises".
+- Pipeline: `generate_widget_questions.py` reachability (cross-checked case by case against the app's TypeScript),
+  reading fields and comparison for the blind verifier, the instrument text (`GRID_DOC` and per-kind modes).
+- **Deliberately not changed:** the tutor's widget docs (`lib/widget-docs.ts`) — the lesson prompts stay byte-identical,
+  so the tutor is not yet offered the new modes; and Samuel's `runbook/widgets.workflow.js` — only the book-widget
+  variant (`widgets-book.workflow.js`, s7b-v2) authors with them.
+- Fixed on the way: line_drawer's arrow keys moved the previously focused handle on the first press after switching
+  (stale state, present before this change); the pipeline's copy of pair_plotter's instrument text had drifted from the
+  app's (the one test that was failing).
+- **Two new kinds (Tamer: "build arrow_builder or region shading" — both built):**
+  - `arrow_builder` {X, Y, pairs} — the student draws a relation's arrows; graded as a set; predicates
+    `arrows-reversed` (on a set, an arrow turned round), `extra-arrows`, `missing-arrows`. X and Y may hold short words
+    (the book pairs students with books). Its board is shared with the arrow-diagram figure task
+    (`widgets/ArrowBoard.tsx`), so a diagram is drawn the same way everywhere.
+  - `region_shader` {x, y, open?, grid?} — the student marks X × Y for two intervals: two corners on the grid, each
+    edge included (solid) or excluded (dashed); predicates `region-swapped`, `edge-inclusion-wrong`, `off-target`.
+  - Both serve Unit 1 only today (lessons 1-1 drill 4, 2-1, 2-2, 3-2). Decision 11 makes a new kind Samuel's call:
+    until he accepts them, S7's own author is never offered them (`GW.PROPOSED_KINDS`), the tutor is never told of them
+    (in DOCS, not in any unit's list), and only the book-widget author (s7b-v3) can author them.
+
+## Arrow diagrams — Unit 1 (2026-10-21)
+
+Tamer: "start the arrow diagrams for unit 1". The prototype's draw / verdict / range (`proto/interactive-diagrams`,
+a hand-written table keyed to the old book's ids) rebuilt the figure-tasks way: `figure_tasks.arrow_tasks` writes them
+at compile from the figure's own arrows, no model call; the app grades them (`lib/figure-interactions.ts`
+readArrowMap / gradeDraw / isFunctionMap / gradeRange) in `InteractiveFigure.tsx` (ArrowsStep, VerdictStep, RangeStep).
+
+- **draw** — "Draw the relation {(−1, 2), (1, 6), (2, 8)} as an arrow diagram" (a complete product: "Draw X × Y"); tap
+  X then Y; hint on the first miss, the missed arrows drawn in on the second.
+- **function** — only where the lesson's objectives teach functions (`compile_book_records.lesson_context`).
+- **range** — only where they teach the range, and only on a function.
+- **Never on an exercise's figure** — and compile now counts a figure an exercise prints as the exercise's even when no
+  question of it was kept (pp3u1-3 drill 1, "which arrow diagrams are functions?", has no compiled answer). Book-wide
+  this changed no geometry task.
+- Unit 1: 19 tasks on 9 of 13 arrow diagrams; drill 1's three and pp3u1-2 figure 2 (used by an open "think") get none.
+  Harness: `/dev/figure-marks` → "Arrow diagrams — Unit 1".
+
 ## Book widgets — Unit 1 trial (2026-10-21)
 
 Tamer: "let's try 1+2 for unit 1 … through the independent solver as usual, and held for review in case anything
