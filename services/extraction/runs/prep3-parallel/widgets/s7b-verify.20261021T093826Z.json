@@ -1,0 +1,50 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "f27e78e4e4bb7cdea337c4e27cee61313e3c8b4d60a22b5aa95b754d3b1242bd",
+  "generated_sha256": "b7403b10f9913a39894c8dc53ea43b00cbdabf2e36dfeaf6eb6d0a6d2c6f7925",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u1-1-1:w003",
+   "template_sha": "99c95f95f597e644b80bc2f2132dc8ef606bf78db52f1c94bf06a7e7a4fcdeec",
+   "reading": {
+    "targets": [
+     [
+      3,
+      5
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   },
+   "construction": "Tap lattice points (3,5) and (5,3). Both lie within the board (x -1..6, y -1..6) and the set is graded order-free, so this is a correct answer.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires if the student plots only (3,5), or only one of the two. The hint is correct, tells them to check both pairs, and gives no coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires if the student plots (3,5), (5,3) and also a stray point such as (1,1). The hint says only the two listed pairs should be plotted and explains the x-then-y move, so it is correct and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "It cannot fire on this board. Reflecting the targets gives points like (-3,5) or (3,-5), and the board runs only from -1 to 6, so those points cannot be tapped. The hint also reveals that both numbers are positive, which is part of the answer."
+    }
+   ]
+  }
+ ]
+}

@@ -15,6 +15,7 @@
     "wt:pp3u1-4-3:drill-5-3": "7d463e732892462be4789d4fa5d0c4fd4af47e53d747cbc3efc08e35ca38c4ba",
     "wt:pp3u1-1-1:think-and-discuss-1": "15f25f1b775e32f30ea922f4cde9d2e94e7c6ad1630215410d5fd54195fc541c",
     "wt:pp3u1-1-1:think-and-discuss-2": "83bd8334e7deedadc0acf5dd1bb620ff1266e39e12484c22f9423a025a475210",
+    "wt:pp3u1-1-1:think-and-discuss-3": "99c95f95f597e644b80bc2f2132dc8ef606bf78db52f1c94bf06a7e7a4fcdeec",
     "wt:pp3u1-1-4:drill-4": "7e6fa00b422c1b685752c759091a1128d081e9e485ef86ad5ae1ecf37d12c58f",
     "wt:pp3u1-1-4:exercise-2-a": "566b093301bfda1a89943bb8fef3267b1f562345b6710896654aeb5dec2c70d3",
     "wt:pp3u1-1-4:exercise-2-b": "39296f2bd2200b89eeafea81f217bd9b4da3b3b5e2d2707d83694d56b949da3d",
@@ -248,6 +249,102 @@
       "family": "wt:pp3u1-1-1:think-and-discuss-2",
       "template_sha": "83bd8334e7deedadc0acf5dd1bb620ff1266e39e12484c22f9423a025a475210",
       "parent_kind": "teaching"
+    },
+    {
+      "id": "q:pp3u1-1-1:w003",
+      "lo_id": "lo:pp3u1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Represent the ordered pairs (3, 5) and (5, 3) graphically in the coordinate plane. Tap each point. Are they the same point?",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "grid": {
+            "x": [
+              -1,
+              6
+            ],
+            "y": [
+              -1,
+              6
+            ]
+          },
+          "targets": [
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              3
+            ]
+          ]
+        },
+        "diagnostics": [],
+        "hints": [
+          {
+            "predicate": "missing-points",
+            "step": 1,
+            "text": "Each ordered pair gives one point. Check that both pairs have been plotted."
+          },
+          {
+            "predicate": "extra-points",
+            "step": 2,
+            "text": "Only the two pairs listed are plotted. For each one, move along x by the first number, then up by the second."
+          }
+        ],
+        "pending_hints": [
+          {
+            "predicate": "wrong-quadrant",
+            "step": 2,
+            "text": "Both numbers in each pair are positive, so both moves go right along x and up along y.",
+            "why": "It cannot fire on this board. Reflecting the targets gives points like (-3,5) or (3,-5), and the board runs only from -1 to 6, so those points cannot be tapped. The hint also reveals that both numbers are positive, which is part of the answer.",
+            "verifier_runs": [
+              "s7-verify.20261017T074751Z",
+              "s7-verify.20261018T070113Z",
+              "s7-verify.20261018T071535Z",
+              "s7-verify.20261018T101810Z",
+              "s7-verify.20261018T101900Z",
+              "s7-verify.20261018T101945Z",
+              "s7-verify.20261018T102010Z",
+              "s7-verify.20261018T102042Z",
+              "s7-verify.20261018T102110Z",
+              "s7b-verify.20261021T074820Z",
+              "s7b-verify.20261021T084017Z",
+              "s7b-verify.20261021T084543Z",
+              "s7b-verify.20261021T093736Z",
+              "s7b-verify.20261021T093826Z"
+            ]
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Plot (3, 5): go 3 along the x-axis, then 5 up."
+        },
+        {
+          "step": 2,
+          "text_md": "Plot (5, 3): go 5 along the x-axis, then 3 up."
+        },
+        {
+          "step": 3,
+          "text_md": "The two points are in different places."
+        },
+        {
+          "step": 4,
+          "text_md": "Each ordered pair is represented by one and only one point, so different points mean different pairs."
+        },
+        {
+          "step": 5,
+          "text_md": "The first projections 3 and 5 differ, so the pairs are not equal: (3, 5) ≠ (5, 3)."
+        }
+      ],
+      "parent_question_id": "q:pp3u1-1-1:bk-think-and-discuss-3",
+      "source_note": "The book's own exercise pp3u1-1:think-and-discuss-3 on an instrument. Generated from template family wt:pp3u1-1-1:think-and-discuss-3.",
+      "family": "wt:pp3u1-1-1:think-and-discuss-3",
+      "template_sha": "99c95f95f597e644b80bc2f2132dc8ef606bf78db52f1c94bf06a7e7a4fcdeec"
     },
     {
       "id": "q:pp3u1-1-2:w001",
@@ -5645,6 +5742,7 @@
     "templates": [
       "wt:pp3u1-1-1:think-and-discuss-1",
       "wt:pp3u1-1-1:think-and-discuss-2",
+      "wt:pp3u1-1-1:think-and-discuss-3",
       "wt:pp3u1-1-2:drill-2-a",
       "wt:pp3u1-1-2:drill-2-b",
       "wt:pp3u1-1-2:drill-2-c",
@@ -5686,15 +5784,16 @@
     "verifier_runs": [
       "s7b-verify.20261021T074820Z",
       "s7b-verify.20261021T084017Z",
-      "s7b-verify.20261021T084543Z"
+      "s7b-verify.20261021T084543Z",
+      "s7b-verify.20261021T093826Z"
     ],
     "counts": {
       "active": 4,
       "held": 0,
       "kept_by_review": 0,
       "dropped_by_review": 0,
-      "hints_active": 45,
-      "hints_held": 8
+      "hints_active": 47,
+      "hints_held": 9
     },
     "superseded": [
       "s7b-verify.20261021T083920Z (runs/prep3-parallel/widgets/superseded/README.md)"

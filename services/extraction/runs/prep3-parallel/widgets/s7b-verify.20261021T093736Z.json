@@ -1,0 +1,50 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "df5b125a1315f48f2c6f5d3051f882b163f83226cb92f5557d0a98dca2937964",
+  "generated_sha256": "97cdbb5e40a90eadd02289183ebdcaf3caf744939622312e2e1b1e99304e0c3b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u1-1-1:w001",
+   "template_sha": "99c95f95f597e644b80bc2f2132dc8ef606bf78db52f1c94bf06a7e7a4fcdeec",
+   "reading": {
+    "targets": [
+     [
+      3,
+      5
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   },
+   "construction": "Use the targets form. Tap (3,5) and (5,3) on the board (x -1..6, y -1..6). Both are lattice points in range. The two points are different, which answers the question.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires if the student plots only one of the two points, for example just (3,5). The hint is correct. It tells the student to check that both pairs are plotted without giving coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when a plotted point is not a target and the error is not a swap or reflection, for example (3,3) with (5,3). The hint describes the correct method (x first, then y) and gives no coordinates, so the student still has to do the plotting."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "This predicate needs every wrong point to be a reflection of a target, such as (-3,5), (3,-5) or (-3,-5). The board only reaches -1 on each axis, so none of these can be tapped and the predicate cannot fire here. The hint also gives away that both numbers are positive."
+    }
+   ]
+  }
+ ]
+}
