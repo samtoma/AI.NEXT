@@ -64,3 +64,52 @@ def test_widget_mapping_rejected_drops_that_claim_only():
     g.dec = {("mapping", ref): {"decision": "reject", "by": "TD", "at": "2026-10-17", "fingerprint": g.task.fingerprint(item, "mapping")}}
     out = g.apply([copy.deepcopy(w)], "questions")
     assert [d["predicate"] for d in out[0]["choices"]["diagnostics"]] == ["p2"]
+
+
+def held_widget():
+    return Q(1, question_type="widget", choices={
+        "diagnostics": [{"predicate": "p1", "misconception_id": "mc:a"}],
+        "pending_review": [{"predicate": "p2", "misconception_id": "mc:b", "why": "doubted", "verifier_runs": ["r1"]}],
+        "pending_hints": [{"predicate": "p3", "step": 2, "text": "Check step two.", "why": "gives it away"},
+                          {"predicate": "p4", "step": 1, "text": "Start from the rule.", "why": "unclear"}]})
+
+
+def held_decision(g, w, ref, decision):
+    item = next(i for r, i, _k, _e in g.task.held_items(w) if r == ref)
+    return {("held", ref): {"decision": decision, "by": "TD", "at": "2026-10-21", "fingerprint": g.task.fingerprint(item, "held")}}
+
+
+def test_held_claims_kept_go_live_dropped_go_away_undecided_stay_held():
+    g = review({})
+    w = held_widget()
+    g.dec = {**held_decision(g, w, f"{w['id']}#p2", "keep"), **held_decision(g, w, f"{w['id']}#hint:p3", "drop"),
+             **held_decision(g, w, f"{w['id']}#hint:p4", "keep")}
+    ch = g.apply([copy.deepcopy(w)], "questions")[0]["choices"]
+    assert [d["predicate"] for d in ch["diagnostics"]] == ["p1", "p2"]
+    assert "why" not in ch["diagnostics"][1] and "verifier_runs" not in ch["diagnostics"][1], "the verifier's notes stay behind"
+    assert "pending_review" not in ch
+    assert [h["predicate"] for h in ch["hints"]] == ["p4"] and "pending_hints" not in ch
+    assert {x["ref"] for x in g.report["claims_kept"]} == {f"{w['id']}#p2", f"{w['id']}#hint:p4"}
+
+
+def test_a_held_claim_is_judged_on_the_claim_not_the_verifiers_reasons():
+    g = review({})
+    w = held_widget()
+    g.dec = held_decision(g, w, f"{w['id']}#hint:p3", "keep")
+    w2 = copy.deepcopy(w)
+    w2["choices"]["pending_hints"][0]["why"] = "a later run's different reason"
+    assert [h["predicate"] for h in g.apply([w2], "questions")[0]["choices"]["hints"]] == ["p3"]
+    w3 = copy.deepcopy(w)
+    w3["choices"]["pending_hints"][0]["text"] = "A rewritten hint."
+    g2 = review({})
+    g2.dec = held_decision(g2, w, f"{w['id']}#hint:p3", "keep")
+    ch = g2.apply([w3], "questions")[0]["choices"]
+    assert "hints" not in ch and len(ch["pending_hints"]) == 2, "a rewritten hint is a new claim: held again"
+
+
+def test_deciding_a_held_claim_does_not_send_its_widget_back_for_review():
+    g = review({})
+    w = held_widget()
+    g.dec = {**decided(g, "widget", w, "approve"), **held_decision(g, w, f"{w['id']}#p2", "keep")}
+    g.apply([copy.deepcopy(w)], "questions")
+    assert [s["decision"] for s in g.stamps] == ["approve"] and not g.report["changed_since"]

@@ -792,6 +792,8 @@ f"""<p><span class="tag info">claim</span> a student whose construction fires <b
                  "Keep a claim only if a student holding that misconception would build exactly what fires the "
                  "predicate, on this question's numbers. Drop it if the predicate would mostly fire for another "
                  "reason, or never for this error. A dropped claim is deleted; the widget stays.",
+                 "Decide these in the review tool (Generated content → Held hints and diagnoses): a decision there takes "
+                 "effect on the next refresh. This page is a snapshot to read or share.",
                  "A METHOD HINT (book widgets) is shown when its predicate fires and no misconception is named. Keep it "
                  "only if it is right for this question, points at the step the student got wrong, and does not give "
                  "the answer away."],

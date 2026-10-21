@@ -24,6 +24,14 @@ compile_book_records.py applies them to a book's own generated rows (GeneratedRe
 out, a fix request holds it, and both, with an approval, are review stamps written at load (apply_review_verdicts.py
 --book-reviews); a misconception or widget mapping rejected or sent for a fix is left out (its links with it), an
 approved one listed. The admin console's own backlog is untouched. Standard library only.
+
+HELD HINTS AND DIAGNOSES (Tamer, 2026-10-21: "should this be part of the review tool?" — "yes, build it"). A widget's
+claims the blind verifier did not confirm are held in the widget bundle (decision 47): a diagnosis in
+`choices.pending_review`, a book widget's method hint in `choices.pending_hints`. Each is an item of kind `held`,
+decided keep or drop. compile_book_records.py applies them (GeneratedReview): a kept claim goes live (into
+`diagnostics` or `hints`), a dropped one is removed; a refresh is enough, no model call. Their ref is the one the
+widget pipeline uses (generate_widget_questions.mapping_key): `<question>#<predicate>`, a hint `<question>#hint:<predicate>`.
+Their fingerprint is the claim alone (not the verifier's reasons, which change with every re-verification).
 """
 import hashlib
 import json
@@ -39,10 +47,12 @@ REVIEWS = EXTRACTION / "reviews"
 TEACHING = EXTRACTION / "teaching"
 NAME = re.compile(r"^[a-z0-9][a-z0-9.-]{0,63}$")
 FIGURE_ID = re.compile(r"^[a-z0-9][a-z0-9.-]{0,63}:[a-z0-9][a-z0-9.-]{0,63}$")
-KINDS = ("question", "widget", "mapping", "misconception", "figure")
-KIND_LABEL = {"question": "Generated question", "widget": "Widget question", "mapping": "Widget mapping", "misconception": "Misconception",
-              "figure": "Figure"}
+KINDS = ("question", "widget", "mapping", "held", "misconception", "figure")
+KIND_LABEL = {"question": "Generated question", "widget": "Widget question", "mapping": "Widget mapping",
+              "held": "Held hint or diagnosis", "misconception": "Misconception", "figure": "Figure"}
 DECISIONS = {"approve", "fix_requested", "reject"}
+HELD_DECISIONS = {"keep", "drop"}
+HELD_LISTS = (("pending_review", "diagnosis"), ("pending_hints", "hint"))
 SKIP_IN_PRINT = {"status", "reviewed_at", "reviewed_by", "ai_checked_at", "ai_checked_by"}
 SKIP_IN_FIGURE = SKIP_IN_PRINT | {"made"}   # S4's run record: the same drawing from a later run is the same drawing
 
@@ -90,7 +100,24 @@ def lesson_of(lo: str) -> str:
     return re.sub(r"-\d+$", "", str(lo or "").removeprefix("lo:")) or "?"
 
 
+def held_items(q: dict) -> list[tuple[str, dict, str, dict]]:
+    """A widget question's held claims as (ref, review item, the choices list it sits in, the bundle entry)."""
+    ch = q.get("choices") if isinstance(q.get("choices"), dict) else {}
+    out = []
+    for key, claim in HELD_LISTS:
+        for e in ch.get(key) or []:
+            pred = e.get("predicate")
+            ref = f"{q['id']}#{pred}" if claim == "diagnosis" else f"{q['id']}#hint:{pred}"
+            item = {"id": ref, "widget_id": q["id"], "lo_id": q.get("lo_id"), "claim": claim, "predicate": pred,
+                    **({"misconception_id": e.get("misconception_id")} if claim == "diagnosis" else {"text": e.get("text"), "step": e.get("step")}),
+                    "why": e.get("why")}
+            out.append((ref, item, key, e))
+    return out
+
+
 def fingerprint(item: dict, kind: str | None = None) -> str:
+    if kind == "held":   # the claim alone: the verifier's reasons change with every re-verification
+        item = {k: v for k, v in item.items() if k != "why"}
     skip = SKIP_IN_FIGURE if kind == "figure" else SKIP_IN_PRINT
     content = {k: v for k, v in item.items() if k not in skip}
     return hashlib.md5(json.dumps(content, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
@@ -187,6 +214,8 @@ def load(book: str) -> dict:
                 for dg in (q.get("choices") or {}).get("diagnostics") or []:
                     ref = f"{q['id']}#{dg.get('predicate')}"
                     items[("mapping", ref)] = {"id": ref, "widget_id": q["id"], "lo_id": q.get("lo_id"), **dg}
+                for ref, item, _key, _e in held_items(q):
+                    items[("held", ref)] = item
     catalogue = {}
     for p in paths["misconceptions"]:
         if p.exists():
@@ -239,6 +268,10 @@ def _title(kind: str, it: dict) -> str:
         return it.get("label") or it["id"]
     if kind == "mapping":
         return f"{it.get('predicate')} → {str(it.get('misconception_id', '')).split(':')[-1]}"
+    if kind == "held":
+        if it["claim"] == "hint":
+            return f"hint · {it.get('predicate')} · {it.get('text') or ''}"[:90]
+        return f"diagnosis · {it.get('predicate')} → {str(it.get('misconception_id', '')).split(':')[-1]}"
     if kind == "figure":
         local = it["id"].split(":", 1)[-1]
         if not it["drawn"]:
@@ -331,7 +364,7 @@ def detail(book: str, kind: str, ref: str) -> dict:
     sources = []  # the book items it was made from
     if kind in ("question", "widget") and it.get("parent_question_id"):
         sources.append(it["parent_question_id"])
-    if kind == "mapping":
+    if kind in ("mapping", "held"):
         w = data["items"].get(("widget", it["widget_id"]), {})
         if w.get("parent_question_id"):
             sources.append(w["parent_question_id"])
@@ -351,7 +384,7 @@ def detail(book: str, kind: str, ref: str) -> dict:
     page = (first or {}).get("source_page") or it.get("source_page") or (lo or {}).get("source_page")
     term = data["term"].get((first or {}).get("id")) or data["term"].get(it.get("lo_id"))
     extra = {}
-    if kind == "mapping":
+    if kind in ("mapping", "held"):
         extra["widget"] = data["items"].get(("widget", it["widget_id"]))
         extra["misconception"] = data["catalogue"].get(it.get("misconception_id"))
     if kind in ("question", "widget"):
@@ -361,15 +394,16 @@ def detail(book: str, kind: str, ref: str) -> dict:
     dec = latest_decisions(book).get((kind, ref))
     return {"kind": kind, "ref": ref, "item": it, "objective": lo, "book_items": book_items, "extra": extra,
             "printed_page": page, "pdf_page": data["pdf_page"](page, term), "pdf": data["pdf"],
-            "fingerprint": fingerprint(it), "decision": dec,
-            "changed": bool(dec and dec.get("fingerprint") != fingerprint(it))}
+            "fingerprint": fingerprint(it, kind), "decision": dec,
+            "changed": bool(dec and dec.get("fingerprint") != fingerprint(it, kind))}
 
 
 def decide(body: dict) -> dict:
     book, kind, ref = body.get("book"), body.get("kind"), body.get("ref")
     decision, by = body.get("decision"), (body.get("by") or "").strip()
-    if kind not in KINDS or decision not in DECISIONS or not ref or not by:
-        raise ValueError("needs book, kind, ref, a decision (approve, fix_requested, reject) and your initials")
+    allowed = HELD_DECISIONS if kind == "held" else DECISIONS
+    if kind not in KINDS or decision not in allowed or not ref or not by:
+        raise ValueError(f"needs book, kind, ref, a decision ({', '.join(sorted(allowed))}) and your initials")
     it = load(book)["items"].get((kind, ref))
     if it is None:
         raise ValueError(f"no {kind} {ref} in {book}")

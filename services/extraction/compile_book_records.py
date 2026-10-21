@@ -952,7 +952,10 @@ class GeneratedReview:
       a misconception: reject or a fix request leaves it out of the catalogue, and every link to it from a question
         is dropped (the question kept); approve is listed (the catalogue has no review columns);
       a widget mapping (a predicate → misconception claim): reject or a fix request drops that claim from its
-        widget; approve is listed.
+        widget; approve is listed;
+      a held hint or diagnosis (the verifier did not confirm it, decision 47; kind `held`): keep moves it into the
+        widget's live claims (`diagnostics` or `hints`), drop removes it from the held list. Applied after the widget's
+        own decision is read, so the widget it belongs to is not sent back for review by it.
     A decision on an item that has changed since is not applied: the item is back in the task, open."""
 
     def __init__(self, book: str):
@@ -961,7 +964,8 @@ class GeneratedReview:
         self.stamps: list[dict] = []
         self.listed: list[dict] = []
         self.left_mc: set[str] = set()
-        self.report = {"left_out": [], "held": [], "stamped": 0, "links_dropped": [], "changed_since": []}
+        self.report = {"left_out": [], "held": [], "stamped": 0, "links_dropped": [], "changed_since": [],
+                       "claims_kept": [], "claims_dropped": []}
 
     def _current(self, kind: str, row: dict) -> dict | None:
         d = self.dec.get((kind, row["id"]))
@@ -1007,6 +1011,8 @@ class GeneratedReview:
                 ch["diagnostics"] = keep
             else:
                 d = self._current(kind, r)
+            if kind == "widget" and isinstance(ch, dict):
+                self._held(r, ch)
             if d:
                 self._stamp(r["id"], d, f"generated {kind}")
                 self.report["stamped"] += 1
@@ -1017,6 +1023,23 @@ class GeneratedReview:
                     self.report["held"].append({"question": r["id"], "by": d["by"], "note": d.get("note")})
             out.append(r)
         return out
+
+    def _held(self, r: dict, ch: dict) -> None:
+        """The held hints and diagnoses a person decided: keep → live, drop → gone (each only as it was decided)."""
+        live = {"pending_review": "diagnostics", "pending_hints": "hints"}
+        for ref, item, key, e in self.task.held_items(r):
+            dm = self.dec.get(("held", ref))
+            if not dm or dm.get("fingerprint") != self.task.fingerprint(item, "held"):
+                continue
+            ch[key] = [x for x in ch.get(key) or [] if x is not e]
+            if not ch[key]:
+                del ch[key]
+            if dm["decision"] == "keep":
+                ch.setdefault(live[key], []).append({k: v for k, v in e.items() if k not in ("why", "verifier_runs")})
+                self.report["claims_kept"].append({"ref": ref, "by": dm["by"]})
+            else:
+                self.report["claims_dropped"].append({"ref": ref, "by": dm["by"]})
+            self.listed.append({"kind": "held", "ref": ref, "decision": dm["decision"], "by": dm["by"], "at": dm["at"]})
 
     def unlink_left_out(self, generated: dict) -> None:
         """A misconception left out takes its links with it: no question may name what the catalogue no longer holds."""

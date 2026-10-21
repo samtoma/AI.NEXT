@@ -847,6 +847,16 @@ function plainBox(task, a = {}) {
       head = "A mistake a widget claims to recognise";
       problem = "None found automatically. When a student makes this mistake on the widget, they'll be shown the explanation of the misunderstanding named here. Is that the right explanation for that mistake?";
       choices = "Approve: keep the claim. Needs fix or Reject: the claim is removed, and the student just sees the worked solution.";
+    } else if (k === "held") {
+      const it = d.item || {}, m = (d.extra && d.extra.misconception) || {};
+      head = it.claim === "hint" ? "A hint a widget would show, held back for now" : "A mistake a widget claims to recognise, held back for now";
+      problem = it.claim === "hint"
+        ? `When a student's answer shows this mistake (${esc(pStr(it.predicate))}), they would see: “${esc(pStr(it.text))}”. The independent checker doubted this hint — it may be wrong, not help with that mistake, or give the answer away.`
+        : `When a student's answer shows this mistake (${esc(pStr(it.predicate))}), they would be told the reason is “${esc(pStr(m.label || it.misconception_id))}”. The independent checker doubted that's the real reason.`;
+      theirs = it.why;
+      choices = it.claim === "hint"
+        ? "Keep: students who make that mistake see this hint (after the next refresh, free). Drop: they see the worked solution instead."
+        : "Keep: students who make that mistake get that explanation (after the next refresh, free). Drop: they see the worked solution instead.";
     } else if (k === "misconception") {
       head = `An explanation of a common mistake: "${esc(pStr(d.item && d.item.label))}"`;
       problem = "None found automatically. Check the mistake is real and the explanation would help a student who makes it.";
@@ -952,7 +962,7 @@ async function renderHome() {
       what: "The interactive widgets, the redrawn figures, the explanations of common mistakes, and the hints and diagnoses a widget shows.",
       ifNot: "Widgets, figures and explanations are already live. Hints and diagnoses the checker doubted stay hidden until you keep them.",
       then: "Refresh (free). Asking for a fix takes the item out until it's rewritten on the next pipeline run (paid).",
-      sub: `${gCount("widget")} widgets · ${gCount("figure")} figures · ${gCount("misconception")} explanations · ${gCount("mapping")} hints and diagnoses`,
+      sub: `${gCount("widget")} widgets · ${gCount("figure")} figures · ${gCount("misconception")} explanations · ${gCount("mapping")} live diagnoses · ${gCount("held")} hints and diagnoses held back`,
       open: () => { store.set("rv-gkind", "widget"); show("generated"); } },
     tiers: { band: "should", title: "How hard each book question is", n: tOpen.length, unit: "to decide",
       what: "Each book question's level (basic, standard, advanced) is judged twice. These are the ones where the two judgements differ.",
@@ -1932,8 +1942,8 @@ async function objDecide(decision, note, statement, label, objective) {
 
 /* ---------- Generated content ---------- */
 let gen = [], gi = -1, gDetail = null;
-const GKIND = { question: "Generated question", widget: "Widget question", mapping: "Widget mapping", misconception: "Misconception", figure: "Figure" };
-const GSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", changed: "Changed since it was decided", open: "Not reviewed yet" };
+const GKIND = { question: "Generated question", widget: "Widget question", mapping: "Widget mapping", held: "Held hint and diagnosis", misconception: "Misconception", figure: "Figure" };
+const GSTATE = { approve: "Approved", fix_requested: "Fix requested", reject: "Rejected", keep: "Kept", drop: "Dropped", changed: "Changed since it was decided", open: "Not reviewed yet" };
 const md = (t) => esc(t ?? "").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
 const stepsOf = (arr) => (arr || []).map((s) => (typeof s === "string" ? s : s.text_md ?? s.text ?? JSON.stringify(s)));
 const olist = (arr) => (arr && arr.length ? `<ol>${stepsOf(arr).map((s) => `<li>${md(s)}</li>`).join("")}</ol>` : '<span class="muted">none</span>');
@@ -1972,13 +1982,13 @@ function renderGen() {
   const kinds = Object.keys(GKIND), cur = $("#gkind").dataset.kind;
   $("#gkind").innerHTML = kinds.map((k) => {
     const all = gen.filter((g) => g.kind === k && g.sampled !== false), open = all.filter((g) => g.state === "open" || g.state === "changed").length;
-    return `<button type="button" class="${k === cur ? "on" : ""}" data-k="${k}">${GKIND[k]}s · ${open}</button>`;
+    return `<button type="button" class="${k === cur ? "on" : ""}" data-k="${k}">${k === "held" ? "Held hints and diagnoses" : `${GKIND[k]}s`} · ${open}</button>`;
   }).join("");
   $("#gkind").querySelectorAll("button").forEach((b) => (b.onclick = () => { $("#gkind").dataset.kind = b.dataset.k; store.set("rv-gkind", b.dataset.k); gi = -1; renderGen(); }));
   const ofKind = gen.filter((g) => g.kind === cur && g.sampled !== false), done = ofKind.filter((g) => g.state !== "open" && g.state !== "changed").length;
   const outside = gen.filter((g) => g.kind === cur && g.sampled === false).length;
   $("#gbar").style.width = `${ofKind.length ? (100 * done) / ofKind.length : 0}%`;
-  $("#gprog").textContent = `${done} of ${ofKind.length} ${outside ? "sampled " : ""}${GKIND[cur].toLowerCase()}s reviewed${outside ? ` · ${outside} outside the sample` : ""}`;
+  $("#gprog").textContent = `${done} of ${ofKind.length} ${outside ? "sampled " : ""}${cur === "held" ? "held hints and diagnoses" : `${GKIND[cur].toLowerCase()}s`} reviewed${outside ? ` · ${outside} outside the sample` : ""}`;
   const vis = gVisible();
   if (!vis.some((x) => x.i === gi)) gi = vis[0]?.i ?? -1;
   const dot = (s) => s === "approve" ? '<span class="dot s-done">✓</span>' : s === "reject" ? '<span class="dot s-disp">✗</span>'
@@ -2028,6 +2038,17 @@ function generatedBlock(d) {
       <div class="muted">When the student's construction shows…</div>
       <ul>${(c.diagnostics || []).map((g) => `<li><b>${esc(g.predicate)}</b> → ${esc(d.extra.misconceptions?.[g.misconception_id]?.label || g.misconception_id)}</li>`).join("") || "<li class=muted>no diagnostics</li>"}</ul>
       <div>Answer: <b>${md(it.correct_answer)}</b></div>${olist(it.canonical_solution)}</div>`;
+  }
+  if (d.kind === "held") {
+    const w = d.extra.widget || {}, m = d.extra.misconception || {};
+    return `<div class="gen"><span class="label">${it.claim === "hint" ? "Held method hint" : "Held diagnosis"}</span>
+      <div style="margin-top:6px">In the widget <span class="muted">(${esc(w.id || it.widget_id)})</span>: ${md(w.stem)}</div>
+      <div style="margin-top:8px">When the student's construction shows <b>${esc(it.predicate)}</b>, ${it.claim === "hint"
+        ? `the student would be shown, from step ${esc(String(it.step ?? "?"))} of the solution: <b>${md(it.text || "")}</b>`
+        : `the tutor would name the misconception <b>${esc(m.label || it.misconception_id)}</b> and show its refutation.`}</div>
+      ${it.claim !== "hint" && m.description ? `<div class="muted" style="margin-top:6px">${md(m.description)}</div>` : ""}
+      ${w.canonical_solution ? `<div class="muted" style="margin-top:6px">The widget's worked solution</div>${olist(w.canonical_solution)}` : ""}
+      <div class="why" style="margin-top:8px"><span class="label">Why the checker held it</span><div>${md(it.why || "no reason recorded")}</div></div></div>`;
   }
   if (d.kind === "mapping") {
     const w = d.extra.widget || {}, m = d.extra.misconception || {};
@@ -2181,9 +2202,11 @@ async function showGenItem(g) {
     ${d.kind === "figure" ? figureBlocks(d) : bookBlock(d) + generatedBlock(d)}
     <div class="who">${dec ? `<b>${esc(GSTATE[dec.decision])}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.note ? `: ${md(dec.note)}` : ""}${d.changed ? ' · <b>it has changed since</b>, so it is back for review' : ""}` : "Not reviewed yet"}</div>
     <div class="actions">
-      <button class="confirm" id="ga" ${!me ? "disabled" : ""}>Approve (a)</button>
+      ${d.kind === "held"
+        ? `<button class="confirm" id="ga" ${!me ? "disabled" : ""}>Keep (a)</button><button class="dispute" id="gx" ${!me ? "disabled" : ""}>Drop (x)</button>`
+        : `<button class="confirm" id="ga" ${!me ? "disabled" : ""}>Approve (a)</button>
       <button id="gf" ${!me ? "disabled" : ""}>Needs fix (f)</button>
-      <button class="dispute" id="gx" ${!me ? "disabled" : ""}>Reject (x)</button>
+      <button class="dispute" id="gx" ${!me ? "disabled" : ""}>Reject (x)</button>`}
       <span class="grow"></span><button id="gprev">‹ Prev (k)</button><button id="gnext">Next (j) ›</button>
     </div>
     ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to review.</div>' : ""}
@@ -2195,7 +2218,9 @@ async function showGenItem(g) {
     <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/generated-content.json. Nothing changes for students until the pipeline reads them; the admin console is not touched.</div>
   </div>`;
   renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
-  $("#ga").onclick = () => genDecide("approve"); $("#gx").onclick = () => genDecide("reject"); $("#gf").onclick = openGenFix;
+  const held = d.kind === "held";   // a held claim is kept or dropped; everything else approved, fixed or rejected
+  $("#ga").onclick = () => genDecide(held ? "keep" : "approve"); $("#gx").onclick = () => genDecide(held ? "drop" : "reject");
+  if ($("#gf")) $("#gf").onclick = openGenFix;
   $("#gprev").onclick = () => genMove(-1); $("#gnext").onclick = () => genMove(1);
   $("#gcancel").onclick = () => $("#gform").classList.remove("open");
   $("#gform").onsubmit = (e) => { e.preventDefault(); genDecide("fix_requested", $("#gnote").value.trim(), $("#gcorr").value.trim()); };
@@ -2204,7 +2229,7 @@ async function showGenItem(g) {
     page = d.printed_page; loadPdf(`/pdf?book=${encodeURIComponent(book)}`);
   }
 }
-function openGenFix() { if (!meNow() || !$("#gform")) return; $("#gform").classList.add("open"); $("#gnote").focus(); }
+function openGenFix() { if (!meNow() || !$("#gform") || gDetail?.kind === "held") return; $("#gform").classList.add("open"); $("#gnote").focus(); }
 function genMove(dir) {
   const vis = gVisible().map((x) => x.i); if (!vis.length) return;
   let p = vis.indexOf(gi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1);
@@ -2281,9 +2306,9 @@ document.addEventListener("keydown", (e) => {
   }
   if (view === "generated") {
     if (e.key === "j") genMove(1); else if (e.key === "k") genMove(-1);
-    else if (e.key === "a" && meNow()) genDecide("approve");
+    else if (e.key === "a" && meNow()) genDecide(gDetail?.kind === "held" ? "keep" : "approve");
     else if (e.key === "f") { e.preventDefault(); openGenFix(); }
-    else if (e.key === "x" && meNow()) genDecide("reject");
+    else if (e.key === "x" && meNow()) genDecide(gDetail?.kind === "held" ? "drop" : "reject");
     return;
   }
   if (view !== "label") return;
