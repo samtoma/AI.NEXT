@@ -64,7 +64,7 @@ export function VizRefCard({ id, task = false }: { id: string; task?: boolean })
 
   // the tasks travel in the figure's spec (the pipeline writes them at compile)
   const steps = task && state.s === "ok" ? interactionsFor(id, state.v.spec) : null;
-  if (state.s === "ok" && steps && state.v.kind === "geo_scene") {
+  if (state.s === "ok" && steps && (state.v.kind === "geo_scene" || state.v.kind === "arrow_map")) {
     return <InteractiveFigure figure={state.v} steps={steps} taskId={id} onNote={onNote ?? undefined} />;
   }
 

@@ -672,12 +672,19 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
 GIVEN = re.compile(r"\(\s*-?\$?\d|=")   # a coordinate or an equation in the stem: ALB.book_picture_reveals's read-off test
 
 
-def with_tasks(kind: str, spec: dict, exercise: bool) -> dict:
+def with_tasks(kind: str, spec: dict, exercise: bool, context: dict | None = None) -> dict:
     """The figure's spec with the tasks a student works on it (figure_tasks.py: derived from the drawing, no model;
     VIZ_SPEC v4 `tasks`, written here and never by S4). An exercise's figure gets `marks` only. A copy: the teaching
-    layer's drawing is never changed."""
-    tasks = FT.tasks_for(kind, spec, exercise)
+    layer's drawing is never changed. `context`: what the lesson teaches (lesson_context)."""
+    tasks = FT.tasks_for(kind, spec, exercise, context)
     return {**{k: v for k, v in spec.items() if k != "tasks"}, **({"tasks": tasks} if tasks else {})}
+
+
+def lesson_context(record: dict) -> dict:
+    """What a lesson's objectives teach, for the arrow-diagram tasks: whether a figure may ask "is it a function?" and
+    "which values make the range?" (figure_tasks.arrow_tasks), read off the objectives' own labels and descriptions."""
+    text = " ".join(f"{o.get('label') or ''} {o.get('description') or ''}" for o in record.get("learning_objectives") or []).lower()
+    return {"functions": bool(re.search(r"\bfunctions?\b", text)), "range": bool(re.search(r"\brange\b", text))}
 
 
 def figure_of_part(part: dict | None, n_figures: int) -> int | None:
@@ -716,6 +723,7 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             reviewed_out[fid] = (drawn.pop(fid), f"S4's drawing was {what} in review ({dec['by']}, {dec['at']}"
                                                  f"{': ' + dec['note'] if dec.get('note') else ''})")
     shown_drawing: dict[str, list[str]] = {}   # figure → the visuals that show S4's drawing of it
+    ctx = lesson_context(record)
     items = {it["id"]: it for it in record.get("items") or []}
     users = BRF.figure_users(record)
     answer_figs = BRF.answer_figures(record)
@@ -768,7 +776,7 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
                 readoff = exercise and d.get("withheld") and not GIVEN.search(q["stem"])
                 if not why and not readoff:
                     visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": q["lo"], "question": q["id"], "kind": d["kind"],
-                                    "spec": with_tasks(d["kind"], d["spec"], exercise),
+                                    "spec": with_tasks(d["kind"], d["spec"], exercise, ctx),
                                     "caption": d.get("caption"), "source_page": fig["source_page"]})
                     shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
                     shown.add(q["id"])
@@ -803,8 +811,11 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             current = {lo_of(slug, o["id"]) for o in record.get("learning_objectives") or []}
             lo = lo_of(slug, fig["lo"]) if fig.get("lo") else (d.get("lo") if d.get("lo") in current else None)
             if lo:
+                # a figure an EXERCISE prints is that exercise's even when no question of it was kept (pp3u1-3 drill 1
+                # asks which of its three arrow diagrams is a function, and has no answer to compile): no task answers it
+                in_exercise = any(items[it]["type"] != "worked_example" for it in users.get(fid, []) if it in items)
                 visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"],
-                                "spec": with_tasks(d["kind"], d["spec"], False),
+                                "spec": with_tasks(d["kind"], d["spec"], in_exercise, ctx),
                                 "caption": d.get("caption"), "source_page": fig["source_page"]})
                 shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
         elif fid in reviewed_out and not qs:

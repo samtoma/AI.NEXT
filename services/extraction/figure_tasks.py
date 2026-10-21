@@ -22,6 +22,16 @@ spot, drag and converse are NEVER written for a figure shown with an exercise: t
 an exercise on inscribed angles asks (pp3u10-3 drill 1 asks m(∠C) in exactly such a figure). They go on a lesson's own
 figures and its worked examples' only. Tasks are ordered as the student meets them: marks, spot, drag, converse.
 
+ARROW DIAGRAMS (arrow_map; Tamer 2026-10-21, "start the arrow diagrams for unit 1" — the prototype's draw / verdict /
+range of proto/interactive-diagrams, moved into the data). Never on an exercise's figure, for any of the three:
+  draw      "Draw the relation {(−1, 2), (1, 6), (2, 8)} as an arrow diagram." — the student taps an element of X, then where
+            it goes; graded against the figure's own arrows, which are then drawn in. A complete product is asked as
+            "Draw X × Y". The pairs are in the prompt, so it is never a guess (at most 9 arrows, 7 elements a side).
+  function  "Is this relation a function from X to Y?" — only in a lesson whose objectives teach functions
+            (`context["functions"]`), graded by every element of X sending exactly one arrow.
+  range     "Tap every element of Y an arrow reaches." — only in a lesson whose objectives teach the range
+            (`context["range"]`), and only on a function.
+
 Pure, apart from `report`.
 """
 from __future__ import annotations
@@ -203,8 +213,62 @@ def converse_task(spec: dict) -> dict | None:
     return None
 
 
-def tasks_for(kind: str, spec: dict, exercise: bool) -> list[dict]:
-    """A figure's tasks, in the order the student meets them. An exercise's figure gets `marks` only."""
+def _label(v) -> str:
+    return str(v) if isinstance(v, str) else (f"{v:g}" if _num(v) else "?")
+
+
+def _arrow_map(spec: dict):
+    """(X, Y, [(i, j)]) as the app reads it (lib/figure-interactions.ts readArrowMap): a pair names an element by value,
+    else by index; a pair that names nothing is dropped."""
+    X = [_label(v) for v in spec.get("X") or []]
+    Y = [_label(v) for v in spec.get("Y") or []]
+
+    def at(xs, v):
+        if _label(v) in xs:
+            return xs.index(_label(v))
+        return v if isinstance(v, int) and not isinstance(v, bool) and 0 <= v < len(xs) else None
+    pairs = []
+    for p in spec.get("pairs") or []:
+        if isinstance(p, list) and len(p) >= 2 and at(X, p[0]) is not None and at(Y, p[1]) is not None:
+            if (at(X, p[0]), at(Y, p[1])) not in pairs:
+                pairs.append((at(X, p[0]), at(Y, p[1])))
+    return X, Y, pairs
+
+
+def _minus(t: str) -> str:
+    return t.replace("-", "−") if t.lstrip("-").replace(".", "", 1).isdigit() else t
+
+
+def arrow_tasks(spec: dict, context: dict) -> list[dict]:
+    X, Y, pairs = _arrow_map(spec)
+    if not X or not Y or not pairs:
+        return []
+    out = []
+    same = X == Y
+    if len(pairs) <= 9 and len(X) <= 7 and len(Y) <= 7:
+        if len(pairs) == len(X) * len(Y):
+            name = "X × X" if same else "X × Y"
+            prompt = f"Draw {name} as an arrow diagram: an arrow from every element of X to every element of {'X' if same else 'Y'}."
+        else:
+            listed = ", ".join(f"({_minus(X[i])}, {_minus(Y[j])})" for i, j in pairs)
+            prompt = f"Draw the relation {{{listed}}} as an arrow diagram: one arrow for each pair."
+        out.append({"name": "draw", "mode": "arrows", "prompt": prompt})
+    is_function = all(sum(1 for i, _ in pairs if i == k) == 1 for k in range(len(X)))
+    if context.get("functions"):
+        out.append({"name": "function", "mode": "verdict",
+                    "prompt": f"Is this relation a function {'on X' if same else 'from X to Y'}?"})
+    if context.get("range") and is_function:
+        out.append({"name": "range", "mode": "range",
+                    "prompt": ("Tap every element an arrow points to: together they are the range." if same
+                               else "Tap every element of Y that an arrow reaches: together they are the range.")})
+    return out
+
+
+def tasks_for(kind: str, spec: dict, exercise: bool, context: dict | None = None) -> list[dict]:
+    """A figure's tasks, in the order the student meets them. An exercise's figure gets `marks` only (a geo_scene) or
+    nothing (an arrow diagram). `context`: what the figure's lesson teaches ({"functions", "range"})."""
+    if kind == "arrow_map" and isinstance(spec, dict):
+        return [] if exercise else arrow_tasks(spec, context or {})
     if kind != "geo_scene" or not isinstance(spec, dict) or spec.get("panels"):
         return []
     out = [t for t in [marks_task(spec)] if t]

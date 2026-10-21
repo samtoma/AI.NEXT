@@ -13,9 +13,10 @@
 
 import { useState } from "react";
 import { Visual } from "@/components/viz/Visual";
-import { InteractiveFigure } from "@/components/student/figures/InteractiveFigure";
+import { InteractiveFigure, type StoredFigure } from "@/components/student/figures/InteractiveFigure";
 import { interactionsFor, taskIdsOf } from "@/lib/figure-interactions";
 import { PP3U10_3_FIGURES } from "./pp3u10-3-figures";
+import { PP3U1_ARROW_FIGURES } from "./pp3u1-arrow-figures";
 
 interface Case {
   figure: string;
@@ -857,17 +858,23 @@ const S4_OUTPUT: Case[] = [
 
 /** The lesson's figures as a student works them — with the note each step
  *  would send the tutor printed underneath, since no tutor is listening here. */
-function InteractiveSection() {
+function InteractiveSection({
+  title,
+  blurb,
+  figures,
+}: {
+  title: string;
+  blurb: string;
+  figures: StoredFigure[];
+}) {
   const [notes, setNotes] = useState<string[]>([]);
   return (
     <section className="mb-8">
-      <h2 className="font-display text-xl text-ink">Work with the figure — lesson pp3u10-3</h2>
-      <p className="mt-1 max-w-2xl text-sm text-ink-soft">
-        Read the marks, tap the equal angle, drag to discover. Graded from each figure&apos;s own spec; no AI.
-      </p>
+      <h2 className="font-display text-xl text-ink">{title}</h2>
+      <p className="mt-1 max-w-2xl text-sm text-ink-soft">{blurb}</p>
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         {/* one card per TASK, as the tutor pushes them: a figure with two tasks is two cards */}
-        {PP3U10_3_FIGURES.flatMap((f) =>
+        {figures.flatMap((f) =>
           taskIdsOf(f.id, f.spec).map((tid) => {
             const steps = interactionsFor(tid, f.spec);
             return steps ? (
@@ -898,7 +905,16 @@ function InteractiveSection() {
 export default function FigureMarksPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-6">
-      <InteractiveSection />
+      <InteractiveSection
+        title="Arrow diagrams — Unit 1"
+        blurb="Draw the relation, say whether it is a function, tap the range. Graded from each figure's own arrows; no AI."
+        figures={PP3U1_ARROW_FIGURES}
+      />
+      <InteractiveSection
+        title="Work with the figure — lesson pp3u10-3"
+        blurb="Read the marks, tap the equal angle, drag to discover. Graded from each figure's own spec; no AI."
+        figures={PP3U10_3_FIGURES}
+      />
       <h1 className="font-display text-2xl text-ink">Figure abilities — VIZ_SPEC v4</h1>
       <p className="mt-1 max-w-2xl text-sm text-ink-soft">
         Each drawing is a spec modelled on a Prep-3 figure the drawing step refused before v4. Compare it with the

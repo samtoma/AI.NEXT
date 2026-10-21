@@ -29,6 +29,17 @@
  * `{{widget:figure_task:<visual id>#<name>}}`, one per message, in order — a
  * figure that once asked two things on one card hid its second job.
  *
+ * ARROW DIAGRAMS (arrow_map, Tamer 2026-10-21): three more, the prototype's
+ * draw / verdict / range (proto/interactive-diagrams), now written by the
+ * pipeline like the rest and never on an exercise's figure:
+ *
+ *   arrows       draw the relation whose pairs the prompt lists: tap an
+ *                element of X, then where it goes; the figure's own arrows are
+ *                the key, drawn in after the check.
+ *   verdict      "Is this relation a function?" — every element of X sends
+ *                exactly one arrow.
+ *   range        tap every element an arrow reaches.
+ *
  * GROUNDED, NOT SOLVED: no model is asked anything. ENGAGEMENT ONLY: no
  * attempt row, no mastery move; the outcome reaches the tutor as one note.
  *
@@ -57,6 +68,9 @@ export type FigureInteraction = { name?: string } & (
       key?: number;
     }
   | { mode: "equal_angle"; angle: [string, string, string]; prompt: string }
+  | { mode: "arrows"; prompt: string }
+  | { mode: "verdict"; prompt: string }
+  | { mode: "range"; prompt: string }
 );
 
 const isTriple = (v: unknown): v is [string, string, string] =>
@@ -71,6 +85,8 @@ function asTask(raw: unknown): FigureInteraction | null {
   if (t.mode === "marks" && (t.ask === "equal" || t.ask === "parallel" || t.ask === "both"))
     return { name, mode: "marks", ask: t.ask, prompt: t.prompt };
   if (t.mode === "equal_angle" && isTriple(t.angle)) return { name, mode: "equal_angle", angle: t.angle, prompt: t.prompt };
+  if (t.mode === "arrows" || t.mode === "verdict" || t.mode === "range")
+    return { name, mode: t.mode, prompt: t.prompt } as FigureInteraction;
   if (
     t.mode === "drag" && typeof t.point === "string" && (t.along === "circle" || t.along === "free") && isTriple(t.angle) &&
     typeof t.question === "string" && Array.isArray(t.options) && t.options.every((o) => typeof o === "string") && t.options.length >= 2
@@ -119,6 +135,9 @@ export function taskIdsOf(figureId: string, spec: Record<string, unknown> | null
 function stepSummary(st: FigureInteraction): string {
   if (st.mode === "marks") return `asks "${st.prompt}" (the student taps lines)`;
   if (st.mode === "equal_angle") return `asks "${st.prompt}" (the student taps vertices)`;
+  if (st.mode === "arrows") return `asks "${st.prompt}" (the student draws the arrows, then sees the figure's)`;
+  if (st.mode === "verdict") return `asks "${st.prompt}" (yes or no)`;
+  if (st.mode === "range") return `asks "${st.prompt}" (the student taps elements)`;
   return `${st.prompt} Then asks "${st.question}"`;
 }
 
@@ -420,4 +439,90 @@ export function withPointMoved(
 export function interactionNote(figureId: string, what: string, correct: boolean, studentName?: string): string {
   const who = studentName || "The student";
   return `[figure ${figureId} — engagement, not an attempt] ${who} ${what} — ${correct ? "correct" : "not right yet"}.`;
+}
+
+/* ---------------- arrow diagrams ---------------- */
+
+export interface ArrowMapModel {
+  X: string[];
+  Y: string[];
+  /** arrows as [index in X, index in Y] */
+  pairs: [number, number][];
+}
+
+const labelOf = (v: unknown): string =>
+  typeof v === "string" ? v : typeof v === "number" && Number.isFinite(v) ? String(v) : "?";
+
+/**
+ * The arrow_map spec as ArrowMap.tsx reads it: a pair names an element by
+ * VALUE, else by INDEX, and a pair that names nothing is dropped — so the
+ * arrows graded here are the arrows the figure draws (figure_tasks.py
+ * `_arrow_map` reads it the same way).
+ */
+export function readArrowMap(spec: Record<string, unknown>): ArrowMapModel {
+  const list = (v: unknown) => (Array.isArray(v) ? v : []);
+  const X = list(spec.X).map(labelOf);
+  const Y = list(spec.Y).map(labelOf);
+  const at = (set: string[], v: unknown) => {
+    const i = set.indexOf(labelOf(v));
+    if (i !== -1) return i;
+    return typeof v === "number" && Number.isInteger(v) && v >= 0 && v < set.length ? v : -1;
+  };
+  const pairs: [number, number][] = [];
+  for (const p of list(spec.pairs)) {
+    if (!Array.isArray(p) || p.length < 2) continue;
+    const a: [number, number] = [at(X, p[0]), at(Y, p[1])];
+    if (a[0] !== -1 && a[1] !== -1 && !pairs.some((q) => q[0] === a[0] && q[1] === a[1])) pairs.push(a);
+  }
+  return { X, Y, pairs };
+}
+
+export interface DrawGrade {
+  correct: boolean;
+  hit: [number, number][];
+  extra: [number, number][];
+  missed: [number, number][];
+}
+
+/** The student's arrows against the figure's. */
+export function gradeDraw(spec: Record<string, unknown>, drawn: readonly (readonly [number, number])[]): DrawGrade {
+  const { pairs } = readArrowMap(spec);
+  const has = (set: readonly (readonly [number, number])[], a: readonly [number, number]) =>
+    set.some((b) => b[0] === a[0] && b[1] === a[1]);
+  const hit = drawn.filter((a) => has(pairs, a)).map((a) => [a[0], a[1]] as [number, number]);
+  const extra = drawn.filter((a) => !has(pairs, a)).map((a) => [a[0], a[1]] as [number, number]);
+  const missed = pairs.filter((a) => !has(drawn, a));
+  return { correct: extra.length === 0 && missed.length === 0, hit, extra, missed };
+}
+
+/** A relation from X is a function when every element of X sends exactly one arrow. */
+export function isFunctionMap(spec: Record<string, unknown>): { isFunction: boolean; broken: string[] } {
+  const { X, pairs } = readArrowMap(spec);
+  const broken: string[] = [];
+  X.forEach((x, i) => {
+    const out = pairs.filter(([xi]) => xi === i).length;
+    if (out === 0) broken.push(`${x} sends no arrow`);
+    else if (out > 1) broken.push(`${x} sends ${out} arrows`);
+  });
+  return { isFunction: broken.length === 0, broken };
+}
+
+/** The elements of Y an arrow reaches, in Y's own order. */
+export function rangeOf(spec: Record<string, unknown>): string[] {
+  const { Y, pairs } = readArrowMap(spec);
+  const hit = new Set(pairs.map(([, j]) => j));
+  return Y.filter((_, j) => hit.has(j));
+}
+
+export function gradeRange(spec: Record<string, unknown>, picked: readonly string[]): {
+  correct: boolean;
+  range: string[];
+  extra: string[];
+  missed: string[];
+} {
+  const { Y } = readArrowMap(spec);
+  const range = rangeOf(spec);
+  const extra = Y.filter((y) => picked.includes(y) && !range.includes(y));
+  const missed = range.filter((y) => !picked.includes(y));
+  return { correct: extra.length === 0 && missed.length === 0, range, extra, missed };
 }

@@ -51,5 +51,40 @@ class FigureTasks(unittest.TestCase):
         self.assertNotIn("tasks", CBR.with_tasks("geo_scene", spec(3), exercise=True))
 
 
+# Unit 1's arrow diagrams, as S4 drew them (teaching/prep3-parallel/visuals/pp3u1-*.json)
+B_EQ_2A_PLUS_4 = {"X": ["-1", "1", "2"], "Y": ["2", "4", "6", "8"], "pairs": [["-1", "2"], ["1", "6"], ["2", "8"]]}
+X_TIMES_X = {"X": [3, 4, 8], "Y": [3, 4, 8], "pairs": [[a, b] for a in (3, 4, 8) for b in (3, 4, 8)]}
+NOT_A_FUNCTION = {"X": [1, 2, 3, 4], "Y": [1, 2, 3, 4], "pairs": [[1, 3], [2, 3], [2, 4], [3, 4]]}
+BOTH = {"functions": True, "range": True}
+
+
+class ArrowDiagrams(unittest.TestCase):
+    def test_draw_lists_the_pairs_so_the_student_never_guesses(self):
+        (t,) = FT.tasks_for("arrow_map", B_EQ_2A_PLUS_4, exercise=False)
+        self.assertEqual(t["mode"], "arrows")
+        self.assertEqual(t["prompt"], "Draw the relation {(−1, 2), (1, 6), (2, 8)} as an arrow diagram: one arrow for each pair.")
+
+    def test_a_complete_product_is_asked_as_the_product(self):
+        (t,) = FT.tasks_for("arrow_map", X_TIMES_X, exercise=False)
+        self.assertIn("Draw X × X", t["prompt"])
+
+    def test_function_and_range_only_where_the_lesson_teaches_them(self):
+        self.assertEqual(names(FT.tasks_for("arrow_map", B_EQ_2A_PLUS_4, False, BOTH)), ["draw", "function", "range"])
+        self.assertEqual(names(FT.tasks_for("arrow_map", B_EQ_2A_PLUS_4, False, {"functions": True})), ["draw", "function"])
+        # no range of a relation that is not a function
+        self.assertEqual(names(FT.tasks_for("arrow_map", NOT_A_FUNCTION, False, BOTH)), ["draw", "function"])
+
+    def test_never_on_an_exercises_figure(self):
+        # pp3u1-3 drill 1 asks which of its three arrow diagrams is a function
+        self.assertEqual(FT.tasks_for("arrow_map", NOT_A_FUNCTION, exercise=True, context=BOTH), [])
+
+    def test_the_lesson_context_is_read_off_its_objectives(self):
+        import compile_book_records as CBR
+        rec = {"learning_objectives": [{"label": "Identify functions"}, {"label": "Domain, codomain and range"}]}
+        self.assertEqual(CBR.lesson_context(rec), {"functions": True, "range": True})
+        self.assertEqual(CBR.lesson_context({"learning_objectives": [{"label": "Represent relations by diagrams"}]}),
+                         {"functions": False, "range": False})
+
+
 if __name__ == "__main__":
     unittest.main()

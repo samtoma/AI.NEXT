@@ -23,6 +23,11 @@ import {
   tasksOf,
   pointsOf,
   withPointMoved,
+  gradeDraw,
+  gradeRange,
+  isFunctionMap,
+  rangeOf,
+  readArrowMap,
   type FigureInteraction,
 } from "./figure-interactions.ts";
 import { parseMessage } from "./chat-parse.ts";
@@ -155,4 +160,42 @@ test("a task id names one task; without a name it is the figure's first", () => 
   assert.deepEqual(taskIdsOf("v:pp3u10-3:figure-2", s), ["v:pp3u10-3:figure-2#spot", "v:pp3u10-3:figure-2#drag"]);
   assert.deepEqual(taskIdsOf("v:pp3u10-3:figure-4", spec("v:pp3u10-3:figure-4")), ["v:pp3u10-3:figure-4#marks"]);
   assert.deepEqual(splitTaskId("v:pp3u10-3:figure-2#drag"), { figureId: "v:pp3u10-3:figure-2", task: "drag" });
+});
+
+/* ---------------- arrow diagrams (Unit 1) ---------------- */
+
+const B_EQ_2A_PLUS_4 = { X: ["-1", "1", "2"], Y: ["2", "4", "6", "8"], pairs: [["-1", "2"], ["1", "6"], ["2", "8"]] };
+const NOT_A_FUNCTION = { X: [1, 2, 3, 4], Y: [1, 2, 3, 4], pairs: [[1, 3], [2, 3], [2, 4], [3, 4]] };
+
+test("the arrow-diagram tasks the pipeline writes are read, and a malformed one is dropped", () => {
+  const spec = { ...B_EQ_2A_PLUS_4, tasks: [
+    { name: "draw", mode: "arrows", prompt: "Draw the relation …" },
+    { name: "function", mode: "verdict", prompt: "Is this relation a function from X to Y?" },
+    { name: "range", mode: "range", prompt: "Tap …" },
+    { name: "bad", mode: "verdict" },
+  ] };
+  assert.deepEqual(tasksOf(spec).map((t) => t.mode), ["arrows", "verdict", "range"]);
+  assert.match(figureTasksBlock([{ id: "v:pp3u1-2:figure-3", spec }]), /figure-3#draw: asks "Draw the relation …" \(the student draws the arrows/);
+});
+
+test("draw: the key is the figure's own arrows, matched by value", () => {
+  const m = readArrowMap(B_EQ_2A_PLUS_4);
+  assert.deepEqual(m.pairs, [[0, 0], [1, 2], [2, 3]]);
+  assert.equal(gradeDraw(B_EQ_2A_PLUS_4, [[0, 0], [1, 2], [2, 3]]).correct, true);
+  const g = gradeDraw(B_EQ_2A_PLUS_4, [[0, 0], [1, 1]]);
+  assert.equal(g.correct, false);
+  assert.deepEqual(g.extra, [[1, 1]]);
+  assert.deepEqual(g.missed, [[1, 2], [2, 3]]);
+});
+
+test("function or not: every element of X sends exactly one arrow", () => {
+  assert.equal(isFunctionMap(B_EQ_2A_PLUS_4).isFunction, true);
+  assert.deepEqual(isFunctionMap(NOT_A_FUNCTION).broken, ["2 sends 2 arrows", "4 sends no arrow"]);
+});
+
+test("range: the elements an arrow reaches, and nothing else in the codomain", () => {
+  assert.deepEqual(rangeOf(B_EQ_2A_PLUS_4), ["2", "6", "8"]);
+  assert.equal(gradeRange(B_EQ_2A_PLUS_4, ["2", "6", "8"]).correct, true);
+  assert.deepEqual(gradeRange(B_EQ_2A_PLUS_4, ["2", "4", "6"]).extra, ["4"]);
+  assert.deepEqual(gradeRange(B_EQ_2A_PLUS_4, ["2", "4", "6"]).missed, ["8"]);
 });

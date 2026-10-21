@@ -8,6 +8,10 @@
  *   marks        tap the sides or arcs the marks speak about, then Check
  *   equal_angle  tap the vertices of the angles equal to the one named
  *   drag         drag the point; the angles update live; then one question
+ *   arrows       (arrow_map) draw the relation: tap an element of X, then
+ *                where it goes; then the figure's own arrows are drawn in
+ *   verdict      (arrow_map) is this relation a function? yes or no
+ *   range        (arrow_map) tap every element an arrow reaches
  *
  * Every tap target also has a real button in a row under the figure, so the
  * step works without a pointer and "which line is this" never depends on
@@ -19,10 +23,22 @@
 import { useMemo, useState } from "react";
 import { BUTTON_SECONDARY, BUTTON_TERTIARY, cx } from "@/components/sticker";
 import { GeoSceneInteractive } from "@/components/viz/GeoScene";
-import { WidgetShell, WIDGET_ACTIONS, type Verdict } from "@/components/student/widgets/WidgetShell";
+import { Visual } from "@/components/viz/Visual";
+import { ArrowBoard } from "@/components/student/widgets/ArrowBoard";
+import {
+  WidgetShell,
+  WIDGET_ACTIONS,
+  WIDGET_OPTION,
+  pickInk,
+  type Verdict,
+} from "@/components/student/widgets/WidgetShell";
 import {
   circleDragKey,
   circleOf,
+  gradeDraw,
+  gradeRange,
+  isFunctionMap,
+  readArrowMap,
   equalAngleCandidates,
   gradeEqualAngle,
   gradeMarks,
@@ -75,6 +91,9 @@ export function InteractiveFigure({
   const props = { figure, page, of, report, onNext: next };
   if (step.mode === "marks") return <MarksStep key={at} step={step} {...props} />;
   if (step.mode === "equal_angle") return <EqualAngleStep key={at} step={step} {...props} />;
+  if (step.mode === "arrows") return <ArrowsStep key={at} step={step} {...props} />;
+  if (step.mode === "verdict") return <VerdictStep key={at} step={step} {...props} />;
+  if (step.mode === "range") return <RangeStep key={at} step={step} {...props} />;
   return <DragStep key={at} step={step} {...props} />;
 }
 
@@ -375,6 +394,173 @@ function DragStep({ figure, step, page, of, report, onNext }: StepProps<"drag">)
         </p>
       )}
       {ok && <NextButton onNext={onNext} />}
+    </WidgetShell>
+  );
+}
+
+/* ---------------- arrow diagrams: draw the relation ---------------- */
+
+type Arrow = [number, number];
+const same = (a: Arrow, b: Arrow) => a[0] === b[0] && a[1] === b[1];
+
+function ArrowsStep({ figure, step, page, of, report, onNext }: StepProps<"arrows">) {
+  const { X, Y } = useMemo(() => readArrowMap(figure.spec), [figure.spec]);
+  const [drawn, setDrawn] = useState<Arrow[]>([]);
+  const [graded, setGraded] = useState<ReturnType<typeof gradeDraw> | null>(null);
+  const [tries, setTries] = useState(0);
+  const reveal = !!graded && (graded.correct || tries >= 2);
+  const name = ([i, j]: Arrow) => `${X[i]}→${Y[j]}`;
+  const toggle = (a: Arrow) =>
+    setDrawn((d) => (d.some((b) => same(b, a)) ? d.filter((b) => !same(b, a)) : [...d, a]));
+  const check = () => {
+    const g = gradeDraw(figure.spec, drawn);
+    const n = tries + 1;
+    setGraded(g);
+    setTries(n);
+    if (g.correct || n >= 2)
+      report(`drew ${drawn.length} arrow(s) on try ${n} (${g.hit.length} of ${g.hit.length + g.missed.length} right${g.extra.length ? `; extra ${g.extra.map(name).join(", ")}` : ""})`, g.correct);
+  };
+
+  const verdict: Verdict = graded ? (graded.correct ? "correct" : graded.hit.length ? "partial" : "wrong") : null;
+  const feedback = !graded
+    ? undefined
+    : graded.correct
+      ? `All ${graded.hit.length} arrows, none extra.`
+      : reveal
+        ? `${graded.hit.length} of ${graded.hit.length + graded.missed.length} right. ${graded.missed.length ? `Drawing in the ones missed: ${graded.missed.map(name).join(", ")}.` : ""} ${graded.extra.length ? `${graded.extra.map(name).join(", ")} ${graded.extra.length === 1 ? "is" : "are"} not in the relation.` : ""}`.trim()
+        : `${graded.hit.length} of ${graded.hit.length + graded.missed.length} right${graded.extra.length ? `, and ${graded.extra.length} extra` : ""}. Each pair (a, b) is one arrow from a in X to b in Y.`;
+  return (
+    <WidgetShell
+      kind={`draw the arrows${page}`}
+      hint={`tap X, then Y${of}`}
+      prompt={step.prompt}
+      verdict={verdict}
+      feedback={feedback}
+      onReset={graded && !reveal ? () => { setDrawn((d) => d.filter((a) => !graded.extra.some((b) => same(a, b)))); setGraded(null); } : undefined}
+    >
+      {/* the shared board (widgets/ArrowBoard.tsx), as the arrow_builder widget draws it */}
+      <ArrowBoard X={X} Y={Y} drawn={drawn} onToggle={graded ? undefined : toggle}
+        graded={graded} reveal={reveal} yName={X.join() === Y.join() ? "X" : "Y"} />
+      {graded ? (
+        <p className="mt-1 text-center font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
+          solid = right · dashed grey = not in the relation{reveal ? " · drawing in = the ones missed" : ""}
+        </p>
+      ) : (
+        <div className={WIDGET_ACTIONS}>
+          <button type="button" disabled={drawn.length === 0} onClick={check} className={BUTTON_SECONDARY}>
+            Check my arrows
+          </button>
+          {drawn.length > 0 && (
+            <button type="button" onClick={() => setDrawn([])} className={BUTTON_TERTIARY}>
+              Clear
+            </button>
+          )}
+        </div>
+      )}
+      {reveal && <NextButton onNext={onNext} />}
+    </WidgetShell>
+  );
+}
+
+/* ---------------- arrow diagrams: function or not ---------------- */
+
+function VerdictStep({ figure, step, page, of, report, onNext }: StepProps<"verdict">) {
+  const { isFunction, broken } = useMemo(() => isFunctionMap(figure.spec), [figure.spec]);
+  const [given, setGiven] = useState<boolean | null>(null);
+  const done = given !== null;
+  const right = done && given === isFunction;
+  const choose = (says: boolean) => {
+    if (done) return;
+    setGiven(says);
+    report(`said the relation is ${says ? "" : "not "}a function`, says === isFunction);
+  };
+  const option = (says: boolean, text: string) => {
+    const picked = given === says;
+    const isRight = done && says === isFunction;
+    const isWrong = done && picked && !right;
+    return (
+      <button key={text} type="button" disabled={done} onClick={() => choose(says)}
+        className={cx(WIDGET_OPTION, "flex-1 px-4 text-[0.95rem]", pickInk(isRight, isWrong, done))}>
+        {text}
+      </button>
+    );
+  };
+  return (
+    <WidgetShell
+      kind={`read the figure${page}`}
+      hint={`yes or no${of}`}
+      prompt={step.prompt}
+      verdict={done ? (right ? "correct" : "wrong") : null}
+      feedback={done ? (isFunction ? "Yes: every element of X sends exactly one arrow." : `No: ${broken.join(" and ")}. A function needs exactly one arrow from each element.`) : undefined}
+    >
+      <Visual kind="arrow_map" spec={{ ...figure.spec, ...(done ? { highlight: "function-check" } : {}) }} caption={null} />
+      <div className="mt-2.5 flex flex-wrap gap-2">
+        {option(true, "Yes, a function")}
+        {option(false, "No, not a function")}
+      </div>
+      {done && <NextButton onNext={onNext} />}
+    </WidgetShell>
+  );
+}
+
+/* ---------------- arrow diagrams: tap the range ---------------- */
+
+function RangeStep({ figure, step, page, of, report, onNext }: StepProps<"range">) {
+  const { Y } = useMemo(() => readArrowMap(figure.spec), [figure.spec]);
+  const [sel, setSel] = useState<string[]>([]);
+  const [graded, setGraded] = useState<ReturnType<typeof gradeRange> | null>(null);
+  const [tries, setTries] = useState(0);
+  const reveal = !!graded && (graded.correct || tries >= 2);
+  const toggle = (y: string) => !graded && setSel((s) => (s.includes(y) ? s.filter((v) => v !== y) : [...s, y]));
+  const check = () => {
+    const g = gradeRange(figure.spec, sel);
+    const n = tries + 1;
+    setGraded(g);
+    setTries(n);
+    if (g.correct || n >= 2) report(`tapped {${Y.filter((y) => sel.includes(y)).join(", ")}} as the range on try ${n}`, g.correct);
+  };
+  const set = (xs: string[]) => `{${xs.join(", ")}}`;
+  return (
+    <WidgetShell
+      kind={`read the figure${page}`}
+      hint={`tap the values${of}`}
+      prompt={step.prompt}
+      verdict={graded ? (graded.correct ? "correct" : "wrong") : null}
+      feedback={
+        !graded
+          ? undefined
+          : reveal
+            ? `The range is ${set(graded.range)}${graded.extra.length ? `: ${graded.extra.join(", ")} ${graded.extra.length === 1 ? "is" : "are"} in the codomain, but no arrow reaches ${graded.extra.length === 1 ? "it" : "them"}` : ""}.`
+            : graded.extra.length
+              ? "Not every element of the codomain is in the range: follow each arrow to its end."
+              : "Some value an arrow reaches is missing: follow every arrow to its end."
+      }
+      onReset={graded && !reveal ? () => { setSel((s) => s.filter((y) => !graded.extra.includes(y))); setGraded(null); } : undefined}
+    >
+      <Visual kind="arrow_map" spec={figure.spec} caption={null} />
+      <div className={WIDGET_ACTIONS}>
+        {Y.map((y) => {
+          const on = sel.includes(y);
+          const isRight = reveal && graded!.range.includes(y);
+          const isWrong = !!graded && on && graded.extra.includes(y);
+          return (
+            <button key={y} type="button" aria-pressed={on} onClick={() => toggle(y)}
+              // before the answer shows, the picks stay picked and only a wrong one greys out
+              className={reveal ? cx(WIDGET_OPTION, "px-4", pickInk(isRight, isWrong, true))
+                : isWrong ? cx(WIDGET_OPTION, "px-4", pickInk(false, true, true)) : CHIP(on)}>
+              {y}
+            </button>
+          );
+        })}
+      </div>
+      {!graded && (
+        <div className={WIDGET_ACTIONS}>
+          <button type="button" disabled={sel.length === 0} onClick={check} className={BUTTON_SECONDARY}>
+            Check
+          </button>
+        </div>
+      )}
+      {reveal && <NextButton onNext={onNext} />}
     </WidgetShell>
   );
 }
