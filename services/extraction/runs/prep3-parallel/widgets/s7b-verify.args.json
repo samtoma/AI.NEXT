@@ -56,6 +56,153 @@
   "mode": "verify",
   "widgets": [
     {
+      "question_id": "q:pp3u1-1-1:w001",
+      "template_id": "wt:pp3u1-1-1:think-and-discuss-1",
+      "template_sha": "15f25f1b775e32f30ea922f4cde9d2e94e7c6ad1630215410d5fd54195fc541c",
+      "lo_id": "lo:pp3u1-1-1",
+      "kind": "product_builder",
+      "spec": {
+        "mode": "relation",
+        "X": [
+          0,
+          1,
+          2
+        ],
+        "Y": [
+          -1,
+          1,
+          3
+        ],
+        "pairs": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "stem": "Find the set of ordered pairs (x, y) which satisfy the relation $y = 2x - 1$ when $x = 0$, $x = 1$ and $x = 2$. Tap the pairs that satisfy the relation.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board, with the answer's pairs turned round added as decoys (so reversed-pairs can fire), and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned round) or missing-pairs.",
+      "reading_fields": {
+        "X": "the set X as a list",
+        "Y": "the set Y as a list",
+        "pairs": "only if the question asks for a relation (a rule picks some pairs of X×Y): every pair the rule gives, as [a, b]"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "(absent)": [
+            "reversed-pairs",
+            "missing-pairs"
+          ],
+          "relation": [
+            "reversed-pairs",
+            "extra-pairs",
+            "missing-pairs"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "reversed-pairs",
+          "predicate_meaning": "Built Y×X — the pairs are the right numbers in the wrong order",
+          "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair",
+          "misconception_label": "Treats an ordered pair like an unordered set",
+          "misconception_description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions."
+        }
+      ],
+      "hints": [
+        {
+          "predicate": "missing-pairs",
+          "predicate_meaning": "An incomplete product: some pairs of X×Y were not selected",
+          "text": "There is one pair for each value of x you were given. Check that every one of them has a pair."
+        },
+        {
+          "predicate": "extra-pairs",
+          "predicate_meaning": "Selected pairs that are not in X×Y at all",
+          "text": "Substitute each x into $y = 2x - 1$ and compute y. Only a pair whose y matches that result belongs in the set."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-1:w002",
+      "template_id": "wt:pp3u1-1-1:think-and-discuss-2",
+      "template_sha": "83bd8334e7deedadc0acf5dd1bb620ff1266e39e12484c22f9423a025a475210",
+      "lo_id": "lo:pp3u1-1-1",
+      "kind": "pair_plotter",
+      "spec": {
+        "targets": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "stem": "Represent the ordered pairs (0, -1), (1, 1) and (2, 3) graphically in the coordinate plane. Tap each point.",
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "reading_fields": {
+        "target": "[x, y], the point the question asks for (one point)",
+        "targets": "every point the question asks for, as [x, y] pairs (several points)"
+      },
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "diagnostics": [
+        {
+          "predicate": "swapped-coordinates",
+          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+          "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair",
+          "misconception_label": "Treats an ordered pair like an unordered set",
+          "misconception_description": "The student thinks (a, b) is the same as (b, a), or the same as {a, b}, so they match components in the wrong positions."
+        }
+      ],
+      "hints": [
+        {
+          "predicate": "missing-points",
+          "predicate_meaning": "Some of the points asked for were not plotted",
+          "text": "Each ordered pair in the list gives one point. Check that every pair has been plotted."
+        },
+        {
+          "predicate": "extra-points",
+          "predicate_meaning": "Plotted points that were not asked for, with no recognisable pattern",
+          "text": "Only the pairs listed are plotted. Check each point against the pairs, moving along x first and then along y."
+        },
+        {
+          "predicate": "wrong-quadrant",
+          "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+          "text": "Check the direction for each move: right or left along x, then up or down along y, as the signs say."
+        }
+      ]
+    },
+    {
       "question_id": "q:pp3u1-1-2:w001",
       "template_id": "wt:pp3u1-1-2:drill-2-a",
       "template_sha": "a5fdbc64cc731b77c422cfb730feceb6d8041db1ebdbb936b334f8c966859f40",
@@ -72,15 +219,26 @@
         ]
       },
       "stem": "If $X=\\{2,-1\\}$ and $Y=\\{4,0\\}$, find $X\\times Y$. Tap all the ordered pairs that belong to $X\\times Y$.",
-      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board, with the answer's pairs turned round added as decoys (so reversed-pairs can fire), and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned round) or missing-pairs.",
       "reading_fields": {
         "X": "the set X as a list",
-        "Y": "the set Y as a list"
+        "Y": "the set Y as a list",
+        "pairs": "only if the question asks for a relation (a rule picks some pairs of X×Y): every pair the rule gives, as [a, b]"
       },
-      "can_emit": [
-        "reversed-pairs",
-        "missing-pairs"
-      ],
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "(absent)": [
+            "reversed-pairs",
+            "missing-pairs"
+          ],
+          "relation": [
+            "reversed-pairs",
+            "extra-pairs",
+            "missing-pairs"
+          ]
+        }
+      },
       "diagnostics": [
         {
           "predicate": "reversed-pairs",
@@ -116,15 +274,26 @@
         ]
       },
       "stem": "If $Y=\\{4,0\\}$ and $Z=\\{4,5,-2\\}$, find $Y\\times Z$. Tap all the ordered pairs that belong to $Y\\times Z$.",
-      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board, with the answer's pairs turned round added as decoys (so reversed-pairs can fire), and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned round) or missing-pairs.",
       "reading_fields": {
         "X": "the set X as a list",
-        "Y": "the set Y as a list"
+        "Y": "the set Y as a list",
+        "pairs": "only if the question asks for a relation (a rule picks some pairs of X×Y): every pair the rule gives, as [a, b]"
       },
-      "can_emit": [
-        "reversed-pairs",
-        "missing-pairs"
-      ],
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "(absent)": [
+            "reversed-pairs",
+            "missing-pairs"
+          ],
+          "relation": [
+            "reversed-pairs",
+            "extra-pairs",
+            "missing-pairs"
+          ]
+        }
+      },
       "diagnostics": [
         {
           "predicate": "reversed-pairs",
@@ -159,21 +328,406 @@
         ]
       },
       "stem": "If $X=\\{2,-1\\}$, find $X^2=X\\times X$. Tap all the ordered pairs that belong to $X^2$.",
-      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board, with the answer's pairs turned round added as decoys (so reversed-pairs can fire), and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned round) or missing-pairs.",
       "reading_fields": {
         "X": "the set X as a list",
-        "Y": "the set Y as a list"
+        "Y": "the set Y as a list",
+        "pairs": "only if the question asks for a relation (a rule picks some pairs of X×Y): every pair the rule gives, as [a, b]"
       },
-      "can_emit": [
-        "reversed-pairs",
-        "missing-pairs"
-      ],
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "(absent)": [
+            "reversed-pairs",
+            "missing-pairs"
+          ],
+          "relation": [
+            "reversed-pairs",
+            "extra-pairs",
+            "missing-pairs"
+          ]
+        }
+      },
       "diagnostics": [],
       "hints": [
         {
           "predicate": "missing-pairs",
           "predicate_meaning": "An incomplete product: some pairs of X×Y were not selected",
           "text": "$X^2$ is X crossed with itself. Take each element of X as the first projection and pair it with every element of X."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-4:w001",
+      "template_id": "wt:pp3u1-1-4:drill-4",
+      "template_sha": "7e6fa00b422c1b685752c759091a1128d081e9e485ef86ad5ae1ecf37d12c58f",
+      "lo_id": "lo:pp3u1-1-4",
+      "kind": "region_shader",
+      "spec": {
+        "x": [
+          -2,
+          3
+        ],
+        "y": [
+          -2,
+          3
+        ]
+      },
+      "stem": "If $X=[-2,3]$, mark the location which represents $X\\times X$. Drag two opposite corners onto the grid and set each edge solid (included) or dashed (excluded).",
+      "instrument": "Spec example {\"x\":[-2,3],\"y\":[-2,3]} — the student marks a rectangle of the plane, X × Y for two intervals: drags two opposite corners onto the grid and sets each edge included (solid) or excluded (dashed), as a number line's filled and hollow ends. \"x\" and \"y\" are the two intervals; \"open\" names the excluded edges ({\"left\":true} for (a, b], and so on); both intervals' ends must be on the board (−5..5 whole steps, or the spec's own grid).",
+      "reading_fields": {
+        "x": "the interval along x as [lo, hi]",
+        "y": "the interval along y as [lo, hi]",
+        "open": "the excluded ends as {left, right, bottom, top} booleans: true where the interval's bracket is round (the end is not included)"
+      },
+      "can_emit": [
+        "region-swapped",
+        "edge-inclusion-wrong",
+        "off-target"
+      ],
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "edge-inclusion-wrong",
+          "predicate_meaning": "The right rectangle with a wrong edge included or excluded — solid is ≤, dashed is <",
+          "text": "The interval [-2, 3] has square brackets. Decide whether each edge should be solid or dashed."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "The rectangle does not match the region asked for",
+          "text": "Both coordinates of a pair in X × X come from the same interval. Mark where x and y can each lie."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-4:w002",
+      "template_id": "wt:pp3u1-1-4:exercise-2-a",
+      "template_sha": "566b093301bfda1a89943bb8fef3267b1f562345b6710896654aeb5dec2c70d3",
+      "lo_id": "lo:pp3u1-1-4",
+      "kind": "pair_plotter",
+      "spec": {
+        "target": [
+          3,
+          2.5
+        ],
+        "grid": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -4,
+            4
+          ],
+          "step": 0.5
+        }
+      },
+      "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $A(3,\\frac{5}{2})$. Tap the point.",
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "board": "THIS question's board: x from -4 to 4, y from -4 to 4, step 0.5 — every grid point a tap or a handle can land on",
+      "reading_fields": {
+        "target": "[x, y], the point the question asks for (one point)",
+        "targets": "every point the question asks for, as [x, y] pairs (several points)"
+      },
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "swapped-coordinates",
+          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+          "text": "The first number is the position along the horizontal axis and the second is the height."
+        },
+        {
+          "predicate": "wrong-quadrant",
+          "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+          "text": "Check the sign of each number to see which way to move."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+          "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-4:w003",
+      "template_id": "wt:pp3u1-1-4:exercise-2-b",
+      "template_sha": "39296f2bd2200b89eeafea81f217bd9b4da3b3b5e2d2707d83694d56b949da3d",
+      "lo_id": "lo:pp3u1-1-4",
+      "kind": "pair_plotter",
+      "spec": {
+        "target": [
+          -1.5,
+          4
+        ],
+        "grid": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -4,
+            4
+          ],
+          "step": 0.5
+        }
+      },
+      "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $B(-\\frac{3}{2},4)$. Tap the point.",
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "board": "THIS question's board: x from -4 to 4, y from -4 to 4, step 0.5 — every grid point a tap or a handle can land on",
+      "reading_fields": {
+        "target": "[x, y], the point the question asks for (one point)",
+        "targets": "every point the question asks for, as [x, y] pairs (several points)"
+      },
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "swapped-coordinates",
+          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+          "text": "The first number is the position along the horizontal axis and the second is the height."
+        },
+        {
+          "predicate": "wrong-quadrant",
+          "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+          "text": "Check the sign of each number to see which way to move."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+          "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-4:w004",
+      "template_id": "wt:pp3u1-1-4:exercise-2-c",
+      "template_sha": "8dc487983b1863d565dadfcaca28046e4fcae0908490b0120d6281dae0aaf9f1",
+      "lo_id": "lo:pp3u1-1-4",
+      "kind": "pair_plotter",
+      "spec": {
+        "target": [
+          -3,
+          -1.5
+        ],
+        "grid": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -4,
+            4
+          ],
+          "step": 0.5
+        }
+      },
+      "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $C(-3,-\\frac{3}{2})$. Tap the point.",
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "board": "THIS question's board: x from -4 to 4, y from -4 to 4, step 0.5 — every grid point a tap or a handle can land on",
+      "reading_fields": {
+        "target": "[x, y], the point the question asks for (one point)",
+        "targets": "every point the question asks for, as [x, y] pairs (several points)"
+      },
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "swapped-coordinates",
+          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+          "text": "The first number is the position along the horizontal axis and the second is the height."
+        },
+        {
+          "predicate": "wrong-quadrant",
+          "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+          "text": "Check the sign of each number to see which way to move."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+          "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-4:w005",
+      "template_id": "wt:pp3u1-1-4:exercise-2-d",
+      "template_sha": "acb644771b800b593e8eaffa48de5d395ef6505da57a6b4513182f9c89a1e69e",
+      "lo_id": "lo:pp3u1-1-4",
+      "kind": "pair_plotter",
+      "spec": {
+        "target": [
+          2.5,
+          -1.5
+        ],
+        "grid": {
+          "x": [
+            -4,
+            4
+          ],
+          "y": [
+            -4,
+            4
+          ],
+          "step": 0.5
+        }
+      },
+      "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $D(\\frac{5}{2},-\\frac{3}{2})$. Tap the point.",
+      "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "board": "THIS question's board: x from -4 to 4, y from -4 to 4, step 0.5 — every grid point a tap or a handle can land on",
+      "reading_fields": {
+        "target": "[x, y], the point the question asks for (one point)",
+        "targets": "every point the question asks for, as [x, y] pairs (several points)"
+      },
+      "can_emit": {
+        "by": "targets",
+        "cases": {
+          "(absent)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "off-target"
+          ],
+          "(present)": [
+            "swapped-coordinates",
+            "wrong-quadrant",
+            "extra-points",
+            "missing-points"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "swapped-coordinates",
+          "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+          "text": "The first number is the position along the horizontal axis and the second is the height."
+        },
+        {
+          "predicate": "wrong-quadrant",
+          "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+          "text": "Check the sign of each number to see which way to move."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+          "text": "Write the fractions as decimals first, then count along each axis in steps of one half."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-2-2:w001",
+      "template_id": "wt:pp3u1-2-2:drill-1-first",
+      "template_sha": "625e3b4c3fd14dbcb83ef8a1c4232e9ea9783708309f3a2efd74cf5ec3688333",
+      "lo_id": "lo:pp3u1-2-2",
+      "kind": "arrow_builder",
+      "spec": {
+        "X": [
+          1,
+          2,
+          3
+        ],
+        "Y": [
+          12,
+          21,
+          47,
+          52
+        ],
+        "pairs": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            21
+          ],
+          [
+            2,
+            12
+          ],
+          [
+            2,
+            21
+          ],
+          [
+            2,
+            52
+          ]
+        ]
+      },
+      "stem": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$ and R is the relation from X to Y where a R b means: a is a digit of b, for each $a\\in X$, $b\\in Y$. Represent R by an arrow diagram: tap an element of X, then the element of Y it is related to.",
+      "instrument": "Spec example {\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — the student DRAWS a relation as an arrow diagram: taps an element of X, then where it goes in Y. Graded as a set against \"pairs\" (the relation itself), so the stem must give the relation — by its rule or its pairs — and the board never shows it. X and Y are numbers or short words, 1–7 each; at most 12 pairs. A relation ON a set (X equal to Y) is the one case where an arrow can be drawn the wrong way round, and that is named on its own.",
+      "reading_fields": {
+        "X": "the first set, as a list",
+        "Y": "the second set, as a list (the same as X for a relation on X)",
+        "pairs": "every pair of the relation, as [a, b] — worked out from the rule when the question gives one"
+      },
+      "can_emit": [
+        "arrows-reversed",
+        "extra-arrows",
+        "missing-arrows"
+      ],
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "missing-arrows",
+          "predicate_meaning": "Some pairs of the relation have no arrow",
+          "text": "Go through each element of X one at a time and check it against the digits of every element of Y, so no related element is skipped."
+        },
+        {
+          "predicate": "extra-arrows",
+          "predicate_meaning": "Arrows for pairs that are not in the relation",
+          "text": "An arrow is drawn only when a is really a digit of b. Re-read the digits of each b you have joined."
+        },
+        {
+          "predicate": "arrows-reversed",
+          "predicate_meaning": "Arrows drawn the wrong way round — from the second element of a pair to the first",
+          "text": "Arrows go from the element of X (the first in the pair) to the element of Y (the second)."
         }
       ]
     },
@@ -189,12 +743,13 @@
         "b": 2
       },
       "stem": "Represent graphically the function $f(x) = x + 2$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -204,6 +759,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -248,12 +810,13 @@
         "b": 0
       },
       "stem": "Represent graphically the function $g(x) = 3x$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -263,6 +826,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -312,12 +882,13 @@
         "b": 0
       },
       "stem": "Represent graphically the function $\\ell(x) = -2x$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -327,6 +898,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -376,12 +954,13 @@
         "b": 5
       },
       "stem": "Represent graphically the function $f(x) = 5$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -391,6 +970,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -435,12 +1021,13 @@
         "b": -4
       },
       "stem": "Represent graphically the function $f(x) = -4$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -450,6 +1037,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -489,12 +1083,13 @@
         "b": 0
       },
       "stem": "Represent graphically the function $f(x) = 0$. Drag the two points so the line is the graph.",
-      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
       "reading_fields": {
-        "mode": "'equation' or 'points'",
+        "mode": "'equation', 'points' or 'system' (two lines on one board)",
         "m": "gradient (equation mode)",
         "b": "y-intercept (equation mode)",
-        "through": "[[x1, y1], [x2, y2]] (points mode)"
+        "through": "[[x1, y1], [x2, y2]] (points mode)",
+        "lines": "system mode: both lines as [{m, b}, {m, b}], each written y = mx + b"
       },
       "can_emit": {
         "by": "mode",
@@ -504,6 +1099,13 @@
             "off-target"
           ],
           "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ],
+          "system": [
             "vertical-line",
             "intercept-wrong",
             "slope-sign-flipped",
@@ -528,6 +1130,112 @@
           "predicate": "off-target",
           "predicate_meaning": "Neither the slope nor the intercept matches",
           "text": "Find f(-1), f(0), f(1) from the rule and compare them."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w007",
+      "template_id": "wt:pp3u1-4-3:drill-5-4",
+      "template_sha": "3bfa79ba7e19fd97ba3b3bb4834d65a7dcc2747575567550d9e2d1382a1221ca",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "curve_sketcher",
+      "spec": {
+        "fn": "linear",
+        "coefs": [
+          0,
+          2.5
+        ]
+      },
+      "stem": "Represent graphically the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2\\frac{1}{2}$. Draw the graph freehand across the whole board.",
+      "instrument": "Spec example {\"fn\":\"quadratic\",\"coefs\":[1,0,-4]} — the student draws the curve FREEHAND with a finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside −5..5. Validator limits (parseMathWidget): every linear or quadratic coefficient is within ±10. Five more families: spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the student to lift their finger and draw each branch separately. Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is a boundary the curve approaches and never crosses. On its own GRID (linear and quadratic only) the board is that range — draw a parabola over the book's interval, {\"fn\":\"quadratic\",\"coefs\":[1,-4,3],\"grid\":{\"x\":[-1,5],\"y\":[-2,9]}} — coefficients within ±20, most of the curve on the board, and the tolerance scales with its height. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps.",
+      "reading_fields": {
+        "fn": "'linear', 'quadratic', 'hyperbola', 'exponential', 'sine', 'cosine' or 'tangent'",
+        "coefs": "linear [m, c]; quadratic [a, b, c]; hyperbola y = a/x + q [a, q]; exponential y = a·b^x + q [a, b, q]; sine, cosine, tangent [a, q] (amplitude, vertical shift)"
+      },
+      "can_emit": {
+        "by": "fn",
+        "cases": {
+          "linear": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "slope-sign-flipped"
+          ],
+          "quadratic": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "opens-wrong-way"
+          ],
+          "hyperbola": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-quadrants"
+          ],
+          "exponential": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-intercept"
+          ],
+          "sine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "cosine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "tangent": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "vertically-displaced",
+          "predicate_meaning": "Right shape, sitting consistently above or below the true curve",
+          "text": "Look at the table of values: what is the image of every x? Check the height at which your line meets the y-axis."
+        },
+        {
+          "predicate": "partial-coverage",
+          "predicate_meaning": "The sketch covers only part of the visible domain",
+          "text": "The domain is all of R, so the line should run across the whole visible board, not stop part-way."
+        },
+        {
+          "predicate": "fails-vertical-line-test",
+          "predicate_meaning": "The stroke doubles back: one x carries two y values, so it is not a function",
+          "text": "A function gives one image for each x. Draw a single line moving from left to right without doubling back."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "The sketch does not follow the curve",
+          "text": "Start from the rule: does the image change when x changes? Use that to decide the direction of the line."
         }
       ]
     }

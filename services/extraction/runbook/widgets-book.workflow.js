@@ -45,7 +45,7 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's7b-v3'   // v2: the grid option and the new modes (several points, relation, system); v3: arrow_builder, region_shader
+const PROMPTS_VERSION = 's7b-v4'   // v2: the grid option and the new modes (several points, relation, system); v3: arrow_builder, region_shader; v4: the verifier is told a question's own board
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'verify', 'args.mode must be "author" or "verify"')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config')
@@ -225,7 +225,7 @@ what the student gets — the question and the instrument — plus the claimed d
 
 ${ws.map((w, i) => `WIDGET W${i + 1} (kind ${w.kind})
 Question: ${w.stem}
-Instrument: ${w.instrument}
+Instrument: ${w.instrument}${w.board ? `\nBoard: ${w.board}` : ''}
 Fields to read from the question: ${JSON.stringify(w.reading_fields || {})}
 What this kind can emit, per its spec field: ${JSON.stringify(w.can_emit || null)}
 Claimed diagnoses (predicate → misconception):

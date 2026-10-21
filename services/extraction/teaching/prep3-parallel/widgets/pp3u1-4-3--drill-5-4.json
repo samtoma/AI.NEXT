@@ -1,0 +1,48 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-4-3:drill-5-4",
+ "lo_id": "lo:pp3u1-4-3",
+ "book_item": "pp3u1-4:drill-5#4",
+ "parent_question_id": "expl:pp3u1-4-3:bk-example-2",
+ "parent_kind": "teaching",
+ "tier": "basic",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "linear",
+  "coefs": [
+   0,
+   2.5
+  ]
+ },
+ "stem": "Represent graphically the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2\\frac{1}{2}$. Draw the graph freehand across the whole board.",
+ "solution": [
+  "The rule is $f(x)=2.5$: every $x$ has the same image, so this is a constant function.",
+  "Make a table: $f(0)=2.5$, $f(1)=2.5$, $f(2)=2.5$, $f(-1)=2.5$, giving the pairs $(0, 2.5)$, $(1, 2.5)$, $(2, 2.5)$, $(-1, 2.5)$.",
+  "Mark these points on the square net: they all lie at the same height.",
+  "Draw the straight line through them, parallel to the x-axis and meeting the y-axis at $(0, 2.5)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "vertically-displaced",
+   "step": 2,
+   "text": "Look at the table of values: what is the image of every x? Check the height at which your line meets the y-axis."
+  },
+  {
+   "predicate": "partial-coverage",
+   "step": 4,
+   "text": "The domain is all of R, so the line should run across the whole visible board, not stop part-way."
+  },
+  {
+   "predicate": "fails-vertical-line-test",
+   "step": 4,
+   "text": "A function gives one image for each x. Draw a single line moving from left to right without doubling back."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Start from the rule: does the image change when x changes? Use that to decide the direction of the line."
+  }
+ ],
+ "notes": "Line_drawer needs whole b, so the half-valued constant uses the freehand linear curve_sketcher on the default board (2.5 is within −5..5)."
+}

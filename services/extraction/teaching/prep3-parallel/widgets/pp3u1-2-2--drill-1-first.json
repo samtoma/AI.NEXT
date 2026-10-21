@@ -1,0 +1,72 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-2-2:drill-1-first",
+ "lo_id": "lo:pp3u1-2-2",
+ "book_item": "pp3u1-2:drill-1#First",
+ "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "arrow_builder",
+ "spec": {
+  "X": [
+   1,
+   2,
+   3
+  ],
+  "Y": [
+   12,
+   21,
+   47,
+   52
+  ],
+  "pairs": [
+   [
+    1,
+    12
+   ],
+   [
+    1,
+    21
+   ],
+   [
+    2,
+    12
+   ],
+   [
+    2,
+    21
+   ],
+   [
+    2,
+    52
+   ]
+  ]
+ },
+ "stem": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$ and R is the relation from X to Y where a R b means: a is a digit of b, for each $a\\in X$, $b\\in Y$. Represent R by an arrow diagram: tap an element of X, then the element of Y it is related to.",
+ "solution": [
+  "Take each a in X in turn and look at the digits of every b in Y.",
+  "1 is a digit of 12 and of 21, so draw arrows 1 → 12 and 1 → 21.",
+  "2 is a digit of 12, 21 and 52, so draw arrows 2 → 12, 2 → 21 and 2 → 52.",
+  "3 is a digit of none of 12, 21, 47, 52, so no arrow leaves 3.",
+  "R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52)}, and the arrow diagram shows exactly these five arrows."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-arrows",
+   "step": 1,
+   "text": "Go through each element of X one at a time and check it against the digits of every element of Y, so no related element is skipped."
+  },
+  {
+   "predicate": "extra-arrows",
+   "step": 1,
+   "text": "An arrow is drawn only when a is really a digit of b. Re-read the digits of each b you have joined."
+  },
+  {
+   "predicate": "arrows-reversed",
+   "step": 2,
+   "text": "Arrows go from the element of X (the first in the pair) to the element of Y (the second)."
+  }
+ ],
+ "notes": "The cartesian-diagram part of this exercise is a gap (see gaps). Second part is a judgement of given pairs, not a construction."
+}

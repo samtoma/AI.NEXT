@@ -1,0 +1,650 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "f425ada01e12b979ad3701ad528b0c998630ed6ca68a8c51a573dfe2d55a9ebb",
+  "args_sha256": "2bc991fe5848d94262fed89e3a13733dbb695a4ba3423270e15bf6dbbb55aa4c",
+  "generated_sha256": "5879b57f867374d837ed9a8e82e0338a30ae28a332f8581b76960fbb41c95a19",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u1-1-1:w001",
+   "template_sha": "15f25f1b775e32f30ea922f4cde9d2e94e7c6ad1630215410d5fd54195fc541c",
+   "reading": {
+    "X": [
+     0,
+     1,
+     2
+    ],
+    "Y": [
+     -1,
+     1,
+     3
+    ],
+    "pairs": [
+     [
+      0,
+      -1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      3
+     ]
+    ]
+   },
+   "construction": "Mode relation with X=[0,1,2], Y=[-1,1,3]. Tap (0,-1), (1,1), (2,3). Each satisfies y=2x-1 and the set has one pair per x. Reachable, within the small-set limits (3 numbers each). Y is not given in the question, so the Y set is inferred from the rule's outputs, which is a reasonable reading.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "The mode is relation, so the can_emit table lists reversed-pairs. It fires when the student taps the turned-round pairs (-1,0), (1,1), (3,2). A student who treats (a,b) like (b,a) puts y first and x second, so this matches the order-ignored-in-pair misconception. Caveat: (1,1) is its own reverse, so the full reversal is only partly visible. Caveat: a student who tapped the wrong order for a different reason, such as misreading which variable is first, would also fire it."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "Fires when the student taps only some of the correct pairs, for example (0,-1) and (1,1) but not (2,3). The hint says there is one pair per given x and to check each has one. It is true, points to the step the student skipped, and gives no coordinates or list of pairs. It is listed in the relation can_emit."
+    },
+    {
+     "predicate": "extra-pairs",
+     "ok": false,
+     "why": "It is in the can_emit table for relation mode. It fires when the student taps a pair of X×Y that the rule leaves out, such as (0,1). The hint's description says 'not in X×Y at all', which is wrong: these pairs are in X×Y, they just fail the rule. The hint text itself is mathematically right and doesn't give the answer. But it says 'Only a pair whose y matches that result belongs', which nearly directs the student to the answer. The mismatch between the predicate description and the situation makes this a risky hint, so it is rejected."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-1:w002",
+   "template_sha": "83bd8334e7deedadc0acf5dd1bb620ff1266e39e12484c22f9423a025a475210",
+   "reading": {
+    "targets": [
+     [
+      0,
+      -1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      3
+     ]
+    ]
+   },
+   "construction": "Default grid −5..5 (or a smaller grid). Tap lattice points (0,-1), (1,1), (2,3). All are whole numbers within range; graded as a set of three points, so this is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "swapped-coordinates",
+     "matches": true,
+     "why": "Fires when every wrong point is a target with x and y exchanged: (-1,0), (1,1), (3,2). A student who reads the pair as unordered, or takes y first, plots exactly these. Note (1,1) swaps to itself, so the student still plots it correctly. The pattern is still a clear order-ignored error, so it matches the misconception. The predicate is in the can_emit list for the present-targets case."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires when the student plots fewer points, for example only two of the three. The hint tells them to check that each pair has a point. It names no coordinates and gives no answer away. It helps them find the omitted pair, and the predicate can fire for a multi-point question."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when the student plots a point not asked for, with no recognisable pattern, for example an extra point at (3,3). The hint says to plot only the listed pairs and to move along x first and then along y. That is mathematically right. It gives no coordinates, and it points to the step they got wrong."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when every wrong point is a target reflected, for example (0,1), (1,-1), (2,-3) or sign errors such as (-1,1). The hint says to check the direction of each move, left or right and up or down, as the signs say. That is correct and gives no coordinates. It guides the student to the sign step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-2:w001",
+   "template_sha": "a5fdbc64cc731b77c422cfb730feceb6d8041db1ebdbb936b334f8c966859f40",
+   "reading": {
+    "X": [
+     2,
+     -1
+    ],
+    "Y": [
+     4,
+     0
+    ]
+   },
+   "construction": "Tap the four pairs (2,4), (2,0), (-1,4), (-1,0). That is every element of X paired with every element of Y, in X-first order. Both sets have 2 numbers, so they are within the limits.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "A student who treats X×Y as Y×X taps (4,2), (0,2), (4,-1), (0,-1). Those are the right numbers in the wrong order, which is the product-order-ignored error. This is a plain product question (mode absent), so reversed-pairs can fire."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "A student who taps only some of the four pairs, such as (2,4) and (-1,0), fires missing-pairs. The hint is correct: pair each element of X with every element of Y and check the count. It gives no pairs or total, so the student still has to do the step. Missing-pairs can fire in this mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-2:w002",
+   "template_sha": "e2abcf0be7d73a0e918398d0d5054625cefae9682d44480cacd49a41d4cc5b01",
+   "reading": {
+    "X": [
+     4,
+     0
+    ],
+    "Y": [
+     4,
+     5,
+     -2
+    ]
+   },
+   "construction": "Product mode (no pairs). Y×Z with Y={4,0}, Z={4,5,-2}: tap all six pairs (4,4),(4,5),(4,-2),(0,4),(0,5),(0,-2). Reading X=Y-set [4,0], Y=Z-set [4,5,-2] gives a 2x3 board; 6 pairs, all reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "Fires when the student taps the Z×Y pairs, e.g. (4,0),(5,0),(-2,0),(4,4),(5,4),(-2,4) — right numbers in swapped order. That is exactly a student who treats Y×Z and Z×Y as the same, product-order-ignored. Pairs like (4,4) are in both, but the others are distinct, so the swap is detectable."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "Fires when the student taps only some of the six correct pairs, e.g. only (4,4),(4,5),(4,-2). The hint gives the method (pair each first-set element with every second-set element, count per element) without listing pairs or the answer. It is correct and helps find the omission. The predicate is in the can_emit list for the absent mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-2:w003",
+   "template_sha": "9ed461cbd92d47e5c29f2e12d42237a891632b2494b4b9d06ebaed45f524263e",
+   "reading": {
+    "X": [
+     2,
+     -1
+    ],
+    "Y": [
+     2,
+     -1
+    ]
+   },
+   "construction": "Tap all four pairs: (2,2), (2,-1), (-1,2), (-1,-1). Mode absent; X=[2,-1] has 2 numbers, within limits.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "Fires when the student taps only some of the four pairs, e.g. just (2,2) and (-1,-1). missing-pairs is in the can_emit table for the absent mode. The hint is mathematically right, points to pairing each element with every element, and gives no coordinates or list of pairs."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-4:w001",
+   "template_sha": "7e6fa00b422c1b685752c759091a1128d081e9e485ef86ad5ae1ecf37d12c58f",
+   "reading": {
+    "x": [
+     -2,
+     3
+    ],
+    "y": [
+     -2,
+     3
+    ],
+    "open": {
+     "left": false,
+     "right": false,
+     "bottom": false,
+     "top": false
+    }
+   },
+   "construction": "Drag one corner to (-2,-2) and the opposite corner to (3,3), which are on the -5..5 board. Set all four edges solid, because [-2,3] is closed at both ends. This gives the square [-2,3]×[-2,3]. It satisfies every limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "edge-inclusion-wrong",
+     "ok": true,
+     "why": "A student can build the right rectangle (-2,-2) to (3,3) with one or more dashed edges, and this predicate fires. The hint is mathematically correct, because square brackets mean the end is included. It points the student at the solid/dashed step without giving any coordinates or the edge settings. The student still has to match brackets to solid edges."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A student can build a rectangle that is not [-2,3]², for example x in [-2,3] but y in [0,3], or a rectangle using the wrong interval. This fires the predicate. The hint is correct: for X×X both coordinates come from the same interval. It gives no coordinates, so the student still has to mark the region."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-4:w002",
+   "template_sha": "566b093301bfda1a89943bb8fef3267b1f562345b6710896654aeb5dec2c70d3",
+   "reading": {
+    "target": [
+     3,
+     2.5
+    ]
+   },
+   "construction": "Tap the grid point at x=3, y=2.5 (5/2 = 2.5, on the 0.5 step grid within -4..4). Single target, so graded as one exact point.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (2.5, 3) fires it. This is the classic order error. The hint explains the axis roles and gives no coordinates, and the predicate can fire for a single target."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-3, 2.5) or (3, -2.5) fires it. The distances are right and the signs are wrong. The hint tells the student to check signs and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (2, 1) fires it, since neither coordinate matches and it is not a swap or reflection. The hint says to convert the fraction to a decimal and count in halves, which is a correct method step and does not reveal 2.5 or 3. It is somewhat generic for an error that has no pattern, but it is mathematically right and gives nothing away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-4:w003",
+   "template_sha": "39296f2bd2200b89eeafea81f217bd9b4da3b3b5e2d2707d83694d56b949da3d",
+   "reading": {
+    "target": [
+     -1.5,
+     4
+    ]
+   },
+   "construction": "Single point question. Tap the grid point x=-1.5, y=4: 1.5 units left of the origin (three half-steps), 4 units up. The board is -4..4 in steps of 0.5, so (-1.5,4) is a tappable point. It lies on the top edge of the board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (4,-1.5) fires it. This is on the board and is the classic order mix-up. The hint explains the x/y convention without giving any coordinates, so it is correct and not an answer giveaway."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (1.5,4), (-1.5,-4) or (1.5,-4) fires it. These are a sign error on one or both coordinates. The hint tells the student to check the signs and direction of movement. It is correct and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Off-target can be emitted when there is no target list, which holds here. It fires for a point with both coordinates wrong and no pattern, for example (-3,2) from misreading -3/2. The hint, to convert the fraction to a decimal and count in half steps, is correct for the 0.5-step board. It helps with the fraction misreading and does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-4:w004",
+   "template_sha": "8dc487983b1863d565dadfcaca28046e4fcae0908490b0120d6281dae0aaf9f1",
+   "reading": {
+    "target": [
+     -3,
+     -1.5
+    ]
+   },
+   "construction": "Tap the grid point x=-3, y=-1.5 (on the 0.5-step board, within -4..4).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-1.5,-3) fires it; the hint explains axis order without giving coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (3,1.5) or (-3,1.5) fires it; the hint directs the student to check signs without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (2,1) fires it; converting -3/2 to a decimal and counting in halves is correct, helpful and does not reveal the point."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-4:w005",
+   "template_sha": "acb644771b800b593e8eaffa48de5d395ef6505da57a6b4513182f9c89a1e69e",
+   "reading": {
+    "target": [
+     2.5,
+     -1.5
+    ]
+   },
+   "construction": "Tap the grid point x=2.5, y=-1.5 (5 half-steps right of the origin, 3 half-steps down). It lies within -4..4 on the 0.5 step.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-1.5, 2.5) fires it. The hint explains which coordinate is horizontal and which is vertical, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (2.5, 1.5) or (-2.5, -1.5) fires it. The hint tells the student to check the signs, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping (2, -1) fires it. The hint says to convert the fractions to decimals and count in halves, which is correct for this board and does not give the point away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-2-2:w001",
+   "template_sha": "625e3b4c3fd14dbcb83ef8a1c4232e9ea9783708309f3a2efd74cf5ec3688333",
+   "reading": {
+    "X": [
+     1,
+     2,
+     3
+    ],
+    "Y": [
+     12,
+     21,
+     47,
+     52
+    ],
+    "pairs": [
+     [
+      1,
+      12
+     ],
+     [
+      1,
+      21
+     ],
+     [
+      2,
+      12
+     ],
+     [
+      2,
+      21
+     ],
+     [
+      2,
+      52
+     ]
+    ]
+   },
+   "construction": "Draw five arrows: 1→12, 1→21, 2→12, 2→21, 2→52. Element 3 gets no arrow (it is a digit of none of 12, 21, 47, 52) and 47 receives none. This satisfies the limit of at most 12 pairs.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-arrows",
+     "ok": true,
+     "why": "Fires if, say, 2→52 is left out. The hint tells the student to check each X element against every Y element's digits. That is correct, does not list any pairs, and leaves the student to do the step."
+    },
+    {
+     "predicate": "extra-arrows",
+     "ok": true,
+     "why": "Fires if, say, 3→_ or 1→52 is drawn. The hint says to draw an arrow only when a is really a digit of b, and to re-read the digits of each joined b. That is correct, helps find the wrong arrow, and gives nothing away."
+    },
+    {
+     "predicate": "arrows-reversed",
+     "ok": false,
+     "why": "X and Y are different sets and the student taps X first and then Y, so an arrow cannot be drawn from Y to X. Reversal can only occur for a relation on one set, so the predicate cannot fire here and the hint would never be shown."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w001",
+   "template_sha": "138a830c2b1f05298294d663177bbbaf6afd48d471df2ae267dde63de4c8ce57",
+   "reading": {
+    "mode": "equation",
+    "m": 1,
+    "b": 2
+   },
+   "construction": "Equation mode, y = x + 2 (m=1, b=2). Drag the two handles to lattice points (-1,1) and (2,4), both on the line (also e.g. (0,2) and (1,3)). Both within the ±5 default grid; the pipeline rule on points mode does not apply. Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires with a parallel line of gradient 1, e.g. y = x through (0,0),(1,1). The hint is correct, points the student to f(0) and the y-axis crossing without stating the value or the equation."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires with gradient -1, e.g. y = -x + 2 through (0,2),(1,1). Asking whether f(x) rises or falls as x increases is correct, helps the student see the lean is wrong, and gives no coordinates."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x, e.g. (1,-1) and (1,3). The hint is mathematically right (a function has one image per x), directs to a table of pairs, and reveals no answer. Vertical-line is in the equation-mode can_emit list."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept match, e.g. y = 2x + 1 through (0,1),(1,3). The hint tells the student to compute f(0), f(1), f(-1) and plot them, a method without giving the values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w002",
+   "template_sha": "ce4608615e2f26938d26007abdccccc84bf9e52e06a0952b2025da3c9e4f86dd",
+   "reading": {
+    "mode": "equation",
+    "m": 3,
+    "b": 0
+   },
+   "construction": "Equation mode with m=3, b=0: drag the handles to (0,0) and (1,3). Both are lattice points within the default board, and neither handle's start position matters in equation mode. Any two points on y=3x are also accepted, e.g. (-1,-3) and (1,3).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires on slope 1/3, e.g. (0,0) and (3,1), which is the run-over-rise slip. The hint asks for the rise per step of 1 to the right, and gives no numbers. It assumes the student has a table."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires on slope -3, e.g. (0,0) and (1,-3). The hint sends the student to g(1) and asks whether the point is above or below the x-axis. That exposes the sign error without stating the answer."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on slope 3 with b≠0, e.g. (0,2) and (1,5). Finding g(0) from the rule is the right step, and the hint does not state the value."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x, e.g. (2,0) and (2,3). The hint says a function gives one image per x, so its graph cannot be vertical. That is correct and does not reveal the line."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches, e.g. (0,1) and (1,1). The hint asks for g(0), g(1) and g(-1) and then to plot the pairs. That is a correct method and it does not give the values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w003",
+   "template_sha": "052a1a56b734e304aee8125fe0c3dce673da91b037aac0072370cfa3cbe9b4be",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": 0
+   },
+   "construction": "Equation mode, y = -2x. Drag handles to lattice points (0,0) and (1,-2) (or (-1,2)); the line through them has m=-2, b=0. Neither is at the starting handle positions (-3,-2) or (1,1), and all within the default ±5 board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires on y=2x (e.g. points (0,0),(1,2)). Computing ℓ(1) = -2 and checking it is below the axis exposes the sign error without stating the answer."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires on slope ±1/2 (e.g. (0,0),(2,-1)). Asking for the movement per step of 1 to the right targets rise over run and gives no coordinates. Mentions 'your table', which the student can build from the rule."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on slope -2 with b≠0 (e.g. (0,1),(1,-1)). Finding ℓ(0) pinpoints the intercept step without revealing it."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x. The reasoning that each x has exactly one image is correct and reveals no answer; the table of pairs is a method the student can build."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when both slope and intercept are wrong. Computing ℓ(0), ℓ(1), ℓ(-1) and plotting them is a correct method, and the values are not given away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w004",
+   "template_sha": "edf9d14c5d42244bcfb402e095bc6f6504d6d32ccf6d11166c09e335fd95fcf4",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 5
+   },
+   "construction": "Equation mode, m=0, b=5 on the default board (−5..5). Drag the handles to (-1,5) and (2,5), which are lattice points on y=5. Neither is at the starting positions (-3,-2) or (1,1), and the pipeline rule only restricts points mode. Any two points with y=5 are accepted. m=0 is a whole number and b=5 is within −5..5, so the spec is valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on a horizontal line at the wrong height, e.g. y=3 through (-1,3) and (2,3). The hint is correct, since the line is parallel to the answer. Asking for the image of every x points the student to the constant output without stating 5."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x, e.g. (2,0) and (2,3). The hint is correct: a constant function gives the same y for different x, so the line is horizontal, not vertical. It prompts the student to rethink without giving the value 5. A student who confuses constant with vertical is helped."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": false,
+     "why": "The correct gradient is 0, and its negative is also 0, so a sign-flipped line is the correct line. The predicate cannot fire for a student who has made an error here. The hint also refers to a table that does not exist on this widget."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when both slope and intercept are wrong, e.g. y=x+1 through (0,1) and (2,3). The hint tells the student to compute f(-1), f(0) and f(1) and compare them. This is mathematically right and exposes the constant output without giving the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w005",
+   "template_sha": "6cc52713ced2aea51d861a39e5df8bc9ee63bf908c1bfdaa465760907b32a248",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": -4
+   },
+   "construction": "Equation mode with m=0, b=-4: drag the handles to (0,-4) and (2,-4); the line is horizontal y=-4. Both points are lattice points in range and avoid the (-3,-2) and (1,1) starting spots.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires for a horizontal line at the wrong height, e.g. y=4 through (0,4),(2,4). The hint says the line is parallel but at the wrong height and asks about the sign of the image. It gives no coordinates or equation, and the student still has to find the value."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "Fires for a vertical line such as x=-4, from a student who mixed up x and y. The hint says the points have different x and the same y. That states the key step (a constant output means a horizontal line) and nearly gives the answer's construction, so the student has nothing left to work out."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a line with a nonzero slope, e.g. through (0,0) and (1,1). The hint asks the student to compute f(-1), f(0), f(1) and compare them with the drawn line. That is a sound method, and it doesn't reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w006",
+   "template_sha": "7d463e732892462be4789d4fa5d0c4fd4af47e53d747cbc3efc08e35ca38c4ba",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 0
+   },
+   "construction": "Equation mode with m=0, b=0 (the x-axis, y=0). Drag the handles to (-2,0) and (3,0): both are lattice points on y=0 inside ±5, and neither is a start handle position (-3,-2) or (1,1).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on a horizontal line at the wrong height, e.g. through (-2,2) and (3,2) for y=2. This is a student who has confused f(x)=0 with a nonzero constant. The hint is accurate. It prompts her to ask what each x maps to, and it does not state the answer."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "Fires on two points with the same x, e.g. (2,-1) and (2,3). The hint says the points have different x but the same y, and that describes a horizontal line, which is the correct answer here. It is mathematically wrong for a vertical line, and it also gives away the construction. It would mislead the student who built the vertical line."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a line with nonzero slope and nonzero intercept, e.g. through (0,1) and (1,2). Computing f(-1), f(0), f(1) from the rule gives 0 each time, which shows the line must be flat on the axis. The hint does not state the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w007",
+   "template_sha": "3bfa79ba7e19fd97ba3b3bb4834d65a7dcc2747575567550d9e2d1382a1221ca",
+   "reading": {
+    "fn": "linear",
+    "coefs": [
+     0,
+     2.5
+    ]
+   },
+   "construction": "Mixed number 2½ = 2.5, so f is constant: y = 2.5. On the default board (−5..5, whole steps) draw one left-to-right stroke from x=−5 to x=5 at height 2.5, midway between the grid lines y=2 and y=3. This is linear with m=0, c=2.5, within the ±10 limits and within one grid square tolerance. Reading 2·½=1 is a less likely alternative.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "vertically-displaced",
+     "ok": true,
+     "why": "A horizontal line at the wrong height, e.g. y=2 or y=3 or y=−2.5, fires this. The hint sends the student to the table of values and the y-intercept without giving the value. It is correct and can fire for linear."
+    },
+    {
+     "predicate": "partial-coverage",
+     "ok": true,
+     "why": "Fires if the student draws a short horizontal segment or a stroke that stops part-way. The hint is right because the domain is R, and it gives no coordinates. It can fire for linear."
+    },
+    {
+     "predicate": "fails-vertical-line-test",
+     "ok": true,
+     "why": "Fires if the stroke loops or doubles back, e.g. a scribble or a vertical segment. The hint states the function definition and asks for a single left-to-right line, which does not give the answer. It can fire for linear."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires if the student draws a sloped line, e.g. y=x or y=2.5x, or a line that is far off. The hint asks whether the image changes when x changes, which leads to a horizontal line without stating the height or the equation. It is mathematically right and can fire for linear."
+    }
+   ]
+  }
+ ]
+}

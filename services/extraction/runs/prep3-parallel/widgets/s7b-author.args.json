@@ -59,14 +59,27 @@
    "predicates": {
     "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
     "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
-    "off-target": "Neither coordinate matches, with no recognisable pattern"
+    "off-target": "Neither coordinate matches, with no recognisable pattern",
+    "missing-points": "Some of the points asked for were not plotted",
+    "extra-points": "Plotted points that were not asked for, with no recognisable pattern"
    },
-   "can_emit": [
-    "swapped-coordinates",
-    "wrong-quadrant",
-    "off-target"
-   ],
-   "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5."
+   "can_emit": {
+    "by": "targets",
+    "cases": {
+     "(absent)": [
+      "swapped-coordinates",
+      "wrong-quadrant",
+      "off-target"
+     ],
+     "(present)": [
+      "swapped-coordinates",
+      "wrong-quadrant",
+      "extra-points",
+      "missing-points"
+     ]
+    }
+   },
+   "instrument": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. Target coordinates must be whole numbers in −5..5. It grades ONE exact point, so the prompt MUST name that point (\"Plot the point (3,-4)\") — never describe a family of points (\"a point with a positive first number…\"): the student would plot a right point and be marked wrong. SEVERAL POINTS (book widgets, 2026-10-21): {\"targets\":[[2,3],[6,2],[-2,-2],[-2,1]],\"grid\":{\"x\":[-3,7],\"y\":[-3,4]}} — 2 to 8 points, tapped on and off, graded as a SET (order does not matter); add \"join\":true to draw the polygon through them in x order (a frequency polygon). It reports missing-points, extra-points, swapped-coordinates (every wrong point a target with x and y exchanged) or wrong-quadrant (every wrong point a target reflected). GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps."
   },
   "product_builder": {
    "predicates": {
@@ -74,11 +87,21 @@
     "missing-pairs": "An incomplete product: some pairs of X×Y were not selected",
     "extra-pairs": "Selected pairs that are not in X×Y at all"
    },
-   "can_emit": [
-    "reversed-pairs",
-    "missing-pairs"
-   ],
-   "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers."
+   "can_emit": {
+    "by": "mode",
+    "cases": {
+     "(absent)": [
+      "reversed-pairs",
+      "missing-pairs"
+     ],
+     "relation": [
+      "reversed-pairs",
+      "extra-pairs",
+      "missing-pairs"
+     ]
+    }
+   },
+   "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned round) or missing-pairs."
   },
   "line_drawer": {
    "predicates": {
@@ -102,10 +125,17 @@
       "slope-sign-flipped",
       "slope-inverted",
       "off-target"
+     ],
+     "system": [
+      "vertical-line",
+      "intercept-wrong",
+      "slope-sign-flipped",
+      "slope-inverted",
+      "off-target"
      ]
     }
    },
-   "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed."
+   "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed. SYSTEM (book widgets, 2026-10-21): {\"mode\":\"system\",\"lines\":[{\"m\":2,\"b\":-3},{\"m\":-0.5,\"b\":2}]} — two lines on one board, four handles, for \"find the solution set graphically\": each line is graded on the LINE as in equation mode, in either order, and once both are right the board shows where they meet (or that they are parallel: the solution set is ∅). Each line must pass through two grid points. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps."
   },
   "circle_builder": {
    "predicates": {
@@ -364,7 +394,7 @@
      ]
     }
    },
-   "instrument": "Spec example {\"fn\":\"quadratic\",\"coefs\":[1,0,-4]} — the student draws the curve FREEHAND with a finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside −5..5. Validator limits (parseMathWidget): every linear or quadratic coefficient is within ±10. Five more families: spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the student to lift their finger and draw each branch separately. Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is a boundary the curve approaches and never crosses."
+   "instrument": "Spec example {\"fn\":\"quadratic\",\"coefs\":[1,0,-4]} — the student draws the curve FREEHAND with a finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside −5..5. Validator limits (parseMathWidget): every linear or quadratic coefficient is within ±10. Five more families: spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the student to lift their finger and draw each branch separately. Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is a boundary the curve approaches and never crosses. On its own GRID (linear and quadratic only) the board is that range — draw a parabola over the book's interval, {\"fn\":\"quadratic\",\"coefs\":[1,-4,3],\"grid\":{\"x\":[-1,5],\"y\":[-2,9]}} — coefficients within ±20, most of the curve on the board, and the tolerance scales with its height. GRID (book widgets, 2026-10-21): any of pair_plotter, line_drawer and curve_sketcher takes \"grid\":{\"x\":[lo,hi],\"y\":[lo,hi],\"step\":s} (or \"step\":[sx,sy]) — the range and the step of the board, for a point with a half in it (step 0.5), a line or curve reaching past ±5, or axes counting in fives; the ends of each range sit on its step, at most 16 steps an axis. Absent, the board is −5..5 in whole steps."
   },
   "polygon_builder": {
    "predicates": {
@@ -586,6 +616,32 @@
     "off-target"
    ],
    "instrument": "Spec example {\"mode\":\"expand\",\"a\":2,\"b\":-3} — algebra tiles as a grid the student builds: one x² tile anchored, x-tiles run out along its top and left edges (the \"a\" and \"b\" signs — negative tiles are hatched AND marked \"−\", never colour alone), and the block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation of FOIL: the cross term is something the student places, not a step they recite."
+  },
+  "arrow_builder": {
+   "predicates": {
+    "arrows-reversed": "Arrows drawn the wrong way round — from the second element of a pair to the first",
+    "extra-arrows": "Arrows for pairs that are not in the relation",
+    "missing-arrows": "Some pairs of the relation have no arrow"
+   },
+   "can_emit": [
+    "arrows-reversed",
+    "extra-arrows",
+    "missing-arrows"
+   ],
+   "instrument": "Spec example {\"X\":[-1,1,2],\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — the student DRAWS a relation as an arrow diagram: taps an element of X, then where it goes in Y. Graded as a set against \"pairs\" (the relation itself), so the stem must give the relation — by its rule or its pairs — and the board never shows it. X and Y are numbers or short words, 1–7 each; at most 12 pairs. A relation ON a set (X equal to Y) is the one case where an arrow can be drawn the wrong way round, and that is named on its own."
+  },
+  "region_shader": {
+   "predicates": {
+    "region-swapped": "The two intervals exchanged — the first belongs along x, the second along y",
+    "edge-inclusion-wrong": "The right rectangle with a wrong edge included or excluded — solid is ≤, dashed is <",
+    "off-target": "The rectangle does not match the region asked for"
+   },
+   "can_emit": [
+    "region-swapped",
+    "edge-inclusion-wrong",
+    "off-target"
+   ],
+   "instrument": "Spec example {\"x\":[-2,3],\"y\":[-2,3]} — the student marks a rectangle of the plane, X × Y for two intervals: drags two opposite corners onto the grid and sets each edge included (solid) or excluded (dashed), as a number line's filled and hollow ends. \"x\" and \"y\" are the two intervals; \"open\" names the excluded edges ({\"left\":true} for (a, b], and so on); both intervals' ends must be on the board (−5..5 whole steps, or the spec's own grid)."
   }
  },
  "lessons": [
@@ -606,7 +662,20 @@
        "own": true
       }
      ],
-     "worked_examples": [],
+     "worked_examples": [
+      {
+       "id": "expl:pp3u1-1-1:bk-think-and-discuss-2",
+       "problem": "Represent these ordered pairs graphically in the coordinate plane.",
+       "steps": [
+        "Draw the horizontal x-axis and the vertical y-axis, meeting at O.",
+        "Mark the integers on both axes.",
+        "Plot (0, -1): at 0 on the x-axis, then 1 unit down, on the y-axis.",
+        "Plot (1, 1): 1 unit right, 1 unit up.",
+        "Plot (2, 3): 2 units right, 3 units up.",
+        "Each ordered pair is one and only one point."
+       ]
+      }
+     ],
      "exercises": [
       {
        "item": "pp3u1-1:think-and-discuss-1",
@@ -632,8 +701,8 @@
         {
          "part": null,
          "stem": null,
-         "parent": "q:pp3u1-1-1:bk-think-and-discuss-1",
-         "parent_kind": "question"
+         "parent": "expl:pp3u1-1-1:bk-think-and-discuss-2",
+         "parent_kind": "teaching"
         }
        ]
       },
@@ -646,8 +715,9 @@
         {
          "part": null,
          "stem": null,
-         "parent": "q:pp3u1-1-1:bk-think-and-discuss-1",
-         "parent_kind": "question"
+         "parent": "q:pp3u1-1-1:bk-think-and-discuss-3",
+         "parent_kind": "question",
+         "book_answer": "No"
         }
        ]
       },
@@ -715,6 +785,16 @@
        ]
       },
       {
+       "id": "expl:pp3u1-1-2:bk-think-1",
+       "problem": "When $X\\times Y=Y\\times X$?",
+       "steps": [
+        "The lesson says X×Y ≠ Y×X when X ≠ Y.",
+        "So the two products can be equal only when X and Y are the same set.",
+        "If X = Y then X×Y = X×X = Y×X.",
+        "Answer: when X = Y."
+       ]
+      },
+      {
        "id": "expl:pp3u1-1-2:bk-example-3",
        "problem": "If $X=\\{1\\}$, $Y=\\{2, 3\\}$, $Z=\\{2, 5, 6\\}$ represent the sets of X, Y, Z with venn diagram then find:",
        "steps": [
@@ -753,8 +833,9 @@
         {
          "part": null,
          "stem": null,
-         "parent": "expl:pp3u1-1-2:bk-example-2",
-         "parent_kind": "teaching"
+         "parent": "q:pp3u1-1-2:bk-think-2",
+         "parent_kind": "question",
+         "book_answer": "Yes"
         }
        ]
       },
@@ -764,27 +845,6 @@
        "page": 9,
        "text": "If $X=\\{2,-1\\}$, $Y=\\{4,0\\}$, $Z=\\{4,5,-2\\}$ Find",
        "parts": [
-        {
-         "part": "A",
-         "stem": "$X\\times Y$",
-         "parent": "q:pp3u1-1-2:bk-drill-2-a",
-         "parent_kind": "question",
-         "book_answer": "\\{(2, 4), (2, 0), (-1, 4), (-1, 0)\\}"
-        },
-        {
-         "part": "B",
-         "stem": "$Y\\times Z$",
-         "parent": "q:pp3u1-1-2:bk-drill-2-b",
-         "parent_kind": "question",
-         "book_answer": "\\{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)\\}"
-        },
-        {
-         "part": "C",
-         "stem": "$X^2$",
-         "parent": "q:pp3u1-1-2:bk-drill-2-c",
-         "parent_kind": "question",
-         "book_answer": "\\{(2, 2), (2, -1), (-1, 2), (-1, -1)\\}"
-        },
         {
          "part": "D",
          "stem": "$n(X\\times Z)$",
@@ -1428,55 +1488,11 @@
      ],
      "exercises": [
       {
-       "item": "pp3u1-4:drill-4",
-       "type": "exercise",
-       "page": 21,
-       "text": "Reprsent graphically each of the following functions:",
-       "parts": [
-        {
-         "part": "1",
-         "stem": "$f: f(x)=x+2$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        },
-        {
-         "part": "2",
-         "stem": "$g: g(x)=3x$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        },
-        {
-         "part": "3",
-         "stem": "$\\ell: \\ell(x)=-2x$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        }
-       ]
-      },
-      {
        "item": "pp3u1-4:drill-5",
        "type": "exercise",
        "page": 21,
        "text": "Represent the following functions graphically:",
        "parts": [
-        {
-         "part": "1",
-         "stem": "$f(x)=5$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        },
-        {
-         "part": "2",
-         "stem": "$f(x)=-4$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        },
-        {
-         "part": "3",
-         "stem": "$f(x)=0$",
-         "parent": "expl:pp3u1-4-3:bk-example-2",
-         "parent_kind": "teaching"
-        },
         {
          "part": "4",
          "stem": "$f(x)=2\\frac{1}{2}$",

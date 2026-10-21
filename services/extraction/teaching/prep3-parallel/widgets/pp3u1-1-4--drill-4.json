@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-1-4:drill-4",
+ "lo_id": "lo:pp3u1-1-4",
+ "book_item": "pp3u1-1:drill-4#A",
+ "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "region_shader",
+ "spec": {
+  "x": [
+   -2,
+   3
+  ],
+  "y": [
+   -2,
+   3
+  ]
+ },
+ "stem": "If $X=[-2,3]$, mark the location which represents $X\\times X$. Drag two opposite corners onto the grid and set each edge solid (included) or dashed (excluded).",
+ "solution": [
+  "X × X is the set of pairs (x, y) with x in [-2, 3] and y in [-2, 3].",
+  "So x runs from -2 to 3 along the horizontal axis.",
+  "And y runs from -2 to 3 along the vertical axis.",
+  "The interval is closed, so every edge is included (solid).",
+  "The region is a square with corners (-2, -2) and (3, 3)."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "edge-inclusion-wrong",
+   "step": 4,
+   "text": "The interval [-2, 3] has square brackets. Decide whether each edge should be solid or dashed."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Both coordinates of a pair in X × X come from the same interval. Mark where x and y can each lie."
+  }
+ ],
+ "notes": "Book parts A-D are yes/no membership checks on this location; this template covers the construction in the stem, attached to part A."
+}

@@ -1,0 +1,602 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v3",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "8cddb984d0d69497885871d81fd1b9dbe2a76d7627fb93e37ca152e937bfbabf",
+  "args_sha256": "76ff84c497b8ebac0fc46e299fa277dd2aa9b299ca1a2aa7cb0f76fde8f9e052",
+  "generated_sha256": "fc6b9e032957d173ba4e24d4f709fa1e85c10b69534b77fb3b51891408a18b0f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u1-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-1:think-and-discuss-1",
+     "lo_id": "lo:pp3u1-1-1",
+     "book_item": "pp3u1-1:think-and-discuss-1",
+     "parent_question_id": "q:pp3u1-1-1:bk-think-and-discuss-1",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "product_builder",
+     "spec": {
+      "mode": "relation",
+      "X": [
+       0,
+       1,
+       2
+      ],
+      "Y": [
+       -1,
+       1,
+       3
+      ],
+      "pairs": [
+       [
+        0,
+        -1
+       ],
+       [
+        1,
+        1
+       ],
+       [
+        2,
+        3
+       ]
+      ]
+     },
+     "stem": "Find the set of ordered pairs (x, y) which satisfy the relation $y = 2x - 1$ when $x = 0$, $x = 1$ and $x = 2$. Tap the pairs that satisfy the relation.",
+     "solution": [
+      "Take each value of x in turn: 0, 1 and 2.",
+      "For x = 0: y = 2(0) - 1 = -1, so the pair is (0, -1).",
+      "For x = 1: y = 2(1) - 1 = 1, so the pair is (1, 1).",
+      "For x = 2: y = 2(2) - 1 = 3, so the pair is (2, 3).",
+      "The set is {(0, -1), (1, 1), (2, 3)}, with x first and y second in each pair."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "reversed-pairs",
+       "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "missing-pairs",
+       "step": 1,
+       "text": "There is one pair for each value of x you were given. Check that every one of them has a pair."
+      },
+      {
+       "predicate": "extra-pairs",
+       "step": 2,
+       "text": "Substitute each x into $y = 2x - 1$ and compute y. Only a pair whose y matches that result belongs in the set."
+      }
+     ],
+     "notes": "Relation mode: every pair of X×Y is on the board, the stem states only the rule."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-1:think-and-discuss-2",
+     "lo_id": "lo:pp3u1-1-1",
+     "book_item": "pp3u1-1:think-and-discuss-2",
+     "parent_question_id": "expl:pp3u1-1-1:bk-think-and-discuss-2",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        0,
+        -1
+       ],
+       [
+        1,
+        1
+       ],
+       [
+        2,
+        3
+       ]
+      ]
+     },
+     "stem": "Represent the ordered pairs (0, -1), (1, 1) and (2, 3) graphically in the coordinate plane. Tap each point.",
+     "solution": [
+      "The x-axis is horizontal and the y-axis vertical, meeting at O.",
+      "Plot (0, -1): at 0 on the x-axis, then 1 unit down.",
+      "Plot (1, 1): 1 unit right, 1 unit up.",
+      "Plot (2, 3): 2 units right, 3 units up.",
+      "Each ordered pair is one and only one point."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "swapped-coordinates",
+       "misconception_id": "mc:pp3u1-1-1:order-ignored-in-pair"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 1,
+       "text": "Each ordered pair in the list gives one point. Check that every pair has been plotted."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 2,
+       "text": "Only the pairs listed are plotted. Check each point against the pairs, moving along x first and then along y."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the direction for each move: right or left along x, then up or down along y, as the signs say."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-4:exercise-2-a",
+     "lo_id": "lo:pp3u1-1-4",
+     "book_item": "pp3u1-1:exercise-2#A",
+     "parent_question_id": "q:pp3u1-1-4:bk-exercise-1-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       2.5
+      ],
+      "grid": {
+       "x": [
+        -4,
+        4
+       ],
+       "y": [
+        -4,
+        4
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $A(3,\\frac{5}{2})$. Tap the point.",
+     "solution": [
+      "$\\frac{5}{2} = 2.5$, so A is (3, 2.5).",
+      "Move 3 units right along the x-axis.",
+      "Move 2.5 units up, halfway between 2 and 3.",
+      "Mark the point."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "The first number is the position along the horizontal axis and the second is the height."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the sign of each number to see which way to move."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+      }
+     ],
+     "notes": "Grid step 0.5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-4:exercise-2-b",
+     "lo_id": "lo:pp3u1-1-4",
+     "book_item": "pp3u1-1:exercise-2#B",
+     "parent_question_id": "q:pp3u1-1-4:bk-exercise-1-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -1.5,
+       4
+      ],
+      "grid": {
+       "x": [
+        -4,
+        4
+       ],
+       "y": [
+        -4,
+        4
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $B(-\\frac{3}{2},4)$. Tap the point.",
+     "solution": [
+      "$-\\frac{3}{2} = -1.5$, so B is (-1.5, 4).",
+      "Move 1.5 units left along the x-axis, halfway between -1 and -2.",
+      "Move 4 units up.",
+      "Mark the point."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "The first number is the position along the horizontal axis and the second is the height."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the sign of each number to see which way to move."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+      }
+     ],
+     "notes": "Grid step 0.5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-4:exercise-2-c",
+     "lo_id": "lo:pp3u1-1-4",
+     "book_item": "pp3u1-1:exercise-2#C",
+     "parent_question_id": "q:pp3u1-1-4:bk-exercise-1-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -3,
+       -1.5
+      ],
+      "grid": {
+       "x": [
+        -4,
+        4
+       ],
+       "y": [
+        -4,
+        4
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $C(-3,-\\frac{3}{2})$. Tap the point.",
+     "solution": [
+      "$-\\frac{3}{2} = -1.5$, so C is (-3, -1.5).",
+      "Move 3 units left along the x-axis.",
+      "Move 1.5 units down, halfway between -1 and -2.",
+      "Mark the point."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "The first number is the position along the horizontal axis and the second is the height."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the sign of each number to see which way to move."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write the fraction as a decimal first, then count along each axis in steps of one half."
+      }
+     ],
+     "notes": "Grid step 0.5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-4:exercise-2-d",
+     "lo_id": "lo:pp3u1-1-4",
+     "book_item": "pp3u1-1:exercise-2#D",
+     "parent_question_id": "q:pp3u1-1-4:bk-exercise-1-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2.5,
+       -1.5
+      ],
+      "grid": {
+       "x": [
+        -4,
+        4
+       ],
+       "y": [
+        -4,
+        4
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "On a perpendicular graphical net representing Q on both axes, plot the point $D(\\frac{5}{2},-\\frac{3}{2})$. Tap the point.",
+     "solution": [
+      "$\\frac{5}{2} = 2.5$ and $-\\frac{3}{2} = -1.5$, so D is (2.5, -1.5).",
+      "Move 2.5 units right along the x-axis.",
+      "Move 1.5 units down.",
+      "Mark the point."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "The first number is the position along the horizontal axis and the second is the height."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the sign of each number to see which way to move."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write the fractions as decimals first, then count along each axis in steps of one half."
+      }
+     ],
+     "notes": "Grid step 0.5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-1-4:drill-4",
+     "lo_id": "lo:pp3u1-1-4",
+     "book_item": "pp3u1-1:drill-4#A",
+     "parent_question_id": "q:pp3u1-1-4:bk-drill-4-a",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "region_shader",
+     "spec": {
+      "x": [
+       -2,
+       3
+      ],
+      "y": [
+       -2,
+       3
+      ]
+     },
+     "stem": "If $X=[-2,3]$, mark the location which represents $X\\times X$. Drag two opposite corners onto the grid and set each edge solid (included) or dashed (excluded).",
+     "solution": [
+      "X × X is the set of pairs (x, y) with x in [-2, 3] and y in [-2, 3].",
+      "So x runs from -2 to 3 along the horizontal axis.",
+      "And y runs from -2 to 3 along the vertical axis.",
+      "The interval is closed, so every edge is included (solid).",
+      "The region is a square with corners (-2, -2) and (3, 3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "edge-inclusion-wrong",
+       "step": 4,
+       "text": "The interval [-2, 3] has square brackets. Decide whether each edge should be solid or dashed."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Both coordinates of a pair in X × X come from the same interval. Mark where x and y can each lie."
+      }
+     ],
+     "notes": "Book parts A-D are yes/no membership checks on this location; this template covers the construction in the stem, attached to part A."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u1-1-3",
+     "need_kind": "none",
+     "description": "think-3: represent N×N, Z×Z, Q×Q and R×R on a graphical net",
+     "why": "The products are infinite sets with an open-ended description. No widget grades an infinite lattice, a dense set, or a whole plane as a drawing, and the book gives no specific points."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u1-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-2-2:drill-1-first",
+     "lo_id": "lo:pp3u1-2-2",
+     "book_item": "pp3u1-2:drill-1#First",
+     "parent_question_id": "q:pp3u1-2-2:bk-example-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "arrow_builder",
+     "spec": {
+      "X": [
+       1,
+       2,
+       3
+      ],
+      "Y": [
+       12,
+       21,
+       47,
+       52
+      ],
+      "pairs": [
+       [
+        1,
+        12
+       ],
+       [
+        1,
+        21
+       ],
+       [
+        2,
+        12
+       ],
+       [
+        2,
+        21
+       ],
+       [
+        2,
+        52
+       ]
+      ]
+     },
+     "stem": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$ and R is the relation from X to Y where a R b means: a is a digit of b, for each $a\\in X$, $b\\in Y$. Represent R by an arrow diagram: tap an element of X, then the element of Y it is related to.",
+     "solution": [
+      "Take each a in X in turn and look at the digits of every b in Y.",
+      "1 is a digit of 12 and of 21, so draw arrows 1 → 12 and 1 → 21.",
+      "2 is a digit of 12, 21 and 52, so draw arrows 2 → 12, 2 → 21 and 2 → 52.",
+      "3 is a digit of none of 12, 21, 47, 52, so no arrow leaves 3.",
+      "R = {(1, 12), (1, 21), (2, 12), (2, 21), (2, 52)}, and the arrow diagram shows exactly these five arrows."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-arrows",
+       "step": 1,
+       "text": "Go through each element of X one at a time and check it against the digits of every element of Y, so no related element is skipped."
+      },
+      {
+       "predicate": "extra-arrows",
+       "step": 1,
+       "text": "An arrow is drawn only when a is really a digit of b. Re-read the digits of each b you have joined."
+      },
+      {
+       "predicate": "arrows-reversed",
+       "step": 2,
+       "text": "Arrows go from the element of X (the first in the pair) to the element of Y (the second)."
+      }
+     ],
+     "notes": "The cartesian-diagram part of this exercise is a gap (see gaps). Second part is a judgement of given pairs, not a construction."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u1-2-1",
+     "need_kind": "ordered-pair writer for a relation",
+     "description": "think-and-discuss-1: write statements (students and the books they read) as ordered pairs from X to Y.",
+     "why": "Student must write a set of ordered pairs. product_builder relation mode is limited to 4 numbers per set and numbers only (here 5 students × 4 book types, words), and the statements are on a previous page. No kind fits."
+    },
+    {
+     "lo_id": "lo:pp3u1-2-2",
+     "need_kind": "arrow diagram of an unstated relation",
+     "description": "think-and-discuss-2: represent a set of ordered pairs as an arrow diagram.",
+     "why": "The stem does not say which ordered pairs (they come from the previous activity), so the widget could not stand alone and its key cannot be read from the stem."
+    },
+    {
+     "lo_id": "lo:pp3u1-2-2",
+     "need_kind": "cartesian diagram with large values",
+     "description": "drill-1 First (cartesian diagram part): plot R = {(1,12),(1,21),(2,12),(2,21),(2,52)}.",
+     "why": "pair_plotter needs lattice points on a grid of at most 16 steps per axis; y values 12, 21 and 52 cannot all sit on a step of one board that reaches 52 (a step of 1 would need 52 steps), so no grid holds them."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u1-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u1-3-2",
+     "need_kind": "pair_plotter (cartesian diagram) or arrow_builder",
+     "description": "pp3u1-3:think-and-discuss-1: Write each relation and represent it by a cartesian diagram.",
+     "why": "The relations are in the book's figures. Their sets and pairs are not in the exercise text, so a spec would have to use numbers I made up. pair_plotter could plot a cartesian diagram, but only once the pairs are known. The worked example's f on {3,4,5,6} is a different problem, so I did not substitute it."
+    }
+   ],
+   "notes": "I wrote no templates for this lesson. drill-1, drill-2 and think-and-discuss-2 ask the student to pick which diagrams are functions. That is reading figures, not building anything. think-1 is an open explanation. Objective 3 (domain, codomain and range) has no exercises. The only construction exercise is think-and-discuss-1, and I recorded it as a gap because its relations are not given."
+  },
+  {
+   "lesson": "pp3u1-4",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u1-4-3:drill-5-4",
+     "lo_id": "lo:pp3u1-4-3",
+     "book_item": "pp3u1-4:drill-5#4",
+     "parent_question_id": "expl:pp3u1-4-3:bk-example-2",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "linear",
+      "coefs": [
+       0,
+       2.5
+      ]
+     },
+     "stem": "Represent graphically the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2\\frac{1}{2}$. Draw the graph freehand across the whole board.",
+     "solution": [
+      "The rule is $f(x)=2.5$: every $x$ has the same image, so this is a constant function.",
+      "Make a table: $f(0)=2.5$, $f(1)=2.5$, $f(2)=2.5$, $f(-1)=2.5$, giving the pairs $(0, 2.5)$, $(1, 2.5)$, $(2, 2.5)$, $(-1, 2.5)$.",
+      "Mark these points on the square net: they all lie at the same height.",
+      "Draw the straight line through them, parallel to the x-axis and meeting the y-axis at $(0, 2.5)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "vertically-displaced",
+       "step": 2,
+       "text": "Look at the table of values: what is the image of every x? Check the height at which your line meets the y-axis."
+      },
+      {
+       "predicate": "partial-coverage",
+       "step": 4,
+       "text": "The domain is all of R, so the line should run across the whole visible board, not stop part-way."
+      },
+      {
+       "predicate": "fails-vertical-line-test",
+       "step": 4,
+       "text": "A function gives one image for each x. Draw a single line moving from left to right without doubling back."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from the rule: does the image change when x changes? Use that to decide the direction of the line."
+      }
+     ],
+     "notes": "Line_drawer needs whole b, so the half-valued constant uses the freehand linear curve_sketcher on the default board (2.5 is within −5..5)."
+    }
+   ],
+   "gaps": [],
+   "notes": "Other exercises (identify polynomials, find degree, evaluate values, prove f(3)=g(3)=0, think-and-discuss) are readings or calculations, not constructions, so no gaps."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u1-1-3",
+   "need_kind": "none",
+   "description": "think-3: represent N×N, Z×Z, Q×Q and R×R on a graphical net",
+   "why": "The products are infinite sets with an open-ended description. No widget grades an infinite lattice, a dense set, or a whole plane as a drawing, and the book gives no specific points."
+  },
+  {
+   "lo_id": "lo:pp3u1-2-1",
+   "need_kind": "ordered-pair writer for a relation",
+   "description": "think-and-discuss-1: write statements (students and the books they read) as ordered pairs from X to Y.",
+   "why": "Student must write a set of ordered pairs. product_builder relation mode is limited to 4 numbers per set and numbers only (here 5 students × 4 book types, words), and the statements are on a previous page. No kind fits."
+  },
+  {
+   "lo_id": "lo:pp3u1-2-2",
+   "need_kind": "arrow diagram of an unstated relation",
+   "description": "think-and-discuss-2: represent a set of ordered pairs as an arrow diagram.",
+   "why": "The stem does not say which ordered pairs (they come from the previous activity), so the widget could not stand alone and its key cannot be read from the stem."
+  },
+  {
+   "lo_id": "lo:pp3u1-2-2",
+   "need_kind": "cartesian diagram with large values",
+   "description": "drill-1 First (cartesian diagram part): plot R = {(1,12),(1,21),(2,12),(2,21),(2,52)}.",
+   "why": "pair_plotter needs lattice points on a grid of at most 16 steps per axis; y values 12, 21 and 52 cannot all sit on a step of one board that reaches 52 (a step of 1 would need 52 steps), so no grid holds them."
+  },
+  {
+   "lo_id": "lo:pp3u1-3-2",
+   "need_kind": "pair_plotter (cartesian diagram) or arrow_builder",
+   "description": "pp3u1-3:think-and-discuss-1: Write each relation and represent it by a cartesian diagram.",
+   "why": "The relations are in the book's figures. Their sets and pairs are not in the exercise text, so a spec would have to use numbers I made up. pair_plotter could plot a cartesian diagram, but only once the pairs are known. The worked example's f on {3,4,5,6} is a different problem, so I did not substitute it."
+  }
+ ]
+}

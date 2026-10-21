@@ -123,6 +123,8 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
         bundles.append(gq_out)
     wdir = unit_dir(book, widgets_dir(book), slugs, "widgets")
     # s7b-*: the book-widget variant's runs (book_widgets.py, runbook/widgets-book.workflow.js), read beside S7's own
+    # and like them FAIL CLOSED: a claim any run refused stays held until a person decides. A run made with a prompt
+    # found defective is moved to runs/<book>/widgets/superseded/ with the reason, never silently outvoted.
     verdicts = latest(book, "widgets", "s7-verify") + latest(book, "widgets", "s7b-verify")
     if any(wdir.glob("*.json")) and verdicts and dsn:
         run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn,

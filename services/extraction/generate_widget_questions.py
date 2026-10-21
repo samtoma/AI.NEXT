@@ -415,8 +415,8 @@ INSTRUMENTS = {
     "product_builder": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added "
         "automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X "
         "and Y are non-empty lists of numbers. RELATION (book widgets, 2026-10-21): {\"mode\":\"relation\",\"X\":[-1,1,2],"
-        "\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board and the student taps the "
-        "subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is "
+        "\"Y\":[2,4,6,8],\"pairs\":[[-1,2],[1,6],[2,8]]} — every pair of X×Y is on the board, with the answer's pairs "
+        "turned round added as decoys (so reversed-pairs can fire), and the student taps the subset a rule gives; the stem states the rule (\"a R b means b = 2a + 4\"), never the pairs, and no total is "
         "shown. It reports extra-pairs (a pair of X×Y the rule leaves out), reversed-pairs (an answer pair turned "
         "round) or missing-pairs.",
     "line_drawer": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line "
@@ -2070,6 +2070,15 @@ def author_args(book, graph, course: str, figures: dict | None = None) -> dict:
                                                   "contract": contract, "objectives": objs})
 
 
+def _board_text(grid: dict) -> str:
+    g = _grid(grid)
+    if not g:
+        return "a board of its own (malformed)"
+    (x0, x1), (y0, y1), sx, sy = g
+    step = f"step {sx:g}" if sx == sy else f"steps {sx:g} along x and {sy:g} along y"
+    return f"THIS question's board: x from {x0:g} to {x1:g}, y from {y0:g} to {y1:g}, {step} — every grid point a tap or a handle can land on"
+
+
 def verify_args(book, graph, questions: list[dict]) -> dict:
     """args for widgets.workflow.js (mode verify): the stem and the instrument, never the solution."""
     import book_config
@@ -2082,6 +2091,8 @@ def verify_args(book, graph, questions: list[dict]) -> dict:
             "question_id": q["id"], "template_id": q["family"], "template_sha": q["template_sha"],
             "lo_id": q["lo_id"], "kind": kind, "spec": q["choices"]["spec"], "stem": q["stem"],
             "instrument": INSTRUMENTS.get(kind, ""),
+            # the board a spec's own grid sets (grid.ts) is the instrument, not the answer: the verifier is told it
+            **({"board": _board_text(q["choices"]["spec"]["grid"])} if isinstance(q["choices"]["spec"].get("grid"), dict) else {}),
             "reading_fields": READING_FIELDS.get(kind, {}),
             # W1: the KIND's can_emit table — never this question's own mode, which would leak the spec to the
             # blind verifier; it reads the mode from the stem, as it reads every other field

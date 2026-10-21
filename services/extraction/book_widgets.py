@@ -65,6 +65,8 @@ def author_args(book_name: str, slugs: list[str], dsn: str) -> dict:
     graph = GW.PgGraph(dsn)
     mcs, los, db_qs, teaching = graph.misconceptions(), graph.objectives(), graph.questions(), graph.teaching()
     qs, wes = compiled(book_name, slugs)
+    # a part that already has a book widget is not offered again (a re-run adds, never duplicates)
+    done = {json.loads(f.read_text()).get("book_item") for f in BRG.widgets_dir(book_name).glob("*.json")}
     lessons = []
     for slug in slugs:
         rec = json.loads((HERE / "book-records" / book_name / f"{slug}.json").read_text())
@@ -100,6 +102,8 @@ def author_args(book_name: str, slugs: list[str], dsn: str) -> dict:
                 return (first_q, "question") if first_q else (None, None)
             parts = []
             for p in it.get("parts") or [{"label": None, "stem": None}]:
+                if f"{it['id']}#{p['label']}" in done or (p.get("label") is None and it["id"] in done):
+                    continue
                 pid, pk = parent(p.get("label"))
                 if not pid:
                     continue   # nothing in the database to hang it on: no widget can be shipped for it
