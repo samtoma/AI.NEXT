@@ -1301,7 +1301,7 @@ def student_texts(bundle: dict, where: str) -> list[dict]:
     for q in bundle.get("questions") or []:
         shown = {k: q.get(k) for k in ("stem", "answer", "solution", "correct_answer", "canonical_solution")}
         ch = q.get("choices")
-        shown["choices"] = {k: v for k, v in ch.items() if k != "pending_review"} if isinstance(ch, dict) else ch
+        shown["choices"] = {k: v for k, v in ch.items() if k not in ("pending_review", "pending_hints")} if isinstance(ch, dict) else ch
         rows += [{"where": q["id"], "text": t} for t in _strings(shown)]
     for e in bundle.get("explanation_entries") or []:
         rows += [{"where": e["id"], "text": t} for t in _strings(e.get("content"))]

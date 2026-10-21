@@ -527,6 +527,27 @@ export function ChatQuestionCard({
                     guessing at one of the LO's OTHER misconceptions — which used
                     to repeat the same borrowed explanation across unrelated
                     questions on the same objective. */}
+                {/* A BOOK WIDGET'S METHOD HINT — the step to check for the
+                    construction she built, when no misconception names it.
+                    Shown above the worked solution, never instead of a
+                    refutation (the server sends none when one was served). */}
+                {result.hint && !result.refutation && !result.isCorrect && !answerOnly && (
+                  <div
+                    className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
+                  >
+                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent-deep">
+                      check this step
+                    </p>
+                    <p className="mt-1.5 font-read text-[1rem] text-ink">
+                      <TeX text={result.hint.text} />
+                    </p>
+                    {debug && (
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                        hint · via {result.hint.predicate} · solution step {result.hint.step}
+                      </p>
+                    )}
+                  </div>
+                )}
                 {!result.refutation && !result.isCorrect && !answerOnly && result.solution.length > 0 && (
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}

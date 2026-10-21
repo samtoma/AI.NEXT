@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u1-1-2:drill-2-b",
+ "lo_id": "lo:pp3u1-1-2",
+ "book_item": "pp3u1-1:drill-2#B",
+ "parent_question_id": "q:pp3u1-1-2:bk-drill-2-b",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "product_builder",
+ "spec": {
+  "X": [
+   4,
+   0
+  ],
+  "Y": [
+   4,
+   5,
+   -2
+  ]
+ },
+ "stem": "If $Y=\\{4,0\\}$ and $Z=\\{4,5,-2\\}$, find $Y\\times Z$. Tap all the ordered pairs that belong to $Y\\times Z$.",
+ "solution": [
+  "$Y\\times Z$ has first projections from Y and second projections from Z.",
+  "Pair 4 with each element of Z: (4, 4), (4, 5), (4, -2).",
+  "Pair 0 with each element of Z: (0, 4), (0, 5), (0, -2).",
+  "$Y\\times Z=\\{(4, 4), (4, 5), (4, -2), (0, 4), (0, 5), (0, -2)\\}$, 6 pairs."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "reversed-pairs",
+   "misconception_id": "mc:pp3u1-1-2:product-order-ignored"
+  }
+ ],
+ "hints": [
+  {
+   "predicate": "missing-pairs",
+   "step": 2,
+   "text": "Take each element of the first set in turn and pair it with every element of the second set. Count how many pairs each element should have."
+  }
+ ],
+ "notes": "Widget X is the book's Y, widget Y is the book's Z. Matches book answer."
+}

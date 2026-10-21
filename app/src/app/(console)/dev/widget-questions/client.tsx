@@ -69,6 +69,28 @@ export function StoredWidgets({ questions }: { questions: SpineQuestion[] }) {
                     </li>
                   ))}
                 </ul>
+                {/* Book widgets (lib/widget-hint.ts): the confirmed method hints, and the held ones a person still decides */}
+                {(["hints", "pending_hints"] as const).map((key) => {
+                  const hs = ((w as unknown as Record<string, unknown> | undefined)?.[key] ?? []) as {
+                    predicate: string;
+                    step: number;
+                    text: string;
+                  }[];
+                  return hs.length ? (
+                    <div key={key} className="mt-1.5">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+                        {key === "hints" ? "predicates → method hints" : "held hints (not shown to students)"}
+                      </p>
+                      <ul className="mt-1 grid gap-0.5">
+                        {hs.map((h) => (
+                          <li key={h.predicate} className="text-[11.5px] leading-relaxed text-ink-soft">
+                            <span className="font-mono text-gold">{h.predicate}</span> · step {h.step} — {h.text}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null;
+                })}
               </div>
             </section>
           );

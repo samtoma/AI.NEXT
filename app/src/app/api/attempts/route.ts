@@ -18,6 +18,7 @@ import {
 } from "@/lib/socratic-probing";
 import { advanceIfMastered } from "@/lib/progression-db";
 import { attemptCanCrossGate } from "@/lib/progression";
+import { widgetHint } from "@/lib/widget-hint";
 
 /**
  * A refusal decided INSIDE the unit of work.
@@ -639,6 +640,9 @@ export async function POST(req: Request) {
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,
       refutation: served,
+      // A book widget's method hint (lib/widget-hint.ts): only where no
+      // misconception was diagnosed, and only one the blind verifier confirmed.
+      hint: isWidget && !isCorrect && !answerOnly ? widgetHint(q.choices, predicate, misconceptionId) : null,
       // Probing as it applied to THIS attempt (ADR-0021) — declared only
       // when the attempt was written inside a learn-mode lesson sitting
       // (`attemptProbingDeclaration`, fix pass 2). There the client adopts

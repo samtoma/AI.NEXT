@@ -92,13 +92,18 @@ def describe(kind: str, predicate: str) -> str | None:
 
 
 def widget_choices(kind: str, spec: dict, diagnostics: list[tuple[str, str]],
-                   held: list[tuple[str, str, str]] | None = None) -> dict:
+                   held: list[tuple[str, str, str]] | None = None,
+                   hints: list[dict] | None = None) -> dict:
     """Build the `choices` payload for a widget question.
 
     `diagnostics` is a list of (predicate, misconception_id). Order is the order
     a reviewer reads them in, so put the likeliest error first. `held` is a list
     of (predicate, misconception_id, why) a human has still to keep or drop
     (decision 47): stored under `pending_review`, never read by the app.
+    `hints` (book widgets, Tamer 2026-10-21) is a list of {predicate, step, text}:
+    a method hint for a predicate no misconception names, grounded in step `step`
+    of the canonical solution. The app shows one only where no misconception was
+    diagnosed; an unconfirmed one is held under `pending_hints`, never read.
     """
     out = {
         "kind": kind,
@@ -109,6 +114,8 @@ def widget_choices(kind: str, spec: dict, diagnostics: list[tuple[str, str]],
     }
     if held:
         out["pending_review"] = [{"predicate": p, "misconception_id": m, "why": w} for p, m, w in held]
+    if hints:
+        out["hints"] = [{"predicate": h["predicate"], "step": h["step"], "text": h["text"]} for h in hints]
     return out
 
 
@@ -157,7 +164,9 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
     # Decision 47 (specs/003 FR-4306 amendment): a mapping the blind verifier did not confirm is HELD in
     # `pending_review` until a human keeps or drops it, and a widget whose every mapping is held ships as a
     # plain right/wrong widget. A widget with no mapping at all, active or held, is still refused.
-    if not isinstance(diags, list) or (not diags and not held):
+    hints = choices.get("hints") or []
+    held_hints = choices.get("pending_hints") or []
+    if not isinstance(diags, list) or (not diags and not held and not hints and not held_hints):
         problems.append(
             f"{qid}: no diagnostics — a widget with no predicate mapping can mark an "
             f"answer wrong but can never say why, which is the reason for ADR-0009"
@@ -182,6 +191,19 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
             problems.append(f"{qid}: held predicate {d['predicate']!r} names misconception "
                             f"{d['misconception_id']!r}, which does not exist")
 
+    # book widgets: a method hint, active or held, names a predicate THIS question can emit and no misconception
+    for h in [*hints, *held_hints] if isinstance(hints, list) and isinstance(held_hints, list) else [None]:
+        if not isinstance(h, dict) or not h.get("predicate") or not str(h.get("text") or "").strip():
+            problems.append(f"{qid}: a hint is {{predicate, step, text}}")
+            continue
+        if h["predicate"] not in allowed_held:
+            problems.append(f"{qid}: hint predicate {h['predicate']!r} is not one {kind} can emit")
+        elif emits is not None and h["predicate"] not in emits:
+            problems.append(f"{qid}: hint predicate {h['predicate']!r} can never fire here — {kind} with {where} "
+                            f"emits only {sorted(emits)}")
+        if h["predicate"] in active:
+            problems.append(f"{qid}: predicate {h['predicate']!r} has a misconception and a hint — the misconception wins, "
+                            "so the hint would never show")
     allowed = predicates_for(kind)
     seen: set[str] = set()
     for d in diags:

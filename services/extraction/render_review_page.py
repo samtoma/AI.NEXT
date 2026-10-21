@@ -755,10 +755,13 @@ def dossier_g3_mappings(queue: dict, source: str) -> str:
 <p class="stem">{md_html(it.get("stem"))}</p>
 <p class="note">What the blind checker read off the question:</p>
 <pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{html.escape(json.dumps(reading, ensure_ascii=False))}</pre>
-<p><span class="tag info">claim</span> a student whose construction fires <b>{html.escape(it["predicate"])}</b>
+{(f"""<p><span class="tag info">method hint</span> a student whose construction fires <b>{html.escape(it["predicate"])}</b>
+{f'(“{html.escape(it["predicate_meaning"])}”)' if it.get("predicate_meaning") else ""} is shown, from step {html.escape(str(it.get("hint_step") or "?"))} of the solution:</p>
+<p class="note">{md_html(it["hint"])}</p>""" if it.get("hint") is not None else
+f"""<p><span class="tag info">claim</span> a student whose construction fires <b>{html.escape(it["predicate"])}</b>
 {f'(“{html.escape(it["predicate_meaning"])}”)' if it.get("predicate_meaning") else ""} holds
 <b>{md_html(it.get("misconception_label") or it["misconception_id"])}</b></p>
-{f'<p class="note">{md_html(it["misconception_description"])}</p>' if it.get("misconception_description") else ""}
+{f'<p class="note">{md_html(it["misconception_description"])}</p>' if it.get("misconception_description") else ""}""")}
 <p class="advice"><span class="tag attention">checker refused</span> {md_html(it.get("why") or "no verdict")}</p>
 <details><summary>How the checker built a correct answer</summary><p class="note">{md_html(it.get("construction") or "—")}</p></details>
 {verdict_box(it["key"], [("keep", "Keep the claim"), ("drop", "Drop it")])}</article>""")
@@ -770,7 +773,10 @@ def dossier_g3_mappings(queue: dict, source: str) -> str:
                  "misconception to a student and S5 never uses it as evidence — until you decide it.",
                  "Keep a claim only if a student holding that misconception would build exactly what fires the "
                  "predicate, on this question's numbers. Drop it if the predicate would mostly fire for another "
-                 "reason, or never for this error. A dropped claim is deleted; the widget stays."],
+                 "reason, or never for this error. A dropped claim is deleted; the widget stays.",
+                 "A METHOD HINT (book widgets) is shown when its predicate fires and no misconception is named. Keep it "
+                 "only if it is right for this question, points at the step the student got wrong, and does not give "
+                 "the answer away."],
                 cards, {"bundle": source, "format": queue.get("format"), "held": len(items),
                         "sampled": [it["key"] for it in items]})
 

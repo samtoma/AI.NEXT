@@ -877,6 +877,11 @@ class PgGraph:
                 self._closures[lo] = prerequisite_closure(cur, lo)
         return self._closures[lo]
 
+    def teaching(self) -> dict[str, dict]:
+        """The book's worked examples (explanation_library), which a book widget may be parented to (migration 038)."""
+        return {i: {"lo_id": lo} for i, lo in self._rows(
+            "SELECT id, lo_id FROM explanation_library WHERE entry_type = 'worked_example'")}
+
     def questions(self) -> dict[str, dict]:
         return {i: {"lo_id": lo, "source": src, "stem": stem, "type": t, "answer": ans}
                 for i, lo, src, stem, t, ans in self._rows(
@@ -946,6 +951,9 @@ class FixtureGraph:
     def questions(self):
         return self.d.get("questions", {})
 
+    def teaching(self):
+        return self.d.get("teaching", {})
+
     def modules(self, course):
         return self.d.get("modules", [])
 
@@ -972,7 +980,11 @@ class FixtureGraph:
 # ==========================================================================
 
 TEMPLATE_KEYS = {"format", "id", "lo_id", "parent_question_id", "tier", "kind", "instances", "spec",
-                 "stem", "solution", "diagnostics", "notes", "source_page", "verified_as"}
+                 "stem", "solution", "diagnostics", "notes", "source_page", "verified_as",
+                 # BOOK WIDGETS (runbook/widgets-book.workflow.js, Tamer 2026-10-21): the book exercise the widget puts
+                 # on an instrument, a worked-example parent where the objective has no book question (migration 038),
+                 # and method hints for the predicates no misconception names
+                 "book_item", "parent_kind", "hints"}
 
 
 def _render_value(v, env):
@@ -1010,9 +1022,14 @@ def check_template(raw: dict) -> list[str]:
     m = re.match(r"^wt:([a-z0-9-]+):[a-z0-9][a-z0-9-]*$", str(raw.get("id", "")))
     if not m or (tail and m.group(1) != tail):
         p.append("id must be wt:<objective tail>:<slug>, naming its own objective")
-    q = re.match(r"^q:([a-z0-9-]+):[A-Za-z0-9._-]+$", str(raw.get("parent_question_id") or ""))
+    pk = raw.get("parent_kind", "question")
+    if pk not in ("question", "teaching"):
+        p.append("parent_kind is 'question' or 'teaching' (migration 038)")
+    q = re.match(r"^q:([a-z0-9-]+):[A-Za-z0-9._-]+$" if pk != "teaching" else r"^expl:([a-z0-9-]+):[A-Za-z0-9._-]+$",
+                 str(raw.get("parent_question_id") or ""))
     if not q or (tail and q.group(1) != tail):
-        p.append("parent_question_id is required: the objective's anchor book question (FR-1101, §3.10)")
+        p.append("parent_question_id is required: the objective's anchor book question (FR-1101, §3.10)"
+                 + (", or with parent_kind 'teaching' its worked example expl:<objective tail>:<item>" if pk == "teaching" else ""))
     if raw.get("tier") not in ("basic", "standard", "advanced"):
         p.append("tier must be basic|standard|advanced")
     if raw.get("kind") not in W.contract()["kinds"]:
@@ -1034,8 +1051,12 @@ def check_template(raw: dict) -> list[str]:
     if not isinstance(raw.get("solution"), list) or not raw["solution"]:
         p.append("solution must be a non-empty list of step templates")
     ds = raw.get("diagnostics")
-    if not isinstance(ds, list) or not ds:
-        p.append("diagnostics must map at least one predicate to a misconception (ADR-0009)")
+    hs = raw.get("hints")
+    if hs is not None:
+        p += _check_hints(raw, hs)
+    if not isinstance(ds, list) or (not ds and not hs):
+        p.append("diagnostics must map at least one predicate to a misconception (ADR-0009)"
+                 + (" — or, for a book widget, hints must give a method hint for at least one" if "book_item" in raw else ""))
     else:
         for d in ds:
             if not isinstance(d, dict) or set(d) != {"predicate", "misconception_id"}:
@@ -1051,6 +1072,35 @@ def check_template(raw: dict) -> list[str]:
                     FE.parse(src)
             except FE.EvalError as e:
                 p.append(str(e))
+    return p
+
+
+def _check_hints(raw: dict, hs) -> list[str]:
+    """A book widget's method hints: [{predicate, step, text}] — a predicate THIS kind declares that no diagnostic of the
+    template names (a misconception's refutation always wins), once each; `step` the 1-based solution step the hint is
+    taken from (grounded, never solved afresh); `text` one or two sentences that point at the method, never the answer."""
+    p = []
+    if not isinstance(hs, list) or not hs:
+        return ["hints, when present, is a non-empty list of {predicate, step, text}"]
+    preds = set((W.contract()["kinds"].get(raw.get("kind")) or {}).get("predicates") or {})
+    mapped = {d.get("predicate") for d in raw.get("diagnostics") or [] if isinstance(d, dict)}
+    seen = set()
+    n_steps = len(raw.get("solution") or []) if isinstance(raw.get("solution"), list) else 0
+    for h in hs:
+        if not isinstance(h, dict) or set(h) != {"predicate", "step", "text"}:
+            p.append("each hint is {predicate, step, text}")
+            continue
+        if h["predicate"] not in preds or h["predicate"] == W.OK:
+            p.append(f"hint predicate {h['predicate']!r} is not one {raw.get('kind')} declares")
+        if h["predicate"] in mapped:
+            p.append(f"hint predicate {h['predicate']!r} already names a misconception — its refutation is shown, never the hint")
+        if h["predicate"] in seen:
+            p.append(f"hint predicate {h['predicate']!r} given twice")
+        seen.add(h["predicate"])
+        if not isinstance(h["step"], int) or isinstance(h["step"], bool) or not 1 <= h["step"] <= n_steps:
+            p.append(f"hint for {h['predicate']!r}: step must be the number of a solution step (1–{n_steps})")
+        if not isinstance(h["text"], str) or not h["text"].strip() or len(h["text"]) > 300:
+            p.append(f"hint for {h['predicate']!r}: text is one or two sentences (at most 300 characters)")
     return p
 
 
@@ -1097,6 +1147,7 @@ def build_from_templates(templates: list[dict]) -> tuple[list[dict], list[str]]:
                 spec = _render_value(tpl["spec"], env)
                 stem = FE.render(tpl["stem"], env)
                 steps = [{"step": n, "text_md": FE.render(s, env)} for n, s in enumerate(tpl["solution"], 1)]
+                hints = [dict(h, text=FE.render(h["text"], env)) for h in tpl.get("hints") or []]
             except FE.EvalError as e:
                 problems.append(f"{tpl['id']} instance {i}: {e}")
                 continue
@@ -1108,14 +1159,19 @@ def build_from_templates(templates: list[dict]) -> tuple[list[dict], list[str]]:
                 "question_type": "widget",
                 "stem": stem,
                 "choices": W.widget_choices(tpl["kind"], spec,
-                                            [(d["predicate"], d["misconception_id"]) for d in tpl["diagnostics"]]),
+                                            [(d["predicate"], d["misconception_id"]) for d in tpl["diagnostics"]],
+                                            hints=hints),
                 "correct_answer": W.OK,
                 "canonical_solution": steps,
                 "parent_question_id": tpl["parent_question_id"],
-                "source_note": f"Generated from template family {tpl['id']}.",
+                # the book item first: the loader reads the family back from the note's end (load_generated_questions.py)
+                "source_note": (f"The book's own exercise {tpl['book_item']} on an instrument. " if tpl.get("book_item") else "")
+                               + f"Generated from template family {tpl['id']}.",
                 "family": tpl["id"],
                 "template_sha": tpl["_sha"],
             }
+            if tpl.get("parent_kind", "question") != "question":
+                q["parent_kind"] = tpl["parent_kind"]
             if tpl.get("source_page") is not None:
                 q["source_page"] = tpl["source_page"]
             questions.append(q)
@@ -1153,9 +1209,10 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False,
         if q["lo_id"] not in los:
             problems.append(f"{q['id']}: lo_id {q['lo_id']} is not in the graph")
             continue
-        parent = qs.get(q.get("parent_question_id"))
+        parent = (graph.teaching() if q.get("parent_kind") == "teaching" else qs).get(q.get("parent_question_id"))
         if parent is None:
-            problems.append(f"{q['id']}: parent {q.get('parent_question_id')} is not a question in the database")
+            problems.append(f"{q['id']}: parent {q.get('parent_question_id')} is not a "
+                            + ("worked example" if q.get("parent_kind") == "teaching" else "question") + " in the database")
         elif parent["lo_id"] != q["lo_id"]:
             problems.append(f"{q['id']}: parent {q['parent_question_id']} is on {parent['lo_id']}, not {q['lo_id']}")
         allowed = graph.closure(q["lo_id"])
@@ -1180,7 +1237,7 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False,
                                 "question's objective nor a prerequisite of it (FR-1215)")
             kept.append(d)
         q["choices"]["diagnostics"] = kept
-        if not kept:
+        if not kept and not q["choices"].get("hints"):   # a book widget's confirmed hint says why, too
             if orphans is not None and gone and not any(p.startswith(q["id"] + ":") for p in problems):
                 orphans.append((q, gone))
             else:
@@ -1526,6 +1583,13 @@ def verdict_scan(templates: list[dict], questions: list[dict], files: list[Path]
                 ok = all(v is not None and v.get("matches") is True for v in vs)
                 why = " / ".join(str(v.get("why")) for v in vs if v is not None and v.get("matches") is not True and v.get("why"))
                 st[pred] = (ok, "" if ok else (why or "the verifier gave no verdict on this mapping"))
+            hinted = {h["predicate"] for h in q["choices"].get("hints") or []}
+            for pred in hinted:   # book widgets: a hint is judged on its own, like a mapping, and held unless confirmed
+                vs = [next((v for v in r.get("hints") or [] if _predicate_of(v.get("predicate"), hinted) == pred), None)
+                      for r in rs]
+                ok = all(v is not None and v.get("ok") is True for v in vs)
+                why = " / ".join(str(v.get("why")) for v in vs if v is not None and v.get("ok") is not True and v.get("why"))
+                st["hint:" + pred] = (ok, "" if ok else (why or "the verifier gave no verdict on this hint"))
         if reasons or not mine:
             rejected[tpl["id"]] = reasons or ["no instances"]
         else:
@@ -1593,6 +1657,26 @@ def hold_pending(questions: list[dict], status: dict, reviews: dict | None = Non
             ch.pop("pending_review", None)
         n["active"] += len(active)
         n["held"] += len(held)
+        # book widgets: the same rule for a method hint — confirmed it is shown, else held (`pending_hints`, never read)
+        hints, held_hints = [], []
+        for h in ch.get("hints") or []:
+            ok, why = st.get("hint:" + h["predicate"], (False, "the verifier gave no verdict on this hint"))
+            rv = reviews.get(mapping_key(q["id"], "hint:" + h["predicate"]))
+            if ok or (rv and rv["verdict"] == "keep"):
+                hints.append(h)
+            elif not (rv and rv["verdict"] == "drop"):
+                held_hints.append({**h, "why": why, **({"verifier_runs": verifier_runs} if verifier_runs else {})})
+        if "hints" in ch or held_hints:
+            if hints:
+                ch["hints"] = hints
+            else:
+                ch.pop("hints", None)
+            if held_hints:
+                ch["pending_hints"] = held_hints
+            else:
+                ch.pop("pending_hints", None)
+            n["hints_active"] = n.get("hints_active", 0) + len(hints)
+            n["hints_held"] = n.get("hints_held", 0) + len(held_hints)
     return n
 
 
@@ -1617,6 +1701,14 @@ def pending_queue(questions: list[dict], graph, verify_files: list[Path]) -> dic
                           "predicate_meaning": kinds[q["choices"]["kind"]]["predicates"].get(d["predicate"]),
                           "misconception_id": d["misconception_id"], "misconception_label": m.get("label"),
                           "misconception_description": m.get("description"), "why": d.get("why")})
+        for h in (q["choices"].get("pending_hints") or []):   # book widgets: a held method hint
+            r = readings.get(q["id"]) or {}
+            items.append({"key": mapping_key(q["id"], "hint:" + h["predicate"]), "question_id": q["id"],
+                          "template_id": q["family"], "lo_id": q["lo_id"], "kind": q["choices"]["kind"],
+                          "stem": q["stem"], "reading": r.get("reading"), "construction": r.get("construction"),
+                          "predicate": h["predicate"],
+                          "predicate_meaning": kinds[q["choices"]["kind"]]["predicates"].get(h["predicate"]),
+                          "hint": h["text"], "hint_step": h.get("step"), "why": h.get("why")})
     return {"format": "ainext.widget-mapping-review/1",
             "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a "
                     "diagnosis, never S5 evidence — until a human keeps or drops it",
@@ -1812,6 +1904,8 @@ def verify_args(book, graph, questions: list[dict]) -> dict:
                              "misconception_label": (mcs.get(d["misconception_id"]) or {}).get("label"),
                              "misconception_description": (mcs.get(d["misconception_id"]) or {}).get("description")}
                             for d in q["choices"]["diagnostics"]],
+            **({"hints": [{"predicate": h["predicate"], "predicate_meaning": preds.get(h["predicate"]), "text": h["text"]}
+                          for h in q["choices"]["hints"]]} if q["choices"].get("hints") else {}),
         })
     return book_config.workflow_args(book, extra={"mode": "verify", "widgets": items}) if book else \
         {"mode": "verify", "widgets": items}
@@ -2223,7 +2317,9 @@ def main_templates(args) -> int:
         hold_pending(s5_view, status, reviews, runs)
         print(f"verdicts: {len(verified)}/{len(templates)} template(s) accepted; mappings: {counts['active']} active, "
               f"{counts['held']} held for human review, {counts['kept_by_review']} kept and "
-              f"{counts['dropped_by_review']} dropped by review (decision 47)")
+              f"{counts['dropped_by_review']} dropped by review (decision 47)"
+              + (f"; method hints: {counts.get('hints_active', 0)} active, {counts.get('hints_held', 0)} held"
+                 if "hints_active" in counts else ""))
         if args.pending_review:
             queue = pending_queue([q for q in questions if q["family"] in verified], graph, args.verdicts)
             args.pending_review.parent.mkdir(parents=True, exist_ok=True)

@@ -514,6 +514,10 @@ export interface AttemptResult {
     reviewed: boolean;
     steps: { step: number; text_md: string }[];
   } | null;
+  /** A book widget's method hint for the predicate that fired, when no
+   *  misconception was diagnosed (lib/widget-hint.ts). Grounded in step
+   *  `step` of the canonical solution; never the answer. */
+  hint?: { predicate: string; step: number; text: string } | null;
 }
 
 /* ---- Per-subject roll-up (Wave 1.5 — subject home; never blended) ---- */

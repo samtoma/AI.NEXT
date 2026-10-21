@@ -1,0 +1,324 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v1",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "2414d4a6f0b18cf95616466c7335150fdf6900d435832ec6e00bb5c4e80a965a",
+  "args_sha256": "92163c4b9ad0634690655df866cc35922f82f3965659e1130b0aeca606d2f6da",
+  "generated_sha256": "0a69400a6192963cc55002b5facacb622d2f8fcb4f36af23fb39db77f9969858",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u1-1-2:w001",
+   "template_sha": "a5fdbc64cc731b77c422cfb730feceb6d8041db1ebdbb936b334f8c966859f40",
+   "reading": {
+    "X": [
+     2,
+     -1
+    ],
+    "Y": [
+     4,
+     0
+    ]
+   },
+   "construction": "Tap the four pairs (2,4), (2,0), (-1,4), (-1,0). Sets have 2 numbers each, within limits, so this is reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "Fires when the student builds Y×X: (4,2), (4,-1), (0,2), (0,-1). That is exactly the order-ignored error of treating X×Y as Y×X, so the diagnosis fits."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "Fires if the student taps only some of the correct pairs, e.g. (2,4), (2,0), (-1,4) but not (-1,0). The hint is correct and points to the step they skipped, which is pairing every element of X with every element of Y. It gives no pairs or coordinates, so it does not give the answer away. missing-pairs is in the can_emit table."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-2:w002",
+   "template_sha": "e2abcf0be7d73a0e918398d0d5054625cefae9682d44480cacd49a41d4cc5b01",
+   "reading": {
+    "X": [
+     4,
+     0
+    ],
+    "Y": [
+     4,
+     5,
+     -2
+    ]
+   },
+   "construction": "Tap all 6 pairs: (4,4),(4,5),(4,-2),(0,4),(0,5),(0,-2). Both sets have 2-3 numbers, so this is within the limits.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "reversed-pairs",
+     "matches": true,
+     "why": "Tapping the pairs of Z×Y, such as (4,4),(5,4),(-2,4),(4,0),(5,0),(-2,0), fires it. A student who treats X×Y and Y×X as the same builds exactly this."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "It fires when the student taps only some of the 6 correct pairs. The hint describes the correct method, helps the student find the missing pairs, and does not give any pairs away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-1-2:w003",
+   "template_sha": "9ed461cbd92d47e5c29f2e12d42237a891632b2494b4b9d06ebaed45f524263e",
+   "reading": {
+    "X": [
+     2,
+     -1
+    ],
+    "Y": [
+     2,
+     -1
+    ]
+   },
+   "construction": "Tap all four pairs: (2,2), (2,-1), (-1,2), (-1,-1). X and Y are both [2,-1], which is 2 numbers each and within the limits.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-pairs",
+     "ok": true,
+     "why": "A student who taps only some pairs, for example (2,2) and (-1,-1), fires it. The hint gives the correct method: pair each element of X with every element of X. It lists no pairs and no coordinates. 'First projection' is loose wording for 'first coordinate', but it doesn't mislead. The predicate can fire for this question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w001",
+   "template_sha": "138a830c2b1f05298294d663177bbbaf6afd48d471df2ae267dde63de4c8ce57",
+   "reading": {
+    "mode": "equation",
+    "m": 1,
+    "b": 2
+   },
+   "construction": "Equation mode, y = x + 2. Drag handles to lattice points (0,2) and (1,3) (or (-2,0) and (2,4)). Line has m=1, b=2; any two points on it are accepted. Neither starting handle position matters in equation mode. Within limits.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "intercept-wrong",
+     "matches": true,
+     "why": "Fires for a line with gradient 1 but intercept not 2, e.g. through (0,0),(1,1) or (0,-2),(1,-1). Students who get slope right but misjudge or ignore the +2 offset (or take f(0) wrongly) build this. Fires for this error."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "matches": false,
+     "why": "Would fire for gradient -1 (e.g. y = -x + 2 or -x-2). Equation mode can emit it, but for f(x)=x+2 the 'sign flip' of a positive gradient 1 gives -1; a student building y=-x+2 more plausibly misreads the graph orientation or swaps axes, and the predicate's refutation 'leans the other way' is legitimate. However, the misconception it names is plausible though less common; it does fire for a genuine sign error on the gradient, so it can match."
+    },
+    {
+     "predicate": "vertical-line",
+     "matches": false,
+     "why": "Can be emitted in equation mode (two handles with same x), but a student with an actual misconception for x+2 would rarely build a vertical line such as x=2 by reading 'x + 2' as a location on the x-axis; it mostly fires from accidental handle stacking, not a specific diagnosis."
+    },
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "Catch-all for wrong slope and wrong intercept; no single misconception attributed, and no diagnosis claimed for it."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Construct line y = x (through (0,0),(1,1)) fires it. Hint is mathematically right, directs the student to compute f(0) and compare with the y-intercept, and does not give the value of f(0) or the equation."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Construct line y=-x+2 through (0,2),(2,0): fires it. Hint is correct for f(x)=x+2, asks the student to test pairs and see whether f(x) rises or falls with x, without revealing the gradient or the answer."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Construct two handles at the same x, e.g. (2,0),(2,3): fires it. Hint is mathematically correct (a function gives one image per x) and points to a table of pairs without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Construct a line with gradient 2 and wrong intercept, e.g. through (0,0),(1,2): fires it. Hint tells the student to compute f(0), f(1), f(-1) and plot them; this is a method, gives no coordinates or final equation, and helps a student who has a wrong slope and intercept."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w002",
+   "template_sha": "ce4608615e2f26938d26007abdccccc84bf9e52e06a0952b2025da3c9e4f86dd",
+   "reading": {
+    "mode": "equation",
+    "m": 3,
+    "b": 0
+   },
+   "construction": "Equation mode, y = 3x. Drag the handles to (0,0) and (1,3) (or (-1,-3) and (2,6)); the line has gradient 3 and intercept 0, and the live equation reads y = 3x. All points are lattice points within the grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-inverted",
+     "why": "Fires with a line of gradient 1/3, e.g. through (0,0) and (3,1), when the student takes run over rise. The hint points to the rise per step of 1 to the right and gives no numbers, so it is accurate and helpful without giving the answer away.",
+     "ok": true
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "why": "Fires with y = -3x, e.g. through (0,0) and (1,-3). Checking whether g(1) is above or below the x-axis catches the sign error and does not reveal the value.",
+     "ok": true
+    },
+    {
+     "predicate": "intercept-wrong",
+     "why": "Fires with a parallel line such as y = 3x + 2, through (0,2) and (1,5). The hint tells the student to find g(0) from the rule and gives no value, so it directs the step they got wrong.",
+     "ok": true
+    },
+    {
+     "predicate": "vertical-line",
+     "why": "Fires when both handles share an x, e.g. (2,0) and (2,3). The hint says each x has exactly one image, so the graph cannot be vertical. That is correct and gives no coordinates.",
+     "ok": true
+    },
+    {
+     "predicate": "off-target",
+     "why": "Fires when neither the slope nor the intercept matches, e.g. y = 2x + 1. The hint asks the student to compute g(0), g(1) and g(-1) and plot those pairs. It names no values, so the student still has to do the work.",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w003",
+   "template_sha": "052a1a56b734e304aee8125fe0c3dce673da91b037aac0072370cfa3cbe9b4be",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": 0
+   },
+   "construction": "Equation mode, m=-2, b=0: drag the handles to (0,0) and (1,-2) (or (-1,2) and (1,-2)). The line y=-2x passes through them; any two points on it are accepted. Neither is at (-3,-2) or (1,1) restrictions, and points mode limits don't apply.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires with m=2, b=0 (e.g. (0,0),(1,2)). ℓ(1)=-2 lies below the axis, so checking above/below exposes the sign error without stating the line."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": false,
+     "why": "Fires with m=-1/2 (e.g. (0,0),(2,-1)), but the hint says 'Use your table' and this question has no table, so the student has nothing to refer to."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires with m=-2 and b≠0, e.g. (0,1),(1,-1). Finding ℓ(0) tells where the line crosses the y-axis, is correct, and doesn't state the equation."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "Can fire (two points with the same x), and the reasoning about one image per x is right, but it points to 'the table of pairs', which this question doesn't provide."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires with e.g. m=1, b=2. Asking for ℓ(0), ℓ(1), ℓ(-1) and plotting them is correct, gives a method not the values, and helps rebuild the line."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w004",
+   "template_sha": "edf9d14c5d42244bcfb402e095bc6f6504d6d32ccf6d11166c09e335fd95fcf4",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 5
+   },
+   "construction": "Equation mode with m=0, b=5: place the two handles at (-2,5) and (2,5), giving the horizontal line y=5. Both are lattice points in range and avoid the opening handle spots (-3,-2) and (1,1). Any two points with y=5 and different x also work.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on a horizontal line at the wrong height (slope 0 correct, b≠5). The hint is correct and prompts the student to think about the image of each x. It gives no value, so the student still has to find the height."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "It can fire when both points share an x. But the hint says every x has the same image and that the points need different x and the same y. That is the construction of the answer, a horizontal line, so it gives the answer away."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": false,
+     "why": "The correct slope is 0, so there is no sign to flip. A line with slope -0 is the correct slope and cannot fire this predicate. The hint's table-of-images advice does not match any student error here."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a sloped line with the wrong intercept, which is neither the correct slope nor the correct height. The hint asks the student to compute f(-1), f(0) and f(1) and compare them. That is correct, helpful, and does not reveal the value 5."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w005",
+   "template_sha": "6cc52713ced2aea51d861a39e5df8bc9ee63bf908c1bfdaa465760907b32a248",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": -4
+   },
+   "construction": "Equation mode, y = 0x - 4. Drag the two handles to (-2,-4) and (2,-4); the line through them is horizontal at y = -4. m=0 is a whole number and b=-4 is within -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "A horizontal line at the wrong height, e.g. y = 4 or y = -3, has the correct slope 0 and the wrong intercept. The hint asks for the image of every x and its sign. That prompts the missing step without stating the value. The predicate can fire in equation mode."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "A student who confuses f(x) = -4 with x = -4 and places both points at x = -4 gets a vertical line, so the predicate can fire. The hint says the points need different x but the same y. That is the construction of the answer, so it gives the step away. It also asks 'does that give a vertical line?' while describing a horizontal one, which is muddled."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A sloped line, e.g. through (0,0) and (1,1), matches neither the slope nor the intercept, so the predicate fires. The hint tells the student to compute f(-1), f(0) and f(1) from the rule and compare. That is a sound method and does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u1-4-3:w006",
+   "template_sha": "7d463e732892462be4789d4fa5d0c4fd4af47e53d747cbc3efc08e35ca38c4ba",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 0
+   },
+   "construction": "Equation mode with m=0, b=0: drag the two handles to lattice points (0,0) and (2,0) (any two points on the x-axis, e.g. (-3,0),(4,0)). The line y=0 is drawn. m=0 is a whole number and b=0 is within -5..5, so it satisfies every limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires with a horizontal line at the wrong height, e.g. through (0,2) and (3,2). The hint is right (parallel, wrong height), prompts the student to think about the image of every x, and gives no coordinates or equation."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": false,
+     "why": "Fires with two points of equal x, e.g. (2,0) and (2,3). The hint says the points have different x but the same y, which describes a horizontal line, not a vertical one. It is mathematically wrong and would confuse a student who built a vertical line. It also says every x has the same image, which is the actual answer's property."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires with a slanted line, e.g. through (0,1) and (1,3), where neither slope nor intercept matches. Evaluating f(-1), f(0), f(1) is correct and helpful, and the student must still do the step and then compare to her line. It states no answer."
+    }
+   ]
+  }
+ ]
+}

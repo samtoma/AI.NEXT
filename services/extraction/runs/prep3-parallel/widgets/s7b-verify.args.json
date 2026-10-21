@@ -1,0 +1,535 @@
+{
+  "book": {
+    "config_version": 1,
+    "book": "prep3-parallel",
+    "title": "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+    "course_id": "course:prep3-parallel-math-en",
+    "curriculum": "eg-national-en",
+    "subject": "math",
+    "grade": "prep-3",
+    "language": "en",
+    "direction": "ltr",
+    "id_prefixes": [
+      "pp3geo",
+      "pp3t",
+      "pp3u"
+    ],
+    "id_prefix": null,
+    "load_order": 15,
+    "sources": {
+      "pdf": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    },
+    "page_offsets": [],
+    "objectives_mode": "printed",
+    "notation": null,
+    "sacred_content": false,
+    "bundles": [
+      "services/extraction/work/prep3-parallel/bookrecord/bundle-1.json"
+    ],
+    "superseded_bundles": {},
+    "content_files": [],
+    "manifest": null,
+    "generated": null,
+    "parity": null,
+    "program": null,
+    "status": "ingest",
+    "maths_source": null,
+    "lesson_unit": null,
+    "answer_rules": null,
+    "lesson_titles": {
+      "pp3u1-1": "Cartesian product",
+      "pp3u1-2": "Relations",
+      "pp3u1-3": "Functions (Mapping)",
+      "pp3u1-4": "Polynomial functions"
+    },
+    "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
+    "paths": {
+      "repo_root": "/Users/tdeif/Developer/Noor",
+      "extraction_dir": "/Users/tdeif/Developer/Noor/services/extraction",
+      "pdf": "/Users/tdeif/Developer/Noor/docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    }
+  },
+  "mode": "verify",
+  "widgets": [
+    {
+      "question_id": "q:pp3u1-1-2:w001",
+      "template_id": "wt:pp3u1-1-2:drill-2-a",
+      "template_sha": "a5fdbc64cc731b77c422cfb730feceb6d8041db1ebdbb936b334f8c966859f40",
+      "lo_id": "lo:pp3u1-1-2",
+      "kind": "product_builder",
+      "spec": {
+        "X": [
+          2,
+          -1
+        ],
+        "Y": [
+          4,
+          0
+        ]
+      },
+      "stem": "If $X=\\{2,-1\\}$ and $Y=\\{4,0\\}$, find $X\\times Y$. Tap all the ordered pairs that belong to $X\\times Y$.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "reading_fields": {
+        "X": "the set X as a list",
+        "Y": "the set Y as a list"
+      },
+      "can_emit": [
+        "reversed-pairs",
+        "missing-pairs"
+      ],
+      "diagnostics": [
+        {
+          "predicate": "reversed-pairs",
+          "predicate_meaning": "Built Y×X — the pairs are the right numbers in the wrong order",
+          "misconception_id": "mc:pp3u1-1-2:product-order-ignored",
+          "misconception_label": "Treats X×Y and Y×X as the same",
+          "misconception_description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X."
+        }
+      ],
+      "hints": [
+        {
+          "predicate": "missing-pairs",
+          "predicate_meaning": "An incomplete product: some pairs of X×Y were not selected",
+          "text": "Take each element of X in turn and pair it with every element of Y. Check that no element of X is left with fewer pairs than the size of Y."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-2:w002",
+      "template_id": "wt:pp3u1-1-2:drill-2-b",
+      "template_sha": "e2abcf0be7d73a0e918398d0d5054625cefae9682d44480cacd49a41d4cc5b01",
+      "lo_id": "lo:pp3u1-1-2",
+      "kind": "product_builder",
+      "spec": {
+        "X": [
+          4,
+          0
+        ],
+        "Y": [
+          4,
+          5,
+          -2
+        ]
+      },
+      "stem": "If $Y=\\{4,0\\}$ and $Z=\\{4,5,-2\\}$, find $Y\\times Z$. Tap all the ordered pairs that belong to $Y\\times Z$.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "reading_fields": {
+        "X": "the set X as a list",
+        "Y": "the set Y as a list"
+      },
+      "can_emit": [
+        "reversed-pairs",
+        "missing-pairs"
+      ],
+      "diagnostics": [
+        {
+          "predicate": "reversed-pairs",
+          "predicate_meaning": "Built Y×X — the pairs are the right numbers in the wrong order",
+          "misconception_id": "mc:pp3u1-1-2:product-order-ignored",
+          "misconception_label": "Treats X×Y and Y×X as the same",
+          "misconception_description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X."
+        }
+      ],
+      "hints": [
+        {
+          "predicate": "missing-pairs",
+          "predicate_meaning": "An incomplete product: some pairs of X×Y were not selected",
+          "text": "Take each element of the first set in turn and pair it with every element of the second set. Count how many pairs each element should have."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-1-2:w003",
+      "template_id": "wt:pp3u1-1-2:drill-2-c",
+      "template_sha": "9ed461cbd92d47e5c29f2e12d42237a891632b2494b4b9d06ebaed45f524263e",
+      "lo_id": "lo:pp3u1-1-2",
+      "kind": "product_builder",
+      "spec": {
+        "X": [
+          2,
+          -1
+        ],
+        "Y": [
+          2,
+          -1
+        ]
+      },
+      "stem": "If $X=\\{2,-1\\}$, find $X^2=X\\times X$. Tap all the ordered pairs that belong to $X^2$.",
+      "instrument": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X and Y are non-empty lists of numbers.",
+      "reading_fields": {
+        "X": "the set X as a list",
+        "Y": "the set Y as a list"
+      },
+      "can_emit": [
+        "reversed-pairs",
+        "missing-pairs"
+      ],
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "missing-pairs",
+          "predicate_meaning": "An incomplete product: some pairs of X×Y were not selected",
+          "text": "$X^2$ is X crossed with itself. Take each element of X as the first projection and pair it with every element of X."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w001",
+      "template_id": "wt:pp3u1-4-3:drill-4-1",
+      "template_sha": "138a830c2b1f05298294d663177bbbaf6afd48d471df2ae267dde63de4c8ce57",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": 1,
+        "b": 2
+      },
+      "stem": "Represent graphically the function $f(x) = x + 2$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Your line has the right lean but sits at the wrong height. Work out f(0) and see where the graph must meet the y-axis."
+        },
+        {
+          "predicate": "slope-sign-flipped",
+          "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+          "text": "Check two more pairs in the table: as x increases, does f(x) go up or down?"
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Each x has exactly one image f(x), so the graph cannot be a vertical line. Use the table of pairs."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Start by finding f(0), f(1) and f(-1) from the rule, then place the points from your table."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w002",
+      "template_id": "wt:pp3u1-4-3:drill-4-2",
+      "template_sha": "ce4608615e2f26938d26007abdccccc84bf9e52e06a0952b2025da3c9e4f86dd",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": 3,
+        "b": 0
+      },
+      "stem": "Represent graphically the function $g(x) = 3x$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "slope-inverted",
+          "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+          "text": "Compare how far up the line goes for each step of 1 to the right, using your table."
+        },
+        {
+          "predicate": "slope-sign-flipped",
+          "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+          "text": "Check g(1) in your table: is the point above or below the x-axis?"
+        },
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Find g(0) from the rule to see where the line must cross the y-axis."
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Each x has exactly one image, so the graph cannot be vertical. Use the table of pairs."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Find g(0), g(1) and g(-1) from the rule, then plot those pairs."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w003",
+      "template_id": "wt:pp3u1-4-3:drill-4-3",
+      "template_sha": "052a1a56b734e304aee8125fe0c3dce673da91b037aac0072370cfa3cbe9b4be",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": -2,
+        "b": 0
+      },
+      "stem": "Represent graphically the function $\\ell(x) = -2x$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "slope-sign-flipped",
+          "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+          "text": "Find ℓ(1) from the rule and check whether the point lies above or below the x-axis."
+        },
+        {
+          "predicate": "slope-inverted",
+          "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+          "text": "Use your table: for each step of 1 to the right, how many units does the line move up or down?"
+        },
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Find ℓ(0) from the rule to see where the line must cross the y-axis."
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Each x has exactly one image, so the graph cannot be vertical. Use the table of pairs."
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Find ℓ(0), ℓ(1) and ℓ(-1) from the rule, then plot those pairs."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w004",
+      "template_id": "wt:pp3u1-4-3:drill-5-1",
+      "template_sha": "edf9d14c5d42244bcfb402e095bc6f6504d6d32ccf6d11166c09e335fd95fcf4",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": 0,
+        "b": 5
+      },
+      "stem": "Represent graphically the function $f(x) = 5$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Your line is parallel to the right one but at the wrong height. What is the image of every x?"
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?"
+        },
+        {
+          "predicate": "slope-sign-flipped",
+          "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+          "text": "Compare the images in your table: do they change as x changes?"
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Find f(-1), f(0), f(1) from the rule and compare them."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w005",
+      "template_id": "wt:pp3u1-4-3:drill-5-2",
+      "template_sha": "6cc52713ced2aea51d861a39e5df8bc9ee63bf908c1bfdaa465760907b32a248",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": 0,
+        "b": -4
+      },
+      "stem": "Represent graphically the function $f(x) = -4$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Your line is parallel to the right one but at the wrong height. What is the image of every x, and is it positive or negative?"
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?"
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Find f(-1), f(0), f(1) from the rule and compare them."
+        }
+      ]
+    },
+    {
+      "question_id": "q:pp3u1-4-3:w006",
+      "template_id": "wt:pp3u1-4-3:drill-5-3",
+      "template_sha": "7d463e732892462be4789d4fa5d0c4fd4af47e53d747cbc3efc08e35ca38c4ba",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "spec": {
+        "mode": "equation",
+        "m": 0,
+        "b": 0
+      },
+      "stem": "Represent graphically the function $f(x) = 0$. Drag the two points so the line is the graph.",
+      "instrument": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line through them is drawn, with its equation updating live. In \"equation\" mode any two points on the correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the reciprocal of one, and b a whole number in −5..5. The other mode is {\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — the two handles open there, so the widget would start half-answered and a handle the student never moved could not be told from one she placed.",
+      "reading_fields": {
+        "mode": "'equation' or 'points'",
+        "m": "gradient (equation mode)",
+        "b": "y-intercept (equation mode)",
+        "through": "[[x1, y1], [x2, y2]] (points mode)"
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "diagnostics": [],
+      "hints": [
+        {
+          "predicate": "intercept-wrong",
+          "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+          "text": "Your line is parallel to the right one but at the wrong height. What is the image of every x?"
+        },
+        {
+          "predicate": "vertical-line",
+          "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+          "text": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?"
+        },
+        {
+          "predicate": "off-target",
+          "predicate_meaning": "Neither the slope nor the intercept matches",
+          "text": "Find f(-1), f(0), f(1) from the rule and compare them."
+        }
+      ]
+    }
+  ]
+}

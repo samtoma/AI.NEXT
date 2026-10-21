@@ -122,6 +122,33 @@ Open questions:
 - **Whether the tutor actually uses the tasks, and keeps to "no second
   question", is untested:** it needs a live lesson turn.
 
+## Book widgets — Unit 1 trial (2026-10-21)
+
+Tamer: "let's try 1+2 for unit 1 … through the independent solver as usual, and held for review in case anything
+does not seem right." A **variant of S7**, built beside Samuel's like the cross-unit linker; his
+`runbook/widgets.workflow.js` is untouched and stays the default. **Not in the ingest plan**: run by hand.
+
+- **Option 1, the book's construction exercises as widgets.** `book_widgets.py author` →
+  `runbook/widgets-book.workflow.js` (mode author). Per exercise part: an existing kind only where building the answer
+  IS the part; the stem in the book's words; the key the book's or read off the stem; the parent the part's own
+  question row, else the objective's worked example (`parent_kind: "teaching"`, migration 038).
+- **Option 2, method hints.** A template's `hints: [{predicate, step, text}]` for predicates no misconception names,
+  each taken from solution step `step`, never the answer. The app shows one (`AttemptResult.hint`, "check this step")
+  only when no misconception was diagnosed (`lib/widget-hint.ts`).
+- **Same review rules.** `generate_widget_questions.py` checks (additive: hints, teaching parents); Samuel's blind
+  verifier prompt word for word plus a step judging each hint (`book_widgets.py verify`, runs `s7b-verify.*`); `finish`
+  applies decision 47 to hints too (unconfirmed → `choices.pending_hints`, never read); the new widgets join the 10%
+  generated-review sample. Held hints: `reviews/prep3-parallel/widget-mappings-pending.pp3u1-1.json`, page
+  `reviews/prep3-parallel/pages/g3-book-widget-hints-u1.html` (keep/drop export → `--mapping-review`).
+- **Unit 1 result** ($0.54 author + $0.95 verify): 9 widgets live — Cartesian products (drill 2 A–C, product_builder)
+  and graphs of linear and constant functions (drills 4 and 5, line_drawer); 2 misconception mappings, 21 hints active,
+  6 held (four "vertical-line" hints on constant lines that describe the answer; two "use your table" hints, and the
+  widget shows no table). 9 gaps, all for Samuel: multi-point plotting, rational points, a region of the plane,
+  relations as subsets, arrow diagrams, $f(x) = 2\tfrac12$ (off the lattice).
+- **Gotcha:** `finish` rebuilds the unit's catalogue from its S5 final run, which still holds the carry-over entries
+  deleted in 6bbb1f0 — after it, restore `generated/misconceptions.json` and `generated-questions.json` and keep only
+  `widget-questions.json` (merged by hand, header kept).
+
 ## In the pipeline (2026-10-21)
 
 **Figure tasks: generated.**

@@ -122,10 +122,12 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
             "--grades", *map(str, grades), "--out", str(gq_out))
         bundles.append(gq_out)
     wdir = unit_dir(book, widgets_dir(book), slugs, "widgets")
-    verdicts = latest(book, "widgets", "s7-verify")
+    # s7b-*: the book-widget variant's runs (book_widgets.py, runbook/widgets-book.workflow.js), read beside S7's own
+    verdicts = latest(book, "widgets", "s7-verify") + latest(book, "widgets", "s7b-verify")
     if any(wdir.glob("*.json")) and verdicts and dsn:
         run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn,
-            "--verdicts", *map(str, verdicts), "--gaps", *map(str, latest(book, "widgets", "s7-author")), "--out", str(wq_out))
+            "--verdicts", *map(str, verdicts), "--gaps", *map(str, latest(book, "widgets", "s7-author") + latest(book, "widgets", "s7b-author")),
+            "--pending-review", str(HERE / "reviews" / book / f"widget-mappings-pending.{slugs[0]}.json"), "--out", str(wq_out))
         bundles.append(wq_out)
     if bundles:
         run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat),

@@ -605,7 +605,7 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
         # a widget's held mappings (decision 47) carry the blind verifier's prose for the reviewer — never shown
         # in the app, so not the app's notation to keep
         ch = q.get("choices")
-        shown = {**q, "choices": {k: v for k, v in ch.items() if k != "pending_review"}} if isinstance(ch, dict) else q
+        shown = {**q, "choices": {k: v for k, v in ch.items() if k not in ("pending_review", "pending_hints")}} if isinstance(ch, dict) else q
         for s in _strings(shown):
             residual += residual_notation(s)
     c.want = 0

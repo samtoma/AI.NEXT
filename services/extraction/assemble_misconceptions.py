@@ -608,7 +608,8 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
                     ch["pending_review"] = held
                 else:
                     del ch["pending_review"]
-            if not kept and not held:
+            # a book widget (book_widgets.py) says why with a method hint, active or held, as a mapping does
+            if not kept and not held and not ch.get("hints") and not ch.get("pending_hints"):
                 if dropped is not None and lost:
                     log.append(f"DROP WIDGET {qid}: left with no diagnostic once the refused mappings are gone "
                                f"({', '.join(f'{p} → {m}' for p, m in lost)}); recorded as a widget gap")

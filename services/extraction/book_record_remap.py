@@ -71,14 +71,16 @@ def remap_questions(rows: list[dict], idx: dict, slugs: list[str], report: dict)
         if s is None:
             continue
         parent = q.get("parent_question_id") or ""
-        m = re.match(r"^q:[^:]+:bk-(.+)$", parent)
-        hit = idx[s]["locals"].get(m.group(1)) if m else None
+        # a teaching parent (a worked example, migration 038: a book widget of an objective with no book question)
+        # follows its book item the same way; its id keeps its own prefix
+        m = re.match(r"^(q|expl):[^:]+:bk-(.+)$", parent)
+        hit = idx[s]["locals"].get(m.group(2)) if m else None
         new = idx[s]["lo"].get(hit[1]) if hit else None
         if new is None:
             report["questions_unplaced"].append({"id": q["id"], "lo_id": q["lo_id"], "parent": parent,
                                                  "why": "its book question is filed under no objective" if hit else "its parent is not a book question of the lesson"})
             continue
-        new_parent = f"q:{new.removeprefix('lo:')}:bk-{m.group(1)}"
+        new_parent = f"{m.group(1)}:{new.removeprefix('lo:')}:bk-{m.group(2)}"
         if q["lo_id"] != new or parent != new_parent:
             report["questions_moved"].append({"id": q["id"], "from": q["lo_id"], "to": new, "book_question": hit[0]})
             q["lo_id"], q["parent_question_id"] = new, new_parent

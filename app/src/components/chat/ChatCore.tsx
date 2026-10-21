@@ -1208,6 +1208,9 @@ export function ChatCore({
         if (!r.isCorrect) {
           const material = r.refutation
             ? r.refutation.steps.map((st) => st.text_md).join(" ")
+            : r.hint && r.solution.length > 0
+              ? `Method hint for the construction the student built (step ${r.hint.step}): ${r.hint.text} ` +
+                r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
             : r.solution.length > 0
               ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
               : null;
