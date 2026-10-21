@@ -370,6 +370,53 @@ REFRESH_LOCK = threading.Lock()
 SCRATCH_DSN: list[str] = []   # --scratch-dsn: a refresh also loads this LOCAL scratch database again
 
 
+# ---- what a refresh has not taken in yet (Tamer, 2026-10-21: "clear … whether we should re-compile after or not") ----
+# Every decision saved here is also written, with the time, to reviews/<book>/decision-log.jsonl; a refresh that
+# finishes records its time in reviews/<book>/last-refresh.json. A decision logged after the last refresh is one
+# the book does not have yet. (Decisions made before the log existed are not counted: the log starts empty.)
+TASK_OF = {"/api/misprint-decision": "misprints", "/api/answers/decision": "answers", "/api/objectives/decision": "objectives",
+           "/api/g2/decision": "g2", "/api/maths/decision": "maths", "/api/tiers/decision": "tiers",
+           "/api/held/decision": "held", "/api/generated/decision": "generated"}
+
+
+def _now() -> str:
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def journal(book: str, task: str, body: dict) -> None:
+    if not NAME.match(book or ""):
+        return
+    d = EXTRACTION / "reviews" / book
+    d.mkdir(parents=True, exist_ok=True)
+    row = {"ts": _now(), "task": task, "ref": body.get("ref") or body.get("question") or body.get("file"),
+           "decision": body.get("decision") or body.get("choice") or body.get("tier"), "by": body.get("by")}
+    with (d / "decision-log.jsonl").open("a") as fh:
+        fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def last_refresh(book: str) -> str | None:
+    p = EXTRACTION / "reviews" / book / "last-refresh.json"
+    return json.loads(p.read_text()).get("ts") if p.exists() else None
+
+
+def pending(book: str) -> dict:
+    """{since, by_task: {task: n}, total}: the decisions logged since the last refresh finished."""
+    if not NAME.match(book or ""):
+        raise ValueError(f"no book {book!r}")
+    since = last_refresh(book)
+    p = EXTRACTION / "reviews" / book / "decision-log.jsonl"
+    by_task: dict[str, int] = {}
+    for line in (p.read_text().splitlines() if p.exists() else []):
+        try:
+            r = json.loads(line)
+        except ValueError:
+            continue
+        if since is None or r.get("ts", "") > since:
+            by_task[r["task"]] = by_task.get(r["task"], 0) + 1
+    return {"since": since, "by_task": by_task, "total": sum(by_task.values())}
+
+
 def refresh_book(book: str) -> dict:
     """`ingest.py refresh <book>`: the decisions made here into the book records and the compiled book (no model call)."""
     if not NAME.match(book or "") or not (EXTRACTION / "books" / f"{book}.json").exists():
@@ -379,7 +426,7 @@ def refresh_book(book: str) -> dict:
     try:
         argv = ["uv", "run", "ingest.py", "refresh", book, "--json", *(["--dsn", SCRATCH_DSN[0]] if SCRATCH_DSN else [])]
         p = subprocess.run(argv, cwd=EXTRACTION, text=True, capture_output=True, timeout=1800)
-        try:
+        try:   # a refresh that finishes records its start in reviews/<book>/last-refresh.json (ingest.py refresh)
             return json.loads(p.stdout)
         except ValueError:
             return {"ok": False, "steps": [], "error": (p.stderr or p.stdout).strip()[-600:] or f"exit {p.returncode}"}
@@ -480,6 +527,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(provenance.flags(q["book"], q["slug"]))
             if u.path == "/api/misprints":
                 return self.send_json(misprints())
+            if u.path == "/api/pending":
+                return self.send_json(pending(q["book"]))
             if u.path == "/api/answers/books":
                 return self.send_json(answers.books())
             if u.path == "/api/answers":
@@ -554,22 +603,14 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(refresh_book(body.get("book")))
             if u.path == "/api/statement-apply":
                 return self.send_json({"ok": True, **apply_statement(body)})
-            if u.path == "/api/misprint-decision":
-                return self.send_json({"ok": True, "decision": decide_misprint(body)})
-            if u.path == "/api/answers/decision":
-                return self.send_json({"ok": True, "decision": answers.decide(body)})
-            if u.path == "/api/objectives/decision":
-                return self.send_json({"ok": True, "decision": objectives.decide(body)})
-            if u.path == "/api/g2/decision":
-                return self.send_json({"ok": True, "decision": book_questions.decide(body)})
-            if u.path == "/api/maths/decision":
-                return self.send_json({"ok": True, "decision": maths_reading.decide(body)})
-            if u.path == "/api/tiers/decision":
-                return self.send_json({"ok": True, "decision": tiers.decide(body)})
-            if u.path == "/api/held/decision":
-                return self.send_json({"ok": True, "decision": held.decide(body)})
-            if u.path == "/api/generated/decision":
-                return self.send_json({"ok": True, "decision": generated.decide(body)})
+            if u.path in TASK_OF:
+                decide = {"/api/misprint-decision": decide_misprint, "/api/answers/decision": answers.decide,
+                          "/api/objectives/decision": objectives.decide, "/api/g2/decision": book_questions.decide,
+                          "/api/maths/decision": maths_reading.decide, "/api/tiers/decision": tiers.decide,
+                          "/api/held/decision": held.decide, "/api/generated/decision": generated.decide}[u.path]
+                entry = decide(body)
+                journal(body.get("book"), TASK_OF[u.path], body)   # saved: the next refresh has it to take in
+                return self.send_json({"ok": True, "decision": entry})
         except (FileNotFoundError, KeyError, ValueError, StopIteration) as e:
             return self.send_json({"error": str(e)}, 400)
         self.send_json({"error": "not found"}, 404)

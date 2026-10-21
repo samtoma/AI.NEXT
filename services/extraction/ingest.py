@@ -335,6 +335,8 @@ def refresh(name: str, units: list[int] | None, dsn: str | None) -> dict:
     log = HERE / "runs" / bk / "fanout" / "refresh.log"
     log.parent.mkdir(parents=True, exist_ok=True)
     out = []
+    from datetime import datetime, timezone  # noqa: PLC0415
+    started = datetime.now(timezone.utc).isoformat(timespec="seconds")
     for label, argv in steps:
         p = subprocess.run(argv, cwd=HERE, text=True, capture_output=True)
         with log.open("a") as fh:
@@ -352,6 +354,10 @@ def refresh(name: str, units: list[int] | None, dsn: str | None) -> dict:
         out.append(row)
         if not ok:
             return {"ok": False, "book": bk, "units": units, "steps": out, "error": f"{label} failed (exit {p.returncode}); see {log.relative_to(HERE)}"}
+    # the review tool counts the decisions made after this as not yet in the book (groundtruth/review/server.py pending)
+    rv = HERE / "reviews" / bk
+    rv.mkdir(parents=True, exist_ok=True)
+    (rv / "last-refresh.json").write_text(json.dumps({"ts": started, "loaded": bool(dsn)}) + "\n")
     return {"ok": True, "book": bk, "units": units, "steps": out}
 
 

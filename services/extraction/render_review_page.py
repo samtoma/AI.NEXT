@@ -337,6 +337,9 @@ PAGE_CSS = """
 body{margin:0;background:var(--play-bg-page);color:var(--play-ink);font-family:var(--play-font-read);
 font-size:var(--play-text-read);line-height:var(--play-leading-latin);-webkit-text-size-adjust:100%}
 .shell{max-width:860px;margin:0 auto;padding:0 16px}
+.plain{background:var(--play-bg-warm);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);
+padding:10px 14px;margin-bottom:12px}
+.plain p{margin:4px 0}
 header.top{background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);padding:24px 0 20px}
 h1,h2,h3{font-family:var(--play-font-display);font-weight:800;line-height:1.2;margin:0}
 h1{font-size:clamp(1.4rem,5vw,var(--play-text-title))}
@@ -750,7 +753,22 @@ def dossier_g3_mappings(queue: dict, source: str) -> str:
     cards = []
     for it in items:
         reading = it.get("reading")
-        cards.append(f"""<article class="card"><header><span class="tag sample">{html.escape(it.get("template_id") or "")}</span>
+        # the plain-English box first (Tamer, 2026-10-21): what it is, the problem, the choices — the checker's own
+        # words shown as they are; the technical details follow, unchanged
+        meaning = (it.get("predicate_meaning") or it["predicate"]).rstrip(".")
+        meaning = meaning[:1].lower() + meaning[1:]
+        if it.get("hint") is not None:
+            plain = (f"<p><b>A hint a widget would show.</b> When a student's answer shows this mistake — {html.escape(meaning)} — "
+                     f"they would see: “{md_html(it['hint'])}”</p><p><b>The problem:</b> the independent checker doubted this hint "
+                     "(it may be wrong, not help with that mistake, or give the answer away).</p><p><b>Your choices:</b> Keep: "
+                     "students who make that mistake see it. Drop: they see the worked solution instead.</p>")
+        else:
+            plain = (f"<p><b>A mistake a widget claims to recognise.</b> When a student's answer shows this mistake — "
+                     f"{html.escape(meaning)} — they would be told the reason is: “{md_html(it.get('misconception_label') or it['misconception_id'])}”.</p>"
+                     "<p><b>The problem:</b> the independent checker doubted that this is the real reason for that mistake.</p>"
+                     "<p><b>Your choices:</b> Keep: students get that explanation. Drop: they see the worked solution instead.</p>")
+        plain += f'<p class="note"><b>In the checker\'s words:</b> {md_html(it.get("why") or "no reason given")}</p>'
+        cards.append(f"""<article class="card"><div class="plain">{plain}</div><header><span class="tag sample">{html.escape(it.get("template_id") or "")}</span>
 <span class="tag plain">{html.escape(it.get("kind") or "")}</span><span class="id">{html.escape(it["key"])}</span></header>
 <p class="stem">{md_html(it.get("stem"))}</p>
 <p class="note">What the blind checker read off the question:</p>
