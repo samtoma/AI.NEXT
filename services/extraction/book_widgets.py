@@ -1,15 +1,22 @@
 """BOOK WIDGETS — the book's own construction exercises as widget questions, with method hints (an S7 variant).
 
-    uv run book_widgets.py args   <book> <lesson> …  --dsn …        # the author packet, for a look (no model call)
-    uv run book_widgets.py author <book> <lesson> …  --dsn … [--cap 4]
-    uv run book_widgets.py verify <book> <lesson> …  --dsn … [--cap 4]
+    uv run book_widgets.py args   <book> <lesson> …  --dsn … [--catalogue <S5 draft>]   # the author packet (no model call)
+    uv run book_widgets.py author <book> <lesson> …  --dsn … [--catalogue <S5 draft>] [--cap 4]
+    uv run book_widgets.py verify <book> <lesson> …  --dsn … [--catalogue <S5 draft>] [--cap 4]
     uv run book_record_generation.py finish <book> <lesson> … --dsn …   # Samuel's finishing passes, unchanged
 
 Tamer, 2026-10-21 ("let's try 1+2 for unit 1 … through the independent solver as usual, and held for review in case
 anything does not seem right"). Samuel's S7 (runbook/widgets.workflow.js, book_record_generation.py s7-author /
 s7-verify) starts from a misconception; this variant starts from the BOOK'S EXERCISES (option 1) and gives the
 predicates no misconception names a METHOD HINT grounded in a solution step (option 2). It runs
-runbook/widgets-book.workflow.js; his workflow is untouched and stays the S7 default, and this is NOT in the ingest plan.
+runbook/widgets-book.workflow.js.
+
+THE S7 DEFAULT (Tamer, 2026-10-21: "I want all the changes made today to run in the new ingestion pipeline by default
+and replace any of Sam's workflows. He will see the difference when merging and can decide what to do then."): the
+ingest plan's S7 runs this — author then verify, against the S5 draft as catalogue, like his — in place of
+`book_record_generation.py s7-author / s7-verify` (runbook/widgets.workflow.js), which stay in the tree, unused by
+the plan. Like his verify step, this one writes the verified templates' predicate mappings for S5's final pass
+(runs/<book>/widgets/s5-distractors.json), so S5 keeps the misconceptions the widgets diagnose.
 
 What it shares with S7, so every review rule holds: the templates land in teaching/<book>/widgets/ like his, are
 checked by generate_widget_questions.py (a malformed one is held in widgets-held/), verified by his blind verifier's
@@ -60,9 +67,10 @@ def compiled(book: str, slugs: list[str]) -> tuple[dict, list[dict]]:
     return qs, wes
 
 
-def author_args(book_name: str, slugs: list[str], dsn: str) -> dict:
+def author_args(book_name: str, slugs: list[str], dsn: str, catalogue: Path | None = None) -> dict:
     book = book_config.load_book(BRG.book_view(book_name, slugs))
-    graph = GW.PgGraph(dsn)
+    # the S5 draft (in the pipeline, S7 runs before any catalogue is loaded): its entries are the ones a widget may name
+    graph = GW._with_catalogue(GW.PgGraph(dsn), catalogue)
     mcs, los, db_qs, teaching = graph.misconceptions(), graph.objectives(), graph.questions(), graph.teaching()
     qs, wes = compiled(book_name, slugs)
     # a part that already has a book widget is not offered again (a re-run adds, never duplicates); an objective
@@ -166,12 +174,13 @@ def main(argv: list[str]) -> int:
     ap.add_argument("book")
     ap.add_argument("lessons", nargs="+")
     ap.add_argument("--dsn", required=True, help="the database holding the compiled lessons and their catalogue")
+    ap.add_argument("--catalogue", type=Path, default=None, help="the S5 draft run (the pipeline's S7 passes it)")
     ap.add_argument("--cap", type=float, default=4.0)
     a = ap.parse_args(argv)
     runs = HERE / "runs" / a.book / "widgets"
     runs.mkdir(parents=True, exist_ok=True)
     if a.cmd in ("args", "author"):
-        args = author_args(a.book, a.lessons, a.dsn)
+        args = author_args(a.book, a.lessons, a.dsn, a.catalogue)
         path = runs / "s7b-author.args.json"
         path.write_text(json.dumps(args, indent=1, ensure_ascii=False) + "\n")
         n = sum(len(e["parts"]) for l in args["lessons"] for o in l["objectives"] for e in o["exercises"])
@@ -187,7 +196,8 @@ def main(argv: list[str]) -> int:
     view = BRG.book_view(a.book, a.lessons)
     wdir = BRG.widgets_dir(a.book)
     vargs = runs / "s7b-verify.args.json"
-    common = ["--templates", str(book_dir(a.book, a.lessons)), "--book", str(view), "--dsn", a.dsn]
+    common = ["--templates", str(book_dir(a.book, a.lessons)), "--book", str(view), "--dsn", a.dsn,
+              *(["--catalogue", str(a.catalogue)] if a.catalogue else [])]
     BRG.hold_malformed_templates(a.book, a.lessons, wdir, [*common, "--verify-args", str(vargs)])
     common[1] = str(book_dir(a.book, a.lessons))
     if not any(Path(common[1]).glob("*.json")):
@@ -196,7 +206,10 @@ def main(argv: list[str]) -> int:
     BRG.gw(*common, "--verify-args", str(vargs))
     copy = EW.default_out(a.book, "widgets", "s7b-verify.bookrecord")
     print(EW.summary(EW.write(WORKFLOW, json.loads(vargs.read_text()), copy)), file=sys.stderr)
-    WR.run_copy(copy, [], a.cap, "s7b-verify", a.book, "widgets", stage="S7")
+    run, _res, _cost = WR.run_copy(copy, [], a.cap, "s7b-verify", a.book, "widgets", stage="S7")
+    # as S7's verify step does: the verified templates' predicate mappings, for S5's final pass
+    out = HERE / "work" / a.book / "unit-view" / a.lessons[0] / "widgets-verified.json"
+    BRG.gw(*common, "--verdicts", str(run), "--s5-distractors", str(runs / "s5-distractors.json"), "--out", str(out))
     return 0
 
 

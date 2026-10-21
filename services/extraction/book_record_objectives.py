@@ -118,9 +118,12 @@ def s1_args(book_name: str, chapter: int, slugs: list[str]) -> dict:
     return {"book": {"book": book.book, "course_id": book.course_id, "language": book.language,
                      "objectives_mode": "derived", "id_prefixes": book.id_prefixes},
             "stage": "S1", "chapter": packet, "packet_sha256": AO.packet_sha(packet), "teacher_only_dropped": 0,
-            # the earlier units' objectives approved at G1: the only other ids Samuel's linker may start a link at
-            # (Tamer, 2026-10-18: with none, no link could cross a unit; book_record_links.py adds them after G1)
-            "prior_objectives": prior_objectives(book_name, chapter), "options": {"second_mapper": True, "pool_batch": 60, "links": True},
+            # NO earlier units' objectives (Tamer, 2026-10-21: today's changes are the pipeline default and replace
+            # Samuel's workflows): S1's linker links inside the unit only, and every link into an earlier unit is the
+            # cross-unit linker's (S1X, book_record_links.py --cross, runbook/links-cross.workflow.js — the quoted
+            # step, the removal-test checker, the filters). From 2026-10-18 to now S1 passed them, so both linkers
+            # proposed links across units. prior_objectives() is kept for S1X.
+            "prior_objectives": [], "options": {"second_mapper": True, "pool_batch": 60, "links": True},
             "source": "book records (book_record_objectives.py)"}
 
 

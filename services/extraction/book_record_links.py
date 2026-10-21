@@ -17,6 +17,9 @@ START in an earlier unit are kept here (the unit's own links went through G1 alr
 teaching/<book>/cross-links/ch<NN>.json and shown in the review tool's Objectives (G1) task as links; `apply` adds the
 ones a person kept to teaching/<book>/links/ch<NN>.json, which compile turns into `prerequisite_of` edges (Refresh).
 
+THE DEFAULT (Tamer, 2026-10-21: today's changes run in the pipeline by default and replace Samuel's workflows): the
+ingest plan runs this with --cross (S1X), and S1 no longer gives its own linker the earlier units' objectives
+(book_record_objectives.s1_args), so every link into an earlier unit comes from the cross-unit linker below.
 CROSS (links-v2-cross, Tamer 2026-10-21): `run … --cross` / `args … --cross` run runbook/links-cross.workflow.js instead,
 a variant that looks ONLY for links into earlier units, makes every link quote the step it rests on and name the earlier
 result, and gives the checker a removal test (could the step stand without it?). Samuel's links.workflow.js is

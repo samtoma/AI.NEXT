@@ -179,7 +179,10 @@ def plan(name: str, unit: int) -> dict:
     add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", "S5 draft" in ledger(bk, unit))
     add("S6", "question families and widgets", f"{UV} book_record_generation.py s6-author {bk} {L} --catalogue <S5 draft>  ·  s6-grade",
         "S6" in ledger(bk, unit))
-    add("S7", "refutations", f"{UV} book_record_generation.py s7-author {bk} {L} --catalogue <S5 draft>  ·  s7-verify", "S7" in ledger(bk, unit))
+    # S7 is the book-widget author (book_widgets.py, runbook/widgets-book.workflow.js) in place of Samuel's
+    # s7-author / s7-verify (runbook/widgets.workflow.js) — Tamer, 2026-10-21: today's changes are the default
+    add("S7", "widget questions from the book's exercises, with method hints; blind verifier (book widgets)",
+        f"{UV} book_widgets.py author {bk} {L} --catalogue <S5 draft> --dsn …  ·  verify", "S7" in ledger(bk, unit))
     add("S5", "misconceptions (final), with S6/S7's distractors", f"{UV} book_record_generation.py s5 {bk} {L} --stage final --draft <S5 draft> --distractors …",
         "S5 final" in ledger(bk, unit))
     add("S5–S7", "finish: the catalogue, the generated and widget questions (Samuel's §4 passes)",
@@ -281,8 +284,8 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
                          U("book_record_generation.py", "s6-grade", bk, *slugs, *c())]))
     if dsn:
         out.append(("S7", "S7" in did,
-                    lambda: [U("book_record_generation.py", "s7-author", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c()),
-                             U("book_record_generation.py", "s7-verify", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c())]))
+                    lambda: [U("book_widgets.py", "author", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c()),
+                             U("book_widgets.py", "verify", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c())]))
     else:
         out.append(("S7", "S7" in did, "S7 builds against the unit in a scratch database: pass --dsn"))
     dists = lambda: [x for f in ("families", "widgets") if ex("runs", bk, f, "s5-distractors.json")
@@ -370,7 +373,8 @@ def run_unit(name: str, unit: int, dsn: str | None, cap: float | None, dry: bool
             if dry:   # a later stage's input (the S5 draft) does not exist yet in a dry run
                 done.append(f"{stage}: {' '.join(x if x is not None else '<an earlier stage s output>' for x in argv)}")
                 continue
-            paid_once = any(x in argv for x in ("s6-author", "s7-author"))   # their runs are saved and their specs written:
+            paid_once = any(x in argv for x in ("s6-author", "s7-author")) or (   # their runs are saved and their specs written:
+                any(str(x).endswith("book_widgets.py") for x in argv) and "author" in argv)
             for attempt in ((1,) if paid_once else (1, 2)):   # a retry would pay to author again. Others: an agent can
                 # return an incomplete batch now and then, so one retry before stopping
                 with log.open("a") as fh:

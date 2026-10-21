@@ -122,6 +122,23 @@ Open questions:
 - **Whether the tutor actually uses the tasks, and keeps to "no second
   question", is untested:** it needs a live lesson turn.
 
+## Today's changes are the ingest pipeline's default (2026-10-21)
+
+Tamer: "I want all the changes made today to run in the new ingestion pipeline by default and replace any of Sam's
+workflows. He will see the difference when merging and can decide what to do then." In `ingest.py` (the book-record
+pipeline; the Grade 10 fan-out, `fanout.py`, is unchanged):
+
+| Stage | Was (Samuel's) | Now |
+|---|---|---|
+| S1 | objectives + links, its linker given every earlier unit's objectives (since 10-18) | objectives + links **inside the unit** (`prior_objectives: []`) |
+| S1X | — | the cross-unit linker (`links-cross.workflow.js`): every link into an earlier unit |
+| S4 | lesson-v8 drawing | lesson-v9 (VIZ_SPEC v4, ADR-0026) — already his file, edited |
+| compile | figures | + figure tasks (geometry, arrow diagrams), exercise figures guarded |
+| S7 | `book_record_generation.py s7-author / s7-verify` (`widgets.workflow.js`, misconception-led) | `book_widgets.py author / verify` (`widgets-book.workflow.js`: book exercises, method hints, grid, new modes and kinds), same catalogue (S5 draft), same S5 distractor file |
+| finish | his passes | his passes, reading the s7b verify runs fail-closed |
+
+Samuel's `widgets.workflow.js`, `links.workflow.js` and the s7 commands stay in the tree, unused by the plan.
+
 ## Book widgets — every unit (2026-10-21)
 
 Tamer: "run units 3, 5 and 6 and any other unit that need to run". The book-widget author on Units 2–10 ($3.48), the

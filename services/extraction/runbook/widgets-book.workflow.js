@@ -1,7 +1,7 @@
 export const meta = {
   name: 'widgets-book',
   description: 'S7 variant (book widgets, Tamer 2026-10-21): the book\'s own construction exercises put on an existing widget kind, with method hints for the errors no misconception names (mode author); the blind verifier, which also judges each hint (mode verify)',
-  whenToUse: 'book_widgets.py author / verify. Samuel\'s runbook/widgets.workflow.js is untouched and stays the S7 default; this runs only when named.',
+  whenToUse: 'book_widgets.py author / verify — the ingest plan\'s S7 (Tamer 2026-10-21: the default, in place of runbook/widgets.workflow.js, which stays in the tree for Samuel to compare).',
   phases: [
     { title: 'Author', detail: 'per lesson: each book exercise an existing kind genuinely fits becomes a template, its parent the book item, its key the book\'s; hints grounded in a solution step (Sonnet)', model: 'sonnet' },
     { title: 'Verify', detail: 'blind, as Samuel\'s S7 verifier: read the stem, construct an answer, judge each mapping — and each method hint (Sonnet)', model: 'sonnet' },
@@ -10,7 +10,9 @@ export const meta = {
 
 /*
  * BOOK WIDGETS — a variant of S7 (runbook/widgets.workflow.js, ADR-0009), built beside it the way
- * links-cross.workflow.js was built beside links.workflow.js: the original is untouched and stays the default.
+ * links-cross.workflow.js was built beside links.workflow.js. Since 2026-10-21 it IS the ingest plan's S7 (Tamer:
+ * "run in the new ingestion pipeline by default and replace any of Sam's workflows"); the original is untouched in
+ * the tree, unused by the plan, for Samuel to compare when he merges.
  *
  * WHAT IS DIFFERENT. Samuel's S7 starts from a MISCONCEPTION and asks which kind would reveal it, so an
  * objective with no misconception gets no widget, and a predicate no misconception names says nothing but
