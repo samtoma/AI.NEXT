@@ -96,7 +96,9 @@ export function ProductGrid({ spec, animOn }: VizProps) {
         {/* cells fill in sequence */}
         {X.map((x, i) =>
           Y.map((y, j) => {
-            const hot = hover?.[0] === i || hover?.[1] === j;
+            // only the pair under the pointer — its x and y headers turn bold above;
+            // lighting its whole row and column lit 3 of a 2×2 grid's 4 cells
+            const hot = hover?.[0] === i && hover?.[1] === j;
             return (
               <g key={`c${i}-${j}`} style={a.pop(cellAt(i, j))}>
                 <rect

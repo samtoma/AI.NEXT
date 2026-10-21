@@ -26,6 +26,12 @@ interface Case {
 
 const CASES: Case[] = [
   {
+    figure: "pp3u1-1 (tutor-drawn)",
+    what: "a product grid: hovering a pair lights that pair and its x and y headers only",
+    kind: "product_grid",
+    spec: { X: [2, -1], Y: [4, 0], animate: "fill", showCount: true },
+  },
+  {
     figure: "pp3u10-3:figure-17",
     what: "a quadrilateral with diagonals, two angle values and equal-side ticks (AB = AD)",
     kind: "geo_scene",
