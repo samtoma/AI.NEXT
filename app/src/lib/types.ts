@@ -383,6 +383,11 @@ export interface LessonData {
   subject: Subject;
   los: LessonLo[];
   questions: SpineQuestion[];
+  /** true when `questions` is in this sitting's order (lib/question-order.ts:
+   *  the student's unanswered first, shuffled per chat session) rather than
+   *  the bank's own `lo_id, tier, id` sort. Absent for every caller with no
+   *  sitting — the pages, the rating and the prompt-capture harness. */
+  questionsOrderedForSitting?: true;
   visuals: LessonViz[];
   /** distinct base-map ids referenced by this lesson's stored map_scene
    *  visuals (≤2, first-appearance order) — keys the server-side gazetteer

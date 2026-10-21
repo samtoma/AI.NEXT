@@ -343,7 +343,8 @@ export async function POST(req: Request) {
               uploadId,
               client,
               // the server's answer for this request — never a request field
-              session.probing
+              session.probing,
+              session.sessionId
             )
           : buildAskContext(
               surface,

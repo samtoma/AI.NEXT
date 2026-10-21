@@ -562,7 +562,8 @@ test("/api/ask builds the prompt from the session's stored snapshot, never the r
   const ask = code("app/api/ask/route.ts");
   assert.match(ask, /currentSessionSnapshot\(/);
   assert.doesNotMatch(ask, /currentSessionOrNull\(/, "the ask route must read the snapshot with the session");
-  assert.match(ask, /buildLessonContext\([\s\S]*?session\.probing\s*\)/, "buildLessonContext must get session.probing");
+  // the session id after it orders the question bank (lib/question-order.ts)
+  assert.match(ask, /buildLessonContext\([\s\S]*?session\.probing\s*,\s*session\.sessionId\s*\)/, "buildLessonContext must get session.probing");
   assert.match(ask, /probing:\s*session\.probing/, "the context cache must be keyed by the snapshot");
   assert.match(ask, /send\(\{\s*type:\s*"session",\s*probing\s*\}\)/, "the client must be told the snapshot");
   assert.doesNotMatch(ask, /body\.probing|probing\?:\s*(unknown|boolean)/, "no probing field may be read from the request");

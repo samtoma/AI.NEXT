@@ -17,6 +17,7 @@ import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { ANSWER_ONLY_INSTRUCTION, isAnswerOnly } from "./question-flags";
 import { figuresByQuestion, noteFigureless } from "./question-figures";
+import { orderQuestionsForSitting } from "./question-order";
 import { EXPECTS_MATH_RULE } from "./math-keys";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
@@ -502,15 +503,28 @@ export async function lessonCourseId(
 export async function getLessonData(
   slug: string = DEFAULT_LESSON_SLUG,
   studentId: number | null = null,
-  c?: PoolClient
+  c?: PoolClient,
+  sitting?: LessonSitting
 ): Promise<LessonData | null> {
-  return scoped(studentId, c, (db) => lessonDataOn(db, slug, studentId));
+  return scoped(studentId, c, (db) => lessonDataOn(db, slug, studentId, sitting));
+}
+
+/**
+ * The sitting a lesson's tutor turn belongs to, for ordering its question
+ * bank (lib/question-order.ts). `seed` is the chat session key; `sessionId`
+ * is the learning session row, whose own attempts are left out so the order
+ * a sitting opened with is the order it keeps.
+ */
+export interface LessonSitting {
+  seed: string;
+  sessionId: number | null;
 }
 
 async function lessonDataOn(
   db: Db,
   slug: string,
-  studentId: number | null
+  studentId: number | null,
+  sitting?: LessonSitting
 ): Promise<LessonData | null> {
   // Which objectives — `resolveLessonLos`, the one resolution `lessonCourseId`
   // shares, unknown slug → the default lesson included.
@@ -607,6 +621,24 @@ async function lessonDataOn(
     },
   }));
   for (const q of questions) noteFigureless(q);
+
+  // THIS student's answered questions, before this sitting — their own
+  // attempts only, never another student's. Read only for a tutor turn with a
+  // sitting; every other caller keeps the bank's own sort.
+  let ordered: SpineQuestion[] | null = null;
+  if (sitting && studentId != null && questions.length > 1) {
+    const seen = await db.query(
+      `SELECT DISTINCT question_id FROM attempts
+        WHERE student_id = $1 AND question_id = ANY($2)
+          AND ($3::bigint IS NULL OR session_id IS DISTINCT FROM $3)`,
+      [studentId, questions.map((q) => q.id), sitting.sessionId]
+    );
+    ordered = orderQuestionsForSitting(
+      questions,
+      new Set(seen.rows.map((r: { question_id: string }) => r.question_id)),
+      sitting.seed
+    );
+  }
 
   const first = losRes.rows[0];
   // A lesson IS its subject: the contract, the grounding rules and the widget
@@ -733,7 +765,8 @@ async function lessonDataOn(
     courseId,
     subject,
     los,
-    questions,
+    questions: ordered ?? questions,
+    ...(ordered ? { questionsOrderedForSitting: true as const } : {}),
     visuals: visuals.map((v) => ({
       id: v.id,
       kind: v.kind,
@@ -825,7 +858,11 @@ function fmtSteps(steps: SolutionStep[]): string {
 export function lessonDataBlock(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
   const solutionLabel = kit.solutionLabel;
-  const bankNote = kit.bankNote;
+  // A bank in this sitting's order says so, and why: the model otherwise has
+  // no reason to prefer the first question of a tier over any other.
+  const bankNote = data.questionsOrderedForSitting
+    ? `${kit.bankNote}; within each objective and tier, questions this student has not answered yet are listed first — prefer them, in the order given`
+    : kit.bankNote;
   // Band, not percentage — see the note in `retrieval.ts`. "mastery today
   // 92%" in this block is the literal source of the model saying "92%,
   // that's excellent" mid-lesson (#27): it was handed a number and nothing
@@ -1720,12 +1757,16 @@ export async function buildLessonContext(
    * or off), which can only narrow it. Absent is off: the prompt-capture
    * harness and every caller that has no session render the Off prompt.
    */
-  probingSnapshot: boolean = false
+  probingSnapshot: boolean = false,
+  /** the learning session this turn writes into — its own attempts do not
+   *  reorder the bank mid-sitting (lib/question-order.ts) */
+  sessionId: number | null = null
 ): Promise<AskContext | null> {
   const data = await getLessonData(
     sanitizeLessonSlug(lessonSlug),
     studentId,
-    client
+    client,
+    { seed: chatSession, sessionId }
   );
   if (!data) return null;
   const kit = lessonPromptKit(data.subject);
