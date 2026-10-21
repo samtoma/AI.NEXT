@@ -16,14 +16,8 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
-          },
-          {
-            "type": "point",
-            "x": 0,
-            "y": 0,
-            "label": "M",
-            "step": 2
           },
           {
             "type": "segment",
@@ -32,23 +26,68 @@
               0
             ],
             "to": [
-              7.12,
+              7.13,
               0
             ],
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                -0.63,
+                3.95
+              ],
+              [
+                3.56,
+                1.82
+              ]
+            ],
+            "fill": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              3.56,
+              1.82
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              3.56,
+              1.82
+            ],
+            "to": [
+              7.13,
+              0
+            ],
+            "ticks": 1,
             "step": 3
           },
           {
             "type": "point",
-            "x": 4,
+            "x": 0,
             "y": 0,
-            "label": "B",
+            "label": "M",
             "step": 4
           },
           {
             "type": "point",
-            "x": 7.12,
-            "y": 0,
-            "label": "A",
+            "x": -0.63,
+            "y": 3.95,
+            "label": "E",
             "step": 4
           },
           {
@@ -60,46 +99,17 @@
           },
           {
             "type": "point",
-            "x": -0.63,
-            "y": 3.95,
-            "label": "E",
+            "x": 4,
+            "y": 0,
+            "label": "B",
             "step": 4
           },
           {
-            "type": "segment",
-            "from": [
-              -0.63,
-              3.95
-            ],
-            "to": [
-              7.12,
-              0
-            ],
-            "step": 5
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              3.56,
-              1.82
-            ],
-            "step": 6
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -0.63,
-              3.95
-            ],
-            "step": 6
+            "type": "point",
+            "x": 7.13,
+            "y": 0,
+            "label": "A",
+            "step": 4
           },
           {
             "type": "angle",
@@ -110,21 +120,40 @@
             "fromDeg": 0,
             "toDeg": 27,
             "label": "27°",
-            "step": 7
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 27,
+            "toDeg": 99,
+            "label": "Y°",
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              3.56,
+              1.82
+            ],
+            "fromDeg": 153,
+            "toDeg": 207,
+            "label": "X°",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with a diameter extended to A, points E and D on the circle, line E–D–A, and a 27° angle at M.",
-      "withheld": [
-        "X",
-        "Y"
-      ],
+      "caption": "Circle with centre M, a diameter through B extended to A, and triangle MED; MD and DA are marked equal, the angle at M towards B is 27°, and X and Y are marked.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -139,121 +168,154 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                -1.04,
+                3.86
+              ],
+              [
+                3.98,
+                -0.35
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                3.98,
+                -0.35
+              ],
+              [
+                -1.69,
+                -3.63
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              -1.04,
+              3.86
+            ],
+            "to": [
+              3.98,
+              -0.35
+            ],
+            "label": "10 cm",
+            "step": 3
           },
           {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 2
+            "step": 4
           },
           {
             "type": "point",
-            "x": -1.17,
-            "y": 3.82,
+            "x": -1.04,
+            "y": 3.86,
             "label": "A",
-            "step": 3
+            "step": 4
           },
           {
             "type": "point",
-            "x": 3.99,
-            "y": -0.21,
+            "x": 3.98,
+            "y": -0.35,
             "label": "B",
-            "step": 3
+            "step": 4
           },
           {
             "type": "point",
-            "x": -1.56,
-            "y": -3.68,
+            "x": -1.69,
+            "y": -3.63,
             "label": "C",
-            "step": 3
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -1.17,
-              3.82
-            ],
             "step": 4
           },
           {
-            "type": "radius",
-            "from": [
+            "type": "angle",
+            "at": [
               0,
               0
             ],
-            "to": [
-              3.99,
-              -0.21
-            ],
-            "step": 4
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -1.56,
-              -3.68
-            ],
-            "step": 4
-          },
-          {
-            "type": "chord",
-            "from": [
-              -1.17,
-              3.82
-            ],
-            "to": [
-              3.99,
-              -0.21
-            ],
-            "label": "10 cm",
-            "step": 5
-          },
-          {
-            "type": "chord",
-            "from": [
-              3.99,
-              -0.21
-            ],
-            "to": [
-              -1.56,
-              -3.68
-            ],
+            "fromDeg": -5,
+            "toDeg": 105,
+            "label": "X",
+            "arcs": 1,
             "step": 5
           },
           {
             "type": "angle",
             "at": [
-              3.99,
-              -0.21
+              0,
+              0
             ],
-            "fromDeg": 177,
-            "toDeg": 212,
+            "fromDeg": -115,
+            "toDeg": -5,
+            "label": "X",
+            "arcs": 1,
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              3.98,
+              -0.35
+            ],
+            "fromDeg": 175,
+            "toDeg": 210,
             "label": "35°",
-            "step": 6
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              -1.04,
+              3.86
+            ],
+            "fromDeg": -75,
+            "toDeg": -40,
+            "label": "Y°",
+            "step": 5
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 4,
+            "startDeg": -115,
+            "endDeg": -5,
+            "label": "X",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with A, B, C on it, AB = 10 cm, and the angle at B in triangle MBC marked 35°.",
-      "withheld": [
-        "X",
-        "Y"
-      ],
+      "caption": "Circle with centre M and radii to A, B and C; AB is 10 cm, the angles AMB and BMC are both marked X, the angle at B is 35° and the angle at A is marked Y.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -268,139 +330,151 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                1.69,
+                3.63
+              ],
+              [
+                3.94,
+                -0.69
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                2.57,
+                -3.06
+              ],
+              [
+                -2.57,
+                -3.06
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.69,
+              3.63
+            ],
+            "to": [
+              3.94,
+              -0.69
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2.57,
+              -3.06
+            ],
+            "to": [
+              2.57,
+              -3.06
+            ],
+            "ticks": 2,
+            "step": 3
           },
           {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 2
+            "step": 4
           },
           {
             "type": "point",
-            "x": 1.37,
-            "y": 3.76,
+            "x": 1.69,
+            "y": 3.63,
             "label": "A",
-            "step": 3
+            "step": 4
           },
           {
             "type": "point",
             "x": 3.94,
             "y": -0.69,
             "label": "B",
-            "step": 3
+            "step": 4
           },
           {
             "type": "point",
-            "x": 3.06,
-            "y": -2.57,
+            "x": 2.57,
+            "y": -3.06,
             "label": "C",
-            "step": 3
+            "step": 4
           },
           {
             "type": "point",
-            "x": -3.06,
-            "y": -2.57,
+            "x": -2.57,
+            "y": -3.06,
             "label": "D",
-            "step": 3
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              1.37,
-              3.76
-            ],
             "step": 4
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              3.94,
-              -0.69
-            ],
-            "step": 4
-          },
-          {
-            "type": "chord",
-            "from": [
-              1.37,
-              3.76
-            ],
-            "to": [
-              3.94,
-              -0.69
-            ],
-            "step": 5
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              3.06,
-              -2.57
-            ],
-            "step": 6
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -3.06,
-              -2.57
-            ],
-            "step": 6
-          },
-          {
-            "type": "chord",
-            "from": [
-              -3.06,
-              -2.57
-            ],
-            "to": [
-              3.06,
-              -2.57
-            ],
-            "step": 7
           },
           {
             "type": "angle",
             "at": [
-              3.06,
-              -2.57
+              2.57,
+              -3.06
             ],
-            "fromDeg": 140,
+            "fromDeg": 130,
             "toDeg": 180,
             "label": "50°",
-            "step": 8
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 230,
+            "toDeg": 310,
+            "label": "X°",
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              1.69,
+              3.63
+            ],
+            "fromDeg": 245,
+            "toDeg": 298,
+            "label": "Y°",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with chords AB and DC, triangles MAB and MCD, and the angle at C marked 50°.",
-      "withheld": [
-        "X",
-        "Y"
-      ],
+      "caption": "Circle with centre M and two triangles MAB and MCD; AB and DC carry equal-length marks as printed, the angle at C is 50°, and X (at M) and Y (at A) are marked.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -415,14 +489,8 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
-          },
-          {
-            "type": "point",
-            "x": 0,
-            "y": 0,
-            "label": "M",
-            "step": 2
           },
           {
             "type": "segment",
@@ -434,20 +502,71 @@
               0,
               5
             ],
+            "arrow": "both",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              -2.57,
+              -3.06
+            ],
+            "to": [
+              2.57,
+              -3.06
+            ],
             "step": 3
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                2.57,
+                -3.06
+              ]
+            ],
+            "fill": true,
+            "step": 3
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                -3.06
+              ],
+              [
+                2.57,
+                -3.06
+              ]
+            ],
+            "fill": true,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 4
           },
           {
             "type": "point",
             "x": 0,
             "y": 4,
             "label": "D",
-            "step": 4
-          },
-          {
-            "type": "point",
-            "x": 2.57,
-            "y": -3.06,
-            "label": "A",
             "step": 4
           },
           {
@@ -465,40 +584,11 @@
             "step": 4
           },
           {
-            "type": "chord",
-            "from": [
-              -2.57,
-              -3.06
-            ],
-            "to": [
-              2.57,
-              -3.06
-            ],
-            "step": 5
-          },
-          {
-            "type": "chord",
-            "from": [
-              0,
-              4
-            ],
-            "to": [
-              2.57,
-              -3.06
-            ],
-            "step": 6
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              2.57,
-              -3.06
-            ],
-            "step": 6
+            "type": "point",
+            "x": 2.57,
+            "y": -3.06,
+            "label": "A",
+            "step": 4
           },
           {
             "type": "angle",
@@ -509,7 +599,7 @@
             "fromDeg": 270,
             "toDeg": 290,
             "label": "20°",
-            "step": 7
+            "step": 5
           },
           {
             "type": "angle",
@@ -520,27 +610,46 @@
             "fromDeg": 130,
             "toDeg": 180,
             "label": "50°",
-            "step": 7
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              2.57,
+              -3.06
+            ],
+            "fromDeg": 110,
+            "toDeg": 130,
+            "label": "X°",
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 230,
+            "toDeg": 270,
+            "label": "Y°",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with a vertical line through D and M, chord BA meeting it at C, and angles 20° at D and 50° at A.",
-      "withheld": [
-        "X",
-        "Y"
-      ],
+      "caption": "Circle with centre M, a vertical line through M and D meeting chord BA at C, triangles DMA and MCA, with angles 20° at D, 50° at A and X, Y marked.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u9-1:figure-14",
       "for_item": "pp3u9-1:example-1",
-      "lo": "lo:pp3u9-1-1",
+      "lo": "lo:pp3u9-1-3",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -549,108 +658,98 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              -4,
+              0
+            ],
+            "to": [
+              6.08,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              -1.17,
+              3.82
+            ],
+            "to": [
+              6.08,
+              0
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              -1.17,
+              3.82
+            ],
+            "dashed": true,
+            "step": 4
           },
           {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 2
-          },
-          {
-            "type": "diameter",
-            "from": [
-              -4,
-              0
-            ],
-            "to": [
-              4,
-              0
-            ],
-            "step": 3
+            "step": 5
           },
           {
             "type": "point",
             "x": -4,
             "y": 0,
             "label": "B",
-            "step": 4
+            "step": 5
           },
           {
             "type": "point",
             "x": 4,
             "y": 0,
             "label": "A",
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              4,
-              0
-            ],
-            "to": [
-              6.4,
-              0
-            ],
             "step": 5
           },
           {
             "type": "point",
-            "x": 6.4,
+            "x": -1.17,
+            "y": 3.82,
+            "label": "D",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 3.8,
+            "y": 1.2,
+            "label": "C",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 6.08,
             "y": 0,
             "label": "N",
             "step": 5
-          },
-          {
-            "type": "point",
-            "x": -1.1,
-            "y": 3.85,
-            "label": "D",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": 3.75,
-            "y": 1.37,
-            "label": "C",
-            "step": 6
-          },
-          {
-            "type": "segment",
-            "from": [
-              -1.1,
-              3.85
-            ],
-            "to": [
-              6.4,
-              0
-            ],
-            "step": 7
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -1.1,
-              3.85
-            ],
-            "step": 8
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Diameter BA extended to N, and line DN crossing the circle at C, with radius MD drawn.",
+      "caption": "Diameter BA of circle M extended to N, with D on the circle and the line DC extended to N; the radius MD is dashed.",
       "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -665,6 +764,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -677,14 +777,15 @@
           {
             "type": "segment",
             "from": [
-              -5,
-              0
+              -4.53,
+              2.11
             ],
             "to": [
-              5,
-              0
+              4.53,
+              -2.11
             ],
-            "label": "L5",
+            "arrow": "both",
+            "label": "L₁",
             "step": 3
           },
           {
@@ -697,58 +798,62 @@
               0,
               5
             ],
-            "label": "L2",
+            "arrow": "both",
+            "label": "L₂",
             "step": 4
           },
           {
             "type": "segment",
             "from": [
-              -4.7,
-              1.7
+              -2.65,
+              4.24
             ],
             "to": [
-              4.7,
-              -1.7
+              2.65,
+              -4.24
             ],
-            "label": "L1",
+            "arrow": "both",
+            "label": "L₃",
             "step": 5
           },
           {
             "type": "segment",
             "from": [
-              -2.9,
-              4.1
+              -3.54,
+              -3.54
             ],
             "to": [
-              2.9,
-              -4.1
+              3.54,
+              3.54
             ],
-            "label": "L3",
+            "arrow": "both",
+            "label": "L₄",
             "step": 6
           },
           {
             "type": "segment",
             "from": [
-              -3.3,
-              -3.8
+              -5,
+              0
             ],
             "to": [
-              3.3,
-              3.8
+              5,
+              0
             ],
-            "label": "L4",
+            "arrow": "both",
+            "label": "L₅",
             "step": 7
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Five different straight lines all pass through the centre M of the circle.",
+      "caption": "Five different straight lines through the centre M of a circle, each an axis of symmetry.",
       "withheld": [],
       "page": 42,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -763,6 +868,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -773,61 +879,62 @@
             "step": 2
           },
           {
-            "type": "segment",
+            "type": "chord",
             "from": [
-              0,
-              -4.8
+              -3.12,
+              -2.5
             ],
             "to": [
-              0,
-              5
+              3.12,
+              -2.5
             ],
-            "label": "L",
             "step": 3
           },
           {
-            "type": "point",
-            "x": -3.2,
-            "y": -2.36,
-            "label": "B",
-            "step": 4
-          },
-          {
-            "type": "point",
-            "x": 3.2,
-            "y": -2.36,
-            "label": "A",
-            "step": 4
-          },
-          {
-            "type": "chord",
+            "type": "segment",
             "from": [
-              -3.2,
-              -2.36
+              0,
+              -5.5
             ],
             "to": [
-              3.2,
-              -2.36
+              0,
+              5.5
             ],
+            "arrow": "both",
+            "label": "L",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -3.12,
+            "y": -2.5,
+            "label": "B",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 3.12,
+            "y": -2.5,
+            "label": "A",
             "step": 5
           },
           {
             "type": "point",
             "x": 0,
-            "y": -2.36,
+            "y": -2.5,
             "label": "C",
-            "step": 6
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A vertical line L through the centre M crosses chord BA at point C.",
+      "caption": "A vertical line L through the centre M meets the horizontal chord BA at C.",
       "withheld": [],
       "page": 42,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -855,69 +962,334 @@
             "type": "segment",
             "from": [
               0,
-              6
+              -6
             ],
             "to": [
               0,
-              -6
+              6
             ],
+            "arrow": "both",
             "label": "L",
             "step": 3
           },
           {
+            "type": "chord",
+            "from": [
+              -3.57,
+              -3.5
+            ],
+            "to": [
+              3.57,
+              -3.5
+            ],
+            "step": 4
+          },
+          {
             "type": "point",
-            "x": -3,
-            "y": -4,
+            "x": -3.57,
+            "y": -3.5,
             "label": "B",
             "step": 4
           },
           {
             "type": "point",
-            "x": 3,
-            "y": -4,
+            "x": 3.57,
+            "y": -3.5,
             "label": "A",
             "step": 4
           },
           {
-            "type": "chord",
-            "from": [
-              -3,
-              -4
-            ],
-            "to": [
-              3,
-              -4
-            ],
-            "step": 5
-          },
-          {
             "type": "point",
             "x": 0,
-            "y": -4,
+            "y": -3.5,
             "label": "C",
-            "step": 6
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
               0,
-              -4
+              -3.5
             ],
             "fromDeg": 90,
             "toDeg": 180,
-            "label": "90°",
-            "step": 7
+            "right": true,
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M, a vertical line L through M, and a chord BA that L meets at C at a right angle.",
+      "caption": "A circle with centre M, a vertical line L through M, and a chord BA that L meets at C with a right angle.",
       "withheld": [],
       "page": 42,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u9-1:figure-18",
+      "for_item": "pp3u9-1:activity-2",
+      "lo": "lo:pp3u9-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -6
+            ],
+            "to": [
+              0,
+              6
+            ],
+            "arrow": "both",
+            "label": "L",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -3.57,
+              -3.5
+            ],
+            "to": [
+              0,
+              -3.5
+            ],
+            "ticks": 1,
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -3.5
+            ],
+            "to": [
+              3.57,
+              -3.5
+            ],
+            "ticks": 1,
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -3.57,
+            "y": -3.5,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 3.57,
+            "y": -3.5,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -3.5,
+            "label": "C",
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              -3.5
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 5
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A circle with centre M, a line L through M meeting chord BA at C at a right angle, with BC and CA marked equal.",
+      "withheld": [],
+      "page": 42,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u9-1:figure-19",
+      "for_item": "pp3u9-1:drill-7",
+      "lo": "lo:pp3u9-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              -3.83,
+              -3.21
+            ],
+            "to": [
+              3.83,
+              -3.21
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -3.83,
+              -3.21
+            ],
+            "to": [
+              0,
+              -3.21
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -3.21
+            ],
+            "to": [
+              3.83,
+              -3.21
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -3.83,
+            "y": -3.21,
+            "label": "B",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 3.83,
+            "y": -3.21,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -3.21,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              -3.21
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              3.83,
+              -3.21
+            ],
+            "step": 4
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                -3.21
+              ],
+              [
+                3.83,
+                -3.21
+              ]
+            ],
+            "fill": true,
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              -3.21
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 220,
+            "toDeg": 270,
+            "label": "50°",
+            "step": 6
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Circle M with radius MC perpendicular to chord BA at C, BC and CA marked equal, and a 50° angle at M beside MC.",
+      "withheld": [
+        "angle MAC"
+      ],
+      "page": 43,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -931,7 +1303,8 @@
             "type": "circle",
             "cx": 0,
             "cy": 0,
-            "r": 3,
+            "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -944,13 +1317,217 @@
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with its centre marked as point M.",
+      "caption": "A circle with its centre M marked inside it.",
       "withheld": [],
       "page": 39,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u9-1:figure-20",
+      "for_item": "pp3u9-1:drill-7",
+      "lo": "lo:pp3u9-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              -4.11,
+              2.84
+            ],
+            "to": [
+              4.11,
+              2.84
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -4.11,
+              2.84
+            ],
+            "to": [
+              0,
+              2.84
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              2.84
+            ],
+            "to": [
+              4.11,
+              2.84
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "chord",
+            "from": [
+              4.11,
+              2.84
+            ],
+            "to": [
+              -0.4,
+              -4.98
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              4.11,
+              2.84
+            ],
+            "to": [
+              1.85,
+              -1.07
+            ],
+            "ticks": 1,
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.85,
+              -1.07
+            ],
+            "to": [
+              -0.4,
+              -4.98
+            ],
+            "ticks": 1,
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -4.11,
+            "y": 2.84,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 4.11,
+            "y": 2.84,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 2.84,
+            "label": "E",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 1.85,
+            "y": -1.07,
+            "label": "D",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": -0.4,
+            "y": -4.98,
+            "label": "B",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              2.84
+            ],
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1.85,
+              -1.07
+            ],
+            "step": 5
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                4.11,
+                2.84
+              ],
+              [
+                0,
+                2.84
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                1.85,
+                -1.07
+              ]
+            ],
+            "fill": true,
+            "step": 6
+          },
+          {
+            "type": "angle",
+            "at": [
+              4.11,
+              2.84
+            ],
+            "fromDeg": 180,
+            "toDeg": 240,
+            "label": "60°",
+            "step": 6
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Circle M with chords CA and AB; E and D are the marked equal-halves points, ME and MD are joined, and the angle at A is 60°.",
+      "withheld": [
+        "angle DME"
+      ],
+      "page": 43,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -964,7 +1541,7 @@
             "type": "circle",
             "cx": 0,
             "cy": 0,
-            "r": 4.5,
+            "r": 5,
             "step": 1
           },
           {
@@ -975,37 +1552,37 @@
             "step": 2
           },
           {
+            "type": "chord",
+            "from": [
+              -4,
+              -3
+            ],
+            "to": [
+              4,
+              -3
+            ],
+            "step": 3
+          },
+          {
             "type": "point",
-            "x": -3.35,
+            "x": -4,
             "y": -3,
             "label": "B",
             "step": 3
           },
           {
             "type": "point",
-            "x": 3.35,
+            "x": 4,
             "y": -3,
             "label": "A",
             "step": 3
-          },
-          {
-            "type": "chord",
-            "from": [
-              -3.35,
-              -3
-            ],
-            "to": [
-              3.35,
-              -3
-            ],
-            "step": 4
           },
           {
             "type": "point",
             "x": 0,
             "y": -3,
             "label": "C",
-            "step": 5
+            "step": 3
           },
           {
             "type": "segment",
@@ -1018,7 +1595,38 @@
               -3
             ],
             "label": "3 cm",
-            "step": 6
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              -4,
+              -3
+            ],
+            "step": 4
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                -3
+              ],
+              [
+                -4,
+                -3
+              ]
+            ],
+            "fill": true,
+            "step": 5
           },
           {
             "type": "angle",
@@ -1028,31 +1636,21 @@
             ],
             "fromDeg": 90,
             "toDeg": 180,
-            "label": "90°",
-            "step": 7
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -3.35,
-              -3
-            ],
-            "step": 8
+            "right": true,
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M and chord BA; MC is 3 cm and meets the chord at C at a right angle, with MB joined.",
-      "withheld": [],
+      "caption": "Circle M with chord BA, MC = 3 cm perpendicular to the chord at C, and triangle MBC shaded.",
+      "withheld": [
+        "MB"
+      ],
       "page": 43,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1077,50 +1675,37 @@
             "step": 2
           },
           {
+            "type": "chord",
+            "from": [
+              8.82,
+              4.71
+            ],
+            "to": [
+              2.06,
+              -9.79
+            ],
+            "step": 3
+          },
+          {
             "type": "point",
-            "x": 9.2,
-            "y": 3.93,
+            "x": 8.82,
+            "y": 4.71,
             "label": "A",
             "step": 3
           },
           {
             "type": "point",
-            "x": 1.2,
-            "y": -9.93,
+            "x": 2.06,
+            "y": -9.79,
             "label": "B",
             "step": 3
           },
           {
-            "type": "chord",
-            "from": [
-              9.2,
-              3.93
-            ],
-            "to": [
-              1.2,
-              -9.93
-            ],
-            "step": 4
-          },
-          {
             "type": "point",
-            "x": 5.2,
-            "y": -3,
+            "x": 5.44,
+            "y": -2.54,
             "label": "X",
-            "step": 5
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              9.2,
-              3.93
-            ],
-            "label": "10 cm",
-            "step": 6
+            "step": 4
           },
           {
             "type": "segment",
@@ -1129,33 +1714,67 @@
               0
             ],
             "to": [
-              5.2,
-              -3
+              8.82,
+              4.71
+            ],
+            "label": "10 cm",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              5.44,
+              -2.54
             ],
             "label": "6 cm",
-            "step": 7
+            "step": 4
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                5.44,
+                -2.54
+              ],
+              [
+                8.82,
+                4.71
+              ]
+            ],
+            "fill": true,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
-              5.2,
-              -3
+              5.44,
+              -2.54
             ],
-            "fromDeg": 60,
-            "toDeg": 150,
-            "label": "90°",
-            "step": 8
+            "fromDeg": 65,
+            "toDeg": 155,
+            "right": true,
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M, a chord AB, MA = 10 cm and MX = 6 cm, with MX meeting the chord at X at a right angle.",
-      "withheld": [],
+      "caption": "Circle M with radius MA = 10 cm, MX = 6 cm perpendicular to chord AB at X, and triangle MXA shaded.",
+      "withheld": [
+        "AB"
+      ],
       "page": 43,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1180,6 +1799,18 @@
             "step": 2
           },
           {
+            "type": "diameter",
+            "from": [
+              0,
+              5
+            ],
+            "to": [
+              0,
+              -5
+            ],
+            "step": 3
+          },
+          {
             "type": "point",
             "x": 0,
             "y": 5,
@@ -1194,32 +1825,6 @@
             "step": 3
           },
           {
-            "type": "diameter",
-            "from": [
-              0,
-              5
-            ],
-            "to": [
-              0,
-              -5
-            ],
-            "step": 4
-          },
-          {
-            "type": "point",
-            "x": -2.5,
-            "y": -4.33,
-            "label": "B",
-            "step": 5
-          },
-          {
-            "type": "point",
-            "x": 2.5,
-            "y": -4.33,
-            "label": "A",
-            "step": 5
-          },
-          {
             "type": "chord",
             "from": [
               -2.5,
@@ -1229,28 +1834,31 @@
               2.5,
               -4.33
             ],
-            "step": 6
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -2.5,
+            "y": -4.33,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 2.5,
+            "y": -4.33,
+            "label": "A",
+            "step": 4
           },
           {
             "type": "point",
             "x": 0,
             "y": -4.33,
             "label": "E",
-            "step": 7
+            "step": 4
           },
           {
-            "type": "angle",
-            "at": [
-              0,
-              -4.33
-            ],
-            "fromDeg": 270,
-            "toDeg": 360,
-            "label": "90°",
-            "step": 8
-          },
-          {
-            "type": "radius",
+            "type": "segment",
             "from": [
               0,
               0
@@ -1259,7 +1867,37 @@
               2.5,
               -4.33
             ],
-            "step": 9
+            "step": 5
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                -4.33
+              ],
+              [
+                2.5,
+                -4.33
+              ]
+            ],
+            "fill": true,
+            "step": 5
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              -4.33
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 5
           },
           {
             "type": "angle",
@@ -1270,18 +1908,18 @@
             "fromDeg": 270,
             "toDeg": 300,
             "label": "30°",
-            "step": 10
+            "step": 6
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M and a vertical diameter CD; chord BA meets it at E at a right angle, and the angle between MD and MA is 30°.",
+      "caption": "Circle M with diameter CD, chord BA meeting MD at E with a right angle, a 30° angle at M, and triangle MEA shaded.",
       "withheld": [],
       "page": 43,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1306,27 +1944,6 @@
             "step": 2
           },
           {
-            "type": "point",
-            "x": -4,
-            "y": -3,
-            "label": "A",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": 4,
-            "y": 3,
-            "label": "C",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": 4,
-            "y": -3,
-            "label": "B",
-            "step": 3
-          },
-          {
             "type": "diameter",
             "from": [
               -4,
@@ -1336,7 +1953,7 @@
               4,
               3
             ],
-            "step": 4
+            "step": 3
           },
           {
             "type": "chord",
@@ -1348,26 +1965,35 @@
               4,
               -3
             ],
-            "step": 5
+            "step": 3
           },
           {
-            "type": "segment",
-            "from": [
-              4,
-              -3
-            ],
-            "to": [
-              4,
-              3
-            ],
-            "step": 6
+            "type": "point",
+            "x": -4,
+            "y": -3,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": -3,
+            "label": "B",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 3,
+            "label": "C",
+            "step": 3
           },
           {
             "type": "point",
             "x": 0,
             "y": -3,
             "label": "D",
-            "step": 7
+            "step": 4
           },
           {
             "type": "segment",
@@ -1379,7 +2005,61 @@
               0,
               -3
             ],
-            "step": 8
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              -3
+            ],
+            "to": [
+              4,
+              3
+            ],
+            "step": 4
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                -4,
+                -3
+              ],
+              [
+                0,
+                -3
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "fill": true,
+            "step": 5
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                -3
+              ],
+              [
+                4,
+                -3
+              ],
+              [
+                4,
+                3
+              ]
+            ],
+            "fill": true,
+            "step": 5
           },
           {
             "type": "angle",
@@ -1389,8 +2069,8 @@
             ],
             "fromDeg": 0,
             "toDeg": 90,
-            "label": "90°",
-            "step": 9
+            "right": true,
+            "step": 5
           },
           {
             "type": "angle",
@@ -1401,18 +2081,160 @@
             "fromDeg": 90,
             "toDeg": 180,
             "label": "2X°",
-            "step": 10
+            "step": 6
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M and diameter AC; B is on the circle, MD meets chord AB at D at a right angle, and the angle at B in triangle ABC is marked 2X°.",
+      "caption": "Circle M with diameter AC, chord AB, MD perpendicular to AB at D, BC joined, and the angle at B marked 2X°.",
       "withheld": [],
       "page": 43,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u9-1:figure-25",
+      "for_item": "pp3u9-1:drill-8",
+      "lo": "lo:pp3u9-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 13,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              -12,
+              -5
+            ],
+            "to": [
+              12,
+              -5
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -12,
+              -5
+            ],
+            "to": [
+              0,
+              -5
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              12,
+              -5
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -12,
+            "y": -5,
+            "label": "B",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 12,
+            "y": -5,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -5,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -13,
+            "label": "D",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              12,
+              -5
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              -13
+            ],
+            "step": 4
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                12,
+                -5
+              ],
+              [
+                0,
+                -13
+              ],
+              [
+                -12,
+                -5
+              ]
+            ],
+            "fill": true,
+            "step": 5
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Circle M with chord AB, C its midpoint, MA joined, ray MC meeting the circle at D, and triangle ADB shaded.",
+      "withheld": [],
+      "page": 43,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1426,69 +2248,69 @@
             "type": "circle",
             "cx": 0,
             "cy": 0,
-            "r": 5,
+            "r": 8,
             "step": 1
           },
           {
             "type": "circle",
             "cx": 0,
             "cy": 0,
-            "r": 3,
-            "step": 2
+            "r": 5,
+            "step": 1
           },
           {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 3
+            "step": 2
           },
           {
             "type": "chord",
             "from": [
-              -4.77,
-              -1.5
+              -7.56,
+              -2.6
             ],
             "to": [
-              4.77,
-              -1.5
+              7.56,
+              -2.6
             ],
-            "step": 4
+            "step": 3
           },
           {
             "type": "point",
-            "x": -4.77,
-            "y": -1.5,
+            "x": -7.56,
+            "y": -2.6,
             "label": "B",
-            "step": 5
+            "step": 3
           },
           {
             "type": "point",
-            "x": -2.6,
-            "y": -1.5,
+            "x": -4.27,
+            "y": -2.6,
             "label": "D",
-            "step": 5
+            "step": 3
           },
           {
             "type": "point",
             "x": 0,
-            "y": -1.5,
+            "y": -2.6,
             "label": "E",
-            "step": 5
+            "step": 3
           },
           {
             "type": "point",
-            "x": 2.6,
-            "y": -1.5,
+            "x": 4.27,
+            "y": -2.6,
             "label": "C",
-            "step": 5
+            "step": 3
           },
           {
             "type": "point",
-            "x": 4.77,
-            "y": -1.5,
+            "x": 7.56,
+            "y": -2.6,
             "label": "A",
-            "step": 5
+            "step": 3
           },
           {
             "type": "segment",
@@ -1498,40 +2320,48 @@
             ],
             "to": [
               0,
-              -1.5
+              -2.6
             ],
-            "step": 6
+            "dashed": true,
+            "step": 4
           },
           {
             "type": "angle",
             "at": [
               0,
-              -1.5
+              -2.6
             ],
             "fromDeg": 0,
             "toDeg": 90,
-            "label": "90°",
-            "step": 7
+            "right": true,
+            "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Two circles with the same centre M; a chord BA of the big circle cuts the small one at D and C, and ME meets it at E at a right angle.",
+      "caption": "Two circles with the same centre M, a chord BA of the larger one cutting the smaller at D and C, and the dotted perpendicular ME to the chord.",
       "withheld": [],
       "page": 43,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u9-1:figure-27",
       "for_item": "pp3u9-1:drill-9",
-      "lo": "lo:pp3u9-1-1",
+      "lo": "lo:pp3u9-1-3",
       "kind": "geo_scene",
       "spec": {
         "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 8,
+            "step": 1
+          },
           {
             "type": "circle",
             "cx": 0,
@@ -1540,115 +2370,221 @@
             "step": 1
           },
           {
-            "type": "circle",
-            "cx": 0,
-            "cy": 0,
-            "r": 3,
-            "step": 2
-          },
-          {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              -7.27,
+              -3.33
+            ],
+            "to": [
+              7.27,
+              3.33
+            ],
             "step": 3
           },
           {
-            "type": "diameter",
+            "type": "segment",
             "from": [
-              -2.87,
-              4.1
+              -5.03,
+              6.22
             ],
             "to": [
-              2.87,
-              -4.1
+              5.03,
+              -6.22
             ],
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 7.27,
+            "y": 3.33,
+            "label": "A",
             "step": 4
           },
           {
-            "type": "diameter",
-            "from": [
-              -4.53,
-              -2.11
-            ],
-            "to": [
-              4.53,
-              2.11
-            ],
+            "type": "point",
+            "x": -7.27,
+            "y": -3.33,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 5.03,
+            "y": -6.22,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -5.03,
+            "y": 6.22,
+            "label": "D",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 4.55,
+            "y": 2.08,
+            "label": "X",
             "step": 5
           },
           {
             "type": "point",
-            "x": -2.87,
-            "y": 4.1,
-            "label": "D",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": 2.87,
-            "y": -4.1,
-            "label": "C",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": -4.53,
-            "y": -2.11,
-            "label": "B",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": 4.53,
-            "y": 2.11,
-            "label": "A",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": -1.72,
-            "y": 2.46,
-            "label": "L",
-            "step": 7
-          },
-          {
-            "type": "point",
-            "x": 1.72,
-            "y": -2.46,
-            "label": "Z",
-            "step": 7
-          },
-          {
-            "type": "point",
-            "x": -2.72,
-            "y": -1.27,
+            "x": -4.55,
+            "y": -2.08,
             "label": "Y",
-            "step": 7
+            "step": 5
           },
           {
             "type": "point",
-            "x": 2.72,
-            "y": 1.27,
-            "label": "X",
-            "step": 7
+            "x": 3.15,
+            "y": -3.89,
+            "label": "Z",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": -3.15,
+            "y": 3.89,
+            "label": "L",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Two circles with the same centre M, and two lines through M: D to C and B to A, crossing the small circle at L, Z and Y, X.",
+      "caption": "Two circles with centre M and two straight lines through M, meeting the outer circle at A, B, C, D and the inner circle at X, Y, Z, L.",
       "withheld": [],
       "page": 44,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u9-1:figure-28",
       "for_item": "pp3u9-1:drill-9",
-      "lo": "lo:pp3u9-1-1",
+      "lo": "lo:pp3u9-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 8.5,
+            "step": 1
+          },
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              8.5,
+              0
+            ],
+            "to": [
+              -5.5,
+              6.45
+            ],
+            "step": 3
+          },
+          {
+            "type": "chord",
+            "from": [
+              8.5,
+              0
+            ],
+            "to": [
+              -8.1,
+              -2.5
+            ],
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 8.5,
+            "y": 0,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -5.5,
+            "y": 6.45,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -8.1,
+            "y": -2.5,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 4.68,
+            "y": 1.76,
+            "label": "Z",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": -1.69,
+            "y": 4.7,
+            "label": "L",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 4.97,
+            "y": -0.53,
+            "label": "X",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": -4.59,
+            "y": -1.97,
+            "label": "Y",
+            "step": 5
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two circles with centre M and two chords of the outer circle from A, one to C through Z and L, one to B through X and Y.",
+      "withheld": [],
+      "page": 44,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u9-1:figure-29",
+      "for_item": "pp3u9-1:example-3",
+      "lo": "lo:pp3u9-1-3",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -1660,102 +2596,129 @@
             "step": 1
           },
           {
-            "type": "circle",
-            "cx": 0,
-            "cy": 0,
-            "r": 3,
-            "step": 2
-          },
-          {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              -3.76,
+              3.3
+            ],
+            "to": [
+              3.76,
+              3.3
+            ],
+            "parallel": 1,
             "step": 3
           },
           {
             "type": "chord",
             "from": [
-              -3.1,
-              3.9
+              -3.76,
+              -3.3
             ],
             "to": [
-              5,
-              0
+              3.76,
+              -3.3
             ],
+            "parallel": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              -3.76,
+              -3.3
+            ],
+            "to": [
+              0,
+              -3.3
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -3.3
+            ],
+            "to": [
+              3.76,
+              -3.3
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -3.76,
+            "y": 3.3,
+            "label": "D",
             "step": 4
           },
           {
-            "type": "chord",
-            "from": [
-              -4.75,
-              -1.55
-            ],
-            "to": [
-              5,
-              0
-            ],
+            "type": "point",
+            "x": 3.76,
+            "y": 3.3,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -3.76,
+            "y": -3.3,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 3.76,
+            "y": -3.3,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -3.3,
+            "label": "X",
             "step": 5
           },
           {
             "type": "point",
-            "x": -3.1,
-            "y": 3.9,
-            "label": "C",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": 5,
-            "y": 0,
-            "label": "A",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": -4.75,
-            "y": -1.55,
-            "label": "B",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": -0.93,
-            "y": 2.85,
-            "label": "L",
-            "step": 7
-          },
-          {
-            "type": "point",
-            "x": 2.81,
-            "y": 1.05,
-            "label": "Z",
-            "step": 7
-          },
-          {
-            "type": "point",
-            "x": -2.73,
-            "y": -1.23,
+            "x": 0,
+            "y": 3.3,
             "label": "Y",
-            "step": 7
+            "step": 5
           },
           {
-            "type": "point",
-            "x": 2.97,
-            "y": -0.32,
-            "label": "X",
-            "step": 7
+            "type": "segment",
+            "from": [
+              0,
+              -3.3
+            ],
+            "to": [
+              0,
+              3.3
+            ],
+            "arrow": "end",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Two circles with the same centre M; two chords of the big circle, C to A and B to A, meet at A and cross the small circle.",
+      "caption": "Circle M with parallel chords CD and AB, X marked as midpoint of AB, and the line from X through M meeting CD at Y.",
       "withheld": [],
       "page": 44,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1770,6 +2733,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -1781,8 +2745,8 @@
           },
           {
             "type": "point",
-            "x": 2.83,
-            "y": 2.83,
+            "x": 2.9,
+            "y": 2.7,
             "label": "A",
             "step": 3
           },
@@ -1802,22 +2766,22 @@
           },
           {
             "type": "point",
-            "x": 1.3,
-            "y": 2.75,
+            "x": 1.36,
+            "y": 2.7,
             "label": "D",
             "step": 4
           },
           {
             "type": "point",
-            "x": -1.64,
-            "y": -1.93,
+            "x": -1.6,
+            "y": -2,
             "label": "E",
             "step": 4
           },
           {
             "type": "point",
             "x": -4,
-            "y": 3.25,
+            "y": 3.2,
             "label": "X",
             "step": 5
           },
@@ -1831,20 +2795,20 @@
           {
             "type": "point",
             "x": -4,
-            "y": -4.25,
+            "y": -4.2,
             "label": "Z",
             "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Points A, B, C are on the circle, D, E and M are inside it, and X, Y, Z are outside it.",
+      "caption": "Points A, B, C lie on the circle, D, E and M inside it, and X, Y, Z outside it.",
       "withheld": [],
       "page": 39,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -1869,144 +2833,145 @@
             "step": 2
           },
           {
+            "type": "polygon",
+            "points": [
+              [
+                -1.71,
+                4.7
+              ],
+              [
+                -3.99,
+                -3.01
+              ],
+              [
+                3.99,
+                -3.01
+              ]
+            ],
+            "step": 3
+          },
+          {
             "type": "point",
-            "x": -1.9,
-            "y": 4.62,
+            "x": -1.71,
+            "y": 4.7,
             "label": "A",
             "step": 3
           },
           {
             "type": "point",
-            "x": -4.3,
-            "y": -2.55,
+            "x": -3.99,
+            "y": -3.01,
             "label": "C",
             "step": 3
           },
           {
             "type": "point",
-            "x": 4.3,
-            "y": -2.55,
+            "x": 3.99,
+            "y": -3.01,
             "label": "B",
             "step": 3
           },
           {
-            "type": "segment",
-            "from": [
-              -1.9,
-              4.62
-            ],
-            "to": [
-              4.3,
-              -2.55
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              4.3,
-              -2.55
-            ],
-            "to": [
-              -4.3,
-              -2.55
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              -4.3,
-              -2.55
-            ],
-            "to": [
-              -1.9,
-              4.62
-            ],
-            "step": 4
-          },
-          {
             "type": "point",
             "x": 0,
-            "y": -2.55,
+            "y": -3.01,
             "label": "D",
-            "step": 5
+            "step": 4
           },
           {
             "type": "point",
-            "x": -3.1,
-            "y": 1.04,
+            "x": -2.85,
+            "y": 0.845,
             "label": "E",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              -3.01
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              -2.85,
+              0.845
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2.85,
+              0.845
+            ],
+            "to": [
+              0,
+              -3.01
+            ],
             "step": 5
           },
           {
-            "type": "segment",
-            "from": [
-              0,
-              0
+            "type": "polygon",
+            "points": [
+              [
+                -2.85,
+                0.845
+              ],
+              [
+                0,
+                -3.01
+              ],
+              [
+                0,
+                0
+              ]
             ],
-            "to": [
-              0,
-              -2.55
-            ],
-            "step": 6
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -3.1,
-              1.04
-            ],
-            "step": 6
+            "fill": true,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
               0,
-              -2.55
+              -3.01
             ],
             "fromDeg": 0,
             "toDeg": 90,
-            "label": "90°",
-            "step": 7
+            "right": true,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
-              -3.1,
-              1.04
+              -2.85,
+              0.845
             ],
-            "fromDeg": -18.5,
-            "toDeg": 71.5,
-            "label": "90°",
-            "step": 7
-          },
-          {
-            "type": "segment",
-            "from": [
-              -3.1,
-              1.04
-            ],
-            "to": [
-              0,
-              -2.55
-            ],
-            "step": 8
+            "fromDeg": -16.5,
+            "toDeg": 73.5,
+            "right": true,
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M and triangle ABC inside it; MD meets BC at D and ME meets AC at E, both at right angles, and ED is joined.",
+      "caption": "Circle M with inscribed triangle ABC, MD perpendicular to BC at D, ME perpendicular to AC at E, and triangle MED shaded.",
       "withheld": [],
       "page": 45,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2031,166 +2996,155 @@
             "step": 2
           },
           {
+            "type": "polygon",
+            "points": [
+              [
+                1.71,
+                4.7
+              ],
+              [
+                -4.33,
+                -2.5
+              ],
+              [
+                4.33,
+                -2.5
+              ]
+            ],
+            "step": 3
+          },
+          {
             "type": "point",
-            "x": 0.87,
-            "y": 4.92,
+            "x": 1.71,
+            "y": 4.7,
             "label": "A",
             "step": 3
           },
           {
             "type": "point",
-            "x": -3.83,
-            "y": -3.21,
+            "x": -4.33,
+            "y": -2.5,
             "label": "C",
             "step": 3
           },
           {
             "type": "point",
-            "x": 4.7,
-            "y": -1.71,
+            "x": 4.33,
+            "y": -2.5,
             "label": "B",
             "step": 3
           },
           {
-            "type": "segment",
-            "from": [
-              0.87,
-              4.92
-            ],
-            "to": [
-              4.7,
-              -1.71
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              4.7,
-              -1.71
-            ],
-            "to": [
-              -3.83,
-              -3.21
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              -3.83,
-              -3.21
-            ],
-            "to": [
-              0.87,
-              4.92
-            ],
-            "step": 4
-          },
-          {
             "type": "angle",
             "at": [
-              0.87,
-              4.92
+              1.71,
+              4.7
             ],
-            "fromDeg": -120,
-            "toDeg": -60,
+            "fromDeg": 230,
+            "toDeg": 290,
             "label": "60°",
-            "step": 5
+            "step": 4
           },
           {
             "type": "angle",
             "at": [
-              4.7,
-              -1.71
+              4.33,
+              -2.5
             ],
-            "fromDeg": 120,
-            "toDeg": 190,
+            "fromDeg": 110,
+            "toDeg": 180,
             "label": "70°",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 3.02,
+            "y": 1.1,
+            "label": "X",
             "step": 5
           },
           {
             "type": "point",
-            "x": 2.78,
-            "y": 1.6,
-            "label": "X",
-            "step": 6
-          },
-          {
-            "type": "point",
-            "x": -1.48,
-            "y": 0.86,
+            "x": -1.31,
+            "y": 1.1,
             "label": "Y",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              3.02,
+              1.1
+            ],
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              -1.31,
+              1.1
+            ],
+            "step": 5
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                3.02,
+                1.1
+              ],
+              [
+                -1.31,
+                1.1
+              ]
+            ],
+            "fill": true,
             "step": 6
           },
           {
-            "type": "segment",
-            "from": [
-              0,
-              0
+            "type": "angle",
+            "at": [
+              3.02,
+              1.1
             ],
-            "to": [
-              2.78,
-              1.6
-            ],
-            "step": 7
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -1.48,
-              0.86
-            ],
-            "step": 7
+            "fromDeg": 110,
+            "toDeg": 200,
+            "right": true,
+            "step": 6
           },
           {
             "type": "angle",
             "at": [
-              2.78,
-              1.6
+              -1.31,
+              1.1
             ],
-            "fromDeg": 120,
-            "toDeg": 210,
-            "label": "90°",
-            "step": 8
-          },
-          {
-            "type": "angle",
-            "at": [
-              -1.48,
-              0.86
-            ],
-            "fromDeg": -30,
-            "toDeg": 60,
-            "label": "90°",
-            "step": 8
-          },
-          {
-            "type": "segment",
-            "from": [
-              -1.48,
-              0.86
-            ],
-            "to": [
-              2.78,
-              1.6
-            ],
-            "step": 9
+            "fromDeg": -40,
+            "toDeg": 50,
+            "right": true,
+            "step": 6
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A circle with centre M and triangle ABC inside it, angle A = 60° and angle B = 70°; MX and MY meet AB and AC at right angles, and XY is joined.",
+      "caption": "Circle M with inscribed triangle ABC, angle A = 60° and angle B = 70°, MX and MY perpendicular to AB and AC, and triangle MXY shaded.",
       "withheld": [],
       "page": 45,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2205,6 +3159,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -2217,13 +3172,14 @@
           {
             "type": "segment",
             "from": [
-              -5,
+              -6,
               -2.5
             ],
             "to": [
-              5,
+              6,
               -2.5
             ],
+            "arrow": "both",
             "step": 3
           },
           {
@@ -2235,35 +3191,35 @@
           },
           {
             "type": "point",
-            "x": 5,
-            "y": -2.5,
-            "label": "A",
-            "step": 4
-          },
-          {
-            "type": "point",
             "x": -3.12,
             "y": -2.5,
             "label": "D",
-            "step": 5
+            "step": 4
           },
           {
             "type": "point",
             "x": 3.12,
             "y": -2.5,
             "label": "C",
-            "step": 5
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 5,
+            "y": -2.5,
+            "label": "A",
+            "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "A line through B and A cuts circle M at the two points D and C.",
+      "caption": "A line AB cuts the circle with centre M, crossing it at D and C, with B and A outside the circle on either side.",
       "withheld": [],
       "page": 40,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2278,6 +3234,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -2286,27 +3243,6 @@
             "y": 0,
             "label": "M",
             "step": 2
-          },
-          {
-            "type": "point",
-            "x": 0,
-            "y": 4,
-            "label": "C",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": -4,
-            "y": 0,
-            "label": "B",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": 2.9,
-            "y": -2.75,
-            "label": "A",
-            "step": 3
           },
           {
             "type": "radius",
@@ -2318,7 +3254,8 @@
               0,
               4
             ],
-            "step": 4
+            "ticks": 1,
+            "step": 3
           },
           {
             "type": "radius",
@@ -2330,7 +3267,8 @@
               -4,
               0
             ],
-            "step": 5
+            "ticks": 1,
+            "step": 3
           },
           {
             "type": "radius",
@@ -2339,21 +3277,43 @@
               0
             ],
             "to": [
-              2.9,
-              -2.75
+              2.93,
+              -2.73
             ],
-            "step": 6
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 4,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -4,
+            "y": 0,
+            "label": "B",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 2.93,
+            "y": -2.73,
+            "label": "A",
+            "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Three radii MC, MB and MA of the same circle are all the same length.",
+      "caption": "Three radii MC, MB and MA of the same circle are marked equal.",
       "withheld": [],
       "page": 40,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2368,6 +3328,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -2379,61 +3340,61 @@
           },
           {
             "type": "point",
-            "x": -1.75,
-            "y": 3.6,
+            "x": -1.6,
+            "y": 3.66,
             "label": "C",
             "step": 3
           },
           {
             "type": "point",
-            "x": 3.85,
-            "y": 1.05,
-            "label": "A",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": -3.93,
-            "y": 0.75,
+            "x": -3.85,
+            "y": 1.08,
             "label": "D",
             "step": 3
           },
           {
             "type": "point",
-            "x": -3.95,
-            "y": -0.6,
+            "x": -3.88,
+            "y": -0.95,
             "label": "E",
             "step": 3
           },
           {
             "type": "point",
-            "x": 1.64,
-            "y": -3.65,
+            "x": 3.9,
+            "y": 0.95,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 1.6,
+            "y": -3.66,
             "label": "B",
             "step": 3
           },
           {
             "type": "chord",
             "from": [
-              3.85,
-              1.05
+              3.9,
+              0.95
             ],
             "to": [
-              1.64,
-              -3.65
+              1.6,
+              -3.66
             ],
             "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with five points C, A, D, E, B on it, and the chord AB already drawn.",
+      "caption": "A circle with centre M, five points A, B, C, D, E on it, and the chord AB drawn.",
       "withheld": [],
       "page": 40,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2448,6 +3409,7 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
           },
           {
@@ -2456,27 +3418,6 @@
             "y": 0,
             "label": "M",
             "step": 2
-          },
-          {
-            "type": "point",
-            "x": -4,
-            "y": 0,
-            "label": "B",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": 4,
-            "y": 0,
-            "label": "A",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": -2.2,
-            "y": 3.34,
-            "label": "C",
-            "step": 3
           },
           {
             "type": "chord",
@@ -2488,42 +3429,63 @@
               4,
               0
             ],
-            "step": 4
+            "step": 3
           },
           {
-            "type": "chord",
+            "type": "segment",
             "from": [
-              -2.2,
-              3.34
+              -2.15,
+              3.37
             ],
             "to": [
               4,
               0
             ],
-            "step": 5
+            "step": 4
           },
           {
-            "type": "radius",
+            "type": "segment",
             "from": [
+              -2.15,
+              3.37
+            ],
+            "to": [
               0,
               0
             ],
-            "to": [
-              -2.2,
-              3.34
-            ],
-            "step": 6
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": -4,
+            "y": 0,
+            "label": "B",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "A",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": -2.15,
+            "y": 3.37,
+            "label": "C",
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Circle M with chord BA through the centre, point C on the circle, and segments CA and CM.",
+      "caption": "A circle with centre M, a horizontal chord BA through M, and a point C on the circle joined to A and to M.",
       "withheld": [],
       "page": 40,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2541,11 +3503,30 @@
             "step": 1
           },
           {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                -3.06,
+                -2.57
+              ],
+              [
+                3.06,
+                -2.57
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 2
+            "step": 3
           },
           {
             "type": "point",
@@ -2562,40 +3543,15 @@
             "step": 3
           },
           {
-            "type": "radius",
-            "from": [
+            "type": "angle",
+            "at": [
               0,
               0
             ],
-            "to": [
-              -3.06,
-              -2.57
-            ],
+            "fromDeg": 220,
+            "toDeg": 320,
+            "label": "X°",
             "step": 4
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              3.06,
-              -2.57
-            ],
-            "step": 4
-          },
-          {
-            "type": "chord",
-            "from": [
-              -3.06,
-              -2.57
-            ],
-            "to": [
-              3.06,
-              -2.57
-            ],
-            "step": 5
           },
           {
             "type": "angle",
@@ -2606,20 +3562,18 @@
             "fromDeg": 140,
             "toDeg": 180,
             "label": "40°",
-            "step": 6
+            "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Triangle MAB inside circle M with the angle at A marked 40°.",
-      "withheld": [
-        "X"
-      ],
+      "caption": "Triangle MAB with M the centre and A, B on the circle; the angle at A is 40° and the angle at M is marked X.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -2634,64 +3588,48 @@
             "cx": 0,
             "cy": 0,
             "r": 4,
+            "fill": true,
             "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                -3.94,
+                0.69
+              ],
+              [
+                2.57,
+                -3.06
+              ]
+            ],
+            "fill": true,
+            "step": 2
           },
           {
             "type": "point",
             "x": 0,
             "y": 0,
             "label": "M",
-            "step": 2
+            "step": 3
           },
           {
             "type": "point",
-            "x": -3.76,
-            "y": 1.37,
+            "x": -3.94,
+            "y": 0.69,
             "label": "B",
             "step": 3
           },
           {
             "type": "point",
-            "x": 2,
-            "y": -3.46,
+            "x": 2.57,
+            "y": -3.06,
             "label": "A",
             "step": 3
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              -3.76,
-              1.37
-            ],
-            "step": 4
-          },
-          {
-            "type": "radius",
-            "from": [
-              0,
-              0
-            ],
-            "to": [
-              2,
-              -3.46
-            ],
-            "step": 4
-          },
-          {
-            "type": "chord",
-            "from": [
-              -3.76,
-              1.37
-            ],
-            "to": [
-              2,
-              -3.46
-            ],
-            "step": 5
           },
           {
             "type": "angle",
@@ -2699,23 +3637,32 @@
               0,
               0
             ],
-            "fromDeg": -60,
-            "toDeg": 160,
+            "fromDeg": 310,
+            "toDeg": 530,
             "label": "220°",
-            "step": 6
+            "step": 4
+          },
+          {
+            "type": "angle",
+            "at": [
+              2.57,
+              -3.06
+            ],
+            "fromDeg": 130,
+            "toDeg": 150,
+            "label": "Y°",
+            "step": 4
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Triangle MBA in circle M, with the angle at M marked 220° (the big way round).",
-      "withheld": [
-        "Y"
-      ],
+      "caption": "Triangle MBA inside a circle with centre M; the reflex angle at M is 220° and the angle at A is marked Y.",
+      "withheld": [],
       "page": 41,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -2723,73 +3670,13 @@
     {
       "figure": "pp3u9-1:figure-1",
       "for_item": null,
-      "reason": "Aerial photograph of circular irrigated fields; not a geometric diagram.",
-      "needed_kind": "photo / image display",
+      "reason": "Aerial photograph of circular irrigated fields; a photo cannot be drawn by any available kind.",
+      "needed_kind": "photograph / image display",
       "page": 39,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
-      }
-    },
-    {
-      "figure": "pp3u9-1:figure-18",
-      "for_item": "pp3u9-1:activity-2",
-      "reason": "The figure marks BC = CA with equal-length tick marks on the chord; geo_scene has no tick marks for equal segments, and leaving them out would drop the key fact.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
-      "page": 42,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
-      }
-    },
-    {
-      "figure": "pp3u9-1:figure-19",
-      "for_item": "pp3u9-1:drill-7",
-      "reason": "The figure uses equal-length tick marks on BC and CA, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
-      "page": 43,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
-      }
-    },
-    {
-      "figure": "pp3u9-1:figure-20",
-      "for_item": "pp3u9-1:drill-7",
-      "reason": "The figure relies on equal-length tick marks on chords and segments (CE = EA, AD = DB), which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
-      "page": 43,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
-      }
-    },
-    {
-      "figure": "pp3u9-1:figure-25",
-      "for_item": "pp3u9-1:drill-8",
-      "reason": "The figure shows equal-length tick marks showing C is the midpoint of AB, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
-      "page": 43,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
-      }
-    },
-    {
-      "figure": "pp3u9-1:figure-29",
-      "for_item": "pp3u9-1:example-3",
-      "reason": "The figure marks AB parallel to CD with arrows and AX = XB with tick marks; geo_scene cannot draw parallel arrows or equal-length ticks.",
-      "needed_kind": "geo_scene with equal-length tick marks and parallel-line arrow marks",
-      "page": 44,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T074749Z.json",
-        "script_sha256": "f8d762469830078ccf52e1e1a0ba1e30f987fad9d3bad301af898398c404f54f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -2803,6 +3690,17 @@
         "visuals": 25,
         "viz_gaps": 6,
         "compared": 25
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 30,
+        "viz_gaps": 1,
+        "compared": 30
       }
     }
   ]

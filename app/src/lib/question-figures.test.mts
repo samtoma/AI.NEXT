@@ -15,7 +15,9 @@ import {
   BOOK_FIGURE_SRC,
   bookImageOf,
   displayStem,
+  figureBase,
   figuresByQuestion,
+  figuresOnCards,
   hasFigurePlaceholder,
   noteFigureless,
 } from "./question-figures.ts";
@@ -123,4 +125,18 @@ test("book_image renders through the stored-figure path only, as a plain image w
   // a COMPOSED book picture (the tutor's {{widget:viz:…}}) is refused: only the pipeline attaches one,
   // after checking it does not show the question's unknown
   assert.match(src("../components/viz/render-viz-widget.tsx"), /if \(kind === "book_image"\) return null;/);
+});
+
+test("a figure a question card in the same message carries is drawn once, on the card", () => {
+  const questions: Record<string, { figures?: string[] }> = {
+    "q:pp3u10-3-1:bk-drill-1-1": { figures: ["v:pp3u10-3:figure-3"] },
+    "q:pp3u10-3-1:bk-drill-1-2": { figures: ["v:pp3u10-3:figure-4-2"] },
+    "q:pp3u10-3-2:bk-drill-4": {},
+  };
+  const on = figuresOnCards(Object.keys(questions), (qid) => questions[qid]);
+  assert.ok(on.has("v:pp3u10-3:figure-3"));
+  assert.ok(on.has(figureBase("v:pp3u10-3:figure-4")), "a copy on a second question is the same figure");
+  assert.ok(!on.has("v:pp3u10-3:figure-5"));
+  assert.equal(figureBase("v:pp3u10-3:figure-3-2"), "v:pp3u10-3:figure-3");
+  assert.equal(figureBase("v:pp3u10-3:bk-drill-1-2"), "v:pp3u10-3:bk-drill-1-2", "a book picture keeps its own id");
 });

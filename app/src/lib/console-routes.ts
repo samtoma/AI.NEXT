@@ -455,6 +455,12 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     nav: "Math widgets",
   },
   {
+    path: "/dev/figure-marks",
+    file: "(console)/dev/figure-marks/page.console.tsx",
+    roles: ["evidence-access"],
+    nav: "Figure marks",
+  },
+  {
     path: "/dev/social-fixture",
     file: "(console)/dev/social-fixture/page.console.tsx",
     roles: ["evidence-access"],

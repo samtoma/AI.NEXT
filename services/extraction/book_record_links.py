@@ -16,6 +16,15 @@ objective's lesson, the checker's CONFIRMED, no duplicate, a backward link flagg
 START in an earlier unit are kept here (the unit's own links went through G1 already). They are written to
 teaching/<book>/cross-links/ch<NN>.json and shown in the review tool's Objectives (G1) task as links; `apply` adds the
 ones a person kept to teaching/<book>/links/ch<NN>.json, which compile turns into `prerequisite_of` edges (Refresh).
+
+CROSS (links-v2-cross, Tamer 2026-10-21): `run … --cross` / `args … --cross` run runbook/links-cross.workflow.js instead,
+a variant that looks ONLY for links into earlier units, makes every link quote the step it rests on and name the earlier
+result, and gives the checker a removal test (could the step stand without it?). Samuel's links.workflow.js is
+unchanged. `accept` then also drops, with the reason kept for review:
+  * a link the approved graph already implies (A -> C when A -> … -> C is there: only the most direct is kept);
+  * a link already decided — approved in teaching/<book>/links/, or proposed before in cross-links/;
+  * all but the 3 best-evidenced links into one objective (more says the run was too loose);
+and MERGES its links into cross-links/ch<NN>.json beside the earlier proposals (and their G1 decisions), never over them.
 """
 from __future__ import annotations
 
@@ -31,6 +40,69 @@ sys.path.insert(0, str(HERE))
 import book_config  # noqa: E402
 
 FORMAT = "ainext.cross-links/1"
+CROSS_WORKFLOW = "links-cross.workflow.js"
+CROSS_CAP = 3            # cross-unit links into one objective
+SIGNAL_RANK = {"recall": 0, "reference": 1, "uses_method": 2}
+
+
+def has_cross_run(book: str, unit: int) -> bool:
+    """Has the cross-unit linker (links-v2-cross) run for this unit? What ingest.py checks before it runs it."""
+    p = out_path(book, unit)
+    return p.exists() and any("xlinks-" in r for r in (json.loads(p.read_text()).get("runs") or []))
+
+
+def approved_graph(book: str) -> set[tuple[str, str]]:
+    """Every prerequisite link a person has approved for the book: each unit's own (G1) and the cross-unit ones applied."""
+    out = set()
+    for f in (HERE / "teaching" / book / "links").glob("ch*.json"):
+        out |= {(k["src"], k["dst"]) for k in json.loads(f.read_text()).get("links") or []}
+    return out
+
+
+def implied(edges: set[tuple[str, str]], src: str, dst: str) -> bool:
+    """Is there a path src -> … -> dst of two or more links, not using the link src -> dst itself?"""
+    nxt: dict[str, set[str]] = {}
+    for a, b in edges:
+        if (a, b) != (src, dst):
+            nxt.setdefault(a, set()).add(b)
+    seen, todo = set(), [b for b in nxt.get(src, ()) if b != dst]
+    while todo:
+        n = todo.pop()
+        if n == dst:
+            return True
+        if n in seen:
+            continue
+        seen.add(n)
+        todo += list(nxt.get(n, ()))
+    return False
+
+
+def cross_filters(kept: list[dict], decided: set[tuple[str, str]], approved: set[tuple[str, str]]) -> tuple[list[dict], list[dict]]:
+    """The v2 filters, in order: already decided, implied by the approved graph (with the run's other links), then the
+    cap per objective. Pure: returns (kept, dropped-with-why)."""
+    out, dropped = [], []
+    for k in kept:
+        if (k["src"], k["dst"]) in decided:
+            dropped.append({**k, "why": "already decided: approved, or proposed before for G1"})
+        else:
+            out.append(k)
+    graph = approved | {(k["src"], k["dst"]) for k in out}
+    keep2 = []
+    for k in out:
+        if implied(graph, k["src"], k["dst"]):
+            dropped.append({**k, "why": "implied: the approved links already lead from its source to its objective"})
+            graph.discard((k["src"], k["dst"]))
+        else:
+            keep2.append(k)
+    by_dst: dict[str, list[dict]] = {}
+    for k in keep2:
+        by_dst.setdefault(k["dst"], []).append(k)
+    final = []
+    for dst, ks in by_dst.items():
+        ks.sort(key=lambda k: (SIGNAL_RANK.get(k.get("signal"), 9), -len(k.get("evidence") or [])))
+        final += ks[:CROSS_CAP]
+        dropped += [{**k, "why": f"over the cap of {CROSS_CAP} cross-unit links into {dst}"} for k in ks[CROSS_CAP:]]
+    return final, dropped
 
 
 def approved(book: str, slug: str) -> list[dict]:
@@ -88,27 +160,50 @@ def accept(book: str, unit: int, run_file: Path) -> dict:
              "fingerprint": fp({x: k.get(x) for x in ("src", "dst", "signal", "evidence")})} for k in ev["kept"] if cross(k)]
     dropped = [{"key": d.get("key"), "src": d.get("src"), "dst": d.get("dst"), "why": d.get("dropped"), "check": d.get("check"),
                 "cross": True} for d in ev["dropped"] if d.get("src") not in mine]
-    doc = {"format": FORMAT, "book": book, "chapter": unit, "run": str(run_file.relative_to(HERE)) if run_file.is_relative_to(HERE) else str(run_file),
+    v2 = run.get("workflow") == "links-cross"
+    p = out_path(book, unit)
+    before = json.loads(p.read_text()) if p.exists() else None
+    if v2:
+        # the step and the earlier result each link names, for the person who reviews it
+        reasons = {(x.get("src"), x.get("dst")): x.get("reason") for x in (run.get("links") or {}).get("proposed") or []}
+        for k in kept:
+            k["reason"] = reasons.get((k["src"], k["dst"]))
+        decided = approved_graph(book) | {(k["src"], k["dst"]) for k in (before or {}).get("links") or []}
+        kept, filtered = cross_filters(kept, decided, approved_graph(book))
+        dropped += [{"key": k["key"], "src": k["src"], "dst": k["dst"], "why": k["why"], "check": k.get("check"), "cross": True}
+                    for k in filtered]
+    if v2 and before:
+        # beside the earlier proposals and their G1 decisions, never over them
+        old = [{**o, "run": o.get("run") or before.get("run")} for o in before.get("links") or []]
+        kept = old + [k for k in kept if k["key"] not in {o["key"] for o in old}]
+        dropped = (before.get("links_dropped") or []) + dropped
+        ev["decisions"] = (before.get("decisions") or []) + (ev.get("decisions") or [])
+    run_ref = str(run_file.relative_to(HERE)) if run_file.is_relative_to(HERE) else str(run_file)
+    for k in kept:
+        k.setdefault("run", run_ref)   # which run proposed each link: v1 and v2 links can sit in one file
+    doc = {"format": FORMAT, "book": book, "chapter": unit, "run": run_ref,
+           "runs": sorted({*((before or {}).get("runs") or ([before["run"]] if before else [])), run_ref}),
            "prompts_version": run.get("prompts_version"), "prior_objectives": len(args["prior_objectives"]),
            "links": kept, "links_dropped": dropped, "inside_unit_found": sum(1 for k in ev["kept"] if not cross(k)),
            "outside_book": ev.get("outside_book") or [], "failures": ev.get("failures") or [],
            "decisions": [d for d in ev.get("decisions") or [] if d.get("kind") == "link_backward"], "made": date.today().isoformat()}
-    p = out_path(book, unit)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     return {"unit": unit, "proposed": ev.get("proposed"), "kept_cross": len(kept), "dropped_cross": len(dropped),
+            "new_for_review": sum(1 for k in kept if k.get("run") == run_ref),
             "inside_unit_found": doc["inside_unit_found"], "failures": doc["failures"]}
 
 
-def run(book: str, unit: int, cap: float) -> dict:
+def run(book: str, unit: int, cap: float, cross: bool = False) -> dict:
     import embed_workflow as EW  # noqa: PLC0415
     import workflow_runner as WR  # noqa: PLC0415
     args = build_args(book, unit)
     if not args["prior_objectives"]:
         return {"unit": unit, "skipped": "no earlier unit is past G1: nothing a link could start at"}
-    copy = EW.default_out(book, "links", f"ch{unit:02d}")
-    print(EW.summary(EW.write(HERE / "runbook" / "links.workflow.js", args, copy)), file=sys.stderr)
-    run_file, _res, _cost = WR.run_copy(copy, [], cap, f"links-ch{unit:02d}", book, "links", stage="S1")
+    name = "xlinks" if cross else "links"
+    copy = EW.default_out(book, name, f"ch{unit:02d}")
+    print(EW.summary(EW.write(HERE / "runbook" / (CROSS_WORKFLOW if cross else "links.workflow.js"), args, copy)), file=sys.stderr)
+    run_file, _res, _cost = WR.run_copy(copy, [], cap, f"{name}-ch{unit:02d}", book, "links", stage="S1")
     return accept(book, unit, run_file)
 
 
@@ -146,9 +241,11 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("book")
     r.add_argument("units", type=int, nargs="+")
     r.add_argument("--cap", type=float, default=2.0)
+    r.add_argument("--cross", action="store_true", help="the links-v2-cross variant (links into earlier units only)")
     g = sub.add_parser("args")
     g.add_argument("book")
     g.add_argument("unit", type=int)
+    g.add_argument("--cross", action="store_true")
     c = sub.add_parser("accept")
     c.add_argument("book")
     c.add_argument("unit", type=int)
@@ -160,8 +257,8 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
     if a.cmd == "args":
         import embed_workflow as EW  # noqa: PLC0415
-        print(EW.summary(EW.write(HERE / "runbook" / "links.workflow.js", build_args(a.book, a.unit),
-                                  EW.default_out(a.book, "links", f"ch{a.unit:02d}"))), file=sys.stderr)
+        print(EW.summary(EW.write(HERE / "runbook" / (CROSS_WORKFLOW if a.cross else "links.workflow.js"), build_args(a.book, a.unit),
+                                  EW.default_out(a.book, "xlinks" if a.cross else "links", f"ch{a.unit:02d}"))), file=sys.stderr)
         return 0
     if a.cmd == "accept":
         res = accept(a.book, a.unit, a.run_file.resolve())
@@ -169,7 +266,7 @@ def main(argv: list[str] | None = None) -> int:
         units = a.units or sorted(int(p.stem[2:]) for p in (HERE / "teaching" / a.book / "cross-links").glob("ch*.json"))
         res = apply(a.book, units, a.dry_run)
     else:
-        res = [run(a.book, u, a.cap) for u in a.units]
+        res = [run(a.book, u, a.cap, a.cross) for u in a.units]
     print(json.dumps(res, indent=1, ensure_ascii=False))
     return 0
 

@@ -344,6 +344,9 @@ export interface LessonViz {
   loId: string;
   caption: string | null;
   sourcePage: number | null;
+  /** the tasks a student works on it, as the pipeline wrote them into its
+   *  spec (lib/figure-interactions); absent for a figure with none */
+  tasks?: unknown[];
 }
 
 /** One selectable school lesson (module + syllabus_ref group of LOs). */

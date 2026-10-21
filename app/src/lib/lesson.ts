@@ -37,6 +37,7 @@ import {
   socialFigureDirectivesDoc,
   visualsCatalogLines,
 } from "./viz-prompt";
+import { figureTasksBlock } from "./figure-interactions";
 import {
   SPINE_SUBJECT_KEYS,
   labelArOfSpineKey,
@@ -739,6 +740,7 @@ async function lessonDataOn(
       loId: v.loId,
       caption: v.caption,
       sourcePage: v.sourcePage,
+      ...(Array.isArray(v.spec?.tasks) ? { tasks: v.spec.tasks as unknown[] } : {}),
     })),
     mapBases,
     docTitle,
@@ -857,6 +859,9 @@ export function lessonDataBlock(data: LessonData): string {
     .join("\n");
 
   const vizLines = visualsCatalogLines(data.visuals);
+  // figures the student works with (prototype, lib/figure-interactions): told
+  // only to a lesson that has some, so every other lesson's prompt is unchanged
+  const tasks = figureTasksBlock(data.visuals.map((v) => ({ id: v.id, spec: v.tasks ? { tasks: v.tasks } : null })));
   // the course's own book (FR-4205): "Egyptian ministry textbook" and "school
   // Lesson 1-1" for the National books, exactly as before; "this book" and
   // "section 1.3" for Grade 10
@@ -873,7 +878,7 @@ QUESTION BANK for this lesson (${bankNote}):
 ${qLines}
 
 FIGURE LIBRARY for this lesson (stored animated figures — push by id with {{widget:viz_ref:<id>}}):
-${vizLines || "(none for this lesson — compose custom figures with {{widget:viz:…}} when needed)"}`;
+${vizLines || "(none for this lesson — compose custom figures with {{widget:viz:…}} when needed)"}${tasks ? `\n\n${tasks}` : ""}`;
 }
 
 /* ------------------------------------------------------------------ */

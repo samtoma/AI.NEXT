@@ -268,8 +268,9 @@ function parseActionAt(s: string, i: number): Action | null {
     };
   }
   const w = WIDGET_HEAD_RE.exec(head);
-  if (w && w[1] === "viz_ref") {
-    // {{widget:viz_ref:v:geo1-1:001}} — bare id payload, no JSON
+  if (w && (w[1] === "viz_ref" || w[1] === "figure_task")) {
+    // {{widget:viz_ref:v:geo1-1:001}} — bare id payload, no JSON; and its
+    // working twin {{widget:figure_task:…}} (lib/figure-interactions)
     const rest = s.slice(i + w[0].length, i + w[0].length + 120);
     const rm = /^([^{}\n]{1,80})\}\}/.exec(rest);
     if (rm) {
@@ -279,7 +280,7 @@ function parseActionAt(s: string, i: number): Action | null {
       return {
         start: i,
         end,
-        block: id ? { t: "widget", name: "viz_ref", props: { id } } : null,
+        block: id ? { t: "widget", name: w[1], props: { id } } : null,
       };
     }
     return null; // still streaming the id

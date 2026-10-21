@@ -1,0 +1,82 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 5,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "e51a36def7aa35a19b49023222d66cfa0a297eb56200650eaf487c9383719eaf",
+  "generated_sha256": "0aad6639225ff1e7f7a932c987358378aa09fd5035a1d213476055af37d7b2cf",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 37,
+  "proposed": [
+   {
+    "src": "lo:pp3u4-2-1",
+    "dst": "lo:pp3u5-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE9",
+      "printed_page": 67,
+      "quote": "m_2) = \\tan 45^\\circ = 1"
+     }
+    ],
+    "reason": "STEP: slope of a line at 45° is computed as tan 45° = 1 | RESULT: exact special-angle value tan45°=1 (and tan30°, tan60°) | WHY NOT LOCAL: this lesson only gives m = tan E, not the special-angle values"
+   },
+   {
+    "src": "lo:pp3u4-2-3",
+    "dst": "lo:pp3u5-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 66,
+      "quote": "m = \\tan 56^\\circ 12' 48'' = 1.494534405"
+     }
+    ],
+    "reason": "STEP: evaluate tan of an angle in degrees, minutes, seconds with calculator | RESULT: using a calculator to find a trig ratio of a given angle incl. DMS | WHY NOT LOCAL: lesson only lists keys, the skill of tan evaluation is taught in unit 4"
+   },
+   {
+    "src": "lo:pp3u4-2-4",
+    "dst": "lo:pp3u5-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE8",
+      "printed_page": 66,
+      "quote": "m(\\angle E) = 56^\\circ 4' 13''"
+     }
+    ],
+    "reason": "STEP: find the angle from tan E = 1.4865 using SHIFT tan | RESULT: finding an angle from its trigonometric ratio with the calculator | WHY NOT LOCAL: inverse-tan procedure is taught in unit 4"
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Step is there (m2 = tan45° = 1). It needs the exact value tan45°=1, which src teaches from the isosceles right triangle. dst only gives m = tan E and doesn't state special values. Removal test fails to remove it, so the link is needed."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Step is there (tan 56°12'48'' = 1.4945...). It uses the calculator evaluation of a trig ratio with DMS input, which src teaches. dst only shows the key sequence as an instruction. Removal test: without src, the student wouldn't know how to use the calculator for DMS tan."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Step is there (tan E = 1.4865, so the angle is 56°4'13''). It uses the inverse trig procedure with the calculator, which src teaches. dst shows only the key sequence. Removal test: the idea of finding an angle from its ratio isn't stated in dst, so the link is needed."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 2,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "4349fe1ecc6105390c67ca65ca9f29c0b53e2e139c65b4baf3f40731fbf3d296",
+  "generated_sha256": "5a7dcd82288d619c428b0d040e9c2bdba673ffbd1d10516f92c1deea73c294f7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 14,
+  "proposed": [
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u2-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u2-3:think-and-discuss-1:A",
+      "printed_page": 32,
+      "quote": "Represent the relation between d and t graphically."
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u2-3:rule-2",
+      "printed_page": 33,
+      "quote": "is represented by a straight line passing through the origin point"
+     }
+    ],
+    "reason": "STEP: graphing d = 15t and stating that the direct variation y = mx is a straight line through the origin | RESULT: a linear function is graphed by finding ordered pairs and drawing a straight line | WHY NOT LOCAL: this chapter does not teach how to plot ordered pairs of a linear function and draw its line; that is in the earlier functions unit"
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u2-2-1",
+    "anchor": "WE4",
+    "quote": "$\\therefore 3x - 2x = 22 - 21$",
+    "note": "solving linear equations and expanding brackets is earlier-grade algebra",
+    "printed_page": 26
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "Test 3 (removal): dst states the straight line through the origin as a fact. A student can plot d=15t from a table of values using earlier-grade plotting knowledge, so the src lesson is not needed."
+    }
+   ]
+  }
+ }
+}

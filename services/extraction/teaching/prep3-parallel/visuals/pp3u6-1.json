@@ -5,6 +5,62 @@
   "source": "book-records/prep3-parallel/pp3u6-1.json",
   "visuals": [
     {
+      "figure": "pp3u6-1:figure-1",
+      "for_item": null,
+      "lo": "lo:pp3u6-1-4",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                6,
+                0
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                0,
+                3
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "X cm",
+            "step": 2
+          },
+          {
+            "type": "label",
+            "x": -0.9,
+            "y": 1.5,
+            "text": "Y cm",
+            "step": 2
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A shaded rectangle with width X cm and height Y cm.",
+      "withheld": [],
+      "page": 5,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
       "figure": "pp3u6-1:figure-2",
       "for_item": "pp3u6-1:example-1",
       "lo": "lo:pp3u6-1-1",
@@ -16,28 +72,32 @@
           -1
         ],
         "domain": [
-          -2,
+          -1,
           3
         ],
         "markers": [
           {
             "x": 0,
-            "label": "(0,-1)"
+            "label": "(0, −1)"
           },
           {
             "x": 2,
-            "label": "(2,3)"
+            "label": "(2, 3)"
           }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The solutions of 2x − y = 1 all lie on one straight line through (0, −1) and (2, 3).",
+      "caption": "The straight line through (0, −1) and (2, 3), the graph of 2x − y = 1.",
       "withheld": [],
       "page": 6,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T070533Z.json",
-        "script_sha256": "838c08ba7ab68dc337fdac171f8e47b67ef512cb2032ce44df928d6c39aed177"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -47,63 +107,81 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -3,
+          8
         ],
         "yRange": [
-          -6,
-          6
+          -5,
+          7
         ],
         "points": [
           {
-            "x": 0,
-            "y": -3,
-            "color": "red"
+            "x": -1,
+            "y": -5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": -3,
+            "y": 3.5
+          },
+          {
+            "x": 8,
+            "y": -2
           },
           {
             "x": 2,
             "y": 1,
-            "label": "(2,1)",
-            "color": "purple"
+            "label": "(2, 1)"
           },
           {
-            "x": 4,
-            "y": 5,
-            "label": "L1",
-            "color": "red"
+            "x": 2,
+            "y": 0
           },
           {
             "x": 0,
-            "y": 2,
-            "color": "blue"
-          },
-          {
-            "x": 4,
-            "y": 0,
-            "label": "L2",
-            "color": "blue"
+            "y": 1
           }
         ],
         "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            3,
-            4
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "L₁"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "L₂"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "dashed": true
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "dashed": true
+          }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "Line L1 (y = 2x − 3) and line L2 (x + 2y = 4) cross at the point (2, 1), the solution.",
+      "caption": "Two lines L1 and L2 cross at (2, 1), the solution of the pair.",
       "withheld": [],
       "page": 6,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T070533Z.json",
-        "script_sha256": "838c08ba7ab68dc337fdac171f8e47b67ef512cb2032ce44df928d6c39aed177"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -113,59 +191,78 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -3,
+          3
         ],
         "yRange": [
-          -6,
+          -4,
           6
         ],
         "points": [
           {
+            "x": -0.5,
+            "y": 5.5
+          },
+          {
+            "x": 2.5,
+            "y": -3.5
+          },
+          {
+            "x": -1,
+            "y": 4.5
+          },
+          {
+            "x": 1.5,
+            "y": -3
+          },
+          {
             "x": 0,
             "y": 4,
-            "label": "(0,4)",
-            "color": "red"
+            "label": "(0, 4)"
           },
           {
             "x": 2,
             "y": -2,
-            "label": "L1",
-            "color": "red"
+            "label": "(2, −2)"
           },
           {
             "x": 0,
             "y": 1.5,
-            "label": "(0,3/2)",
-            "color": "red"
+            "label": "(0, 3/2)"
           },
           {
             "x": 1,
             "y": -1.5,
-            "label": "L2",
-            "color": "red"
+            "label": "(1, −3/2)"
           }
         ],
         "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            2,
-            3
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "L₁"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "L₂"
+          }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "L1 (3x + y = 4) and L2 (2y + 6x = 3) are parallel lines that never meet.",
+      "caption": "Two parallel lines L1 and L2 that never meet, so there is no solution.",
       "withheld": [],
       "page": 7,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T070533Z.json",
-        "script_sha256": "838c08ba7ab68dc337fdac171f8e47b67ef512cb2032ce44df928d6c39aed177"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -225,20 +322,7 @@
       }
     }
   ],
-  "gaps": [
-    {
-      "figure": "pp3u6-1:figure-1",
-      "for_item": null,
-      "reason": "A plain rectangle with its sides labelled X cm and Y cm cannot be drawn by any available kind.",
-      "needed_kind": "geo_scene with rectangle/polygon and side labels",
-      "page": 5,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T070533Z.json",
-        "script_sha256": "838c08ba7ab68dc337fdac171f8e47b67ef512cb2032ce44df928d6c39aed177"
-      }
-    }
-  ],
+  "gaps": [],
   "runs": [
     {
       "at": "2026-10-18T07:06:15+00:00",
@@ -250,6 +334,22 @@
         "viz_gaps": 1,
         "compared": 4
       }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 4,
+        "viz_gaps": 1,
+        "compared": 5
+      }
+    },
+    {
+      "at": "2026-10-20",
+      "kept": "pp3u6-1:figure-5",
+      "why": "drawn and checked by the earlier S4 run; the lesson-v9 re-run refused it, so the accepted drawing is kept (no regression)"
     }
   ]
 }

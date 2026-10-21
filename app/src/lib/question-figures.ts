@@ -84,3 +84,25 @@ export function bookImageOf(spec: unknown): BookImage | null {
   const kind = typeof s.native_kind_needed === "string" && s.native_kind_needed.trim() ? s.native_kind_needed : null;
   return { src, alt, nativeKindNeeded: kind };
 }
+
+/** A stored figure's own id: a copy attached to a second question (`…:figure-3-2`) is the same figure. */
+export function figureBase(id: string): string {
+  return id.replace(/^(v:[^:]+:figure-\d+)-\d+$/, "$1");
+}
+
+/**
+ * ONE FIGURE, ONCE (Tamer, 2026-10-20). The tutor often shows a figure and then
+ * pushes the question that is about it, whose card carries the same figure —
+ * the student saw it drawn twice in one message. The card's copy is the one
+ * that belongs with the question, so a separate `viz_ref` of a figure some
+ * question card in the SAME message carries is not drawn. Returns the figures
+ * (by `figureBase`) the message's question cards carry.
+ */
+export function figuresOnCards(
+  questionIds: readonly string[],
+  lookup: (qid: string) => { figures?: readonly string[] } | undefined
+): Set<string> {
+  const out = new Set<string>();
+  for (const qid of questionIds) for (const f of lookup(qid)?.figures ?? []) out.add(figureBase(f));
+  return out;
+}

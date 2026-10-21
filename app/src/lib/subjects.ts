@@ -157,8 +157,8 @@ export const SUBJECTS = {
       "bar_builder", "ratio_balance",
       // freehand
       "curve_sketcher",
-      // figures
-      "viz_ref", "viz",
+      // figures (figure_task: a stored figure as a task, lib/figure-interactions)
+      "viz_ref", "viz", "figure_task",
     ],
     // Offered after "I don't get it". The bar is EFFORT, not difficulty: a
     // student who has just said they are lost should meet something they can

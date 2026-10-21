@@ -3,91 +3,277 @@
   "book": "prep3-parallel",
   "lesson": "pp3u4-1",
   "source": "book-records/prep3-parallel/pp3u4-1.json",
-  "visuals": [],
-  "gaps": [
+  "visuals": [
     {
       "figure": "pp3u4-1:figure-1",
       "for_item": "pp3u4-1:think-and-discuss-1",
-      "reason": "Plain right triangle ABC (right angle at B) with no angle or side values; no kind draws a labelled triangle with a right-angle mark and no marked acute angle.",
-      "needed_kind": "triangle scene with labelled vertices and right-angle mark",
+      "lo": "lo:pp3u4-1-2",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                6
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                0
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 6,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Right-angled triangle ABC with the right angle at B and the hypotenuse AC.",
+      "withheld": [],
       "page": 49,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
-      }
-    },
-    {
-      "figure": "pp3u4-1:figure-2",
-      "for_item": null,
-      "reason": "Circular protractor ring with degree labels every 10° around the full circle and two axes; geo_scene cannot draw a graduated degree scale.",
-      "needed_kind": "protractor / angle-measure dial with degree scale",
-      "page": 49,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
-      }
-    },
-    {
-      "figure": "pp3u4-1:figure-3",
-      "for_item": null,
-      "reason": "Photo of a scientific calculator; not a parametric figure.",
-      "needed_kind": "calculator image / photo (static image)",
-      "page": 50,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u4-1:figure-4",
       "for_item": null,
-      "reason": "the spec does not match the figure: Angle θ is not marked or labeled on the triangle. Side labels use descriptive text ('opposite', 'adjacent', 'hypotenuse') instead of vertex notation ('AB', 'BC', 'AC') as specified in the spec.",
-      "needed_kind": null,
-      "page": 50,
-      "rejected_spec": {
-        "kind": "trig_triangle",
-        "spec": {
-          "angleDeg": "θ",
-          "emphasize": "sin",
-          "sides": {
-            "opp": "AB",
-            "adj": "BC",
-            "hyp": "AC"
+      "lo": "lo:pp3u4-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                6
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                0
+              ]
+            ],
+            "fill": true,
+            "step": 1
           },
-          "animate": "ratio-highlight"
-        }
+          {
+            "type": "point",
+            "x": 0,
+            "y": 6,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 3
+          },
+          {
+            "type": "label",
+            "x": -0.9,
+            "y": 3,
+            "text": "opposite",
+            "step": 4
+          },
+          {
+            "type": "label",
+            "x": 2,
+            "y": -0.7,
+            "text": "adjacent",
+            "step": 4
+          },
+          {
+            "type": "label",
+            "x": 2.9,
+            "y": 3.4,
+            "text": "hypotenuse",
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
       },
+      "caption": "Right-angled triangle ABC with the right angle at B: AB is the opposite side, BC the adjacent side and AC the hypotenuse.",
+      "withheld": [],
+      "page": 50,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "figure": "pp3u4-1:figure-2",
+      "for_item": null,
+      "reason": "A circular ring scale marked with degree labels every 10° from 10 to 360 around two perpendicular axes cannot be drawn by any kind.",
+      "needed_kind": "circular protractor scale with degree labels around the circle",
+      "page": 49,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u4-1:figure-3",
+      "for_item": null,
+      "reason": "A photograph of a scientific calculator with its keys.",
+      "needed_kind": "photograph or calculator image",
+      "page": 50,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u4-1:figure-5",
       "for_item": "pp3u4-1:example-1",
-      "reason": "the spec does not match the figure: Angle θ is not clearly marked or labeled on the triangle, despite being required by the spec (angleDeg='θ'). The side values (12 cm, 13 cm) are correct, but the angle designation is missing.",
+      "reason": "the spec does not match the figure: Extra text element on left side not specified in spec",
       "needed_kind": null,
       "page": 51,
       "rejected_spec": {
-        "kind": "trig_triangle",
+        "kind": "geo_scene",
         "spec": {
-          "angleDeg": "θ",
-          "emphasize": "cos",
-          "sides": {
-            "adj": "12 cm",
-            "hyp": "13 cm"
-          },
-          "animate": "ratio-highlight"
+          "elements": [
+            {
+              "type": "polygon",
+              "points": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  12,
+                  0
+                ],
+                [
+                  12,
+                  5
+                ]
+              ],
+              "fill": true,
+              "step": 1
+            },
+            {
+              "type": "point",
+              "x": 0,
+              "y": 0,
+              "label": "B",
+              "step": 2
+            },
+            {
+              "type": "point",
+              "x": 12,
+              "y": 0,
+              "label": "C",
+              "step": 2
+            },
+            {
+              "type": "point",
+              "x": 12,
+              "y": 5,
+              "label": "A",
+              "step": 2
+            },
+            {
+              "type": "angle",
+              "at": [
+                12,
+                0
+              ],
+              "fromDeg": 90,
+              "toDeg": 180,
+              "right": true,
+              "step": 3
+            },
+            {
+              "type": "label",
+              "x": 5.5,
+              "y": 3.4,
+              "text": "13 cm",
+              "step": 4
+            },
+            {
+              "type": "label",
+              "x": 6,
+              "y": -0.9,
+              "text": "12 cm",
+              "step": 4
+            }
+          ],
+          "animate": "sequence"
         }
       },
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -101,6 +287,17 @@
         "visuals": 0,
         "viz_gaps": 5,
         "compared": 2
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 2,
+        "viz_gaps": 3,
+        "compared": 3
       }
     }
   ]

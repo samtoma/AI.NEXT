@@ -1,0 +1,114 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 6,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "c0ab4ea37204a42b9c4dc826017a943da886ac6cbd97194821ae88854dbf5013",
+  "generated_sha256": "e28cb31dad3ed8c16cc9c7c67ccd56ff907335d01043f506e66f84f488084e9f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 48,
+  "proposed": [
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u6-1-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE1",
+      "printed_page": 5,
+      "quote": "And by drawing the straight line L passing throught the two represented points"
+     }
+    ],
+    "reason": "STEP: plots two solution points and draws the line for 2x - y = 1 | RESULT: a linear function is graphed by finding ordered pairs and drawing the straight line | WHY NOT LOCAL: this lesson uses the drawing without teaching how to plot a line"
+   },
+   {
+    "src": "lo:pp3u1-4-3",
+    "dst": "lo:pp3u6-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE2",
+      "printed_page": 6,
+      "quote": "Thus: $L_1$ in the opposite figure represents the solution set of this of equation (1)"
+     }
+    ],
+    "reason": "STEP: draws both lines L1 and L2 | RESULT: graphing a straight line from ordered pairs | WHY NOT LOCAL: line drawing is taught earlier"
+   },
+   {
+    "src": "lo:pp3u1-4-4",
+    "dst": "lo:pp3u6-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 10,
+      "quote": "Plot on the coordinate plane the points which represent these ordered pairs, then draw a curve passing through these points."
+     }
+    ],
+    "reason": "STEP: draws the parabola of f(x)=x^2-4x+3 from a table | RESULT: a quadratic function is represented graphically by finding points and drawing the curve | WHY NOT LOCAL: curve drawing was taught earlier; text says 'We have represented graphically the quadratic function'"
+   },
+   {
+    "src": "lo:pp3u1-4-2",
+    "dst": "lo:pp3u6-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 10,
+      "quote": "$f(-1)=8$, $f(0)=3$, $f(1)=0$, $f(2)=-1$"
+     }
+    ],
+    "reason": "STEP: computes images f(x) for the table | RESULT: image of a value under a polynomial function | WHY NOT LOCAL: evaluation of f(x) is not taught in this chapter"
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u6-2-2",
+    "anchor": "pp3u6-2:prior-knowledge-1",
+    "quote": "You have previously solved this equation by factorizing.",
+    "note": "factorizing and completing the square come from earlier grades"
+   },
+   {
+    "dst": "lo:pp3u6-1-3",
+    "anchor": "WE4",
+    "quote": "thus: $x+4x-6=4$, $\\therefore 5x=10$, $\\therefore x=2$",
+    "note": "solving linear equations is earlier-grade algebra"
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "The step is there: plot two points and draw the line. It uses src's skill of graphing a linear equation from ordered pairs and drawing the line. Removal test: dst only says 'by drawing the straight line' and doesn't teach how, so a student needs src. Borderline, since the dst objective itself includes representing the solution set as a line."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "The step is there: L1 and L2 are drawn from two points each. Drawing a line from ordered pairs is src's skill, and dst's lesson only uses it without teaching it. Removal test fails to reject because dst doesn't state how to draw a line from points."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "The step is there: plot the points and draw a curve through them. It uses src's skill of graphing a quadratic function from points. dst gives only a one-line instruction and doesn't teach the parabola's shape, so removal doesn't make the step justifiable."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "Removal test: computing f(-1) and similar values is simple substitution into a given formula. That is earlier-grade knowledge, and src's surd and polynomial image skill isn't needed for these integer values."
+    }
+   ]
+  }
+ }
+}

@@ -137,7 +137,8 @@ TEXT_TYPES = ("heading", "para", "box", "definition", "list", "table", "summary_
 # The maths kinds of VIZ_SPEC.md (v1). The social kinds are VIZ_KINDS too, but a maths
 # figure is never drawn as a map, a timeline or a flow chain.
 MATH_VIZ_KINDS = ("coordinate_plot", "function_graph", "arrow_map", "product_grid",
-                  "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line")
+                  "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line",
+                  "venn_diagram")  # VIZ_SPEC v4
 assert set(MATH_VIZ_KINDS) <= VIZ_KINDS
 
 

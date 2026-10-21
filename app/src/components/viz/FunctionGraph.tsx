@@ -3,7 +3,9 @@
 /**
  * function_graph — animated curve draw; vertex/intercept reveals.
  * spec: {fn:"linear"|"quadratic", coefs:[a,b]|[a,b,c], domain:[min,max],
- *        markers:[{x,label}]?, reveals:["vertex","axis","roots"]?, animate:"draw"}
+ *        markers:[{x,label}]?, reveals:["vertex","axis","roots"]?, axes:{x?,y?}?,
+ *        animate:"draw"}
+ * VIZ_SPEC v4: `axes` titles the axes in the book's words.
  */
 
 import {
@@ -22,7 +24,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
-import { PlaneFrame, makePlane } from "./plane";
+import { PlaneFrame, makePlane, titleRoom, type AxisTitles } from "./plane";
 
 export function FunctionGraph({ spec, animOn }: VizProps) {
   const coefs = arr(spec.coefs).map((c) => num(c));
@@ -62,7 +64,9 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
   yMin -= yPad;
   yMax += yPad;
 
-  const p = makePlane([d0 - 0.4, d1 + 0.4], [yMin, yMax], 300, 240);
+  const axes = obj(spec.axes);
+  const titles: AxisTitles = { x: str(axes.x) || undefined, y: str(axes.y) || undefined };
+  const p = makePlane([d0 - 0.4, d1 + 0.4], [yMin, yMax], 300, 240, 16, titleRoom(titles));
   const path = xs
     .map((x, i) => `${i === 0 ? "M" : "L"} ${p.sx(x).toFixed(1)} ${p.sy(ys[i]).toFixed(1)}`)
     .join(" ");
@@ -108,7 +112,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
 
   return (
     <svg viewBox={`0 0 ${p.W} ${p.H}`} role="img" aria-label={eq} className="block w-full">
-      <PlaneFrame p={p} />
+      <PlaneFrame p={p} titles={titles} />
       <text
         x={p.W - 10}
         y={16}

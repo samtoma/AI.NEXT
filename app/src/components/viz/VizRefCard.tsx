@@ -7,8 +7,11 @@
  * id degrades to a quiet "figure not found" chip — never crashes the stream.
  */
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { VizCard } from "./VizCard";
+import { FigureNoteContext } from "./figure-note-context";
+import { interactionsFor, splitTaskId } from "@/lib/figure-interactions";
+import { InteractiveFigure } from "@/components/student/figures/InteractiveFigure";
 import { authFetch } from "@/lib/auth/client-session";
 
 interface VisualDto {
@@ -24,13 +27,19 @@ type State =
   | { s: "ok"; v: VisualDto }
   | { s: "missing" };
 
-export function VizRefCard({ id }: { id: string }) {
+export function VizRefCard({ id, task = false }: { id: string; task?: boolean }) {
   const [state, setState] = useState<State>({ s: "loading" });
+  // {{widget:figure_task:…}}: the figure as a task the student works
+  // (prototype, lib/figure-interactions). Only when the tutor asked for it —
+  // a figure it merely shows stays a picture, so it never asks a second
+  // question beside the tutor's own.
+  const onNote = useContext(FigureNoteContext);
 
   useEffect(() => {
     let alive = true;
     setState({ s: "loading" });
-    authFetch(`/api/visuals?id=${encodeURIComponent(id)}`)
+    // a task id names one of the figure's tasks after a "#": the row is the figure's
+    authFetch(`/api/visuals?id=${encodeURIComponent(splitTaskId(id).figureId)}`)
       .then(async (res) => {
         if (!alive) return;
         if (!res.ok) {
@@ -52,6 +61,12 @@ export function VizRefCard({ id }: { id: string }) {
       alive = false;
     };
   }, [id]);
+
+  // the tasks travel in the figure's spec (the pipeline writes them at compile)
+  const steps = task && state.s === "ok" ? interactionsFor(id, state.v.spec) : null;
+  if (state.s === "ok" && steps && state.v.kind === "geo_scene") {
+    return <InteractiveFigure figure={state.v} steps={steps} taskId={id} onNote={onNote ?? undefined} />;
+  }
 
   if (state.s === "ok") {
     return (

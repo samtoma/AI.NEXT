@@ -166,6 +166,11 @@
       "src": "lo:pp3u6-1-3",
       "dst": "lo:pp3u6-3-1",
       "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u1-4-3",
+      "dst": "lo:pp3u6-1-1",
+      "type": "prerequisite_of"
     }
   ],
   "questions": [
@@ -616,6 +621,56 @@
   ],
   "visuals": [
     {
+      "id": "v:pp3u6-1:figure-1",
+      "lo": "lo:pp3u6-1-1",
+      "question": null,
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                6,
+                0
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                0,
+                3
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "X cm",
+            "step": 2
+          },
+          {
+            "type": "label",
+            "x": -0.9,
+            "y": 1.5,
+            "text": "Y cm",
+            "step": 2
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A shaded rectangle with width X cm and height Y cm.",
+      "source_page": 5
+    },
+    {
       "id": "v:pp3u6-1:figure-2",
       "lo": "lo:pp3u6-1-1",
       "question": null,
@@ -627,22 +682,26 @@
           -1
         ],
         "domain": [
-          -2,
+          -1,
           3
         ],
         "markers": [
           {
             "x": 0,
-            "label": "(0, -1)"
+            "label": "(0, −1)"
           },
           {
             "x": 2,
             "label": "(2, 3)"
           }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The solutions of 2x − y = 1 all lie on one straight line through (0, −1) and (2, 3).",
+      "caption": "The straight line through (0, −1) and (2, 3), the graph of 2x − y = 1.",
       "source_page": 6
     },
     {
@@ -652,57 +711,75 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -3,
+          8
         ],
         "yRange": [
-          -6,
-          6
+          -5,
+          7
         ],
         "points": [
           {
-            "x": 0,
-            "y": -3,
-            "color": "red"
+            "x": -1,
+            "y": -5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": -3,
+            "y": 3.5
+          },
+          {
+            "x": 8,
+            "y": -2
           },
           {
             "x": 2,
             "y": 1,
-            "label": "(2, 1)",
-            "color": "purple"
+            "label": "(2, 1)"
           },
           {
-            "x": 4,
-            "y": 5,
-            "label": "L1",
-            "color": "red"
+            "x": 2,
+            "y": 0
           },
           {
             "x": 0,
-            "y": 2,
-            "color": "blue"
-          },
-          {
-            "x": 4,
-            "y": 0,
-            "label": "L2",
-            "color": "blue"
+            "y": 1
           }
         ],
         "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            3,
-            4
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "L₁"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "L₂"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "dashed": true
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "dashed": true
+          }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "Line L1 (y = 2x − 3) and line L2 (x + 2y = 4) cross at the point (2, 1), the solution.",
+      "caption": "Two lines L1 and L2 cross at (2, 1), the solution of the pair.",
       "source_page": 6
     },
     {
@@ -712,59 +789,78 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -3,
+          3
         ],
         "yRange": [
-          -6,
+          -4,
           6
         ],
         "points": [
           {
+            "x": -0.5,
+            "y": 5.5
+          },
+          {
+            "x": 2.5,
+            "y": -3.5
+          },
+          {
+            "x": -1,
+            "y": 4.5
+          },
+          {
+            "x": 1.5,
+            "y": -3
+          },
+          {
             "x": 0,
             "y": 4,
-            "label": "(0, 4)",
-            "color": "red"
+            "label": "(0, 4)"
           },
           {
             "x": 2,
             "y": -2,
-            "label": "L1",
-            "color": "red"
+            "label": "(2, −2)"
           },
           {
             "x": 0,
             "y": 1.5,
-            "label": "(0, 3/2)",
-            "color": "red"
+            "label": "(0, 3/2)"
           },
           {
             "x": 1,
             "y": -1.5,
-            "label": "L2",
-            "color": "red"
+            "label": "(1, −3/2)"
           }
         ],
         "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            2,
-            3
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "L₁"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "L₂"
+          }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "L1 (3x + y = 4) and L2 (2y + 6x = 3) are parallel lines that never meet.",
+      "caption": "Two parallel lines L1 and L2 that never meet, so there is no solution.",
       "source_page": 7
     },
     {
       "id": "v:pp3u6-1:figure-5",
       "lo": "lo:pp3u6-1-2",
-      "question": "q:pp3u6-1-2:bk-example-3-first",
+      "question": null,
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
@@ -842,9 +938,13 @@
           "axis",
           "roots"
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The curve of f(x) = x² − 4x + 3 on [−1, 5] crosses the x-axis at x = 1 and x = 3, so those are the solutions.",
+      "caption": "The parabola y = x² − 4x + 3 on [−1, 5] dips to its lowest point (2, −1) and crosses the x-axis at x = 1 and x = 3.",
       "source_page": 11
     }
   ],
@@ -1324,6 +1424,7 @@
     }
   ],
   "external_node_refs": [
-    "course:prep3-parallel-math-en"
+    "course:prep3-parallel-math-en",
+    "lo:pp3u1-4-3"
   ]
 }

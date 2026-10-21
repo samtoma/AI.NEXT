@@ -5,6 +5,102 @@
   "source": "book-records/prep3-parallel/pp3u8-1.json",
   "visuals": [
     {
+      "figure": "pp3u8-1:figure-10",
+      "for_item": "pp3u8-1:drill-6",
+      "lo": "lo:pp3u8-1-3",
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "1",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "3",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "5",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "12",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "8",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A and B overlap at 7, while C, holding 6, 9 and 12, is apart from both; 8 is outside all sets.",
+      "withheld": [],
+      "page": 34,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
       "figure": "pp3u8-1:figure-2",
       "for_item": null,
       "lo": "lo:pp3u8-1-1",
@@ -17,34 +113,231 @@
         "points": [
           {
             "x": 0,
-            "label": "impossible event, 0%"
+            "label": "0 = 0%, impossible event"
           },
           {
             "x": 0.25,
-            "label": "less likely, 1/4, 25%"
+            "label": "1/4 = 25%, less likely"
           },
           {
             "x": 0.5,
-            "label": "equally likely as unlikely, 1/2, 50%"
+            "label": "1/2 = 50%, equally likely as unlikely"
           },
           {
             "x": 0.75,
-            "label": "more likely, 3/4, 75%"
+            "label": "3/4 = 75%, more likely"
           },
           {
             "x": 1,
-            "label": "certain event, 100%"
+            "label": "1 = 100%, certain event"
           }
         ],
         "animate": "sweep"
       },
-      "caption": "Probability runs from 0 (impossible) to 1 (certain), with 1/2 in the middle.",
+      "caption": "Probability runs from 0 (impossible) to 1 (certain), with 1/4, 1/2 and 3/4 in between.",
       "withheld": [],
       "page": 30,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u8-1:figure-4",
+      "for_item": null,
+      "lo": "lo:pp3u8-1-2",
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "E",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "shade": [
+          {
+            "in": [
+              "B",
+              "A"
+            ]
+          }
+        ],
+        "notes": [
+          {
+            "text": "B ∩ A",
+            "in": [
+              "B",
+              "A"
+            ],
+            "out": []
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two overlapping sets B and A in universe E, with the overlap shaded as B ∩ A.",
+      "withheld": [],
+      "page": 31,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u8-1:figure-7",
+      "for_item": null,
+      "lo": "lo:pp3u8-1-2",
+      "kind": "venn_diagram",
+      "spec": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two separate sets A and B that do not overlap: mutually exclusive events.",
+      "withheld": [],
+      "page": 32,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u8-1:figure-8",
+      "for_item": "pp3u8-1:example-2",
+      "lo": "lo:pp3u8-1-3",
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "3",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "8",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "5",
+            "in": []
+          },
+          {
+            "text": "1",
+            "in": []
+          }
+        ],
+        "shade": [
+          {
+            "in": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A and B overlap at 6; C holds 7 on its own; 5 and 1 are outside all sets.",
+      "withheld": [],
+      "page": 33,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u8-1:figure-9",
+      "for_item": null,
+      "lo": "lo:pp3u8-1-3",
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two disjoint sets A and B inside the universe S.",
+      "withheld": [],
+      "page": 34,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -52,109 +345,129 @@
     {
       "figure": "pp3u8-1:figure-1",
       "for_item": null,
-      "reason": "Photo of a die showing faces 4, 3 and 1; no kind draws a 3-D die.",
-      "needed_kind": "dice / 3-D solid illustration",
+      "reason": "A photograph of a die showing faces 4, 3 and 1; no kind can draw it.",
+      "needed_kind": "photo or 3-D solid (die)",
       "page": 30,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
-      }
-    },
-    {
-      "figure": "pp3u8-1:figure-10",
-      "for_item": "pp3u8-1:drill-6",
-      "reason": "Venn diagram with overlapping ovals A, B and disjoint oval C holding elements.",
-      "needed_kind": "venn_diagram",
-      "page": 34,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u8-1:figure-3",
       "for_item": "pp3u8-1:exercise-1",
-      "reason": "Spinner of eight equal sectors in different colours with a pointer; stat_chart sector has no colours or pointer.",
-      "needed_kind": "spinner / coloured equal-sector wheel with pointer",
+      "reason": "Spinner with eight equal sectors in different colours and a pointer; geo_scene cannot colour sectors individually, and the colours are what the question asks about.",
+      "needed_kind": "spinner / circle with individually coloured equal sectors and a pointer",
       "page": 31,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
-      }
-    },
-    {
-      "figure": "pp3u8-1:figure-4",
-      "for_item": null,
-      "reason": "Venn diagram with two overlapping circles, shaded intersection and universal rectangle.",
-      "needed_kind": "venn_diagram",
-      "page": 31,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u8-1:figure-5",
       "for_item": "pp3u8-1:example-1",
-      "reason": "Eight plain identical cards in two rows; not a product grid or any listed kind.",
-      "needed_kind": "card/object set illustration",
+      "reason": "Picture of eight identical blank cards in two rows; no kind draws it faithfully.",
+      "needed_kind": "photo / set of cards illustration",
       "page": 31,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u8-1:figure-6",
       "for_item": "pp3u8-1:worked-example-1",
-      "reason": "Venn diagram with shaded overlap, nested oval C and elements.",
-      "needed_kind": "venn_diagram",
+      "reason": "the spec does not match the figure: Items appear with 'x' prefix notation (x3, x5, x7, x2, x6, x4, x8) but spec shows plain numbers (3, 5, 7, 2, 6, 4, 8) without prefix",
+      "needed_kind": null,
       "page": 32,
+      "rejected_spec": {
+        "kind": "venn_diagram",
+        "spec": {
+          "universe": "S",
+          "sets": [
+            {
+              "label": "B"
+            },
+            {
+              "label": "A"
+            },
+            {
+              "label": "C",
+              "inside": "A"
+            }
+          ],
+          "overlaps": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "items": [
+            {
+              "text": "2",
+              "in": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "text": "3",
+              "in": [
+                "B"
+              ]
+            },
+            {
+              "text": "5",
+              "in": [
+                "B"
+              ]
+            },
+            {
+              "text": "7",
+              "in": [
+                "B"
+              ]
+            },
+            {
+              "text": "6",
+              "in": [
+                "A"
+              ]
+            },
+            {
+              "text": "4",
+              "in": [
+                "A",
+                "C"
+              ]
+            },
+            {
+              "text": "8",
+              "in": [
+                "A",
+                "C"
+              ]
+            }
+          ],
+          "shade": [
+            {
+              "in": [
+                "A",
+                "B"
+              ]
+            }
+          ],
+          "animate": "sequence"
+        }
+      },
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
-      }
-    },
-    {
-      "figure": "pp3u8-1:figure-7",
-      "for_item": null,
-      "reason": "Two disjoint ovals A and B (Venn diagram).",
-      "needed_kind": "venn_diagram",
-      "page": 32,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
-      }
-    },
-    {
-      "figure": "pp3u8-1:figure-8",
-      "for_item": "pp3u8-1:example-2",
-      "reason": "Venn diagram with overlapping circles, elements and separate oval C.",
-      "needed_kind": "venn_diagram",
-      "page": 33,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
-      }
-    },
-    {
-      "figure": "pp3u8-1:figure-9",
-      "for_item": null,
-      "reason": "Venn diagram with two disjoint ovals in rectangle S.",
-      "needed_kind": "venn_diagram",
-      "page": 34,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T072213Z.json",
-        "script_sha256": "d1eba0dfae078697669164b59976cf38cf0949215e08db63e2e8533279113180"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -168,6 +481,17 @@
         "visuals": 1,
         "viz_gaps": 9,
         "compared": 1
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 6,
+        "viz_gaps": 4,
+        "compared": 7
       }
     }
   ]

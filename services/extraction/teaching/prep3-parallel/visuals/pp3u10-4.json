@@ -12,155 +12,492 @@
       "spec": {
         "elements": [
           {
+            "type": "polygon",
+            "points": [
+              [
+                0.9,
+                6.3
+              ],
+              [
+                6.4,
+                8.25
+              ],
+              [
+                7.5,
+                0.4
+              ],
+              [
+                1.1,
+                0.4
+              ]
+            ],
+            "step": 1
+          },
+          {
             "type": "point",
-            "x": 1.2,
-            "y": 8.4,
+            "x": 0.9,
+            "y": 6.3,
             "label": "D",
             "step": 1
           },
           {
             "type": "point",
-            "x": 8.5,
-            "y": 11,
+            "x": 6.4,
+            "y": 8.25,
             "label": "A",
             "step": 1
           },
           {
             "type": "point",
-            "x": 10,
-            "y": 0.5,
+            "x": 7.5,
+            "y": 0.4,
             "label": "B",
             "step": 1
           },
           {
             "type": "point",
-            "x": 1.5,
-            "y": 0.5,
+            "x": 1.1,
+            "y": 0.4,
             "label": "C",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
-              1.2,
-              8.4
+              6.4,
+              8.25
             ],
             "to": [
-              8.5,
-              11
+              1.1,
+              0.4
             ],
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              8.5,
-              11
+              0.9,
+              6.3
             ],
             "to": [
-              10,
-              0.5
+              7.5,
+              0.4
             ],
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3.5,
+            "y": 4,
+            "label": "E",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              6.4,
+              8.25
+            ],
+            "fromDeg": 199.5,
+            "toDeg": 236,
+            "label": "35°",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              3.5,
+              4
+            ],
+            "fromDeg": 138.5,
+            "toDeg": 236,
+            "label": "93°",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              1.1,
+              0.4
+            ],
+            "fromDeg": 0,
+            "toDeg": 56,
+            "label": "58°",
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Quadrilateral ABCD with its diagonals meeting at E, showing 35° at A, 93° at E and 58° at C.",
+      "withheld": [],
+      "page": 85,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u10-4:figure-10",
+      "for_item": "pp3u10-4:drill-2",
+      "lo": "lo:pp3u10-4-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 3.6,
+            "cy": 4.2,
+            "r": 2.95,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 3.6,
+            "y": 4.2,
+            "label": "M",
+            "step": 1
+          },
+          {
+            "type": "chord",
+            "from": [
+              0.95,
+              2.9
+            ],
+            "to": [
+              3.6,
+              2.9
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              3.6,
+              2.9
+            ],
+            "to": [
+              6.1,
+              2.9
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              6.1,
+              2.9
+            ],
+            "to": [
+              4.65,
+              2.1
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              4.65,
+              2.1
+            ],
+            "to": [
+              3.25,
+              1.35
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0.95,
+            "y": 2.9,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 6.1,
+            "y": 2.9,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3.25,
+            "y": 1.35,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3.6,
+            "y": 2.9,
+            "label": "Y",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4.65,
+            "y": 2.1,
+            "label": "X",
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              10,
-              0.5
+              3.6,
+              4.2
             ],
             "to": [
-              1.5,
-              0.5
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              1.5,
-              0.5
-            ],
-            "to": [
-              1.2,
-              8.4
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              8.5,
-              11
-            ],
-            "to": [
-              1.5,
-              0.5
+              0.95,
+              2.9
             ],
             "step": 3
           },
           {
             "type": "segment",
             "from": [
-              1.2,
-              8.4
+              3.6,
+              4.2
             ],
             "to": [
-              10,
-              0.5
+              6.1,
+              2.9
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              3.6,
+              4.2
+            ],
+            "to": [
+              3.6,
+              2.9
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              3.6,
+              4.2
+            ],
+            "to": [
+              4.65,
+              2.1
+            ],
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Circle with centre M, chords AB and AC with midpoints X and Y marked by ticks, and M joined to C, A, X and Y.",
+      "withheld": [],
+      "page": 87,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u10-4:figure-11",
+      "for_item": "pp3u10-4:example-2",
+      "lo": "lo:pp3u10-4-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 3.2,
+            "cy": 3.25,
+            "r": 2.9,
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                1.3,
+                5
+              ],
+              [
+                4.68,
+                5.4
+              ],
+              [
+                5.55,
+                1.1
+              ],
+              [
+                0.63,
+                1.1
+              ]
+            ],
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 1.3,
+            "y": 5,
+            "label": "D",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4.68,
+            "y": 5.4,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 5.55,
+            "y": 1.1,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0.63,
+            "y": 1.1,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              4.68,
+              5.4
+            ],
+            "to": [
+              0.63,
+              1.1
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.3,
+              5
+            ],
+            "to": [
+              5.55,
+              1.1
             ],
             "step": 3
           },
           {
             "type": "point",
-            "x": 4.7,
-            "y": 5.3,
-            "label": "E",
+            "x": 2.91,
+            "y": 3.52,
+            "label": "F",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.3,
+              5
+            ],
+            "to": [
+              4.68,
+              5.4
+            ],
+            "parallel": 1,
             "step": 4
           },
           {
-            "type": "angle",
-            "at": [
-              8.5,
-              11
+            "type": "segment",
+            "from": [
+              2.44,
+              3.95
             ],
-            "fromDeg": 199.6,
-            "toDeg": 236.3,
-            "label": "35°",
+            "to": [
+              3.42,
+              4.07
+            ],
+            "parallel": 1,
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 3.42,
+            "y": 4.07,
+            "label": "X",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 2.44,
+            "y": 3.95,
+            "label": "Y",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              5.55,
+              1.1
+            ],
+            "to": [
+              3.42,
+              4.07
+            ],
             "step": 5
           },
           {
-            "type": "angle",
-            "at": [
-              4.7,
-              5.3
+            "type": "segment",
+            "from": [
+              5.55,
+              1.1
             ],
-            "fromDeg": 138.5,
-            "toDeg": 236.3,
-            "label": "93°",
+            "to": [
+              2.44,
+              3.95
+            ],
             "step": 5
           },
           {
-            "type": "angle",
-            "at": [
-              1.5,
-              0.5
+            "type": "segment",
+            "from": [
+              0.63,
+              1.1
             ],
-            "fromDeg": 0,
-            "toDeg": 56.3,
-            "label": "58°",
+            "to": [
+              3.42,
+              4.07
+            ],
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.63,
+              1.1
+            ],
+            "to": [
+              2.44,
+              3.95
+            ],
             "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Quadrilateral ABCD with its diagonals meeting at E, with the angles 35°, 93° and 58° marked.",
+      "caption": "Cyclic quadrilateral ABCD with diagonals meeting at F, XY drawn parallel to AD, and B and C joined to X and Y.",
       "withheld": [],
-      "page": 85,
+      "page": 87,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -172,215 +509,189 @@
         "elements": [
           {
             "type": "circle",
-            "cx": 0,
-            "cy": 0,
-            "r": 4.6,
+            "cx": 3.2,
+            "cy": 3.25,
+            "r": 2.95,
             "step": 1
           },
           {
-            "type": "point",
-            "x": 3.2,
-            "y": 3.2,
-            "label": "A",
+            "type": "polygon",
+            "points": [
+              [
+                1.2,
+                5.2
+              ],
+              [
+                5.25,
+                5.2
+              ],
+              [
+                4.45,
+                0.55
+              ],
+              [
+                1.9,
+                0.6
+              ]
+            ],
             "step": 2
           },
           {
             "type": "point",
-            "x": -3.3,
-            "y": 3.2,
+            "x": 1.2,
+            "y": 5.2,
             "label": "D",
             "step": 2
           },
           {
             "type": "point",
-            "x": 2,
-            "y": -4.1,
+            "x": 5.25,
+            "y": 5.2,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4.45,
+            "y": 0.55,
             "label": "B",
             "step": 2
           },
           {
             "type": "point",
-            "x": -2.2,
-            "y": -4,
+            "x": 1.9,
+            "y": 0.6,
             "label": "C",
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              3.2,
-              3.2
+              5.25,
+              5.2
             ],
             "to": [
-              2,
-              -4.1
+              1.9,
+              0.6
             ],
             "step": 3
           },
           {
             "type": "segment",
             "from": [
-              2,
-              -4.1
+              1.2,
+              5.2
             ],
             "to": [
-              -2.2,
-              -4
+              4.45,
+              0.55
             ],
             "step": 3
           },
           {
             "type": "segment",
             "from": [
-              -2.2,
-              -4
+              5.25,
+              5.2
             ],
             "to": [
-              -3.3,
-              3.2
-            ],
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
-              -3.3,
-              3.2
-            ],
-            "to": [
-              3.2,
-              3.2
-            ],
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
-              3.2,
-              3.2
-            ],
-            "to": [
-              -2.2,
-              -4
+              3.66,
+              1.68
             ],
             "step": 4
           },
           {
             "type": "segment",
             "from": [
-              -3.3,
-              3.2
+              1.2,
+              5.2
             ],
             "to": [
-              2,
-              -4.1
+              2.69,
+              1.68
             ],
             "step": 4
           },
           {
             "type": "point",
-            "x": 0.7,
-            "y": -2.3,
+            "x": 3.66,
+            "y": 1.68,
             "label": "E",
-            "step": 5
+            "step": 4
           },
           {
             "type": "point",
-            "x": -0.7,
-            "y": -2,
+            "x": 2.69,
+            "y": 1.68,
             "label": "F",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              2.69,
+              1.68
+            ],
+            "to": [
+              3.66,
+              1.68
+            ],
             "step": 5
           },
           {
-            "type": "segment",
-            "from": [
-              3.2,
-              3.2
+            "type": "angle",
+            "at": [
+              5.25,
+              5.2
             ],
-            "to": [
-              0.7,
-              -2.3
-            ],
-            "step": 6
-          },
-          {
-            "type": "segment",
-            "from": [
-              -3.3,
-              3.2
-            ],
-            "to": [
-              -0.7,
-              -2
-            ],
-            "step": 6
-          },
-          {
-            "type": "segment",
-            "from": [
-              0.7,
-              -2.3
-            ],
-            "to": [
-              -0.7,
-              -2
-            ],
-            "step": 6
+            "fromDeg": 234,
+            "toDeg": 245.3,
+            "arcs": 2,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
-              3.2,
-              3.2
+              5.25,
+              5.2
             ],
-            "fromDeg": 233.1,
-            "toDeg": 245.6,
-            "label": "×",
-            "step": 7
+            "fromDeg": 245.3,
+            "toDeg": 260.2,
+            "arcs": 2,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
-              3.2,
-              3.2
-            ],
-            "fromDeg": 245.6,
-            "toDeg": 260.7,
-            "label": "×",
-            "step": 7
-          },
-          {
-            "type": "angle",
-            "at": [
-              -3.3,
-              3.2
+              1.2,
+              5.2
             ],
             "fromDeg": 278.7,
-            "toDeg": 296.6,
-            "label": "•",
-            "step": 7
+            "toDeg": 293,
+            "arcs": 1,
+            "step": 5
           },
           {
             "type": "angle",
             "at": [
-              -3.3,
-              3.2
+              1.2,
+              5.2
             ],
-            "fromDeg": 296.6,
-            "toDeg": 306,
-            "label": "•",
-            "step": 7
+            "fromDeg": 293,
+            "toDeg": 305,
+            "arcs": 1,
+            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Cyclic quadrilateral ABCD with its diagonals, AE and DF drawn as angle bisectors with equal angle marks, and EF joined.",
+      "caption": "Cyclic quadrilateral ABCD with both diagonals, AE and DF drawn as angle bisectors, and E joined to F.",
       "withheld": [],
       "page": 87,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -392,104 +703,78 @@
         "elements": [
           {
             "type": "circle",
-            "cx": 0,
-            "cy": 0,
-            "r": 5,
+            "cx": 4,
+            "cy": 4.5,
+            "r": 3.65,
             "step": 1
           },
           {
             "type": "point",
-            "x": 0,
-            "y": 0,
+            "x": 4,
+            "y": 4.5,
             "label": "M",
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                3.87,
+                8.15
+              ],
+              [
+                7.64,
+                4.72
+              ],
+              [
+                5.25,
+                1.07
+              ],
+              [
+                1.23,
+                6.87
+              ]
+            ],
             "step": 2
           },
           {
             "type": "point",
-            "x": 0,
-            "y": 5,
+            "x": 3.87,
+            "y": 8.15,
             "label": "A",
-            "step": 3
+            "step": 2
           },
           {
             "type": "point",
-            "x": 4.99,
-            "y": 0.26,
+            "x": 7.64,
+            "y": 4.72,
             "label": "B",
-            "step": 3
+            "step": 2
           },
           {
             "type": "point",
-            "x": 1.71,
-            "y": -4.7,
+            "x": 5.25,
+            "y": 1.07,
             "label": "C",
-            "step": 3
+            "step": 2
           },
           {
             "type": "point",
-            "x": -3.83,
-            "y": 3.21,
+            "x": 1.23,
+            "y": 6.87,
             "label": "D",
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              5
-            ],
-            "to": [
-              4.99,
-              0.26
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              4.99,
-              0.26
-            ],
-            "to": [
-              1.71,
-              -4.7
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              1.71,
-              -4.7
-            ],
-            "to": [
-              -3.83,
-              3.21
-            ],
-            "step": 4
-          },
-          {
-            "type": "segment",
-            "from": [
-              -3.83,
-              3.21
-            ],
-            "to": [
-              0,
-              5
-            ],
-            "step": 4
+            "step": 2
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Quadrilateral ABCD with all four vertices on a circle with centre M.",
+      "caption": "A circle with centre M and quadrilateral ABCD with all four vertices on the circle.",
       "withheld": [],
       "page": 85,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -500,6 +785,28 @@
       "spec": {
         "elements": [
           {
+            "type": "polygon",
+            "points": [
+              [
+                0.7,
+                9.1
+              ],
+              [
+                9.6,
+                6.55
+              ],
+              [
+                8.9,
+                1.1
+              ],
+              [
+                0.8,
+                0.4
+              ]
+            ],
+            "step": 1
+          },
+          {
             "type": "point",
             "x": 0.7,
             "y": 9.1,
@@ -509,13 +816,13 @@
           {
             "type": "point",
             "x": 9.6,
-            "y": 7.25,
+            "y": 6.55,
             "label": "X",
             "step": 1
           },
           {
             "type": "point",
-            "x": 9,
+            "x": 8.9,
             "y": 1.1,
             "label": "Y",
             "step": 1
@@ -530,32 +837,8 @@
           {
             "type": "segment",
             "from": [
-              0.7,
-              9.1
-            ],
-            "to": [
               9.6,
-              7.25
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              9.6,
-              7.25
-            ],
-            "to": [
-              9,
-              1.1
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              9,
-              1.1
+              6.55
             ],
             "to": [
               0.8,
@@ -566,38 +849,14 @@
           {
             "type": "segment",
             "from": [
-              0.8,
-              0.4
-            ],
-            "to": [
-              0.7,
-              9.1
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              9.6,
-              7.25
-            ],
-            "to": [
-              0.8,
-              0.4
-            ],
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
               0.7,
               9.1
             ],
             "to": [
-              9,
+              8.9,
               1.1
             ],
-            "step": 3
+            "step": 2
           },
           {
             "type": "angle",
@@ -606,29 +865,31 @@
               9.1
             ],
             "fromDeg": 270.7,
-            "toDeg": 316.1,
-            "step": 4
+            "toDeg": 315.7,
+            "arcs": 1,
+            "step": 3
           },
           {
             "type": "angle",
             "at": [
               9.6,
-              7.25
+              6.55
             ],
-            "fromDeg": 217.9,
-            "toDeg": 264.4,
-            "step": 4
+            "fromDeg": 215,
+            "toDeg": 262.7,
+            "arcs": 1,
+            "step": 3
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Quadrilateral XYZL with both diagonals, and the angles at L and at X on base YZ marked equal.",
+      "caption": "Quadrilateral XYZL with both diagonals, and angle YLZ marked equal to angle YXZ.",
       "withheld": [],
       "page": 85,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -639,155 +900,129 @@
       "spec": {
         "elements": [
           {
+            "type": "polygon",
+            "points": [
+              [
+                4.8,
+                6.3
+              ],
+              [
+                1,
+                3.8
+              ],
+              [
+                4.8,
+                0.75
+              ],
+              [
+                8.7,
+                3.8
+              ]
+            ],
+            "step": 1
+          },
+          {
             "type": "point",
-            "x": 5.1,
-            "y": 7.7,
+            "x": 4.8,
+            "y": 6.3,
             "label": "A",
             "step": 1
           },
           {
             "type": "point",
-            "x": 0,
-            "y": 4.4,
+            "x": 1,
+            "y": 3.8,
             "label": "D",
             "step": 1
           },
           {
             "type": "point",
-            "x": 10.3,
-            "y": 4.4,
+            "x": 8.7,
+            "y": 3.8,
             "label": "B",
             "step": 1
           },
           {
             "type": "point",
-            "x": 5.1,
-            "y": 0.3,
+            "x": 4.8,
+            "y": 0.75,
             "label": "C",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
-              5.1,
-              7.7
+              4.8,
+              6.3
             ],
             "to": [
-              0,
-              4.4
+              4.8,
+              0.75
             ],
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              5.1,
-              7.7
+              1,
+              3.8
             ],
             "to": [
-              10.3,
-              4.4
+              8.7,
+              3.8
             ],
             "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              10.3,
-              4.4
-            ],
-            "to": [
-              5.1,
-              0.3
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              5.1,
-              0.3
-            ],
-            "to": [
-              0,
-              4.4
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              5.1,
-              7.7
-            ],
-            "to": [
-              5.1,
-              0.3
-            ],
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              4.4
-            ],
-            "to": [
-              10.3,
-              4.4
-            ],
-            "step": 3
           },
           {
             "type": "point",
-            "x": 5.1,
-            "y": 4.4,
+            "x": 4.8,
+            "y": 3.8,
             "label": "E",
-            "step": 4
+            "step": 2
           },
           {
             "type": "angle",
             "at": [
-              5.1,
-              4.4
+              4.8,
+              3.8
             ],
             "fromDeg": 0,
             "toDeg": 90,
-            "label": "90°",
-            "step": 5
+            "right": true,
+            "step": 3
           },
           {
             "type": "angle",
             "at": [
-              0,
-              4.4
+              1,
+              3.8
             ],
             "fromDeg": 0,
             "toDeg": 33,
             "label": "40°",
-            "step": 5
+            "step": 3
           },
           {
             "type": "angle",
             "at": [
-              10.3,
-              4.4
+              8.7,
+              3.8
             ],
-            "fromDeg": 147,
+            "fromDeg": 147.3,
             "toDeg": 180,
             "label": "50°",
-            "step": 5
+            "step": 3
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Four-sided figure ADBC with perpendicular diagonals meeting at E, with angles 40° at D and 50° at B marked.",
+      "caption": "Quadrilateral ADBC with diagonals meeting at E at a right angle, with 40° at D and 50° at B.",
       "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -798,213 +1033,659 @@
       "spec": {
         "elements": [
           {
+            "type": "polygon",
+            "points": [
+              [
+                0.9,
+                0.45
+              ],
+              [
+                6.7,
+                5
+              ],
+              [
+                10.5,
+                0.45
+              ]
+            ],
+            "step": 1
+          },
+          {
             "type": "point",
-            "x": 0,
+            "x": 0.9,
             "y": 0.45,
             "label": "C",
             "step": 1
           },
           {
             "type": "point",
-            "x": 9.6,
+            "x": 6.7,
+            "y": 5,
+            "label": "D",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 10.5,
             "y": 0.45,
             "label": "B",
             "step": 1
           },
           {
             "type": "point",
-            "x": 5.8,
-            "y": 5.05,
-            "label": "D",
-            "step": 1
-          },
-          {
-            "type": "point",
-            "x": 8.8,
-            "y": 3.5,
+            "x": 9.51,
+            "y": 3.4,
             "label": "A",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
-              0,
+              0.9,
               0.45
             ],
             "to": [
-              5.8,
-              5.05
+              9.51,
+              3.4
             ],
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              5.8,
-              5.05
+              9.51,
+              3.4
             ],
             "to": [
-              9.6,
+              10.5,
               0.45
             ],
             "step": 2
           },
           {
-            "type": "segment",
-            "from": [
-              0,
-              0.45
+            "type": "angle",
+            "at": [
+              9.51,
+              3.4
             ],
-            "to": [
-              9.6,
-              0.45
-            ],
-            "step": 2
-          },
-          {
-            "type": "segment",
-            "from": [
-              0,
-              0.45
-            ],
-            "to": [
-              8.8,
-              3.5
-            ],
-            "step": 3
-          },
-          {
-            "type": "segment",
-            "from": [
-              8.8,
-              3.5
-            ],
-            "to": [
-              9.6,
-              0.45
-            ],
+            "fromDeg": 198.7,
+            "toDeg": 288.7,
+            "right": true,
             "step": 3
           },
           {
             "type": "angle",
             "at": [
-              8.8,
-              3.5
-            ],
-            "fromDeg": 199,
-            "toDeg": 289,
-            "label": "90°",
-            "step": 4
-          },
-          {
-            "type": "angle",
-            "at": [
-              0,
+              0.9,
               0.45
             ],
             "fromDeg": 0,
-            "toDeg": 38.4,
+            "toDeg": 38,
             "label": "40°",
-            "step": 4
+            "step": 3
           },
           {
             "type": "angle",
             "at": [
-              9.6,
+              10.5,
               0.45
             ],
-            "fromDeg": 129.6,
+            "fromDeg": 130,
             "toDeg": 180,
             "label": "50°",
-            "step": 4
+            "step": 3
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Triangle DCB with segment CA to point A beside B, a right angle at A, 40° at C and 50° at B.",
+      "caption": "Triangle DCB with segment CA, a right angle at A, 40° at C and 50° at B.",
       "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
-      }
-    }
-  ],
-  "gaps": [
-    {
-      "figure": "pp3u10-4:figure-10",
-      "for_item": "pp3u10-4:drill-2",
-      "reason": "The figure shows midpoints X and Y through single and double tick marks on the chords, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
-      "page": 87,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
-      }
-    },
-    {
-      "figure": "pp3u10-4:figure-11",
-      "for_item": "pp3u10-4:example-2",
-      "reason": "The figure shows AD parallel to XY with parallel arrow marks, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with parallel-line arrow marks",
-      "page": 87,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u10-4:figure-6",
       "for_item": "pp3u10-4:drill-1",
-      "reason": "The figure shows DA parallel to CB with parallel arrow marks, which geo_scene cannot draw; leaving them out would drop part of the figure.",
-      "needed_kind": "geo_scene with parallel-side arrow marks",
+      "lo": "lo:pp3u10-4-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                2.25,
+                3.7
+              ],
+              [
+                6.25,
+                3.7
+              ],
+              [
+                7.85,
+                0.4
+              ],
+              [
+                0.7,
+                0.4
+              ]
+            ],
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 2.25,
+            "y": 3.7,
+            "label": "D",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 6.25,
+            "y": 3.7,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 7.85,
+            "y": 0.4,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0.7,
+            "y": 0.4,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              2.25,
+              3.7
+            ],
+            "to": [
+              6.25,
+              3.7
+            ],
+            "parallel": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.7,
+              0.4
+            ],
+            "to": [
+              7.85,
+              0.4
+            ],
+            "parallel": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              2.25,
+              3.7
+            ],
+            "to": [
+              7.85,
+              0.4
+            ],
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6.25,
+              3.7
+            ],
+            "to": [
+              0.7,
+              0.4
+            ],
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              2.25,
+              3.7
+            ],
+            "fromDeg": 329.5,
+            "toDeg": 360,
+            "label": "41°",
+            "step": 4
+          },
+          {
+            "type": "angle",
+            "at": [
+              4.22,
+              2.54
+            ],
+            "fromDeg": 211.3,
+            "toDeg": 329.5,
+            "label": "99°",
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Trapezium DABC with DA parallel to CB, its diagonals crossing, 41° at D and 99° between the diagonals.",
+      "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u10-4:figure-7",
       "for_item": "pp3u10-4:drill-1",
-      "reason": "The figure shows equal opposite sides only through tick marks, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-side tick marks",
+      "lo": "lo:pp3u10-4-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                1.9,
+                5.07
+              ],
+              [
+                5.8,
+                5.07
+              ],
+              [
+                4.7,
+                1.33
+              ],
+              [
+                0.8,
+                1.33
+              ]
+            ],
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 1.9,
+            "y": 5.07,
+            "label": "D",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 5.8,
+            "y": 5.07,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 4.7,
+            "y": 1.33,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0.8,
+            "y": 1.33,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.9,
+              5.07
+            ],
+            "to": [
+              5.8,
+              5.07
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              5.8,
+              5.07
+            ],
+            "to": [
+              4.7,
+              1.33
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              4.7,
+              1.33
+            ],
+            "to": [
+              0.8,
+              1.33
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.8,
+              1.33
+            ],
+            "to": [
+              1.9,
+              5.07
+            ],
+            "ticks": 1,
+            "step": 2
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Quadrilateral DABC whose four sides are marked equal with one tick each.",
+      "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u10-4:figure-8",
       "for_item": "pp3u10-4:drill-1",
-      "reason": "The figure shows parallel arrow marks on DA and CB and equal-side tick marks on DC and AB, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with parallel arrow marks and equal-side tick marks",
+      "lo": "lo:pp3u10-4-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                2.25,
+                3.7
+              ],
+              [
+                6.25,
+                3.7
+              ],
+              [
+                7.85,
+                0.4
+              ],
+              [
+                0.7,
+                0.4
+              ]
+            ],
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 2.25,
+            "y": 3.7,
+            "label": "D",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 6.25,
+            "y": 3.7,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 7.85,
+            "y": 0.4,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0.7,
+            "y": 0.4,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              2.25,
+              3.7
+            ],
+            "to": [
+              6.25,
+              3.7
+            ],
+            "parallel": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.7,
+              0.4
+            ],
+            "to": [
+              7.85,
+              0.4
+            ],
+            "parallel": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              2.25,
+              3.7
+            ],
+            "to": [
+              0.7,
+              0.4
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6.25,
+              3.7
+            ],
+            "to": [
+              7.85,
+              0.4
+            ],
+            "ticks": 1,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Trapezium DABC with DA parallel to CB and the slanted sides DC and AB marked equal.",
+      "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u10-4:figure-9",
       "for_item": "pp3u10-4:example-1",
-      "reason": "The figure marks X as the midpoint of AC with equal-length tick marks, which geo_scene cannot draw.",
-      "needed_kind": "geo_scene with equal-length tick marks on segments",
+      "lo": "lo:pp3u10-4-2",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 4.1,
+            "cy": 6.4,
+            "r": 3.2,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 4.1,
+            "y": 6.4,
+            "label": "M",
+            "step": 1
+          },
+          {
+            "type": "diameter",
+            "from": [
+              0.9,
+              6.4
+            ],
+            "to": [
+              7.3,
+              6.4
+            ],
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0.9,
+            "y": 6.4,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 7.3,
+            "y": 6.4,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "chord",
+            "from": [
+              2.15,
+              8.9
+            ],
+            "to": [
+              4.725,
+              7.65
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "chord",
+            "from": [
+              4.725,
+              7.65
+            ],
+            "to": [
+              7.3,
+              6.4
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 2.15,
+            "y": 8.9,
+            "label": "C",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 4.725,
+            "y": 7.65,
+            "label": "X",
+            "step": 3
+          },
+          {
+            "type": "tangent",
+            "from": [
+              0.9,
+              6.4
+            ],
+            "to": [
+              0.9,
+              0.5
+            ],
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 0.9,
+            "y": 0.5,
+            "label": "Y",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              4.725,
+              7.65
+            ],
+            "to": [
+              0.9,
+              0.5
+            ],
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              7.3,
+              6.4
+            ],
+            "to": [
+              0.9,
+              0.5
+            ],
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.9,
+              6.4
+            ],
+            "to": [
+              4.725,
+              7.65
+            ],
+            "step": 5
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Circle with centre M and diameter AB, chord AC with midpoint X, line XM meeting the tangent at B in Y, and AY joined.",
+      "withheld": [],
       "page": 86,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T084038Z.json",
-        "script_sha256": "179996269cc17e459615a63bd78d9cfd77db0ff205c54f9536168b331d495949"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
+  "gaps": [],
   "runs": [
     {
       "at": "2026-10-18T08:43:45+00:00",
@@ -1015,6 +1696,17 @@
         "visuals": 6,
         "viz_gaps": 6,
         "compared": 6
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 12,
+        "viz_gaps": 0,
+        "compared": 12
       }
     }
   ]

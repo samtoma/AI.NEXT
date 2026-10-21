@@ -135,6 +135,38 @@
         "AINEXT_DIST_DIR": ".next-bookrecord",
         "AINEXT_BOOK_STATEMENTS_DIR": "../services/extraction/compiled/prep3-parallel/content"
       }
+    },
+    {
+      "name": "bookrecord-console",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3014",
+        "-H",
+        "127.0.0.1"
+      ],
+      "cwd": "app",
+      "port": 3014,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_prep3_parallel_scratch",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_prep3_parallel_scratch",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_prep3_parallel_scratch",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "on",
+        "AINEXT_PUBLIC_URL": "http://localhost:3013",
+        "AINEXT_CONSOLE_URL": "http://localhost:3014",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3014",
+        "AINEXT_DIST_DIR": ".next-bookrecord-admin",
+        "AINEXT_BOOK_STATEMENTS_DIR": "../services/extraction/compiled/prep3-parallel/content",
+        "AINEXT_SURFACE": "admin",
+        "AINEXT_DEV_OPERATOR_PICKER": "on",
+        "AINEXT_BOOTSTRAP_OPERATOR_EMAIL": "samuel.s.toma@gmail.com"
+      }
     }
   ]
 }

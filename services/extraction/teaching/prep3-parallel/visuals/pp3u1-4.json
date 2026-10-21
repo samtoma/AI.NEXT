@@ -8,53 +8,44 @@
       "figure": "pp3u1-4:figure-1",
       "for_item": "pp3u1-4:example-2",
       "lo": "lo:pp3u1-4-3",
-      "kind": "coordinate_plot",
+      "kind": "function_graph",
       "spec": {
-        "xRange": [
-          -6,
-          6
+        "fn": "linear",
+        "coefs": [
+          2,
+          -3
         ],
-        "yRange": [
-          -6,
-          6
+        "domain": [
+          -2,
+          4
         ],
-        "points": [
+        "markers": [
           {
             "x": 0,
-            "y": -3,
-            "label": "(0,-3)"
+            "label": "(0, −3)"
           },
           {
             "x": 1,
-            "y": -1,
-            "label": "(1,-1)"
+            "label": "(1, −1)"
           },
           {
             "x": 2,
-            "y": 1,
-            "label": "(2,1)"
+            "label": "(2, 1)"
           }
         ],
-        "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            1,
-            2
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
+        "animate": "draw"
       },
-      "caption": "I plot (0,-3), (1,-1) and (2,1) for f(x)=2x-3 and join them with a straight line.",
+      "caption": "The straight line y = 2x − 3 drawn through the points at x = 0, 1 and 2.",
       "withheld": [],
       "page": 20,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -75,26 +66,30 @@
         "markers": [
           {
             "x": -1,
-            "label": "(-1,3)"
+            "label": "(−1, 3)"
           },
           {
             "x": 1,
-            "label": "(1,3)"
+            "label": "(1, 3)"
           },
           {
             "x": 2,
-            "label": "(2,3)"
+            "label": "(2, 3)"
           }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The graph of y = 3 is a horizontal line, and every point on it has y = 3.",
+      "caption": "The constant function y = 3 is a horizontal line, with points at x = −1, 1 and 2.",
       "withheld": [],
       "page": 21,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -116,46 +111,50 @@
         "markers": [
           {
             "x": -3,
-            "label": "(-3,9)"
+            "label": "(−3, 9)"
           },
           {
             "x": -2,
-            "label": "(-2,4)"
+            "label": "(−2, 4)"
           },
           {
             "x": -1,
-            "label": "(-1,1)"
+            "label": "(−1, 1)"
           },
           {
             "x": 0,
-            "label": "(0,0)"
+            "label": "(0, 0)"
           },
           {
             "x": 1,
-            "label": "(1,1)"
+            "label": "(1, 1)"
           },
           {
             "x": 2,
-            "label": "(2,4)"
+            "label": "(2, 4)"
           },
           {
             "x": 3,
-            "label": "(3,9)"
+            "label": "(3, 9)"
           }
         ],
         "reveals": [
           "vertex",
           "axis"
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The graph of f(x)=x² for x from -3 to 3 is a U-shaped curve with its lowest point at the origin.",
+      "caption": "The parabola y = x² for x from −3 to 3, opening upwards with its vertex at the origin.",
       "withheld": [],
       "page": 22,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -177,46 +176,50 @@
         "markers": [
           {
             "x": -3,
-            "label": "(-3,-9)"
+            "label": "(−3, −9)"
           },
           {
             "x": -2,
-            "label": "(-2,-4)"
+            "label": "(−2, −4)"
           },
           {
             "x": -1,
-            "label": "(-1,-1)"
+            "label": "(−1, −1)"
           },
           {
             "x": 0,
-            "label": "(0,0)"
+            "label": "(0, 0)"
           },
           {
             "x": 1,
-            "label": "(1,-1)"
+            "label": "(1, −1)"
           },
           {
             "x": 2,
-            "label": "(2,-4)"
+            "label": "(2, −4)"
           },
           {
             "x": 3,
-            "label": "(3,-9)"
+            "label": "(3, −9)"
           }
         ],
         "reveals": [
           "vertex",
           "axis"
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The graph of f(x)=-x² for x from -3 to 3 is an upside-down U with its highest point at the origin.",
+      "caption": "The parabola y = −x² for x from −3 to 3, opening downwards with its vertex at the origin.",
       "withheld": [],
       "page": 23,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -238,6 +241,17 @@
       "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
       "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
       "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f",
+      "counts": {
+        "visuals": 4,
+        "viz_gaps": 0,
+        "compared": 4
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
       "counts": {
         "visuals": 4,
         "viz_gaps": 0,

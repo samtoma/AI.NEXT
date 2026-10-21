@@ -4,6 +4,7 @@
  * Shared renderer for the two figure directives every chat surface supports:
  *   {{widget:viz:{"kind":…,"spec":{…},"caption":"…"}}}  → inline composed figure
  *   {{widget:viz_ref:v:geo1-1:001}}                     → stored figure by id
+ *   {{widget:figure_task:v:geo1-1:001}}                 → the same, as a task to work
  * Returns null for anything else so callers can layer their own widgets
  * (pair_plotter, product_builder, …) on top.
  */
@@ -16,10 +17,12 @@ export function renderVizWidget(
   name: string,
   props: Record<string, unknown>
 ): ReactNode | null {
-  if (name === "viz_ref") {
+  if (name === "viz_ref" || name === "figure_task") {
     const id = props.id;
     if (typeof id === "string" && id.length > 0 && id.length <= 120) {
-      return <VizRefCard id={id} />;
+      // figure_task: the same stored figure, as the task the student works
+      // (lib/figure-interactions); a figure with no task degrades to the picture
+      return <VizRefCard id={id} task={name === "figure_task"} />;
     }
     return null;
   }

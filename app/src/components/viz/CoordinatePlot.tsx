@@ -2,8 +2,14 @@
 
 /**
  * coordinate_plot — points/segments appearing in sequence on a grid.
- * spec: {xRange, yRange, points:[{x,y,label?,color?}], segments:[[i,j]]?,
+ * spec: {xRange, yRange, points:[{x,y,label?,color?}],
+ *        segments:[[i,j] | {from:i,to:j,label?,dashed?}]?,
+ *        polygons:[{points:[i,j,k,…], fill?}]?, axes:{x?,y?}?,
+ *        quadrants:true|[4 names]?, notes:[{x,y,text}]?, scale:"numbers"|"none"?,
  *        animate:"plot-sequence"|"none", interactive:false|"click-to-plot"}
+ * VIZ_SPEC v4 added labelled/dashed segments, shaded polygons, axis titles,
+ * quadrant names, notes and scale:"none" (a derivation drawn with symbolic
+ * points: no grid, no numbers to read off).
  */
 
 import { useRef, useState } from "react";
@@ -12,6 +18,7 @@ import {
   ACCENT_DEEP,
   GOLD,
   INK_FAINT,
+  INK_SOFT,
   MONO,
   VizError,
   arr,
@@ -25,7 +32,16 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
-import { PlaneFrame, makePlane } from "./plane";
+import { PlaneFrame, makePlane, titleRoom, type AxisTitles } from "./plane";
+
+interface Seg {
+  i: number;
+  j: number;
+  label: string;
+  dashed: boolean;
+}
+
+const QUADRANT_NAMES = ["first", "second", "third", "fourth"];
 
 interface Pt {
   x: number;
@@ -44,16 +60,37 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
       color: colorOf(p.color, ACCENT),
     };
   });
-  const segments: [number, number][] = arr(spec.segments)
-    .map((s) => (Array.isArray(s) ? [num(s[0], -1), num(s[1], -1)] : [-1, -1]))
-    .filter(
-      ([i, j]) =>
-        Number.isInteger(i) && Number.isInteger(j) &&
-        i >= 0 && j >= 0 && i < points.length && j < points.length && i !== j
-    ) as [number, number][];
+  const valid = (i: number) => Number.isInteger(i) && i >= 0 && i < points.length;
+  const segments: Seg[] = arr(spec.segments)
+    .map((s): Seg => {
+      if (Array.isArray(s)) return { i: num(s[0], -1), j: num(s[1], -1), label: "", dashed: false };
+      const o = obj(s);
+      return { i: num(o.from, -1), j: num(o.to, -1), label: str(o.label), dashed: o.dashed === true };
+    })
+    .filter(({ i, j }) => valid(i) && valid(j) && i !== j);
+  const polygons = arr(spec.polygons)
+    .map((raw) => {
+      const o = obj(raw);
+      return { idx: arr(o.points).map((v) => num(v, -1)).filter(valid), fill: o.fill !== false };
+    })
+    .filter((g) => g.idx.length >= 3);
+  const axes = obj(spec.axes);
+  const titles: AxisTitles = { x: str(axes.x) || undefined, y: str(axes.y) || undefined };
+  const quadrants =
+    spec.quadrants === true
+      ? QUADRANT_NAMES
+      : arr(spec.quadrants).map((q) => str(q)).filter(Boolean);
+  const notes = arr(spec.notes)
+    .map((n) => obj(n))
+    .map((n) => ({ x: num(n.x, NaN), y: num(n.y, NaN), text: str(n.text) }))
+    .filter((n) => Number.isFinite(n.x) && Number.isFinite(n.y) && n.text);
+  const bare = spec.scale === "none";
   const interactive = spec.interactive === "click-to-plot" || spec.interactive === true;
-  if (points.length === 0 && !interactive)
+  // a plane with only its quadrants named, or notes, is a figure too (pp3u1-1 figure 7)
+  if (points.length === 0 && !interactive && quadrants.length === 0 && notes.length === 0)
     throw new VizError("coordinate_plot: no points");
+
+
 
   // auto-widen the range so every point fits
   let [x0, x1] = range2(spec.xRange, [-6, 6]);
@@ -64,7 +101,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
     y0 = Math.min(y0, Math.floor(p.y) - 1);
     y1 = Math.max(y1, Math.ceil(p.y) + 1);
   }
-  const p = makePlane([x0, x1], [y0, y1], 300, 240);
+  const p = makePlane([x0, x1], [y0, y1], 300, 240, 16, titleRoom(titles));
 
   const on = animOn && spec.animate !== "none";
   const D_PT = 0.45;
@@ -97,10 +134,20 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
         onClick={handleClick}
         className={`block w-full ${interactive ? "cursor-crosshair" : ""}`}
       >
-        <PlaneFrame p={p} />
+        <PlaneFrame p={p} titles={titles} bare={bare} quadrants={quadrants.length ? quadrants : undefined} />
 
         {/* animated layer — remounts each cycle */}
         <g key={tl.key}>
+          {polygons.map((g, k) => (
+            <path
+              key={`g${k}`}
+              d={g.idx.map((i, n) => `${n === 0 ? "M" : "L"} ${p.sx(points[i].x).toFixed(1)} ${p.sy(points[i].y).toFixed(1)}`).join(" ") + " Z"}
+              fill={g.fill ? points[g.idx[0]].color : "none"}
+              fillOpacity={0.14}
+              stroke="none"
+              style={a.fade(segStart + segments.length * 0.55)}
+            />
+          ))}
           {points.map((pt, i) => {
             const d = 0.4 + i * D_PT;
             return (
@@ -117,24 +164,54 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
                   fill={pt.color === ACCENT ? ACCENT_DEEP : pt.color}
                   style={{ fontFamily: MONO, ...a.fade(d + 0.15) }}
                 >
-                  {pt.label || `(${fmtNum(pt.x)},${fmtNum(pt.y)})`}
+                  {pt.label || (bare ? "" : `(${fmtNum(pt.x)},${fmtNum(pt.y)})`)}
                 </text>
               </g>
             );
           })}
-          {segments.map(([i, j], k) => (
-            <line
-              key={`s${k}`}
-              x1={p.sx(points[i].x)}
-              y1={p.sy(points[i].y)}
-              x2={p.sx(points[j].x)}
-              y2={p.sy(points[j].y)}
-              stroke={points[i].color}
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              pathLength={100}
-              style={a.draw(segStart + k * 0.55, 0.5)}
-            />
+          {segments.map(({ i, j, label, dashed }, k) => {
+            const d = segStart + k * 0.55;
+            const X1 = p.sx(points[i].x), Y1 = p.sy(points[i].y);
+            const X2 = p.sx(points[j].x), Y2 = p.sy(points[j].y);
+            const len = Math.hypot(X2 - X1, Y2 - Y1) || 1;
+            // label beside the segment's middle, on its normal — clear of the line by half
+            // its width when the normal runs sideways (a vertical leg), ~3.6px per mono char
+            const ux = -(Y2 - Y1) / len, uy = (X2 - X1) / len;
+            const off = 8 + Math.abs(ux) * label.length * 3.6;
+            const nx = ux * off, ny = uy * off;
+            return (
+              <g key={`s${k}`}>
+                <line
+                  x1={X1} y1={Y1} x2={X2} y2={Y2}
+                  stroke={points[i].color}
+                  strokeWidth={dashed ? 1.2 : 1.6}
+                  strokeLinecap="round"
+                  strokeDasharray={dashed ? "4 3" : undefined}
+                  pathLength={dashed ? undefined : 100}
+                  style={dashed ? a.fade(d, 0.5) : a.draw(d, 0.5)}
+                />
+                {label && (
+                  <text
+                    x={(X1 + X2) / 2 + nx} y={(Y1 + Y2) / 2 + ny + 3}
+                    fontSize="7.5" fontWeight="600" textAnchor="middle"
+                    fill={points[i].color === ACCENT ? ACCENT_DEEP : points[i].color}
+                    style={{ fontFamily: MONO, ...a.fade(d + 0.4) }}
+                  >
+                    {label}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+          {notes.map((n, k) => (
+            <text
+              key={`n${k}`}
+              x={p.sx(n.x)} y={p.sy(n.y)}
+              fontSize="7.5" textAnchor="middle" fill={INK_SOFT}
+              style={{ fontFamily: MONO, ...a.fade(segStart + segments.length * 0.55 + 0.3) }}
+            >
+              {n.text}
+            </text>
           ))}
         </g>
 

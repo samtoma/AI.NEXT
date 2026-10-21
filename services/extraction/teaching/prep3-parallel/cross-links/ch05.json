@@ -2,8 +2,12 @@
  "format": "ainext.cross-links/1",
  "book": "prep3-parallel",
  "chapter": 5,
- "run": "runs/prep3-parallel/links/links-ch05.20261018T092555Z.json",
- "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "run": "runs/prep3-parallel/links/xlinks-ch05.20261021T061559Z.json",
+ "runs": [
+  "runs/prep3-parallel/links/links-ch05.20261018T092555Z.json",
+  "runs/prep3-parallel/links/xlinks-ch05.20261021T061559Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
  "prior_objectives": 37,
  "links": [
   {
@@ -29,7 +33,8 @@
    "cross": true,
    "src_statement": "Use a calculator to find the trigonometric ratio of a given angle, including angles in degrees, minutes and seconds.",
    "dst_statement": "Calculate the slope of a straight line from two points, and from the positive angle it makes with the positive direction of the x-axis using m = tan E, and find the angle from a given slope with the calculator.",
-   "fingerprint": "8fcdf2329d7d04b187860603cf95d5d6"
+   "fingerprint": "8fcdf2329d7d04b187860603cf95d5d6",
+   "run": "runs/prep3-parallel/links/links-ch05.20261018T092555Z.json"
   },
   {
    "src": "lo:pp3u4-2-4",
@@ -54,7 +59,8 @@
    "cross": true,
    "src_statement": "Find the measure of an angle from its trigonometrical ratio, using the calculator or special-angle values, and apply this to find angles and areas in a triangle.",
    "dst_statement": "Calculate the slope of a straight line from two points, and from the positive angle it makes with the positive direction of the x-axis using m = tan E, and find the angle from a given slope with the calculator.",
-   "fingerprint": "2c9c37ca93eb48b9a187ad6231979379"
+   "fingerprint": "2c9c37ca93eb48b9a187ad6231979379",
+   "run": "runs/prep3-parallel/links/links-ch05.20261018T092555Z.json"
   },
   {
    "src": "lo:pp3u1-4-3",
@@ -79,13 +85,64 @@
    "cross": true,
    "src_statement": "Represent a linear function or constant function graphically by finding ordered pairs and drawing the straight line.",
    "dst_statement": "Determine the slope and the length of the y-intercept of a straight line from its equation, by writing it in the form y = mx + b or using m = -a/b, and use them to represent the line graphically.",
-   "fingerprint": "89f0fc5b571d1f9c1f34d94ac8a3da31"
+   "fingerprint": "89f0fc5b571d1f9c1f34d94ac8a3da31",
+   "run": "runs/prep3-parallel/links/links-ch05.20261018T092555Z.json"
+  },
+  {
+   "src": "lo:pp3u4-2-1",
+   "dst": "lo:pp3u5-3-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE9",
+     "anchor": "pp3u5-3:example-3",
+     "printed_page": 67,
+     "quote": "m_2) = \\tan 45^\\circ = 1"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step is there (m2 = tan45° = 1). It needs the exact value tan45°=1, which src teaches from the isosceles right triangle. dst only gives m = tan E and doesn't state special values. Removal test fails to remove it, so the link is needed."
+   },
+   "key": "lo:pp3u4-2-1->lo:pp3u5-3-1",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Determine the trigonometric ratios (sin, cos, tan) of the special angles 30°, 60° and 45° from the side ratios of an equilateral triangle and an isosceles right-angled triangle, and state that sin of an angle equals cos of its complementary angle.",
+   "dst_statement": "Calculate the slope of a straight line from two points, and from the positive angle it makes with the positive direction of the x-axis using m = tan E, and find the angle from a given slope with the calculator.",
+   "fingerprint": "41df0013af98495d4dd577cbd8dc3ade",
+   "reason": "STEP: slope of a line at 45° is computed as tan 45° = 1 | RESULT: exact special-angle value tan45°=1 (and tan30°, tan60°) | WHY NOT LOCAL: this lesson only gives m = tan E, not the special-angle values",
+   "run": "runs/prep3-parallel/links/xlinks-ch05.20261021T061559Z.json"
   }
  ],
- "links_dropped": [],
- "inside_unit_found": 8,
+ "links_dropped": [
+  {
+   "key": "lo:pp3u4-2-3->lo:pp3u5-3-1",
+   "src": "lo:pp3u4-2-3",
+   "dst": "lo:pp3u5-3-1",
+   "why": "already decided: approved, or proposed before for G1",
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step is there (tan 56°12'48'' = 1.4945...). It uses the calculator evaluation of a trig ratio with DMS input, which src teaches. dst only shows the key sequence as an instruction. Removal test: without src, the student wouldn't know how to use the calculator for DMS tan."
+   },
+   "cross": true
+  },
+  {
+   "key": "lo:pp3u4-2-4->lo:pp3u5-3-1",
+   "src": "lo:pp3u4-2-4",
+   "dst": "lo:pp3u5-3-1",
+   "why": "already decided: approved, or proposed before for G1",
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step is there (tan E = 1.4865, so the angle is 56°4'13''). It uses the inverse trig procedure with the calculator, which src teaches. dst shows only the key sequence. Removal test: the idea of finding an angle from its ratio isn't stated in dst, so the link is needed."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
  "outside_book": [],
  "failures": [],
  "decisions": [],
- "made": "2026-10-18"
+ "made": "2026-10-21"
 }

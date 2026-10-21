@@ -141,6 +141,7 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/pipeline": ["evidence-access"],
   "/gallery": ["evidence-access"],
   "/dev/lesson-content": ["evidence-access"],
+  "/dev/figure-marks": ["evidence-access"],
   "/dev/math-widgets": ["evidence-access"],
   "/dev/social-fixture": ["evidence-access"],
   "/dev/widget-questions": ["evidence-access"],

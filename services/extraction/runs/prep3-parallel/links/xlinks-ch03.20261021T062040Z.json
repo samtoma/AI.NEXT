@@ -1,0 +1,52 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 3,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "f1a72a044a10f8a0b7750d4fa4cbc4e61c7088d08ed025f61a096b1cdfd80f5e",
+  "generated_sha256": "03ce80bb40415c45334053050d4e5fef84f36f3b1aabf4f2738b24fd02c70a42",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 22,
+  "proposed": [
+   {
+    "src": "lo:pp3u2-1-2",
+    "dst": "lo:pp3u3-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u3-1:linking-text-10",
+      "printed_page": 40,
+      "quote": "ratio of males to females is 3:2, with a sample of 50 persons, we must select 30 persons from the male layer and 20 persons from the female layer"
+     }
+    ],
+    "reason": "STEP: splits a sample of 50 into layers 30 and 20 according to the ratio 3:2 | RESULT: a ratio a:b divides a quantity in proportion to its terms (multiplying terms by a fixed amount keeps the ratio, so 3:2 = 30:20) | WHY NOT LOCAL: the chapter does not teach ratio or its properties"
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:pp3u3-2-2",
+    "anchor": "mean computation",
+    "quote": "(12+13+16+18+21)/5=80/5=16",
+    "printed_page": 43,
+    "note": "arithmetic mean from earlier grades"
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "Test 3 (removal): the step is present and uses a ratio, but src teaches that multiplying both terms by a fixed amount, or adding a number to them, does or doesn't change a ratio. Splitting 50 as 30:20 for 3:2 is simple proportional division, which a student knows from earlier grades. The link is unnecessary."
+    }
+   ]
+  }
+ }
+}

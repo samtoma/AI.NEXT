@@ -150,6 +150,12 @@ def plan(name: str, unit: int) -> dict:
         f"{UV} book_record_objectives.py run {bk} {unit} {L}", ex("teaching", bk, "objectives", f"{ch}.json"))
     add("G1", "review the objectives, links and S1's questions", "review tool: Objectives (G1)", ex("reviews", bk, "objectives-g1.json"), gate=True)
     add("S1", "write what G1 approved", f"{UV} book_record_objectives.py apply {bk} {unit}", ex("teaching", bk, "links", f"{ch}.json"))
+    if unit > 1:   # links INTO EARLIER UNITS (Tamer, 2026-10-21): what a unit needs from the units before it
+        import book_record_links as BRL  # noqa: PLC0415
+        add("S1X", "links into earlier units: the cross-unit linker (quotes the step, removal-test checker, filters)",
+            f"{UV} book_record_links.py run {bk} {unit} --cross", BRL.has_cross_run(bk, unit))
+        add("G1", "review the links into earlier units", "review tool: Objectives (G1), kind Links", False, gate=True)
+        add("S1X", "write the links into earlier units G1 kept", f"{UV} book_record_links.py apply {bk} {unit}", False)
     add("S1F", "file statements, tables and figures under the approved objectives (two readings; Samuel's S2/S4 filing)",
         f"{UV} book_record_filing.py run {bk} {unit}", ex("teaching", bk, "filing", f"{ch}.json"))
     add("G1", "decide the filings the two readings disagree on, then apply", f"review tool: Objectives (G1), kind Filing · "
@@ -166,7 +172,8 @@ def plan(name: str, unit: int) -> dict:
             all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")))
     add("S4", "figures: visual specs", f"{UV} book_record_figures.py run {bk} {L}",
         all_of(lambda s: ex("teaching", bk, "visuals", f"{s}.json")))
-    add("C", "compile the unit", f"{UV} compile_book_records.py {bk} {L}", ex("compiled", bk, f"unit{unit}.json"))
+    add("C", "compile the unit (and each figure's tasks, derived from its drawing: figure_tasks.py)",
+        f"{UV} compile_book_records.py {bk} {L}", ex("compiled", bk, f"unit{unit}.json"))
     add("SW", "step check of every worked solution (reads the compiled unit); book flags → Misprints",
         f"{UV} book_record_checks.py sw {bk} {unit} {L}", ex("runs", bk, "working-check", f"{ch}.flags.json"))
     add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", "S5 draft" in ledger(bk, unit))
@@ -245,6 +252,10 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     out.append(("S1", ex("teaching", bk, "objectives", f"{ch}.json"), [U("book_record_objectives.py", "run", bk, str(unit), *slugs, *c(), w=("jsonschema",))]))
     out.append(("G1", ex("teaching", bk, "links", f"{ch}.json"),
                 "the objectives are not approved: the review tool's Objectives (G1) task, then book_record_objectives.py apply"))
+    if unit > 1:   # links into earlier units: run once; their review is G1's, and apply is safe to repeat
+        import book_record_links as BRL  # noqa: PLC0415
+        out.append(("S1X", BRL.has_cross_run(bk, unit), [U("book_record_links.py", "run", bk, str(unit), "--cross", *c())]))
+        out.append(("S1X apply", False, [U("book_record_links.py", "apply", bk, str(unit))]))
     out.append(("S1F", ex("teaching", bk, "filing", f"{ch}.json"), [U("book_record_filing.py", "run", bk, str(unit), *c(), w=("jsonschema",))]))
     out.append(("S1R", False, [U("book_record_remap.py", bk, str(unit), w=("jsonschema",))]))
     out.append(("S2", all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")),
@@ -310,6 +321,9 @@ def refresh(name: str, units: list[int] | None, dsn: str | None) -> dict:
         if (HERE / "teaching" / bk / "filing" / f"ch{u:02d}.json").exists():
             steps.append((f"unit {u}: filing decisions", U("book_record_filing.py", "apply", bk, str(u))))
         steps.append((f"unit {u}: re-map generated content", U("book_record_remap.py", bk, str(u))))
+        if (HERE / "teaching" / bk / "cross-links" / f"ch{u:02d}.json").exists():
+            # the links into earlier units G1 kept: without this they were approved and never compiled (2026-10-21)
+            steps.append((f"unit {u}: links into earlier units kept", U("book_record_links.py", "apply", bk, str(u))))
     steps.append(("compile", U("compile_book_records.py", bk, *slugs)))
     steps.append(("review sample", U("book_record_sample.py", bk)))
     steps += [(f"unit {u}: coverage audit", U("book_record_coverage.py", bk, str(u))) for u in units]

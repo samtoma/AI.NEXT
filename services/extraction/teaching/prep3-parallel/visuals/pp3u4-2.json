@@ -5,113 +5,591 @@
   "source": "book-records/prep3-parallel/pp3u4-2.json",
   "visuals": [
     {
-      "figure": "pp3u4-2:figure-5",
-      "for_item": null,
-      "lo": "lo:pp3u4-2-1",
-      "kind": "trig_triangle",
-      "spec": {
-        "angleDeg": 30,
-        "emphasize": "sin",
-        "sides": {
-          "opp": "1",
-          "adj": "√3",
-          "hyp": "2"
-        },
-        "animate": "ratio-highlight"
-      },
-      "caption": "A right triangle with a 30° angle: opposite side 1, adjacent side √3, hypotenuse 2.",
-      "withheld": [],
-      "page": 55,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
-      }
-    }
-  ],
-  "gaps": [
-    {
       "figure": "pp3u4-2:figure-1",
       "for_item": "pp3u4-2:think-and-discuss-1",
-      "reason": "Equilateral triangle with an altitude, right-angle mark at D and side labels; no kind draws a general triangle with a right-angle mark.",
-      "needed_kind": "triangle scene with right-angle marks and side labels",
+      "lo": "lo:pp3u4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                2,
+                3.46
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 2,
+            "y": 3.46,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              2,
+              3.46
+            ],
+            "to": [
+              2,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 2,
+            "y": 0,
+            "label": "D",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              2,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Equilateral triangle ABC with the line AD dropped from A to D on CB, meeting it at a right angle.",
+      "withheld": [],
       "page": 52,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u4-2:figure-2",
       "for_item": null,
-      "reason": "Shows both the 30° and the 60° angle labels; trig_triangle marks only one acute angle.",
-      "needed_kind": "trig_triangle with both acute angles labelled",
+      "lo": "lo:pp3u4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1.732
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 1,
+            "y": 0,
+            "label": "D",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 1,
+            "y": 1.732,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1,
+              1.732
+            ],
+            "label": "2",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "label": "1",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              0
+            ],
+            "to": [
+              1,
+              1.732
+            ],
+            "label": "√3",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              1,
+              0
+            ],
+            "fromDeg": 90,
+            "toDeg": 180,
+            "right": true,
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              1,
+              1.732
+            ],
+            "fromDeg": 240,
+            "toDeg": 270,
+            "label": "30°",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 60,
+            "label": "60°",
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Right triangle ABD with 30° at A and 60° at B; AB = 2, BD = 1, AD = √3.",
+      "withheld": [],
       "page": 52,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u4-2:figure-3",
       "for_item": "pp3u4-2:think-and-discuss-2",
-      "reason": "the spec does not match the figure: Missing angle label 'θ' at the triangle vertex. The spec requires angleDeg:'θ' but the angle is not labeled in the image.",
-      "needed_kind": null,
-      "page": 53,
-      "rejected_spec": {
-        "kind": "trig_triangle",
-        "spec": {
-          "angleDeg": "θ",
-          "emphasize": "tan",
-          "sides": {
-            "opp": "L",
-            "adj": "L"
+      "lo": "lo:pp3u4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            "fill": true,
+            "step": 1
           },
-          "animate": "ratio-highlight"
-        }
+          {
+            "type": "point",
+            "x": 4,
+            "y": 4,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              0
+            ],
+            "to": [
+              4,
+              4
+            ],
+            "label": "L",
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "label": "L",
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              4,
+              0
+            ],
+            "fromDeg": 90,
+            "toDeg": 180,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
       },
+      "caption": "Right triangle ABC with the right angle at C; the legs AC and BC are equal, each labelled L.",
+      "withheld": [],
+      "page": 53,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
-      "figure": "pp3u4-2:figure-4",
-      "for_item": "pp3u4-2:example-2",
-      "reason": "A photo of a scientific calculator, no mathematical content to plot.",
-      "needed_kind": "calculator illustration or image display",
-      "page": 54,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
-      }
-    },
-    {
-      "figure": "pp3u4-2:figure-6",
+      "figure": "pp3u4-2:figure-5",
       "for_item": null,
-      "reason": "Calculator key sequence (SHIFT, sin, value, =, DMS key giving 33°); not a plot or geometric figure.",
-      "needed_kind": "calculator key-sequence display",
+      "lo": "lo:pp3u4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                1.732,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              1
+            ],
+            "label": "1",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              1.732,
+              0
+            ],
+            "to": [
+              0,
+              1
+            ],
+            "label": "2",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1.732,
+              0
+            ],
+            "label": "√3",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              1.732,
+              0
+            ],
+            "fromDeg": 150,
+            "toDeg": 180,
+            "label": "30°",
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Right triangle with a 30° angle, opposite side 1, hypotenuse 2 and adjacent side √3.",
+      "withheld": [],
       "page": 55,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u4-2:figure-7",
       "for_item": "pp3u4-2:example-4",
-      "reason": "Isosceles triangle with altitude, right-angle mark, equal-side ticks and lengths; a triangle scene.",
-      "needed_kind": "triangle scene with side labels and right-angle marks",
+      "lo": "lo:pp3u4-2-4",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                12,
+                0
+              ],
+              [
+                6,
+                5.29
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 5.29,
+            "label": "A",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "C",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 12,
+            "y": 0,
+            "label": "B",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              6,
+              5.29
+            ],
+            "label": "8 cm",
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              12,
+              0
+            ],
+            "to": [
+              6,
+              5.29
+            ],
+            "label": "8 cm",
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              5.29
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 0,
+            "label": "D",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "label": "6 cm",
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              0
+            ],
+            "to": [
+              12,
+              0
+            ],
+            "label": "6 cm",
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              6,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Isosceles triangle ABC with AB = AC = 8 cm and AD perpendicular to CB, where CD = DB = 6 cm.",
+      "withheld": [],
       "page": 55,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T064610Z.json",
-        "script_sha256": "d0a578808b362f961af804087170ff67cbeb1bce1a1a36a3126832b866bbb660"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "figure": "pp3u4-2:figure-4",
+      "for_item": "pp3u4-2:example-2",
+      "reason": "A photograph of a scientific calculator; no mathematical content to draw.",
+      "needed_kind": "photo / calculator image (not a parametric figure)",
+      "page": 54,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u4-2:figure-6",
+      "for_item": null,
+      "reason": "A sequence of calculator keys (SHIFT, sin, value, =, DMS key) giving 33°; not a geometric or graphical figure.",
+      "needed_kind": "calculator key-sequence display",
+      "page": 55,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -125,6 +603,17 @@
         "visuals": 1,
         "viz_gaps": 6,
         "compared": 2
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 5,
+        "viz_gaps": 2,
+        "compared": 5
       }
     }
   ]

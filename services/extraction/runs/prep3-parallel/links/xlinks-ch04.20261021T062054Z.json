@@ -1,0 +1,50 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 4,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "a6217f500c0a1ca0d7eb59c1d2b51ba7a2dc5d037560c07d405bd58cf86c5d4e",
+  "generated_sha256": "8bd93ba67f202b1941d572fc04a487f4157bcb0bd6675fbd2ab3083226f73632",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 29,
+  "proposed": [
+   {
+    "src": "lo:pp3u2-1-1",
+    "dst": "lo:pp3u4-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-1",
+      "printed_page": 52,
+      "quote": "BD : AB : AD = 1 : 2 : √3"
+     },
+     {
+      "kind": "text",
+      "anchor": "pp3u4-2:linking-text-2",
+      "printed_page": 53,
+      "quote": "AC : BC : AB = 1 : 1 : √2"
+     }
+    ],
+    "reason": "STEP: writes the sides of the special triangles as a ratio a:b:c and reads each trig ratio as a fraction of two terms | RESULT: a ratio of two numbers can be written as a:b or a/b, with terms compared as fractions | WHY NOT LOCAL: this chapter does not teach ratio notation."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "Test 3 (removal): the quoted steps are present, but the ratio 1:2:√3 is given in the dst text itself, and the trig ratios are read as side-over-side fractions. A student can follow this without a separate lesson on ratio notation (earlier-grade knowledge). Test 2 is also weak, because only shared ratio notation is used, not a distinct result."
+    }
+   ]
+  }
+ }
+}

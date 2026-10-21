@@ -8,275 +8,911 @@
       "figure": "pp3u5-2:figure-1",
       "for_item": null,
       "lo": "lo:pp3u5-2-1",
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              8,
+              0
+            ],
+            "arrow": "end",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              8
+            ],
+            "arrow": "end",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 1,
+            "y": -0.5,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 2,
+            "y": -0.5,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 4,
+            "y": -0.5,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 5,
+            "y": -0.5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 6,
+            "y": -0.5,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 1,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 2,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 3,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 4,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 6,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              2,
+              6
+            ],
+            "to": [
+              4,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              6
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": 2,
             "y": 6,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
-            "x": 6,
-            "y": 6,
-            "label": "B"
-          },
-          {
+            "type": "point",
             "x": 4,
             "y": 6,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
-            "x": 2,
-            "y": 0,
-            "label": "2"
-          },
-          {
-            "x": 4,
-            "y": 0,
-            "label": "4"
-          },
-          {
+            "type": "point",
             "x": 6,
-            "y": 0,
-            "label": "6"
+            "y": 6,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              2,
+              6
+            ],
+            "to": [
+              2,
+              0
+            ],
+            "dashed": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              6
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "dashed": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           }
-        ],
-        "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            2,
-            4
-          ],
-          [
-            1,
-            5
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        ]
       },
-      "caption": "A(2, 6) and B(6, 6) are joined by a horizontal segment, and the midpoint C is at x = 4.",
+      "caption": "A horizontal segment AB at height 6 from x = 2 to x = 6, with midpoint C at x = 4 and dotted lines down to the x-axis.",
       "withheld": [],
       "page": 62,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T065740Z.json",
-        "script_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u5-2:figure-2",
       "for_item": null,
       "lo": "lo:pp3u5-2-1",
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -5,
+              0
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "arrow": "both",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              1
+            ],
+            "to": [
+              0,
+              -6
+            ],
+            "arrow": "both",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -4,
+            "y": 0.4,
+            "text": "−4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -3,
+            "y": 0.4,
+            "text": "−3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -2,
+            "y": 0.4,
+            "text": "−2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -1,
+            "y": 0.4,
+            "text": "−1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -1,
+            "text": "−1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -2,
+            "text": "−2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -3,
+            "text": "−3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -4,
+            "text": "−4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -5,
+            "text": "−5",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2,
+              -1
+            ],
+            "to": [
+              -2,
+              -3
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2,
+              -3
+            ],
+            "to": [
+              -2,
+              -5
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": -2,
             "y": -1,
-            "label": "B"
+            "label": "B",
+            "step": 2
           },
           {
+            "type": "point",
             "x": -2,
             "y": -3,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
+            "type": "point",
             "x": -2,
             "y": -5,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
-            "x": 0,
-            "y": -1,
-            "label": "-1"
+            "type": "segment",
+            "from": [
+              -2,
+              -1
+            ],
+            "to": [
+              0,
+              -1
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": -3,
-            "label": "-3"
+            "type": "segment",
+            "from": [
+              -2,
+              -3
+            ],
+            "to": [
+              0,
+              -3
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": -5,
-            "label": "-5"
+            "type": "segment",
+            "from": [
+              -2,
+              -5
+            ],
+            "to": [
+              0,
+              -5
+            ],
+            "dashed": true,
+            "step": 3
           }
-        ],
-        "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            1,
-            4
-          ],
-          [
-            2,
-            5
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        ]
       },
-      "caption": "B(-2, -1) and A(-2, -5) are joined by a vertical segment, and the midpoint C is at y = -3.",
+      "caption": "A vertical segment at x = −2 from B(−2, −1) down to A(−2, −5), with midpoint C at y = −3 and dotted lines across to the y-axis.",
       "withheld": [],
       "page": 62,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T065740Z.json",
-        "script_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
       "figure": "pp3u5-2:figure-3",
       "for_item": null,
       "lo": "lo:pp3u5-2-1",
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "arrow": "end",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              7
+            ],
+            "arrow": "end",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 1,
+            "y": -0.5,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 2,
+            "y": -0.5,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 4,
+            "y": -0.5,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 5,
+            "y": -0.5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 1,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 2,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 3,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 4,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 6,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              3,
+              4
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              5,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": 1,
             "y": 2,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
+            "type": "point",
             "x": 3,
             "y": 4,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
+            "type": "point",
             "x": 5,
             "y": 6,
-            "label": "B"
+            "label": "B",
+            "step": 2
           },
           {
-            "x": 1,
-            "y": 0,
-            "label": "1"
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 3,
-            "y": 0,
-            "label": "3"
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              3,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 5,
-            "y": 0,
-            "label": "5"
+            "type": "segment",
+            "from": [
+              5,
+              6
+            ],
+            "to": [
+              5,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 2,
-            "label": "2"
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              0,
+              2
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 4,
-            "label": "4"
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              0,
+              4
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 6,
-            "label": "6"
+            "type": "segment",
+            "from": [
+              5,
+              6
+            ],
+            "to": [
+              0,
+              6
+            ],
+            "dashed": true,
+            "step": 3
           }
-        ],
-        "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            1,
-            4
-          ],
-          [
-            2,
-            5
-          ],
-          [
-            0,
-            6
-          ],
-          [
-            1,
-            7
-          ],
-          [
-            2,
-            8
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        ]
       },
-      "caption": "A(1, 2) and B(5, 6) are joined by a slanted segment, and its midpoint C is at (3, 4).",
+      "caption": "Segment from A(1, 2) to B(5, 6) with midpoint C(3, 4), and dotted lines from A, C and B to both axes.",
       "withheld": [],
       "page": 62,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T065740Z.json",
-        "script_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u5-2:figure-4",
+      "for_item": null,
+      "lo": "lo:pp3u5-2-2",
+      "kind": "geo_scene",
+      "spec": {
+        "animate": "sequence",
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              11,
+              0
+            ],
+            "arrow": "both",
+            "label": "x′x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              10
+            ],
+            "arrow": "both",
+            "label": "y′y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": -0.5,
+            "text": "F",
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                3,
+                3
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                6,
+                6
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                6,
+                6
+              ],
+              [
+                9,
+                6
+              ],
+              [
+                9,
+                9
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              9,
+              9
+            ],
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 3,
+            "y": 3,
+            "label": "A(x₁; y₁)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 6,
+            "label": "M(x; y)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 9,
+            "y": 9,
+            "label": "B(x₂; y₂)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 3,
+            "label": "D",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 9,
+            "y": 6,
+            "label": "E",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              3,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              3
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              9,
+              6
+            ],
+            "to": [
+              9,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              6,
+              3
+            ],
+            "label": "x − x₁",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              3
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "label": "y − y₁",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              9,
+              6
+            ],
+            "label": "x₂ − x",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              9,
+              6
+            ],
+            "to": [
+              9,
+              9
+            ],
+            "label": "y₂ − y",
+            "step": 5
+          }
+        ]
+      },
+      "caption": "Segment AB with midpoint M, and two right triangles AMD and MBE whose legs are x − x₁, y − y₁, x₂ − x and y₂ − y.",
+      "withheld": [],
+      "page": 63,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
   "gaps": [
     {
-      "figure": "pp3u5-2:figure-4",
-      "for_item": null,
-      "reason": "Symbolic derivation figure with algebraic coordinates (x1;y1), (x;y), (x2;y2), labelled side lengths like x − x1, and shaded right triangles; no numeric values to plot and no kind draws algebraic labels or shaded triangles.",
-      "needed_kind": "geometry diagram with symbolic point labels, labelled legs and shaded triangles",
-      "page": 63,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T065740Z.json",
-        "script_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6"
-      }
-    },
-    {
       "figure": "pp3u5-2:figure-5",
       "for_item": "pp3u5-2:example-3",
-      "reason": "the spec does not match the figure: Image contains additional geometry not specified: red quadrilateral, point D, and extra segments beyond the three-point triangle (A, B, C) defined in spec",
+      "reason": "the spec does not match the figure: Extra point D(x₁,y₁) and additional polygonal elements not specified in the spec. Spec shows only a simple triangle connecting A, B, C; image contains extra shape and point.",
       "needed_kind": null,
       "page": 64,
       "rejected_spec": {
@@ -294,17 +930,17 @@
             {
               "x": 3,
               "y": 2,
-              "label": "A"
+              "label": "A(3, 2)"
             },
             {
               "x": 4,
               "y": -5,
-              "label": "B"
+              "label": "B(4, −5)"
             },
             {
               "x": 0,
               "y": -3,
-              "label": "C"
+              "label": "C(0, −3)"
             }
           ],
           "segments": [
@@ -321,14 +957,15 @@
               2
             ]
           ],
+          "scale": "numbers",
           "animate": "plot-sequence",
           "interactive": false
         }
       },
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261018T065740Z.json",
-        "script_sha256": "e87b17e41016604528ee451712e0fc96adc96cc09b5d8e2573d2d8946a4996f6"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
@@ -342,6 +979,17 @@
         "visuals": 3,
         "viz_gaps": 2,
         "compared": 4
+      }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 4,
+        "viz_gaps": 1,
+        "compared": 5
       }
     }
   ]

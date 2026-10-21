@@ -414,9 +414,22 @@ export const COURSES = {
     cite: NATIONAL_CITE,
     homeCopy: NATIONAL_HOME,
     pipelineBook: "prep3-parallel",
-    // Lesson slugs `pp3u1-1` …: no term rule yet, so every module reads Term 1
-    // until the Term 2 units are ingested and given one.
-    terms: { rules: [], defaultTerm: 1 },
+    // Lesson slugs `pp3u1-1` …: the book's ten units in book order, and the
+    // book numbers Term 2's from Unit 1 again. Units 6–10 (`pp3u6`…`pp3u10`)
+    // are the Second Term — Equations, Algebraic fractions, Probability, The
+    // Circle, Angles and Arcs (2026-10-21: without a rule all ten read Term 1,
+    // and the picker looked like Term 1's five units listed twice). Each is
+    // named in full: a `pp3u1` rule would also take `pp3u10`. Rank 1: after
+    // Term 1, in the book's own unit order.
+    terms: {
+      rules: ["pp3u6", "pp3u7", "pp3u8", "pp3u9", "pp3u10"].map((u) => ({
+        modulePrefix: u,
+        slugPrefix: `${u}-`,
+        term: 2,
+        rank: 1,
+      })),
+      defaultTerm: 1,
+    },
     // Decision 7: exactly one course probes, and it is the launch course.
     probing: false,
     // A National book, so the National facts — but never the launch course's

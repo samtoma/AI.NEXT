@@ -1,0 +1,82 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "prep3-parallel",
+ "chapter": 10,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "99c4df479ce38b511a104b30743efbe01beee37e3a2aec6f771c3f6ff159fd7e",
+  "generated_sha256": "844eb34537f29d1c8ece646aaf62e6186bf94a6047bd2172619b82d0c32b52b6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 83,
+  "proposed": [
+   {
+    "src": "lo:pp3u9-2-2",
+    "dst": "lo:pp3u10-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 74,
+      "quote": "∴ $m(\\angle ABM)=90^\\circ$"
+     }
+    ],
+    "reason": "STEP: sets m(∠ABM)=90° for tangent AB and radius BM | RESULT: a tangent is perpendicular to the radius at the point of tangency | WHY NOT LOCAL: taught in unit 9, not in this chapter before this example"
+   },
+   {
+    "src": "lo:pp3u9-2-2",
+    "dst": "lo:pp3u10-6-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "pp3u10-6:linking-text-4",
+      "printed_page": 93,
+      "quote": "∵ AB is a tangent segment to circle M ∴ m(∠ABM) = 90°."
+     }
+    ],
+    "reason": "STEP: proof of Theorem 4 uses right angles at points of tangency | RESULT: tangent is perpendicular to radius at point of contact | WHY NOT LOCAL: taught in unit 9"
+   },
+   {
+    "src": "lo:pp3u9-2-4",
+    "dst": "lo:pp3u10-6-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "pp3u10-6:drill-8",
+      "printed_page": 99,
+      "quote": "Find the length of $\\overline{AB}$"
+     }
+    ],
+    "reason": "STEP: finds common tangent length of two circles from radii and MN | RESULT: common tangent and line of centres of two circles, with right-angle radii to tangent | WHY NOT LOCAL: taught in unit 9"
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Step present; tangent ⟂ radius is exactly src's result and is not taught in this chapter's example; cannot be derived from triangle angle sum etc. Passes all tests."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Step present in the proof; it needs tangent ⟂ radius from src; the dst lesson only states it as a given reason, no local derivation. Passes removal test."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Finding the common tangent length requires radii ⟂ tangent at A and B (src: tangent perpendicular to radius), then a right trapezoid/Pythagoras: sqrt(41²-9²)=40. Without the perpendicularity the step cannot be justified. The quote is just the question, but the exercise is the step; moderately confident."
+    }
+   ]
+  }
+ }
+}

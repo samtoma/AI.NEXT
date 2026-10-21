@@ -42,6 +42,8 @@ import {
   probingDeclaredBy,
 } from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
+import { FigureNoteContext } from "@/components/viz/figure-note-context";
+import { figureBase, figuresOnCards } from "@/lib/question-figures";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
   StudentBubble,
@@ -1384,6 +1386,7 @@ export function ChatCore({
         {leading}
         {messages.length === 0 && !streaming && emptyState}
 
+        <FigureNoteContext.Provider value={lessonSurface ? handleWidgetNote : null}>
         {messages.map((m, i) => (
           <MessageRow
             key={i}
@@ -1416,6 +1419,7 @@ export function ChatCore({
             onSwitchSubject={onSwitchSubject}
           />
         ))}
+        </FigureNoteContext.Provider>
       </div>
 
       {/* FR-3501: a reply paused at a beat puts its two moves where the
@@ -1713,6 +1717,10 @@ const MessageRow = memo(function MessageRow({
   const visibleText =
     m.streaming && m.reveal != null ? m.text.slice(0, m.reveal) : m.text;
   const blocks = parseMessage(visibleText, !!m.streaming);
+  // a figure a question card in this message already carries is drawn once, on the card
+  const onCards = lookupQuestion
+    ? figuresOnCards(blocks.flatMap((b) => (b.t === "question" ? [b.qid] : [])), lookupQuestion)
+    : new Set<string>();
 
   const bubble = (
     <TutorBubble error={!!m.error} style={dimStyle} lesson={lesson}>
@@ -1742,6 +1750,8 @@ const MessageRow = memo(function MessageRow({
               />
             ),
             widget: (b, i) => {
+              if (b.name === "viz_ref" && typeof b.props.id === "string" && onCards.has(figureBase(b.props.id)))
+                return null;
               // whiteboard interception: the surface owns the card on its
               // board — the transcript keeps a small re-pin chip in place
               if (

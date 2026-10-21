@@ -2,14 +2,30 @@
  "format": "ainext.cross-links/1",
  "book": "prep3-parallel",
  "chapter": 9,
- "run": "runs/prep3-parallel/links/links-ch09.20261018T092713Z.json",
- "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "run": "runs/prep3-parallel/links/xlinks-ch09.20261021T062203Z.json",
+ "runs": [
+  "runs/prep3-parallel/links/links-ch09.20261018T092713Z.json",
+  "runs/prep3-parallel/links/xlinks-ch09.20261021T062203Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
  "prior_objectives": 70,
  "links": [],
- "links_dropped": [],
- "inside_unit_found": 6,
+ "links_dropped": [
+  {
+   "key": "lo:pp3u5-1-1->lo:pp3u9-2-2",
+   "src": "lo:pp3u5-1-1",
+   "dst": "lo:pp3u9-2-2",
+   "why": "the link checker said REJECTED: Test 2: the step uses the converse of the Pythagorean theorem and squaring given lengths (MY=13 from segment addition). The distance rule from the coordinate plane (src) is not used; no coordinates are involved. The link is not supported.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Test 2: the step uses the converse of the Pythagorean theorem and squaring given lengths (MY=13 from segment addition). The distance rule from the coordinate plane (src) is not used; no coordinates are involved. The link is not supported."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
  "outside_book": [],
  "failures": [],
  "decisions": [],
- "made": "2026-10-18"
+ "made": "2026-10-21"
 }

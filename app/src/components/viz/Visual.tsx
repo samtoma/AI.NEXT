@@ -6,8 +6,8 @@
  *
  * One renderer library, hundreds of data specs: producers (extraction
  * agents, the lesson AI) emit {kind, spec} rows; this registry maps them to
- * the nineteen primitives (nine math + three social-studies, VIZ_SPEC v2 +
- * seven Arabic, VIZ_SPEC v3). A bad or unknown spec NEVER crashes the surface
+ * the twenty primitives (ten math + three social-studies, VIZ_SPEC v2 +
+ * seven Arabic, VIZ_SPEC v3; venn_diagram is VIZ_SPEC v4). A bad or unknown spec NEVER crashes the surface
  * — it degrades to a quiet "spec error" chip. `irab_tree` uses that path
  * deliberately: it refuses to render an uncited إعراب (see IrabTree.tsx).
  */
@@ -46,6 +46,7 @@ import { StatChart } from "./StatChart";
 import { TextPassage } from "./TextPassage";
 import { Timeline } from "./Timeline";
 import { TrigTriangle } from "./TrigTriangle";
+import { VennDiagram } from "./VennDiagram";
 import { VerseLayout } from "./VerseLayout";
 
 export const VIZ_KINDS = [
@@ -58,6 +59,8 @@ export const VIZ_KINDS = [
   "trig_triangle",
   "geo_scene",
   "number_line",
+  // VIZ_SPEC v4 — sets as relationships, the tenth maths kind
+  "venn_diagram",
   // VIZ_SPEC v2 — social studies (ADR-0004 Wave 0)
   "map_scene",
   "timeline",
@@ -92,6 +95,7 @@ const REGISTRY: Record<
   trig_triangle: TrigTriangle,
   geo_scene: GeoScene,
   number_line: NumberLine,
+  venn_diagram: VennDiagram,
   map_scene: MapScene,
   timeline: Timeline,
   flow_chain: FlowChain,

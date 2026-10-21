@@ -1692,7 +1692,8 @@ async function showObjective(row) {
         <div style="font-size:17px;margin-top:4px"><b>${esc(String(it.src || it.key).replace(/lo:/g, ""))}</b>${it.dst ? ` is needed for <b>${esc(it.dst.replace("lo:", ""))}</b>` : ""}</div>
         ${it.src_statement ? `<div style="margin-top:4px"><b>${esc(it.src.replace("lo:", ""))}</b>: ${md(it.src_statement)}</div>` : ""}
         ${it.dst_statement ? `<div><b>${esc(it.dst.replace("lo:", ""))}</b>: ${md(it.dst_statement)}</div>` : ""}
-        <div class="muted">${esc(it.signal || "")}${it.why ? ` · ${esc(it.why)}` : ""}${it.check ? ` · checker: ${esc(it.check.verdict || "")} ${esc(it.check.note || "")}` : ""}</div></div>
+        <div class="muted">${esc(it.signal || "")}${it.why ? ` · ${esc(it.why)}` : ""}${it.check ? ` · checker: ${esc(it.check.verdict || "")} ${esc(it.check.note || "")}` : ""}</div>
+        ${it.reason ? `<div style="margin-top:6px">${String(it.reason).split(" | ").map((part) => `<div>${esc(part)}</div>`).join("")}</div>` : ""}</div>
       <div class="why"><span class="label">Evidence</span><ul class="answers">${evList(it.evidence)}</ul></div>`;
   } else if (d.kind === "filing") {
     const name = (n) => n === 0 ? "none of them" : n == null ? "no answer" : `${n}. ${(it.objectives.find((o) => o.n === n) || {}).label || "?"}`;

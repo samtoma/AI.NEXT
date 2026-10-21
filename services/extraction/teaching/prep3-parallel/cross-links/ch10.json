@@ -2,14 +2,84 @@
  "format": "ainext.cross-links/1",
  "book": "prep3-parallel",
  "chapter": 10,
- "run": "runs/prep3-parallel/links/links-ch10.20261018T092731Z.json",
- "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "run": "runs/prep3-parallel/links/xlinks-ch10.20261021T061614Z.json",
+ "runs": [
+  "runs/prep3-parallel/links/links-ch10.20261018T092731Z.json",
+  "runs/prep3-parallel/links/xlinks-ch10.20261021T061614Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
  "prior_objectives": 83,
- "links": [],
- "links_dropped": [],
- "inside_unit_found": 7,
+ "links": [
+  {
+   "src": "lo:pp3u9-2-2",
+   "dst": "lo:pp3u10-2-1",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE5",
+     "anchor": "pp3u10-2:example-1",
+     "printed_page": 74,
+     "quote": "∴ $m(\\angle ABM)=90^\\circ$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step present; tangent ⟂ radius is exactly src's result and is not taught in this chapter's example; cannot be derived from triangle angle sum etc. Passes all tests."
+   },
+   "key": "lo:pp3u9-2-2->lo:pp3u10-2-1",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Determine whether a straight line is outside, a secant or a tangent to a circle by comparing the distance MA with the radius r, and use the perpendicularity of a tangent to the radius at the point of tangency to calculate lengths and angles and to justify that a line is a tangent.",
+   "dst_statement": "Calculate the measure of an inscribed angle or of the central angle subtended by the same arc, using the theorem that the inscribed angle is half the central angle.",
+   "fingerprint": "4e8e18fe7075775f2eee708a6895c41e",
+   "reason": "STEP: sets m(∠ABM)=90° for tangent AB and radius BM | RESULT: a tangent is perpendicular to the radius at the point of tangency | WHY NOT LOCAL: taught in unit 9, not in this chapter before this example",
+   "run": "runs/prep3-parallel/links/xlinks-ch10.20261021T061614Z.json"
+  },
+  {
+   "src": "lo:pp3u9-2-4",
+   "dst": "lo:pp3u10-6-3",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "exercise",
+     "anchor": "pp3u10-6:drill-8",
+     "printed_page": 99,
+     "quote": "Find the length of $\\overline{AB}$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Finding the common tangent length requires radii ⟂ tangent at A and B (src: tangent perpendicular to radius), then a right trapezoid/Pythagoras: sqrt(41²-9²)=40. Without the perpendicularity the step cannot be justified. The quote is just the question, but the exercise is the step; moderately confident."
+   },
+   "key": "lo:pp3u9-2-4->lo:pp3u10-6-3",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Use the line of centers of touching or intersecting circles, with the common tangent and the common chord, to calculate lengths and angles and to prove relations.",
+   "dst_statement": "Distinguish common internal and common external tangents of two circles, and solve problems finding unknown values and the length of a common tangent.",
+   "fingerprint": "ff534c65ea2faf8f417740fef5324a54",
+   "reason": "STEP: finds common tangent length of two circles from radii and MN | RESULT: common tangent and line of centres of two circles, with right-angle radii to tangent | WHY NOT LOCAL: taught in unit 9",
+   "run": "runs/prep3-parallel/links/xlinks-ch10.20261021T061614Z.json"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:pp3u9-2-2->lo:pp3u10-6-1",
+   "src": "lo:pp3u9-2-2",
+   "dst": "lo:pp3u10-6-1",
+   "why": "implied: the approved links already lead from its source to its objective",
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step present in the proof; it needs tangent ⟂ radius from src; the dst lesson only states it as a given reason, no local derivation. Passes removal test."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
  "outside_book": [],
  "failures": [],
  "decisions": [],
- "made": "2026-10-18"
+ "made": "2026-10-21"
 }

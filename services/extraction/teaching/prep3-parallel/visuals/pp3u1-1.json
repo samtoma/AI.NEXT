@@ -5,6 +5,74 @@
   "source": "book-records/prep3-parallel/pp3u1-1.json",
   "visuals": [
     {
+      "figure": "pp3u1-1:figure-1",
+      "for_item": "pp3u1-1:example-3",
+      "lo": "lo:pp3u1-1-2",
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "X"
+          },
+          {
+            "label": "Y"
+          },
+          {
+            "label": "Z"
+          }
+        ],
+        "overlaps": [
+          [
+            "Y",
+            "Z"
+          ]
+        ],
+        "items": [
+          {
+            "text": "1",
+            "in": [
+              "X"
+            ]
+          },
+          {
+            "text": "5",
+            "in": [
+              "Z"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "Z"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "Y",
+              "Z"
+            ]
+          },
+          {
+            "text": "3",
+            "in": [
+              "Y"
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "X sits apart holding 1; Z and Y overlap, with 2 in the overlap, 5 and 6 only in Z, and 3 only in Y.",
+      "withheld": [],
+      "page": 9,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
       "figure": "pp3u1-1:figure-2",
       "for_item": "pp3u1-1:example-4",
       "lo": "lo:pp3u1-1-3",
@@ -47,13 +115,13 @@
         ],
         "animate": "arrows"
       },
-      "caption": "Every element of X sends an arrow to every element of Y, giving all 6 pairs of X × Y.",
+      "caption": "Every element of X = {1, 2} has an arrow to every element of Y = {3, 4, 5}, giving the 6 pairs of X × Y.",
       "withheld": [],
       "page": 10,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -74,44 +142,49 @@
           {
             "x": 1,
             "y": 3,
-            "label": "(1,3)"
+            "label": "(1, 3)"
           },
           {
             "x": 2,
             "y": 3,
-            "label": "(2,3)"
+            "label": "(2, 3)"
           },
           {
             "x": 1,
             "y": 4,
-            "label": "(1,4)"
+            "label": "(1, 4)"
           },
           {
             "x": 2,
             "y": 4,
-            "label": "(2,4)"
+            "label": "(2, 4)"
           },
           {
             "x": 1,
             "y": 5,
-            "label": "(1,5)"
+            "label": "(1, 5)"
           },
           {
             "x": 2,
             "y": 5,
-            "label": "(2,5)"
+            "label": "(2, 5)"
           }
         ],
+        "axes": {
+          "x": "X",
+          "y": "Y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "The six points of X × Y sit where x is 1 or 2 and y is 3, 4 or 5.",
+      "caption": "The six points (1,3), (2,3), (1,4), (2,4), (1,5), (2,5) form the cartesian diagram of X × Y.",
       "withheld": [],
       "page": 10,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -191,7 +264,7 @@
         ],
         "yRange": [
           -1,
-          6
+          5
         ],
         "points": [
           {
@@ -205,19 +278,24 @@
             "label": "B"
           }
         ],
+        "axes": {
+          "x": "x'x",
+          "y": "y'y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "A grid for N × N with points A and B plotted.",
+      "caption": "A graphical net of N × N with points A and B marked.",
       "withheld": [
         "C",
         "O"
       ],
       "page": 11,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -227,29 +305,88 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -5,
+          5
         ],
         "yRange": [
-          -6,
-          6
+          -5,
+          4
         ],
-        "points": [],
-        "animate": "none",
-        "interactive": "click-to-plot"
+        "points": [
+          {
+            "x": 2,
+            "y": 3,
+            "label": "A"
+          },
+          {
+            "x": 3,
+            "y": -2,
+            "label": "B"
+          },
+          {
+            "x": -3,
+            "y": 1,
+            "label": "C"
+          },
+          {
+            "x": -3,
+            "y": -4,
+            "label": "D"
+          }
+        ],
+        "axes": {
+          "x": "x'x",
+          "y": "y'y"
+        },
+        "scale": "numbers",
+        "animate": "plot-sequence",
+        "interactive": false
       },
-      "caption": "An empty Z × Z grid where you can plot points to find their ordered pairs.",
-      "withheld": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
+      "caption": "A Z × Z graphical net with four points labelled A, B, C and D.",
+      "withheld": [],
       "page": 11,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
+      }
+    },
+    {
+      "figure": "pp3u1-1:figure-7",
+      "for_item": null,
+      "lo": "lo:pp3u1-1-4",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -4,
+          4
+        ],
+        "yRange": [
+          -4,
+          4
+        ],
+        "points": [],
+        "quadrants": [
+          "first\nx > 0, y > 0",
+          "second\nx < 0, y > 0",
+          "third\nx < 0, y < 0",
+          "fourth\nx > 0, y < 0"
+        ],
+        "axes": {
+          "x": "x'x",
+          "y": "y'y"
+        },
+        "scale": "numbers",
+        "animate": "none",
+        "interactive": false
+      },
+      "caption": "The axes split the plane into four quadrants, each named with the signs of x and y.",
+      "withheld": [],
+      "page": 12,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     },
     {
@@ -259,12 +396,12 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -6,
-          6
+          -5,
+          5
         ],
         "yRange": [
-          -6,
-          6
+          -4,
+          4
         ],
         "points": [
           {
@@ -298,45 +435,25 @@
             "label": "F (2, 0)"
           }
         ],
+        "axes": {
+          "x": "x'x",
+          "y": "y'y"
+        },
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "Six points plotted on the R × R grid: four in quadrants, E on the y-axis and F on the x-axis.",
+      "caption": "Points A(3, 3), B(3, -2), C(-4, -2), D(-4, 3) lie in quadrants, E(0, -3) on the y-axis and F(2, 0) on the x-axis.",
       "withheld": [],
       "page": 12,
       "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+        "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721"
       }
     }
   ],
-  "gaps": [
-    {
-      "figure": "pp3u1-1:figure-1",
-      "for_item": "pp3u1-1:example-3",
-      "reason": "Venn diagram of sets X, Y, Z with Y overlapping Z at 2 and X separate cannot be drawn by any existing kind.",
-      "needed_kind": "venn_diagram (overlapping labelled set regions with elements)",
-      "page": 9,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
-      }
-    },
-    {
-      "figure": "pp3u1-1:figure-7",
-      "for_item": null,
-      "reason": "Figure shows the four quadrants of the plane named and annotated with sign conditions (x>0, y>0 etc.); coordinate_plot cannot draw quadrant names or text annotations.",
-      "needed_kind": "coordinate_plot with labelled quadrant text annotations",
-      "page": 12,
-      "made": {
-        "by": "runbook/lesson.workflow.js S4 (lesson-v8, collect-6)",
-        "run": "runs/prep3-parallel/lessons/s4-visuals.20261017T080218Z.json",
-        "script_sha256": "933a9532e375ae08bc73c96748af547335eba431f8d877c5da6947a1f5b6b94f"
-      }
-    }
-  ],
+  "gaps": [],
   "runs": [
     {
       "at": "2026-10-17T07:43:51+00:00",
@@ -359,6 +476,22 @@
         "viz_gaps": 2,
         "compared": 6
       }
+    },
+    {
+      "at": "2026-10-20T13:19:40+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/prep3-parallel/lessons/s4-visuals.20261020T131609Z.json",
+      "script_sha256": "db3a2b09643cb2cdd7aab4730feafe510ba272ab95a9f8ad6b1b1c7f63e88721",
+      "counts": {
+        "visuals": 7,
+        "viz_gaps": 1,
+        "compared": 7
+      }
+    },
+    {
+      "at": "2026-10-20",
+      "kept": "pp3u1-1:figure-4",
+      "why": "drawn and checked by the earlier S4 run; the lesson-v9 re-run refused it, so the accepted drawing is kept (no regression)"
     }
   ]
 }

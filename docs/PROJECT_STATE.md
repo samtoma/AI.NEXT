@@ -1743,6 +1743,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0023 | Turn and upload limits become observed thresholds, not an enforced cap | ✅ Accepted 2026-09-24 · amended same day |
 | ADR-0024 | Curriculum is a dimension of what a student sees — curricula and courses registries, one curriculum per course and per student, the manual "Load a course" action | ✅ Accepted 2026-09-25 ("I would take your recommendations", then "ok for all") · on the feature branch as unreviewed WIP snapshots, not merged |
 | ADR-0025 | The maths-expression marker is built in-house — no third-party library; exact rationals plus seeded sampling behind a pluggable `mark(answer, spec, engine)` seam | ✅ Accepted 2026-09-25 (T413, "Build our own (Recommended)") · on the feature branch, not merged |
+| ADR-0026 | VIZ_SPEC v4 — `geo_scene` draws any straight-edge-and-circle figure with the book's marks (ticks, parallel arrows, right angles, equal-angle arcs), dashed/shaded parts and panels; `venn_diagram` is the tenth maths kind; S4 prompts `lesson-v9` | ✅ Accepted 2026-10-20 (on `proto/interactive-figures`) |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

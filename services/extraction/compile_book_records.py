@@ -93,6 +93,7 @@ sys.path.insert(0, str(HERE / "groundtruth"))
 import answer_gen as AG  # noqa: E402  (with_intended, NEEDS_PAGE)
 import assemble_lesson_bundle as ALB  # noqa: E402  (normalise, …, katex_errors, the figure rules A8 / answer 37d)
 import book_record_figures as BRF  # noqa: E402  (figure_users, answer_figures)
+import figure_tasks as FT  # noqa: E402  (the tasks a student works on a figure)
 import crop_figures as CF  # noqa: E402  (figures_dir, crop_name)
 import multipart as MP  # noqa: E402  (Samuel's carry-over rules R1–R3)
 import schemas  # noqa: E402
@@ -101,6 +102,8 @@ from collections import Counter  # noqa: E402
 from pydantic import ValidationError  # noqa: E402
 
 FORMAT_REPORT = "ainext.compile-report/2"
+# a part names its figure: "(figure 2)", "Figure 3:", "fig. 1"
+FIGURE_OF_PART = re.compile(r"\bfig(?:ure)?\.?\s*\(?\s*(\d+)", re.I)
 VERSION = "compile-v3"  # v3: figures, unanswerable holds, library entries, printed-answer checks, human stamps
 NUM = r"-?\d+(?:\.\d+)?(?:/\d+)?"
 # A question that points the student at a printed picture ("on the Z × Z net", "in the previous diagram"): without
@@ -640,6 +643,10 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                                 "Compiled from the book record (compile_book_records.py)."}
             if choices:
                 q["choices"] = choices
+            if p:
+                # which part of the prompt this is, and its own words: a drill of several numbered figures shows
+                # each part only its own figure (lesson_figures, `_figure_of_part`)
+                q["_part"] = {"i": (r.get("parts") or []).index(p), "n": len(r.get("parts") or []), "words": p.get("stem") or p.get("label") or ""}
             if r["type"] == "worked_example" and printed:
                 q["solution_provenance"] = "book_worked"
             if not printed and gen:  # two independent readings agreed (or a person approved): the loader records the AI check
@@ -663,6 +670,25 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
 
 # ============================================================================ figures (S4's drawings and the book's pictures)
 GIVEN = re.compile(r"\(\s*-?\$?\d|=")   # a coordinate or an equation in the stem: ALB.book_picture_reveals's read-off test
+
+
+def with_tasks(kind: str, spec: dict, exercise: bool) -> dict:
+    """The figure's spec with the tasks a student works on it (figure_tasks.py: derived from the drawing, no model;
+    VIZ_SPEC v4 `tasks`, written here and never by S4). An exercise's figure gets `marks` only. A copy: the teaching
+    layer's drawing is never changed."""
+    tasks = FT.tasks_for(kind, spec, exercise)
+    return {**{k: v for k, v in spec.items() if k != "tasks"}, **({"tasks": tasks} if tasks else {})}
+
+
+def figure_of_part(part: dict | None, n_figures: int) -> int | None:
+    """Which of its prompt's numbered figures (1-based) a part is about, or None when it is about all of them: the
+    figure its own words name ("(figure 2)", "Figure 3:"), else — when the prompt has one figure per part — the one
+    in its own place. A prompt with one figure, or a question that is not a part, is about every figure it has."""
+    if n_figures < 2 or not part:
+        return None
+    m = FIGURE_OF_PART.search(part.get("words") or "")
+    n = int(m.group(1)) if m else (part["i"] + 1 if part["n"] == n_figures else None)
+    return n if n is not None and 1 <= n <= n_figures else None
 
 
 def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], report: dict, stand_in_files: set,
@@ -708,6 +734,19 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             q.pop("verified", None)
             report["held"].append({"question": q["id"], "why": why})
 
+    # ONE FIGURE PER PART (Tamer, 2026-10-20). "Study each of the following figures": the book prints several numbered
+    # figures for one prompt and asks a part about each ("(figure 2)"). Each part is its own question, so it shows its
+    # own figure only — all of them at once had the student hunting for the right one.
+    figs_of_item: dict[str, list[str]] = {}
+    for fid in items:   # record order is the book's figure order
+        for it in users.get(fid, []):
+            figs_of_item.setdefault(it, []).append(fid)
+
+    def own_figure(q: dict, fid: str) -> bool:
+        figs = figs_of_item.get(q["_item"], [])
+        n = figure_of_part(q.get("_part"), len(figs))
+        return n is None or figs[n - 1] == fid
+
     shown: set[str] = set()   # question ids with a figure
     for fid, fig in items.items():
         if fig["type"] != "figure" or BRF.DECORATIVE.search(fig.get("caption") or ""):
@@ -718,7 +757,7 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
         for it in users.get(fid, []):
             if fid in answer_figs and items[it]["type"] != "worked_example":
                 continue   # an exercise's drawn answer is never shown with its question
-            qs += by_item.get(it, [])
+            qs += [q for q in by_item.get(it, []) if own_figure(q, fid)]
         crop = CF.figures_dir(book) / CF.crop_name(fid)
         checked = crop.exists() and (fig.get("region") or {}).get("checked")
         on_question = False
@@ -728,7 +767,8 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
                 why = ALB.visual_gives_answer(q, {"spec": d["spec"]}) if exercise else None
                 readoff = exercise and d.get("withheld") and not GIVEN.search(q["stem"])
                 if not why and not readoff:
-                    visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": q["lo"], "question": q["id"], "kind": d["kind"], "spec": d["spec"],
+                    visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": q["lo"], "question": q["id"], "kind": d["kind"],
+                                    "spec": with_tasks(d["kind"], d["spec"], exercise),
                                     "caption": d.get("caption"), "source_page": fig["source_page"]})
                     shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
                     shown.add(q["id"])
@@ -763,7 +803,8 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
             current = {lo_of(slug, o["id"]) for o in record.get("learning_objectives") or []}
             lo = lo_of(slug, fig["lo"]) if fig.get("lo") else (d.get("lo") if d.get("lo") in current else None)
             if lo:
-                visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"], "spec": d["spec"],
+                visuals.append({"id": vid(f"v:{slug}:{local}"), "lo": lo, "question": None, "kind": d["kind"],
+                                "spec": with_tasks(d["kind"], d["spec"], False),
                                 "caption": d.get("caption"), "source_page": fig["source_page"]})
                 shown_drawing.setdefault(fid, []).append(visuals[-1]["id"])
         elif fid in reviewed_out and not qs:
@@ -777,7 +818,7 @@ def lesson_figures(book: str, slug: str, record: dict, questions: list[dict], re
                                          "visuals": shown_drawing.get(fid, []), "effect": effect,
                                          **({"note": dec["note"]} if dec.get("note") else {})})
     for q in questions:
-        linked = [f for f, its in users.items() if q["_item"] in its and f not in answer_figs]
+        linked = [f for f, its in users.items() if q["_item"] in its and f not in answer_figs and own_figure(q, f)]
         if q["id"] in shown:
             continue
         if linked:
@@ -1101,7 +1142,7 @@ def main(argv: list[str]) -> int:
             stamps.append({"question": q["id"], "ref": q["_ref"], "decision": d["decision"], "by": d["by"], "at": d["at"],
                            "fingerprint": d["fingerprint"], "what": q.get("_stamp_what") or "generated answer"})
         report["tiers"].append({"question": q["id"], "tier": q["tier"], "from": q["_tier_from"]})
-        for k in ("_item", "_ref", "_why", "_decision", "_tier_from", "_stamp_what"):
+        for k in ("_item", "_ref", "_why", "_decision", "_tier_from", "_stamp_what", "_part"):
             q.pop(k, None)
     for slug in slugs:
         for e in new_entries[slug]:

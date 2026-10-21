@@ -63,8 +63,13 @@ function templateWith(rel: string, marker: string): string {
 /* The definition                                                      */
 /* ------------------------------------------------------------------ */
 
+// The launch course's two rules, then the book-record Prep-3 course's Term 2 units
+// (pp3u6–pp3u10, 2026-10-21): new modules only, so every existing module keeps
+// its rank and the launch course's order does not move.
 const TERM_RANK =
-  "CASE WHEN m.id LIKE 'module:geo%' THEN 2 WHEN m.id LIKE 'module:t2-%' THEN 1 ELSE 0 END";
+  "CASE WHEN m.id LIKE 'module:geo%' THEN 2 WHEN m.id LIKE 'module:t2-%' THEN 1 " +
+  ["pp3u6", "pp3u7", "pp3u8", "pp3u9", "pp3u10"].map((u) => `WHEN m.id LIKE 'module:${u}%' THEN 1 `).join("") +
+  "ELSE 0 END";
 
 test("MODULE_ORDER is exactly the order v0.9.1 shipped — the progression's sequence does not move", () => {
   assert.equal(

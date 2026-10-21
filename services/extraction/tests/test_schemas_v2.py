@@ -259,8 +259,9 @@ class Ids(unittest.TestCase):
                 bad()
 
     def test_viz_kinds_are_unchanged(self):
-        # 12 native kinds + answer 37d's book_image stand-in (never a kind the lesson AI may pick)
-        self.assertEqual(len(schemas.VIZ_KINDS), 13)
+        # 13 native kinds (VIZ_SPEC v4 added venn_diagram) + answer 37d's book_image stand-in (never a kind the
+        # lesson AI may pick)
+        self.assertEqual(len(schemas.VIZ_KINDS), 14)
         self.assertIn("book_image", schemas.VIZ_KINDS)
         import assemble_objectives
         self.assertNotIn("book_image", assemble_objectives.MATH_VIZ_KINDS)

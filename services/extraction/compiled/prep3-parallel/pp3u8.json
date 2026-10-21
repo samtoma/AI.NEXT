@@ -753,29 +753,73 @@
         "points": [
           {
             "x": 0,
-            "label": "impossible event, 0%"
+            "label": "0 = 0%, impossible event"
           },
           {
             "x": 0.25,
-            "label": "less likely, 1/4, 25%"
+            "label": "1/4 = 25%, less likely"
           },
           {
             "x": 0.5,
-            "label": "equally likely as unlikely, 1/2, 50%"
+            "label": "1/2 = 50%, equally likely as unlikely"
           },
           {
             "x": 0.75,
-            "label": "more likely, 3/4, 75%"
+            "label": "3/4 = 75%, more likely"
           },
           {
             "x": 1,
-            "label": "certain event, 100%"
+            "label": "1 = 100%, certain event"
           }
         ],
         "animate": "sweep"
       },
-      "caption": "Probability runs from 0 (impossible) to 1 (certain), with 1/2 in the middle.",
+      "caption": "Probability runs from 0 (impossible) to 1 (certain), with 1/4, 1/2 and 3/4 in between.",
       "source_page": 30
+    },
+    {
+      "id": "v:pp3u8-1:figure-4",
+      "lo": "lo:pp3u8-1-2",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "E",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "shade": [
+          {
+            "in": [
+              "B",
+              "A"
+            ]
+          }
+        ],
+        "notes": [
+          {
+            "text": "B ∩ A",
+            "in": [
+              "B",
+              "A"
+            ],
+            "out": []
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two overlapping sets B and A in universe E, with the overlap shaded as B ∩ A.",
+      "source_page": 31
     },
     {
       "id": "v:pp3u8-1:bk-example-1-2-a",
@@ -786,7 +830,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -800,7 +844,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -814,7 +858,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -828,7 +872,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -842,7 +886,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -856,7 +900,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-5.png",
         "alt": "The textbook's diagram for this question, printed on page 31.",
         "stand_in": true,
-        "native_kind_needed": "card/object set illustration"
+        "native_kind_needed": "photo / set of cards illustration"
       },
       "caption": null,
       "source_page": 31
@@ -870,7 +914,7 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-6.png",
         "alt": "The textbook's diagram for this question, printed on page 32.",
         "stand_in": true,
-        "native_kind_needed": "venn_diagram"
+        "native_kind_needed": null
       },
       "caption": null,
       "source_page": 32
@@ -884,93 +928,642 @@
         "src": "/book-figures/prep3-parallel/pp3u8-1__figure-6.png",
         "alt": "The textbook's diagram for this question, printed on page 32.",
         "stand_in": true,
-        "native_kind_needed": "venn_diagram"
+        "native_kind_needed": null
       },
       "caption": null,
       "source_page": 32
     },
     {
-      "id": "v:pp3u8-1:bk-drill-6-a",
+      "id": "v:pp3u8-1:figure-7",
+      "lo": "lo:pp3u8-1-2",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two separate sets A and B that do not overlap: mutually exclusive events.",
+      "source_page": 32
+    },
+    {
+      "id": "v:pp3u8-1:figure-8",
+      "lo": "lo:pp3u8-1-2",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "3",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "8",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "5",
+            "in": []
+          },
+          {
+            "text": "1",
+            "in": []
+          }
+        ],
+        "shade": [
+          {
+            "in": [
+              "A",
+              "B"
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A and B overlap at 6; C holds 7 on its own; 5 and 1 are outside all sets.",
+      "source_page": 33
+    },
+    {
+      "id": "v:pp3u8-1:figure-9",
+      "lo": "lo:pp3u8-1-2",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two disjoint sets A and B inside the universe S.",
+      "source_page": 34
+    },
+    {
+      "id": "v:pp3u8-1:figure-10",
       "lo": "lo:pp3u8-1-3",
       "question": "q:pp3u8-1-3:bk-drill-6-a",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-1__figure-10.png",
-        "alt": "The textbook's diagram for this question, printed on page 34.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "1",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "3",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "5",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "12",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "8",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "A and B overlap at 7, while C, holding 6, 9 and 12, is apart from both; 8 is outside all sets.",
       "source_page": 34
     },
     {
-      "id": "v:pp3u8-1:bk-drill-6-b",
+      "id": "v:pp3u8-1:figure-10-2",
       "lo": "lo:pp3u8-1-3",
       "question": "q:pp3u8-1-3:bk-drill-6-b",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-1__figure-10.png",
-        "alt": "The textbook's diagram for this question, printed on page 34.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "1",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "3",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "5",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "12",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "8",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "A and B overlap at 7, while C, holding 6, 9 and 12, is apart from both; 8 is outside all sets.",
       "source_page": 34
     },
     {
-      "id": "v:pp3u8-1:bk-drill-6-c",
+      "id": "v:pp3u8-1:figure-10-3",
       "lo": "lo:pp3u8-1-3",
       "question": "q:pp3u8-1-3:bk-drill-6-c",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-1__figure-10.png",
-        "alt": "The textbook's diagram for this question, printed on page 34.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          },
+          {
+            "label": "C"
+          }
+        ],
+        "overlaps": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "items": [
+          {
+            "text": "1",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "3",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "4",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "7",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "2",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "5",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "6",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "9",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "12",
+            "in": [
+              "C"
+            ]
+          },
+          {
+            "text": "8",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "A and B overlap at 7, while C, holding 6, 9 and 12, is apart from both; 8 is outside all sets.",
       "source_page": 34
     },
     {
-      "id": "v:pp3u8-2:bk-drill-2-1",
+      "id": "v:pp3u8-2:figure-1",
+      "lo": "lo:pp3u8-2-1",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "A"
+          }
+        ],
+        "shade": [
+          {
+            "in": [],
+            "out": [
+              "A"
+            ]
+          }
+        ],
+        "notes": [
+          {
+            "text": "A′",
+            "in": [],
+            "out": [
+              "A"
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Set A is an oval inside the universe S; everything outside the oval is the complement A′.",
+      "source_page": 35
+    },
+    {
+      "id": "v:pp3u8-2:figure-2",
       "lo": "lo:pp3u8-2-2",
       "question": "q:pp3u8-2-2:bk-drill-2-1",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-2__figure-2.png",
-        "alt": "The textbook's diagram for this question, printed on page 36.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram with two overlapping sets and region counts"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "items": [
+          {
+            "text": "7",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "8",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "10",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "15",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "Two overlapping sets B and A in S: 7 only in B, 8 in both, 10 only in A, 15 in neither.",
       "source_page": 36
     },
     {
-      "id": "v:pp3u8-2:bk-drill-2-2",
+      "id": "v:pp3u8-2:figure-2-2",
       "lo": "lo:pp3u8-2-2",
       "question": "q:pp3u8-2-2:bk-drill-2-2",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-2__figure-2.png",
-        "alt": "The textbook's diagram for this question, printed on page 36.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram with two overlapping sets and region counts"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "items": [
+          {
+            "text": "7",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "8",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "10",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "15",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "Two overlapping sets B and A in S: 7 only in B, 8 in both, 10 only in A, 15 in neither.",
       "source_page": 36
     },
     {
-      "id": "v:pp3u8-2:bk-drill-2-3",
+      "id": "v:pp3u8-2:figure-2-3",
       "lo": "lo:pp3u8-2-2",
       "question": "q:pp3u8-2-2:bk-drill-2-3",
-      "kind": "book_image",
+      "kind": "venn_diagram",
       "spec": {
-        "src": "/book-figures/prep3-parallel/pp3u8-2__figure-2.png",
-        "alt": "The textbook's diagram for this question, printed on page 36.",
-        "stand_in": true,
-        "native_kind_needed": "venn_diagram with two overlapping sets and region counts"
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "items": [
+          {
+            "text": "7",
+            "in": [
+              "B"
+            ]
+          },
+          {
+            "text": "8",
+            "in": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "10",
+            "in": [
+              "A"
+            ]
+          },
+          {
+            "text": "15",
+            "in": []
+          }
+        ],
+        "animate": "sequence"
       },
-      "caption": null,
+      "caption": "Two overlapping sets B and A in S: 7 only in B, 8 in both, 10 only in A, 15 in neither.",
+      "source_page": 36
+    },
+    {
+      "id": "v:pp3u8-2:figure-3",
+      "lo": "lo:pp3u8-2-2",
+      "question": null,
+      "kind": "venn_diagram",
+      "spec": {
+        "universe": "S",
+        "sets": [
+          {
+            "label": "B"
+          },
+          {
+            "label": "A"
+          }
+        ],
+        "overlaps": [
+          [
+            "B",
+            "A"
+          ]
+        ],
+        "shade": [
+          {
+            "in": [
+              "A"
+            ],
+            "out": [
+              "B"
+            ]
+          }
+        ],
+        "notes": [
+          {
+            "text": "A − B",
+            "in": [
+              "A"
+            ],
+            "out": [
+              "B"
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Two overlapping sets B and A in S, with the part of A outside B shaded and named A − B.",
       "source_page": 36
     }
   ],

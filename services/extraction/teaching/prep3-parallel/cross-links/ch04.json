@@ -2,14 +2,30 @@
  "format": "ainext.cross-links/1",
  "book": "prep3-parallel",
  "chapter": 4,
- "run": "runs/prep3-parallel/links/links-ch04.20261018T092540Z.json",
- "prompts_version": "links-v1 (s1-v5 linker and checker)",
+ "run": "runs/prep3-parallel/links/xlinks-ch04.20261021T062054Z.json",
+ "runs": [
+  "runs/prep3-parallel/links/links-ch04.20261018T092540Z.json",
+  "runs/prep3-parallel/links/xlinks-ch04.20261021T062054Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
  "prior_objectives": 29,
  "links": [],
- "links_dropped": [],
- "inside_unit_found": 3,
+ "links_dropped": [
+  {
+   "key": "lo:pp3u2-1-1->lo:pp3u4-2-1",
+   "src": "lo:pp3u2-1-1",
+   "dst": "lo:pp3u4-2-1",
+   "why": "the link checker said REJECTED: Test 3 (removal): the quoted steps are present, but the ratio 1:2:√3 is given in the dst text itself, and the trig ratios are read as side-over-side fractions. A student can follow this without a separate lesson on ratio notation (earlier-grade knowledge). Test 2 is also weak, because only shared ratio notation is used, not a distinct result.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Test 3 (removal): the quoted steps are present, but the ratio 1:2:√3 is given in the dst text itself, and the trig ratios are read as side-over-side fractions. A student can follow this without a separate lesson on ratio notation (earlier-grade knowledge). Test 2 is also weak, because only shared ratio notation is used, not a distinct result."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
  "outside_book": [],
  "failures": [],
  "decisions": [],
- "made": "2026-10-18"
+ "made": "2026-10-21"
 }

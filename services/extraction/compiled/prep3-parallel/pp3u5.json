@@ -214,6 +214,26 @@
       "src": "lo:pp3u5-3-1",
       "dst": "lo:pp3u5-4-2",
       "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-2-3",
+      "dst": "lo:pp3u5-3-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-2-4",
+      "dst": "lo:pp3u5-3-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u1-4-3",
+      "dst": "lo:pp3u5-4-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:pp3u4-2-1",
+      "dst": "lo:pp3u5-3-1",
+      "type": "prerequisite_of"
     }
   ],
   "questions": [
@@ -898,7 +918,7 @@
       "kind": "coordinate_plot",
       "spec": {
         "xRange": [
-          -3,
+          -4,
           4
         ],
         "yRange": [
@@ -909,12 +929,12 @@
           {
             "x": -1,
             "y": 0,
-            "label": "B"
+            "label": "B(−1, 0)"
           },
           {
             "x": 3,
             "y": 0,
-            "label": "A"
+            "label": "A(3, 0)"
           }
         ],
         "segments": [
@@ -926,7 +946,7 @@
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "B(-1, 0) and A(3, 0) sit on the x-axis, 4 units apart.",
+      "caption": "Points B(−1, 0) and A(3, 0) sit on the x-axis, so the distance is just the difference of the x-values.",
       "source_page": 58
     },
     {
@@ -947,12 +967,12 @@
           {
             "x": 0,
             "y": -1,
-            "label": "D"
+            "label": "D(0, −1)"
           },
           {
             "x": 0,
             "y": -3,
-            "label": "C"
+            "label": "C(0, −3)"
           }
         ],
         "segments": [
@@ -964,7 +984,7 @@
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "D(0, -1) and C(0, -3) sit on the y-axis, 2 units apart.",
+      "caption": "Points D(0, −1) and C(0, −3) sit on the y-axis, so the distance is the difference of the y-values.",
       "source_page": 58
     },
     {
@@ -1017,6 +1037,278 @@
       },
       "caption": "M(3, 2) and N(7, 5) are joined, with K(7, 2) making a right triangle whose legs are the horizontal and vertical differences.",
       "source_page": 58
+    },
+    {
+      "id": "v:pp3u5-1:figure-4",
+      "lo": "lo:pp3u5-1-1",
+      "question": null,
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              6
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "O",
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                1,
+                2
+              ],
+              [
+                4,
+                2
+              ],
+              [
+                4,
+                5
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 1,
+            "y": 2,
+            "label": "M(x₁, y₁)",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 5,
+            "label": "N(x₂, y₂)",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 2,
+            "label": "K",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              4,
+              2
+            ],
+            "label": "x₂ − x₁",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              2
+            ],
+            "to": [
+              4,
+              5
+            ],
+            "label": "y₂ − y₁",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              4,
+              2
+            ],
+            "fromDeg": 90,
+            "toDeg": 180,
+            "right": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "dashed": true,
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              2
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "dashed": true,
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 1,
+            "y": 0,
+            "label": "A",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 0,
+            "label": "B",
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Right triangle MKN with M(x₁, y₁) and N(x₂, y₂); the legs are x₂ − x₁ and y₂ − y₁, with dotted lines down to A and B on the x-axis.",
+      "source_page": 59
+    },
+    {
+      "id": "v:pp3u5-1:figure-5",
+      "lo": "lo:pp3u5-1-1",
+      "question": null,
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              5
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "O",
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                4,
+                3
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 3,
+            "label": "M(x₁, y₁)",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "label": "x₁",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              0
+            ],
+            "to": [
+              4,
+              3
+            ],
+            "label": "y₁",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              4,
+              0
+            ],
+            "fromDeg": 90,
+            "toDeg": 180,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Right triangle from the origin to M(x₁, y₁), with legs x₁ along the x-axis and y₁ upright, giving the distance from the origin.",
+      "source_page": 59
     },
     {
       "id": "v:pp3u5-1:figure-6",
@@ -1089,24 +1381,24 @@
           4
         ],
         "yRange": [
-          -5,
-          6
+          -4,
+          5
         ],
         "points": [
           {
             "x": 1,
             "y": 4,
-            "label": "A"
+            "label": "A(1, 4)"
           },
           {
             "x": -1,
             "y": -2,
-            "label": "B"
+            "label": "B(−1, −2)"
           },
           {
             "x": 2,
             "y": -3,
-            "label": "C"
+            "label": "C(2, −3)"
           }
         ],
         "segments": [
@@ -1123,10 +1415,19 @@
             0
           ]
         ],
+        "polygons": [
+          {
+            "points": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "Triangle ABC with A(1, 4), B(-1, -2) and C(2, -3).",
+      "caption": "Triangle ABC with A(1, 4), B(−1, −2), C(2, −3) drawn on the plane.",
       "source_page": 60
     },
     {
@@ -1147,271 +1448,942 @@
           {
             "x": 4,
             "y": 3,
-            "label": "A"
+            "label": "A(4, 3)"
           },
           {
             "x": 1,
             "y": 1,
-            "label": "B"
+            "label": "B(1, 1)"
           },
           {
             "x": -5,
             "y": -3,
-            "label": "C"
+            "label": "C(−5, −3)"
           }
         ],
         "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            1,
-            2
-          ]
+          {
+            "from": 2,
+            "to": 0,
+            "dashed": true
+          }
         ],
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "A(4, 3), B(1, 1) and C(-5, -3) all lie along one straight line.",
+      "caption": "Points A(4, 3), B(1, 1) and C(−5, −3) all lie along one dotted straight line.",
       "source_page": 61
     },
     {
       "id": "v:pp3u5-2:figure-1",
       "lo": "lo:pp3u5-2-1",
       "question": null,
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              8,
+              0
+            ],
+            "arrow": "end",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              8
+            ],
+            "arrow": "end",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 1,
+            "y": -0.5,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 2,
+            "y": -0.5,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 4,
+            "y": -0.5,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 5,
+            "y": -0.5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 6,
+            "y": -0.5,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 1,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 2,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 3,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 4,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 6,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              2,
+              6
+            ],
+            "to": [
+              4,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              6
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": 2,
             "y": 6,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
-            "x": 6,
-            "y": 6,
-            "label": "B"
-          },
-          {
+            "type": "point",
             "x": 4,
             "y": 6,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
-            "x": 2,
-            "y": 0,
-            "label": "2"
-          },
-          {
-            "x": 4,
-            "y": 0,
-            "label": "4"
-          },
-          {
+            "type": "point",
             "x": 6,
-            "y": 0,
-            "label": "6"
+            "y": 6,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              2,
+              6
+            ],
+            "to": [
+              2,
+              0
+            ],
+            "dashed": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              4,
+              6
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "dashed": true,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           }
         ],
-        "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            2,
-            4
-          ],
-          [
-            1,
-            5
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "equal",
+            "prompt": "Which sides or segments does the figure mark as equal? Tap all of them."
+          }
+        ]
       },
-      "caption": "A(2, 6) and B(6, 6) are joined by a horizontal segment, and the midpoint C is at x = 4.",
+      "caption": "A horizontal segment AB at height 6 from x = 2 to x = 6, with midpoint C at x = 4 and dotted lines down to the x-axis.",
       "source_page": 62
     },
     {
       "id": "v:pp3u5-2:figure-2",
       "lo": "lo:pp3u5-2-1",
       "question": null,
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -5,
+              0
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "arrow": "both",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              1
+            ],
+            "to": [
+              0,
+              -6
+            ],
+            "arrow": "both",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -4,
+            "y": 0.4,
+            "text": "−4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -3,
+            "y": 0.4,
+            "text": "−3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -2,
+            "y": 0.4,
+            "text": "−2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -1,
+            "y": 0.4,
+            "text": "−1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -1,
+            "text": "−1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -2,
+            "text": "−2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -3,
+            "text": "−3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -4,
+            "text": "−4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.5,
+            "y": -5,
+            "text": "−5",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2,
+              -1
+            ],
+            "to": [
+              -2,
+              -3
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2,
+              -3
+            ],
+            "to": [
+              -2,
+              -5
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": -2,
             "y": -1,
-            "label": "B"
+            "label": "B",
+            "step": 2
           },
           {
+            "type": "point",
             "x": -2,
             "y": -3,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
+            "type": "point",
             "x": -2,
             "y": -5,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
-            "x": 0,
-            "y": -1,
-            "label": "-1"
+            "type": "segment",
+            "from": [
+              -2,
+              -1
+            ],
+            "to": [
+              0,
+              -1
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": -3,
-            "label": "-3"
+            "type": "segment",
+            "from": [
+              -2,
+              -3
+            ],
+            "to": [
+              0,
+              -3
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": -5,
-            "label": "-5"
+            "type": "segment",
+            "from": [
+              -2,
+              -5
+            ],
+            "to": [
+              0,
+              -5
+            ],
+            "dashed": true,
+            "step": 3
           }
         ],
-        "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            1,
-            4
-          ],
-          [
-            2,
-            5
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "equal",
+            "prompt": "Which sides or segments does the figure mark as equal? Tap all of them."
+          }
+        ]
       },
-      "caption": "B(-2, -1) and A(-2, -5) are joined by a vertical segment, and the midpoint C is at y = -3.",
+      "caption": "A vertical segment at x = −2 from B(−2, −1) down to A(−2, −5), with midpoint C at y = −3 and dotted lines across to the y-axis.",
       "source_page": 62
     },
     {
       "id": "v:pp3u5-2:figure-3",
       "lo": "lo:pp3u5-2-1",
       "question": null,
-      "kind": "coordinate_plot",
+      "kind": "geo_scene",
       "spec": {
-        "xRange": [
-          -6,
-          6
-        ],
-        "yRange": [
-          -6,
-          6
-        ],
-        "points": [
+        "animate": "sequence",
+        "elements": [
           {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "arrow": "end",
+            "label": "x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              7
+            ],
+            "arrow": "end",
+            "label": "y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 1,
+            "y": -0.5,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 2,
+            "y": -0.5,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 3,
+            "y": -0.5,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 4,
+            "y": -0.5,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 5,
+            "y": -0.5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 1,
+            "text": "1",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 2,
+            "text": "2",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 3,
+            "text": "3",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 4,
+            "text": "4",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 5,
+            "text": "5",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": 6,
+            "text": "6",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              3,
+              4
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              5,
+              6
+            ],
+            "ticks": 2,
+            "step": 2
+          },
+          {
+            "type": "point",
             "x": 1,
             "y": 2,
-            "label": "A"
+            "label": "A",
+            "step": 2
           },
           {
+            "type": "point",
             "x": 3,
             "y": 4,
-            "label": "C"
+            "label": "C",
+            "step": 2
           },
           {
+            "type": "point",
             "x": 5,
             "y": 6,
-            "label": "B"
+            "label": "B",
+            "step": 2
           },
           {
-            "x": 1,
-            "y": 0,
-            "label": "1"
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 3,
-            "y": 0,
-            "label": "3"
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              3,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 5,
-            "y": 0,
-            "label": "5"
+            "type": "segment",
+            "from": [
+              5,
+              6
+            ],
+            "to": [
+              5,
+              0
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 2,
-            "label": "2"
+            "type": "segment",
+            "from": [
+              1,
+              2
+            ],
+            "to": [
+              0,
+              2
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 4,
-            "label": "4"
+            "type": "segment",
+            "from": [
+              3,
+              4
+            ],
+            "to": [
+              0,
+              4
+            ],
+            "dashed": true,
+            "step": 3
           },
           {
-            "x": 0,
-            "y": 6,
-            "label": "6"
+            "type": "segment",
+            "from": [
+              5,
+              6
+            ],
+            "to": [
+              0,
+              6
+            ],
+            "dashed": true,
+            "step": 3
           }
         ],
-        "segments": [
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            1,
-            4
-          ],
-          [
-            2,
-            5
-          ],
-          [
-            0,
-            6
-          ],
-          [
-            1,
-            7
-          ],
-          [
-            2,
-            8
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "equal",
+            "prompt": "Which sides or segments does the figure mark as equal? Tap all of them."
+          }
+        ]
       },
-      "caption": "A(1, 2) and B(5, 6) are joined by a slanted segment, and its midpoint C is at (3, 4).",
+      "caption": "Segment from A(1, 2) to B(5, 6) with midpoint C(3, 4), and dotted lines from A, C and B to both axes.",
       "source_page": 62
+    },
+    {
+      "id": "v:pp3u5-2:figure-4",
+      "lo": "lo:pp3u5-2-2",
+      "question": null,
+      "kind": "geo_scene",
+      "spec": {
+        "animate": "sequence",
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -1,
+              0
+            ],
+            "to": [
+              11,
+              0
+            ],
+            "arrow": "both",
+            "label": "x′x",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              0,
+              10
+            ],
+            "arrow": "both",
+            "label": "y′y",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.5,
+            "y": -0.5,
+            "text": "F",
+            "step": 1
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                3,
+                3
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                6,
+                6
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                6,
+                6
+              ],
+              [
+                9,
+                6
+              ],
+              [
+                9,
+                9
+              ]
+            ],
+            "fill": true,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              9,
+              9
+            ],
+            "ticks": 2,
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 3,
+            "y": 3,
+            "label": "A(x₁, y₁)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 6,
+            "label": "M(x, y)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 9,
+            "y": 9,
+            "label": "B(x₂, y₂)",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": 3,
+            "label": "D",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 9,
+            "y": 6,
+            "label": "E",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              3,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              3
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              9,
+              6
+            ],
+            "to": [
+              9,
+              0
+            ],
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              6,
+              3
+            ],
+            "label": "x − x₁",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              3
+            ],
+            "to": [
+              6,
+              6
+            ],
+            "label": "y − y₁",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              6,
+              6
+            ],
+            "to": [
+              9,
+              6
+            ],
+            "label": "x₂ − x",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              9,
+              6
+            ],
+            "to": [
+              9,
+              9
+            ],
+            "label": "y₂ − y",
+            "step": 5
+          }
+        ],
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "equal",
+            "prompt": "Which sides or segments does the figure mark as equal? Tap all of them."
+          }
+        ]
+      },
+      "caption": "Segment AB with midpoint M, and two right triangles AMD and MBE whose legs are x − x₁, y − y₁, x₂ − x and y₂ − y.",
+      "source_page": 63
     },
     {
       "id": "v:pp3u5-3:figure-1",
@@ -1592,15 +2564,17 @@
           }
         ],
         "segments": [
-          [
-            0,
-            1
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "y = 3"
+          }
         ],
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "A horizontal line at y = 3 through (-1, 3) and (2, 3).",
+      "caption": "A horizontal line at y = 3 through the points (-1, 3) and (2, 3); it is parallel to the x-axis.",
       "source_page": 65
     },
     {
@@ -1630,15 +2604,17 @@
           }
         ],
         "segments": [
-          [
-            0,
-            1
-          ]
+          {
+            "from": 0,
+            "to": 1,
+            "label": "x = 2"
+          }
         ],
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "A vertical line at x = 2 through (2, -1) and (2, 3).",
+      "caption": "A vertical line at x = 2 through the points (2, -1) and (2, 3); it is parallel to the y-axis.",
       "source_page": 65
     },
     {
@@ -1655,23 +2631,37 @@
               0
             ],
             "to": [
-              5,
+              6,
               0
             ],
-            "label": "x",
+            "arrow": "both",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
               0,
-              -3
+              -4
             ],
             "to": [
               0,
-              4
+              5
             ],
-            "label": "y",
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 6,
+            "y": -0.5,
+            "text": "x",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.3,
+            "y": 5,
+            "text": "y",
             "step": 1
           },
           {
@@ -1681,51 +2671,63 @@
               -1
             ],
             "to": [
-              1,
-              3
+              2,
+              5
             ],
-            "label": "L2",
+            "parallel": 1,
+            "arrow": "end",
+            "label": "L₂",
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              -0.5,
-              -1.5
+              -1,
+              -3
             ],
             "to": [
-              3.5,
-              2.5
+              4,
+              3
             ],
-            "label": "L1",
+            "parallel": 1,
+            "arrow": "end",
+            "label": "L₁",
             "step": 2
           },
           {
             "type": "angle",
             "at": [
-              -2,
+              -1.83,
               0
             ],
             "fromDeg": 0,
-            "toDeg": 45,
-            "label": "E1",
+            "toDeg": 50,
+            "label": "E₁",
             "step": 3
           },
           {
             "type": "angle",
             "at": [
-              1,
+              1.5,
               0
             ],
             "fromDeg": 0,
-            "toDeg": 45,
-            "label": "E2",
+            "toDeg": 50,
+            "label": "E₂",
             "step": 3
           }
         ],
-        "animate": "sequence"
+        "animate": "sequence",
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "parallel",
+            "prompt": "Which sides or segments are marked parallel? Tap all of them."
+          }
+        ]
       },
-      "caption": "Two parallel lines L1 and L2 sloping up to the right, each making a positive angle with the positive x-axis, marked E1 and E2.",
+      "caption": "Two parallel lines L₁ and L₂ slope upward to the right, each making a positive angle with the positive x-axis, marked E₁ and E₂.",
       "source_page": 67
     },
     {
@@ -1742,23 +2744,37 @@
               0
             ],
             "to": [
-              5,
+              6,
               0
             ],
-            "label": "x",
+            "arrow": "both",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
               0,
-              -3
+              -4
             ],
             "to": [
               0,
-              4
+              5
             ],
-            "label": "y",
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 6,
+            "y": -0.5,
+            "text": "x",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 0.3,
+            "y": 5,
+            "text": "y",
             "step": 1
           },
           {
@@ -1768,51 +2784,63 @@
               -1
             ],
             "to": [
-              1,
-              3
+              2,
+              5
             ],
-            "label": "L2",
+            "parallel": 1,
+            "arrow": "end",
+            "label": "L₂",
             "step": 2
           },
           {
             "type": "segment",
             "from": [
-              -0.5,
-              -1.5
+              -1,
+              -3
             ],
             "to": [
-              3.5,
-              2.5
+              4,
+              3
             ],
-            "label": "L1",
+            "parallel": 1,
+            "arrow": "end",
+            "label": "L₁",
             "step": 2
           },
           {
             "type": "angle",
             "at": [
-              -2,
+              -1.83,
               0
             ],
             "fromDeg": 0,
-            "toDeg": 45,
-            "label": "E1",
+            "toDeg": 50,
+            "label": "E₁",
             "step": 3
           },
           {
             "type": "angle",
             "at": [
-              1,
+              1.5,
               0
             ],
             "fromDeg": 0,
-            "toDeg": 45,
-            "label": "E2",
+            "toDeg": 50,
+            "label": "E₂",
             "step": 3
           }
         ],
-        "animate": "sequence"
+        "animate": "sequence",
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "parallel",
+            "prompt": "Which sides or segments are marked parallel? Tap all of them."
+          }
+        ]
       },
-      "caption": "Two parallel lines L1 and L2 sloping up to the right, each making a positive angle with the positive x-axis, marked E1 and E2.",
+      "caption": "Two parallel lines L₁ and L₂ slope upward to the right, each making a positive angle with the positive x-axis, marked E₁ and E₂.",
       "source_page": 67
     },
     {
@@ -1833,22 +2861,22 @@
           {
             "x": 2,
             "y": 3,
-            "label": "A"
+            "label": "A(2, 3)"
           },
           {
             "x": 6,
             "y": 2,
-            "label": "B"
+            "label": "B(6, 2)"
           },
           {
             "x": -2,
             "y": -2,
-            "label": "C"
+            "label": "C(-2, -2)"
           },
           {
             "x": -2,
             "y": 1,
-            "label": "D"
+            "label": "D(-2, 1)"
           }
         ],
         "segments": [
@@ -1869,10 +2897,11 @@
             0
           ]
         ],
+        "scale": "numbers",
         "animate": "plot-sequence",
         "interactive": false
       },
-      "caption": "Quadrilateral ABCD with A(2, 3), B(6, 2), C(-2, -2) and D(-2, 1) plotted and joined.",
+      "caption": "Quadrilateral ABCD with A(2, 3), B(6, 2), C(-2, -2) and D(-2, 1) plotted on the grid and joined in order.",
       "source_page": 67
     },
     {
@@ -1892,7 +2921,7 @@
               5,
               0
             ],
-            "label": "x",
+            "arrow": "both",
             "step": 1
           },
           {
@@ -1905,67 +2934,87 @@
               0,
               5
             ],
-            "label": "y",
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 5,
+            "y": -0.4,
+            "text": "x",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": -0.4,
+            "y": -0.4,
+            "text": "F",
             "step": 1
           },
           {
             "type": "segment",
             "from": [
-              -4,
-              -1
+              -3,
+              -1.5
             ],
             "to": [
-              1,
-              4
+              3,
+              4.5
             ],
-            "label": "L1",
+            "arrow": "end",
+            "label": "L₁",
             "step": 2
           },
           {
             "type": "segment",
             "from": [
               -1.5,
-              4
+              3.5
             ],
             "to": [
-              3,
-              -0.5
+              3.5,
+              -1.5
             ],
-            "label": "L2",
+            "arrow": "end",
+            "label": "L₂",
             "step": 2
           },
           {
             "type": "point",
-            "x": -0.5,
-            "y": 2.5,
-            "label": "C",
-            "step": 3
-          },
-          {
-            "type": "point",
-            "x": -3,
-            "y": 0,
+            "x": -2.5,
+            "y": -1,
             "label": "A",
-            "step": 3
+            "step": 2
           },
           {
             "type": "point",
             "x": 2,
             "y": 0,
             "label": "B",
-            "step": 3
+            "step": 2
           },
           {
             "type": "point",
-            "x": 0,
-            "y": 0,
-            "label": "F",
+            "x": 0.25,
+            "y": 1.75,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              0.25,
+              1.75
+            ],
+            "fromDeg": 225,
+            "toDeg": 315,
+            "right": true,
             "step": 3
           },
           {
             "type": "angle",
             "at": [
-              -3,
+              -1.5,
               0
             ],
             "fromDeg": 0,
@@ -1983,22 +3032,11 @@
             "toDeg": 135,
             "label": "J",
             "step": 4
-          },
-          {
-            "type": "angle",
-            "at": [
-              -0.5,
-              2.5
-            ],
-            "fromDeg": 225,
-            "toDeg": 315,
-            "label": "90°",
-            "step": 5
           }
         ],
         "animate": "sequence"
       },
-      "caption": "Two perpendicular lines L1 and L2 meeting at C, with angle E where L1 meets the x-axis and angle J where L2 meets it.",
+      "caption": "Two perpendicular lines L₁ and L₂ meet at C with a right angle; E is the angle L₁ makes with the x-axis and J is the angle L₂ makes with it at B.",
       "source_page": 68
     },
     {
@@ -2026,9 +3064,13 @@
             "label": "B(0, 2)"
           }
         ],
+        "axes": {
+          "x": "x",
+          "y": "y"
+        },
         "animate": "draw"
       },
-      "caption": "The line x - 2y + 4 = 0 is y = x/2 + 2; it crosses the x-axis at (-4, 0) and the y-axis at B(0, 2).",
+      "caption": "The line x − 2y + 4 = 0, which is y = ½x + 2, crosses the x-axis at (−4, 0) and the y-axis at B(0, 2).",
       "source_page": 70
     }
   ],
@@ -2571,6 +3613,10 @@
     }
   ],
   "external_node_refs": [
-    "course:prep3-parallel-math-en"
+    "course:prep3-parallel-math-en",
+    "lo:pp3u1-4-3",
+    "lo:pp3u4-2-1",
+    "lo:pp3u4-2-3",
+    "lo:pp3u4-2-4"
   ]
 }

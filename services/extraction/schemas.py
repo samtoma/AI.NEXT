@@ -1164,6 +1164,8 @@ VIZ_KINDS = {"coordinate_plot", "function_graph", "arrow_map", "product_grid",
              "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line",
              # VIZ_SPEC v2 (ADR-0004, Social Studies vertical)
              "map_scene", "timeline", "flow_chain",
+             # VIZ_SPEC v4 (2026-10-20, Samuel): sets as relationships, the tenth maths kind
+             "venn_diagram",
              # Samuel's answer 37d (2026-10-01): "book picture for now" — a STAND-IN, never a native kind
              "book_image"}
 

@@ -16,6 +16,7 @@ const META: Record<string, KindMeta> = {
   trig_triangle: { glyph: "◺", chip: "border-rust/35 bg-rust-wash text-rust" },
   geo_scene: { glyph: "◎", chip: "border-rust/35 bg-rust-wash text-rust" },
   number_line: { glyph: "⊷", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
+  venn_diagram: { glyph: "⦶", chip: "border-gold/40 bg-gold-wash text-gold" },
   // VIZ_SPEC v2 — social studies
   map_scene: { glyph: "⌖", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
   timeline: { glyph: "⧖", chip: "border-gold/40 bg-gold-wash text-gold" },

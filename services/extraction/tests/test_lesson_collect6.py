@@ -1341,7 +1341,7 @@ class TypingPromptV8(unittest.TestCase):
     def test_the_typing_prompt_carries_the_closed_set_rule_and_the_quote_rule(self):
         it = item("Ex8-2:2", "Round it.", ["$9,1$"], "9,1")
         rep = run(args_for([it]), responses([typing("Ex8-2:2", "9,1", "$9,1$")], [{"ref": "Ex8-2:2", "final_answer": "9.1", "markable": True}]))
-        self.assertEqual(rep["result"]["prompts_version"], "lesson-v8")
+        self.assertEqual(rep["result"]["prompts_version"], "lesson-v9")
         prompt = next(c["prompt"] for c in rep["calls"] if c["label"].startswith("S3:type:"))
         for phrase in ("The options are NEVER yours to make up", "CLOSED SET OF CATEGORIES", 'expression, marker_kind "values", key "4; 5"',
                        "never a choice with the whole list as options", "QUOTED from its last sentence", 'never drop or add a "not"',

@@ -16,6 +16,9 @@ export interface VizCatalogItem {
   loId: string;
   caption: string | null;
   sourcePage: number | null;
+  /** the tasks a student works on it, as the pipeline wrote them (spec.tasks;
+   *  lib/figure-interactions) — never printed in the catalog line */
+  tasks?: unknown[];
 }
 
 /** Compact `id | kind | lo | page | caption` catalog lines. */

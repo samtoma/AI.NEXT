@@ -66,7 +66,7 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v8'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v9'   // v3: ids are asked for WITHOUT their brackets, and read either way
 // v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
 // at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
 // claims replay, and typing and every agent after it run again.
@@ -87,6 +87,9 @@ const PROMPTS_VERSION = 'lesson-v8'   // v3: ids are asked for WITHOUT their bra
 // (28 of one lesson's 34 items were). book_final is a quote of the solution's last sentence, a parenthetical left out at
 // most — never a summary, never a computation of the agent's own (23 of 96 items of one lesson failed that containment).
 // A two-part answer of different kinds is not markable. The collection (COLLECT-6) refuses what this prompt forbids.
+// v9 (2026-10-20, VIZ_SPEC v4): ONLY the visuals prompts changed. A Venn diagram, a triangle or quadrilateral scene and a
+// shaded region are no longer named as gaps (geo_scene draws polygons, marks, dashed and shaded parts; venn_diagram is a
+// kind); the author is told marks are givens and several drawings are panels, and Compare reads a mark field as the mark it draws.
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
 const COLLECT_VERSION = 'collect-6'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
@@ -1292,9 +1295,10 @@ async function runS4(L, s2) {
     `Turn each book figure below into a parametric spec of ONE of these existing visual kinds, so the app can draw it:
 ${kinds}
 
-Read each figure's image file with the Read tool. For each figure: decision "viz" with kind, spec (exactly the kind's shape, with the figure's own numbers and labels), a one-line caption in plain student-voiced English, and lo (the objective it illustrates); or decision "gap" when no kind above can show it faithfully (a hyperbola, an exponential or trig graph, a Venn diagram, a box plot, a 3-D solid, a triangle or quadrilateral scene …), with gap_reason and needed_kind. Never force a figure into the nearest kind: a wrong picture teaches the wrong thing.
+Read each figure's image file with the Read tool. For each figure: decision "viz" with kind, spec (exactly the kind's shape, with the figure's own numbers and labels), a one-line caption in plain student-voiced English, and lo (the objective it illustrates); or decision "gap" when no kind above can show it faithfully (a hyperbola, an exponential or trig graph, a box plot, a 3-D solid, a photograph or a calculator's keys …), with gap_reason and needed_kind. Never force a figure into the nearest kind: a wrong picture teaches the wrong thing.
 
-EVERY FIGURE: draw every element it shows — every labelled point, segment, side, line, function and label — with the figure's own values, except a withheld unknown (below). If the kind cannot draw one of them (two functions on one set of axes, a text annotation such as a slope, a shaded region …), decision "gap" with needed_kind naming exactly what is missing (e.g. "function_graph with two functions on one set of axes") — never a spec that leaves it out.
+EVERY FIGURE: draw every element it shows — every labelled point, segment, side, line, function and label — with the figure's own values, except a withheld unknown (below). If the kind cannot draw one of them (two functions on one set of axes, a text annotation such as a slope …), decision "gap" with needed_kind naming exactly what is missing (e.g. "function_graph with two functions on one set of axes") — never a spec that leaves it out.
+MARKS ARE GIVENS: every equal-length tick, parallel arrow, right-angle square and equal-angle arc the book draws goes into the spec with the kind's own mark fields (geo_scene: ticks, parallel, right, arcs) — never as a text label, never left out. A figure printed as several numbered drawings side by side is ONE geo_scene with panels, one panel per drawing.
 
 A FIGURE THAT BELONGS TO AN EXERCISE (marked "exercise" below; its question is shown with it) MUST NOT ANSWER IT:
 - leave out the unknown the question asks for — a point written with a letter for a coordinate (B(1; y), M(x; y)) or the point to be found — name its label in "withheld" (e.g. ["B"]), and DRAW THE REST: the known points, segments, lines and labels. A figure is never a gap only because it holds the unknown;
@@ -1331,7 +1335,7 @@ Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, writt
     candidates.push({ f, a, lo })
   }
   if (candidates.length) {
-    const cmp = await call('S4 Compare', s, `S4:compare:${s}`, `For each figure, read its image file with the Read tool and compare it with the spec an agent wrote to redraw it. faithful = the spec shows the same mathematical object: the same points, values, labels and relationships (styling may differ). Any wrong or missing value, point or label: faithful=false, with the issue.\n\n${candidates.map(({ f, a }) => `[${f.figure_id}] ${f.path}\n  kind ${a.kind} spec ${JSON.stringify(a.spec)}${a.withheld.length ? `\n  WITHHELD on purpose (the exercise's unknown, which the image shows): ${a.withheld.join(', ')} — their absence, and that of a segment ending at them, is not a mismatch; anything else missing, extra or wrong is` : ''}`).join('\n\n')}\n\nReturn COMPARE_SCHEMA.`, { model: 'haiku', effort: 'low', schema: COMPARE_SCHEMA })
+    const cmp = await call('S4 Compare', s, `S4:compare:${s}`, `For each figure, read its image file with the Read tool and compare it with the spec an agent wrote to redraw it. faithful = the spec shows the same mathematical object: the same points, values, labels and relationships (styling may differ). A mark field draws the book's mark: ticks:2 is two equal-length tick marks, parallel:1 one parallel arrow, right:true the right-angle square, arcs:2 two equal-angle arcs; dashed:true a dashed line, fill:true a shaded region. Any wrong or missing value, point or label: faithful=false, with the issue.\n\n${candidates.map(({ f, a }) => `[${f.figure_id}] ${f.path}\n  kind ${a.kind} spec ${JSON.stringify(a.spec)}${a.withheld.length ? `\n  WITHHELD on purpose (the exercise's unknown, which the image shows): ${a.withheld.join(', ')} — their absence, and that of a segment ending at them, is not a mismatch; anything else missing, extra or wrong is` : ''}`).join('\n\n')}\n\nReturn COMPARE_SCHEMA.`, { model: 'haiku', effort: 'low', schema: COMPARE_SCHEMA })
     const v = {}
     for (const c of (cmp && cmp.checks) || []) v[unbr(c.figure_id, isFig)] = c
     for (const { f, a, lo } of candidates) {
