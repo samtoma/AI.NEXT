@@ -1,0 +1,46 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-1-2:drill-1-b",
+ "lo_id": "lo:pp3u7-1-2",
+ "book_item": "pp3u7-1:drill-1#b",
+ "parent_question_id": "q:pp3u7-1-2:bk-drill-1-b",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   1
+  ]
+ },
+ "stem": "Find the set of zeroes of the function $f(x)=x^2-2x+1$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+ "solution": [
+  "Put $f(x)=0$: $x^2-2x+1=0$.",
+  "Factorise: $(x-1)^2=0$.",
+  "Set the factor equal to zero: $x-1=0$, so $x=1$.",
+  "$Z(f)=\\{1\\}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Check whether your factorised form can be zero for any value of $x$, by setting its factor equal to 0."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 3,
+   "text": "Substitute each value you marked into $f(x)$; it is a zero only if $f(x)$ comes out as 0."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 3,
+   "text": "Solve the factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?"
+  }
+ ],
+ "notes": "Answer agrees with book {1}."
+}

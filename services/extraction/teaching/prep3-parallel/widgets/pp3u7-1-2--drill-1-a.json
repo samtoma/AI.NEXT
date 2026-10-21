@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-1-2:drill-1-a",
+ "lo_id": "lo:pp3u7-1-2",
+ "book_item": "pp3u7-1:drill-1#a",
+ "parent_question_id": "q:pp3u7-1-2:bk-drill-1-a",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   0,
+   4
+  ]
+ },
+ "stem": "Find the set of zeroes of the function $f(x)=x^3-4x^2$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+ "solution": [
+  "Put $f(x)=0$: $x^3-4x^2=0$.",
+  "Factorise by taking out the common factor: $x^2(x-4)=0$.",
+  "Set each factor equal to zero: $x^2=0$ gives $x=0$; $x-4=0$ gives $x=4$.",
+  "$Z(f)=\\{0, 4\\}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Every factor that can be zero gives a zero of the function. Check that you have set each factor equal to 0."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 3,
+   "text": "Substitute each value you marked into $f(x)$; it is a zero only if $f(x)$ comes out as 0."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 3,
+   "text": "Solve each factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?"
+  }
+ ],
+ "notes": "Answer agrees with book {0, 4}."
+}

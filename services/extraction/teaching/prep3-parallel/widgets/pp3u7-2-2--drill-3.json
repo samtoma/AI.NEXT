@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-2-2:drill-3",
+ "lo_id": "lo:pp3u7-2-2",
+ "book_item": "pp3u7-2:drill-3",
+ "parent_question_id": "expl:pp3u7-2-2:bk-example-1",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -2,
+   1,
+   2
+  ]
+ },
+ "stem": "If $n_1(x)=\\frac{1}{x-1}$ and $n_2(x)=\\frac{3}{x^2-4}$, find the common domain of $n_1$ and $n_2$. The common domain is R minus the values that make a denominator zero: tap those values on the number line.",
+ "solution": [
+  "The domain of $n_1$ is R minus the zero of $x-1$: $x-1=0$ gives $x=1$, so $m_1=R-\\{1\\}$.",
+  "$x^2-4=(x-2)(x+2)$, whose zeroes are $2$ and $-2$, so $m_2=R-\\{-2,2\\}$.",
+  "The common domain is $m_1\\cap m_2$, i.e. R minus the union of the zeroes: $R-\\{-2,1,2\\}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "The common domain removes the zeroes of every denominator. Have you collected the zeroes of both fractions?"
+  },
+  {
+   "predicate": "extra-values",
+   "step": 2,
+   "text": "Only values that make a denominator zero are excluded. Check each marked value by substituting it into the denominators."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 1,
+   "text": "Solve each factor of the denominator equal to zero carefully: for $x-a=0$, what is $x$?"
+  }
+ ],
+ "notes": "Marks excluded values; domain is R minus the marked set."
+}

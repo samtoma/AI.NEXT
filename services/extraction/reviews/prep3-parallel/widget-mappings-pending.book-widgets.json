@@ -1,0 +1,846 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:pp3u1-1-1:w001#hint:extra-pairs",
+      "question_id": "q:pp3u1-1-1:w001",
+      "template_id": "wt:pp3u1-1-1:think-and-discuss-1",
+      "lo_id": "lo:pp3u1-1-1",
+      "kind": "product_builder",
+      "stem": "Find the set of ordered pairs (x, y) which satisfy the relation $y = 2x - 1$ when $x = 0$, $x = 1$ and $x = 2$. Tap the pairs that satisfy the relation.",
+      "reading": {
+        "X": [
+          0,
+          1,
+          2
+        ],
+        "Y": [
+          -1,
+          1,
+          3
+        ],
+        "pairs": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "construction": "Mode relation with X=[0,1,2], Y=[-1,1,3]. Tap (0,-1), (1,1), (2,3). Each satisfies y=2x-1 and the set has one pair per x. Reachable, within the small-set limits (3 numbers each). Y is not given in the question, so the Y set is inferred from the rule's outputs, which is a reasonable reading.",
+      "predicate": "extra-pairs",
+      "predicate_meaning": "Selected pairs that are not in X×Y at all",
+      "hint": "Substitute each x into $y = 2x - 1$ and compute y. Only a pair whose y matches that result belongs in the set.",
+      "hint_step": 2,
+      "why": "It is in the can_emit table for relation mode. It fires when the student taps a pair of X×Y that the rule leaves out, such as (0,1). The hint's description says 'not in X×Y at all', which is wrong: these pairs are in X×Y, they just fail the rule. The hint text itself is mathematically right and doesn't give the answer. But it says 'Only a pair whose y matches that result belongs', which nearly directs the student to the answer. The mismatch between the predicate description and the situation makes this a risky hint, so it is rejected."
+    },
+    {
+      "key": "q:pp3u1-2-2:w001#hint:arrows-reversed",
+      "question_id": "q:pp3u1-2-2:w001",
+      "template_id": "wt:pp3u1-2-2:drill-1-first",
+      "lo_id": "lo:pp3u1-2-2",
+      "kind": "arrow_builder",
+      "stem": "If $X=\\{1,2,3\\}$, $Y=\\{12,21,47,52\\}$ and R is the relation from X to Y where a R b means: a is a digit of b, for each $a\\in X$, $b\\in Y$. Represent R by an arrow diagram: tap an element of X, then the element of Y it is related to.",
+      "reading": {
+        "X": [
+          1,
+          2,
+          3
+        ],
+        "Y": [
+          12,
+          21,
+          47,
+          52
+        ],
+        "pairs": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            21
+          ],
+          [
+            2,
+            12
+          ],
+          [
+            2,
+            21
+          ],
+          [
+            2,
+            52
+          ]
+        ]
+      },
+      "construction": "Draw five arrows: 1→12, 1→21, 2→12, 2→21, 2→52. Element 3 gets no arrow (it is a digit of none of 12, 21, 47, 52) and 47 receives none. This satisfies the limit of at most 12 pairs.",
+      "predicate": "arrows-reversed",
+      "predicate_meaning": "Arrows drawn the wrong way round — from the second element of a pair to the first",
+      "hint": "Arrows go from the element of X (the first in the pair) to the element of Y (the second).",
+      "hint_step": 2,
+      "why": "X and Y are different sets and the student taps X first and then Y, so an arrow cannot be drawn from Y to X. Reversal can only occur for a relation on one set, so the predicate cannot fire here and the hint would never be shown."
+    },
+    {
+      "key": "q:pp3u1-4-3:w003#hint:slope-inverted",
+      "question_id": "q:pp3u1-4-3:w003",
+      "template_id": "wt:pp3u1-4-3:drill-4-3",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $\\ell(x) = -2x$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": -2,
+        "b": 0
+      },
+      "construction": "Equation mode, y = -2x. Drag handles to lattice points (0,0) and (1,-2) (or (-1,2)); the line through them has m=-2, b=0. Neither is at the starting handle positions (-3,-2) or (1,1), and all within the default ±5 board.",
+      "predicate": "slope-inverted",
+      "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+      "hint": "Use your table: for each step of 1 to the right, how many units does the line move up or down?",
+      "hint_step": 2,
+      "why": "Fires with m=-1/2 (e.g. (0,0),(2,-1)), but the hint says 'Use your table' and this question has no table, so the student has nothing to refer to."
+    },
+    {
+      "key": "q:pp3u1-4-3:w003#hint:vertical-line",
+      "question_id": "q:pp3u1-4-3:w003",
+      "template_id": "wt:pp3u1-4-3:drill-4-3",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $\\ell(x) = -2x$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": -2,
+        "b": 0
+      },
+      "construction": "Equation mode, y = -2x. Drag handles to lattice points (0,0) and (1,-2) (or (-1,2)); the line through them has m=-2, b=0. Neither is at the starting handle positions (-3,-2) or (1,1), and all within the default ±5 board.",
+      "predicate": "vertical-line",
+      "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+      "hint": "Each x has exactly one image, so the graph cannot be vertical. Use the table of pairs.",
+      "hint_step": 2,
+      "why": "Can fire (two points with the same x), and the reasoning about one image per x is right, but it points to 'the table of pairs', which this question doesn't provide."
+    },
+    {
+      "key": "q:pp3u1-4-3:w004#hint:vertical-line",
+      "question_id": "q:pp3u1-4-3:w004",
+      "template_id": "wt:pp3u1-4-3:drill-5-1",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $f(x) = 5$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": 0,
+        "b": 5
+      },
+      "construction": "Equation mode, m=0, b=5 on the default board (−5..5). Drag the handles to (-1,5) and (2,5), which are lattice points on y=5. Neither is at the starting positions (-3,-2) or (1,1), and the pipeline rule only restricts points mode. Any two points with y=5 are accepted. m=0 is a whole number and b=5 is within −5..5, so the spec is valid.",
+      "predicate": "vertical-line",
+      "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+      "hint": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?",
+      "hint_step": 1,
+      "why": "It can fire when both points share an x. But the hint says every x has the same image and that the points need different x and the same y. That is the construction of the answer, a horizontal line, so it gives the answer away."
+    },
+    {
+      "key": "q:pp3u1-4-3:w004#hint:slope-sign-flipped",
+      "question_id": "q:pp3u1-4-3:w004",
+      "template_id": "wt:pp3u1-4-3:drill-5-1",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $f(x) = 5$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": 0,
+        "b": 5
+      },
+      "construction": "Equation mode, m=0, b=5 on the default board (−5..5). Drag the handles to (-1,5) and (2,5), which are lattice points on y=5. Neither is at the starting positions (-3,-2) or (1,1), and the pipeline rule only restricts points mode. Any two points with y=5 are accepted. m=0 is a whole number and b=5 is within −5..5, so the spec is valid.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "hint": "Compare the images in your table: do they change as x changes?",
+      "hint_step": 2,
+      "why": "The correct slope is 0, so there is no sign to flip. A line with slope -0 is the correct slope and cannot fire this predicate. The hint's table-of-images advice does not match any student error here. / The correct gradient is 0, and its negative is also 0, so a sign-flipped line is the correct line. The predicate cannot fire for a student who has made an error here. The hint also refers to a table that does not exist on this widget."
+    },
+    {
+      "key": "q:pp3u1-4-3:w005#hint:vertical-line",
+      "question_id": "q:pp3u1-4-3:w005",
+      "template_id": "wt:pp3u1-4-3:drill-5-2",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $f(x) = -4$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": 0,
+        "b": -4
+      },
+      "construction": "Equation mode with m=0, b=-4: drag the handles to (0,-4) and (2,-4); the line is horizontal y=-4. Both points are lattice points in range and avoid the (-3,-2) and (1,1) starting spots.",
+      "predicate": "vertical-line",
+      "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+      "hint": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?",
+      "hint_step": 1,
+      "why": "A student who confuses f(x) = -4 with x = -4 and places both points at x = -4 gets a vertical line, so the predicate can fire. The hint says the points need different x but the same y. That is the construction of the answer, so it gives the step away. It also asks 'does that give a vertical line?' while describing a horizontal one, which is muddled. / Fires for a vertical line such as x=-4, from a student who mixed up x and y. The hint says the points have different x and the same y. That states the key step (a constant output means a horizontal line) and nearly gives the answer's construction, so the student has nothing left to work out."
+    },
+    {
+      "key": "q:pp3u1-4-3:w006#hint:vertical-line",
+      "question_id": "q:pp3u1-4-3:w006",
+      "template_id": "wt:pp3u1-4-3:drill-5-3",
+      "lo_id": "lo:pp3u1-4-3",
+      "kind": "line_drawer",
+      "stem": "Represent graphically the function $f(x) = 0$. Drag the two points so the line is the graph.",
+      "reading": {
+        "mode": "equation",
+        "m": 0,
+        "b": 0
+      },
+      "construction": "Equation mode with m=0, b=0 (the x-axis, y=0). Drag the handles to (-2,0) and (3,0): both are lattice points on y=0 inside ±5, and neither is a start handle position (-3,-2) or (1,1).",
+      "predicate": "vertical-line",
+      "predicate_meaning": "A vertical line, which has no slope and cannot be written y = mx + c",
+      "hint": "Every x has the same image, so the points have different x but the same y. Does that give a vertical line?",
+      "hint_step": 1,
+      "why": "Fires with two points of equal x, e.g. (2,0) and (2,3). The hint says the points have different x but the same y, which describes a horizontal line, not a vertical one. It is mathematically wrong and would confuse a student who built a vertical line. It also says every x has the same image, which is the actual answer's property. / Fires on two points with the same x, e.g. (2,-1) and (2,3). The hint says the points have different x but the same y, and that describes a horizontal line, which is the correct answer here. It is mathematically wrong for a vertical line, and it also gives away the construction. It would mislead the student who built the vertical line."
+    },
+    {
+      "key": "q:pp3u10-1-1:w002#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w002",
+      "template_id": "wt:pp3u10-1-1:drill-1-3",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\overset{\\frown}{AC}) = 60^\\circ$, with C on the semicircle ACB. Complete: $m(\\overset{\\frown}{BC}) = m(\\overset{\\frown}{ACB}) - m(\\overset{\\frown}{AC}) = 180^\\circ - \\ldots\\ldots = \\ldots\\ldots^\\circ$ (Why?). Drag the points to set the central angle that gives the measure of arc BC.",
+      "reading": {
+        "ask": "central",
+        "target": 120
+      },
+      "construction": "AB is a diameter, so semicircle = 180°, and arc BC = 180° − 60° = 120°. Ask is central, so drag A and B so the arc AB they cut off (the one C faces) is 120° (e.g. A at 90°, B at 210° on the circle), with C on the far side. The inscribed angle ACB then reads 60°, and the central angle is 120°, a multiple of 5 within 10–350. Reachable.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The measure of the arc is its central angle. Check which angle you have set.",
+      "hint_step": 4,
+      "why": "For target central 120, the predicate would fire when the inscribed angle is 120 (the arc is 240) or the central angle is 60. A student with arc 240 has far more likely picked the far-side arc (the other-arc case), so this hint would often be the wrong diagnosis. Students computing 180 − 60 rarely confuse inscribed and central angles here, and the hint is vague."
+    },
+    {
+      "key": "q:pp3u10-1-1:w003#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w003",
+      "template_id": "wt:pp3u10-1-1:drill-1-4",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M, D is on the semicircle AB and $m(\\overset{\\frown}{AD}) = 40^\\circ$. Complete: $m(\\overset{\\frown}{DCB})$ = measure of circle $- m(\\overset{\\frown}{DB})$. Drag the points to set the measure of the major arc DCB (the long way round from D to B).",
+      "reading": {
+        "ask": "central",
+        "target": 220
+      },
+      "construction": "AB is a diameter, so arc DB = 180 − 40 = 140, and major arc DCB = 360 − 140 = 220. Use ask=central. Drag A and B so the arc that C faces (the long way from D to B) reads 220°, with the inscribed angle at 110°. 220 is within the central range 10–350 and is a multiple of 5.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure equals its central angle. Check which angle you have set.",
+      "hint_step": 4,
+      "why": "The table lists it for central. But it fires only when the setting is the half-angle or double of the target, such as an arc of 110 where 220 is wanted. This question has no inscribed angle in it, so a student rarely makes that slip. The hint about which angle was set does not match the likely errors, which are 140 or an arithmetic slip. It could mislead."
+    },
+    {
+      "key": "q:pp3u10-1-1:w006#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w006",
+      "template_id": "wt:pp3u10-1-1:drill-2-4",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$, with C on the semicircle ACB. Complete: $m(\\widehat{BC}) = \\ldots^\\circ$. Drag the points to set the measure of arc BC.",
+      "reading": {
+        "ask": "central",
+        "target": 130
+      },
+      "construction": "Choose ask=central, target 130. Arc AB is a semicircle (180°) and arc AC=50°, so arc BC = 180-50 = 130°. Place A and B diametrically opposite, put C on the semicircle 50° from A, and set the arc/central angle for BC to 130° (a multiple of 5, within 10–350). Reachable.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Start from the semicircle on the diameter and take away the known arc.",
+      "hint_step": 1,
+      "why": "It states the full solution method (semicircle minus the known arc), which is the one step the student has to find. That gives the answer away instead of helping her find where her step went wrong."
+    },
+    {
+      "key": "q:pp3u10-1-1:w008#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w008",
+      "template_id": "wt:pp3u10-1-1:drill-2-6",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\widehat{CB}) = 130^\\circ$ and $m(\\widehat{BD}) = 3x + 5 = 80^\\circ$, with C and D on opposite sides of B. Complete: $m(\\widehat{CBD}) = \\ldots$. Drag the points to set the measure of arc CBD.",
+      "reading": {
+        "ask": "central",
+        "target": 210
+      },
+      "construction": "ask=central. Arc CBD = arc CB + arc BD = 130 + 80 = 210 degrees (C and D on opposite sides of B, so arcs add). Drag the points so the marked arc measures 210 degrees (the reflex arc through B; its inscribed angle then shows 105). Target 210 is a multiple of 5 within 10-350.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure is its central angle itself. Check which angle you have set.",
+      "hint_step": 3,
+      "why": "This fires when the student sets the inscribed angle or half the arc (e.g. arc 105). This question has no inscribed angle in it. Its natural errors are 150, 50 or 130, from the other arc or a wrong combination, not halving. The hint is aimed at a mistake the student probably did not make. Its wording about the 'central angle' is also confusing for a 210 degree reflex arc."
+    },
+    {
+      "key": "q:pp3u10-1-1:w009#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w009",
+      "template_id": "wt:pp3u10-1-1:drill-2-7",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AD}) = 100^\\circ$. Arc ACD goes from A through C and B to D (the long way round). Complete: $m(\\widehat{ACD}) = \\ldots$. Drag the points to set the measure of arc ACD.",
+      "reading": {
+        "ask": "central",
+        "target": 260
+      },
+      "construction": "Set ask=central. Arc ACD runs A→B (180°) then B→D (80°), so it is 360−100 = 260°. Drag A, B, C so the arc shown is 260° (central angle 260, multiple of 10 within 10–350), and the inscribed angle on the other side reads 130°. Reachable.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Subtract the small arc from the measure of the whole circle.",
+      "hint_step": 2,
+      "why": "Fires for any unpatterned miss, so the hint does not fit. 'Subtract the small arc from the whole circle' is the solution step (360−100) and gives the method away. It would also mislead a student whose error was something else."
+    },
+    {
+      "key": "q:pp3u10-1-1:w010#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w010",
+      "template_id": "wt:pp3u10-1-1:drill-2-8",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$. Arc ADC goes from A through D and B to C (the long way round). Complete: $m(\\widehat{ADC}) = \\ldots$. Drag the points to set the measure of arc ADC.",
+      "reading": {
+        "ask": "central",
+        "target": 310
+      },
+      "construction": "Arc AC (short) is 50°, so arc ADC the long way round is 360−50 = 310°. Set ask=central with the arc/central angle at 310° (a multiple of 5, within 10–350): drag C so the arc from A through D and B to C measures 310°.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure is its central angle itself. Check which angle you have set.",
+      "hint_step": 2,
+      "why": "Fires when the student sets half the target (155°). Nothing in this question involves an inscribed angle, so a student rarely makes this error. The hint about an inscribed angle versus the arc doesn't help someone who has misread the arcs or the circle total, so it is mismatched."
+    },
+    {
+      "key": "q:pp3u10-1-1:w010#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w010",
+      "template_id": "wt:pp3u10-1-1:drill-2-8",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$. Arc ADC goes from A through D and B to C (the long way round). Complete: $m(\\widehat{ADC}) = \\ldots$. Drag the points to set the measure of arc ADC.",
+      "reading": {
+        "ask": "central",
+        "target": 310
+      },
+      "construction": "Arc AC (short) is 50°, so arc ADC the long way round is 360−50 = 310°. Set ask=central with the arc/central angle at 310° (a multiple of 5, within 10–350): drag C so the arc from A through D and B to C measures 310°.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Subtract the small arc from the measure of the whole circle.",
+      "hint_step": 2,
+      "why": "It fires for any miss with no recognisable pattern. The hint 'Subtract the small arc from the measure of the whole circle' states the solution step (360−50) and so gives the answer away. It may also not fit a student who made a different error."
+    },
+    {
+      "key": "q:pp3u10-3-1:w001#hint:off-target",
+      "question_id": "q:pp3u10-3-1:w001",
+      "template_id": "wt:pp3u10-3-1:think-and-discuss-1-2",
+      "lo_id": "lo:pp3u10-3-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, $m(\\text{arc } AB) = 100^\\circ$. Find the measure of the inscribed angle $\\angle ACB$ that includes arc $AB$. Drag A, B and C on the circle so that arc $AB$ is $100^\\circ$ and the inscribed angle shows its measure. Then move C around: what do you notice about $\\angle ACB$?",
+      "reading": {
+        "ask": "inscribed",
+        "target": 50
+      },
+      "construction": "ask=inscribed, target=50. Place A and B so the arc AB that C faces is 100° (central angle AOB = 100°), and put C on the opposite (major) arc so it faces the 100° arc. The display shows arc AB = 100° and ∠ACB = 50°, and stays 2:1 as C moves along the major arc.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Use the given arc of $100^\\circ$ and the rule that an inscribed angle is half of its arc to find the angle, then set it.",
+      "hint_step": 3,
+      "why": "The hint says to take half of the 100° arc and set that. This states the rule and almost hands over the number 50, so the student has no step left to do."
+    },
+    {
+      "key": "q:pp3u10-5-1:w001#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-5-1:w001",
+      "template_id": "wt:pp3u10-5-1:think-and-discuss-1-1",
+      "lo_id": "lo:pp3u10-5-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, the inscribed angle $\\angle A$ measures $60^\\circ$ and faces arc BCD. Drag A, B and C so that the arc BCD (the arc that $\\angle A$ faces) is the one asked for: find $m(\\text{arc } BCD)$.",
+      "reading": {
+        "ask": "central",
+        "target": 120
+      },
+      "construction": "Choose ask=central, target 120: place B and D (the arc ends) on the circle so arc BCD = 120°, and put A on the opposite major arc. Then the inscribed angle at A is 60° and the arc it faces is 120°. Reachable because 120 is a multiple of 5 within 10–350.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "Check which measure you set: the arc is related to the inscribed angle facing it by a factor of 2.",
+      "hint_step": 2,
+      "why": "Fires when the student sets the arc to 60 (the given angle). The hint is correct, but it states the factor-of-2 relation, which is the rule the student has to supply, so it gives away the key step."
+    },
+    {
+      "key": "q:pp3u10-5-1:w003#hint:arc-given-as-angle",
+      "question_id": "q:pp3u10-5-1:w003",
+      "template_id": "wt:pp3u10-5-1:think-and-discuss-1-3",
+      "lo_id": "lo:pp3u10-5-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, m(arc BAD) = $240^\\circ$. Set the inscribed angle ∠BCD that faces arc BAD, so that it shows $m(\\angle BCD)$.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 120
+      },
+      "construction": "ask=inscribed, target=120: drag A, B, C so the arc C faces measures 240° and the displayed angle ∠BCD is 120° (half of 240). 120 is a multiple of 5 within 5–175.",
+      "predicate": "arc-given-as-angle",
+      "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+      "hint": "Check what you set: the inscribed angle is not equal to its arc, it is a fraction of it.",
+      "hint_step": 2,
+      "why": "A student who gives the arc as the angle would set 240, but the inscribed angle range is 5–175, so 240 cannot be set. The predicate cannot realistically fire for this question, so the hint is never shown."
+    },
+    {
+      "key": "q:pp3u10-7-1:w002#hint:arc-given-as-angle",
+      "question_id": "q:pp3u10-7-1:w002",
+      "template_id": "wt:pp3u10-7-1:drill-1-2",
+      "lo_id": "lo:pp3u10-7-1",
+      "kind": "angle_setter",
+      "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 90
+      },
+      "construction": "Tangent is perpendicular to diameter AB at B, so ∠ABC = 90°, equal to the inscribed angle on the semicircle. Set ask=inscribed, target=90: put A and B diametrically opposite (e.g. A=(-1,0), B=(1,0) on the unit circle) and C at (0,1). Arc AB faced by C is 180° and ∠ACB = 90°.",
+      "predicate": "arc-given-as-angle",
+      "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+      "hint": "The angle is a fraction of the arc it faces, not the arc itself.",
+      "hint_step": 2,
+      "why": "It would need the inscribed angle to read 180° (arc value as angle), but the inscribed range is 5–175, so it cannot fire here. The 'fraction of the arc' wording would also be fine in itself, but the predicate is unreachable."
+    },
+    {
+      "key": "q:pp3u10-7-1:w002#hint:other-arc",
+      "question_id": "q:pp3u10-7-1:w002",
+      "template_id": "wt:pp3u10-7-1:drill-1-2",
+      "lo_id": "lo:pp3u10-7-1",
+      "kind": "angle_setter",
+      "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 90
+      },
+      "construction": "Tangent is perpendicular to diameter AB at B, so ∠ABC = 90°, equal to the inscribed angle on the semicircle. Set ask=inscribed, target=90: put A and B diametrically opposite (e.g. A=(-1,0), B=(1,0) on the unit circle) and C at (0,1). Arc AB faced by C is 180° and ∠ACB = 90°.",
+      "predicate": "other-arc",
+      "predicate_meaning": "Set the arc on the far side; C faces the arc across from it",
+      "hint": "Check that C faces the arc that lies between the sides of the angle of tangency.",
+      "hint_step": 1,
+      "why": "Both arcs AB are 180° because AB is a diameter, so C on the far side gives the same 90° angle and is correct. The predicate cannot fire as an error, and the hint about the 'other arc' would be misleading."
+    },
+    {
+      "key": "q:pp3u5-2-2:w001#hint:wrong-quadrant",
+      "question_id": "q:pp3u5-2-2:w001",
+      "template_id": "wt:pp3u5-2-2:drill-1-1",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(2, 4) and B(6, 0). Plot the point C.",
+      "reading": {
+        "target": [
+          4,
+          2
+        ]
+      },
+      "construction": "Tap the lattice point (4,2), the midpoint ((2+6)/2, (4+0)/2). It is inside the −5..5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add the coordinates with their signs before halving.",
+      "hint_step": 2,
+      "why": "Fires on a reflection such as (-4,2). All the given coordinates are positive, so a sign error is not a plausible cause. The 'add with their signs' hint addresses a mistake the student has no reason to make."
+    },
+    {
+      "key": "q:pp3u5-2-2:w002#hint:off-target",
+      "question_id": "q:pp3u5-2-2:w002",
+      "template_id": "wt:pp3u5-2-2:drill-1-2",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(7, -5) and B(-3, 5). Plot the point C.",
+      "reading": {
+        "target": [
+          2,
+          0
+        ]
+      },
+      "construction": "Midpoint = ((7+(-3))/2, (-5+5)/2) = (2,0). Tap lattice point (2,0); it lies within x -4..8, y -6..6.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates.",
+      "hint_step": 1,
+      "why": "It fires for any non-matching, non-swapped, non-reflected tap, such as (4,0). The hint then states the midpoint rule itself (average the x's, average the y's). That is the very step the question tests, so it gives the method away instead of helping the student find their error."
+    },
+    {
+      "key": "q:pp3u5-2-2:w003#hint:wrong-quadrant",
+      "question_id": "q:pp3u5-2-2:w003",
+      "template_id": "wt:pp3u5-2-2:drill-1-3",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(-3, 6) and B(3, -6). Plot the point C.",
+      "reading": {
+        "target": [
+          0,
+          0
+        ]
+      },
+      "construction": "Midpoint = ((-3+3)/2, (6+-6)/2) = (0,0). Tap the origin, which is a lattice point on the board (x -4..4, y -6..6).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add the coordinates with their signs before halving.",
+      "hint_step": 2,
+      "why": "The target is the origin, so reflecting it gives the origin itself. A wrong point can never be a reflection of the target, so this predicate cannot fire for this question. The hint is also pitched at a sign error that does not apply here."
+    },
+    {
+      "key": "q:pp3u6-1-2:w003#hint:slope-sign-flipped",
+      "question_id": "q:pp3u6-1-2:w003",
+      "template_id": "wt:pp3u6-1-2:exercise-2",
+      "lo_id": "lo:pp3u6-1-2",
+      "kind": "line_drawer",
+      "stem": "Find the solution set of the pair of equations $y = 3x - 1$, $x - y + 1 = 0$ graphically. Drag the four points to draw both lines.",
+      "reading": {
+        "mode": "system",
+        "m": null,
+        "b": null,
+        "through": null,
+        "lines": [
+          {
+            "m": 3,
+            "b": -1
+          },
+          {
+            "m": 1,
+            "b": 1
+          }
+        ]
+      },
+      "construction": "System mode. Line 1 (y = 3x - 1): handles at (0,-1) and (1,2). Line 2 (x - y + 1 = 0, i.e. y = x + 1): handles at (0,1) and (1,2). Both lines pass through (1,2), so the solution set is {(1,2)}. All points are lattice points within the board.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "hint": "A line leans the wrong way. Write the second equation as y = ... and see whether y rises or falls as x grows.",
+      "hint_step": 2,
+      "why": "The predicate can fire for either line, but the hint names only 'the second equation'. A student who flipped the first line (slope -3) is sent to the wrong equation. It is also a weak fit for the first line, which is already given as y = 3x - 1."
+    },
+    {
+      "key": "q:pp3u6-2-1:w001#hint:opens-wrong-way",
+      "question_id": "q:pp3u6-2-1:w001",
+      "template_id": "wt:pp3u6-2-1:drill-1",
+      "lo_id": "lo:pp3u6-2-1",
+      "kind": "curve_sketcher",
+      "stem": "Draw the graphical form of the function $f$ where $f(x) = x^2 + 2x + 1$ in the interval $[-4, 2]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 + 2x + 1 = 0$.",
+      "reading": {
+        "fn": "quadratic",
+        "coefs": [
+          1,
+          2,
+          1
+        ]
+      },
+      "construction": "Board x -4..2, y -2..10, step 1. Draw one left-to-right stroke along y=(x+1)^2 across the whole interval: points (-4,9),(-3,4),(-2,1),(-1,0),(0,1),(1,4),(2,9). Vertex touches the x-axis at (-1,0), so the solution set {-1} is read from the drawing. Curve stays within the board (max y=9 ≤ 10). Reachable as a freehand curve; the solution-set part is a separate typed answer the sketch only supports.",
+      "predicate": "opens-wrong-way",
+      "predicate_meaning": "The parabola opens the opposite way — the sign of a",
+      "hint": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward.",
+      "hint_step": 3,
+      "why": "Fires when the student draws a downward-opening parabola. The hint says the sign of the x² coefficient decides the direction, which is correct and gives nothing away. It's a good fit for a student who draws it opening down. However, the claimed list gives no diagnosis, and the hint is valid for quadratic. On reflection the hint is mathematically right and non-revealing, so it would be ok, but this predicate is only a method hint here; marking false is not justified. Correction: ok should be true."
+    },
+    {
+      "key": "q:pp3u7-1-2:w003#hint:sign-flipped",
+      "question_id": "q:pp3u7-1-2:w003",
+      "template_id": "wt:pp3u7-1-2:drill-1-d",
+      "lo_id": "lo:pp3u7-1-2",
+      "kind": "number_line_marker",
+      "stem": "Find the set of zeroes of the function $f(x)=x^4-x^2$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]. Factor: x^4 - x^2 = x^2(x-1)(x+1), so the zeroes are x = -1, 0, 1. Tap -1, 0 and 1. All are whole numbers inside the range and there are 3 targets, within the 1-4 limit.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve each factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?",
+      "hint_step": 3,
+      "why": "The answer set {-1,0,1} is symmetric under negation, so a sign error cannot be told apart from the right answer. Negating a marked value gives either a correct value or a plain missed/extra error. The predicate has no meaningful way to fire on this question, so its hint would mislead the student."
+    },
+    {
+      "key": "q:pp3u7-2-2:w002#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w002",
+      "template_id": "wt:pp3u7-2-2:exercise-1-n1",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_1(x)=\\frac{1}{x}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap only 0. 0 is a whole number within the range, so the answer is reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Set the denominator equal to zero and solve; check the sign of your value.",
+      "hint_step": 2,
+      "why": "The only target is 0, and its negative is also 0, so a sign flip can never be built. The predicate never fires for this question."
+    },
+    {
+      "key": "q:pp3u7-2-2:w004#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w004",
+      "template_id": "wt:pp3u7-2-2:exercise-2-n1",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_1(x)=\\frac{3}{x^2-x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0,
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap 0 and 1. x^2-x = x(x-1) = 0 gives x=0 or x=1. Both are whole numbers inside the range, 2 targets (within 1-4).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The correct set {0,1} contains 0, which is its own negative, so a sign-flip would give {0,-1}. The hint's cue is the (x-a)=0 -> x=-a error. That could fire if the student marks -1 for the factor (x-1), but the extra mark at -1 would mostly trigger extra-values or be ambiguous. The hint is also less well-targeted here, since the student hardly has a sign confusion with such simple factors. When in doubt, false."
+    },
+    {
+      "key": "q:pp3u7-2-2:w005#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w005",
+      "template_id": "wt:pp3u7-2-2:exercise-2-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{2x-3}{x^2-1}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -1,
+          1
+        ]
+      },
+      "construction": "Denominator x^2-1=(x-1)(x+1)=0 gives x=1 and x=-1. Numerator 2x-3 is zero at 1.5, which is irrelevant. Mode points, range [-6,6], mark -1 and 1. Both are whole numbers in range, so reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The answer set {-1,1} is symmetric, so a sign-flipped mark yields the same set and the predicate never fires for this question. The hint would never be shown."
+    },
+    {
+      "key": "q:pp3u7-2-2:w007#hint:missed-values",
+      "question_id": "q:pp3u7-2-2:w007",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{5}{x+2}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], tap only -2 (x+2=0 gives x=-2). Whole number within range, single target, valid.",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "hint": "Find every value that makes the denominator equal zero.",
+      "hint_step": 2,
+      "why": "It can only fire if the student marks nothing, or a subset of a one-element set. The hint is mathematically fine and gives nothing away, but it barely fits this question's single answer. The 'every value' wording is misleading."
+    },
+    {
+      "key": "q:pp3u7-2-2:w007#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w007",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{5}{x+2}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], tap only -2 (x+2=0 gives x=-2). Whole number within range, single target, valid.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve $x+2=0$ by moving the constant across with its sign changed.",
+      "hint_step": 2,
+      "why": "The hint is correct, but it says 'moving the constant across with its sign changed' for x+2=0. That nearly states the answer, x=-2, and is a step-by-step solution of this exact equation. It leaks the answer."
+    },
+    {
+      "key": "q:pp3u7-2-2:w008#hint:extra-values",
+      "question_id": "q:pp3u7-2-2:w008",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n3",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_3(x)=\\frac{x}{x^3-4x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          0,
+          2
+        ]
+      },
+      "construction": "x/(x^3-4x) = x/(x(x-2)(x+2)); the denominator is zero at x = 0, -2, 2. Points mode, range [-6,6]: tap -2, 0 and 2 (3 targets, all whole numbers inside the range). Answer set {-2,0,2}.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Only zeroes of the denominator are removed; the numerator does not matter.",
+      "hint_step": 2,
+      "why": "Fires when the student marks a value outside {-2,0,2}, e.g. 4 from x²=4, or 3. The hint says the numerator does not matter. That does not address those errors. This numerator's zero, x=0, is also a denominator zero, so the hint could push a student to unmark 0, which is correct to remove. It does not help this construction and could mislead."
+    },
+    {
+      "key": "q:pp3u7-2-2:w008#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w008",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n3",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_3(x)=\\frac{x}{x^3-4x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          0,
+          2
+        ]
+      },
+      "construction": "x/(x^3-4x) = x/(x(x-2)(x+2)); the denominator is zero at x = 0, -2, 2. Points mode, range [-6,6]: tap -2, 0 and 2 (3 targets, all whole numbers inside the range). Answer set {-2,0,2}.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The target set {-2,0,2} is symmetric, so negating every value gives the same set. A fully sign-flipped answer is therefore correct and the predicate cannot fire for this error. The 'sign flipped' reading would only arise as a partial set, which is a missed-values case. The hint is not useful here."
+    },
+    {
+      "key": "q:pp3u7-2-2:w010#hint:extra-values",
+      "question_id": "q:pp3u7-2-2:w010",
+      "template_id": "wt:pp3u7-2-2:exercise-4-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{3x}{x^2-x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0,
+          1
+        ]
+      },
+      "construction": "Denominator x^2 - x = x(x-1) is zero at x=0 and x=1. Points mode, range [-6,6]: tap 0 and 1. Both are whole numbers inside the range, 2 targets (within 1-4), so valid.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Only zeroes of the denominator are removed; the numerator does not matter.",
+      "hint_step": 2,
+      "why": "Can fire (e.g. tapping 3, or -1 and 1 both). But the hint blames the numerator, and here the numerator's zero (x=0) is already a denominator zero, so a numerator-based error would not appear as an extra value. The hint would mostly be misdirected for the actual errors, so it does not help find the wrong step."
+    },
+    {
+      "key": "q:pp3u7-3-1:w001#hint:sign-flipped",
+      "question_id": "q:pp3u7-3-1:w001",
+      "template_id": "wt:pp3u7-3-1:drill-1-2",
+      "lo_id": "lo:pp3u7-3-1",
+      "kind": "number_line_marker",
+      "stem": "The common domain of the functions $n_1, n_2$, where $n_1(x)=\\frac{x-2}{x^2-4}$ and $n_2(x)=\\frac{1}{x+1}$, is $\\mathbb{R}$ minus the values x cannot take in either function. Mark on the number line every value that is NOT in the common domain.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          -1,
+          2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], targets [-2,-1,2]. n1 has x^2-4=(x-2)(x+2), so x=2 and x=-2 are excluded. n2 has x+1=0, so x=-1 is excluded. Tap -2, -1 and 2. That is 3 targets, all whole numbers inside the range.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve each factor of the denominator equal to zero, such as $x+2=0$, and watch the sign of the value you get.",
+      "hint_step": 2,
+      "why": "The hint's example, x+2=0, is one of this question's own denominator factors. It points the student to the target -2. It also reads as the exact step to repeat, so the hint partly gives the answer away. The predicate can fire here, for example if the student marks 1 instead of -1, but the example is too close to the answer."
+    },
+    {
+      "key": "q:pp3u8-1-1:w001#hint:sign-flipped",
+      "question_id": "q:pp3u8-1-1:w001",
+      "template_id": "wt:pp3u8-1-1:drill-3-a",
+      "lo_id": "lo:pp3u8-1-1",
+      "kind": "number_line_marker",
+      "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $A$ = the event of getting an even number: tap on the number line every outcome in $A$.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          2,
+          4,
+          6
+        ]
+      },
+      "construction": "Points mode, range [-6,6]. Tap 2, 4 and 6 — all within range, whole numbers, 3 targets (≤4). Reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check each marked outcome against the condition of the event.",
+      "hint_step": 2,
+      "why": "Fires only if student marks negatives like -2,-4,-6. Nobody holding a misconception about even numbers in a die's sample space would tap negatives, and the predicate description (x−a=0 read as x=−a) is irrelevant here; the hint is generic and does not address a sign issue. The sample space has only positive outcomes, so this is a stray mis-tap rather than a sign misconception."
+    },
+    {
+      "key": "q:pp3u8-1-1:w002#hint:sign-flipped",
+      "question_id": "q:pp3u8-1-1:w002",
+      "template_id": "wt:pp3u8-1-1:drill-3-b",
+      "lo_id": "lo:pp3u8-1-1",
+      "kind": "number_line_marker",
+      "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $B$ = the event of getting an odd number: tap on the number line every outcome in $B$.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          1,
+          3,
+          5
+        ]
+      },
+      "construction": "Points mode, range [-6,6]. Tap 1, 3 and 5. That is 3 targets, all whole numbers inside the range, so it is valid.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check each marked outcome against the condition of the event.",
+      "hint_step": 2,
+      "why": "It can fire, for example on -1, -3 and -5. But the sample space is positive, and a sign flip is not the likely error here. The hint does not point at the sign, so it does not help the student find the step they got wrong."
+    },
+    {
+      "key": "q:pp3u8-1-1:w003#hint:sign-flipped",
+      "question_id": "q:pp3u8-1-1:w003",
+      "template_id": "wt:pp3u8-1-1:drill-3-c",
+      "lo_id": "lo:pp3u8-1-1",
+      "kind": "number_line_marker",
+      "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $C$ = the event of getting a prime even number: tap on the number line every outcome in $C$.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          2
+        ]
+      },
+      "construction": "Points mode, range [-6,6]. Primes in S are 2,3,5; evens are 2,4,6; both: only 2. Tap 2 only (targets=[2]); within range, a whole number, 1 target.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check each marked outcome against both conditions.",
+      "hint_step": 2,
+      "why": "It can fire, e.g. if the student taps -2 instead of 2. But the hint is generic and does not point to the sign slip. The sign-flip idea (x−a=0 read as x=−a) has nothing to do with a die outcome question, so the hint does not help the student find the step they got wrong. Rejected."
+    },
+    {
+      "key": "q:pp3u8-2-2:w001#overlap-counted-twice",
+      "question_id": "q:pp3u8-2-2:w001",
+      "template_id": "wt:pp3u8-2-2:drill-2-1",
+      "lo_id": "lo:pp3u8-2-2",
+      "kind": "venn_builder",
+      "stem": "A classroom contains 40 students. 18 of them read Al-Akhbar newspaper, 15 read Al-Ahram newspaper and 8 read both newspapers. A student is selected randomly. Fill in the number of students in each region of the Venn diagram, then find the probability that the student reads Al-Akhbar newspaper only.",
+      "reading": {
+        "sets": 2,
+        "labels": [
+          "Al-Akhbar",
+          "Al-Ahram"
+        ],
+        "mode": "counts",
+        "total": 40,
+        "regions": {
+          "a": 10,
+          "b": 7,
+          "ab": 8,
+          "n": 15
+        },
+        "clues": {
+          "a": 18,
+          "b": 15
+        }
+      },
+      "construction": "Enter a=10 (Al-Akhbar only), b=7 (Al-Ahram only), ab=8 (both), n=15 (neither). Sum = 40 = total. Clues a=10+8=18 and b=7+8=15 are consistent. All values are whole numbers in 0–999. The probability part (10/40 = 1/4) is outside the widget, but the counts are fully buildable.",
+      "predicate": "overlap-counted-twice",
+      "predicate_meaning": "A region's raw set size was entered instead of the count exclusive to it — the overlap counted in twice",
+      "misconception_id": "mc:pp3u8-2-2:only-means-whole-set",
+      "misconception_label": "Counts the whole set A when asked for A only",
+      "misconception_description": "The student takes the 'only' event A - B to be the whole set A, so they use all of A's students and never remove the overlap A ∩ B.",
+      "why": "The predicate can fire here, because clues are present. It fires when a region holds the raw set size (a=18 or b=15) instead of the exclusive count. But the misconception is 'only means whole set A': the student takes A-only to be all of A. A student who enters 18 in the A-only region while also entering 8 in the overlap does double-count the overlap, so some firings would fit. The predicate can't tell this error from a student who simply doesn't subtract, for example one who enters 18 and 15 as raw sizes in both circles. It would also fire for B's raw size, which the misconception (about A only) doesn't cover. The match is partial, and the question asks for counts in every region, not for A only alone. When in doubt, false."
+    }
+  ]
+}

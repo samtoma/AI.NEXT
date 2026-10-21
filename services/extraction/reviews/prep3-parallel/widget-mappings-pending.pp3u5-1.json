@@ -1,0 +1,146 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:pp3u5-2-2:w001#hint:wrong-quadrant",
+      "question_id": "q:pp3u5-2-2:w001",
+      "template_id": "wt:pp3u5-2-2:drill-1-1",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(2, 4) and B(6, 0). Plot the point C.",
+      "reading": {
+        "target": [
+          4,
+          2
+        ]
+      },
+      "construction": "Tap the lattice point (4,2), the midpoint ((2+6)/2, (4+0)/2). It is inside the −5..5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add the coordinates with their signs before halving.",
+      "hint_step": 2,
+      "why": "Fires on a reflection such as (-4,2). All the given coordinates are positive, so a sign error is not a plausible cause. The 'add with their signs' hint addresses a mistake the student has no reason to make."
+    },
+    {
+      "key": "q:pp3u5-2-2:w002#hint:off-target",
+      "question_id": "q:pp3u5-2-2:w002",
+      "template_id": "wt:pp3u5-2-2:drill-1-2",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(7, -5) and B(-3, 5). Plot the point C.",
+      "reading": {
+        "target": [
+          2,
+          0
+        ]
+      },
+      "construction": "Midpoint = ((7+(-3))/2, (-5+5)/2) = (2,0). Tap lattice point (2,0); it lies within x -4..8, y -6..6.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates.",
+      "hint_step": 1,
+      "why": "It fires for any non-matching, non-swapped, non-reflected tap, such as (4,0). The hint then states the midpoint rule itself (average the x's, average the y's). That is the very step the question tests, so it gives the method away instead of helping the student find their error."
+    },
+    {
+      "key": "q:pp3u5-2-2:w003#hint:wrong-quadrant",
+      "question_id": "q:pp3u5-2-2:w003",
+      "template_id": "wt:pp3u5-2-2:drill-1-3",
+      "lo_id": "lo:pp3u5-2-2",
+      "kind": "pair_plotter",
+      "stem": "C is the midpoint of AB, where A(-3, 6) and B(3, -6). Plot the point C.",
+      "reading": {
+        "target": [
+          0,
+          0
+        ]
+      },
+      "construction": "Midpoint = ((-3+3)/2, (6+-6)/2) = (0,0). Tap the origin, which is a lattice point on the board (x -4..4, y -6..6).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add the coordinates with their signs before halving.",
+      "hint_step": 2,
+      "why": "The target is the origin, so reflecting it gives the origin itself. A wrong point can never be a reflection of the target, so this predicate cannot fire for this question. The hint is also pitched at a sign error that does not apply here."
+    },
+    {
+      "key": "q:pp3u5-4-1:w001#intercept-wrong",
+      "question_id": "q:pp3u5-4-1:w001",
+      "template_id": "wt:pp3u5-4-1:draw-from-general-form-advanced",
+      "lo_id": "lo:pp3u5-4-1",
+      "kind": "line_drawer",
+      "stem": "Represent the relation $x + 2y + 2 = 0$ graphically by dragging two points. Find the slope and the length of the part of the y-axis between the origin and the line.",
+      "reading": {
+        "mode": "equation",
+        "m": -0.5,
+        "b": -1
+      },
+      "construction": "x+2y+2=0 gives y=-x/2-1, so m=-1/2 (reciprocal of -2, allowed) and b=-1 (in range). Drag one point to (0,-1) and another to (2,-2) (or (-2,0)). Both are lattice points on the line. The y-axis part from the origin has length 1.",
+      "predicate": "intercept-wrong",
+      "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+      "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "misconception_label": "Reading m and b straight off the equation without isolating y",
+      "misconception_description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "why": "It needs the correct slope -1/2 with a wrong intercept. A student who reads coefficients without isolating y gets the slope wrong too (m=1), so they would not fire it. Correct-slope, wrong-intercept lines come from other slips, such as a sign error on c or forgetting to divide by 2. / This fires when the slope is -1/2 but the intercept is wrong. A student who got -1/2 must have isolated y, so she would normally have the intercept right too. A wrong intercept there is more likely a sign or arithmetic slip, such as b=+1. Reading coefficients without isolating y gives a wrong slope, so this predicate mostly fires for other reasons."
+    },
+    {
+      "key": "q:pp3u5-4-1:w002#intercept-wrong",
+      "question_id": "q:pp3u5-4-1:w002",
+      "template_id": "wt:pp3u5-4-1:draw-from-general-form-basic",
+      "lo_id": "lo:pp3u5-4-1",
+      "kind": "line_drawer",
+      "stem": "Represent the relation $x - 2y + 4 = 0$ graphically by dragging two points. Then read the slope of the line and the length of the part of the y-axis between the origin and the line.",
+      "reading": {
+        "mode": "equation",
+        "m": 0.5,
+        "b": 2
+      },
+      "construction": "Equation mode: drag points (0,2) and (2,3). Both satisfy x-2y+4=0 (slope 0.5, intercept 2). Neither is at the default handle positions (-3,-2) or (1,1). The limits hold: |m| = 0.5 = 1/2, b = 2 in -5..5.",
+      "predicate": "intercept-wrong",
+      "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+      "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "misconception_label": "Reading m and b straight off the equation without isolating y",
+      "misconception_description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "why": "Fires on slope 1/2 with an intercept other than 2. A student who reads coefficients off the unisolated equation takes m=1 here (the x coefficient), so the slope is wrong too. That case lands in off-target, not here. Slope 1/2 with b=4 is not what this misconception produces, so the diagnosis would mostly fire for another error, such as an arithmetic slip in the intercept. / This needs slope 0.5 with an intercept other than 2. A student who reads the constant straight off without isolating y also gets the slope wrong, because the x coefficient is 1, not 1/2. A correct slope with a wrong intercept would mostly come from an arithmetic slip, not from this misconception. Attributing it to this misconception would be wrong."
+    },
+    {
+      "key": "q:pp3u5-4-1:w003#intercept-wrong",
+      "question_id": "q:pp3u5-4-1:w003",
+      "template_id": "wt:pp3u5-4-1:draw-from-general-form-standard",
+      "lo_id": "lo:pp3u5-4-1",
+      "kind": "line_drawer",
+      "stem": "Represent the relation $2x + y - 3 = 0$ graphically by dragging two points. State the slope and the length of the y-intercept.",
+      "reading": {
+        "mode": "equation",
+        "m": -2,
+        "b": 3
+      },
+      "construction": "Rearranged: y = -2x + 3. Equation mode, so drag the two handles to lattice points (0,3) and (2,-1) (avoiding the opening handle spots (-3,-2) and (1,1), though (1,1) is on the line). Slope -2, y-intercept 3 (length 3). Within limits: |m|=2, b=3.",
+      "predicate": "intercept-wrong",
+      "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+      "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "misconception_label": "Reading m and b straight off the equation without isolating y",
+      "misconception_description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "why": "Fires on slope -2 with an intercept other than 3, a parallel line. A student who reads coefficients without isolating y takes slope 2 (not -2) and intercept -3, so this error would not produce a correct slope. The predicate fires for other slips, such as arithmetic errors. / Fires on slope -2 with an intercept other than 3. A student who reads coefficients straight off 2x + y - 3 = 0 gets slope +2 (not -2), so they would not keep the correct slope; this construction would come from a different error."
+    },
+    {
+      "key": "q:pp3u5-4-1:w003#off-target",
+      "question_id": "q:pp3u5-4-1:w003",
+      "template_id": "wt:pp3u5-4-1:draw-from-general-form-standard",
+      "lo_id": "lo:pp3u5-4-1",
+      "kind": "line_drawer",
+      "stem": "Represent the relation $2x + y - 3 = 0$ graphically by dragging two points. State the slope and the length of the y-intercept.",
+      "reading": {
+        "mode": "equation",
+        "m": -2,
+        "b": 3
+      },
+      "construction": "Rearranged: y = -2x + 3. Equation mode, so drag the two handles to lattice points (0,3) and (2,-1) (avoiding the opening handle spots (-3,-2) and (1,1), though (1,1) is on the line). Slope -2, y-intercept 3 (length 3). Within limits: |m|=2, b=3.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither the slope nor the intercept matches",
+      "misconception_id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "misconception_label": "Reading m and b straight off the equation without isolating y",
+      "misconception_description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "why": "Fires when neither slope nor intercept matches and the slope is not a plain sign flip. The coefficient-reading student's line (m=2, b=-3) has slope magnitude 2 with the sign flipped, so it would most likely be caught by slope-sign-flipped first. Off-target is a catch-all with no specific link to this misconception."
+    }
+  ]
+}

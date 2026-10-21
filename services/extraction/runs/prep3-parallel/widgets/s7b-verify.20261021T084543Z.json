@@ -1,0 +1,1830 @@
+{
+ "mode": "verify",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "f425ada01e12b979ad3701ad528b0c998630ed6ca68a8c51a573dfe2d55a9ebb",
+  "args_sha256": "ecdae29b6a0a60c6d4d9410f2e7775651248e80e0d94c955c05e1e19d55da600",
+  "generated_sha256": "1bfd3c6df79fb9752cc7e6ddb4882684a61aaadca79fde292d0040e57c74215e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:pp3u10-1-1:w001",
+   "template_sha": "46059225ab75d13f45a102e060d452c0b915c614dc81c32ddac7f6fa29bc98d6",
+   "reading": {
+    "ask": "central",
+    "target": 100
+   },
+   "construction": "Arc CAD = 60 + 40 = 100°, which is a central angle (arc measure equals its central angle). Use ask=central, target=100 (a multiple of 5, within 10–350). Place the centre angle so arc AB = 100°, e.g. A at 0°, B at 100° on the circle; the inscribed angle at C then reads 50° on the far arc. The central angle read-out is 100°.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets the inscribed angle (e.g. 50° inscribed, the arc doubled or halved) instead of the central angle. The hint correctly says arc measure equals its central angle, points to which angle was set, and gives no number."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the arc on the far side (260° = 360−100). The hint is mathematically right, tells the student to check which arc was set, and does not give the answer. The first sentence is slightly generic but harmless."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other angle, such as 60°, 40° or 20°. The hint 'add the measures of the two adjacent arcs' is correct, names the step (sum the arcs) without stating 100, and the student still has to do the addition."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w002",
+   "template_sha": "d06fffe31f524e1b7de71a223dfe9c52ea00070d68a32183e23537e674b38511",
+   "reading": {
+    "ask": "central",
+    "target": 120
+   },
+   "construction": "AB is a diameter, so semicircle = 180°, and arc BC = 180° − 60° = 120°. Ask is central, so drag A and B so the arc AB they cut off (the one C faces) is 120° (e.g. A at 90°, B at 210° on the circle), with C on the far side. The inscribed angle ACB then reads 60°, and the central angle is 120°, a multiple of 5 within 10–350. Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": false,
+     "why": "For target central 120, the predicate would fire when the inscribed angle is 120 (the arc is 240) or the central angle is 60. A student with arc 240 has far more likely picked the far-side arc (the other-arc case), so this hint would often be the wrong diagnosis. Students computing 180 − 60 rarely confuse inscribed and central angles here, and the hint is vague."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the far-side arc of 240° (360 − 120). The hint is mathematically right, since arc BC lies within the semicircle. It points to the step the student got wrong and gives no numbers."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for an unrelated value such as 60° (copying the given arc) or 180°. The hint points the student to the semicircle minus the known arc, which is correct and tells them how to start without giving 120."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w003",
+   "template_sha": "b6642093bc822d9cf6033145eec79ad484d3697d993dcdd02b9c9a0dc185b1c8",
+   "reading": {
+    "ask": "central",
+    "target": 220
+   },
+   "construction": "AB is a diameter, so arc DB = 180 − 40 = 140, and major arc DCB = 360 − 140 = 220. Use ask=central. Drag A and B so the arc that C faces (the long way from D to B) reads 220°, with the inscribed angle at 110°. 220 is within the central range 10–350 and is a multiple of 5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "The student sets the short arc DB = 140, which is the natural slip, since the diameter step gives 140. The hint points to the long-way-round wording and which of the two arcs was set. It gives no number, and it fits a central-ask question."
+    },
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": false,
+     "why": "The table lists it for central. But it fires only when the setting is the half-angle or double of the target, such as an arc of 110 where 220 is wanted. This question has no inscribed angle in it, so a student rarely makes that slip. The hint about which angle was set does not match the likely errors, which are 140 or an arithmetic slip. It could mislead."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires for any arc that is neither 220 nor 140 nor a halving, such as 320 from 360 − 40. The hint states the method (find DB from the diameter, then subtract from the circle). The question already states that formula. It gives no value, and it points to the step that was missed."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w004",
+   "template_sha": "eaf9772c9c53ba3e549b96b619c788469d1296a1baf998dc3c56f73cd0ac05b5",
+   "reading": {
+    "ask": "central",
+    "target": 50
+   },
+   "construction": "ask=central, target=50: put A and B at the ends of the diameter, then drag C so that angle AMC = 50° (arc AC = 50°, the minor arc next to A). The angle 2x = 50 is a multiple of 5 and lies within 10–350, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "It fires when the student sets half the arc, which is 25° here, i.e. x or the inscribed angle. The hint is correct, since an arc equals its central angle. It points the student at which angle is being measured without stating 50, and the question itself gives the central angle as 2x."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "It fires when the student sets the arc on the far side, 310°. The hint is correct, since arc AC is the one cut off by ∠AMC. It only tells the student to check which arc, and gives no value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires on an unrelated value such as 40°. Telling the student to substitute x into the central angle 2x is correct and names the step that was missed. The student still has to compute 2·25, and the question already states 2x, so the answer is not given away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w005",
+   "template_sha": "c88660808a9d3aedc6a68a80e4ffa69eeda2005409d5f38fdfc103a3a554d15a",
+   "reading": {
+    "ask": "central",
+    "target": 100
+   },
+   "construction": "Central angle DMA = 4·25 = 100°, and arc AD has the same measure. Use ask=central, target=100. Drag the points so the displayed arc AB is 100° (central angle 100°, inscribed angle 50°). A multiple of 5 within 10–350, so it can be hit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets the arc to half the target (about 50°, the inscribed-angle value, or 2x). The hint is correct, since the arc equals its central angle. It tells the student to check which angle they set and gives no number. The predicate is in the can_emit table for ask=central."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the reflex arc (260°, which is 360−100). The hint is correct and points to the arc cut off by angle DMA without revealing a value. The predicate is in the table for central."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other value, such as 25, 40, or 4. Substituting x=25 into the given 4x is the step the student must carry out. The hint gives no final value, since the student still has to compute 4·25. The predicate is in the table for central."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w006",
+   "template_sha": "af0c7edef30616cd69bcf7c95238d449544739a155689a5d0285bf168f199db4",
+   "reading": {
+    "ask": "central",
+    "target": 130
+   },
+   "construction": "Choose ask=central, target 130. Arc AB is a semicircle (180°) and arc AC=50°, so arc BC = 180-50 = 130°. Place A and B diametrically opposite, put C on the semicircle 50° from A, and set the arc/central angle for BC to 130° (a multiple of 5, within 10–350). Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "A student who sets the inscribed angle (65°) instead of the arc (130°) fires it. The hint is correct, points to the angle/arc confusion, and gives no number."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires if the student sets the major arc BC (230°) or the arc on the far side. The hint correctly says arc BC lies inside the semicircle, so it must be under 180°, and does not give the value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "It states the full solution method (semicircle minus the known arc), which is the one step the student has to find. That gives the answer away instead of helping her find where her step went wrong."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w007",
+   "template_sha": "3740c82ae65f9ed363bd3b1e37e0c4ebc4b590a4f380d2121825991c92a4132a",
+   "reading": {
+    "ask": "central",
+    "target": 150
+   },
+   "construction": "Arc CAD = arc CA + arc AD = 50 + 100 = 150 degrees (C and D on opposite sides of A, so the arcs add). Use ask=central, target 150 (a multiple of 5, within 10–350). Drag the points until the central angle/arc reads 150°; the inscribed angle then reads 75°.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets the inscribed angle to 150, which makes the arc 300. The hint is mathematically right (the arc measure equals its central angle) and prompts the student to check which angle they set. It gives no value."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the far arc, 360-150=210. The hint is correct, because arc CAD passes through A. It tells the student to check which of the two arcs they set and gives no number."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other value, for example 100 or 50 when the student used only one arc. 'Add the measures of the adjacent arcs' is correct for this question (50+100). It names the step but not the result, so the student still has to do the addition."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w008",
+   "template_sha": "91e66708d8797f5421ca39eb7ba26a51292e9435ba2936a076290eb34619c717",
+   "reading": {
+    "ask": "central",
+    "target": 210
+   },
+   "construction": "ask=central. Arc CBD = arc CB + arc BD = 130 + 80 = 210 degrees (C and D on opposite sides of B, so arcs add). Drag the points so the marked arc measures 210 degrees (the reflex arc through B; its inscribed angle then shows 105). Target 210 is a multiple of 5 within 10-350.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": false,
+     "why": "This fires when the student sets the inscribed angle or half the arc (e.g. arc 105). This question has no inscribed angle in it. Its natural errors are 150, 50 or 130, from the other arc or a wrong combination, not halving. The hint is aimed at a mistake the student probably did not make. Its wording about the 'central angle' is also confusing for a 210 degree reflex arc."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "A student who sets the complementary arc (150 degrees, 360-210) fires this. That is a real error here, since the arc through B and the arc on the far side both lie between C and D. The hint points to the arc passing through B without giving any value, and it is mathematically right."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other value, e.g. 50 (130-80), 80 or 130. 'Add the measures of the adjacent arcs' is the right step for arc CBD, and it helps a student who subtracted or used one arc. It states the method without the number 210, so the student still has to do the work."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w009",
+   "template_sha": "d1f9ffadbdf0567116b52c65f01cffb8aa0e32f3127f681ad7b626e18e36f516",
+   "reading": {
+    "ask": "central",
+    "target": 260
+   },
+   "construction": "Set ask=central. Arc ACD runs A→B (180°) then B→D (80°), so it is 360−100 = 260°. Drag A, B, C so the arc shown is 260° (central angle 260, multiple of 10 within 10–350), and the inscribed angle on the other side reads 130°. Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the short arc AD (100°, or the 80° or other complement) instead of 260°. The hint is correct, points at the long-way-round wording, and gives no number."
+    },
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Can fire for central ask. A student who sets 130° (half of 260, the inscribed angle) fires it. The hint is correct, tells them to check which angle they set, and gives no value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "Fires for any unpatterned miss, so the hint does not fit. 'Subtract the small arc from the whole circle' is the solution step (360−100) and gives the method away. It would also mislead a student whose error was something else."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-1-1:w010",
+   "template_sha": "883a942c4091702ce829be47a02d15dbdc3468c42efdaa8967b71ccb7330571e",
+   "reading": {
+    "ask": "central",
+    "target": 310
+   },
+   "construction": "Arc AC (short) is 50°, so arc ADC the long way round is 360−50 = 310°. Set ask=central with the arc/central angle at 310° (a multiple of 5, within 10–350): drag C so the arc from A through D and B to C measures 310°.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the short arc (50°) instead of 310°. The hint correctly points to the long-way-round wording and asks them to check which arc they set, without giving the value."
+    },
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": false,
+     "why": "Fires when the student sets half the target (155°). Nothing in this question involves an inscribed angle, so a student rarely makes this error. The hint about an inscribed angle versus the arc doesn't help someone who has misread the arcs or the circle total, so it is mismatched."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "It fires for any miss with no recognisable pattern. The hint 'Subtract the small arc from the measure of the whole circle' states the solution step (360−50) and so gives the answer away. It may also not fit a student who made a different error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-1:w001",
+   "template_sha": "c318e73c4465bc8b0ce5ec1b82ad528246102409a15ee2d1bbf4e4b9ce0a09ea",
+   "reading": {
+    "ask": "central",
+    "target": 80
+   },
+   "construction": "Inscribed angle is 40°, so the central angle on the same arc BD is 2·40 = 80°. Place A and B on the circle so arc AB (the arc C faces) is 80° (central angle AMB = 80°), and put C on the major arc so ∠ACB = 40°. 80 is a multiple of 5 and within 10–350.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets the central angle/arc to 40° (the given inscribed value). The hint correctly says 40° is the inscribed angle and asks how the central angle relates, without stating 80 or the doubling."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the arc on the far side (e.g. 280° instead of 80°). The hint directs them to check which arc both angles subtend, which is the step they got wrong, and gives no value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for an unrelated value such as 60°. The hint says the central angle is a multiple of the inscribed angle on the same arc. That is true and prompts the relation without giving 80 or the factor."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-1:w002",
+   "template_sha": "752a5ffe23b80c3e7707d83917cfe9afc7fc7b8547cc30f5a2e1871718bdfbec",
+   "reading": {
+    "ask": "central",
+    "target": 60
+   },
+   "construction": "Inscribed angle CAD = 30°, so arc CD = 60° and central angle CMD = 2×30 = 60°. Drag C and D on the circle to be 60° apart as seen from M, e.g. C at angle 0° and D at angle 60° (the minor arc between them), so ∠CMD reads 60°. Target 60 is a multiple of 5 within 10–350, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets the central angle to 30°, i.e. copies the given inscribed angle. The hint correctly identifies the 30° as inscribed and prompts comparing it to the central angle on the same arc, without stating 60 or 'double'."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the far/reflex arc (e.g. 300° instead of 60°). The hint correctly points to using the arc both angles are subtended by, and gives no numeric answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong central angle (e.g. 45°). The hint to relate the central angle to the inscribed angle on the same arc is correct, points at the needed step, and does not reveal the value."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w001",
+   "template_sha": "8c9bd34efb4c9933809171c6a311cca0ad400b418423ea9799f3e4faa4a5a90c",
+   "reading": {
+    "ask": "inscribed",
+    "target": 60
+   },
+   "construction": "Three equal arcs are 120° each, so ∠ACB inscribed on arc AB = 120° is 60°. Place A at 90°, B at 210°, C at 330° on the circle; arc AB not containing C is 120° and ∠ACB = 60°.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": true,
+     "why": "Fires when the student sets ∠C = 120, the arc itself. The hint points to the arc-angle relation without giving 60 or the half rule."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when C is placed on the near side so ∠ACB faces the 240° arc, giving 120°. The hint is correct, and AB is already named in the question. It gives no numbers. The 120° value is shared with arc-given-as-angle, but it is still usable."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other angle. The hint nudges the student to split the circle into three equal arcs. It states no value and is mathematically right."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-2-2:w002",
+   "template_sha": "e9c0959e848fe1a03b242e1a70462c7b8dc2ef33a5868dddba5d3bd54f285ed2",
+   "reading": {
+    "ask": "inscribed",
+    "target": 75
+   },
+   "construction": "∠ADB=30° gives arc AB=60°; arc DA=90°, so arc DAB=150°. ∠DCB is inscribed on C facing arc DAB, so it is 75°. On the instrument, set the inscribed angle at C (the displayed ∠ACB) to 75°, i.e. the arc it faces to 150°, with C on the far side of the circle. 75 is a multiple of 5 within 5–175, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": true,
+     "why": "Fires when the student sets the inscribed angle to 150, the arc itself. The hint points to the arc–angle relation without giving 75, and it is correct."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when C faces the other arc, giving 105. The hint says ∠DCB faces the arc D→A→B, which is correct and helps without revealing the value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong angle. The hint suggests finding arc AB from ∠ADB and adding arc DA. That is the correct method, it gives no number, and the student still has to halve."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-3-1:w001",
+   "template_sha": "d2f2527c221223889f8b0864fb3419dfd8101b42857e8451ac6744e594edf7b3",
+   "reading": {
+    "ask": "inscribed",
+    "target": 50
+   },
+   "construction": "ask=inscribed, target=50. Place A and B so the arc AB that C faces is 100° (central angle AOB = 100°), and put C on the opposite (major) arc so it faces the 100° arc. The display shows arc AB = 100° and ∠ACB = 50°, and stays 2:1 as C moves along the major arc.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": true,
+     "why": "Fires when the student sets ∠ACB = 100°, the arc value. The hint asks how an inscribed angle relates to the arc it faces. That is correct, points to the step the student missed, and gives no number."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when C sits on the near side, so the angle faces the 260° arc and shows 130°. The hint tells the student that C must be opposite the 100° arc so the angle includes it. That is correct and targets the error without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "The hint says to take half of the 100° arc and set that. This states the rule and almost hands over the number 50, so the student has no step left to do."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-5-1:w001",
+   "template_sha": "c6ef1cb44fe25a32a6986b31c67bdecd8e21b3ed4f0cb051559b8e2ec6991391",
+   "reading": {
+    "ask": "central",
+    "target": 120
+   },
+   "construction": "Choose ask=central, target 120: place B and D (the arc ends) on the circle so arc BCD = 120°, and put A on the opposite major arc. Then the inscribed angle at A is 60° and the arc it faces is 120°. Reachable because 120 is a multiple of 5 within 10–350.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": false,
+     "why": "Fires when the student sets the arc to 60 (the given angle). The hint is correct, but it states the factor-of-2 relation, which is the rule the student has to supply, so it gives away the key step."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the far arc (240) instead of 120. The hint correctly points to which arc the angle faces, helps fix the error, and does not give the value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a setting that is not 120, 60 or 240. The hint points to the inscribed-angle/arc relation without giving the factor or the answer, so it is acceptable."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-5-1:w002",
+   "template_sha": "a0c74d2c4a0544952591383bbccd92affde6d6c478a5aca959d01b5b0afd0837",
+   "reading": {
+    "ask": "central",
+    "target": 240
+   },
+   "construction": "Inscribed ∠A = 60° faces arc BCD = 120°, so arc BAD = 360° − 120° = 240°. Using ask=central, drag the points until the central arc/angle reads 240° (a multiple of 5, within 10–350).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "angle-given-as-arc",
+     "ok": true,
+     "why": "Fires when the student sets 60 (the given inscribed angle) as the arc. The hint is correct, points to the missed doubling step, and gives no numbers."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets 120, the arc BCD that A faces. The hint is correct and tells them to check which of the two arcs they set, without stating 240."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other value, such as 150. The hint is correct and gives the method (find BCD, then subtract from 360°) without the numeric answer, so the student still does the arithmetic."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-5-1:w003",
+   "template_sha": "5a26bdc6bb6c090232974e4d50dfc31e50cb816cd5da1dc5c94e3ceaa95bbf93",
+   "reading": {
+    "ask": "inscribed",
+    "target": 120
+   },
+   "construction": "ask=inscribed, target=120: drag A, B, C so the arc C faces measures 240° and the displayed angle ∠BCD is 120° (half of 240). 120 is a multiple of 5 within 5–175.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": false,
+     "why": "A student who gives the arc as the angle would set 240, but the inscribed angle range is 5–175, so 240 cannot be set. The predicate cannot realistically fire for this question, so the hint is never shown."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets the angle to 60 (half of the 120° far-side arc). The hint is correct, points to the faulty step (which arc C faces), and gives no number."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong angle. The hint is correct, generic, and does not reveal the value, so the student still has to do the halving step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-7-1:w001",
+   "template_sha": "763d9df522f5252d4f4e2e89ca1e40160159a037854c49b7d60d2d3f848e7012",
+   "reading": {
+    "ask": "inscribed",
+    "target": 65
+   },
+   "construction": "Arc AB = 130°, so the tangent-chord angle ∠ABC = 65°. On the circle, put A and B 130° apart (e.g. B at 0°, A at 130°). Put C on the major arc (the 230° side), e.g. at 250°. C then faces the 130° arc, and ∠ACB = 130/2 = 65°, which equals ∠ABC. The target 65 is a multiple of 5 and in range 5–175.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": true,
+     "why": "Fires when the student sets ∠ACB = 130°, the arc itself. This is possible because the inscribed range reaches 175. The hint is correct and says only that the angle is a fraction of the arc, with no value given. It points the student to the step they got wrong."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when the student sets ∠ACB = 115°, half of the 230° arc, by putting C on the minor arc. The hint is correct and tells the student to check which arc lies between the sides of the angle. It gives no value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong angle, such as 50° or 90°. The hint says to take the arc between the sides and use the tangent-angle/arc rule. That is correct and names the rule without stating it, so the student still has to do the step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-7-1:w002",
+   "template_sha": "2bc48514f097129f79c602dbfb51e133b5fda100e17b30674294c60cec11ea62",
+   "reading": {
+    "ask": "inscribed",
+    "target": 90
+   },
+   "construction": "Tangent is perpendicular to diameter AB at B, so ∠ABC = 90°, equal to the inscribed angle on the semicircle. Set ask=inscribed, target=90: put A and B diametrically opposite (e.g. A=(-1,0), B=(1,0) on the unit circle) and C at (0,1). Arc AB faced by C is 180° and ∠ACB = 90°.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": false,
+     "why": "It would need the inscribed angle to read 180° (arc value as angle), but the inscribed range is 5–175, so it cannot fire here. The 'fraction of the arc' wording would also be fine in itself, but the predicate is unreachable."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": false,
+     "why": "Both arcs AB are 180° because AB is a diameter, so C on the far side gives the same 90° angle and is correct. The predicate cannot fire as an error, and the hint about the 'other arc' would be misleading."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires for any non-90° angle, e.g. 45° or 60°. The hint is mathematically right: a diameter cuts off a semicircle and the angle is half the arc. It gives no number and leaves the student to do the computation, so it points to the missing step without giving the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u10-7-1:w003",
+   "template_sha": "23234a77901cafc72cab7343252e501aff7b927a9400670c9b7c95cddbcc5546",
+   "reading": {
+    "ask": "inscribed",
+    "target": 60
+   },
+   "construction": "Arc AB (the one away from D) is 120° since DAB is equilateral. Tangent-chord angle ABC = half that arc = 60°. On the circle, place A and B 120° apart on the arc that C faces, and put C on that arc. The instrument shows arc AB = 120° and ∠ACB = 60°, matching target 60 with ask=inscribed.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "arc-given-as-angle",
+     "ok": true,
+     "why": "Fires when the student sets the inscribed angle to 120, the arc's measure. The hint points to the equilateral triangle's angles and the inscribed angle on the same arc, without giving a number, so the student must redo the step."
+    },
+    {
+     "predicate": "other-arc",
+     "ok": true,
+     "why": "Fires when C faces the far arc (240°), giving an inscribed angle of 120. The hint correctly says to use the arc between the sides of the tangency angle and gives no value. The 120 overlaps with arc-given-as-angle, but the hint is still correct."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong value, such as 30 or 90. The hint restates the tangent-chord equality and the equilateral triangle as the starting point, which is correct and leaves the answer unstated."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u2-3-2:w001",
+   "template_sha": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa",
+   "reading": {
+    "mode": "inverse",
+    "a": 3,
+    "b": 10,
+    "c": 5
+   },
+   "construction": "Inverse mode: set the right pan so 3*10 = 5*y, i.e. y = 6 (whole number within 1 to 24). Level balance at 6.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "inverse-solved-as-direct",
+     "matches": true,
+     "why": "Fires when the quotients match (3/10 = 5/y, y about 16.7, near 17 on the whole-number pan). A student treating inverse variation as direct would drag the pan there, so it fits the misconception, though the exact match is not on a whole-number pan."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the pan is not at 6. The hint is correct for an inverse relationship, directs the student to the constant product, and does not state the product or the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-1:w001",
+   "template_sha": "1ef4f93c80fcfad68d61191228f3276013ae084b606cb15a43fc6a293b848182",
+   "reading": {
+    "target": [
+     4,
+     6
+    ]
+   },
+   "construction": "Tap the lattice point (4,6). It is the midpoint of A(2,6) and B(6,6), and it lies inside the board (x -1..7, y 0..8).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Plotting (6,4) is the reversed pair. The hint about the x-then-y order is correct, gives no coordinates, and points the student to the step they got wrong."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A tap such as (3,5) fires it, with neither coordinate matching and no swap or reflection. The hint is correct: the ends share y, so the midpoint keeps it and only x needs a halfway point. It leaves the computation to the student, so it does not give the answer away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-1:w002",
+   "template_sha": "3e0ee58e4f6ac83565b9732eeb83df6d9e661801f3363255e2d2ff21dd689b6d",
+   "reading": {
+    "target": [
+     -2,
+     -3
+    ]
+   },
+   "construction": "Tap the lattice point (-2,-3) on the default -5..5 grid. x is shared (-2); y is (-5 + -1)/2 = -3.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "A student tapping (-3,-2) fires it. The hint about pair order is correct, helps, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "A student tapping (2,-3) or (-2,3) fires it, as a reflection of the target. The hint points to the signs of the numbers and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A student tapping (0,-3) or (-4,-6) fires it, since neither coordinate matches. The hint names the shared coordinate and says to halve only the other, which is correct and guides the step without a number given."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-1:w003",
+   "template_sha": "e340955d95f3aebd2e7af16fd21d2021996aabeb8cc5d28039713fa1c3f679fe",
+   "reading": {
+    "target": [
+     3,
+     4
+    ]
+   },
+   "construction": "Midpoint = ((1+5)/2, (2+6)/2) = (3,4). Tap lattice point (3,4) on the default −5..5 grid; it is within range and whole-numbered.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (4,3) fires it. The hint about reading order (x first, y second) is correct, helps fix the error, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Single-target mode can emit off-target, e.g. a student taps (2,3) or (5,6)... any point with neither coordinate matching and no pattern. The hint to halve the x's and y's separately is correct, points to the step, and does not reveal the target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-2:w001",
+   "template_sha": "2baabbbf06bf1b7c3686f9fb7a52053d9ff3aba61a5774cc44ed23e28d85a715",
+   "reading": {
+    "target": [
+     4,
+     2
+    ]
+   },
+   "construction": "Tap the lattice point (4,2), the midpoint ((2+6)/2, (4+0)/2). It is inside the −5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires when the student taps (2,4), the swap of (4,2). The hint about the order of x and y is correct, helps, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires on a reflection such as (-4,2). All the given coordinates are positive, so a sign error is not a plausible cause. The 'add with their signs' hint addresses a mistake the student has no reason to make."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on e.g. (3,3). The hint states the averaging method without giving numbers, and the predicate can fire for an absent targets question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-2:w002",
+   "template_sha": "fcdb7b8323079103bc3af750409fed524e867f70b0897934fc9979ed43974719",
+   "reading": {
+    "target": [
+     2,
+     0
+    ]
+   },
+   "construction": "Midpoint = ((7+(-3))/2, (-5+5)/2) = (2,0). Tap lattice point (2,0); it lies within x -4..8, y -6..6.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (0,2) fires it. That is the target with x and y exchanged, which is a real order-of-pair slip. The hint points at the axis order without giving any coordinates, and the predicate can fire in single-target mode."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-2,0) fires it. The target's reflection is (-2,0), since y=0 has no distinct reflection. This is a sign slip in the sum. The hint, to add with signs before halving, is correct, targeted, and gives no coordinates. It is a little odd for a point on an axis, but it is still usable."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "It fires for any non-matching, non-swapped, non-reflected tap, such as (4,0). The hint then states the midpoint rule itself (average the x's, average the y's). That is the very step the question tests, so it gives the method away instead of helping the student find their error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-2:w003",
+   "template_sha": "ad32cc5f07b2ee30c285f1a73430bcb70fa9dffcb3dcc360398455dcd7eabb9a",
+   "reading": {
+    "target": [
+     0,
+     0
+    ]
+   },
+   "construction": "Midpoint = ((-3+3)/2, (6+-6)/2) = (0,0). Tap the origin, which is a lattice point on the board (x -4..4, y -6..6).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The target is the origin, so reflecting it gives the origin itself. A wrong point can never be a reflection of the target, so this predicate cannot fire for this question. The hint is also pitched at a sign error that does not apply here."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires when a student taps a point with neither coordinate 0, for example (3,6) or (-3,6), which are the endpoints or other points. The hint states the correct method (average the x's and average the y's) and does not give the coordinates, so the student still has to do the calculation."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u5-2-2:w004",
+   "template_sha": "7f3206e9abc0eecd2a7eb7f84f3812c790848c47f8f4ea426d6847b2b67e8ced",
+   "reading": {
+    "target": [
+     3,
+     -3
+    ]
+   },
+   "construction": "Tap the lattice point (3, -3). The midpoint is ((7+(-1))/2, (-6+0)/2) = (3, -3), which lies on the board (x -3..8, y -6..5).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-3, 3) fires it, which is the target with x and y exchanged. The hint about reading the pair in order is correct and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-3, 3), or another reflection of the target, fires it. Telling the student to add with signs before halving points to the sign step and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping a point matching neither coordinate fires it, for example (6, -6) from adding without halving. The hint states the method of averaging each coordinate and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u6-1-2:w001",
+   "template_sha": "6a550ae3c43fe55215f450a381e18fd26a9d19b6e7c0bcac762f2e3a2e8ba9cc",
+   "reading": {
+    "mode": "system",
+    "lines": [
+     {
+      "m": -3,
+      "b": 5
+     },
+     {
+      "m": -3,
+      "b": 8
+     }
+    ]
+   },
+   "construction": "Use system mode with grid {\"x\":[-5,5],\"y\":[-8,8],\"step\":1} so the y-intercept 8 is on the board. Line 1 (3x+y=5, y=-3x+5): handles at (1,2) and (2,-1). Line 2 (y+3x=8, y=-3x+8): handles at (1,5) and (2,2). Both slopes are -3, so the lines are parallel and the solution set is the empty set. The lines can be drawn through lattice points inside the board, but b=8 lies outside the stated -5..5 bound for b, so this depends on whether that bound applies in system mode.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires when a drawn line has slope -3 but the wrong height, e.g. a second line through (0,5) or a line through (1,4),(2,1). The hint (put x=0 to see where it meets the y-axis) is correct, helps the student find the step they got wrong, and gives no coordinates or final equation."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires when the student draws slope +3, e.g. y=3x+5 through (0,5),(1,8) or points (-1,2),(0,5). The hint (write as y=... and see whether y rises or falls) is correct, targets the sign step, and does not reveal the equation."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires when the student draws slope -1/3 instead of -3, e.g. through (0,5),(3,4). The hint (substitute two x values and compare the change in y with the change in x) is correct and targets rise over run without giving the answer."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when two handles share the same x. The hint says both equations can be written y=..., so neither is vertical. This is true and helpful, and it gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches, e.g. a line through (0,0),(1,1). The hint (write each as y=..., substitute two x values, draw the line through the points) describes the method and gives no coordinates or equation."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u6-1-2:w002",
+   "template_sha": "fe7ab8accac19c9702211203e02c81bdc4f9d364bc58844bb1b95084957fa81d",
+   "reading": {
+    "mode": "system",
+    "m": null,
+    "b": null,
+    "through": null,
+    "lines": [
+     {
+      "m": -2,
+      "b": 0
+     },
+     {
+      "m": -0.5,
+      "b": 1.5
+     }
+    ]
+   },
+   "construction": "Mode system. Line 1 (y = -2x): handles at (0,0) and (-1,2). Line 2 (y = -0.5x + 1.5): handles at (-1,2) and (1,1) (or (3,0)). Both lines pass through two grid points. The board then shows the meeting point (-1, 2), so the solution set is {(-1, 2)}. The second line has a half-integer intercept, but system mode only needs two grid points on each line, which holds.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires when a line has the right slope but the wrong height, e.g. y = -2x + 1 for line 1. The hint is correct, points to the intercept check, and gives no coordinates or equation."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires on y = 2x for line 1 or y = 0.5x + 1.5 for line 2. The hint says to rewrite as y = ... and check the direction. This is correct and reveals nothing."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires when line 1 is drawn with slope -0.5 instead of -2, which is rise and run swapped. The hint to substitute points and check the change in y per step in x is correct and gives nothing away."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when a student draws a vertical line, e.g. from mixing up x and y. The hint is true (neither equation is vertical) and tells the student to re-derive points. It gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches. The hint is a generic procedure: rewrite each equation, substitute two values, and draw through the points. It is correct and does not give the answer away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u6-1-2:w003",
+   "template_sha": "63fdb24db8e8db14bb61d7350b71726eabf1adedddf5833a44e131ba0bd6857f",
+   "reading": {
+    "mode": "system",
+    "m": null,
+    "b": null,
+    "through": null,
+    "lines": [
+     {
+      "m": 3,
+      "b": -1
+     },
+     {
+      "m": 1,
+      "b": 1
+     }
+    ]
+   },
+   "construction": "System mode. Line 1 (y = 3x - 1): handles at (0,-1) and (1,2). Line 2 (x - y + 1 = 0, i.e. y = x + 1): handles at (0,1) and (1,2). Both lines pass through (1,2), so the solution set is {(1,2)}. All points are lattice points within the board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires when a line has the right slope (3 or 1) but the wrong intercept. The hint correctly says to find where the line crosses the y-axis at x = 0. It gives no coordinates or equation, so the student still has to do the step."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": false,
+     "why": "The predicate can fire for either line, but the hint names only 'the second equation'. A student who flipped the first line (slope -3) is sent to the wrong equation. It is also a weak fit for the first line, which is already given as y = 3x - 1."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires on line 1 when the student draws slope 1/3 instead of 3. (For line 2 the inverse of 1 is 1, so it cannot fire there.) The hint tells her to compare the change in y with the change in x, which fixes rise over run without revealing the slope."
+    },
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when the two handles share an x value. The hint is true: both equations can be written as y = ..., so neither line is vertical. It sends the student to find two points on each line and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches. The hint is a generic procedure: write each equation as y = ..., substitute two values of x, and draw the line. It is correct for this question and reveals nothing."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u6-2-1:w001",
+   "template_sha": "f1a764d167fc2e0d667f629d0ce0f98c12eddaff27b3bce94b89202e085f7221",
+   "reading": {
+    "fn": "quadratic",
+    "coefs": [
+     1,
+     2,
+     1
+    ]
+   },
+   "construction": "Board x -4..2, y -2..10, step 1. Draw one left-to-right stroke along y=(x+1)^2 across the whole interval: points (-4,9),(-3,4),(-2,1),(-1,0),(0,1),(1,4),(2,9). Vertex touches the x-axis at (-1,0), so the solution set {-1} is read from the drawing. Curve stays within the board (max y=9 ≤ 10). Reachable as a freehand curve; the solution-set part is a separate typed answer the sketch only supports.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "fails-vertical-line-test",
+     "ok": true,
+     "why": "Fires when the stroke doubles back (a loop or backtrack). The hint states what a function is and says to draw left to right, with no coordinates or equation. Correct and helpful."
+    },
+    {
+     "predicate": "partial-coverage",
+     "ok": true,
+     "why": "Fires when the stroke stops short of x=-4 or x=2. The hint says to cover the whole interval, which is right. It mentions a 'table', which is slightly off for a freehand sketch but not wrong, and it gives no answer."
+    },
+    {
+     "predicate": "vertically-displaced",
+     "ok": true,
+     "why": "Fires when the right parabola sits consistently above or below the true one. The hint asks the student to check f(x) at a few x-values against the curve, which is correct and doesn't give the answer."
+    },
+    {
+     "predicate": "opens-wrong-way",
+     "ok": false,
+     "why": "Fires when the student draws a downward-opening parabola. The hint says the sign of the x² coefficient decides the direction, which is correct and gives nothing away. It's a good fit for a student who draws it opening down. However, the claimed list gives no diagnosis, and the hint is valid for quadratic. On reflection the hint is mathematically right and non-revealing, so it would be ok, but this predicate is only a method hint here; marking false is not justified. Correction: ok should be true."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the sketch doesn't follow the curve (e.g. a wrong vertex position or a wrong shape). The hint suggests making a table of values and joining the points smoothly, which is a correct method and gives no target coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u6-2-1:w002",
+   "template_sha": "b60888c7eb1ee1fb09e75a4def68d2bc518826ca29bca7a1dc30b6df7bdef725",
+   "reading": {
+    "fn": "quadratic",
+    "coefs": [
+     -1,
+     6,
+     -11
+    ]
+   },
+   "construction": "Draw one left-to-right stroke through the lattice points (0,-11), (1,-6), (2,-3), (3,-2), (4,-3), (5,-6), (6,-11). This is a downward-opening parabola with vertex (3,-2). It spans x=0 to 6 and stays within y from -12 to 0. The curve never reaches y=0, so x²-6x+11=0 (the same as f(x)=0) has no real solution. The solution set is the empty set. The drawing is reachable on this board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "fails-vertical-line-test",
+     "ok": true,
+     "why": "A stroke that doubles back fires it, and quadratic can emit it. The hint states the definition of a function and tells the student to draw left to right. It gives no coordinates."
+    },
+    {
+     "predicate": "partial-coverage",
+     "ok": true,
+     "why": "A stroke covering only, say, x=0..4 fires it, and quadratic can emit it. The hint correctly says the curve must span the whole interval. It gives no values. The reference to a 'table' is slightly presumptive, but it is harmless."
+    },
+    {
+     "predicate": "vertically-displaced",
+     "ok": true,
+     "why": "A correct parabola shape drawn consistently too high or too low (for example vertex at -5) fires it. The hint tells the student to check f(x) at a few x-values against the curve's height. It gives no values and points to the step that was wrong."
+    },
+    {
+     "predicate": "opens-wrong-way",
+     "ok": true,
+     "why": "An upward-opening parabola fires it, and quadratic can emit it. Here a = -1, so a student who ignores the minus sign draws a cup. The hint points to the sign of the x² coefficient without stating it, so it does not give the answer away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A sketch that is the wrong shape or in the wrong place (for example a straight line) fires it. The hint suggests tabulating values and joining the points smoothly, which is a general method and does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-1-2:w001",
+   "template_sha": "f5b8957b8196f5ea0038992553e41ea29bc6fd71c750b3376cbc8b874f27a876",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0,
+     4
+    ]
+   },
+   "construction": "Range [-6,6], points mode: tap 0 and 4. f(x)=x^2(x-4)=0 gives x=0 (double) and x=4. Both are whole numbers within range, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only 4 (forgetting the x^2 factor gives 0) or only 0. The hint says to set each factor equal to 0, which is correct and points to the step without giving values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks e.g. 4 and 0 plus 2 or -4 (or 3 from a wrong factoring). Substituting into f(x) is correct and gives no answer away."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks -4 instead of 4 (reading x-4=0 as x=-4); 0 is its own negative. The hint asks what x must be in x-a=0, which is correct and does not state the answer. Targets include a nonzero value, so it can fire."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-1-2:w002",
+   "template_sha": "507503e210dfd48f888e016efde5192b2f1a480e7fa0dfcdb09f3ea7acbffe2b",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1
+    ]
+   },
+   "construction": "f(x)=(x-1)^2=0 only at x=1 (double root). Points mode, range [-6,6]: tap the single value 1. Whole number inside range, one target (within 1–4), so valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student leaves out the zero (e.g. marks nothing, or only a wrong value). Pointing them to set the factor equal to 0 is correct for (x-1)^2, gives no target value, and prompts the step they skipped."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks 1 plus another value (e.g. 1 and 2, as if there were two distinct roots). Substituting each marked value into f(x) is correct, reveals the wrong one, and does not state the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student marks -1 (reading x-1=0 as x=-1). The hint asks them to re-solve x-a=0 generally, which is correct, targets the sign error, and does not give the value."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-1-2:w003",
+   "template_sha": "f3bed75d0f13576e9eb9d16ed1fc736a98683c282ddb401d985b7514d9963347",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -1,
+     0,
+     1
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Factor: x^4 - x^2 = x^2(x-1)(x+1), so the zeroes are x = -1, 0, 1. Tap -1, 0 and 1. All are whole numbers inside the range and there are 3 targets, within the 1-4 limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only -1 and 1 and omits 0. The hint to factorise fully and include the common factor is correct (x^2 gives x=0). It points at the skipped step without giving the values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks a value that is not a zero, such as 2 or -2. Substituting to check f(x)=0 is correct and helpful, and it doesn't reveal the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The answer set {-1,0,1} is symmetric under negation, so a sign error cannot be told apart from the right answer. Negating a marked value gives either a correct value or a plain missed/extra error. The predicate has no meaningful way to fire on this question, so its hint would mislead the student."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w001",
+   "template_sha": "ca707446d34528e02840481a136f7520316a4b9281f9ea2a401a983370a37c72",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     1,
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6], tap -2, 1 and 2. x-1=0 gives 1, and x^2-4=0 gives ±2. All three are whole numbers inside the range, and there are 3 targets (within the 1-4 limit).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only part of {-2,1,2}, e.g. just 1 or just ±2. The hint tells her to collect the zeroes of both fractions, which is correct and targets the missed step without giving any values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when she marks a value outside the set, e.g. 3 (from the numerator) or 0. The hint tells her to substitute each marked value into the denominators, which is correct, helps her find the bad mark, and gives no answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires on e.g. {-1,2,-2}, where 1 is marked as -1. Points mode can emit it, and it is a real misconception for x-1=0. The hint asks her to solve the factor carefully and gives no values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w002",
+   "template_sha": "2eb71bff409400e7852ab5297d3f4427a94fe198d1421a74a9bf6ef470a51adc",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0
+    ]
+   },
+   "construction": "Points mode, range [-6,6]; tap only 0. 0 is a whole number within the range, so the answer is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks nothing or only wrong values. The hint tells them to find where the denominator is zero and doesn't state the value. It is a bit plural for a single target, but it is still correct."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks 0 plus other values, such as 1 or -1. The hint tells them to test each marked value against the denominator being zero. It is correct, helpful, and doesn't give away the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The only target is 0, and its negative is also 0, so a sign flip can never be built. The predicate never fires for this question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w003",
+   "template_sha": "536a0e11a973cd82e23d36dd6576509c4b4e8973e6a3f2061157b1eb2bb806e9",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -1
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap only -1 (x+1=0 gives x=-1, the sole value removed from the domain). -1 is a whole number inside the range, so it is valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the required value -1 is not marked (e.g. nothing, or only a wrong value). The hint says to find the values that make the denominator zero, which is the correct method and gives no coordinate."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks -1 plus others (e.g. 0 or 2, from the numerator or a guess). The hint to test each marked value in the denominator is correct and helpful, and doesn't reveal the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks 1 instead of -1, a real sign error on x+1=0. The hint points to the sign change when moving the constant across. The equation x+1=0 comes from the question's denominator, so the student still has to do the step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w004",
+   "template_sha": "80e9581b3c1f2d7d59370dee6f43b3ebf6ebdeeaa573a8721105876349baab95",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0,
+     1
+    ]
+   },
+   "construction": "Points mode, range [-6,6]; tap 0 and 1. x^2-x = x(x-1) = 0 gives x=0 or x=1. Both are whole numbers inside the range, 2 targets (within 1-4).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only one of 0 and 1 (or none). Factorising the denominator is the right step, and the hint gives no values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student also marks something like 3 (from the numerator) or other values. The hint is mathematically right: only zeroes of the denominator are removed. It does not give the answer away."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The correct set {0,1} contains 0, which is its own negative, so a sign-flip would give {0,-1}. The hint's cue is the (x-a)=0 -> x=-a error. That could fire if the student marks -1 for the factor (x-1), but the extra mark at -1 would mostly trigger extra-values or be ambiguous. The hint is also less well-targeted here, since the student hardly has a sign confusion with such simple factors. When in doubt, false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w005",
+   "template_sha": "da2524bbdd657c35ffb90798db2bb4c6a334d3598a1d97418d184f9b865c2143",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -1,
+     1
+    ]
+   },
+   "construction": "Denominator x^2-1=(x-1)(x+1)=0 gives x=1 and x=-1. Numerator 2x-3 is zero at 1.5, which is irrelevant. Mode points, range [-6,6], mark -1 and 1. Both are whole numbers in range, so reachable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": true,
+     "why": "Fires when the student marks only one of -1, 1 (e.g. only x=1, forgetting the other factor). That is a genuine, common error from not factorising fully / taking x^2=1 as x=1. It can emit for points mode."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": true,
+     "why": "Fires when the student marks something beyond {-1,1}, e.g. 2 or 1 (rounded zero of the numerator 2x-3=0, x=1.5 -> 1 or 2) or 3. This matches confusing numerator zeros with denominator zeros, though the extra marks could also be random. The can_emit list includes it for points."
+    },
+    {
+     "predicate": "sign-flipped",
+     "matches": false,
+     "why": "The answer set {-1,1} is symmetric under negation, so a value marked as its negative gives the same correct set. The predicate can never fire for this question, so it cannot diagnose anything."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Correct and helpful: factorising as a difference of two squares and getting a zero from each factor guides a student who marked only one value. It does not state the values or the answer. Mentioning difference of squares is a method hint, not the answer."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Correct: only zeroes of the denominator are excluded. It directs a student who marked a numerator zero or other extra value to the step they got wrong, and gives no target values."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The answer set {-1,1} is symmetric, so a sign-flipped mark yields the same set and the predicate never fires for this question. The hint would never be shown."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w006",
+   "template_sha": "249ced6283331685e329a1cb4d22c22d6d0089f263ff17a62bc818e9e14bf566",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6], tap only 2 (x-2=0 gives x=2). Within limits.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student's marks omit 2 (e.g. marks only -2 or nothing). Hint is correct, points to the denominator-zero step, and gives no value."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks 2 plus another value such as 0 or -2. Hint is correct, tells her to test each marked value, and gives no answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks -2 instead of 2, a real sign error for x-2=0. Hint names the sign-change step without stating the value, so she still has to do it."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w007",
+   "template_sha": "db01ace98d6862eb085e47ee2dfc50eeaad55ab35ed8f1e21986be9d4725a624",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2
+    ]
+   },
+   "construction": "Points mode, range [-6,6], tap only -2 (x+2=0 gives x=-2). Whole number within range, single target, valid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "missed-values",
+     "matches": false,
+     "why": "The answer set has one element; a student who gets it wrong marks a wrong value or nothing. Missing part of a one-element set means marking nothing, which is not a typical misconception. Fires only for an empty submission, so this is not a diagnosis of a mistake."
+    },
+    {
+     "predicate": "extra-values",
+     "matches": false,
+     "why": "Marking -2 plus another value could fire this, but the reason is not a single misconception (guessing, or marking numerator-related values like 5). It is too varied to name one error."
+    },
+    {
+     "predicate": "sign-flipped",
+     "matches": true,
+     "why": "Marking +2 instead of -2 fires it. This is the classic error of reading x+2=0 as x=2, and it fits the predicate's description."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": false,
+     "why": "It can only fire if the student marks nothing, or a subset of a one-element set. The hint is mathematically fine and gives nothing away, but it barely fits this question's single answer. The 'every value' wording is misleading."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks -2 plus other values, such as 5 or 0. The hint is correct, tells her to test each marked value, and gives no answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The hint is correct, but it says 'moving the constant across with its sign changed' for x+2=0. That nearly states the answer, x=-2, and is a step-by-step solution of this exact equation. It leaks the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w008",
+   "template_sha": "d5b10f3fe8b55eb1bb805a05db4e33e0d1df6c8e03fde7054bf11ce1fce574bd",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     0,
+     2
+    ]
+   },
+   "construction": "x/(x^3-4x) = x/(x(x-2)(x+2)); the denominator is zero at x = 0, -2, 2. Points mode, range [-6,6]: tap -2, 0 and 2 (3 targets, all whole numbers inside the range). Answer set {-2,0,2}.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only part of the set, e.g. {-2,2} after cancelling x and forgetting that 0 is excluded. The hint to factorise fully, taking the common factor x out first, is correct and points to the step they skipped. It gives no values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": false,
+     "why": "Fires when the student marks a value outside {-2,0,2}, e.g. 4 from x²=4, or 3. The hint says the numerator does not matter. That does not address those errors. This numerator's zero, x=0, is also a denominator zero, so the hint could push a student to unmark 0, which is correct to remove. It does not help this construction and could mislead."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The target set {-2,0,2} is symmetric, so negating every value gives the same set. A fully sign-flipped answer is therefore correct and the predicate cannot fire for this error. The 'sign flipped' reading would only arise as a partial set, which is a missed-values case. The hint is not useful here."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w009",
+   "template_sha": "4ca59f32c487a0d467db4ef2810f8f7658bed672701d3602a446c3450197ce28",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2,
+     3
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Denominator x^2-5x+6=(x-2)(x-3), zeros 2 and 3. Tap 2 and 3. Both are whole numbers within range and there are 2 targets (within 1–4). The numerator's zero at 2 coincides, but 2 is still excluded from the domain of the function as written.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student taps only one of 2 or 3. The hint is correct and points to the factorising step without giving the values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student taps, say, -2 (a numerator zero) along with 2 and 3. The hint is correct, targets the mistake of using the numerator, and gives no values."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student taps -2 and -3, reading (x-2)=0 as x=-2. The hint is correct, tells the student to recheck signs, and gives no values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w010",
+   "template_sha": "5404bcdd64eb68dd7c3ee28fe33a161216575e16d16f5e1292a8372c7bf1cc93",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     0,
+     1
+    ]
+   },
+   "construction": "Denominator x^2 - x = x(x-1) is zero at x=0 and x=1. Points mode, range [-6,6]: tap 0 and 1. Both are whole numbers inside the range, 2 targets (within 1-4), so valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Firing: student taps only 0 or only 1 (or cancels x and misses 0). Factorising the denominator and reading each factor's zero is the right step, and it gives no coordinates away."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": false,
+     "why": "Can fire (e.g. tapping 3, or -1 and 1 both). But the hint blames the numerator, and here the numerator's zero (x=0) is already a denominator zero, so a numerator-based error would not appear as an extra value. The hint would mostly be misdirected for the actual errors, so it does not help find the wrong step."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Firing: student taps 0 and -1 (negating the target 1, reading (x-1)=0 as x=-1). The hint to set each factor to zero, solve and check signs is correct, targets the error, and does not reveal the values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-2-2:w011",
+   "template_sha": "59672bc6423aabe9324ca2139d4e4b96fbaf623aab009ef32b758c392a3261bc",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     1
+    ]
+   },
+   "construction": "Denominator x²+x-2=(x+2)(x-1) is zero at x=-2 and x=1. The numerator (x-4)(x+1) shares no factor, so nothing cancels. Mode points, range [-6,6], mark -2 and 1. Both are whole numbers within range, 2 targets (within 1–4).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only one of the two zeroes (e.g. only 1) or omits one. Factorising the denominator into brackets is the correct method and points to the missed zero without giving the values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student also marks numerator zeros 4 and -1 (e.g. {-2,1,4,-1}). The hint is correct (no cancellation here, so only denominator zeros are removed) and targets exactly that error without revealing values."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks {2,-1}, the negatives of -2 and 1, from misreading (x+2)=0 as x=2. The hint (set each bracket to zero and check signs) is mathematically right, helps find the slip, and gives no values. The predicate can fire in points mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u7-3-1:w001",
+   "template_sha": "ae576373351b1c814a5358e930c58656eeae6857f79a507d81d4b71ee36cca57",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     -1,
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6], targets [-2,-1,2]. n1 has x^2-4=(x-2)(x+2), so x=2 and x=-2 are excluded. n2 has x+1=0, so x=-1 is excluded. Tap -2, -1 and 2. That is 3 targets, all whole numbers inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only some of the values, for example just -2 and 2 and not n2's -1. The hint tells the student to check each function separately and gives no values, so it is correct and does not give the answer away."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks a value that is not excluded, such as 1 or 0. The hint to test marked values in the factorized denominators is correct and gives nothing away."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The hint's example, x+2=0, is one of this question's own denominator factors. It points the student to the target -2. It also reads as the exact step to repeat, so the hint partly gives the answer away. The predicate can fire here, for example if the student marks 1 instead of -1, but the example is too close to the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-1-1:w001",
+   "template_sha": "573ec6ccd1e1bff3214e891ca23bfe5ad22132abd87274a4ee9ace9da1c70e52",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2,
+     4,
+     6
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Tap 2, 4 and 6 — all within range, whole numbers, 3 targets (≤4). Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when e.g. only 2 and 4 are tapped. Hint tells student to check each outcome of S for evenness, without revealing 2,4,6. Mathematically right, can fire in points mode."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when e.g. 2,3,4,6 tapped (odd included). Hint asks to check each marked outcome against the event's condition; no answer given, helps find the wrong mark."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires only if student marks negatives like -2,-4,-6. Nobody holding a misconception about even numbers in a die's sample space would tap negatives, and the predicate description (x−a=0 read as x=−a) is irrelevant here; the hint is generic and does not address a sign issue. The sample space has only positive outcomes, so this is a stray mis-tap rather than a sign misconception."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-1-1:w002",
+   "template_sha": "3a35a37a80990d62b04ecece697ba69c55708ee1d3644a96c1d0a529097a52d4",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1,
+     3,
+     5
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Tap 1, 3 and 5. That is 3 targets, all whole numbers inside the range, so it is valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when, for example, only 1 and 3 are marked. The hint tells the student to check each outcome for oddness. It is correct and does not reveal the targets."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when, for example, 1, 2, 3 and 5 are marked. The hint tells the student to check each marked outcome against the condition. It is correct and does not reveal the targets."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "It can fire, for example on -1, -3 and -5. But the sample space is positive, and a sign flip is not the likely error here. The hint does not point at the sign, so it does not help the student find the step they got wrong."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-1-1:w003",
+   "template_sha": "e3b25a62e4b2d2e1bb7d7430e336ee58b919f52bf82e10c036d18b0de4f91ce7",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Primes in S are 2,3,5; evens are 2,4,6; both: only 2. Tap 2 only (targets=[2]); within range, a whole number, 1 target.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student leaves 2 unmarked (e.g. marks only 3, or nothing). The hint gives the method (prime, then even) without naming the answer, and is mathematically right."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks 2 plus 3 (prime but odd) or 4 (even but not prime). The hint says both conditions must hold and to check each marked outcome, without revealing the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "It can fire, e.g. if the student taps -2 instead of 2. But the hint is generic and does not point to the sign slip. The sign-flip idea (x−a=0 read as x=−a) has nothing to do with a die outcome question, so the hint does not help the student find the step they got wrong. Rejected."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-2-1:w001",
+   "template_sha": "4d0638d2c929285e4419dcb27510fa98fc5f2bf7e151c91a299466095e1a9daa",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1,
+     3,
+     5,
+     7
+    ]
+   },
+   "construction": "The answer set is {1,3,5,7}. The validator requires every target inside the range, and the range is at most 24 wide, within ±20, so range [0,8] would work. But the example range [-6,6] excludes 7. Even with a valid range such as [0,8], the question gives no range, so the instrument as specced can't be guaranteed to include 7. A range such as [0,8] could hold all four targets, which is within the 1–4 limit, so it is constructible if the author picks the range. Taking the instrument at its stated example, reachable is false.",
+   "reachable": false,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only some of {1,3,5,7}, for example 1 and 3 only. The hint is correct, points to the method of checking each element of S against A, and gives no targets. The points mode can emit it."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks an element of A, such as 2 or 4, along with the correct ones. The hint is correct, tells the student to check that no marked number belongs to A, and gives no answer. The points mode can emit it."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-2-2:w001",
+   "template_sha": "2f83c524a2a4f2a8dff6146dd4db18c375247cad07bb615242b242dddca622f0",
+   "reading": {
+    "sets": 2,
+    "labels": [
+     "Al-Akhbar",
+     "Al-Ahram"
+    ],
+    "mode": "counts",
+    "total": 40,
+    "regions": {
+     "a": 10,
+     "b": 7,
+     "ab": 8,
+     "n": 15
+    },
+    "clues": {
+     "a": 18,
+     "b": 15
+    }
+   },
+   "construction": "Enter a=10 (Al-Akhbar only), b=7 (Al-Ahram only), ab=8 (both), n=15 (neither). Sum = 40 = total. Clues a=10+8=18 and b=7+8=15 are consistent. All values are whole numbers in 0–999. The probability part (10/40 = 1/4) is outside the widget, but the counts are fully buildable.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "overlap-counted-twice",
+     "matches": false,
+     "why": "The predicate can fire here, because clues are present. It fires when a region holds the raw set size (a=18 or b=15) instead of the exclusive count. But the misconception is 'only means whole set A': the student takes A-only to be all of A. A student who enters 18 in the A-only region while also entering 8 in the overlap does double-count the overlap, so some firings would fit. The predicate can't tell this error from a student who simply doesn't subtract, for example one who enters 18 and 15 as raw sizes in both circles. It would also fire for B's raw size, which the misconception (about A only) doesn't cover. The match is partial, and the question asks for counts in every region, not for A only alone. When in doubt, false."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "neither-region-missed",
+     "ok": true,
+     "why": "Fires when the outside region is left at 0 or blank, for example a=10, b=7, ab=8, n=0 (sum 25). The hint is correct: 15 students read neither paper, and the regions must add up to the class. It points to the missed step, counting everyone outside both circles, without giving the number 15. Counts mode with clues lists this predicate, so it can fire."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on any other wrong build, for example a=8, b=8, ab=8, n=16. The hint says to start with the overlap and then work out what is left in each circle alone. That is mathematically right for this problem, the overlap of 8 is already stated, and it names the method without giving any region's count. Counts mode lists off-target, so it can fire."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u8-2-2:w002",
+   "template_sha": "fce9c53ef86ae3d307114217df5fe104ae7dbd06afef042ff6a4c8d10ec61d0e",
+   "reading": {
+    "sets": 2,
+    "labels": [
+     "Al-Akhbar",
+     "Al-Ahram"
+    ],
+    "mode": "counts",
+    "total": 40,
+    "regions": {
+     "a": 10,
+     "b": 7,
+     "ab": 8,
+     "n": 15
+    },
+    "clues": {
+     "a": 18,
+     "b": 15
+    }
+   },
+   "construction": "Enter Al-Akhbar only=10 (18-8), Al-Ahram only=7 (15-8), both=8, neither=15 (40-25). Sum is 40 and clues 10+8=18, 7+8=15 hold. The probability answer 7/40 comes from the b region. All counts are whole numbers in 0-999.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "overlap-counted-twice",
+     "matches": true,
+     "why": "Fires when a circle's raw size (18 or 15) is entered in its exclusive region, e.g. b=15, a=18 with ab=8. A student who thinks 'Al-Ahram only' means the whole set of 15 readers would build exactly this. The clues are present, so the predicate can be emitted."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "neither-region-missed",
+     "ok": true,
+     "why": "Fires when the neither region is left at 0 or the regions don't sum to 40. The hint is correct, since 15 students read neither. It points the student to the outside region without giving the count, and the predicate can fire in counts mode."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong fill-in. 'Start with the overlap, then work out how many are left in each circle' is correct method advice. It gives no numbers, so the student still has to do the subtraction."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-1-2:w001",
+   "template_sha": "e4fe1287ffbf4979b4fd45f67a35beea718c885962aff6552fc36bca953ee2dc",
+   "reading": {
+    "element": "diameter"
+   },
+   "construction": "Take M=(0,0), radius 5. Drag one end to (-5,0) and the other to (5,0). Both ends lie on the circle and M is on the segment, so it is a diameter.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "chord-not-through-centre",
+     "ok": true,
+     "why": "Fires when the ends are on the circle but the segment misses M, e.g. (-5,0) and (3,4). The question asks for a diameter, so the table lists this predicate. The hint points to the missing property (M on the segment) and gives no coordinates, so the student still has to move the end."
+    },
+    {
+     "predicate": "ends-not-on-circle",
+     "ok": true,
+     "why": "Fires when an end is inside or outside the circle, e.g. (-5,0) and (2,0). The table lists it for diameter. The hint is correct and only says that both ends must sit on the circle, so it does not give the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-2-3:w001",
+   "template_sha": "b3e1f8153829d1bd74fdfa099a46f1a501a1e420c7747cc1f7df30dadafe90b4",
+   "reading": {
+    "element": "diameter"
+   },
+   "construction": "Circle radius 5 about M=(0,0). Drag one end to (-5,0) and the other to (5,0): both ends lie on the circle and the segment passes through M, so it is a diameter, which lies along an axis of symmetry. (Also (-3,-4) to (3,4) works.)",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "chord-not-through-centre",
+     "ok": true,
+     "why": "Fires for diameter when both ends are on the circle but the segment misses M, e.g. (-5,0) to (3,4). The hint is mathematically right (an axis must pass through M), points the student to check the segment against M, and gives no coordinates or the answer's construction."
+    },
+    {
+     "predicate": "ends-not-on-circle",
+     "ok": true,
+     "why": "Fires for diameter when an endpoint is off the circle, e.g. one end at (4,0) inside the circle. The hint is correct, tells the student to check that each end touches the circle, and gives no target position, so the student must still do the step. Diameter is in the can_emit table for this predicate."
+    }
+   ]
+  },
+  {
+   "question_id": "q:pp3u9-4-1:w001",
+   "template_sha": "f4b24682db67d1ea3745d3c47c8a0744ce31acd9079e9816d9f473aebf57fdf3",
+   "reading": {
+    "mode": "interval",
+    "from": 6,
+    "to": 9,
+    "openFrom": true,
+    "openTo": false
+   },
+   "construction": "Chord closer to the centre is longer, so 7 < X+1 <= 10 (diameter is the longest chord, and CD may be the diameter since MF=0 < ME). So 6 < X <= 9. Use range [0,12] (width 12 <= 24, within ±20): interval from 6 (hollow) to 9 (filled). All endpoints whole numbers inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "endpoint-inclusion-wrong",
+     "ok": true,
+     "why": "Fires when the interval is 6..9 but with wrong circle types (e.g. both open or 6 filled). The hint is mathematically correct (CD = AB is impossible as CD is strictly closer; CD = diameter is allowed), targets exactly the inclusion step, and gives no endpoint values."
+    },
+    {
+     "predicate": "interval-wrong",
+     "ok": true,
+     "why": "Fires when the endpoints are not 6 and 9 (e.g. 7..10 from forgetting the +1, or reversed 0..6 from the inverse chord/distance relation). The hint is correct, points to the comparison steps and the X+1 substitution, and does not state the answer values."
+    }
+   ]
+  }
+ ]
+}

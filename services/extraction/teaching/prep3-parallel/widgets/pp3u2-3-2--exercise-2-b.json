@@ -1,0 +1,37 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u2-3-2:exercise-2-b",
+ "lo_id": "lo:pp3u2-3-2",
+ "book_item": "pp3u2-3:exercise-2#B",
+ "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "ratio_balance",
+ "spec": {
+  "mode": "inverse",
+  "a": 3,
+  "b": 10,
+  "c": 5
+ },
+ "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
+ "solution": [
+  "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$.",
+  "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$.",
+  "For $x = 5$: $y = \\frac{30}{5}$.",
+  "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "inverse-solved-as-direct",
+   "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
+  }
+ ],
+ "hints": [
+  {
+   "predicate": "off-target",
+   "step": 2,
+   "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
+  }
+ ],
+ "notes": "Table has four columns (x=3,5,6,10); one pair used as the given and one asked. Book answer y=6 for x=5 agrees."
+}

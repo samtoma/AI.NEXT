@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u9-4-1:exercise-1",
+ "lo_id": "lo:pp3u9-4-1",
+ "book_item": "pp3u9-4:exercise-1",
+ "parent_question_id": "expl:pp3u9-4-1:bk-drill-1-1",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   0,
+   12
+  ],
+  "from": 6,
+  "to": 9,
+  "openFrom": true,
+  "openTo": false
+ },
+ "stem": "In a circle M of radius 5 cm, the chord AB = 7 cm and the chord CD = $X + 1$ cm. CD is closer to the centre than AB (MF < ME). Mark on the number line all the possible values of $X$, setting each end hollow (excluded) or filled (included).",
+ "solution": [
+  "Radius = 5 cm, so the diameter is 10 cm; AB = 7 cm.",
+  "MF < ME, so CD is closer to the centre than AB, so CD is longer: $X + 1 > 7$, i.e. $X > 6$.",
+  "CD is a chord, so it is at most the diameter: $X + 1 \\le 10$, so $X \\le 9$.",
+  "So $X \\in (6, 9]$, i.e. $6 < X \\le 9$: hollow circle at 6, filled circle at 9, shaded between."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "step": 3,
+   "text": "Ask whether a chord can be exactly as long as the diameter, and whether CD can be exactly as long as AB when it is closer to the centre."
+  },
+  {
+   "predicate": "interval-wrong",
+   "step": 2,
+   "text": "The closer a chord is to the centre, the longer it is. Compare CD with AB first, then with the longest chord of the circle, and remember CD is $X + 1$, not $X$."
+  }
+ ],
+ "notes": "The completion-style blanks become the final interval; the figure's data is stated in the stem."
+}

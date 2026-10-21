@@ -122,6 +122,23 @@ Open questions:
 - **Whether the tutor actually uses the tasks, and keeps to "no second
   question", is untested:** it needs a live lesson turn.
 
+## Book widgets — every unit (2026-10-21)
+
+Tamer: "run units 3, 5 and 6 and any other unit that need to run". The book-widget author on Units 2–10 ($3.48), the
+blind verifier on its templates ($1.52), Samuel's finish per unit; only the widget bundle kept (the catalogue and the
+generated questions restored each time, as for Unit 1).
+
+- Two safeguards for S7's own widgets (Units 5, 7): an objective with an S7 template is never offered to the book
+  author (question ids are numbered per objective, so a book template there could renumber S7's live questions), and
+  the book verifier judges book templates only (`book_widgets.book_dir`). S7's five widgets are byte-identical.
+- **80 book and S7 widgets live** (was 23): U1 18, U2 1, U5 10, U6 5, U7 17, U8 5, U9 3, U10 21; Units 3 and 4 none
+  (statistics tables and trigonometry: no kind fit). 2 templates held as malformed (an uppercase id), 1 rejected by
+  the verifier (U8 complement event {1, 3, 5, 7}: judged unreachable). 34 gaps.
+- **Held for review: 39 claims (38 hints, 1 mapping)** — `reviews/prep3-parallel/pages/g3-book-widget-claims.html`
+  (queue `widget-mappings-pending.book-widgets.json`; keep/drop export → `--mapping-review`).
+- Kinds used: angle_setter 21, number_line_marker 20, pair_plotter 7, line_drawer system 3, curve_sketcher on the
+  book's interval 2, ratio_balance 3, venn_builder 2, circle_builder 2.
+
 ## Widget grid and three new modes — PROPOSAL for Samuel (2026-10-21)
 
 Tamer: "implement those changes" — the widget gaps the book's exercises hit across Units 1, 2, 3, 5 and 6. Built on

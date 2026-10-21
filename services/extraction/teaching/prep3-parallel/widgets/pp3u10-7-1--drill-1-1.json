@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u10-7-1:drill-1-1",
+ "lo_id": "lo:pp3u10-7-1",
+ "book_item": "pp3u10-7:drill-1#1",
+ "parent_question_id": "q:pp3u10-7-1:bk-drill-1-1",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "angle_setter",
+ "spec": {
+  "ask": "inscribed",
+  "target": 65
+ },
+ "stem": "BC is a tangent at B and AB is a chord, cutting off an arc AB of 130° (the other arc is 230°). The angle of tangency ∠ABC equals the inscribed angle on the same arc. Calculate $m(\\angle ABC)$: drag A, B and C so that the inscribed angle ∠ACB, facing the 130° arc, has the same measure as ∠ABC.",
+ "solution": [
+  "The angle ABC is an angle of tangency; the arc between its sides is the 130° arc AB (not the 230° arc).",
+  "An angle of tangency is half the measure of the arc between its sides.",
+  "$m(\\angle ABC) = \\tfrac{1}{2} \\times 130° = 65°$.",
+  "It equals the inscribed angle on the same arc, so set the inscribed angle to 65°."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "arc-given-as-angle",
+   "step": 2,
+   "text": "The arc is not the angle. An angle of tangency or inscribed angle on an arc is only a fraction of that arc's measure."
+  },
+  {
+   "predicate": "other-arc",
+   "step": 1,
+   "text": "Check which arc lies between the sides of the angle of tangency; the angle must face that arc."
+  },
+  {
+   "predicate": "off-target",
+   "step": 3,
+   "text": "Take the arc between the sides of the angle and use the rule connecting an angle of tangency with its arc."
+  }
+ ],
+ "notes": "Angle of tangency equals inscribed angle on the same arc; the widget builds that inscribed angle. Matches book answer 65."
+}

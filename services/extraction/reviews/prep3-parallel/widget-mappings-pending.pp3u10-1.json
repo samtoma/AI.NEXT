@@ -1,0 +1,222 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:pp3u10-1-1:w002#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w002",
+      "template_id": "wt:pp3u10-1-1:drill-1-3",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\overset{\\frown}{AC}) = 60^\\circ$, with C on the semicircle ACB. Complete: $m(\\overset{\\frown}{BC}) = m(\\overset{\\frown}{ACB}) - m(\\overset{\\frown}{AC}) = 180^\\circ - \\ldots\\ldots = \\ldots\\ldots^\\circ$ (Why?). Drag the points to set the central angle that gives the measure of arc BC.",
+      "reading": {
+        "ask": "central",
+        "target": 120
+      },
+      "construction": "AB is a diameter, so semicircle = 180°, and arc BC = 180° − 60° = 120°. Ask is central, so drag A and B so the arc AB they cut off (the one C faces) is 120° (e.g. A at 90°, B at 210° on the circle), with C on the far side. The inscribed angle ACB then reads 60°, and the central angle is 120°, a multiple of 5 within 10–350. Reachable.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The measure of the arc is its central angle. Check which angle you have set.",
+      "hint_step": 4,
+      "why": "For target central 120, the predicate would fire when the inscribed angle is 120 (the arc is 240) or the central angle is 60. A student with arc 240 has far more likely picked the far-side arc (the other-arc case), so this hint would often be the wrong diagnosis. Students computing 180 − 60 rarely confuse inscribed and central angles here, and the hint is vague."
+    },
+    {
+      "key": "q:pp3u10-1-1:w003#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w003",
+      "template_id": "wt:pp3u10-1-1:drill-1-4",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M, D is on the semicircle AB and $m(\\overset{\\frown}{AD}) = 40^\\circ$. Complete: $m(\\overset{\\frown}{DCB})$ = measure of circle $- m(\\overset{\\frown}{DB})$. Drag the points to set the measure of the major arc DCB (the long way round from D to B).",
+      "reading": {
+        "ask": "central",
+        "target": 220
+      },
+      "construction": "AB is a diameter, so arc DB = 180 − 40 = 140, and major arc DCB = 360 − 140 = 220. Use ask=central. Drag A and B so the arc that C faces (the long way from D to B) reads 220°, with the inscribed angle at 110°. 220 is within the central range 10–350 and is a multiple of 5.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure equals its central angle. Check which angle you have set.",
+      "hint_step": 4,
+      "why": "The table lists it for central. But it fires only when the setting is the half-angle or double of the target, such as an arc of 110 where 220 is wanted. This question has no inscribed angle in it, so a student rarely makes that slip. The hint about which angle was set does not match the likely errors, which are 140 or an arithmetic slip. It could mislead."
+    },
+    {
+      "key": "q:pp3u10-1-1:w006#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w006",
+      "template_id": "wt:pp3u10-1-1:drill-2-4",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$, with C on the semicircle ACB. Complete: $m(\\widehat{BC}) = \\ldots^\\circ$. Drag the points to set the measure of arc BC.",
+      "reading": {
+        "ask": "central",
+        "target": 130
+      },
+      "construction": "Choose ask=central, target 130. Arc AB is a semicircle (180°) and arc AC=50°, so arc BC = 180-50 = 130°. Place A and B diametrically opposite, put C on the semicircle 50° from A, and set the arc/central angle for BC to 130° (a multiple of 5, within 10–350). Reachable.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Start from the semicircle on the diameter and take away the known arc.",
+      "hint_step": 1,
+      "why": "It states the full solution method (semicircle minus the known arc), which is the one step the student has to find. That gives the answer away instead of helping her find where her step went wrong."
+    },
+    {
+      "key": "q:pp3u10-1-1:w008#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w008",
+      "template_id": "wt:pp3u10-1-1:drill-2-6",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\widehat{CB}) = 130^\\circ$ and $m(\\widehat{BD}) = 3x + 5 = 80^\\circ$, with C and D on opposite sides of B. Complete: $m(\\widehat{CBD}) = \\ldots$. Drag the points to set the measure of arc CBD.",
+      "reading": {
+        "ask": "central",
+        "target": 210
+      },
+      "construction": "ask=central. Arc CBD = arc CB + arc BD = 130 + 80 = 210 degrees (C and D on opposite sides of B, so arcs add). Drag the points so the marked arc measures 210 degrees (the reflex arc through B; its inscribed angle then shows 105). Target 210 is a multiple of 5 within 10-350.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure is its central angle itself. Check which angle you have set.",
+      "hint_step": 3,
+      "why": "This fires when the student sets the inscribed angle or half the arc (e.g. arc 105). This question has no inscribed angle in it. Its natural errors are 150, 50 or 130, from the other arc or a wrong combination, not halving. The hint is aimed at a mistake the student probably did not make. Its wording about the 'central angle' is also confusing for a 210 degree reflex arc."
+    },
+    {
+      "key": "q:pp3u10-1-1:w009#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w009",
+      "template_id": "wt:pp3u10-1-1:drill-2-7",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AD}) = 100^\\circ$. Arc ACD goes from A through C and B to D (the long way round). Complete: $m(\\widehat{ACD}) = \\ldots$. Drag the points to set the measure of arc ACD.",
+      "reading": {
+        "ask": "central",
+        "target": 260
+      },
+      "construction": "Set ask=central. Arc ACD runs A→B (180°) then B→D (80°), so it is 360−100 = 260°. Drag A, B, C so the arc shown is 260° (central angle 260, multiple of 10 within 10–350), and the inscribed angle on the other side reads 130°. Reachable.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Subtract the small arc from the measure of the whole circle.",
+      "hint_step": 2,
+      "why": "Fires for any unpatterned miss, so the hint does not fit. 'Subtract the small arc from the whole circle' is the solution step (360−100) and gives the method away. It would also mislead a student whose error was something else."
+    },
+    {
+      "key": "q:pp3u10-1-1:w010#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-1-1:w010",
+      "template_id": "wt:pp3u10-1-1:drill-2-8",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$. Arc ADC goes from A through D and B to C (the long way round). Complete: $m(\\widehat{ADC}) = \\ldots$. Drag the points to set the measure of arc ADC.",
+      "reading": {
+        "ask": "central",
+        "target": 310
+      },
+      "construction": "Arc AC (short) is 50°, so arc ADC the long way round is 360−50 = 310°. Set ask=central with the arc/central angle at 310° (a multiple of 5, within 10–350): drag C so the arc from A through D and B to C measures 310°.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "The arc measure is its central angle itself. Check which angle you have set.",
+      "hint_step": 2,
+      "why": "Fires when the student sets half the target (155°). Nothing in this question involves an inscribed angle, so a student rarely makes this error. The hint about an inscribed angle versus the arc doesn't help someone who has misread the arcs or the circle total, so it is mismatched."
+    },
+    {
+      "key": "q:pp3u10-1-1:w010#hint:off-target",
+      "question_id": "q:pp3u10-1-1:w010",
+      "template_id": "wt:pp3u10-1-1:drill-2-8",
+      "lo_id": "lo:pp3u10-1-1",
+      "kind": "angle_setter",
+      "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$. Arc ADC goes from A through D and B to C (the long way round). Complete: $m(\\widehat{ADC}) = \\ldots$. Drag the points to set the measure of arc ADC.",
+      "reading": {
+        "ask": "central",
+        "target": 310
+      },
+      "construction": "Arc AC (short) is 50°, so arc ADC the long way round is 360−50 = 310°. Set ask=central with the arc/central angle at 310° (a multiple of 5, within 10–350): drag C so the arc from A through D and B to C measures 310°.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Subtract the small arc from the measure of the whole circle.",
+      "hint_step": 2,
+      "why": "It fires for any miss with no recognisable pattern. The hint 'Subtract the small arc from the measure of the whole circle' states the solution step (360−50) and so gives the answer away. It may also not fit a student who made a different error."
+    },
+    {
+      "key": "q:pp3u10-3-1:w001#hint:off-target",
+      "question_id": "q:pp3u10-3-1:w001",
+      "template_id": "wt:pp3u10-3-1:think-and-discuss-1-2",
+      "lo_id": "lo:pp3u10-3-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, $m(\\text{arc } AB) = 100^\\circ$. Find the measure of the inscribed angle $\\angle ACB$ that includes arc $AB$. Drag A, B and C on the circle so that arc $AB$ is $100^\\circ$ and the inscribed angle shows its measure. Then move C around: what do you notice about $\\angle ACB$?",
+      "reading": {
+        "ask": "inscribed",
+        "target": 50
+      },
+      "construction": "ask=inscribed, target=50. Place A and B so the arc AB that C faces is 100° (central angle AOB = 100°), and put C on the opposite (major) arc so it faces the 100° arc. The display shows arc AB = 100° and ∠ACB = 50°, and stays 2:1 as C moves along the major arc.",
+      "predicate": "off-target",
+      "predicate_meaning": "The angle is not the one asked for, with no recognisable pattern",
+      "hint": "Use the given arc of $100^\\circ$ and the rule that an inscribed angle is half of its arc to find the angle, then set it.",
+      "hint_step": 3,
+      "why": "The hint says to take half of the 100° arc and set that. This states the rule and almost hands over the number 50, so the student has no step left to do."
+    },
+    {
+      "key": "q:pp3u10-5-1:w001#hint:angle-given-as-arc",
+      "question_id": "q:pp3u10-5-1:w001",
+      "template_id": "wt:pp3u10-5-1:think-and-discuss-1-1",
+      "lo_id": "lo:pp3u10-5-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, the inscribed angle $\\angle A$ measures $60^\\circ$ and faces arc BCD. Drag A, B and C so that the arc BCD (the arc that $\\angle A$ faces) is the one asked for: find $m(\\text{arc } BCD)$.",
+      "reading": {
+        "ask": "central",
+        "target": 120
+      },
+      "construction": "Choose ask=central, target 120: place B and D (the arc ends) on the circle so arc BCD = 120°, and put A on the opposite major arc. Then the inscribed angle at A is 60° and the arc it faces is 120°. Reachable because 120 is a multiple of 5 within 10–350.",
+      "predicate": "angle-given-as-arc",
+      "predicate_meaning": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+      "hint": "Check which measure you set: the arc is related to the inscribed angle facing it by a factor of 2.",
+      "hint_step": 2,
+      "why": "Fires when the student sets the arc to 60 (the given angle). The hint is correct, but it states the factor-of-2 relation, which is the rule the student has to supply, so it gives away the key step."
+    },
+    {
+      "key": "q:pp3u10-5-1:w003#hint:arc-given-as-angle",
+      "question_id": "q:pp3u10-5-1:w003",
+      "template_id": "wt:pp3u10-5-1:think-and-discuss-1-3",
+      "lo_id": "lo:pp3u10-5-1",
+      "kind": "angle_setter",
+      "stem": "In a circle, m(arc BAD) = $240^\\circ$. Set the inscribed angle ∠BCD that faces arc BAD, so that it shows $m(\\angle BCD)$.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 120
+      },
+      "construction": "ask=inscribed, target=120: drag A, B, C so the arc C faces measures 240° and the displayed angle ∠BCD is 120° (half of 240). 120 is a multiple of 5 within 5–175.",
+      "predicate": "arc-given-as-angle",
+      "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+      "hint": "Check what you set: the inscribed angle is not equal to its arc, it is a fraction of it.",
+      "hint_step": 2,
+      "why": "A student who gives the arc as the angle would set 240, but the inscribed angle range is 5–175, so 240 cannot be set. The predicate cannot realistically fire for this question, so the hint is never shown."
+    },
+    {
+      "key": "q:pp3u10-7-1:w002#hint:arc-given-as-angle",
+      "question_id": "q:pp3u10-7-1:w002",
+      "template_id": "wt:pp3u10-7-1:drill-1-2",
+      "lo_id": "lo:pp3u10-7-1",
+      "kind": "angle_setter",
+      "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 90
+      },
+      "construction": "Tangent is perpendicular to diameter AB at B, so ∠ABC = 90°, equal to the inscribed angle on the semicircle. Set ask=inscribed, target=90: put A and B diametrically opposite (e.g. A=(-1,0), B=(1,0) on the unit circle) and C at (0,1). Arc AB faced by C is 180° and ∠ACB = 90°.",
+      "predicate": "arc-given-as-angle",
+      "predicate_meaning": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+      "hint": "The angle is a fraction of the arc it faces, not the arc itself.",
+      "hint_step": 2,
+      "why": "It would need the inscribed angle to read 180° (arc value as angle), but the inscribed range is 5–175, so it cannot fire here. The 'fraction of the arc' wording would also be fine in itself, but the predicate is unreachable."
+    },
+    {
+      "key": "q:pp3u10-7-1:w002#hint:other-arc",
+      "question_id": "q:pp3u10-7-1:w002",
+      "template_id": "wt:pp3u10-7-1:drill-1-2",
+      "lo_id": "lo:pp3u10-7-1",
+      "kind": "angle_setter",
+      "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+      "reading": {
+        "ask": "inscribed",
+        "target": 90
+      },
+      "construction": "Tangent is perpendicular to diameter AB at B, so ∠ABC = 90°, equal to the inscribed angle on the semicircle. Set ask=inscribed, target=90: put A and B diametrically opposite (e.g. A=(-1,0), B=(1,0) on the unit circle) and C at (0,1). Arc AB faced by C is 180° and ∠ACB = 90°.",
+      "predicate": "other-arc",
+      "predicate_meaning": "Set the arc on the far side; C faces the arc across from it",
+      "hint": "Check that C faces the arc that lies between the sides of the angle of tangency.",
+      "hint_step": 1,
+      "why": "Both arcs AB are 180° because AB is a diameter, so C on the far side gives the same 90° angle and is correct. The predicate cannot fire as an error, and the hint about the 'other arc' would be misleading."
+    }
+  ]
+}

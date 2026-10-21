@@ -65,13 +65,17 @@ def author_args(book_name: str, slugs: list[str], dsn: str) -> dict:
     graph = GW.PgGraph(dsn)
     mcs, los, db_qs, teaching = graph.misconceptions(), graph.objectives(), graph.questions(), graph.teaching()
     qs, wes = compiled(book_name, slugs)
-    # a part that already has a book widget is not offered again (a re-run adds, never duplicates)
-    done = {json.loads(f.read_text()).get("book_item") for f in BRG.widgets_dir(book_name).glob("*.json")}
+    # a part that already has a book widget is not offered again (a re-run adds, never duplicates); an objective
+    # that has one of S7's own templates is not offered at all: question ids are numbered per objective across its
+    # templates, so a book template there could renumber S7's live widgets
+    tpls = [json.loads(f.read_text()) for f in BRG.widgets_dir(book_name).glob("*.json")]
+    done = {t.get("book_item") for t in tpls}
+    s7_los = {t.get("lo_id") for t in tpls if not t.get("book_item")}
     lessons = []
     for slug in slugs:
         rec = json.loads((HERE / "book-records" / book_name / f"{slug}.json").read_text())
         objs: dict[str, dict] = {}
-        for lo in sorted(l for l in los if re.match(rf"^lo:{re.escape(slug)}-[0-9]+$", l)):
+        for lo in sorted(l for l in los if re.match(rf"^lo:{re.escape(slug)}-[0-9]+$", l) and l not in s7_los):
             closure = graph.closure(lo)
             objs[lo] = {"lo_id": lo, "label": los[lo]["label"], "description": los[lo]["description"],
                         "misconceptions": [{"id": i, "lo_id": m["lo_id"], "label": m["label"],
@@ -142,6 +146,20 @@ def write_templates(book: str, slugs: list[str], run: Path) -> list[str]:
     return added
 
 
+def book_dir(book: str, slugs: list[str]) -> Path:
+    """The lessons' BOOK templates only, linked into a work folder: the variant verifies its own templates and never
+    S7's (whose verdicts come from S7's verifier; a second verifier read fail-closed could only take them down)."""
+    src = BRG.unit_dir(book, BRG.widgets_dir(book), slugs, "widgets")
+    d = HERE / "work" / book / "unit-view" / slugs[0] / "widgets-book"
+    d.mkdir(parents=True, exist_ok=True)
+    for f in d.iterdir():
+        f.unlink()
+    for f in sorted(src.glob("*.json")):
+        if json.loads(f.read_text()).get("book_item"):
+            (d / f.name).symlink_to(f.resolve())
+    return d
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("cmd", choices=("args", "author", "verify"))
@@ -169,9 +187,9 @@ def main(argv: list[str]) -> int:
     view = BRG.book_view(a.book, a.lessons)
     wdir = BRG.widgets_dir(a.book)
     vargs = runs / "s7b-verify.args.json"
-    common = ["--templates", str(BRG.unit_dir(a.book, wdir, a.lessons, "widgets")), "--book", str(view), "--dsn", a.dsn]
+    common = ["--templates", str(book_dir(a.book, a.lessons)), "--book", str(view), "--dsn", a.dsn]
     BRG.hold_malformed_templates(a.book, a.lessons, wdir, [*common, "--verify-args", str(vargs)])
-    common[1] = str(BRG.unit_dir(a.book, wdir, a.lessons, "widgets"))
+    common[1] = str(book_dir(a.book, a.lessons))
     if not any(Path(common[1]).glob("*.json")):
         print("verify: no template left for these lessons", file=sys.stderr)
         return 0

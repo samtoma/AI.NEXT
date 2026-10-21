@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u5-2-2:drill-1-3",
+ "lo_id": "lo:pp3u5-2-2",
+ "book_item": "pp3u5-2:drill-1#3",
+ "parent_question_id": "q:pp3u5-2-2:bk-drill-1-3",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "spec": {
+  "target": [
+   0,
+   0
+  ],
+  "grid": {
+   "x": [
+    -4,
+    4
+   ],
+   "y": [
+    -6,
+    6
+   ]
+  }
+ },
+ "stem": "C is the midpoint of AB, where A(-3, 6) and B(3, -6). Plot the point C.",
+ "solution": [
+  "Use M = ((x1 + x2)/2, (y1 + y2)/2).",
+  "x = (-3 + 3)/2 = 0.",
+  "y = (6 + (-6))/2 = 0.",
+  "C is (0, 0)."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "wrong-quadrant",
+   "step": 2,
+   "text": "Add the coordinates with their signs before halving."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates."
+  }
+ ],
+ "notes": "Swapped/wrong-quadrant cannot fire for origin but harmless."
+}

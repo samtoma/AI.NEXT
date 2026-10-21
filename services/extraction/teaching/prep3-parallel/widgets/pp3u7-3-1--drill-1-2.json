@@ -1,0 +1,48 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u7-3-1:drill-1-2",
+ "lo_id": "lo:pp3u7-3-1",
+ "book_item": "pp3u7-3:drill-1#2",
+ "parent_question_id": "q:pp3u7-3-1:bk-drill-1-2",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -2,
+   -1,
+   2
+  ]
+ },
+ "stem": "The common domain of the functions $n_1, n_2$, where $n_1(x)=\\frac{x-2}{x^2-4}$ and $n_2(x)=\\frac{1}{x+1}$, is $\\mathbb{R}$ minus the values x cannot take in either function. Mark on the number line every value that is NOT in the common domain.",
+ "solution": [
+  "Factorize the denominator of $n_1$: $x^2-4=(x+2)(x-2)$, so $n_1(x)=\\frac{x-2}{(x+2)(x-2)}$.",
+  "The denominator of $n_1$ is zero at $x=-2$ and $x=2$, so the domain of $n_1$ is $\\mathbb{R}-\\{-2,2\\}$.",
+  "The denominator of $n_2$ is zero at $x=-1$, so the domain of $n_2$ is $\\mathbb{R}-\\{-1\\}$.",
+  "The common domain leaves out the values excluded by either function: $\\mathbb{R}-\\{-2,-1,2\\}$, so mark $-2$, $-1$ and $2$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Check each function separately: which values make a denominator zero? The common domain leaves out the excluded values of both functions."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 2,
+   "text": "Only values that make a denominator zero are excluded. Test each marked value in the factorized denominators."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 2,
+   "text": "Solve each factor of the denominator equal to zero, such as $x+2=0$, and watch the sign of the value you get."
+  }
+ ],
+ "notes": "Marks the excluded values (the complement of the common domain). Book answer x ≠ -2, -1, 2. Domain is stated before cancelling, as in example 1."
+}

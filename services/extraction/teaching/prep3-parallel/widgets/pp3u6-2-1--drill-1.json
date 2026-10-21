@@ -1,0 +1,66 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u6-2-1:drill-1",
+ "lo_id": "lo:pp3u6-2-1",
+ "book_item": "pp3u6-2:drill-1",
+ "parent_question_id": "q:pp3u6-2-1:bk-drill-1",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "quadratic",
+  "coefs": [
+   1,
+   2,
+   1
+  ],
+  "grid": {
+   "x": [
+    -4,
+    2
+   ],
+   "y": [
+    -2,
+    10
+   ],
+   "step": 1
+  }
+ },
+ "stem": "Draw the graphical form of the function $f$ where $f(x) = x^2 + 2x + 1$ in the interval $[-4, 2]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 + 2x + 1 = 0$.",
+ "solution": [
+  "Make a table for x in [-4, 2]: f(-4)=9, f(-3)=4, f(-2)=1, f(-1)=0, f(0)=1, f(1)=4, f(2)=9.",
+  "Plot the points (-4, 9), (-3, 4), (-2, 1), (-1, 0), (0, 1), (1, 4), (2, 9).",
+  "Draw a smooth curve through them; it opens upward with its lowest point at (-1, 0).",
+  "The solutions of $x^2+2x+1=0$ are the x-coordinates of the points where the curve meets the x-axis: it touches the axis only at x = -1.",
+  "The solution set is {-1}."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "fails-vertical-line-test",
+   "step": 3,
+   "text": "A function gives one value of f(x) for each x. Draw one smooth curve from left to right without doubling back."
+  },
+  {
+   "predicate": "partial-coverage",
+   "step": 1,
+   "text": "The table runs over the whole interval given. Your curve should start at its left end and reach its right end."
+  },
+  {
+   "predicate": "vertically-displaced",
+   "step": 2,
+   "text": "Check the value f(x) at a few x-values in your table and make sure your curve passes through those heights."
+  },
+  {
+   "predicate": "opens-wrong-way",
+   "step": 3,
+   "text": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Make a table of values for x from the left end of the interval to the right end, plot the points, then join them smoothly."
+  }
+ ],
+ "notes": "Freehand quadratic on the book's interval [-4,2]; grid y -2..10 holds f(-4)=f(2)=9. The solution set {-1} is read from where the curve touches the x-axis (shown in the solution). LO has no misconceptions, so hints only."
+}

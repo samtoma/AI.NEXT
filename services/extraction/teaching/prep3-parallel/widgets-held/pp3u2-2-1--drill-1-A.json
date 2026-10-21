@@ -1,0 +1,37 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u2-2-1:drill-1-A",
+ "lo_id": "lo:pp3u2-2-1",
+ "book_item": "pp3u2-2:drill-1#A",
+ "parent_question_id": "q:pp3u2-2-1:bk-drill-1-a",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "ratio_balance",
+ "spec": {
+  "mode": "direct",
+  "a": 4,
+  "b": 6,
+  "c": 2
+ },
+ "stem": "Find the second proportional of the numbers $2, \\ldots\\ldots, 4, 6$. The four numbers are proportional, so $2 : \\text{second} = 4 : 6$, which is the same as $4 : 6 = 2 : \\text{second}$. Drag the right pan until the balance is level to find the second proportional.",
+ "solution": [
+  "Let the second proportional be $x$. The numbers $2, x, 4, 6$ are proportional, so $\\frac{2}{x}=\\frac{4}{6}$.",
+  "Product of extremes = product of means: $2\\times 6 = x \\times 4$, so $12 = 4x$.",
+  "$x = 12 \\div 4 = 3$.",
+  "Check: $\\frac{2}{3}=\\frac{4}{6}$, both equal $\\frac{2}{3}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "direct-solved-as-inverse",
+   "step": 1,
+   "text": "Two ratios are equal when their quotients match, so compare the fractions $\\frac{a}{b}$ and $\\frac{c}{d}$, not the products of the numbers beside each other."
+  },
+  {
+   "predicate": "off-target",
+   "step": 2,
+   "text": "Use the product of the extremes equals the product of the means: multiply the first and last numbers, then divide by the other known number."
+  }
+ ],
+ "notes": "Rewritten as 4/6 = 2/x (same proportion) so the unknown is the balance's fourth term; fourth term 3."
+}

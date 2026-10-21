@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u10-3-1:think-and-discuss-1-2",
+ "lo_id": "lo:pp3u10-3-1",
+ "book_item": "pp3u10-3:think-and-discuss-1#2",
+ "parent_question_id": "q:pp3u10-3-1:bk-think-and-discuss-1-2",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "angle_setter",
+ "spec": {
+  "ask": "inscribed",
+  "target": 50
+ },
+ "stem": "In a circle, $m(\\text{arc } AB) = 100^\\circ$. Find the measure of the inscribed angle $\\angle ACB$ that includes arc $AB$. Drag A, B and C on the circle so that arc $AB$ is $100^\\circ$ and the inscribed angle shows its measure. Then move C around: what do you notice about $\\angle ACB$?",
+ "solution": [
+  "The inscribed angles $\\angle AEB$, $\\angle ADB$ and $\\angle ACB$ all include the same arc $AB$, which measures $100^\\circ$.",
+  "An inscribed angle is half the measure of the arc it includes: $m(\\angle ACB) = \\frac{1}{2} m(\\text{arc } AB)$.",
+  "So $m(\\angle ACB) = \\frac{1}{2} \\times 100^\\circ = 50^\\circ$.",
+  "The same holds for $\\angle AEB$ and $\\angle ADB$: each is $50^\\circ$, so inscribed angles on the same arc are equal."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "arc-given-as-angle",
+   "step": 2,
+   "text": "Check what the angle at C measures compared with the arc it faces. How are an inscribed angle and its arc related?"
+  },
+  {
+   "predicate": "other-arc",
+   "step": 1,
+   "text": "Look at which arc the angle at C faces. C must be on the opposite side from the $100^\\circ$ arc AB, so that the angle includes that arc."
+  },
+  {
+   "predicate": "off-target",
+   "step": 3,
+   "text": "Use the given arc of $100^\\circ$ and the rule that an inscribed angle is half of its arc to find the angle, then set it."
+  }
+ ],
+ "notes": "Part 1 (yes/no) and part 3 (explain) are not constructions. Drill-1 and drill-3 depend on figures not shown and read angles rather than construct them, so they are not templated. Proof and concyclic-judgement exercises are not constructions."
+}

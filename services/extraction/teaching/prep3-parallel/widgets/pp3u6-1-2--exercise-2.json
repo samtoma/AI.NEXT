@@ -1,0 +1,58 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u6-1-2:exercise-2",
+ "lo_id": "lo:pp3u6-1-2",
+ "book_item": "pp3u6-1:exercise-2",
+ "parent_question_id": "q:pp3u6-1-2:bk-exercise-2",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "system",
+  "lines": [
+   {
+    "m": 3,
+    "b": -1
+   },
+   {
+    "m": 1,
+    "b": 1
+   }
+  ]
+ },
+ "stem": "Find the solution set of the pair of equations $y = 3x - 1$, $x - y + 1 = 0$ graphically. Drag the four points to draw both lines.",
+ "solution": [
+  "For $y = 3x - 1$: put $x = 0$, then $y = -1$, giving $(0, -1)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_1$ through these points.",
+  "Write $x - y + 1 = 0$ as $y = x + 1$. Put $x = 0$, then $y = 1$, giving $(0, 1)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_2$ through these points.",
+  "The lines meet at $(1, 2)$. The solution set is $\\{(1, 2)\\}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "intercept-wrong",
+   "step": 1,
+   "text": "A line is parallel to the right one but at the wrong height. Put x = 0 and see where the line must cross the y-axis."
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "step": 2,
+   "text": "A line leans the wrong way. Write the second equation as y = ... and see whether y rises or falls as x grows."
+  },
+  {
+   "predicate": "slope-inverted",
+   "step": 1,
+   "text": "Substitute two values of x and compare how much y changes with how much x changes."
+  },
+  {
+   "predicate": "vertical-line",
+   "step": 2,
+   "text": "Both equations can be written as y = ... so neither line is vertical. Find two points on each."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Take each equation in turn, write it as y = ..., substitute two values of x, and draw the line through the two points."
+  }
+ ],
+ "notes": "Read directly from the stem; key {(1,2)}."
+}

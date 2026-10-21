@@ -1,0 +1,67 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u6-2-1:drill-2",
+ "lo_id": "lo:pp3u6-2-1",
+ "book_item": "pp3u6-2:drill-2",
+ "parent_question_id": "expl:pp3u6-2-1:bk-drill-2",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "curve_sketcher",
+ "spec": {
+  "fn": "quadratic",
+  "coefs": [
+   -1,
+   6,
+   -11
+  ],
+  "grid": {
+   "x": [
+    0,
+    6
+   ],
+   "y": [
+    -12,
+    0
+   ],
+   "step": 1
+  }
+ },
+ "stem": "Draw the graphical form of the function $f$ where $f(x) = -x^2 + 6x - 11$ in the interval $[0, 6]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 - 6x + 11 = 0$.",
+ "solution": [
+  "Make a table for x in [0, 6]: f(0)=-11, f(1)=-6, f(2)=-3, f(3)=-2, f(4)=-3, f(5)=-6, f(6)=-11.",
+  "Plot the points (0, -11), (1, -6), (2, -3), (3, -2), (4, -3), (5, -6), (6, -11).",
+  "Draw a smooth curve through them; it opens downward with its highest point at (3, -2), below the x-axis.",
+  "The curve does not meet the x-axis.",
+  "$x^2-6x+11=0$ is the same equation as $-x^2+6x-11=0$, so it has no real roots.",
+  "The solution set is ∅."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "fails-vertical-line-test",
+   "step": 3,
+   "text": "A function gives one value of f(x) for each x. Draw one smooth curve from left to right without doubling back."
+  },
+  {
+   "predicate": "partial-coverage",
+   "step": 1,
+   "text": "The table runs over the whole interval given. Your curve should start at its left end and reach its right end."
+  },
+  {
+   "predicate": "vertically-displaced",
+   "step": 2,
+   "text": "Check the value f(x) at a few x-values in your table and make sure your curve passes through those heights."
+  },
+  {
+   "predicate": "opens-wrong-way",
+   "step": 3,
+   "text": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Make a table of values for x from the left end of the interval to the right end, plot the points, then join them smoothly."
+  }
+ ],
+ "notes": "Freehand quadratic on [0,6]; grid y -12..0 holds all values (max -2). Solution set ∅ is read from the curve not meeting the x-axis."
+}

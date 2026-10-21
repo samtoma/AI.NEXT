@@ -1,0 +1,58 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u6-1-2:exercise-1",
+ "lo_id": "lo:pp3u6-1-2",
+ "book_item": "pp3u6-1:exercise-1",
+ "parent_question_id": "q:pp3u6-1-2:bk-exercise-1",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "system",
+  "lines": [
+   {
+    "m": -2,
+    "b": 0
+   },
+   {
+    "m": -0.5,
+    "b": 1.5
+   }
+  ]
+ },
+ "stem": "Find the solution set of the pair of equations $2x + y = 0$, $x + 2y = 3$ graphically. Drag the four points to draw both lines.",
+ "solution": [
+  "Write $2x + y = 0$ as $y = -2x$. Put $x = 0$, then $y = 0$, giving $(0, 0)$. Put $x = 1$, then $y = -2$, giving $(1, -2)$. Draw line $L_1$ through these points.",
+  "Write $x + 2y = 3$ as $x = 3 - 2y$. Put $y = 0$, then $x = 3$, giving $(3, 0)$. Put $y = 2$, then $x = -1$, giving $(-1, 2)$. Draw line $L_2$ through these points.",
+  "The lines meet at $(-1, 2)$. The solution set is $\\{(-1, 2)\\}$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "intercept-wrong",
+   "step": 2,
+   "text": "One line is parallel to the right one but sits at the wrong height. Put x = 0 (or y = 0) in the equation and check where your line crosses the axis."
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "step": 1,
+   "text": "A line leans the wrong way. Write the equation as y = ... and check whether y goes up or down as x grows."
+  },
+  {
+   "predicate": "slope-inverted",
+   "step": 2,
+   "text": "Find two points by substituting values, then check how far y changes for each step in x."
+  },
+  {
+   "predicate": "vertical-line",
+   "step": 1,
+   "text": "Neither equation gives a vertical line. Write each as y = ... or x = ... and find two points that fit."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Take each equation in turn, write it as y = ... or x = ..., substitute two values, and draw the line through the two points."
+  }
+ ],
+ "notes": "System mode with b = 1.5 for x + 2y = 3: the line passes through grid points (3,0) and (-1,2), as the system rule requires; the equation-mode whole-number b limit may not apply to system mode. Key {(-1,2)} agrees."
+}

@@ -1,0 +1,283 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:pp3u7-1-2:w003#hint:sign-flipped",
+      "question_id": "q:pp3u7-1-2:w003",
+      "template_id": "wt:pp3u7-1-2:drill-1-d",
+      "lo_id": "lo:pp3u7-1-2",
+      "kind": "number_line_marker",
+      "stem": "Find the set of zeroes of the function $f(x)=x^4-x^2$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]. Factor: x^4 - x^2 = x^2(x-1)(x+1), so the zeroes are x = -1, 0, 1. Tap -1, 0 and 1. All are whole numbers inside the range and there are 3 targets, within the 1-4 limit.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve each factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?",
+      "hint_step": 3,
+      "why": "The answer set {-1,0,1} is symmetric under negation, so a sign error cannot be told apart from the right answer. Negating a marked value gives either a correct value or a plain missed/extra error. The predicate has no meaningful way to fire on this question, so its hint would mislead the student."
+    },
+    {
+      "key": "q:pp3u7-2-1:w001#extra-values",
+      "question_id": "q:pp3u7-2-1:w001",
+      "template_id": "wt:pp3u7-2-1:exclude-numerator-trap",
+      "lo_id": "lo:pp3u7-2-1",
+      "kind": "number_line_marker",
+      "stem": "For the function $n(x)=\\frac{x-1}{x^2-9}$, mark every value of $x$ that must be excluded from the domain.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -3,
+          3
+        ]
+      },
+      "construction": "Points mode, range [-6,6]: tap x=-3 and x=3. Denominator x^2-9=0 gives x=±3; both are whole numbers inside the range, and the numerator is nonzero at both, so there is no cancellation. Reachable.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+      "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
+      "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+      "why": "A student who excludes numerator zeroes would mark x=1 instead of ±3, so the marks would be {1}. That does fire extra-values, because 1 is not in the answer set. But it would also fire missed-values, and extra-values fires on any stray mark, such as a sign error or a guessed value. It is not specific to this misconception, so the diagnosis is not safe."
+    },
+    {
+      "key": "q:pp3u7-2-1:w002#missed-values",
+      "question_id": "q:pp3u7-2-1:w002",
+      "template_id": "wt:pp3u7-2-1:exclude-square-denominator",
+      "lo_id": "lo:pp3u7-2-1",
+      "kind": "number_line_marker",
+      "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          2
+        ]
+      },
+      "construction": "Points mode, range [-6,6]: tap -2 and 2. Both are whole numbers inside the range, and there are 2 targets (within the 1–4 limit).",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "misconception_id": "mc:pp3u7-2-1:one-root-only-denominator",
+      "misconception_label": "Finds only the positive root of the denominator",
+      "misconception_description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
+      "why": "It fires when only part of the set is marked, for example just 2, or just -2. A student holding the one-root-only-denominator misconception would mark only the positive root, 2, and that does trigger missed-values. But missed-values also fires for any partial answer, such as marking only -2, or marking one root plus a stray value. It is a generic partial-set signal, so it is not specific to this misconception. The 'when in doubt, false' rule applies."
+    },
+    {
+      "key": "q:pp3u7-2-1:w002#extra-values",
+      "question_id": "q:pp3u7-2-1:w002",
+      "template_id": "wt:pp3u7-2-1:exclude-square-denominator",
+      "lo_id": "lo:pp3u7-2-1",
+      "kind": "number_line_marker",
+      "stem": "For the function $f(x)=\\frac{x+1}{x^2-4}$, mark on the number line every value of $x$ that is NOT in the domain.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          2
+        ]
+      },
+      "construction": "Points mode, range [-6,6]: tap -2 and 2. Both are whole numbers inside the range, and there are 2 targets (within the 1–4 limit).",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "misconception_id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+      "misconception_label": "Removes the zeroes of the numerator instead of the denominator",
+      "misconception_description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+      "why": "It fires when the student marks values outside the answer set. A student who sets the numerator to zero marks x=-1, and -1 is an extra value, so the predicate would fire. But that student would also leave out -2 and 2, so the construction is only a partial match for the excludes-numerator-zeroes error. The predicate would also fire for many other errors, such as marking 4 or 0. It is not specific to this misconception."
+    },
+    {
+      "key": "q:pp3u7-2-2:w002#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w002",
+      "template_id": "wt:pp3u7-2-2:exercise-1-n1",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_1(x)=\\frac{1}{x}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap only 0. 0 is a whole number within the range, so the answer is reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Set the denominator equal to zero and solve; check the sign of your value.",
+      "hint_step": 2,
+      "why": "The only target is 0, and its negative is also 0, so a sign flip can never be built. The predicate never fires for this question."
+    },
+    {
+      "key": "q:pp3u7-2-2:w004#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w004",
+      "template_id": "wt:pp3u7-2-2:exercise-2-n1",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_1(x)=\\frac{3}{x^2-x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0,
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap 0 and 1. x^2-x = x(x-1) = 0 gives x=0 or x=1. Both are whole numbers inside the range, 2 targets (within 1-4).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The correct set {0,1} contains 0, which is its own negative, so a sign-flip would give {0,-1}. The hint's cue is the (x-a)=0 -> x=-a error. That could fire if the student marks -1 for the factor (x-1), but the extra mark at -1 would mostly trigger extra-values or be ambiguous. The hint is also less well-targeted here, since the student hardly has a sign confusion with such simple factors. When in doubt, false."
+    },
+    {
+      "key": "q:pp3u7-2-2:w005#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w005",
+      "template_id": "wt:pp3u7-2-2:exercise-2-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{2x-3}{x^2-1}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -1,
+          1
+        ]
+      },
+      "construction": "Denominator x^2-1=(x-1)(x+1)=0 gives x=1 and x=-1. Numerator 2x-3 is zero at 1.5, which is irrelevant. Mode points, range [-6,6], mark -1 and 1. Both are whole numbers in range, so reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The answer set {-1,1} is symmetric, so a sign-flipped mark yields the same set and the predicate never fires for this question. The hint would never be shown."
+    },
+    {
+      "key": "q:pp3u7-2-2:w007#hint:missed-values",
+      "question_id": "q:pp3u7-2-2:w007",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{5}{x+2}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], tap only -2 (x+2=0 gives x=-2). Whole number within range, single target, valid.",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "hint": "Find every value that makes the denominator equal zero.",
+      "hint_step": 2,
+      "why": "It can only fire if the student marks nothing, or a subset of a one-element set. The hint is mathematically fine and gives nothing away, but it barely fits this question's single answer. The 'every value' wording is misleading."
+    },
+    {
+      "key": "q:pp3u7-2-2:w007#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w007",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{5}{x+2}$. Tap the value(s) that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], tap only -2 (x+2=0 gives x=-2). Whole number within range, single target, valid.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve $x+2=0$ by moving the constant across with its sign changed.",
+      "hint_step": 2,
+      "why": "The hint is correct, but it says 'moving the constant across with its sign changed' for x+2=0. That nearly states the answer, x=-2, and is a step-by-step solution of this exact equation. It leaks the answer."
+    },
+    {
+      "key": "q:pp3u7-2-2:w008#hint:extra-values",
+      "question_id": "q:pp3u7-2-2:w008",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n3",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_3(x)=\\frac{x}{x^3-4x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          0,
+          2
+        ]
+      },
+      "construction": "x/(x^3-4x) = x/(x(x-2)(x+2)); the denominator is zero at x = 0, -2, 2. Points mode, range [-6,6]: tap -2, 0 and 2 (3 targets, all whole numbers inside the range). Answer set {-2,0,2}.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Only zeroes of the denominator are removed; the numerator does not matter.",
+      "hint_step": 2,
+      "why": "Fires when the student marks a value outside {-2,0,2}, e.g. 4 from x²=4, or 3. The hint says the numerator does not matter. That does not address those errors. This numerator's zero, x=0, is also a denominator zero, so the hint could push a student to unmark 0, which is correct to remove. It does not help this construction and could mislead."
+    },
+    {
+      "key": "q:pp3u7-2-2:w008#hint:sign-flipped",
+      "question_id": "q:pp3u7-2-2:w008",
+      "template_id": "wt:pp3u7-2-2:exercise-3-n3",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_3(x)=\\frac{x}{x^3-4x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          0,
+          2
+        ]
+      },
+      "construction": "x/(x^3-4x) = x/(x(x-2)(x+2)); the denominator is zero at x = 0, -2, 2. Points mode, range [-6,6]: tap -2, 0 and 2 (3 targets, all whole numbers inside the range). Answer set {-2,0,2}.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "For each factor set it equal to zero and solve; check the signs.",
+      "hint_step": 2,
+      "why": "The target set {-2,0,2} is symmetric, so negating every value gives the same set. A fully sign-flipped answer is therefore correct and the predicate cannot fire for this error. The 'sign flipped' reading would only arise as a partial set, which is a missed-values case. The hint is not useful here."
+    },
+    {
+      "key": "q:pp3u7-2-2:w010#hint:extra-values",
+      "question_id": "q:pp3u7-2-2:w010",
+      "template_id": "wt:pp3u7-2-2:exercise-4-n2",
+      "lo_id": "lo:pp3u7-2-2",
+      "kind": "number_line_marker",
+      "stem": "Find the common domain of the function $n_2(x)=\\frac{3x}{x^2-x}$. Tap the values that must be removed from R.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          0,
+          1
+        ]
+      },
+      "construction": "Denominator x^2 - x = x(x-1) is zero at x=0 and x=1. Points mode, range [-6,6]: tap 0 and 1. Both are whole numbers inside the range, 2 targets (within 1-4), so valid.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Only zeroes of the denominator are removed; the numerator does not matter.",
+      "hint_step": 2,
+      "why": "Can fire (e.g. tapping 3, or -1 and 1 both). But the hint blames the numerator, and here the numerator's zero (x=0) is already a denominator zero, so a numerator-based error would not appear as an extra value. The hint would mostly be misdirected for the actual errors, so it does not help find the wrong step."
+    },
+    {
+      "key": "q:pp3u7-3-1:w001#hint:sign-flipped",
+      "question_id": "q:pp3u7-3-1:w001",
+      "template_id": "wt:pp3u7-3-1:drill-1-2",
+      "lo_id": "lo:pp3u7-3-1",
+      "kind": "number_line_marker",
+      "stem": "The common domain of the functions $n_1, n_2$, where $n_1(x)=\\frac{x-2}{x^2-4}$ and $n_2(x)=\\frac{1}{x+1}$, is $\\mathbb{R}$ minus the values x cannot take in either function. Mark on the number line every value that is NOT in the common domain.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          -1,
+          2
+        ]
+      },
+      "construction": "Points mode, range [-6,6], targets [-2,-1,2]. n1 has x^2-4=(x-2)(x+2), so x=2 and x=-2 are excluded. n2 has x+1=0, so x=-1 is excluded. Tap -2, -1 and 2. That is 3 targets, all whole numbers inside the range.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Solve each factor of the denominator equal to zero, such as $x+2=0$, and watch the sign of the value you get.",
+      "hint_step": 2,
+      "why": "The hint's example, x+2=0, is one of this question's own denominator factors. It points the student to the target -2. It also reads as the exact step to repeat, so the hint partly gives the answer away. The predicate can fire here, for example if the student marks 1 instead of -1, but the example is too close to the answer."
+    }
+  ]
+}

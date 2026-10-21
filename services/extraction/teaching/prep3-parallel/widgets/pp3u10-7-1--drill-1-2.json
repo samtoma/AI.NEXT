@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u10-7-1:drill-1-2",
+ "lo_id": "lo:pp3u10-7-1",
+ "book_item": "pp3u10-7:drill-1#2",
+ "parent_question_id": "q:pp3u10-7-1:bk-drill-1-2",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "angle_setter",
+ "spec": {
+  "ask": "inscribed",
+  "target": 90
+ },
+ "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+ "solution": [
+  "The arc between the sides of ∠ABC is the semicircle AB, whose measure is 180°.",
+  "$m(\\angle ABC) = \\tfrac{1}{2} \\times 180° = 90°$.",
+  "So set the inscribed angle on this arc to 90°."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "arc-given-as-angle",
+   "step": 2,
+   "text": "The angle is a fraction of the arc it faces, not the arc itself."
+  },
+  {
+   "predicate": "other-arc",
+   "step": 1,
+   "text": "Check that C faces the arc that lies between the sides of the angle of tangency."
+  },
+  {
+   "predicate": "off-target",
+   "step": 2,
+   "text": "Find the measure of the arc AB cut off by a diameter, then apply the half rule."
+  }
+ ],
+ "notes": "Matches book answer 90."
+}

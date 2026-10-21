@@ -13,9 +13,9 @@
   "status": "RED",
   "summary": {
     "checks": 20,
-    "hold": 12,
+    "hold": 13,
     "excepted": 0,
-    "fail": 8
+    "fail": 7
   },
   "checks": [
     {
@@ -129,15 +129,11 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 39,
-      "got": 21,
+      "got": 23,
       "state": "fails",
       "failures": [
         {
           "scope": "lo:pp3u9-1-1 advanced",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u9-1-2 basic",
           "detail": "no live question at this tier"
         },
         {
@@ -185,10 +181,6 @@
           "detail": "no live question at this tier"
         },
         {
-          "scope": "lo:pp3u9-4-1 standard",
-          "detail": "no live question at this tier"
-        },
-        {
           "scope": "lo:pp3u9-4-1 advanced",
           "detail": "no live question at this tier"
         },
@@ -211,14 +203,9 @@
       "id": "module_widgets",
       "title": "The unit = a unit with a live widget question",
       "want": 1,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "unit 9",
-          "detail": "no live widget question"
-        }
-      ],
+      "got": 1,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
@@ -406,8 +393,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 1062,
-      "got": 1062,
+      "want": 1078,
+      "got": 1078,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -454,7 +441,7 @@
     "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
     "groundtruth/prep3-parallel/misprint-decisions.json": "941c1aac3c315dbfe7d81fe7c4428d8d1d3b2cb889ea295fe31ae492cdd00804",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "teaching/prep3-parallel/held.json": "28b8566362431a7ca90966c43abdd65ec52da8e81543a34552d14b2683456865",
+    "teaching/prep3-parallel/held.json": "af8ac00d79e0cd7a1b9fabbee00c0fe2a24a4f4d4c281aa483abcb08435f60ca",
     "book-records/prep3-parallel/pp3u9-1.json": "ffe3d459eca49c58a596fb40152f8ebea8f8d26d06ff1fcb0432b1982137b72b",
     "book-records/prep3-parallel/pp3u9-2.json": "723ce41944f3e1de117bccf2515696f46f84e25c681437d20c19e2839c8690cc",
     "book-records/prep3-parallel/pp3u9-3.json": "b7b39b960648aee61a5aef207a97fb5e33a11eaf2a4e524d37a54018af0af750",
@@ -467,7 +454,7 @@
     "teaching/prep3-parallel/visuals/pp3u9-2.json": "a9b57b37b0aff1737f9cc4c2e2b10fab5090bbd08cf20180109c6c6917b1a9bf",
     "teaching/prep3-parallel/visuals/pp3u9-3.json": "2e699e5ee5e8172020d92a746ac2ae57195e98b9506042a45e47f2a583e9c2b4",
     "teaching/prep3-parallel/visuals/pp3u9-4.json": "20ce96fcff55e2226a5a6271e732707c77e94395a12b0839a3ccf931055b85d6",
-    "compiled/prep3-parallel/compile-report.json": "08ce5cf1d28ac05ff3abe24a0f2895d9a89d6fb2dad15e5105cda937188048b2",
+    "compiled/prep3-parallel/compile-report.json": "0b7811bfd93ac1c1c0caa84fbe354ba8f7cf0f7bba94d66f7415f67548c13334",
     "compiled/prep3-parallel/generated-questions.json": "2b0d6de0d1c1f4ad8439dd6810be311f3a8e7d048f912dc8afb87e9e764b568b",
     "compiled/prep3-parallel/misconceptions.json": "c621012a62a4ccb62c29f2e7fbe7a1ba2bc7f0a13527704bdf93fc07e6354a6f",
     "compiled/prep3-parallel/pp3u1.json": "8052604aabb4a05caa1ab2ed3b719231768908decae5f2fc9f9f4170df07979e",
@@ -481,7 +468,7 @@
     "compiled/prep3-parallel/pp3u8.json": "08f6809711385aba607e1447aec5849e3075f19a7e1e1e9c52917697f5534d13",
     "compiled/prep3-parallel/pp3u9.json": "117752db3476505719332179df1cec22a27691045012ebde42511d305fdbae43",
     "compiled/prep3-parallel/review-stamps.json": "f2d6fab6b057fa327f455e081ac72148a5a427b5a6e5383c59609deef39c4aa6",
-    "compiled/prep3-parallel/widget-questions.json": "682f81c340678ae59055d7f8b2324764963cc8fd3e62d734d2b9b07a05f33ab1",
+    "compiled/prep3-parallel/widget-questions.json": "d8fd481603bd9ea7b3bf8bd90ae8dbd5f39306db2224b279217a3932e9c09ea9",
     "compiled/prep3-parallel/content/pp3u9-1.json": "1f357f49ed4c1b767aaecc1ab223fe2c68c925e4fde7daeec6d0127785075431",
     "compiled/prep3-parallel/content/pp3u9-2.json": "462797fe8774b15f8f2372847fe4300ad7881e167a250bd79b144c63202cba77",
     "compiled/prep3-parallel/content/pp3u9-3.json": "36460b15a512cdbe72b82e2f016152ee9524bb7a1ddd239c87c1b04e3696acc5",

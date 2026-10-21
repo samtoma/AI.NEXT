@@ -1,0 +1,39 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u10-1-1:drill-2-4",
+ "lo_id": "lo:pp3u10-1-1",
+ "book_item": "pp3u10-1:drill-2#4",
+ "parent_question_id": "q:pp3u10-1-1:bk-drill-2-4",
+ "parent_kind": "question",
+ "tier": "basic",
+ "kind": "angle_setter",
+ "spec": {
+  "ask": "central",
+  "target": 130
+ },
+ "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$, with C on the semicircle ACB. Complete: $m(\\widehat{BC}) = \\ldots^\\circ$. Drag the points to set the measure of arc BC.",
+ "solution": [
+  "AB is a diameter, so arc ACB is a semicircle of 180°.",
+  "m(BC) = 180° − m(AC).",
+  "m(BC) = 180° − 50° = 130°."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "angle-given-as-arc",
+   "step": 3,
+   "text": "The arc measure equals its central angle. Check which angle you have set."
+  },
+  {
+   "predicate": "other-arc",
+   "step": 2,
+   "text": "Arc BC lies in the semicircle. Check that you set it, not the arc across."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Start from the semicircle on the diameter and take away the known arc."
+  }
+ ],
+ "notes": "Book answer 130."
+}

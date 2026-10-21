@@ -1,0 +1,3305 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "f425ada01e12b979ad3701ad528b0c998630ed6ca68a8c51a573dfe2d55a9ebb",
+  "args_sha256": "2d64887342d9bf91987a37990373e26bcb3917205873f61c68c16a28d44f00d0",
+  "generated_sha256": "19a9146669b67d871d2c48c1c76702978ca5612cd260e903399bbfb0632d0349",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "pp3u2-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-1-2",
+     "need_kind": "fill-in / equivalent-ratio completer",
+     "description": "Think and discuss 1: complete 3/5 = (3×…)/(5×…) by choosing a multiplier, then see that the ratio is unchanged.",
+     "why": "ratio_balance grades a fourth term against fixed a, b and c. Here the student chooses the multiplier, and any non-zero value is right. The balance has no way to accept a free multiplier, so using it would be a stretch."
+    },
+    {
+     "lo_id": "lo:pp3u2-1-2",
+     "need_kind": "numeric answer entry for an equation solution",
+     "description": "Drill 1: find the positive number x so that (5 + x²)/(11 + x²) = 3/5. The book's answer is 2.",
+     "why": "The task is to solve an equation and give one number. No widget builds that. Tapping 2 on number_line_marker would only be answer entry, not a construction, and the other 'fourth term' widgets do not model adding a square to both terms."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u2-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u2-2-1:drill-1-A",
+     "lo_id": "lo:pp3u2-2-1",
+     "book_item": "pp3u2-2:drill-1#A",
+     "parent_question_id": "q:pp3u2-2-1:bk-drill-1-a",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "ratio_balance",
+     "spec": {
+      "mode": "direct",
+      "a": 4,
+      "b": 6,
+      "c": 2
+     },
+     "stem": "Find the second proportional of the numbers $2, \\ldots\\ldots, 4, 6$. The four numbers are proportional, so $2 : \\text{second} = 4 : 6$, which is the same as $4 : 6 = 2 : \\text{second}$. Drag the right pan until the balance is level to find the second proportional.",
+     "solution": [
+      "Let the second proportional be $x$. The numbers $2, x, 4, 6$ are proportional, so $\\frac{2}{x}=\\frac{4}{6}$.",
+      "Product of extremes = product of means: $2\\times 6 = x \\times 4$, so $12 = 4x$.",
+      "$x = 12 \\div 4 = 3$.",
+      "Check: $\\frac{2}{3}=\\frac{4}{6}$, both equal $\\frac{2}{3}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "direct-solved-as-inverse",
+       "step": 1,
+       "text": "Two ratios are equal when their quotients match, so compare the fractions $\\frac{a}{b}$ and $\\frac{c}{d}$, not the products of the numbers beside each other."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Use the product of the extremes equals the product of the means: multiply the first and last numbers, then divide by the other known number."
+      }
+     ],
+     "notes": "Rewritten as 4/6 = 2/x (same proportion) so the unknown is the balance's fourth term; fourth term 3."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u2-2-1:drill-1-B",
+     "lo_id": "lo:pp3u2-2-1",
+     "book_item": "pp3u2-2:drill-1#B",
+     "parent_question_id": "q:pp3u2-2-1:bk-drill-1-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "ratio_balance",
+     "spec": {
+      "mode": "direct",
+      "a": 6,
+      "b": 8,
+      "c": 12
+     },
+     "stem": "Find the third proportional of the numbers $8, 6, \\ldots\\ldots, 12$. The four numbers are proportional, so $8 : 6 = \\text{third} : 12$, which is the same as $6 : 8 = 12 : \\text{third}$. Drag the right pan until the balance is level to find the third proportional.",
+     "solution": [
+      "Let the third proportional be $x$. The numbers $8, 6, x, 12$ are proportional, so $\\frac{8}{6}=\\frac{x}{12}$.",
+      "Product of extremes = product of means: $8\\times 12 = 6\\times x$, so $96 = 6x$.",
+      "$x = 96 \\div 6 = 16$.",
+      "Check: $\\frac{8}{6}=\\frac{4}{3}$ and $\\frac{16}{12}=\\frac{4}{3}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "direct-solved-as-inverse",
+       "step": 1,
+       "text": "Equal ratios have equal quotients: write the proportion as two fractions and compare them rather than multiplying numbers across within one ratio."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Use the product of the extremes equals the product of the means to get an equation for the missing number, then divide."
+      }
+     ],
+     "notes": "Rewritten as 6/8 = 12/x so the unknown is the fourth term; fourth term 16."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-2-1",
+     "need_kind": "numeric fill-in blanks",
+     "description": "Exercise 1 (parts first and second): complete the blanks in 4/2 = …/… and 4/16 = …/… from 4×8 = 2×16.",
+     "why": "The student fills two numbers into a fraction; no existing instrument builds a pair of numerators/denominators from a product equality, and ratio_balance finds only one fourth term."
+    },
+    {
+     "lo_id": "lo:pp3u2-2-1",
+     "need_kind": "open numeric examples",
+     "description": "Open prompt: check the properties with your own numerical examples.",
+     "why": "Free-ended student-chosen examples cannot be graded by any existing instrument."
+    },
+    {
+     "lo_id": "lo:pp3u2-2-3",
+     "need_kind": "algebraic proof",
+     "description": "Drill 4 and the open prompts on middle proportionals.",
+     "why": "They are proofs or open questions, not constructions on any existing instrument."
+    }
+   ],
+   "notes": "Drill 2, drill 3 and drill 4 are algebraic computations/proofs, not constructions."
+  },
+  {
+   "lesson": "pp3u2-3",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u2-3-2:exercise-2-b",
+     "lo_id": "lo:pp3u2-3-2",
+     "book_item": "pp3u2-3:exercise-2#B",
+     "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "ratio_balance",
+     "spec": {
+      "mode": "inverse",
+      "a": 3,
+      "b": 10,
+      "c": 5
+     },
+     "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
+     "solution": [
+      "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$.",
+      "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$.",
+      "For $x = 5$: $y = \\frac{30}{5}$.",
+      "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "inverse-solved-as-direct",
+       "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
+      }
+     ],
+     "notes": "Table has four columns (x=3,5,6,10); one pair used as the given and one asked. Book answer y=6 for x=5 agrees."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u2-3-1",
+     "need_kind": "line_drawer",
+     "description": "Think and discuss 1A: represent d = 15t graphically (a line through the origin with gradient 15).",
+     "why": "line_drawer equation mode allows |m| at most 5; gradient 15 is out of the validator's limit and a grid cannot change that."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u3-1",
+   "templates": [],
+   "gaps": [],
+   "notes": "No book exercises were supplied for lo:pp3u3-1-1, lo:pp3u3-1-2 or lo:pp3u3-1-3, so there is nothing to convert and no construction exercise to record as a gap."
+  },
+  {
+   "lesson": "pp3u3-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u3-2-4",
+     "need_kind": "pair_plotter with two joined polygons on one board",
+     "description": "pp3u3-2:exercise-1 asks the student to draw the frequency polygons of Class A and Class B in one figure, with centres 5, 15, 25, 35, 45 and frequencies 2, 5, 11, 15, 7 and 2, 3, 18, 7, 10.",
+     "why": "pair_plotter takes at most 8 points and draws one joined polygon. Two polygons are 10 points, or 14 with the usual zero-frequency end points, and the join would link them as a single polygon. Plotting one class only would change what the book asks. bar_builder and curve_sketcher do not fit either."
+    }
+   ],
+   "notes": "The other parts are calculations or judgements, not constructions, so they get no widget. think-and-discuss-1 and drill-1 are for computing means and standard deviations. think-and-discuss-2, drill-2 and exercise-3 are for comparing or choosing. bar_builder only takes values 0–10 and could not hold wages like 200 or marks like 30. exercise-2 is calculation."
+  },
+  {
+   "lesson": "pp3u4-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u4-1-3",
+     "need_kind": "right-triangle ratio evaluation on a given triangle (three ratios at once)",
+     "description": "pp3u4-1:drill-3#First asks for sin, cos and tan of angle CAD in the isosceles triangle ABC (AB = AC = 10, BC = 12, AD ⊥ BC). The student must find D as the midpoint, work out AD = 8 by Pythagoras, then write three ratios.",
+     "why": "triangle_ratio has the student drag the legs of a free triangle to hit ONE target ratio. It accepts every similar triangle, so it cannot check a computed value for this specific triangle. It also cannot ask for three ratios in one part, and it cannot show the given triangle or the derived side. Using it would be a stretch, so this is a gap."
+    }
+   ],
+   "notes": "Only one part is a gap. The other exercises are not constructions, so I recorded no gap for them. drill-1 and drill-2 are numeric degree/minute/second conversions. The pp3u4-1 think-and-discuss items 1–6 are inequality and equality comparisons. drill-3 Second A and Second B are proofs. LO 1-4 has no exercises."
+  },
+  {
+   "lesson": "pp3u4-2",
+   "templates": [],
+   "gaps": [],
+   "notes": "No part is a construction an existing widget builds exactly. Parts are figure-based completions, identity proofs, or numeric angle/value finding. triangle_ratio would be a stretch (decimal targets, no exact 1/√3, and the task is not building a ratio)."
+  },
+  {
+   "lesson": "pp3u5-1",
+   "templates": [],
+   "gaps": [],
+   "notes": "No part of this lesson is a construction on an existing widget. The think-and-discuss items and drill-2 ask for computed distances or completed algebra steps, and drill-1 asks the student to state conditions in words. No widget outputs a distance or takes a written proof, so no templates or gaps were recorded."
+  },
+  {
+   "lesson": "pp3u5-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-1:think-and-discuss-1-first",
+     "lo_id": "lo:pp3u5-2-1",
+     "book_item": "pp3u5-2:think-and-discuss-1#First",
+     "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-first",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       4,
+       6
+      ],
+      "grid": {
+       "x": [
+        -1,
+        7
+       ],
+       "y": [
+        0,
+        8
+       ]
+      }
+     },
+     "stem": "On a perpendicular coordinate plane, the straight segment AB has ends A (2, 6) and B (6, 6). Plot the midpoint of AB.",
+     "solution": [
+      "A and B have the same y-coordinate 6, so AB is parallel to the x-axis and the midpoint has y = 6.",
+      "The x-coordinate of the midpoint is halfway between 2 and 6: (2 + 6) ÷ 2 = 4.",
+      "The midpoint is (4, 6)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Notice which coordinate the two ends share; the midpoint keeps that value, and only the other coordinate needs a halfway point."
+      }
+     ],
+     "notes": "Single point from the key."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-1:think-and-discuss-1-second",
+     "lo_id": "lo:pp3u5-2-1",
+     "book_item": "pp3u5-2:think-and-discuss-1#Second",
+     "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-second",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -2,
+       -3
+      ]
+     },
+     "stem": "On a perpendicular coordinate plane, the straight segment AB has ends A (-2, -5) and B (-2, -1). Plot the midpoint of AB.",
+     "solution": [
+      "A and B have the same x-coordinate -2, so AB is parallel to the y-axis and the midpoint has x = -2.",
+      "The y-coordinate is halfway between -5 and -1: (-5 + -1) ÷ 2 = -3.",
+      "The midpoint is (-2, -3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 2,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Both ends are on the negative side of an axis; look at the signs of the numbers when you find the halfway point."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Notice which coordinate the two ends share; the midpoint keeps that value, and only the other coordinate needs a halfway point."
+      }
+     ],
+     "notes": "Single point from the key."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-1:think-and-discuss-1-third",
+     "lo_id": "lo:pp3u5-2-1",
+     "book_item": "pp3u5-2:think-and-discuss-1#Third",
+     "parent_question_id": "q:pp3u5-2-1:bk-think-and-discuss-1-third",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       4
+      ]
+     },
+     "stem": "On a perpendicular coordinate plane, the straight segment AB has ends A (1, 2) and B (5, 6). Plot the midpoint of AB.",
+     "solution": [
+      "The ends differ in both coordinates, so find the halfway value of each separately.",
+      "x: (1 + 5) ÷ 2 = 3.",
+      "y: (2 + 6) ÷ 2 = 4.",
+      "The midpoint is (3, 4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the halfway value of the two x-coordinates, then of the two y-coordinates, separately."
+      }
+     ],
+     "notes": "Single point from the key."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-2:drill-1-1",
+     "lo_id": "lo:pp3u5-2-2",
+     "book_item": "pp3u5-2:drill-1#1",
+     "parent_question_id": "q:pp3u5-2-2:bk-drill-1-1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       4,
+       2
+      ]
+     },
+     "stem": "C is the midpoint of AB, where A(2, 4) and B(6, 0). Plot the point C.",
+     "solution": [
+      "Use M = ((x1 + x2)/2, (y1 + y2)/2).",
+      "x = (2 + 6)/2 = 4.",
+      "y = (4 + 0)/2 = 2.",
+      "C is (4, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the coordinates with their signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates."
+      }
+     ],
+     "notes": "Single point from the key."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-2:drill-1-2",
+     "lo_id": "lo:pp3u5-2-2",
+     "book_item": "pp3u5-2:drill-1#2",
+     "parent_question_id": "q:pp3u5-2-2:bk-drill-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       0
+      ],
+      "grid": {
+       "x": [
+        -4,
+        8
+       ],
+       "y": [
+        -6,
+        6
+       ]
+      }
+     },
+     "stem": "C is the midpoint of AB, where A(7, -5) and B(-3, 5). Plot the point C.",
+     "solution": [
+      "Use M = ((x1 + x2)/2, (y1 + y2)/2).",
+      "x = (7 + (-3))/2 = 4/2 = 2.",
+      "y = (-5 + 5)/2 = 0.",
+      "C is (2, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the coordinates with their signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates."
+      }
+     ],
+     "notes": "Grid holds A's x = 7."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-2:drill-1-3",
+     "lo_id": "lo:pp3u5-2-2",
+     "book_item": "pp3u5-2:drill-1#3",
+     "parent_question_id": "q:pp3u5-2-2:bk-drill-1-3",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       0,
+       0
+      ],
+      "grid": {
+       "x": [
+        -4,
+        4
+       ],
+       "y": [
+        -6,
+        6
+       ]
+      }
+     },
+     "stem": "C is the midpoint of AB, where A(-3, 6) and B(3, -6). Plot the point C.",
+     "solution": [
+      "Use M = ((x1 + x2)/2, (y1 + y2)/2).",
+      "x = (-3 + 3)/2 = 0.",
+      "y = (6 + (-6))/2 = 0.",
+      "C is (0, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the coordinates with their signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates."
+      }
+     ],
+     "notes": "Swapped/wrong-quadrant cannot fire for origin but harmless."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u5-2-2:drill-1-4",
+     "lo_id": "lo:pp3u5-2-2",
+     "book_item": "pp3u5-2:drill-1#4",
+     "parent_question_id": "q:pp3u5-2-2:bk-drill-1-4",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       -3
+      ],
+      "grid": {
+       "x": [
+        -3,
+        8
+       ],
+       "y": [
+        -6,
+        5
+       ]
+      }
+     },
+     "stem": "C is the midpoint of AB, where A(7, -6) and B(-1, 0). Plot the point C.",
+     "solution": [
+      "Use M = ((x1 + x2)/2, (y1 + y2)/2).",
+      "x = (7 + (-1))/2 = 6/2 = 3.",
+      "y = (-6 + 0)/2 = -3.",
+      "C is (3, -3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Check the order of the pair: the first number is read along the x-axis, the second along the y-axis."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the coordinates with their signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The midpoint's x is the average of the two x-coordinates, and its y the average of the two y-coordinates."
+      }
+     ],
+     "notes": "Grid holds A(7,-6)."
+    }
+   ],
+   "gaps": [],
+   "notes": "LO3 has no book exercises, so no templates. Drill parts are calculations; they are built as plotting the midpoint."
+  },
+  {
+   "lesson": "pp3u5-3",
+   "templates": [],
+   "gaps": [],
+   "notes": "No exercise in pp3u5-3 asks the student to construct a graph, line or point. The parts ask for computed slopes or angles, fill-in completions, proofs and single unknown coordinates, so I wrote no templates and recorded no gaps."
+  },
+  {
+   "lesson": "pp3u5-4",
+   "templates": [],
+   "gaps": [],
+   "notes": "Lesson pp3u5-4 lists no book exercises (exercises: []), so there are no parts to convert. I wrote no templates and recorded no gaps. The two worked examples (equation of a line from a perpendicular slope, and from a midpoint) are not exercise parts."
+  },
+  {
+   "lesson": "pp3u6-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u6-1-2:exercise-1",
+     "lo_id": "lo:pp3u6-1-2",
+     "book_item": "pp3u6-1:exercise-1",
+     "parent_question_id": "q:pp3u6-1-2:bk-exercise-1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "system",
+      "lines": [
+       {
+        "m": -2,
+        "b": 0
+       },
+       {
+        "m": -0.5,
+        "b": 1.5
+       }
+      ]
+     },
+     "stem": "Find the solution set of the pair of equations $2x + y = 0$, $x + 2y = 3$ graphically. Drag the four points to draw both lines.",
+     "solution": [
+      "Write $2x + y = 0$ as $y = -2x$. Put $x = 0$, then $y = 0$, giving $(0, 0)$. Put $x = 1$, then $y = -2$, giving $(1, -2)$. Draw line $L_1$ through these points.",
+      "Write $x + 2y = 3$ as $x = 3 - 2y$. Put $y = 0$, then $x = 3$, giving $(3, 0)$. Put $y = 2$, then $x = -1$, giving $(-1, 2)$. Draw line $L_2$ through these points.",
+      "The lines meet at $(-1, 2)$. The solution set is $\\{(-1, 2)\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "One line is parallel to the right one but sits at the wrong height. Put x = 0 (or y = 0) in the equation and check where your line crosses the axis."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "A line leans the wrong way. Write the equation as y = ... and check whether y goes up or down as x grows."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 2,
+       "text": "Find two points by substituting values, then check how far y changes for each step in x."
+      },
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "Neither equation gives a vertical line. Write each as y = ... or x = ... and find two points that fit."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Take each equation in turn, write it as y = ... or x = ..., substitute two values, and draw the line through the two points."
+      }
+     ],
+     "notes": "System mode with b = 1.5 for x + 2y = 3: the line passes through grid points (3,0) and (-1,2), as the system rule requires; the equation-mode whole-number b limit may not apply to system mode. Key {(-1,2)} agrees."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u6-1-2:exercise-2",
+     "lo_id": "lo:pp3u6-1-2",
+     "book_item": "pp3u6-1:exercise-2",
+     "parent_question_id": "q:pp3u6-1-2:bk-exercise-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "system",
+      "lines": [
+       {
+        "m": 3,
+        "b": -1
+       },
+       {
+        "m": 1,
+        "b": 1
+       }
+      ]
+     },
+     "stem": "Find the solution set of the pair of equations $y = 3x - 1$, $x - y + 1 = 0$ graphically. Drag the four points to draw both lines.",
+     "solution": [
+      "For $y = 3x - 1$: put $x = 0$, then $y = -1$, giving $(0, -1)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_1$ through these points.",
+      "Write $x - y + 1 = 0$ as $y = x + 1$. Put $x = 0$, then $y = 1$, giving $(0, 1)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_2$ through these points.",
+      "The lines meet at $(1, 2)$. The solution set is $\\{(1, 2)\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "intercept-wrong",
+       "step": 1,
+       "text": "A line is parallel to the right one but at the wrong height. Put x = 0 and see where the line must cross the y-axis."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 2,
+       "text": "A line leans the wrong way. Write the second equation as y = ... and see whether y rises or falls as x grows."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 1,
+       "text": "Substitute two values of x and compare how much y changes with how much x changes."
+      },
+      {
+       "predicate": "vertical-line",
+       "step": 2,
+       "text": "Both equations can be written as y = ... so neither line is vertical. Find two points on each."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Take each equation in turn, write it as y = ..., substitute two values of x, and draw the line through the two points."
+      }
+     ],
+     "notes": "Read directly from the stem; key {(1,2)}."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u6-1-2:drill-2-1",
+     "lo_id": "lo:pp3u6-1-2",
+     "book_item": "pp3u6-1:drill-2#1",
+     "parent_question_id": "expl:pp3u6-1-2:bk-drill-1",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "system",
+      "lines": [
+       {
+        "m": -3,
+        "b": 5
+       },
+       {
+        "m": -3,
+        "b": 8
+       }
+      ]
+     },
+     "stem": "Graphically find the solution set of the pair of equations $3x + y = 5$, $y + 3x = 8$. Drag the four points to draw both lines.",
+     "solution": [
+      "Write $3x + y = 5$ as $y = 5 - 3x$. Put $x = 0$, then $y = 5$, giving $(0, 5)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_1$ through these points.",
+      "Write $y + 3x = 8$ as $y = 8 - 3x$. Put $x = 2$, then $y = 2$, giving $(2, 2)$. Put $x = 3$, then $y = -1$, giving $(3, -1)$. Draw line $L_2$ through these points.",
+      "Both lines have slope $-3$, so $L_1 \\parallel L_2$.",
+      "The lines do not meet, so $L_1 \\cap L_2 = \\phi$ and the solution set is empty."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "intercept-wrong",
+       "step": 1,
+       "text": "A line is parallel to the right one but at the wrong height. Put x = 0 in the equation to see where it meets the y-axis."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "A line leans the wrong way. Write the equation as y = ... and see whether y rises or falls as x grows."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 2,
+       "text": "Substitute two values of x and compare how much y changes with how much x changes."
+      },
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "Both equations can be written as y = ..., so neither line is vertical."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write each equation as y = ..., substitute two values of x, and draw the line through the two points."
+      }
+     ],
+     "notes": "Parallel lines; the board reports that the solution set is empty once both are right."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u6-1-1",
+     "need_kind": "open set of ordered-pair solutions of a line",
+     "description": "Open prompt: tell another four solutions of 2x − y = 1 (the student chooses any four points on the line).",
+     "why": "pair_plotter grades one exact point or one exact set of targets. Here any four points of the line are correct and the book gives no fixed set, so a target list would have to be guessed. line_drawer would draw the line, not give four solutions."
+    },
+    {
+     "lo_id": "lo:pp3u6-1-2",
+     "need_kind": "coincident lines",
+     "description": "drill-2 part 2: 2x + y = 4 and 8 − 2y = 4x, which give the same line, so there are infinitely many solutions.",
+     "why": "Both lines in system mode are the same line. The four handles would stack on one line, and the board has no way to show an infinite solution set {(x, y): y = 4 − 2x}, so the construction cannot be graded or explained."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u6-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u6-2-1:drill-1",
+     "lo_id": "lo:pp3u6-2-1",
+     "book_item": "pp3u6-2:drill-1",
+     "parent_question_id": "q:pp3u6-2-1:bk-drill-1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       2,
+       1
+      ],
+      "grid": {
+       "x": [
+        -4,
+        2
+       ],
+       "y": [
+        -2,
+        10
+       ],
+       "step": 1
+      }
+     },
+     "stem": "Draw the graphical form of the function $f$ where $f(x) = x^2 + 2x + 1$ in the interval $[-4, 2]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 + 2x + 1 = 0$.",
+     "solution": [
+      "Make a table for x in [-4, 2]: f(-4)=9, f(-3)=4, f(-2)=1, f(-1)=0, f(0)=1, f(1)=4, f(2)=9.",
+      "Plot the points (-4, 9), (-3, 4), (-2, 1), (-1, 0), (0, 1), (1, 4), (2, 9).",
+      "Draw a smooth curve through them; it opens upward with its lowest point at (-1, 0).",
+      "The solutions of $x^2+2x+1=0$ are the x-coordinates of the points where the curve meets the x-axis: it touches the axis only at x = -1.",
+      "The solution set is {-1}."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "fails-vertical-line-test",
+       "step": 3,
+       "text": "A function gives one value of f(x) for each x. Draw one smooth curve from left to right without doubling back."
+      },
+      {
+       "predicate": "partial-coverage",
+       "step": 1,
+       "text": "The table runs over the whole interval given. Your curve should start at its left end and reach its right end."
+      },
+      {
+       "predicate": "vertically-displaced",
+       "step": 2,
+       "text": "Check the value f(x) at a few x-values in your table and make sure your curve passes through those heights."
+      },
+      {
+       "predicate": "opens-wrong-way",
+       "step": 3,
+       "text": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Make a table of values for x from the left end of the interval to the right end, plot the points, then join them smoothly."
+      }
+     ],
+     "notes": "Freehand quadratic on the book's interval [-4,2]; grid y -2..10 holds f(-4)=f(2)=9. The solution set {-1} is read from where the curve touches the x-axis (shown in the solution). LO has no misconceptions, so hints only."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u6-2-1:drill-2",
+     "lo_id": "lo:pp3u6-2-1",
+     "book_item": "pp3u6-2:drill-2",
+     "parent_question_id": "expl:pp3u6-2-1:bk-drill-2",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "curve_sketcher",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       -1,
+       6,
+       -11
+      ],
+      "grid": {
+       "x": [
+        0,
+        6
+       ],
+       "y": [
+        -12,
+        0
+       ],
+       "step": 1
+      }
+     },
+     "stem": "Draw the graphical form of the function $f$ where $f(x) = -x^2 + 6x - 11$ in the interval $[0, 6]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 - 6x + 11 = 0$.",
+     "solution": [
+      "Make a table for x in [0, 6]: f(0)=-11, f(1)=-6, f(2)=-3, f(3)=-2, f(4)=-3, f(5)=-6, f(6)=-11.",
+      "Plot the points (0, -11), (1, -6), (2, -3), (3, -2), (4, -3), (5, -6), (6, -11).",
+      "Draw a smooth curve through them; it opens downward with its highest point at (3, -2), below the x-axis.",
+      "The curve does not meet the x-axis.",
+      "$x^2-6x+11=0$ is the same equation as $-x^2+6x-11=0$, so it has no real roots.",
+      "The solution set is ∅."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "fails-vertical-line-test",
+       "step": 3,
+       "text": "A function gives one value of f(x) for each x. Draw one smooth curve from left to right without doubling back."
+      },
+      {
+       "predicate": "partial-coverage",
+       "step": 1,
+       "text": "The table runs over the whole interval given. Your curve should start at its left end and reach its right end."
+      },
+      {
+       "predicate": "vertically-displaced",
+       "step": 2,
+       "text": "Check the value f(x) at a few x-values in your table and make sure your curve passes through those heights."
+      },
+      {
+       "predicate": "opens-wrong-way",
+       "step": 3,
+       "text": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Make a table of values for x from the left end of the interval to the right end, plot the points, then join them smoothly."
+      }
+     ],
+     "notes": "Freehand quadratic on [0,6]; grid y -12..0 holds all values (max -2). Solution set ∅ is read from the curve not meeting the x-axis."
+    }
+   ],
+   "gaps": [],
+   "notes": "Only the two drawing exercises in lo:pp3u6-2-1 are constructions. The think-and-discuss items are fill-in-the-blank, so they are not constructions and I recorded no gap for them. lo:pp3u6-2-3 has no exercises."
+  },
+  {
+   "lesson": "pp3u6-3",
+   "templates": [],
+   "gaps": [],
+   "notes": "The only book exercise is pp3u6-3:mental-math-1 (find x − y, answer 4). It is a numeric calculation, not a construction, so it gets no template and no gap. Lesson pp3u6-3 has no other exercises."
+  },
+  {
+   "lesson": "pp3u7-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-1-2:drill-1-a",
+     "lo_id": "lo:pp3u7-1-2",
+     "book_item": "pp3u7-1:drill-1#a",
+     "parent_question_id": "q:pp3u7-1-2:bk-drill-1-a",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       0,
+       4
+      ]
+     },
+     "stem": "Find the set of zeroes of the function $f(x)=x^3-4x^2$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+     "solution": [
+      "Put $f(x)=0$: $x^3-4x^2=0$.",
+      "Factorise by taking out the common factor: $x^2(x-4)=0$.",
+      "Set each factor equal to zero: $x^2=0$ gives $x=0$; $x-4=0$ gives $x=4$.",
+      "$Z(f)=\\{0, 4\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Every factor that can be zero gives a zero of the function. Check that you have set each factor equal to 0."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 3,
+       "text": "Substitute each value you marked into $f(x)$; it is a zero only if $f(x)$ comes out as 0."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Solve each factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?"
+      }
+     ],
+     "notes": "Answer agrees with book {0, 4}."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-1-2:drill-1-b",
+     "lo_id": "lo:pp3u7-1-2",
+     "book_item": "pp3u7-1:drill-1#b",
+     "parent_question_id": "q:pp3u7-1-2:bk-drill-1-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       1
+      ]
+     },
+     "stem": "Find the set of zeroes of the function $f(x)=x^2-2x+1$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+     "solution": [
+      "Put $f(x)=0$: $x^2-2x+1=0$.",
+      "Factorise: $(x-1)^2=0$.",
+      "Set the factor equal to zero: $x-1=0$, so $x=1$.",
+      "$Z(f)=\\{1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Check whether your factorised form can be zero for any value of $x$, by setting its factor equal to 0."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 3,
+       "text": "Substitute each value you marked into $f(x)$; it is a zero only if $f(x)$ comes out as 0."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Solve the factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?"
+      }
+     ],
+     "notes": "Answer agrees with book {1}."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-1-2:drill-1-d",
+     "lo_id": "lo:pp3u7-1-2",
+     "book_item": "pp3u7-1:drill-1#d",
+     "parent_question_id": "q:pp3u7-1-2:bk-drill-1-d",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -1,
+       0,
+       1
+      ]
+     },
+     "stem": "Find the set of zeroes of the function $f(x)=x^4-x^2$. Tap on the number line every value of $x$ for which $f(x)=0$.",
+     "solution": [
+      "Put $f(x)=0$: $x^4-x^2=0$.",
+      "Factorise: $x^2(x^2-1)=x^2(x-1)(x+1)=0$.",
+      "Set each factor equal to zero: $x=0$, $x=1$, $x=-1$.",
+      "$Z(f)=\\{-1, 0, 1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Factorise fully, then set every factor equal to 0, including the common factor you took out."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 3,
+       "text": "Substitute each value you marked into $f(x)$; it is a zero only if $f(x)$ comes out as 0."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Solve each factor equal to 0 again, carefully: in $x-a=0$, what must $x$ be?"
+      }
+     ],
+     "notes": "Answer agrees with book {-1, 0, 1}."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-1-2",
+     "need_kind": "number_line_marker with irrational targets",
+     "description": "drill-1#c: $f(x)=x^2-2x-1$, Z(f)={1+√2, 1−√2}",
+     "why": "The zeroes are irrational; number_line_marker targets must be whole numbers, so the book's answer cannot be marked."
+    },
+    {
+     "lo_id": "lo:pp3u7-1-2",
+     "need_kind": "number_line_marker with irrational targets",
+     "description": "drill-1#f: $f(x)=x^2-2$, Z(f)={√2, −√2}",
+     "why": "The zeroes are irrational; targets must be whole numbers, so the answer cannot be built."
+    },
+    {
+     "lo_id": "lo:pp3u7-1-2",
+     "need_kind": "empty-set answer widget",
+     "description": "drill-1#e: $f(x)=x^2-x+1$, Z(f)=φ (no real zeroes)",
+     "why": "number_line_marker needs 1–4 targets; no widget can take an empty set as the answer."
+    }
+   ],
+   "notes": "Only drill-1 a, b and d fit number_line_marker. The think-and-discuss activity asks for calculations and an observation, not a construction, so it has no gap."
+  },
+  {
+   "lesson": "pp3u7-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:drill-3",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:drill-3",
+     "parent_question_id": "expl:pp3u7-2-2:bk-example-1",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       1,
+       2
+      ]
+     },
+     "stem": "If $n_1(x)=\\frac{1}{x-1}$ and $n_2(x)=\\frac{3}{x^2-4}$, find the common domain of $n_1$ and $n_2$. The common domain is R minus the values that make a denominator zero: tap those values on the number line.",
+     "solution": [
+      "The domain of $n_1$ is R minus the zero of $x-1$: $x-1=0$ gives $x=1$, so $m_1=R-\\{1\\}$.",
+      "$x^2-4=(x-2)(x+2)$, whose zeroes are $2$ and $-2$, so $m_2=R-\\{-2,2\\}$.",
+      "The common domain is $m_1\\cap m_2$, i.e. R minus the union of the zeroes: $R-\\{-2,1,2\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "The common domain removes the zeroes of every denominator. Have you collected the zeroes of both fractions?"
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make a denominator zero are excluded. Check each marked value by substituting it into the denominators."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 1,
+       "text": "Solve each factor of the denominator equal to zero carefully: for $x-a=0$, what is $x$?"
+      }
+     ],
+     "notes": "Marks excluded values; domain is R minus the marked set."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-1-n1",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-1#n1",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-1-n1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       0
+      ]
+     },
+     "stem": "Find the common domain of the function $n_1(x)=\\frac{1}{x}$. Tap the value(s) that must be removed from R.",
+     "solution": [
+      "The denominator is $x$.",
+      "$x=0$ makes it zero.",
+      "The domain is $R-\\{0\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Find every value that makes the denominator equal zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make the denominator zero are removed; test each marked value."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Set the denominator equal to zero and solve; check the sign of your value."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-1-n2",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-1#n2",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-1-n2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -1
+      ]
+     },
+     "stem": "Find the common domain of the function $n_2(x)=\\frac{2}{x+1}$. Tap the value(s) that must be removed from R.",
+     "solution": [
+      "The denominator is $x+1$.",
+      "$x+1=0$ gives $x=-1$.",
+      "The domain is $R-\\{-1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Find every value that makes the denominator equal zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make the denominator zero are removed; test each marked value."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Solve $x+1=0$ step by step, moving the constant across with its sign changed."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-2-n1",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-2#n1",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-2-n1",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       0,
+       1
+      ]
+     },
+     "stem": "Find the common domain of the function $n_1(x)=\\frac{3}{x^2-x}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^2-x=x(x-1)$.",
+      "Its zeroes are $x=0$ and $x=1$.",
+      "The domain is $R-\\{0,1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator; each factor gives a zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; the numerator does not matter."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each factor set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-2-n2",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-2#n2",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-2-n2",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -1,
+       1
+      ]
+     },
+     "stem": "Find the common domain of the function $n_2(x)=\\frac{2x-3}{x^2-1}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^2-1=(x-1)(x+1)$.",
+      "Its zeroes are $x=1$ and $x=-1$.",
+      "The domain is $R-\\{-1,1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator as a difference of two squares; each factor gives a zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; the numerator does not matter."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each factor set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-3-n1",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-3#n1",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-3-n1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       2
+      ]
+     },
+     "stem": "Find the common domain of the function $n_1(x)=\\frac{3}{x-2}$. Tap the value(s) that must be removed from R.",
+     "solution": [
+      "The denominator is $x-2$.",
+      "$x-2=0$ gives $x=2$.",
+      "The domain is $R-\\{2\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Find every value that makes the denominator equal zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make the denominator zero are removed; test each marked value."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Solve $x-2=0$ by moving the constant across with its sign changed."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-3-n2",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-3#n2",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-3-n2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2
+      ]
+     },
+     "stem": "Find the common domain of the function $n_2(x)=\\frac{5}{x+2}$. Tap the value(s) that must be removed from R.",
+     "solution": [
+      "The denominator is $x+2$.",
+      "$x+2=0$ gives $x=-2$.",
+      "The domain is $R-\\{-2\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Find every value that makes the denominator equal zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make the denominator zero are removed; test each marked value."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Solve $x+2=0$ by moving the constant across with its sign changed."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-3-n3",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-3#n3",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-3-n3",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       0,
+       2
+      ]
+     },
+     "stem": "Find the common domain of the function $n_3(x)=\\frac{x}{x^3-4x}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^3-4x=x(x^2-4)=x(x-2)(x+2)$.",
+      "Its zeroes are $0$, $2$ and $-2$.",
+      "The domain is $R-\\{-2,0,2\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator completely: take out a common factor first, then factorise what is left."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; the numerator does not matter."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each factor set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-4-n1",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-4#n1",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-4-n1",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       2,
+       3
+      ]
+     },
+     "stem": "Find the common domain of the function $n_1(x)=\\frac{x^2-4}{x^2-5x+6}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^2-5x+6=(x-2)(x-3)$.",
+      "Its zeroes are $x=2$ and $x=3$.",
+      "The domain is $R-\\{2,3\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator into two brackets; each bracket gives a zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; do not use the numerator."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each bracket set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-4-n2",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-4#n2",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-4-n2",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       0,
+       1
+      ]
+     },
+     "stem": "Find the common domain of the function $n_2(x)=\\frac{3x}{x^2-x}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^2-x=x(x-1)$.",
+      "Its zeroes are $x=0$ and $x=1$.",
+      "The domain is $R-\\{0,1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator; each factor gives a zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; the numerator does not matter."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each factor set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-2-2:exercise-4-n3",
+     "lo_id": "lo:pp3u7-2-2",
+     "book_item": "pp3u7-2:exercise-4#n3",
+     "parent_question_id": "q:pp3u7-2-2:bk-exercise-4-n3",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       1
+      ]
+     },
+     "stem": "Find the common domain of the function $n_3(x)=\\frac{x^2-3x-4}{x^2+x-2}$. Tap the values that must be removed from R.",
+     "solution": [
+      "Factorise the denominator: $x^2+x-2=(x+2)(x-1)$.",
+      "Its zeroes are $x=-2$ and $x=1$.",
+      "The domain is $R-\\{-2,1\\}$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Factorise the denominator into two brackets; each bracket gives a zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only zeroes of the denominator are removed; do not use the numerator."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "For each bracket set it equal to zero and solve; check the signs."
+      }
+     ],
+     "notes": ""
+    }
+   ],
+   "gaps": [],
+   "notes": "Domain exercises are mapped to number_line_marker points mode: the student marks the excluded values, and the domain is R minus that set. The objective lists no misconceptions, so the templates use hints only."
+  },
+  {
+   "lesson": "pp3u7-3",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u7-3-1:drill-1-2",
+     "lo_id": "lo:pp3u7-3-1",
+     "book_item": "pp3u7-3:drill-1#2",
+     "parent_question_id": "q:pp3u7-3-1:bk-drill-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       -1,
+       2
+      ]
+     },
+     "stem": "The common domain of the functions $n_1, n_2$, where $n_1(x)=\\frac{x-2}{x^2-4}$ and $n_2(x)=\\frac{1}{x+1}$, is $\\mathbb{R}$ minus the values x cannot take in either function. Mark on the number line every value that is NOT in the common domain.",
+     "solution": [
+      "Factorize the denominator of $n_1$: $x^2-4=(x+2)(x-2)$, so $n_1(x)=\\frac{x-2}{(x+2)(x-2)}$.",
+      "The denominator of $n_1$ is zero at $x=-2$ and $x=2$, so the domain of $n_1$ is $\\mathbb{R}-\\{-2,2\\}$.",
+      "The denominator of $n_2$ is zero at $x=-1$, so the domain of $n_2$ is $\\mathbb{R}-\\{-1\\}$.",
+      "The common domain leaves out the values excluded by either function: $\\mathbb{R}-\\{-2,-1,2\\}$, so mark $-2$, $-1$ and $2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Check each function separately: which values make a denominator zero? The common domain leaves out the excluded values of both functions."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Only values that make a denominator zero are excluded. Test each marked value in the factorized denominators."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Solve each factor of the denominator equal to zero, such as $x+2=0$, and watch the sign of the value you get."
+      }
+     ],
+     "notes": "Marks the excluded values (the complement of the common domain). Book answer x ≠ -2, -1, 2. Domain is stated before cancelling, as in example 1."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u7-3-1",
+     "need_kind": "algebraic expression entry",
+     "description": "Reducing an algebraic fraction to simplest form (think-and-discuss-3, 5, 6, 7; drill-1 parts 1, 3, 4, 5; and the domain-writing in think-and-discuss-1) asks for an algebraic expression or value written out.",
+     "why": "No widget builds or types an algebraic expression or checks a factorization. The number-line marker could mark excluded values only for fully stated fractions, and think-and-discuss-1 gives no fraction in its own text."
+    },
+    {
+     "lo_id": "lo:pp3u7-3-2",
+     "need_kind": "equality of functions by domain and simplest form",
+     "description": "think-and-discuss-8 asks whether n1 = n2 and to explain, by comparing simplest forms and domains.",
+     "why": "It is a yes/no judgement with an explanation. No widget compares two algebraic fractions."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u7-4",
+   "templates": [],
+   "gaps": [],
+   "notes": "No exercise in pp3u7-4 is a construction. Each asks for a simplified algebraic fraction plus its domain, which is a symbolic answer that no existing widget kind can take. number_line_marker could only grade the excluded values, which is half the task. Some of those values are fractions such as 1/2 (drills 9 and 10), which the widget does not allow. The think-and-discuss items are derivations of a general formula. No templates or gaps recorded."
+  },
+  {
+   "lesson": "pp3u8-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-1-1:drill-3-a",
+     "lo_id": "lo:pp3u8-1-1",
+     "book_item": "pp3u8-1:drill-3#A",
+     "parent_question_id": "q:pp3u8-1-1:bk-drill-3-a",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       1,
+       6
+      ],
+      "targets": [
+       2,
+       4,
+       6
+      ]
+     },
+     "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $A$ = the event of getting an even number: tap on the number line every outcome in $A$.",
+     "solution": [
+      "The sample space is S = {1, 2, 3, 4, 5, 6}.",
+      "Go through each outcome and keep those that are even.",
+      "2, 4 and 6 are even.",
+      "So A = {2, 4, 6}."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Go through every outcome of S one by one and ask whether it is even. Some outcomes in the event are still unmarked."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Check each marked outcome again: does it satisfy the condition of the event?"
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check each marked outcome against the condition of the event."
+      }
+     ],
+     "notes": "Event as a set of outcomes; matches book answer {2,4,6}."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-1-1:drill-3-b",
+     "lo_id": "lo:pp3u8-1-1",
+     "book_item": "pp3u8-1:drill-3#B",
+     "parent_question_id": "q:pp3u8-1-1:bk-drill-3-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       1,
+       6
+      ],
+      "targets": [
+       1,
+       3,
+       5
+      ]
+     },
+     "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $B$ = the event of getting an odd number: tap on the number line every outcome in $B$.",
+     "solution": [
+      "The sample space is S = {1, 2, 3, 4, 5, 6}.",
+      "Go through each outcome and keep those that are odd.",
+      "1, 3 and 5 are odd.",
+      "So B = {1, 3, 5}."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Go through every outcome of S one by one and ask whether it is odd. Some outcomes in the event are still unmarked."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Check each marked outcome again: does it satisfy the condition of the event?"
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check each marked outcome against the condition of the event."
+      }
+     ],
+     "notes": "Matches book answer {1,3,5}."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-1-1:drill-3-c",
+     "lo_id": "lo:pp3u8-1-1",
+     "book_item": "pp3u8-1:drill-3#C",
+     "parent_question_id": "q:pp3u8-1-1:bk-drill-3-c",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       1,
+       6
+      ],
+      "targets": [
+       2
+      ]
+     },
+     "stem": "A die is thrown, so the sample space is $S=\\{1, 2, 3, 4, 5, 6\\}$. Write the event $C$ = the event of getting a prime even number: tap on the number line every outcome in $C$.",
+     "solution": [
+      "The sample space is S = {1, 2, 3, 4, 5, 6}.",
+      "The prime numbers in S are 2, 3, 5.",
+      "Only one of them is even: 2.",
+      "So C = {2}."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 2,
+       "text": "Find the outcomes that are prime, then keep those that are also even."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "An outcome must satisfy both conditions at once: prime and even. Check each marked outcome against both."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check each marked outcome against both conditions."
+      }
+     ],
+     "notes": "Matches book answer {2}."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u8-1-1",
+     "need_kind": "set-writing widget",
+     "description": "think-and-discuss-1 and drill-2: write the sample space {1,...,6} of a die.",
+     "why": "number_line_marker allows only 1–4 targets and sample_space needs a grid of at least 2×2; six outcomes of one die fit neither."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u8-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-2-1:think-and-discuss-2",
+     "lo_id": "lo:pp3u8-2-1",
+     "book_item": "pp3u8-2:think-and-discuss-2",
+     "parent_question_id": "q:pp3u8-2-1:bk-think-and-discuss-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       1,
+       7
+      ],
+      "targets": [
+       1,
+       3,
+       5,
+       7
+      ]
+     },
+     "stem": "If the sample space is $S=\\{1,2,3,4,5,6,7\\}$ and the event is $A=\\{2,4,6\\}$, mark the elements of the complementary event $A'$ on the number line.",
+     "solution": [
+      "A' is made of every element of S that is not in A.",
+      "S = {1, 2, 3, 4, 5, 6, 7} and A = {2, 4, 6}.",
+      "Remove 2, 4 and 6 from S; what is left is 1, 3, 5 and 7.",
+      "So A' = {1, 3, 5, 7}."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "A' contains every element of S that is not in A. Go through S one number at a time and check each against A."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 3,
+       "text": "A and A' have no element in common. Check that none of the numbers you marked belongs to A."
+      }
+     ],
+     "notes": "Four targets is the widget maximum; S = 1..7 fits the range."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-2-2:drill-2-1",
+     "lo_id": "lo:pp3u8-2-2",
+     "book_item": "pp3u8-2:drill-2#1",
+     "parent_question_id": "q:pp3u8-2-2:bk-drill-2-1",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "Al-Akhbar",
+       "Al-Ahram"
+      ],
+      "mode": "counts",
+      "total": 40,
+      "regions": {
+       "a": 10,
+       "b": 7,
+       "ab": 8,
+       "n": 15
+      },
+      "clues": {
+       "a": 18,
+       "b": 15
+      }
+     },
+     "stem": "A classroom contains 40 students. 18 of them read Al-Akhbar newspaper, 15 read Al-Ahram newspaper and 8 read both newspapers. A student is selected randomly. Fill in the number of students in each region of the Venn diagram, then find the probability that the student reads Al-Akhbar newspaper only.",
+     "solution": [
+      "n(S) = 40, n(A) = 18, n(B) = 15, n(A ∩ B) = 8.",
+      "Reading Al-Akhbar only is the event A − B, so the 8 students who read both are removed from A.",
+      "n(A − B) = 18 − 8 = 10, since (A − B) ∪ (A ∩ B) = A.",
+      "P(A − B) = 10/40 = 1/4."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "overlap-counted-twice",
+       "misconception_id": "mc:pp3u8-2-2:only-means-whole-set"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "neither-region-missed",
+       "step": 1,
+       "text": "Some students read neither newspaper. Count everyone in the class who is outside both circles, so the regions add up to the whole class."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Start with the overlap, the students who read both. Then work out how many are left in each circle on its own."
+      }
+     ],
+     "notes": "A-only = 10, B-only = 7, both = 8, neither = 15; sum 40."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u8-2-2:drill-2-2",
+     "lo_id": "lo:pp3u8-2-2",
+     "book_item": "pp3u8-2:drill-2#2",
+     "parent_question_id": "q:pp3u8-2-2:bk-drill-2-2",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "venn_builder",
+     "spec": {
+      "sets": 2,
+      "labels": [
+       "Al-Akhbar",
+       "Al-Ahram"
+      ],
+      "mode": "counts",
+      "total": 40,
+      "regions": {
+       "a": 10,
+       "b": 7,
+       "ab": 8,
+       "n": 15
+      },
+      "clues": {
+       "a": 18,
+       "b": 15
+      }
+     },
+     "stem": "A classroom contains 40 students. 18 of them read Al-Akhbar newspaper, 15 read Al-Ahram newspaper and 8 read both newspapers. A student is selected randomly. Fill in the number of students in each region of the Venn diagram, then find the probability that the student reads Al-Ahram newspaper only.",
+     "solution": [
+      "n(S) = 40, n(A) = 18, n(B) = 15, n(A ∩ B) = 8.",
+      "Reading Al-Ahram only is the event B − A, so the 8 students who read both are removed from B.",
+      "n(B − A) = 15 − 8 = 7, since (B − A) ∪ (A ∩ B) = B.",
+      "P(B − A) = 7/40."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "overlap-counted-twice",
+       "misconception_id": "mc:pp3u8-2-2:only-means-whole-set"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "neither-region-missed",
+       "step": 1,
+       "text": "Some students read neither newspaper. Count everyone in the class who is outside both circles, so the regions add up to the whole class."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Start with the overlap, the students who read both. Then work out how many are left in each circle on its own."
+      }
+     ],
+     "notes": "Same diagram as part 1; the answer is read from the B-only region."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u8-2-2",
+     "need_kind": "venn_builder shade target for 'A only or B only'",
+     "description": "Part 3 asks for the probability that the student reads Al-Akhbar only or Al-Ahram only (17/40), the union of two exclusive regions.",
+     "why": "venn_builder shade targets have no 'A only or B only' (symmetric difference) region. The counts diagram would repeat parts 1 and 2, and the part asks for a probability, so no existing kind fits."
+    }
+   ],
+   "notes": "think-and-discuss-1, drill-1 (a table to complete) and think-1 (an explanation) are not constructions, so I left them out."
+  },
+  {
+   "lesson": "pp3u9-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u9-1-2:activity-1-2",
+     "lo_id": "lo:pp3u9-1-2",
+     "book_item": "pp3u9-1:activity-1#2",
+     "parent_question_id": "expl:pp3u9-1-2:bk-think-1",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "circle_builder",
+     "spec": {
+      "element": "diameter"
+     },
+     "stem": "A circle with centre M is drawn. Draw a straight line L1 passing through the centre of the circle and dividing it into two arcs. Drag the two ends of the segment onto the circle so that the line passes through M.",
+     "solution": [
+      "The line L1 must pass through the centre M of the circle.",
+      "Place one end of the segment on the circle.",
+      "Place the other end on the circle on the opposite side so that M lies on the segment; the line then divides the circle into two arcs, and it is a diameter."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "chord-not-through-centre",
+       "step": 1,
+       "text": "Check whether your line passes through the centre M. Move one end round the circle until M lies on the segment."
+      },
+      {
+       "predicate": "ends-not-on-circle",
+       "step": 2,
+       "text": "Both ends of the segment must lie on the circle itself, not inside it or outside it. Drag each end until it sits on the circle."
+      }
+     ],
+     "notes": "Part 2 asks for a line through the centre cutting the circle in two arcs; this is the diameter construction. Parts 1 (draw circle with compasses), 3 and 4 (fold and observe) are not covered."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-1-1",
+     "need_kind": "chord construction between named points on a circle",
+     "description": "drill-2: draw all the chords through pairs of the given points A, B, C, D, E on a circle.",
+     "why": "circle_builder lets the student drag two free ends to build one chord; it has no named fixed points on the circle and cannot grade a set of chords joining specific pairs."
+    },
+    {
+     "lo_id": "lo:pp3u9-1-2",
+     "need_kind": "circle drawn with compasses",
+     "description": "activity-1 part 1: draw circle M on transparent paper using compasses.",
+     "why": "circle_builder gives a fixed circle already drawn; no widget lets the student construct a circle from a centre and radius."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u9-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u9-2-3:activity-2",
+     "lo_id": "lo:pp3u9-2-3",
+     "book_item": "pp3u9-2:activity-2",
+     "parent_question_id": "expl:pp3u9-2-3:bk-drill-6-1",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "circle_builder",
+     "spec": {
+      "element": "diameter"
+     },
+     "stem": "Draw one of the axes of symmetry of circle M. Drag both ends of the segment onto the circle so that it lies along an axis of symmetry.",
+     "solution": [
+      "An axis of symmetry of a circle is a straight line through its centre M.",
+      "Its two ends on the circle give a segment through M, that is a diameter.",
+      "Place one end on the circle, then place the other end on the circle on the opposite side so the segment passes through M."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "chord-not-through-centre",
+       "step": 1,
+       "text": "An axis of symmetry must pass through the centre M. Check where your segment crosses relative to M."
+      },
+      {
+       "predicate": "ends-not-on-circle",
+       "step": 2,
+       "text": "Both ends of the segment must lie on the circle itself. Check that each end touches the circle."
+      }
+     ],
+     "notes": "Axis of symmetry drawn as a diameter; the line L in the book is extended, here its diameter segment is graded."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-2-3",
+     "need_kind": "circle drawing with compass",
+     "description": "Draw a circle with centre M and radius r1 (activity-1).",
+     "why": "circle_builder starts from a given circle; no widget draws a circle of chosen radius."
+    },
+    {
+     "lo_id": "lo:pp3u9-2-3",
+     "need_kind": "two-circle placement",
+     "description": "Draw a second circle N with r2 < r1 with N on line L (unlabelled-activity-1 and 2).",
+     "why": "No widget builds a second circle or places a centre on a line."
+    },
+    {
+     "lo_id": "lo:pp3u9-2-3",
+     "need_kind": "two-circle position explorer",
+     "description": "Slide circle N toward M, measure MN and compare with r1+r2 and r1-r2 (activity-3).",
+     "why": "No instrument shows two circles with a draggable centre distance."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u9-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u9-3-1",
+     "need_kind": "compass circle construction through a given point",
+     "description": "pp3u9-3:drill-1 (and think-and-discuss-4): draw a circle through A with radius 2 cm using a compass, and see that the possible centres lie on a congruent circle about A.",
+     "why": "circle_builder only offers a fixed circle of radius 5 about M, in which the student builds a radius, chord, diameter or tangent. It cannot draw a new circle through a given point or take a radius. pair_plotter would only grade lattice points and would not draw the circle or arcs, so it would be a stretch."
+    },
+    {
+     "lo_id": "lo:pp3u9-3-2",
+     "need_kind": "compass construction of circles through two points A and B (axis of AB, given radius or diameter)",
+     "description": "pp3u9-3:drill-2 parts 1, 2 and 3: draw AB = 4 cm, then circles through A and B with diameter 5 cm (2 circles), radius 2 cm (1 circle) or diameter 3 cm (none). The student finds the number of solutions using the axis of AB and the compass.",
+     "why": "No existing widget lets the student draw a segment, build its axis and draw circles of a given radius through two points. circle_builder has a fixed circle and element types only. line_drawer and pair_plotter are lattice graders, not compass constructions, and cannot count solutions that depend on radius against half of AB."
+    },
+    {
+     "lo_id": "lo:pp3u9-3-3",
+     "need_kind": "circumcircle construction through three points",
+     "description": "Draw the circle through three non-collinear points as the meeting of the axes of two sides, and explain why collinear points give no circle. The lesson has no book exercises yet.",
+     "why": "No widget builds axes of segments or a circle through three given points. circle_builder cannot place the circle or take points."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u9-4",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u9-4-1:exercise-1",
+     "lo_id": "lo:pp3u9-4-1",
+     "book_item": "pp3u9-4:exercise-1",
+     "parent_question_id": "expl:pp3u9-4-1:bk-drill-1-1",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       0,
+       12
+      ],
+      "from": 6,
+      "to": 9,
+      "openFrom": true,
+      "openTo": false
+     },
+     "stem": "In a circle M of radius 5 cm, the chord AB = 7 cm and the chord CD = $X + 1$ cm. CD is closer to the centre than AB (MF < ME). Mark on the number line all the possible values of $X$, setting each end hollow (excluded) or filled (included).",
+     "solution": [
+      "Radius = 5 cm, so the diameter is 10 cm; AB = 7 cm.",
+      "MF < ME, so CD is closer to the centre than AB, so CD is longer: $X + 1 > 7$, i.e. $X > 6$.",
+      "CD is a chord, so it is at most the diameter: $X + 1 \\le 10$, so $X \\le 9$.",
+      "So $X \\in (6, 9]$, i.e. $6 < X \\le 9$: hollow circle at 6, filled circle at 9, shaded between."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 3,
+       "text": "Ask whether a chord can be exactly as long as the diameter, and whether CD can be exactly as long as AB when it is closer to the centre."
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 2,
+       "text": "The closer a chord is to the centre, the longer it is. Compare CD with AB first, then with the longest chord of the circle, and remember CD is $X + 1$, not $X$."
+      }
+     ],
+     "notes": "The completion-style blanks become the final interval; the figure's data is stated in the stem."
+    }
+   ],
+   "gaps": [],
+   "notes": "Only exercise-1 is a construction (an interval to mark). The other parts are fill-ins, numeric answers, proofs or open explanations that read a figure, so they need no widget. circle_builder does not fit them because it builds a radius, chord, diameter or tangent, not a comparison or a proof."
+  },
+  {
+   "lesson": "pp3u10-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-1-2",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-1#2",
+     "parent_question_id": "q:pp3u10-1-1:bk-drill-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 100
+     },
+     "stem": "In circle M, $m(\\overset{\\frown}{CA}) = 60^\\circ$ and $m(\\overset{\\frown}{AD}) = 40^\\circ$, and CA and AD are adjacent arcs. Complete: $m(\\overset{\\frown}{CAD}) = m(\\overset{\\frown}{CA}) + \\ldots\\ldots = \\ldots\\ldots + \\ldots\\ldots = \\ldots\\ldots^\\circ$. Drag A, B and C to set the central angle that gives the measure of arc CAD.",
+     "solution": [
+      "CA and AD are adjacent arcs, so m(CAD) = m(CA) + m(AD).",
+      "m(CAD) = 60° + 40°.",
+      "m(CAD) = 100°, and the arc has the same measure as its central angle."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 3,
+       "text": "The arc measure is the measure of its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Adjacent arcs share one endpoint and add up. Check that you set the arc, not the one across from it."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Add the measures of the two adjacent arcs."
+      }
+     ],
+     "notes": "Book answer 100."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-1-3",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-1#3",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 120
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\overset{\\frown}{AC}) = 60^\\circ$, with C on the semicircle ACB. Complete: $m(\\overset{\\frown}{BC}) = m(\\overset{\\frown}{ACB}) - m(\\overset{\\frown}{AC}) = 180^\\circ - \\ldots\\ldots = \\ldots\\ldots^\\circ$ (Why?). Drag the points to set the central angle that gives the measure of arc BC.",
+     "solution": [
+      "AB is a diameter, so arc ACB is a semicircle and its measure is 180°.",
+      "m(ACB) = m(AC) + m(CB), so m(BC) = m(ACB) − m(AC).",
+      "m(BC) = 180° − 60°.",
+      "m(BC) = 120°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 4,
+       "text": "The measure of the arc is its central angle. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 2,
+       "text": "Arc BC is part of the semicircle. Check that you set the arc inside it, not the one across."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from the measure of the semicircle on diameter AB, then take away the known arc."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-1-4",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-1#4",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 220
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M, D is on the semicircle AB and $m(\\overset{\\frown}{AD}) = 40^\\circ$. Complete: $m(\\overset{\\frown}{DCB})$ = measure of circle $- m(\\overset{\\frown}{DB})$. Drag the points to set the measure of the major arc DCB (the long way round from D to B).",
+     "solution": [
+      "Arc DCB is the circle minus arc DB.",
+      "m(DB) = m(AB) − m(AD) = 180° − 40° = 140°.",
+      "The measure of the circle is 360°.",
+      "m(DCB) = 360° − 140° = 220°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Arc DCB is the long way round. Check which of the two arcs between D and B you have set."
+      },
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 4,
+       "text": "The arc measure equals its central angle. Check which angle you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "First find the small arc DB from the diameter, then subtract it from the whole circle."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-2",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#2",
+     "parent_question_id": "q:pp3u10-1-1:bk-drill-2-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 50
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\angle AMC) = 2x^\\circ$ and $x = 25$. Complete: $m(\\widehat{AC}) = \\ldots^\\circ$. Drag the points to set the measure of arc AC.",
+     "solution": [
+      "The measure of an arc equals its central angle, so m(AC) = m(∠AMC) = 2x°.",
+      "2 × 25 = 50.",
+      "m(AC) = 50°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 1,
+       "text": "The arc is measured by its central angle directly. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check that you set the arc cut off by the angle at M, not the one across."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Replace x by its value in the central angle."
+      }
+     ],
+     "notes": "Book answer 50."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-3",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#3",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 100
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\angle DMA) = 4x^\\circ$ and $x = 25$. Complete: $m(\\widehat{AD}) = \\ldots$. Drag the points to set the measure of arc AD.",
+     "solution": [
+      "m(AD) = m(∠DMA) = 4x°.",
+      "4 × 25 = 100.",
+      "m(AD) = 100°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 1,
+       "text": "The arc measure is its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check that you set the arc cut off by angle DMA, not the one across."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Replace x by its value in the central angle."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-4",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#4",
+     "parent_question_id": "q:pp3u10-1-1:bk-drill-2-4",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 130
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$, with C on the semicircle ACB. Complete: $m(\\widehat{BC}) = \\ldots^\\circ$. Drag the points to set the measure of arc BC.",
+     "solution": [
+      "AB is a diameter, so arc ACB is a semicircle of 180°.",
+      "m(BC) = 180° − m(AC).",
+      "m(BC) = 180° − 50° = 130°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 3,
+       "text": "The arc measure equals its central angle. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 2,
+       "text": "Arc BC lies in the semicircle. Check that you set it, not the arc across."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from the semicircle on the diameter and take away the known arc."
+      }
+     ],
+     "notes": "Book answer 130."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-5",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#5",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 150
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\widehat{CA}) = 50^\\circ$ and $m(\\widehat{AD}) = 100^\\circ$, with C and D on opposite sides of A. Complete: $m(\\widehat{CAD}) = \\ldots$. Drag the points to set the measure of arc CAD.",
+     "solution": [
+      "CA and AD are adjacent arcs.",
+      "m(CAD) = m(CA) + m(AD).",
+      "= 50° + 100°.",
+      "= 150°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "The arc measure is its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Arc CAD passes through A. Check which of the two arcs between C and D you set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Add the measures of the adjacent arcs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-6",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#6",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 210
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M, $m(\\widehat{CB}) = 130^\\circ$ and $m(\\widehat{BD}) = 3x + 5 = 80^\\circ$, with C and D on opposite sides of B. Complete: $m(\\widehat{CBD}) = \\ldots$. Drag the points to set the measure of arc CBD.",
+     "solution": [
+      "CB and BD are adjacent arcs.",
+      "m(BD) = 3x + 5 = 80°.",
+      "m(CBD) = m(CB) + m(BD).",
+      "= 130° + 80° = 210°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 3,
+       "text": "The arc measure is its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Arc CBD passes through B. Check which of the two arcs between C and D you set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 3,
+       "text": "Add the measures of the adjacent arcs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-7",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#7",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 260
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AD}) = 100^\\circ$. Arc ACD goes from A through C and B to D (the long way round). Complete: $m(\\widehat{ACD}) = \\ldots$. Drag the points to set the measure of arc ACD.",
+     "solution": [
+      "Arc ACD goes from A through C and B to D, so it is the whole circle minus arc AD.",
+      "m(ACD) = 360° − m(AD).",
+      "= 360° − 100°.",
+      "= 260°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Arc ACD is the long way round. Check which of the two arcs between A and D you set."
+      },
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "The arc measure is its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Subtract the small arc from the measure of the whole circle."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-1-1:drill-2-8",
+     "lo_id": "lo:pp3u10-1-1",
+     "book_item": "pp3u10-1:drill-2#8",
+     "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 310
+     },
+     "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\widehat{AC}) = 50^\\circ$. Arc ADC goes from A through D and B to C (the long way round). Complete: $m(\\widehat{ADC}) = \\ldots$. Drag the points to set the measure of arc ADC.",
+     "solution": [
+      "Arc ADC goes from A through D and B to C, so it is the whole circle minus arc AC.",
+      "m(ADC) = 360° − m(AC).",
+      "= 360° − 50°.",
+      "= 310°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Arc ADC is the long way round. Check which of the two arcs between A and C you set."
+      },
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "The arc measure is its central angle itself. Check which angle you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Subtract the small arc from the measure of the whole circle."
+      }
+     ],
+     "notes": ""
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-1-1",
+     "need_kind": "arc marking on a figure",
+     "description": "Exercise 1: represent arcs AB and BC in the given figure.",
+     "why": "The student marks arcs on a given figure; no widget draws or highlights arcs on a supplied figure."
+    },
+    {
+     "lo_id": "lo:pp3u10-1-1",
+     "need_kind": "two-value answer",
+     "description": "Drill 1 part 1: m(AD) = 40°, m(AC) = 60°.",
+     "why": "The key has two values in one part and angle_setter grades a single arc, so the spec cannot agree with the whole key."
+    },
+    {
+     "lo_id": "lo:pp3u10-1-3",
+     "need_kind": "chord drawing on a figure",
+     "description": "Drill 6: draw the chords equal in length on the given figure.",
+     "why": "The student draws chords on a supplied figure with equal arcs; circle_builder draws one element on its own circle and does not grade equality."
+    }
+   ],
+   "notes": "The angle_setter central ask is used for the arc-measure parts of lo-1-1, with the figure's data stated in each stem. Arc length (lo-1-2) is numeric, so no widget fits. Drills 4 and 5 are read-off-the-figure tasks, and drill 7 is a fill-in proof, so none is a construction."
+  },
+  {
+   "lesson": "pp3u10-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-2-1:activity-1-2",
+     "lo_id": "lo:pp3u10-2-1",
+     "book_item": "pp3u10-2:activity-1#2",
+     "parent_question_id": "expl:pp3u10-2-1:bk-think-and-discuss-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 80
+     },
+     "stem": "In circle M, the inscribed angle $\\angle BAD$ and the central angle $\\angle BMD$ are both subtended by arc BD, and $m(\\angle BAD) = 40^\\circ$. Drag A, B and C on the circle so that the central angle measures $m(\\angle BMD)$.",
+     "solution": [
+      "∠BAD is inscribed and ∠BMD is central; both are subtended by arc BD.",
+      "The central angle is twice the inscribed angle: m(∠BMD) = 2 × m(∠BAD).",
+      "m(∠BMD) = 2 × 40° = 80°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "The 40° belongs to the inscribed angle. How is the central angle on the same arc related to it?"
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check which arc both angles are subtended by, and set the angle on that arc."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Compare the central angle with the inscribed angle on the same arc: one is a multiple of the other."
+      }
+     ],
+     "notes": "Book answer not given; read off the worked example (80)."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-2-1:activity-1-3",
+     "lo_id": "lo:pp3u10-2-1",
+     "book_item": "pp3u10-2:activity-1#3",
+     "parent_question_id": "expl:pp3u10-2-1:bk-think-and-discuss-1-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 60
+     },
+     "stem": "In circle M, the inscribed angle $\\angle CAD$ and the central angle $\\angle CMD$ are both subtended by arc CD, and $m(\\angle CAD) = 30^\\circ$. Drag the points so that the central angle measures $m(\\angle CMD)$.",
+     "solution": [
+      "∠CAD is inscribed and ∠CMD is central; both are subtended by arc CD.",
+      "m(∠CMD) = 2 × m(∠CAD).",
+      "m(∠CMD) = 2 × 30° = 60°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "The 30° is the inscribed angle. How does the central angle on the same arc compare with it?"
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Make sure the arc you set is the one both angles are subtended by."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Relate the central angle to the inscribed angle on the same arc."
+      }
+     ],
+     "notes": "Answer 60 from the worked example."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-2-2:drill-14-4",
+     "lo_id": "lo:pp3u10-2-2",
+     "book_item": "pp3u10-2:drill-14#4",
+     "parent_question_id": "expl:pp3u10-2-2:bk-example-2",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 60
+     },
+     "stem": "Triangle ABC is inscribed in a circle and its three arcs AB, BC and CA are equal. Find $m(\\angle C)$: drag A, B and C so the inscribed angle $\\angle ACB$ has that measure.",
+     "solution": [
+      "The three arcs are equal, so each arc = 360° ÷ 3 = 120°.",
+      "∠C is subtended by arc AB = 120°.",
+      "m(∠C) = ½ × 120° = 60°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 3,
+       "text": "The inscribed angle is not equal to the arc it faces. How are they related?"
+      },
+      {
+       "predicate": "other-arc",
+       "step": 2,
+       "text": "∠C faces the arc across from it, AB; check which arc you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "First find the measure of one arc from the three equal arcs that make the whole circle."
+      }
+     ],
+     "notes": "Answer 60 from the worked example."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-2-2:drill-14-6",
+     "lo_id": "lo:pp3u10-2-2",
+     "book_item": "pp3u10-2:drill-14#6",
+     "parent_question_id": "expl:pp3u10-2-2:bk-example-2",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 75
+     },
+     "stem": "Points D, A, B and C lie on a circle in that order. $m(\\angle ADB) = 30^\\circ$ and $m(\\widehat{DA}) = 90^\\circ$. Find $m(\\angle DCB)$: drag the points so the inscribed angle $\\angle DCB$ has that measure, on the arc DAB.",
+     "solution": [
+      "∠ADB = 30° is subtended by arc AB, so m(arc AB) = 60°.",
+      "Arc DAB = 90° + 60° = 150°.",
+      "∠DCB is subtended by arc DAB.",
+      "m(∠DCB) = ½ × 150° = 75°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 4,
+       "text": "The inscribed angle is not the arc itself; relate the two once you know the whole arc it faces."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 3,
+       "text": "∠DCB faces the arc from D through A to B; check which arc you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start by finding arc AB from the inscribed angle ∠ADB, then add the arcs."
+      }
+     ],
+     "notes": "Answer 75 from the worked example; stem states the figure's data in words."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-2-1",
+     "need_kind": "circle drawing of inscribed angles on one arc",
+     "description": "think-1: draw the inscribed angles subtended with central ∠AMB at arc AB and count them",
+     "why": "angle_setter shows a single inscribed angle at a time; no kind lets the student draw and count many inscribed angles on one arc."
+    },
+    {
+     "lo_id": "lo:pp3u10-2-3",
+     "need_kind": "angle from intersecting chords/secants",
+     "description": "drill-15 and drill-16 compute angles or arcs from chords or secants meeting inside or outside a circle",
+     "why": "angle_setter only models central and inscribed angles; no kind builds the half-sum or half-difference of arcs. These are calculations from figures, not constructions."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u10-3",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-3-1:think-and-discuss-1-2",
+     "lo_id": "lo:pp3u10-3-1",
+     "book_item": "pp3u10-3:think-and-discuss-1#2",
+     "parent_question_id": "q:pp3u10-3-1:bk-think-and-discuss-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 50
+     },
+     "stem": "In a circle, $m(\\text{arc } AB) = 100^\\circ$. Find the measure of the inscribed angle $\\angle ACB$ that includes arc $AB$. Drag A, B and C on the circle so that arc $AB$ is $100^\\circ$ and the inscribed angle shows its measure. Then move C around: what do you notice about $\\angle ACB$?",
+     "solution": [
+      "The inscribed angles $\\angle AEB$, $\\angle ADB$ and $\\angle ACB$ all include the same arc $AB$, which measures $100^\\circ$.",
+      "An inscribed angle is half the measure of the arc it includes: $m(\\angle ACB) = \\frac{1}{2} m(\\text{arc } AB)$.",
+      "So $m(\\angle ACB) = \\frac{1}{2} \\times 100^\\circ = 50^\\circ$.",
+      "The same holds for $\\angle AEB$ and $\\angle ADB$: each is $50^\\circ$, so inscribed angles on the same arc are equal."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 2,
+       "text": "Check what the angle at C measures compared with the arc it faces. How are an inscribed angle and its arc related?"
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Look at which arc the angle at C faces. C must be on the opposite side from the $100^\\circ$ arc AB, so that the angle includes that arc."
+      },
+      {
+       "predicate": "off-target",
+       "step": 3,
+       "text": "Use the given arc of $100^\\circ$ and the rule that an inscribed angle is half of its arc to find the angle, then set it."
+      }
+     ],
+     "notes": "Part 1 (yes/no) and part 3 (explain) are not constructions. Drill-1 and drill-3 depend on figures not shown and read angles rather than construct them, so they are not templated. Proof and concyclic-judgement exercises are not constructions."
+    }
+   ],
+   "gaps": [],
+   "notes": "Only think-and-discuss-1 part 2 fits (angle_setter inscribed 50). The others are figure-based readings, proofs or explanations, not constructions."
+  },
+  {
+   "lesson": "pp3u10-4",
+   "templates": [],
+   "gaps": [],
+   "notes": "The exercises in this lesson (drill-2 parts 1–3, drill-3 parts 1–2) are written proofs. The student shows that a figure is cyclic or deduces equal angles, parallel lines or a diameter. They don't construct anything. No existing widget kind has the student write a proof, so no templates were made. None of them is a construction, so I recorded no gaps."
+  },
+  {
+   "lesson": "pp3u10-5",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-5-1:think-and-discuss-1-1",
+     "lo_id": "lo:pp3u10-5-1",
+     "book_item": "pp3u10-5:think-and-discuss-1#1",
+     "parent_question_id": "q:pp3u10-5-1:bk-think-and-discuss-1-1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 120
+     },
+     "stem": "In a circle, the inscribed angle $\\angle A$ measures $60^\\circ$ and faces arc BCD. Drag A, B and C so that the arc BCD (the arc that $\\angle A$ faces) is the one asked for: find $m(\\text{arc } BCD)$.",
+     "solution": [
+      "∠A is an inscribed angle facing arc BCD.",
+      "The arc is double the inscribed angle that faces it.",
+      "m(arc BCD) = 2 × 60° = 120°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 2,
+       "text": "Check which measure you set: the arc is related to the inscribed angle facing it by a factor of 2."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Look at which arc the angle faces; the arc asked for is the one across from the angle's vertex."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Use the relation between an inscribed angle and the arc it faces, then set the arc."
+      }
+     ],
+     "notes": "Book answer 120."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-5-1:think-and-discuss-1-2",
+     "lo_id": "lo:pp3u10-5-1",
+     "book_item": "pp3u10-5:think-and-discuss-1#2",
+     "parent_question_id": "q:pp3u10-5-1:bk-think-and-discuss-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "central",
+      "target": 240
+     },
+     "stem": "In a circle, ∠A = $60^\\circ$ faces arc BCD, and arc BAD is the rest of the circle. Set the arc so that it shows $m(\\text{arc } BAD)$.",
+     "solution": [
+      "∠A = 60° faces arc BCD, so m(arc BCD) = 120°.",
+      "The whole circle is 360°.",
+      "m(arc BAD) = 360° − 120° = 240°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "angle-given-as-arc",
+       "step": 1,
+       "text": "First find the arc the given angle faces; remember an arc is double its inscribed angle."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 2,
+       "text": "The two arcs BCD and BAD together make the whole circle; check which one you have set."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Find arc BCD first, then use the fact that the two arcs complete 360°."
+      }
+     ],
+     "notes": "Book answer 240. Original stem is truncated; the givens are taken from part 1's figure."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-5-1:think-and-discuss-1-3",
+     "lo_id": "lo:pp3u10-5-1",
+     "book_item": "pp3u10-5:think-and-discuss-1#3",
+     "parent_question_id": "q:pp3u10-5-1:bk-think-and-discuss-1-3",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 120
+     },
+     "stem": "In a circle, m(arc BAD) = $240^\\circ$. Set the inscribed angle ∠BCD that faces arc BAD, so that it shows $m(\\angle BCD)$.",
+     "solution": [
+      "∠BCD is an inscribed angle facing arc BAD.",
+      "An inscribed angle is half the arc it faces.",
+      "m(∠BCD) = 240° ÷ 2 = 120°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 2,
+       "text": "Check what you set: the inscribed angle is not equal to its arc, it is a fraction of it."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check which arc ∠BCD faces; C faces the arc across from it."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Use the relation between the inscribed angle and the arc it faces."
+      }
+     ],
+     "notes": "Book answer 120. Original stem truncated; givens from part 2's chain."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:pp3u10-5-1",
+     "need_kind": "cyclic quadrilateral angle finder",
+     "description": "think-and-discuss-1 part 4: ∠B = 80°, find opposite ∠D = 100°",
+     "why": "Opposite supplementary angles in a cyclic quadrilateral is a numeric calculation; angle_setter only shows an inscribed angle and its arc, with no supplementary-opposite-angle instrument."
+    },
+    {
+     "lo_id": "lo:pp3u10-5-1",
+     "need_kind": "algebraic angle solver",
+     "description": "drill-1 parts 1–3 and drill-2 A–D: solve for x, y or angle measures in figures",
+     "why": "These need typed numeric/algebraic answers on figures with a cyclic quadrilateral; no existing kind constructs them and they depend on figures."
+    },
+    {
+     "lo_id": "lo:pp3u10-5-2",
+     "need_kind": "cyclic quadrilateral exterior angle",
+     "description": "drill-3 parts 1–3: exterior angle equals interior opposite angle",
+     "why": "Numeric figure-based angle calculations with no book answers; no kind fits."
+    },
+    {
+     "lo_id": "lo:pp3u10-5-3",
+     "need_kind": "proof",
+     "description": "drill-4 to drill-10 prove a quadrilateral is cyclic",
+     "why": "Written proofs, not constructions."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "pp3u10-6",
+   "templates": [],
+   "gaps": [],
+   "notes": "No exercise in pp3u10-6 is a construction an existing widget builds. All items are proofs, explanations, or numeric answers that depend on figures the widget cannot show. No templates and no gaps are recorded."
+  },
+  {
+   "lesson": "pp3u10-7",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-7-1:drill-1-1",
+     "lo_id": "lo:pp3u10-7-1",
+     "book_item": "pp3u10-7:drill-1#1",
+     "parent_question_id": "q:pp3u10-7-1:bk-drill-1-1",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 65
+     },
+     "stem": "BC is a tangent at B and AB is a chord, cutting off an arc AB of 130° (the other arc is 230°). The angle of tangency ∠ABC equals the inscribed angle on the same arc. Calculate $m(\\angle ABC)$: drag A, B and C so that the inscribed angle ∠ACB, facing the 130° arc, has the same measure as ∠ABC.",
+     "solution": [
+      "The angle ABC is an angle of tangency; the arc between its sides is the 130° arc AB (not the 230° arc).",
+      "An angle of tangency is half the measure of the arc between its sides.",
+      "$m(\\angle ABC) = \\tfrac{1}{2} \\times 130° = 65°$.",
+      "It equals the inscribed angle on the same arc, so set the inscribed angle to 65°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 2,
+       "text": "The arc is not the angle. An angle of tangency or inscribed angle on an arc is only a fraction of that arc's measure."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check which arc lies between the sides of the angle of tangency; the angle must face that arc."
+      },
+      {
+       "predicate": "off-target",
+       "step": 3,
+       "text": "Take the arc between the sides of the angle and use the rule connecting an angle of tangency with its arc."
+      }
+     ],
+     "notes": "Angle of tangency equals inscribed angle on the same arc; the widget builds that inscribed angle. Matches book answer 65."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-7-1:drill-1-2",
+     "lo_id": "lo:pp3u10-7-1",
+     "book_item": "pp3u10-7:drill-1#2",
+     "parent_question_id": "q:pp3u10-7-1:bk-drill-1-2",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 90
+     },
+     "stem": "A circle has centre M, AB is a diameter and BC is the tangent at B. The angle of tangency ∠ABC stands on the semicircle AB and equals the inscribed angle on that arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle on the semicircle AB has that same measure.",
+     "solution": [
+      "The arc between the sides of ∠ABC is the semicircle AB, whose measure is 180°.",
+      "$m(\\angle ABC) = \\tfrac{1}{2} \\times 180° = 90°$.",
+      "So set the inscribed angle on this arc to 90°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 2,
+       "text": "The angle is a fraction of the arc it faces, not the arc itself."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "Check that C faces the arc that lies between the sides of the angle of tangency."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Find the measure of the arc AB cut off by a diameter, then apply the half rule."
+      }
+     ],
+     "notes": "Matches book answer 90."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:pp3u10-7-1:drill-1-3",
+     "lo_id": "lo:pp3u10-7-1",
+     "book_item": "pp3u10-7:drill-1#3",
+     "parent_question_id": "q:pp3u10-7-1:bk-drill-1-3",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "angle_setter",
+     "spec": {
+      "ask": "inscribed",
+      "target": 60
+     },
+     "stem": "Triangle DAB is equilateral and inscribed in a circle; the line through B with C on its right is the tangent at B. The angle of tangency ∠ABC equals the inscribed angle on the same arc. Calculate $m(\\angle ABC)$: drag A, B and C so the inscribed angle has that same measure.",
+     "solution": [
+      "The tangent-chord angle ∠ABC equals the inscribed angle on the same arc AB, namely ∠D of triangle DAB.",
+      "Triangle DAB is equilateral, so each of its angles is 60°.",
+      "So $m(\\angle ABC) = 60°$; set the inscribed angle to 60°."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "arc-given-as-angle",
+       "step": 2,
+       "text": "Think about the angles of an equilateral triangle, then use the inscribed angle on the same arc."
+      },
+      {
+       "predicate": "other-arc",
+       "step": 1,
+       "text": "The angle must face the arc that lies between the sides of the angle of tangency."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from the equality of the angle of tangency with the inscribed angle on the same arc, then use what you know about the equilateral triangle."
+      }
+     ],
+     "notes": "Matches book answer 60."
+    }
+   ],
+   "gaps": [],
+   "notes": "Drill-2, drill-3 depend on unseen figures and are calculations; drill-4 and the proof examples are written proofs. Think-and-discuss items are not constructions."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:pp3u2-1-2",
+   "need_kind": "fill-in / equivalent-ratio completer",
+   "description": "Think and discuss 1: complete 3/5 = (3×…)/(5×…) by choosing a multiplier, then see that the ratio is unchanged.",
+   "why": "ratio_balance grades a fourth term against fixed a, b and c. Here the student chooses the multiplier, and any non-zero value is right. The balance has no way to accept a free multiplier, so using it would be a stretch."
+  },
+  {
+   "lo_id": "lo:pp3u2-1-2",
+   "need_kind": "numeric answer entry for an equation solution",
+   "description": "Drill 1: find the positive number x so that (5 + x²)/(11 + x²) = 3/5. The book's answer is 2.",
+   "why": "The task is to solve an equation and give one number. No widget builds that. Tapping 2 on number_line_marker would only be answer entry, not a construction, and the other 'fourth term' widgets do not model adding a square to both terms."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-1",
+   "need_kind": "numeric fill-in blanks",
+   "description": "Exercise 1 (parts first and second): complete the blanks in 4/2 = …/… and 4/16 = …/… from 4×8 = 2×16.",
+   "why": "The student fills two numbers into a fraction; no existing instrument builds a pair of numerators/denominators from a product equality, and ratio_balance finds only one fourth term."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-1",
+   "need_kind": "open numeric examples",
+   "description": "Open prompt: check the properties with your own numerical examples.",
+   "why": "Free-ended student-chosen examples cannot be graded by any existing instrument."
+  },
+  {
+   "lo_id": "lo:pp3u2-2-3",
+   "need_kind": "algebraic proof",
+   "description": "Drill 4 and the open prompts on middle proportionals.",
+   "why": "They are proofs or open questions, not constructions on any existing instrument."
+  },
+  {
+   "lo_id": "lo:pp3u2-3-1",
+   "need_kind": "line_drawer",
+   "description": "Think and discuss 1A: represent d = 15t graphically (a line through the origin with gradient 15).",
+   "why": "line_drawer equation mode allows |m| at most 5; gradient 15 is out of the validator's limit and a grid cannot change that."
+  },
+  {
+   "lo_id": "lo:pp3u3-2-4",
+   "need_kind": "pair_plotter with two joined polygons on one board",
+   "description": "pp3u3-2:exercise-1 asks the student to draw the frequency polygons of Class A and Class B in one figure, with centres 5, 15, 25, 35, 45 and frequencies 2, 5, 11, 15, 7 and 2, 3, 18, 7, 10.",
+   "why": "pair_plotter takes at most 8 points and draws one joined polygon. Two polygons are 10 points, or 14 with the usual zero-frequency end points, and the join would link them as a single polygon. Plotting one class only would change what the book asks. bar_builder and curve_sketcher do not fit either."
+  },
+  {
+   "lo_id": "lo:pp3u4-1-3",
+   "need_kind": "right-triangle ratio evaluation on a given triangle (three ratios at once)",
+   "description": "pp3u4-1:drill-3#First asks for sin, cos and tan of angle CAD in the isosceles triangle ABC (AB = AC = 10, BC = 12, AD ⊥ BC). The student must find D as the midpoint, work out AD = 8 by Pythagoras, then write three ratios.",
+   "why": "triangle_ratio has the student drag the legs of a free triangle to hit ONE target ratio. It accepts every similar triangle, so it cannot check a computed value for this specific triangle. It also cannot ask for three ratios in one part, and it cannot show the given triangle or the derived side. Using it would be a stretch, so this is a gap."
+  },
+  {
+   "lo_id": "lo:pp3u6-1-1",
+   "need_kind": "open set of ordered-pair solutions of a line",
+   "description": "Open prompt: tell another four solutions of 2x − y = 1 (the student chooses any four points on the line).",
+   "why": "pair_plotter grades one exact point or one exact set of targets. Here any four points of the line are correct and the book gives no fixed set, so a target list would have to be guessed. line_drawer would draw the line, not give four solutions."
+  },
+  {
+   "lo_id": "lo:pp3u6-1-2",
+   "need_kind": "coincident lines",
+   "description": "drill-2 part 2: 2x + y = 4 and 8 − 2y = 4x, which give the same line, so there are infinitely many solutions.",
+   "why": "Both lines in system mode are the same line. The four handles would stack on one line, and the board has no way to show an infinite solution set {(x, y): y = 4 − 2x}, so the construction cannot be graded or explained."
+  },
+  {
+   "lo_id": "lo:pp3u7-1-2",
+   "need_kind": "number_line_marker with irrational targets",
+   "description": "drill-1#c: $f(x)=x^2-2x-1$, Z(f)={1+√2, 1−√2}",
+   "why": "The zeroes are irrational; number_line_marker targets must be whole numbers, so the book's answer cannot be marked."
+  },
+  {
+   "lo_id": "lo:pp3u7-1-2",
+   "need_kind": "number_line_marker with irrational targets",
+   "description": "drill-1#f: $f(x)=x^2-2$, Z(f)={√2, −√2}",
+   "why": "The zeroes are irrational; targets must be whole numbers, so the answer cannot be built."
+  },
+  {
+   "lo_id": "lo:pp3u7-1-2",
+   "need_kind": "empty-set answer widget",
+   "description": "drill-1#e: $f(x)=x^2-x+1$, Z(f)=φ (no real zeroes)",
+   "why": "number_line_marker needs 1–4 targets; no widget can take an empty set as the answer."
+  },
+  {
+   "lo_id": "lo:pp3u7-3-1",
+   "need_kind": "algebraic expression entry",
+   "description": "Reducing an algebraic fraction to simplest form (think-and-discuss-3, 5, 6, 7; drill-1 parts 1, 3, 4, 5; and the domain-writing in think-and-discuss-1) asks for an algebraic expression or value written out.",
+   "why": "No widget builds or types an algebraic expression or checks a factorization. The number-line marker could mark excluded values only for fully stated fractions, and think-and-discuss-1 gives no fraction in its own text."
+  },
+  {
+   "lo_id": "lo:pp3u7-3-2",
+   "need_kind": "equality of functions by domain and simplest form",
+   "description": "think-and-discuss-8 asks whether n1 = n2 and to explain, by comparing simplest forms and domains.",
+   "why": "It is a yes/no judgement with an explanation. No widget compares two algebraic fractions."
+  },
+  {
+   "lo_id": "lo:pp3u8-1-1",
+   "need_kind": "set-writing widget",
+   "description": "think-and-discuss-1 and drill-2: write the sample space {1,...,6} of a die.",
+   "why": "number_line_marker allows only 1–4 targets and sample_space needs a grid of at least 2×2; six outcomes of one die fit neither."
+  },
+  {
+   "lo_id": "lo:pp3u8-2-2",
+   "need_kind": "venn_builder shade target for 'A only or B only'",
+   "description": "Part 3 asks for the probability that the student reads Al-Akhbar only or Al-Ahram only (17/40), the union of two exclusive regions.",
+   "why": "venn_builder shade targets have no 'A only or B only' (symmetric difference) region. The counts diagram would repeat parts 1 and 2, and the part asks for a probability, so no existing kind fits."
+  },
+  {
+   "lo_id": "lo:pp3u9-1-1",
+   "need_kind": "chord construction between named points on a circle",
+   "description": "drill-2: draw all the chords through pairs of the given points A, B, C, D, E on a circle.",
+   "why": "circle_builder lets the student drag two free ends to build one chord; it has no named fixed points on the circle and cannot grade a set of chords joining specific pairs."
+  },
+  {
+   "lo_id": "lo:pp3u9-1-2",
+   "need_kind": "circle drawn with compasses",
+   "description": "activity-1 part 1: draw circle M on transparent paper using compasses.",
+   "why": "circle_builder gives a fixed circle already drawn; no widget lets the student construct a circle from a centre and radius."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-3",
+   "need_kind": "circle drawing with compass",
+   "description": "Draw a circle with centre M and radius r1 (activity-1).",
+   "why": "circle_builder starts from a given circle; no widget draws a circle of chosen radius."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-3",
+   "need_kind": "two-circle placement",
+   "description": "Draw a second circle N with r2 < r1 with N on line L (unlabelled-activity-1 and 2).",
+   "why": "No widget builds a second circle or places a centre on a line."
+  },
+  {
+   "lo_id": "lo:pp3u9-2-3",
+   "need_kind": "two-circle position explorer",
+   "description": "Slide circle N toward M, measure MN and compare with r1+r2 and r1-r2 (activity-3).",
+   "why": "No instrument shows two circles with a draggable centre distance."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-1",
+   "need_kind": "compass circle construction through a given point",
+   "description": "pp3u9-3:drill-1 (and think-and-discuss-4): draw a circle through A with radius 2 cm using a compass, and see that the possible centres lie on a congruent circle about A.",
+   "why": "circle_builder only offers a fixed circle of radius 5 about M, in which the student builds a radius, chord, diameter or tangent. It cannot draw a new circle through a given point or take a radius. pair_plotter would only grade lattice points and would not draw the circle or arcs, so it would be a stretch."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-2",
+   "need_kind": "compass construction of circles through two points A and B (axis of AB, given radius or diameter)",
+   "description": "pp3u9-3:drill-2 parts 1, 2 and 3: draw AB = 4 cm, then circles through A and B with diameter 5 cm (2 circles), radius 2 cm (1 circle) or diameter 3 cm (none). The student finds the number of solutions using the axis of AB and the compass.",
+   "why": "No existing widget lets the student draw a segment, build its axis and draw circles of a given radius through two points. circle_builder has a fixed circle and element types only. line_drawer and pair_plotter are lattice graders, not compass constructions, and cannot count solutions that depend on radius against half of AB."
+  },
+  {
+   "lo_id": "lo:pp3u9-3-3",
+   "need_kind": "circumcircle construction through three points",
+   "description": "Draw the circle through three non-collinear points as the meeting of the axes of two sides, and explain why collinear points give no circle. The lesson has no book exercises yet.",
+   "why": "No widget builds axes of segments or a circle through three given points. circle_builder cannot place the circle or take points."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-1",
+   "need_kind": "arc marking on a figure",
+   "description": "Exercise 1: represent arcs AB and BC in the given figure.",
+   "why": "The student marks arcs on a given figure; no widget draws or highlights arcs on a supplied figure."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-1",
+   "need_kind": "two-value answer",
+   "description": "Drill 1 part 1: m(AD) = 40°, m(AC) = 60°.",
+   "why": "The key has two values in one part and angle_setter grades a single arc, so the spec cannot agree with the whole key."
+  },
+  {
+   "lo_id": "lo:pp3u10-1-3",
+   "need_kind": "chord drawing on a figure",
+   "description": "Drill 6: draw the chords equal in length on the given figure.",
+   "why": "The student draws chords on a supplied figure with equal arcs; circle_builder draws one element on its own circle and does not grade equality."
+  },
+  {
+   "lo_id": "lo:pp3u10-2-1",
+   "need_kind": "circle drawing of inscribed angles on one arc",
+   "description": "think-1: draw the inscribed angles subtended with central ∠AMB at arc AB and count them",
+   "why": "angle_setter shows a single inscribed angle at a time; no kind lets the student draw and count many inscribed angles on one arc."
+  },
+  {
+   "lo_id": "lo:pp3u10-2-3",
+   "need_kind": "angle from intersecting chords/secants",
+   "description": "drill-15 and drill-16 compute angles or arcs from chords or secants meeting inside or outside a circle",
+   "why": "angle_setter only models central and inscribed angles; no kind builds the half-sum or half-difference of arcs. These are calculations from figures, not constructions."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-1",
+   "need_kind": "cyclic quadrilateral angle finder",
+   "description": "think-and-discuss-1 part 4: ∠B = 80°, find opposite ∠D = 100°",
+   "why": "Opposite supplementary angles in a cyclic quadrilateral is a numeric calculation; angle_setter only shows an inscribed angle and its arc, with no supplementary-opposite-angle instrument."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-1",
+   "need_kind": "algebraic angle solver",
+   "description": "drill-1 parts 1–3 and drill-2 A–D: solve for x, y or angle measures in figures",
+   "why": "These need typed numeric/algebraic answers on figures with a cyclic quadrilateral; no existing kind constructs them and they depend on figures."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-2",
+   "need_kind": "cyclic quadrilateral exterior angle",
+   "description": "drill-3 parts 1–3: exterior angle equals interior opposite angle",
+   "why": "Numeric figure-based angle calculations with no book answers; no kind fits."
+  },
+  {
+   "lo_id": "lo:pp3u10-5-3",
+   "need_kind": "proof",
+   "description": "drill-4 to drill-10 prove a quadrilateral is cyclic",
+   "why": "Written proofs, not constructions."
+  }
+ ]
+}

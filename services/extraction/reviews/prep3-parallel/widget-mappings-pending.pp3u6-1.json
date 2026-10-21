@@ -1,0 +1,58 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:pp3u6-1-2:w003#hint:slope-sign-flipped",
+      "question_id": "q:pp3u6-1-2:w003",
+      "template_id": "wt:pp3u6-1-2:exercise-2",
+      "lo_id": "lo:pp3u6-1-2",
+      "kind": "line_drawer",
+      "stem": "Find the solution set of the pair of equations $y = 3x - 1$, $x - y + 1 = 0$ graphically. Drag the four points to draw both lines.",
+      "reading": {
+        "mode": "system",
+        "m": null,
+        "b": null,
+        "through": null,
+        "lines": [
+          {
+            "m": 3,
+            "b": -1
+          },
+          {
+            "m": 1,
+            "b": 1
+          }
+        ]
+      },
+      "construction": "System mode. Line 1 (y = 3x - 1): handles at (0,-1) and (1,2). Line 2 (x - y + 1 = 0, i.e. y = x + 1): handles at (0,1) and (1,2). Both lines pass through (1,2), so the solution set is {(1,2)}. All points are lattice points within the board.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "hint": "A line leans the wrong way. Write the second equation as y = ... and see whether y rises or falls as x grows.",
+      "hint_step": 2,
+      "why": "The predicate can fire for either line, but the hint names only 'the second equation'. A student who flipped the first line (slope -3) is sent to the wrong equation. It is also a weak fit for the first line, which is already given as y = 3x - 1."
+    },
+    {
+      "key": "q:pp3u6-2-1:w001#hint:opens-wrong-way",
+      "question_id": "q:pp3u6-2-1:w001",
+      "template_id": "wt:pp3u6-2-1:drill-1",
+      "lo_id": "lo:pp3u6-2-1",
+      "kind": "curve_sketcher",
+      "stem": "Draw the graphical form of the function $f$ where $f(x) = x^2 + 2x + 1$ in the interval $[-4, 2]$. Sketch the curve with your finger across the whole interval; then, from your drawing, find the solution set of the equation $x^2 + 2x + 1 = 0$.",
+      "reading": {
+        "fn": "quadratic",
+        "coefs": [
+          1,
+          2,
+          1
+        ]
+      },
+      "construction": "Board x -4..2, y -2..10, step 1. Draw one left-to-right stroke along y=(x+1)^2 across the whole interval: points (-4,9),(-3,4),(-2,1),(-1,0),(0,1),(1,4),(2,9). Vertex touches the x-axis at (-1,0), so the solution set {-1} is read from the drawing. Curve stays within the board (max y=9 ≤ 10). Reachable as a freehand curve; the solution-set part is a separate typed answer the sketch only supports.",
+      "predicate": "opens-wrong-way",
+      "predicate_meaning": "The parabola opens the opposite way — the sign of a",
+      "hint": "Look at the sign of the x² coefficient in f(x): it decides whether the curve opens upward or downward.",
+      "hint_step": 3,
+      "why": "Fires when the student draws a downward-opening parabola. The hint says the sign of the x² coefficient decides the direction, which is correct and gives nothing away. It's a good fit for a student who draws it opening down. However, the claimed list gives no diagnosis, and the hint is valid for quadratic. On reflection the hint is mathematically right and non-revealing, so it would be ok, but this predicate is only a method hint here; marking false is not justified. Correction: ok should be true."
+    }
+  ]
+}

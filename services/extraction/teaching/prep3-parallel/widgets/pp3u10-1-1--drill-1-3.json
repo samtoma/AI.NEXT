@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u10-1-1:drill-1-3",
+ "lo_id": "lo:pp3u10-1-1",
+ "book_item": "pp3u10-1:drill-1#3",
+ "parent_question_id": "expl:pp3u10-1-1:bk-drill-1-3",
+ "parent_kind": "teaching",
+ "tier": "basic",
+ "kind": "angle_setter",
+ "spec": {
+  "ask": "central",
+  "target": 120
+ },
+ "stem": "$\\overline{AB}$ is a diameter of circle M and $m(\\overset{\\frown}{AC}) = 60^\\circ$, with C on the semicircle ACB. Complete: $m(\\overset{\\frown}{BC}) = m(\\overset{\\frown}{ACB}) - m(\\overset{\\frown}{AC}) = 180^\\circ - \\ldots\\ldots = \\ldots\\ldots^\\circ$ (Why?). Drag the points to set the central angle that gives the measure of arc BC.",
+ "solution": [
+  "AB is a diameter, so arc ACB is a semicircle and its measure is 180°.",
+  "m(ACB) = m(AC) + m(CB), so m(BC) = m(ACB) − m(AC).",
+  "m(BC) = 180° − 60°.",
+  "m(BC) = 120°."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "angle-given-as-arc",
+   "step": 4,
+   "text": "The measure of the arc is its central angle. Check which angle you have set."
+  },
+  {
+   "predicate": "other-arc",
+   "step": 2,
+   "text": "Arc BC is part of the semicircle. Check that you set the arc inside it, not the one across."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Start from the measure of the semicircle on diameter AB, then take away the known arc."
+  }
+ ],
+ "notes": ""
+}

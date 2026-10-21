@@ -1,0 +1,55 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:pp3u8-2-2:drill-2-1",
+ "lo_id": "lo:pp3u8-2-2",
+ "book_item": "pp3u8-2:drill-2#1",
+ "parent_question_id": "q:pp3u8-2-2:bk-drill-2-1",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "venn_builder",
+ "spec": {
+  "sets": 2,
+  "labels": [
+   "Al-Akhbar",
+   "Al-Ahram"
+  ],
+  "mode": "counts",
+  "total": 40,
+  "regions": {
+   "a": 10,
+   "b": 7,
+   "ab": 8,
+   "n": 15
+  },
+  "clues": {
+   "a": 18,
+   "b": 15
+  }
+ },
+ "stem": "A classroom contains 40 students. 18 of them read Al-Akhbar newspaper, 15 read Al-Ahram newspaper and 8 read both newspapers. A student is selected randomly. Fill in the number of students in each region of the Venn diagram, then find the probability that the student reads Al-Akhbar newspaper only.",
+ "solution": [
+  "n(S) = 40, n(A) = 18, n(B) = 15, n(A ∩ B) = 8.",
+  "Reading Al-Akhbar only is the event A − B, so the 8 students who read both are removed from A.",
+  "n(A − B) = 18 − 8 = 10, since (A − B) ∪ (A ∩ B) = A.",
+  "P(A − B) = 10/40 = 1/4."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "overlap-counted-twice",
+   "misconception_id": "mc:pp3u8-2-2:only-means-whole-set"
+  }
+ ],
+ "hints": [
+  {
+   "predicate": "neither-region-missed",
+   "step": 1,
+   "text": "Some students read neither newspaper. Count everyone in the class who is outside both circles, so the regions add up to the whole class."
+  },
+  {
+   "predicate": "off-target",
+   "step": 2,
+   "text": "Start with the overlap, the students who read both. Then work out how many are left in each circle on its own."
+  }
+ ],
+ "notes": "A-only = 10, B-only = 7, both = 8, neither = 15; sum 40."
+}
