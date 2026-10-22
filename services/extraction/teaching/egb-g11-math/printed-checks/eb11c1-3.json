@@ -1,0 +1,221 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c1-3",
+  "source": "book-records/egb-g11-math/eb11c1-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 9,
+      "cost_usd": 0.0481,
+      "calls": [
+        {
+          "call": "check-printed.eb11c1-3",
+          "cost_usd": 0.0361,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c1-3",
+          "cost_usd": 0.012,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c1-3:example-1",
+      "record_id": "eb11c1-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 14,
+      "printed": "$\\frac{x-1}{x}$",
+      "blind": "(x-1)/x, for x ≠ 0, 3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "641c30aa4d70fce1aec3c9a5cdf12661",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-3:example-1",
+        "verdict": "equivalent",
+        "reason": "Same reduced fraction (x-1)/x; solver only states the excluded values, implicit in the original."
+      },
+      "how": "judged equivalent: Same reduced fraction (x-1)/x; solver only states the excluded values, implicit in the original.",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-1:a",
+      "record_id": "eb11c1-3:explanation-1",
+      "part": "a",
+      "type": "worked_example",
+      "page": 15,
+      "printed": "$\\frac{4b^3}{3a^2}$",
+      "blind": "4b^3/(3a^2)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "f3207f3df0dd4c8b9bcc2639ac4e0bf7",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-3:explanation-1:a",
+        "verdict": "equivalent",
+        "reason": "Both are 4b^3/(3a^2)."
+      },
+      "how": "judged equivalent: Both are 4b^3/(3a^2).",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-1:b",
+      "record_id": "eb11c1-3:explanation-1",
+      "part": "b",
+      "type": "worked_example",
+      "page": 15,
+      "printed": "$\\frac{x-2}{3x+1}$",
+      "blind": "(x-2)/(3x+1)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "2752c8776ea5ce2c7900ee51f4f7fdb5",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-2",
+      "record_id": "eb11c1-3:explanation-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 15,
+      "printed": "$\\frac{(x+1)(x-3)}{(x+2)(x+4)}$",
+      "blind": "(x+1)(x-3)/((x+2)(x+4))",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "069b68a76b466ee3e25a7e1670f4a9f1",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-3:explanation-2",
+        "verdict": "equivalent",
+        "reason": "Same expression (x+1)(x-3)/((x+2)(x+4))."
+      },
+      "how": "judged equivalent: Same expression (x+1)(x-3)/((x+2)(x+4)).",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:example-2",
+      "record_id": "eb11c1-3:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 17,
+      "printed": "$\\frac{2x-1}{(x+1)(x-2)}$",
+      "blind": "(2x-1)/((x+1)(x-2))",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "ff0d6b6da98ce4ad741c57ceeb2fccdf",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:example-3",
+      "record_id": "eb11c1-3:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 17,
+      "printed": "$\\frac{5x-3}{(x+1)(x-2)(x-3)}$",
+      "blind": "(5x-3)/((x+1)(x-2)(x-3))",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "4dfacbc59dadbbd16c07d35fd751132b",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-3",
+      "record_id": "eb11c1-3:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 17,
+      "printed": "$\\frac{x+2}{x(x-1)}$",
+      "blind": "(x+2)/(x(x-1))",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "8b9696f2d6f4d4b2b4370200fec2bcf8",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-4",
+      "record_id": "eb11c1-3:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 19,
+      "printed": "$\\frac{x-1}{x-2}$",
+      "blind": "(x-1)/(x-2)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "175d2110c154441b125100e7db35b703",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-3:explanation-5",
+      "record_id": "eb11c1-3:explanation-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 19,
+      "printed": "$\\frac{1}{x}$",
+      "blind": "1/x",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "834b59dfd5ae3bbbe420c24d10df1e71",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-3:explanation-5",
+        "verdict": "equivalent",
+        "reason": "Both are 1/x."
+      },
+      "how": "judged equivalent: Both are 1/x.",
+      "made": {
+        "at": "2026-10-21T14:12:10+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

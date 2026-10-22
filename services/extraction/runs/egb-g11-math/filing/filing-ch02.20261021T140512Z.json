@@ -1,0 +1,820 @@
+{
+ "stage": "filing",
+ "workflow": "filing",
+ "prompts_version": "file-v1",
+ "embedded": {
+  "source": "runbook/filing.workflow.js",
+  "source_sha256": "159227a549f0c70b9c4e7462bda371a1734ecd386db808d283700d3c299cf3c7",
+  "args_sha256": "6ababfd6af8b6007f10261763dc4323c331e7da058fbbcbd29864e156d7d5e03",
+  "generated_sha256": "917adc279e1fd0d539efb4df2bcf7637d5568f422b456710e0d0f4cc699148a8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "egb-g11-math",
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "A": [
+    {
+     "key": "eb11c2-1:figure-1",
+     "objective": 0,
+     "why": "Jogging program intro illustrating constant additive change for the whole lesson."
+    },
+    {
+     "key": "eb11c2-1:definition-1",
+     "objective": 1,
+     "why": "Defines sequence and term, the basis for general term work."
+    },
+    {
+     "key": "eb11c2-1:convention-1",
+     "objective": 1,
+     "why": "Names first, 2nd, n-th terms, used for terms of a sequence."
+    },
+    {
+     "key": "eb11c2-1:convention-2",
+     "objective": 1,
+     "why": "Notation a_n for general sequences."
+    },
+    {
+     "key": "eb11c2-1:convention-3",
+     "objective": 1,
+     "why": "Notation {a_n} for a sequence."
+    },
+    {
+     "key": "eb11c2-1:figure-2",
+     "objective": 2,
+     "why": "Shows a_n is a plus (n-1) times d, the arithmetic general term."
+    },
+    {
+     "key": "eb11c2-1:figure-3",
+     "objective": 2,
+     "why": "Example sequence with common difference +3."
+    },
+    {
+     "key": "eb11c2-1:figure-4",
+     "objective": 2,
+     "why": "Example sequence with common difference -5."
+    },
+    {
+     "key": "eb11c2-1:rule-2",
+     "objective": 2,
+     "why": "States a_n = a + (n-1)d."
+    },
+    {
+     "key": "eb11c2-1:rule-3",
+     "objective": 3,
+     "why": "Method of finding a and d first to get the general term from conditions."
+    },
+    {
+     "key": "eb11c2-1:definition-4",
+     "objective": 4,
+     "why": "Number of terms and last term, used for the sum formula."
+    },
+    {
+     "key": "eb11c2-1:convention-4",
+     "objective": 4,
+     "why": "Defines notation S_n for the sum."
+    },
+    {
+     "key": "eb11c2-1:rule-5",
+     "objective": 4,
+     "why": "Sum formula with last term."
+    },
+    {
+     "key": "eb11c2-1:method-1",
+     "objective": 4,
+     "why": "Find n first when unknown before summing."
+    },
+    {
+     "key": "eb11c2-1:rule-7",
+     "objective": 4,
+     "why": "Side note on last term used in sum problems."
+    },
+    {
+     "key": "eb11c2-1:figure-5",
+     "objective": 4,
+     "why": "Shows sum of a block of terms as S_20 minus S_9."
+    },
+    {
+     "key": "eb11c2-1:rule-8",
+     "objective": 4,
+     "why": "Sums of natural numbers or multiples via arithmetic sequences."
+    },
+    {
+     "key": "eb11c2-1:rule-9",
+     "objective": 4,
+     "why": "Sum formula with first and last term."
+    },
+    {
+     "key": "eb11c2-1:rule-10",
+     "objective": 4,
+     "why": "Sum formula with first term and common difference."
+    },
+    {
+     "key": "eb11c2-1:method-2",
+     "objective": 4,
+     "why": "Find n first with l = a+(n-1)d for sums."
+    },
+    {
+     "key": "eb11c2-1:rule-11",
+     "objective": 5,
+     "why": "Sum formula restated among problems using a given sum."
+    },
+    {
+     "key": "eb11c2-1:rule-12",
+     "objective": 5,
+     "why": "Sum formula restated among problems using a given sum."
+    },
+    {
+     "key": "eb11c2-1:caution-1",
+     "objective": 5,
+     "why": "Mistake in finding the term count for maximum sum with negative d."
+    },
+    {
+     "key": "eb11c2-1:figure-6",
+     "objective": 5,
+     "why": "Positive and negative terms show where the maximum sum occurs."
+    }
+   ],
+   "B": [
+    {
+     "key": "eb11c2-1:figure-6",
+     "objective": 5,
+     "why": "Positive/negative terms braces show where the sum is greatest, for the maximum-sum rule."
+    },
+    {
+     "key": "eb11c2-1:caution-1",
+     "objective": 5,
+     "why": "Warns against solving S_n>0 instead of a_n>0 in a maximum-sum problem."
+    },
+    {
+     "key": "eb11c2-1:rule-12",
+     "objective": 4,
+     "why": "Sum formula with a, d, n is the sum rule printed among sum examples."
+    },
+    {
+     "key": "eb11c2-1:rule-11",
+     "objective": 4,
+     "why": "Sum formula with first and last term."
+    },
+    {
+     "key": "eb11c2-1:method-2",
+     "objective": 4,
+     "why": "Find n first using l=a+(n-1)d when computing a sum."
+    },
+    {
+     "key": "eb11c2-1:rule-10",
+     "objective": 4,
+     "why": "Sum formula S_n with a, d, n."
+    },
+    {
+     "key": "eb11c2-1:rule-9",
+     "objective": 4,
+     "why": "Sum formula S_n=(1/2)n(a+l)."
+    },
+    {
+     "key": "eb11c2-1:rule-8",
+     "objective": 4,
+     "why": "Sums of natural numbers or multiples are done with arithmetic sequence sums."
+    },
+    {
+     "key": "eb11c2-1:figure-5",
+     "objective": 4,
+     "why": "Braces show the sum of a block of terms as S_20 minus S_9."
+    },
+    {
+     "key": "eb11c2-1:rule-7",
+     "objective": 4,
+     "why": "Last term l=a+(n-1)d is used in the sum of part (b)."
+    },
+    {
+     "key": "eb11c2-1:method-1",
+     "objective": 4,
+     "why": "Find the number of terms first when unknown, for the sum."
+    },
+    {
+     "key": "eb11c2-1:rule-5",
+     "objective": 4,
+     "why": "Sum formula using first and last term."
+    },
+    {
+     "key": "eb11c2-1:convention-4",
+     "objective": 4,
+     "why": "Defines the notation S_n for the sum of terms."
+    },
+    {
+     "key": "eb11c2-1:definition-4",
+     "objective": 4,
+     "why": "Number of terms and last term are introduced for the sum formula."
+    },
+    {
+     "key": "eb11c2-1:rule-3",
+     "objective": 2,
+     "why": "Find a and d first to get the general term of an arithmetic sequence."
+    },
+    {
+     "key": "eb11c2-1:rule-2",
+     "objective": 2,
+     "why": "States the general term a_n=a+(n-1)d."
+    },
+    {
+     "key": "eb11c2-1:figure-4",
+     "objective": 2,
+     "why": "Illustrates common difference -5 of an arithmetic sequence."
+    },
+    {
+     "key": "eb11c2-1:figure-3",
+     "objective": 2,
+     "why": "Illustrates common difference +3 of an arithmetic sequence."
+    },
+    {
+     "key": "eb11c2-1:figure-2",
+     "objective": 2,
+     "why": "Shows a_n is a plus d added (n-1) times, giving the general term."
+    },
+    {
+     "key": "eb11c2-1:convention-3",
+     "objective": 1,
+     "why": "Notation {a_n} for a sequence."
+    },
+    {
+     "key": "eb11c2-1:convention-2",
+     "objective": 1,
+     "why": "Notation a_1, a_2, ..., a_n for terms of a sequence."
+    },
+    {
+     "key": "eb11c2-1:convention-1",
+     "objective": 1,
+     "why": "Names first term, n-th term of a sequence."
+    },
+    {
+     "key": "eb11c2-1:definition-1",
+     "objective": 1,
+     "why": "Defines sequence and term."
+    },
+    {
+     "key": "eb11c2-1:figure-1",
+     "objective": 0,
+     "why": "Jogging illustration introduces the lesson's idea of constant additive change."
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-2",
+   "A": [
+    {
+     "key": "eb11c2-2:figure-1",
+     "objective": 0,
+     "why": "Decorative/intro illustration of exponential bacterial growth for the whole lesson."
+    },
+    {
+     "key": "eb11c2-2:figure-2",
+     "objective": 1,
+     "why": "Shows multiplying a by r (n−1) times gives a_n, the general term."
+    },
+    {
+     "key": "eb11c2-2:figure-3",
+     "objective": 1,
+     "why": "Shows the common ratio r between consecutive terms of 5, 10, 20, 40."
+    },
+    {
+     "key": "eb11c2-2:rule-2",
+     "objective": 1,
+     "why": "States the general term a_n = ar^{n-1}."
+    },
+    {
+     "key": "eb11c2-2:caution-1",
+     "objective": 1,
+     "why": "Notes parentheses for negative or fractional ratio when writing the general term."
+    },
+    {
+     "key": "eb11c2-2:figure-4",
+     "objective": 1,
+     "why": "Finds missing terms A and B using the common ratio of 1/2."
+    },
+    {
+     "key": "eb11c2-2:rule-3",
+     "objective": 1,
+     "why": "Restates the general term a_n = ar^{n-1} from first term and ratio."
+    },
+    {
+     "key": "eb11c2-2:rule-6",
+     "objective": 3,
+     "why": "Gives the alternative sum formula S_n for r>1."
+    }
+   ],
+   "B": [
+    {
+     "key": "eb11c2-2:rule-6",
+     "objective": 3,
+     "why": "Sum formula for r>1 is the S_n formula for a geometric sequence."
+    },
+    {
+     "key": "eb11c2-2:rule-3",
+     "objective": 1,
+     "why": "States the general term a_n = ar^{n-1} from first term and ratio."
+    },
+    {
+     "key": "eb11c2-2:figure-4",
+     "objective": 1,
+     "why": "Shows finding missing terms using the common ratio 1/2."
+    },
+    {
+     "key": "eb11c2-2:caution-1",
+     "objective": 1,
+     "why": "Notes parentheses for negative or fractional ratio when writing the general term."
+    },
+    {
+     "key": "eb11c2-2:rule-2",
+     "objective": 1,
+     "why": "Side note restating the general term a_n = ar^{n-1}."
+    },
+    {
+     "key": "eb11c2-2:figure-3",
+     "objective": 1,
+     "why": "Illustrates the common ratio between consecutive terms of 5, 10, 20, 40 for the general term."
+    },
+    {
+     "key": "eb11c2-2:figure-2",
+     "objective": 1,
+     "why": "Shows multiplying a by r (n−1) times gives a_n, explaining the general term."
+    },
+    {
+     "key": "eb11c2-2:figure-1",
+     "objective": 0,
+     "why": "Lesson-opening illustration of exponential growth motivating geometric sequences in general."
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-3",
+   "A": [
+    {
+     "key": "eb11c2-3:figure-1",
+     "objective": 0,
+     "why": "Decorative opening illustration with no numeric values."
+    },
+    {
+     "key": "eb11c2-3:rule-1",
+     "objective": 2,
+     "why": "Formula for the sum of a constant, used to evaluate sums."
+    },
+    {
+     "key": "eb11c2-3:rule-3",
+     "objective": 2,
+     "why": "Formula for the sum of k squared."
+    },
+    {
+     "key": "eb11c2-3:convention-1",
+     "objective": 2,
+     "why": "Clarifies p is constant in the summation properties."
+    },
+    {
+     "key": "eb11c2-3:rule-4",
+     "objective": 2,
+     "why": "Summation property of taking out a constant factor."
+    },
+    {
+     "key": "eb11c2-3:rule-5",
+     "objective": 2,
+     "why": "Summation property for a sum of terms."
+    },
+    {
+     "key": "eb11c2-3:rule-6",
+     "objective": 2,
+     "why": "Summation property for a difference of terms."
+    },
+    {
+     "key": "eb11c2-3:rule-7",
+     "objective": 2,
+     "why": "Formula for the sum of cubes."
+    },
+    {
+     "key": "eb11c2-3:rule-8",
+     "objective": 2,
+     "why": "Introduces the geometric sum notation used in the geometric formulas."
+    },
+    {
+     "key": "eb11c2-3:rule-9",
+     "objective": 2,
+     "why": "Geometric sum formula for r<1."
+    },
+    {
+     "key": "eb11c2-3:rule-10",
+     "objective": 2,
+     "why": "Geometric sum formula for r>1."
+    },
+    {
+     "key": "eb11c2-3:rule-11",
+     "objective": 2,
+     "why": "Identifies first term and ratio of r^{n-1} to apply the geometric formula."
+    },
+    {
+     "key": "eb11c2-3:rule-12",
+     "objective": 2,
+     "why": "Identifies first term and ratio of r^n to apply the geometric formula."
+    },
+    {
+     "key": "eb11c2-3:method-2",
+     "objective": 3,
+     "why": "Cancelling terms is step 2 of summing fractional sequences."
+    },
+    {
+     "key": "eb11c2-3:rule-13",
+     "objective": 3,
+     "why": "Rationalize square-root denominators before cancelling."
+    },
+    {
+     "key": "eb11c2-3:rule-14",
+     "objective": 3,
+     "why": "Expressing fractional/root sums with Σ after rewriting as terms, within the fractional-sequence section."
+    },
+    {
+     "key": "eb11c2-3:caution-1",
+     "objective": 4,
+     "why": "Mistake in subtracting 3S from S in the arithmetic×geometric method."
+    },
+    {
+     "key": "eb11c2-3:convention-2",
+     "objective": 5,
+     "why": "Defines S_n, the sum to the n-th term."
+    },
+    {
+     "key": "eb11c2-3:rule-16",
+     "objective": 5,
+     "why": "a_1 = S_1 is part of finding a_n from S_n."
+    },
+    {
+     "key": "eb11c2-3:method-4",
+     "objective": 5,
+     "why": "Check whether a_n for n≥2 also holds at n=1."
+    },
+    {
+     "key": "eb11c2-3:rule-17",
+     "objective": 5,
+     "why": "If the check holds, keep a_n as is."
+    },
+    {
+     "key": "eb11c2-3:rule-18",
+     "objective": 5,
+     "why": "If it fails, write both a_1 and a_n."
+    },
+    {
+     "key": "eb11c2-3:figure-2",
+     "objective": 5,
+     "why": "Illustrates a_n = S_n − S_{n−1}."
+    },
+    {
+     "key": "eb11c2-3:caution-2",
+     "objective": 5,
+     "why": "Mistake of ignoring n≥2 and the n=1 check when finding a_n from S_n."
+    }
+   ],
+   "B": [
+    {
+     "key": "eb11c2-3:caution-2",
+     "objective": 5,
+     "why": "Warns that a_n = S_n − S_{n−1} needs n ≥ 2 and a check at n = 1."
+    },
+    {
+     "key": "eb11c2-3:figure-2",
+     "objective": 5,
+     "why": "Illustrates a_n = S_n − S_{n−1} via braces on S_{n−1} and S_n."
+    },
+    {
+     "key": "eb11c2-3:rule-18",
+     "objective": 5,
+     "why": "If a_n fails at n=1, write a_1 and a_n separately."
+    },
+    {
+     "key": "eb11c2-3:rule-17",
+     "objective": 5,
+     "why": "If the formula holds at n=1, keep a_n as is."
+    },
+    {
+     "key": "eb11c2-3:method-4",
+     "objective": 5,
+     "why": "Check the n ≥ 2 formula at n = 1 when finding a_n from S_n."
+    },
+    {
+     "key": "eb11c2-3:rule-16",
+     "objective": 5,
+     "why": "States a_1 = S_1 for finding a_n from S_n."
+    },
+    {
+     "key": "eb11c2-3:convention-2",
+     "objective": 5,
+     "why": "Defines S_n, used for finding a_n from S_n."
+    },
+    {
+     "key": "eb11c2-3:caution-1",
+     "objective": 4,
+     "why": "Mistake in the S − 3S subtraction for an arithmetic × geometric sum."
+    },
+    {
+     "key": "eb11c2-3:rule-14",
+     "objective": 3,
+     "why": "Rewrites sums of fractional or root sequences as sums of terms, for the fractional-sum method."
+    },
+    {
+     "key": "eb11c2-3:rule-13",
+     "objective": 3,
+     "why": "Rationalize square-root denominators before cancelling."
+    },
+    {
+     "key": "eb11c2-3:method-2",
+     "objective": 3,
+     "why": "Step 2 of the fractional-sum method: cancel terms that sum to zero."
+    },
+    {
+     "key": "eb11c2-3:rule-12",
+     "objective": 2,
+     "why": "Identifies r^n as geometric, to use the geometric sum formula."
+    },
+    {
+     "key": "eb11c2-3:rule-11",
+     "objective": 2,
+     "why": "Identifies r^{n-1} as geometric, to use the geometric sum formula."
+    },
+    {
+     "key": "eb11c2-3:rule-10",
+     "objective": 2,
+     "why": "Geometric sum formula for r>1."
+    },
+    {
+     "key": "eb11c2-3:rule-9",
+     "objective": 2,
+     "why": "Geometric sum formula for r<1."
+    },
+    {
+     "key": "eb11c2-3:rule-8",
+     "objective": 2,
+     "why": "Meaning of the geometric sum Σ a r^{k-1}, a formula for evaluating sums."
+    },
+    {
+     "key": "eb11c2-3:rule-7",
+     "objective": 2,
+     "why": "Sum of cubes formula."
+    },
+    {
+     "key": "eb11c2-3:rule-6",
+     "objective": 2,
+     "why": "Summation property for differences."
+    },
+    {
+     "key": "eb11c2-3:rule-5",
+     "objective": 2,
+     "why": "Summation property for sums."
+    },
+    {
+     "key": "eb11c2-3:rule-4",
+     "objective": 2,
+     "why": "Summation property for taking out a constant factor."
+    },
+    {
+     "key": "eb11c2-3:convention-1",
+     "objective": 2,
+     "why": "Says p is constant in the summation properties."
+    },
+    {
+     "key": "eb11c2-3:rule-3",
+     "objective": 2,
+     "why": "Sum of squares formula."
+    },
+    {
+     "key": "eb11c2-3:rule-1",
+     "objective": 2,
+     "why": "Sum of a constant formula."
+    },
+    {
+     "key": "eb11c2-3:figure-1",
+     "objective": 0,
+     "why": "Decorative opening illustration with no numeric content."
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-4",
+   "A": [
+    {
+     "key": "eb11c2-4:figure-1",
+     "objective": 1,
+     "why": "The virus-spread illustration (2, 5, 10, 17) motivates finding a general term from a difference pattern at the start of the lesson."
+    },
+    {
+     "key": "eb11c2-4:rule-1",
+     "objective": 1,
+     "why": "States that the general term can be found from the first term and the difference sequence."
+    },
+    {
+     "key": "eb11c2-4:method-1",
+     "objective": 1,
+     "why": "It is the step of checking whether the formula holds for n=1."
+    },
+    {
+     "key": "eb11c2-4:figure-2",
+     "objective": 1,
+     "why": "It shows a_n = a_1 + b_1 + ... + b_{n-1} from the difference sequence."
+    },
+    {
+     "key": "eb11c2-4:caution-1",
+     "objective": 1,
+     "why": "It warns about a mistake when summing the difference sequence to get a_n."
+    },
+    {
+     "key": "eb11c2-4:figure-3",
+     "objective": 2,
+     "why": "It shows a sequence divided into groups, with the group sizes 1, 3, 5."
+    },
+    {
+     "key": "eb11c2-4:figure-4",
+     "objective": 2,
+     "why": "It shows the (n-1)-th and n-th groups, used to find the first term and the sum of a group."
+    },
+    {
+     "key": "eb11c2-4:figure-5",
+     "objective": 2,
+     "why": "It shows that 88 is in the 7th group, which answers which group and position a term is in."
+    }
+   ],
+   "B": [
+    {
+     "key": "eb11c2-4:figure-5",
+     "objective": 2,
+     "why": "Shows 88 as the 44th term, lying in the 7th group, for locating a term's group and position."
+    },
+    {
+     "key": "eb11c2-4:figure-4",
+     "objective": 2,
+     "why": "Diagram of the (n-1)-th and n-th groups used to find the first term and sum of a group."
+    },
+    {
+     "key": "eb11c2-4:figure-3",
+     "objective": 2,
+     "why": "Grouped sequence with term counts per group, the setup for group sequence problems."
+    },
+    {
+     "key": "eb11c2-4:caution-1",
+     "objective": 1,
+     "why": "Common mistake in summing the difference sequence a_1 + sum of b_k up to n-1."
+    },
+    {
+     "key": "eb11c2-4:figure-2",
+     "objective": 1,
+     "why": "Shows differences b_1 to b_{n-1} giving a_n = a_1 + b_1 + ... + b_{n-1}."
+    },
+    {
+     "key": "eb11c2-4:method-1",
+     "objective": 1,
+     "why": "Check whether the formula holds for n=1 after finding the general term."
+    },
+    {
+     "key": "eb11c2-4:rule-1",
+     "objective": 1,
+     "why": "General term found from the first term and the difference sequence."
+    },
+    {
+     "key": "eb11c2-4:figure-1",
+     "objective": 0,
+     "why": "Virus-spread illustration that motivates the lesson as a whole."
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-5",
+   "A": [
+    {
+     "key": "eb11c2-5:figure-1",
+     "objective": 0,
+     "why": "Decorative illustration of the antibiotic dosing intro text, not a specific objective."
+    },
+    {
+     "key": "eb11c2-5:rule-1",
+     "objective": 1,
+     "why": "States the two conditions (first term and recurrence) that determine a sequence and let terms be computed."
+    },
+    {
+     "key": "eb11c2-5:convention-1",
+     "objective": 1,
+     "why": "Convention about the range of n for recurrence relations in the basic recurrence section."
+    },
+    {
+     "key": "eb11c2-5:rule-3",
+     "objective": 1,
+     "why": "a_{n+1}=ra_n is a geometric sequence, a basic recurrence form."
+    },
+    {
+     "key": "eb11c2-5:rule-4",
+     "objective": 1,
+     "why": "Arithmetic general term formula used to find the general term from a_{n+1}=a_n+d."
+    },
+    {
+     "key": "eb11c2-5:rule-5",
+     "objective": 1,
+     "why": "Geometric general term formula used to find the general term from a_{n+1}=ra_n."
+    },
+    {
+     "key": "eb11c2-5:rule-6",
+     "objective": 2,
+     "why": "Identifies f(n) as the difference sequence for a_{n+1}=a_n+f(n)."
+    },
+    {
+     "key": "eb11c2-5:method-2",
+     "objective": 2,
+     "why": "Step of solving c=pc+q for a_{n+1}=pa_n+q."
+    },
+    {
+     "key": "eb11c2-5:method-3",
+     "objective": 2,
+     "why": "Writing a_{n+1}-c=p(a_n-c) in the a_{n+1}=pa_n+q method."
+    },
+    {
+     "key": "eb11c2-5:method-4",
+     "objective": 2,
+     "why": "Letting b_n=a_n-c gives a geometric sequence with ratio p."
+    },
+    {
+     "key": "eb11c2-5:method-5",
+     "objective": 2,
+     "why": "Recover a_n from the general term of {b_n}."
+    },
+    {
+     "key": "eb11c2-5:caution-1",
+     "objective": 3,
+     "why": "Hint for induction proofs of equalities/inequalities involving a^n."
+    },
+    {
+     "key": "eb11c2-5:caution-2",
+     "objective": 3,
+     "why": "Hint for induction proofs of divisibility (multiple of a) statements."
+    }
+   ],
+   "B": [
+    {
+     "key": "eb11c2-5:caution-2",
+     "objective": 3,
+     "why": "Divisibility proofs by induction: write the k+1 case as a×(integer)."
+    },
+    {
+     "key": "eb11c2-5:caution-1",
+     "objective": 3,
+     "why": "Tip for induction proofs of equalities/inequalities with a^n: multiply the assumed expression by a."
+    },
+    {
+     "key": "eb11c2-5:method-5",
+     "objective": 2,
+     "why": "Final step of the a_{n+1}=pa_n+q procedure: recover a_n from b_n."
+    },
+    {
+     "key": "eb11c2-5:method-4",
+     "objective": 2,
+     "why": "Step of the pa_n+q method: b_n=a_n-c is geometric with ratio p."
+    },
+    {
+     "key": "eb11c2-5:method-3",
+     "objective": 2,
+     "why": "Step of the pa_n+q method: write a_{n+1}-c=p(a_n-c)."
+    },
+    {
+     "key": "eb11c2-5:method-2",
+     "objective": 2,
+     "why": "Step of the pa_n+q method: solve c=pc+q."
+    },
+    {
+     "key": "eb11c2-5:rule-6",
+     "objective": 2,
+     "why": "States f(n) is the difference sequence for a_{n+1}=a_n+f(n), the basis of that general-term method."
+    },
+    {
+     "key": "eb11c2-5:rule-5",
+     "objective": 1,
+     "why": "Geometric general term formula used to find the general term of a_{n+1}=ra_n."
+    },
+    {
+     "key": "eb11c2-5:rule-4",
+     "objective": 1,
+     "why": "Arithmetic general term formula used to find the general term of a_{n+1}=a_n+d."
+    },
+    {
+     "key": "eb11c2-5:rule-3",
+     "objective": 1,
+     "why": "a_{n+1}=ra_n is a geometric sequence with ratio r."
+    },
+    {
+     "key": "eb11c2-5:convention-1",
+     "objective": 1,
+     "why": "Convention on n for recurrence relations, introduced with basic recurrences."
+    },
+    {
+     "key": "eb11c2-5:rule-1",
+     "objective": 1,
+     "why": "Says a first term and a recurrence relation determine the sequence, so terms can be calculated in order."
+    },
+    {
+     "key": "eb11c2-5:figure-1",
+     "objective": 0,
+     "why": "Drug-dosing illustration that decorates the lesson opening and teaches no objective in particular."
+    }
+   ]
+  }
+ ]
+}

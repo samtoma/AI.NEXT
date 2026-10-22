@@ -1,0 +1,2750 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c3-3",
+  "source": "book-records/egb-g11-math/eb11c3-3.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 69,
+      "cost_usd": 1.1741,
+      "calls": [
+        {
+          "call": "answers.eb11c3-3",
+          "cost_usd": 1.1741,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c3-3:open-prompt-1",
+      "record_id": "eb11c3-3:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 132,
+      "question": {
+        "text": "Guiding Question: How can polynomial theorems help economists and social scientists test values and predict future trends efficiently?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2eee0700482e328021559268632cee6d",
+      "kind": "explanation",
+      "answer": "They let us test a model at a value quickly (Remainder Theorem), find where it equals zero (Factor Theorem) and simplify the work (synthetic division).",
+      "solution": [
+        "The Remainder Theorem gives the value P(a) directly, so we can test the model at a given year without dividing.",
+        "If P(a) = 0, then x − a is a factor, so we can see when the model reaches zero.",
+        "Synthetic division is a fast way to test values and to find the quotient.",
+        "So economists can test values and predict trends efficiently."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:rule-9",
+        "eb11c3-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "The Remainder Theorem gives the model's value at a given year, e.g. P(5), with no long division. The Factor Theorem shows when the model reaches zero. Synthetic division tests values and simplifies the calculation quickly.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-1",
+      "record_id": "eb11c3-3:warm-up-1",
+      "part": null,
+      "type": "exercise",
+      "page": 132,
+      "question": {
+        "text": "Find the remainder when $3x^4 - 8x^3 - 5x^2 + 12$ is divided by $3x - 2$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "410fe93ab024311f64dc23b0d720dc10",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+        "Divisor 3x − 2, so substitute x = 2/3.",
+        "P(2/3) = 3(2/3)^4 − 8(2/3)^3 − 5(2/3)^2 + 12.",
+        "= 16/27 − 64/27 − 60/27 + 324/27 = 216/27.",
+        "The remainder is 8."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2",
+        "eb11c3-3:explanation-1",
+        "eb11c3-3:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-2",
+      "record_id": "eb11c3-3:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 132,
+      "question": {
+        "text": "If the remainder when $x^3 + ax^2 + 3x + 1$ is divided by $x + 3$ is 4, find the value of $a$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7de0962dfd073c7db77425efb9a6b396",
+      "kind": "value",
+      "answer": "a = 13/3",
+      "solution": [
+        "Divisor x + 3, so substitute x = −3.",
+        "P(−3) = (−3)^3 + a(−3)^2 + 3(−3) + 1 = 9a − 35.",
+        "Set 9a − 35 = 4.",
+        "9a = 39, so a = 13/3."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = 13/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-1",
+      "record_id": "eb11c3-3:try-1",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Find the remainder when $x^3-5x^2+4x-1$ is divided by $2x-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4d74a57b46026c0640799c8e6cd48af4",
+      "kind": "value",
+      "answer": "-1/8",
+      "solution": [
+        "Divisor 2x − 1, so substitute x = 1/2.",
+        "P(1/2) = 1/8 − 5/4 + 2 − 1.",
+        "= 1/8 − 10/8 + 8/8 = −1/8.",
+        "The remainder is −1/8."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "-1/8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-2",
+      "record_id": "eb11c3-3:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "If the remainder when $x^3+ax^2+3x+1$ is divided by $x-3$ is 1, find the value of $a$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "473a9ade48df9fb9362d472dc6cf0bb9",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+        "Divisor x − 3, so substitute x = 3.",
+        "P(3) = 27 + 9a + 9 + 1 = 9a + 37.",
+        "Set 9a + 37 = 1.",
+        "9a = −36, so a = −4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:work-with-a-partner-1",
+      "record_id": "eb11c3-3:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 133,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "14b56df2a9ea1477365d43510a888e65",
+      "kind": "value",
+      "answer": "Try 1: remainder -1/8; Try 2: a = -4",
+      "solution": [
+        "Try 1: substitute x = 1/2 for 2x − 1, giving P(1/2) = −1/8.",
+        "Try 2: substitute x = 3 for x − 3, giving 9a + 37 = 1.",
+        "So a = −4.",
+        "Answers: −1/8 and a = −4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is a group activity with no question of its own. The try answers are -1/8 and a = -4.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-1",
+      "record_id": "eb11c3-3:exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Find the remainder when $x^3+2x^2-3x-4$ is divided by $x+2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b2b5105baaa0eea71acf8c12bcdb850e",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "Divisor x + 2, so substitute x = −2.",
+        "P(−2) = −8 + 8 + 6 − 4.",
+        "The remainder is 2."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-2",
+      "record_id": "eb11c3-3:exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Find the remainder when $3x^3+2x^2-5x+6$ is divided by $x-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "aab63f07186849885cb92ec1909fe656",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+        "Divisor x − 1, so substitute x = 1.",
+        "P(1) = 3 + 2 − 5 + 6.",
+        "The remainder is 6."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-3",
+      "record_id": "eb11c3-3:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Find the remainder when $6x^3-x^2+x-2$ is divided by $3x-2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8a26c791904ad2ded156dea59d49f81f",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "Divisor 3x − 2, so substitute x = 2/3.",
+        "P(2/3) = 6(8/27) − 4/9 + 2/3 − 2.",
+        "= 16/9 − 4/9 + 6/9 − 18/9 = 0.",
+        "The remainder is 0."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-4",
+      "record_id": "eb11c3-3:exercise-4",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Find the remainder when $4x^3-2x^2-4x+3$ is divided by $2x+1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "020ba87e37dc4b4e8102e8aeef64d35e",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "Divisor 2x + 1, so substitute x = −1/2.",
+        "P(−1/2) = 4(−1/8) − 2(1/4) − 4(−1/2) + 3.",
+        "= −1/2 − 1/2 + 2 + 3.",
+        "The remainder is 4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-5",
+      "record_id": "eb11c3-3:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "If the remainder when $x^3-x^2+ax-4$ is divided by $x+1$ is $-2$, find the value of $a$.",
+        "stem": "",
+        "notes": "Printed 'ax' looks like 'αx' with missing spaces; read as a."
+      },
+      "needs_page": false,
+      "question_fingerprint": "dae706939f838697f1e5e142178e3b82",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+        "Divisor x + 1, so substitute x = −1.",
+        "P(−1) = −1 − 1 − a − 4 = −6 − a.",
+        "Set −6 − a = −2.",
+        "a = −4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-6",
+      "record_id": "eb11c3-3:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "If the remainder when $x^3+4x^2-5x+a$ is divided by $x+3$ is 8, find the value of $a$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "908f9d9193e5ac1e10e8ddff70a7827e",
+      "kind": "value",
+      "answer": "a = -16",
+      "solution": [
+        "Divisor x + 3, so substitute x = −3.",
+        "P(−3) = −27 + 36 + 15 + a = 24 + a.",
+        "Set 24 + a = 8.",
+        "a = −16."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = -16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-7",
+      "record_id": "eb11c3-3:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "If $x^3-3x^2+4x+a$ is divisible by $x-2$, find the value of $a$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "509fec535df527d83a82929567dca8c9",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+        "Divisible by x − 2 means the remainder P(2) = 0.",
+        "P(2) = 8 − 12 + 8 + a = 4 + a.",
+        "Set 4 + a = 0.",
+        "a = −4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-1",
+      "record_id": "eb11c3-3:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "A researcher models the income distribution of a community with the polynomial $P(x)=2x^3-3x^2+ax+6$, where $x$ represents the number of years since a new economic policy was introduced. For the model to be valid and stable, it must be divisible by the condition $(2x+1)$, which represents a fairness constraint in the system. Find the value of $a$ that ensures divisibility.",
+        "stem": "",
+        "notes": "Intro text shared with item 2."
+      },
+      "needs_page": false,
+      "question_fingerprint": "e3ce024cda1ac90d290c2a800865e8d1",
+      "kind": "value",
+      "answer": "a = 10",
+      "solution": [
+        "Divisible by 2x + 1 means P(−1/2) = 0.",
+        "P(−1/2) = 2(−1/8) − 3(1/4) + a(−1/2) + 6.",
+        "= −1/4 − 3/4 − a/2 + 6 = 5 − a/2.",
+        "Set 5 − a/2 = 0, so a = 10."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2",
+        "eb11c3-3:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = 10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-2:1",
+      "record_id": "eb11c3-3:challenge-2",
+      "part": "1",
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Discuss mathematically:",
+        "stem": "What changes if the divisor were instead $(x+2)$?",
+        "notes": "Bulleted sub-points, labelled 1-3 by order."
+      },
+      "needs_page": false,
+      "question_fingerprint": "7f561cc9610b3b7eca8fb36ac75e61ac",
+      "kind": "explanation",
+      "answer": "We would substitute x = −2 instead of x = −1/2, and the value of a becomes −11.",
+      "solution": [
+        "For divisor x + 2, divisibility means P(−2) = 0.",
+        "P(−2) = 2(−8) − 3(4) − 2a + 6 = −22 − 2a.",
+        "Set −22 − 2a = 0, so a = −11.",
+        "So the substitution value and the value of a change (from 10 to −11)."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "The condition becomes P(-2) = 0 instead of P(-1/2) = 0. This gives -16 - 12 - 2a + 6 = 0, so a = -11 instead of 10.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-2:2",
+      "record_id": "eb11c3-3:challenge-2",
+      "part": "2",
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Discuss mathematically:",
+        "stem": "How does the choice of divisor affect the possible values of $a$?",
+        "notes": "Bulleted sub-points, labelled 1-3 by order."
+      },
+      "needs_page": false,
+      "question_fingerprint": "db9f663ea69dae2658062df0affd71ac",
+      "kind": "explanation",
+      "answer": "The divisor decides which value of x we substitute, so it decides the equation for a and hence the value of a needed.",
+      "solution": [
+        "For a divisor ax − b we substitute x = b/a.",
+        "Setting P(b/a) = 0 gives an equation in the unknown a.",
+        "A different divisor gives a different equation, so generally a different value of a."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-2",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "The divisor fixes the root, and so the equation P(root) = 0. This is a linear equation in a, so each divisor gives a different single value of a.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-2:3",
+      "record_id": "eb11c3-3:challenge-2",
+      "part": "3",
+      "type": "exercise",
+      "page": 133,
+      "question": {
+        "text": "Discuss mathematically:",
+        "stem": "Can a single polynomial be divisible by more than one linear factor at the same time? Under what conditions?",
+        "notes": "Bulleted sub-points, labelled 1-3 by order."
+      },
+      "needs_page": false,
+      "question_fingerprint": "f1b461cda79c109ae225e28e613a78ea",
+      "kind": "explanation",
+      "answer": "Yes, if P vanishes at each of the corresponding values, i.e. each remainder is zero.",
+      "solution": [
+        "P is divisible by x − a exactly when P(a) = 0.",
+        "If P(a) = 0 and P(b) = 0, then both x − a and x − b are factors.",
+        "So P can have as many linear factors as it has values with P = 0, at most its degree."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "Yes. P is divisible by several distinct linear factors exactly when P vanishes at every one of those roots. Then it is divisible by their product. A polynomial of degree n has at most n distinct linear factors.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-3",
+      "record_id": "eb11c3-3:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 134,
+      "question": {
+        "text": "If a polynomial $P(x)$ is divided by $x-1$, the remainder is 3, and when divided by $x+3$, the remainder is $-5$. Find the remainder when $P(x)$ is divided by $x^2+2x-3$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "83260bf624e588f6360fe2c79d619b73",
+      "kind": "value",
+      "answer": "2x + 1",
+      "solution": [
+        "x² + 2x − 3 = (x − 1)(x + 3).",
+        "P(x) = (x − 1)(x + 3)Q(x) + ax + b.",
+        "P(1) = 3 gives a + b = 3.",
+        "P(−3) = −5 gives −3a + b = −5.",
+        "Solving gives a = 2, b = 1.",
+        "The remainder is 2x + 1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2x + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-3",
+      "record_id": "eb11c3-3:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 135,
+      "question": {
+        "text": "If a polynomial $P(x)$ is divided by $x-2$, the remainder is 3, and when divided by $x+3$, the remainder is $-7$. Find the remainder when $P(x)$ is divided by $x^2+x-6$.",
+        "stem": "",
+        "notes": "Question mark/full stop missing after -7 as printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "ba2530e084b59a717b6336ffbf5e979c",
+      "kind": "value",
+      "answer": "2x - 1",
+      "solution": [
+        "x² + x − 6 = (x − 2)(x + 3).",
+        "P(x) = (x − 2)(x + 3)Q(x) + ax + b.",
+        "P(2) = 3 gives 2a + b = 3.",
+        "P(−3) = −7 gives −3a + b = −7.",
+        "Subtract: 5a = 10, so a = 2, b = −1.",
+        "The remainder is 2x − 1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2x - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:work-with-a-partner-2",
+      "record_id": "eb11c3-3:work-with-a-partner-2",
+      "part": null,
+      "type": "activity",
+      "page": 135,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": "Side box titled 'Work with a partner'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "611a992a43cc08aea86183047c551a76",
+      "kind": "value",
+      "answer": "2x - 1",
+      "solution": [
+        "This is the try section (try-3).",
+        "x² + x − 6 = (x − 2)(x + 3).",
+        "2a + b = 3 and −3a + b = −7 give a = 2, b = −1.",
+        "The remainder is 2x − 1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is a group activity with no question of its own. The try answer is 2x - 1.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-8",
+      "record_id": "eb11c3-3:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 135,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "561545dd08ac87459219d74f875e4869",
+      "kind": "value",
+      "answer": "Problem 1: 2x + 3; Problem 2: 3x - 2",
+      "solution": [
+        "Problem 1: write $P(x)=(x-1)(x+2)Q(x)+ax+b$.",
+        "$P(1)=5$ gives $a+b=5$.",
+        "$P(-2)=-1$ gives $-2a+b=-1$.",
+        "Subtract: $3a=6$, so $a=2$ and $b=3$.",
+        "Problem 2: factorise $x^2+x-6=(x-2)(x+3)$ and write $P(x)=(x-2)(x+3)Q(x)+ax+b$.",
+        "$P(2)=4$ gives $2a+b=4$; $P(-3)=-11$ gives $-3a+b=-11$.",
+        "Subtract: $5a=15$, so $a=3$ and $b=-2$.",
+        "Answers: problem 1 remainder $2x+3$; problem 2 remainder $3x-2$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1",
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems' and has no problem of its own; the problems are the separate exercises (1, 2 and the Challenge).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-9",
+      "record_id": "eb11c3-3:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 135,
+      "question": {
+        "text": "If a polynomial $P(x)$ is divided by $x-1$, the remainder is 5, and when divided by $x+2$, the remainder is $-1$. Find the remainder when $P(x)$ is divided by $(x-1)(x+2)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8f37f41366d92b04c4c6e15868e507b0",
+      "kind": "value",
+      "answer": "2x + 3",
+      "solution": [
+        "P(x) = (x − 1)(x + 2)Q(x) + ax + b.",
+        "P(1) = 5 gives a + b = 5.",
+        "P(−2) = −1 gives −2a + b = −1.",
+        "Subtract: 3a = 6, so a = 2, b = 3.",
+        "The remainder is 2x + 3."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2x + 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-10",
+      "record_id": "eb11c3-3:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 135,
+      "question": {
+        "text": "If a polynomial $P(x)$ is divided by $x-2$, the remainder is 4, and when divided by $x+3$, the remainder is $-11$. Find the remainder when $P(x)$ is divided by $x^2+x-6$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "421b99a65977566cc42adf87170a3a7e",
+      "kind": "value",
+      "answer": "3x - 2",
+      "solution": [
+        "x² + x − 6 = (x − 2)(x + 3).",
+        "P(2) = 4 gives 2a + b = 4.",
+        "P(−3) = −11 gives −3a + b = −11.",
+        "Subtract: 5a = 15, so a = 3, b = −2.",
+        "The remainder is 3x − 2."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3x - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-3",
+      "record_id": "eb11c3-3:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 135,
+      "question": {
+        "text": "A polynomial $P(x)$ is divisible by $x-1$, and leaves a remainder of $-4$ when divided by $x+3$. Find the remainder when $P(x)$ is divided by $x^2+2x-3$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "980731868a792bbfed0de86c7060cc75",
+      "kind": "value",
+      "answer": "x - 1",
+      "solution": [
+        "x² + 2x − 3 = (x − 1)(x + 3).",
+        "Divisible by x − 1 means P(1) = 0, so a + b = 0.",
+        "P(−3) = −4 gives −3a + b = −4.",
+        "Subtract: 4a = 4, so a = 1, b = −1.",
+        "The remainder is x − 1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-4",
+      "record_id": "eb11c3-3:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 136,
+      "question": {
+        "text": "A polynomial $P(x)$ leaves a remainder of $7x+6$ when divided by $x^2-x-6$, and $4x-3$ when divided by $x^2+2x-3$. Find the remainder when $P(x)$ is divided by $x^2+x-2$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b157e6d9fa5de188235f3b092e31a6d4",
+      "kind": "value",
+      "answer": "3x - 2",
+      "solution": [
+        "x² + x − 2 = (x + 2)(x − 1); let the remainder be ax + b.",
+        "x² − x − 6 = (x + 2)(x − 3), remainder 7x + 6, so P(−2) = −8.",
+        "x² + 2x − 3 = (x + 3)(x − 1), remainder 4x − 3, so P(1) = 1.",
+        "So −2a + b = −8 and a + b = 1.",
+        "Subtract: 3a = 9, so a = 3, b = −2.",
+        "The remainder is 3x − 2."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3x - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-4",
+      "record_id": "eb11c3-3:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 137,
+      "question": {
+        "text": "A polynomial $P(x)$ leaves a remainder of $3x+2$ when divided by $x^2-x-2$, and $7x-6$ when divided by $x^2+2x-3$. Find the remainder when $P(x)$ is divided by $x^2-1$",
+        "stem": "",
+        "notes": "Side box 'Work with a partner: Collaborate with your group to solve the try section then discuss the answer.' printed in margin."
+      },
+      "needs_page": false,
+      "question_fingerprint": "f6933b6640979814e3e35fcba3ad9878",
+      "kind": "value",
+      "answer": "x",
+      "solution": [
+        "x² − 1 = (x − 1)(x + 1); let the remainder be ax + b.",
+        "x² − x − 2 = (x − 2)(x + 1), remainder 3x + 2, so P(−1) = −1.",
+        "x² + 2x − 3 = (x + 3)(x − 1), remainder 7x − 6, so P(1) = 1.",
+        "So a + b = 1 and −a + b = −1.",
+        "Adding gives b = 0, so a = 1.",
+        "The remainder is x."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-11",
+      "record_id": "eb11c3-3:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 137,
+      "question": {
+        "text": "A polynomial $P(x)$ leaves a remainder of $2x-2$ when divided by $x^2-2x-3$, and $-x+7$ when divided by $x^2-4$. Find the remainder when $P(x)$ is divided by $x^2-x-2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bc97a783305385427ed3201a26d392bb",
+      "kind": "value",
+      "answer": "3x - 1",
+      "solution": [
+        "x² − x − 2 = (x − 2)(x + 1); let the remainder be ax + b.",
+        "x² − 2x − 3 = (x − 3)(x + 1), remainder 2x − 2, so P(−1) = −4.",
+        "x² − 4 = (x − 2)(x + 2), remainder −x + 7, so P(2) = 5.",
+        "So 2a + b = 5 and −a + b = −4.",
+        "Subtract: 3a = 9, so a = 3, b = −1.",
+        "The remainder is 3x − 1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3x - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-12",
+      "record_id": "eb11c3-3:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 137,
+      "question": {
+        "text": "A polynomial $P(x)$ leaves a remainder of $-x+4$ when divided by $x^2-3x+2$, and $3x$ when divided by $x^2-4x+3$. Find the remainder when $P(x)$ is divided by $x^2-5x+6$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "68eb6e94716e5ac2a4dc596d508c4ef0",
+      "kind": "value",
+      "answer": "7x - 12",
+      "solution": [
+        "x² − 5x + 6 = (x − 2)(x − 3); let the remainder be ax + b.",
+        "x² − 3x + 2 = (x − 1)(x − 2), remainder −x + 4, so P(2) = 2.",
+        "x² − 4x + 3 = (x − 1)(x − 3), remainder 3x, so P(3) = 9.",
+        "So 2a + b = 2 and 3a + b = 9.",
+        "Subtract: a = 7, b = −12.",
+        "The remainder is 7x − 12."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "7x - 12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-13",
+      "record_id": "eb11c3-3:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 137,
+      "question": {
+        "text": "A polynomial $P(x)$ leaves a remainder of $x-5$ when divided by $(x+1)^2$, and $6$ when divided by $x-2$. In this case, find the remainder when $P(x)$ is divided by $(x+1)^2(x-2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7609222b7f296bce78d657f7c68af571",
+      "kind": "value",
+      "answer": "x^2 + 3x - 4",
+      "solution": [
+        "The divisor has degree 3, so the remainder R has degree at most 2.",
+        "R leaves remainder x − 5 on division by (x + 1)², so R = k(x + 1)² + x − 5.",
+        "P(2) = 6 and the divisor term vanishes at x = 2, so R(2) = 6.",
+        "9k − 3 = 6, so k = 1.",
+        "R = (x + 1)² + x − 5 = x² + 3x − 4.",
+        "The remainder is x² + 3x − 4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-4",
+        "eb11c3-3:rule-5",
+        "eb11c3-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "x^2 + 3x - 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-4",
+      "record_id": "eb11c3-3:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 137,
+      "question": {
+        "text": "Evaluate exactly what the remainder will be when $x^{57}+57$ is divided by $x+1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8f5b47173f8fd5c62967d4185e9bd316",
+      "kind": "value",
+      "answer": "56",
+      "solution": [
+        "Divisor x + 1, so substitute x = −1.",
+        "P(−1) = (−1)^57 + 57 = −1 + 57.",
+        "The remainder is 56."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "56",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-5",
+      "record_id": "eb11c3-3:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 138,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $x^3+5x+11$ is divided by $x+2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2ed328dd1b92112e53fdf1375b21ccd2",
+      "kind": "value",
+      "answer": "Quotient x^2 - 2x + 9, remainder -7",
+      "solution": [
+        "Coefficients of x³ + 0x² + 5x + 11: 1, 0, 5, 11.",
+        "Divisor x + 2, so write −2 on the left.",
+        "Bring down 1; 1 × (−2) = −2; 0 + (−2) = −2.",
+        "−2 × (−2) = 4; 5 + 4 = 9.",
+        "9 × (−2) = −18; 11 − 18 = −7.",
+        "Bottom row 1, −2, 9, −7: quotient x² − 2x + 9, remainder −7."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-1",
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5",
+        "eb11c3-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient x^2 - 2x + 9, remainder -7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-5:a",
+      "record_id": "eb11c3-3:try-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = x^3 + 5x - 6,\\ B = x - 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d6563e88b7f5738b4fd24a3234559a92",
+      "kind": "value",
+      "answer": "quotient x^2 + x + 6, remainder 0",
+      "solution": [
+        "Coefficients of $x^3+0x^2+5x-6$: 1, 0, 5, -6 (insert 0 for the missing $x^2$ term).",
+        "Divisor $x-1$, so write 1 on the left.",
+        "Bring down 1; $1\\times1=1$, $0+1=1$; $1\\times1=1$, $5+1=6$; $6\\times1=6$, $-6+6=0$.",
+        "Bottom row: 1, 1, 6, remainder 0.",
+        "Quotient $x^2+x+6$, remainder 0."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-1",
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5",
+        "eb11c3-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient x^2 + x + 6, remainder 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-5:b",
+      "record_id": "eb11c3-3:try-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = 3x^3 - 5x^2 - 3x - 1,\\ B = x - 3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8c408c9e4ca1ca9fe945144cff53980c",
+      "kind": "value",
+      "answer": "quotient 3x^2 + 4x + 9, remainder 26",
+      "solution": [
+        "Coefficients: 3, -5, -3, -1; divisor $x-3$, write 3 on the left.",
+        "Bring down 3; $3\\times3=9$, $-5+9=4$; $4\\times3=12$, $-3+12=9$; $9\\times3=27$, $-1+27=26$.",
+        "Bottom row: 3, 4, 9, remainder 26.",
+        "Quotient $3x^2+4x+9$, remainder 26."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient 3x^2 + 4x + 9, remainder 26",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:work-with-a-partner-3",
+      "record_id": "eb11c3-3:work-with-a-partner-3",
+      "part": null,
+      "type": "activity",
+      "page": 139,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": "Side box 'Work with a partner'; printed text 'Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": false,
+      "question_fingerprint": "fdafbfef23ab2496ae6c131f445de3cb",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the polynomials A and B of the try section are not given here.",
+      "solution": [
+        "The activity refers to the try section, whose A and B are not listed.",
+        "Without them no division can be done."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is a group activity with no question of its own.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-14:a",
+      "record_id": "eb11c3-3:exercise-14",
+      "part": "a",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = x^3 - 5x + 6,\\ B = x - 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c365634a69ecdcdc34010484d6ee30ee",
+      "kind": "value",
+      "answer": "quotient x^2 + 2x - 1, remainder 4",
+      "solution": [
+        "Coefficients of $x^3+0x^2-5x+6$: 1, 0, -5, 6; divisor $x-2$, write 2 on the left.",
+        "Bring down 1; $1\\times2=2$, $0+2=2$; $2\\times2=4$, $-5+4=-1$; $-1\\times2=-2$, $6-2=4$.",
+        "Bottom row: 1, 2, -1, remainder 4.",
+        "Quotient $x^2+2x-1$, remainder 4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-1",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5",
+        "eb11c3-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient x^2 + 2x - 1, remainder 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-14:b",
+      "record_id": "eb11c3-3:exercise-14",
+      "part": "b",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = x^3 + 2x^2 - x - 3,\\ B = x - 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4ed4f7580b2f8295e0162e0024ba1f73",
+      "kind": "value",
+      "answer": "quotient x^2 + 3x + 2, remainder -1",
+      "solution": [
+        "Coefficients: 1, 2, -1, -3; divisor $x-1$, write 1 on the left.",
+        "Bring down 1; $2+1=3$; $-1+3=2$; $-3+2=-1$.",
+        "Bottom row: 1, 3, 2, remainder -1.",
+        "Quotient $x^2+3x+2$, remainder -1."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient x^2 + 3x + 2, remainder -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-14:c",
+      "record_id": "eb11c3-3:exercise-14",
+      "part": "c",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = 4x^2 - 2x + 2,\\ B = x - 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f247c00a4ae14f67de3141547f9b09cd",
+      "kind": "value",
+      "answer": "quotient 4x + 2, remainder 4",
+      "solution": [
+        "Coefficients: 4, -2, 2; divisor $x-1$, write 1 on the left.",
+        "Bring down 4; $-2+4=2$; $2+2=4$.",
+        "Bottom row: 4, 2, remainder 4.",
+        "Quotient $4x+2$, remainder 4."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient 4x + 2, remainder 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-14:d",
+      "record_id": "eb11c3-3:exercise-14",
+      "part": "d",
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "Using Synthetic Division, find the quotient and remainder when $A$ is divided by $B$ for the following polynomials $A$ and $B$.",
+        "stem": "$A = 3x^4 + 5x^3 - 2x - 12,\\ B = x + 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "017e7370763c0acf355e774f16708d79",
+      "kind": "value",
+      "answer": "quotient 3x^3 - x^2 + 2x - 6, remainder 0",
+      "solution": [
+        "Coefficients of $3x^4+5x^3+0x^2-2x-12$: 3, 5, 0, -2, -12 (insert 0 for $x^2$).",
+        "Divisor $x+2$, so write $-2$ on the left.",
+        "Bring down 3; $3\\times(-2)=-6$, $5-6=-1$; $-1\\times(-2)=2$, $0+2=2$; $2\\times(-2)=-4$, $-2-4=-6$; $-6\\times(-2)=12$, $-12+12=0$.",
+        "Bottom row: 3, -1, 2, -6, remainder 0.",
+        "Quotient $3x^3-x^2+2x-6$, remainder 0."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-1",
+        "eb11c3-3:method-2",
+        "eb11c3-3:method-3",
+        "eb11c3-3:method-4",
+        "eb11c3-3:method-5",
+        "eb11c3-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "Quotient 3x^3 - x^2 + 2x - 6, remainder 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-5",
+      "record_id": "eb11c3-3:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 139,
+      "question": {
+        "text": "The polynomial $P(x) = 4x^4 - 4x^3 - 11x^2 + 12x - 3$ has a horizontal intercept at $x = \\frac{1}{2}$ with multiplicity 2. Find the other intercepts of $P(x)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4dc511ec78a95a0e0965083bc4a9ed02",
+      "kind": "value",
+      "answer": "x = √3 and x = -√3",
+      "solution": [
+        "x = 1/2 is a double root, so divide by x − 1/2 twice using synthetic division.",
+        "Coefficients 4, −4, −11, 12, −3 with 1/2: 4, −2, −12, 6, remainder 0.",
+        "Again with 1/2 on 4, −2, −12, 6: 4, 0, −12, remainder 0.",
+        "Quotient 4x² − 12 = 0, so x² = 3.",
+        "Other intercepts: x = √3 and x = −√3."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-8",
+        "eb11c3-3:method-5",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "x = √3 and x = -√3 (P(x) = (2x-1)^2 (x^2 - 3)); x = 1/2 is the double intercept given",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-6:a",
+      "record_id": "eb11c3-3:warm-up-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 140,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3+2x^2-x-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8798a6cd272bc4aadf1244291200e8c4",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x+2)",
+      "solution": [
+        "Let $P(x)=x^3+2x^2-x-2$; constant term $-2$, try $\\pm1,\\pm2$.",
+        "$P(1)=1+2-1-2=0$, so $x-1$ is a factor.",
+        "Synthetic division by 1: 1, 2, -1, -2 gives 1, 3, 2, remainder 0.",
+        "$P(x)=(x-1)(x^2+3x+2)$.",
+        "Factorise the quadratic: $(x-1)(x+1)(x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:worked-example-2",
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+1)(x+2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:warm-up-6:b",
+      "record_id": "eb11c3-3:warm-up-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 140,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-6x^3+8x^2+8x-16$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c0355d6b25002c1810fbe52fbd9d9b01",
+      "kind": "value",
+      "answer": "(x-2)^2(x^2-2x-4)",
+      "solution": [
+        "Let $P(x)=x^4-6x^3+8x^2+8x-16$; try $\\pm1,\\pm2,\\pm4...$.",
+        "$P(2)=16-48+32+16-16=0$, so $x-2$ is a factor.",
+        "Synthetic division by 2: 1, -6, 8, 8, -16 gives 1, -4, 0, 8, remainder 0.",
+        "$P(x)=(x-2)(x^3-4x^2+8)$.",
+        "Let $Q(x)=x^3-4x^2+8$; $Q(2)=8-16+8=0$.",
+        "Synthetic division by 2: 1, -4, 0, 8 gives 1, -2, -4, remainder 0.",
+        "$Q(x)=(x-2)(x^2-2x-4)$; the quadratic cannot be factorised further.",
+        "$P(x)=(x-2)^2(x^2-2x-4)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-1",
+        "eb11c3-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2(x^2-2x-4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:a",
+      "record_id": "eb11c3-3:try-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-2x^2-5x+6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fef9ee2fe7c933dbf15abac3d5ef753a",
+      "kind": "value",
+      "answer": "(x-1)(x-3)(x+2)",
+      "solution": [
+        "Constant term 6; $P(1)=1-2-5+6=0$.",
+        "Synthetic division by 1: 1, -2, -5, 6 gives 1, -1, -6, remainder 0.",
+        "$P(x)=(x-1)(x^2-x-6)$.",
+        "$x^2-x-6=(x-3)(x+2)$.",
+        "$P(x)=(x-1)(x-3)(x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+2)(x-3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:b",
+      "record_id": "eb11c3-3:try-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-x^2-16x-20$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5ae5db6aa1142d964e3e4b8ea00164a2",
+      "kind": "value",
+      "answer": "(x+2)^2(x-5)",
+      "solution": [
+        "Constant term $-20$; $P(1)=-36$, $P(-1)=-6$, $P(2)=-52$, $P(-2)=-8-4+32-20=0$.",
+        "Synthetic division by $-2$: 1, -1, -16, -20 gives 1, -3, -10, remainder 0.",
+        "$P(x)=(x+2)(x^2-3x-10)$.",
+        "$x^2-3x-10=(x-5)(x+2)$.",
+        "$P(x)=(x+2)^2(x-5)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2)^2(x-5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:c",
+      "record_id": "eb11c3-3:try-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^3-x^2-5x-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1bfeabf392a3ee2f15da714a733ebe8f",
+      "kind": "value",
+      "answer": "(x+1)(2x+1)(x-2)",
+      "solution": [
+        "$P(1)=2-1-5-2=-6$; $P(-1)=-2-1+5-2=0$.",
+        "Synthetic division by $-1$: 2, -1, -5, -2 gives 2, -3, -2, remainder 0.",
+        "$P(x)=(x+1)(2x^2-3x-2)$.",
+        "$2x^2-3x-2=(2x+1)(x-2)$.",
+        "$P(x)=(x+1)(2x+1)(x-2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x-2)(2x+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:d",
+      "record_id": "eb11c3-3:try-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^3-3x^2-x-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e7b39edc996a77e145a01feafa1ba0d1",
+      "kind": "value",
+      "answer": "(x-2)(2x^2+x+1)",
+      "solution": [
+        "$P(1)=-4$, $P(-1)=-2-3+1-2=-6$, $P(2)=16-12-2-2=0$.",
+        "Synthetic division by 2: 2, -3, -1, -2 gives 2, 1, 1, remainder 0.",
+        "$P(x)=(x-2)(2x^2+x+1)$.",
+        "The quadratic cannot be factorised further, so leave it."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)(2x^2+x+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:e",
+      "record_id": "eb11c3-3:try-6",
+      "part": "e",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4+3x^3-27x^2+13x+42$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "25e54d507419d281bad6201f272ad55b",
+      "kind": "value",
+      "answer": "(x+1)(x-2)(x-3)(x+7)",
+      "solution": [
+        "$P(1)=32$; $P(-1)=1-3-27-13+42=0$.",
+        "Synthetic division by $-1$: 1, 3, -27, 13, 42 gives 1, 2, -29, 42, remainder 0.",
+        "$P(x)=(x+1)(x^3+2x^2-29x+42)$.",
+        "Let $Q(x)=x^3+2x^2-29x+42$; $Q(2)=8+8-58+42=0$.",
+        "Synthetic division by 2: 1, 2, -29, 42 gives 1, 4, -21, remainder 0.",
+        "$x^2+4x-21=(x+7)(x-3)$.",
+        "$P(x)=(x+1)(x-2)(x-3)(x+7)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x-2)(x-3)(x+7)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:try-6:f",
+      "record_id": "eb11c3-3:try-6",
+      "part": "f",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-4x^3+8x^2-8x+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f192d39fb849b00b1c7c4b5727df4ee6",
+      "kind": "value",
+      "answer": "(x-1)^2(x^2-2x+3)",
+      "solution": [
+        "$P(1)=1-4+8-8+3=0$.",
+        "Synthetic division by 1: 1, -4, 8, -8, 3 gives 1, -3, 5, -3, remainder 0.",
+        "$P(x)=(x-1)(x^3-3x^2+5x-3)$.",
+        "$Q(1)=1-3+5-3=0$; synthetic division by 1: 1, -3, 5, -3 gives 1, -2, 3, remainder 0.",
+        "$x^2-2x+3$ cannot be factorised further.",
+        "$P(x)=(x-1)^2(x^2-2x+3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2(x^2-2x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:work-with-a-partner-4",
+      "record_id": "eb11c3-3:work-with-a-partner-4",
+      "part": null,
+      "type": "activity",
+      "page": 141,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a332d470cbaeb2d1e172ccd2b95bbfdb",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the expressions to factorise in the try section are not given here.",
+      "solution": [
+        "The activity refers to try-6, whose expressions are not listed.",
+        "Without them nothing can be factorised."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is a group activity with no question of its own.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:a",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "a",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-7x-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c6aef2c092b079d07d1d4c2bcf2a8b9f",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x-3)",
+      "solution": [
+        "$P(-1)=-1+7-6=0$.",
+        "Synthetic division by $-1$: 1, 0, -7, -6 gives 1, -1, -6, remainder 0.",
+        "$x^2-x-6=(x-3)(x+2)$.",
+        "$P(x)=(x+1)(x+2)(x-3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:caution-3",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x+2)(x-3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:b",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "b",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3+4x^2+x-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b6229e2da2d25c78341b151e5b863799",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x+3)",
+      "solution": [
+        "$P(1)=1+4+1-6=0$.",
+        "Synthetic division by 1: 1, 4, 1, -6 gives 1, 5, 6, remainder 0.",
+        "$x^2+5x+6=(x+2)(x+3)$.",
+        "$P(x)=(x-1)(x+2)(x+3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+2)(x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:c",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "c",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3+6x^2+11x+6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0efe3bc94334ae2983314ac49dc67a5f",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x+3)",
+      "solution": [
+        "$P(1)=24$; $P(-1)=-1+6-11+6=0$.",
+        "Synthetic division by $-1$: 1, 6, 11, 6 gives 1, 5, 6, remainder 0.",
+        "$x^2+5x+6=(x+2)(x+3)$.",
+        "$P(x)=(x+1)(x+2)(x+3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x+2)(x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:d",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "d",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-3x+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "86c7f3af8a5a2ffe88046bcdda48dda0",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)",
+      "solution": [
+        "$P(1)=1-3+2=0$.",
+        "Synthetic division by 1: 1, 0, -3, 2 gives 1, 1, -2, remainder 0.",
+        "$x^2+x-2=(x-1)(x+2)$.",
+        "$P(x)=(x-1)^2(x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:caution-3",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2(x+2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:e",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "e",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3+x^2-8x-12$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "27c7fc8f7c3d2d465b8ca6bff4070030",
+      "kind": "value",
+      "answer": "(x+2)^2(x-3)",
+      "solution": [
+        "$P(1)=-18$, $P(-1)=-4$, $P(2)=-16$, $P(-2)=-8+4+16-12=0$.",
+        "Synthetic division by $-2$: 1, 1, -8, -12 gives 1, -1, -6, remainder 0.",
+        "$x^2-x-6=(x-3)(x+2)$.",
+        "$P(x)=(x+2)^2(x-3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2)^2(x-3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:f",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "f",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-3x^2-9x-5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "47e870c82b5847d0986c93e75ec91df5",
+      "kind": "value",
+      "answer": "(x+1)^2(x-5)",
+      "solution": [
+        "Constant term $-5$; $P(-1)=-1-3+9-5=0$.",
+        "Synthetic division by $-1$: 1, -3, -9, -5 gives 1, -4, -5, remainder 0.",
+        "$x^2-4x-5=(x-5)(x+1)$.",
+        "$P(x)=(x+1)^2(x-5)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2(x-5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:g",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "g",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^3-3x^2-3x+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4a50966446af2e2320c9b3d117a0bf5b",
+      "kind": "value",
+      "answer": "(x+1)(2x-1)(x-2)",
+      "solution": [
+        "$P(1)=-2$; $P(-1)=-2-3+3+2=0$.",
+        "Synthetic division by $-1$: 2, -3, -3, 2 gives 2, -5, 2, remainder 0.",
+        "$2x^2-5x+2=(2x-1)(x-2)$.",
+        "$P(x)=(x+1)(2x-1)(x-2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)(x+1)(2x-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:h",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "h",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$3x^3+x^2-8x+4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8aae443f022024a2dcc45e27d18d5d95",
+      "kind": "value",
+      "answer": "(x-1)(3x-2)(x+2)",
+      "solution": [
+        "$P(1)=3+1-8+4=0$.",
+        "Synthetic division by 1: 3, 1, -8, 4 gives 3, 4, -4, remainder 0.",
+        "$3x^2+4x-4=(3x-2)(x+2)$.",
+        "$P(x)=(x-1)(3x-2)(x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+2)(3x-2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:i",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "i",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^3+7x^2+8x+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "03696e4cff462b09fda444207efc4b10",
+      "kind": "value",
+      "answer": "(x+1)^2(2x+3)",
+      "solution": [
+        "$P(1)=20$; $P(-1)=-2+7-8+3=0$.",
+        "Synthetic division by $-1$: 2, 7, 8, 3 gives 2, 5, 3, remainder 0.",
+        "$2x^2+5x+3=(2x+3)(x+1)$.",
+        "$P(x)=(x+1)^2(2x+3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2(2x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:j",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "j",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^3-7x^2+3x+6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "14cb282311314d7ffba240240d356c6f",
+      "kind": "value",
+      "answer": "(x-2)(2x^2-3x-3)",
+      "solution": [
+        "$P(1)=4$, $P(-1)=-2-7-3+6=-6$, $P(2)=16-28+6+6=0$.",
+        "Synthetic division by 2: 2, -7, 3, 6 gives 2, -3, -3, remainder 0.",
+        "$2x^2-3x-3$ cannot be factorised further, so leave it.",
+        "$P(x)=(x-2)(2x^2-3x-3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)(2x^2-3x-3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:k",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "k",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3+4x^2+2x-4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c4fe1f37e9df157a74ec3cf2a159e9d0",
+      "kind": "value",
+      "answer": "(x+2)(x^2+2x-2)",
+      "solution": [
+        "$P(1)=3$, $P(-1)=-3$, $P(2)=24$, $P(-2)=-8+16-4-4=0$.",
+        "Synthetic division by $-2$: 1, 4, 2, -4 gives 1, 2, -2, remainder 0.",
+        "$x^2+2x-2$ cannot be factorised further.",
+        "$P(x)=(x+2)(x^2+2x-2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2)(x^2+2x-2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:l",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "l",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^3-3x^2+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4883e4bda53102c63bdfb6efa290a4ac",
+      "kind": "value",
+      "answer": "(x-1)(x^2-2x-2)",
+      "solution": [
+        "$P(1)=1-3+2=0$.",
+        "Synthetic division by 1: 1, -3, 0, 2 gives 1, -2, -2, remainder 0.",
+        "$x^2-2x-2$ cannot be factorised further.",
+        "$P(x)=(x-1)(x^2-2x-2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:caution-3",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x^2-2x-2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:m",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "m",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-10x^3+35x^2-50x+24$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c773c1ddaba3641c82e9ed1371898986",
+      "kind": "value",
+      "answer": "(x-1)(x-2)(x-3)(x-4)",
+      "solution": [
+        "Constant term 24; $P(1)=1-10+35-50+24=0$.",
+        "Synthetic division by 1: 1, -10, 35, -50, 24 gives 1, -9, 26, -24, remainder 0.",
+        "$Q(x)=x^3-9x^2+26x-24$; $Q(2)=8-36+52-24=0$.",
+        "Synthetic division by 2: 1, -9, 26, -24 gives 1, -7, 12, remainder 0.",
+        "$x^2-7x+12=(x-3)(x-4)$.",
+        "$P(x)=(x-1)(x-2)(x-3)(x-4)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x-2)(x-3)(x-4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:n",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "n",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-5x^3-3x^2+17x-10$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cf2bf6e9f786476b72af1c4f7ec2e8a4",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)(x-5)",
+      "solution": [
+        "$P(1)=1-5-3+17-10=0$.",
+        "Synthetic division by 1: 1, -5, -3, 17, -10 gives 1, -4, -7, 10, remainder 0.",
+        "$Q(x)=x^3-4x^2-7x+10$; $Q(1)=0$.",
+        "Synthetic division by 1: 1, -4, -7, 10 gives 1, -3, -10, remainder 0.",
+        "$x^2-3x-10=(x-5)(x+2)$.",
+        "$P(x)=(x-1)^2(x+2)(x-5)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2(x+2)(x-5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:o",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "o",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$2x^4-5x^3-20x^2+20x+48$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4264677a56ddb050ebad8d8f3a8cbb66",
+      "kind": "value",
+      "answer": "(x-2)(x+2)(2x+3)(x-4)",
+      "solution": [
+        "$P(2)=32-40-80+40+48=0$.",
+        "Synthetic division by 2: 2, -5, -20, 20, 48 gives 2, -1, -22, -24, remainder 0.",
+        "$Q(x)=2x^3-x^2-22x-24$; $Q(-2)=-16-4+44-24=0$.",
+        "Synthetic division by $-2$: 2, -1, -22, -24 gives 2, -5, -12, remainder 0.",
+        "$2x^2-5x-12=(2x+3)(x-4)$.",
+        "$P(x)=(x-2)(x+2)(2x+3)(x-4)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)(x+2)(x-4)(2x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:p",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "p",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-4x^3-4x^2+13x-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "55275d0f7a0103ad48fe266f9f5a941b",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x^2-5x+3)",
+      "solution": [
+        "$P(1)=1-4-4+13-6=0$.",
+        "Synthetic division by 1: 1, -4, -4, 13, -6 gives 1, -3, -7, 6, remainder 0.",
+        "$Q(x)=x^3-3x^2-7x+6$; $Q(-2)=-8-12+14+6=0$.",
+        "Synthetic division by $-2$: 1, -3, -7, 6 gives 1, -5, 3, remainder 0.",
+        "$x^2-5x+3$ cannot be factorised further.",
+        "$P(x)=(x-1)(x+2)(x^2-5x+3)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+2)(x^2-5x+3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:q",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "q",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-4x^3+3x^2+2x-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2985b4573297dbaa3c8cd27edb9a2065",
+      "kind": "value",
+      "answer": "(x+1)(x-3)(x^2-2x+2)",
+      "solution": [
+        "$P(1)=-4$; $P(-1)=1+4+3-2-6=0$.",
+        "Synthetic division by $-1$: 1, -4, 3, 2, -6 gives 1, -5, 8, -6, remainder 0.",
+        "$Q(x)=x^3-5x^2+8x-6$; $Q(3)=27-45+24-6=0$.",
+        "Synthetic division by 3: 1, -5, 8, -6 gives 1, -2, 2, remainder 0.",
+        "$x^2-2x+2$ cannot be factorised further.",
+        "$P(x)=(x+1)(x-3)(x^2-2x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x-3)(x^2-2x+2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:exercise-15:r",
+      "record_id": "eb11c3-3:exercise-15",
+      "part": "r",
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Factorise the following expressions.",
+        "stem": "$x^4-x^3+x^2+x-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ee7172b263dee08f278687e03c2bcb43",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x^2-x+2)",
+      "solution": [
+        "$P(1)=1-1+1+1-2=0$.",
+        "Synthetic division by 1: 1, -1, 1, 1, -2 gives 1, 0, 1, 2, remainder 0.",
+        "$Q(x)=x^3+x+2$ (the $x^2$ coefficient is 0); $Q(-1)=-1-1+2=0$.",
+        "Synthetic division by $-1$: 1, 0, 1, 2 gives 1, -1, 2, remainder 0.",
+        "$x^2-x+2$ cannot be factorised further.",
+        "$P(x)=(x-1)(x+1)(x^2-x+2)$."
+      ],
+      "grounded_in": [
+        "eb11c3-3:method-6",
+        "eb11c3-3:method-7",
+        "eb11c3-3:caution-3",
+        "eb11c3-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+1)(x^2-x+2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-6",
+      "record_id": "eb11c3-3:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Let $P(x)$ be a polynomial defined as $P(x)=x^4-3x^3+ax^2+bx+12$. Given that both $(x-1)$ and $(x+2)$ are factors of $P(x)$: Find the exact values of the constants $a$ and $b$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "662d1a6828c36534f4e0d72bc22b12a2",
+      "kind": "value",
+      "answer": "a = -12, b = 2",
+      "solution": [
+        "(x − 1) is a factor, so P(1) = 0: 1 − 3 + a + b + 12 = 0, so a + b = −10.",
+        "(x + 2) is a factor, so P(−2) = 0: 16 + 24 + 4a − 2b + 12 = 0, so 2a − b = −26.",
+        "Add the two equations: 3a = −36, so a = −12.",
+        "Then b = −10 + 12 = 2."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "a = -12, b = 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:challenge-7",
+      "record_id": "eb11c3-3:challenge-7",
+      "part": null,
+      "type": "exercise",
+      "page": 141,
+      "question": {
+        "text": "Hence, determine all the roots of the equation $P(x)=0$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "50306c11dde682664a7492cbf4fb0aef",
+      "kind": "value",
+      "answer": "x = 1, x = -2, x = 2 + √10, x = 2 - √10",
+      "solution": [
+        "With a = −12, b = 2: P(x) = x⁴ − 3x³ − 12x² + 2x + 12.",
+        "Synthetic division by x − 1: 1, −2, −14, −12, remainder 0.",
+        "Synthetic division of x³ − 2x² − 14x − 12 by x + 2: 1, −4, −6, remainder 0.",
+        "So P(x) = (x − 1)(x + 2)(x² − 4x − 6).",
+        "x² − 4x − 6 = 0 gives x = 2 ± √10.",
+        "Roots: 1, −2, 2 + √10, 2 − √10."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-6",
+        "eb11c3-3:rule-8",
+        "eb11c3-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, x = -2, x = 2 + √10, x = 2 - √10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-3:reflect-1",
+      "record_id": "eb11c3-3:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 141,
+      "question": {
+        "text": "How does breaking down polynomials into factors help us understand both mathematics and real-world systems more deeply?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3794345b64fbc780db8ebb59f8fb4521",
+      "kind": "explanation",
+      "answer": "Factors show where a polynomial is zero and break a complicated expression into simple parts, which helps in solving equations and analysing real systems.",
+      "solution": [
+        "Each factor x − a shows a value where P(a) = 0.",
+        "Simple factors are easier to solve and study than one big polynomial.",
+        "In real models, the zeros show when a quantity reaches zero, so we can analyse and predict behaviour."
+      ],
+      "grounded_in": [
+        "eb11c3-3:rule-9",
+        "eb11c3-3:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "Factors show the roots, where the model is zero or changes sign. They also split a complicated polynomial into simpler pieces that are easier to solve and analyse. In real systems this helps find break-even points, equilibria and stability conditions.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:30:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

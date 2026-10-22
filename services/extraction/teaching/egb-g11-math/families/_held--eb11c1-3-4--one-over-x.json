@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-4:one-over-x",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-4",
+ "parent_question_id": "q:eb11c1-3-4:bk-try-4-1",
+ "source_page": 20,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    6
+   ],
+   "resample_while": "q == p"
+  }
+ ],
+ "constraints": [
+  "p != q"
+ ],
+ "stem": "Simplify the following expression to a single rational expression. $\\dfrac{{=p}+\\dfrac{1}{x}}{{=q}+\\dfrac{1}{x}}$",
+ "answer": "({=p}*x+1)/({=q}*x+1)",
+ "solution": [
+  "The only small fraction is $\\frac{1}{x}$, so multiply the top and the bottom by $x$.",
+  "Top: $x\\left({=p}+\\frac{1}{x}\\right)={=p}x+1$.",
+  "Bottom: $x\\left({=q}+\\frac{1}{x}\\right)={=q}x+1$.",
+  "The answer is $\\dfrac{{=p}x+1}{{=q}x+1}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*x + 1)/({=q}*x + 1)",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: a single inner fraction 1/x, multiply top and bottom by x. p,q in 2..6 distinct, so no common factor and no coefficient 1; answer is already in lowest terms."
+}

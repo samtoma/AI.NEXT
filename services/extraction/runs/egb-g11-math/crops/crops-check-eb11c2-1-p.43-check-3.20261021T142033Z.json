@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "f102ad1e011926a4be743a16affbd3a816db7d9843450b7ada9a64566d41ea66",
+  "generated_sha256": "a05646c901618748c9731c58fdd26ea7f30d660cdee02214eae5f50ea16971dd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c2-1:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Dotted border of the next figure's box is visible along the bottom edge."
+   },
+   {
+    "id": "eb11c2-1:figure-4",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Bottom of the previous figure's dotted box is visible along the top edge."
+   }
+  ]
+ }
+}

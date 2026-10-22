@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-3:coeff-xyz",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-3",
+ "parent_question_id": "q:eb11c1-1-3:bk-exercise-3-a",
+ "source_page": 8,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    "n - 2"
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "n - p - 1"
+   ]
+  },
+  {
+   "name": "r",
+   "let": "n - p - q"
+  },
+  {
+   "name": "f",
+   "let": "[1, 1, 2, 6, 24, 120, 720]"
+  },
+  {
+   "name": "tx",
+   "let": "\"x\" if p == 1 else \"x^\" + str(p)"
+  },
+  {
+   "name": "ty",
+   "let": "\"y\" if q == 1 else \"y^\" + str(q)"
+  },
+  {
+   "name": "tz",
+   "let": "\"z\" if r == 1 else \"z^\" + str(r)"
+  },
+  {
+   "name": "d",
+   "let": "f[p] * f[q] * f[r]"
+  },
+  {
+   "name": "ans",
+   "let": "f[n] / d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the coefficient of ${=tx}{=ty}{=tz}$ in the expansion of $(x+y+z)^{{=n}}$.",
+ "answer": "ans",
+ "solution": [
+  "The exponents of x, y and z add up to {=p} + {=q} + {=r} = {=n}, which is the power of the expression, so n = {=n}, p = {=p}, q = {=q}, r = {=r}.",
+  "The coefficient is $\\frac{n!}{p!q!r!} = \\frac{{=n}!}{{=p}!\\,{=q}!\\,{=r}!}$.",
+  "$\\frac{{=f[n]}}{{=d}} = {=ans}$.",
+  "The coefficient is {=ans}."
+ ],
+ "notes": "Basic entry point: (x+y+z)^n with n 4-6 and every exponent at least 1, coefficient n!/(p!q!r!) as in the book exercises 3 and 4. Factorials come from a lookup table. Exponent 1 is not printed, as in the book (xy^5z). The coefficient is always a whole number.",
+ "proposed_misconceptions": []
+}

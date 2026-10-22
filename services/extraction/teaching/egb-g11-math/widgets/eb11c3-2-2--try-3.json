@@ -1,0 +1,43 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-2-2:try-3",
+ "lo_id": "lo:eb11c3-2-2",
+ "book_item": "eb11c3-2:try-3",
+ "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -4,
+   5
+  ],
+  "from": -1,
+  "to": 2,
+  "openFrom": true,
+  "openTo": true
+ },
+ "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+m+2=0$ has two distinct imaginary solutions. Mark the interval for $m$ and set each end hollow or filled.",
+ "solution": [
+  "Two distinct imaginary solutions need $D<0$.",
+  "$D=(-2m)^2-4(m+2)=4m^2-4m-8$.",
+  "$4m^2-4m-8<0$, so $m^2-m-2<0$.",
+  "$(m-2)(m+1)<0$.",
+  "$-1<m<2$, both ends excluded."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "step": 1,
+   "text": "The condition on $D$ is strict here; does it allow $D=0$?"
+  },
+  {
+   "predicate": "interval-wrong",
+   "step": 4,
+   "text": "Factorise the inequality and decide where the product of the two factors is negative."
+  }
+ ],
+ "notes": "Open both ends."
+}

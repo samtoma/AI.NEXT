@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-2-3:sum-roots",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-2-3",
+ "parent_question_id": "q:eb11c3-2-3:bk-exercise-6-a",
+ "source_page": 123,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "require": "s != 0",
+   "why": "sum nonzero so b nonzero"
+  },
+  {
+   "name": "p",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "require": "p != 0",
+   "why": "c nonzero"
+  },
+  {
+   "name": "b",
+   "let": "-a * s"
+  },
+  {
+   "name": "c",
+   "let": "a * p"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $ {=quadratic(a, b, c)} = 0$. Find the value of $\\alpha + \\beta$.",
+ "answer": "s",
+ "solution": [
+  "For $ax^2 + bx + c = 0$, the sum of the solutions is $\\alpha + \\beta = -\\frac{b}{a}$.",
+  "Here $a = {=a}$ and $b = {=b}$.",
+  "$\\alpha + \\beta = -\\frac{{=b}}{{=a}} = {=s}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: sum of roots from coefficients. b is a multiple of a so the answer is a whole number; c is irrelevant to the sum (a distractor of sorts). Relies on quadratic(a,b,c) rendering the polynomial in x."
+}

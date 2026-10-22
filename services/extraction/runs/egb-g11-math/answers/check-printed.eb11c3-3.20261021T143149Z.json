@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "a26362cc6f653eb5be3a1ef16d23a4a4d857f84bfb0bc7c5dfe229d07f336d8c",
+  "generated_sha256": "e11efd310874d99749a12b88987b189230de6665c7f0bef75c5630e24149e2da",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c3-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-3:explanation-1",
+      "kind": "value",
+      "answer": "8"
+     },
+     {
+      "ref": "eb11c3-3:worked-example-1",
+      "kind": "value",
+      "answer": "2x + 1"
+     },
+     {
+      "ref": "eb11c3-3:worked-example-2",
+      "kind": "value",
+      "answer": "(x - 1)(x + 1)(x + 2)"
+     }
+    ]
+   }
+  }
+ ]
+}

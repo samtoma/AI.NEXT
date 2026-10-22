@@ -1,0 +1,31 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-4:sumcoef",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-4",
+ "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+ "source_page": 6,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    4,
+    9
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "If $(1+x)^{{=n}} = c_0 + c_1x + c_2x^2 + \\dots + c_{{=n}}x^{{=n}}$, find the numerical value of $c_0 + c_1 + c_2 + \\dots + c_{{=n}}$.",
+ "answer": "2**n",
+ "solution": [
+  "The identity $(1+x)^{{=n}} = c_0 + c_1x + \\dots + c_{{=n}}x^{{=n}}$ holds for every value of $x$.",
+  "Substitute $x=1$: the right side becomes $c_0 + c_1 + \\dots + c_{{=n}}$.",
+  "The left side becomes $(1+1)^{{=n}} = 2^{{=n}}$.",
+  "So $c_0 + c_1 + \\dots + c_{{=n}} = {=2**n}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Same skeleton as the book question, with n varied. Substitute x=1."
+}

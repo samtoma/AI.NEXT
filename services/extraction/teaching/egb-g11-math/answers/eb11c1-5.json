@@ -1,0 +1,2235 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c1-5",
+  "source": "book-records/egb-g11-math/eb11c1-5.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 54,
+      "cost_usd": 1.0318,
+      "calls": [
+        {
+          "call": "answers.eb11c1-5",
+          "cost_usd": 1.0318,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c1-5:guiding-question-1",
+      "record_id": "eb11c1-5:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 31,
+      "question": {
+        "text": "Guiding question: How can algebraic techniques and the structural properties of positive real numbers be used to establish definitive upper and lower bounds for variable expressions, and how does equality emerge as a special boundary condition?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f8c23058c3c8b3860b70b37ca57d3601",
+      "kind": "explanation",
+      "answer": "Show LHS − RHS is positive (or ≥ 0) by factorising or completing the square, or use AM-GM for positive numbers; equality is the case where the square or the difference is exactly 0.",
+      "solution": [
+        "To prove LHS > RHS, calculate LHS − RHS and show it is positive.",
+        "Use factorising with given conditions such as a − b > 0, or complete the square to get X² or X² + Y² ≥ 0.",
+        "For positive numbers, AM-GM gives a + b ≥ 2√(ab), which gives a bound when the product is constant.",
+        "Equality is the boundary case: it holds when X = 0 (and Y = 0), or when a = b in AM-GM.",
+        "So inequalities give bounds, and equality shows where the bound is reached."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "Compute LHS − RHS, factorise or complete the square, and use the given conditions (a > b means a − b > 0), squares (X² ≥ 0) or AM-GM for positive numbers to fix its sign. This gives the bound. Equality is the boundary case where the square term is 0 (e.g. X = 0) or the AM-GM terms are equal (a = b).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-1",
+      "record_id": "eb11c1-5:warm-up-1",
+      "part": null,
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "Prove the following inequalities. If $a>b$ and $x>y$, prove that $2(ax+by)>(a+b)(x+y)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "67354e93c40ca78c4dadbf382c4a8d55",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (a − b)(x − y) > 0, so 2(ax + by) > (a + b)(x + y).",
+      "solution": [
+        "LHS − RHS $= 2(ax+by)-(a+b)(x+y)$",
+        "$= 2ax+2by-ax-ay-bx-by$",
+        "$= ax-ay-bx+by$",
+        "$= a(x-y)-b(x-y)$",
+        "$= (a-b)(x-y)$",
+        "Since $a>b$ and $x>y$, we have $a-b>0$ and $x-y>0$",
+        "So $(a-b)(x-y)>0$",
+        "Therefore $2(ax+by)>(a+b)(x+y)$"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=2ax+2by-(ax+ay+bx+by)=ax-ay-bx+by=(a-b)(x-y)$. Since $a>b$ and $x>y$, $a-b>0$ and $x-y>0$, so the product is $>0$. Hence $2(ax+by)>(a+b)(x+y)$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-2",
+      "record_id": "eb11c1-5:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 31,
+      "question": {
+        "text": "Prove the following inequalities. If $x>3$ and $y>-5$, prove that $xy+5x>3y+15$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5d8d37335f1521ab8440a42cd290f181",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (x − 3)(y + 5) > 0, so xy + 5x > 3y + 15.",
+      "solution": [
+        "LHS − RHS $= xy+5x-(3y+15)$",
+        "$= xy+5x-3y-15$",
+        "$= x(y+5)-3(y+5)$",
+        "$= (x-3)(y+5)$",
+        "Since $x>3$ and $y>-5$, we have $x-3>0$ and $y+5>0$",
+        "So $(x-3)(y+5)>0$",
+        "Therefore $xy+5x>3y+15$"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=xy+5x-3y-15=x(y+5)-3(y+5)=(x-3)(y+5)$. Since $x>3$ and $y>-5$, $x-3>0$ and $y+5>0$, so the product is $>0$. Hence $xy+5x>3y+15$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-1",
+      "record_id": "eb11c1-5:try-1",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $a>b$ and $c>d$, prove that $ac+bd>ad+bc$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e0e201940ae22e28ff1f78580fc67c1b",
+      "kind": "explanation",
+      "answer": "ac + bd − (ad + bc) = (a − b)(c − d) > 0, so ac + bd > ad + bc.",
+      "solution": [
+        "LHS − RHS = ac + bd − ad − bc",
+        "= a(c − d) − b(c − d)",
+        "= (a − b)(c − d)",
+        "Since a > b and c > d, a − b > 0 and c − d > 0.",
+        "So (a − b)(c − d) > 0.",
+        "Therefore ac + bd > ad + bc."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = ac+bd−ad−bc = a(c−d)−b(c−d) = (a−b)(c−d) > 0 since a−b>0 and c−d>0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-2",
+      "record_id": "eb11c1-5:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $x>2$ and $y>1$, prove that $xy+2>x+2y$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "50f3057364a24fd6ddd44c832e7bb51a",
+      "kind": "explanation",
+      "answer": "xy + 2 − (x + 2y) = (x − 2)(y − 1) > 0, so xy + 2 > x + 2y.",
+      "solution": [
+        "LHS − RHS = xy + 2 − x − 2y",
+        "= x(y − 1) − 2(y − 1)",
+        "= (x − 2)(y − 1)",
+        "Since x > 2 and y > 1, x − 2 > 0 and y − 1 > 0.",
+        "So (x − 2)(y − 1) > 0.",
+        "Therefore xy + 2 > x + 2y."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = xy+2−x−2y = x(y−1)−2(y−1) = (x−2)(y−1) > 0 since x−2>0 and y−1>0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-1",
+      "record_id": "eb11c1-5:exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $x>y$, prove that $3x-4y>2x-3y$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ddd1f5a27c1ff523a270f436776c1a1c",
+      "kind": "explanation",
+      "answer": "3x − 4y − (2x − 3y) = x − y > 0, so 3x − 4y > 2x − 3y.",
+      "solution": [
+        "LHS − RHS = 3x − 4y − (2x − 3y)",
+        "= 3x − 4y − 2x + 3y",
+        "= x − y",
+        "Since x > y, x − y > 0.",
+        "Therefore 3x − 4y > 2x − 3y."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = 3x−4y−2x+3y = x−y > 0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-2",
+      "record_id": "eb11c1-5:exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $a>c$ and $b>d$, prove that $ab+cd>ad+bc$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "559ad76ec716f9f8674242ad1c5fcc99",
+      "kind": "explanation",
+      "answer": "ab + cd − (ad + bc) = (a − c)(b − d) > 0, so ab + cd > ad + bc.",
+      "solution": [
+        "LHS − RHS = ab + cd − ad − bc",
+        "= a(b − d) − c(b − d)",
+        "= (a − c)(b − d)",
+        "Since a > c and b > d, a − c > 0 and b − d > 0.",
+        "So (a − c)(b − d) > 0.",
+        "Therefore ab + cd > ad + bc."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = ab+cd−ad−bc = a(b−d)−c(b−d) = (a−c)(b−d) > 0 since a−c>0 and b−d>0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-3",
+      "record_id": "eb11c1-5:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $a>1$ and $b>1$, prove that $ab+1>a+b$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2c6b92b2c575290a5b742cf95ed09a0d",
+      "kind": "explanation",
+      "answer": "ab + 1 − (a + b) = (a − 1)(b − 1) > 0, so ab + 1 > a + b.",
+      "solution": [
+        "LHS − RHS = ab + 1 − a − b",
+        "= a(b − 1) − (b − 1)",
+        "= (a − 1)(b − 1)",
+        "Since a > 1 and b > 1, a − 1 > 0 and b − 1 > 0.",
+        "So (a − 1)(b − 1) > 0.",
+        "Therefore ab + 1 > a + b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = ab+1−a−b = (a−1)(b−1) > 0 since a−1>0 and b−1>0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-4",
+      "record_id": "eb11c1-5:exercise-4",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "If $a>b>x>y$, prove that $ax+by>ay+bx$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "fd582c9060f70ce0cdba04d9c3d740e1",
+      "kind": "explanation",
+      "answer": "ax + by − (ay + bx) = (a − b)(x − y) > 0, so ax + by > ay + bx.",
+      "solution": [
+        "LHS − RHS = ax + by − ay − bx",
+        "= a(x − y) − b(x − y)",
+        "= (a − b)(x − y)",
+        "Since a > b and x > y, a − b > 0 and x − y > 0.",
+        "So (a − b)(x − y) > 0.",
+        "Therefore ax + by > ay + bx."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = ax+by−ay−bx = a(x−y)−b(x−y) = (a−b)(x−y) > 0 since a>b and x>y.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:challenge-1",
+      "record_id": "eb11c1-5:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 32,
+      "question": {
+        "text": "Challenge — Rearrangement: If $a>b>c>0$ and $x>y>z>0$, prove that $ax+by+cz>ay+bz+cx$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7d79530dd2be57fe1ef0f920b436bd42",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (a − c)(x − y) + (b − c)(y − z) > 0, so ax + by + cz > ay + bz + cx.",
+      "solution": [
+        "LHS − RHS = ax + by + cz − ay − bz − cx",
+        "= a(x − y) + b(y − z) + c(z − x)",
+        "Write z − x = −(x − y) − (y − z).",
+        "So the expression = a(x − y) + b(y − z) − c(x − y) − c(y − z)",
+        "= (a − c)(x − y) + (b − c)(y − z)",
+        "Since a > b > c, a − c > 0 and b − c > 0. Since x > y > z, x − y > 0 and y − z > 0.",
+        "So each product is positive and their sum is positive.",
+        "Therefore ax + by + cz > ay + bz + cx."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS = ax+by+cz−ay−bz−cx = a(x−y)+b(y−z)−c(x−z). Write x−z=(x−y)+(y−z). Then it equals (a−c)(x−y)+(b−c)(y−z) > 0, since a>c, x>y, b>c and y>z.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-3:1",
+      "record_id": "eb11c1-5:warm-up-3",
+      "part": "1",
+      "type": "exercise",
+      "page": 33,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine when equality holds.",
+        "stem": "$a^2+4b^2 \\ge 4ab$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "16f43635a0bf22dc828671e4483eb6cf",
+      "kind": "value",
+      "answer": "a = 2b",
+      "solution": [
+        "LHS − RHS $= a^2+4b^2-4ab$",
+        "$= a^2-4ab+4b^2$",
+        "$= (a-2b)^2$ (complete the square)",
+        "$(a-2b)^2 \\ge 0$, so $a^2+4b^2 \\ge 4ab$",
+        "Equality holds when $a-2b=0$",
+        "Equality holds when a = 2b"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=a^2-4ab+4b^2=(a-2b)^2\\ge0$, so $a^2+4b^2\\ge4ab$. Equality holds when $a=2b$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-3:2",
+      "record_id": "eb11c1-5:warm-up-3",
+      "part": "2",
+      "type": "exercise",
+      "page": 33,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine when equality holds.",
+        "stem": "$x^2+y^2 \\ge 2(x-y-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a2a4d5859f8fcbd07fd38d99edfb7be6",
+      "kind": "value",
+      "answer": "x = 1, y = -1",
+      "solution": [
+        "LHS − RHS $= x^2+y^2-2(x-y-1)$",
+        "$= x^2-2x+y^2+2y+2$",
+        "$= (x-1)^2-1+(y+1)^2-1+2$",
+        "$= (x-1)^2+(y+1)^2 \\ge 0$, so $x^2+y^2 \\ge 2(x-y-1)$",
+        "Equality holds when $x-1=0$ and $y+1=0$",
+        "Equality holds when x = 1, y = -1"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-4",
+        "eb11c1-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=x^2-2x+y^2+2y+2=(x-1)^2+(y+1)^2\\ge0$, so $x^2+y^2\\ge2(x-y-1)$. Equality holds when $x=1$ and $y=-1$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-3",
+      "record_id": "eb11c1-5:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine when equality holds: $(a^2+b^2)(x^2+y^2) \\ge (ax+by)^2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "face15fb2b7a12680acaba537b221b36",
+      "kind": "value",
+      "answer": "ay = bx",
+      "solution": [
+        "LHS − RHS $= (a^2+b^2)(x^2+y^2)-(ax+by)^2$",
+        "$= a^2x^2+a^2y^2+b^2x^2+b^2y^2-a^2x^2-2abxy-b^2y^2$",
+        "$= a^2y^2-2abxy+b^2x^2$",
+        "$= (ay-bx)^2 \\ge 0$, so the inequality is proved",
+        "Equality holds when $ay-bx=0$",
+        "Equality holds when ay = bx"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=a^2y^2+b^2x^2-2abxy=(ay-bx)^2\\ge0$. Equality holds when $ay=bx$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-4",
+      "record_id": "eb11c1-5:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine when equality holds: $a^2+5b^2 \\ge 4ab$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "de4492c6dd50bf750a6b77a53d39c308",
+      "kind": "value",
+      "answer": "a = 0, b = 0",
+      "solution": [
+        "LHS − RHS $= a^2+5b^2-4ab$",
+        "$= a^2-4ab+4b^2+b^2$",
+        "$= (a-2b)^2+b^2 \\ge 0$, so $a^2+5b^2 \\ge 4ab$",
+        "Equality holds when $a-2b=0$ and $b=0$",
+        "So $b=0$ and then $a=0$",
+        "Equality holds when a = 0, b = 0"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "LHS − RHS $=a^2-4ab+5b^2=(a-2b)^2+b^2\\ge0$. Equality holds when $a-2b=0$ and $b=0$, that is, $a=0$ and $b=0$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:work-with-a-partner-1",
+      "record_id": "eb11c1-5:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 34,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7b0606a9e954379c76303bb50b4b7677",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a group on the try questions, not a question with an answer of its own.",
+      "solution": [
+        "The activity only asks students to solve the try section together and discuss it.",
+        "The answers are given under try-3 and try-4."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Group activity with no single answer: work the try questions together (complete the square to X² or X²+Y², state when equality holds) and compare. Try 3: equality when ay=bx. Try 4: (a−2b)²+b² ≥ 0, equality when a=b=0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-5",
+      "record_id": "eb11c1-5:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine when equality holds except for 5: $9x^2 \\ge y(6x-y)$",
+        "stem": "",
+        "notes": "Shared instruction 'Prove the following inequalities. Also, determine when equality holds except for 5.' printed once above items 1–6."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9a94cb8b777d02b97e04d680f0723af2",
+      "kind": "value",
+      "answer": "y = 3x",
+      "solution": [
+        "LHS − RHS $= 9x^2-y(6x-y)$",
+        "$= 9x^2-6xy+y^2$",
+        "$= (3x-y)^2 \\ge 0$, so $9x^2 \\ge y(6x-y)$",
+        "Equality holds when $3x-y=0$",
+        "Equality holds when y = 3x"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "This is item 1 of the exercise. LHS − RHS $=9x^2-6xy+y^2=(3x-y)^2\\ge0$. Equality holds when $y=3x$. The other items of this exercise are answered under their own refs.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-6",
+      "record_id": "eb11c1-5:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the inequality and determine when equality holds: $2(x^2+y^2) \\ge (x+y)^2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ec6a5b95752c2a8e36301ad90f8367ba",
+      "kind": "value",
+      "answer": "Proved: 2(x²+y²) − (x+y)² = (x − y)² ≥ 0; equality holds when x = y",
+      "solution": [
+        "LHS − RHS = 2x² + 2y² − (x² + 2xy + y²)",
+        "= x² − 2xy + y²",
+        "= (x − y)² ≥ 0, since X² ≥ 0.",
+        "Therefore 2(x²+y²) ≥ (x+y)².",
+        "Equality holds when x − y = 0, that is, x = y."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "2(x²+y²)−(x+y)² = x²−2xy+y² = (x−y)² ≥ 0. Equality holds when x = y.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-7",
+      "record_id": "eb11c1-5:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the inequality and determine when equality holds: $(2x-y)^2 \\ge 3(x^2-y^2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "061b3293e13723dae0324afaa50e3385",
+      "kind": "value",
+      "answer": "Proved: (2x−y)² − 3(x²−y²) = (x − 2y)² ≥ 0; equality holds when x = 2y",
+      "solution": [
+        "LHS − RHS = 4x² − 4xy + y² − 3x² + 3y²",
+        "= x² − 4xy + 4y²",
+        "= (x − 2y)² ≥ 0, since X² ≥ 0.",
+        "Therefore (2x−y)² ≥ 3(x²−y²).",
+        "Equality holds when x − 2y = 0, that is, x = 2y."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "(2x−y)²−3(x²−y²) = x²−4xy+4y² = (x−2y)² ≥ 0. Equality holds when x = 2y.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-8",
+      "record_id": "eb11c1-5:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the inequality and determine when equality holds: $(2a+3b)^2 \\ge 12ab$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3e7a664acc45fcb25146f744cca2e098",
+      "kind": "value",
+      "answer": "Proved: (2a+3b)² − 12ab = (2a)² + (3b)² ≥ 0; equality holds when a = 0 and b = 0",
+      "solution": [
+        "LHS − RHS = 4a² + 12ab + 9b² − 12ab",
+        "= 4a² + 9b²",
+        "= (2a)² + (3b)² ≥ 0, since X² + Y² ≥ 0.",
+        "Therefore (2a+3b)² ≥ 12ab.",
+        "Equality holds when 2a = 0 and 3b = 0, that is, a = 0 and b = 0."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-4",
+        "eb11c1-5:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "(2a+3b)²−12ab = 4a²+9b² ≥ 0. Equality holds when a = 0 and b = 0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-9",
+      "record_id": "eb11c1-5:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the inequality and determine when equality holds: $x^2+2 > 2x$",
+        "stem": "",
+        "notes": "Strict inequality; the instruction says 'except for 5', i.e. equality question does not apply to item 5."
+      },
+      "needs_page": false,
+      "question_fingerprint": "381dacfdec261674851773f117cc6856",
+      "kind": "value",
+      "answer": "Proved: x² + 2 − 2x = (x − 1)² + 1 > 0; equality never holds (strict inequality)",
+      "solution": [
+        "LHS − RHS = x² + 2 − 2x",
+        "= x² − 2x + 1 + 1",
+        "= (x − 1)² + 1",
+        "Since (x − 1)² ≥ 0, (x − 1)² + 1 ≥ 1 > 0.",
+        "Therefore x² + 2 > 2x.",
+        "The inequality is strict, so equality never holds."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "x²+2−2x = (x−1)²+1 ≥ 1 > 0, so x²+2 > 2x for all x. It is a strict inequality, so equality never holds.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-10",
+      "record_id": "eb11c1-5:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "Prove the inequality and determine when equality holds: $x^2+y^2-6x+8y+25 \\ge 0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bd6bca6061406ca7bedf8e75632bd655",
+      "kind": "value",
+      "answer": "Proved: x²+y²−6x+8y+25 = (x−3)² + (y+4)² ≥ 0; equality holds when x = 3 and y = −4",
+      "solution": [
+        "LHS − RHS = x² − 6x + y² + 8y + 25",
+        "= (x − 3)² − 9 + (y + 4)² − 16 + 25",
+        "= (x − 3)² + (y + 4)² ≥ 0, since X² + Y² ≥ 0.",
+        "Equality holds when x − 3 = 0 and y + 4 = 0, that is, x = 3 and y = −4."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-1",
+        "eb11c1-5:rule-4",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "x²+y²−6x+8y+25 = (x−3)²+(y+4)² ≥ 0. Equality holds when x = 3 and y = −4.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:challenge-2",
+      "record_id": "eb11c1-5:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 34,
+      "question": {
+        "text": "You are a data analyst at a factory that produces precision drone components using two machines, X and Y. Due to mechanical wear, calibration drifts, and energy spikes, the daily overhead cost (in dollars) based on the settings x and y is modelled by Overhead Cost = $x^2+2y^2-10x+12y+43$. Prove that no matter what settings x and y are chosen, the factory will never have a negative overhead cost.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9af3b8c89f70622a7fbe37d8a31038e1",
+      "kind": "explanation",
+      "answer": "The cost equals (x − 5)² + 2(y + 3)² ≥ 0 for all x, y, so it is never negative (it is 0 at x = 5, y = −3).",
+      "solution": [
+        "Cost = x² − 10x + 2y² + 12y + 43",
+        "= (x − 5)² − 25 + 2(y² + 6y) + 43",
+        "= (x − 5)² − 25 + 2[(y + 3)² − 9] + 43",
+        "= (x − 5)² + 2(y + 3)² + (−25 − 18 + 43)",
+        "= (x − 5)² + 2(y + 3)²",
+        "Squares are never negative, so the cost is ≥ 0 for all x and y.",
+        "The minimum cost 0 occurs when x = 5 and y = −3."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Cost = (x−5)²+2(y+3)² (since 25+18=43), which is ≥ 0 for all x, y. So the cost is never negative. It is 0 only when x=5, y=−3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-4",
+      "record_id": "eb11c1-5:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 35,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{\\dfrac{a^2+b^2}{2}}\\ge\\dfrac{a+b}{2}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8474acf49c1b3bd4811641bc43dd4a70",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "(LHS)² − (RHS)² = (a²+b²)/2 − (a+b)²/4",
+        "= (2a²+2b² − a² − 2ab − b²)/4 = (a−b)²/4",
+        "= ((a−b)/2)² ≥ 0, so (LHS)² ≥ (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "So LHS ≥ RHS.",
+        "Equality holds when (a−b)/2 = 0, that is, a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7",
+        "eb11c1-5:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "(LHS)²−(RHS)² = (a²+b²)/2 − (a+b)²/4 = ((a−b)/2)² ≥ 0. Both sides are >0 since a,b>0, so LHS ≥ RHS. Equality holds when a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-5",
+      "record_id": "eb11c1-5:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 35,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{a}+4\\sqrt{b}>\\sqrt{a+16b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f74e449fcbf7be57c4e2562a1d013ec3",
+      "kind": "explanation",
+      "answer": "Proved: (√a+4√b)² − (√(a+16b))² = 8√(ab) > 0, so √a + 4√b > √(a+16b).",
+      "solution": [
+        "(LHS)² − (RHS)² = a + 8√(ab) + 16b − (a + 16b)",
+        "= 8√(ab) > 0",
+        "So (LHS)² > (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "Therefore √a + 4√b > √(a+16b)."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7",
+        "eb11c1-5:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "(LHS)²−(RHS)² = a+8√(ab)+16b−(a+16b) = 8√(ab) > 0. Both sides are >0, so √a+4√b > √(a+16b). It is strict, so there is no equality.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-5",
+      "record_id": "eb11c1-5:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine if equality holds for 1",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bac3a827de0660f5e88add460ef76b86",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = b",
+      "solution": [
+        "The first inequality printed under this instruction is $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$",
+        "$(LHS)^2-(RHS)^2 = 2(a+b)-(a+2\\sqrt{ab}+b)$",
+        "$= a+b-2\\sqrt{ab}$",
+        "$= (\\sqrt a-\\sqrt b)^2 \\ge 0$, so $(LHS)^2 \\ge (RHS)^2$ ...(i)",
+        "Since $a>0, b>0$: $\\sqrt{2(a+b)}>0$ and $\\sqrt a+\\sqrt b>0$ ...(ii)",
+        "From (i) and (ii), $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$",
+        "Equality holds when $\\sqrt a-\\sqrt b=0$, that is, when $a=b$",
+        "Yes, equality holds when a = b"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "This is the instruction for the Try items. Item 1: $(LHS)^2-(RHS)^2=2a+2b-(a+2\\sqrt{ab}+b)=(\\sqrt a-\\sqrt b)^2\\ge0$, and both sides are $>0$, so $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$. Equality holds when $a=b$. Item 2: $(2\\sqrt a+\\sqrt b)^2-(4a+b)=4\\sqrt{ab}>0$, and both sides are $>0$, so the inequality holds. It is strict, so equality does not hold.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-6",
+      "record_id": "eb11c1-5:try-6",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{2(a+b)}\\ge\\sqrt{a}+\\sqrt{b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c6e5467d4b868bfa20d6ee6c615bc109",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "(LHS)² − (RHS)² = 2(a+b) − (√a+√b)²",
+        "= 2a + 2b − a − 2√(ab) − b",
+        "= a + b − 2√(ab)",
+        "= (√a − √b)² ≥ 0 (also this is AM-GM: a + b ≥ 2√(ab)).",
+        "So (LHS)² ≥ (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "So √(2(a+b)) ≥ √a + √b.",
+        "Equality holds when √a = √b, that is, a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7",
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(LHS)²−(RHS)² = 2(a+b)−(a+b+2√(ab))... = a+b−2√(ab) = (√a−√b)² ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-7",
+      "record_id": "eb11c1-5:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+\\sqrt{b}>\\sqrt{4a+b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "069a0b4a17a69acc96d8422040d429ce",
+      "kind": "explanation",
+      "answer": "Proved: (2√a+√b)² − (4a+b) = 4√(ab) > 0, so 2√a + √b > √(4a+b).",
+      "solution": [
+        "(LHS)² − (RHS)² = 4a + 4√(ab) + b − (4a + b)",
+        "= 4√(ab) > 0",
+        "So (LHS)² > (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "Therefore 2√a + √b > √(4a+b)."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(2√a+√b)²−(4a+b) = 4√(ab) > 0. Both sides are >0, so 2√a+√b > √(4a+b). It is strict, so there is no equality.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-11",
+      "record_id": "eb11c1-5:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine if equality holds for 1 to 3",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e88025a038bbd88e0ca6c24e9c1cb55f",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = 1",
+      "solution": [
+        "The first inequality printed under this instruction is: if $a>0$, $2+a\\ge\\sqrt{3+6a}$",
+        "$(LHS)^2-(RHS)^2 = (2+a)^2-(3+6a)$",
+        "$= 4+4a+a^2-3-6a$",
+        "$= a^2-2a+1$",
+        "$= (a-1)^2 \\ge 0$, so $(LHS)^2 \\ge (RHS)^2$ ...(i)",
+        "Since $a>0$: $2+a>0$ and $\\sqrt{3+6a}>0$ ...(ii)",
+        "From (i) and (ii), $2+a\\ge\\sqrt{3+6a}$",
+        "Equality holds when $a-1=0$",
+        "Yes, equality holds when a = 1"
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7",
+        "eb11c1-5:rule-2",
+        "eb11c1-5:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "This is the instruction for the exercise items. Item 1: $(2+a)^2-(3+6a)=(a-1)^2\\ge0$, and both sides are $>0$. Equality holds when $a=1$. Item 2: $2(a^2+b^2)-(a+b)^2=(a-b)^2\\ge0$. Equality holds when $a=b$. Item 3: $\\frac{a+b}{2}-\\frac{(\\sqrt a+\\sqrt b)^2}{4}=\\frac{(\\sqrt a-\\sqrt b)^2}{4}\\ge0$. Equality holds when $a=b$. Item 4: $(\\sqrt a+\\sqrt b)^2-(a+b)=2\\sqrt{ab}>0$, strict. Item 5: $(2\\sqrt a+3\\sqrt b)^2-(4a+9b)=12\\sqrt{ab}>0$, strict. Item 6: $(a-b)-(\\sqrt a-\\sqrt b)^2=2\\sqrt b(\\sqrt a-\\sqrt b)>0$, strict. In each item, show both sides are positive.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-12",
+      "record_id": "eb11c1-5:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$, $2+a\\ge\\sqrt{3+6a}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2229bdfeacb78c871cfaa9f1e677e812",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 1",
+      "solution": [
+        "(LHS)² − (RHS)² = (2+a)² − (3+6a)",
+        "= 4 + 4a + a² − 3 − 6a",
+        "= a² − 2a + 1 = (a − 1)² ≥ 0",
+        "So (LHS)² ≥ (RHS)².",
+        "Since a > 0, 2 + a > 0 and √(3+6a) > 0.",
+        "So 2 + a ≥ √(3+6a).",
+        "Equality holds when a − 1 = 0, that is, a = 1."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(2+a)²−(3+6a) = a²−2a+1 = (a−1)² ≥ 0. Both sides are >0, so 2+a ≥ √(3+6a). Equality holds when a = 1.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-13",
+      "record_id": "eb11c1-5:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{2(a^2+b^2)}\\ge a+b$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "afc716e2836f6b29bec31578f2fa4746",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "(LHS)² − (RHS)² = 2(a²+b²) − (a+b)²",
+        "= 2a² + 2b² − a² − 2ab − b²",
+        "= a² − 2ab + b² = (a − b)² ≥ 0",
+        "So (LHS)² ≥ (RHS)².",
+        "Since a > 0 and b > 0, √(2(a²+b²)) > 0 and a + b > 0.",
+        "So √(2(a²+b²)) ≥ a + b.",
+        "Equality holds when a − b = 0, that is, a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "2(a²+b²)−(a+b)² = (a−b)² ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-14",
+      "record_id": "eb11c1-5:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{\\frac{a+b}{2}}\\ge\\frac{\\sqrt{a}+\\sqrt{b}}{2}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b053b4f571284a128429246decd72ae2",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "(LHS)² − (RHS)² = (a+b)/2 − (√a+√b)²/4",
+        "= (2a + 2b − a − 2√(ab) − b)/4",
+        "= (a + b − 2√(ab))/4",
+        "= ((√a − √b)/2)² ≥ 0",
+        "So (LHS)² ≥ (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "So √((a+b)/2) ≥ (√a+√b)/2.",
+        "Equality holds when √a = √b, that is, a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-3",
+        "eb11c1-5:rule-6",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(LHS)²−(RHS)² = (a+b)/2 − (a+b+2√(ab))/4 = (√a−√b)²/4 ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-15",
+      "record_id": "eb11c1-5:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\sqrt{a}+\\sqrt{b}>\\sqrt{a+b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d1f7edf82e1a6cbb2a2bf236232a8e0f",
+      "kind": "explanation",
+      "answer": "Proved: (√a+√b)² − (a+b) = 2√(ab) > 0, so √a + √b > √(a+b). Equality does not hold.",
+      "solution": [
+        "(LHS)² − (RHS)² = a + 2√(ab) + b − (a + b)",
+        "= 2√(ab) > 0",
+        "So (LHS)² > (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "Therefore √a + √b > √(a+b)."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(√a+√b)²−(a+b) = 2√(ab) > 0. Both sides are >0, so the inequality holds. It is strict, so there is no equality.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-16",
+      "record_id": "eb11c1-5:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+3\\sqrt{b}>\\sqrt{4a+9b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a378fef818fbde082bec9c8a76adba6e",
+      "kind": "explanation",
+      "answer": "Proved: (2√a+3√b)² − (4a+9b) = 12√(ab) > 0, so 2√a + 3√b > √(4a+9b). Equality does not hold.",
+      "solution": [
+        "(LHS)² − (RHS)² = 4a + 12√(ab) + 9b − (4a + 9b)",
+        "= 12√(ab) > 0",
+        "So (LHS)² > (RHS)².",
+        "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+        "Therefore 2√a + 3√b > √(4a+9b)."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(2√a+3√b)²−(4a+9b) = 12√(ab) > 0. Both sides are >0, so the inequality holds. It is strict, so there is no equality.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-17",
+      "record_id": "eb11c1-5:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>b>0$, $\\sqrt{a-b}>\\sqrt{a}-\\sqrt{b}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "95986d9d90e743f5f2f715518338ea7c",
+      "kind": "explanation",
+      "answer": "Proved: (√(a−b))² − (√a−√b)² = 2√b(√a − √b) > 0, so √(a−b) > √a − √b.",
+      "solution": [
+        "(LHS)² − (RHS)² = (a − b) − (a − 2√(ab) + b)",
+        "= 2√(ab) − 2b",
+        "= 2√b(√a − √b)",
+        "Since a > b > 0, (√a)² > (√b)² with both positive, so √a > √b, so √a − √b > 0.",
+        "Also √b > 0, so the difference is positive and (LHS)² > (RHS)².",
+        "Since a − b > 0, LHS > 0; and RHS = √a − √b > 0.",
+        "Therefore √(a−b) > √a − √b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(√(a−b))²−(√a−√b)² = a−b−(a−2√(ab)+b) = 2√b(√a−√b) > 0, since a>b gives √a>√b. Also √(a−b)>0 and √a−√b>0, so √(a−b) > √a−√b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:challenge-3",
+      "record_id": "eb11c1-5:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 36,
+      "question": {
+        "text": "If $a>b$, where $a$ and $b$ are two positive numbers, prove that $\\sqrt{a-b}<\\sqrt{a}-\\frac{b}{2\\sqrt{a}}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0c7d19d6c9a127bbf6bb2d85c4ad0930",
+      "kind": "explanation",
+      "answer": "Proved: (√a − b/(2√a))² − (√(a−b))² = b²/(4a) > 0, so √(a−b) < √a − b/(2√a).",
+      "solution": [
+        "(RHS)² − (LHS)² = a − b + b²/(4a) − (a − b)",
+        "= b²/(4a) > 0, since a > 0 and b > 0.",
+        "So (RHS)² > (LHS)².",
+        "LHS: a − b > 0, so √(a−b) > 0.",
+        "RHS = (2a − b)/(2√a). Since a > b > 0, 2a − b > 0, so RHS > 0.",
+        "From these, LHS < RHS.",
+        "Therefore √(a−b) < √a − b/(2√a)."
+      ],
+      "grounded_in": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:rule-5",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "RHS = (2a−b)/(2√a) > 0 since a>b>0. (RHS)²−(LHS)² = a−b+b²/(4a)−(a−b) = b²/(4a) > 0. With LHS>0 and RHS>0, √(a−b) < √a − b/(2√a).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-6",
+      "record_id": "eb11c1-5:warm-up-6",
+      "part": null,
+      "type": "exercise",
+      "page": 37,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine if equality holds.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b34f5fe505da82daf4495e4fe3e3f24d",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = b",
+      "solution": [
+        "The first inequality printed under this instruction is: if $a>0$, $b>0$, $\\frac ba+\\frac ab\\ge2$",
+        "Since $\\frac ba>0$ and $\\frac ab>0$, use AM-GM",
+        "$\\frac ba+\\frac ab\\ge2\\sqrt{\\frac ba\\times\\frac ab}=2\\sqrt1=2$",
+        "Equality holds when $\\frac ba=\\frac ab$",
+        "Multiply both sides by $ab$: $b^2=a^2$",
+        "Since $a>0, b>0$, $a=b$",
+        "Yes, equality holds when a = b"
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "This is the instruction for the Warm Up. By AM-GM with $\\frac ba,\\frac ab>0$: $\\frac ba+\\frac ab\\ge2$, with equality when $a=b$. For item 2, $(a+b)(\\frac1a+\\frac1b)=\\frac ab+\\frac ba+2\\ge4$, with equality when $a=b$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-7",
+      "record_id": "eb11c1-5:warm-up-7",
+      "part": null,
+      "type": "exercise",
+      "page": 37,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f23664607ac1d2bbb45f1c6bc7a8f9be",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "Since b/a > 0 and a/b > 0, use AM-GM.",
+        "b/a + a/b ≥ 2√((b/a)(a/b))",
+        "= 2√1 = 2",
+        "Equality holds when b/a = a/b, so b² = a².",
+        "Since a > 0 and b > 0, a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "Since b/a>0 and a/b>0, AM-GM gives b/a+a/b ≥ 2√((b/a)(a/b)) = 2. Equality holds when b/a=a/b, i.e. a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:warm-up-8",
+      "record_id": "eb11c1-5:warm-up-8",
+      "part": null,
+      "type": "exercise",
+      "page": 37,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\ge 4$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "84fff46be711ff30c6dd1122fa83270f",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+        "(a+b)(1/a + 1/b) = 1 + a/b + b/a + 1 = a/b + b/a + 2",
+        "Since a/b > 0 and b/a > 0, AM-GM gives a/b + b/a ≥ 2√1 = 2.",
+        "Add 2: a/b + b/a + 2 ≥ 4.",
+        "So (a+b)(1/a + 1/b) ≥ 4.",
+        "Equality holds when a/b = b/a, so a² = b², and a = b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "(a+b)(1/a+1/b) = 2 + a/b + b/a ≥ 2+2 = 4 by AM-GM, since a/b>0 and b/a>0. Equality holds when a = b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-8",
+      "record_id": "eb11c1-5:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine if equality holds.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4ae28ddba355967a97bea7b183323570",
+      "kind": "value",
+      "answer": "Yes, equality holds when b = 6a",
+      "solution": [
+        "The first inequality printed under this instruction is: if $a>0$, $b>0$, $\\frac{b}{3a}+\\frac{12a}{b}\\ge4$",
+        "Since $\\frac{b}{3a}>0$ and $\\frac{12a}{b}>0$, use AM-GM",
+        "$\\frac{b}{3a}+\\frac{12a}{b}\\ge2\\sqrt{\\frac{b}{3a}\\times\\frac{12a}{b}}=2\\sqrt4=4$",
+        "Equality holds when $\\frac{b}{3a}=\\frac{12a}{b}$",
+        "Multiply both sides by $3ab$: $b^2=36a^2$",
+        "Since $a>0, b>0$, $b=6a$",
+        "Yes, equality holds when b = 6a"
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "This is the instruction for the Try items. Item 1: by AM-GM, $\\frac{b}{3a}+\\frac{12a}{b}\\ge2\\sqrt{4}=4$. Equality holds when $b=6a$. Item 2: $(a+\\frac1b)(b+\\frac9a)=ab+\\frac{9}{ab}+10\\ge2\\sqrt9+10=16$. Equality holds when $ab=3$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-9",
+      "record_id": "eb11c1-5:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\frac{b}{3a}+\\frac{12a}{b}\\ge 4$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "13b0c5a907f3b99e71c935c81bb98ab5",
+      "kind": "value",
+      "answer": "Proved; equality holds when b = 6a",
+      "solution": [
+        "Since b/(3a) > 0 and 12a/b > 0, use AM-GM.",
+        "b/(3a) + 12a/b ≥ 2√((b/(3a))(12a/b))",
+        "= 2√4 = 4",
+        "Equality holds when b/(3a) = 12a/b, so b² = 36a².",
+        "Since a > 0 and b > 0, b = 6a."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "b/(3a) and 12a/b are positive, so by AM-GM the sum is ≥ 2√((b/(3a))(12a/b)) = 2√4 = 4. Equality holds when b/(3a)=12a/b, i.e. b = 6a.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:try-10",
+      "record_id": "eb11c1-5:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{1}{b}\\right)\\left(b+\\frac{9}{a}\\right)\\ge 16$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c492cbfcc23d1fdeb8c5126c15d74b39",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 3",
+      "solution": [
+        "(a + 1/b)(b + 9/a) = ab + 9 + 1 + 9/(ab) = ab + 9/(ab) + 10",
+        "Since ab > 0 and 9/(ab) > 0, AM-GM gives ab + 9/(ab) ≥ 2√9 = 6.",
+        "Add 10: ab + 9/(ab) + 10 ≥ 16.",
+        "Equality holds when ab = 9/(ab), so (ab)² = 9, and ab = 3."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "Expand: (a+1/b)(b+9/a) = ab+9+1+9/(ab) = ab+9/(ab)+10 ≥ 2√9+10 = 16 by AM-GM. Equality holds when ab = 3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-18",
+      "record_id": "eb11c1-5:exercise-18",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "Prove the following inequalities. Also, determine if equality holds.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4ae28ddba355967a97bea7b183323570",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = 2",
+      "solution": [
+        "The first inequality printed under this instruction is: if $a>0$, $a+\\frac4a\\ge4$",
+        "Since $a>0$ and $\\frac4a>0$, use AM-GM",
+        "$a+\\frac4a\\ge2\\sqrt{a\\times\\frac4a}=2\\sqrt4=4$",
+        "Equality holds when $a=\\frac4a$",
+        "So $a^2=4$, and since $a>0$, $a=2$",
+        "Yes, equality holds when a = 2"
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "This is the instruction for the exercise items. In each item, state the terms are positive and apply AM-GM. Item 1: $a+\\frac4a\\ge2\\sqrt4=4$. Equality holds when $a=2$. Item 2: $3ab+\\frac4{ab}\\ge2\\sqrt{12}=4\\sqrt3$. Equality holds when $ab=\\frac{2}{\\sqrt3}$. Item 3: $(a+b)+\\frac{9}{a+b}\\ge2\\sqrt9=6$. Equality holds when $a+b=3$. Item 4: the product expands to $x^2+\\frac4{x^2}+5\\ge4+5=9$. Equality holds when $x=\\sqrt2$. Item 5: the product expands to $10+\\frac ab+\\frac{16b}{a}\\ge10+8=18$. Equality holds when $a=4b$. Item 6: the product expands to $ab+\\frac9{ab}+6\\ge6+6=12$. Equality holds when $ab=3$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-19",
+      "record_id": "eb11c1-5:exercise-19",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$, $a+\\frac{4}{a}\\ge 4$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c5cfbd1e143402d2a89b95284192abc0",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 2",
+      "solution": [
+        "Since a > 0 and 4/a > 0, use AM-GM.",
+        "a + 4/a ≥ 2√(a · 4/a) = 2√4 = 4",
+        "Equality holds when a = 4/a, so a² = 4.",
+        "Since a > 0, a = 2."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "a+4/a ≥ 2√4 = 4 by AM-GM, since a>0 and 4/a>0. Equality holds when a = 4/a, i.e. a = 2.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-20",
+      "record_id": "eb11c1-5:exercise-20",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $3ab+\\frac{4}{ab}\\ge 4\\sqrt{3}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "93a5a04f80f1c7848971485ca85e6968",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 2/√3",
+      "solution": [
+        "Since 3ab > 0 and 4/(ab) > 0, use AM-GM.",
+        "3ab + 4/(ab) ≥ 2√(3ab · 4/(ab)) = 2√12 = 4√3",
+        "Equality holds when 3ab = 4/(ab), so (ab)² = 4/3.",
+        "Since ab > 0, ab = 2/√3."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "By AM-GM, 3ab+4/(ab) ≥ 2√12 = 4√3. Equality holds when 3ab=4/(ab), i.e. ab = 2/√3 = 2√3/3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-21",
+      "record_id": "eb11c1-5:exercise-21",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $a+b+\\frac{9}{a+b}\\ge 6$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2e98a7b5ee8e3462f08e192a2536241a",
+      "kind": "value",
+      "answer": "Proved; equality holds when a + b = 3",
+      "solution": [
+        "Since a + b > 0 and 9/(a+b) > 0, use AM-GM.",
+        "(a+b) + 9/(a+b) ≥ 2√9 = 6",
+        "Equality holds when a + b = 9/(a+b), so (a+b)² = 9.",
+        "Since a + b > 0, a + b = 3."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Let t=a+b>0. Then t+9/t ≥ 2√9 = 6 by AM-GM. Equality holds when a+b = 3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-22",
+      "record_id": "eb11c1-5:exercise-22",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $x>0$, $\\left(x+\\frac{1}{x}\\right)\\left(x+\\frac{4}{x}\\right)\\ge 9$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7658cf18137746434fb2215161fd5d4a",
+      "kind": "value",
+      "answer": "Proved; equality holds when x = √2",
+      "solution": [
+        "(x + 1/x)(x + 4/x) = x² + 4 + 1 + 4/x² = x² + 4/x² + 5",
+        "Since x² > 0 and 4/x² > 0, AM-GM gives x² + 4/x² ≥ 2√4 = 4.",
+        "Add 5: the expression ≥ 9.",
+        "Equality holds when x² = 4/x², so x⁴ = 4, x² = 2.",
+        "Since x > 0, x = √2."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "The product is x²+4/x²+5 ≥ 2·2+5 = 9 by AM-GM. Equality holds when x² = 4/x², i.e. x = √2.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-23",
+      "record_id": "eb11c1-5:exercise-23",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $(a+8b)\\left(\\frac{2}{a}+\\frac{1}{b}\\right)\\ge 18$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "70abafa534a6dc6269e4bcabc2c4eb1f",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 4b",
+      "solution": [
+        "(a + 8b)(2/a + 1/b) = 2 + a/b + 16b/a + 8 = a/b + 16b/a + 10",
+        "Since a/b > 0 and 16b/a > 0, AM-GM gives a/b + 16b/a ≥ 2√16 = 8.",
+        "Add 10: the expression ≥ 18.",
+        "Equality holds when a/b = 16b/a, so a² = 16b².",
+        "Since a > 0 and b > 0, a = 4b."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10",
+        "eb11c1-5:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "The product is 10 + a/b + 16b/a ≥ 10+2√16 = 18 by AM-GM. Equality holds when a/b=16b/a, i.e. a = 4b.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:exercise-24",
+      "record_id": "eb11c1-5:exercise-24",
+      "part": null,
+      "type": "exercise",
+      "page": 38,
+      "question": {
+        "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{3}{b}\\right)\\left(b+\\frac{3}{a}\\right)\\ge 12$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cb6988232c649ee7fed177b0d178e81d",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 3",
+      "solution": [
+        "(a + 3/b)(b + 3/a) = ab + 3 + 3 + 9/(ab) = ab + 9/(ab) + 6",
+        "Since ab > 0 and 9/(ab) > 0, AM-GM gives ab + 9/(ab) ≥ 2√9 = 6.",
+        "Add 6: the expression ≥ 12.",
+        "Equality holds when ab = 9/(ab), so (ab)² = 9, and ab = 3."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "The product is ab+9/(ab)+6 ≥ 6+6 = 12 by AM-GM. Equality holds when ab = 3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:challenge-4",
+      "record_id": "eb11c1-5:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 39,
+      "question": {
+        "text": "A rectangle has a perimeter of 200 cm. Using the relation between A.M. and G.M., prove that the area of the rectangle ≤ 2500 cm².",
+        "stem": "",
+        "notes": "Label is the box title 'Challenge — Maximum Area'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "64a53ec1f6063c5548dd17e2f0416dec",
+      "kind": "explanation",
+      "answer": "Area = LW ≤ 2500 cm², with equality when L = W = 50 cm.",
+      "solution": [
+        "Let the length be L and the width be W, both positive.",
+        "Perimeter 2(L + W) = 200, so L + W = 100.",
+        "By AM-GM, (L + W)/2 ≥ √(LW).",
+        "So 50 ≥ √(LW).",
+        "Both sides are positive, so squaring gives LW ≤ 2500.",
+        "Area ≤ 2500 cm², with equality when L = W = 50."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-9",
+        "eb11c1-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "Perimeter 200 gives L+W=100. AM-GM: √(LW) ≤ (L+W)/2 = 50, so LW ≤ 2500 cm². Equality holds when L = W = 50 (a square).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:question-for-reflection-1",
+      "record_id": "eb11c1-5:question-for-reflection-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 39,
+      "question": {
+        "text": "What happens if we try to break this condition and apply the inequality to negative numbers? Suppose that $a = -2$ and $b = -8$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2b7ef508c96a84f37f902be8d7b636ab",
+      "kind": "explanation",
+      "answer": "The inequality fails: AM = −5 but √(ab) = 4, and −5 ≥ 4 is false.",
+      "solution": [
+        "AM = (−2 + −8)/2 = −5.",
+        "ab = (−2)(−8) = 16, so √(ab) = 4.",
+        "AM-GM would say −5 ≥ 4, which is false.",
+        "So the AM-GM inequality does not hold for negative numbers."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "For a=−2, b=−8: AM = −5 and GM = √16 = 4. The claim −5 ≥ 4 is false, so AM-GM fails for negative numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:unlabelled-exercise-1",
+      "record_id": "eb11c1-5:unlabelled-exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 39,
+      "question": {
+        "text": "Calculate their Arithmetic Mean (AM).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0ce69505cd2c42327239c8d19a12189c",
+      "kind": "value",
+      "answer": "-5",
+      "solution": [
+        "AM = (a + b)/2 = (−2 + (−8))/2",
+        "= −10/2",
+        "= −5"
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "-5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:unlabelled-exercise-2",
+      "record_id": "eb11c1-5:unlabelled-exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 39,
+      "question": {
+        "text": "Attempt to calculate their Geometric Mean (GM).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "992c1590aa9ddb447b3d74a19b4a7f25",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "GM = √(ab) = √((−2)(−8))",
+        "= √16",
+        "= 4"
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "4 (√((−2)(−8)) = √16 = 4; this is positive, so it does not match the negative mean)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:unlabelled-exercise-3",
+      "record_id": "eb11c1-5:unlabelled-exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 39,
+      "question": {
+        "text": "Does the inequality sign ($\\ge$) still hold true and remain valid?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6a28aaab2365fb2e01207cad9c840118",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+        "AM = −5 and GM = 4.",
+        "The inequality needs AM ≥ GM, that is −5 ≥ 4.",
+        "This is false, so the sign does not hold."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "No. AM = −5 is not ≥ GM = 4, so the inequality fails.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c1-5:open-prompt-1",
+      "record_id": "eb11c1-5:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 39,
+      "question": {
+        "text": "Explain the algebraic and logical breakdown that occurs here, and why defining “domains and restrictions” in inequalities is vital to prevent medical and engineering models from collapsing in the real world.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "75444121de324d47a4b7686f34c0e13e",
+      "kind": "explanation",
+      "answer": "AM-GM was proved only for positive numbers; with negatives the AM is negative while √(ab) is positive, so the inequality breaks, and stating domains keeps models valid.",
+      "solution": [
+        "The rule (a+b)/2 ≥ √(ab) needs a > 0 and b > 0.",
+        "For a = −2, b = −8: the AM is −5, which is negative, but √(ab) = 4 is positive, so −5 ≥ 4 is false.",
+        "The proof relies on √a and √b being positive; for negative numbers that step is not valid.",
+        "So the conditions (domains and restrictions) must be stated before using an inequality.",
+        "In medical or engineering models, ignoring them could give a false bound, for example claiming a maximum or minimum that does not exist, so the model would fail."
+      ],
+      "grounded_in": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "The proof uses (√a−√b)² ≥ 0, which needs √a and √b to be real, so a, b ≥ 0. For negative numbers √a and √b are not real. Also √(ab) is always positive, so it cannot be compared with a negative mean, and the inequality breaks (−5 < 4). Domains and restrictions are vital because a model applied outside the conditions where its proof holds gives wrong bounds. In medicine or engineering that could mean wrong dosages, volumes or safety limits.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:11:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

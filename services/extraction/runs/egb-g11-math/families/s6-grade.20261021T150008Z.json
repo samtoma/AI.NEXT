@@ -1,0 +1,404 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "4fa774a990e9474ca63f8a231a6494c36a1c2e9598951ceb52a3150f182a53a2",
+  "generated_sha256": "aacd72bb826d0e7ace6a448c9c3802df75a4ade59240900ea0ac88dd0e12f130",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c4-1-2:reflect",
+   "spec_sha": "758a6ea897d2ec70dd498f3b4032850fb6720512f9e6434db0e3689a70dd5ce0",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-1-2:g001-reflec",
+     "stem_sha": "04d98391db45b625",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g002-reflec",
+     "stem_sha": "dac4cd116723caf9",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g008-reflec",
+     "stem_sha": "3392aaaa20e960da",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options were shown, so there is nothing to check for distractors. The keys match answer_check and the stems. Each solution applies the right reflection rule, and the quadrant statements are correct."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-1-2:twostep",
+   "spec_sha": "76e116da6b05f095e9204563d1cdbf43cb039ce72d40c183f137024cf14bc463",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-1-2:g001-twoste",
+     "stem_sha": "608424aca0a82c04",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g005-twoste",
+     "stem_sha": "aceb6bc4cc571708",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g010-twoste",
+     "stem_sha": "6e5796148abfb2cc",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key is correct. The worked solutions are correct step by step, including the quadrant statements. No options were supplied, so there are no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-1:isos-right",
+   "spec_sha": "55fe54412859f529d335fbf9217563672c695d3c3b4001d197fa1e093bed0147",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-1:g001-isos-r",
+     "stem_sha": "2d334e3e9c600bd9",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-1:g005-isos-r",
+     "stem_sha": "d20c81f32edb8adf",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-1:g009-isos-r",
+     "stem_sha": "f3246c5fc2c24e74",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed the squared side lengths for all three instances.\n- g001: AB²=8, BC²=16, CA²=8. The right angle is at A, so key C is correct.\n- g005: AB²=36, BC²=18, CA²=18. The right angle is at C, so key C is correct.\n- g009: AB²=9, BC²=18, CA²=9. The right angle is at A, so key D is correct.\nEach worked solution matches its key. Each shows the isosceles check and then the Pythagorean check. The hypotenuse is the longest side, and the right angle is at the opposite vertex.\nThe \"isosceles, not right-angled\" option is the one tagged stops-at-isosceles. It is what a student who stops after finding two equal sides would pick.\nThe \"equilateral\" option and the \"right angle at the wrong vertex\" option are untagged and clearly wrong.",
+    "distractors": [
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-5:fixed-point",
+   "spec_sha": "c06dc06a05531ddb4557cf96455820eb1abc2680b23a9d67c51b255816593e1d",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-5:g003-fixed-",
+     "stem_sha": "5420e4167e04f84d",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g006-fixed-",
+     "stem_sha": "3538932a61cca806",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g007-fixed-",
+     "stem_sha": "c97ee67c7a110b54",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys satisfy the original line for any k, checked by substitution. The solutions are correct. No options are present.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-5:no-triangle",
+   "spec_sha": "4f6ebaece654dbc20b84a680073f7ce7c03e443a2c578f589e0812996e7e3e3b",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-5:g003-no-tri",
+     "stem_sha": "7e8a2275f3a98768",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g006-no-tri",
+     "stem_sha": "ba15ffd3374407b2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g009-no-tri",
+     "stem_sha": "5939160a5889ecea",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "I checked the maths for all three instances and the keys are correct: -3, 2 and 3. In each case the parallel values m=1 and m=-1 give lines that are parallel but distinct, so they are valid. The concurrent value is also distinct from both. No options were supplied, so there are no distractors to check. The solution text has a flaw in step 6. It contains a stray phrase (\"$-3$ is not needed;\", \"$6$ is not needed;\", \"$3$ is not needed;\") that looks like a leaked template artefact. In g003 and g009 the phrase repeats a number that then appears in the answer, which is confusing. Remove the phrase and write, for example, \"Substitute (1, 4) into mx+y=1: m+4=1, so m=-3.\""
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-2:count-points",
+   "spec_sha": "f64249198321ad82adfe35de87e2aeddcb9c1d580833ab37c9966c56d2631160",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-2:g003-count-",
+     "stem_sha": "75019f87542f1d70",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-3-2:g005-count-",
+     "stem_sha": "74a134ccf7f34862",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-3-2:g007-count-",
+     "stem_sha": "571f6a4aa472b2e4",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options were shown, so there are no distractors to judge. I checked the arithmetic for all three instances.\n- g003: 2x²+6x=0, D=36, so 2 points. Correct.\n- g005: 2x²+18x+80=0, D=324−640=−316, so 0 points. Correct.\n- g007: 2x²+2x−24=0, D=4+192=196, so 2 points. Correct.\nMinor cosmetic issue: g003 shows \"+(0)\" in the simplified equation. It is harmless."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-3:from-outside",
+   "spec_sha": "669fa0e34138c2aefaab53ab727c281452711d58b52b814fb39ee2494f153715",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-3:g003-from-o",
+     "stem_sha": "cf1bbd030319c1cb",
+     "answer": {
+      "plain": "2*x-y=10"
+     },
+     "working": "Chord of contact 6x+2y=20 meets circle at (4,-2),(2,4). Greater x: (4,-2); tangent 4x-2y=20."
+    },
+    {
+     "instance_id": "q:eb11c4-3-3:g006-from-o",
+     "stem_sha": "dd20b5a02b5b155a",
+     "answer": {
+      "plain": "3*x-2*y=13"
+     },
+     "working": "Chord of contact 5x+y=13 meets circle at (3,-2),(2,3). Greater x: (3,-2); tangent 3x-2y=13."
+    },
+    {
+     "instance_id": "q:eb11c4-3-3:g007-from-o",
+     "stem_sha": "79753f5340edea28",
+     "answer": {
+      "plain": "2*x+3*y=-13"
+     },
+     "working": "Chord of contact -5x-y=13 meets circle at (-2,-3),(-3,2). Greater x: (-2,-3); tangent -2x-3y=13."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The maths is correct in all three instances. I checked the contact points and tangents, and the greater-x choice is right each time: 4x−2y=20, 3x−2y=13, −2x−3y=13. The family has no options, so there are no distractors to judge.\n\nKey form: the displayed keys are \"4x + (-2)y = 20\", \"3x + (-2)y = 13\" and \"(-2)x + (-3)y = 13\". They are equivalent to answer_check but unsimplified. A Grade 11 student expects 4x − 2y = 20. The solution's own final step writes the clean form, so the key does not match it.\n\nSolution: in g007, step 3 writes \"-2^2+(-3)^2=13\" and \"-3^2+(2)^2=13\". As written, -2^2 means −4, so the check is wrong. It needs (−2)^2 and (−3)^2. Step 2 also writes \"-5a+(-1)b=13\", which is clumsy.\n\nFix: render the signs properly (e.g. 4x − 2y = 20) and parenthesise the negative squares."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-3:point-on-circle",
+   "spec_sha": "d51e2de6d69b1f4b7a0ac3e9ec7933ff43f430cfa86cc947e8dbd81a301500d6",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-3:g002-point-",
+     "stem_sha": "f227dfda5c9648cf",
+     "answer": {
+      "plain": "12*x+5*y=169"
+     },
+     "working": "Tangent at (x1,y1): x*x1+y*y1=r^2 → 12x+5y=169"
+    },
+    {
+     "instance_id": "q:eb11c4-3-3:g006-point-",
+     "stem_sha": "61b0d4cfc0d68698",
+     "answer": {
+      "plain": "15*x+8*y=289"
+     },
+     "working": "x*15+y*8=289"
+    },
+    {
+     "instance_id": "q:eb11c4-3-3:g008-point-",
+     "stem_sha": "3c3c03f0914e99fc",
+     "answer": {
+      "plain": "3*x+4*y=25"
+     },
+     "working": "3x+4y=25"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three points lie on their circles and each key is the correct tangent ax+by=r². No wrong options are present, and each answer_check matches its key.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-4:position",
+   "spec_sha": "5c98173d1919b78afa84ce50e4f4f6c633b0dc4d32c4e4f49c0e21cc3d46725c",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-4:g003-positi",
+     "stem_sha": "8f1dc7f1c0d9ff72",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-3-4:g005-positi",
+     "stem_sha": "250bad7c45aa5e72",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c4-3-4:g010-positi",
+     "stem_sha": "157447afacbc4dd7",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by computing d, r+r' and |r-r'|.\n- g003: d=13, r+r'=12, |r-r'|=10. Since d>r+r', the circles are separate, so A is correct. Internal touching, two intersection points and external touching are all wrong.\n- g005: d=5, r+r'=6, |r-r'|=0. Since 0<5<6, the circles intersect at two points, so C is correct. The other three options are wrong.\n- g010: d=13, r+r'=13. The circles touch externally, so D is correct. The other three options are wrong.\nNo wrong option carries a misconception tag, so each only needs to be wrong, and each is. Each worked solution is correct and follows the same method: find d, find the radii, compare with r+r' and |r-r'|. Each key answers what the stem asks.",
+    "distractors": [
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:eb11c3-4-1:w001#hint:extra-values",
+      "question_id": "q:eb11c3-4-1:w001",
+      "template_id": "wt:eb11c3-4-1:exercise-1-d",
+      "lo_id": "lo:eb11c3-4-1",
+      "kind": "number_line_marker",
+      "stem": "Solve $x^3 + 6x^2 + 11x + 6 = 0$. Tap every solution on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -3,
+          -2,
+          -1
+        ]
+      },
+      "construction": "x^3+6x^2+11x+6=(x+1)(x+2)(x+3), so the roots are -1, -2, -3. Tap -3, -2 and -1 on the number line (range [-6,6]). All are whole numbers inside the range and there are 3 targets, within the 1–4 limit.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions.",
+      "hint_step": 1,
+      "why": "It can fire, e.g. when the student marks 1 or -4. The hint is mathematically right. But the question never defines P(x), so the notation is unclear to the student. When in doubt, false."
+    },
+    {
+      "key": "q:eb11c3-4-1:w007#hint:sign-flipped",
+      "question_id": "q:eb11c3-4-1:w007",
+      "template_id": "wt:eb11c3-4-1:try-1-e",
+      "lo_id": "lo:eb11c3-4-1",
+      "kind": "number_line_marker",
+      "stem": "Solve $x^4-5x^2+4=0$. Tap every solution on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          -1,
+          1,
+          2
+        ]
+      },
+      "construction": "Factor as (x^2-1)(x^2-4)=0, so x^2=1 or x^2=4, giving x=±1 and ±2. Mark -2, -1, 1, 2 on the range [-6,6]. That is 4 whole-number targets inside the range, so it is reachable.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Taking the square root gives both signs, so check each value has its partner.",
+      "hint_step": 3,
+      "why": "The answer set {-2,-1,1,2} is symmetric, so the negative of any target is also a target. Flipping signs can never produce a wrong mark, so the predicate never fires meaningfully here. The hint's 'check each value has its partner' also nearly reveals the ± structure."
+    },
+    {
+      "key": "q:eb11c3-4-1:w009#hint:extra-values",
+      "question_id": "q:eb11c3-4-1:w009",
+      "template_id": "wt:eb11c3-4-1:warm-up-1-b",
+      "lo_id": "lo:eb11c3-4-1",
+      "kind": "number_line_marker",
+      "stem": "Solve $x^3 - 2x^2 - 5x + 6 = 0$. Tap every solution on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -2,
+          1,
+          3
+        ]
+      },
+      "construction": "x^3-2x^2-5x+6 factors as (x-1)(x-3)(x+2); roots -2, 1, 3. Tap -2, 1 and 3 on the number line (range [-6,6], all whole numbers inside range, 3 targets).",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Substitute each marked value into $P(x)$; only values that give $0$ are solutions.",
+      "hint_step": 1,
+      "why": "Fires if the student marks e.g. -2, 1, 3 and also 2. Substituting is valid, but the hint refers to $P(x)$, which the question never defines, so it may confuse the student. Not clearly helpful as written."
+    }
+  ]
+}

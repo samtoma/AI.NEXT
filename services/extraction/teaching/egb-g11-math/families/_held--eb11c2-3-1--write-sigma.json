@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-3-1:write-sigma",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-3-1",
+ "parent_question_id": "none-supplied",
+ "source_page": null,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "m",
+   "let": "n - 1"
+  }
+ ],
+ "stem": "Which expression, written with $\\sum$, equals ${=a + b} + {=2*a + b} + {=3*a + b} + \\dots + ({=a}\\times {=n} + {=b})$, whose general term is $({=a}r + {=b})$ for $r = 1, 2, 3, \\dots, {=n}$?",
+ "choices": {
+  "correct": "$\\sum_{r=1}^{{=n}} ({=a}r + {=b})$",
+  "distractors": [
+   {
+    "text": "$\\sum_{r=0}^{{=m}} ({=a}r + {=b})$",
+    "misconception_id": "mc:eb11c2-3-1:limits-shift"
+   },
+   {
+    "text": "$\\sum_{r=1}^{{=n}} {=a}(r + {=b})$",
+    "misconception_id": "mc:eb11c2-3-1:bad-general-term"
+   },
+   {
+    "text": "$\\sum_{r=1}^{{=n}} ({=a + b})r$",
+    "misconception_id": "mc:eb11c2-3-1:bad-general-term"
+   }
+  ]
+ },
+ "answer": "",
+ "solution": [
+  "Terms are ${=a}\\times 1 + {=b}$, ${=a}\\times 2 + {=b}$, ... so the general term is ${=a}r + {=b}$.",
+  "The first term has $r = 1$ and the last has $r = {=n}$.",
+  "So the sum is $\\sum_{r=1}^{{=n}} ({=a}r + {=b})$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:eb11c2-3-1:limits-shift",
+   "label": "Wrong limits",
+   "description": "Starts the index at 0 and stops at n-1, which changes the terms."
+  },
+  {
+   "id": "mc:eb11c2-3-1:bad-general-term",
+   "label": "Wrong general term",
+   "description": "Writes a general term that does not reproduce the terms given, by factoring or grouping wrongly."
+  }
+ ],
+ "notes": "No book questions supplied; parent is placeholder. Standard: write a sum using sigma."
+}

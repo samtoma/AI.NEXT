@@ -1,0 +1,109 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "8c2b7124d8c275f18b5ff2e6abec94e7f0e7511206624eb0655841692dd9a300",
+ "keys": [
+  "eb11c4-2:WE1",
+  "eb11c4-2:WE2",
+  "eb11c4-2:WE3",
+  "eb11c4-2:WE4",
+  "eb11c4-3:Ex3-1:1"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 0
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "dcf0103bfbea50c50d71c4c333efeb1014244b3c7d3f77093f188ef2f0af498d",
+  "generated_sha256": "b089da5f8edef7a1c0dd60a17225b67e6a39af5415c781c0457aeb6f597876f7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "eb11c4-2:WE1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE1",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "The stem only says 'find the equations of the lines (a)–(f)'. The points or lines for part (a) are not shown, so a student cannot reach $y=-4$. The book's working does not give the data to repair it.",
+    "defect": "Warm Up data (points or lines) for part (a) missing from stem."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE2",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE2",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "The data for part (b) are missing from the stem. $x=-3$ cannot be derived from what the student reads, and the working gives no data to restore it.",
+    "defect": "Warm Up data for part (b) missing from stem."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE3",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE3",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "The two points for part (c) are not in the stem. The working only says their x-coordinates are equal, so the points cannot be restored.",
+    "defect": "The two points for part (c) are missing from the stem."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE4",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE4",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "The two points for part (d) are not in the stem. The working only says their y-coordinates are equal, so the points cannot be restored.",
+    "defect": "The two points for part (d) are missing from the stem."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-3:Ex3-1:1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-3:Ex3-1:1",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Completing the square on $x^2+y^2-6x+2y+6=0$ gives $(x-3)^2+(y+1)^2=4$, a circle with centre $(3,-1)$ and radius 2. The printed $(x-3)^2+(y+2)^2=25$ does not follow from this stem. The stem also asks 'what kind of figure'.",
+    "own_value": "circle, centre (3,-1), radius 2: (x-3)^2+(y+1)^2=4",
+    "correct_answer": "(x-3)^2+(y+1)^2=4",
+    "defect": "Printed answer has centre (3,-2) and r=5, which does not match the stem's equation. The answer may belong to another question, and a stray hint is pasted into the stem."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "exclude": 5
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage G2R --run <runId>"
+ }
+}

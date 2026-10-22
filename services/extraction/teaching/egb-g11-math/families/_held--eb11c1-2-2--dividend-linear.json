@@ -1,0 +1,54 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-2-2:dividend-linear",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-2-2",
+ "parent_question_id": "q:eb11c1-2-2:bk-exercise-12",
+ "source_page": 13,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    9
+   ]
+  }
+ ],
+ "stem": "When the polynomial $A$ is divided by $x+{=p}$, the quotient is $x+{=q}$ and the remainder is ${=r}$. Find the polynomial $A$.",
+ "answer": "",
+ "solution": [
+  "Here $B=x+{=p}$, $Q=x+{=q}$ and $R={=r}$.",
+  "Write $A=BQ+R$: $A=(x+{=p})(x+{=q})+{=r}$.",
+  "Multiply: $(x+{=p})(x+{=q})=x^2+{=q}x+{=p}x+{=p*q}=x^2+{=p+q}x+{=p*q}$.",
+  "Add the remainder: $x^2+{=p+q}x+{=p*q}+{=r}$.",
+  "So $A=x^2+{=p+q}x+{=p*q+r}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x**2 + {=p+q}*x + {=p*q+r}",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: monic linear divisor and quotient, constant remainder, all positive coefficients. Book method A = BQ + R."
+}

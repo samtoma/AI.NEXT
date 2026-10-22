@@ -1,0 +1,1644 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "83fd2917082ce1a54bedd4699f3d366367be6c286c87f845786f1006a9da4b5e",
+  "generated_sha256": "84427672b4a7fca0e8a677127bd225aa25bd160cf83cef1e569d4ee8b7a3edeb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-5:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-5:guiding-question-1",
+      "kind": "explanation",
+      "answer": "By mathematical induction: show the pattern holds at the start, then show that if it holds at one step it holds at the next.",
+      "solution": [
+       "A recurrence relation gives each term from the one before it.",
+       "[1] Show the statement is true for the first case, n = 1.",
+       "[2] Assume it is true for n = k, then show it must be true for n = k + 1.",
+       "Then it is true for 1, so for 2, so for 3, and so on forever.",
+       "So the process stays predictable for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:definition-1",
+       "eb11c2-5:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:challenge-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this relation links three earlier terms, and the lesson only teaches a_{n+1}=a_n+d, a_{n+1}=ra_n, a_{n+1}=a_n+f(n) and a_{n+1}=pa_n+q.",
+      "solution": [
+       "The lesson's methods need a_{n+1} to depend on only one earlier term a_n.",
+       "This relation uses a_{n-1}, a_{n-2} and a_{n-3}, so none of those methods applies.",
+       "So it cannot be solved with the lesson's methods."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity telling students to work on the try section. It has no single answer of its own.",
+      "solution": [
+       "The activity only asks students to solve the try exercises together and discuss them.",
+       "The try exercises are answered under their own references."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:challenge-2",
+      "kind": "value",
+      "answer": "a_n = 4 - 0.02n(n-1)",
+      "solution": [
+       "Here f(n) = -0.04n, so a_{n+1} - a_n = -0.04n.",
+       "For n ≥ 2: $a_n = 4 + \\sum_{k=1}^{n-1}(-0.04k)$.",
+       "$\\sum_{k=1}^{n-1}k = \\frac{1}{2}(n-1)n$.",
+       "So $a_n = 4 - 0.04 \\times \\frac{1}{2}(n-1)n = 4 - 0.02n(n-1)$.",
+       "For n = 1 this gives 4, so the formula also holds for n = 1.",
+       "Answer: $a_n = 4 - 0.02n(n-1)$ hundred thousand LE."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-5",
+      "kind": "explanation",
+      "answer": "The equality $1+2+\\dots+n=\\frac{1}{2}n(n+1)$ is proved for all natural numbers by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] When n = 1: LHS = 1 and RHS = $\\frac{1}{2}\\times1\\times2=1$. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $1+2+\\dots+k=\\frac{1}{2}k(k+1)$ (i).",
+       "When n = k+1, LHS = $1+2+\\dots+k+(k+1)$.",
+       "By (i), this is $\\frac{1}{2}k(k+1)+(k+1)$.",
+       "Factor out $\\frac{1}{2}(k+1)$: $=\\frac{1}{2}(k+1)(k+2)$.",
+       "This equals $\\frac{1}{2}(k+1)\\{(k+1)+1\\}$, which is the RHS for n = k+1. So (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-7",
+      "kind": "explanation",
+      "answer": "$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9 for all natural numbers n, proved by induction.",
+      "solution": [
+       "Let (A) be \"$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9\".",
+       "[1] When n = 1: $1+8+27=36=9\\times4$. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $k^3+(k+1)^3+(k+2)^3=9m$ with m an integer.",
+       "When n = k+1: $(k+1)^3+(k+2)^3+(k+3)^3 = 9m-k^3+(k+3)^3$.",
+       "$(k+3)^3-k^3=9k^2+27k+27$.",
+       "So the sum is $9m+9k^2+27k+27=9(m+k^2+3k+3)$.",
+       "$m+k^2+3k+3$ is an integer, so (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-8",
+      "kind": "explanation",
+      "answer": "$n^3+2n$ is a multiple of 3 for all natural numbers n, proved by induction.",
+      "solution": [
+       "Let (A) be \"$n^3+2n$ is a multiple of 3\".",
+       "[1] When n = 1: $1+2=3$, a multiple of 3. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $k^3+2k=3m$ with m an integer.",
+       "When n = k+1: $(k+1)^3+2(k+1)=k^3+3k^2+3k+1+2k+2$.",
+       "$=(k^3+2k)+3k^2+3k+3$.",
+       "$=3m+3k^2+3k+3=3(m+k^2+k+1)$.",
+       "$m+k^2+k+1$ is an integer, so (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:activity-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity telling students to work on the try section. It has no single answer of its own.",
+      "solution": [
+       "The activity only asks students to solve the try exercise together and discuss it.",
+       "The try exercise is answered under its own reference."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-10",
+      "kind": "explanation",
+      "answer": "$2n^3-3n^2+n$ is a multiple of 6 for all natural numbers n, proved by induction.",
+      "solution": [
+       "Let (A) be \"$2n^3-3n^2+n$ is a multiple of 6\".",
+       "[1] When n = 1: $2-3+1=0=6\\times0$. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $2k^3-3k^2+k=6m$ with m an integer.",
+       "When n = k+1: $2(k+1)^3-3(k+1)^2+(k+1)=2k^3+6k^2+6k+2-3k^2-6k-3+k+1$.",
+       "$=2k^3+3k^2+k$.",
+       "$=(2k^3-3k^2+k)+6k^2=6m+6k^2=6(m+k^2)$.",
+       "$m+k^2$ is an integer, so (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-11",
+      "kind": "explanation",
+      "answer": "$4n^3-n$ is divisible by 3 for all natural numbers n, proved by induction.",
+      "solution": [
+       "Let (A) be \"$4n^3-n$ is a multiple of 3\".",
+       "[1] When n = 1: $4-1=3$, a multiple of 3. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $4k^3-k=3m$ with m an integer.",
+       "When n = k+1: $4(k+1)^3-(k+1)=4k^3+12k^2+12k+4-k-1$.",
+       "$=(4k^3-k)+12k^2+12k+3$.",
+       "$=3m+12k^2+12k+3=3(m+4k^2+4k+1)$.",
+       "$m+4k^2+4k+1$ is an integer, so (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:challenge-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the proof needs the binomial expansion of $(n+1)^n$, which the lesson does not teach. The lesson's induction steps (n = k to n = k+1) do not apply to this statement.",
+      "solution": [
+       "The statement has n in both the base and the exponent.",
+       "Assuming it for n = k gives no useful link to $(k+2)^{k+1}-1$ using the lesson's methods.",
+       "So it cannot be proved with the lesson's methods."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-8",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 5, a_4 = 6; a_n = n + 2",
+      "solution": [
+       "$a_2=\\frac{a_1^2-1}{2}=\\frac{9-1}{2}=4$.",
+       "$a_3=\\frac{a_2^2-1}{3}=\\frac{16-1}{3}=5$.",
+       "$a_4=\\frac{a_3^2-1}{4}=\\frac{25-1}{4}=6$.",
+       "The terms 3, 4, 5, 6, ... go up by 1 each time.",
+       "So estimate $a_n=n+2$."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-9",
+      "kind": "explanation",
+      "answer": "The estimation $a_n=n+2$ is correct for all natural numbers.",
+      "solution": [
+       "Let (A) be $a_n=n+2$.",
+       "[1] When n = 1: $a_1=1+2=3$, which matches the given $a_1=3$. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $a_k=k+2$.",
+       "Then $a_{k+1}=\\frac{a_k^2-1}{k+1}=\\frac{(k+2)^2-1}{k+1}$.",
+       "$(k+2)^2-1=k^2+4k+3=(k+1)(k+3)$, so $a_{k+1}=k+3=(k+1)+2$.",
+       "So (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers, so the estimation is correct."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-6",
+       "eb11c2-5:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-10",
+      "kind": "explanation",
+      "answer": "The estimation $a_n=1-2n$ is correct for all natural numbers.",
+      "solution": [
+       "From try-9: $a_1=-1$, $a_2=1-2-2=-3$, $a_3=9-12-2=-5$, $a_4=25-30-2=-7$. These terms go down by 2 each time, so the estimate is $a_n=1-2n$.",
+       "Let (A) be $a_n=1-2n$.",
+       "[1] When n = 1: $a_1=1-2=-1$. So (A) holds for n = 1.",
+       "[2] Assume (A) holds for n = k: $a_k=1-2k$.",
+       "Then $a_{k+1}=a_k^2+2ka_k-2=a_k(a_k+2k)-2$.",
+       "Substitute $a_k=1-2k$: $=(1-2k)\\times1-2=-2k-1$.",
+       "$-2k-1=1-2(k+1)$, so (A) holds for n = k+1.",
+       "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:explanation-6",
+       "eb11c2-5:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:challenge-5",
+      "kind": "value",
+      "answer": "r = 2 + √3 or r = 2 - √3",
+      "solution": [
+       "A, B, C is geometric with ratio r, so B = Ar and C = Ar².",
+       "A, 2B, C is arithmetic, so the middle term 2B is the mean of A and C: 4B = A + C.",
+       "Substitute: 4Ar = A + Ar².",
+       "Divide by A (A ≠ 0): r² - 4r + 1 = 0.",
+       "Solve: $r=\\frac{4\\pm\\sqrt{16-4}}{2}=2\\pm\\sqrt3$.",
+       "Answer: r = 2 + √3 or r = 2 - √3."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:reflect-1",
+      "kind": "explanation",
+      "answer": "Induction proves that a guessed formula for a_n is true for every n, not just the first few terms checked.",
+      "solution": [
+       "First, work out the first few terms from the recurrence and guess the general term.",
+       "[1] Check that the formula gives the correct first term at n = 1.",
+       "[2] Assume $a_k$ equals the formula, then use the recurrence to find $a_{k+1}$ and show it also equals the formula with n = k+1.",
+       "Since the recurrence builds each term from the one before, true for 1 means true for 2, then 3, and so on.",
+       "So the formula is correct for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:explanation-6",
+       "eb11c2-5:method-6"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-5:guiding-question-1",
+      "kind": "explanation",
+      "answer": "By mathematical induction: show the pattern holds at the start (n=1), then show that if it holds for n=k it must hold for n=k+1. The step then carries on forever, so the pattern holds for every n."
+     },
+     {
+      "ref": "eb11c2-5:challenge-1",
+      "kind": "value",
+      "answer": "a_n = 1/2 - 2·2^n + (3/2)·3^n (that is, a_n = (1 - 2^{n+2} + 3^{n+1})/2)"
+     },
+     {
+      "ref": "eb11c2-5:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Group activity with no single answer: solve the try problems with your partner (find the terms by substituting n=1,2,3 into the recurrence, and use the arithmetic or geometric general term formula), then compare answers."
+     },
+     {
+      "ref": "eb11c2-5:challenge-2",
+      "kind": "value",
+      "answer": "a_n = 4 - 0.02n(n-1) = -0.02n^2 + 0.02n + 4"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-5",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS=1, RHS=(1/2)(1)(2)=1. [2] Assume 1+...+k=(1/2)k(k+1). Then 1+...+k+(k+1)=(1/2)k(k+1)+(k+1)=(1/2)(k+1)(k+2)=(1/2)(k+1){(k+1)+1}, so it holds for n=k+1. Hence it holds for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:warm-up-7",
+      "kind": "explanation",
+      "answer": "[1] n=1: 1+8+27=36=9·4, a multiple of 9. [2] Assume k^3+(k+1)^3+(k+2)^3=9m (m an integer). Then (k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3=9m+9k^2+27k+27=9(m+k^2+3k+3), a multiple of 9. So it holds for n=k+1, and therefore for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:try-8",
+      "kind": "explanation",
+      "answer": "[1] n=1: 1+2=3, a multiple of 3. [2] Assume k^3+2k=3m (m an integer). Then (k+1)^3+2(k+1)=k^3+3k^2+3k+1+2k+2=(k^3+2k)+3k^2+3k+3=3m+3(k^2+k+1)=3(m+k^2+k+1), a multiple of 3. So it holds for n=k+1, and therefore for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:activity-1",
+      "kind": "explanation",
+      "answer": "Group activity with no single answer. Solve try-8 with your partner using induction: n=1 gives 3, and k^3+2k=3m implies (k+1)^3+2(k+1)=3(m+k^2+k+1). Then compare answers."
+     },
+     {
+      "ref": "eb11c2-5:exercise-10",
+      "kind": "explanation",
+      "answer": "[1] n=1: 2-3+1=0=6·0, a multiple of 6. [2] Assume 2k^3-3k^2+k=6m (m an integer). Then 2(k+1)^3-3(k+1)^2+(k+1)=2k^3+6k^2+6k+2-3k^2-6k-3+k+1=(2k^3-3k^2+k)+6k^2=6m+6k^2=6(m+k^2), a multiple of 6. So it holds for n=k+1, and therefore for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:exercise-11",
+      "kind": "explanation",
+      "answer": "[1] n=1: 4-1=3, divisible by 3. [2] Assume 4k^3-k=3m (m an integer). Then 4(k+1)^3-(k+1)=4k^3+12k^2+12k+4-k-1=(4k^3-k)+12k^2+12k+3=3m+3(4k^2+4k+1)=3(m+4k^2+4k+1), divisible by 3. So it holds for n=k+1, and therefore for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:challenge-4",
+      "kind": "explanation",
+      "answer": "By the binomial theorem, (n+1)^n-1 = C(n,1)n + C(n,2)n^2 + ... + n^n = n^2 + C(n,2)n^2 + ... + n^n. The first term is n·n=n^2, and every later term has a factor n^j with j≥2. So every term is a multiple of n^2, and the sum is a multiple of n^2 for all n≥1. (For n=1: 2-1=1=1^2·1.)"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-8",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 5, a_4 = 6; estimate a_n = n + 2"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-9",
+      "kind": "explanation",
+      "answer": "[1] n=1: a_1=1+2=3, which holds. [2] Assume a_k=k+2. Then a_{k+1}=(a_k^2-1)/(k+1)=((k+2)^2-1)/(k+1)=(k+1)(k+3)/(k+1)=k+3=(k+1)+2, so it holds for n=k+1. Hence a_n=n+2 for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:try-10",
+      "kind": "explanation",
+      "answer": "Here a_1=-1, a_2=-3, a_3=-5, a_4=-7, so the estimate is a_n=-2n+1. [1] n=1: a_1=-2+1=-1, which holds. [2] Assume a_k=-2k+1. Then a_{k+1}=a_k^2+2k·a_k-2=(1-2k)^2+2k(1-2k)-2=1-4k+4k^2+2k-4k^2-2=-2k-1=-2(k+1)+1, so it holds for n=k+1. Hence a_n=-2n+1 for all natural numbers n."
+     },
+     {
+      "ref": "eb11c2-5:challenge-5",
+      "kind": "value",
+      "answer": "r = 2 + √3 or r = 2 - √3"
+     },
+     {
+      "ref": "eb11c2-5:reflect-1",
+      "kind": "explanation",
+      "answer": "A formula guessed from the first few terms may fail later. Induction proves it for every n. First check the formula gives the first term (n=1). Then assume it holds for a_k and use the recurrence to compute a_{k+1}, showing the result equals the formula with n=k+1. Because each term comes from the previous one, the formula then holds for all natural numbers."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c2-5:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-5:warm-up-1",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 26, a_4 = 80",
+      "solution": [
+       "Put n=1: a_2 = 3×2+2 = 8.",
+       "Put n=2: a_3 = 3×8+2 = 26.",
+       "Put n=3: a_4 = 3×26+2 = 80.",
+       "So a_2 = 8, a_3 = 26, a_4 = 80."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-2:a",
+      "kind": "value",
+      "answer": "a_n = 5n - 6",
+      "solution": [
+       "a_{n+1}=a_n+5 is an arithmetic sequence with first term -1 and common difference 5.",
+       "a_n = -1+(n-1)×5.",
+       "a_n = 5n-6."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4",
+       "eb11c2-5:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-2:b",
+      "kind": "value",
+      "answer": "a_n = 2×3^{n-1}",
+      "solution": [
+       "a_{n+1}=3a_n is a geometric sequence with first term 2 and common ratio 3.",
+       "a_n = 2×3^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5",
+       "eb11c2-5:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Try 2 and Try 3.",
+      "solution": [
+       "The item has no problem of its own.",
+       "Answer Try 2 (parts a, b) and Try 3 (parts a to d) separately."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-2:a",
+      "kind": "value",
+      "answer": "a_2 = -9, a_3 = -15, a_4 = -27",
+      "solution": [
+       "a_2 = 2×(-6)+3 = -9.",
+       "a_3 = 2×(-9)+3 = -15.",
+       "a_4 = 2×(-15)+3 = -27.",
+       "So a_2 = -9, a_3 = -15, a_4 = -27."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-2:b",
+      "kind": "value",
+      "answer": "a_2 = 5, a_3 = 13, a_4 = 36",
+      "solution": [
+       "n=1: a_2 = 3×2-1 = 5.",
+       "n=2: a_3 = 3×5-2 = 13.",
+       "n=3: a_4 = 3×13-3 = 36.",
+       "So a_2 = 5, a_3 = 13, a_4 = 36."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-3:a",
+      "kind": "value",
+      "answer": "a_n = 3n - 2",
+      "solution": [
+       "Arithmetic sequence, first term 1, common difference 3.",
+       "a_n = 1+(n-1)×3 = 3n-2."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-3:b",
+      "kind": "value",
+      "answer": "a_n = 6 - 2n",
+      "solution": [
+       "Arithmetic sequence, first term 4, common difference -2.",
+       "a_n = 4+(n-1)×(-2) = 6-2n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-3:c",
+      "kind": "value",
+      "answer": "a_n = 3×5^{n-1}",
+      "solution": [
+       "Geometric sequence, first term 3, common ratio 5.",
+       "a_n = 3×5^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-3:d",
+      "kind": "value",
+      "answer": "a_n = -3×(-2)^{n-1}",
+      "solution": [
+       "Geometric sequence, first term -3, common ratio -2.",
+       "a_n = -3×(-2)^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Exercise 2 and Exercise 3.",
+      "solution": [
+       "The item has no problem of its own.",
+       "Answer Exercise 2 (parts a to f) and Exercise 3 (parts a to h) separately."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:a",
+      "kind": "value",
+      "answer": "a_2 = 3, a_3 = -1, a_4 = 7",
+      "solution": [
+       "a_2 = -2×1+5 = 3.",
+       "a_3 = -2×3+5 = -1.",
+       "a_4 = -2×(-1)+5 = 7."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:b",
+      "kind": "value",
+      "answer": "a_2 = -7, a_3 = -7, a_4 = -4",
+      "solution": [
+       "n=1: a_2 = -6+1²-2×1 = -7.",
+       "n=2: a_3 = -7+2²-2×2 = -7.",
+       "n=3: a_4 = -7+3²-2×3 = -4."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:c",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 22, a_4 = 63",
+      "solution": [
+       "n=1: a_2 = 3×3-1 = 8.",
+       "n=2: a_3 = 3×8-2 = 22.",
+       "n=3: a_4 = 3×22-3 = 63."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:d",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -8",
+      "solution": [
+       "n=1: a_2 = -2-1 = -3.",
+       "n=2: a_3 = -3-2 = -5.",
+       "n=3: a_4 = -5-3 = -8."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:e",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 8, a_4 = 14",
+      "solution": [
+       "n=1: a_2 = 2+2×1 = 4.",
+       "n=2: a_3 = 4+2×2 = 8.",
+       "n=3: a_4 = 8+2×3 = 14."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:f",
+      "kind": "value",
+      "answer": "a_2 = 1, a_3 = 10, a_4 = 37",
+      "solution": [
+       "n=1: a_2 = -2+3 = 1.",
+       "n=2: a_3 = 1+9 = 10.",
+       "n=3: a_4 = 10+27 = 37."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-1",
+       "eb11c2-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:a",
+      "kind": "value",
+      "answer": "a_n = 6n - 5",
+      "solution": [
+       "Arithmetic, first term 1, difference 6.",
+       "a_n = 1+(n-1)×6 = 6n-5."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:b",
+      "kind": "value",
+      "answer": "a_n = 8 - 5n",
+      "solution": [
+       "Arithmetic, first term 3, difference -5.",
+       "a_n = 3+(n-1)×(-5) = 8-5n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:c",
+      "kind": "value",
+      "answer": "a_n = 4×3^{n-1}",
+      "solution": [
+       "Geometric, first term 4, ratio 3.",
+       "a_n = 4×3^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:d",
+      "kind": "value",
+      "answer": "a_n = 2×(-5)^{n-1}",
+      "solution": [
+       "Geometric, first term 2, ratio -5.",
+       "a_n = 2×(-5)^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:e",
+      "kind": "value",
+      "answer": "a_n = 3n - 5",
+      "solution": [
+       "Arithmetic, first term -2, difference 3.",
+       "a_n = -2+(n-1)×3 = 3n-5."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:f",
+      "kind": "value",
+      "answer": "a_n = 8 - 4n",
+      "solution": [
+       "Arithmetic, first term 4, difference -4.",
+       "a_n = 4+(n-1)×(-4) = 8-4n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-2",
+       "eb11c2-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:g",
+      "kind": "value",
+      "answer": "a_n = 4^{n-1}",
+      "solution": [
+       "Geometric, first term 1, ratio 4.",
+       "a_n = 1×4^{n-1} = 4^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:h",
+      "kind": "value",
+      "answer": "a_n = -2×(-4)^{n-1}",
+      "solution": [
+       "Geometric, first term -2, ratio -4.",
+       "a_n = -2×(-4)^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-3",
+       "eb11c2-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-3",
+      "kind": "value",
+      "answer": "a_n = (n-2)^2",
+      "solution": [
+       "a_{n+1}-a_n = 2n-3, so f(n)=2n-3.",
+       "For n≥2: a_n = 1+Σ_{k=1}^{n-1}(2k-3).",
+       "= 1+2×(1/2)(n-1)n-3(n-1) = n²-4n+4 = (n-2)².",
+       "This also holds for n=1, so a_n = (n-2)²."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-4:a",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/6",
+      "solution": [
+       "f(n)=n², so for n≥2: a_n = 2+Σ_{k=1}^{n-1}k².",
+       "Using Σ_{k=1}^{m}k² = m(m+1)(2m+1)/6 with m=n-1: a_n = 2+(n-1)n(2n-1)/6.",
+       "For n=1 this gives 2, which is a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-4:b",
+      "kind": "value",
+      "answer": "a_n = (3^n - 1)/2",
+      "solution": [
+       "f(n)=3^n, so a_n = 1+Σ_{k=1}^{n-1}3^k.",
+       "The sum is a geometric sum: 3+3²+...+3^{n-1} = 3(3^{n-1}-1)/(3-1).",
+       "a_n = 1+(3^n-3)/2 = (3^n-1)/2.",
+       "For n=1 it gives 1 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a side note asking students to work in a group; it has no question to answer.",
+      "solution": [
+       "It only tells students to solve the Try section together and discuss."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:a",
+      "kind": "value",
+      "answer": "a_n = n² - n + 2",
+      "solution": [
+       "f(n)=2n, so a_n = 2+Σ_{k=1}^{n-1}2k.",
+       "= 2+2×(1/2)(n-1)n = 2+n²-n.",
+       "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:b",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/2",
+      "solution": [
+       "f(n)=3n², so a_n = 2+3Σ_{k=1}^{n-1}k².",
+       "= 2+3×(n-1)n(2n-1)/6 = 2+(n-1)n(2n-1)/2.",
+       "n=1 gives 2, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:c",
+      "kind": "value",
+      "answer": "a_n = 2^n - 1",
+      "solution": [
+       "f(n)=2^n, so a_n = 1+Σ_{k=1}^{n-1}2^k.",
+       "Geometric sum: 2+2²+...+2^{n-1} = 2(2^{n-1}-1)/(2-1) = 2^n-2.",
+       "a_n = 1+2^n-2 = 2^n-1.",
+       "n=1 gives 1 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:d",
+      "kind": "value",
+      "answer": "a_n = (3n² - n + 2)/2",
+      "solution": [
+       "f(n)=3n+1, so a_n = 2+Σ_{k=1}^{n-1}(3k+1).",
+       "= 2+3×(1/2)(n-1)n+(n-1) = 2+(3n²-3n)/2+n-1.",
+       "= (3n²-n+2)/2.",
+       "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:e",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(4n+1)/6",
+      "solution": [
+       "f(n)=2n²+n, so a_n = 2+2Σk²+Σk (k=1 to n-1).",
+       "= 2+(n-1)n(2n-1)/3+(n-1)n/2.",
+       "= 2+(n-1)n[2(2n-1)+3]/6 = 2+(n-1)n(4n+1)/6.",
+       "n=1 gives 2, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:f",
+      "kind": "value",
+      "answer": "a_n = (7 - 3^n)/2",
+      "solution": [
+       "f(n)=-3^n, so a_n = 2-Σ_{k=1}^{n-1}3^k.",
+       "Geometric sum: 3+...+3^{n-1} = 3(3^{n-1}-1)/2 = (3^n-3)/2.",
+       "a_n = 2-(3^n-3)/2 = (7-3^n)/2.",
+       "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:g",
+      "kind": "value",
+      "answer": "a_n = (16 - 4^n)/3",
+      "solution": [
+       "f(n)=-4^n, so a_n = 4-Σ_{k=1}^{n-1}4^k.",
+       "Geometric sum: 4+...+4^{n-1} = 4(4^{n-1}-1)/3 = (4^n-4)/3.",
+       "a_n = 4-(4^n-4)/3 = (16-4^n)/3.",
+       "n=1 gives 4 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:rule-6",
+       "eb11c2-5:rule-7",
+       "eb11c2-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:warm-up-4",
+      "kind": "value",
+      "answer": "a_n = 3^n - 2",
+      "solution": [
+       "Replace a_{n+1}, a_n by c: c=3c+4, so c=-2.",
+       "a_{n+1}+2 = 3(a_n+2).",
+       "Let b_n = a_n+2: geometric with ratio 3, b_1 = 1+2 = 3.",
+       "b_n = 3×3^{n-1} = 3^n.",
+       "a_n = 3^n-2."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5",
+       "eb11c2-5:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-5:a",
+      "kind": "value",
+      "answer": "a_n = 3×5^{n-1} - 2",
+      "solution": [
+       "c=5c+8 gives c=-2.",
+       "a_{n+1}+2 = 5(a_n+2).",
+       "b_n = a_n+2 is geometric, ratio 5, b_1 = 3.",
+       "b_n = 3×5^{n-1}.",
+       "a_n = 3×5^{n-1}-2."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-5:b",
+      "kind": "value",
+      "answer": "a_n = 3×(-2)^{n-1} + 1",
+      "solution": [
+       "c=-2c+3 gives c=1.",
+       "a_{n+1}-1 = -2(a_n-1).",
+       "b_n = a_n-1 is geometric, ratio -2, b_1 = 3.",
+       "b_n = 3×(-2)^{n-1}.",
+       "a_n = 3×(-2)^{n-1}+1."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:a",
+      "kind": "value",
+      "answer": "a_n = 2^{n-1} + 1",
+      "solution": [
+       "c=2c-1 gives c=1.",
+       "a_{n+1}-1 = 2(a_n-1).",
+       "b_n = a_n-1: ratio 2, b_1 = 1.",
+       "b_n = 2^{n-1}.",
+       "a_n = 2^{n-1}+1."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:b",
+      "kind": "value",
+      "answer": "a_n = -2×4^{n-1} - 1",
+      "solution": [
+       "c=4c+3 gives c=-1.",
+       "a_{n+1}+1 = 4(a_n+1).",
+       "b_n = a_n+1: ratio 4, b_1 = -2.",
+       "b_n = -2×4^{n-1}.",
+       "a_n = -2×4^{n-1}-1."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:c",
+      "kind": "value",
+      "answer": "a_n = 2×3^{n-1} + 1",
+      "solution": [
+       "c=3c-2 gives c=1.",
+       "a_{n+1}-1 = 3(a_n-1).",
+       "b_n = a_n-1: ratio 3, b_1 = 2.",
+       "b_n = 2×3^{n-1}.",
+       "a_n = 2×3^{n-1}+1."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:d",
+      "kind": "value",
+      "answer": "a_n = (-3)^n + 1",
+      "solution": [
+       "c=-3c+4 gives c=1.",
+       "a_{n+1}-1 = -3(a_n-1).",
+       "b_n = a_n-1: ratio -3, b_1 = -3.",
+       "b_n = -3×(-3)^{n-1} = (-3)^n.",
+       "a_n = (-3)^n+1."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:e",
+      "kind": "value",
+      "answer": "a_n = 3 - 2×(1/3)^{n-1}",
+      "solution": [
+       "c=(1/3)c+2 gives (2/3)c=2, so c=3.",
+       "a_{n+1}-3 = (1/3)(a_n-3).",
+       "b_n = a_n-3: ratio 1/3, b_1 = 1-3 = -2.",
+       "b_n = -2×(1/3)^{n-1}.",
+       "a_n = 3-2×(1/3)^{n-1}."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:f",
+      "kind": "value",
+      "answer": "a_n = (7/2)×(2/3)^{n-1} - 3/2",
+      "solution": [
+       "c=(2/3)c-1/2 gives (1/3)c=-1/2, so c=-3/2.",
+       "a_{n+1}+3/2 = (2/3)(a_n+3/2).",
+       "b_n = a_n+3/2: ratio 2/3, b_1 = 2+3/2 = 7/2.",
+       "b_n = (7/2)×(2/3)^{n-1}.",
+       "a_n = (7/2)(2/3)^{n-1}-3/2."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-1",
+       "eb11c2-5:method-2",
+       "eb11c2-5:method-3",
+       "eb11c2-5:method-4",
+       "eb11c2-5:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-6:a",
+      "kind": "explanation",
+      "answer": "Proved: 1+3+5+...+(2n-1)=n² holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 1, RHS = 1² = 1. So (A) holds.",
+       "[2] Assume n=k: 1+3+...+(2k-1) = k².",
+       "For n=k+1: LHS = k²+(2k+1) = (k+1)² = RHS.",
+       "So (A) holds for n=k+1. By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-6:b",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 1×2 = 2, RHS = (1/3)×1×2×3 = 2. So (A) holds.",
+       "[2] Assume n=k: 1×2+...+k(k+1) = (1/3)k(k+1)(k+2).",
+       "For n=k+1: LHS = (1/3)k(k+1)(k+2)+(k+1)(k+2).",
+       "= (1/3)(k+1)(k+2)(k+3) = (1/3)(k+1){(k+1)+1}{(k+1)+2} = RHS.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:a",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 1, RHS = (1/3)×1×1×3 = 1. So (A) holds.",
+       "[2] Assume n=k: 1²+3²+...+(2k-1)² = (1/3)k(2k-1)(2k+1).",
+       "For n=k+1: LHS = (1/3)k(2k-1)(2k+1)+(2k+1)².",
+       "= (1/3)(2k+1){k(2k-1)+3(2k+1)} = (1/3)(2k+1)(2k²+5k+3).",
+       "= (1/3)(2k+1)(2k+3)(k+1) = (1/3)(k+1){2(k+1)-1}{2(k+1)+1} = RHS.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:b",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 3, RHS = 4-1 = 3. So (A) holds.",
+       "[2] Assume n=k: 3+3×4+...+3×4^{k-1} = 4^k-1.",
+       "For n=k+1: LHS = 4^k-1+3×4^k = 4×4^k-1 = 4^{k+1}-1 = RHS.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:c",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 1×3 = 3, RHS = (1/6)×1×2×9 = 3. So (A) holds.",
+       "[2] Assume n=k: 1×3+...+k(k+2) = (1/6)k(k+1)(2k+7).",
+       "For n=k+1: LHS = (1/6)k(k+1)(2k+7)+(k+1)(k+3).",
+       "= (1/6)(k+1){k(2k+7)+6(k+3)} = (1/6)(k+1)(2k²+13k+18).",
+       "= (1/6)(k+1)(k+2)(2k+9) = (1/6)(k+1){(k+1)+1}{2(k+1)+7} = RHS.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:d",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+       "Call the equality (A).",
+       "[1] n=1: LHS = 1+10 = 11, RHS = (1/9)(100-1) = 11. So (A) holds.",
+       "[2] Assume n=k: 1+10+...+10^k = (1/9)(10^{k+1}-1).",
+       "For n=k+1: LHS = (1/9)(10^{k+1}-1)+10^{k+1}.",
+       "= (1/9)(10^{k+1}-1+9×10^{k+1}) = (1/9)(10^{k+2}-1) = RHS.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:worked-example-1",
+       "eb11c2-5:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-7",
+      "kind": "explanation",
+      "answer": "Proved: 3^n > 5n+1 for all natural numbers n ≥ 3.",
+      "solution": [
+       "Call the inequality (A).",
+       "[1] n=3: LHS = 27, RHS = 16. 27>16, so (A) holds.",
+       "[2] Assume k≥3 and 3^k > 5k+1. Multiply both sides by 3: 3^{k+1} > 15k+3 ...(i)",
+       "Compare: 15k+3-(5(k+1)+1) = 10k-3 > 0, so 15k+3 > 5(k+1)+1 ...(ii)",
+       "From (i),(ii): 3^{k+1} > 5(k+1)+1. So (A) holds for n=k+1.",
+       "By [1] and [2], (A) holds for all n ≥ 3."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:warm-up-6",
+       "eb11c2-5:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-7",
+      "kind": "explanation",
+      "answer": "Proved: 3^n > 2n for all natural numbers n.",
+      "solution": [
+       "Call the inequality (A).",
+       "[1] n=1: LHS = 3, RHS = 2. 3>2, so (A) holds.",
+       "[2] Assume k≥1 and 3^k > 2k. Multiply by 3: 3^{k+1} > 6k ...(i)",
+       "6k-2(k+1) = 4k-2 > 0 for k≥1, so 6k > 2(k+1) ...(ii)",
+       "From (i),(ii): 3^{k+1} > 2(k+1). So (A) holds for n=k+1.",
+       "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:warm-up-6",
+       "eb11c2-5:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-8",
+      "kind": "explanation",
+      "answer": "Proved: 2^n > 3n+1 for all natural numbers n ≥ 4.",
+      "solution": [
+       "Call the inequality (A).",
+       "[1] n=4: LHS = 16, RHS = 13. 16>13, so (A) holds.",
+       "[2] Assume k≥4 and 2^k > 3k+1. Multiply by 2: 2^{k+1} > 6k+2 ...(i)",
+       "6k+2-(3(k+1)+1) = 3k-2 > 0 for k≥4, so 6k+2 > 3(k+1)+1 ...(ii)",
+       "From (i),(ii): 2^{k+1} > 3(k+1)+1. So (A) holds for n=k+1.",
+       "By [1] and [2], (A) holds for all n ≥ 4."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:warm-up-6",
+       "eb11c2-5:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:challenge-3",
+      "kind": "explanation",
+      "answer": "Proved: (1+h)^n > 1+nh² for h>0 and all natural numbers n ≥ 3.",
+      "solution": [
+       "Call the inequality (A).",
+       "[1] n=3: (1+h)³ = 1+3h+3h²+h³. Since h>0, 3h+h³>0, so (1+h)³ > 1+3h². (A) holds.",
+       "[2] Assume k≥3 and (1+h)^k > 1+kh². Multiply both sides by 1+h (positive): (1+h)^{k+1} > (1+kh²)(1+h) = 1+h+kh²+kh³ ...(i)",
+       "Compare with 1+(k+1)h²: (1+h+kh²+kh³)-(1+kh²+h²) = h(kh²-h+1).",
+       "kh²-h+1 ≥ 3h²-h+1 = 3(h-1/6)²+11/12 > 0, so the difference is positive ...(ii)",
+       "From (i),(ii): (1+h)^{k+1} > 1+(k+1)h². So (A) holds for n=k+1.",
+       "By [1] and [2], (A) holds for all n ≥ 3."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:warm-up-6",
+       "eb11c2-5:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-9",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Exercise 10 and Exercise 11.",
+      "solution": [
+       "The item has no problem of its own.",
+       "Answer the multiple/divisibility proofs separately."
+      ],
+      "grounded_in": [
+       "eb11c2-5:method-6",
+       "eb11c2-5:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:try-9",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -7; a_n = 1 - 2n",
+      "solution": [
+       "n=1: a_2 = (-1)²+2×1×(-1)-2 = 1-2-2 = -3.",
+       "n=2: a_3 = (-3)²+2×2×(-3)-2 = 9-12-2 = -5.",
+       "n=3: a_4 = (-5)²+2×3×(-5)-2 = 25-30-2 = -7.",
+       "Terms -1, -3, -5, -7 drop by 2 each time, so estimate a_n = -1-2(n-1) = 1-2n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-12:a",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 9, a_4 = 16; a_n = n²",
+      "solution": [
+       "n=1: a_2 = 1²-1²×1+2² = 4.",
+       "n=2: a_3 = 4²-2²×4+3² = 16-16+9 = 9.",
+       "n=3: a_4 = 9²-3²×9+4² = 81-81+16 = 16.",
+       "Terms 1, 4, 9, 16 are squares, so estimate a_n = n²."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-12:b",
+      "kind": "explanation",
+      "answer": "The estimate a_n = n² is correct, proved by induction.",
+      "solution": [
+       "Call a_n = n² (A).",
+       "[1] n=1: a_1 = 1 = 1². So (A) holds.",
+       "[2] Assume n=k: a_k = k².",
+       "a_{k+1} = a_k²-k²a_k+(k+1)² = k⁴-k²×k²+(k+1)² = (k+1)².",
+       "So (A) holds for n=k+1.",
+       "By [1] and [2], a_n = n² for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-6",
+       "eb11c2-5:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-13:a",
+      "kind": "value",
+      "answer": "a_2 = 3/2, a_3 = 5/3, a_4 = 7/4; a_n = (2n-1)/n",
+      "solution": [
+       "a_2 = (1-4)/(1-3) = (-3)/(-2) = 3/2.",
+       "a_3 = (3/2-4)/(3/2-3) = (-5/2)/(-3/2) = 5/3.",
+       "a_4 = (5/3-4)/(5/3-3) = (-7/3)/(-4/3) = 7/4.",
+       "Terms 1/1, 3/2, 5/3, 7/4: numerator 2n-1, denominator n.",
+       "Estimate a_n = (2n-1)/n."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-5",
+       "eb11c2-5:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-5:exercise-13:b",
+      "kind": "explanation",
+      "answer": "The estimate a_n = (2n-1)/n is correct, proved by induction.",
+      "solution": [
+       "Call a_n = (2n-1)/n (A).",
+       "[1] n=1: a_1 = 1/1 = 1. So (A) holds.",
+       "[2] Assume n=k: a_k = (2k-1)/k.",
+       "a_{k+1} = ((2k-1)/k-4)/((2k-1)/k-3) = ((-2k-1)/k)/((-k-1)/k) = (2k+1)/(k+1).",
+       "(2k+1)/(k+1) = (2(k+1)-1)/(k+1), so (A) holds for n=k+1.",
+       "By [1] and [2], a_n = (2n-1)/n for all natural numbers."
+      ],
+      "grounded_in": [
+       "eb11c2-5:explanation-6",
+       "eb11c2-5:method-6"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-5:warm-up-1",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 26, a_4 = 80"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-2:a",
+      "kind": "value",
+      "answer": "a_n = 5n - 6"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-2:b",
+      "kind": "value",
+      "answer": "a_n = 2·3^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:try-1",
+      "kind": "explanation",
+      "answer": "This is only the instruction line; the answers are in Try 2 (terms) and Try 3 (general terms)."
+     },
+     {
+      "ref": "eb11c2-5:try-2:a",
+      "kind": "value",
+      "answer": "a_2 = -9, a_3 = -15, a_4 = -27"
+     },
+     {
+      "ref": "eb11c2-5:try-2:b",
+      "kind": "value",
+      "answer": "a_2 = 5, a_3 = 13, a_4 = 36"
+     },
+     {
+      "ref": "eb11c2-5:try-3:a",
+      "kind": "value",
+      "answer": "a_n = 3n - 2"
+     },
+     {
+      "ref": "eb11c2-5:try-3:b",
+      "kind": "value",
+      "answer": "a_n = 6 - 2n"
+     },
+     {
+      "ref": "eb11c2-5:try-3:c",
+      "kind": "value",
+      "answer": "a_n = 3·5^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:try-3:d",
+      "kind": "value",
+      "answer": "a_n = -3·(-2)^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:exercise-1",
+      "kind": "explanation",
+      "answer": "This is only the instruction line; the answers are in Exercise 2 (terms) and Exercise 3 (general terms)."
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:a",
+      "kind": "value",
+      "answer": "a_2 = 3, a_3 = -1, a_4 = 7"
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:b",
+      "kind": "value",
+      "answer": "a_2 = -7, a_3 = -7, a_4 = -4"
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:c",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 22, a_4 = 63"
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:d",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -8"
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:e",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 8, a_4 = 14"
+     },
+     {
+      "ref": "eb11c2-5:exercise-2:f",
+      "kind": "value",
+      "answer": "a_2 = 1, a_3 = 10, a_4 = 37"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:a",
+      "kind": "value",
+      "answer": "a_n = 6n - 5"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:b",
+      "kind": "value",
+      "answer": "a_n = 8 - 5n"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:c",
+      "kind": "value",
+      "answer": "a_n = 4·3^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:d",
+      "kind": "value",
+      "answer": "a_n = 2·(-5)^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:e",
+      "kind": "value",
+      "answer": "a_n = 3n - 5"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:f",
+      "kind": "value",
+      "answer": "a_n = 8 - 4n"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:g",
+      "kind": "value",
+      "answer": "a_n = 4^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:exercise-3:h",
+      "kind": "value",
+      "answer": "a_n = -2·(-4)^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-3",
+      "kind": "value",
+      "answer": "a_n = (n-2)^2"
+     },
+     {
+      "ref": "eb11c2-5:try-4:a",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/6"
+     },
+     {
+      "ref": "eb11c2-5:try-4:b",
+      "kind": "value",
+      "answer": "a_n = (3^n - 1)/2"
+     },
+     {
+      "ref": "eb11c2-5:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "This is a group-work prompt (collaborate on the Try section and discuss the answers); it is a duplicate of the box on the previous page and has no answer of its own."
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:a",
+      "kind": "value",
+      "answer": "a_n = n^2 - n + 2"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:b",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/2"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:c",
+      "kind": "value",
+      "answer": "a_n = 2^n - 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:d",
+      "kind": "value",
+      "answer": "a_n = (3n^2 - n + 2)/2"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:e",
+      "kind": "value",
+      "answer": "a_n = 2 + n(n-1)(4n+1)/6"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:f",
+      "kind": "value",
+      "answer": "a_n = (7 - 3^n)/2"
+     },
+     {
+      "ref": "eb11c2-5:exercise-4:g",
+      "kind": "value",
+      "answer": "a_n = (16 - 4^n)/3"
+     },
+     {
+      "ref": "eb11c2-5:warm-up-4",
+      "kind": "value",
+      "answer": "a_n = 3^n - 2"
+     },
+     {
+      "ref": "eb11c2-5:try-5:a",
+      "kind": "value",
+      "answer": "a_n = 3·5^{n-1} - 2"
+     },
+     {
+      "ref": "eb11c2-5:try-5:b",
+      "kind": "value",
+      "answer": "a_n = 3·(-2)^{n-1} + 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:a",
+      "kind": "value",
+      "answer": "a_n = 2^{n-1} + 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:b",
+      "kind": "value",
+      "answer": "a_n = -2·4^{n-1} - 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:c",
+      "kind": "value",
+      "answer": "a_n = 2·3^{n-1} + 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:d",
+      "kind": "value",
+      "answer": "a_n = (-3)^n + 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:e",
+      "kind": "value",
+      "answer": "a_n = 3 - 2·(1/3)^{n-1}"
+     },
+     {
+      "ref": "eb11c2-5:exercise-5:f",
+      "kind": "value",
+      "answer": "a_n = (7/2)·(2/3)^{n-1} - 3/2"
+     },
+     {
+      "ref": "eb11c2-5:try-6:a",
+      "kind": "explanation",
+      "answer": "Let (A) be the equality. [1] n=1: LHS = 1, RHS = 1^2 = 1. [2] Assume 1+3+...+(2k-1) = k^2. Then for n=k+1: LHS = k^2 + (2k+1) = (k+1)^2 = RHS. So (A) holds for all natural numbers."
+     },
+     {
+      "ref": "eb11c2-5:try-6:b",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS = 1×2 = 2, RHS = (1/3)·1·2·3 = 2. [2] Assume the sum up to n=k equals (1/3)k(k+1)(k+2). For n=k+1: LHS = (1/3)k(k+1)(k+2) + (k+1)(k+2) = (1/3)(k+1)(k+2)(k+3) = (1/3)(k+1){(k+1)+1}{(k+1)+2} = RHS. So it holds for all natural numbers."
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:a",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS = 1, RHS = (1/3)·1·1·3 = 1. [2] Assume the sum up to n=k equals (1/3)k(2k-1)(2k+1). For n=k+1: LHS = (1/3)k(2k-1)(2k+1) + (2k+1)^2 = (1/3)(2k+1)(2k^2+5k+3) = (1/3)(k+1)(2k+1)(2k+3) = (1/3)(k+1){2(k+1)-1}{2(k+1)+1} = RHS. So it holds for all n."
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:b",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS = 3, RHS = 4-1 = 3. [2] Assume 3+3×4+...+3×4^{k-1} = 4^k - 1. For n=k+1: LHS = 4^k - 1 + 3×4^k = 4×4^k - 1 = 4^{k+1} - 1 = RHS. So it holds for all n."
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:c",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS = 1×3 = 3, RHS = (1/6)·1·2·9 = 3. [2] Assume the sum up to n=k equals (1/6)k(k+1)(2k+7). For n=k+1: LHS = (1/6)k(k+1)(2k+7) + (k+1)(k+3) = (1/6)(k+1)(2k^2+13k+18) = (1/6)(k+1)(k+2)(2k+9) = (1/6)(k+1){(k+1)+1}{2(k+1)+7} = RHS. So it holds for all n."
+     },
+     {
+      "ref": "eb11c2-5:exercise-6:d",
+      "kind": "explanation",
+      "answer": "[1] n=1: LHS = 1+10 = 11, RHS = (1/9)(100-1) = 11. [2] Assume 1+10+...+10^k = (1/9)(10^{k+1}-1). For n=k+1: LHS = (1/9)(10^{k+1}-1) + 10^{k+1} = (1/9)(10·10^{k+1} - 1) = (1/9)(10^{k+2}-1) = RHS. So it holds for all n."
+     },
+     {
+      "ref": "eb11c2-5:try-7",
+      "kind": "explanation",
+      "answer": "Let (A) be 3^n > 5n+1. [1] n=3: LHS = 27 > 16 = RHS. [2] Assume k≥3 and 3^k > 5k+1. Multiply by 3: 3^{k+1} > 15k+3. Since 15k+3 - (5(k+1)+1) = 10k-3 > 0, 3^{k+1} > 5(k+1)+1. So (A) holds for all n≥3."
+     },
+     {
+      "ref": "eb11c2-5:exercise-7",
+      "kind": "explanation",
+      "answer": "Let (A) be 3^n > 2n. [1] n=1: 3 > 2. [2] Assume 3^k > 2k. Multiply by 3: 3^{k+1} > 6k. Since 6k - 2(k+1) = 4k-2 > 0, 3^{k+1} > 2(k+1). So (A) holds for all natural numbers."
+     },
+     {
+      "ref": "eb11c2-5:exercise-8",
+      "kind": "explanation",
+      "answer": "Let (A) be 2^n > 3n+1. [1] n=4: 16 > 13. [2] Assume k≥4 and 2^k > 3k+1. Multiply by 2: 2^{k+1} > 6k+2. Since 6k+2 - (3(k+1)+1) = 3k-2 > 0, 2^{k+1} > 3(k+1)+1. So (A) holds for all n≥4."
+     },
+     {
+      "ref": "eb11c2-5:challenge-3",
+      "kind": "explanation",
+      "answer": "[1] n=3: (1+h)^3 = 1+3h+3h^2+h^3 > 1+3h^2 since 3h+h^3 > 0. [2] Assume k≥3 and (1+h)^k > 1+kh^2. Multiply by (1+h)>0: (1+h)^{k+1} > 1+h+kh^2+kh^3. We need h+kh^3 ≥ h^2: if h≤1 then h ≥ h^2; if h>1 then kh^3 > h^2. So (1+h)^{k+1} > 1+(k+1)h^2. Holds for all n≥3."
+     },
+     {
+      "ref": "eb11c2-5:exercise-9",
+      "kind": "explanation",
+      "answer": "This is only the instruction line; the proofs are in Exercises 10 and 11 (divisibility by induction)."
+     },
+     {
+      "ref": "eb11c2-5:try-9",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -7; estimate a_n = -2n + 1"
+     },
+     {
+      "ref": "eb11c2-5:exercise-12:a",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 9, a_4 = 16; estimate a_n = n^2"
+     },
+     {
+      "ref": "eb11c2-5:exercise-12:b",
+      "kind": "explanation",
+      "answer": "[1] n=1: a_1 = 1 = 1^2. [2] Assume a_k = k^2. Then a_{k+1} = k^4 - k^2·k^2 + (k+1)^2 = (k+1)^2. So a_n = n^2 holds for all natural numbers."
+     },
+     {
+      "ref": "eb11c2-5:exercise-13:a",
+      "kind": "value",
+      "answer": "a_2 = 3/2, a_3 = 5/3, a_4 = 7/4; estimate a_n = (2n-1)/n"
+     },
+     {
+      "ref": "eb11c2-5:exercise-13:b",
+      "kind": "explanation",
+      "answer": "[1] n=1: a_1 = (2-1)/1 = 1. [2] Assume a_k = (2k-1)/k. Then a_{k+1} = ((2k-1)/k - 4)/((2k-1)/k - 3) = (-2k-1)/(-k-1) = (2k+1)/(k+1) = (2(k+1)-1)/(k+1). So a_n = (2n-1)/n holds for all natural numbers."
+     },
+     {
+      "ref": "eb11c2-5:try-10",
+      "kind": "explanation",
+      "answer": "[1] n=1: a_1 = -2+1 = -1. [2] Assume a_k = -2k+1. Then a_{k+1} = (1-2k)^2 + 2k(1-2k) - 2 = 1-4k+4k^2+2k-4k^2-2 = -2k-1 = -2(k+1)+1. So a_n = -2n+1 holds for all natural numbers."
+     }
+    ]
+   }
+  }
+ ]
+}

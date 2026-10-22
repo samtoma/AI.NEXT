@@ -1,0 +1,2241 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "a600cc9c60e44593dc8fa12fde6bedcdba27b78ee031195cd064dfdc51d74733",
+  "generated_sha256": "00970a1c2dd3648631abf326229ce7210639d51433f5ca09a9f8868682a22472",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c3-1",
+   "pages": [
+    {
+     "printed": 106,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Concept 1 · Complex number",
+       "label": "",
+       "number": null,
+       "text": "Concept 1 · Complex number",
+       "_key": "p106-k1",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "When a medical technician monitors a patient's heart",
+       "label": "",
+       "number": null,
+       "text": "When a medical technician monitors a patient's heart using an electrocardiogram (ECG), the screen displays a rhythmic, wave-like pattern. Similarly, an MRI machine uses powerful magnetic fields and radio waves to construct detailed images of organs inside the human body. These biological signals are fundamentally waves, and tracking them requires tracking both their size (amplitude) and their timing (phase shift). While standard numbers fail to capture both pieces of data simultaneously, a unique mathematical framework solves this problem perfectly by treating numbers as coordinates on a plane.",
+       "_key": "p106-k2",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "quote": "BIOLOGICAL SIGNALS: WAVES & COMPLEX NUMBERS",
+       "label": "",
+       "number": null,
+       "caption": "Picture of a technician at an MRI/ECG machine with a screen titled 'Biological Signals: Waves & Complex Numbers', showing a complex-plane diagram with small labels (amplitude, phase, etc.); text too small to read reliably.",
+       "notes": "Mostly illustrative; labels not legible; verify.",
+       "_key": "p106-k3",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "printed_objective",
+       "quote": "Identify the complex number (z = a + bi)",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Identify the complex number (z = a + bi) and its components (the real part and the imaginary part).",
+       "_key": "p106-k4",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "quote": "Guiding Question: How can complex numbers help us expand",
+       "label": "",
+       "number": null,
+       "text": "Guiding Question: How can complex numbers help us expand our understanding of mathematics so that we can solve problems that seem impossible using only real numbers?",
+       "_key": "p106-k5",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "definition",
+       "quote": "The number whose square is −1 is denoted by i.",
+       "label": "",
+       "number": null,
+       "claim": "The number whose square is −1 is denoted by i; that is, i² = −1.",
+       "formula": "$i^2=-1$",
+       "_key": "p106-k6",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "definition",
+       "quote": "A number expressed in the form a + bi using two real numbers a, b is called a complex number.",
+       "label": "",
+       "number": null,
+       "claim": "A number expressed in the form a + bi using two real numbers a, b is called a complex number.",
+       "formula": "$a+bi$",
+       "_key": "p106-k7",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "definition",
+       "quote": "The part a is called the Real Part, and the part b is called the Imaginary Part.",
+       "label": "",
+       "number": null,
+       "claim": "The part a is called the real part, and the part b is called the imaginary part.",
+       "notes": "'Real Part' and 'Imaginary Part' are printed as red fill-in terms.",
+       "_key": "p106-k8",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "quote": "When b = 0, a + bi becomes a real number.",
+       "label": "",
+       "number": null,
+       "claim": "When b = 0, a + bi becomes a real number.",
+       "formula": "$b=0$",
+       "_key": "p106-k9",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "definition",
+       "quote": "When b ≠ 0, a + bi is called an imaginary number.",
+       "label": "",
+       "number": null,
+       "claim": "When b ≠ 0, a + bi is called an imaginary number.",
+       "formula": "$b\\neq 0$",
+       "_key": "p106-k10",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "rule",
+       "quote": "When a, b, c, d are real numbers, if a + bi = c + di, then",
+       "label": "",
+       "number": null,
+       "claim": "Equality of complex numbers: when a, b, c, d are real numbers, if a + bi = c + di, then a = c, b = d.",
+       "formula": "$a=c,\\ b=d$",
+       "_key": "p106-k11",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "rule",
+       "quote": "When a, b are real numbers, if a + bi = 0, then a = 0, b = 0",
+       "label": "",
+       "number": null,
+       "claim": "When a, b are real numbers, if a + bi = 0, then a = 0, b = 0.",
+       "formula": "$a=0,\\ b=0$",
+       "_key": "p106-k12",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "figure",
+       "quote": "Real numbers are also part of Complex numbers.",
+       "label": "",
+       "number": null,
+       "caption": "Side diagram: 'Complex Numbers' band split into 'Imaginary Numbers' (−2i, 8i) in blue and 'Real Numbers' (7, −√3) in pink. Note: 'Real numbers are also part of Complex numbers.'",
+       "_key": "p106-k13",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "quote": "i is not included in the imaginary part.",
+       "label": "",
+       "number": null,
+       "text": "i is not included in the imaginary part.",
+       "_key": "p106-k14",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "quote": "The real and imaginary parts of both sides are equal.",
+       "label": "",
+       "number": null,
+       "text": "The real and imaginary parts of both sides are equal.",
+       "_key": "p106-k15",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "linking_text",
+       "quote": "0 = 0 + 0i",
+       "label": "",
+       "number": null,
+       "text": "0 = 0 + 0i",
+       "formula": "$0=0+0i$",
+       "_key": "p106-k16",
+       "source_page": 106,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 107,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p107-k1",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p107-k2",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "State the real and imaginary parts of the following complex numbers.",
+       "text": "State the real and imaginary parts of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$3-2i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{4-\\sqrt{5}i}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$-8$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$2i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p107-k3",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Find the values of real numbers x, y that satisfy the following equation.",
+       "text": "Find the values of real numbers $x, y$ that satisfy the following equation: $(2+i)x+(1+i)y=2+3i$",
+       "_key": "p107-k4",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p107-k5",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "Real Part: 3, Imaginary Part: −2",
+       "stem": "State the real and imaginary parts of the complex numbers (Warm Up 1).",
+       "solution": [
+        "(a) $3-2i$ with $a=3$, $b=-2$",
+        "(b) $\\frac{4-\\sqrt{5}i}{3}=\\frac{4}{3}-\\frac{\\sqrt{5}}{3}i$",
+        "(c) $-8=-8+0i$",
+        "(d) $2i=0+2i$"
+       ],
+       "answer": "",
+       "parts": [
+        {
+         "label": "a",
+         "answer": "Real part 3, imaginary part $-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "Real part $\\frac{4}{3}$, imaginary part $-\\frac{\\sqrt{5}}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "Real part $-8$, imaginary part 0",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "Real part 0, imaginary part 2",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Explanation of Warm Up 1; side notes: 'i is not included in the imaginary part.' and 'Express it in the form a + bi first.'",
+       "_key": "p107-k6",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "2x + ix + y + iy = 2 + 3i",
+       "stem": "Find real $x, y$ satisfying $(2+i)x+(1+i)y=2+3i$.",
+       "solution": [
+        "$2x+ix+y+iy=2+3i$",
+        "$(2x+y)+(x+y)i=2+3i$",
+        "Therefore $2x+y=2$, $x+y=3$",
+        "Solving this system of equations gives $x=-1, y=4$"
+       ],
+       "answer": "$x=-1,\\ y=4$",
+       "notes": "Side notes: 'Expand the LHS and rearrange into the form a + bi.' and 'Compare the real and imaginary parts of both sides.'",
+       "_key": "p107-k7",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p107-k8",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p107-k9",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "State the real and imaginary parts of the following complex numbers.",
+       "text": "State the real and imaginary parts of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$-3+5i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{-1-\\sqrt{3}i}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$3i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p107-k10",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Find the values of real numbers x, y that satisfy the following equations.",
+       "text": "Find the values of real numbers $x, y$ that satisfy the following equations.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(x-6)+(x+3y)i=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(3+2i)x+(4-i)y=6-7i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p107-k11",
+       "source_page": 107,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 108,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p108-k1",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p108-k2",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "State the real and imaginary parts of the following complex numbers",
+       "text": "State the real and imaginary parts of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$2+5i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$-25+13i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{2-\\sqrt{5}i}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\frac{7-\\sqrt{2}i}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$-4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\frac{1}{4}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$\\sqrt{3}i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$-i$",
+         "notes": "printed with upright i",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p108-k3",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the values of real numbers x, y that satisfy the following equations.",
+       "text": "Find the values of real numbers $x$, $y$ that satisfy the following equations.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(2x+y)+(3x-y)i=8+7i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(x+1)-5i=4+(2y+1)i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$(x-2)+(x+y)i=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$(3+2i)x+(1-i)y=7+3i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$(1-i)(x+yi)=2+i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p108-k4",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Challenge",
+       "text": "Challenge",
+       "_key": "p108-k5",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A sound engineer is programming a stereo echo plugin",
+       "text": "A sound engineer is programming a stereo echo plugin where complex numbers track the volume and timing of audio waves. To perfectly center the sound between the left speaker (volume multiplier x) and right speaker (volume multiplier y), the two audio paths must balance according to this equation: $(1+2i)(x+i)=x(y+i)$. Find the exact values of the real numbers x and y.",
+       "notes": "A photo of a sound engineer at a mixing screen accompanies the text; treated as decorative.",
+       "_key": "p108-k6",
+       "source_page": 108,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 109,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Operations with Complex Numbers (1)",
+       "text": "3-2 Operations with Complex Numbers (1) — Chapter 3 Complex Numbers and Equations",
+       "_key": "p109-k1",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Identify the complex number (z = a + bi) and its components",
+       "text": "Learning Outcomes: Identify the complex number ($z = a + bi$) and its components (the real part and the imaginary part). Perform arithmetic operations (addition, subtraction, multiplication, division) on complex numbers and put them in their simplest form.",
+       "_key": "p109-k2",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Calculations involving complex numbers can be performed in the same way as algebraic expressions.",
+       "claim": "Calculations with complex numbers can be performed in the same way as algebraic expressions. However, if i² appears, substitute i² = −1.",
+       "formula": "$i^2 = -1$",
+       "_key": "p109-k3",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Powers of i should be calculated by expressing them in terms of i²",
+       "claim": "Powers of i should be calculated by expressing them in terms of i². Example: i⁸ = (i²)⁴ = (−1)⁴ = 1; i⁷ = i × (i²)³ = i × (−1)³ = −i.",
+       "formula": "$i^8=(i^2)^4=(-1)^4=1,\\ i^7=i\\times(i^2)^3=i\\times(-1)^3=-i$",
+       "_key": "p109-k4",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "When the exponent is odd, express it using i and i².",
+       "text": "Side note (attached to the i⁷ example): When the exponent is odd, express it using $i$ and $i^2$.",
+       "_key": "p109-k5",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Calculate the following. (a) (3 − 2i) − (2 + 5i)",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(3-2i)-(2+5i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(i-2)^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$i^6+i^{27}+i^{17}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p109-k6",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Explanation (a) (3 − 2i) − (2 + 5i) = 3 − 2i − 2 − 5i",
+       "stem": "Calculate (a) $(3-2i)-(2+5i)$, (b) $(i-2)^2$, (c) $i^6+i^{27}+i^{17}$.",
+       "solution": [
+        "Calculate treating i as a variable.",
+        "(a) $=3-2i-2-5i$",
+        "$=1-7i$ (answer in the form a + bi)",
+        "(b) $(i-2)^2=i^2-4i+4$ (substitute i² = −1)",
+        "$=-1-4i+4$",
+        "$=3-4i$",
+        "(c) express each power of i using i²: $=(i^2)^3+i\\times(i^2)^{13}+i\\times(i^2)^8$",
+        "$=(-1)^3+i\\times(-1)^{13}+i\\times(-1)^8$",
+        "$=-1-i+i$",
+        "$=-1$"
+       ],
+       "answer": "(a) 1 − 7i; (b) 3 − 4i; (c) −1",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(3-2i)-(2+5i)$",
+         "answer": "$1-7i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(i-2)^2$",
+         "answer": "$3-4i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$i^6+i^{27}+i^{17}$",
+         "answer": "$-1$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Side notes: 'Calculate treating i as a variable.', 'Answer in the form a + bi', 'Substitute i² = −1', 'Express each power of i using i²'.",
+       "_key": "p109-k7",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Mixing real and imaginary parts: Adding or subtracting unlike terms together",
+       "claim": "Misconceptions: Mixing real and imaginary parts: adding or subtracting unlike terms together instead of keeping real and imaginary parts separate. Errors in multiplication: when expanding brackets, forgetting that i × i = i² = −1.",
+       "_key": "p109-k8",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Calculate the following. (a) (4 + 6i) + (−3 + 2i)",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(4+6i)+(-3+2i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(2+3i)(1-2i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$i+i^2+i^3+i^4$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p109-k9",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "activity",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p109-k10",
+       "source_page": 109,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 110,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Calculate the following.",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$(7+4i)-(3+5i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$(-4+3i)+(5-6i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$(3-3i)-(5-3i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$(\\sqrt{2}+3i)(\\sqrt{2}+i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$(2+3i)+(5+8i)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\left(\\frac{2}{5}-\\frac{1}{2}i\\right)-\\left(\\frac{1}{3}+\\frac{3}{7}i\\right)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$(2i-1)^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$\\left(\\frac{2}{i}+i\\right)\\left(\\frac{2}{i}-i\\right)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$(2+i)^3+(2-i)^3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$i^5+i^3+i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$i^9+i^{14}+i^{11}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$i^{12}+i^{18}+i^{15}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p110-k1",
+       "source_page": 110,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Given that x is a real number, solve the equation:",
+       "text": "Given that $x$ is a real number, solve the equation: $(7x-7i)(x^2+xi)=14x^2i^{40}$",
+       "parts": [],
+       "_key": "p110-k2",
+       "source_page": 110,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 111,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Operations with Complex Numbers (2)",
+       "text": "3-3 Operations with Complex Numbers (2) — Chapter 3 Complex Numbers and Equations",
+       "label": "",
+       "number": null,
+       "_key": "p111-k1",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Identify the complex number (z = a + bi) and its components",
+       "text": "Learning Outcomes: Identify the complex number (z = a + bi) and its components (the real part and the imaginary part). Perform arithmetic operations (addition, subtraction, multiplication, division) on complex numbers and put them in their simplest form.",
+       "label": "",
+       "number": null,
+       "_key": "p111-k2",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "definition",
+       "quote": "Complex numbers a + bi and a − bi are called Complex Conjugates",
+       "claim": "Complex numbers a + bi and a − bi are called complex conjugates.",
+       "formula": "$a+bi$ and $a-bi$",
+       "label": "",
+       "number": null,
+       "notes": "Margin note beside it: 'The signs of their imaginary parts are opposite.'",
+       "_key": "p111-k3",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "quote": "The signs of their imaginary parts are opposite.",
+       "text": "The signs of their imaginary parts are opposite.",
+       "label": "",
+       "number": null,
+       "notes": "Side-column note linked by dotted line to the conjugates definition.",
+       "_key": "p111-k4",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "The product of conjugate complex numbers becomes a real number.",
+       "claim": "The product of conjugate complex numbers is a real number.",
+       "label": "",
+       "number": null,
+       "_key": "p111-k5",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "quote": "(2 + 3i)(2 − 3i) = 4 − 9i²",
+       "stem": "$(2+3i)(2-3i)$",
+       "solution": [
+        "$(2+3i)(2-3i)=4-9i^2$",
+        "$=4-9\\times(-1)$",
+        "$=4+9$",
+        "$=13$"
+       ],
+       "answer": "$13$",
+       "label": "Example",
+       "number": null,
+       "_key": "p111-k6",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "quote": "first multiply both the numerator and denominator by",
+       "claim": "For fractional expressions containing imaginary numbers in the denominator, first multiply both numerator and denominator by the complex conjugate of the denominator to make the denominator a real number.",
+       "label": "",
+       "number": null,
+       "_key": "p111-k7",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "quote": "(1 − i)(2 − 3i) / (2 + 3i)(2 − 3i)",
+       "stem": "$\\dfrac{1-i}{2+3i}$",
+       "solution": [
+        "$\\dfrac{1-i}{2+3i}=\\dfrac{(1-i)(2-3i)}{(2+3i)(2-3i)}$",
+        "$=\\dfrac{-1-5i}{13}$"
+       ],
+       "answer": "$\\dfrac{-1-5i}{13}$",
+       "label": "Example",
+       "number": null,
+       "notes": "The multiplier (2 − 3i) is highlighted in pink.",
+       "_key": "p111-k8",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "label": "",
+       "number": null,
+       "_key": "p111-k9",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "_key": "p111-k10",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "quote": "State the complex conjugate of the following complex numbers.",
+       "text": "State the complex conjugate of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$2+3i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$7-i\\sqrt{11}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$-5i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "label": "Warm Up",
+       "number": 1,
+       "_key": "p111-k11",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "quote": "Calculate the following and answer in the form a + bi.",
+       "text": "Calculate the following and answer in the form $a+bi$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\dfrac{2+i}{2-i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\dfrac{3-i}{2i}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "label": "Warm Up",
+       "number": 2,
+       "_key": "p111-k12",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "heading",
+       "quote": "Explanation",
+       "text": "Explanation",
+       "label": "",
+       "number": null,
+       "_key": "p111-k13",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "worked_example",
+       "quote": "Reverse the sign of the imaginary part.",
+       "stem": "Warm Up 1: Reverse the sign of the imaginary part.",
+       "solution": [
+        "Reverse the sign of the imaginary part."
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$2-3i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "$7+i\\sqrt{11}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "$6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "$5i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "label": "Explanation",
+       "number": 1,
+       "notes": "Side notes: 'Conjugate of 6 + 0i is 6 − 0i' and 'Conjugate of 0 − 5i is 0 + 5i'.",
+       "_key": "p111-k14",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "quote": "Conjugate of 6 + 0i is 6 − 0i",
+       "text": "Conjugate of 6 + 0i is 6 − 0i",
+       "label": "",
+       "number": null,
+       "notes": "Side-column note, linked to part (c).",
+       "_key": "p111-k15",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "linking_text",
+       "quote": "Conjugate of 0 − 5i is 0 + 5i",
+       "text": "Conjugate of 0 − 5i is 0 + 5i",
+       "label": "",
+       "number": null,
+       "notes": "Side-column note, linked to part (d).",
+       "_key": "p111-k16",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "worked_example",
+       "quote": "(2 + i)² / (2 − i)(2 + i)",
+       "stem": "Warm Up 2(a): $\\dfrac{2+i}{2-i}$",
+       "solution": [
+        "$\\dfrac{2+i}{2-i}=\\dfrac{(2+i)^2}{(2-i)(2+i)}$",
+        "$=\\dfrac{4+4i+i^2}{4-i^2}$",
+        "$=\\dfrac{4+4i+(-1)}{4-(-1)}$",
+        "$=\\dfrac{3+4i}{5}$",
+        "$=\\dfrac{3}{5}+\\dfrac{4}{5}i$"
+       ],
+       "answer": "$\\dfrac{3}{5}+\\dfrac{4}{5}i$",
+       "label": "Explanation",
+       "number": 2,
+       "notes": "Only part (a) is worked on this page. Side notes: 'Multiply numerator and denominator by 2 + i' and 'Answer in the form a + bi'.",
+       "_key": "p111-k17",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k18",
+       "type": "linking_text",
+       "quote": "Multiply numerator and denominator by 2 + i",
+       "text": "Multiply numerator and denominator by 2 + i",
+       "label": "",
+       "number": null,
+       "notes": "Side-column note.",
+       "_key": "p111-k18",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k19",
+       "type": "linking_text",
+       "quote": "Answer in the form a + bi",
+       "text": "Answer in the form a + bi",
+       "label": "",
+       "number": null,
+       "notes": "Side-column note.",
+       "_key": "p111-k19",
+       "source_page": 111,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 112,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "(b) 3 − i over 2i, multiply by −2i",
+       "continues": true,
+       "stem": "(b) $\\frac{3-i}{2i}$",
+       "solution": [
+        "Multiply numerator and denominator by $-2i$: $\\frac{(3-i)(-2i)}{2i(-2i)}=\\frac{-6i+2i^2}{-4i^2}$",
+        "$=\\frac{-6i+2\\times(-1)}{-4\\times(-1)}$",
+        "Simplify the fraction: $=\\frac{-2-6i}{4}$",
+        "Answer in the form $a+bi$: $=-\\frac{1}{2}-\\frac{3}{2}i$"
+       ],
+       "answer": "$-\\frac{1}{2}-\\frac{3}{2}i$",
+       "notes": "Side notes (Multiply numerator and denominator by −2i; Simplify the fraction; Answer in the form a + bi) folded into solution. Printed second step has -6i+2i^2 over -4i^2 (printed as written). Hand-annotated cancellation marks in the simplify step.",
+       "_key": "p112-k1",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "State the complex conjugate of the following complex numbers.",
+       "text": "State the complex conjugate of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$1-4i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sqrt{2}+i\\sqrt{10}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$-8i$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Preceded by 'Solve the following problems.'",
+       "_key": "p112-k2",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Calculate the following and answer in the form a + bi.",
+       "text": "Calculate the following and answer in the form $a+bi$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{3+i}{1+2i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{1-i}{i}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p112-k3",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p112-k4",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "State the complex conjugate of the following complex numbers.",
+       "text": "State the complex conjugate of the following complex numbers.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$3+4i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$9+8i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$8+i\\sqrt{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$-15$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\sqrt{7}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$-50i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$i\\sqrt{6}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Preceded by 'Solve the following problems.'",
+       "_key": "p112-k5",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Calculate the following and answer in the form a + bi.",
+       "text": "Calculate the following and answer in the form $a+bi$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{1+i}{1-i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{3+i}{2+i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{\\sqrt{5}+i}{\\sqrt{5}-i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\frac{5i}{1+2i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\frac{5i}{4+3i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\frac{1-3i}{3-2i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$\\frac{1}{i}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$\\frac{2+i}{3i}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p112-k6",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Perform the indicated operation and write your answer in standard form.",
+       "text": "Perform the indicated operation and write your answer in standard form: $\\left(\\frac{i(10-12i)}{(2+i)(-1+4i)}\\right)^{2027}$",
+       "_key": "p112-k7",
+       "source_page": 112,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 113,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Square Roots of Negative Numbers",
+       "text": "3-4 Square Roots of Negative Numbers (Chapter 3 Complex Numbers and Equations)",
+       "_key": "p113-k1",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When a > 0, √−a = i√a",
+       "claim": "For a > 0, the square root of −a equals i times the square root of a.",
+       "formula": "$a>0,\\ \\sqrt{-a}=i\\sqrt{a}$",
+       "_key": "p113-k2",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "When the inside of the square root is a negative number",
+       "claim": "When the inside of the square root is a negative number, calculate after expressing it in a form in terms of i.",
+       "_key": "p113-k3",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate square roots of negative numbers and complex numbers",
+       "text": "Learning Outcomes: Calculate square roots of negative numbers and complex numbers.",
+       "_key": "p113-k4",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p113-k5",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p113-k6",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Express the square roots of −6 in terms of i.",
+       "text": "Express the square roots of $-6$ in terms of $i$.",
+       "_key": "p113-k7",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Calculate the following.",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-12}\\times\\sqrt{-6}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\dfrac{\\sqrt{8}}{\\sqrt{-18}}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p113-k8",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p113-k9",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "The square roots of −6 are ± √−6 = ± i√6",
+       "stem": "Square roots of $-6$ (Warm Up 1).",
+       "solution": [
+        "The square roots of $-6$ are $\\pm\\sqrt{-6}=\\pm i\\sqrt{6}$"
+       ],
+       "answer": "$\\pm i\\sqrt{6}$",
+       "_key": "p113-k10",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "= i√12 × i √6",
+       "stem": "Calculate (a) $\\sqrt{-12}\\times\\sqrt{-6}$ and (b) $\\dfrac{\\sqrt8}{\\sqrt{-18}}$.",
+       "solution": [],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-12}\\times\\sqrt{-6}$",
+         "solution": [
+          "$=i\\sqrt{12}\\times i\\sqrt{6}$",
+          "$=2i\\sqrt{3}\\times i\\sqrt{6}$",
+          "$=6i^2\\sqrt{2}$",
+          "$=6\\sqrt{2}\\times(-1)=-6\\sqrt{2}$"
+         ],
+         "answer": "$-6\\sqrt{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\dfrac{\\sqrt8}{\\sqrt{-18}}$",
+         "solution": [
+          "$=\\dfrac{2\\sqrt2}{3\\sqrt2\\,i}$ (with $\\sqrt2$ crossed out)",
+          "$=\\dfrac{-6i}{9}$",
+          "$=-\\dfrac{2}{3}i$"
+         ],
+         "answer": "$-\\dfrac{2}{3}i$",
+         "notes": "Side note says multiply numerator and denominator by −3i.",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Side margin notes attached to steps: see k12-k14.",
+       "_key": "p113-k11",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "First express in terms of i",
+       "text": "Side note beside (a) first line: First express in terms of $i$.",
+       "_key": "p113-k12",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute i² = −1",
+       "text": "Side note beside (a) third line: Substitute $i^2=-1$.",
+       "_key": "p113-k13",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Multiply numerator and denominator by −3i (or simpler, just i).",
+       "text": "Side note beside (b): Multiply numerator and denominator by $-3i$ (or simpler, just $i$).",
+       "_key": "p113-k14",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Thinking √−n is undefined or impossible",
+       "claim": "Misconception: thinking √−n is undefined or impossible. Students may believe negative numbers cannot have square roots at all, rather than understanding that complex numbers extend the system to make this possible.",
+       "_key": "p113-k15",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Confusing signs: Some assume √−n = −√n, which is incorrect.",
+       "claim": "Misconception: confusing signs. Some assume √−n = −√n, which is incorrect; the correct form is √−n = i√n.",
+       "formula": "$\\sqrt{-n}=i\\sqrt{n}$",
+       "_key": "p113-k16",
+       "source_page": 113,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 114,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Try",
+       "label": "",
+       "number": null,
+       "text": "Try",
+       "_key": "p114-k1",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p114-k2",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Express the following numbers in terms of i.",
+       "text": "Express the following numbers in terms of i.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-7}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sqrt{-27}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$-\\sqrt{-12}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Square roots of $-12$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p114-k3",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Calculate the following.",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-3}\\times\\sqrt{-6}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{\\sqrt{27}}{\\sqrt{-3}}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$(3+\\sqrt{-2})^2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p114-k4",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "label": "",
+       "number": null,
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p114-k5",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "quote": "Exercise",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p114-k6",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p114-k7",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Express the following numbers in terms of i.",
+       "text": "Express the following numbers in terms of $i$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sqrt{-9}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sqrt{-45}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$-\\sqrt{-24}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$-\\sqrt{-36}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "Square roots of $-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "Square roots of $-18$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "Square roots of $-16$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p114-k8",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Calculate the following.",
+       "text": "Calculate the following.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sqrt{-2}\\times\\sqrt{-6}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sqrt{-28}\\times\\sqrt{-35}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{\\sqrt{8}}{\\sqrt{-2}}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\frac{\\sqrt{27}}{\\sqrt{-12}}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\sqrt{-32}+\\sqrt{-98}+\\sqrt{-8}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\sqrt{-98}-\\sqrt{-72}+\\sqrt{-50}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$(\\sqrt{3}+\\sqrt{-5})^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$(2+\\sqrt{-3})(2-\\sqrt{-3})$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p114-k9",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Solve: (2x – 8)² = –10",
+       "text": "Solve: $(2x-8)^2=-10$",
+       "notes": "Challenge box (star).",
+       "_key": "p114-k10",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "how does this change your view of what makes a mathematical concept",
+       "text": "Looking back at how expanding our number system from standard real lines to two-dimensional planes allows us to calculate things like tissue impedance and audio processing, how does this change your view of what makes a mathematical concept \"real\" versus \"imaginary\"?",
+       "_key": "p114-k11",
+       "source_page": 114,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Identify parts of a complex number",
+      "description": "Identify a complex number a + bi, state its real and imaginary parts, and tell real from imaginary numbers.",
+      "evidence_keys": [
+       "p106-k7",
+       "p106-k8",
+       "p106-k13",
+       "p107-k3",
+       "p108-k3"
+      ]
+     },
+     {
+      "label": "Use equality of complex numbers",
+      "description": "Find real unknowns x, y by equating real and imaginary parts of two complex numbers.",
+      "evidence_keys": [
+       "p106-k11",
+       "p106-k12",
+       "p107-k4",
+       "p107-k7",
+       "p108-k4"
+      ]
+     },
+     {
+      "label": "Add, subtract and multiply complex numbers",
+      "description": "Calculate sums, differences, products and powers of i, replacing i² with −1.",
+      "evidence_keys": [
+       "p109-k3",
+       "p109-k4",
+       "p109-k7",
+       "p109-k9",
+       "p110-k1"
+      ]
+     },
+     {
+      "label": "Find conjugates and divide complex numbers",
+      "description": "State complex conjugates and divide complex numbers by multiplying by the conjugate of the denominator, giving the answer as a + bi.",
+      "evidence_keys": [
+       "p111-k3",
+       "p111-k7",
+       "p111-k8",
+       "p112-k3",
+       "p112-k6"
+      ]
+     },
+     {
+      "label": "Calculate with square roots of negative numbers",
+      "description": "Write square roots of negative numbers in terms of i and calculate with them.",
+      "evidence_keys": [
+       "p113-k2",
+       "p113-k3",
+       "p113-k11",
+       "p114-k4",
+       "p114-k9"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p106-k3",
+      "objective": 1
+     },
+     {
+      "key": "p106-k5",
+      "objective": 1
+     },
+     {
+      "key": "p106-k6",
+      "objective": 1
+     },
+     {
+      "key": "p106-k7",
+      "objective": 1
+     },
+     {
+      "key": "p106-k8",
+      "objective": 1
+     },
+     {
+      "key": "p106-k9",
+      "objective": 1
+     },
+     {
+      "key": "p106-k10",
+      "objective": 1
+     },
+     {
+      "key": "p106-k11",
+      "objective": 2
+     },
+     {
+      "key": "p106-k12",
+      "objective": 2
+     },
+     {
+      "key": "p106-k13",
+      "objective": 1
+     },
+     {
+      "key": "p107-k3",
+      "objective": 1
+     },
+     {
+      "key": "p107-k4",
+      "objective": 2
+     },
+     {
+      "key": "p107-k6",
+      "objective": 1
+     },
+     {
+      "key": "p107-k7",
+      "objective": 2
+     },
+     {
+      "key": "p107-k10",
+      "objective": 1
+     },
+     {
+      "key": "p107-k11",
+      "objective": 2
+     },
+     {
+      "key": "p108-k3",
+      "objective": 1
+     },
+     {
+      "key": "p108-k4",
+      "objective": 2
+     },
+     {
+      "key": "p108-k6",
+      "objective": 2
+     },
+     {
+      "key": "p109-k3",
+      "objective": 3
+     },
+     {
+      "key": "p109-k4",
+      "objective": 3
+     },
+     {
+      "key": "p109-k6",
+      "objective": 3
+     },
+     {
+      "key": "p109-k7",
+      "objective": 3
+     },
+     {
+      "key": "p109-k8",
+      "objective": 3
+     },
+     {
+      "key": "p109-k9",
+      "objective": 3
+     },
+     {
+      "key": "p109-k10",
+      "objective": 3
+     },
+     {
+      "key": "p110-k1",
+      "objective": 3
+     },
+     {
+      "key": "p110-k2",
+      "objective": 3
+     },
+     {
+      "key": "p111-k3",
+      "objective": 4
+     },
+     {
+      "key": "p111-k5",
+      "objective": 4
+     },
+     {
+      "key": "p111-k6",
+      "objective": 4
+     },
+     {
+      "key": "p111-k7",
+      "objective": 4
+     },
+     {
+      "key": "p111-k8",
+      "objective": 4
+     },
+     {
+      "key": "p111-k11",
+      "objective": 4
+     },
+     {
+      "key": "p111-k12",
+      "objective": 4
+     },
+     {
+      "key": "p111-k14",
+      "objective": 4
+     },
+     {
+      "key": "p111-k17",
+      "objective": 4
+     },
+     {
+      "key": "p112-k1",
+      "objective": 4
+     },
+     {
+      "key": "p112-k2",
+      "objective": 4
+     },
+     {
+      "key": "p112-k3",
+      "objective": 4
+     },
+     {
+      "key": "p112-k5",
+      "objective": 4
+     },
+     {
+      "key": "p112-k6",
+      "objective": 4
+     },
+     {
+      "key": "p112-k7",
+      "objective": 4
+     },
+     {
+      "key": "p113-k2",
+      "objective": 5
+     },
+     {
+      "key": "p113-k3",
+      "objective": 5
+     },
+     {
+      "key": "p113-k7",
+      "objective": 5
+     },
+     {
+      "key": "p113-k8",
+      "objective": 5
+     },
+     {
+      "key": "p113-k10",
+      "objective": 5
+     },
+     {
+      "key": "p113-k11",
+      "objective": 5
+     },
+     {
+      "key": "p113-k15",
+      "objective": 5
+     },
+     {
+      "key": "p113-k16",
+      "objective": 5
+     },
+     {
+      "key": "p114-k3",
+      "objective": 5
+     },
+     {
+      "key": "p114-k4",
+      "objective": 5
+     },
+     {
+      "key": "p114-k8",
+      "objective": 5
+     },
+     {
+      "key": "p114-k9",
+      "objective": 5
+     },
+     {
+      "key": "p114-k10",
+      "objective": 5
+     },
+     {
+      "key": "p114-k11",
+      "objective": 5
+     }
+    ],
+    "prompt_figures": []
+   }
+  }
+ ],
+ "failed_lessons": []
+}

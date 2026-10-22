@@ -1,0 +1,46 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-4-1:exercise-1-l",
+ "lo_id": "lo:eb11c3-4-1",
+ "book_item": "eb11c3-4:exercise-1#l",
+ "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   -2
+  ]
+ },
+ "stem": "Solve $x^3 + 6x^2 + 12x + 8 = 0$. Tap every real solution on the number line.",
+ "solution": [
+  "Let $P(x)=x^3+6x^2+12x+8$. $P(-2)=-8+24-24+8=0$, so $(x+2)$ is a factor.",
+  "Divide: $(x+2)(x^2+4x+4)=0$.",
+  "Factorise: $x^2+4x+4=(x+2)^2$, so $(x+2)^3=0$.",
+  "The only solution is $x=-2$ (repeated three times)."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 1,
+   "text": "Use the Factor Theorem: try small whole numbers in $P(x)$ until one gives $0$."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 3,
+   "text": "Factorise the quadratic part fully and see whether any new solution appears."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 4,
+   "text": "Set the factor equal to zero: $(x+a)$ gives $x=-a$."
+  }
+ ],
+ "notes": "Book answer x = -2."
+}

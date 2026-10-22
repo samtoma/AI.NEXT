@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-1:factor-twist",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-1",
+ "parent_question_id": "q:eb11c1-3-1:bk-exercise-1-e",
+ "source_page": 16,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    4
+   ],
+   "resample_while": "b == a"
+  },
+  {
+   "name": "c",
+   "let": "b - a"
+  },
+  {
+   "name": "sc",
+   "let": "'+' if c > 0 else '-'"
+  },
+  {
+   "name": "cs",
+   "let": "'' if abs(c) == 1 else str(abs(c))"
+  }
+ ],
+ "constraints": [
+  "a != b"
+ ],
+ "stem": "Simplify the following rational expression. $\\frac{{=k}x^2-{=2*k*a}x+{=k*a*a}}{x^3{=sc}{=cs}x^2-{=a*b}x}$",
+ "answer": "{=k}*(x-{=a})/(x*(x+{=b}))",
+ "solution": [
+  "Factorise the top: take out the common factor {=k}, then recognise a perfect square: ${=k}x^2-{=2*k*a}x+{=k*a*a}={=k}(x^2-{=2*a}x+{=a*a})={=k}(x-{=a})^2$.",
+  "Factorise the bottom: take out $x$ first: $x^3{=sc}{=cs}x^2-{=a*b}x=x(x^2{=sc}{=cs}x-{=a*b})$.",
+  "Factorise the quadratic: $x^2{=sc}{=cs}x-{=a*b}=(x-{=a})(x+{=b})$, so the bottom is $x(x-{=a})(x+{=b})$.",
+  "Cancel one common factor $(x-{=a})$ from top and bottom.",
+  "The answer is $\\frac{{=k}(x-{=a})}{x(x+{=b})}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=k}*(x-{=a})/(x*(x+{=b}))",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on book exercise 1(e): common factor, perfect-square numerator, cubic denominator with x taken out then quadratic factorised. Numerator k(x-a)^2, denominator x(x-a)(x+b), a != b so the x^2 term of the denominator never vanishes (c nonzero) and the printed form is clean. Coefficient 1 is suppressed via cs. Answer is not reducible further."
+}

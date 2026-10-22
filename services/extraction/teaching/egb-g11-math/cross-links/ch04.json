@@ -1,0 +1,102 @@
+{
+ "format": "ainext.cross-links/1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "run": "runs/egb-g11-math/links/xlinks-ch04.20261021T143044Z.json",
+ "runs": [
+  "runs/egb-g11-math/links/xlinks-ch04.20261021T143044Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "prior_objectives": 55,
+ "links": [
+  {
+   "src": "lo:eb11c3-2-2",
+   "dst": "lo:eb11c4-3-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE21",
+     "anchor": "eb11c4-3:example-4",
+     "printed_page": 188,
+     "quote": "$D=6^2-4\\cdot2\\cdot7=-20<0$"
+    },
+    {
+     "kind": "text",
+     "anchor": "eb11c4-3:rule-12",
+     "printed_page": 187,
+     "quote": "create a quadratic equation and check the sign of the discriminant D"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step is there: D computed and its sign is read to count the intersection points. It needs the meaning of the sign of D (negative gives no real roots), which src teaches. A student can't get that from dst, which only applies D. Passes all three tests."
+   },
+   "key": "lo:eb11c3-2-2->lo:eb11c4-3-2",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Determine the nature of the solutions of a quadratic equation using the discriminant, and find the range of a constant for which the solutions are real, repeated or imaginary.",
+   "dst_statement": "Calculate the points of intersection of a circle and a line, determine their number using the discriminant D, find constants or radii for tangency, and compute the length of a chord.",
+   "fingerprint": "de60744e7ace54ddf145205e5720bdf0",
+   "reason": "STEP: uses D>0 for two intersection points to bound k | RESULT: discriminant sign gives root count | WHY NOT LOCAL: not taught in this chapter",
+   "run": "runs/egb-g11-math/links/xlinks-ch04.20261021T143044Z.json"
+  },
+  {
+   "src": "lo:eb11c3-2-2",
+   "dst": "lo:eb11c4-3-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE22",
+     "anchor": "eb11c4-3:explanation-3",
+     "printed_page": 189,
+     "quote": "$=-4k^2+100>0$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Step is there: D>0 is set for two distinct intersection points, then solved for k. It rests on D>0 meaning two distinct real roots, which src teaches. dst only applies D here, so the removal test does not remove the need."
+   },
+   "key": "lo:eb11c3-2-2->lo:eb11c4-3-3",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Determine the nature of the solutions of a quadratic equation using the discriminant, and find the range of a constant for which the solutions are real, repeated or imaginary.",
+   "dst_statement": "Derive the equation of a tangent to a circle x²+y²=r², at a given point on it or drawn from a point not on it.",
+   "fingerprint": "f394f35ceab97b5c519a95f426bdc8ff",
+   "reason": "STEP: sets D>0 for two intersection points and solves for the range of k | RESULT: discriminant sign conditions give number of real roots and the range of a constant | WHY NOT LOCAL: the discriminant meaning is taught in the earlier chapter",
+   "run": "runs/egb-g11-math/links/xlinks-ch04.20261021T143044Z.json"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:eb11c3-2-2->lo:eb11c4-3-2",
+   "src": "lo:eb11c3-2-2",
+   "dst": "lo:eb11c4-3-2",
+   "why": "a duplicate of a link already kept",
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Same step as i=1, within dst lo 3-2. D>0 is used for two intersection points, and the sign meaning comes from src. Not taught locally."
+   },
+   "cross": true
+  },
+  {
+   "key": "lo:eb11c3-2-2->lo:eb11c4-3-1",
+   "src": "lo:eb11c3-2-2",
+   "dst": "lo:eb11c4-3-1",
+   "why": "the link checker said REJECTED: Removal test decided. The step is a quadratic inequality in k, 2k^2-4k-6>0. The circle condition r^2>0 is stated in dst itself. Solving the inequality is earlier-grade algebra and does not need the discriminant lesson, which is about the nature of roots.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Removal test decided. The step is a quadratic inequality in k, 2k^2-4k-6>0. The circle condition r^2>0 is stated in dst itself. Solving the inequality is earlier-grade algebra and does not need the discriminant lesson, which is about the nature of roots."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
+ "outside_book": [],
+ "failures": [],
+ "decisions": [],
+ "made": "2026-10-21"
+}

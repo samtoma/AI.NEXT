@@ -1,0 +1,1479 @@
+{
+ "format": "ainext.filing/1",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "made": "2026-10-21",
+ "made_by": "book_record_filing.py accept (file-v1)",
+ "run": "runs/egb-g11-math/filing/filing-ch02.20261021T140512Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "title": "Arithmetic Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-1:objective-1",
+     "label": "General term of a sequence",
+     "description": "Calculate terms of a sequence from its general term, and deduce the general term of a sequence from the pattern of its first few terms."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-1:objective-2",
+     "label": "General term of an arithmetic sequence",
+     "description": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms using a_n = a + (n-1)d."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-1:objective-3",
+     "label": "General term from given conditions",
+     "description": "Determine the general term of an arithmetic sequence from two given conditions, find which term has a given value, and use 2b = a + c when three numbers form an arithmetic sequence."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-1:objective-4",
+     "label": "Sum of an arithmetic sequence",
+     "description": "Calculate the sum S_n of an arithmetic sequence, including sums of a block of terms, sums of natural numbers or multiples, finding the number of terms first when unknown."
+    },
+    {
+     "n": 5,
+     "id": "eb11c2-1:objective-5",
+     "label": "Use a given sum",
+     "description": "Determine the number of terms or the general term from a given sum, and determine the number of terms giving the maximum sum of an arithmetic sequence."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c2-1:figure-1",
+     "type": "figure",
+     "page": 40,
+     "text": "Illustration 'Athlete Recovery Jogging Program': Week 1 shows a jogger with a timer reading 10 minutes; Week 2 timer 13 minutes (+3 min); Week 3 timer 16 minutes (+3 min); Week 4 timer 19 minutes (+3 min).",
+     "A": {
+      "objective": 0,
+      "why": "Jogging program intro illustrating constant additive change for the whole lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Jogging illustration introduces the lesson's idea of constant additive change."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "bfc3efe29b18945f"
+    },
+    {
+     "key": "eb11c2-1:definition-1",
+     "type": "definition",
+     "page": 40,
+     "text": "A list of numbers arranged in a row is called a sequence, and each number in the sequence is called a term.",
+     "A": {
+      "objective": 1,
+      "why": "Defines sequence and term, the basis for general term work."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines sequence and term."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "8091943b322ad987"
+    },
+    {
+     "key": "eb11c2-1:convention-1",
+     "type": "convention",
+     "page": 40,
+     "text": "The terms of a sequence are called the first term, the 2nd term, the 3rd term, etc., in order from the beginning. The term in the n-th position is called the n-th term.",
+     "A": {
+      "objective": 1,
+      "why": "Names first, 2nd, n-th terms, used for terms of a sequence."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Names first term, n-th term of a sequence."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "044f282c1731a1e4"
+    },
+    {
+     "key": "eb11c2-1:convention-2",
+     "type": "convention",
+     "page": 40,
+     "text": "To express a sequence generally, write it by attaching the term number to a single letter: $a_1, a_2, a_3, \\dots, a_n, \\dots$ ($a_1$ is the first term, $a_n$ is the $n$-th term, per side note). $a_1, a_2, a_3, \\dots, a_n, \\dots$",
+     "A": {
+      "objective": 1,
+      "why": "Notation a_n for general sequences."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Notation a_1, a_2, ..., a_n for terms of a sequence."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "5e23a73b0fc73cc7"
+    },
+    {
+     "key": "eb11c2-1:convention-3",
+     "type": "convention",
+     "page": 40,
+     "text": "The sequence is also denoted as $\\{a_n\\}$. $\\{a_n\\}$",
+     "A": {
+      "objective": 1,
+      "why": "Notation {a_n} for a sequence."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Notation {a_n} for a sequence."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "f095627f1bef7528"
+    },
+    {
+     "key": "eb11c2-1:figure-2",
+     "type": "figure",
+     "page": 43,
+     "text": "Side note diagram: terms a, a_2, a_3, ..., a_{n-1}, a_n with +d arrows between consecutive terms, a brace beneath; text: a_n is obtained by adding \"d\" to \"a\" exactly (n – 1) times.",
+     "A": {
+      "objective": 2,
+      "why": "Shows a_n is a plus (n-1) times d, the arithmetic general term."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Shows a_n is a plus d added (n-1) times, giving the general term."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "ecfbebcd064ec86d"
+    },
+    {
+     "key": "eb11c2-1:figure-3",
+     "type": "figure",
+     "page": 43,
+     "text": "Dotted side diagram: 2, 5, 8, 11, ... with +3 arrows between terms.",
+     "A": {
+      "objective": 2,
+      "why": "Example sequence with common difference +3."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Illustrates common difference +3 of an arithmetic sequence."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "dfc6847106b8b796"
+    },
+    {
+     "key": "eb11c2-1:figure-4",
+     "type": "figure",
+     "page": 43,
+     "text": "Dotted side diagram: 3, -2, -7, -12, -17, ... with -5 arrows between terms.",
+     "A": {
+      "objective": 2,
+      "why": "Example sequence with common difference -5."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Illustrates common difference -5 of an arithmetic sequence."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "6c7e8579b7a4f297"
+    },
+    {
+     "key": "eb11c2-1:rule-2",
+     "type": "rule",
+     "page": 46,
+     "text": "The general term a_n of an arithmetic sequence {a_n} is a + (n − 1)d. $a_n = a + (n-1)d$",
+     "A": {
+      "objective": 2,
+      "why": "States a_n = a + (n-1)d."
+     },
+     "B": {
+      "objective": 2,
+      "why": "States the general term a_n=a+(n-1)d."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "7b6a0a956fb8cef5"
+    },
+    {
+     "key": "eb11c2-1:rule-3",
+     "type": "rule",
+     "page": 46,
+     "text": "When finding the general term of an arithmetic sequence, first find the first term a and the common difference d.",
+     "A": {
+      "objective": 3,
+      "why": "Method of finding a and d first to get the general term from conditions."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Find a and d first to get the general term of an arithmetic sequence."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "0ac6df6393e74f50"
+    },
+    {
+     "key": "eb11c2-1:definition-4",
+     "type": "definition",
+     "page": 49,
+     "text": "In a sequence with n terms, n is called the number of terms, and the last term is called the last term.",
+     "A": {
+      "objective": 4,
+      "why": "Number of terms and last term, used for the sum formula."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Number of terms and last term are introduced for the sum formula."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "58b303054f0abd98"
+    },
+    {
+     "key": "eb11c2-1:convention-4",
+     "type": "convention",
+     "page": 49,
+     "text": "S_n denotes the sum from the first term to the n-th term of an arithmetic sequence.",
+     "A": {
+      "objective": 4,
+      "why": "Defines notation S_n for the sum."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Defines the notation S_n for the sum of terms."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "e7285e50f2135f16"
+    },
+    {
+     "key": "eb11c2-1:rule-5",
+     "type": "rule",
+     "page": 49,
+     "text": "When the first term is a, the last term is l and the number of terms is n, the sum is S_n = 1/2 n(a + l). $S_n=\\frac{1}{2}n(a+l)$",
+     "A": {
+      "objective": 4,
+      "why": "Sum formula with last term."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sum formula using first and last term."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "950e712b8b14fe4f"
+    },
+    {
+     "key": "eb11c2-1:method-1",
+     "type": "method",
+     "page": 49,
+     "text": "When the number of terms n is unknown, first find n using l = a + (n–1)d. $l=a+(n-1)d$",
+     "A": {
+      "objective": 4,
+      "why": "Find n first when unknown before summing."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Find the number of terms first when unknown, for the sum."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "b1450777a31110a0"
+    },
+    {
+     "key": "eb11c2-1:rule-7",
+     "type": "rule",
+     "page": 50,
+     "text": "Side note beside (b): the last term is $l=a+(n-1)d$. $l=a+(n-1)d$",
+     "A": {
+      "objective": 4,
+      "why": "Side note on last term used in sum problems."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Last term l=a+(n-1)d is used in the sum of part (b)."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "4d52a5440786fa83"
+    },
+    {
+     "key": "eb11c2-1:figure-5",
+     "type": "figure",
+     "page": 50,
+     "text": "Side diagram: terms $a_1+a_2+a_3+\\dots+a_9+a_{10}+\\dots+a_{20}$ with a brace under $a_1$ to $a_9$ labelled $S_9$, a brace under $a_{10}$ to $a_{20}$ labelled 'Required Sum', and a larger brace under the whole labelled $S_{20}$.",
+     "A": {
+      "objective": 4,
+      "why": "Shows sum of a block of terms as S_20 minus S_9."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Braces show the sum of a block of terms as S_20 minus S_9."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "bb40dfe5787e4844"
+    },
+    {
+     "key": "eb11c2-1:rule-8",
+     "type": "rule",
+     "page": 52,
+     "text": "Use arithmetic sequences for problems involving sums of natural numbers or multiples.",
+     "A": {
+      "objective": 4,
+      "why": "Sums of natural numbers or multiples via arithmetic sequences."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sums of natural numbers or multiples are done with arithmetic sequence sums."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "8c5b166f60c92afb"
+    },
+    {
+     "key": "eb11c2-1:rule-9",
+     "type": "rule",
+     "page": 52,
+     "text": "The sum S_n of an arithmetic sequence from the first term to the n-th term: when the first term is a, the last term is l, and the number of terms is n, S_n = (1/2) n (a + l). $S_n=\\frac{1}{2}n(a+l)$",
+     "A": {
+      "objective": 4,
+      "why": "Sum formula with first and last term."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sum formula S_n=(1/2)n(a+l)."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "70f17a8c7e1141b5"
+    },
+    {
+     "key": "eb11c2-1:rule-10",
+     "type": "rule",
+     "page": 52,
+     "text": "When the first term is a, the common difference is d, and the number of terms is n, S_n = (1/2) n {2a + (n-1)d}. $S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$",
+     "A": {
+      "objective": 4,
+      "why": "Sum formula with first term and common difference."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sum formula S_n with a, d, n."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "b5139ff0f910917d"
+    },
+    {
+     "key": "eb11c2-1:method-2",
+     "type": "method",
+     "page": 52,
+     "text": "When the number of terms n is unknown, first find n using l = a + (n-1)d. $l=a+(n-1)d$",
+     "A": {
+      "objective": 4,
+      "why": "Find n first with l = a+(n-1)d for sums."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Find n first using l=a+(n-1)d when computing a sum."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "7fe276e62bb24b87"
+    },
+    {
+     "key": "eb11c2-1:rule-11",
+     "type": "rule",
+     "page": 54,
+     "text": "The sum $S_n$ of an arithmetic sequence from the first term to the n-th term, when the first term is a, the last term is l and the number of terms is n, is given by the formula. $S_n = \\frac{1}{2}n(a+l)$",
+     "A": {
+      "objective": 5,
+      "why": "Sum formula restated among problems using a given sum."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sum formula with first and last term."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "704cf9780624b1a6"
+    },
+    {
+     "key": "eb11c2-1:rule-12",
+     "type": "rule",
+     "page": 54,
+     "text": "When the first term is a, the common difference is d, and the number of terms is n, the sum is given by the formula. $S_n = \\frac{1}{2}n\\{2a+(n-1)d\\}$",
+     "A": {
+      "objective": 5,
+      "why": "Sum formula restated among problems using a given sum."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Sum formula with a, d, n is the sum rule printed among sum examples."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "3405a203ffbcf145"
+    },
+    {
+     "key": "eb11c2-1:caution-1",
+     "type": "caution",
+     "page": 55,
+     "text": "Common Mistakes: for $S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$, you are solving for when the sum is positive ($S_n>0$) instead of finding until which term the sequence remains positive ($a_n>0$). $S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$",
+     "A": {
+      "objective": 5,
+      "why": "Mistake in finding the term count for maximum sum with negative d."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Warns against solving S_n>0 instead of a_n>0 in a maximum-sum problem."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "4a14b88d8ba37b0c"
+    },
+    {
+     "key": "eb11c2-1:figure-6",
+     "type": "figure",
+     "page": 55,
+     "text": "Side note with braces: $a_1, a_2, a_3, \\dots, a_{17}$ labelled 'positive terms'; $a_{18}, a_{19}, \\dots$ labelled 'negative terms'.",
+     "A": {
+      "objective": 5,
+      "why": "Positive and negative terms show where the maximum sum occurs."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Positive/negative terms braces show where the sum is greatest, for the maximum-sum rule."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "22b5ac90c68365c3"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-2",
+   "title": "Geometric Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-2:objective-1",
+     "label": "General term from first term, ratio",
+     "description": "Calculate the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio or from listed terms, and find the common ratio and missing terms."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-2:objective-2",
+     "label": "Terms given; b² = ac",
+     "description": "Determine the general term of a geometric sequence from two given terms, and use b² = ac for three numbers in a geometric sequence, including with an arithmetic sequence."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-2:objective-3",
+     "label": "Sum of n terms",
+     "description": "Calculate the sum S_n of a geometric sequence of n terms using the formula for S_n."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-2:objective-4",
+     "label": "First term, ratio from sums",
+     "description": "Determine the first term and common ratio of a geometric sequence from conditions on a term and sums of some of its terms."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c2-2:figure-1",
+     "type": "figure",
+     "page": 57,
+     "text": "Illustration of a bloodstream with E. coli bacteria, titled 'Exponential growth: single E. coli to massive colony in bloodstream'. Stages: introduction and entry; first division (geometric 1→2); multiplying exponentially (geometric 2→4→8→...); massive colony formation. Shows 2→4→8→16→32→64 and 2→4→8, with a growth curve at lower right. Small text is hard to read; verify.",
+     "A": {
+      "objective": 0,
+      "why": "Decorative/intro illustration of exponential bacterial growth for the whole lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Lesson-opening illustration of exponential growth motivating geometric sequences in general."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "d43b4387e9fc1e34"
+    },
+    {
+     "key": "eb11c2-2:figure-2",
+     "type": "figure",
+     "page": 57,
+     "text": "Side note diagram: a, a_2, a_3, ..., a_{n-1}, a_n with arrows each marked ×r; caption 'Multiplying a by r, (n−1) times results in a_n'.",
+     "A": {
+      "objective": 1,
+      "why": "Shows multiplying a by r (n−1) times gives a_n, the general term."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Shows multiplying a by r (n−1) times gives a_n, explaining the general term."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "370fbeba9b5e294e"
+    },
+    {
+     "key": "eb11c2-2:figure-3",
+     "type": "figure",
+     "page": 58,
+     "text": "Side note beside 1(b): sequence 5, 10, 20, 40, ... with curved arrows between consecutive terms each labelled ×r.",
+     "A": {
+      "objective": 1,
+      "why": "Shows the common ratio r between consecutive terms of 5, 10, 20, 40."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Illustrates the common ratio between consecutive terms of 5, 10, 20, 40 for the general term."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "16ec9a2690ffabfc"
+    },
+    {
+     "key": "eb11c2-2:rule-2",
+     "type": "rule",
+     "page": 58,
+     "text": "General term of a geometric sequence (side note). $a_n = ar^{n-1}$",
+     "A": {
+      "objective": 1,
+      "why": "States the general term a_n = ar^{n-1}."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Side note restating the general term a_n = ar^{n-1}."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "909ccd8242575e8c"
+    },
+    {
+     "key": "eb11c2-2:caution-1",
+     "type": "caution",
+     "page": 58,
+     "text": "Use parentheses when the common ratio is a negative number or a fraction.",
+     "A": {
+      "objective": 1,
+      "why": "Notes parentheses for negative or fractional ratio when writing the general term."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Notes parentheses for negative or fractional ratio when writing the general term."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "19666c9faacabc91"
+    },
+    {
+     "key": "eb11c2-2:figure-4",
+     "type": "figure",
+     "page": 58,
+     "text": "Side note beside item 2: sequence A, 24, 12, B, ... with arrows ×1/2 from A to 24 (and ÷1/2 backward from 24 to A), ×1/2 from 24 to 12, ×1/2 from 12 to B.",
+     "A": {
+      "objective": 1,
+      "why": "Finds missing terms A and B using the common ratio of 1/2."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Shows finding missing terms using the common ratio 1/2."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "5475d87ab9daccaa"
+    },
+    {
+     "key": "eb11c2-2:rule-3",
+     "type": "rule",
+     "page": 60,
+     "text": "The general term of a geometric sequence with first term a and common ratio r is a_n = a r^{n-1}. $a_n = ar^{n-1}$",
+     "A": {
+      "objective": 1,
+      "why": "Restates the general term a_n = ar^{n-1} from first term and ratio."
+     },
+     "B": {
+      "objective": 1,
+      "why": "States the general term a_n = ar^{n-1} from first term and ratio."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "b4b5a4b4bd7c7f4b"
+    },
+    {
+     "key": "eb11c2-2:rule-6",
+     "type": "rule",
+     "page": 63,
+     "text": "Equivalently, when $r \\neq 1$, $S_n=\\frac{a(r^n-1)}{r-1}$ (formula to use when the common ratio r is greater than 1). $S_n=\\frac{a(r^n-1)}{r-1}$",
+     "A": {
+      "objective": 3,
+      "why": "Gives the alternative sum formula S_n for r>1."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Sum formula for r>1 is the S_n formula for a geometric sequence."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "b26f214f6bff2ca4"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-3",
+   "title": "Summation",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-3:objective-1",
+     "label": "Write and expand Σ",
+     "description": "Write a sum given with the summation symbol Σ as a sum of terms, and express a sum of terms or of a general term using Σ."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-3:objective-2",
+     "label": "Evaluate sums with formulas",
+     "description": "Calculate sums in terms of n using the summation properties and the formulas for constants, k, k², k³ and geometric sequences, and evaluate sums with numerical limits."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-3:objective-3",
+     "label": "Sum fractional sequences",
+     "description": "Calculate the sum of fractional sequences by decomposing each term into partial fractions (or rationalizing square-root denominators) and cancelling terms."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-3:objective-4",
+     "label": "Sum arithmetic × geometric",
+     "description": "Find the sum of the product of an arithmetic sequence and a geometric sequence using S − rS."
+    },
+    {
+     "n": 5,
+     "id": "eb11c2-3:objective-5",
+     "label": "General term and sum S_n",
+     "description": "Find the k-th term and the sum S_n of a sequence whose terms are themselves sums, and find the general term a_n from S_n using a_n = S_n − S_{n−1} for n ≥ 2 and a_1 = S_1."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c2-3:figure-1",
+     "type": "figure",
+     "page": 68,
+     "text": "Two-panel illustration: left 'SIMPLE SAPLINGS PLANTING' shows people planting and watering saplings; right 'DROUGHT PRESSURE' shows sun, dry ground and wilting saplings with a person watering. No numeric values.",
+     "A": {
+      "objective": 0,
+      "why": "Decorative opening illustration with no numeric values."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Decorative opening illustration with no numeric content."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "a3b69fe72041b12a"
+    },
+    {
+     "key": "eb11c2-3:rule-1",
+     "type": "rule",
+     "page": 71,
+     "text": "Sum of a constant c from k=1 to n equals nc (c is a constant). $\\sum_{k=1}^{n} c = nc$",
+     "A": {
+      "objective": 2,
+      "why": "Formula for the sum of a constant, used to evaluate sums."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Sum of a constant formula."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "b27719634956f638"
+    },
+    {
+     "key": "eb11c2-3:rule-3",
+     "type": "rule",
+     "page": 71,
+     "text": "Sum of k squared from k=1 to n equals one sixth n(n+1)(2n+1). $\\sum_{k=1}^{n} k^2 = \\frac{1}{6}n(n+1)(2n+1)$",
+     "A": {
+      "objective": 2,
+      "why": "Formula for the sum of k squared."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Sum of squares formula."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "c4cb6c65e8836b53"
+    },
+    {
+     "key": "eb11c2-3:convention-1",
+     "type": "convention",
+     "page": 71,
+     "text": "In the properties of the summation symbol Σ, p is a constant independent of k.",
+     "A": {
+      "objective": 2,
+      "why": "Clarifies p is constant in the summation properties."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Says p is constant in the summation properties."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "20813448bb29598e"
+    },
+    {
+     "key": "eb11c2-3:rule-4",
+     "type": "rule",
+     "page": 71,
+     "text": "A constant factor can be taken out of the sum. Printed example: sum of 5k equals 5 times sum of k. $\\sum_{k=1}^{n} pa_k = p\\sum_{k=1}^{n} a_k$; Example: $\\sum_{k=1}^{n} 5k = 5\\sum_{k=1}^{n} k$",
+     "A": {
+      "objective": 2,
+      "why": "Summation property of taking out a constant factor."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Summation property for taking out a constant factor."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "08e6f07092b3d320"
+    },
+    {
+     "key": "eb11c2-3:rule-5",
+     "type": "rule",
+     "page": 71,
+     "text": "The sum of a sum is the sum of the sums. Printed example given. $\\sum_{k=1}^{n} (a_k+b_k) = \\sum_{k=1}^{n} a_k + \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (k^2+4) = \\sum_{k=1}^{n} k^2 + \\sum_{k=1}^{n} 4$",
+     "A": {
+      "objective": 2,
+      "why": "Summation property for a sum of terms."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Summation property for sums."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "3a636c21b10b08dc"
+    },
+    {
+     "key": "eb11c2-3:rule-6",
+     "type": "rule",
+     "page": 71,
+     "text": "The sum of a difference is the difference of the sums. Printed example given. $\\sum_{k=1}^{n} (a_k-b_k) = \\sum_{k=1}^{n} a_k - \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (2k-3) = 2\\sum_{k=1}^{n} k - \\sum_{k=1}^{n} 3$",
+     "A": {
+      "objective": 2,
+      "why": "Summation property for a difference of terms."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Summation property for differences."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "23ba5b19e3cab5c4"
+    },
+    {
+     "key": "eb11c2-3:rule-7",
+     "type": "rule",
+     "page": 74,
+     "text": "Formula for the sum of cubes: the sum of k^3 for k from 1 to n equals the square of one half n(n+1). $\\sum_{k=1}^{n} k^3 = \\{\\frac{1}{2}n(n+1)\\}^2$",
+     "A": {
+      "objective": 2,
+      "why": "Formula for the sum of cubes."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Sum of cubes formula."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "bcc6c00edd59e77d"
+    },
+    {
+     "key": "eb11c2-3:rule-8",
+     "type": "rule",
+     "page": 74,
+     "text": "The sum of a r^{k-1} for k from 1 to n is the sum from the first term to the n-th term of a geometric sequence with first term a and common ratio r. $\\sum_{k=1}^{n} ar^{k-1}$",
+     "A": {
+      "objective": 2,
+      "why": "Introduces the geometric sum notation used in the geometric formulas."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Meaning of the geometric sum Σ a r^{k-1}, a formula for evaluating sums."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "8ccd6eedec0e130d"
+    },
+    {
+     "key": "eb11c2-3:rule-9",
+     "type": "rule",
+     "page": 74,
+     "text": "When r<1 the sum of the first n terms equals a(1-r^n)/(1-r). $\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(1-r^n)}{1-r}$",
+     "A": {
+      "objective": 2,
+      "why": "Geometric sum formula for r<1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Geometric sum formula for r<1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d17bd110770733df"
+    },
+    {
+     "key": "eb11c2-3:rule-10",
+     "type": "rule",
+     "page": 74,
+     "text": "When r>1 the sum of the first n terms equals a(r^n-1)/(r-1). $\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(r^n-1)}{r-1}$",
+     "A": {
+      "objective": 2,
+      "why": "Geometric sum formula for r>1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Geometric sum formula for r>1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "6547b8c841e3f59e"
+    },
+    {
+     "key": "eb11c2-3:rule-11",
+     "type": "rule",
+     "page": 74,
+     "text": "A sequence a_n = r^{n-1} can be rewritten as a_n = 1 × r^{n-1}, so it is a geometric sequence with first term 1 and common ratio r. Example: a_n = 4^{n-1} = 1 × 4^{n-1}; first term 1, common ratio 4. $a_n = r^{n-1} = 1\\times r^{n-1}$",
+     "A": {
+      "objective": 2,
+      "why": "Identifies first term and ratio of r^{n-1} to apply the geometric formula."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Identifies r^{n-1} as geometric, to use the geometric sum formula."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "924d3f98393df3f2"
+    },
+    {
+     "key": "eb11c2-3:rule-12",
+     "type": "rule",
+     "page": 74,
+     "text": "A sequence a_n = r^n can be rewritten as a_n = r × r^{n-1}, so it is a geometric sequence with first term r and common ratio r. Example: a_n = 4^n = 4 × 4^{n-1}; first term 4, common ratio 4. $a_n = r^n = r\\times r^{n-1}$",
+     "A": {
+      "objective": 2,
+      "why": "Identifies first term and ratio of r^n to apply the geometric formula."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Identifies r^n as geometric, to use the geometric sum formula."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "986b85c039c719b9"
+    },
+    {
+     "key": "eb11c2-3:method-2",
+     "type": "method",
+     "page": 76,
+     "text": "Step 2: Cancel out the terms that sum to zero and calculate the remaining parts.",
+     "A": {
+      "objective": 3,
+      "why": "Cancelling terms is step 2 of summing fractional sequences."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Step 2 of the fractional-sum method: cancel terms that sum to zero."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "f58c3f7afcbb7bf3"
+    },
+    {
+     "key": "eb11c2-3:rule-13",
+     "type": "rule",
+     "page": 76,
+     "text": "For sequences containing a square root in the denominator, first rationalize the denominator.",
+     "A": {
+      "objective": 3,
+      "why": "Rationalize square-root denominators before cancelling."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Rationalize square-root denominators before cancelling."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "a90bd689f0c7633b"
+    },
+    {
+     "key": "eb11c2-3:rule-14",
+     "type": "rule",
+     "page": 76,
+     "text": "When the sum of a sequence containing fractions or square roots is expressed using summation notation Σ, rewrite it into the form of a sum of terms.",
+     "A": {
+      "objective": 3,
+      "why": "Expressing fractional/root sums with Σ after rewriting as terms, within the fractional-sequence section."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Rewrites sums of fractional or root sequences as sums of terms, for the fractional-sum method."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "915c590e5f78b17a"
+    },
+    {
+     "key": "eb11c2-3:caution-1",
+     "type": "caution",
+     "page": 79,
+     "text": "Common Mistakes: in subtracting 3S from S, writing −2S = 3×1 + 2×3 + 2×3² + 2×3³ + … + 2×3^{n−1} + (2n+1)×3^n is wrong; you forgot to change the sign of the last term to minus when subtracting 3S from S.",
+     "A": {
+      "objective": 4,
+      "why": "Mistake in subtracting 3S from S in the arithmetic×geometric method."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Mistake in the S − 3S subtraction for an arithmetic × geometric sum."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "d41e84275b7b5b61"
+    },
+    {
+     "key": "eb11c2-3:convention-2",
+     "type": "convention",
+     "page": 83,
+     "text": "S_n denotes the sum from the first term a_1 to the n-th term of the sequence {a_n}. $S_n$",
+     "A": {
+      "objective": 5,
+      "why": "Defines S_n, the sum to the n-th term."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Defines S_n, used for finding a_n from S_n."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "d4720e7d46b0820b"
+    },
+    {
+     "key": "eb11c2-3:rule-16",
+     "type": "rule",
+     "page": 83,
+     "text": "The first term equals S_1. $a_1 = S_1$",
+     "A": {
+      "objective": 5,
+      "why": "a_1 = S_1 is part of finding a_n from S_n."
+     },
+     "B": {
+      "objective": 5,
+      "why": "States a_1 = S_1 for finding a_n from S_n."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "29c13e912ee1b09a"
+    },
+    {
+     "key": "eb11c2-3:method-4",
+     "type": "method",
+     "page": 83,
+     "text": "Check whether the a_n obtained under the condition n ≥ 2 also holds for the first term by substituting n = 1 into the formula for a_n.",
+     "A": {
+      "objective": 5,
+      "why": "Check whether a_n for n≥2 also holds at n=1."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Check the n ≥ 2 formula at n = 1 when finding a_n from S_n."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "7e6965055cad5311"
+    },
+    {
+     "key": "eb11c2-3:rule-17",
+     "type": "rule",
+     "page": 83,
+     "text": "If it holds, keep a_n as is.",
+     "A": {
+      "objective": 5,
+      "why": "If the check holds, keep a_n as is."
+     },
+     "B": {
+      "objective": 5,
+      "why": "If the formula holds at n=1, keep a_n as is."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "68c5c63e8e3278b1"
+    },
+    {
+     "key": "eb11c2-3:rule-18",
+     "type": "rule",
+     "page": 83,
+     "text": "If it does not hold, write both a_1 and a_n.",
+     "A": {
+      "objective": 5,
+      "why": "If it fails, write both a_1 and a_n."
+     },
+     "B": {
+      "objective": 5,
+      "why": "If a_n fails at n=1, write a_1 and a_n separately."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "852bb25c587eeb96"
+    },
+    {
+     "key": "eb11c2-3:figure-2",
+     "type": "figure",
+     "page": 83,
+     "text": "Side diagram: a_1 + a_2 + a_3 + ... + a_{n-1} + a_n, with a brace under a_1 ... a_{n-1} labelled S_{n-1} and a larger brace under the whole sum labelled S_n; a_n is highlighted in pink. Linked by a dotted line to a_n = S_n − S_{n−1}.",
+     "A": {
+      "objective": 5,
+      "why": "Illustrates a_n = S_n − S_{n−1}."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Illustrates a_n = S_n − S_{n−1} via braces on S_{n−1} and S_n."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "5a351e69758c99f7"
+    },
+    {
+     "key": "eb11c2-3:caution-2",
+     "type": "caution",
+     "page": 83,
+     "text": "Common Mistakes: computing a_n = S_n − S_{n−1} = (n²−3n) − {(n−1)² − 3(n−1)} = 2n − 4 and concluding a_n = 2n−4 overlooks the prerequisite n ≥ 2 and fails to perform the final verification for n = 1. $a_n=S_n-S_{n-1}=(n^2-3n)-\\{(n-1)^2-3(n-1)\\}=2n-4$",
+     "A": {
+      "objective": 5,
+      "why": "Mistake of ignoring n≥2 and the n=1 check when finding a_n from S_n."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Warns that a_n = S_n − S_{n−1} needs n ≥ 2 and a check at n = 1."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "1043e01a4640877e"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-4",
+   "title": "Advanced Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-4:objective-1",
+     "label": "General term by differences",
+     "description": "Find the general term of a sequence by writing its difference sequence and using a_n = a_1 + sum of the first n-1 terms of the difference sequence, then check whether the formula holds for n=1."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-4:objective-2",
+     "label": "Solving group sequence problems",
+     "description": "Solve group sequence problems: divide a sequence into groups to find the first term of a given group, the sum of the terms in a group, and which group and position a given term is in."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c2-4:figure-1",
+     "type": "figure",
+     "page": 85,
+     "text": "Illustration of viral cell reproduction and epidemic spread: 'Day 1: Reproduction & Initial Spread, based on a single viral cell', epidemic spread tracking for Day 1 to Day 4 with people icons (2, 5, 10, 17 people infected), and a growth data chart rising over days 1-4 with a key. Small text; values read from figure, verify.",
+     "A": {
+      "objective": 1,
+      "why": "The virus-spread illustration (2, 5, 10, 17) motivates finding a general term from a difference pattern at the start of the lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Virus-spread illustration that motivates the lesson as a whole."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "f7db15a6609231e8"
+    },
+    {
+     "key": "eb11c2-4:rule-1",
+     "type": "rule",
+     "page": 85,
+     "text": "For sequences where the general term is difficult to estimate, it can sometimes be found from the first term and the difference sequence.",
+     "A": {
+      "objective": 1,
+      "why": "States that the general term can be found from the first term and the difference sequence."
+     },
+     "B": {
+      "objective": 1,
+      "why": "General term found from the first term and the difference sequence."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "a9bcfe1cca4e57fa"
+    },
+    {
+     "key": "eb11c2-4:method-1",
+     "type": "method",
+     "page": 85,
+     "text": "Check if it holds for $n=1$ by substituting $n=1$ into the formula for $a_n$ and seeing if it equals the given $a_1$.",
+     "A": {
+      "objective": 1,
+      "why": "It is the step of checking whether the formula holds for n=1."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Check whether the formula holds for n=1 after finding the general term."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "c9b1dc4bba93c7f3"
+    },
+    {
+     "key": "eb11c2-4:figure-2",
+     "type": "figure",
+     "page": 85,
+     "text": "Side box: sequence $a_1, a_2, a_3, \\ldots, a_{n-1}, a_n$ with arrows beneath showing differences $b_1$ (between a1,a2), $b_2$ (a2,a3), ..., $b_{n-1}$ (a_{n-1},a_n); below: $a_n = a_1 + b_1 + b_2 + \\ldots + b_{n-1}$.",
+     "A": {
+      "objective": 1,
+      "why": "It shows a_n = a_1 + b_1 + ... + b_{n-1} from the difference sequence."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Shows differences b_1 to b_{n-1} giving a_n = a_1 + b_1 + ... + b_{n-1}."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "fdf4b82c5f1a5dc8"
+    },
+    {
+     "key": "eb11c2-4:caution-1",
+     "type": "caution",
+     "page": 86,
+     "text": "Common Mistakes: a wrong working $a_n=a_1+\\sum_{k=1}^{n-1}b_k = 2+\\sum_{k=1}^{n-1}(4k-1) = 2+4\\times\\frac12\\times n(n+1)-n = 2+2n^2+2n-n = 2n^2+n+2$ is shown; the error is not replacing all instances of n with n−1 in the formula. $2n^2+n+2$",
+     "A": {
+      "objective": 1,
+      "why": "It warns about a mistake when summing the difference sequence to get a_n."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Common mistake in summing the difference sequence a_1 + sum of b_k up to n-1."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "eb5ade64aa1d889e"
+    },
+    {
+     "key": "eb11c2-4:figure-3",
+     "type": "figure",
+     "page": 88,
+     "text": "Grouped sequence: {a_n}: 2 | 4, 6, 8 | 10, 12, 14, 16, 18 | 20, 22, … labelled the 1st, 2nd, 3rd group; {b_n} (terms per group): 1, 3, 5. Side notes: 'Sequence before grouping.' for {a_n}; 'Sequence of term counts in each group.' for {b_n}.",
+     "A": {
+      "objective": 2,
+      "why": "It shows a sequence divided into groups, with the group sizes 1, 3, 5."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Grouped sequence with term counts per group, the setup for group sequence problems."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "566de6e6b2b777b2"
+    },
+    {
+     "key": "eb11c2-4:figure-4",
+     "type": "figure",
+     "page": 89,
+     "text": "Diagram of the sequence split into groups: '..., ○ | ○, ..., ○ | ...' with labels 'the (n-1)-th group' and 'the n-th group' above; the bars mark group boundaries.",
+     "A": {
+      "objective": 2,
+      "why": "It shows the (n-1)-th and n-th groups, used to find the first term and the sum of a group."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Diagram of the (n-1)-th and n-th groups used to find the first term and sum of a group."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "f447e3c5153080cd"
+    },
+    {
+     "key": "eb11c2-4:figure-5",
+     "type": "figure",
+     "page": 89,
+     "text": "Diagram: '..., (the 36th term) | ..., 88, ..., (the 49th term) |' with labels 'the 6th group' and 'the 7th group' above, and '(the 44th term)' below 88.",
+     "A": {
+      "objective": 2,
+      "why": "It shows that 88 is in the 7th group, which answers which group and position a term is in."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Shows 88 as the 44th term, lying in the 7th group, for locating a term's group and position."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "8caf8bdfcf20804b"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-5",
+   "title": "Recurrence and Induction",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-5:objective-1",
+     "label": "Basic recurrence relations",
+     "description": "Calculate terms and find the general term of a sequence given by a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-5:objective-2",
+     "label": "General term from recurrences",
+     "description": "Find the general term of a sequence from a_{n+1}=a_n+f(n) using the sum of the difference sequence, and from a_{n+1}=pa_n+q by solving c=pc+q and writing a_{n+1}-c=p(a_n-c) (a geometric sequence {b_n})."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-5:objective-3",
+     "label": "Prove by mathematical induction",
+     "description": "Prove equalities, inequalities and divisibility statements for natural numbers by mathematical induction: show n=1, then show n=k implies n=k+1."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-5:objective-4",
+     "label": "Estimate and prove general term",
+     "description": "Estimate the general term of a sequence defined by a recurrence relation from its first terms, and prove the estimate by mathematical induction."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c2-5:figure-1",
+     "type": "figure",
+     "page": 91,
+     "text": "Illustration of an arm with an IV drip and a tube showing a wavy drug level within a therapeutic range; labels read: STABLE DRUG LEVEL, THERAPEUTIC RANGE, METABOLIZES, ELIMINATES, NEW DAILY DOSE, 24h. Illustrates the antibiotic dosing text.",
+     "A": {
+      "objective": 0,
+      "why": "Decorative illustration of the antibiotic dosing intro text, not a specific objective."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Drug-dosing illustration that decorates the lesson opening and teaches no objective in particular."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "ed6c7b02f550a6fb"
+    },
+    {
+     "key": "eb11c2-5:rule-1",
+     "type": "rule",
+     "page": 91,
+     "text": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\dots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$). $a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$)",
+     "A": {
+      "objective": 1,
+      "why": "States the two conditions (first term and recurrence) that determine a sequence and let terms be computed."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Says a first term and a recurrence relation determine the sequence, so terms can be calculated in order."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "73a3fccb468fb666"
+    },
+    {
+     "key": "eb11c2-5:convention-1",
+     "type": "convention",
+     "page": 91,
+     "text": "Hereafter, recurrence relations are assumed to hold for $n=1,2,3,\\dots$.",
+     "A": {
+      "objective": 1,
+      "why": "Convention about the range of n for recurrence relations in the basic recurrence section."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Convention on n for recurrence relations, introduced with basic recurrences."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "497583c44d52a4c8"
+    },
+    {
+     "key": "eb11c2-5:rule-3",
+     "type": "rule",
+     "page": 91,
+     "text": "The recurrence relation $a_{n+1}=ra_n$ represents a geometric sequence with common ratio $r$. $a_{n+1}=ra_n$",
+     "A": {
+      "objective": 1,
+      "why": "a_{n+1}=ra_n is a geometric sequence, a basic recurrence form."
+     },
+     "B": {
+      "objective": 1,
+      "why": "a_{n+1}=ra_n is a geometric sequence with ratio r."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "dc53bdfb60b85a16"
+    },
+    {
+     "key": "eb11c2-5:rule-4",
+     "type": "rule",
+     "page": 92,
+     "text": "General term of an arithmetic sequence with first term a and common difference d (side note beside part a). $a_n = a + (n-1)d$",
+     "A": {
+      "objective": 1,
+      "why": "Arithmetic general term formula used to find the general term from a_{n+1}=a_n+d."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Arithmetic general term formula used to find the general term of a_{n+1}=a_n+d."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "100f814f5bd1793c"
+    },
+    {
+     "key": "eb11c2-5:rule-5",
+     "type": "rule",
+     "page": 92,
+     "text": "General term of a geometric sequence with first term a and common ratio r (side note beside part b). $a_n = ar^{n-1}$",
+     "A": {
+      "objective": 1,
+      "why": "Geometric general term formula used to find the general term from a_{n+1}=ra_n."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Geometric general term formula used to find the general term of a_{n+1}=ra_n."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "25d7b5c4c4c37f42"
+    },
+    {
+     "key": "eb11c2-5:rule-6",
+     "type": "rule",
+     "page": 94,
+     "text": "For a recurrence relation $a_{n+1}=a_n+f(n)$, $f(n)$ is the general term of the difference sequence of $\\{a_n\\}$ (an expression in terms of $n$; can be transformed to $a_{n+1}-a_n=f(n)$). $a_{n+1}=a_n+f(n)$",
+     "A": {
+      "objective": 2,
+      "why": "Identifies f(n) as the difference sequence for a_{n+1}=a_n+f(n)."
+     },
+     "B": {
+      "objective": 2,
+      "why": "States f(n) is the difference sequence for a_{n+1}=a_n+f(n), the basis of that general-term method."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "41b51f378262391e"
+    },
+    {
+     "key": "eb11c2-5:method-2",
+     "type": "method",
+     "page": 96,
+     "text": "Step 2: Solve the equation from step 1.",
+     "A": {
+      "objective": 2,
+      "why": "Step of solving c=pc+q for a_{n+1}=pa_n+q."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Step of the pa_n+q method: solve c=pc+q."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "0640aadec9725494"
+    },
+    {
+     "key": "eb11c2-5:method-3",
+     "type": "method",
+     "page": 96,
+     "text": "Step 3: Substitute the solution from step 2 into $a_{n+1}-c=p(a_n-c)$. $a_{n+1}-c=p(a_n-c)$",
+     "A": {
+      "objective": 2,
+      "why": "Writing a_{n+1}-c=p(a_n-c) in the a_{n+1}=pa_n+q method."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Step of the pa_n+q method: write a_{n+1}-c=p(a_n-c)."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "3727bdd43be44d2b"
+    },
+    {
+     "key": "eb11c2-5:method-4",
+     "type": "method",
+     "page": 96,
+     "text": "Step 4: Letting $a_n-c=b_n$, $\\{b_n\\}$ is a geometric sequence with common ratio p.",
+     "A": {
+      "objective": 2,
+      "why": "Letting b_n=a_n-c gives a geometric sequence with ratio p."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Step of the pa_n+q method: b_n=a_n-c is geometric with ratio p."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "b3f10dce67eaedb5"
+    },
+    {
+     "key": "eb11c2-5:method-5",
+     "type": "method",
+     "page": 96,
+     "text": "Step 5: Find the general term of $\\{a_n\\}$ using the general term of $\\{b_n\\}$.",
+     "A": {
+      "objective": 2,
+      "why": "Recover a_n from the general term of {b_n}."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Final step of the a_{n+1}=pa_n+q procedure: recover a_n from b_n."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "0d7c696722294ebd"
+    },
+    {
+     "key": "eb11c2-5:caution-1",
+     "type": "caution",
+     "page": 100,
+     "text": "When proving equalities or inequalities involving $a^n$, multiply both sides of the assumed expression by $a$. $a^n$",
+     "A": {
+      "objective": 3,
+      "why": "Hint for induction proofs of equalities/inequalities involving a^n."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Tip for induction proofs of equalities/inequalities with a^n: multiply the assumed expression by a."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "b25f59c0c275972d"
+    },
+    {
+     "key": "eb11c2-5:caution-2",
+     "type": "caution",
+     "page": 102,
+     "text": "When proving that something is a multiple of $a$, use the assumed expression to show it takes the form $a \\times$ (integer). $a \\times (\\text{integer})$",
+     "A": {
+      "objective": 3,
+      "why": "Hint for induction proofs of divisibility (multiple of a) statements."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Divisibility proofs by induction: write the k+1 case as a×(integer)."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "fd8d45331b55eb3a"
+    }
+   ]
+  }
+ ]
+}

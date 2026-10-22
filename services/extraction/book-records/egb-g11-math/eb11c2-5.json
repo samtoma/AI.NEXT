@@ -1,0 +1,1776 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c2-5",
+    "syllabus_ref": "Concept 5",
+    "title": "Recurrence and Induction",
+    "module": "Unit 2 Sequences",
+    "pages": [
+      91,
+      105
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c2-5:heading-1",
+      "type": "heading",
+      "source_page": 91,
+      "quote": "Concept 5 · Recurrence and induction",
+      "text": "Concept 5 · Recurrence and induction",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 91,
+      "quote": "Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+      "text": "Learning Outcomes: Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-1",
+      "type": "linking_text",
+      "source_page": 91,
+      "quote": "When a doctor prescribes an antibiotic, the goal is to maintain",
+      "text": "A doctor prescribes an antibiotic to maintain a therapeutic amount of the drug in the bloodstream; each 24 hours a new dose is taken while the body eliminates a fixed percentage of the drug present. The amount tomorrow depends directly on the amount left over today; this step-by-step dependency is the essence of a recurrence relation. To prove the pattern remains safe over infinitely many days, mathematicians use a logical domino effect called mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:figure-1",
+      "type": "figure",
+      "source_page": 91,
+      "quote": "STABLE DRUG LEVEL / THERAPEUTIC RANGE / NEW DAILY DOSE",
+      "caption": "Illustration of an arm with an IV drip and a tube showing a wavy drug level within a therapeutic range; labels read: STABLE DRUG LEVEL, THERAPEUTIC RANGE, METABOLIZES, ELIMINATES, NEW DAILY DOSE, 24h. Illustrates the antibiotic dosing text.",
+      "notes": "Illustrative picture; small labels read from image, verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3732,
+          0.1922,
+          0.6598,
+          0.3124
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-5:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+      "text": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-1",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "A sequence {a_n} is determined, and a_2, a_3, a_4, ... can be found in order",
+      "claim": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\dots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$).",
+      "formula": "$a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:definition-1",
+      "type": "definition",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "The above (b) is called a recurrence relation.",
+      "claim": "Condition (b), a relational expression to find $a_{n+1}$ from $a_n$, is called a recurrence relation.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:key-term-1",
+      "type": "key_term",
+      "source_page": 91,
+      "quote": "a recurrence relation",
+      "term": "recurrence relation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:convention-1",
+      "type": "convention",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "Hereafter, recurrence relations are assumed to hold for n = 1, 2, 3, ...",
+      "claim": "Hereafter, recurrence relations are assumed to hold for $n=1,2,3,\\dots$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-2",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "a_{n+1} = a_n + d Arithmetic sequence with common difference d",
+      "claim": "The recurrence relation $a_{n+1}=a_n+d$ represents an arithmetic sequence with common difference $d$.",
+      "formula": "$a_{n+1}=a_n+d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-3",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 91,
+      "quote": "a_{n+1} = r a_n Geometric sequence with common ratio r",
+      "claim": "The recurrence relation $a_{n+1}=ra_n$ represents a geometric sequence with common ratio $r$.",
+      "formula": "$a_{n+1}=ra_n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-2",
+      "type": "linking_text",
+      "source_page": 91,
+      "quote": "Adding d to a_n gives a_{n+1}",
+      "text": "Side notes: \"Adding $d$ to $a_n$ gives $a_{n+1}$\"; \"Multiplying $a_n$ by $r$ gives $a_{n+1}$\".",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-2",
+      "type": "heading",
+      "source_page": 92,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-3",
+      "type": "linking_text",
+      "source_page": 92,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "Find the 2nd through the 4th terms of the sequence",
+      "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1 = 2,\\ a_{n+1} = 3a_n + 2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "Find the general term of the sequence",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1 = -1,\\ a_{n+1} = a_n + 5$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1 = 2,\\ a_{n+1} = 3a_n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-3",
+      "type": "heading",
+      "source_page": 92,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "The 2nd. term is found by substituting n = 1",
+      "stem": "Find the 2nd through the 4th terms of the sequence with $a_1=2$, $a_{n+1}=3a_n+2$ (Warm Up 1).",
+      "solution": [
+        "The 2nd term is found by substituting $n=1$ into the given recurrence relation: $a_{1+1}=3a_1+2$, $a_2=3\\times2+2=8$",
+        "The 3rd term is found using the 2nd term: $a_{2+1}=3a_2+2$, $a_3=3\\times8+2=26$",
+        "Similarly, the 4th term is found using the 3rd term: $a_{3+1}=3a_3+2$, $a_4=3\\times26+2=80$"
+      ],
+      "answer": "$a_2=8,\\ a_3=26,\\ a_4=80$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-2",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "Since the sequence is an arithmetic sequence with the first term",
+      "stem": "Find the general term of the sequences in Warm Up 2.",
+      "parts": [
+        {
+          "label": "a",
+          "answer": "$a_n=5n-6$",
+          "solution": [
+            "Since the sequence $\\{a_n\\}$ is an arithmetic sequence with the first term $-1$ and the common difference 5:",
+            "$a_n=-1+(n-1)\\times5$"
+          ],
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "$a_n=2\\times3^{n-1}$",
+          "solution": [
+            "Since the sequence $\\{a_n\\}$ is a geometric sequence with the first term 2 and the common ratio 3:"
+          ],
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-4",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "a_n = a + (n−1)d",
+      "claim": "General term of an arithmetic sequence with first term a and common difference d (side note beside part a).",
+      "formula": "$a_n = a + (n-1)d$",
+      "notes": "Side-box note.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-5",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 92,
+      "quote": "a_n = ar^{n−1}",
+      "claim": "General term of a geometric sequence with first term a and common ratio r (side note beside part b).",
+      "formula": "$a_n = ar^{n-1}$",
+      "notes": "Side-box note.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-1",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-2",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Find the 2nd. through the 4th terms of the sequence",
+      "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=-6,\\ a_{n+1}=2a_n+3$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=2,\\ a_{n+1}=3a_n-n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-3",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Find the general term of the sequence",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=1,\\ a_{n+1}=a_n+3$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=4,\\ a_{n+1}=a_n-2$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_1=3,\\ a_{n+1}=5a_n$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_1=-3,\\ a_{n+1}=-2a_n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Find the 2nd. through the 4th. terms of the sequence",
+      "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=1,\\ a_{n+1}=-2a_n+5$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=-6,\\ a_{n+1}=a_n+n^2-2n$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_1=3,\\ a_{n+1}=3a_n-n$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_1=-2,\\ a_{n+1}=a_n-n$"
+        },
+        {
+          "label": "e",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$"
+        },
+        {
+          "label": "f",
+          "stem": "$a_1=-2,\\ a_{n+1}=a_n+3^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Find the general term of the sequence",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=1,\\ a_{n+1}=a_n+6$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=3,\\ a_{n+1}=a_n-5$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_1=4,\\ a_{n+1}=3a_n$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_1=2,\\ a_{n+1}=-5a_n$"
+        },
+        {
+          "label": "e",
+          "stem": "$a_1=-2,\\ a_{n+1}=a_n+3$"
+        },
+        {
+          "label": "f",
+          "stem": "$a_1=4,\\ a_{n+1}=a_n-4$"
+        },
+        {
+          "label": "g",
+          "stem": "$a_1=1,\\ a_{n+1}=4a_n$"
+        },
+        {
+          "label": "h",
+          "stem": "$a_1=-2,\\ a_{n+1}=-4a_n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Solve the recurrence relation for a_n",
+      "text": "Solve the recurrence relation for $a_n$: $a_n=6a_{n-1}-11a_{n-2}+6a_{n-3}$ for $n\\ge 3$. Given initial conditions: $a_0=0$, $a_1=1$, and $a_2=6$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c2-5:objective-1",
+      "source_page": 93,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-4",
+      "type": "heading",
+      "source_page": 94,
+      "quote": "Recurrence Relations (2)",
+      "text": "Recurrence Relations (2)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 94,
+      "quote": "Solve recurrence relations at their different levels",
+      "text": "Learning Outcomes: Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-6",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "Recurrence relations where the difference sequence is known",
+      "claim": "For a recurrence relation $a_{n+1}=a_n+f(n)$, $f(n)$ is the general term of the difference sequence of $\\{a_n\\}$ (an expression in terms of $n$; can be transformed to $a_{n+1}-a_n=f(n)$).",
+      "formula": "$a_{n+1}=a_n+f(n)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:rule-7",
+      "type": "rule",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "When n ≥ 2, a_n = a_1 + ∑ f(k)",
+      "claim": "When $n\\ge 2$, $a_n$ equals $a_1$ plus the sum of $f(k)$ for k from 1 to n−1.",
+      "formula": "$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-5",
+      "type": "heading",
+      "source_page": 94,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "Find the general term of the sequence {a n} determined by the following conditions.",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=a_n+2n-3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-6",
+      "type": "heading",
+      "source_page": 94,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-3",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "Since a n+1 − a n = 2n−3, the general term of the difference sequence",
+      "stem": "Find the general term of $\\{a_n\\}$ with $a_1=1,\\ a_{n+1}=a_n+2n-3$.",
+      "solution": [
+        "Since $a_{n+1}-a_n=2n-3$, the general term of the difference sequence of $\\{a_n\\}$ is $2n-3$.",
+        "Therefore, when $n\\ge 2$: $a_n=1+\\sum_{k=1}^{n-1}(2k-3)$",
+        "$=1+2\\times\\frac{1}{2}(n-1)\\{(n-1)+1\\}-3(n-1)$",
+        "$=n^2-4n+4=(n-2)^2$",
+        "This formula also holds when $n=1$",
+        "Therefore, $a_n=(n-2)^2$"
+      ],
+      "answer": "$a_n=(n-2)^2$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-7",
+      "type": "heading",
+      "source_page": 94,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-4",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "Find the general term of the sequence {a n} determined by the following conditions.",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+n^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=1,\\ a_{n+1}=a_n+3^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:work-with-a-partner-2",
+      "type": "activity",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 94,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box; on the previous page the record is the same activity but here it is printed on page 94 as well; check whether duplicate.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 95,
+      "quote": "Find the general term of the sequence",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+3n^2$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_1=1,\\ a_{n+1}=a_n+2^n$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+3n+1$"
+        },
+        {
+          "label": "e",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n+2n^2+n$"
+        },
+        {
+          "label": "f",
+          "stem": "$a_1=2,\\ a_{n+1}=a_n-3^n$"
+        },
+        {
+          "label": "g",
+          "stem": "$a_1=4,\\ a_{n+1}=a_n-4^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 95,
+      "quote": "A tech startup launches with a 400,000 LE cash reserve",
+      "text": "A tech startup launches with a 400,000 LE cash reserve ($a_1 = 4$ hundred thousand). They burn an amount of 4n thousand LE at the end of each quarter: $a_1=4,\\ a_{n+1}=a_n-0.04n$. Find an explicit formula for the general term $a_n$ to predict the company's cash reserve at the start of any quarter.",
+      "notes": "Starred Challenge box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-8",
+      "type": "heading",
+      "source_page": 96,
+      "quote": "Recurrence Relations (3)",
+      "text": "Recurrence Relations (3)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 96,
+      "quote": "Solve recurrence relations at their different levels",
+      "text": "Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-4",
+      "type": "linking_text",
+      "source_page": 96,
+      "quote": "Steps to find the general term from a recurrence relation",
+      "text": "Point! Steps to find the general term from a recurrence relation of the form $a_{n+1}=pa_n+q$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-1",
+      "type": "method",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Replace both a_{n+1} and a_n in the recurrence relation with c",
+      "claim": "Step 1: Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$.",
+      "formula": "$c=pc+q$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-2",
+      "type": "method",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Solve the equation from ❶",
+      "claim": "Step 2: Solve the equation from step 1.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-3",
+      "type": "method",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Substitute the solution from ❷ into a_{n+1} − c = p(a_n − c)",
+      "claim": "Step 3: Substitute the solution from step 2 into $a_{n+1}-c=p(a_n-c)$.",
+      "formula": "$a_{n+1}-c=p(a_n-c)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-4",
+      "type": "method",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Letting a_n − c = b_n, {b_n} is a geometric sequence with common ratio p",
+      "claim": "Step 4: Letting $a_n-c=b_n$, $\\{b_n\\}$ is a geometric sequence with common ratio p.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-5",
+      "type": "method",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Find the general term of {a_n} using the general term of {b_n}",
+      "claim": "Step 5: Find the general term of $\\{a_n\\}$ using the general term of $\\{b_n\\}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Find the general term of the sequence {a_n} determined by the following conditions",
+      "text": "Warm Up: Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=3a_n+4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-4",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 96,
+      "quote": "Replacing both a_{n+1} and a_n in the given recurrence relation",
+      "stem": "Explanation of the Warm Up: find the general term of $a_1=1,\\ a_{n+1}=3a_n+4$.",
+      "solution": [
+        "Replacing both $a_{n+1}$ and $a_n$ in $a_{n+1}=3a_n+4$ with $c$: $c=3c+4$",
+        "Solving this gives $c=-2$",
+        "Therefore, $a_{n+1}+2=3(a_n+2)$ ...... (i)",
+        "Here, letting $a_n+2=b_n$ ......(ii), we can express it as $a_{n+1}+2=b_{n+1}$",
+        "Substituting these into (i) gives $b_{n+1}=3b_n$, so $\\{b_n\\}$ is a geometric sequence with common ratio 3",
+        "Also, the first term $b_1$ of $\\{b_n\\}$ is, from (ii), $b_1=a_1+2=1+2=3$",
+        "Therefore, $b_n=3\\times3^{n-1}=3^n$",
+        "Substituting this into (ii) gives $a_n+2=3^n$",
+        "$a_n=3^n-2$"
+      ],
+      "answer": "$a_n=3^n-2$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-5",
+      "type": "linking_text",
+      "source_page": 96,
+      "quote": "Substitute c = −2 into a_{n+1} − c = p(a_n − c)",
+      "text": "Side note: Substitute $c=-2$ into $a_{n+1}-c=p(a_n-c)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-6",
+      "type": "linking_text",
+      "source_page": 96,
+      "quote": "{b_n} is a geometric sequence with the first term 3, the common ratio 3",
+      "text": "Side note: $\\{b_n\\}$ is a geometric sequence with the first term 3, the common ratio 3",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-5",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 97,
+      "quote": "Find the general term of the sequence {a_n} determined by the following",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1 = 1,\\ a_{n+1} = 5a_n + 8$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1 = 4,\\ a_{n+1} = -2a_n + 3$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-2",
+      "source_page": 97,
+      "quote": "Find the general term of the sequence {a_n} determined by the following",
+      "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_1 = 2,\\ a_{n+1} = 2a_n - 1$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_1 = -3,\\ a_{n+1} = 4a_n + 3$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_1 = 3,\\ a_{n+1} = 3a_n - 2$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_1 = -2,\\ a_{n+1} = -3a_n + 4$"
+        },
+        {
+          "label": "e",
+          "stem": "$a_1 = 1,\\ a_{n+1} = \\frac{1}{3}a_n + 2$"
+        },
+        {
+          "label": "f",
+          "stem": "$a_1 = 2,\\ a_{n+1} = \\frac{2}{3}a_n - \\frac{1}{2}$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-7",
+      "type": "linking_text",
+      "source_page": 97,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-4",
+      "type": "printed_objective",
+      "source_page": 98,
+      "quote": "Apply the principle of mathematical induction to prove",
+      "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of mathematical equalities and identities.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-9",
+      "type": "heading",
+      "source_page": 98,
+      "quote": "Mathematical Induction for Proving Equalities",
+      "text": "Mathematical Induction for Proving Equalities",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:method-6",
+      "type": "method",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 98,
+      "quote": "Proof by mathematical induction",
+      "claim": "Procedure to prove that \"Condition (A) holds for all natural numbers n\": [1] Show that (A) holds when n = 1. [2] Assume that (A) holds when n = k, and write the equation that holds then. By transforming that equation, show that (A) also holds when n = k + 1.",
+      "formula": "$n=1$, $n=k$, $n=k+1$",
+      "notes": "Printed in a 'Point!' box with a heading 'Proof by mathematical induction'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-10",
+      "type": "heading",
+      "source_page": 98,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-5",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 98,
+      "quote": "Use mathematical induction to prove that 1 + 2 + 3 + … + n",
+      "text": "Use mathematical induction to prove that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-11",
+      "type": "heading",
+      "source_page": 98,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:worked-example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 98,
+      "quote": "Let the given equality be (A).",
+      "stem": "Prove by induction that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$ (the Warm Up); let the given equality be (A).",
+      "solution": [
+        "[1] When $n=1$: LHS $=1$, RHS $=\\frac{1}{2}\\times1\\times(1+1)=1$. Therefore, (A) holds when $n=1$.",
+        "[2] Assume (A) holds when $n=k$: $1+2+3+\\dots+k=\\frac{1}{2}k(k+1)\\dots\\dots$(i)",
+        "When $n=k+1$, from (i): LHS $=1+2+3+\\dots+k+(k+1)$",
+        "$=\\frac{1}{2}k(k+1)+(k+1)$",
+        "$=\\frac{1}{2}(k+1)(k+2)$",
+        "$=\\frac{1}{2}(k+1)\\{(k+1)+1\\}$",
+        "RHS $=\\frac{1}{2}(k+1)\\{(k+1)+1\\}$. Therefore, (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "notes": "Explanation of the Warm Up; not labelled as an Example. Side notes beside lines: see k8-k10.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-8",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:worked-example-1",
+      "source_page": 98,
+      "quote": "Derive the expression that holds for n = k + 1 using (i).",
+      "text": "Side note (beside LHS line): Derive the expression that holds for n = k + 1 using (i).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-9",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:worked-example-1",
+      "source_page": 98,
+      "quote": "Do not expand; factor out",
+      "text": "Side note (beside the second line): Do not expand; factor out $\\frac{1}{2}(k+1)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-10",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:worked-example-1",
+      "source_page": 98,
+      "quote": "Transform into the form obtained by substituting n =",
+      "text": "Side note (beside the third line): Transform into the form obtained by substituting $n=k+1$ into the RHS of (A).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-6",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 99,
+      "quote": "Use mathematical induction to prove the following equalities.",
+      "text": "Use mathematical induction to prove the following equalities.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$1+3+5+\\dots+(2n-1)=n^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$1\\times2+2\\times3+3\\times4+\\dots+n(n+1)=\\frac{1}{3}n(n+1)(n+2)$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-11",
+      "type": "linking_text",
+      "source_page": 99,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 99,
+      "quote": "Use mathematical induction to prove the following equalities.",
+      "text": "Use mathematical induction to prove the following equalities.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$1^2+3^2+5^2+\\dots+(2n-1)^2=\\frac{1}{3}n(2n-1)(2n+1)$"
+        },
+        {
+          "label": "b",
+          "stem": "$3+3\\times4+3\\times4^2+\\dots+3\\times4^{n-1}=4^n-1$"
+        },
+        {
+          "label": "c",
+          "stem": "$1\\times3+2\\times4+3\\times5+\\dots+n(n+2)=\\frac{1}{6}n(n+1)(2n+7)$"
+        },
+        {
+          "label": "d",
+          "stem": "$1+10+10^2+\\dots+10^n=\\frac{1}{9}(10^{n+1}-1)$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-12",
+      "type": "heading",
+      "source_page": 100,
+      "quote": "Mathematical Induction for Proving Inequalities",
+      "text": "2-24 Mathematical Induction for Proving Inequalities (Chapter 2 Sequences)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-5",
+      "type": "printed_objective",
+      "source_page": 100,
+      "quote": "Apply the principle of mathematical induction to prove",
+      "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of algebraic inequalities.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:caution-1",
+      "type": "caution",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 100,
+      "quote": "When proving equalities or inequalities involving a^n, multiply both sides",
+      "claim": "When proving equalities or inequalities involving $a^n$, multiply both sides of the assumed expression by $a$.",
+      "formula": "$a^n$",
+      "notes": "Printed in a 'Point!' box with a warning icon.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-6",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 100,
+      "quote": "When n is a natural number greater than or equal to 4",
+      "stem": "When $n$ is a natural number greater than or equal to 4, prove the following inequality. $2^n > 3n$",
+      "solution": [
+        "Let the given inequality be (A).",
+        "[1] When $n=4$, LHS $=2^4=16$, RHS $=3\\times4=12$. Therefore, (A) holds when $n=4$.",
+        "[2] Assuming $k\\ge4$ and (A) holds when $n=k$, $2^k>3k$. Multiplying both sides by 2 gives $2^{k+1}>6k$ ...... (i)",
+        "Here, comparing $6k$ and $3(k+1)$: when $k\\ge4$, $6k-3(k+1)=6k-3k-3=3k-3>0$. Therefore, $6k>3(k+1)$ ......(ii)",
+        "From (i) and (ii), since $2^{k+1}>6k>3(k+1)$, $2^{k+1}>3(k+1)$. This shows that (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers greater than or equal to 4."
+      ],
+      "notes": "Warm Up with 'Explanation' section printed as its solution; no separate final answer line. Three margin notes follow (k5-k7).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-12",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:warm-up-6",
+      "source_page": 100,
+      "quote": "Since we are proving this for n ≥ 4",
+      "text": "Side note (beside step [1]): Since we are proving this for $n\\ge4$ or more, show it holds when $n=4$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-13",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:warm-up-6",
+      "source_page": 100,
+      "quote": "Using this expression, show (A) for",
+      "text": "Side note (beside $2^k>3k$): Using this expression, show (A) for $n=k+1$, which is $2^{k+1}>3(k+1)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-14",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-5:warm-up-6",
+      "source_page": 100,
+      "quote": "Since the RHS when substituting",
+      "text": "Side note (beside comparing $6k$ and $3(k+1)$): Since the RHS when substituting $n=k+1$ into (A) is $3(k+1)$, show $2^{k+1}>6k>3(k+1)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-7",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 101,
+      "quote": "When n is a natural number greater than or equal to 3",
+      "text": "When $n$ is a natural number greater than or equal to 3, prove the following inequality. $3^n > 5n+1$",
+      "notes": "Printed as a 'Try' box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-15",
+      "type": "linking_text",
+      "source_page": 101,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side column box, printed to the right.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-13",
+      "type": "heading",
+      "source_page": 101,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-16",
+      "type": "linking_text",
+      "source_page": 101,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 101,
+      "quote": "When n is a natural number, prove the following inequality.",
+      "text": "When $n$ is a natural number, prove the following inequality. $3^n > 2n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 101,
+      "quote": "When n is a natural number greater than or equal to 4",
+      "text": "When $n$ is a natural number greater than or equal to 4, prove the following inequality. $2^n > 3n+1$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 101,
+      "quote": "When h > 0 and n is a natural number greater than or equal to 3",
+      "text": "When $h > 0$ and $n$ is a natural number greater than or equal to 3, prove the following inequality. $(1+h)^n > 1 + nh^2$",
+      "notes": "Printed in a 'Challenge' box with a star.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:caution-2",
+      "type": "caution",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 102,
+      "quote": "When proving that something is a multiple of a, use the assumed",
+      "claim": "When proving that something is a multiple of $a$, use the assumed expression to show it takes the form $a \\times$ (integer).",
+      "formula": "$a \\times (\\text{integer})$",
+      "notes": "Boxed under heading 'Point!'",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-6",
+      "type": "printed_objective",
+      "source_page": 102,
+      "quote": "Apply the principle of mathematical induction to prove the validity of divisibility.",
+      "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of divisibility.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-7",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 102,
+      "quote": "Prove that n^3 + (n+1)^3 + (n+2)^3 is a multiple of 9",
+      "text": "Prove that $n^3+(n+1)^3+(n+2)^3$ is a multiple of 9 for all natural numbers $n$, using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-14",
+      "type": "heading",
+      "source_page": 102,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-17",
+      "type": "linking_text",
+      "source_page": 102,
+      "quote": "Let “(A)” be “n^3 + (n + 1)^3 + (n + 2)^3 is a multiple of 9”.",
+      "text": "Let “(A)” be “$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9”. [1] When $n=1$: $1^3+(1+1)^3+(1+2)^3=1+8+27=36$ (side note: 36 is a multiple of 9). Therefore (A) holds when $n=1$. [2] Assuming (A) holds when $n=k$, it can be expressed using an integer $m$ as $k^3+(k+1)^3+(k+2)^3=9m$ (side note: Using this equation, show that (A) holds when $n=k+1$). Considering $n=k+1$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3=9m-k^3+k^3+9k^2+27k+27=9(m+k^2+3k+3)$. Since $m+k^2+3k+3$ is an integer, $9(m+k^2+3k+3)$ is a multiple of 9. Therefore $(k+1)^3+(k+2)^3+(k+3)^3$ is a multiple of 9, and (A) also holds when $n=k+1$. From [1] and [2], (A) holds for all natural numbers. Side note: Since $(k+1)^3+(k+2)^3=9m-k^3$ from $k^3+(k+1)^3+(k+2)^3=9m$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3$ $n=k+1$.",
+      "notes": "Explanation is a worked solution to the Warm Up, printed as prose with side notes; recorded as one linking text. Side-note last line is printed 'n = k + 1' after the expression.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-8",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 102,
+      "quote": "Prove that n^3 + 2n is a multiple of 3 for all natural numbers n",
+      "text": "Prove that $n^3+2n$ is a multiple of 3 for all natural numbers $n$, using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:activity-1",
+      "type": "activity",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 102,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 103,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 103,
+      "quote": "Prove that 2n^3 − 3n^2 + n is a multiple of 6",
+      "text": "Prove that $2n^3 - 3n^2 + n$ is a multiple of 6 for all natural numbers $n$, using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 103,
+      "quote": "Prove that 4n^3 − n is divisible by 3",
+      "text": "Prove that $4n^3 - n$ is divisible by 3 for all natural numbers $n$, using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:challenge-4",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-3",
+      "source_page": 103,
+      "quote": "Prove that for any integer n ≥ 1: (n + 1)^n − 1 is a multiple of n^2.",
+      "text": "Prove that for any integer $n \\ge 1$: $(n+1)^n - 1$ is a multiple of $n^2$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:printed-objective-7",
+      "type": "printed_objective",
+      "source_page": 104,
+      "quote": "Employ mathematical induction to prove and validate recurrence relations of sequences.",
+      "text": "Learning Outcomes: Employ mathematical induction to prove and validate recurrence relations of sequences.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-15",
+      "type": "heading",
+      "source_page": 104,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-18",
+      "type": "linking_text",
+      "source_page": 104,
+      "quote": "For the sequence {a_n} determined by the conditions",
+      "text": "For the sequence $\\{a_n\\}$ determined by the conditions $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$, solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-8",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 104,
+      "quote": "Find a 2 , a 3 , a 4 and estimate the general term",
+      "text": "Find $a_2, a_3, a_4$ and estimate the general term of this sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:warm-up-9",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 104,
+      "quote": "Prove that the estimation in 1 is correct using mathematical induction.",
+      "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:heading-16",
+      "type": "heading",
+      "source_page": 104,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-5",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 104,
+      "quote": "From the given recurrence relation: a2 = a1^2 − 1 / 1+1",
+      "stem": "Find $a_2, a_3, a_4$ and estimate the general term of the sequence $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$.",
+      "solution": [
+        "From the given recurrence relation: $a_2=\\frac{a_1^2-1}{1+1}=\\frac{3^2-1}{2}=\\frac{8}{2}=4$",
+        "Similarly, $a_3=5$, $a_4=6$",
+        "Therefore, we can estimate $a_n=n+2$"
+      ],
+      "answer": "$a_n=n+2$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-19",
+      "type": "linking_text",
+      "source_page": 104,
+      "quote": "{a_n}, 3, 4, 5, 6, ...",
+      "text": "Margin note beside the computation of a_2, a_3, a_4: $\\{a_n\\}, 3, 4, 5, 6, \\ldots$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:explanation-6",
+      "type": "worked_example",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 104,
+      "quote": "Let a n = n + 2 be (A).",
+      "stem": "Prove by mathematical induction that the estimation $a_n=n+2$ (call it (A)) is correct.",
+      "solution": [
+        "Let $a_n=n+2$ be (A).",
+        "[1] When $n=1$, substituting $n=1$ into (A) gives: $a_1=1+2=3$. Therefore, (A) holds when $n=1$.",
+        "[2] Assuming (A) holds when $n=k$, $a_k=k+2$.",
+        "At this time, finding $a_{k+1}$ from the given recurrence relation: $a_{k+1}=\\frac{a_k^2-1}{k+1}$",
+        "$=\\frac{(k+2)^2-1}{k+1}$",
+        "$=k+3$",
+        "$=(k+1)+2$",
+        "This shows that (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers.",
+        "Therefore, the estimation in 1 is correct."
+      ],
+      "answer": "The estimation $a_n=n+2$ is correct",
+      "solution_provenance": "book_worked",
+      "notes": "Margin notes: 'Substitute a_k = k + 2' beside the a_{k+1} line; 'Transform into the form obtained by substituting n = k + 1 into the RHS of (A)' beside (k+1)+2. Skipped step in the printed solution: (k+2)^2-1 over k+1 equals k+3 with no expansion shown.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-20",
+      "type": "linking_text",
+      "source_page": 104,
+      "quote": "Substitute a k = k + 2",
+      "text": "Margin note: Substitute $a_k=k+2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-21",
+      "type": "linking_text",
+      "source_page": 104,
+      "quote": "Transform into the form obtained by substituting n = k + 1 into the RHS of (A)",
+      "text": "Margin note: Transform into the form obtained by substituting $n=k+1$ into the RHS of (A)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-9",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "Find a2, a3, a4 and estimate the general term.",
+      "text": "For the sequence {a_n} determined by $a_1=-1, a_{n+1}=a_n^2+2na_n-2$, solve the following problems. Find $a_2, a_3, a_4$ and estimate the general term.",
+      "notes": "Intro sentence shared with Try 2.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:try-10",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "Prove that the estimation in 1 is correct using mathematical induction.",
+      "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:linking-text-22",
+      "type": "linking_text",
+      "source_page": 105,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "For the sequence {an} determined by a1 = 1, an+1 = an² − n²an + (n + 1)²",
+      "text": "Solve the following problems. For the sequence {a_n} determined by $a_1=1, a_{n+1}=a_n^2-n^2a_n+(n+1)^2$, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find $a_2, a_3, a_4$ and estimate the general term."
+        },
+        {
+          "label": "b",
+          "stem": "Prove that the estimation in (a) is correct using mathematical induction."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "For the sequence {an} determined by a1 = 1, an+1 = (an − 4)/(an − 3)",
+      "text": "For the sequence {a_n} determined by $a_1=1, a_{n+1}=\\frac{a_n-4}{a_n-3}$, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find $a_2, a_3, a_4$ and estimate the general term."
+        },
+        {
+          "label": "b",
+          "stem": "Prove that the estimation in (a) is correct using mathematical induction."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:challenge-5",
+      "type": "exercise",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "Three numbers, A, B, C in that order, are in geometric sequence",
+      "text": "Three numbers, A, B, C in that order, are in geometric sequence with common ratio $r$. Given further that A, 2B, C in that order are in arithmetic sequence, determine the possible values of $r$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-5:objective-4",
+      "source_page": 105,
+      "quote": "How can mathematical induction help us confirm the correctness of a general",
+      "text": "How can mathematical induction help us confirm the correctness of a general formula for a sequence defined by a recurrence relation? Explain your answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c2-5:objective-1",
+      "label": "Basic recurrence relations",
+      "description": "Calculate terms and find the general term of a sequence given by a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c2-5:definition-1",
+        "eb11c2-5:rule-2",
+        "eb11c2-5:explanation-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:objective-2",
+      "label": "General term from recurrences",
+      "description": "Find the general term of a sequence from a_{n+1}=a_n+f(n) using the sum of the difference sequence, and from a_{n+1}=pa_n+q by solving c=pc+q and writing a_{n+1}-c=p(a_n-c) (a geometric sequence {b_n}).",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3",
+        "eb11c2-5:method-1",
+        "eb11c2-5:explanation-4"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:objective-3",
+      "label": "Prove by mathematical induction",
+      "description": "Prove equalities, inequalities and divisibility statements for natural numbers by mathematical induction: show n=1, then show n=k implies n=k+1.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1",
+        "eb11c2-5:warm-up-6",
+        "eb11c2-5:try-8"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-5:objective-4",
+      "label": "Estimate and prove general term",
+      "description": "Estimate the general term of a sequence defined by a recurrence relation from its first terms, and prove the estimate by mathematical induction.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c2-5:printed-objective-7",
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:try-10"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (4)",
+    "2026-10-21: 12 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 1 cropped"
+  ]
+}

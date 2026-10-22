@@ -1,0 +1,2327 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c4-1",
+    "syllabus_ref": "Concept 1",
+    "title": "Coordinate Geometry Basics",
+    "module": "Unit 4 Geometry and Equations",
+    "pages": [
+      150,
+      161
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c4-1:heading-1",
+      "type": "heading",
+      "source_page": 150,
+      "quote": "Concept 1 · Coordinate Geometry Basics",
+      "text": "Concept 1 · Coordinate Geometry Basics",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 150,
+      "quote": "Find the coordinates of the division point (internal and external)",
+      "text": "Learning Outcomes: Find the coordinates of the division point (internal and external) of a line segment on the number line.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-1",
+      "type": "linking_text",
+      "source_page": 150,
+      "quote": "When a surgeon plans a minimally invasive robotic surgery",
+      "text": "Intro: a surgeon's robotic arm must navigate 3D space inside the body to target a tumor without damaging tissue; imaging software maps anatomy onto a precise grid, each landmark given numerical coordinates, so the system determines optimal paths, distances and boundary midpoints.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "How does mapping physical space onto a grid of numbers allow",
+      "text": "How does mapping physical space onto a grid of numbers allow us to precisely partition paths, find balances, and safely navigate complex physical environments?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:definition-1",
+      "type": "definition",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "On a number line, one real number a corresponds to point P.",
+      "claim": "On a number line, one real number $a$ corresponds to point P; $a$ is called the coordinate of P, and P with coordinate $a$ is denoted P($a$).",
+      "formula": "$P(a)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-1",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "The distance AB between two points A(a) and B(b)",
+      "claim": "The distance AB between A($a$) and B($b$) on a number line is given by AB = |b − a|. Side note: since distance cannot be negative, we use the absolute value.",
+      "formula": "$AB=|b-a|$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:definition-2",
+      "type": "definition",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "point P is said to divide the line segment AB internally in the ratio",
+      "claim": "If P is on segment AB such that AP:PB = m : n, P is said to divide AB internally in the ratio m : n.",
+      "formula": "$AP:PB=m:n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:definition-3",
+      "type": "definition",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "point Q is said to divide the line segment AB externally in the ratio",
+      "claim": "If Q is on the extension of segment AB such that AQ:QB = m : n, Q is said to divide AB externally in the ratio m : n.",
+      "formula": "$AQ:QB=m:n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-1",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "Point P is a point m away from A and n away from B.",
+      "caption": "Two number lines with arrow labelled x. Top: A(a), P, B(b), with arcs m (A to P) and n (P to B); caption 'Point P is a point m away from A and n away from B.' Bottom: A(a), B(b), Q on the line, with a large arc m from A to Q and a small arc n from B to Q; caption 'Point Q is a point m away from A and n away from B.'",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7002,
+          0.6306,
+          0.923,
+          0.7306
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-2",
+      "type": "linking_text",
+      "source_page": 150,
+      "quote": "Regarding the line segment AB connecting two points A(a) and B(b)",
+      "text": "Regarding the line segment AB connecting two points A(a) and B(b) on a number line:",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-2",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "The coordinate of point P dividing segment AB internally in the ratio",
+      "claim": "(i) The coordinate of P dividing AB internally in the ratio m : n is P((na + mb)/(m + n)).",
+      "formula": "$P\\left(\\frac{na+mb}{m+n}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-3",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "The coordinate of point Q dividing segment AB externally in the ratio",
+      "claim": "(ii) The coordinate of Q dividing AB externally in the ratio m : n is Q((−na + mb)/(m − n)).",
+      "formula": "$Q\\left(\\frac{-na+mb}{m-n}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:caution-1",
+      "type": "caution",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "Be careful with the order of multiplication (cross-multiply).",
+      "claim": "Side note beside formulas (i) and (ii): shows (na+mb)/(m+n) and (−na+mb)/(m−n); be careful with the order of multiplication (cross-multiply).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-4",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "The coordinate of the midpoint M is (since it divides segment AB",
+      "claim": "(iii) The coordinate of the midpoint M (dividing AB internally in 1:1) is M((a+b)/2).",
+      "formula": "$M\\left(\\frac{a+b}{2}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-2",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 150,
+      "quote": "A(a) M B(b) x",
+      "caption": "Number line with arrow x: points A(a), M, B(b); two equal arcs each labelled 1 (A to M and M to B), segment AB highlighted in blue.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6959,
+          0.8348,
+          0.9257,
+          0.882
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-2",
+      "type": "heading",
+      "source_page": 151,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 151,
+      "quote": "For two points A( − 4) and B(8), find the following distances or coordinates.",
+      "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Distance AB between the two points."
+        },
+        {
+          "label": "b",
+          "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1"
+        },
+        {
+          "label": "c",
+          "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:3"
+        },
+        {
+          "label": "d",
+          "stem": "Coordinate of midpoint M of segment AB."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-3",
+      "type": "heading",
+      "source_page": 151,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-3",
+      "type": "linking_text",
+      "source_page": 151,
+      "quote": "AB = | 8 − ( − 4) |",
+      "text": "Worked explanation of the Warm Up: (a) $AB=|8-(-4)|$; (b) $\\frac{1\\times(-4)+2\\times 8}{2+1}=4$ Therefore, C(4), then a stray line '$=12$' printed below; (c) $\\frac{-3\\times(-4)+2\\times 8}{2-3}=-28$ Therefore, D(−28); (d) $\\frac{-4+8}{2}=2$ Therefore, M(2).",
+      "misprints": [
+        {
+          "field": "text",
+          "printed": "(b) fraction ... = 4 with separate line '= 12'",
+          "intended": "numerator 1×(−4)+2×8 = 12, so 12/3 = 4",
+          "notes": "'= 12' is the numerator value and is misplaced under the fraction; (a) omits final value 12"
+        }
+      ],
+      "notes": "Layout of (a) and (b) is odd: (a) has no final value printed; (b) prints '= 12' on a separate line below the fraction before/after '= 4'. Check against image.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-4",
+      "type": "heading",
+      "source_page": 151,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-1",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 151,
+      "quote": "For two points A( − 5) and B(7), find the following distances or coordinates.",
+      "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Distance AB between the two points."
+        },
+        {
+          "label": "b",
+          "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1"
+        },
+        {
+          "label": "c",
+          "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:5"
+        },
+        {
+          "label": "d",
+          "stem": "Coordinate of midpoint M of segment AB."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-4",
+      "type": "linking_text",
+      "source_page": 151,
+      "quote": "Collaborate with your group to solve parts (c and d) then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve parts (c and d) then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-5",
+      "type": "heading",
+      "source_page": 151,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-5",
+      "type": "linking_text",
+      "source_page": 151,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 151,
+      "quote": "For two points A( − 2) and B(6), find the following distances or coordinates.",
+      "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Distance AB between the two points."
+        },
+        {
+          "label": "b",
+          "stem": "Coordinate of point C dividing segment AB internally in the ratio 3:1"
+        },
+        {
+          "label": "c",
+          "stem": "Coordinate of point D dividing segment AB externally in the ratio 5:3"
+        },
+        {
+          "label": "d",
+          "stem": "Coordinate of midpoint M of segment AB."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 151,
+      "quote": "For two points A(4) and B(10), find the following distances or coordinates.",
+      "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Distance AB between the two points."
+        },
+        {
+          "label": "b",
+          "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1"
+        },
+        {
+          "label": "c",
+          "stem": "Coordinate of point D dividing segment AB externally in the ratio 1:3"
+        },
+        {
+          "label": "d",
+          "stem": "Coordinate of midpoint M of segment AB."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-6",
+      "type": "heading",
+      "source_page": 152,
+      "quote": "Challenge",
+      "text": "Challenge",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-3",
+      "type": "figure",
+      "source_page": 152,
+      "quote": "Position along trench wall",
+      "caption": "Illustration of an underwater research habitat beside a trench wall, with a vertical axis 'Position along trench wall'. Labelled points from top: Sea level (0 km), Pod B, Hub M, Sensor C, Pod A (with axis break), Outpost D. A dome-shaped habitat, fish and jellyfish are shown. No numeric values besides 0 km are printed; positions are only schematic.",
+      "notes": "Labels read from image; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.1428,
+          0.1033,
+          0.6101,
+          0.3183
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-1",
+      "source_page": 152,
+      "quote": "Subterranean Research Lab Infrastructure",
+      "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Fiber-Optic Tether Length"
+        },
+        {
+          "label": "b",
+          "stem": "Internal Environmental Sensor Array — Point C divides AB internally in ratio 1:4"
+        },
+        {
+          "label": "c",
+          "stem": "External Deep-Trench Outpost — Point D divides AB externally in ratio 3:4"
+        },
+        {
+          "label": "d",
+          "stem": "Emergency Supply Hub Location (M) — Midpoint M of AB"
+        }
+      ],
+      "notes": "Figure k2 belongs to this challenge box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-7",
+      "type": "heading",
+      "source_page": 153,
+      "quote": "Points on the Coordinate Plane",
+      "text": "Points on the Coordinate Plane",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 153,
+      "quote": "Determine the quadrant of a point on the coordinate plane",
+      "text": "Learning Outcomes: Determine the quadrant of a point on the coordinate plane.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:convention-1",
+      "type": "convention",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "The coordinate plane is divided into 4 quadrants",
+      "claim": "The coordinate plane is divided into 4 quadrants as shown in the figure on the right, excluding the coordinate axes.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-4",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "Quadrant II Quadrant I Quadrant III Quadrant IV",
+      "caption": "Coordinate plane with x- and y-axes meeting at origin O; Quadrant I upper right, Quadrant II upper left, Quadrant III lower left, Quadrant IV lower right.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6987,
+          0.2663,
+          0.9173,
+          0.3665
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-8",
+      "type": "heading",
+      "source_page": 153,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-6",
+      "type": "linking_text",
+      "source_page": 153,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:unlabelled-exercise-1",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "Determine which quadrant the following points lie in.",
+      "text": "Determine which quadrant the following points lie in.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point A(2, 3)"
+        },
+        {
+          "label": "b",
+          "stem": "Point B(2, −3)"
+        },
+        {
+          "label": "c",
+          "stem": "Point C(−2, 3)"
+        },
+        {
+          "label": "d",
+          "stem": "Point D(−2, −3)"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:unlabelled-exercise-2",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "For point A( − 3, 2), find the coordinates of the following points.",
+      "text": "For point A(−3, 2), find the coordinates of the following points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the x−axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the y−axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-9",
+      "type": "heading",
+      "source_page": 153,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:worked-example-1",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "Plot the points on the coordinate plane to visualize.",
+      "stem": "Plot the points on the coordinate plane to visualize.",
+      "solution": [
+        "Plot the points A(2,3), B(2,−3), C(−2,3), D(−2,−3) on the coordinate plane."
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "answer": "1st Quadrant",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "4th Quadrant",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "c",
+          "answer": "2nd Quadrant",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "d",
+          "answer": "3rd Quadrant",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "notes": "Explanation numbered 1 answers Warm Up 1; printed (a) 1st, (b) 4th, (c) 2nd, (d) 3rd.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-5",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-2",
+      "belongs_to": "eb11c4-1:worked-example-1",
+      "source_page": 153,
+      "quote": "(b) Quadrant II (a) Quadrant I",
+      "caption": "Coordinate plane with points A (x=2, y=3) in (a) Quadrant I, C (x=−2, y=3) in (b) Quadrant II, D (x=−2, y=−3) in (c) Quadrant III, B (x=2, y=−3) in (d) Quadrant IV; dashed lines to axes labelled 3, −3, −2, 2.",
+      "notes": "Point coordinates read from figure; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7213,
+          0.5368,
+          0.9271,
+          0.6448
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:worked-example-2",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 153,
+      "quote": "Change the sign of other coordinate.",
+      "stem": "Change the sign of other coordinate. For A(−3, 2) find P, Q, R.",
+      "solution": [
+        "(a) P symmetric with respect to the x−axis: Change the sign of the y−coordinate. P(−3, −2)",
+        "(b) Q symmetric with respect to the y−axis: Change the sign of the x−coordinate. Q(3, 2)",
+        "(c) R symmetric with respect to the origin: Change the sign of the x−coordinate and the y−coordinate. R(3, −2)"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "answer": "P(−3, −2)",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "Q(3, 2)",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "c",
+          "answer": "R(3, −2)",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "notes": "Page prints this under Explanation 2; label lines read in order.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-6",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-2",
+      "belongs_to": "eb11c4-1:worked-example-2",
+      "source_page": 153,
+      "quote": "(symmetric with respect to the y-axis)",
+      "caption": "Coordinate plane with A(−3, 2), Q(3, 2) (symmetric with respect to the y-axis), P(−3, −2) (symmetric with respect to the x-axis), R(3, −2) (symmetric with respect to the origin); dashed rectangle, diagonal A to R through O, tick marks; axis labels −3, 3, 2, −2.",
+      "notes": "Read from figure; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6993,
+          0.6563,
+          0.9224,
+          0.7775
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:try-2",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "Determine which quadrant the following points lie in.",
+      "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point A(−4, 2)"
+        },
+        {
+          "label": "b",
+          "stem": "Point B(1, 2)"
+        },
+        {
+          "label": "c",
+          "stem": "Point C(3, −2)"
+        },
+        {
+          "label": "d",
+          "stem": "Point D(−3, −1)"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-3",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "For point A( − 1, 2), find the coordinates of the following points.",
+      "text": "For point A(−1, 2), find the coordinates of the following points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the $x$-axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the $y$-axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+      "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "Determine which quadrant the following points lie in.",
+      "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point A(−3, 1)"
+        },
+        {
+          "label": "b",
+          "stem": "Point B(2, −8)"
+        },
+        {
+          "label": "c",
+          "stem": "Point C(4, 4)"
+        },
+        {
+          "label": "d",
+          "stem": "Point D(−6, −4)"
+        },
+        {
+          "label": "e",
+          "stem": "Point E(−2, 6)"
+        },
+        {
+          "label": "f",
+          "stem": "Point F(3, −3)"
+        },
+        {
+          "label": "g",
+          "stem": "Point G(−5, −7)"
+        },
+        {
+          "label": "h",
+          "stem": "Point H(1, 4)"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "For point A( − 4, − 2), find the coordinates of the following points.",
+      "text": "For point A(−4, −2), find the coordinates of the following points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the $x$-axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the $y$-axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "For point A(1, − 2), find the coordinates of the following points.",
+      "text": "For point A(1, −2), find the coordinates of the following points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the $x$-axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the $y$-axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "For point A( − 3, 4), find the coordinates of the following points.",
+      "text": "For point A(−3, 4), find the coordinates of the following points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the $x$-axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the $y$-axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-2",
+      "source_page": 154,
+      "quote": "A robotic welding arm is programmed at point A(−3, 4)",
+      "text": "A robotic welding arm is programmed at point A(−3, 4) on a metal sheet. To weld identical support brackets, the arm must mirror this point:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P symmetric with respect to the x-axis"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q symmetric with respect to the y-axis"
+        },
+        {
+          "label": "c",
+          "stem": "Point R symmetric with respect to the origin"
+        }
+      ],
+      "notes": "A photo of a robotic welding arm over a metal sheet with faint grid markings accompanies the challenge; treated as decorative.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-10",
+      "type": "heading",
+      "source_page": 155,
+      "quote": "Distance Between Two Points",
+      "text": "4-3 Distance Between Two Points (Chapter 4 Geometry and Equations)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-5",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "The distance AB between two points A(x1, y1) and B(x2, y2) is",
+      "claim": "The distance AB between two points A(x1, y1) and B(x2, y2) is the square root of (x2 − x1)² + (y2 − y1)².",
+      "formula": "$AB=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:method-1",
+      "type": "method",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "In problems where the distance between 2 points is known, square both sides",
+      "claim": "In problems where the distance between 2 points is known, square both sides.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-11",
+      "type": "heading",
+      "source_page": 155,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "Find the distance between the following 2 points. A(2, 6), B(5, 10)",
+      "text": "Find the distance between the following 2 points.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "$A(2,6),\\ B(5,10)$"
+        }
+      ],
+      "notes": "Printed Explanation: $\\sqrt{(5-2)^2+(10-6)^2}=\\sqrt{3^2+4^2}=5$. Page prints instruction 'Solve the following problems.' above.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between points A(3, − 2) and B(x, 1) is 5, find the value of x.",
+      "text": "If the distance between points $A(3,-2)$ and $B(x,1)$ is 5, find the value of $x$.",
+      "notes": "Printed Explanation: since distance is 5, $\\sqrt{(x-3)^2+\\{1-(-2)\\}^2}=5$ (side note: Square both sides); $(x-3)^2+\\{1-(-2)\\}^2=25$; solving, $x=-1, 7$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-12",
+      "type": "heading",
+      "source_page": 155,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-4",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "Find the distance between the following 2 points.",
+      "text": "Find the distance between the following 2 points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$A(4,3),\\ B(1,2)$"
+        },
+        {
+          "label": "b",
+          "stem": "$A(\\sqrt{3},-1),\\ B(0,1)$"
+        },
+        {
+          "label": "c",
+          "stem": "Origin $O$, $A(2,-4)$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-5",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between points A(−1, 3) and B(x, 1) is √5",
+      "text": "If the distance between points $A(-1,3)$ and $B(x,1)$ is $\\sqrt{5}$, find the value of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-13",
+      "type": "heading",
+      "source_page": 155,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "Find the distance between the following 2 points.",
+      "text": "Find the distance between the following 2 points.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$A(1,2),\\ B(11,7)$"
+        },
+        {
+          "label": "b",
+          "stem": "$A(3,-1),\\ B(-1,3)$"
+        },
+        {
+          "label": "c",
+          "stem": "Origin $O$, $A(-3,4)$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between points A(3, − 1) and B(x, 2) is 5, find x.",
+      "text": "If the distance between points $A(3,-1)$ and $B(x,2)$ is 5, find $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between points A(1, −3) and B(−2, y) is √13, find y.",
+      "text": "If the distance between points $A(1,-3)$ and $B(-2,y)$ is $\\sqrt{13}$, find $y$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between points A(−4, −2) and B(x, 3) is 5√5, find x.",
+      "text": "If the distance between points $A(-4,-2)$ and $B(x,3)$ is $5\\sqrt{5}$, find $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 155,
+      "quote": "Calculate the distance between two points.",
+      "text": "Learning Outcomes: Calculate the distance between two points.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-7",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "Use the Pythagorean theorem.",
+      "caption": "Coordinate axes x, y with origin O. Point A at (x1, y1) and point B at (x2, y2) with dotted guide lines to axis values x1, x2, y1, y2. Right triangle ABC shaded yellow with right angle at lower right; horizontal leg labelled |x2 − x1|, vertical leg labelled |y2 − y1|, hypotenuse AB. Caption: Use the Pythagorean theorem.",
+      "notes": "Labels read from figure; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6957,
+          0.2674,
+          0.9027,
+          0.4239
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-7",
+      "type": "linking_text",
+      "source_page": 155,
+      "quote": "Square both sides.",
+      "text": "Square both sides. (side note beside Warm Up 2 explanation)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:work-with-a-partner-2",
+      "type": "activity",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+      "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 155,
+      "quote": "If the distance between the two points (x,7) and (3x-1, -5) equals 13",
+      "text": "If the distance between the two points $(x,7)$ and $(3x-1,-5)$ equals 13 length units, then find the value(s) of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-4",
+      "type": "printed_objective",
+      "source_page": 156,
+      "quote": "Determine the position of a point equidistant from two points.",
+      "text": "Learning Outcomes: Determine the position of a point equidistant from two points.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:method-2",
+      "type": "method",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "To find a point equidistant from two points, assign variables",
+      "claim": "To find a point equidistant from two points, assign variables to its coordinates based on the given conditions.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-6",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Point on x−axis ⟹ The required point is ( s, 0)",
+      "claim": "A point on the x-axis: the required point is (s, 0).",
+      "formula": "$(s, 0)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-7",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Point on y−axis ⟹ The required point is ( 0, t)",
+      "claim": "A point on the y-axis: the required point is (0, t).",
+      "formula": "$(0, t)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-8",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Point on line y = ax + b ⟹ The required point is ( s, as+b)",
+      "claim": "A point on the line y = ax + b: the required point is (s, as+b).",
+      "formula": "$(s, as+b)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-14",
+      "type": "heading",
+      "source_page": 156,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-8",
+      "type": "linking_text",
+      "source_page": 156,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Find the coordinates of point P on the x-axis equidistant from 2 points A( − 2, 1)",
+      "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points $A(-2, 1)$ and $B(3, 4)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-5",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Find the coordinates of point Q on y = 2x − 1 equidistant from 2 points A(1, 4)",
+      "text": "Find the coordinates of point Q on $y = 2x - 1$ equidistant from 2 points $A(1, 4)$ and $B(3, 1)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-15",
+      "type": "heading",
+      "source_page": 156,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Let the coordinates of point P be (s, 0).",
+      "stem": "Find P on the x-axis equidistant from A(−2, 1) and B(3, 4).",
+      "solution": [
+        "Let the coordinates of point P be $(s, 0)$.",
+        "Since it is equidistant from 2 points A(−2, 1) and B(3, 4), $AP = BP$",
+        "$\\sqrt{\\{s-(-2)\\}^2+(-1)^2}=\\sqrt{(s-3)^2+(-4)^2}$",
+        "$\\{s-(-2)\\}^2+(-1)^2=(s-3)^2+(-4)^2$",
+        "Simplifying and solving this gives $s = 2$",
+        "Therefore, the required coordinates is P(2, 0)."
+      ],
+      "answer": "$P(2, 0)$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-8",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-3",
+      "belongs_to": "eb11c4-1:explanation-1",
+      "source_page": 156,
+      "quote": "A(−2, 1) B(3, 4) P(s, 0)",
+      "caption": "Coordinate axes with points A(−2, 1) in the second quadrant, B(3, 4) in the first quadrant, and P(s, 0) on the x-axis; segments AP and BP drawn with equal-length tick marks.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7015,
+          0.5428,
+          0.9264,
+          0.6722
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:explanation-2",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 156,
+      "quote": "Let the coordinates of point Q be (s, 2s−1).",
+      "stem": "Find Q on y = 2x − 1 equidistant from A(1, 4) and B(3, 1).",
+      "solution": [
+        "Let the coordinates of point Q be $(s, 2s-1)$.",
+        "Since it is equidistant from 2 points A(1, 4) and B(3, 1), $AQ = BQ$",
+        "$\\sqrt{(s-1)^2+\\{(2s-1)-4\\}^2}=\\sqrt{(s-3)^2+\\{(2s-1)-1\\}^2}$",
+        "$(s-1)^2+\\{(2s-1)-4\\}^2=(s-3)^2+\\{(2s-1)-1\\}^2$",
+        "Simplifying and solving this gives $s=\\frac{13}{8}$",
+        "Since the required point is on y= 2x−1, Q(13/8, 9/4)"
+      ],
+      "answer": "$Q\\left(\\frac{13}{8}, \\frac{9}{4}\\right)$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-9",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-3",
+      "belongs_to": "eb11c4-1:explanation-2",
+      "source_page": 156,
+      "quote": "A(1, 4) y=2x−1 Q(s, 2s−1) B(3, 1)",
+      "caption": "Axes with line y = 2x − 1 (y-intercept −1 marked), points A(1, 4), Q(s, 2s−1) on the line, and B(3, 1); segments AQ and BQ drawn with equal-length tick marks.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7015,
+          0.7442,
+          0.9229,
+          0.8836
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:try-6",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-7",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point P on the y-axis equidistant",
+      "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(4, 2) and B(1, −1).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-8",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point Q on y = 3x + 1",
+      "text": "Find the coordinates of point Q on $y = 3x + 1$ equidistant from 2 points A(4, −5) and B(2, −3).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-9",
+      "type": "linking_text",
+      "source_page": 157,
+      "quote": "Work with your colleagues",
+      "text": "Work with a partner: Work with your colleagues",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point P on the x-axis equidistant",
+      "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(4, 3).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point P on the y-axis equidistant",
+      "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(−5, 2) and B(3, 5).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-14",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point P on the x-axis equidistant",
+      "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(3, 8).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-15",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point Q on y = 2x − 3",
+      "text": "Find the coordinates of point Q on $y = 2x - 3$ equidistant from 2 points A(1, 4) and B(3, −2).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-16",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point Q on y = x − 1",
+      "text": "Find the coordinates of point Q on $y = x - 1$ equidistant from 2 points A(−1, 5) and B(7, −1).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-17",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "Find the coordinates of point Q on y = − x + 1",
+      "text": "Find the coordinates of point Q on $y = -x + 1$ equidistant from 2 points A(1, 2) and B(−3, 6).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-4",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-3",
+      "source_page": 157,
+      "quote": "If A (2,1), B (4,5), C (3, y) and D (x,0)",
+      "text": "If A(2,1), B(4,5), C(3, y) and D(x,0) such that CA = CB and DA = DB, then find CD.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-16",
+      "type": "heading",
+      "source_page": 158,
+      "quote": "Internal and External Division Points on the Coordinate Plane",
+      "text": "4-5 Internal and External Division Points on the Coordinate Plane (Chapter 4 Geometry and Equations)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-5",
+      "type": "printed_objective",
+      "source_page": 158,
+      "quote": "Find the coordinates of the division point (internal and external)",
+      "text": "Learning Outcomes: Find the coordinates of the division point (internal and external) of a line segment on the coordinate plane.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-17",
+      "type": "heading",
+      "source_page": 158,
+      "quote": "Point!",
+      "text": "Point!",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-10",
+      "type": "linking_text",
+      "source_page": 158,
+      "quote": "Regarding the line segment AB connecting two points A(x1, y1) and B(",
+      "text": "Regarding the line segment AB connecting two points A(x₁, y₁) and B(x₂, y₂) on the coordinate plane:",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-9",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "The coordinates of point P dividing segment AB internally in the",
+      "claim": "(a) The point P dividing segment AB internally in the ratio m : n has coordinates ((n x₁ + m x₂)/(m + n), (n y₁ + m y₂)/(m + n)).",
+      "formula": "$P\\left(\\frac{nx_1+mx_2}{m+n},\\frac{ny_1+my_2}{m+n}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-10",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "The coordinates of point Q dividing segment AB externally in the",
+      "claim": "(b) The point Q dividing segment AB externally in the ratio m : n has coordinates ((−n x₁ + m x₂)/(m − n), (−n y₁ + m y₂)/(m − n)).",
+      "formula": "$Q\\left(\\frac{-nx_1+mx_2}{m-n},\\frac{-ny_1+my_2}{m-n}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-11",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "Since the midpoint M divides segment AB internally in the ratio 1:1",
+      "claim": "(c) Since the midpoint M divides segment AB internally in the ratio 1:1, its coordinates are M((x₁+x₂)/2, (y₁+y₂)/2).",
+      "formula": "$M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-12",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "The coordinates of the centroid G of △ABC with vertices A(",
+      "claim": "The centroid G of triangle ABC with vertices A(x₁, y₁), B(x₂, y₂) and C(x₃, y₃) has coordinates ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3).",
+      "formula": "$G\\left(\\frac{x_1+x_2+x_3}{3},\\frac{y_1+y_2+y_3}{3}\\right)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:caution-2",
+      "type": "caution",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "Pay attention to the order of multiplication.",
+      "claim": "Side note beside (a) and (b): the formulas are written as (na+mb)/(m+n) and (−na+mb)/(m−n); pay attention to the order of multiplication (n goes with the first point, m with the second).",
+      "formula": "$\\frac{na+mb}{m+n},\\ \\frac{-na+mb}{m-n}$",
+      "notes": "Side margin note with dotted connectors to (a) and (b); the a, b notation is as printed.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-6",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "Given three points A( − 2, − 3), B(3, 7), and C(5, 2)",
+      "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P dividing segment BA internally in the ratio 1:2"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q dividing segment BC externally in the ratio 1:3"
+        },
+        {
+          "label": "c",
+          "stem": "Midpoint M of segment CA"
+        },
+        {
+          "label": "d",
+          "stem": "Centroid G of triangle ABC"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-18",
+      "type": "heading",
+      "source_page": 158,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:worked-example-3",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 158,
+      "quote": "so P (4/3, 11/3)",
+      "stem": "Printed explanation (solution) of the Warm Up.",
+      "solution": [
+        "(a) $\\left(\\frac{2\\times3+1\\times(-2)}{1+2},\\frac{2\\times7+1\\times(-3)}{1+2}\\right)$, so $P\\left(\\frac43,\\frac{11}{3}\\right)$",
+        "(b) $\\left(\\frac{-3\\times3+1\\times5}{1-3},\\frac{-3\\times7+1\\times2}{1-3}\\right)$, so $Q\\left(2,\\frac{19}{2}\\right)$",
+        "(c) $\\left(\\frac{5+(-2)}{2},\\frac{2+(-3)}{2}\\right)$, so $M\\left(\\frac32,-\\frac12\\right)$",
+        "(d) $\\left(\\frac{-2+3+5}{3},\\frac{-3+7+2}{3}\\right)$, so $G(2,2)$"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "answer": "$P\\left(\\frac43,\\frac{11}{3}\\right)$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "$Q\\left(2,\\frac{19}{2}\\right)$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "c",
+          "answer": "$M\\left(\\frac32,-\\frac12\\right)$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "d",
+          "answer": "$G(2,2)$",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "notes": "Unlabelled explanation of the Warm Up, not an 'Example'. In (a) the ratio 2:1 is used (1:2 for BA with m=2? as printed), recorded as printed.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-9",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Point P dividing segment AC internally in the ratio 3:1",
+      "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point P dividing segment AC internally in the ratio 3:1",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-10",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Point Q dividing segment BC externally in the ratio 2:3",
+      "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point Q dividing segment BC externally in the ratio 2:3",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-11",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Midpoint M of segment AB",
+      "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Midpoint M of segment AB",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-12",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Centroid G of triangle ABC",
+      "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Centroid G of triangle ABC",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:work-with-a-partner-3",
+      "type": "activity",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Collaborate with your group to solve question (3 and 4) then discuss the answer.",
+      "text": "Collaborate with your group to solve question (3 and 4) then discuss the answer.",
+      "notes": "Side box beside the Try questions.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-18",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Given three points A(2, 3), B(2, − 3), and C( − 2, 3)",
+      "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P dividing segment AB internally in the ratio 4:1"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q dividing segment BC externally in the ratio 2:3"
+        },
+        {
+          "label": "c",
+          "stem": "Midpoint M of segment CA"
+        },
+        {
+          "label": "d",
+          "stem": "Centroid G of triangle ABC"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-19",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Given three points A( − 2, 1), B(6, -3), and C(1, 7)",
+      "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P dividing segment BC internally in the ratio 3:2"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q dividing segment CA externally in the ratio 3:2"
+        },
+        {
+          "label": "c",
+          "stem": "Midpoint M of segment AB"
+        },
+        {
+          "label": "d",
+          "stem": "Centroid G of triangle ABC"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-20",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "Given three points A( − 4, 5), B(1, − 5), and C(3, 0)",
+      "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Point P dividing segment BA internally in the ratio 1:2"
+        },
+        {
+          "label": "b",
+          "stem": "Point Q dividing segment BC externally in the ratio 1:3"
+        },
+        {
+          "label": "c",
+          "stem": "Midpoint M of segment BC"
+        },
+        {
+          "label": "d",
+          "stem": "Centroid G of triangle ABC"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-5",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 159,
+      "quote": "If A (-2,3), B (6,1) and C (0, y), such that CA = CB",
+      "text": "If $A(-2,3)$, $B(6,1)$ and $C(0,y)$, such that $CA = CB$, then find the coordinates of the centroid G of triangle ABC.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-19",
+      "type": "heading",
+      "source_page": 160,
+      "quote": "Symmetric Points",
+      "text": "Symmetric Points (4-6, Chapter 4 Geometry and Equations)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:printed-objective-6",
+      "type": "printed_objective",
+      "source_page": 160,
+      "quote": "Learning Outcomes Determine the symmetric point.",
+      "text": "Learning Outcomes: Determine the symmetric point.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-10",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "B A C",
+      "caption": "Side figure: a line segment with points B (left, top), A (middle) and C (right, lower); A lies on the segment between B and C.",
+      "notes": "Positions read from figure.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7035,
+          0.24,
+          0.8957,
+          0.2933
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:rule-13",
+      "type": "rule",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "Two points B, C are symmetric with respect to point A",
+      "claim": "Two points B, C are symmetric with respect to point A if and only if point A is the midpoint of segment BC.",
+      "notes": "Printed in the 'Point!' box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:method-3",
+      "type": "method",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "When finding symmetric points, first draw a diagram",
+      "claim": "When finding symmetric points, first draw a diagram to understand the relative positions of the points. Next, let the required coordinates be (s, t) and express the midpoint in terms of s, t.",
+      "formula": "$(s, t)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-20",
+      "type": "heading",
+      "source_page": 160,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:warm-up-7",
+      "type": "worked_example",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "Find the coordinates of point B symmetric to point A( − 3, 2)",
+      "stem": "Find the coordinates of point B symmetric to point A$(-3,2)$ with respect to point P$(2,6)$.",
+      "solution": [
+        "Let the coordinates of point B be $(s, t)$.",
+        "The coordinates of the midpoint of segment AB can be expressed as $\\left(\\frac{-3+s}{2}, \\frac{2+t}{2}\\right)$.",
+        "Since this coincides with point P(2, 6): $\\frac{-3+s}{2}=2$ and $\\frac{2+t}{2}=6$.",
+        "Solving this gives $s = 7, t = 10$."
+      ],
+      "answer": "B(7, 10)",
+      "solution_provenance": "book_worked",
+      "notes": "Under the heading 'Explanation'. Side note beside the midpoint: 'Express the midpoint in terms of s, t.'",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:linking-text-11",
+      "type": "linking_text",
+      "belongs_to": "eb11c4-1:warm-up-7",
+      "source_page": 160,
+      "quote": "Express the midpoint in terms of s, t.",
+      "text": "Side note: Express the midpoint in terms of s, t.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:figure-11",
+      "type": "figure",
+      "lo": "eb11c4-1:objective-4",
+      "belongs_to": "eb11c4-1:warm-up-7",
+      "source_page": 160,
+      "quote": "A (−3, 2) P (2, 6) B (s, t)",
+      "caption": "Side figure: a horizontal segment with three points: A(−3, 2) on the left, P(2, 6) in the middle, B(s, t) on the right.",
+      "notes": "Values read from figure; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6994,
+          0.5845,
+          0.8711,
+          0.6221
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c4-1:heading-21",
+      "type": "heading",
+      "source_page": 160,
+      "quote": "Try",
+      "text": "Try: Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-13",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "Find the coordinates of point B symmetric to point A(1, − 2)",
+      "text": "Find the coordinates of point B symmetric to point A$(1,-2)$ with respect to point P$(2,3)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:try-14",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "Find the coordinates of point Q symmetric to point P(3, 2)",
+      "text": "Find the coordinates of point Q symmetric to point P$(3,2)$ with respect to point A$(-1,5)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:work-with-a-partner-4",
+      "type": "activity",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 160,
+      "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-21",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-22",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Find the coordinates of point B symmetric to point A( − 3, 1)",
+      "text": "Find the coordinates of point $B$ symmetric to point $A(-3,1)$ with respect to point $P(2,0)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-23",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Find the coordinates of point B symmetric to point A(7, 4)",
+      "text": "Find the coordinates of point $B$ symmetric to point $A(7,4)$ with respect to point $M(-3,5)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-24",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Find the coordinates of point B symmetric to point A(4, − 8)",
+      "text": "Find the coordinates of point $B$ symmetric to point $A(4,-8)$ with respect to point $P(-3,2)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-25",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Find the coordinates of point Q symmetric to point P(0, − 4)",
+      "text": "Find the coordinates of point $Q$ symmetric to point $P(0,-4)$ with respect to point $A(-4,1)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:exercise-26",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "Find the coordinates of point B symmetric to point A( − 4, 2)",
+      "text": "Find the coordinates of point $B$ symmetric to point $A(-4,2)$ with respect to point $P(-1,-3)$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:challenge-6",
+      "type": "exercise",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "If the points B (m, 5), C (4, n) are symmetric with respect to the point A",
+      "text": "If the points $B(m,5)$, $C(4,n)$ are symmetric with respect to the point $A(1,-1)$, then find $m+n$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c4-1:objective-4",
+      "source_page": 161,
+      "quote": "If we change the ratio of dividing a line segment, how will the position",
+      "text": "If we change the ratio of dividing a line segment, how will the position of the point on that line change? And how does thinking about ratios and reference distances help us understand locations in mathematics and in everyday life?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c4-1:objective-1",
+      "label": "Divide number-line segments",
+      "description": "Calculate the distance between two points on a number line and the coordinate of the point dividing a segment internally or externally in a given ratio, including the mid-point.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c4-1:rule-2",
+        "eb11c4-1:exercise-1",
+        "eb11c4-1:warm-up-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:objective-2",
+      "label": "Quadrants and reflections",
+      "description": "Determine the quadrant of a point and find the coordinates of its symmetric points with respect to the x−axis, the y−axis and the origin.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-2"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:objective-3",
+      "label": "Distance and equidistant points",
+      "description": "Calculate the distance between two points on the coordinate plane, find an unknown coordinate from a given distance, and determine the coordinates of a point equidistant from two points.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:exercise-8",
+        "eb11c4-1:explanation-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c4-1:objective-4",
+      "label": "Division points, centroid and symmetric points",
+      "description": "Calculate the coordinates of internal and external division points, the mid-point and the centroid of a triangle on the coordinate plane, and determine the point symmetric to a given point with respect to another point using the mid-point.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c4-1:rule-12",
+        "eb11c4-1:worked-example-3",
+        "eb11c4-1:rule-13",
+        "eb11c4-1:warm-up-7"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch04.20261021T110247Z.json), approved at G1 (4)",
+    "2026-10-21: 27 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 11 cropped"
+  ]
+}

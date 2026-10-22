@@ -1,0 +1,40 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-2-2:exercise-7-q",
+ "lo_id": "lo:eb11c4-2-2",
+ "book_item": "eb11c4-2:exercise-7#q",
+ "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-q",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 1,
+  "b": -5
+ },
+ "stem": "Find the line passing through the point $(-3, -8)$ with gradient $1$. Drag the two points so the line is that line. (Use a point you can place on the board.)",
+ "solution": [
+  "Use $y-y_1=m(x-x_1)$ with $m=1$ and $(-3,-8)$.",
+  "$y+8=x+3$.",
+  "$y=x-5$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "intercept-wrong",
+   "step": 2,
+   "text": "The line must pass through the given point. Substitute it into y − y₁ = m(x − x₁) to find where the line meets the y-axis."
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "step": 1,
+   "text": "A gradient of 1 means the line rises as you move right."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Start from y − y₁ = m(x − x₁) with the given gradient and point."
+  }
+ ],
+ "notes": "The given point lies off the default board, but the line y=x-5 has lattice points on it (e.g. (0,-5), (5,0))."
+}

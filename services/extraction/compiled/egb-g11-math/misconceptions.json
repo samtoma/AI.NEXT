@@ -1,0 +1,1621 @@
+{
+  "catalogue": "egb-g11-math-misconceptions",
+  "course_id": "course:egb-g11-math-en",
+  "book": "egb-g11-math",
+  "reviewed": false,
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs s5-final.20261021T150406Z.json; pipeline-generated, UNREVIEWED",
+  "misconceptions": [
+    {
+      "id": "mc:eb11c1-2-1:partial-multiplication",
+      "lo_id": "lo:eb11c1-2-1",
+      "label": "Multiplying only the leading term of the divisor",
+      "description": "The student multiplies the quotient term by the first term of the divisor only and leaves the other terms of the divisor out of the line they subtract.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You chose the right quotient term, $2x$, by comparing leading terms. The next step then needs the whole divisor, not just its first term."
+        },
+        {
+          "step": 2,
+          "text_md": "In the box problem the divisor is $2x^2-x-3$. Using only $2x^2$ gives $2x\\cdot 2x^2=4x^3$. Subtracting that from $4x^3+4x^2-9x-9$ leaves $4x^2-9x-9$."
+        },
+        {
+          "step": 3,
+          "text_md": "That is not what is really left over. The full product is $4x^3-2x^2-6x$, and it leaves $6x^2-3x-9$. The two leftovers differ, so the later steps and the final answer go wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "Each time, multiply the quotient term by every term of the divisor, write the whole line, and only then subtract."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Using only 4x³ leaves 4x²-9x-9. The full product leaves 6x²-3x-9. Both are correct, and they match the canonical step. The error is supported by caution-1.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c1-2:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-2-1:remainder-must-be-zero",
+      "lo_id": "lo:eb11c1-2-1",
+      "label": "Believing the remainder must always be zero",
+      "description": "The student thinks a non-zero remainder means the division has gone wrong, so they hunt for a mistake or force the remainder to vanish.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "It is natural to expect a zero remainder, because the box problem works out that way: the last subtraction leaves $0$ and the height is exactly $2x+3$."
+        },
+        {
+          "step": 2,
+          "text_md": "That is a special case, though. The rule for stopping is not that the remainder is $0$. It is that what is left has lower degree than the divisor."
+        },
+        {
+          "step": 3,
+          "text_md": "So a leftover of lower degree, such as a term in $x$ when dividing by a quadratic, is a correct remainder. It does not signal an error, and you should not change the working to get rid of it."
+        },
+        {
+          "step": 4,
+          "text_md": "When the division stops, state both parts: the quotient, and the remainder, which may be $0$ or may be a lower-degree expression."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation is mathematically correct. It states the stopping rule as lower degree, not zero remainder, which matches caution-3. It stays consistent with the canonical remainder of 0 for the box problem. It cites no outside references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c1-2:caution-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-2-1:stopping-too-early",
+      "lo_id": "lo:eb11c1-2-1",
+      "label": "Stopping before the remainder has lower degree than the divisor",
+      "description": "The student stops dividing after one or two steps, while what is left still has degree at least that of the divisor.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You carried out a step correctly and then stopped, probably because the working looked finished. The test for stopping is the degree of what is left."
+        },
+        {
+          "step": 2,
+          "text_md": "In the box problem, after the first step the quotient is $2x$ and what is left is $6x^2-3x-9$. That has degree $2$, the same as the divisor $2x^2-x-3$, so $2x^2-x-3$ still divides into it."
+        },
+        {
+          "step": 3,
+          "text_md": "The next term is $6x^2\\div 2x^2=3$. Then $3(2x^2-x-3)=6x^2-3x-9$, and subtracting leaves $0$. The height is $2x+3$, not $2x$."
+        },
+        {
+          "step": 4,
+          "text_md": "After each subtraction, compare the degree of what is left with the degree of the divisor. Stop only when it is lower."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "After the first step 6x²-3x-9 still has degree 2, equal to the divisor's degree. The next term is 3, and the result is 2x+3 with remainder 0, which matches the canonical answer. The error is supported by caution-2.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c1-2:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-2-1:subtraction-sign-slip",
+      "lo_id": "lo:eb11c1-2-1",
+      "label": "Subtracting without changing signs",
+      "description": "The student multiplies the divisor correctly but then adds, or subtracts only some terms, so the signs of the line being taken away are not all reversed.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the right term to multiply by and built the right line underneath. The slip comes at the next move: subtracting means changing the sign of every term in that line, not just the first."
+        },
+        {
+          "step": 2,
+          "text_md": "Take the box volume $4x^3+4x^2-9x-9$ divided by $2x^2-x-3$. The first quotient term is $2x$, and $2x(2x^2-x-3)=4x^3-2x^2-6x$. The $x^2$ terms are $4x^2-(-2x^2)=6x^2$."
+        },
+        {
+          "step": 3,
+          "text_md": "If the sign is not changed you get $4x^2-2x^2=2x^2$ instead. Everything after that is built on the wrong line, so the division will not finish at $0$."
+        },
+        {
+          "step": 4,
+          "text_md": "Put the line you are subtracting in brackets with a minus in front, then work down term by term: $x^3$, $x^2$, $x$, constant. Here that gives $6x^2-3x-9$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the arithmetic against the canonical solution. 2x(2x²-x-3)=4x³-2x²-6x. Subtracting gives 6x²-3x-9. Not changing the sign gives 4x²-2x²=2x² instead. The error is supported by caution-1. The refutation cites nothing outside the book.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c1-2:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-3-3:add-tops-and-bottoms",
+      "lo_id": "lo:eb11c1-3-3",
+      "label": "Adds numerators and denominators separately",
+      "description": "The student treats the sum or difference of two rational expressions like adding whole numbers, adding the numerators together and the denominators together.",
+      "signal": "For 1/(x+1) + 1/(x-2) the student writes 2/(2x-1).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are treating $\\frac{1}{x+1}+\\frac{1}{x-2}$ as if you can add the tops and add the bottoms, giving $\\frac{2}{2x-1}$. It is natural to want a quick rule, but this one does not work for fractions."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it with $x=3$. The original is $\\frac{1}{4}+\\frac{1}{1}=\\frac{5}{4}$. Your answer gives $\\frac{2}{5}$. The two do not match, so the rule has changed the value."
+        },
+        {
+          "step": 3,
+          "text_md": "The bottoms tell you the size of the pieces. You can only add pieces that are the same size, so both fractions must first be written over the same denominator."
+        },
+        {
+          "step": 4,
+          "text_md": "Do that by multiplying each fraction top and bottom by the factor the other denominator has and it lacks: $\\frac{(x-2)}{(x+1)(x-2)}+\\frac{(x+1)}{(x-2)(x+1)}$. Now the denominators are equal."
+        },
+        {
+          "step": 5,
+          "text_md": "Only the numerators are combined: $\\frac{(x-2)+(x+1)}{(x+1)(x-2)}=\\frac{2x-1}{(x+1)(x-2)}$. At $x=3$ this is $\\frac{5}{4}$, which matches."
+        },
+        {
+          "step": 6,
+          "text_md": "Next time: factorise the denominators, build a common denominator, then combine the numerators over it. The denominator is never added."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one named in the book's caution. The signal is correct: (1+1)/((x+1)+(x-2)) = 2/(2x-1). The x=3 check is correct (5/4 against 2/5). The corrected method and result match the book's worked example. It cites no outside references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c1-3:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-3-3:stops-before-reducing",
+      "lo_id": "lo:eb11c1-3-3",
+      "label": "Leaves the result unreduced",
+      "description": "The student finds the common denominator and combines the numerators correctly but stops there, without factorising the numerator and cancelling common factors.",
+      "signal": "For the first warm-up the student gives (x^2-4)/(x(x-1)(x-2)) instead of (x+2)/(x(x-1)).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your working up to the combined fraction is right, and you have the numerator correct. The step missing is the last one: reducing the fraction."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $\\frac{x+4}{x(x-2)}-\\frac{3}{(x-1)(x-2)}$. Over the common denominator the numerator is $(x+4)(x-1)-3x=x^2-4$, giving $\\frac{x^2-4}{x(x-1)(x-2)}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Look at the numerator. $x^2-4=(x-2)(x+2)$, and $(x-2)$ is also a factor of the denominator. So the fraction can still be simplified."
+        },
+        {
+          "step": 4,
+          "text_md": "Cancel the common factor: $\\frac{(x-2)(x+2)}{x(x-1)(x-2)}=\\frac{x+2}{x(x-1)}$. The question asks you to simplify, so this is the form to give."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time: after combining, always try to factorise the numerator and cancel any factor it shares with the denominator."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The numerator (x+4)(x-1)-3x = x^2-4 is correct. The factorisation and cancellation match the canonical warm-up solution and the book's explanation, and the final answer (x+2)/(x(x-1)) is correct. The refutation targets the missing reduction step. The signal is realistic. It cites no outside references.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "expl:eb11c1-3-3:bk-explanation-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c1-5-4:amgm-without-positivity-check",
+      "lo_id": "lo:eb11c1-5-4",
+      "label": "Uses AM-GM without checking the numbers are positive",
+      "description": "The student applies AM-GM, that the arithmetic mean is at least the geometric mean, to numbers that may be negative, without first checking that each one is greater than 0.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You may be treating AM-GM as a rule that works for any two numbers. The inequality $\\frac{a+b}{2}\\ge\\sqrt{ab}$ is only promised when $a>0$ and $b>0$. The rule isn't wrong. It just has a condition that has to be checked first."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it on $a=-2$ and $b=-8$. The arithmetic mean is $\\frac{-2+(-8)}{2}=-5$. The geometric mean is $\\sqrt{(-2)(-8)}=\\sqrt{16}=4$."
+        },
+        {
+          "step": 3,
+          "text_md": "AM-GM would need $-5\\ge 4$, which is false. So the inequality sign does not hold when the numbers are negative."
+        },
+        {
+          "step": 4,
+          "text_md": "This is why the worked solutions begin with a line such as \"Since $\\frac{b}{a}>0$ and $\\frac{a}{b}>0$\" before they use AM-GM. That line is the condition being checked."
+        },
+        {
+          "step": 5,
+          "text_md": "Before using AM-GM, write down why each of the two terms is greater than 0. This usually comes from the given $a>0$ and $b>0$. If you can't say why a term is positive, don't use AM-GM on it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T151046Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The counterexample a=-2, b=-8 matches the book's exercise: AM=-5, GM=4, and -5≥4 is false. The condition a>0, b>0 matches the book's repeated 'Since b/a>0 and a/b>0 (always write this)' step. The refutation is mathematically correct and argues against the error of skipping the positivity check. It doesn't just restate the method, and it adds nothing outside the book. It names no question ids, page numbers or review history. There is no signal and no attached options.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:eb11c1-5-4:bk-unlabelled-exercise-3"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:eb11c1-5-4:bk-explanation-5"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-1-5:sum-positive-instead-of-term-positive",
+      "lo_id": "lo:eb11c2-1-5",
+      "label": "Solving $S_n>0$ instead of $a_n>0$ for the maximum sum",
+      "description": "To find the number of terms that gives the maximum sum, the student writes the sum formula and solves $S_n>0$, instead of finding how long the terms $a_n$ stay positive.",
+      "signal": "For first term 65 and common difference −4, the student answers 33 (from $S_n>0$) instead of 17.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using the sum formula $S_n=\\frac12 n\\{2\\times 65+(n-1)(-4)\\}$ and asking when it is still positive. That is a natural move, because the sum is the thing we want to make as large as possible. But the question is a different one: which terms are worth adding?"
+        },
+        {
+          "step": 2,
+          "text_md": "Adding a positive term makes the sum bigger. Adding a negative term makes it smaller. So the sum is largest at the last term that is still positive. That means we need $a_n>0$, not $S_n>0$."
+        },
+        {
+          "step": 3,
+          "text_md": "Try $S_n>0$ on the sequence with first term 65 and common difference −4. We get $S_n=n(67-2n)>0$, so $n<33.5$ and you would answer 33. But the 18th term onwards are already negative, so those terms only shrink the sum."
+        },
+        {
+          "step": 4,
+          "text_md": "Compare the sums. $S_{17}=561$, while $S_{33}=33$, which is far smaller. So 33 cannot give the maximum."
+        },
+        {
+          "step": 5,
+          "text_md": "The move that works: write $a_n=65+(n-1)(-4)=-4n+69$ and solve $a_n>0$. This gives $n<17.25$, so terms 1 to 17 are positive and the maximum sum is at the 17th term. Only then put $n=17$ into the sum formula to get 561."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one in the book's caution. I checked the numbers: S_n = n(67−2n) > 0 gives n < 33.5, so the student answers 33. S_33 = 33 and S_17 = 17·33 = 561, which matches the canonical answer. The a_n > 0 method (a_n = −4n+69, n < 17.25, so n = 17) is the book's. The refutation cites no question ids, pages or review history, and it argues against the specific mistake.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-1:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-3-4:forget-sign-change-last-term",
+      "lo_id": "lo:eb11c2-3-4",
+      "label": "Keeps the last term of 3S positive when subtracting",
+      "description": "When subtracting rS from S, the student lines up the terms correctly but writes the last term of rS with a plus sign instead of a minus.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You multiplied by the ratio and lined the terms up correctly, and the middle terms combine properly. The slip is at the end: the last term of $3S$ has nothing in $S$ to pair with, and you copied it across as $+(n+1)\\times3^n$."
+        },
+        {
+          "step": 2,
+          "text_md": "We are working out $S-3S$, so every term of $3S$ is subtracted. That includes the last one, $(n+1)\\times3^n$, so it appears as $-(n+1)\\times3^n$. The sign changes."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it with $n=1$, where the sum is just $S=2\\times1=2$. Keeping the plus sign gives $-2S=2+2\\times3=8$ (from $2+$ the geometric part, which is 0 here, plus $(1+1)\\times3^1$). That makes $S=-4$, which cannot be right, because every term of $S$ is positive."
+        },
+        {
+          "step": 4,
+          "text_md": "With the minus sign, $-2S=2+0-2\\times3=-4$, so $S=2$. This matches."
+        },
+        {
+          "step": 5,
+          "text_md": "The move that works: after writing $3S$, subtract it term by term and check the last term. It should read $-(n+1)\\times3^n$. Then sum the geometric part and divide by $-2$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one the book's caution describes. The refutation uses the book's S − rS method. The n=1 check is correct: S=2, and S−3S = 2−6 = −4 gives S=2, while keeping the plus sign gives −2S=8 and S=−4. It names no question ids, page numbers or review history.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-3:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-3-5:skip-n1-check",
+      "lo_id": "lo:eb11c2-3-5",
+      "label": "Stops after S_n − S_{n−1} without checking n = 1",
+      "description": "The student subtracts S_n − S_{n−1}, simplifies, and states that formula as a_n for all n, without saying it holds only for n ≥ 2 and without comparing with a_1 = S_1.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You did the subtraction $S_n - S_{n-1}$ correctly, and that part is the heart of the method. The step that is missing is the one afterwards: the subtraction only gives $a_n$ for $n \\ge 2$, so the formula you get has not yet been shown to work for $n = 1$."
+        },
+        {
+          "step": 2,
+          "text_md": "The reason is that $S_{n-1}$ must be a sum of at least one term. For $n = 1$ it would be $S_0$, which is not a sum of terms from this sequence. So the first term has to come separately: $a_1 = S_1$."
+        },
+        {
+          "step": 3,
+          "text_md": "The two can disagree. Suppose the subtraction gives $a_n = 2n^2 - 2n + 1$ but $S_1$ gives $a_1 = 0$. Putting $n = 1$ into the formula gives $1$, not $0$. Writing $a_n = 2n^2-2n+1$ for every $n$ would then give the wrong first term."
+        },
+        {
+          "step": 4,
+          "text_md": "When they do agree, as for $S_n = n^2 - 3n$, you can write one formula. There $a_1 = S_1 = -2$, and $2n-4$ at $n=1$ also gives $-2$, so $a_n = 2n-4$ for all $n$."
+        },
+        {
+          "step": 5,
+          "text_md": "Always do three things: (1) find $a_n = S_n - S_{n-1}$ for $n \\ge 2$; (2) find $a_1 = S_1$; (3) put $n=1$ into your formula. If it matches, write one formula. If not, write $a_1$ and the formula for $n \\ge 2$ separately."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one the book's caution describes: stating S_n − S_{n−1} as a_n without the n ≥ 2 condition and without checking a_1 = S_1. The refutation is correct. The 2n²−2n+1 versus a_1 = 0 case and the S_n = n²−3n case (a_1 = −2, 2n−4 also gives −2) both match the book's worked examples. The closing three-step procedure matches the book's rule, including writing a_1 and the n ≥ 2 formula separately when they disagree. It contains no question ids, page numbers, or review history. The S_0 remark is a brief true justification and not a different method. The entry has no signal and no attached options.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-3:caution-2"
+          },
+          {
+            "type": "remark",
+            "ref": "eb11c2-3:rule-18"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-4-1:sum-limit-n-not-n-minus-1",
+      "lo_id": "lo:eb11c2-4-1",
+      "label": "Substituting n instead of n−1 after summing the differences",
+      "description": "The student sums the difference sequence correctly in k but, when writing the sum up to n−1, replaces only some of the n−1's with n, so the sum is really taken up to n terms.",
+      "signal": "For 2, 5, 12, 23, 38, 57, … the answer 2n^2 + n + 2 instead of 2n^2 − 3n + 3.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You set up the right formula, $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$, and you used the right sum rule. The slip is in putting the number of terms into that rule: the sum has only $n-1$ terms, so $n-1$ must go in everywhere the rule asks for the number of terms."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $2, 5, 12, 23, 38, 57, \\dots$, where $b_k = 4k-1$. Summing $k$ from 1 to $n-1$ gives $4\\times\\frac12(n-1)\\{(n-1)+1\\} - (n-1) = 2n(n-1) - (n-1)$. If you write $4\\times\\frac12 n(n+1) - n$ instead, you have summed $n$ terms."
+        },
+        {
+          "step": 3,
+          "text_md": "That slip gives $2n^2+n+2$. Test it at $n=2$: it gives $8+2+2=12$, but $a_2 = 5$. The correct $2n^2-3n+3$ gives $8-6+3=5$."
+        },
+        {
+          "step": 4,
+          "text_md": "The move that works: write the number of terms as $n-1$ first, put it into the sum rule and into the constant part, then expand. Finally, test your formula on $n=1$ and $n=2$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's caution shows exactly this wrong working, which sums n terms and gives 2n^2+n+2. I checked the refutation's algebra: 4·½(n−1)n − (n−1) = 2n(n−1) − (n−1), and the wrong version 2+2n(n+1)−n = 2n^2+n+2. At n=2 the wrong formula gives 12 against a_2=5, and the correct formula gives 5. The method matches the canonical one, including the n=1 check. It cites no question ids, pages or review history. The description's phrase 'only some' is slightly loose, but the signal is specific and would not misdiagnose a student.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-4:caution-1"
+          },
+          {
+            "type": "remark",
+            "ref": "eb11c2-4:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-4-2:first-term-is-last-position-of-previous-groups",
+      "lo_id": "lo:eb11c2-4-2",
+      "label": "Stops at the last term of the previous group",
+      "description": "The student counts the terms in the groups before and takes that count as the position of the first term of the next group, forgetting to add 1.",
+      "signal": "Answer is the last term of the (n-1)-th group, e.g. 45 instead of 46 for the 1 | 2, 3 | 4, 5, 6 | … sequence, or 268 instead of 271 for 1, 4 | 7, 10, 13, 16 | …",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found correctly how many terms come before the 10th group, and that is the hard part. The slip is treating that count as the position of the group's first term."
+        },
+        {
+          "step": 2,
+          "text_md": "For $1 | 2, 3 | 4, 5, 6 | \\dots$, the first 9 groups hold $\\frac12\\times9\\times10=45$ terms. So the 45th term of $\\{a_n\\}$ is the **last** term of the 9th group, and it is 45."
+        },
+        {
+          "step": 3,
+          "text_md": "The 10th group starts with the very next term, the 46th. Check with small groups: the 2nd group starts at 2, the 1st group has 1 term, and 2 is the 1+1 = 2nd term, not the 1st."
+        },
+        {
+          "step": 4,
+          "text_md": "The same happens for $1, 4 | 7, 10, \\dots$: 90 terms come before, so the first term of the 10th group is the 91st term, $3\\times91-2=271$, not the 90th term, 268."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time: count the terms before the group, add 1 for its position, then put that position into $a_n$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. 45 is the 45th term, the last term of group 9, and 268 is 3*90-2. The correct answers 46 and 271 match the canonical solutions. The refutation's arithmetic and small-case check are right, and it names no question id or page.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:eb11c2-4-2:bk-worked-example-2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:eb11c2-4-2:bk-exercise-2-a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:eb11c2-4-2:bk-exercise-3-a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-4-2:group-number-used-as-term-position",
+      "lo_id": "lo:eb11c2-4-2",
+      "label": "Uses the group number as the term position",
+      "description": "The student puts the group number straight into the formula for $a_n$, as if the 10th group began at the 10th term of the sequence.",
+      "signal": "Answer is $a_{10}$ or $a_{12}$, e.g. 28 instead of 271, or 46 instead of 310.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have spotted the formula for the sequence before grouping, which is the right start. The slip is mixing up two different counts: which group, and which term of $\\{a_n\\}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$ with $a_n=4n-2$. The 3rd group starts at 22, which is the 6th term, not the 3rd. Putting $n=3$ would give 10, which is in the 2nd group."
+        },
+        {
+          "step": 3,
+          "text_md": "Groups hold more than one term, so the term number runs ahead of the group number. For the 12th group, $a_{12}=46$ is far too small. The correct answer is 310."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: first find the position of the group's first term by adding up the terms in the earlier groups, then put that position into $a_n$. Here the position is 78, and $4\\times78-2=310$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and the book's caution-2 supports it. a_10=28 and a_12=46 are computed correctly. The example (3rd group starts at 22, the 6th term; a_3=10 is in group 2) is correct, as are 78 and 310. It is consistent with the canonical method and has no forbidden references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-4:caution-2"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:eb11c2-4-2:bk-exercise-3-a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "q:eb11c2-4-2:bk-challenge-2-a"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c2-5-3:power-step-add-not-multiply",
+      "lo_id": "lo:eb11c2-5-3",
+      "label": "Treats going from 2^k to 2^(k+1) as adding, not multiplying",
+      "description": "When the statement contains a power such as $2^n$, the student gets the $n=k+1$ case by adding to both sides of the assumed expression instead of multiplying both sides by the base.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that the assumption $2^k>3k$ has to be changed into a statement about $2^{k+1}$. The slip is in how: adding something to both sides, such as $2^k+2>3k+2$, does not give $2^{k+1}$."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it with $k=4$. $2^{k+1}=2^5=32$, but $2^k+2=16+2=18$. These are different numbers, so $2^{k+1}$ is not $2^k+2$."
+        },
+        {
+          "step": 3,
+          "text_md": "What links the two is multiplication: $2^{k+1}=2\\times2^k$. So multiply both sides of $2^k>3k$ by $2$. This gives $2^{k+1}>6k$, and every step stays true."
+        },
+        {
+          "step": 4,
+          "text_md": "Next compare $6k$ with $3(k+1)$. For $k\\ge4$, $6k-3(k+1)=3k-3>0$, so $2^{k+1}>6k>3(k+1)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Whenever the statement has $a^n$, multiply both sides of the assumed expression by $a$ to reach $a^{k+1}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T142923Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and is backed by caution-1. The k=4 check (2^5=32 against 2^4+2=18) is correct. Multiplying 2^k>3k by 2 and then comparing 6k with 3(k+1) matches the canonical warm-up-6 solution. The text names no external references and teaches nothing beyond the book.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c2-5:caution-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:eb11c2-5-3:bk-warm-up-6"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-1-2:i-squared-not-minus-one",
+      "lo_id": "lo:eb11c3-1-2",
+      "label": "Forgets that i × i = −1 when expanding",
+      "description": "When multiplying out brackets, the student leaves $i^2$ in the answer or treats it as $1$ or $i$, instead of substituting $i^2=-1$.",
+      "signal": "Answers such as 5 - 4i for (i-2)^2, or -4 - i for (2+3i)(1-2i), or an answer still containing i^2.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your expansion is fine. The slip comes after it, with the $i\\times i$ term. $i\\times i$ is $i^2$, and the book's rule is $i^2=-1$. It is not $1$, and it cannot stay in the answer."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at $(i-2)^2=i^2-4i+4$. If you take $i^2=1$, you get $1-4i+4=5-4i$. Substituting $i^2=-1$ gives $-1-4i+4=3-4i$. These differ, and the second is the book's answer."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign matters again in $(2+3i)(1-2i)=2-4i+3i-6i^2$. The term $-6i^2$ becomes $-6\\times(-1)=+6$, which gives $2-4i+3i+6=8-i$. If you use $+1$ you get $-4-i$, which is wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "Once you have expanded, find every $i^2$ and replace it with $-1$. Then collect the real parts and the $i$ parts to get the form $a+bi$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's caution. The numbers check out. With i²=1, (i-2)²=1-4i+4=5-4i, and the correct value is 3-4i. With i²=1, (2+3i)(1-2i)=2-4i+3i-6=-4-i, and the correct value is 8-i. The method matches the canonical solutions. The refutation cites no question ids or pages, and teaches nothing outside the book. The signal examples are accurate.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-1:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-1-4:negative-has-no-square-root",
+      "lo_id": "lo:eb11c3-1-4",
+      "label": "Thinks a negative number has no square root",
+      "description": "The student says $\\sqrt{-n}$ is undefined or impossible, so they refuse to answer or write \"no solution\" instead of using $i$.",
+      "signal": "\"No square root\", \"undefined\" or \"not possible\" written for something like $\\sqrt{-6}$ or the square roots of $-12$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that no ordinary (real) number squares to give a negative: $3^2=9$ and $(-3)^2=9$. It is sensible to stop there, but the number $i$ was introduced to get past exactly that point."
+        },
+        {
+          "step": 2,
+          "text_md": "With $i^2=-1$, the number $i\\sqrt{6}$ can be squared: $(i\\sqrt6)^2=i^2\\times 6=-1\\times 6=-6$. So it really is a square root of $-6$."
+        },
+        {
+          "step": 3,
+          "text_md": "The same works for $-i\\sqrt6$, because $(-i\\sqrt6)^2=-6$ too. That is why $-6$ has two square roots, $\\pm i\\sqrt6$, just as $9$ has $\\pm3$."
+        },
+        {
+          "step": 4,
+          "text_md": "So never write \"no square root\". Use $\\sqrt{-a}=i\\sqrt{a}$, and write $\\pm$ when the question asks for the square roots."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by caution-2. The refutation is correct: (i√6)² = -6 and (-i√6)² = -6, giving ±i√6, which matches the canonical answers. It argues against the 'no square root' claim, and it names no question ids, pages or review history.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-1:caution-2"
+          },
+          {
+            "type": "remark",
+            "ref": "eb11c3-1:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-1-4:sqrt-negative-equals-minus-sqrt",
+      "lo_id": "lo:eb11c3-1-4",
+      "label": "Treats $\\sqrt{-n}$ as $-\\sqrt{n}$",
+      "description": "The student moves the minus sign out of the root and gets $-\\sqrt{n}$, a real negative number, instead of $i\\sqrt{n}$.",
+      "signal": "$\\sqrt{-9}$ written as $-3$, or $\\sqrt{-7}$ written as $-\\sqrt7$, with no $i$ in the answer.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You noticed that the minus sign is part of the problem, and you pulled it out of the root. But the minus sign inside the root has to become $i$, not a minus sign in front."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it by squaring. If $\\sqrt{-9}=-3$, then $(-3)^2$ would have to be $-9$. But $(-3)^2=+9$, so $-3$ is not a square root of $-9$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now try $3i$: $(3i)^2=9i^2=9\\times(-1)=-9$. This works, so $\\sqrt{-9}=3i$."
+        },
+        {
+          "step": 4,
+          "text_md": "Use $\\sqrt{-n}=i\\sqrt{n}$. A minus sign written outside the root stays outside: $-\\sqrt{-36}=-6i$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by caution-3. The squaring test shows (-3)² = 9, not -9, so -3 is not a root of -9. (3i)² = -9 is correct. The √-n = i√n method and the -√-36 = -6i example match the canonical solutions. The signal fits the error, and the entry has no forbidden references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-1:caution-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-1:leaves-negative-root-unconverted",
+      "lo_id": "lo:eb11c3-2-1",
+      "label": "Stops at the square root of a negative number",
+      "description": "The student reaches a square root of a negative number, such as $\\sqrt{-8}$, and either leaves it as it is or writes 'no solution' instead of expressing it in terms of $i$.",
+      "signal": "Final answer contains $\\sqrt{-8}$ or similar left unconverted, or says 'no solution' for an equation like $x^2+8=0$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You did the first part correctly: you isolated $x^2$ and took the square root with $\\pm$. The only gap is that a root of a negative number is not a finished answer in this chapter."
+        },
+        {
+          "step": 2,
+          "text_md": "Here we solve in the complex numbers, where a negative square root is written using $i$. So $x^2+8=0$ is not 'no solution'. It gives $x^2=-8$, so $x=\\pm\\sqrt{-8}$, and $\\sqrt{-8}$ can be rewritten."
+        },
+        {
+          "step": 3,
+          "text_md": "Take $i$ out of the root: $\\sqrt{-8}=i\\sqrt{8}=2i\\sqrt{2}$. So $x=\\pm 2i\\sqrt{2}$, not $\\pm\\sqrt{-8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The same applies inside longer answers. For $(x-3)^2=-8$, stopping at $x=3\\pm\\sqrt{-8}$ is unfinished. Converting gives $x=3\\pm 2i\\sqrt{2}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Whenever the number under a root is negative, whether in a square-root solution or in the quadratic formula, rewrite it as $i$ times the root of the positive number, then simplify, e.g. $\\sqrt{-64}=8i$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and backed by the book's caution to express a negative root using i. Every refutation step matches the canonical working and answers: ±2i√2 for x²+8=0, 3±2i√2 for (x-3)²=-8, and √-64=8i. It argues against this specific error, uses only the book's method, and cites no question ids, pages or review history.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-2:negative-d-no-solutions",
+      "lo_id": "lo:eb11c3-2-2",
+      "label": "D < 0 means no solutions at all",
+      "description": "The student finds D < 0 and concludes the equation has no solutions, instead of two distinct imaginary solutions.",
+      "signal": "States 'no solutions' when D is negative.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You calculated $D$ correctly and saw it was negative. It is natural to say 'no solutions' because the graph never reaches the $x$-axis. But the discriminant tells us about the solutions of the equation, and the book counts imaginary ones."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $3x^2+4x+7=0$. Here $D=4^2-4\\times3\\times7=16-84=-68<0$. 'No solutions' would be an incomplete answer."
+        },
+        {
+          "step": 3,
+          "text_md": "The book's conclusion is that this equation has two distinct imaginary solutions. A negative $D$ changes the kind of solutions, not how many there are."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: if $D<0$, write 'two distinct imaginary solutions'. If you are asked for a range of a constant, solve $D<0$ and give that as your answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches caution-2. The computation D=16-84=-68 and the conclusion of two distinct imaginary solutions match the canonical worked example. The refutation says negative D changes the kind of solutions, not how many there are, so it addresses the error directly. The final advice (solve D<0 for a range) matches the book method. It cites no question id, page number or review history.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-2:positive-d-one-solution",
+      "lo_id": "lo:eb11c3-2-2",
+      "label": "D > 0 means only one solution",
+      "description": "The student finds D > 0 and concludes there is only one solution, instead of two distinct real solutions.",
+      "signal": "States 'one solution' when D is positive.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You may be thinking that a positive $D$ gives a single answer, such as one value of $\\sqrt{D}$. But the formula uses $\\pm\\sqrt{D}$, and that gives two values of $x$."
+        },
+        {
+          "step": 2,
+          "text_md": "In the book's example $x^2+kx+3-k=0$, $D=(k-2)(k+6)$. When $D>0$, that is, when $k<-6$ or $k>2$, the book says the equation has two distinct real solutions. It does not say one."
+        },
+        {
+          "step": 3,
+          "text_md": "Only $D=0$ makes the $+$ and $-$ give the same value, which is why that case is called a repeated solution. When $D>0$ the two values differ."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: if $D>0$, write 'two distinct real solutions'."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches caution-4. The ±√D explanation is correct. The example D=(k-2)(k+6)>0 for k<-6 or k>2 gives two distinct real solutions, as in the canonical example. Saying that only D=0 makes the two values coincide is correct. The refutation targets the one-solution error and adds nothing outside the book.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-4"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-3:forget-divide-by-a",
+      "lo_id": "lo:eb11c3-2-3",
+      "label": "Ignores the coefficient a",
+      "description": "The student takes the sum as $-b$ and the product as $c$, without dividing by $a$ when $a\\neq1$.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pieces, $-b$ and $c$. But the formulas are $-b/a$ and $c/a$, and the division by $a$ matters whenever $a$ is not $1$."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $2x^2-6x-3=0$. Without dividing by $a$ you would get $\\alpha+\\beta=6$ and $\\alpha\\beta=-3$. With $a=2$ the correct values are $\\alpha+\\beta=3$ and $\\alpha\\beta=-\\frac32$."
+        },
+        {
+          "step": 3,
+          "text_md": "The wrong values carry through. Using them, $\\alpha^2+\\beta^2$ would be $36+6=42$, not the correct $(3)^2-2(-\\frac32)=12$."
+        },
+        {
+          "step": 4,
+          "text_md": "Each time, write down $a$, $b$ and $c$ first. Then compute $-b/a$ and $c/a$ before you do anything else with $\\alpha$ and $\\beta$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real (caution-6). On 2x²-6x-3=0 the wrong values are 6 and -3, which give 36+6=42. The correct values are 3 and -3/2, which give 9+3=12, matching the canonical answer. The refutation uses the book's method and cites no outside references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-6"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-4:forgets-leading-coefficient",
+      "lo_id": "lo:eb11c3-2-4",
+      "label": "Drops the coefficient a of x²",
+      "description": "The student finds the two solutions correctly but writes (x − α)(x − β) without the leading factor a.",
+      "signal": "For a quadratic with a ≠ 1, such as 2x² − 3x + 2, the answer has the right two brackets but no factor 2 in front.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the solutions correctly and put them into brackets of the form $(x-\\alpha)$. That is the hard part. The slip is that the form is $a(x-\\alpha)(x-\\beta)$, and the $a$ went missing."
+        },
+        {
+          "step": 2,
+          "text_md": "Test it on $2x^2-3x+2$, whose solutions are $x=\\frac{3\\pm i\\sqrt{7}}{4}$. The two brackets alone multiply out to something starting with $x^2$, not $2x^2$. So they cannot equal the original expression."
+        },
+        {
+          "step": 3,
+          "text_md": "The brackets only record where the expression is zero. Any multiple of them is zero at the same places. The factor $a$ is what makes the product match the original expression."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, write down $a$ before you solve. It is the number in front of $x^2$. Put it in front of the brackets: $2\\left(x-\\frac{3+i\\sqrt{7}}{4}\\right)\\left(x-\\frac{3-i\\sqrt{7}}{4}\\right)$. When $a=1$ you can leave it out."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and backed by the book's cautions. The refutation is correct: the brackets alone give a leading x², not 2x². It uses the book's example and answer, and it cites no references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-7"
+          },
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-8"
+          },
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-10"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-4:says-it-does-not-factorise",
+      "lo_id": "lo:eb11c3-2-4",
+      "label": "Thinks it cannot be factorised unless the discriminant is a perfect square",
+      "description": "The student expects neat integer factors and stops, or forces a wrong split of the middle term, when the discriminant is not a perfect square or is negative.",
+      "signal": "The answer says it does not factorise, or gives integer brackets that do not multiply back to the original.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are looking for integer brackets by splitting the middle term. That works for some quadratics, so it is a natural first try. But not every quadratic factorises into integers."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x^2+4x+2$. No two integers multiply to $2$ and add to $4$. But $D=16-8=8$ gives $x=-2\\pm\\sqrt{2}$, so it factorises as $(x+2-\\sqrt{2})(x+2+\\sqrt{2})$."
+        },
+        {
+          "step": 3,
+          "text_md": "The same holds when $D$ is negative. For $x^2+2x+5$, $D=-16$ and $x=-1\\pm 2i$. Over the complex numbers this gives $(x+1-2i)(x+1+2i)$. A negative discriminant does not stop you."
+        },
+        {
+          "step": 4,
+          "text_md": "So don't hunt for integer pairs. Solve $ax^2+bx+c=0$ with the quadratic formula, whatever $D$ is. Then write $a(x-\\alpha)(x-\\beta)$ using the two solutions."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is supported by the caution on assuming every quadratic factorises neatly. The examples x²+4x+2 and x²+2x+5 match the book's answers. The arithmetic checks (D=8 and D=-16, and no integer pair has product 2 and sum 4). The method is the book's quadratic formula followed by a(x-α)(x-β). It cites no references.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-9"
+          },
+          {
+            "type": "remark",
+            "ref": "eb11c3-2:caution-9"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped",
+      "lo_id": "lo:eb11c3-2-5",
+      "label": "Sum of roots taken as the x-coefficient without its sign change",
+      "description": "The student writes the sum of the solutions as $b$ instead of $-b$, so the condition on $\\alpha+\\beta$ points the wrong way.",
+      "signal": "The range for the constant comes out with the sum condition reversed, e.g. $m>0$ where the book has $m<0$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You correctly saw that two negative solutions need $\\alpha+\\beta<0$. The slip is in reading the sum off the equation: you used the coefficient of $x$ as it stands, but the sum is its opposite."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x^2-2mx+m+6=0$. The coefficient of $x$ is $-2m$, but $\\alpha+\\beta=-(-2m)=2m$. Writing $-2m<0$ gives $m>0$, which is the wrong direction."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it. With $m=4$ the equation is $x^2-8x+10=0$. Its solutions add to $8$, so they are positive, even though $m>0$. With $m=-3$ the equation is $x^2+6x+3=0$. Its solutions add to $-6$, so they are negative. The correct condition is $2m<0$, so $m<0$."
+        },
+        {
+          "step": 4,
+          "text_md": "Each time, write $\\alpha+\\beta=-\\dfrac{b}{a}$ first, with the minus sign, and only then put in $<0$ or $>0$. Check the result with one value of the constant."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's caution (forgetting the negative sign gives m>0 instead of m<0). I checked the refutation: for x²-2mx+m+6=0 the sum is 2m. m=4 gives x²-8x+10=0, with roots 4±√6, both positive. m=-3 gives x²+6x+3=0, with sum -6 and negative roots. The correct condition 2m<0 gives m<0, as in the book. It uses the book's sum/product method, cites no question ids, pages or review history, and targets this specific slip.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-2:caution-11"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-3-1:substitutes-constant-not-root",
+      "lo_id": "lo:eb11c3-3-1",
+      "label": "Substitutes the constant b instead of b/a",
+      "description": "For a divisor $ax - b$ with $a \\neq 1$, the student substitutes $x = b$ (for example $x = 2$ for $3x - 2$) instead of $x = \\frac{b}{a}$.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You know the remainder comes from substituting a number into the polynomial, and you took the number from the divisor. That part is right. The slip is reading off the $2$ in $3x - 2$ and ignoring the $3$ in front of $x$."
+        },
+        {
+          "step": 2,
+          "text_md": "The number to substitute is the value of $x$ that makes the divisor equal to $0$. For $x - 3$ that is $x = 3$. For $3x - 2$, solve $3x - 2 = 0$ and you get $x = \\frac{2}{3}$. If you put $x = 2$ in, the divisor becomes $3(2) - 2 = 4$, not $0$, so it is the wrong test."
+        },
+        {
+          "step": 3,
+          "text_md": "Try it on $3x^4 - 8x^3 - 5x^2 + 12$ divided by $3x - 2$. With $x = 2$ you get $48 - 64 - 20 + 12 = -24$. With $x = \\frac{2}{3}$ you get $\\frac{16}{27} - \\frac{64}{27} - \\frac{60}{27} + \\frac{324}{27} = 8$. The remainder is $8$, so $-24$ is wrong."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, set the divisor equal to $0$ and solve for $x$ first. Then substitute that value, which is $\\frac{b}{a}$ for $ax - b$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is the one the book's caution names (using x=2 instead of 2/3 for 3x−2). I checked the arithmetic: P(2)=48−64−20+12=−24, and P(2/3)=8, which matches the canonical answer. Substituting the value that makes the divisor zero is the book's method. The refutation shows concretely that x=2 makes the divisor 4, not 0, so it is more than a restatement of the method. It cites no question ids, pages, figures or review history.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-3:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-3-2:constant-remainder-for-quadratic-divisor",
+      "lo_id": "lo:eb11c3-3-2",
+      "label": "Writing the remainder as a single constant for a quadratic divisor",
+      "description": "The student writes P(x) = (x − α)(x − β)Q(x) + r with one constant r, as they would for a linear divisor, instead of allowing a remainder ax + b.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using the pattern that works for a linear divisor like $x-1$, where the remainder is a single number. That habit is sensible, but the divisor here is a quadratic."
+        },
+        {
+          "step": 2,
+          "text_md": "The remainder must have lower degree than the divisor. A quadratic divisor has degree 2, so the remainder can have degree 1. It has the form $ax+b$, with two unknowns."
+        },
+        {
+          "step": 3,
+          "text_md": "Test the single-number version on this case. $P(x)$ leaves remainder 3 on division by $x-1$ and $-5$ on division by $x+3$, and the divisor is $x^2+2x-3=(x-1)(x+3)$. Write $P(x)=(x-1)(x+3)Q(x)+r$. Then $P(1)=r=3$ and $P(-3)=r=-5$. One number cannot be both 3 and $-5$, so the form is too small."
+        },
+        {
+          "step": 4,
+          "text_md": "With $P(x)=(x-1)(x+3)Q(x)+ax+b$ you get $a+b=3$ and $-3a+b=-5$. These give $a=2$, $b=1$, so the remainder is $2x+1$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time: factorise the quadratic, write the remainder as $ax+b$, substitute each root to get two equations, and solve them simultaneously."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and is supported by the book's caution that the remainder must have lower degree than the divisor. The refutation is mathematically correct. The single constant r would need to equal both 3 and −5, which is a genuine contradiction. The final result, a=2, b=1 and remainder 2x+1, matches the canonical solution. The method (factorise, write ax+b, substitute the roots, solve simultaneously) is the book's. The text cites no question ids, page numbers or review history, and it does not restate the method alone because it argues against this specific error.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-3:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-3-3:quotient-remainder-mixed-up",
+      "lo_id": "lo:eb11c3-3-3",
+      "label": "Mixes up the quotient coefficients with the remainder",
+      "description": "The student reads the bottom row wrongly: they count the last number as a quotient coefficient, or they take the remainder from the wrong place.",
+      "signal": "Quotient has the same degree as the original polynomial, e.g. $3x^3+4x^2+9x+26$, or the remainder is not the final number in the bottom row.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You did the arithmetic correctly and got the right bottom row. The slip is in how you read it. All the numbers in the bottom row look alike, but the last one plays a different role from the others."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $3x^3-5x^2-3x-1$ divided by $x-3$. The bottom row is $3, 4, 9, 26$. If all four numbers are quotient coefficients, you get $3x^3+4x^2+9x+26$. That has the same degree as the polynomial you started with. Dividing by $x-3$ should lower the degree by one."
+        },
+        {
+          "step": 3,
+          "text_md": "The last number is the leftover after the final addition, so it is the remainder. The numbers before it belong to the quotient, starting one power lower than the original. Here the quotient is $3x^2+4x+9$ and the remainder is $26$."
+        },
+        {
+          "step": 4,
+          "text_md": "When you finish, separate the last number of the bottom row from the rest. The last number is the remainder. The others are the quotient's coefficients, starting with a power one lower than the polynomial's highest power."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches caution-4. The example uses the canonical item 3x^3-5x^2-3x-1 ÷ (x-3), bottom row 3,4,9,26, quotient 3x^2+4x+9, remainder 26. The degree argument addresses the error directly. The signal fits a student who reads the whole row as the quotient.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-3:caution-4"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-3-3:skips-zero-for-missing-term",
+      "lo_id": "lo:eb11c3-3-3",
+      "label": "Leaves out the zero for a missing term",
+      "description": "The student writes only the coefficients that appear in the polynomial, so a missing power such as $x^2$ gets no place in the row.",
+      "signal": "Quotient is one degree too low and the remainder is wrong, e.g. $x-3$ with remainder 0 for $x^3-5x+6$ divided by $x-2$.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You wrote down the coefficients you could see and ran the division on them. That is a natural move, and your multiply-and-add steps may be perfectly accurate. The slip is that each place in the row stands for a power of $x$, and a missing power still needs its place."
+        },
+        {
+          "step": 2,
+          "text_md": "Try $x^3-5x+6$ divided by $x-2$. Using only $1, -5, 6$ with $2$ on the left: bring down $1$; $-5+2=-3$; $6-6=0$. That gives $x-3$ with remainder $0$."
+        },
+        {
+          "step": 3,
+          "text_md": "A cubic divided by $x-2$ should give a quotient with an $x^2$ term. The row $1, -5, 6$ has only three places, so it treats $-5$ as the $x^2$ coefficient. It has quietly turned the polynomial into $x^2-5x+6$, which is a different polynomial."
+        },
+        {
+          "step": 4,
+          "text_md": "Written in full, $x^3-5x+6$ is $x^3+0x^2-5x+6$, with coefficients $1, 0, -5, 6$. The row becomes $1, 2, -1$ with remainder $4$, so the quotient is $x^2+2x-1$ and the remainder is $4$."
+        },
+        {
+          "step": 5,
+          "text_md": "Before you start, write the polynomial in descending powers and put a $0$ in every power that is missing. Then check that the number of coefficients is the degree plus one."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches caution-3. The wrong computation is correct (1,-5,6 with 2 gives x-3, remainder 0). The corrected row 1,2,-1 with remainder 4 matches the canonical solution for x^3-5x+6 ÷ (x-2). No outside references. It argues against this specific error.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c3-3:caution-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-3-4:forces-quadratic-to-factorise",
+      "lo_id": "lo:eb11c3-3-4",
+      "label": "Forces the leftover quadratic to split into brackets",
+      "description": "After dividing out x − a, the student insists the quadratic quotient must factorise and writes made-up brackets instead of leaving it as it is.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have done the hard part correctly: you found a value $a$ with $P(a)=0$ and divided out $x-a$. Then you felt the quadratic left over had to break into two brackets. That is a natural thought, because many quadratics do."
+        },
+        {
+          "step": 2,
+          "text_md": "Not every quadratic does. Take $x^3+4x^2+2x-4$. Since $P(-2)=0$, dividing by $x+2$ gives $(x+2)(x^2+2x-2)$."
+        },
+        {
+          "step": 3,
+          "text_md": "To split $x^2+2x-2$ you would need two whole numbers that multiply to $-2$ and add to $2$. The pairs that multiply to $-2$ are $1, -2$ and $-1, 2$. They add to $-1$ and $1$, so none works."
+        },
+        {
+          "step": 4,
+          "text_md": "Brackets you force into place will not multiply back to $x^2+2x-2$. So the factorisation is already complete: $(x+2)(x^2+2x-2)$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, look for two numbers with the right product and sum. If none exist, stop and leave the quadratic as it is. Multiply your brackets out to check that they give the quadratic back."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real, and the book's remark says the quadratic part cannot be factorised further, so the answer is left as it is. The worked example, x^3+4x^2+2x-4 = (x+2)(x^2+2x-2), matches the book's answer. The product/sum check is correct: the pairs 1,-2 and -1,2 sum to -1 and 1, not 2. The refutation names no question id, page or review history. It argues against forcing brackets and does not just restate the method. It uses only integer-pair factorisation, which is what the book uses.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "eb11c3-3:linking-text-17"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c3-4-2:lists-given-solutions-as-other",
+      "lo_id": "lo:eb11c3-4-2",
+      "label": "Lists the given solutions again as the 'other' solutions",
+      "description": "After finding the full factorisation, the student writes all the solutions, including the ones the question already gave, instead of only the remaining one.",
+      "signal": "Final answer lists every root, e.g. $x=1, -3, -2$, where only the new root was asked for.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have solved the cubic correctly and found every root. The slip is in what to report: the question says the equation already has certain solutions and asks for the *other* solutions."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x^3+4x^2+ax+b=0$ with $-3$ and $1$ given. After finding $a=1$, $b=-6$, we get $(x-1)(x+2)(x+3)=0$, with roots $1$, $-2$, $-3$."
+        },
+        {
+          "step": 3,
+          "text_md": "The question already told us $-3$ and $1$ are solutions, so they are not 'other' ones. Writing $x=1, -2, -3$ answers a different question from the one asked."
+        },
+        {
+          "step": 4,
+          "text_md": "Once you have the roots, cross out the ones the question gave you. Here only $x=-2$ is left, so write: the other solution is $x=-2$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T144506Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches the book's remark not to include the given solution (2+i) in the answer. The canonical solutions report only the remaining root (-2, 1, 4). The refutation's numbers are right: a=1, b=-6, (x-1)(x+2)(x+3), other root -2. It targets this specific slip, uses the book's method, cites no outside references, and teaches nothing new.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "eb11c3-4:linking-text-5"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-1-1:distance-no-absolute-value",
+      "lo_id": "lo:eb11c4-1-1",
+      "label": "Distance as a−b or without absolute value",
+      "description": "The student subtracts in the wrong order or leaves the result negative, giving a negative distance.",
+      "signal": "Negative distance, e.g. −12 for A(−4), B(8).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Subtracting the two coordinates is the right idea. The slip is the order, or forgetting to take the absolute value."
+        },
+        {
+          "step": 2,
+          "text_md": "For A(−4), B(8), computing $a-b=-4-8=-12$ gives a negative number, but a distance cannot be negative."
+        },
+        {
+          "step": 3,
+          "text_md": "The book uses $AB=|b-a|=|8-(-4)|=12$. The absolute value makes the answer positive whichever order you subtract."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, subtract, then put bars around it so that the distance comes out non-negative."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "a-b=-12 is a negative distance. The refutation uses the book's |b-a|=12 and the absolute-value remark. It is correct, consistent with the canonical solution, and the signal fits.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "eb11c4-1:rule-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-1-1:external-uses-internal-formula",
+      "lo_id": "lo:eb11c4-1-1",
+      "label": "Uses the internal formula for an external ratio",
+      "description": "The student uses $\\frac{na+mb}{m+n}$ (plus in the numerator and denominator) for an externally divided segment.",
+      "signal": "A point inside the segment, e.g. 0.8 instead of −28 for A(−4), B(8) in ratio 2:3 external.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The cross-multiplying is right. The slip is using the internal formula when the question says externally."
+        },
+        {
+          "step": 2,
+          "text_md": "For A(−4), B(8), external ratio 2:3, the internal formula gives $\\frac{3\\times(-4)+2\\times 8}{2+3}=\\frac{4}{5}$, a point between A and B."
+        },
+        {
+          "step": 3,
+          "text_md": "An external point lies outside the segment AB, so an answer between −4 and 8 cannot be right."
+        },
+        {
+          "step": 4,
+          "text_md": "The external formula is $\\frac{-na+mb}{m-n}=\\frac{-3\\times(-4)+2\\times 8}{2-3}=\\frac{28}{-1}=-28$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, check the word internally or externally first. For external, use a minus sign in the numerator on the $na$ term and $m-n$ in the denominator."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The internal formula gives (3(-4)+2·8)/5=4/5=0.8, which is correct. The external computation gives -28, matching the canonical answer. The outside-the-segment check is valid, and the signal fits.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c4-1:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-1-1:swapped-multipliers",
+      "lo_id": "lo:eb11c4-1-1",
+      "label": "Multiplies a by m and b by n",
+      "description": "The student pairs each coordinate with its own ratio number (m with a, n with b) instead of cross-multiplying.",
+      "signal": "Point lands nearer to the wrong end; e.g. 0 instead of 4 for A(-4), B(8) in ratio 2:1.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pieces: $m$, $n$, $a$, $b$ and the denominator $m+n$. The slip is which number multiplies which coordinate."
+        },
+        {
+          "step": 2,
+          "text_md": "Take A(−4), B(8), ratio 2:1. Pairing straight across gives $\\frac{2\\times(-4)+1\\times 8}{2+1}=\\frac{0}{3}=0$."
+        },
+        {
+          "step": 3,
+          "text_md": "A point dividing AB in the ratio 2:1 should be twice as far from A as from B, so it should sit closer to B. 0 is only 4 from A and 8 from B, so it is closer to A. That is the wrong way round."
+        },
+        {
+          "step": 4,
+          "text_md": "The book's formula cross-multiplies: $\\frac{na+mb}{m+n}=\\frac{1\\times(-4)+2\\times 8}{3}=\\frac{12}{3}=4$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, write $n$ under $a$ and $m$ under $b$ (cross-multiply) before you calculate."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Computation 2(-4)+1(8)=0, 0/3=0 is correct. The check is right: for 2:1, 4 is 8 from A and 4 from B, while 0 is 4 from A and 8 from B. The cross-multiplied formula and the answer 4 match the canonical solution. The caution supports the error.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c4-1:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-1-4:swapped-ratio-weights",
+      "lo_id": "lo:eb11c4-1-4",
+      "label": "Multiplies each point by the wrong part of the ratio",
+      "description": "The student uses the right denominator but pairs m with the first point and n with the second, instead of n with the first point and m with the second.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right shape for the formula: add two products and divide by $m+n$ (or $m-n$ for an external point). The slip is which number multiplies which point. You paired $m$ with the first point and $n$ with the second."
+        },
+        {
+          "step": 2,
+          "text_md": "The formula is $\\frac{na+mb}{m+n}$: $n$ goes with the first point and $m$ goes with the second. The order of multiplication matters."
+        },
+        {
+          "step": 3,
+          "text_md": "Take the point dividing segment BA internally in the ratio $1:2$, with B$(3, 7)$ first and A$(-2, -3)$ second. The correct $x$ is $\\frac{2\\times3+1\\times(-2)}{1+2}=\\frac43$. With the weights swapped you get $\\frac{1\\times3+2\\times(-2)}{3}=-\\frac13$, which is a different point."
+        },
+        {
+          "step": 4,
+          "text_md": "Before you substitute, write which point is first and which is second, since the order of the segment's name decides this. Then put $n$ beside the first point and $m$ beside the second. For the external case, the first product is $-n$ times the first point."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and comes from the book's caution about multiplication order. The refutation matches the canonical formulas. The internal case gives 4/3 for BA at 1:2, and the swapped weights give (3−4)/3 = −1/3, which is correct. The external note that the first product is −n times the first point matches the canonical work. It cites no question ids, pages or review history, and it teaches nothing beyond the book.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c4-1:caution-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-2-1:stops-at-isosceles",
+      "lo_id": "lo:eb11c4-2-1",
+      "label": "Stops at 'isosceles' without testing for a right angle",
+      "description": "After finding two equal squared sides, the student names the triangle isosceles and never checks whether the largest squared side equals the sum of the other two.",
+      "signal": "Answers 'isosceles triangle' when the book's answer is 'isosceles right-angled triangle'.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the equal sides correctly, and that does show the triangle is isosceles. The slip is treating that as the whole answer, when equal sides say nothing about whether there is a right angle."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $A(1, 2)$, $B(5, 8)$, $C(11, 4)$. Then $(AB)^2=16+36=52$ and $(BC)^2=36+16=52$, so it is isosceles. But $(CA)^2=100+4=104$ is still unused."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it: $52+52=104=(CA)^2$. So the triangle is right-angled at $B$ as well. Answering only 'isosceles' leaves out half of what is true."
+        },
+        {
+          "step": 4,
+          "text_md": "The rule is that if both conditions are met, the triangle is isosceles right-angled. So you need to check both conditions every time."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, once two squared lengths match, add those two and compare the sum with the third squared length. If they are equal, say 'isosceles right-angled'. If not, say 'isosceles'."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real and matches rule-3 and rule-5. The worked example (A(1,2), B(5,8), C(11,4)) matches the canonical solution: 52, 52, 104, and 52+52=104 gives a right angle at B. The method is the book's, and the text has no question ids or review references. The signal is accurate.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "eb11c4-2:rule-3 p.162"
+          },
+          {
+            "type": "remark",
+            "ref": "eb11c4-2:rule-5 p.162"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S6",
+            "ref": "tpl:eb11c4-2-1:isos-right#mc:eb11c4-2-1:stops-at-isosceles",
+            "question_id": "q:eb11c4-2-1:g001-isos-r",
+            "text": "Isosceles triangle, not right-angled",
+            "tagged": "mc:eb11c4-2-1:stops-at-isosceles"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:eb11c4-2-5:no-triangle-only-one-case",
+      "lo_id": "lo:eb11c4-2-5",
+      "label": "Stops after one way the lines can fail to make a triangle",
+      "description": "The student finds only the value of the constant that makes the three lines meet at one point, or only the parallel values, and gives that as the whole answer.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found a value of the constant that really does stop the lines forming a triangle, and that part is right. The slip is treating it as the only value. Three lines fail to form a triangle in more than one way."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x-y+1=0$, $2x+y+2=0$ and $ax+3y-4=0$. The first two lines meet at $(-1, 0)$. If the third line passes through that point, all three meet at one point and there is no triangle. That gives $a=-4$."
+        },
+        {
+          "step": 3,
+          "text_md": "But the third line can also be parallel to one of the others. Its gradient is $-\\frac a3$. The first line has gradient $1$, so $-\\frac a3=1$ gives $a=-3$. The second has gradient $-2$, so $-\\frac a3=-2$ gives $a=6$. Neither value makes the lines meet at one point, yet with two lines parallel there is still no triangle."
+        },
+        {
+          "step": 4,
+          "text_md": "So an answer of only $a=-4$, or only $-3$ and $6$, is incomplete. The full answer is $a=-4, -3, 6$."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, check every case. First write the gradients and test each pair for parallel lines. Then find where the two non-parallel lines meet and make the third line pass through that point. List every value you get."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I re-solved the worked example. The first two lines meet at (-1,0), which gives a=-4. The gradients 1, -2 and -a/3 give a=-3 and a=6. The full answer a=-4, -3, 6 matches the canonical solution. The method is the book's (parallel cases, then concurrency), and the book's remark supports checking every case. The text cites no question ids, pages or review history. It adds no outside content.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "eb11c4-2:linking-text-28"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:eb11c4-3-4:leave-coefficients-not-one",
+      "lo_id": "lo:eb11c4-3-4",
+      "label": "Stops before making the x² and y² coefficients equal 1",
+      "description": "After finding k for the circle through the intersection points and another point, the student substitutes k and stops, leaving an equation such as $\\tfrac12x^2+\\tfrac12y^2+x+3y-\\tfrac{15}{2}=0$.",
+      "signal": "Final answer has fractions (or a common factor) as the coefficients of $x^2$ and $y^2$, instead of 1.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You did the hard part correctly: you wrote $k(\\dots)+(\\dots)=0$, used the extra point to find $k$, and substituted it back. The slip is stopping there."
+        },
+        {
+          "step": 2,
+          "text_md": "Take the circle through the intersection points of $x^2+y^2-2x-6y+5=0$ and $x^2+y^2=5$ and the point $(3, 0)$. You get $k=-\\tfrac12$, and the equation becomes $\\tfrac12x^2+\\tfrac12y^2+x+3y-\\tfrac{15}{2}=0$."
+        },
+        {
+          "step": 3,
+          "text_md": "That is still the right curve, but it is not the form asked for. A circle equation has the form $x^2+y^2+\\dots=0$, with the coefficients of $x^2$ and $y^2$ equal to 1. With $\\tfrac12$ in front, the terms $x$ and $3y$ do not read off as the circle's own coefficients, so your answer will not match $x^2+y^2+2x+6y-15=0$."
+        },
+        {
+          "step": 4,
+          "text_md": "Multiply every term by the same number to clear the fractions. Here that is 2. Do not multiply only some terms. In another case $k=-\\tfrac56$, so you multiply by 6 and get $x^2+y^2+10x+20y-39=0$."
+        },
+        {
+          "step": 5,
+          "text_md": "Last step every time: after substituting $k$, look at the coefficients of $x^2$ and $y^2$. Multiply the whole equation by the number that makes both equal 1, then write the answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261021T150406Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's caution says the x² and y² coefficients must be 1. The worked numbers check out: k=-1/2 gives ½x²+½y²+x+3y-15/2=0, and ×2 gives x²+y²+2x+6y-15=0. For k=-5/6, ×6 gives x²+y²+10x+20y-39=0. Both match the canonical answers. The refutation cites no ids, pages or review history. Step 3's remark about the terms 'not reading off as coefficients' is slightly loose but not wrong.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "eb11c4-3:caution-3"
+          }
+        ],
+        "covers": []
+      }
+    }
+  ]
+}

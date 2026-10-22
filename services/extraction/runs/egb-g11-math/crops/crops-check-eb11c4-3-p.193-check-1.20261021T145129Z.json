@@ -1,0 +1,37 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "a7cca7c26949f71e6f32e3f94bc25a71ea98a370b9ff0ddcba9ffb1f68074eb5",
+  "generated_sha256": "d555f31f9a2d0e6f018c81cfb27a81b66dcada88b2e080816413d03906c148dd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c4-3:figure-15",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure with all labels."
+   },
+   {
+    "id": "eb11c4-3:figure-16",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "extend",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "The y-axis and the steep tangent line run off the top edge, and the y-axis arrow and label are cut. The caption is included."
+   }
+  ]
+ }
+}

@@ -1,0 +1,270 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v9",
+ "collect_version": "collect-6",
+ "book": "egb-g11-math",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "e3c3d177f0aa6887e3c98706df53db29801258ce7ca22ab881017277736a83cf",
+  "args_sha256": "c086f523ac874bff3f8d567f88cdfa40c009602a3df914bfa89af9825b74637d",
+  "generated_sha256": "e5efdf9c4dad121f89e89d25c5d6447c1e34827e7932e17a9fcce790c96297a4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "eb11c2-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c2-1:figure-1",
+    "eb11c2-1:figure-2",
+    "eb11c2-1:figure-3",
+    "eb11c2-1:figure-4",
+    "eb11c2-1:figure-5",
+    "eb11c2-1:figure-6"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c2-1:figure-1",
+     "src": "eb11c2-1__figure-1.png",
+     "ref": null,
+     "printed_page": 40,
+     "reason": "Illustration of weekly timers 10, 13, 16, 19 minutes with +3 min step labels between weeks; no kind draws the step increments on a sequence of values.",
+     "needed_kind": "sequence strip with terms and labelled +d step arrows"
+    },
+    {
+     "figure_id": "eb11c2-1:figure-2",
+     "src": "eb11c2-1__figure-2.png",
+     "ref": null,
+     "printed_page": 43,
+     "reason": "Symbolic terms a, a2, a3, ..., an with +d arrows and a brace labelled with text; no kind draws symbolic term strips with arrows and braces.",
+     "needed_kind": "sequence strip with terms, labelled +d step arrows and braces"
+    },
+    {
+     "figure_id": "eb11c2-1:figure-3",
+     "src": "eb11c2-1__figure-3.png",
+     "ref": "eb11c2-1:explanation-1",
+     "printed_page": 43,
+     "reason": "Terms 2, 5, 8, 11 with +3 arrows between them; number_line cannot draw labelled jump arrows between terms.",
+     "needed_kind": "sequence strip with terms and labelled +d step arrows"
+    },
+    {
+     "figure_id": "eb11c2-1:figure-4",
+     "src": "eb11c2-1__figure-4.png",
+     "ref": "eb11c2-1:explanation-1",
+     "printed_page": 43,
+     "reason": "Terms 3, -2, -7, -12, -17 with -5 arrows between them; number_line cannot draw labelled jump arrows between terms.",
+     "needed_kind": "sequence strip with terms and labelled +d step arrows"
+    },
+    {
+     "figure_id": "eb11c2-1:figure-5",
+     "src": "eb11c2-1__figure-5.png",
+     "ref": null,
+     "printed_page": 50,
+     "reason": "Symbolic sum a1+...+a20 with labelled braces S9, Required Sum, S20; no kind draws text expressions with braces.",
+     "needed_kind": "term strip with labelled braces over groups of terms"
+    },
+    {
+     "figure_id": "eb11c2-1:figure-6",
+     "src": "eb11c2-1__figure-6.png",
+     "ref": null,
+     "printed_page": 55,
+     "reason": "Symbolic terms grouped by braces labelled positive terms and negative terms; no kind draws term strips with braces.",
+     "needed_kind": "term strip with labelled braces over groups of terms"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 6,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "eb11c2-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c2-2:figure-1",
+    "eb11c2-2:figure-2",
+    "eb11c2-2:figure-3",
+    "eb11c2-2:figure-4"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c2-2:figure-1",
+     "src": "eb11c2-2__figure-1.png",
+     "ref": null,
+     "printed_page": 57,
+     "reason": "Illustrated scene of bacteria in a bloodstream with a small exponential growth curve; it is an illustration, not a drawable parametric figure.",
+     "needed_kind": "illustration/image display (exponential growth graph)"
+    },
+    {
+     "figure_id": "eb11c2-2:figure-2",
+     "src": "eb11c2-2__figure-2.png",
+     "ref": null,
+     "printed_page": 57,
+     "reason": "A row of terms a, a2, a3, ..., a(n-1), an with curved arrows each labelled ×r and a brace; no kind draws terms joined by labelled multiplier arrows.",
+     "needed_kind": "sequence_chain: terms in a row with curved arrows labelled by a multiplier (×r) and a brace"
+    },
+    {
+     "figure_id": "eb11c2-2:figure-3",
+     "src": "eb11c2-2__figure-3.png",
+     "ref": "eb11c2-2:worked-example-1",
+     "printed_page": 58,
+     "reason": "Terms 5, 10, 20, 40 with curved arrows labelled ×r between consecutive terms; arrow_map or number_line would lose the ×r labels.",
+     "needed_kind": "sequence_chain: terms in a row with curved arrows labelled by a multiplier (×r)"
+    },
+    {
+     "figure_id": "eb11c2-2:figure-4",
+     "src": "eb11c2-2__figure-4.png",
+     "ref": "eb11c2-2:worked-example-2",
+     "printed_page": 58,
+     "reason": "Terms A, 24, 12, B with ×1/2 arrows and a backward ÷1/2 arrow; no kind draws labelled multiplier arrows between terms.",
+     "needed_kind": "sequence_chain: terms in a row (with unknown terms) with curved arrows labelled by a multiplier (×1/2, ÷1/2)"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 4,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "eb11c2-3",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c2-3:figure-1",
+    "eb11c2-3:figure-2"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c2-3:figure-1",
+     "src": "eb11c2-3__figure-1.png",
+     "ref": null,
+     "printed_page": 68,
+     "reason": "Illustrative drawing of people planting and watering saplings, sun and wilting plants; no mathematical content to draw.",
+     "needed_kind": "photograph/illustration (not a math figure)"
+    },
+    {
+     "figure_id": "eb11c2-3:figure-2",
+     "src": "eb11c2-3__figure-2.png",
+     "ref": null,
+     "printed_page": 83,
+     "reason": "A symbolic sum a₁+a₂+…+a_n with braces labelled S_{n-1} and S_n and a highlighted a_n; no kind draws braced algebraic expressions.",
+     "needed_kind": "annotated expression with braces and highlighted term"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 2,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "eb11c2-4",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c2-4:figure-1",
+    "eb11c2-4:figure-2",
+    "eb11c2-4:figure-3",
+    "eb11c2-4:figure-4",
+    "eb11c2-4:figure-5"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c2-4:figure-1",
+     "src": "eb11c2-4__figure-1.png",
+     "ref": null,
+     "printed_page": 85,
+     "reason": "Infographic of viral reproduction, people icons and a spread path with a small growth chart; not a single plot or chart the kinds can draw faithfully.",
+     "needed_kind": "illustrated infographic / annotated sequence-growth diagram"
+    },
+    {
+     "figure_id": "eb11c2-4:figure-2",
+     "src": "eb11c2-4__figure-2.png",
+     "ref": null,
+     "printed_page": 85,
+     "reason": "Symbolic sequence a1…an with bracketed difference labels b1…b(n-1) beneath and a formula; no kind draws a labelled term row with difference brackets.",
+     "needed_kind": "sequence_diagram (term row with difference brackets and group bars)"
+    },
+    {
+     "figure_id": "eb11c2-4:figure-3",
+     "src": "eb11c2-4__figure-3.png",
+     "ref": "eb11c2-4:warm-up-2",
+     "printed_page": 88,
+     "reason": "A sequence of numbers split into groups by bars with group labels and a second row of group sizes; no kind shows grouped term rows.",
+     "needed_kind": "sequence_diagram (term row with group bars and group labels)"
+    },
+    {
+     "figure_id": "eb11c2-4:figure-4",
+     "src": "eb11c2-4__figure-4.png",
+     "ref": "eb11c2-4:worked-example-2",
+     "printed_page": 89,
+     "reason": "Schematic of terms divided by group bars labelled the (n-1)-th and n-th group; no kind shows grouped term rows.",
+     "needed_kind": "sequence_diagram (term row with group bars and group labels)"
+    },
+    {
+     "figure_id": "eb11c2-4:figure-5",
+     "src": "eb11c2-4__figure-5.png",
+     "ref": "eb11c2-4:worked-example-2",
+     "printed_page": 89,
+     "reason": "Grouped term row with position annotations (36th, 44th, 49th term) and group labels; no kind shows it.",
+     "needed_kind": "sequence_diagram (term row with group bars, group labels and position annotations)"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 5,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "eb11c2-5",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c2-5:figure-1"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c2-5:figure-1",
+     "src": "eb11c2-5__figure-1.png",
+     "ref": null,
+     "printed_page": 91,
+     "reason": "Illustrative photo-like artwork of an arm with an IV drip and a wavy drug level; it is a decorative scene, not a mathematical figure of points, graphs, or sets.",
+     "needed_kind": "illustration/image (no parametric kind fits)"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 1,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 5
+  },
+  "per_lesson": {
+   "eb11c2-1": 1,
+   "eb11c2-2": 1,
+   "eb11c2-3": 1,
+   "eb11c2-4": 1,
+   "eb11c2-5": 1
+  },
+  "total": 5
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book egb-g11-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book egb-g11-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

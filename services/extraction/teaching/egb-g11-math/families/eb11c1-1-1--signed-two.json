@@ -1,0 +1,79 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-1:signed-two",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-1",
+ "parent_question_id": "q:eb11c1-1-1:bk-exercise-1-a",
+ "source_page": 6,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "choice": [
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "n - 2"
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "let": "n - r"
+  },
+  {
+   "name": "T",
+   "let": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1],[1,5,10,10,5,1],[1,6,15,20,15,6,1],[1,7,21,35,35,21,7,1]]"
+  },
+  {
+   "name": "c",
+   "let": "T[n][r]"
+  },
+  {
+   "name": "ap",
+   "let": "a ** p"
+  },
+  {
+   "name": "bs",
+   "let": "(-b) ** r"
+  },
+  {
+   "name": "ans",
+   "let": "c * ap * bs"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the coefficient of $x^{{=p}}y^{{=r}}$ in the expansion of $({=a}x-{=b}y)^{{=n}}$.",
+ "answer": "ans",
+ "solution": [
+  "The term $x^{{=p}}y^{{=r}}$ has exponent {=p} for ${=a}x$ and exponent {=r} for $-{=b}y$.",
+  "The term is ${}_{{=n}}C_{{=r}}({=a}x)^{{=p}}(-{=b}y)^{{=r}}$.",
+  "${}_{{=n}}C_{{=r}} = {=c}$, $({=a})^{{=p}} = {=ap}$ and $(-{=b})^{{=r}} = {=bs}$.",
+  "The term is ${=c}\\times{=ap}\\times({=bs})\\,x^{{=p}}y^{{=r}} = {=ans}x^{{=p}}y^{{=r}}$.",
+  "The coefficient is {=ans}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: larger n, both coefficients raised to powers, sign from (-b)^r. nCr read from fixed Pascal table in a let. Max magnitude 35*... fine (n=7,r=3,a=3,b=4: 35*81*(-64) = -181440, acceptable). Same skeleton as exercise 1-a."
+}

@@ -89,6 +89,22 @@ export const CURRICULA = {
     // Written by the loader with the Grade 10 course (plan A11).
     programNodeId: "program:us-american-en",
   },
+  "eg-baccalaureate-en": {
+    label: "Egyptian Baccalaureate",
+    labelAr: "البكالوريا المصرية",
+    description: "Egyptian Baccalaureate (ministry, English medium)",
+    // The book counts the secondary years ("Grade XI … 2nd Year").
+    gradeLabels: {
+      "7": "Grade 7",
+      "8": "Grade 8",
+      "9": "Grade 9",
+      "10": "Grade 10 (Year 1)",
+      "11": "Grade 11 (Year 2)",
+      "12": "Grade 12 (Year 3)",
+    },
+    // Written by the loader with the Grade 11 course (books/egb-g11-math.json `program`).
+    programNodeId: "program:eg-baccalaureate-en",
+  },
 } as const satisfies Record<string, CurriculumDef>;
 
 export type CurriculumId = keyof typeof CURRICULA;

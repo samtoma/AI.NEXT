@@ -1,0 +1,97 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "0cd61002cf502023cc4ff6e488410107a6e0806471816a3dcce4a4cc1024d72b",
+  "generated_sha256": "ea5ee18df7624c35664888c5e9f07948bfb3a9abd91c64f9dd30e31fca488168",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c3-2:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-2:worked-example-1:a",
+      "kind": "value",
+      "answer": "x = 2√2 i or x = -2√2 i"
+     },
+     {
+      "ref": "eb11c3-2:worked-example-1:b",
+      "kind": "value",
+      "answer": "x = 9/2 or x = -1"
+     },
+     {
+      "ref": "eb11c3-2:worked-example-1:c",
+      "kind": "value",
+      "answer": "x = (-√6 + 4i)/2 or x = (-√6 - 4i)/2"
+     },
+     {
+      "ref": "eb11c3-2:explanation-1",
+      "kind": "explanation",
+      "answer": "D = 4² - 4·3·7 = -68 < 0, so the equation has two distinct imaginary solutions."
+     },
+     {
+      "ref": "eb11c3-2:example-2",
+      "kind": "explanation",
+      "answer": "D = -3(m-6)(m+2). D>0 (two distinct real solutions) when -2<m<6; D=0 (repeated solution) when m=-2 or 6; D<0 (two distinct imaginary solutions) when m<-2 or m>6."
+     },
+     {
+      "ref": "eb11c3-2:explanation-2:a",
+      "kind": "value",
+      "answer": "22/3"
+     },
+     {
+      "ref": "eb11c3-2:explanation-2:b",
+      "kind": "value",
+      "answer": "18"
+     },
+     {
+      "ref": "eb11c3-2:explanation-2:c",
+      "kind": "value",
+      "answer": "-12/5"
+     },
+     {
+      "ref": "eb11c3-2:explanation-2:d",
+      "kind": "value",
+      "answer": "4/3"
+     },
+     {
+      "ref": "eb11c3-2:worked-example-2",
+      "kind": "value",
+      "answer": "m = 2 with solutions -2 and 3; or m = 0 with solutions 2 and -3"
+     },
+     {
+      "ref": "eb11c3-2:worked-example-3:a",
+      "kind": "value",
+      "answer": "2(x - (3+√7 i)/4)(x - (3-√7 i)/4)"
+     },
+     {
+      "ref": "eb11c3-2:worked-example-3:b",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x-√3 i)(x+√3 i)"
+     },
+     {
+      "ref": "eb11c3-2:explanation-3",
+      "kind": "value",
+      "answer": "x² - x + 1/2 = 0 (equivalently 2x² - 2x + 1 = 0)"
+     },
+     {
+      "ref": "eb11c3-2:explanation-4",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the two numbers' sum and product are not given in the question."
+     },
+     {
+      "ref": "eb11c3-2:explanation-5",
+      "kind": "value",
+      "answer": "-6 < m < -2"
+     }
+    ]
+   }
+  }
+ ]
+}

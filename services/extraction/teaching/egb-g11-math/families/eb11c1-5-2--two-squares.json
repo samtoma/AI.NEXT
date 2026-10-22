@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-5-2:two-squares",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-5-2",
+ "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+ "source_page": 33,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    9
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "c",
+   "let": "p*p + q*q"
+  }
+ ],
+ "constraints": [],
+ "stem": "Prove that $a^2+b^2+{=c} \\ge {=2*p}a+{=2*q}b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $a+b$ at equality.",
+ "answer": "p + q",
+ "solution": [
+  "LHS − RHS $= a^2+b^2+{=c}-{=2*p}a-{=2*q}b$",
+  "$= (a^2-{=2*p}a+{=p*p}) + (b^2-{=2*q}b+{=q*q})$",
+  "$= (a-{=p})^2+(b-{=q})^2$ (complete the square)",
+  "$(a-{=p})^2 \\ge 0$ and $(b-{=q})^2 \\ge 0$, so the sum is $\\ge 0$ and the inequality holds",
+  "Equality holds when $a-{=p}=0$ and $b-{=q}=0$, i.e. $a={=p}$, $b={=q}$",
+  "So $a+b={=p+q}$"
+ ],
+ "notes": "Sum of two squares; numeric answer p+q avoids typing a pair."
+}

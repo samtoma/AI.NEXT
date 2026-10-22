@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-5-4:wall-fence",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-5-4",
+ "parent_question_id": "q:eb11c1-5-4:bk-warm-up-6",
+ "source_page": 37,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A farmer fences a rectangular field using a straight wall as one side, so fencing is needed only for the other three sides.",
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "L",
+   "let": "4 * m"
+  },
+  {
+   "name": "x",
+   "let": "m"
+  },
+  {
+   "name": "y",
+   "let": "2 * m"
+  },
+  {
+   "name": "A",
+   "let": "2 * m * m"
+  }
+ ],
+ "constraints": [],
+ "stem": "A farmer has {=L} m of fencing and builds a rectangular field against a long straight wall, so the wall forms one side and fencing is used only for the other three sides. Let the two sides perpendicular to the wall each have length $x$ m and the side parallel to the wall have length $y$ m, so $2x+y={=L}$. Use the AM-GM inequality on the positive numbers $2x$ and $y$ to find the maximum possible area of the field, in square metres.",
+ "answer": "A",
+ "solution": [
+  "The area is $xy$, with $2x>0$ and $y>0$ and $2x+y={=L}$.",
+  "By AM-GM: $\\sqrt{2x\\cdot y}\\le\\frac{2x+y}{2}=\\frac{{=L}}{2}={=L/2}$.",
+  "Square both sides: $2xy\\le {=(L/2)**2}$, so $xy\\le {=A}$.",
+  "Equality holds when $2x=y$, so $2x=y={=L/2}$, that is $x={=x}$ and $y={=y}$.",
+  "The maximum area is {=A} square metres."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Twist on the rectangle-with-fixed-perimeter case: AM-GM is applied to 2x and y, not x and y. Max area = L^2/8 = 2m^2 with L=4m; x=m, y=2m."
+}

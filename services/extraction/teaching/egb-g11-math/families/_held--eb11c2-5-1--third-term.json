@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-5-1:third-term",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-5-1",
+ "parent_question_id": "q:eb11c2-5-1:bk-exercise-3-a",
+ "source_page": 93,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "let": "s * m"
+  },
+  {
+   "name": "op",
+   "let": "'+' if s == 1 else '-'"
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    20
+   ]
+  },
+  {
+   "name": "e",
+   "let": "p - 3 * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_3={=p}, \\ a_{n+1}=a_n {=op} {=m}$",
+ "solution": [
+  "The relation $a_{n+1}=a_n {=op} {=m}$ means the sequence is arithmetic with common difference {=d}.",
+  "Counting from the third term: $a_n = a_3+(n-3)d = {=p}+(n-3)\\times({=d})$.",
+  "$a_n = {=d}n + ({=e})$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=d}*n + ({=e})",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Twist: the given term is a_3, not a_1, so the formula a_1+(n-1)d cannot be applied directly."
+}

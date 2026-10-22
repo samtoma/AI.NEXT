@@ -1,0 +1,52 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "3929441036b523ff003bce99316509b4e129e4bb81dd58e03a8616dead8434fd",
+  "generated_sha256": "b7cb6dfab360d0d2253503363962de5b0ca4e1eb2a7dd856ec420b04cf1f3dc2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-4:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-4:explanation-1",
+      "kind": "value",
+      "answer": "a = 1, b = -2, c = 7"
+     },
+     {
+      "ref": "eb11c1-4:explanation-2",
+      "kind": "value",
+      "answer": "a = 1, b = 2"
+     },
+     {
+      "ref": "eb11c1-4:explanation-3",
+      "kind": "explanation",
+      "answer": "LHS $=(x^2+2xy+y^2)-(x^2-2xy+y^2)=4xy=$ RHS, so the equality is proved."
+     },
+     {
+      "ref": "eb11c1-4:explanation-4",
+      "kind": "explanation",
+      "answer": "LHS $=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. RHS $=a^2c^2-2abcd+b^2d^2+a^2d^2+2abcd+b^2c^2=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. The two sides are the same, so the equality is proved."
+     },
+     {
+      "ref": "eb11c1-4:worked-example-2",
+      "kind": "explanation",
+      "answer": "Let $a/b=c/d=k$, so $a=bk$ and $c=dk$. Then $ab/(a^2+b^2)=b^2k/(b^2(k^2+1))=k/(k^2+1)$. Also $cd/(c^2+d^2)=d^2k/(d^2(k^2+1))=k/(k^2+1)$. The two sides are equal, so the equality is proved."
+     },
+     {
+      "ref": "eb11c1-4:worked-example-3",
+      "kind": "value",
+      "answer": "3/2"
+     }
+    ]
+   }
+  }
+ ]
+}

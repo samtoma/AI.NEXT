@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "787c9958ea2913a8bd65bd73e0f709a027be48aac95f837fb105e17629ad93ae",
+  "generated_sha256": "df6225a4692ae97047e4f778432dc9d7ad06bba07f1e8e11d2fc5c6ce2d29d28",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c4-3:figure-2",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete circle with diameter, ticks, and r arc."
+   },
+   {
+    "id": "eb11c4-3:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "A pink bar fragment sits at the top edge. It is not part of the figure."
+   },
+   {
+    "id": "eb11c4-3:figure-4",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete figure with both labels."
+   }
+  ]
+ }
+}

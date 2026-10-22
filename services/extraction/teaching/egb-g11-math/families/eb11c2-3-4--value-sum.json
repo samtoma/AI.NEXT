@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-3-4:value-sum",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-3-4",
+ "parent_question_id": "q:eb11c2-3-4:bk-try-4-s",
+ "source_page": 79,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    4,
+    6
+   ]
+  },
+  {
+   "name": "G",
+   "let": "(r**n-1)/(r-1)"
+  },
+  {
+   "name": "T",
+   "let": "n*r**n"
+  },
+  {
+   "name": "S",
+   "let": "(T-G)/(r-1)"
+  }
+ ],
+ "stem": "Use the method $S - rS$ to find the value of $S = 1 + 2\\times {=r} + 3\\times {=r}^2 + \\dots + {=n}\\times {=r}^{{=n-1}}$ (the sum of {=n} terms).",
+ "answer": "S",
+ "solution": [
+  "The terms are (1, 2, 3, ...) times powers of {=r}, so multiply S by the ratio {=r}: ${=r}S = 1\\times {=r} + 2\\times {=r}^2 + \\dots + {=n-1}\\times {=r}^{{=n-1}} + {=n}\\times {=r}^{{=n}}$.",
+  "Subtract: $S - {=r}S = 1 + {=r} + {=r}^2 + \\dots + {=r}^{{=n-1}} - {=n}\\times {=r}^{{=n}}$ (the sign of the last term changes).",
+  "The geometric part has {=n} terms, first term 1 and ratio {=r}: $\\frac{{=r}^{{=n}}-1}{{=r}-1} = {=G}$.",
+  "The last term is ${=n}\\times {=r}^{{=n}} = {=T}$, so $S - {=r}S = {=G} - {=T}$.",
+  "Divide by $1-{=r}$: $S = {=S}$."
+ ],
+ "notes": "Numeric instance of the book's S-rS method, no symbolic n. Answer is exactly integral (S is a sum of integers)."
+}

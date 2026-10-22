@@ -1,0 +1,1213 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "ee430795c978be609bb79f7e899aa0f65472946005a946ad3484cf3e40c5378d",
+  "generated_sha256": "45b78d5c5b939b95a1dc029863ab1ed35c9bbc675bb3ae9a7965ae06a381fdd5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-4:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-4:open-prompt-1",
+      "kind": "explanation",
+      "answer": "Simplify the LHS and the RHS separately until both become the same expression; each step only rewrites an expression as an equal one, so its value never changes.",
+      "solution": [
+       "To show two expressions are identically equal, simplify the LHS and the RHS respectively.",
+       "Each step (expanding, collecting like terms, rearranging) rewrites the expression into an equal one, so its output does not change.",
+       "If both sides reach the same expression, they are equal for every value.",
+       "Therefore LHS = RHS."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-2",
+      "kind": "value",
+      "answer": "a = 6, b = -2",
+      "solution": [
+       "Expand the LHS: $ax+a-bx-5b=(a-b)x+(a-5b)$.",
+       "So $(a-b)x+(a-5b)=8x+0$.",
+       "Compare coefficients: $a-b=8$, $a-5b=0$.",
+       "Subtract: $4b=-8$, so $b=-2$.",
+       "Then $a=8+b=6$.",
+       "Answer: a = 6, b = -2."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-3",
+      "kind": "value",
+      "answer": "a = 3, b = 1",
+      "solution": [
+       "Expand the LHS: $(b+3)x+a(b+3)$.",
+       "Compare with $4x+12$: $b+3=4$, $a(b+3)=12$.",
+       "So $b=1$.",
+       "Then $4a=12$, so $a=3$.",
+       "Answer: a = 3, b = 1."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-4",
+      "kind": "value",
+      "answer": "a = 2, b = 3, c = 1",
+      "solution": [
+       "Expand the RHS: $(x+1)(ax+b)+c=ax^2+(a+b)x+(b+c)$.",
+       "Compare with $2x^2+5x+4$: $a=2$, $a+b=5$, $b+c=4$.",
+       "So $b=3$.",
+       "Then $c=4-3=1$.",
+       "Answer: a = 2, b = 3, c = 1."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-5",
+      "kind": "value",
+      "answer": "a = 4, b = 1, c = 5",
+      "solution": [
+       "Expand the LHS: $(ax+b)(x+1)=ax^2+(a+b)x+b$.",
+       "Compare with $4x^2+cx+1$: $a=4$, $a+b=c$, $b=1$.",
+       "So $c=4+1=5$.",
+       "Answer: a = 4, b = 1, c = 5."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-6",
+      "kind": "value",
+      "answer": "a = 2, b = -1, c = 5",
+      "solution": [
+       "Expand the RHS: $(x-3)(ax+b)+c=ax^2+(b-3a)x+(c-3b)$.",
+       "Compare with $2x^2-7x+8$: $a=2$, $b-3a=-7$, $c-3b=8$.",
+       "So $b-6=-7$, giving $b=-1$.",
+       "Then $c+3=8$, so $c=5$.",
+       "Answer: a = 2, b = -1, c = 5."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-7",
+      "kind": "value",
+      "answer": "a = -1, b = 6",
+      "solution": [
+       "Multiply both sides by $(x-1)(x-5)$: $a(x-5)+b(x-1)=5x-1$.",
+       "Rearrange: $(a+b)x+(-5a-b)=5x-1$.",
+       "Compare: $a+b=5$, $-5a-b=-1$.",
+       "Add the two equations: $-4a=4$, so $a=-1$.",
+       "Then $b=5-a=6$.",
+       "Answer: a = -1, b = 6."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:explanation-2",
+       "eb11c1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-8",
+      "kind": "value",
+      "answer": "a = 2, b = -1",
+      "solution": [
+       "Multiply both sides by $(x-2)(x+3)$: $x+8=a(x+3)+b(x-2)$.",
+       "Rearrange: $x+8=(a+b)x+(3a-2b)$.",
+       "Compare: $a+b=1$, $3a-2b=8$.",
+       "From the first, $b=1-a$; so $3a-2+2a=8$, giving $5a=10$, $a=2$.",
+       "Then $b=-1$.",
+       "Answer: a = 2, b = -1."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:explanation-2",
+       "eb11c1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-9",
+      "kind": "value",
+      "answer": "a = 2, b = -3",
+      "solution": [
+       "Factor: $3x^2+5x-2=(x+2)(3x-1)$.",
+       "Multiply both sides by $(x+2)(3x-1)$: $3x-8=a(3x-1)+b(x+2)$.",
+       "Rearrange: $3x-8=(3a+b)x+(-a+2b)$.",
+       "Compare: $3a+b=3$, $-a+2b=-8$.",
+       "From the first, $b=3-3a$; so $-a+6-6a=-8$, giving $-7a=-14$, $a=2$.",
+       "Then $b=3-6=-3$.",
+       "Answer: a = 2, b = -3."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:explanation-2",
+       "eb11c1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-1",
+      "kind": "value",
+      "answer": "a = 4, b = 3",
+      "solution": [
+       "Factor: $8t^2+10t+3=(2t+1)(4t+3)$.",
+       "Multiply both sides by $(2t+1)(4t+3)$: $22t+15=a(4t+3)+b(2t+1)$.",
+       "Rearrange: $22t+15=(4a+2b)t+(3a+b)$.",
+       "Compare: $4a+2b=22$, $3a+b=15$.",
+       "From the second, $b=15-3a$; so $4a+30-6a=22$, giving $a=4$.",
+       "Then $b=15-12=3$.",
+       "Answer: a = 4, b = 3."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:explanation-2",
+       "eb11c1-4:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-2",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $a^4+a^2b^2+b^4$, so the equality is proved.",
+      "solution": [
+       "LHS $=a^4+a^3b+a^2b^2-a^3b-a^2b^2-ab^3+a^2b^2+ab^3+b^4$.",
+       "$=a^4+a^2b^2+b^4$ ...... (i)",
+       "RHS $=(a^4+2a^2b^2+b^4)-a^2b^2$.",
+       "$=a^4+a^2b^2+b^4$ ...... (ii)",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-4",
+      "kind": "explanation",
+      "answer": "Substituting $y=1-x$ makes both sides equal $2x^2-2x+2$.",
+      "solution": [
+       "From $x+y=1$, $y=1-x$ ...... (i)",
+       "LHS $=x^2+(1-x)^2+1=x^2+1-2x+x^2+1=2x^2-2x+2$ ...... (ii)",
+       "RHS $=2\\{x+(1-x)-x(1-x)\\}=2(1-x+x^2)=2x^2-2x+2$ ...... (iii)",
+       "From (ii) and (iii), $x^2+y^2+1=2(x+y-xy)$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-5",
+      "kind": "explanation",
+      "answer": "Substituting $c=-a-b$ makes both sides equal $-3a^2b-3ab^2$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$ ...... (i)",
+       "LHS $=a^3+b^3+(-a-b)^3=a^3+b^3-(a^3+3a^2b+3ab^2+b^3)$.",
+       "$=-3a^2b-3ab^2$ ...... (ii)",
+       "RHS $=3ab(-a-b)=-3a^2b-3ab^2$ ...... (iii)",
+       "From (ii) and (iii), $a^3+b^3+c^3=3abc$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Solve try-4 and try-5 by expressing one variable from the condition and substituting: $y=1-x$ gives $2x^2-2x+2$ on both sides, and $c=-a-b$ gives $-3a^2b-3ab^2$ on both sides.",
+      "solution": [
+       "Try-4: from $x+y=1$, $y=1-x$.",
+       "LHS $=x^2+(1-x)^2+1=2x^2-2x+2$.",
+       "RHS $=2\\{1-x(1-x)\\}=2x^2-2x+2$, so they are equal.",
+       "Try-5: from $a+b+c=0$, $c=-a-b$.",
+       "LHS $=a^3+b^3-(a+b)^3=-3a^2b-3ab^2$.",
+       "RHS $=3ab(-a-b)=-3a^2b-3ab^2$, so they are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-2",
+      "kind": "explanation",
+      "answer": "With $y=1-x$, both sides equal $2x^2-2x+1$.",
+      "solution": [
+       "From $x+y=1$, $y=1-x$.",
+       "LHS $=x^2+(1-x)^2=2x^2-2x+1$.",
+       "RHS $=1-2x(1-x)=1-2x+2x^2$.",
+       "Both are $2x^2-2x+1$, so $x^2+y^2=1-2xy$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-3",
+      "kind": "explanation",
+      "answer": "With $x=y+1$, both sides equal $2y^2+2y+1$.",
+      "solution": [
+       "From $x-y=1$, $x=y+1$.",
+       "LHS $=(y+1)^2+y^2=2y^2+2y+1$.",
+       "RHS $=2(y+1)y+1=2y^2+2y+1$.",
+       "Both are equal, so $x^2+y^2=2xy+1$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-4",
+      "kind": "explanation",
+      "answer": "With $y=1-x$, both sides equal $x^2-x$.",
+      "solution": [
+       "From $x+y=1$, $y=1-x$.",
+       "LHS $=x^2-x$.",
+       "RHS $=(1-x)^2-(1-x)=1-2x+x^2-1+x=x^2-x$.",
+       "Both are equal, so $x^2-x=y^2-y$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-5",
+      "kind": "explanation",
+      "answer": "With $c=-a-b$, both sides equal $-ab$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$.",
+       "LHS $=a^2+(-a-b)a=a^2-a^2-ab=-ab$.",
+       "RHS $=b^2+b(-a-b)=b^2-ab-b^2=-ab$.",
+       "Both are equal, so $a^2+ca=b^2+bc$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-6",
+      "kind": "explanation",
+      "answer": "With $c=-a-b$, the LHS simplifies to $0$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$.",
+       "$b+c=b-a-b=-a$ and $c+a=-a-b+a=-b$.",
+       "LHS $=(a+b)(-a)(-b)+ab(-a-b)$.",
+       "$=ab(a+b)-ab(a+b)=0$.",
+       "This equals the RHS $0$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-3",
+      "kind": "explanation",
+      "answer": "With $c=-a-b$, each fraction equals $-1$, so the sum is $-3$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$.",
+       "$b+c=-a$, so $\\frac{a}{b+c}=\\frac{a}{-a}=-1$.",
+       "$c+a=-b$, so $\\frac{b}{c+a}=\\frac{b}{-b}=-1$.",
+       "$a+b=-c$, so $\\frac{c}{a+b}=\\frac{c}{-c}=-1$.",
+       "Sum $=-1-1-1=-3$, since $a,b,c$ are non-zero."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:reflect-1",
+      "kind": "explanation",
+      "answer": "Doing the same operation to both sides assumes the two sides are already equal, which is exactly what must be proved; working on each side separately until they match avoids that.",
+      "solution": [
+       "Cross-multiplying or adding terms to both sides treats LHS = RHS as true from the start.",
+       "That assumes the result we want to prove, so the argument is circular.",
+       "Instead, simplify the LHS and the RHS respectively.",
+       "Each step only rewrites an expression as an equal one.",
+       "When both reach the same expression, LHS = RHS is proved."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:warm-up-4",
+      "kind": "explanation",
+      "answer": "Both sides equal $\\frac{k}{k^2+1}$, so $\\frac{ab}{a^2+b^2}=\\frac{cd}{c^2+d^2}$.",
+      "solution": [
+       "Let $\\frac{a}{b}=\\frac{c}{d}=k$, so $a=bk$, $c=dk$ ...... (i)",
+       "LHS $=\\frac{bk\\cdot b}{b^2k^2+b^2}=\\frac{b^2k}{b^2(k^2+1)}=\\frac{k}{k^2+1}$.",
+       "RHS $=\\frac{dk\\cdot d}{d^2k^2+d^2}=\\frac{d^2k}{d^2(k^2+1)}=\\frac{k}{k^2+1}$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:warm-up-5",
+      "kind": "value",
+      "answer": "3/2",
+      "solution": [
+       "Let $x=2k$, $y=3k$, $z=5k$.",
+       "Numerator: $2(2k)(3k)+(3k)(5k)+3(5k)(2k)=12k^2+15k^2+30k^2=57k^2$.",
+       "Denominator: $4k^2+9k^2+25k^2=38k^2$.",
+       "Value $=\\frac{57}{38}=\\frac{3}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-5",
+       "eb11c1-4:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-7",
+      "kind": "explanation",
+      "answer": "Both sides equal $k^2$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{x}{a}=\\frac{y}{b}=\\frac{z}{c}=k$, so $x=ak$, $y=bk$, $z=ck$.",
+       "LHS $=\\frac{k^2(a^2+b^2+c^2)}{a^2+b^2+c^2}=k^2$.",
+       "RHS $=\\frac{k^2(ab+bc+ca)}{ab+bc+ca}=k^2$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-8",
+      "kind": "value",
+      "answer": "26/29",
+      "solution": [
+       "Let $a=2k$, $b=3k$, $c=4k$.",
+       "Numerator: $6k^2+12k^2+8k^2=26k^2$.",
+       "Denominator: $4k^2+9k^2+16k^2=29k^2$.",
+       "Value $=\\frac{26}{29}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-5",
+       "eb11c1-4:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "Question 3 (try-8): the value is 26/29.",
+      "solution": [
+       "Question 3 is $a:b:c=2:3:4$, find $\\frac{ab+bc+ca}{a^2+b^2+c^2}$.",
+       "Let $a=2k$, $b=3k$, $c=4k$.",
+       "Numerator $=6k^2+12k^2+8k^2=26k^2$; denominator $=4k^2+9k^2+16k^2=29k^2$.",
+       "Value $=\\frac{26}{29}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-5",
+       "eb11c1-4:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-13",
+      "kind": "explanation",
+      "answer": "Both sides equal $k$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{a}{b}=\\frac{c}{d}=k$, so $a=bk$, $c=dk$.",
+       "LHS $=\\frac{3bk+dk}{3b+d}=\\frac{k(3b+d)}{3b+d}=k$.",
+       "RHS $=\\frac{2bk-dk}{2b-d}=\\frac{k(2b-d)}{2b-d}=k$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-14",
+      "kind": "explanation",
+      "answer": "Both sides equal $\\frac{1+k^2}{1-k^2}$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{x}{a}=\\frac{y}{b}=k$, so $x=ak$, $y=bk$.",
+       "LHS $=\\frac{a^2+a^2k^2}{a^2-a^2k^2}=\\frac{a^2(1+k^2)}{a^2(1-k^2)}=\\frac{1+k^2}{1-k^2}$.",
+       "RHS $=\\frac{b^2+b^2k^2}{b^2-b^2k^2}=\\frac{1+k^2}{1-k^2}$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-15",
+      "kind": "explanation",
+      "answer": "Both sides equal $k$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{x}{a}=\\frac{y}{b}=\\frac{z}{c}=k$, so $x=ak$, $y=bk$, $z=ck$.",
+       "LHS $=\\frac{ak+bk+ck}{a+b+c}=\\frac{k(a+b+c)}{a+b+c}=k$.",
+       "RHS $=\\frac{x}{a}=k$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-16",
+      "kind": "explanation",
+      "answer": "Both sides equal $k$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{x}{a}=\\frac{y}{b}=\\frac{z}{c}=k$, so $x=ak$, $y=bk$, $z=ck$.",
+       "LHS $=\\frac{k(a+2b+3c)}{a+2b+3c}=k$.",
+       "RHS $=\\frac{k(a+b+c)}{a+b+c}=k$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-17",
+      "kind": "explanation",
+      "answer": "Both sides equal $k^2(a^2+b^2+c^2)^2$, so the equality is proved.",
+      "solution": [
+       "Let $\\frac{x}{a}=\\frac{y}{b}=\\frac{z}{c}=k$, so $x=ak$, $y=bk$, $z=ck$.",
+       "LHS $=(a^2+b^2+c^2)\\cdot k^2(a^2+b^2+c^2)=k^2(a^2+b^2+c^2)^2$.",
+       "RHS $=(a^2k+b^2k+c^2k)^2=k^2(a^2+b^2+c^2)^2$.",
+       "The two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-18",
+      "kind": "value",
+      "answer": "-5/2",
+      "solution": [
+       "Let $a=3k$, $b=5k$, $c=2k$.",
+       "Numerator: $9k^2+25k^2-4k^2=30k^2$.",
+       "Denominator: $9k^2-25k^2+4k^2=-12k^2$.",
+       "Value $=\\frac{30}{-12}=-\\frac{5}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-5",
+       "eb11c1-4:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-19",
+      "kind": "value",
+      "answer": "-29/10",
+      "solution": [
+       "Let $x=2k$, $y=-3k$, $z=4k$.",
+       "Numerator: $4k^2+9k^2+16k^2=29k^2$.",
+       "Denominator: $xy+yz+zx=-6k^2-12k^2+8k^2=-10k^2$.",
+       "Value $=\\frac{29}{-10}=-\\frac{29}{10}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-5",
+       "eb11c1-4:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-20",
+      "kind": "value",
+      "answer": "94/79",
+      "solution": [
+       "Let $\\frac{x}{7}=\\frac{y}{3}=k$, so $x=7k$, $y=3k$ (with $k\\neq0$).",
+       "Numerator: $49k^2+5\\cdot9k^2=94k^2$.",
+       "Denominator: $49k^2+21k^2+9k^2=79k^2$.",
+       "Value $=\\frac{94}{79}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-4:open-prompt-1",
+      "kind": "explanation",
+      "answer": "Simplify each side separately (expand, collect like terms) until both give the same expression. Each step is an equivalence on one side, so its value never changes. The two sides then agree for every value in the domain."
+     },
+     {
+      "ref": "eb11c1-4:exercise-2",
+      "kind": "value",
+      "answer": "a = 10, b = 2"
+     },
+     {
+      "ref": "eb11c1-4:exercise-3",
+      "kind": "value",
+      "answer": "a = 3, b = 1"
+     },
+     {
+      "ref": "eb11c1-4:exercise-4",
+      "kind": "value",
+      "answer": "a = 2, b = 3, c = 1"
+     },
+     {
+      "ref": "eb11c1-4:exercise-5",
+      "kind": "value",
+      "answer": "a = 4, b = 1, c = 5"
+     },
+     {
+      "ref": "eb11c1-4:exercise-6",
+      "kind": "value",
+      "answer": "a = 2, b = -1, c = 5"
+     },
+     {
+      "ref": "eb11c1-4:exercise-7",
+      "kind": "value",
+      "answer": "a = -1, b = 6"
+     },
+     {
+      "ref": "eb11c1-4:exercise-8",
+      "kind": "value",
+      "answer": "a = 2, b = -1"
+     },
+     {
+      "ref": "eb11c1-4:exercise-9",
+      "kind": "value",
+      "answer": "a = 2, b = -3"
+     },
+     {
+      "ref": "eb11c1-4:challenge-1",
+      "kind": "value",
+      "answer": "a = 4, b = 3"
+     },
+     {
+      "ref": "eb11c1-4:challenge-2",
+      "kind": "explanation",
+      "answer": "LHS = (a²+b²-ab)(a²+b²+ab) = (a²+b²)² - (ab)² (difference of squares) = RHS."
+     },
+     {
+      "ref": "eb11c1-4:try-4",
+      "kind": "explanation",
+      "answer": "Put y = 1-x. LHS = x²+(1-x)²+1 = 2x²-2x+2. RHS = 2(1-x(1-x)) = 2(1-x+x²) = 2x²-2x+2. Equal."
+     },
+     {
+      "ref": "eb11c1-4:try-5",
+      "kind": "explanation",
+      "answer": "Put c = -(a+b). LHS = a³+b³-(a+b)³ = -3a²b-3ab². RHS = 3ab(-(a+b)) = -3a²b-3ab². Equal."
+     },
+     {
+      "ref": "eb11c1-4:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Solve try-4 and try-5 by expressing one variable from the condition (y = 1-x, c = -a-b), substituting into both sides, and showing both sides simplify to the same expression. Then compare answers with your partner."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-2",
+      "kind": "explanation",
+      "answer": "Put y = 1-x. LHS = x²+(1-x)² = 2x²-2x+1. RHS = 1-2x(1-x) = 2x²-2x+1. Equal."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-3",
+      "kind": "explanation",
+      "answer": "Put x = y+1. LHS = (y+1)²+y² = 2y²+2y+1. RHS = 2y(y+1)+1 = 2y²+2y+1. Equal."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-4",
+      "kind": "explanation",
+      "answer": "Put y = 1-x. RHS = (1-x)²-(1-x) = x²-x = LHS."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-5",
+      "kind": "explanation",
+      "answer": "Put c = -a-b. LHS = a²+a(-a-b) = -ab. RHS = b²+b(-a-b) = -ab. Equal."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-6",
+      "kind": "explanation",
+      "answer": "Since a+b+c=0, a+b=-c, b+c=-a, c+a=-b. LHS = (-c)(-a)(-b)+abc = -abc+abc = 0 = RHS."
+     },
+     {
+      "ref": "eb11c1-4:reflect-1",
+      "kind": "explanation",
+      "answer": "Cross-multiplying or adding terms to both sides assumes the equality is already true, which is what you are trying to prove (circular reasoning). Working on one side only uses equivalent rewrites of a single expression until it becomes the other side. That shows the two are identical without assuming the result."
+     },
+     {
+      "ref": "eb11c1-4:warm-up-4",
+      "kind": "explanation",
+      "answer": "Let a/b = c/d = k, so a = bk and c = dk. LHS = b²k/(b²k²+b²) = k/(k²+1). RHS = d²k/(d²k²+d²) = k/(k²+1). Equal."
+     },
+     {
+      "ref": "eb11c1-4:warm-up-5",
+      "kind": "value",
+      "answer": "3/2"
+     },
+     {
+      "ref": "eb11c1-4:try-7",
+      "kind": "explanation",
+      "answer": "Let x/a = y/b = z/c = k, so x = ak, y = bk, z = ck. LHS = k²(a²+b²+c²)/(a²+b²+c²) = k². RHS = k²(ab+bc+ca)/(ab+bc+ca) = k². Equal."
+     },
+     {
+      "ref": "eb11c1-4:try-8",
+      "kind": "value",
+      "answer": "26/29"
+     },
+     {
+      "ref": "eb11c1-4:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "Question 3 is try-8: let a=2k, b=3k, c=4k. Then (6k²+12k²+8k²)/(4k²+9k²+16k²) = 26/29."
+     },
+     {
+      "ref": "eb11c1-4:exercise-13",
+      "kind": "explanation",
+      "answer": "Let a/b = c/d = k, so a = bk and c = dk. LHS = (3bk+dk)/(3b+d) = k. RHS = (2bk-dk)/(2b-d) = k. Equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-14",
+      "kind": "explanation",
+      "answer": "Let x/a = y/b = k, so x = ak and y = bk. LHS = a²(1+k²)/(a²(1-k²)) = (1+k²)/(1-k²). RHS = b²(1+k²)/(b²(1-k²)) = (1+k²)/(1-k²). Equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-15",
+      "kind": "explanation",
+      "answer": "Let x/a = y/b = z/c = k, so x = ak, y = bk, z = ck. LHS = k(a+b+c)/(a+b+c) = k = x/a."
+     },
+     {
+      "ref": "eb11c1-4:exercise-16",
+      "kind": "explanation",
+      "answer": "With x = ak, y = bk, z = ck: LHS = k(a+2b+3c)/(a+2b+3c) = k. RHS = k(a+b+c)/(a+b+c) = k. Equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-17",
+      "kind": "explanation",
+      "answer": "With x = ak, y = bk, z = ck: LHS = (a²+b²+c²)·k²(a²+b²+c²) = k²(a²+b²+c²)². RHS = (k(a²+b²+c²))² = k²(a²+b²+c²)². Equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-18",
+      "kind": "value",
+      "answer": "-5/2"
+     },
+     {
+      "ref": "eb11c1-4:exercise-19",
+      "kind": "value",
+      "answer": "-29/10"
+     },
+     {
+      "ref": "eb11c1-4:exercise-20",
+      "kind": "value",
+      "answer": "94/79"
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c1-4:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-4:warm-up-1:?",
+      "kind": "value",
+      "answer": "a = 1, b = -2, c = 7",
+      "solution": [
+       "Expand the RHS: $a(x+1)^2+b(x+1)+c=ax^2+(2a+b)x+(a+b+c)$.",
+       "Compare coefficients with $x^2+0x+6$: $1=a$, $0=2a+b$, $6=a+b+c$.",
+       "From $a=1$: $b=-2$.",
+       "Then $6=1-2+c$, so $c=7$.",
+       "Answer: $a=1$, $b=-2$, $c=7$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:warm-up-2:?",
+      "kind": "value",
+      "answer": "a = 1, b = 2",
+      "solution": [
+       "Multiply both sides by $(x+2)(x-3)$: $3x+1=a(x-3)+b(x+2)$.",
+       "Arrange the RHS: $3x+1=(a+b)x+(-3a+2b)$.",
+       "Compare coefficients: $3=a+b$ and $1=-3a+2b$.",
+       "From the first, $b=3-a$. Then $1=-3a+6-2a$, so $a=1$.",
+       "Then $b=2$.",
+       "Answer: $a=1$, $b=2$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:rule-1",
+       "eb11c1-4:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-1:?",
+      "kind": "value",
+      "answer": "a = 1, b = 1, c = -3",
+      "solution": [
+       "Expand the RHS: $a(x-1)^2+b(x-1)+c=ax^2+(-2a+b)x+(a-b+c)$.",
+       "Compare coefficients with $x^2-x-3$: $1=a$, $-1=-2a+b$, $-3=a-b+c$.",
+       "From $a=1$: $-1=-2+b$, so $b=1$.",
+       "Then $-3=1-1+c$, so $c=-3$.",
+       "Answer: $a=1$, $b=1$, $c=-3$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-2:?",
+      "kind": "value",
+      "answer": "a = 2/3, b = -1/3",
+      "solution": [
+       "Multiply both sides by $(2x-1)(x+1)$: $1=a(x+1)+b(2x-1)$.",
+       "Arrange the RHS: $0x+1=(a+2b)x+(a-b)$.",
+       "Compare coefficients: $0=a+2b$ and $1=a-b$.",
+       "From the first, $a=-2b$. Then $1=-2b-b$, so $b=-1/3$.",
+       "Then $a=2/3$.",
+       "Answer: $a=2/3$, $b=-1/3$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:rule-1",
+       "eb11c1-4:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-1",
+      "kind": "value",
+      "answer": "1) a = 6, b = -2; 2) a = 3, b = 1; 3) a = 2, b = 3, c = 1; 4) a = 4, b = 1, c = 5; 5) a = 2, b = -1, c = 5; 6) a = -1, b = 6; 7) a = 2, b = -1; 8) a = 2, b = -3",
+      "solution": [
+       "1) $(a-b)x+(a-5b)=8x+0$. So $a-b=8$, $a-5b=0$. Then $b=-2$, $a=6$.",
+       "2) $(b+3)x+a(b+3)=4x+12$. So $b+3=4$, giving $b=1$. Then $4a=12$, so $a=3$.",
+       "3) $ax^2+(a+b)x+(b+c)=2x^2+5x+4$. So $a=2$, $b=3$, $c=1$.",
+       "4) $ax^2+(a+b)x+b=4x^2+cx+1$. So $a=4$, $b=1$, $c=a+b=5$.",
+       "5) $ax^2+(b-3a)x+(c-3b)=2x^2-7x+8$. So $a=2$, $b=-1$, $c=5$.",
+       "6) Clear denominators: $a(x-5)+b(x-1)=5x-1$, i.e. $(a+b)x+(-5a-b)=5x-1$. So $a+b=5$, $-5a-b=-1$. Then $a=-1$, $b=6$.",
+       "7) $x+8=a(x+3)+b(x-2)$, i.e. $(a+b)x+(3a-2b)$. So $a+b=1$, $3a-2b=8$. Then $a=2$, $b=-1$.",
+       "8) $3x^2+5x-2=(3x-1)(x+2)$. So $3x-8=a(3x-1)+b(x+2)=(3a+b)x+(-a+2b)$. Then $3a+b=3$, $-a+2b=-8$. So $a=2$, $b=-3$.",
+       "Answers as listed above."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-1",
+       "eb11c1-4:method-1",
+       "eb11c1-4:method-2",
+       "eb11c1-4:explanation-1",
+       "eb11c1-4:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-1",
+      "kind": "value",
+      "answer": "a = 4, b = 3",
+      "solution": [
+       "Factor the denominator: $8t^2+10t+3=(2t+1)(4t+3)$.",
+       "Clear denominators: $22t+15=a(4t+3)+b(2t+1)$.",
+       "Arrange the RHS: $22t+15=(4a+2b)t+(3a+b)$.",
+       "Compare coefficients: $4a+2b=22$ and $3a+b=15$.",
+       "From the second, $b=15-3a$. Then $4a+30-6a=22$, so $a=4$.",
+       "Then $b=3$.",
+       "Answer: $a=4$, $b=3$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-2",
+       "eb11c1-4:rule-1",
+       "eb11c1-4:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:warm-up-3:1",
+      "kind": "explanation",
+      "answer": "Simplifying the LHS gives 4xy, which equals the RHS.",
+      "solution": [
+       "Start with the LHS: $(x+y)^2-(x-y)^2=(x^2+2xy+y^2)-(x^2-2xy+y^2)$.",
+       "Remove brackets: $=x^2+2xy+y^2-x^2+2xy-y^2$.",
+       "Collect terms: $=4xy$, the same as the RHS.",
+       "Therefore $(x+y)^2-(x-y)^2=4xy$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:warm-up-3:2",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $a^2c^2+a^2d^2+b^2c^2+b^2d^2$.",
+      "solution": [
+       "LHS $=a^2c^2+a^2d^2+b^2c^2+b^2d^2$ ...(i).",
+       "RHS $=(a^2c^2-2abcd+b^2d^2)+(a^2d^2+2abcd+b^2c^2)$.",
+       "The $abcd$ terms cancel: $=a^2c^2+b^2d^2+a^2d^2+b^2c^2$.",
+       "Rearrange: $=a^2c^2+a^2d^2+b^2c^2+b^2d^2$ ...(ii).",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-3:1",
+      "kind": "explanation",
+      "answer": "Simplifying the LHS gives $2x^2+2y^2$, which equals the RHS.",
+      "solution": [
+       "LHS $=(x^2+2xy+y^2)+(x^2-2xy+y^2)$.",
+       "Remove brackets: $=x^2+2xy+y^2+x^2-2xy+y^2$.",
+       "Collect terms: $=2x^2+2y^2$, the same as the RHS.",
+       "Therefore the equality is proved."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-3:2",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $a^2c^2-a^2d^2-b^2c^2+b^2d^2$.",
+      "solution": [
+       "LHS $=a^2c^2-a^2d^2-b^2c^2+b^2d^2$ ...(i).",
+       "RHS $=(a^2c^2-2abcd+b^2d^2)-(a^2d^2-2abcd+b^2c^2)$.",
+       "Remove brackets: $=a^2c^2-2abcd+b^2d^2-a^2d^2+2abcd-b^2c^2$.",
+       "The $abcd$ terms cancel: $=a^2c^2-a^2d^2-b^2c^2+b^2d^2$ ...(ii).",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:1",
+      "kind": "explanation",
+      "answer": "The LHS expands and simplifies to $x^4+x^2+1$, which equals the RHS.",
+      "solution": [
+       "LHS $=x^2(x^2-x+1)+x(x^2-x+1)+1(x^2-x+1)$.",
+       "$=x^4-x^3+x^2+x^3-x^2+x+x^2-x+1$.",
+       "Collect terms: $=x^4+x^2+1$, the same as the RHS.",
+       "Therefore the equality is proved."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:2",
+      "kind": "explanation",
+      "answer": "The LHS simplifies to $a^3+b^3$, which equals the RHS.",
+      "solution": [
+       "LHS $=(a^3+3a^2b+3ab^2+b^3)-3ab(a+b)$.",
+       "Expand: $3ab(a+b)=3a^2b+3ab^2$.",
+       "So LHS $=a^3+3a^2b+3ab^2+b^3-3a^2b-3ab^2$.",
+       "Collect terms: $=a^3+b^3$, the same as the RHS."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:3",
+      "kind": "explanation",
+      "answer": "The LHS expands and simplifies to $a^3+b^3+c^3-3abc$, which equals the RHS.",
+      "solution": [
+       "Multiply each term of the first bracket by the second bracket.",
+       "$a(\\ldots)=a^3+ab^2+ac^2-a^2b-abc-a^2c$.",
+       "$b(\\ldots)=a^2b+b^3+bc^2-ab^2-b^2c-abc$.",
+       "$c(\\ldots)=a^2c+b^2c+c^3-abc-bc^2-ac^2$.",
+       "Add them: all mixed terms such as $ab^2$, $ac^2$, $a^2b$, $a^2c$, $bc^2$, $b^2c$ cancel.",
+       "The remaining terms are $a^3+b^3+c^3-3abc$, the same as the RHS."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:4",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $a^2+4b^2$.",
+      "solution": [
+       "LHS $=(a^2+4ab+4b^2)-4ab=a^2+4b^2$ ...(i).",
+       "RHS $=(a^2-4ab+4b^2)+4ab=a^2+4b^2$ ...(ii).",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:5",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $x^2y^2+x^2+y^2+1$.",
+      "solution": [
+       "LHS $=x^2y^2+x^2+y^2+1$ ...(i).",
+       "RHS $=(x^2y^2+2xy+1)+(x^2-2xy+y^2)$.",
+       "The $xy$ terms cancel: $=x^2y^2+x^2+y^2+1$ ...(ii).",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:6",
+      "kind": "explanation",
+      "answer": "Both sides simplify to $3a^2-3b^2$.",
+      "solution": [
+       "LHS $=(4a^2+4ab+b^2)-(a^2+4ab+4b^2)$.",
+       "Remove brackets: $=4a^2+4ab+b^2-a^2-4ab-4b^2$.",
+       "Collect terms: $=3a^2-3b^2$ ...(i).",
+       "RHS $=3(a^2-b^2)=3a^2-3b^2$ ...(ii).",
+       "From (i) and (ii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:rule-2",
+       "eb11c1-4:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-1",
+      "kind": "explanation",
+      "answer": "Substituting $c=-a-b$ makes both sides equal to $2a^2+2ab+2b^2$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$ ...(i).",
+       "Substitute (i) into the LHS: $a^2+b^2+(-a-b)^2=a^2+b^2+a^2+2ab+b^2=2a^2+2ab+2b^2$ ...(ii).",
+       "Substitute (i) into the RHS: $-2\\{ab+b(-a-b)+(-a-b)a\\}=-2(ab-ab-b^2-a^2-ab)$.",
+       "$=-2(-a^2-ab-b^2)=2a^2+2ab+2b^2$ ...(iii).",
+       "From (ii) and (iii), $a^2+b^2+c^2=-2(ab+bc+ca)$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-11",
+      "kind": "explanation",
+      "answer": "In each part, substitute the variable from the condition into both sides and the two sides become equal.",
+      "solution": [
+       "1) $x+y=1$, so $y=1-x$. LHS $=x^2+(1-x)^2=2x^2-2x+1$. RHS $=1-2x(1-x)=1-2x+2x^2$. Equal.",
+       "2) $x-y=1$, so $x=y+1$. LHS $=(y+1)^2+y^2=2y^2+2y+1$. RHS $=2(y+1)y+1=2y^2+2y+1$. Equal.",
+       "3) $x+y=1$, so $y=1-x$. LHS $=x^2-x$. RHS $=(1-x)^2-(1-x)=1-2x+x^2-1+x=x^2-x$. Equal.",
+       "4) $a+b+c=0$, so $c=-a-b$. LHS $=a^2+(-a-b)a=-ab$. RHS $=b^2+b(-a-b)=-ab$. Equal.",
+       "5) $c=-a-b$, so $b+c=-a$ and $c+a=-b$. LHS $=(a+b)(-a)(-b)+ab(-a-b)=ab(a+b)-ab(a+b)=0$, which equals the RHS.",
+       "All five equalities are proved."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-3",
+      "kind": "explanation",
+      "answer": "Substituting $c=-a-b$ turns each fraction into $-1$, so the sum is $-3$.",
+      "solution": [
+       "From $a+b+c=0$, $c=-a-b$.",
+       "Then $b+c=b+(-a-b)=-a$.",
+       "And $c+a=(-a-b)+a=-b$.",
+       "And $a+b=-c$ (from $a+b+c=0$).",
+       "Since $a$, $b$, $c$ are non-zero, $\\frac{a}{b+c}=\\frac{a}{-a}=-1$, $\\frac{b}{c+a}=\\frac{b}{-b}=-1$, $\\frac{c}{a+b}=\\frac{c}{-c}=-1$.",
+       "Sum $=-1-1-1=-3$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-3",
+       "eb11c1-4:rule-3",
+       "eb11c1-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:try-6",
+      "kind": "explanation",
+      "answer": "With $a=bk$, $c=dk$, both sides simplify to $\\frac{b^2+d^2}{b^2-d^2}$.",
+      "solution": [
+       "Let $\\frac{a}{b}=\\frac{c}{d}=k$, so $a=bk$, $c=dk$ ...(i).",
+       "Substitute (i) into the LHS: $\\frac{bk\\cdot b+dk\\cdot d}{bk\\cdot b-dk\\cdot d}=\\frac{k(b^2+d^2)}{k(b^2-d^2)}=\\frac{b^2+d^2}{b^2-d^2}$ ...(ii).",
+       "Substitute (i) into the RHS: $\\frac{b^2k^2+d^2k^2}{b^2k^2-d^2k^2}=\\frac{k^2(b^2+d^2)}{k^2(b^2-d^2)}=\\frac{b^2+d^2}{b^2-d^2}$ ...(iii).",
+       "From (ii) and (iii), the two sides are equal."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:exercise-12",
+      "kind": "explanation",
+      "answer": "With $a=bk$, $c=dk$, both sides simplify to $\\frac{k+1}{k-1}$.",
+      "solution": [
+       "Let $\\frac{a}{b}=\\frac{c}{d}=k$, so $a=bk$, $c=dk$ ...(i).",
+       "Substitute (i) into the LHS: $\\frac{bk+b}{bk-b}=\\frac{b(k+1)}{b(k-1)}=\\frac{k+1}{k-1}$ ...(ii).",
+       "Substitute (i) into the RHS: $\\frac{dk+d}{dk-d}=\\frac{d(k+1)}{d(k-1)}=\\frac{k+1}{k-1}$ ...(iii).",
+       "From (ii) and (iii), $\\frac{a+b}{a-b}=\\frac{c+d}{c-d}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-4:challenge-4",
+      "kind": "explanation",
+      "answer": "Equal concentrations $\\frac{a}{b}=\\frac{c}{d}=k$ give both ratios equal to $\\frac{k+1}{k-1}$.",
+      "solution": [
+       "Equal concentrations: let $\\frac{a}{b}=\\frac{c}{d}=k$, so $a=bk$, $c=dk$ ...(i).",
+       "Substitute (i) into the LHS: $\\frac{bk+b}{bk-b}=\\frac{b(k+1)}{b(k-1)}=\\frac{k+1}{k-1}$ ...(ii).",
+       "Substitute (i) into the RHS: $\\frac{dk+d}{dk-d}=\\frac{d(k+1)}{d(k-1)}=\\frac{k+1}{k-1}$ ...(iii).",
+       "From (ii) and (iii), $\\frac{a+b}{a-b}=\\frac{c+d}{c-d}$."
+      ],
+      "grounded_in": [
+       "eb11c1-4:method-4",
+       "eb11c1-4:worked-example-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-4:warm-up-1:?",
+      "kind": "value",
+      "answer": "a = 1, b = -2, c = 7"
+     },
+     {
+      "ref": "eb11c1-4:warm-up-2:?",
+      "kind": "value",
+      "answer": "a = 1, b = 2"
+     },
+     {
+      "ref": "eb11c1-4:try-1:?",
+      "kind": "value",
+      "answer": "a = 1, b = 1, c = -3"
+     },
+     {
+      "ref": "eb11c1-4:try-2:?",
+      "kind": "value",
+      "answer": "a = 2/3, b = -1/3"
+     },
+     {
+      "ref": "eb11c1-4:exercise-1",
+      "kind": "value",
+      "answer": "Taking the first printed item $a(x+1)-b(x+5)=8x$: a = 10, b = 2"
+     },
+     {
+      "ref": "eb11c1-4:warm-up-3:1",
+      "kind": "explanation",
+      "answer": "LHS $=(x^2+2xy+y^2)-(x^2-2xy+y^2)=4xy=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:warm-up-3:2",
+      "kind": "explanation",
+      "answer": "LHS $=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. RHS $=(a^2c^2-2abcd+b^2d^2)+(a^2d^2+2abcd+b^2c^2)=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:try-3:1",
+      "kind": "explanation",
+      "answer": "LHS $=(x^2+2xy+y^2)+(x^2-2xy+y^2)=2x^2+2y^2=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:try-3:2",
+      "kind": "explanation",
+      "answer": "LHS $=a^2c^2-a^2d^2-b^2c^2+b^2d^2$. RHS $=(a^2c^2-2abcd+b^2d^2)-(a^2d^2-2abcd+b^2c^2)=a^2c^2+b^2d^2-a^2d^2-b^2c^2$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:1",
+      "kind": "explanation",
+      "answer": "LHS $=(x^2+1)^2-x^2=x^4+2x^2+1-x^2=x^4+x^2+1=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:2",
+      "kind": "explanation",
+      "answer": "LHS $=a^3+3a^2b+3ab^2+b^3-3a^2b-3ab^2=a^3+b^3=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:3",
+      "kind": "explanation",
+      "answer": "Expanding $a(\\ldots)+b(\\ldots)+c(\\ldots)$ gives $a^3+b^3+c^3$ plus the mixed terms $ab^2+ac^2-a^2b-a^2c+a^2b+bc^2-ab^2-b^2c+a^2c+b^2c-bc^2-ac^2$, which cancel in pairs, and $-abc-abc-abc=-3abc$. So LHS $=a^3+b^3+c^3-3abc=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:4",
+      "kind": "explanation",
+      "answer": "LHS $=a^2+4ab+4b^2-4ab=a^2+4b^2$. RHS $=a^2-4ab+4b^2+4ab=a^2+4b^2$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:5",
+      "kind": "explanation",
+      "answer": "LHS $=x^2y^2+x^2+y^2+1$. RHS $=x^2y^2+2xy+1+x^2-2xy+y^2=x^2y^2+x^2+y^2+1$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-10:6",
+      "kind": "explanation",
+      "answer": "LHS $=4a^2+4ab+b^2-(a^2+4ab+4b^2)=3a^2-3b^2=3(a^2-b^2)=$ RHS."
+     },
+     {
+      "ref": "eb11c1-4:unlabelled-exercise-1",
+      "kind": "explanation",
+      "answer": "From $a+b+c=0$, $c=-a-b$. LHS $=a^2+b^2+(a+b)^2=2a^2+2ab+2b^2$. RHS $=-2\\{ab+b(-a-b)+(-a-b)a\\}=-2(-a^2-ab-b^2)=2a^2+2ab+2b^2$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-11",
+      "kind": "explanation",
+      "answer": "Taking the first printed item (if $x+y=1$, $x^2+y^2=1-2xy$): $y=1-x$. LHS $=x^2+(1-x)^2=2x^2-2x+1$. RHS $=1-2x(1-x)=2x^2-2x+1$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:challenge-3",
+      "kind": "explanation",
+      "answer": "From $a+b+c=0$: $b+c=-a$, $c+a=-b$, $a+b=-c$. The sum is $\\frac{a}{-a}+\\frac{b}{-b}+\\frac{c}{-c}=-1-1-1=-3$ (a, b, c non-zero)."
+     },
+     {
+      "ref": "eb11c1-4:try-6",
+      "kind": "explanation",
+      "answer": "Let $a/b=c/d=k$, so $a=bk$, $c=dk$. LHS $=\\frac{k(b^2+d^2)}{k(b^2-d^2)}=\\frac{b^2+d^2}{b^2-d^2}$. RHS $=\\frac{k^2(b^2+d^2)}{k^2(b^2-d^2)}=\\frac{b^2+d^2}{b^2-d^2}$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:exercise-12",
+      "kind": "explanation",
+      "answer": "Let $a/b=c/d=k$, so $a=bk$, $c=dk$. LHS $=\\frac{bk+b}{bk-b}=\\frac{k+1}{k-1}$. RHS $=\\frac{dk+d}{dk-d}=\\frac{k+1}{k-1}$. They are equal."
+     },
+     {
+      "ref": "eb11c1-4:challenge-4",
+      "kind": "explanation",
+      "answer": "Let $a/b=c/d=k$, so $a=bk$, $c=dk$. Then $\\frac{a+b}{a-b}=\\frac{b(k+1)}{b(k-1)}=\\frac{k+1}{k-1}$ and $\\frac{c+d}{c-d}=\\frac{d(k+1)}{d(k-1)}=\\frac{k+1}{k-1}$. So they are equal."
+     }
+    ]
+   }
+  }
+ ]
+}

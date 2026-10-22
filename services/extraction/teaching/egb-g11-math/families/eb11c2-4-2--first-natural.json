@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-4-2:first-natural",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-4-2",
+ "parent_question_id": "q:eb11c2-4-2:bk-exercise-2-a",
+ "source_page": 90,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    4,
+    9
+   ]
+  },
+  {
+   "name": "ord",
+   "let": "['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th'][n]"
+  },
+  {
+   "name": "m",
+   "let": "n - 1"
+  },
+  {
+   "name": "before",
+   "let": "m * n / 2"
+  }
+ ],
+ "constraints": [],
+ "stem": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$ The $n$-th group has $n$ terms. Find the first term of the {=ord} group.",
+ "answer": "before + 1",
+ "solution": [
+  "The sequence is $a_n=n$, and the $n$-th group has $n$ terms.",
+  "The number of terms in the first {=m} groups is $1+2+\\dots+{=m}=\\frac12\\times{=m}\\times{=n}={=before}$.",
+  "The first term of the {=ord} group is the $({=before}+1)$-th term of $\\{a_n\\}$, that is the {=before + 1}-th term.",
+  "Since $a_n=n$, the first term is {=before + 1}.",
+  "The answer is {=before + 1}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: a_n=n, triangular groups, n from 4 to 9 (book standard item uses n=10). Answer = n(n-1)/2+1."
+}

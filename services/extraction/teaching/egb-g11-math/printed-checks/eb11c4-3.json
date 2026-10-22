@@ -1,0 +1,363 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c4-3",
+  "source": "book-records/egb-g11-math/eb11c4-3.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 16,
+      "cost_usd": 0.0636,
+      "calls": [
+        {
+          "call": "check-printed.eb11c4-3",
+          "cost_usd": 0.051,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c4-3",
+          "cost_usd": 0.0126,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c4-3:warm-up-2:1",
+      "record_id": "eb11c4-3:warm-up-2",
+      "part": "1",
+      "type": "exercise",
+      "page": 180,
+      "printed": "$(x-3)^2+(y+2)^2=25$",
+      "blind": "The equation is not yet in the form with a known center and radius, so first complete the square. (The form $(x-a)^2+(y-b)^2=r^2$ is used once center and radius are found.)",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "57813bad861acaeba03716ea7f1e3182",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c4-3:warm-up-2:1",
+        "verdict": "different",
+        "reason": "Printed gives a specific equation (x-3)^2+(y+2)^2=25, while the solver gives no equation, only saying to complete the square first."
+      },
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-2:2",
+      "record_id": "eb11c4-3:warm-up-2",
+      "part": "2",
+      "type": "exercise",
+      "page": 180,
+      "printed": "circle with center $(3,-1)$ and radius 2",
+      "blind": "$(x-3)^2+(y+1)^2=4$, so it is a circle with center (3, -1) and radius 2.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "eaa39c2a5f3669477a3f5b8b00f031e3",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:example-1",
+      "record_id": "eb11c4-3:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 183,
+      "printed": "$x^2+y^2-5x-y+4=0$",
+      "blind": "$x^2+y^2-5x-y+4=0$",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "e7b96357db8daba20f383ec0c22ac4ad",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-1",
+      "record_id": "eb11c4-3:explanation-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 184,
+      "printed": "$(x-4)^2+(y+2)^2=4$",
+      "blind": "CANNOT ANSWER: the circle's center and the axis/condition are not given in the question.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "be6e3f2c06a10fb3b39c5b9ead863b6c",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the circle's center and the axis/condition are not given in the question.",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-2",
+      "record_id": "eb11c4-3:explanation-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 184,
+      "printed": "$(x+1)^2+(y-1)^2=1$, $(x+5)^2+(y-5)^2=25$",
+      "blind": "CANNOT ANSWER: the conditions and figure are not given.",
+      "blind_kind": "drawing",
+      "figures": [
+        "eb11c4-3:figure-7"
+      ],
+      "question_fingerprint": "9cce9cfa2f781b024d09d781545eafaf",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the conditions and figure are not given.",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:example-2",
+      "record_id": "eb11c4-3:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 185,
+      "printed": "$(x-1)^2+(y+1)^2=25$",
+      "blind": "$(x-1)^2+(y+1)^2=25$",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c4-3:figure-8"
+      ],
+      "question_fingerprint": "be4bb006db58acbb541ee5f18d2c382a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:example-3",
+      "record_id": "eb11c4-3:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 188,
+      "printed": "$(1,-1),(-1,3)$",
+      "blind": "{(1, -1), (-1, 3)}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "74cb72bdbf2c9cb4c579e159775a187a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:example-4",
+      "record_id": "eb11c4-3:example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 188,
+      "printed": "0",
+      "blind": "No points of intersection: substituting gives $2x^2+6x+7=0$ with $D=-20<0$.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "48c19683c3951f804c8e0cc8a2350999",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c4-3:example-4",
+        "verdict": "equivalent",
+        "reason": "Printed 0 is the number of intersection points, and the solver says there are none (D<0)."
+      },
+      "how": "judged equivalent: Printed 0 is the number of intersection points, and the solver says there are none (D<0).",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-3",
+      "record_id": "eb11c4-3:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 189,
+      "printed": "$-5<k<5$",
+      "blind": "-5 < k < 5",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "6084a3671c9f4aff20876156d02d321a",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-4",
+      "record_id": "eb11c4-3:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 191,
+      "printed": "$\\sqrt{14}$",
+      "blind": "$\\sqrt{14}$",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c4-3:figure-13"
+      ],
+      "question_fingerprint": "13af6fbb24c8e857ecf06c4932fc6255",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-5",
+      "record_id": "eb11c4-3:explanation-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 193,
+      "printed": "$4x+3y=25$",
+      "blind": "4x + 3y = 25",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "a5f9b54c8a698724266b8ccc26f288e9",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-6",
+      "record_id": "eb11c4-3:explanation-6",
+      "part": null,
+      "type": "worked_example",
+      "page": 193,
+      "printed": "$2x+y=5$ and $-x+2y=5$",
+      "blind": "2x + y = 5 and -x + 2y = 5",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c4-3:figure-16"
+      ],
+      "question_fingerprint": "47062b0d66dbeebd9e28e0dfeacbcacc",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:worked-example-1",
+      "record_id": "eb11c4-3:worked-example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 196,
+      "printed": "intersect at 2 points",
+      "blind": "The circles intersect at 2 points, since $d=4$ and $r-r'=1<4<5=r+r'$.",
+      "blind_kind": "explanation",
+      "figures": [
+        "eb11c4-3:figure-23"
+      ],
+      "question_fingerprint": "6eafca2d9b7ddcd68c1d4f02ed42c66a",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c4-3:worked-example-1",
+        "verdict": "equivalent",
+        "reason": "Both say the circles intersect at 2 points."
+      },
+      "how": "judged equivalent: Both say the circles intersect at 2 points.",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:worked-example-2",
+      "record_id": "eb11c4-3:worked-example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 196,
+      "printed": "$(x-3)^2+(y-1)^2=45$",
+      "blind": "$(x-3)^2+(y-1)^2=45$",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "719355e675aee06b354dd81182e4e3c5",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-7",
+      "record_id": "eb11c4-3:explanation-7",
+      "part": null,
+      "type": "worked_example",
+      "page": 198,
+      "printed": "$y=\\frac{1}{2}x-\\frac{5}{4}$",
+      "blind": "2x - 4y - 5 = 0",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "236e15f3e1ab01b43abfd476f31f84a1",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c4-3:explanation-7",
+        "verdict": "equivalent",
+        "reason": "2x-4y-5=0 rearranges to y=x/2-5/4."
+      },
+      "how": "judged equivalent: 2x-4y-5=0 rearranges to y=x/2-5/4.",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c4-3:explanation-8",
+      "record_id": "eb11c4-3:explanation-8",
+      "part": null,
+      "type": "worked_example",
+      "page": 198,
+      "printed": "$(-3,-1)$, $(-1,3)$",
+      "blind": "{(-1, 3), (-3, -1)}",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "ee7ce0ab5fafd9fdea3e25c5d29c4731",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:39:03+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

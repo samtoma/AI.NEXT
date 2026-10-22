@@ -1,0 +1,53 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-2:exercise-28-c",
+ "lo_id": "lo:eb11c4-3-2",
+ "book_item": "eb11c4-3:exercise-28#c",
+ "parent_question_id": "expl:eb11c4-3-2:bk-warm-up-10",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "pair_plotter",
+ "spec": {
+  "targets": [
+   [
+    -2,
+    1
+   ],
+   [
+    4,
+    -1
+   ]
+  ]
+ },
+ "stem": "Find the coordinates of the points of intersection of the circle $(x-1)^2+y^2=10$ and the line $x+3y-1=0$. Plot both points.",
+ "solution": [
+  "From the line, $x=1-3y$.",
+  "Substitute: $9y^2+y^2=10$, so $y=\\pm1$.",
+  "$y=1$ gives $x=-2$; $y=-1$ gives $x=4$.",
+  "The points are $(-2,1)$ and $(4,-1)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-points",
+   "step": 2,
+   "text": "Take both roots of the equation for y."
+  },
+  {
+   "predicate": "extra-points",
+   "step": 3,
+   "text": "Each point must be on the line; find x from the line for each y."
+  },
+  {
+   "predicate": "swapped-coordinates",
+   "step": 3,
+   "text": "Here you solved for y first; remember the pair is written (x, y)."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 3,
+   "text": "Recheck the signs when finding x from the line."
+  }
+ ],
+ "notes": ""
+}

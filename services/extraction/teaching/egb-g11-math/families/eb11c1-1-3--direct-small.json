@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-3:direct-small",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-3",
+ "parent_question_id": "q:eb11c1-1-3:bk-exercise-3-a",
+ "source_page": 8,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    4,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    "n - 2"
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    "n - p - 1"
+   ]
+  },
+  {
+   "name": "r",
+   "let": "n - p - q"
+  },
+  {
+   "name": "f",
+   "let": "[1, 1, 2, 6, 24, 120, 720]"
+  },
+  {
+   "name": "tx",
+   "let": "\"x\" if p == 1 else \"x^\" + str(p)"
+  },
+  {
+   "name": "ty",
+   "let": "\"y\" if q == 1 else \"y^\" + str(q)"
+  },
+  {
+   "name": "tz",
+   "let": "\"z\" if r == 1 else \"z^\" + str(r)"
+  },
+  {
+   "name": "d",
+   "let": "f[p] * f[q] * f[r]"
+  }
+ ],
+ "constraints": [
+  "p + q + r == n"
+ ],
+ "stem": "Find the coefficient of ${=tx}{=ty}{=tz}$ in the expansion of $(x+y+z)^{{=n}}$.",
+ "answer": "f[n] / d",
+ "solution": [
+  "For ${=tx}{=ty}{=tz}$ in $(x+y+z)^{{=n}}$: n = {=n}, p = {=p}, q = {=q}, r = {=r}, and p + q + r = {=n}.",
+  "The coefficient is {=n}!/({=p}!{=q}!{=r}!) = {=f[n]}/{=d} = {=f[n] / d}.",
+  "The coefficient is {=f[n] / d}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: all exponents at least 1, n from 4 to 6, so factorials are small. Exponent 1 is printed without the exponent."
+}

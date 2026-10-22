@@ -1,0 +1,109 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "8c2b7124d8c275f18b5ff2e6abec94e7f0e7511206624eb0655841692dd9a300",
+ "keys": [
+  "eb11c4-2:WE1",
+  "eb11c4-2:WE2",
+  "eb11c4-2:WE3",
+  "eb11c4-2:WE4",
+  "eb11c4-3:Ex3-1:1"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 0
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "dcf0103bfbea50c50d71c4c333efeb1014244b3c7d3f77093f188ef2f0af498d",
+  "generated_sha256": "b089da5f8edef7a1c0dd60a17225b67e6a39af5415c781c0457aeb6f597876f7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "eb11c4-2:WE1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE1",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "The stem has no data for part (a); the line's points or graph are in the Warm Up, which is not shown. $y=-4$ cannot be checked from the stem. The Warm Up page image is needed.",
+    "defect": "Stem lacks the Warm Up data for part (a)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE2",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE2",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "The stem has no data for part (b); $x=-3$ cannot be checked. The Warm Up page image is needed.",
+    "defect": "Stem lacks the Warm Up data for part (b)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE3",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE3",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "The stem has no data for part (c), which depends on two points that are not shown. The Warm Up page image is needed.",
+    "defect": "Stem lacks the two points for part (c)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE4",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE4",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "The stem has no data for part (d), which depends on two points that are not shown. The Warm Up page image is needed.",
+    "defect": "Stem lacks the two points for part (d)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-3:Ex3-1:1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-3:Ex3-1:1",
+    "verdict": "exclude",
+    "class": "book error",
+    "confidence": "high",
+    "note": "Completing the square gives $(x-3)^2+(y+1)^2=4$, a circle with centre $(3,-1)$ and radius 2. The book's $(x-3)^2+(y+2)^2=25$ does not follow from the stem. The stem and answer look mismatched. The stem also asks 'what kind of figure'.",
+    "own_value": "circle, $(x-3)^2+(y+1)^2=4$",
+    "defect": "Printed answer $(x-3)^2+(y+2)^2=25$ does not match the stem's equation, whose circle is $(x-3)^2+(y+1)^2=4$. The stem may be garbled or from another problem."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "hold": 4,
+  "exclude": 1
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage G2R --run <runId>"
+ }
+}

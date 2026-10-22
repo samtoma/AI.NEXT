@@ -1,0 +1,2402 @@
+{
+  "mode": "grade",
+  "book": {
+    "config_version": 1,
+    "book": "egb-g11-math",
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "course_id": "course:egb-g11-math-en",
+    "curriculum": "eg-baccalaureate-en",
+    "subject": "math",
+    "grade": "11",
+    "language": "en",
+    "direction": "ltr",
+    "id_prefixes": [
+      "eb11c"
+    ],
+    "id_prefix": null,
+    "load_order": 50,
+    "sources": {
+      "pdf": "docs/Source/Mathematics-En-EB-Part1.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    },
+    "page_offsets": [],
+    "objectives_mode": "printed",
+    "notation": null,
+    "sacred_content": false,
+    "bundles": [
+      "services/extraction/work/egb-g11-math/bookrecord/bundle-1.json"
+    ],
+    "superseded_bundles": {},
+    "content_files": [],
+    "manifest": null,
+    "generated": null,
+    "parity": null,
+    "program": null,
+    "status": "ingest",
+    "maths_source": null,
+    "lesson_unit": null,
+    "answer_rules": null,
+    "lesson_titles": {},
+    "lesson_titles_note": "Egyptian Baccalaureate, Grade 11 (2nd year) Mathematics, Part One (Ministry of Education and Technical Education, 2026; 204 pages: 4 chapters, 18 concepts). A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-21, branch egy-bac-g11-maths-ingestion). Its course, course:egb-g11-math-en, and its curriculum, eg-baccalaureate-en, are not yet in the app (app/src/lib/courses.ts, curricula.ts): nothing is shown to students until they are added. Lesson slugs are eb11c<chapter>-<concept>. Part Two is a separate PDF, not yet received. Each concept is printed as numbered sections (1-1 … 4-26, 88 in all), and every section prints its Learning Outcomes: those are the objectives (objectives_mode printed), about five per lesson. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
+    "paths": {
+      "repo_root": "/Users/tdeif/Developer/Noor",
+      "extraction_dir": "/Users/tdeif/Developer/Noor/services/extraction",
+      "pdf": "/Users/tdeif/Developer/Noor/docs/Source/Mathematics-En-EB-Part1.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    }
+  },
+  "grading_set": {
+    "format": "ainext.family-grading/1",
+    "seed": 20260925,
+    "sample_per_family": 3,
+    "families": [
+      {
+        "family_id": "tpl:eb11c1-1-1:power-two",
+        "spec_sha": "65df5c2a526d8acf3e6a63b58046155e5dc0c9a16de8ac50c0c4bbbd70c424ef",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-1",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-1:bk-exercise-1-e",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-1:g005-power-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g005-power-",
+              "stem": "Find the coefficient of $x^{4}$ in the expansion of $(3x^2 + 3)^{4}$.",
+              "stem_sha": "5fc12fff1d960b40",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "486",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The general term of $(3x^2 + 3)^{4}$ is ${}_{4}C_k (3x^2)^k (3)^{4-k}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(x^2)^k = x^{2k}$, so $x^{4}$ needs $2k = 4$, that is $k = 2$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The term is ${}_{4}C_{2} (3x^2)^{2} (3)^{2}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "${}_{4}C_{2} = 6$, $(3)^{2} = 9$ and $(3)^{2} = 9$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is $6 \\times 9 \\times (9) = 486$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-1:g006-power-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g006-power-",
+              "stem": "Find the coefficient of $x^{6}$ in the expansion of $(3x^2 + 1)^{5}$.",
+              "stem_sha": "76ace1fc6293174c",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "270",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The general term of $(3x^2 + 1)^{5}$ is ${}_{5}C_k (3x^2)^k (1)^{5-k}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(x^2)^k = x^{2k}$, so $x^{6}$ needs $2k = 6$, that is $k = 3$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The term is ${}_{5}C_{3} (3x^2)^{3} (1)^{2}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "${}_{5}C_{3} = 10$, $(3)^{3} = 27$ and $(1)^{2} = 1$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is $10 \\times 27 \\times (1) = 270$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-1:g008-power-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g008-power-",
+              "stem": "Find the coefficient of $x^{8}$ in the expansion of $(2x^2 - 1)^{5}$.",
+              "stem_sha": "8912840a6c7bd8e4",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-80",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The general term of $(2x^2 - 1)^{5}$ is ${}_{5}C_k (2x^2)^k (-1)^{5-k}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(x^2)^k = x^{2k}$, so $x^{8}$ needs $2k = 8$, that is $k = 4$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The term is ${}_{5}C_{4} (2x^2)^{4} (-1)^{1}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "${}_{5}C_{4} = 5$, $(2)^{4} = 16$ and $(-1)^{1} = -1$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is $5 \\times 16 \\times (-1) = -80$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-1:signed-two",
+        "spec_sha": "55c1cfcc1e02fdc950a477654855f2bb3a876401fe6f4a101df67b26ac09cd72",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-1",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-1:bk-exercise-1-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-1:g005-signed",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g005-signed",
+              "stem": "Find the coefficient of $x^{3}y^{2}$ in the expansion of $(2x-2y)^{5}$.",
+              "stem_sha": "8f86c7154708aeb5",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "320",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The term $x^{3}y^{2}$ has exponent 3 for $2x$ and exponent 2 for $-2y$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The term is ${}_{5}C_{2}(2x)^{3}(-2y)^{2}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "${}_{5}C_{2} = 10$, $(2)^{3} = 8$ and $(-2)^{2} = 4$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The term is $10\\times8\\times(4)\\,x^{3}y^{2} = 320x^{3}y^{2}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is 320."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-1:g009-signed",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g009-signed",
+              "stem": "Find the coefficient of $x^{4}y^{2}$ in the expansion of $(3x-4y)^{6}$.",
+              "stem_sha": "eb0557416639d825",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "19440",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The term $x^{4}y^{2}$ has exponent 4 for $3x$ and exponent 2 for $-4y$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The term is ${}_{6}C_{2}(3x)^{4}(-4y)^{2}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "${}_{6}C_{2} = 15$, $(3)^{4} = 81$ and $(-4)^{2} = 16$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The term is $15\\times81\\times(16)\\,x^{4}y^{2} = 19440x^{4}y^{2}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is 19440."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-1:g010-signed",
+            "blind": {
+              "instance_id": "q:eb11c1-1-1:g010-signed",
+              "stem": "Find the coefficient of $x^{2}y^{5}$ in the expansion of $(3x-4y)^{7}$.",
+              "stem_sha": "ac36270564124ebe",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-193536",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The term $x^{2}y^{5}$ has exponent 2 for $3x$ and exponent 5 for $-4y$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The term is ${}_{7}C_{5}(3x)^{2}(-4y)^{5}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "${}_{7}C_{5} = 21$, $(3)^{2} = 9$ and $(-4)^{5} = -1024$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The term is $21\\times9\\times(-1024)\\,x^{2}y^{5} = -193536x^{2}y^{5}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The coefficient is -193536."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-2:binom-plus",
+        "spec_sha": "3428178c28e8f085c47e1371a66e7af5d750c9c372e397d988452102e44fa95e",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-2",
+        "tier": "basic",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-2:bk-exercise-2-a",
+        "instances_available": 7,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-2:g002-binom-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-2:g002-binom-",
+              "stem": "Find the expansion of $(x+3)^4$.",
+              "stem_sha": "0a96bca5dbfe1bca",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{4} + 12x^{3} + 54x^{2} + 108x + 81",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(x+3)^4 = {}^4C_0 x^4 + {}^4C_1 x^3(3) + {}^4C_2 x^2(3)^2 + {}^4C_3 x(3)^3 + {}^4C_4 (3)^4$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The combinations are 1, 4, 6, 4, 1."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Terms: $x^4$; $4\\cdot3 = 12$, so $12x^3$; $6\\cdot9 = 54$, so $54x^2$; $4\\cdot27 = 108$, so $108x$; $81$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The expansion is $x^4 + 12x^3 + 54x^2 + 108x + 81$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{4} + 12x^{3} + 54x^{2} + 108x + 81",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^4 + 12*x^3 + 54*x^2 + 108*x + 81"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-2:g003-binom-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-2:g003-binom-",
+              "stem": "Find the expansion of $(x+5)^4$.",
+              "stem_sha": "c488530c8078e530",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{4} + 20x^{3} + 150x^{2} + 500x + 625",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(x+5)^4 = {}^4C_0 x^4 + {}^4C_1 x^3(5) + {}^4C_2 x^2(5)^2 + {}^4C_3 x(5)^3 + {}^4C_4 (5)^4$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The combinations are 1, 4, 6, 4, 1."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Terms: $x^4$; $4\\cdot5 = 20$, so $20x^3$; $6\\cdot25 = 150$, so $150x^2$; $4\\cdot125 = 500$, so $500x$; $625$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The expansion is $x^4 + 20x^3 + 150x^2 + 500x + 625$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{4} + 20x^{3} + 150x^{2} + 500x + 625",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^4 + 20*x^3 + 150*x^2 + 500*x + 625"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-2:g004-binom-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-2:g004-binom-",
+              "stem": "Find the expansion of $(x+6)^4$.",
+              "stem_sha": "15563108e9f4e81c",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{4} + 24x^{3} + 216x^{2} + 864x + 1296",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(x+6)^4 = {}^4C_0 x^4 + {}^4C_1 x^3(6) + {}^4C_2 x^2(6)^2 + {}^4C_3 x(6)^3 + {}^4C_4 (6)^4$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The combinations are 1, 4, 6, 4, 1."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Terms: $x^4$; $4\\cdot6 = 24$, so $24x^3$; $6\\cdot36 = 216$, so $216x^2$; $4\\cdot216 = 864$, so $864x$; $1296$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The expansion is $x^4 + 24x^3 + 216x^2 + 864x + 1296$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{4} + 24x^{3} + 216x^{2} + 864x + 1296",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^4 + 24*x^3 + 216*x^2 + 864*x + 1296"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-3:coeff-xyz",
+        "spec_sha": "d2843cbe5c2ba654ba61745477ba71a47dd0b6bb8c34b0748fad62a5678cf407",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-3",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-3:bk-exercise-3-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-3:g001-coeff-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g001-coeff-",
+              "stem": "Find the coefficient of $xyz^4$ in the expansion of $(x+y+z)^{6}$.",
+              "stem_sha": "b951fc79ab6afd66",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "30",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The exponents of x, y and z add up to 1 + 1 + 4 = 6, which is the power of the expression, so n = 6, p = 1, q = 1, r = 4."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is $\\frac{n!}{p!q!r!} = \\frac{6!}{1!\\,1!\\,4!}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$\\frac{720}{24} = 30$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The coefficient is 30."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-3:g007-coeff-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g007-coeff-",
+              "stem": "Find the coefficient of $x^3yz$ in the expansion of $(x+y+z)^{5}$.",
+              "stem_sha": "2b52f7430ba3f381",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "20",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The exponents of x, y and z add up to 3 + 1 + 1 = 5, which is the power of the expression, so n = 5, p = 3, q = 1, r = 1."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is $\\frac{n!}{p!q!r!} = \\frac{5!}{3!\\,1!\\,1!}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$\\frac{120}{6} = 20$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The coefficient is 20."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-3:g009-coeff-",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g009-coeff-",
+              "stem": "Find the coefficient of $xy^3z^2$ in the expansion of $(x+y+z)^{6}$.",
+              "stem_sha": "b8869f210f5d7f47",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "60",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The exponents of x, y and z add up to 1 + 3 + 2 = 6, which is the power of the expression, so n = 6, p = 1, q = 3, r = 2."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is $\\frac{n!}{p!q!r!} = \\frac{6!}{1!\\,3!\\,2!}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$\\frac{720}{12} = 60$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The coefficient is 60."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-3:direct-small",
+        "spec_sha": "a1c4d80af678f55f56780e0af2d887d8a8da837afd0f5643b3523c7b954a634f",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-3",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-3:bk-exercise-3-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-3:g001-direct",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g001-direct",
+              "stem": "Find the coefficient of $x^2yz$ in the expansion of $(x+y+z)^{4}$.",
+              "stem_sha": "feeac98205a8bbf1",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "12",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "For $x^2yz$ in $(x+y+z)^{4}$: n = 4, p = 2, q = 1, r = 1, and p + q + r = 4."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is 4!/(2!1!1!) = 24/2 = 12."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The coefficient is 12."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-3:g002-direct",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g002-direct",
+              "stem": "Find the coefficient of $x^2y^2z^2$ in the expansion of $(x+y+z)^{6}$.",
+              "stem_sha": "cc4dbf0e4097cf16",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "90",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "For $x^2y^2z^2$ in $(x+y+z)^{6}$: n = 6, p = 2, q = 2, r = 2, and p + q + r = 6."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is 6!/(2!2!2!) = 720/8 = 90."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The coefficient is 90."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-3:g009-direct",
+            "blind": {
+              "instance_id": "q:eb11c1-1-3:g009-direct",
+              "stem": "Find the coefficient of $x^2y^3z$ in the expansion of $(x+y+z)^{6}$.",
+              "stem_sha": "a9b95767a2560e1b",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "60",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "For $x^2y^3z$ in $(x+y+z)^{6}$: n = 6, p = 2, q = 3, r = 1, and p + q + r = 6."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The coefficient is 6!/(2!3!1!) = 720/12 = 60."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The coefficient is 60."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-4:allsum",
+        "spec_sha": "4c6c7638659a956afbbb66818b7a3bd3a4aecab5b4ba1c76f1fef3f296fc0c35",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-4",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+        "instances_available": 8,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-4:g003-allsum",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g003-allsum",
+              "stem": "Find the value of $\\binom{9}{0}+\\binom{9}{1}+\\binom{9}{2}+\\dots+\\binom{9}{9}$ by expanding $(1+x)^{9}$.",
+              "stem_sha": "9a3165e2337ccdf0",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "512",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{9}=\\binom{9}{0}+\\binom{9}{1}x+\\binom{9}{2}x^2+\\dots+\\binom{9}{9}x^{9}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes the required sum."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{9}=2^{9}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sum is $512$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g005-allsum",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g005-allsum",
+              "stem": "Find the value of $\\binom{10}{0}+\\binom{10}{1}+\\binom{10}{2}+\\dots+\\binom{10}{10}$ by expanding $(1+x)^{10}$.",
+              "stem_sha": "25ad08306a92cba9",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "1024",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{10}=\\binom{10}{0}+\\binom{10}{1}x+\\binom{10}{2}x^2+\\dots+\\binom{10}{10}x^{10}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes the required sum."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{10}=2^{10}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sum is $1024$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g007-allsum",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g007-allsum",
+              "stem": "Find the value of $\\binom{5}{0}+\\binom{5}{1}+\\binom{5}{2}+\\dots+\\binom{5}{5}$ by expanding $(1+x)^{5}$.",
+              "stem_sha": "ff47e759f2f7a0dc",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "32",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{5}=\\binom{5}{0}+\\binom{5}{1}x+\\binom{5}{2}x^2+\\dots+\\binom{5}{5}x^{5}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes the required sum."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{5}=2^{5}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sum is $32$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-4:oddterms",
+        "spec_sha": "18a1f909a9d1d2d8ea5d98558298094752e4aedc591f93cae40dd3466fd82ef1",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-4",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+        "instances_available": 8,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-4:g001-oddter",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g001-oddter",
+              "stem": "Find the value of $\\binom{8}{1}+\\binom{8}{3}+\\binom{8}{5}+\\dots$, the sum of the combinations with odd lower index, by substituting $x=1$ and $x=-1$ in $(1+x)^{8}$.",
+              "stem_sha": "e85658347793919c",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "128",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{8}=\\binom{8}{0}+\\binom{8}{1}x+\\binom{8}{2}x^2+\\dots+\\binom{8}{8}x^{8}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Put $x=1$: $2^{8}=E+O$, where $E$ is the sum of the even-index terms and $O$ the sum of the odd-index terms."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Put $x=-1$: $0=E-O$, so $E=O$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $2O=2^{8}$ and $O=2^{7}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The sum is $128$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g002-oddter",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g002-oddter",
+              "stem": "Find the value of $\\binom{7}{1}+\\binom{7}{3}+\\binom{7}{5}+\\dots$, the sum of the combinations with odd lower index, by substituting $x=1$ and $x=-1$ in $(1+x)^{7}$.",
+              "stem_sha": "7b36bfc50576e9cf",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "64",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{7}=\\binom{7}{0}+\\binom{7}{1}x+\\binom{7}{2}x^2+\\dots+\\binom{7}{7}x^{7}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Put $x=1$: $2^{7}=E+O$, where $E$ is the sum of the even-index terms and $O$ the sum of the odd-index terms."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Put $x=-1$: $0=E-O$, so $E=O$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $2O=2^{7}$ and $O=2^{6}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The sum is $64$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g005-oddter",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g005-oddter",
+              "stem": "Find the value of $\\binom{11}{1}+\\binom{11}{3}+\\binom{11}{5}+\\dots$, the sum of the combinations with odd lower index, by substituting $x=1$ and $x=-1$ in $(1+x)^{11}$.",
+              "stem_sha": "042eb31d946c4d70",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "1024",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(1+x)^{11}=\\binom{11}{0}+\\binom{11}{1}x+\\binom{11}{2}x^2+\\dots+\\binom{11}{11}x^{11}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Put $x=1$: $2^{11}=E+O$, where $E$ is the sum of the even-index terms and $O$ the sum of the odd-index terms."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Put $x=-1$: $0=E-O$, so $E=O$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $2O=2^{11}$ and $O=2^{10}$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The sum is $1024$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-4:sumcoef",
+        "spec_sha": "3831bb089a4a9624e405219ddc06f3e55c781b9df5fdaf4a33b302a6f9c9a4d7",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-4",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+        "instances_available": 6,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-4:g002-sumcoe",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g002-sumcoe",
+              "stem": "If $(1+x)^{7} = c_0 + c_1x + c_2x^2 + \\dots + c_{7}x^{7}$, find the numerical value of $c_0 + c_1 + c_2 + \\dots + c_{7}$.",
+              "stem_sha": "5619f722a0ab1521",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "128",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The identity $(1+x)^{7} = c_0 + c_1x + \\dots + c_{7}x^{7}$ holds for every value of $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes $c_0 + c_1 + \\dots + c_{7}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{7} = 2^{7}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $c_0 + c_1 + \\dots + c_{7} = 128$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g003-sumcoe",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g003-sumcoe",
+              "stem": "If $(1+x)^{5} = c_0 + c_1x + c_2x^2 + \\dots + c_{5}x^{5}$, find the numerical value of $c_0 + c_1 + c_2 + \\dots + c_{5}$.",
+              "stem_sha": "161f44257f9f2151",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "32",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The identity $(1+x)^{5} = c_0 + c_1x + \\dots + c_{5}x^{5}$ holds for every value of $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes $c_0 + c_1 + \\dots + c_{5}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{5} = 2^{5}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $c_0 + c_1 + \\dots + c_{5} = 32$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g004-sumcoe",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g004-sumcoe",
+              "stem": "If $(1+x)^{6} = c_0 + c_1x + c_2x^2 + \\dots + c_{6}x^{6}$, find the numerical value of $c_0 + c_1 + c_2 + \\dots + c_{6}$.",
+              "stem_sha": "e0e314604a51fd00",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "64",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The identity $(1+x)^{6} = c_0 + c_1x + \\dots + c_{6}x^{6}$ holds for every value of $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute $x=1$: the right side becomes $c_0 + c_1 + \\dots + c_{6}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The left side becomes $(1+1)^{6} = 2^{6}$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $c_0 + c_1 + \\dots + c_{6} = 64$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-1-4:weighted",
+        "spec_sha": "1bd75247ead5ad9bf9509e51afe7f0106ee7d6d6c73182488dd340d6733351e4",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-1-4",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-1-4:g005-weight",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g005-weight",
+              "stem": "Using the binomial expansion of $(1+x)^{5}$, find the value of $^{5}C_0 + 3\\,{}^{5}C_1 + 3^2\\,{}^{5}C_2 + \\dots + 3^{5}\\,{}^{5}C_{5}$.",
+              "stem_sha": "78b414074e6bdf7b",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "1024",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Expand: $(1+x)^{5} = {}^{5}C_0 + {}^{5}C_1x + {}^{5}C_2x^2 + \\dots + {}^{5}C_{5}x^{5}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The required sum has the powers $3, 3^2, \\dots$ multiplying the coefficients, so substitute $x=3$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The right side becomes $^{5}C_0 + 3\\,{}^{5}C_1 + \\dots + 3^{5}\\,{}^{5}C_{5}$, the required sum."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The left side is $(1+3)^{5} = 1024$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So the sum equals $1024$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g006-weight",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g006-weight",
+              "stem": "Using the binomial expansion of $(1+x)^{4}$, find the value of $^{4}C_0 + 4\\,{}^{4}C_1 + 4^2\\,{}^{4}C_2 + \\dots + 4^{4}\\,{}^{4}C_{4}$.",
+              "stem_sha": "06e223bc6296e169",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "625",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Expand: $(1+x)^{4} = {}^{4}C_0 + {}^{4}C_1x + {}^{4}C_2x^2 + \\dots + {}^{4}C_{4}x^{4}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The required sum has the powers $4, 4^2, \\dots$ multiplying the coefficients, so substitute $x=4$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The right side becomes $^{4}C_0 + 4\\,{}^{4}C_1 + \\dots + 4^{4}\\,{}^{4}C_{4}$, the required sum."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The left side is $(1+4)^{4} = 625$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So the sum equals $625$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-1-4:g008-weight",
+            "blind": {
+              "instance_id": "q:eb11c1-1-4:g008-weight",
+              "stem": "Using the binomial expansion of $(1+x)^{6}$, find the value of $^{6}C_0 + 3\\,{}^{6}C_1 + 3^2\\,{}^{6}C_2 + \\dots + 3^{6}\\,{}^{6}C_{6}$.",
+              "stem_sha": "4bdb9d80a89e8841",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "4096",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Expand: $(1+x)^{6} = {}^{6}C_0 + {}^{6}C_1x + {}^{6}C_2x^2 + \\dots + {}^{6}C_{6}x^{6}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The required sum has the powers $3, 3^2, \\dots$ multiplying the coefficients, so substitute $x=3$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "The right side becomes $^{6}C_0 + 3\\,{}^{6}C_1 + \\dots + 3^{6}\\,{}^{6}C_{6}$, the required sum."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The left side is $(1+3)^{6} = 4096$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So the sum equals $4096$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-2-2:find-dividend",
+        "spec_sha": "54f988e0be721912f09c7ef647d0e74e6bb88367f2c36d0f23c5113f95549f94",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-2-2",
+        "tier": "basic",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c1-2-2:bk-exercise-12",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-2-2:g001-find-d",
+            "blind": {
+              "instance_id": "q:eb11c1-2-2:g001-find-d",
+              "stem": "When the polynomial $A$ is divided by $x+3$, the quotient is $x+5$ and the remainder is $4$. Find $A$ in expanded form.",
+              "stem_sha": "b8628f23d13ac703",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{2} + 8x + 19",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Use $A = B \\times Q + R$ with $B = x+3$, $Q = x+5$ and $R = 4$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$A = (x+3)(x+5) + 4$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Multiply: $(x+3)(x+5) = x^2 + 5x + 3x + 15 = x^2 + 8x + 15$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Add the remainder: $x^2 + 8x + 15 + 4 = x^2 + 8x + 19$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So $A = x^2 + 8x + 19$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{2} + 8x + 19",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^2 + 8*x + 19"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-2-2:g004-find-d",
+            "blind": {
+              "instance_id": "q:eb11c1-2-2:g004-find-d",
+              "stem": "When the polynomial $A$ is divided by $x+2$, the quotient is $x+4$ and the remainder is $4$. Find $A$ in expanded form.",
+              "stem_sha": "864d5d54729a8a37",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{2} + 6x + 12",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Use $A = B \\times Q + R$ with $B = x+2$, $Q = x+4$ and $R = 4$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$A = (x+2)(x+4) + 4$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Multiply: $(x+2)(x+4) = x^2 + 4x + 2x + 8 = x^2 + 6x + 8$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Add the remainder: $x^2 + 6x + 8 + 4 = x^2 + 6x + 12$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So $A = x^2 + 6x + 12$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{2} + 6x + 12",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^2 + 6*x + 12"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-2-2:g006-find-d",
+            "blind": {
+              "instance_id": "q:eb11c1-2-2:g006-find-d",
+              "stem": "When the polynomial $A$ is divided by $x+5$, the quotient is $x+4$ and the remainder is $6$. Find $A$ in expanded form.",
+              "stem_sha": "39fc6babcc6aef44",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x^{2} + 9x + 26",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Use $A = B \\times Q + R$ with $B = x+5$, $Q = x+4$ and $R = 6$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$A = (x+5)(x+4) + 6$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Multiply: $(x+5)(x+4) = x^2 + 4x + 5x + 20 = x^2 + 9x + 20$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Add the remainder: $x^2 + 9x + 20 + 6 = x^2 + 9x + 26$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "So $A = x^2 + 9x + 26$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x^{2} + 9x + 26",
+                "form": "expanded",
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x^2 + 9*x + 26"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-3-1:cubic-common",
+        "spec_sha": "ad9026b377a040357a0b5ab72a96c7f0aee2fe2ec2616e48a0cc4a054a0bc22c",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-3-1",
+        "tier": "advanced",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c1-3-1:bk-exercise-1-e",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-3-1:g001-cubic-",
+            "blind": {
+              "instance_id": "q:eb11c1-3-1:g001-cubic-",
+              "stem": "Simplify the following rational expression. $\\frac{ 2x^3-18x^2+40x}{x^3+3x^2-28x}$",
+              "stem_sha": "373ce75978bea52b",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{2(x - 5)}{x + 7}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Factorise the top, taking out the common factor $2x$: $2x^3-18x^2+40x=2x\\left(x^2-9x+20\\right)=2x(x-4)(x-5)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Factorise the bottom, taking out $x$: $x^3+3x^2-28x=x\\left(x^2+3x-28\\right)=x(x-4)(x+7)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel the common factors $x$ and $(x-4)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{ 2(x-5)}{x+7}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{2(x - 5)}{x + 7}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "2*(x - 5)/(x + 7)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-1:g002-cubic-",
+            "blind": {
+              "instance_id": "q:eb11c1-3-1:g002-cubic-",
+              "stem": "Simplify the following rational expression. $\\frac{ 2x^3-8x^2+6x}{x^3+4x^2-5x}$",
+              "stem_sha": "a3cdee559bb388af",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{2(x - 3)}{x + 5}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Factorise the top, taking out the common factor $2x$: $2x^3-8x^2+6x=2x\\left(x^2-4x+3\\right)=2x(x-1)(x-3)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Factorise the bottom, taking out $x$: $x^3+4x^2-5x=x\\left(x^2+4x-5\\right)=x(x-1)(x+5)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel the common factors $x$ and $(x-1)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{ 2(x-3)}{x+5}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{2(x - 3)}{x + 5}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "2*(x - 3)/(x + 5)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-1:g003-cubic-",
+            "blind": {
+              "instance_id": "q:eb11c1-3-1:g003-cubic-",
+              "stem": "Simplify the following rational expression. $\\frac{ 4x^3-24x^2+32x}{x^3+3x^2-28x}$",
+              "stem_sha": "7087a07a19c83653",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{4(x - 2)}{x + 7}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Factorise the top, taking out the common factor $4x$: $4x^3-24x^2+32x=4x\\left(x^2-6x+8\\right)=4x(x-4)(x-2)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Factorise the bottom, taking out $x$: $x^3+3x^2-28x=x\\left(x^2+3x-28\\right)=x(x-4)(x+7)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel the common factors $x$ and $(x-4)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{ 4(x-2)}{x+7}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{4(x - 2)}{x + 7}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "4*(x - 2)/(x + 7)"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-3-3:same-denominator",
+        "spec_sha": "bab6955c005a0b95a559f9b23b74d3c6b36d012cfb741e2775bf6047c172e506",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-3-3",
+        "tier": "basic",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c1-3-3:bk-exercise-3",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-3-3:g007-same-d",
+            "blind": {
+              "instance_id": "q:eb11c1-3-3:g007-same-d",
+              "stem": "Simplify the following expression: $\\frac{x^2-6}{x+2}+\\frac{2}{x+2}$",
+              "stem_sha": "33181957ce32f951",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x - 2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The denominators are the same, so combine the numerators: $\\frac{x^2-6+2}{x+2}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$x^2-6+2=x^2-4$, which factorises as $(x-2)(x+2)$, so the expression is $\\frac{(x-2)(x+2)}{x+2}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel $(x+2)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $x-2$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x - 2",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x - 2"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-3:g009-same-d",
+            "blind": {
+              "instance_id": "q:eb11c1-3-3:g009-same-d",
+              "stem": "Simplify the following expression: $\\frac{x^2-8}{x+2}+\\frac{4}{x+2}$",
+              "stem_sha": "c5caef252023078d",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x - 2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The denominators are the same, so combine the numerators: $\\frac{x^2-8+4}{x+2}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$x^2-8+4=x^2-4$, which factorises as $(x-2)(x+2)$, so the expression is $\\frac{(x-2)(x+2)}{x+2}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel $(x+2)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $x-2$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x - 2",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x - 2"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-3:g010-same-d",
+            "blind": {
+              "instance_id": "q:eb11c1-3-3:g010-same-d",
+              "stem": "Simplify the following expression: $\\frac{x^2-20}{x+4}+\\frac{4}{x+4}$",
+              "stem_sha": "e8d6a91a90d89326",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "x - 4",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The denominators are the same, so combine the numerators: $\\frac{x^2-20+4}{x+4}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$x^2-20+4=x^2-16$, which factorises as $(x-4)(x+4)$, so the expression is $\\frac{(x-4)(x+4)}{x+4}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Cancel $(x+4)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $x-4$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "x - 4",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "x - 4"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-3-4:multiply-by-x",
+        "spec_sha": "2234604263e524d495dbacbf30980862290506e3163a9b1f2610b42282ca521f",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-3-4",
+        "tier": "basic",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c1-3-4:bk-exercise-18-5",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-3-4:g003-multip",
+            "blind": {
+              "instance_id": "q:eb11c1-3-4:g003-multip",
+              "stem": "Simplify the following expression to a single rational expression. $\\dfrac{8+\\dfrac{1}{x}}{2+\\dfrac{1}{x}}$",
+              "stem_sha": "2a976e3a00883a82",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{8x + 1}{2x + 1}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The only small fraction is $\\frac{1}{x}$, so multiply the numerator and the denominator by $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Numerator: $x\\left(8+\\frac{1}{x}\\right)=8x+1$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Denominator: $x\\left(2+\\frac{1}{x}\\right)=2x+1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{8x+1}{2x+1}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{8x + 1}{2x + 1}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "(8*x+1)/(2*x+1)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-4:g005-multip",
+            "blind": {
+              "instance_id": "q:eb11c1-3-4:g005-multip",
+              "stem": "Simplify the following expression to a single rational expression. $\\dfrac{6+\\dfrac{1}{x}}{2+\\dfrac{1}{x}}$",
+              "stem_sha": "da404308f94f6772",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{6x + 1}{2x + 1}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The only small fraction is $\\frac{1}{x}$, so multiply the numerator and the denominator by $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Numerator: $x\\left(6+\\frac{1}{x}\\right)=6x+1$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Denominator: $x\\left(2+\\frac{1}{x}\\right)=2x+1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{6x+1}{2x+1}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{6x + 1}{2x + 1}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "(6*x+1)/(2*x+1)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-3-4:g006-multip",
+            "blind": {
+              "instance_id": "q:eb11c1-3-4:g006-multip",
+              "stem": "Simplify the following expression to a single rational expression. $\\dfrac{6+\\dfrac{1}{x}}{3+\\dfrac{1}{x}}$",
+              "stem_sha": "505ff364dea6b045",
+              "answer_format": {
+                "type": "expression",
+                "kind": "expression",
+                "form": null,
+                "variables": [
+                  "x"
+                ]
+              }
+            },
+            "sealed": {
+              "correct_answer": "\\frac{6x + 1}{3x + 1}",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The only small fraction is $\\frac{1}{x}$, so multiply the numerator and the denominator by $x$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Numerator: $x\\left(6+\\frac{1}{x}\\right)=6x+1$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Denominator: $x\\left(3+\\frac{1}{x}\\right)=3x+1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The answer is $\\frac{6x+1}{3x+1}$."
+                }
+              ],
+              "marker": {
+                "kind": "expression",
+                "key": "\\frac{6x + 1}{3x + 1}",
+                "form": null,
+                "variables": [
+                  "x"
+                ],
+                "tolerance": null
+              },
+              "answer_check": "(6*x+1)/(3*x+1)"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-5-2:cross-term",
+        "spec_sha": "c81f3b90c139b114cf71a41da0b28b08273ee82f64bf41ef33efe2a754dd1481",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-5-2",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-5-2:g003-cross-",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g003-cross-",
+              "stem": "Prove that $x^2+2xy+2y^2-6y+9 \\ge 0$ for all real numbers $x$ and $y$. Equality holds for exactly one pair $(x, y)$. Find the value of the product $xy$ at which equality holds.",
+              "stem_sha": "58e1739e8e1f2943",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-9",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Group the terms so that $x^2+2xy$ starts a perfect square: $x^2+2xy+1y^2=(x+1y)^2$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "Expression $= (x^2+2xy+1y^2)+(y^2-6y+9)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (x+1y)^2+(y-3)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both squares are $\\ge 0$, so the expression is $\\ge 0$ for all real $x$, $y$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $y-3=0$ and $x+1y=0$, so $y=3$ and $x=-3$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $xy=-3\\times 3=-9$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g007-cross-",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g007-cross-",
+              "stem": "Prove that $x^2+4xy+5y^2-8y+16 \\ge 0$ for all real numbers $x$ and $y$. Equality holds for exactly one pair $(x, y)$. Find the value of the product $xy$ at which equality holds.",
+              "stem_sha": "7cb8fddec32c3677",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-32",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Group the terms so that $x^2+4xy$ starts a perfect square: $x^2+4xy+4y^2=(x+2y)^2$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "Expression $= (x^2+4xy+4y^2)+(y^2-8y+16)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (x+2y)^2+(y-4)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both squares are $\\ge 0$, so the expression is $\\ge 0$ for all real $x$, $y$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $y-4=0$ and $x+2y=0$, so $y=4$ and $x=-8$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $xy=-8\\times 4=-32$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g009-cross-",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g009-cross-",
+              "stem": "Prove that $x^2+2xy+2y^2-8y+16 \\ge 0$ for all real numbers $x$ and $y$. Equality holds for exactly one pair $(x, y)$. Find the value of the product $xy$ at which equality holds.",
+              "stem_sha": "b60fdfddae2279ee",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-16",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Group the terms so that $x^2+2xy$ starts a perfect square: $x^2+2xy+1y^2=(x+1y)^2$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "Expression $= (x^2+2xy+1y^2)+(y^2-8y+16)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (x+1y)^2+(y-4)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both squares are $\\ge 0$, so the expression is $\\ge 0$ for all real $x$, $y$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $y-4=0$ and $x+1y=0$, so $y=4$ and $x=-4$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $xy=-4\\times 4=-16$"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-5-2:scaled-sq",
+        "spec_sha": "c7e4fcf9f47eacfa986bbc86ec9967f67322bdb92e58d828a78034992a80759c",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-5-2",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-5-2:g004-scaled",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g004-scaled",
+              "stem": "Prove that $4a^2+4b^2+72 \\ge 24a-24b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $ab$ at equality.",
+              "stem_sha": "1fd8e509fcca613f",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-9",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= 4a^2+4b^2+72-24a+24b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= 4(a^2-6a+9) + 4(b^2+6b+9)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= 4(a-3)^2+4(b+3)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both terms are $\\ge 0$, so LHS − RHS $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-3=0$ and $b+3=0$, i.e. $a=3$, $b=-3$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $ab=-9$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g005-scaled",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g005-scaled",
+              "stem": "Prove that $4a^2+9b^2+52 \\ge 16a-36b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $ab$ at equality.",
+              "stem_sha": "fcec383cbc635a6b",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-4",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= 4a^2+9b^2+52-16a+36b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= 4(a^2-4a+4) + 9(b^2+4b+4)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= 4(a-2)^2+9(b+2)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both terms are $\\ge 0$, so LHS − RHS $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-2=0$ and $b+2=0$, i.e. $a=2$, $b=-2$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $ab=-4$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g008-scaled",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g008-scaled",
+              "stem": "Prove that $9a^2+9b^2+72 \\ge 36a-36b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $ab$ at equality.",
+              "stem_sha": "14dd8294ff7403ca",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-4",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= 9a^2+9b^2+72-36a+36b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= 9(a^2-4a+4) + 9(b^2+4b+4)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= 9(a-2)^2+9(b+2)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "Both terms are $\\ge 0$, so LHS − RHS $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-2=0$ and $b+2=0$, i.e. $a=2$, $b=-2$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $ab=-4$"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-5-2:two-squares",
+        "spec_sha": "2ea5b4683e33f31378091ed69d605b9b8b0743453a1090dd7f5aed55970dfe31",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-5-2",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-5-2:g003-two-sq",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g003-two-sq",
+              "stem": "Prove that $a^2+b^2+45 \\ge 12a+6b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $a+b$ at equality.",
+              "stem_sha": "41f7630108af29e4",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "9",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= a^2+b^2+45-12a-6b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= (a^2-12a+36) + (b^2-6b+9)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (a-6)^2+(b-3)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(a-6)^2 \\ge 0$ and $(b-3)^2 \\ge 0$, so the sum is $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-6=0$ and $b-3=0$, i.e. $a=6$, $b=3$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $a+b=9$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g006-two-sq",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g006-two-sq",
+              "stem": "Prove that $a^2+b^2+90 \\ge 6a+18b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $a+b$ at equality.",
+              "stem_sha": "7398cb9a898a921f",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "12",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= a^2+b^2+90-6a-18b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= (a^2-6a+9) + (b^2-18b+81)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (a-3)^2+(b-9)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(a-3)^2 \\ge 0$ and $(b-9)^2 \\ge 0$, so the sum is $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-3=0$ and $b-9=0$, i.e. $a=3$, $b=9$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $a+b=12$"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-2:g008-two-sq",
+            "blind": {
+              "instance_id": "q:eb11c1-5-2:g008-two-sq",
+              "stem": "Prove that $a^2+b^2+97 \\ge 18a+8b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $a+b$ at equality.",
+              "stem_sha": "5db3ffa9b5116d07",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "13",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "LHS − RHS $= a^2+b^2+97-18a-8b$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$= (a^2-18a+81) + (b^2-8b+16)$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$= (a-9)^2+(b-4)^2$ (complete the square)"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(a-9)^2 \\ge 0$ and $(b-4)^2 \\ge 0$, so the sum is $\\ge 0$ and the inequality holds"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $a-9=0$ and $b-4=0$, i.e. $a=9$, $b=4$"
+                },
+                {
+                  "step": 6,
+                  "text_md": "So $a+b=13$"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-5-4:min-value",
+        "spec_sha": "e552ce48180cafcd714d87f796dbd3665db139688948bef83bbdd90499c8e07d",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-5-4",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c1-5-4:bk-warm-up-6",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-5-4:g004-min-va",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g004-min-va",
+              "stem": "If $x>0$, find the minimum value of the expression $6x+\\frac{150}{x}$.",
+              "stem_sha": "b9a5532383561aac",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "60",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $x>0$, both $6x>0$ and $\\frac{150}{x}>0$, so AM-GM can be used."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$6x+\\frac{150}{x}\\ge 2\\sqrt{6x\\times\\frac{150}{x}}$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$=2\\sqrt{900}$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$=2\\times30=60$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $6x=\\frac{150}{x}$, so $x^2=25$ and $x=5$ (as $x>0$), so the value is reached."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The minimum value is $60$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-4:g005-min-va",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g005-min-va",
+              "stem": "If $x>0$, find the minimum value of the expression $3x+\\frac{27}{x}$.",
+              "stem_sha": "ebc71c5c8fdee90b",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "18",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $x>0$, both $3x>0$ and $\\frac{27}{x}>0$, so AM-GM can be used."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$3x+\\frac{27}{x}\\ge 2\\sqrt{3x\\times\\frac{27}{x}}$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$=2\\sqrt{81}$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$=2\\times9=18$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $3x=\\frac{27}{x}$, so $x^2=9$ and $x=3$ (as $x>0$), so the value is reached."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The minimum value is $18$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-4:g010-min-va",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g010-min-va",
+              "stem": "If $x>0$, find the minimum value of the expression $6x+\\frac{54}{x}$.",
+              "stem_sha": "88cdf3a06e3899c1",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "36",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since $x>0$, both $6x>0$ and $\\frac{54}{x}>0$, so AM-GM can be used."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$6x+\\frac{54}{x}\\ge 2\\sqrt{6x\\times\\frac{54}{x}}$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$=2\\sqrt{324}$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$=2\\times18=36$"
+                },
+                {
+                  "step": 5,
+                  "text_md": "Equality holds when $6x=\\frac{54}{x}$, so $x^2=9$ and $x=3$ (as $x>0$), so the value is reached."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The minimum value is $36$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c1-5-4:wall-fence",
+        "spec_sha": "78ed6d7dd793227b5328d1c5cd41042aba1c03dddacbd24fb8c998f092504de5",
+        "kind": "family",
+        "lo_id": "lo:eb11c1-5-4",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": "A farmer fences a rectangular field using a straight wall as one side, so fencing is needed only for the other three sides.",
+        "parent_question_id": "q:eb11c1-5-4:bk-warm-up-6",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c1-5-4:g006-wall-f",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g006-wall-f",
+              "stem": "A farmer has 36 m of fencing and builds a rectangular field against a long straight wall, so the wall forms one side and fencing is used only for the other three sides. Let the two sides perpendicular to the wall each have length $x$ m and the side parallel to the wall have length $y$ m, so $2x+y=36$. Use the AM-GM inequality on the positive numbers $2x$ and $y$ to find the maximum possible area of the field, in square metres.",
+              "stem_sha": "69bc8d0719050637",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "162",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The area is $xy$, with $2x>0$ and $y>0$ and $2x+y=36$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "By AM-GM: $\\sqrt{2x\\cdot y}\\le\\frac{2x+y}{2}=\\frac{36}{2}=18$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Square both sides: $2xy\\le 324$, so $xy\\le 162$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Equality holds when $2x=y$, so $2x=y=18$, that is $x=9$ and $y=18$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The maximum area is 162 square metres."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-4:g007-wall-f",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g007-wall-f",
+              "stem": "A farmer has 32 m of fencing and builds a rectangular field against a long straight wall, so the wall forms one side and fencing is used only for the other three sides. Let the two sides perpendicular to the wall each have length $x$ m and the side parallel to the wall have length $y$ m, so $2x+y=32$. Use the AM-GM inequality on the positive numbers $2x$ and $y$ to find the maximum possible area of the field, in square metres.",
+              "stem_sha": "5541d4e085c85be3",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "128",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The area is $xy$, with $2x>0$ and $y>0$ and $2x+y=32$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "By AM-GM: $\\sqrt{2x\\cdot y}\\le\\frac{2x+y}{2}=\\frac{32}{2}=16$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Square both sides: $2xy\\le 256$, so $xy\\le 128$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Equality holds when $2x=y$, so $2x=y=16$, that is $x=8$ and $y=16$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The maximum area is 128 square metres."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c1-5-4:g010-wall-f",
+            "blind": {
+              "instance_id": "q:eb11c1-5-4:g010-wall-f",
+              "stem": "A farmer has 24 m of fencing and builds a rectangular field against a long straight wall, so the wall forms one side and fencing is used only for the other three sides. Let the two sides perpendicular to the wall each have length $x$ m and the side parallel to the wall have length $y$ m, so $2x+y=24$. Use the AM-GM inequality on the positive numbers $2x$ and $y$ to find the maximum possible area of the field, in square metres.",
+              "stem_sha": "b3555e3f0112c415",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "72",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The area is $xy$, with $2x>0$ and $y>0$ and $2x+y=24$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "By AM-GM: $\\sqrt{2x\\cdot y}\\le\\frac{2x+y}{2}=\\frac{24}{2}=12$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Square both sides: $2xy\\le 144$, so $xy\\le 72$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Equality holds when $2x=y$, so $2x=y=12$, that is $x=6$ and $y=12$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The maximum area is 72 square metres."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "book": "egb-g11-math",
+    "per_family": 10
+  }
+}

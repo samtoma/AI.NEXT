@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-3-3:point-on-circle",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-3-3",
+ "parent_question_id": "q:eb11c4-3-3:bk-warm-up-16",
+ "source_page": 193,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "L",
+   "let": "[[3,4],[4,3],[6,8],[8,6],[5,12],[12,5],[8,15],[15,8]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    7
+   ]
+  },
+  {
+   "name": "a",
+   "let": "L[i][0]"
+  },
+  {
+   "name": "b",
+   "let": "L[i][1]"
+  },
+  {
+   "name": "R",
+   "let": "a*a + b*b"
+  }
+ ],
+ "stem": "Find the equation of the tangent to the circle $x^2+y^2={=R}$ at the point $({=a}, {=b})$ on it.",
+ "solution": [
+  "Check the point is on the circle: ${=a}^2+{=b}^2={=a*a}+{=b*b}={=R}$.",
+  "For a point $(a, b)$ on the circle $x^2+y^2=r^2$, the tangent is $ax+by=r^2$.",
+  "Here $a={=a}$, $b={=b}$, $r^2={=R}$.",
+  "The tangent is ${=a}x+{=b}y={=R}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "{=a}*x+{=b}*y={=R}",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: both coordinates positive, point given as lying on the circle, direct use of ax+by=r^2."
+}

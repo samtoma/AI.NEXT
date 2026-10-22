@@ -1,0 +1,468 @@
+{
+ "mode": "verify",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "d8864fe123bda423d29aad3e1cf640386632fbb7cc02be8f9fd61dd763072c04",
+  "generated_sha256": "04e09ba4443ff816edae119b2a6aa124588a58c2d8c83c564632d8b48f493310",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:eb11c3-2-1:w001",
+   "template_sha": "88d1019ee3af4433f653b9672af52c711074669b6a8467753376ce6ea55d388e",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     3,
+     5
+    ]
+   },
+   "construction": "Points mode, range [-6,6]. Tap 3 and 5, since x²-8x+15=(x-3)(x-5). Both are whole numbers inside the range, so the answer set is {3,5}.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "A student who marks -3 and -5 fires it, which is the usual sign error on (x-a)=0. Both -3 and -5 are inside the range. The hint asks which x makes the factor zero and gives no values."
+    },
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "A student who marks only 3 or only 5 fires it. The hint is true and prompts the student to take one solution from each factor. It gives no values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "A student who marks a value outside {3,5}, such as 4, fires it. The hint says to substitute each marked value and check it gives 0. That is correct, helps the student find the wrong mark, and gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-2-2:w001",
+   "template_sha": "b288311009bda367782d1f86d6c5dc168cbd91bc6957b52e6d46f1fd42f33eaa",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -5,
+     3
+    ]
+   },
+   "construction": "Repeated root requires D=(a+1)^2-16=0, so a+1=±4, giving a=3 or a=-5. Both are whole numbers within range [-6,6]. Tap -5 and 3.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Firing: student marks only 3 (or only -5). The hint about two cases from a square root is correct, nudges toward the missing case, and gives no value."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Firing: student marks 5 and -3 (negatives of the answers) from a sign slip when isolating a. The hint to solve a+1=each root and check the sign is correct and gives no answer."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Firing: student marks the correct values plus another, e.g. 4 or -4 (the roots of a+1). The hint to use D=0 and check each value by substituting into D is correct, helps, and gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-2-2:w002",
+   "template_sha": "feed96db8ca3b2023d2f2f25a415f45c74069419a36c08a4ff26415000d2b7a4",
+   "reading": {
+    "mode": "interval",
+    "from": -18,
+    "to": -2,
+    "openFrom": true,
+    "openTo": true
+   },
+   "construction": "D=(m+6)^2+8m=m^2+20m+36=(m+2)(m+18)<0 gives -18<m<-2. Use range [-20,4] (24 wide, within ±20), interval from -18 to -2, both endpoints hollow. All limits satisfied.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "endpoint-inclusion-wrong",
+     "ok": true,
+     "why": "Fires when the interval is -18 to -2 but with a filled end, e.g. a student who allows D=0. Distinct non-real roots need D<0 strictly, so the hint is correct. It prompts the student to check strictness and gives no numbers. The predicate can fire in interval mode."
+    },
+    {
+     "predicate": "interval-wrong",
+     "ok": true,
+     "why": "Fires when the endpoints are wrong, e.g. marking the outside region or a wrong factorisation. Factorising D=m^2+20m+36 and finding where the product is negative is the right method. It gives no endpoints or answer. The predicate can fire in interval mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-2-2:w003",
+   "template_sha": "12f13169d0a66d169f4914bf47c231ef2bd1486893d83bd2cb1ab492c45d61c8",
+   "reading": {
+    "mode": "interval",
+    "targets": [],
+    "from": 0,
+    "to": 3,
+    "openFrom": false,
+    "openTo": false
+   },
+   "construction": "D = 4m^2 - 4(2m^2-3m) = -4m^2+12m >= 0, so m(m-3) <= 0, giving 0 <= m <= 3. In interval mode set from=0, to=3, with both ends filled. This is within range [-6,6] and the endpoints are whole numbers.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "endpoint-inclusion-wrong",
+     "ok": true,
+     "why": "It fires on the interval 0 to 3 with a hollow end, for example a student who requires D>0. The hint asks whether D=0 is allowed, which targets exactly that step and gives no values."
+    },
+    {
+     "predicate": "interval-wrong",
+     "ok": true,
+     "why": "It fires when the interval is not 0 to 3, for example the outside region m<=0 or m>=3 from not flipping the sign. Since D=-4m^2+12m>=0 needs division by -4, the sign-reversal hint is correct and relevant, and it does not give away the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-2-2:w004",
+   "template_sha": "781a8fdff3b6098ab7b6cebcc7dc313fe831ea02c67d97df3f401760b4084450",
+   "reading": {
+    "mode": "interval",
+    "targets": [],
+    "from": -1,
+    "to": 2,
+    "openFrom": true,
+    "openTo": true
+   },
+   "construction": "Discriminant D=4m^2-4(m+2)<0 gives m^2-m-2<0, i.e. (m-2)(m+1)<0, so -1<m<2. On the line with range [-6,6], set from=-1, to=2, both endpoints hollow (openFrom=true, openTo=true). Both are whole numbers inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "endpoint-inclusion-wrong",
+     "ok": true,
+     "why": "Fires when the right interval -1 to 2 is built with a filled end. Imaginary distinct roots need D<0 strictly, because D=0 gives a real double root. The hint asks whether D=0 is allowed without giving the endpoints or which circles to use. It can fire in interval mode."
+    },
+    {
+     "predicate": "interval-wrong",
+     "ok": true,
+     "why": "Fires when the interval is not -1 to 2, for example m<-1 or m>2 (outside the roots) or a wrong span from a discriminant error. D<0 reduces to (m-2)(m+1)<0, so factorising and checking where the product is negative is the correct step. It gives no numbers. It can fire in interval mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-2-2:w005",
+   "template_sha": "c6935bc2ef31f7221260f44809efe728111abfd269d4070fac6f3e3909b68161",
+   "reading": {
+    "mode": "interval",
+    "from": -2,
+    "to": 6,
+    "openFrom": false,
+    "openTo": false
+   },
+   "construction": "Real solutions need D = m^2 - 4(m^2-3m-9) = -3m^2+12m+36 >= 0, i.e. m^2-4m-12 <= 0, i.e. (m-6)(m+2) <= 0, so -2 <= m <= 6. On range [-6,6]: from=-2, to=6, both endpoints filled (openFrom=false, openTo=false). Both ends are whole numbers inside the range, so this is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "endpoint-inclusion-wrong",
+     "ok": true,
+     "why": "Fires when the interval is -2 to 6 but an end is hollow, which is the strict-inequality mistake (D>0 instead of D>=0). The hint is correct, since real solutions include the repeated-root case D=0. It points at the step without giving the endpoints or the filled/hollow answer. Interval mode can emit this predicate."
+    },
+    {
+     "predicate": "interval-wrong",
+     "ok": true,
+     "why": "Fires when the endpoints are not -2 and 6, for example after a factoring or sign error or an outside-region choice. The hint is correct, because D>=0 reduces to (m-6)(m+2)<=0 and the product sign decides the region. It gives no endpoints or final interval, so the student still has to do the step. Interval mode can emit this predicate."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w001",
+   "template_sha": "0188998f945832c6356280a7724780ef64eb29c03731323a821738f6b316bfc2",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     -2,
+     -1
+    ]
+   },
+   "construction": "x^3+6x^2+11x+6=(x+1)(x+2)(x+3), so the roots are -1, -2, -3. Tap -3, -2 and -1 on the number line (range [-6,6]). All are whole numbers inside the range and there are 3 targets, within the 1–4 limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks only some of the roots, e.g. only -1. After finding one root by trial, the remaining factor is a quadratic, so factorising it is correct and helps. It gives no values away."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": false,
+     "why": "It can fire, e.g. when the student marks 1 or -4. The hint is mathematically right. But the question never defines P(x), so the notation is unclear to the student. When in doubt, false."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks 1, 2, 3 instead of -1, -2, -3. This is the classic sign error from reading (x+a)=0 as x=a. The hint states the general rule, not the specific answers, and points at the step the student got wrong."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w002",
+   "template_sha": "90d37ef3cbaa399184f909664c5629699f6fbd623b39512f0b9130df770a49bd",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -3,
+     -2,
+     2
+    ]
+   },
+   "construction": "Factor by grouping: x^2(x+3) - 4(x+3) = (x+3)(x-2)(x+2), so roots are -3, -2, 2. Points mode, range [-6,6], tap -3, -2 and 2. All are whole numbers inside the range, and there are 3 targets (within 1-4).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks only some roots, e.g. just -3 or {-3,2}. After taking out (x+3), the quadratic x^2-4 does factorise further, so the hint is correct and points to the missed step without giving any values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks a non-root such as 3 or 1. Substituting into the equation to check for 0 is correct and helps, and gives no answer. The name P(x) is not defined in the question, but it is clearly the cubic."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires on marks like {3,2,-2}, where (x+3) was read as x=3. This is a real misconception. The hint states the general rule for (x+a) and (x-a) without giving the roots."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w003",
+   "template_sha": "e64fa6e112b366d6e137f93135ad3886de0ae883c103653182c6941494ca0db2",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     3
+    ]
+   },
+   "construction": "x^3+x^2-8x-12 = (x+2)^2 (x-3), so the roots are -2 (double) and 3. Use points mode, range [-6,6], and tap -2 and 3. Both are whole numbers inside the range, so this is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks only -2 or only 3. This is a common slip because -2 is a repeated root. The hint is correct and gives no values. It points the student to factor the remaining quadratic fully. The wording 'quadratic part' assumes a first root was already found, which is acceptable."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks a value that is not a root, such as 2 or -3 alongside the true roots, or a wrongly guessed root. Substituting into the polynomial is a valid check and does not reveal the answer. It lets the student find which marked value fails. P(x) is the cubic in the question."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student marks 2 and -3 instead of -2 and 3. This is the (x+2) read as x=2 error. The set {2,-3} differs from {-2,3}, so it can fire. The hint states the general rule that (x+a)=0 gives x=-a, with no specific values. It targets exactly that error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w004",
+   "template_sha": "1e67120228b603695b61b589e9733286e87aa5f10d3f93400fe192ddc7c715d8",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2
+    ]
+   },
+   "construction": "x^3+6x^2+12x+8=(x+2)^3, so the only real solution is x=-2. Points mode, range [-6,6]: tap -2 only. It is a whole number inside the range, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks nothing, or only a wrong value. The Factor Theorem hint is correct and suits a cubic with no obvious root. Testing small whole numbers leads to -2, and the hint doesn't name it."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks -2 plus another value such as 2. Dividing out (x+2) leaves x^2+4x+4=(x+2)^2, so fully factorising the quadratic shows no new root. The hint is correct, targets the step the student skipped, and doesn't give the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student marks 2 instead of -2, reading (x+2)=0 as x=2. The hint states the right rule in general terms with the letter a, so it corrects the error without giving the target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w005",
+   "template_sha": "a28139570acaf91502b3fc213edfd7fadc9673e7e4c631ae4862154d418099f2",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1,
+     2,
+     3
+    ]
+   },
+   "construction": "P(x) = (x-1)(x-2)(x-3)^2, since P(1)=0, quotient x^3-8x^2+21x-18, P(2)=0, quotient x^2-6x+9=(x-3)^2. Roots 1, 2, 3 (3 double). On range [-6,6] tap 1, 2 and 3. All are whole numbers inside the range, so the set is valid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Tapping only 1 and 2, or only 1, leaves part of the set unmarked, so the predicate fires. The hint is correct: after one root the quotient is a cubic that must be factorised further. It names no values, and it points the student to the next step."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Tapping 1, 2, 3 plus an extra such as 6 or -1 fires it. Substituting each marked value into P(x) is a correct check and helps the student find the wrong value. It gives no answer values."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Tapping -1, -2, -3 fires it. The student read (x-a) as x=-a. The hint states that rule correctly, and it doesn't reveal the roots, so the student must still redo the step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w006",
+   "template_sha": "97a710b2d253ad23bdd483b89541c6e8244e0a6031eef2d34dc68d10ac84e0dd",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     5
+    ]
+   },
+   "construction": "x^3-x^2-16x-20 = (x-5)(x+2)^2, so the distinct roots are 5 and -2 (-2 is a double root). Range [-6,6]; tap -2 and 5. Both are whole numbers inside the range and there are 2 targets (within 1-4), so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks only 5 or only -2, for example by missing the repeated root. Factorising fully and setting each distinct factor to zero is correct and prompts the missed step without giving the roots."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks something like 2 or 4 in addition to -2 and 5. Substituting into the polynomial to check for 0 is valid and helps, and it gives no answer. The P(x) notation is generic but understandable."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires with {2,-5}, both inside the range. That is what a student would mark after reading (x-5) as x=-5 and (x+2) as x=2. The hint corrects the factor-to-root sign rule without naming the roots."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w007",
+   "template_sha": "93b269c5bc1bb66acf9a1d62559f72361a656616b260105780f992db1bcc8a0d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     -1,
+     1,
+     2
+    ]
+   },
+   "construction": "Factor as (x^2-1)(x^2-4)=0, so x^2=1 or x^2=4, giving x=±1 and ±2. Mark -2, -1, 1, 2 on the range [-6,6]. That is 4 whole-number targets inside the range, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks only the positive roots, e.g. {1,2}. The hint is correct, points at the dropped negative root, and gives no values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks, for example, 4 and 1 (or 4 and 5) by stopping at x^2=k or by using a wrong constant. The hint is correct: solve each factor for x^2. It names no values, so it does not give the answer away, and it helps the student who treated the quartic wrongly."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The answer set {-2,-1,1,2} is symmetric, so the negative of any target is also a target. Flipping signs can never produce a wrong mark, so the predicate never fires meaningfully here. The hint's 'check each value has its partner' also nearly reveals the ± structure."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w008",
+   "template_sha": "8142f9eedd41c4e321709185ea4a57118be934f1ac37ae7c2ca52e0aed64213d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "construction": "Points mode, range [-6,6], tap 1, 2, 3 and 4. The polynomial factors as (x-1)(x-2)(x-3)(x-4), and each root was checked by substitution. All are whole numbers inside the range, and there are 4 targets, within the 1–4 limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks only some roots, such as 1 and 2. The hint is true for a quartic and prompts further factorising without revealing any root."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks a non-root such as 5 or 6. Substituting into P(x) is a valid check and gives away nothing."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student marks -1, -2, -3, -4 instead of the roots. This is the common sign error, and the hint states the general rule (x-a) gives x=a without naming any target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c3-4-1:w009",
+   "template_sha": "6507cf8d5cbc23ed2af016f43f5af8cb9e419594aee00af36f0517e382673d5c",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -2,
+     1,
+     3
+    ]
+   },
+   "construction": "x^3-2x^2-5x+6 factors as (x-1)(x-3)(x+2); roots -2, 1, 3. Tap -2, 1 and 3 on the number line (range [-6,6], all whole numbers inside range, 3 targets).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires if the student marks e.g. only 1 and 3. The cubic does factor into three linear factors, so the hint is correct, points to the missing factor and gives no values."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": false,
+     "why": "Fires if the student marks e.g. -2, 1, 3 and also 2. Substituting is valid, but the hint refers to $P(x)$, which the question never defines, so it may confuse the student. Not clearly helpful as written."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires if the student marks 2, -1, -3 (negatives of the roots), which is the typical error of reading (x+2) as x=2. The hint states the method (factor = 0 gives x=-a) without giving any target values, and it can fire in points mode."
+    }
+   ]
+  }
+ ]
+}

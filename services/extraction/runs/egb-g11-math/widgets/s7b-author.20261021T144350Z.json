@@ -1,0 +1,976 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "c054080efee2d1ec36eee3850afedf8ccb18add0796a1d4a199dd10ded1d6480",
+  "generated_sha256": "3fd0c95b1e9f2aebaf9c50127e67d170cc079253bf597ca3ee6d8e07dc094b00",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "eb11c3-1",
+   "templates": [],
+   "gaps": [],
+   "notes": "No widget template fits eb11c3-1. Every exercise asks the student to state or compute something: the real and imaginary parts, the values of x and y, a sum, product or quotient in the form a + bi, a conjugate, or a square root of a negative number. None asks for a construction (a graph, set, diagram or figure). The answers are algebraic expressions, and no existing instrument can take them: the widgets grade points, lines, sets, regions or statistics, not complex-number expressions. The open prompts (open-prompt-1, reflect-1) are discussion questions, not constructions. Because none of the parts is a construction exercise, no gaps are recorded."
+  },
+  {
+   "lesson": "eb11c3-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-1:exercise-2-e",
+     "lo_id": "lo:eb11c3-2-1",
+     "book_item": "eb11c3-2:exercise-2#e",
+     "parent_question_id": "q:eb11c3-2-1:bk-exercise-2-e",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -2,
+       8
+      ],
+      "targets": [
+       3,
+       5
+      ]
+     },
+     "stem": "Solve the quadratic equation $x^2-8x+15=0$. Tap the solutions on the number line.",
+     "solution": [
+      "Factorise: $x^2-8x+15=(x-3)(x-5)$.",
+      "Set each factor to zero: $x-3=0$ or $x-5=0$.",
+      "So $x=3$ or $x=5$; mark both."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check the sign when you set a factor $(x-a)$ equal to zero: which value of $x$ makes it zero?"
+      },
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "A quadratic equation can have two solutions; each factor gives one."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Check each marked value by substituting it into $x^2-8x+15$; it must give 0."
+      }
+     ],
+     "notes": "Book answer x=3, x=5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-2:exercise-4-a",
+     "lo_id": "lo:eb11c3-2-2",
+     "book_item": "eb11c3-2:exercise-4#a",
+     "parent_question_id": "q:eb11c3-2-2:bk-exercise-4-a",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -8,
+       6
+      ],
+      "targets": [
+       -5,
+       3
+      ]
+     },
+     "stem": "Find the value(s) of the constant $a$ for which the quadratic equation $x^2-(a+1)x+4=0$ has a repeated solution. Tap the value(s) of $a$ on the number line.",
+     "solution": [
+      "A repeated solution needs $D=0$.",
+      "$D=(a+1)^2-4(1)(4)=(a+1)^2-16$.",
+      "$(a+1)^2=16$, so $a+1=4$ or $a+1=-4$.",
+      "$a=3$ or $a=-5$; mark both."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Taking a square root gives two cases, positive and negative."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Solve $a+1=\\text{each root}$ carefully for $a$; check the sign of the value you subtract."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Start from the condition $D=0$ for a repeated solution, then check each value by substituting it into $D$."
+      }
+     ],
+     "notes": "Book answer a=3, a=-5."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-2:warm-up-3",
+     "lo_id": "lo:eb11c3-2-2",
+     "book_item": "eb11c3-2:warm-up-3",
+     "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -6,
+       8
+      ],
+      "from": -2,
+      "to": 6,
+      "openFrom": false,
+      "openTo": false
+     },
+     "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-mx+m^2-3m-9=0$ has real solutions. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "Real solutions need $D\\ge0$.",
+      "$D=(-m)^2-4(m^2-3m-9)=-3m^2+12m+36$.",
+      "$-3m^2+12m+36\\ge0$, so $m^2-4m-12\\le0$.",
+      "$(m+2)(m-6)\\le0$.",
+      "$-2\\le m\\le6$, both ends included."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "Look at the sign in the condition on $D$: does it allow $D=0$? That decides filled or hollow."
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 4,
+       "text": "Factorise the inequality and think about where the product of the two factors is negative or zero."
+      }
+     ],
+     "notes": "Interval mode, closed both ends."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-2:try-3",
+     "lo_id": "lo:eb11c3-2-2",
+     "book_item": "eb11c3-2:try-3",
+     "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -4,
+       5
+      ],
+      "from": -1,
+      "to": 2,
+      "openFrom": true,
+      "openTo": true
+     },
+     "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+m+2=0$ has two distinct imaginary solutions. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "Two distinct imaginary solutions need $D<0$.",
+      "$D=(-2m)^2-4(m+2)=4m^2-4m-8$.",
+      "$4m^2-4m-8<0$, so $m^2-m-2<0$.",
+      "$(m-2)(m+1)<0$.",
+      "$-1<m<2$, both ends excluded."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "The condition on $D$ is strict here; does it allow $D=0$?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 4,
+       "text": "Factorise the inequality and decide where the product of the two factors is negative."
+      }
+     ],
+     "notes": "Open both ends."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-2:exercise-4-b",
+     "lo_id": "lo:eb11c3-2-2",
+     "book_item": "eb11c3-2:exercise-4#b",
+     "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -20,
+       0
+      ],
+      "from": -18,
+      "to": -2,
+      "openFrom": true,
+      "openTo": true
+     },
+     "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2+(m+6)x-2m=0$ has two distinct imaginary solutions. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "Two distinct imaginary solutions means $D<0$.",
+      "$D=(m+6)^2-4(-2m)=m^2+20m+36$.",
+      "$m^2+20m+36<0$, so $(m+2)(m+18)<0$.",
+      "$-18<m<-2$, both ends excluded."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "Is the condition on $D$ strict or does it include $D=0$?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 3,
+       "text": "Factorise the inequality and decide where the product of the factors is negative."
+      }
+     ],
+     "notes": "Open both ends."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-2:exercise-4-c",
+     "lo_id": "lo:eb11c3-2-2",
+     "book_item": "eb11c3-2:exercise-4#c",
+     "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -3,
+       6
+      ],
+      "from": 0,
+      "to": 3,
+      "openFrom": false,
+      "openTo": false
+     },
+     "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+2m^2-3m=0$ has real solutions. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "Real solutions means $D\\ge0$.",
+      "$D=(-2m)^2-4(2m^2-3m)=-4m^2+12m$.",
+      "$-4m^2+12m\\ge0$; dividing by $-4$ reverses the sign: $m^2-3m\\le0$.",
+      "$m(m-3)\\le0$, so $0\\le m\\le3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "Does the condition for real solutions allow $D=0$?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 3,
+       "text": "Remember that dividing an inequality by a negative number reverses its sign, then factorise."
+      }
+     ],
+     "notes": "Closed both ends."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-5:warm-up-11",
+     "lo_id": "lo:eb11c3-2-5",
+     "book_item": "eb11c3-2:warm-up-11",
+     "parent_question_id": "expl:eb11c3-2-5:bk-warm-up-9",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -8,
+       2
+      ],
+      "from": -6,
+      "to": -2,
+      "openFrom": true,
+      "openTo": true
+     },
+     "stem": "If the quadratic equation $x^2-2mx+m+6=0$ has two distinct negative solutions, find the range of values for the real number $m$. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "$D>0$: $4m^2-4(m+6)>0$, so $(m-3)(m+2)>0$, giving $m<-2$ or $m>3$.",
+      "$\\alpha+\\beta<0$: $2m<0$, so $m<0$.",
+      "$\\alpha\\beta>0$: $m+6>0$, so $m>-6$.",
+      "Common range: $-6<m<-2$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "interval-wrong",
+       "misconception_id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "All three conditions are strict inequalities; do they allow equality?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 4,
+       "text": "Find where all three conditions on $m$ hold at once."
+      }
+     ],
+     "notes": "The diagnostic is a loose fit: interval-wrong can be due to the sum-of-roots sign; kept as the one conditions-based mapping. Open both ends."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-5:try-14",
+     "lo_id": "lo:eb11c3-2-5",
+     "book_item": "eb11c3-2:try-14",
+     "parent_question_id": "expl:eb11c3-2-5:bk-warm-up-9",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -5,
+       2
+      ],
+      "from": -2,
+      "to": -1,
+      "openFrom": true,
+      "openTo": true
+     },
+     "stem": "If the quadratic equation $x^2+2mx+m+2=0$ has two distinct positive solutions, find the range of values for the real number $m$. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "$D>0$: $4m^2-4(m+2)>0$, so $(m-2)(m+1)>0$, giving $m<-1$ or $m>2$.",
+      "$\\alpha+\\beta>0$: $-2m>0$, so $m<0$.",
+      "$\\alpha\\beta>0$: $m+2>0$, so $m>-2$.",
+      "Common range: $-2<m<-1$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "interval-wrong",
+       "misconception_id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "All three conditions are strict; do they allow equality?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 4,
+       "text": "Find where all three conditions on $m$ hold at once."
+      }
+     ],
+     "notes": "Loose diagnostic mapping, as in warm-up-11."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-2-5:challenge-7-a",
+     "lo_id": "lo:eb11c3-2-5",
+     "book_item": "eb11c3-2:challenge-7#a",
+     "parent_question_id": "expl:eb11c3-2-5:bk-warm-up-9",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "interval",
+      "range": [
+       -6,
+       0
+      ],
+      "from": -4,
+      "to": -3,
+      "openFrom": true,
+      "openTo": true
+     },
+     "stem": "The quadratic equation $x^2+(m+1)x+m+4=0$ has two distinct real solutions. Find the range of values for $m$ when both solutions are positive. Mark the interval for $m$ and set each end hollow or filled.",
+     "solution": [
+      "Two distinct real solutions: $D=(m+1)^2-4(m+4)=(m-5)(m+3)>0$, so $m<-3$ or $m>5$.",
+      "Both positive: $\\alpha+\\beta=-(m+1)>0$, so $m<-1$.",
+      "$\\alpha\\beta=m+4>0$, so $m>-4$.",
+      "Common range: $-4<m<-3$."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "interval-wrong",
+       "misconception_id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "endpoint-inclusion-wrong",
+       "step": 1,
+       "text": "All conditions are strict; do they allow equality?"
+      },
+      {
+       "predicate": "interval-wrong",
+       "step": 4,
+       "text": "Find where the conditions from $D$, the sum and the product all hold together."
+      }
+     ],
+     "notes": "Loose diagnostic mapping."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c3-2-1",
+     "need_kind": "complex-plane / symbolic answer entry",
+     "description": "Most 'solve the quadratic' parts (complex, surd or fractional roots) have non-whole-number or non-real answers.",
+     "why": "number_line_marker takes whole-number targets only and no widget can enter complex or surd answers; these are algebraic, not constructions."
+    },
+    {
+     "lo_id": "lo:eb11c3-2-2",
+     "need_kind": "number_line_marker ray",
+     "description": "Ranges that are unbounded (try-15, exercise-23, exercise-24, challenge-7 b and c) and exercise-22 (-1<m<-1/2).",
+     "why": "The interval mode needs two finite whole-number endpoints; a ray or a half-integer endpoint cannot be expressed."
+    },
+    {
+     "lo_id": "lo:eb11c3-2-3",
+     "need_kind": "symbolic answer entry",
+     "description": "Sums, products, expressions in the roots and finding constants.",
+     "why": "Answers are fractions or algebraic values; no widget builds them."
+    },
+    {
+     "lo_id": "lo:eb11c3-2-4",
+     "need_kind": "symbolic factorisation entry",
+     "description": "Factorising over the complex numbers.",
+     "why": "Answers are complex factors; area_model handles only integer linear tiles."
+    },
+    {
+     "lo_id": "lo:eb11c3-2-5",
+     "need_kind": "symbolic equation entry",
+     "description": "Forming equations from roots, finding numbers from sum and product.",
+     "why": "Answers are equations or complex numbers; no widget fits."
+    }
+   ],
+   "notes": "Only parts whose answers are finite whole-number intervals or points were converted, using number_line_marker."
+  },
+  {
+   "lesson": "eb11c3-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c3-3-3",
+     "need_kind": "synthetic-division table (fill in the bottom row of coefficients)",
+     "description": "Exercises warm-up-5, try-5 a-b and exercise-14 a-d ask for the quotient and remainder by synthetic division. The student would fill a row of coefficients.",
+     "why": "No existing instrument builds a row of coefficients or a division table. These are answers to calculate and type, not geometric or statistical constructions."
+    },
+    {
+     "lo_id": "lo:eb11c3-3-3",
+     "need_kind": "number_line_marker with non-integer targets",
+     "description": "challenge-5 asks for the other horizontal intercepts of 4x^4-4x^3-11x^2+12x-3, a double root at 1/2.",
+     "why": "The other intercepts are x = ±√3. number_line_marker only takes whole-number targets, and the book's numbers cannot change."
+    },
+    {
+     "lo_id": "lo:eb11c3-3-4",
+     "need_kind": "factorisation builder",
+     "description": "warm-up-6, try-6 and exercise-15 ask the student to write polynomials as products of linear and quadratic factors. challenge-7 asks for all roots, including 2±√10.",
+     "why": "These are cubics and quartics. area_model only tiles (x+a)(x+b) quadratics, and number_line_marker cannot mark irrational roots. Neither instrument builds the actual answer."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "eb11c3-4",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:warm-up-1-b",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:warm-up-1#b",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       1,
+       3,
+       -2
+      ]
+     },
+     "stem": "Solve $x^3 - 2x^2 - 5x + 6 = 0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3-2x^2-5x+6$. $P(1)=1-2-5+6=0$, so $(x-1)$ is a factor (Factor Theorem).",
+      "Divide: $(x-1)(x^2-x-6)=0$.",
+      "Factorise the quadratic: $x^2-x-6=(x-3)(x+2)$.",
+      "Set each factor to zero: $x=1,\\ 3,\\ -2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 4,
+       "text": "A cubic that factorises into three linear factors gives one solution from each factor. Check that every factor has a mark."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values that give $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "Set each factor equal to zero and solve it: a factor $(x+a)$ gives $x=-a$."
+      }
+     ],
+     "notes": "Real integer roots only; complex-root parts are not constructions on this board."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:try-1-d",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:try-1#d",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       5,
+       -2
+      ]
+     },
+     "stem": "Solve $x^3-x^2-16x-20=0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3-x^2-16x-20$. $P(5)=125-25-80-20=0$, so $(x-5)$ is a factor.",
+      "Divide: $(x-5)(x^2+4x+4)=0$.",
+      "Factorise: $x^2+4x+4=(x+2)^2$.",
+      "Set each factor to zero: $x=5$ and $x=-2$ (repeated, marked once)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Factorise the quadratic part fully, then set each distinct factor to zero."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "Set each factor equal to zero and solve it: a factor $(x+a)$ gives $x=-a$."
+      }
+     ],
+     "notes": "Repeated root marked once (set)."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:try-1-e",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:try-1#e",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       1,
+       -1,
+       2,
+       -2
+      ]
+     },
+     "stem": "Solve $x^4-5x^2+4=0$. Tap every solution on the number line.",
+     "solution": [
+      "Only $x^4$, $x^2$ and a constant appear, so treat $x^2$ as a chunk: $(x^2)^2-5x^2+4=0$.",
+      "Factorise: $(x^2-1)(x^2-4)=0$.",
+      "$x^2=1$ gives $x=\\pm1$.",
+      "$x^2=4$ gives $x=\\pm2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Each equation of the form $x^2=k$ with $k>0$ gives two solutions, one positive and one negative."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 2,
+       "text": "Solve each bracket separately: $x^2$ equals the number that makes that bracket zero."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Taking the square root gives both signs, so check each value has its partner."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:try-1-f",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:try-1#f",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "stem": "Solve $x^4-10x^3+35x^2-50x+24=0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^4-10x^3+35x^2-50x+24$. $P(1)=1-10+35-50+24=0$, so $(x-1)$ is a factor.",
+      "Divide: $(x-1)(x^3-9x^2+26x-24)=0$.",
+      "For the cubic, $Q(2)=8-36+52-24=0$, so $(x-2)$ is a factor: $(x-1)(x-2)(x^2-7x+12)=0$.",
+      "Factorise: $x^2-7x+12=(x-3)(x-4)$.",
+      "Set each factor to zero: $x=1,\\ 2,\\ 3,\\ 4$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 4,
+       "text": "A quartic has up to four solutions; keep factorising until every factor is linear."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 5,
+       "text": "A factor $(x-a)$ gives $x=a$, not $-a$."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:exercise-1-d",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:exercise-1#d",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -1,
+       -2,
+       -3
+      ]
+     },
+     "stem": "Solve $x^3 + 6x^2 + 11x + 6 = 0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3+6x^2+11x+6$. $P(-1)=-1+6-11+6=0$, so $(x+1)$ is a factor.",
+      "Divide: $(x+1)(x^2+5x+6)=0$.",
+      "Factorise: $x^2+5x+6=(x+2)(x+3)$.",
+      "Set each factor to zero: $x=-1,\\ -2,\\ -3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Factorise the quadratic part too; each linear factor gives a solution."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "A factor $(x+a)$ gives $x=-a$."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:exercise-1-e",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:exercise-1#e",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       2,
+       -2,
+       -3
+      ]
+     },
+     "stem": "Solve $x^3 + 3x^2 - 4x - 12 = 0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3+3x^2-4x-12$. $P(2)=8+12-8-12=0$, so $(x-2)$ is a factor.",
+      "Divide: $(x-2)(x^2+5x+6)=0$.",
+      "Factorise: $x^2+5x+6=(x+2)(x+3)$.",
+      "Set each factor to zero: $x=2,\\ -2,\\ -3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Factorise the quadratic part too; each linear factor gives a solution."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "Set each factor equal to zero and solve it: $(x+a)$ gives $x=-a$, $(x-a)$ gives $x=a$."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:exercise-1-j",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:exercise-1#j",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2,
+       3
+      ]
+     },
+     "stem": "Solve $x^3 + x^2 - 8x - 12 = 0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3+x^2-8x-12$. $P(-2)=-8+4+16-12=0$, so $(x+2)$ is a factor.",
+      "Divide: $(x+2)(x^2-x-6)=0$.",
+      "Factorise: $x^2-x-6=(x-3)(x+2)$, so $(x+2)^2(x-3)=0$.",
+      "Set each factor to zero: $x=-2$ (repeated) and $x=3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Factorise the quadratic part fully; each distinct linear factor gives a solution."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "Set each factor equal to zero and solve it: $(x+a)$ gives $x=-a$."
+      }
+     ],
+     "notes": "Repeated root marked once."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:exercise-1-l",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:exercise-1#l",
+     "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       -2
+      ]
+     },
+     "stem": "Solve $x^3 + 6x^2 + 12x + 8 = 0$. Tap every real solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^3+6x^2+12x+8$. $P(-2)=-8+24-24+8=0$, so $(x+2)$ is a factor.",
+      "Divide: $(x+2)(x^2+4x+4)=0$.",
+      "Factorise: $x^2+4x+4=(x+2)^2$, so $(x+2)^3=0$.",
+      "The only solution is $x=-2$ (repeated three times)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Use the Factor Theorem: try small whole numbers in $P(x)$ until one gives $0$."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 3,
+       "text": "Factorise the quadratic part fully and see whether any new solution appears."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 4,
+       "text": "Set the factor equal to zero: $(x+a)$ gives $x=-a$."
+      }
+     ],
+     "notes": "Book answer x = -2."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c3-4-1:exercise-1-p",
+     "lo_id": "lo:eb11c3-4-1",
+     "book_item": "eb11c3-4:exercise-1#p",
+     "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       1,
+       2,
+       3
+      ]
+     },
+     "stem": "Solve $x^4 - 9x^3 + 29x^2 - 39x + 18 = 0$. Tap every solution on the number line.",
+     "solution": [
+      "Let $P(x)=x^4-9x^3+29x^2-39x+18$. $P(1)=0$, so $(x-1)$ is a factor.",
+      "Divide: $(x-1)(x^3-8x^2+21x-18)=0$.",
+      "For the cubic, $Q(2)=8-32+42-18=0$, so $(x-2)$ is a factor: $(x-1)(x-2)(x^2-6x+9)=0$.",
+      "Factorise: $x^2-6x+9=(x-3)^2$.",
+      "Set each factor to zero: $x=1,\\ 2,\\ 3$ (3 is repeated)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 3,
+       "text": "Apply the Factor Theorem again to the cubic quotient, then factorise what is left."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 5,
+       "text": "A factor $(x-a)$ gives $x=a$, not $-a$."
+      }
+     ],
+     "notes": "Repeated root marked once."
+    }
+   ],
+   "gaps": [],
+   "notes": "Only equations whose solutions are all real whole numbers within the board are templated on number_line_marker. Parts with complex or fractional solutions, the coefficient-finding, omega, and repeated-root-constant parts are written answers, not constructions, so no gap is recorded."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:eb11c3-2-1",
+   "need_kind": "complex-plane / symbolic answer entry",
+   "description": "Most 'solve the quadratic' parts (complex, surd or fractional roots) have non-whole-number or non-real answers.",
+   "why": "number_line_marker takes whole-number targets only and no widget can enter complex or surd answers; these are algebraic, not constructions."
+  },
+  {
+   "lo_id": "lo:eb11c3-2-2",
+   "need_kind": "number_line_marker ray",
+   "description": "Ranges that are unbounded (try-15, exercise-23, exercise-24, challenge-7 b and c) and exercise-22 (-1<m<-1/2).",
+   "why": "The interval mode needs two finite whole-number endpoints; a ray or a half-integer endpoint cannot be expressed."
+  },
+  {
+   "lo_id": "lo:eb11c3-2-3",
+   "need_kind": "symbolic answer entry",
+   "description": "Sums, products, expressions in the roots and finding constants.",
+   "why": "Answers are fractions or algebraic values; no widget builds them."
+  },
+  {
+   "lo_id": "lo:eb11c3-2-4",
+   "need_kind": "symbolic factorisation entry",
+   "description": "Factorising over the complex numbers.",
+   "why": "Answers are complex factors; area_model handles only integer linear tiles."
+  },
+  {
+   "lo_id": "lo:eb11c3-2-5",
+   "need_kind": "symbolic equation entry",
+   "description": "Forming equations from roots, finding numbers from sum and product.",
+   "why": "Answers are equations or complex numbers; no widget fits."
+  },
+  {
+   "lo_id": "lo:eb11c3-3-3",
+   "need_kind": "synthetic-division table (fill in the bottom row of coefficients)",
+   "description": "Exercises warm-up-5, try-5 a-b and exercise-14 a-d ask for the quotient and remainder by synthetic division. The student would fill a row of coefficients.",
+   "why": "No existing instrument builds a row of coefficients or a division table. These are answers to calculate and type, not geometric or statistical constructions."
+  },
+  {
+   "lo_id": "lo:eb11c3-3-3",
+   "need_kind": "number_line_marker with non-integer targets",
+   "description": "challenge-5 asks for the other horizontal intercepts of 4x^4-4x^3-11x^2+12x-3, a double root at 1/2.",
+   "why": "The other intercepts are x = ±√3. number_line_marker only takes whole-number targets, and the book's numbers cannot change."
+  },
+  {
+   "lo_id": "lo:eb11c3-3-4",
+   "need_kind": "factorisation builder",
+   "description": "warm-up-6, try-6 and exercise-15 ask the student to write polynomials as products of linear and quadratic factors. challenge-7 asks for all roots, including 2±√10.",
+   "why": "These are cubics and quartics. area_model only tiles (x+a)(x+b) quadratics, and number_line_marker cannot mark irrational roots. Neither instrument builds the actual answer."
+  }
+ ]
+}

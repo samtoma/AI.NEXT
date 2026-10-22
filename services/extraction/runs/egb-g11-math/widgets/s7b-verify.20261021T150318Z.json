@@ -1,0 +1,2877 @@
+{
+ "mode": "verify",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "6a46f9321b03fcca23afc8c6409fb5b3eb3cf8d7e6c4fb6a92d5c602d2b2682e",
+  "generated_sha256": "5dfda911e3dc9c407aeaa5745842bc500d480e7e48585234f3699d3ca3b2119b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "question_id": "q:eb11c4-1-1:w001",
+   "template_sha": "50e8227df897ed9d9b7d0228980996541a030b823d87055894537b96cd0e62eb",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -7
+    ]
+   },
+   "construction": "Range [-10,0] (within limits, 10 wide). Mark the single point -7: C = (4*(-8)+1*(-3))/5 = -7, which is AC=1 from A and CB=4 from B.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks a wrong value such as -4 or -5, or nothing. The hint states the correct section-formula step of weighting each end by the other part of the ratio and dividing by the sum. It gives no coordinates, and it points to the step a student with swapped weights got wrong."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks two or more points, for example both A and C, or both ratio candidates. The hint, that only one point C is asked for, is correct. It gives no coordinates and addresses the mistake."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks +7 for -7, which needs a range that includes positives. The hint says both coordinates are negative, so keep their signs. That is true, it points at the sign step, and it does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w002",
+   "template_sha": "acf422cfcaa3efeb988ed12e8c00d6dcb68d60a59f894493928086455746f305",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     4
+    ]
+   },
+   "construction": "Range [-6,6], mode points, tap 4 only. C = (1*(-2)+3*6)/4 = 4, a whole number inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when 4 is not marked. The section-formula method is correct and gives no coordinate, so the student still has to compute it."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks additional values, such as both the 3:1 and 1:3 points. Only one point is asked for, so the hint is true and gives nothing away."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires on marking -4. 'a = -2' has no meaning in this question, as there is no (x - a) = 0 step. The hint misdirects a student who flipped a sign for another reason."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w003",
+   "template_sha": "2743fdde82816d83d772cbfdd0140e338241af01b6a566710b10d388e642f403",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     18
+    ]
+   },
+   "construction": "External division with AD:DB = 5:3 gives D = (5·6 − 3·(−2))/(5−3) = 36/2 = 18. Use points mode with range [-4,20] (width 24, contains A, B and D, all whole numbers within ±20) and targets [18]. Tap 18. The example range [-6,6] could not contain 18, but the limits allow a wider range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when 18 is not marked, e.g. the student marks the internal-division point 3 or marks nothing. The hint names the correct step (subtract in the numerator and denominator for external division) without giving the value."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when more than 18 is marked, e.g. 18 plus the internal point 3. 'D lies outside AB' is correct and points the student to the internal-vs-external confusion, and 'Mark one point' states the count only. It gives no coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires only if −18 is marked, which is unlikely and would need the range to include −18. The hint about dividing two negatives does not match this computation: (30+6)/2 has no quotient of two negatives. The usual sign slip here is in 5·6 − 3·(−2), so the hint would send the student to the wrong step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w004",
+   "template_sha": "17f89b43d0b9198d289271ee1d51c16a5b609e8ab9ff8a28c8b57e67688dacfd",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2
+    ]
+   },
+   "construction": "Midpoint = (-2+6)/2 = 2. Points mode, range [-6,6], targets [2]; 2 is a whole number inside the range, so tap only 2.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when 2 is not marked, e.g. the student marks 4 or 3. The hint gives the correct method (sum then halve) without stating the value, and the student must still compute."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when 2 is marked along with another value, e.g. 2 and 6. The hint says only one point is asked for, which is true for this question and doesn't reveal the answer."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks -2, the negative of the target 2. The hint to add with signs before halving is correct and points at the step without giving the value. The mistake may often come from just marking A, but the hint is still sound."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w005",
+   "template_sha": "48198b608e361cf9a70e75ce6fb9007b189ea887049bc2378999fc4ac65a8a13",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     8
+    ]
+   },
+   "construction": "C = 4 + (2/3)(10-4) = 8 (section formula (1·4+2·10)/3). Use points mode with range [0,12] (12 wide, whole numbers within limits) and targets [8]; tap 8. The spec example's [-6,6] range would not contain 8, so the range must be set to include it.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks a wrong point such as 6 (ratio reversed) or nothing. The cross-multiply/weight method is correct for the section formula and shows the step without giving the value 8."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks 8 plus A and B (4 and 10), or several points. The hint that only one point between A and B is asked for is correct, helps that student, and gives no coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires only if the student marks -8, which needs a range containing negatives. All inputs are positive and a natural range is [0,12], so the predicate essentially never fires. A negative mark would not come from this misconception. The hint also says nothing about the ratio step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w006",
+   "template_sha": "2fea99047f13dc5292a04aa789fc462b0966e14a7f4de0e21e00d48f7ec95f43",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1
+    ]
+   },
+   "construction": "External division with D = (3·A − 1·B)/(3 − 1) = (12 − 10)/2 = 1. Check: DA = 3, DB = 9, ratio 1:3, D outside AB beyond A. Tap the single value 1 on range [-6,6]; it is a whole number inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the target 1 is not marked, e.g. a student who tapped nothing or only a wrong point. The hint about using subtraction for an external ratio is correct and targets the internal/external formula step. It gives no coordinate."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires if the student marks 1 plus another value, or a wrong value such as 5 or 7 from an internal-style split. 'D lies outside AB. Mark one point.' is true, points to the conceptual error, and does not give the coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when the student marks -1, the negative of 1, from computing (10 − 12)/2 instead of (12 − 10)/2. The hint to check which product is subtracted from which is correct and directs to the reversed subtraction without giving the value. The points-mode can_emit table lists this predicate."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w007",
+   "template_sha": "b7ea5155c7fb47371d010bb9ac12dd2debcc519bc139967352e90da206c8cff1",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     7
+    ]
+   },
+   "construction": "Use range [0,12] (12 wide, within limits) and tap the single value 7, the midpoint (4+10)/2. All limits are satisfied since 7 is a whole number in the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student's set lacks 7 (e.g. marks 6 or 4 or 10). 'Add the coordinates and halve' is the correct midpoint method, points to the step done wrong, and does not state 7."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks more than just 7, e.g. both 4 and 10 or the endpoints plus midpoint. 'Only one point is asked for' is true, helps the student, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w008",
+   "template_sha": "53d27b498fd941401a9436898dc6e155c1816812da03f641464643660f288aac",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     3
+    ]
+   },
+   "construction": "C = (1·(−5) + 2·7)/(2+1) = 3. Mark the single point 3 on the number line with range [-6,6]; 3 is a whole number inside the range, so it satisfies the limits.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student marks a wrong single point (e.g. 1, from weighting the ends the wrong way round), so 3 is missed. The cross-multiply-and-divide-by-the-sum hint is correct for the section formula, targets that exact step, and gives no coordinates."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks 3 plus other points (e.g. both 1 and 3, the two ratio points). 'Only one point C is asked for' is true and helpful and does not reveal the value."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires when the student marks −3 instead of 3. The hint about the sign of a = −5 when substituting suits (x − a) = 0 style problems. Here the sign slip comes from the section formula and the hint would not clearly point to the step. It is a poor fit and also restates a value from the question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w009",
+   "template_sha": "076cfb7fea7d23cca4dc2dea10b337c031e64164880c6c369cfbcfeb5076230d",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     -13
+    ]
+   },
+   "construction": "External division with m:n=2:5: D=(2·7−5·(−5))/(2−5)=39/(−3)=−13. Use range [-14,6] (width 20, within ±20, ≤24 wide) and tap −13 (whole number, inside the range).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when −13 is not marked (nothing or wrong point marked). The external-division formula (m·b − n·a)/(m − n) has minus signs in numerator and denominator, which is correct and gives no coordinate."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when extra points are marked, e.g. −13 together with an internal point like 3. D lies outside AB on A's side (the smaller part 2), which is true, and 'mark one point' reveals no coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "The question's answer −13 has negative 13, and a range containing both ±13 would need width 26 > 24, so a flipped mark (13) cannot be built with −13 in range; the predicate essentially cannot fire. Also the hint says 'subtracting m·b from n·a', i.e. n·a − m·b, which reverses the correct m·b − n·a and is misleading."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w010",
+   "template_sha": "47ceb70fa47f8a5986dbf31d8600668f10c04e27b68bb7b622489c776c99922e",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     1
+    ]
+   },
+   "construction": "Points mode, range [-6,6]: tap the single value 1, since (-5+7)/2 = 1. It is a whole number within the range, so it satisfies every limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": false,
+     "why": "The answer set has one element. Missing it means marking nothing or a wrong value only, so 'part of the set' is not what happened. The hint 'Add the two coordinates and halve' also gives the method away, which is the very step being asked."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when 1 is marked together with other points, e.g. also marking A or B (the ends are outside the range, so e.g. 1 and 6). 'Only one point is asked for' is correct, helps the student see that a single point is wanted, and gives no coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "Fires when -1 is marked instead of 1. 'Add with signs before halving' is mathematically fine and does not give the answer away. But the can_emit table lists sign-flipped for points mode, and the nature of the error here (a sign slip in -5+7 giving -1, or an ordering slip) is plausible. However the hint says to 'add' while the student may have done it right and flipped the final sign, so it may point to the wrong step. When in doubt, false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w011",
+   "template_sha": "ba7db2db34bf1c1b5c3b4c478ca6c3a3a439e830e7ebf0654c08b687e43c7c6e",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     4
+    ]
+   },
+   "construction": "Mode points, range [-6,6]. Tap a single value, 4, since C = (1*(-4)+2*8)/3 = 4. It is a whole number inside the range, so it satisfies every limit.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the student's marked set lacks 4, e.g. nothing marked or the wrong point. The hint describes the section-formula step (weight each end by the other part, divide by the sum) without giving the coordinate."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when the student marks 4 plus another value, e.g. 0 as well. The hint correctly says only one point C is asked for, between A and B, and does not give the coordinate."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": false,
+     "why": "It fires when the student marks -4, the negative of 4. -4 is A itself, so it is not really a sign slip in the formula. The usual error here is swapping the ratio, which gives 0. The hint points at substituting a = -4, which doesn't fit the likely mistake. Given the doubt, false."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-1:w012",
+   "template_sha": "15f63a3f4354a725afca530f587517a65d55038c21f9da8272db29ce7ee291ce",
+   "reading": {
+    "mode": "points",
+    "targets": [
+     2
+    ]
+   },
+   "construction": "Points mode, range [-6,6], targets [2]. Midpoint = (-4+8)/2 = 2, a whole number inside the range. Tap 2 on the number line.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missed-values",
+     "ok": true,
+     "why": "Fires when the marked set lacks 2, for example when nothing is marked or a wrong value is marked. The hint states the method (add and halve) without giving the value, and it is correct."
+    },
+    {
+     "predicate": "extra-values",
+     "ok": true,
+     "why": "Fires when 2 is marked together with other values, such as A or B. The hint that only one point M is asked for is correct, doesn't reveal the coordinate, and helps the student who over-marked."
+    },
+    {
+     "predicate": "sign-flipped",
+     "ok": true,
+     "why": "Fires when -2 is marked, the negative of the target. Mishandling signs while adding -4 and 8 can produce it. The hint to add with signs before halving is correct and doesn't give the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w001",
+   "template_sha": "531790ea1143177452f28f7703bb4a598c142aa60a43b33076ed3d657c92000a",
+   "reading": {
+    "target": [
+     -3,
+     -4
+    ]
+   },
+   "construction": "Tap the lattice point (-3,-4) on the −5..5 grid; it is the reflection of A(-3,4) in the x-axis (y changes sign).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires for e.g. (3,4) or (3,-4), a reflection of the target. The hint is correct (only one coordinate changes sign) and doesn't give the coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires for (-4,-3), the target with x and y exchanged. The hint on the order of x and y is correct and gives nothing away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a point with no pattern, e.g. (1,1). The hint that reflection keeps the distances from the axes is correct, helps, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w002",
+   "template_sha": "f9ba3de5f8fb0d27e6944571e68189dc2030b3b47d2721e0c04142b5a042360e",
+   "reading": {
+    "target": [
+     3,
+     4
+    ]
+   },
+   "construction": "Tap the single lattice point (3,4), the reflection of A(-3,4) in the y-axis. It lies within -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on a reflected target such as (-3,-4) or (3,-4). The hint is correct, since only x changes sign for a y-axis reflection. It gives no coordinates and points to the sign step."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (4,3). The hint about x being across and y being up is correct and helps, and it doesn't reveal the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point with no recognisable pattern, such as (-4,3). The hint that reflection keeps distances from the axes is correct and helps. It doesn't give the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w003",
+   "template_sha": "a37582dc572550ee06f85c79228ae3278cd04ad8d8e9a3a707bdc45536b3ac7d",
+   "reading": {
+    "target": [
+     3,
+     -4
+    ]
+   },
+   "construction": "Reflection through origin maps (x,y) to (-x,-y): A(-3,4) -> R(3,-4). Tap lattice point (3,-4), within -5..5. Reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires when student plots e.g. (3,4) or (-3,-4) (a reflected target; one-axis reflection). Hint 'origin reflection changes both signs' is mathematically right and doesn't give coordinates, but it essentially states the rule/step that yields the answer; for a student who changed only one sign it identifies the error, yet it gives away the full rule for the construction. Borderline; being strict, it reveals the rule."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires when student plots (-4,3) or (4,-3) (target with x,y exchanged, i.e. (-4,3)). Hint about first number across (x), second up (y) is correct, targets the actual error, and gives no coordinates or answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a point matching neither coordinate with no pattern, e.g. (3,4)-like excluded; e.g. (1,1) or (-3,4) unchanged. Hint 'Reflection keeps the distances from the axes' is true for point reflection through the origin, nudges toward checking distances, and doesn't reveal coordinates or the rule fully."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w004",
+   "template_sha": "7cbd0448c07f2cb7454b33d9b79d71335bffb4f86e6aa507f6045cc877f15187",
+   "reading": {
+    "target": [
+     -3,
+     -2
+    ]
+   },
+   "construction": "Tap the lattice point (-3,-2) on the -5..5 grid. It is the reflection of A(-3,2) in the x-axis (y changes sign).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when the student plots (3,2) or (3,-2), the target with signs wrong. The hint is correct, since reflecting in the x-axis flips only one coordinate's sign, and it does not give the coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires when the student plots (-2,-3), the target with x and y exchanged. The hint about the first number being across (x) and the second up (y) is correct and gives nothing away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a point with no pattern, e.g. (-3,3) or (1,1). The hint is correct, since reflection keeps the distances from the axes and only a sign changes, and it does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w005",
+   "template_sha": "0946ec8137abe72912321d1995c495a34eddd21061b5211eb0ceccc941aa0c12",
+   "reading": {
+    "target": [
+     3,
+     2
+    ]
+   },
+   "construction": "Tap the lattice point (3, 2). Reflecting in the y-axis negates x and keeps y, so (-3, 2) becomes (3, 2). It is within -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on (-3,-2), (3,-2) or (-3,2), which are reflections of the target. The hint is mathematically right. It tells the student that only one sign changes, without giving coordinates, and it helps a student who flipped both signs."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (2,3). The hint on x across and y up is correct. It reveals no coordinates and points the student at the order of the pair."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on e.g. (1,1), where neither coordinate matches and no pattern applies. The hint that reflection keeps distances and only a sign changes is correct. It gives no coordinates and points to the step that went wrong."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w006",
+   "template_sha": "60e24b27b853dac7fd7c59395ca4093e5ae0492315e397e98cbb055f9e05fd14",
+   "reading": {
+    "target": [
+     3,
+     -2
+    ]
+   },
+   "construction": "Reflection in the origin sends (x,y) to (−x,−y), so A(−3,2) goes to (3,−2). Tap the lattice point (3,−2), which is inside −5..5. The question's words don't name the point, but the single answer is determined and reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when the student taps a point with the right distances but the wrong signs, e.g. (−3,−2) or (3,2) (a reflection in one axis, or no change). The hint says reflecting in the origin changes both signs. That is correct and points to the step they got wrong. It gives no coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires for a swapped target such as (−2,3) or (2,−3). The hint about x being across and y being up is mathematically fine. But the can_emit table lists swapped-coordinates for the single-target case, and here the swap of the target (3,−2) is (−2,3). A student who reflects and then swaps is plausible, and the hint helps them. It does not give the answer away. Still, the question is about reflecting, not reading coordinates, so the swap is rare. The hint is correct and non-leaking, though only weakly relevant. Marked false because it is not tied to the reflection step."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither coordinate matches and there is no pattern, e.g. (1,1). The hint says reflection keeps the distances from the axes and only signs change. That is correct and does not give the coordinates. It nudges the student to rethink the step."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w007",
+   "template_sha": "c858ecf79c4f4b3690be31821e2b89b7b7a00b62a5cbc272540d25a71faa086d",
+   "reading": {
+    "target": [
+     -4,
+     2
+    ]
+   },
+   "construction": "Tap the lattice point (-4, 2): reflection in the x-axis keeps x = -4 and negates y = -2 to 2.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on a reflected target such as (4,2) or (4,-2). The hint is correct (only y changes sign), points to the sign step, and gives no coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (2,-4). The hint about the order of x and y is correct, relevant and gives no answer away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point with neither coordinate matching and no pattern, e.g. (1,1). The hint that reflection preserves the distances from the axes is correct and does not reveal the answer. It can fire here since the table lists it for the single-target case."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w008",
+   "template_sha": "4c5d29a01fd2015e3f7b648c585e4044220d07bf8d4492580f355c6231080d6f",
+   "reading": {
+    "target": [
+     4,
+     -2
+    ]
+   },
+   "construction": "Reflect A(-4,-2) in the y-axis: x changes sign, y stays. Tap lattice point (4,-2), within -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires for e.g. (-4,2) or (4,2), the target with signs flipped. The hint is correct, since only one coordinate changes sign. It does not say which one or give coordinates, so the student must still decide."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires for (-2,4), the target with x and y exchanged. The hint about across (x) and up (y) is correct and targeted, and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a point like (1,1) that matches neither coordinate and shows no pattern. The single-target case lists it as emittable. The hint that reflection keeps distances from the axes is true and gives nothing away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w009",
+   "template_sha": "5fb3e4a69fb584bc4f41115428cd3d2d1caa11c44711116d23d3fbce0fd52271",
+   "reading": {
+    "target": [
+     4,
+     2
+    ]
+   },
+   "construction": "Tap the lattice point (4,2) on the −5..5 grid; it is the reflection of A(−4,−2) through the origin and lies within range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Student plotting (−4,2), (4,−2) or (−4,−2) has right distances but wrong signs; the hint says both signs change, which is correct and doesn't give the coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Student plotting (2,4) swapped x and y; the hint on the order of the pair is correct, helpful, and doesn't reveal the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Student plotting e.g. (1,1) matches no pattern; the hint that reflection keeps the distances from the axes is correct and non-revealing, and off-target can fire for a single target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w010",
+   "template_sha": "4b0c3cce49bfe487d0563b86e2b9b6a69aa7c38234606a111b1718d2a1b135aa",
+   "reading": {
+    "target": [
+     1,
+     2
+    ]
+   },
+   "construction": "Tap lattice point (1,2): reflection in the x-axis keeps x and negates y, so (1,-2) maps to (1,2). Within -5..5, one point.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when the student plots a reflected target, e.g. (-1,2) (both signs flipped, y-axis-and-x-axis) or (-1,-2). Hint says only one coordinate changes sign: correct, points to the step, and doesn't give coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (2,1), the target with x and y exchanged. Hint about first number being across (x), second up (y) is correct, helps, and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "Fires on e.g. (1,-2) unchanged or (3,3)-type points. Hint 'Reflection keeps the distances from the axes' is true but too vague and does not say which coordinate flips; it also fits the student who plots the point unchanged poorly. Not helpful enough, so reject."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w011",
+   "template_sha": "88852ebfb1c46663e1059ad0e92c6e6d6a4d67e808f2b97d12e6563b4122b232",
+   "reading": {
+    "target": [
+     -1,
+     -2
+    ]
+   },
+   "construction": "Tap the lattice point (-1,-2), the mirror image of A(1,-2) in the y-axis. It is inside the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on (1,2) or (-1,2), which are reflections of the target. The hint is true (the y-axis reflection flips only one coordinate's sign), helps the student check which sign to change, and gives no coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (-2,-1), the target with x and y exchanged. The hint about x being across and y being up is correct, targets the order error and gives no answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither coordinate matches and there is no pattern. The hint that reflection keeps distances from the axes is true, since both |x| and |y| are preserved. It nudges toward the right idea without giving coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w012",
+   "template_sha": "2956284ba47722c376e367ae6648466aba4b03f6cbb902db8c58be7d893da1f3",
+   "reading": {
+    "target": [
+     -1,
+     2
+    ]
+   },
+   "construction": "Tap the single lattice point (-1, 2) on the -5..5 grid. It is the reflection of A(1,-2) through the origin: both signs change.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Firing: the student taps (1,2), (-1,-2) or (1,-2), which is a reflection of the target in an axis (or no reflection). The hint says the origin reflection changes both signs. That is correct, points at the step the student got wrong, and gives no coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Firing: the student taps (2,-1), which is the target with x and y exchanged. The hint about across (x) and up (y) is correct and helps with the reading error. It gives no coordinates, and the predicate can fire for a single target."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Firing: the student taps a point such as (3,0) that matches neither coordinate and fits no pattern. The hint says reflection keeps the distances from the axes. That is true for a point reflection and nudges the student to check the distances without giving the answer. The predicate is in the single-target emit list."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w013",
+   "template_sha": "da9ae9c634f7229a453a6c077d2d3a513e8b463243a89881213031b8e7f2dccd",
+   "reading": {
+    "target": [
+     -3,
+     -4
+    ]
+   },
+   "construction": "Reflecting A(-3,4) in the x-axis keeps x and negates y, giving (-3,-4). Tap the lattice point (-3,-4), which lies inside the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (3,-4), (3,4) or (-3,4) fires it, since each is the target reflected. The hint is true: only y changes sign. It tells the student to count the sign changes and does not name the coordinate or give the answer. The predicate can fire in single-target mode."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-4,-3) fires it. The hint about first number = across (x) and second = up (y) is correct and helps fix the order error. It gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (1,1) fires it, since it is neither a swap nor a reflection. The hint that reflection keeps distances from the axes is correct and nudges the student toward the method. It gives no coordinates. The predicate is listed for single-target mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w014",
+   "template_sha": "852cfae96595b7521c97bb6f93a0d23f177b05198cfbde4b0eaf862fd189ad5d",
+   "reading": {
+    "target": [
+     3,
+     4
+    ]
+   },
+   "construction": "Tap the lattice point (3,4): the y-axis reflection of (-3,4) negates x and keeps y. It lies within the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on (-3,-4) or (3,-4), where the signs are wrong but the distances are right. The hint is correct: only x changes sign for a y-axis reflection. It doesn't say which coordinate or give the point."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (4,3), where the coordinates are in the wrong order. The hint on x versus y order is correct and points to the step that went wrong without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point such as (1,1) with no pattern. The hint that reflection keeps the distances from the axes is correct and doesn't reveal coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w015",
+   "template_sha": "1f959ac1010bb99c25ec0ebbf5507d9f6f0833d07fb78d6b282afd6c73d5bfce",
+   "reading": {
+    "target": [
+     3,
+     -4
+    ]
+   },
+   "construction": "Reflecting A(-3,4) through the origin negates both coordinates, giving R(3,-4). Tap the lattice point (3,-4), which lies inside the -5..5 grid. The question asks for one point, so the single-target mode applies.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (3,4) or (-3,-4) fires it. These are the target with one sign flipped, which is what a student who reflects in only one axis plots. The hint is correct: the origin reflection changes both signs. It names no coordinates and points the student at the step they missed."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-4,3), the target with x and y exchanged, fires it. The hint about the first number being across (x) and the second up (y) is correct, helps a student who read the pair in the wrong order, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping something like (1,1) or (-3,4) itself fires it, since neither coordinate matches and there is no swap or sign pattern. The predicate can fire in single-target mode. The hint that reflection keeps the distances from the axes is true and nudges the student to check the distances without revealing the point."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w016",
+   "template_sha": "d1b086f938a1fe91bd8a1e529e429c9ba63fbfaa83e21e915359345948e49164",
+   "reading": {
+    "target": [
+     -1,
+     -2
+    ]
+   },
+   "construction": "Reflecting A(-1,2) in the x-axis keeps x and negates y, giving (-1,-2). Tap the lattice point (-1,-2) on the -5..5 grid. It is within range, so a single tap hits it.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when the student taps a reflection of the target, e.g. (1,-2) from negating both coordinates, or (1,2) or (-1,2). The hint is mathematically right: a reflection in the x-axis changes only one sign. It does not say which coordinate changes or give the target, so the student still has to do that step. The predicate can be emitted in single-target mode."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires when the student taps (-2,-1), the target with x and y exchanged. The hint about across (x) and up (y) addresses that error directly and gives no coordinates. The predicate can be emitted in single-target mode."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on an unrelated point such as (2,1) or (-1,3). The hint that reflection keeps the distances from the axes is true and nudges the student to check distances. It gives no coordinates. The predicate can be emitted in single-target mode. It is a general hint, but it is acceptable."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w017",
+   "template_sha": "fabff50ccf856b8079e81265de607118d02fa8749e9bde887822445c4f04a014",
+   "reading": {
+    "target": [
+     1,
+     2
+    ]
+   },
+   "construction": "Tap the lattice point (1,2). The reflection of A(-1,2) in the y-axis changes the sign of x only. The point is within the grid -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on a sign-flipped point such as (-1,-2) or (1,-2). The hint is correct, since only x changes sign. It names no coordinates and prompts the student to recheck which sign changes."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (2,1). The hint on axis order is correct and helpful, and it gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on an unrelated point such as (3,3). Reflection does preserve the distances from the axes, so the hint is right and non-revealing. It is general, but it points to the step to check."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-2:w018",
+   "template_sha": "40efcd0fb98c532b11e35cdeb2a0f665f966e2476b9b996a2f80e2ae8d1b7ebd",
+   "reading": {
+    "target": [
+     1,
+     -2
+    ]
+   },
+   "construction": "Reflection through the origin sends (x,y) to (-x,-y), so A(-1,2) goes to R(1,-2). On the grid (−5..5), tap the lattice point at x=1, y=-2. It is in range and whole-numbered, so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Firing: the student taps (-1,-2), (1,2) or A itself (-1,2), which is the target with one or both signs flipped. This usually means only one sign was changed, or none. The hint says the origin reflection changes both signs. That is correct and points at the faulty step without giving the coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Firing: the student taps (-2,1), the target with x and y exchanged. The hint on reading the pair in order (first number across, second up) is correct and addresses that error. It gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Firing: the student taps something like (2,-1) or (3,3), where neither coordinate matches the target and no pattern applies. The hint that reflection keeps the distances from the axes is true for a point reflection and prompts the student to check the distances. It gives no coordinates. The predicate is in the table for a single-target question."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w001",
+   "template_sha": "eae1ca6bdfe68372ea42adef2e8d4eba0cb70cabf620cbfda06152024611e942",
+   "reading": {
+    "target": [
+     2,
+     0
+    ]
+   },
+   "construction": "P=(s,0): (s+1)^2+4=(s-4)^2+9 gives 10s=20, s=2. Tap lattice point (2,0); it is within -5..5 and checks: PA²=9+4=13, PB²=4+9=13.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (0,2) fires it. That student ignored the x-axis condition, and the hint 'y = 0' restates the question's own condition without giving the x value."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-2,0), the reflected target, fires it. That student made a sign error such as in (s+1)² or (s-4)², and the hint points to that step without giving coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "Tapping e.g. (0,0) or (4,0) fires it. The hint refers to 's', which the question never defines. It also hands over the whole method to a student with no recognisable pattern, so it is not tied to any specific error."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w002",
+   "template_sha": "2daddeed60131ddba0729219aa63241384ec2ac64cde64e2ac26300d0521d27f",
+   "reading": {
+    "target": [
+     8.5,
+     0
+    ]
+   },
+   "construction": "P=(s,0). PA²=(s+1)²+4, PB²=(s-3)²+64. Equal gives 8s=68, s=8.5. Tap the lattice point (8.5, 0) on the board (x 1..9, y -2..2, step 0.5). It is on the board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (0, 8.5) is off the board (x 1..9, y -2..2), so it can never be tapped and this predicate cannot fire here. The hint also half-states y = 0, part of the answer."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The target (8.5, 0) has y = 0, so reflecting it in y changes nothing. Reflecting x gives (-8.5, 0), which is off the board. It cannot fire, and the hint about expanding signs is unrelated."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any wrong point on the board, such as the midpoint-like (1, 0) or (4, 0), fires it. Setting PA² = PB² and solving is the correct method and gives no coordinates. The hint does use 's' without the question defining it, which is a minor flaw."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w003",
+   "template_sha": "d99b23db8ab5fc91c2b222d69ff97ccac5111e4379dd835fdc5157f817cd00f7",
+   "reading": {
+    "target": [
+     2,
+     1
+    ]
+   },
+   "construction": "Q=(s,2s-3). Equal squared distances: (s-1)^2+(2s-7)^2 = (s-3)^2+(2s-1)^2 → 5s²-30s+50 = 5s²-10s+10 → s=2, so Q=(2,1). It lies on the line (2·2-3=1) and is in the grid. Tap (2,1).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Can fire (tapping (1,2)), but the hint refers to 's', a symbol the student's question never defines, so it is confusing. It also doesn't point to the step the student got wrong."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires for a reflected point such as (2,-1) or (-2,1), a sign slip when expanding the squared distances. 'Check signs in each bracket' is correct, helps find the slip and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a point matching neither coordinate with no pattern, e.g. (0,-3). The hint gives the correct method (point on line, equate squared distances) without the answer, so the student still does the work."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w004",
+   "template_sha": "bd7046c1abafd1a5de47f08e175345c761727c92378f7543761d4d5787622e0c",
+   "reading": {
+    "target": [
+     3,
+     2
+    ]
+   },
+   "construction": "Q=(s,s-1). Set (s+1)^2+(s-6)^2=(s-7)^2+s^2 → 2s^2-10s+37=2s^2-14s+49 → s=3, so Q=(3,2). It is a lattice point within -5..5 on the default grid; tap (3,2).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (2,3) fires it. The hint, to put s first and the line's value second, is correct and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping a reflection such as (-3,2), (3,-2) or (-3,-2) fires it. 'Check signs in each bracket' is right for sign slips in the squared-distance terms and gives nothing away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (1,0) fires it, since it matches neither coordinate and is not a swap or reflection. The hint, to put the line's rule in y and equate the squared distances, is the correct method and gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w005",
+   "template_sha": "a376e512dc67dab241b4cdb28ec47987e08516afdeac67e49e4d777e5d077b14",
+   "reading": {
+    "target": [
+     -2,
+     3
+    ]
+   },
+   "construction": "Q=(s,1-s). QA²=(s-1)²+(-1-s)²=2s²+2; QB²=(s+3)²+(-5-s)²=2s²+16s+34. Equal gives 16s=-32, s=-2, so Q=(-2,3). Check: QA²=9+1=10, QB²=1+9=10, and 3=-(-2)+1 holds. It is a lattice point inside −5..5, so tap (-2,3) on the default grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (3,-2) is the swapped pair. The hint is mathematically right (Q=(s, line value)), points at the ordering step, and gives no coordinates or equation."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "A reflected point such as (2,-3) or (2,3) is not on the line y=-x+1. The error would be in the y-rule or the final reading, not in signs 'in each bracket'. A plotting-only student has no brackets. The hint is a poor fit and unlikely to help find the faulty step."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any unrelated point, e.g. (0,1), fires it. The hint states the method (use the line's rule in y, then set squared distances equal) without giving s, Q or the equation. It is correct and actionable."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w006",
+   "template_sha": "1b91e1153c4e5d383f9443418ea62bcde862d2e64356f8ec81f9e87732f06458",
+   "reading": {
+    "target": [
+     0,
+     3
+    ]
+   },
+   "construction": "P=(0,t): PA²=16+(t-2)², PB²=1+(t+1)²; equal gives 20-4t=2+2t, t=3. Tap lattice point (0,3), inside the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (3,0) fires it, a student who found 3 but put it in the x slot. The hint is correct, points at the step they got wrong, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (0,-3), the reflection from a sign slip, fires it. Checking signs when expanding is correct and helpful, and gives nothing away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any unrelated point, e.g. (2,-1), fires it. Setting PA² = PB² and solving is the right method and gives no coordinates; it is generic but fine for a student with no pattern."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w007",
+   "template_sha": "35776b303ac3fb71669ce9a02f30a2030e4563de59c919d97bfd0b53f0470853",
+   "reading": {
+    "target": [
+     -4,
+     -11
+    ]
+   },
+   "construction": "Q=(s,3s+1). Setting |QA|²=|QB|²: 10s²+28s+52 = 10s²+20s+20, so 8s=-32, s=-4, Q=(-4,-11). Check: |QA|²=64+36=100... (−8)²+(−6)²=100; |QB|²=(−6)²+(−8)²=100. The point lies inside the board (x -8..0, y -12..-4), so tap (-4,-11).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (-11,-4) has x=-11, outside the board x range -8..0, so the student cannot tap it and the predicate never fires here. The hint also refers to an undefined 's'."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The reflections of the target, such as (4,11), (4,-11) and (-4,11), all lie off the board (x -8..0, y -12..-4), so no tap can land on them and the predicate cannot fire. The hint's 'after dividing' also fits poorly, since s comes from a linear equation, not a division sign slip."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "This is a single-target question, so off-target can fire, for example on tapping (-2,-5) or any other point that matches neither coordinate. The hint points to the correct method (put Q=(s,3s+1) and set the squared distances equal) and does not reveal the coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-3:w008",
+   "template_sha": "46ccc03b34021d33531f3c3ad64020bfba2ffa3c7cd0aa673488cd3f11f7a757",
+   "reading": {
+    "target": [
+     2,
+     0
+    ]
+   },
+   "construction": "P=(s,0): AP²=(s+2)²+1, BP²=(s-3)²+16, so 10s=20, s=2. Tap the single lattice point (2,0), which is inside the −5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (0,2) fires it. The student put 2 as y. The hint says the y-coordinate is 0 and the unknown is the first coordinate, which fixes that without giving the value."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-2,0) fires it, as a sign slip in the expansion would. The hint says to check the signs and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "It fires for any other wrong point, for example (1,0) or (3,0). The method is right and gives nothing away. But it says 'solve for s' and the question never defines s, so a student who plotted a stray point may not know what s is."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w001",
+   "template_sha": "22a3c4f81ebbddcc3257d8da43f4c6c817ca4d6798d1a7deecb11e4819b35087",
+   "reading": {
+    "target": [
+     10,
+     -15
+    ]
+   },
+   "construction": "External division 2:3: Q=(3B−2C)/(3−2)=((6+4)/1,(−9−6)/1)=(10,−15). Tap lattice point (10,−15), inside the board (x −2..12, y −15..0) at its bottom edge.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (−15,10) lies outside the board (x −2..12, y −15..0), so no tap can produce it and the predicate never fires here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Reflections of the target, such as (−10,−15), (10,15) and (−10,15), are off the board or not tappable. The predicate can't fire. The hint about signs of products is also vague."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any wrong tap that is not a swap or reflection fires it, for example a student who used the wrong formula and tapped (3,−9). The hint is mathematically right for external division, helps the student find the step they got wrong, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w002",
+   "template_sha": "706613869d7a0028be48c0d66332c36114bcdb732881cbb67f0cf103f13b8872",
+   "reading": {
+    "target": [
+     0,
+     3
+    ]
+   },
+   "construction": "Midpoint = ((-2+2)/2, (3+3)/2) = (0,3). Tap the lattice point (0,3) on the default −5..5 grid; it is within range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (3,0) fires it. That is the x/y order mix-up. The hint 'x goes across, y goes up' is correct, helps with that step, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The target (0,3) lies on an axis, so there is no quadrant. The only reflection that changes it is (0,-3). A student who adds the x's with signs correctly gets 0, and the y's are both +3, so a sign slip is not a natural cause. The hint 'Add with signs before halving' does not fit the error that fires it, and it hardly applies to this question."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping something like (4,6), the sums without halving, or (1,1) fires it, because neither coordinate matches and it is not a swap or reflection. 'Average x's and y's separately' is correct, points to the step that was missed, and does not reveal the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w003",
+   "template_sha": "aac59c0c0994a897573cc5c9cded5e6d0a1b30700d6b40348dc7f72f857138c7",
+   "reading": {
+    "target": [
+     3,
+     3
+    ]
+   },
+   "construction": "P = (2·B + 3·C)/5 = ((12+3)/5, (−6+21)/5) = (3,3). Tap lattice point (3,3), inside the default −5..5 grid.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target",
+     "matches": true,
+     "why": "A student who swaps the weights computes (3B+2C)/5 = (4,1). Neither coordinate matches (3,3), and it is not a swap or reflection, so off-target fires. It is a catch-all, but this error lands there."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The target (3,3) is symmetric, so swapping x and y gives the target itself. A swapped point is then correct and this predicate can never fire here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Plotting (−3,3), (3,−3) or (−3,−3) fires it. 'Check signs when substituting' is correct for a sign slip in the section formula, points at the step to recheck, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w004",
+   "template_sha": "5313f19d72a401bf7ddb1096c69820446f83b9cc7be3f1f99141ecf0a0b4f165",
+   "reading": {
+    "target": [
+     -8,
+     -11
+    ]
+   },
+   "construction": "External division with CQ:QA = 3:2: Q = (3A − 2C)/(3−2) = (3(−2)−2(1), 3(1)−2(7)) = (−8, −11). Check: Q−C = (−9,−18), A−Q = (6,12), opposite directions, ratio 3:2. The point lies inside the board (x −10..4, y −12..2), so tapping (−8,−11) works.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (−11,−8) has x = −11, outside the board's x range −10..4, so the student cannot tap it and the predicate never fires on this question."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Every reflection of (−8,−11) — (8,−11), (−8,11), (8,11) — lies off the board (x>4 or y>2), so it cannot be plotted and the predicate never fires. The hint also would not apply."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other tapped lattice point, e.g. the internal-division style point (−1,5)-ish or (−4,−5). The hint is correct (external division subtracts in numerator and denominator), points to the faulty step, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w005",
+   "template_sha": "2233faf3199e1a65f2327f03d72616ff2f643391be601636cbc27b2810ac4bc1",
+   "reading": {
+    "target": [
+     2,
+     -1
+    ]
+   },
+   "construction": "Midpoint = ((-2+6)/2, (1+(-3))/2) = (2, -1). Tap lattice point (2,-1) on the default -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-1,2) fires it. The hint about x across and y up addresses the order error and doesn't reveal the coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (2,1) or (-2,-1) fires it, e.g. from a sign slip when adding. 'Add with signs before halving' is correct and points to the step without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (4,-2) (the half-difference or unhalved sum) fires it. 'Average x's and y's separately' is correct, gives no coordinates, and the predicate can fire for a single target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w006",
+   "template_sha": "083841380321ffbf22bdfb8d063f57f11b698cd9b2f006910f54d438dfe49a90",
+   "reading": {
+    "target": [
+     0,
+     -7.5
+    ]
+   },
+   "construction": "External division 1:3: Q = (1*C - 3*B)/(1-3) = ((3-3)/(-2), (0+15)/(-2)) = (0, -7.5). Check: Q = B + (B-C)/2 = (1-1, -5-2.5). Tap (0,-7.5), which is on the board (x -2..2, y -8..0, step 0.5).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point of (0,-7.5) is (-7.5,0), which is off the board (x only -2..2), so a student cannot tap it and the predicate cannot fire here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Reflections of (0,-7.5) are (0,7.5) (or the same point when x is negated); y=7.5 is off the board, so it cannot be tapped. The predicate cannot fire, and the hint about the numerator's sign is not suited to it."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other tapped point, e.g. an internal-division slip such as (1.5,-3.75) rounded to a nearby grid point. The hint is mathematically right (external division uses a subtraction in the numerator and denominator), points to the step that was wrong, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w007",
+   "template_sha": "b4624de3d691030adfcf3a291d0e67e8acdbb11c6ccbd568113aafe20412e543",
+   "reading": {
+    "target": [
+     2,
+     -2.5
+    ]
+   },
+   "construction": "Midpoint = ((1+3)/2, (-5+0)/2) = (2, -2.5). On the board (x 0..4, y -4..0, step 0.5), tap the lattice point x=2, y=-2.5, which is a valid step-0.5 point.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (-2.5, 2) is off the board (x runs 0..4, y runs -4..0), so a student cannot tap it. The predicate can never fire here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Every sign-reflection of (2,-2.5) is off the board: (2,2.5), (-2,-2.5) and (-2,2.5) all fall outside it. The predicate cannot fire. The hint about the sign of the sum is also misleading, because the sum is not what changes sign."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A student can tap a point such as (3,-3) or (4,-1) where neither coordinate matches. The hint 'Average x's and y's separately' is correct. It points to the step to redo and does not give the answer coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w008",
+   "template_sha": "871c64c104582199e8ee8e21fd0a5dd9ad0778c41d540a9871b6e3bdb7be0ff3",
+   "reading": {
+    "target": [
+     0,
+     0
+    ]
+   },
+   "construction": "Centroid = ((-4+1+3)/3, (5-5+0)/3) = (0,0). Tap the origin on the default -5..5 grid; it is a lattice point in range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The target is (0,0), so its swap is (0,0) itself. Any swapped plot is the correct answer and is graded correct, so this predicate can never fire here. The hint 'x goes across, y goes up' would never be shown."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Reflecting (0,0) gives (0,0), so no wrong point is a reflection of the target and the predicate cannot fire. The hint also says 'add the three values with signs', which does not fit a quadrant error."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires when the student taps a point that is not the origin and matches no pattern, for example (1,0) after an arithmetic slip. 'Divide by 3 for the centroid' is correct, points to the averaging step, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w009",
+   "template_sha": "485d6bfdbc2de752364a2b197607d529d36a83d9d9522cdbd403c728a47efed2",
+   "reading": {
+    "target": [
+     7,
+     -1
+    ]
+   },
+   "construction": "B = 2P − A = (2·2−(−3), 2·0−1) = (7,−1). On the board x −2..8, y −3..3, tap lattice point (7,−1); it is inside the range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point of the target (7,−1) is (−1,7). y=7 is off the board (y only −3..3), so the student can't tap it and the predicate can't fire here. The hint is also generic and doesn't match this board."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on a point such as (7,1), which has the right distances and a wrong sign. The midpoint-average hint is mathematically correct, points to the step where the sign went wrong, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point like (5,1) that matches neither coordinate and fits no pattern. 'B is as far beyond P as A is on the other side' is correct, gives a method and no coordinates, and off-target is emitted when targets is absent."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w010",
+   "template_sha": "b07811906c9671a0ff995b9341c57fa0b63cff57e88d17a2e956dc7c87c8246c",
+   "reading": {
+    "target": [
+     -13,
+     6
+    ]
+   },
+   "construction": "B = 2M − A = (2·(−3)−7, 2·5−4) = (−13, 6). Tap the lattice point (−13, 6); it lies inside x −14..2, y 0..8.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (6, −13) is off the board (x max 2, y min 0), so the predicate cannot fire on this question. The hint is also generic and does not address the midpoint step."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The reflected targets (13, 6), (−13, −6) and (13, −6) are all off the board (x max 2, y min 0), so the predicate cannot fire. The hint itself is correct and does not give the answer away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires on any wrong point, e.g. (−10, 6) from a mis-count. The hint is correct, points to the reflection-through-M step, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w011",
+   "template_sha": "49207fea407f00576a6ff9b32799e5bb8d82607468d0a7479d7cc9a2e2be1d6e",
+   "reading": {
+    "target": [
+     -10,
+     12
+    ]
+   },
+   "construction": "B = 2P − A = (2·(−3)−4, 2·2−(−8)) = (−10, 12). Tap lattice point (−10, 12); it lies within x −12..4, y −2..14.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point is (12, −10), which is off the board (x ≤ 4, y ≥ −2). The student cannot tap it, so the predicate cannot fire here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The reflected targets (10,12), (−10,−12) and (10,−12) are all off the board, so the predicate cannot fire. The hint also does not address a sign or quadrant error."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any tapped point other than (−10,12) that isn't a swap or reflection, for example if the student plots P+(A−P) incorrectly. The hint is correct, points to the reflection step, and does not give the coordinates. It is in the can_emit list for a single target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w012",
+   "template_sha": "c265c3abf55a7e0f77c61a7aa7161bcb78aa34cf1b1f5132005e21abc3adb0a0",
+   "reading": {
+    "target": [
+     -8,
+     6
+    ]
+   },
+   "construction": "Q = 2A − P = (2·(−4) − 0, 2·1 − (−4)) = (−8, 6). Tap (−8, 6), which is on the board (x −10..0, y 0..8).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (6, −8) is off the board (x −10..0, y 0..8), so no tap can produce it. The predicate can never fire on this board."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Every reflection of the target, (8, 6), (−8, −6) and (8, −6), is off the board, so no tap can produce one. The predicate can never fire on this board."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires on any wrong tap that is neither swapped nor reflected, for example the midpoint-style error (−4, 1) or P itself. The hint says Q is as far beyond A as P is on the other side. That is correct, it points to the step the student got wrong, and it gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w013",
+   "template_sha": "dfad3764dfb9ecb36c8a47361a7f01e665107f9704777a04c10587b3470a62a3",
+   "reading": {
+    "target": [
+     2,
+     -8
+    ]
+   },
+   "construction": "B = 2P − A = (2·(−1)−(−4), 2·(−3)−2) = (2, −8). Tap (2, −8), which lies inside x −6..6, y −10..2.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (−8, 2) has x = −8, which is off the board (x −6..6), so the student can't tap it and the predicate can't fire here. The hint is also generic and doesn't address the midpoint step."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "A reflected-target error such as (−2, −8) is tappable. The hint, that P is the midpoint so each average equals P's coordinate, is correct. It points to the step to redo and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A point matching neither coordinate, such as (−5, −1) from a wrong offset, can be tapped. The hint is correct and points to the step (the same distance beyond P) without giving coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w014",
+   "template_sha": "c0e9cf782625602ae29ada23b5a3de90ecd8caa4760a0f21f70a100602231aaa",
+   "reading": {
+    "target": [
+     11,
+     -18
+    ]
+   },
+   "construction": "External division 2:3: Q = (2C − 3B)/(2−3). x = (2·(−4) − 3·1)/(−1) = 11; y = (2·3 − 3·(−4))/(−1) = −18. Tap lattice point (11, −18), which is on the board (x 0..12, y −18..0, y step 2 includes −18).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point is (−18, 11), which is off this board (x 0..12, y −18..0), so no tap can produce it and the predicate never fires."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Every sign-reflection of (11, −18), such as (−11, −18), (11, 18) or (−11, 18), is off the board, so the predicate cannot fire."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on any tap that is not the target, for example the internal-division point (−2, −1)... or another lattice point. The hint is mathematically right (the external ratio subtracts in the numerator and the denominator). It points to the step without giving coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w015",
+   "template_sha": "dbf776c217ad028f57eb03467b5456eb62346678665bdbbe81b6dba3324a624e",
+   "reading": {
+    "target": [
+     -1,
+     0
+    ]
+   },
+   "construction": "Midpoint = ((-3+1)/2, (4+(-4))/2) = (-1, 0). Tap the lattice point (-1,0) on the −5..5 grid; it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (0,-1) is the target with x and y exchanged, so it fires. The hint is correct, points at the axis-order step, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (1,0), the target reflected in x, fires it. That is a sign slip, and 'add with signs before halving' is correct and points at that step without giving the answer. Because the target's y is 0, only the x-reflection can fire."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (2,2) fires it, since neither coordinate matches and there is no pattern. 'Average x's and y's separately' is correct, helps, and does not reveal the point. The predicate can fire for a single target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w016",
+   "template_sha": "713bd1a2e5ff05be5711801838cc6b1201d5c42d6dc2460661f731fcf80ae92c",
+   "reading": {
+    "target": [
+     -2,
+     1
+    ]
+   },
+   "construction": "G = ((-3+1-4)/3, (4-4+3)/3) = (-2, 1). Tap the lattice point (-2,1) on the default -5..5 grid; it is within range and whole-numbered.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (1,-2) fires it. The hint about x across and y up is correct, addresses the reading-order error, and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping a reflection such as (2,1), (-2,-1) or (2,-1) fires it. Adding with signs and dividing by 3 is correct, points at the sign step, and does not reveal the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Tapping e.g. (3,3) fires it. The hint to divide by 3 is correct for a centroid and names the method step without giving coordinates. The predicate can fire when targets is absent."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w017",
+   "template_sha": "5e185b849a3e7538d9cfa37db296425f32cc6387ce74eb04b8c3ffde1e545f05",
+   "reading": {
+    "target": [
+     3,
+     8
+    ]
+   },
+   "construction": "B = 2P − A = (2·2−1, 2·3−(−2)) = (3,8). Tap lattice point (3,8); it lies inside x −2..6, y −2..10.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (8,3) has x=8, beyond the board's x max of 6, so it cannot be tapped. The predicate cannot fire on this question."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Reflections of (3,8) are (-3,8), (3,-8), (-3,-8), all off the board (min -2). The predicate cannot fire here. The midpoint hint also doesn't match a signs error."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on any wrong tap, e.g. (0,5) or (1,-2). The hint is correct (B is as far beyond P as A is on the other side), points to the step to redo, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w018",
+   "template_sha": "c31f6203ceb1445d4d0cb2c668eecbc480968afdf7d8269dcd88810a6070ac56",
+   "reading": {
+    "target": [
+     -5,
+     8
+    ]
+   },
+   "construction": "Q = 2A − P = (2·(−1)−3, 2·5−2) = (−5, 8). Tap lattice point (−5, 8); it lies inside the board (x −6..2, y 0..10), so it is reachable.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (8, −5) is off this board (x only −6..2, y only 0..10), so the student cannot tap it and the predicate can never fire here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The reflections of the target, (5,8), (−5,−8), (5,−8), all lie outside the board, so the student cannot tap them and the predicate cannot fire here."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any tapped point other than (−5,8), e.g. plotting (−1,5) or (1,8). The hint is correct (Q is as far beyond A as P is on the other side), points to the reflection step, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w019",
+   "template_sha": "9fed45784313ad9be268fed97f83b0ac899ce5ca438322d7439e1dfa1a1b5c8a",
+   "reading": {
+    "target": [
+     2,
+     9.5
+    ]
+   },
+   "construction": "External division BQ:QC = 1:3 gives Q = (1*C - 3*B)/(1-3) = ((5-9)/(-2), (2-21)/(-2)) = (2, 9.5). Check: Q-B = (-1, 2.5), C-Q = (3, -7.5), so Q lies outside BC on B's side with BQ:QC = 1:3. (2, 9.5) is on the board (x 0..4, y 2..10, step 0.5), so tap (2, 9.5).",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "This is a catch-all that fires for any wrong point with no pattern. The internal-formula error gives (3B+C)/4 = (3.5, 5.75), which is off the half-step grid. The student would have to round it, and rounding could give 5.5 or 6, so it is not reliably distinguishable. Other slips (wrong ratio order, arithmetic errors) fire it just as often. It does not specifically signal this misconception."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The swapped point (9.5, 2) is outside the board (x only runs 0..4), so the student cannot tap it and the predicate never fires here."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "The reflected target, such as (-2, 9.5), is outside the board (x runs 0..4), so the student cannot tap it and the predicate never fires here. The 'quadrant' wording also does not suit a shifted board."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w020",
+   "template_sha": "63086a19d651baa29822f7d4ec07a61f95fc369a7318481fbb96bb6b07009b44",
+   "reading": {
+    "target": [
+     1.5,
+     -0.5
+    ]
+   },
+   "construction": "Midpoint = ((5+(-2))/2, (2+(-3))/2) = (1.5, -0.5). The board spans x -1..4 and y -2..2 in steps of 0.5, so (1.5, -0.5) is a grid point. Tap it.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (-0.5, 1.5) is on the board and fires this predicate. The hint about x across and y up is correct and targets the order error. It gives no coordinates away."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping the reflection (1.5, 0.5) is on the board and fires this predicate. This is a plausible sign slip when adding -3 and 2. 'Add with signs before halving' is correct and points to the step without giving the answer."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any unrelated point such as (3.5, 2) fires this predicate, and off-target can be emitted when the question has a single target. 'Average the x's and average the y's separately' is correct and states the method only, not the values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-1-4:w021",
+   "template_sha": "15d92e8e1949f3b937522c657d0ef01e346c5462dd32064267e757b5b7267fc6",
+   "reading": {
+    "target": [
+     2,
+     2
+    ]
+   },
+   "construction": "Centroid = ((-2+3+5)/3, (-3+7+2)/3) = (6/3, 6/3) = (2,2). Tap lattice point (2,2) on the −5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "The target is (2,2), so swapping x and y gives the same point. A swapped point is the correct one, so this predicate can never fire as an error on this question. The hint is also generic and does not help with the centroid."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "It fires on (-2,2), (2,-2) or (-2,-2), where the student has the right distances but lost a sign. 'Add the three values with signs, then divide by 3' is correct, points at the signed-sum step, and does not reveal the target."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "Dividing by 2 gives (3,3), which fires off-target. But off-target covers any error with no pattern, such as a wrong sum or a misread vertex. The hint assumes one specific error and would mislead the other students."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w001",
+   "template_sha": "db3e63379baf516ddf275049f93d99138bdfff880883943b0ad4107ad528b859",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 2
+   },
+   "construction": "Equation mode, y = 0x + 2. Drag the two handles to lattice points (-4,2) and (9,2) (both on the -5..10 by -3..5 board), or any two points on y = 2, e.g. (0,2) and (3,2). m = 0 is a whole number and b = 2 is in -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x, e.g. (-4,2) and (-4,5). That student has confused which coordinate is shared. The hint is correct, since the sensors share a height, and it only asks which way the line runs. It gives no coordinates or equation."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on a horizontal line at the wrong height, e.g. y = 3 through (0,3) and (5,3). The slope is right and the line is parallel to the answer. The hint is correct and points to the y-intercept without stating the value."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a slanted line, e.g. through (-4,2) and (9,5), where neither slope nor intercept matches. Comparing the sensors' y-values leads to the slope being 0. It does not state the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w002",
+   "template_sha": "420a72eb16a6ad796be89de16ea77f13b9a842bc3fa9727086aae4910963f5c8",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 5
+   },
+   "construction": "Equation mode, target y = 5 (m = 0, b = 5). Drag the two handles to the lattice points (0,5) and (1,5). The line through them is horizontal and passes through (-4,5). Any two points with y = 5 also work, such as (-4,5) and (2,5). m = 0 is a whole number, b = 5 is in range, and the points are within the board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "The student drags both handles to the same x, for example (-4,5) and (-4,0), and draws x = -4. That comes from confusing which axis the line is parallel to. The hint is correct and points to the direction of the line. It gives no coordinates or equation."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "The student draws a horizontal line at the wrong height, for example y = -4 from using the x-value, or y = 0. The slope is right and the intercept is wrong. The hint says every point on the line has the same y-value as the given point, and tells her to check the y-axis crossing. That is correct and focuses her on the step she got wrong. It does not state the value 5 or the equation, so she still has to read it off."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "The student draws a slanted line, for example through (-4,5) and (0,7), with the wrong slope and a wrong intercept. The predicate can fire in equation mode. The hint to decide the gradient of a line parallel to the x-axis first is correct and sends her to the first step she missed. It does not give the value 0 or the equation."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w003",
+   "template_sha": "8e291452072e317d93f79d347b2798a3555c3c2316e187371afc3657c3168e28",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": 1
+   },
+   "construction": "Equation mode, y = 1: drag the handles to (0,1) and (3,1). The line is horizontal through (2,1). m=0 is a whole number, b=1 is within -5..5, and the points are distinct lattice points.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when both handles share an x, e.g. (2,1) and (2,3). The hint correctly separates horizontal from vertical and gives no coordinates."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": false,
+     "why": "Fires for a horizontal line at the wrong height, e.g. y=2 through (0,2) and (3,2). The hint says every point on the line has the y-value of the given point. That states that the answer is y=1, so it gives the answer away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a non-horizontal line such as one through (2,1) and (3,3). The hint to decide the gradient of a line parallel to the x-axis first is correct, points the student at the step they got wrong, and gives no coordinates or equation."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w004",
+   "template_sha": "f6bc6a07c344bef3f2ef370824285e524e7f9fa357613a148969cab22d2b0aa7",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      4,
+      0
+     ],
+     [
+      4,
+      3
+     ]
+    ]
+   },
+   "construction": "Points mode: drag one handle to (4,0) and the other to (4,3). The drawn line is the vertical line x = 4. Both points are lattice points within ±5, distinct, and neither they nor their swaps (0,4), (3,4) are at (-3,-2) or (1,1), so the pipeline rule holds.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Fires when handles are at (0,4) and (3,4), i.e. x and y exchanged. This is a common error, and the points-mode table lists the predicate. The hint is correct, points to the step the student got wrong, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the handles sit on neither the right points nor swapped ones, e.g. (1,2) and (3,4). The points-mode table lists it. Comparing the two x-coordinates is a correct method for this question and leads the student to see that they match. It gives no coordinates or equation, so the student still has to place the handles."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w005",
+   "template_sha": "2491b70cb41c1824568538f27c097d1a653f4f6b43e509f3114078a8eb09a7fe",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -5,
+      -3
+     ],
+     [
+      -5,
+      2
+     ]
+    ]
+   },
+   "construction": "Points mode: drag one handle to (-5,-3) and the other to (-5,2). The drawn line is the vertical line x = -5. Both points are distinct lattice points within ±5, and neither they nor their swaps (-3,-5), (2,-5) are at (-3,-2) or (1,1), so the pipeline rule holds.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Fires when the handles are at (-3,-5) and (2,-5), i.e. x and y exchanged. This is listed for points mode. The hint is correct, targets the actual error (reading order of coordinates), and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the handles are at some other points, e.g. (-3,-5) and (2,-5) swapped excluded, say (-5,-3) and (-4,2). Listed for points mode. Comparing the x-coordinates is correct (they are equal here) and points to the step to redo without giving the coordinates or the equation. It tells the student to place each handle at its point, which is correct for points mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w006",
+   "template_sha": "4736c9a114ef800e416ebd0df1d0987e9415358237920eab51dd41f8029edbbe",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -2,
+      3
+     ],
+     [
+      -3,
+      3
+     ]
+    ]
+   },
+   "construction": "Points mode: drag one handle to (-2,3) and the other to (-3,3). This gives the horizontal line y=3. Neither point nor its swap ((3,-2), (3,-3)) is at (-3,-2) or (1,1), so the pipeline rule is satisfied. Both points are lattice points within ±5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Fires when the handles are put at (3,-2) and (3,-3), the x and y exchanged. The hint is correct, points the student to the step they got wrong (reading the order of coordinates) and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires in points mode when the handles are anywhere else, for example (-2,2) and (-3,2). Comparing the two y-coordinates and placing each handle at its point is correct and helps. It gives no coordinates or equation."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w007",
+   "template_sha": "e169a2ffd615e2b9ea3db09bd67ae1774a99d0387f5d1a425dfd59b0db3f17ff",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      4,
+      -2
+     ],
+     [
+      1,
+      -2
+     ]
+    ]
+   },
+   "construction": "Points mode: drag one handle to (4,-2) and the other to (1,-2). This draws the horizontal line y = -2. Both points are on the ±5 grid and distinct. The swapped points (-2,4) and (-2,1) avoid the forbidden (-3,-2) and (1,1), and so do the points themselves. The handles start at (-3,-2) and (1,1), so both must be moved.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "A student who builds it fires it by placing handles at (-2,4) and (-2,1), which gives the vertical line x = -2. That is a genuine x/y swap. The hint 'first across, then up' is correct, points at the exact step she got wrong, and gives no coordinates. Points mode can emit this predicate."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "It fires for any other placement, for example (4,2) and (1,2), or a sloped line. Comparing the y-coordinates is the useful step here because both are equal, and the hint does not state the values, the line or the equation. It is generic but correct. Points mode can emit this predicate."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w008",
+   "template_sha": "df7bc90aad3581ff77e73272f027905b4288cee77f143d2f766487d87826f010",
+   "reading": {
+    "mode": "equation",
+    "m": -1,
+    "b": 4
+   },
+   "construction": "Line through (-1,5) with gradient -1: y-5 = -(x+1), so y = -x+4 (b=4, within -5..5, |m|<=5). Drag the handles to the lattice points (0,4) and (1,3); (-1,5) also lies on it. The equation reads y = -x+4.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires when the student draws gradient +1 (e.g. through (0,1) and (1,2)). The hint is correct, points at the sign error, and gives no coordinates or equation, since the gradient is already given in the question."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires when gradient is -1 but b is not 4, e.g. through (0,5) and (1,4). Substituting the given point into the point-slope form is the right step to find the intercept, and the hint does not state the intercept or the final equation."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches, e.g. through (0,0) and (1,2). Pointing to point-slope form with the given gradient and point is correct and a sensible starting step. It gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w009",
+   "template_sha": "b2aebe0d3f4c83c84aef389a0ba6d4429cfbc413a04aa99b47f03652f7a39d8e",
+   "reading": {
+    "mode": "equation",
+    "m": 1,
+    "b": -5
+   },
+   "construction": "y+8 = 1(x+3) gives y = x-5. Place handles at lattice points (0,-5) and (1,-4), both on the default -5..5 board. The equation reads y = x - 5. (-3,-8) is off the board, so it can't be used.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires with gradient 1 and b not equal to -5, for example the line through (0,0) and (1,1). The hint points to the point-slope method and the y-intercept. It gives no coordinates or equation, and the student still has to do the substitution."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires with gradient -1, for example the line through (0,-5) and (1,-6). The hint is correct and the gradient is already given in the question, so it gives nothing away. It tells the student the line should rise to the right."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when both slope and intercept are wrong, for example m=2 with b=0. The hint sends the student to point-slope form with the given gradient and point. This is correct and gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w010",
+   "template_sha": "f58790a713b2a329e4cd5b4ff9c3b78c88bba295752b7566013e8435db42a675",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": 3
+   },
+   "construction": "Line y = -2x + 3 (from -1 = -2(2) + b, so b = 3). Place handles at lattice points (0, 3) and (2, -1), both within the board (-5..5) and both on the line. The live equation reads y = -2x + 3. Equation mode accepts any two points on the line, so (1, 1) and (3, -3) would also work.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires when the student draws gradient +2, for example y = 2x - 5 through (2, -1). The hint says a negative gradient falls as you move right. That is correct and targets the sign error. The question already states the gradient is -2, so no answer is given away."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires when the student draws gradient -1/2, for example through (2, -1) and (0, 0). The hint restates rise over run, which is correct and points at the swapped step. It gives no coordinates or equation."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires when the student draws gradient -2 with an intercept other than 3, for example y = -2x + 1. The hint tells her to substitute the given point to find the intercept. That is correct and leaves the substitution for her to do, with no value given."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither the slope nor the intercept matches, for example y = x - 3. The hint gives the point-slope template with the given gradient and point. It is a general method, not this answer, and it is correct. The predicate can fire in equation mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w011",
+   "template_sha": "e699c86329773cb9717d138a38fac30bde9c5d222194e9fcac384475fadf2b68",
+   "reading": {
+    "mode": "equation",
+    "m": 4,
+    "b": -2,
+    "through": null,
+    "lines": null
+   },
+   "construction": "Equation mode, y = 4x - 2 (gradient (10-2)/(3-1)=4, intercept 2-4=-2). Drag the handles to the lattice points (0,-2) and (1,2), both on the line and within the default -5..5 board. Neither is a starting handle position (-3,-2) or (1,1). m=4 is within |m|<=5 and b=-2 is a whole number in -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires on a line with gradient 1/4 (e.g. y = x/4 - 2 through (0,-2),(4,-1)), which is run over rise. The hint states the rule for gradient without giving the numbers, and it points at the step that was wrong."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires on gradient -4, e.g. y = -4x - 2, which comes from subtracting the coordinates in opposite orders. The hint addresses exactly that and gives no answer."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on gradient 4 with b not equal to -2, e.g. y = 4x + 1. Using a given point in y - y1 = m(x - x1) is a correct method for finding the intercept and it does not reveal b."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a line with neither the right gradient nor the right intercept, e.g. y = 2x. Finding the gradient from the two points first is the right starting step and gives away no values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w012",
+   "template_sha": "89235b21a03bbdb965262a9400e4506919adb6cf8fc143d09a18325a1cf309be",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      -2,
+      -2
+     ],
+     [
+      2,
+      -2
+     ]
+    ]
+   },
+   "construction": "Points mode with through [[-2,-2],[2,-2]]: drag one handle to (-2,-2) and the other to (2,-2), giving the horizontal line y=-2. Both points are distinct lattice points within ±5, and neither point nor its swap ((-2,-2), (-2,2)) is at (-3,-2) or (1,1), so the pipeline rule holds.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Fires when the student plots (-2,-2) and (-2,2), which is (2,-2) with x and y exchanged. The result is a vertical line. The hint to read each pair as (x, y) is correct and gives no coordinates. It points to the step the student got wrong."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other wrong placement, for example handles at (-2,-2) and (2,2). Comparing the two y-coordinates and placing each handle at its point is correct and nudges toward the horizontal line. It gives no coordinates or equation, so the student still has to place the handles."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w013",
+   "template_sha": "c250fde889d9e9ac2afd5a5bdff8f3cddfb4f8d1c3658a47df5572d6a7e83c8c",
+   "reading": {
+    "mode": "equation",
+    "m": 0,
+    "b": -4
+   },
+   "construction": "Equation mode, target y = 0x - 4. Drag the two handles to (-2,-4) and (2,-4); the line through them is horizontal and passes through (3,-4). m=0 is a whole number, |m|<=5, b=-4 is in -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "vertical-line",
+     "ok": true,
+     "why": "Fires when the student puts both handles at the same x, e.g. (3,-4) and (3,1), drawing x=3 (the confusion of parallel to the x-axis with the y-axis). The hint points to which axis the line is parallel to without giving coordinates or the equation. Emittable in equation mode."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires for a horizontal line at the wrong height, e.g. through (0,4) and (1,4). The hint says every point shares the given point's y-value and to check the y-intercept. It states no number and shows the step to fix."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for a sloped line, e.g. through (3,-4) and (4,-2), where slope and intercept both differ from the target. The hint asks for the gradient of a line parallel to the x-axis, then to pass through the given point. It is correct and gives no value."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w014",
+   "template_sha": "4f58d8e88c8f291a66adda7cdaa584794808637cfd5f542db1816070e7b0c631",
+   "reading": {
+    "mode": "points",
+    "m": null,
+    "b": null,
+    "through": [
+     [
+      -3,
+      1
+     ],
+     [
+      -3,
+      2
+     ]
+    ],
+    "lines": null
+   },
+   "construction": "Points mode: put one handle at (-3,1) and the other at (-3,2). This draws the vertical line x = -3. Both points are distinct lattice points within ±5. Neither point, nor either point with x and y swapped ((1,-3), (2,-3)), is at (-3,-2) or (1,1). Equation mode cannot express a vertical line, so points mode is the right one.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Fires when the handles are at (1,-3) and (2,-3), which draws the horizontal line y=-3. This is a real x/y mix-up. The hint says which coordinate is across and which is up, and gives no coordinates. It is correct and it points to the step the student got wrong."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the handles are anywhere other than the two named points, for example (-3,1) and (-2,2). The hint tells the student to compare the x-coordinates and place each handle at its point. That is correct, because both x-values are equal. It gives no coordinates or equation, and the student still has to place the handles. The predicate can be emitted in points mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w015",
+   "template_sha": "50ba479c11f311750cd68ec46eb5d1fbea20e0fb6a2d8437ea4a047ffa6facbf",
+   "reading": {
+    "mode": "points",
+    "m": null,
+    "b": null,
+    "through": [
+     [
+      -2,
+      3
+     ],
+     [
+      -5,
+      3
+     ]
+    ],
+    "lines": null
+   },
+   "construction": "Points mode: drag one handle to (-2,3) and the other to (-5,3). The line drawn is horizontal, y=3. Neither point nor its swap ((3,-2), (3,-5)) is at (-3,-2) or (1,1), so the pipeline rule holds and the points lie within ±5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "Handles at (3,-2) and (3,-5) give a vertical line x=3, which is what a student who exchanges x and y builds. The hint is correct, targets that error, and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when the line matches neither named points nor the swapped ones, for example one handle misplaced. The hint points the student to the y-coordinates and to placing each handle at its point. It is correct, gives no coordinates or equation, and can be emitted in points mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-2:w016",
+   "template_sha": "0a6bfbcf9542996e61e4542643a62214cfd29108fb6b623cac9b0ec5123ba4fd",
+   "reading": {
+    "mode": "points",
+    "through": [
+     [
+      1,
+      -1
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "construction": "Points mode: place handles at (1,-1) and (4,0). Neither point nor its swap ((-1,1),(0,4)) is (-3,-2) or (1,1); both are lattice points within ±5. The line has slope 1/3 and intercept -4/3, which equation mode cannot express, so points mode is the right one.",
+   "reachable": true,
+   "predicates": [
+    {
+     "predicate": "points-swapped",
+     "matches": true,
+     "why": "Handles at (-1,1) and (0,4) are the named points with x and y exchanged, a typical slip of reading (x,y) as (y,x)."
+    },
+    {
+     "predicate": "off-target",
+     "matches": false,
+     "why": "It fires for any wrong line and is not tied to a specific misconception, so it would mostly fire for unrelated errors."
+    }
+   ],
+   "hints": [
+    {
+     "predicate": "points-swapped",
+     "ok": true,
+     "why": "It is mathematically right and points the student to the swapped coordinates. It gives no coordinates or equation."
+    },
+    {
+     "predicate": "off-target",
+     "ok": false,
+     "why": "It only restates the task, so it doesn't help the student find which step went wrong. In points mode the named points are the answer, so it effectively gives the answer away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w001",
+   "template_sha": "dc70b0b07997378c9bf242ec17dbd3fca6ea6fdd5ff969dfda2b573ebd46e0b0",
+   "reading": {
+    "target": [
+     -3,
+     4
+    ]
+   },
+   "construction": "Reflect A(5,0) across y=2x: the foot of the perpendicular from A is (1,2), so B = 2(1,2) - (5,0) = (-3,4). Check: the midpoint (1,2) lies on y=2x, and AB direction (-8,4) is perpendicular to (1,2). (-3,4) is a lattice point inside -5..5, so tapping it on the default grid works.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires when the student taps (4,-3). The hint talks about 's (across)' and 't (up)', which are variables this question never defines, so it points at nothing the student has seen. It should say x and y."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires on (3,-4), (-3,-4) or (3,4). The sign slip is real, but 'the two equations' assumes a particular solution method that the question does not set up. A student who used the perpendicular-and-midpoint construction has no 'two equations' to recheck, so the hint is a poor fit."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point with no recognisable pattern, such as (0,5), which is the reflection across y=x. The hint states the two true defining conditions of a reflection (perpendicular, and midpoint on the line). That lets the student check their own point, and it gives no coordinates away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w002",
+   "template_sha": "b1c0182153dd78e71b124c89ffca2223f5d373643ecfb32f464a9e997dfb46d1",
+   "reading": {
+    "mode": "equation",
+    "m": 2,
+    "b": -4
+   },
+   "construction": "2x − y + 5 = 0 gives y = 2x + 5, so gradient 2. Through (1,−2): b = −2 − 2 = −4, so y = 2x − 4. Place the handles at (0,−4) and (2,0), both lattice points on the default board. Equation mode accepts any two points on the line, e.g. (1,−2) and (3,2).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires for a line with m = −2 (e.g. through (1,−2) with slope −2). Hint tells the student to rewrite as y = mx + c and read the gradient with its sign. That is correct, targets the sign error, and gives no numbers. The predicate can fire in equation mode."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires for m = 0.5, run over rise. Hint says parallel lines share the gradient, not a reciprocal. That is correct and targets the inversion without revealing the gradient or the equation. The predicate can fire in equation mode."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires for m = 2 with b ≠ −4, e.g. y = 2x + 5, which is the given line copied. Hint says the line must pass through the given point and to use y − y₁ = m(x − x₁). That is correct, points to the step the student missed, and does not give b. The predicate can fire in equation mode."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches, e.g. m = 3 or m = −0.5. Hint says to find the gradient of the given line first. That is correct, is a sensible first step, and does not give the answer. The predicate can fire in equation mode."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w003",
+   "template_sha": "460ba0131af2f56f2f4309bf9b9c75dec5197a4206f1a7bbd9b54e9bd19b7c5e",
+   "reading": {
+    "mode": "equation",
+    "m": 2,
+    "b": 2,
+    "through": null,
+    "lines": null
+   },
+   "construction": "AB has gradient (1-3)/(2+2) = -1/2; midpoint is (0,2). The perpendicular gradient is 2, so the line is y = 2x + 2. In equation mode, drag the handles to lattice points (0,2) and (1,4). Both are within ±5, m=2 is a whole number and b=2 is in -5..5.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires on a line like y = 0.5x + 2, where the student kept the reciprocal but lost the flip, or confused rise and run. The hint states the correct rule (negative reciprocal of AB's gradient) without giving numbers, and it points to the step that went wrong. Equation mode can emit this predicate."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires on y = -2x + 2, where the student took the reciprocal of -1/2 but kept the sign. The hint tells her to reciprocate and also change the sign, which is correct and targets the missed step. It gives no coordinates or equation. Equation mode can emit this predicate."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires on y = 2x + b with b not equal to 2, for example y = 2x. The slope is right, and the hint directs her to the midpoint of AB without stating it. This is mathematically right, helpful and does not give the answer away."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither the slope nor the intercept is right, for example y = x - 1. The hint says to find AB's gradient and midpoint first, which is the correct method and gives no values."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w004",
+   "template_sha": "90e312c0bacced5e82c692b91b0a507ed0ff8db2ebbcf6366cb3cc388d1d6f25",
+   "reading": {
+    "mode": "equation",
+    "m": 2,
+    "b": 1
+   },
+   "construction": "Equation mode, m=2, b=1: slope of AB = -1/2, so perpendicular slope is 2; midpoint (2,5) gives b=1. Drag handles to (0,1) and (2,5), both lattice points within the board.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "Fires for slope ±1/2 (e.g. m=-1/2). Hint states the negative-reciprocal rule without giving m or b; correct and useful."
+    },
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "Fires for m=-2 (reciprocal taken, sign not changed). Hint is correct and names the missed step without giving the final slope or intercept."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "Fires for m=2 with b≠1 (line parallel to the bisector). Hint to check it passes through the midpoint is correct and gives no coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires when neither slope nor intercept matches. Hint to find AB's gradient and midpoint first is correct and does not give the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w005",
+   "template_sha": "2f0306abc7a46d189a0e5717f1e2d1dc89366cbb133d97d015ea680ea93ac64c",
+   "reading": {
+    "target": [
+     3,
+     6
+    ]
+   },
+   "construction": "Reflection of A(1,2) in x+2y-10=0: value at A is -5, normal (1,2), so B = (1,2) + 2(1,2) = (3,6). Midpoint (2,4) lies on the line (2+8-10=0) and AB is parallel to the normal. Tap (3,6), which is on the board (x -2..8, y -2..8).",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires if the student taps (6,3). But the hint refers to 's' and 't' and to solving equations, which are not in this question, so it is confusing. It also doesn't point to the real slip of reading the pair in the wrong order."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Reflections of (3,6) in the axes, such as (-3,-6), (3,-6) and (-3,6), fall outside the board (x -2..8, y -2..8), so it can hardly fire here. The hint about 'signs when you solve the two equations' also doesn't fit this question, which has no such equations."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any other tap, e.g. (4,4) or (2,4). The hint is mathematically correct: B lies on the perpendicular through A and the midpoint of AB is on the line. It names the method without giving coordinates, and the student can use it to check their point."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w006",
+   "template_sha": "277e07474fafd134851504e0a7c784a28d4c154c3f37447efb435265cab089d8",
+   "reading": {
+    "target": [
+     -2,
+     2
+    ]
+   },
+   "construction": "Value of 4x-2y-3 at A = 16+2-3 = 15; |n|^2 = 20. B = A - 2*(15/20)*(4,-2) = (4,-1) - (6,-3) = (-2,2). Check: midpoint (1,0.5) gives 4-1-3=0, on the line; AB = (-6,3) is parallel to the normal (4,-2). (-2,2) lies in the default -5..5 grid, so tap it.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires when the student taps (2,-2). The hint talks about 's' and 't' (across and up), which are not in this question. They look like leftovers from another question, so the wording would confuse. It also doesn't point to the real slip here, which is a reflection step."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires on a sign-flipped point such as (2,2), (-2,-2) or (2,-2). The hint says 'when you solve the two equations'. This question has no pair of equations (the standard method is the perpendicular plus the midpoint, or the reflection formula), so the hint doesn't match the student's method."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on a point like (3,0) that is neither a swap nor a sign flip of the target. The hint states the correct defining conditions of a reflection (AB perpendicular to the line, midpoint on the line). It helps the student find the step they got wrong and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w007",
+   "template_sha": "f460dea9ca36096040a358e8043d3685b181fb540c3a1767089c4c8bd3bb3bec",
+   "reading": {
+    "mode": "equation",
+    "m": -2,
+    "b": -1
+   },
+   "construction": "6x+3y-5=0 gives y=-2x+5/3, so gradient -2. Through (1,-3): b=-3+2=-1, so y=-2x-1. Drag the handles to lattice points (0,-1) and (1,-3). Any two points on that line also work, such as (-1,1) and (-2,3). m=-2 is a whole number with |m|≤5 and b=-1 is in range.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "slope-sign-flipped",
+     "ok": true,
+     "why": "A student who builds slope +2, for example through (1,-3) and (2,-1), has the right size and the wrong sign. The hint tells her to rewrite the line as y=mx+c and read the sign, which is the step she skipped. It gives no coordinates or equation. The predicate can fire in equation mode."
+    },
+    {
+     "predicate": "slope-inverted",
+     "ok": true,
+     "why": "A student who builds slope -1/2 or 1/2, for example through (1,-3) and (3,-4), has used a reciprocal. The hint says parallel lines share the same gradient, not a reciprocal. That is correct and does not give away the answer. The predicate is listed for equation mode."
+    },
+    {
+     "predicate": "intercept-wrong",
+     "ok": true,
+     "why": "A student who builds slope -2 with the wrong intercept, for example y=-2x+1 through (0,1) and (1,-1), is parallel but misses the point. The hint tells her to use the given point in point-slope form, which is the step she missed. It gives no numbers."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "A student whose line matches neither the slope nor the intercept, for example slope 3, has probably not found the gradient of the given line. The hint tells her to find that gradient first, which is correct. It does not state the value -2."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w008",
+   "template_sha": "3f1430f90050529b5154a908604b12110f375e34d3c11439fad3c69ca365a7cf",
+   "reading": {
+    "target": [
+     4,
+     2
+    ]
+   },
+   "construction": "Reflection of A(0,4) in 2x-y-1=0: f(A)=-5, normal (2,-1), |n|^2=5, B=A-2(-5)/5*(2,-1)=(4,2). Check: midpoint (2,3) gives 4-3-1=0 on the line; AB=(4,-2) is parallel to the normal. Tap (4,2) on the default grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires when the student taps (2,4). But the hint refers to 's' and 't', which do not appear in this question (it has x and y), so it would confuse the student. It looks copied from another problem."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on (-4,2), (4,-2) or (-4,-2), which come from sign slips when solving the perpendicular and midpoint equations. The hint is mathematically sound and does not give away the coordinates."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on any unrelated point, e.g. (1,1). The hint names the two defining conditions of a reflection (perpendicular, midpoint on the line). It is correct, and it gives the method without giving the answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-2-3:w009",
+   "template_sha": "dd4f1950788cec700fb1ae42853aaf9a87ac10810d6ba5bf12d05d8ea7980e76",
+   "reading": {
+    "target": [
+     2,
+     1
+    ]
+   },
+   "construction": "Reflection: 3(-4)-3+5=-10, normal (3,-1), |n|^2=10, B = A - 2(-10)/10*(3,-1) = (-4,3)+(6,-2) = (2,1). Midpoint (-1,2) lies on the line (-3-2+5=0) and AB is parallel to the normal. Tap (2,1), within the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": false,
+     "why": "Fires on tapping (1,2), but the hint talks about s (across) and t (up) and solving two equations — variables that do not exist in this reflection question, so it is a stale hint that cannot guide the student."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires on e.g. (-2,1), (2,-1) or (-2,-1), but the hint says to check signs when solving 'the two equations' — this question has no such parametric setup, so it does not point to the step they got wrong."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires for any point matching neither coordinate and no swap or reflection, e.g. (-1,2) the midpoint or (0,0). The hint states the correct reflection conditions (perpendicular, midpoint on line), helps the student find the faulty step, and gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-2:w001",
+   "template_sha": "9a108c021c6d55d79207506d5a89bee681a4e52f35858e704af2b3bc36ca4d95",
+   "reading": {
+    "target": [
+     3,
+     -1
+    ]
+   },
+   "construction": "Substituting y=3x-10 into x^2+y^2=10 gives x^2-6x+9=0, so x=3 (double root, the line is tangent) and y=-1. Tap lattice point (3,-1); it is within -5..5 and satisfies 9+1=10 and -1=3*3-10.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (-1,3). The hint points to the order of coordinates and to substituting x into the line, with no coordinates given away."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on reflections such as (3,1), (-3,-1) or (-3,1). A sign slip when evaluating 3x-10 is plausible, and the hint says to recheck signs without giving values."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Fires on any other point such as (3,2) or (1,-7). The hint gives the correct method (substitute into the circle, solve the quadratic) without stating the answer, and the single-target table lists off-target."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-2:w002",
+   "template_sha": "c30d1e962a1d50ea96bff3af9e5f3ae0f3e50f7edca70a6f627e9d4b673ae866",
+   "reading": {
+    "target": [
+     -2,
+     1
+    ]
+   },
+   "construction": "Substitute y=2x+5 into x^2+y^2=5: 5x^2+20x+20=0, so (x+2)^2=0, x=-2 (double root, line is tangent), y=1. Tap the lattice point (-2,1), which is inside the -5..5 grid.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Tapping (1,-2) fires it. It is a real order slip, and the hint points to the x-first order and finding y from the line without giving any coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Tapping (-2,-1), (2,1) or (2,-1) fires it. These are sign errors, and the hint tells the student to recheck signs when substituting into the line without giving the answer. It fits the y sign best, but it is still reasonable."
+    },
+    {
+     "predicate": "off-target",
+     "ok": true,
+     "why": "Any point matching neither coordinate and with no pattern, such as (0,5) or (3,3), fires it. The hint names the method (substitute the line into the circle, solve the quadratic) and is correct here. It gives no coordinates."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-2:w003",
+   "template_sha": "0219dd2cbd1b1843423ed9d7b3832ca4cc37be3af1911b8e3e04ff74cd66e79e",
+   "reading": {
+    "targets": [
+     [
+      -2,
+      1
+     ],
+     [
+      4,
+      -1
+     ]
+    ]
+   },
+   "construction": "Substitute x=1-3y: 9y^2+y^2=10, y=±1. y=1 gives x=-2; y=-1 gives x=4. Tap (-2,1) and (4,-1) on the default -5..5 grid; both are lattice points in range. Check: (-3)^2+1=10 and (3)^2+1=10; -2+3-1=0 and 4-3-1=0.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires when the student plots only one of the two, e.g. just (-2,1). Taking both roots y=±1 is correct and gives no coordinates away."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires with an unpatterned wrong point, e.g. a point on the circle but off the line. Checking that each point is on the line and finding x from the line is correct and does not reveal the answer."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires on (1,-2) and (-1,4), the exact swaps of the targets; both are within the grid. The reminder to write the pair as (x, y) is correct, points at the error and gives no values."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on sign-reflected targets, e.g. (2,-1) and (-4,1) or (2,1) and (-4,-1), from a sign slip in x=1-3y. Rechecking the signs when finding x from the line is accurate, helpful and gives nothing away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-2:w004",
+   "template_sha": "01454020682386a2db8d384ca8486f13f01a083e51956a897d7228a514d102a0",
+   "reading": {
+    "targets": [
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      0
+     ]
+    ]
+   },
+   "construction": "Tap (0,2) and (2,0) on the default -5..5 grid. Both are lattice points; y=2-x gives x(x-2)=0.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires if the student plots only one point, e.g. just (0,2). The quadratic 2x^2-4x=0 factors, so the hint is correct, it prompts taking both roots, and it gives no coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires with stray points such as (2,2) or (1,1). The hint to check the line and find y from each x is correct and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires on a sign slip such as using y=x-2, which gives (0,-2) as a reflected target. Rechecking signs when finding y from the line is correct and does not give the answer away."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-2:w005",
+   "template_sha": "27548a8ac68631cc143d22e8f935cd2a51f6b44ca28c22e913a03658d156cbb6",
+   "reading": {
+    "targets": [
+     [
+      1,
+      -1
+     ],
+     [
+      -1,
+      3
+     ]
+    ]
+   },
+   "construction": "Substitute y=-2x+1: (x+2)^2+(-2x+1)^2=10 gives 5x^2+5=10, x=±1. x=1 gives y=-1; x=-1 gives y=3. Tap (1,-1) and (-1,3); both lie in the default -5..5 grid and are whole numbers. Both check in the circle: 9+1=10 and 1+9=10.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires if the student plots only one intersection, e.g. just (1,-1). The hint is correct, since the quadratic has two roots. It points to the skipped step without giving any coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when a plotted point is not a target and fits no swap or reflection pattern, e.g. (0,1) from a bad expansion. The hint to check both equations and get y from the line is correct and gives nothing away."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires if the student plots (-1,1) and (3,-1), the targets with x and y exchanged. The hint about order, x first and then y from the line, is correct and gives no coordinates."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires if the student plots reflected targets such as (1,1) and (-1,-3) after a sign error in y=-2x+1. The hint to recheck signs when substituting is correct, helpful and gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-4:w001",
+   "template_sha": "af8ffc34e9ee3d64eb632b641a4d0152e7b1671b51a5614c5e8529dd9cf68c25",
+   "reading": {
+    "targets": [
+     [
+      3,
+      -4
+     ],
+     [
+      -4,
+      3
+     ]
+    ]
+   },
+   "construction": "Subtracting the expanded circles gives x+y=-1; substituting gives x^2+x-12=0, so x=3 or -4. Tap (3,-4) and (-4,3), both on the −5..5 grid, in set mode with targets [[3,-4],[-4,3]].",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires when the student plots only one of the two intersections, e.g. only (3,-4). The quadratic x^2+x-12=0 has two roots, so the hint is correct. It points to the dropped step without giving coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when the student plots points that are not targets and not a swap or reflection of them, e.g. points picked at random. Eliminating the squares gives the line x+y=-1, so the hint is correct. It names the method but gives no coordinates or equation."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when every wrong point is a reflection of a target, e.g. a student who expands (x+5)^2 with a sign error gets x+y=1 and plots (4,-3) and (-3,4), the negations of the targets. Rechecking the signs when expanding the second circle targets exactly that step, and it gives no answer."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-4:w002",
+   "template_sha": "1fca1a7b1646941fe8ffb9fe6cb653fae2a55c10e9914c7116a3f0cbf2846867",
+   "reading": {
+    "targets": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "construction": "Subtracting the circle equations gives x+y=3; substituting gives x^2-3x+2=0, so x=1 or 2. Tap (1,2) and (2,1) on the default -5..5 grid; both check in both circles. Graded as a set.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires if the student plots only one of the two points. The hint is correct, since the quadratic has two roots, and it gives no coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when a plotted point is wrong with no pattern, for example a point off the line x+y=3. The hint is correct, because subtracting the equations eliminates the squares and gives a line. It doesn't state the line or the points."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": true,
+     "why": "Fires when the wrong points are reflections of the targets, for example (-1,2) and (-2,-1) from a sign slip. The hint to recheck signs when expanding and subtracting is relevant and reveals nothing."
+    }
+   ]
+  },
+  {
+   "question_id": "q:eb11c4-3-4:w003",
+   "template_sha": "725705951f372159e840d79dda6ebc9b61894c263fa852239ea70795500c24b2",
+   "reading": {
+    "targets": [
+     [
+      -1,
+      3
+     ],
+     [
+      -3,
+      -1
+     ]
+    ]
+   },
+   "construction": "Subtracting the circles gives y=2x+5. Substituting gives x²+4x+3=0, so x=-1 or -3, giving (-1,3) and (-3,-1). Both satisfy both circles: 1+9=10 and 1+9-2-3... =5; 9+1=10 and 10-6+1=5. Use the several-points form with targets [[-1,3],[-3,-1]] and the default grid -5..5. Tap both lattice points.",
+   "reachable": true,
+   "predicates": [],
+   "hints": [
+    {
+     "predicate": "missing-points",
+     "ok": true,
+     "why": "Fires when the student plots only one of the two points. Telling them to take both roots of the quadratic in x is correct and gives no coordinates."
+    },
+    {
+     "predicate": "extra-points",
+     "ok": true,
+     "why": "Fires when the student plots points that are not intersections, for example from a wrong line. Pointing them to the line from subtracting the circles is correct. It names the method but gives no line equation or coordinates."
+    },
+    {
+     "predicate": "swapped-coordinates",
+     "ok": true,
+     "why": "Fires when the student plots (3,-1) and (-1,-3), which are the targets with x and y exchanged. Checking the order of x and y is correct and gives nothing away."
+    },
+    {
+     "predicate": "wrong-quadrant",
+     "ok": false,
+     "why": "Fires when every wrong point is a target reflected, for example (1,3) and (3,-1), or (-1,-3) and (-3,1). Many of these come from a sign slip in x, such as solving x²+4x+3=0 as x=1,3, but the hint says to recheck signs when finding y. That misdirects the student, so it is not reliably helpful."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,231 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "d17c69e18f361bfdcd26037d1db6cec11a39676f09f2fbc6c023c0e254dec2ac",
+  "generated_sha256": "ce35c86db1d80df5c6b67b5ee2ae3487b82bd1e538006356ac3fd29152ba0410",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "eb11c1-1",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c1-1-2",
+     "need_kind": "term-by-term expansion builder (assemble nCr·a^(n−r)·b^r terms into a polynomial)",
+     "description": "Expansion exercises (warm-up-2, try-2, exercise-2 a–i) ask the student to write out a full polynomial such as 81x^4−216x^3+216x^2−96x+16.",
+     "why": "No existing kind builds a polynomial from binomial terms. area_model only tiles (x+a)(x+b), not powers up to 6 or coefficients like 3x or 2a². Forcing a one-number answer onto number_line_marker would grade a typed result, not a construction."
+    }
+   ],
+   "notes": "The other exercises in this lesson are computations or proofs, not constructions. They are coefficient-finding (LO1, LO3), the Pascal row count, the sum value 32, the greatest coefficient 19, the identity proofs and the divisibility proof. Their answers are single numbers, many far outside number_line_marker's ±20 range, or written proofs. None is something the student builds on a widget instrument, so I recorded no widget templates and no gaps for them."
+  },
+  {
+   "lesson": "eb11c1-2",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c1-2-1",
+     "need_kind": "polynomial_division_stepper",
+     "description": "Long division of A by B (warm-up-1, warm-up-2, try-1, try-2, exercise-1 to exercise-10, challenge-1): the student builds the quotient and remainder polynomial term by term, including the multiply-and-subtract lines.",
+     "why": "No existing kind takes a polynomial as the answer. area_model only builds (x+a)(x+b) with a single x² tile, so it cannot show a cubic or quartic dividend, a non-monic divisor, a remainder, or terms in a second variable. Every other instrument deals with points, lines, sets, statistics or solids. Entering the quotient and remainder would need an algebraic-expression input, which does not exist."
+    },
+    {
+     "lo_id": "lo:eb11c1-2-2",
+     "need_kind": "polynomial_expression_entry",
+     "description": "Find A = BQ + R, or find B from (A − R) ÷ Q (warm-up-3 parts 1 and 2, try-3, try-4, exercise-11 to exercise-16, challenge-2): the student produces a polynomial by multiplying and adding, or by dividing.",
+     "why": "The answer is a polynomial of degree 2 or 3 with a specified coefficient list. No kind accepts that. area_model is limited to x² + (a+b)x + ab, and curve_sketcher would grade a freehand sketch, not the algebraic identity. Stretching either would be a misfit."
+    }
+   ],
+   "notes": "No template was written for this lesson. Every exercise asks for a polynomial quotient, remainder, dividend or divisor. None of the existing widget kinds can take that answer, so each exercise is recorded as a gap. The guiding question, reflect-1 and work-with-a-partner-1 are not constructions, so they need no gap."
+  },
+  {
+   "lesson": "eb11c1-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c1-3-1",
+     "need_kind": "algebraic expression entry / step-by-step symbolic simplifier",
+     "description": "Warm-up 1, Try 1 and Exercise 1 (a–f): simplify a rational expression to its reduced form (e.g. (x²−4)/(3x²+7x+2) → (x−2)/(3x+1)).",
+     "why": "The answer is a symbolic expression the student must produce. No widget builds one: area_model only tiles (x+a)(x+b), which factors a single quadratic but cannot cancel common factors between a numerator and denominator. Using it would be a stretch, and the monomial parts (a, b) have no tile model at all."
+    },
+    {
+     "lo_id": "lo:eb11c1-3-2",
+     "need_kind": "algebraic expression entry",
+     "description": "Warm-up 2, Try 2, Work with a partner 1, Exercise 2 (a–i), Challenge 1: multiply or divide rational expressions, factorising, using the reciprocal of the divisor, and cancelling common factors. Challenge 1 also asks for an exact evaluation at x=√123.",
+     "why": "The answers are factored symbolic expressions or exact surds. None of the existing instruments (pair_plotter, line_drawer, curve_sketcher, number_line_marker, area_model and the rest) can take or grade a symbolic product or quotient."
+    },
+    {
+     "lo_id": "lo:eb11c1-3-3",
+     "need_kind": "algebraic expression entry",
+     "description": "Warm-up 3, Try 3 (1–2), Exercises 3–13 and Challenge 2: add or subtract rational expressions with different denominators, using a common denominator and then reducing. The Guiding question is an open prompt, not a construction.",
+     "why": "The answers are single rational expressions, e.g. (3x−2)/(x(x−1)). No widget builds or grades a symbolic fraction. Exercises 8 and 13 have no book answer, so they could not be keyed either."
+    },
+    {
+     "lo_id": "lo:eb11c1-3-4",
+     "need_kind": "algebraic expression entry",
+     "description": "Warm-up 4–5, Try 4 (1–3), Exercises 14–18 and Challenge 3: simplify compound fractions into one rational expression, e.g. 1/(1−1/(x−1)) → (x−1)/(x−2).",
+     "why": "The answer is a symbolic expression that comes from multiplying through by a common denominator. No existing instrument can express or grade it."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "eb11c1-4",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c1-4-1",
+     "need_kind": "numeric or symbolic answer entry",
+     "description": "Find constants a, b, c in an identity by comparing coefficients (warm-up-1/2, try-1/2, exercise-1 to 9, challenge-1).",
+     "why": "Each part asks for numbers to be calculated, not built or drawn. No existing instrument takes a typed value for a constant. Forcing one onto line_drawer, ratio_balance or area_model would be a stretch. area_model only tiles (x+a)(x+b), and these identities have a leading coefficient, partial fractions or a remainder."
+    },
+    {
+     "lo_id": "lo:eb11c1-4-2",
+     "need_kind": "step-by-step algebraic proof",
+     "description": "Prove equalities by simplifying one or both sides (warm-up-3, try-3, exercise-10, challenge-2).",
+     "why": "These are written proofs. No kind builds or checks an algebraic derivation. area_model covers only (x+a)(x+b), not expressions such as (a²+b²)(c²+d²)."
+    },
+    {
+     "lo_id": "lo:eb11c1-4-3",
+     "need_kind": "step-by-step algebraic proof",
+     "description": "Prove conditional equalities by substituting c = −a−b or y = 1−x (try-4, try-5, exercise-11 and its parts, challenge-3).",
+     "why": "These are written proofs by substitution. No instrument fits them."
+    },
+    {
+     "lo_id": "lo:eb11c1-4-4",
+     "need_kind": "numeric answer entry and proof",
+     "description": "Prove equalities, or find the value of an expression, given a proportion, by setting each ratio equal to k (warm-up-4/5, try-6/7/8, exercise-12 to 20, challenge-4).",
+     "why": "The proofs have no instrument. The value-finding parts have fractional answers such as 3/2 and 26/29, and ratio_balance only balances a whole-number fourth term from 1 to 24, which does not fit them."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "eb11c1-5",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c1-5-1",
+     "need_kind": "proof builder (ordered algebraic steps)",
+     "description": "Prove conditional inequalities by LHS − RHS, factorising and using a > b as a − b > 0 (warm-up-1/2, try-1/2, exercise-1 to 4, challenge-1).",
+     "why": "Every part asks for a written algebraic proof. No existing instrument builds or checks a symbolic derivation. area_model tiles only (x+a)(x+b) with whole a, b. Forcing these onto it would stretch it."
+    },
+    {
+     "lo_id": "lo:eb11c1-5-2",
+     "need_kind": "proof builder (completing the square)",
+     "description": "Prove an inequality by completing the square to X² or X²+Y², and find when equality holds (warm-up-3, try-3/4, exercise-5 to 10, challenge-2).",
+     "why": "These are symbolic proofs. The equality condition is an algebraic relation such as a = 2b, which no widget can capture. number_line_marker only handles whole-number points."
+    },
+    {
+     "lo_id": "lo:eb11c1-5-3",
+     "need_kind": "proof builder (squaring both sides, roots)",
+     "description": "Prove inequalities with square roots by (LHS)² − (RHS)², then show both sides are positive (warm-up-4/5, try-5 to 7, exercise-11 to 17, challenge-3).",
+     "why": "These are symbolic proofs with radicals. No instrument builds or checks them."
+    },
+    {
+     "lo_id": "lo:eb11c1-5-4",
+     "need_kind": "proof builder (AM-GM)",
+     "description": "Apply AM-GM to prove inequalities and find when equality holds, including the maximum area (warm-up-6 to 8, try-8 to 10, exercise-18 to 24, challenge-4).",
+     "why": "These are symbolic proofs. challenge-4 asks for a proof that area ≤ 2500, not a construction. polygon_builder area mode would only build one rectangle with a given area, not prove a bound."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:eb11c1-1-2",
+   "need_kind": "term-by-term expansion builder (assemble nCr·a^(n−r)·b^r terms into a polynomial)",
+   "description": "Expansion exercises (warm-up-2, try-2, exercise-2 a–i) ask the student to write out a full polynomial such as 81x^4−216x^3+216x^2−96x+16.",
+   "why": "No existing kind builds a polynomial from binomial terms. area_model only tiles (x+a)(x+b), not powers up to 6 or coefficients like 3x or 2a². Forcing a one-number answer onto number_line_marker would grade a typed result, not a construction."
+  },
+  {
+   "lo_id": "lo:eb11c1-2-1",
+   "need_kind": "polynomial_division_stepper",
+   "description": "Long division of A by B (warm-up-1, warm-up-2, try-1, try-2, exercise-1 to exercise-10, challenge-1): the student builds the quotient and remainder polynomial term by term, including the multiply-and-subtract lines.",
+   "why": "No existing kind takes a polynomial as the answer. area_model only builds (x+a)(x+b) with a single x² tile, so it cannot show a cubic or quartic dividend, a non-monic divisor, a remainder, or terms in a second variable. Every other instrument deals with points, lines, sets, statistics or solids. Entering the quotient and remainder would need an algebraic-expression input, which does not exist."
+  },
+  {
+   "lo_id": "lo:eb11c1-2-2",
+   "need_kind": "polynomial_expression_entry",
+   "description": "Find A = BQ + R, or find B from (A − R) ÷ Q (warm-up-3 parts 1 and 2, try-3, try-4, exercise-11 to exercise-16, challenge-2): the student produces a polynomial by multiplying and adding, or by dividing.",
+   "why": "The answer is a polynomial of degree 2 or 3 with a specified coefficient list. No kind accepts that. area_model is limited to x² + (a+b)x + ab, and curve_sketcher would grade a freehand sketch, not the algebraic identity. Stretching either would be a misfit."
+  },
+  {
+   "lo_id": "lo:eb11c1-3-1",
+   "need_kind": "algebraic expression entry / step-by-step symbolic simplifier",
+   "description": "Warm-up 1, Try 1 and Exercise 1 (a–f): simplify a rational expression to its reduced form (e.g. (x²−4)/(3x²+7x+2) → (x−2)/(3x+1)).",
+   "why": "The answer is a symbolic expression the student must produce. No widget builds one: area_model only tiles (x+a)(x+b), which factors a single quadratic but cannot cancel common factors between a numerator and denominator. Using it would be a stretch, and the monomial parts (a, b) have no tile model at all."
+  },
+  {
+   "lo_id": "lo:eb11c1-3-2",
+   "need_kind": "algebraic expression entry",
+   "description": "Warm-up 2, Try 2, Work with a partner 1, Exercise 2 (a–i), Challenge 1: multiply or divide rational expressions, factorising, using the reciprocal of the divisor, and cancelling common factors. Challenge 1 also asks for an exact evaluation at x=√123.",
+   "why": "The answers are factored symbolic expressions or exact surds. None of the existing instruments (pair_plotter, line_drawer, curve_sketcher, number_line_marker, area_model and the rest) can take or grade a symbolic product or quotient."
+  },
+  {
+   "lo_id": "lo:eb11c1-3-3",
+   "need_kind": "algebraic expression entry",
+   "description": "Warm-up 3, Try 3 (1–2), Exercises 3–13 and Challenge 2: add or subtract rational expressions with different denominators, using a common denominator and then reducing. The Guiding question is an open prompt, not a construction.",
+   "why": "The answers are single rational expressions, e.g. (3x−2)/(x(x−1)). No widget builds or grades a symbolic fraction. Exercises 8 and 13 have no book answer, so they could not be keyed either."
+  },
+  {
+   "lo_id": "lo:eb11c1-3-4",
+   "need_kind": "algebraic expression entry",
+   "description": "Warm-up 4–5, Try 4 (1–3), Exercises 14–18 and Challenge 3: simplify compound fractions into one rational expression, e.g. 1/(1−1/(x−1)) → (x−1)/(x−2).",
+   "why": "The answer is a symbolic expression that comes from multiplying through by a common denominator. No existing instrument can express or grade it."
+  },
+  {
+   "lo_id": "lo:eb11c1-4-1",
+   "need_kind": "numeric or symbolic answer entry",
+   "description": "Find constants a, b, c in an identity by comparing coefficients (warm-up-1/2, try-1/2, exercise-1 to 9, challenge-1).",
+   "why": "Each part asks for numbers to be calculated, not built or drawn. No existing instrument takes a typed value for a constant. Forcing one onto line_drawer, ratio_balance or area_model would be a stretch. area_model only tiles (x+a)(x+b), and these identities have a leading coefficient, partial fractions or a remainder."
+  },
+  {
+   "lo_id": "lo:eb11c1-4-2",
+   "need_kind": "step-by-step algebraic proof",
+   "description": "Prove equalities by simplifying one or both sides (warm-up-3, try-3, exercise-10, challenge-2).",
+   "why": "These are written proofs. No kind builds or checks an algebraic derivation. area_model covers only (x+a)(x+b), not expressions such as (a²+b²)(c²+d²)."
+  },
+  {
+   "lo_id": "lo:eb11c1-4-3",
+   "need_kind": "step-by-step algebraic proof",
+   "description": "Prove conditional equalities by substituting c = −a−b or y = 1−x (try-4, try-5, exercise-11 and its parts, challenge-3).",
+   "why": "These are written proofs by substitution. No instrument fits them."
+  },
+  {
+   "lo_id": "lo:eb11c1-4-4",
+   "need_kind": "numeric answer entry and proof",
+   "description": "Prove equalities, or find the value of an expression, given a proportion, by setting each ratio equal to k (warm-up-4/5, try-6/7/8, exercise-12 to 20, challenge-4).",
+   "why": "The proofs have no instrument. The value-finding parts have fractional answers such as 3/2 and 26/29, and ratio_balance only balances a whole-number fourth term from 1 to 24, which does not fit them."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-1",
+   "need_kind": "proof builder (ordered algebraic steps)",
+   "description": "Prove conditional inequalities by LHS − RHS, factorising and using a > b as a − b > 0 (warm-up-1/2, try-1/2, exercise-1 to 4, challenge-1).",
+   "why": "Every part asks for a written algebraic proof. No existing instrument builds or checks a symbolic derivation. area_model tiles only (x+a)(x+b) with whole a, b. Forcing these onto it would stretch it."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-2",
+   "need_kind": "proof builder (completing the square)",
+   "description": "Prove an inequality by completing the square to X² or X²+Y², and find when equality holds (warm-up-3, try-3/4, exercise-5 to 10, challenge-2).",
+   "why": "These are symbolic proofs. The equality condition is an algebraic relation such as a = 2b, which no widget can capture. number_line_marker only handles whole-number points."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-3",
+   "need_kind": "proof builder (squaring both sides, roots)",
+   "description": "Prove inequalities with square roots by (LHS)² − (RHS)², then show both sides are positive (warm-up-4/5, try-5 to 7, exercise-11 to 17, challenge-3).",
+   "why": "These are symbolic proofs with radicals. No instrument builds or checks them."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-4",
+   "need_kind": "proof builder (AM-GM)",
+   "description": "Apply AM-GM to prove inequalities and find when equality holds, including the maximum area (warm-up-6 to 8, try-8 to 10, exercise-18 to 24, challenge-4).",
+   "why": "These are symbolic proofs. challenge-4 asks for a proof that area ≤ 2500, not a construction. polygon_builder area mode would only build one rectangle with a given area, not prove a bound."
+  }
+ ]
+}

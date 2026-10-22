@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-3:same-denominator",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-3",
+ "parent_question_id": "q:eb11c1-3-3:bk-exercise-3",
+ "source_page": 18,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "let": "k*k + s"
+  }
+ ],
+ "constraints": [
+  "r - s == k*k"
+ ],
+ "stem": "Simplify the following expression: $\\frac{x^2-{=r}}{x+{=k}}+\\frac{{=s}}{x+{=k}}$",
+ "solution": [
+  "The denominators are the same, so combine the numerators: $\\frac{x^2-{=r}+{=s}}{x+{=k}}$.",
+  "$x^2-{=r}+{=s}=x^2-{=k*k}$, which factorises as $(x-{=k})(x+{=k})$, so the expression is $\\frac{(x-{=k})(x+{=k})}{x+{=k}}$.",
+  "Cancel $(x+{=k})$.",
+  "The answer is $x-{=k}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x - {=k}",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: same denominator, combine numerators, difference of squares, cancel. Mirrors book exercise 3. 25 distinct instances."
+}

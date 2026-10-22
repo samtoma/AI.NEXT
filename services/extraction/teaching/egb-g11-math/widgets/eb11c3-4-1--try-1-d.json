@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-4-1:try-1-d",
+ "lo_id": "lo:eb11c3-4-1",
+ "book_item": "eb11c3-4:try-1#d",
+ "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   5,
+   -2
+  ]
+ },
+ "stem": "Solve $x^3-x^2-16x-20=0$. Tap every solution on the number line.",
+ "solution": [
+  "Let $P(x)=x^3-x^2-16x-20$. $P(5)=125-25-80-20=0$, so $(x-5)$ is a factor.",
+  "Divide: $(x-5)(x^2+4x+4)=0$.",
+  "Factorise: $x^2+4x+4=(x+2)^2$.",
+  "Set each factor to zero: $x=5$ and $x=-2$ (repeated, marked once)."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Factorise the quadratic part fully, then set each distinct factor to zero."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 1,
+   "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 4,
+   "text": "Set each factor equal to zero and solve it: a factor $(x+a)$ gives $x=-a$."
+  }
+ ],
+ "notes": "Repeated root marked once (set)."
+}

@@ -1,0 +1,2185 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "2707886f8f401bd72b122655633b455eba94fb208f44d719e2b6d2b1c056fb4c",
+  "generated_sha256": "ba45201d96494043b8d19dfa11107005a4c671b54b13726278cc48c6432ce6ec",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c2-2",
+   "pages": [
+    {
+     "printed": 57,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Concept 2 · Geometric sequences",
+       "label": "",
+       "number": null,
+       "text": "Concept 2 · Geometric sequences",
+       "_key": "p57-k1",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Calculate the general term of a geometric sequence",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Calculate the general term of a geometric sequence, and determine certain terms in it.",
+       "_key": "p57-k2",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "quote": "A single E. coli bacterium enters a bloodstream.",
+       "label": "",
+       "number": null,
+       "text": "A single E. coli bacterium enters a bloodstream. Under ideal conditions, it does not just split into two; those two split into four, those four split into eight, doubling every 20 minutes. Within 24 hours, that single cell multiplies into a colony numbering in the sextillions—outnumbering the stars in the galaxy. This is the reality of geometric growth.",
+       "_key": "p57-k3",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "quote": "EXPONENTIAL GROWTH: SINGLE E. coli TO MASSIVE COLONY",
+       "label": "",
+       "number": null,
+       "caption": "Illustration of a bloodstream with E. coli bacteria, titled 'Exponential growth: single E. coli to massive colony in bloodstream'. Stages: introduction and entry; first division (geometric 1→2); multiplying exponentially (geometric 2→4→8→...); massive colony formation. Shows 2→4→8→16→32→64 and 2→4→8, with a growth curve at lower right. Small text is hard to read; verify.",
+       "_key": "p57-k4",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "quote": "Guiding Question: How do processes with small starting values escalate rapidly",
+       "label": "Guiding Question",
+       "number": null,
+       "text": "How do processes with small starting values escalate rapidly, and how can we mathematically predict their cumulative impact over time?",
+       "_key": "p57-k5",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "definition",
+       "quote": "A sequence obtained by successively multiplying each preceding term",
+       "label": "",
+       "number": null,
+       "claim": "A sequence obtained by successively multiplying each preceding term by a constant number r is called a geometric sequence, and the constant number r is called the common ratio.",
+       "_key": "p57-k6",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "quote": "Example: A geometric sequence with the first term 1 and the common ratio 2",
+       "label": "",
+       "number": null,
+       "text": "Example: A geometric sequence with the first term 1 and the common ratio 2: 1, 2, 4, 8, 16, ... (each step marked ×2)",
+       "_key": "p57-k7",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "quote": "The general term of a geometric sequence with the first term a and the",
+       "label": "",
+       "number": null,
+       "claim": "The general term of a geometric sequence with the first term a and the common ratio r is a_n = ar^{n-1}.",
+       "formula": "$a_n = ar^{n-1}$",
+       "_key": "p57-k8",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "figure",
+       "quote": "Multiplying a by r, (n−1) times results in a_n",
+       "label": "",
+       "number": null,
+       "caption": "Side note diagram: a, a_2, a_3, ..., a_{n-1}, a_n with arrows each marked ×r; caption 'Multiplying a by r, (n−1) times results in a_n'.",
+       "_key": "p57-k9",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "quote": "Warm Up",
+       "label": "",
+       "number": null,
+       "text": "Warm Up",
+       "_key": "p57-k10",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "quote": "Find the general term of the following geometric sequences {a_n}.",
+       "label": "Warm Up",
+       "number": 1,
+       "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 2, the common ratio 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$5, 10, 20, 40, \\ldots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$-4, 6, -9, \\frac{27}{2}, \\ldots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p57-k11",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "quote": "The following sequence is a geometric sequence. Find the common ratio",
+       "label": "Warm Up",
+       "number": 2,
+       "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. $A, 24, 12, B, \\ldots$",
+       "_key": "p57-k12",
+       "source_page": 57,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 58,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p58-k1",
+       "source_page": 58,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "(b) Let r be the common ratio. Since the first term is 5",
+       "stem": "Explanation item 1: write the general term of each geometric sequence (parts a, b, c); the question itself is printed on the previous page.",
+       "solution": [
+        "(b) Let $r$ be the common ratio. Since the first term is 5 and the 2nd term is 10: $5r = 10$, $r = 2$",
+        "Therefore, since it is a geometric sequence with the first term 5 and the common ratio 2: $a_n = 5 \\times 2^{n-1}$",
+        "(c) Let $r$ be the common ratio. Since the first term is $-4$ and the 2nd term is 6: $-4r = 6$, $r = -\\frac{3}{2}$",
+        "Therefore, since it is a geometric sequence with the first term $-4$ and the common ratio $-\\frac{3}{2}$: $a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "",
+         "answer": "$a_n = 2 \\times 3^{n-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "",
+         "answer": "$a_n = 5 \\times 2^{n-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "",
+         "answer": "$a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Part (a) printed only as its answer; the stem is not on this page. Whether these are worked examples or answers to previous page's exercise: check.",
+       "_key": "p58-k2",
+       "source_page": 58,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "5, 10, 20, 40, ... ×r ×r ×r",
+       "caption": "Side note beside 1(b): sequence 5, 10, 20, 40, ... with curved arrows between consecutive terms each labelled ×r.",
+       "belongs_to_key": "p58-k2",
+       "_key": "p58-k3",
+       "source_page": 58,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a_n = ar^{n-1}",
+       "claim": "General term of a geometric sequence (side note).",
+       "formula": "$a_n = ar^{n-1}$",
+       "_key": "p58-k4",
+       "source_page": 58,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Use parentheses ( ) when the common ratio is a negative number or a fraction.",
+       "claim": "Use parentheses when the common ratio is a negative number or a fraction.",
+       "_key": "p58-k5",
+       "source_page": 58,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "Let r be the required common ratio.",
+       "stem": "Explanation item 2: find the common ratio and the missing terms A and B in the geometric sequence A, 24, 12, B, ... (stem on previous page).",
+       "solution": [
+        "Let $r$ be the required common ratio. $24r = 12$, $\\therefore r = \\frac{1}{2}$",
+        "Since A multiplied by $\\frac{1}{2}$ becomes 24: $\\therefore 24 \\div \\frac{1}{2} = 48$",
+        "Since 12 multiplied by $\\frac{1}{2}$ becomes B: $\\therefore 12 \\times \\frac{1}{2} = 6$",
+        "Therefore, Common ratio: $\\frac{1}{2}$, A: 48, B: 6"
+       ],
+       "answer": "common ratio $\\frac{1}{2}$, A = 48, B = 6",
+       "notes": "Sequence inferred from the side figure.",
+       "_key": "p58-k6",
+       "source_page": 58,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A, 24, 12, B, ... ×1/2 ÷1/2",
+       "caption": "Side note beside item 2: sequence A, 24, 12, B, ... with arrows ×1/2 from A to 24 (and ÷1/2 backward from 24 to A), ×1/2 from 24 to 12, ×1/2 from 12 to B.",
+       "belongs_to_key": "p58-k6",
+       "_key": "p58-k7",
+       "source_page": 58,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 59,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p59-k1",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p59-k2",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the general term of the following geometric sequences",
+       "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 3, the common ratio 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 5, the common ratio $-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 8, the common ratio $-\\frac{1}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$2, 6, 18, 54, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$-8, 12, -18, 27, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$2, \\frac{2}{3}, \\frac{2}{9}, \\frac{2}{27}, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p59-k3",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The following sequence is a geometric sequence. Find the common ratio",
+       "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. A, $-18$, 6, B, ...",
+       "parts": [],
+       "_key": "p59-k4",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p59-k5",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p59-k6",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p59-k7",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the general term of the following geometric sequences",
+       "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 5, the common ratio 2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 2, the common ratio 5",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 7, the common ratio 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The first term 2, the common ratio -3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The first term 3, the common ratio -5",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The first term 4, the common ratio -2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "The first term 4, the common ratio $\\frac{1}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "The first term 3, the common ratio $-\\frac{1}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "The first term 6, the common ratio $\\frac{1}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$3, 6, 12, 24, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$2, -6, 18, -54, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$5, -10, 20, -40, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "m",
+         "stem": "$48, 24, 12, 6, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "n",
+         "stem": "$\\frac{1}{6}, \\frac{1}{4}, \\frac{3}{8}, \\frac{9}{16}, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "o",
+         "stem": "$8, 16\\sqrt{2}, 64, 128\\sqrt{2}, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "p",
+         "stem": "$3, -\\frac{15}{2}, \\frac{75}{4}, -\\frac{375}{8}, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "q",
+         "stem": "$9, -3\\sqrt{3}, 3, -\\sqrt{3}, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "r",
+         "stem": "$5, -\\frac{10}{3}, \\frac{20}{9}, -\\frac{40}{27}, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p59-k8",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "The following sequences are geometric sequences. Find the common ratio",
+       "text": "The following sequences are geometric sequences. Find the common ratio and the numbers that fit in A and B.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "A, $-3$, 9, B, ...",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "A, $\\frac{1}{3}$, $\\frac{1}{9}$, B, ...",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "A, $-\\frac{1}{4}$, $\\frac{1}{8}$, B, ...",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p59-k9",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "In an increasing geometric sequence, if $a_3 + a_5 = 80$ and $a_4 = 24$",
+       "text": "In an increasing geometric sequence, if $a_3 + a_5 = 80$ and $a_4 = 24$, then find $a_7$.",
+       "parts": [],
+       "notes": "Printed 'and' is italic inside the math.",
+       "_key": "p59-k10",
+       "source_page": 59,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 60,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the general term of a geometric sequence",
+       "text": "Learning Outcomes: Calculate the general term of a geometric sequence, and determine certain terms in it.",
+       "_key": "p60-k1",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The general term of a geometric sequence with the first term",
+       "claim": "The general term of a geometric sequence with first term a and common ratio r is a_n = a r^{n-1}.",
+       "formula": "$a_n = ar^{n-1}$",
+       "_key": "p60-k2",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When the sequence a, b, c is a geometric sequence in this order",
+       "claim": "When a, b, c form a geometric sequence in this order, b² = ac.",
+       "formula": "$b^2 = ac$",
+       "_key": "p60-k3",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Considering a, b, c: b=ar, c=ar²",
+       "text": "Side note: Considering a, b, c with each term multiplied by r: b = ar, c = ar². b² = (ar)² = a²r² ......(i); ac = a × ar² = a²r² ......(ii). From (i) and (ii), b² = ac.",
+       "_key": "p60-k4",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p60-k5",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p60-k6",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the general term of the following geometric sequences",
+       "text": "Find the general term of the following geometric sequences {a_n}.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The 4th term is 24, the 6th term is 96",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The 3rd term is 12, the 6th term is $-96$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p60-k7",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "When the 3 numbers 2, x, 8 form a geometric sequence",
+       "text": "When the 3 numbers 2, x, 8 form a geometric sequence in this order, find the value of x.",
+       "_key": "p60-k8",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 3,
+       "quote": "When the 3 numbers 6, a, b form an arithmetic sequence",
+       "text": "When the 3 numbers 6, a, b form an arithmetic sequence in this order, and a, b, 16 form a geometric sequence in this order, find the values of a and b.",
+       "_key": "p60-k9",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p60-k10",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "Let the general term be a_n = ar^{n-1}",
+       "stem": "(a) The 4th term is 24, the 6th term is 96; find the general term of the geometric sequence.",
+       "solution": [
+        "Let the general term be $a_n = ar^{n-1}$.",
+        "Since the 4th term is 24, $ar^3 = 24$ ......(i)",
+        "Since the 6th term is 96, $ar^5 = 96$ ......(ii)",
+        "From (i) and (ii), $a \\neq 0, r \\neq 0$. Dividing (ii) by (i) gives: $\\frac{ar^5}{ar^3} = \\frac{96}{24}$",
+        "$r^2 = 4$ Therefore, $r = \\pm 2$",
+        "From (i), when $r = 2$, $8a = 24$, so $a = 3$",
+        "When $r = -2$, $-8a = 24$, so $a = -3$",
+        "Therefore, $a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$"
+       ],
+       "answer": "$a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$",
+       "misprints": [
+        {
+         "field": "solution[2]",
+         "printed": "ar^{5,} = 96",
+         "intended": "ar^5 = 96",
+         "notes": "stray comma in exponent"
+        }
+       ],
+       "notes": "Margin notes: a_4 = ar^{4-1} = ar^3; a_6 = ar^{6-1} = ar^5; 'Reduce the fraction.' Only part (a) is solved on this page.",
+       "_key": "p60-k11",
+       "source_page": 60,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 61,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "Let the general term be a n = ar n − 1",
+       "continues": true,
+       "stem": "",
+       "solution": [
+        "(b) Let the general term be $a_n = ar^{n-1}$",
+        "Since the 3rd term is 12, $ar^2 = 12$ ......(i)",
+        "Since the 6th term is $-96$, $ar^5 = -96$ ......(ii)",
+        "From (i) and (ii), $a\\neq 0$, $r\\neq 0$. Dividing (ii) by (i) gives: $\\frac{ar^5}{ar^2} = \\frac{-96}{12}$",
+        "$r^3 = -8$",
+        "Since $r$ is a real number, $r = -2$",
+        "Substitute this into (i): $4a = 12$, so $a = 3$",
+        "Therefore, $a_n = 3\\times(-2)^{n-1}$"
+       ],
+       "answer": "$a_n = 3\\times(-2)^{n-1}$",
+       "notes": "Continuation of part (b) of the previous page's example.",
+       "_key": "p61-k1",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "Example",
+       "number": 2,
+       "quote": "Since 2, x, 8 form a geometric sequence in this order, x² = 16",
+       "stem": "2, x, 8 form a geometric sequence in this order (question implied; find x).",
+       "solution": [
+        "Since 2, $x$, 8 form a geometric sequence in this order, $x^2 = 16$",
+        "Solving this, $x = \\pm 4$."
+       ],
+       "answer": "$x=\\pm4$",
+       "notes": "Stem not printed on this page; the numbered item is a continuation of the example's answers (numbered box 2). Label/number as read from the blue number box.",
+       "_key": "p61-k2",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "worked_example",
+       "label": "Example",
+       "number": 3,
+       "quote": "Since 6, a, b form an arithmetic sequence in this order, 2a = 6 + b",
+       "stem": "6, a, b form an arithmetic sequence and a, b, 16 form a geometric sequence (question implied; find a and b).",
+       "solution": [
+        "Since 6, $a$, $b$ form an arithmetic sequence in this order, $2a = 6 + b$ ......(i)",
+        "Since $a$, $b$, 16 form a geometric sequence in this order, $b^2 = 16a$ ......(ii)",
+        "From (i), $b = 2a - 6$ ......(i)'. Substituting this into (ii) and simplifying: $4a^2 - 40a + 36 = 0$",
+        "Solving this, $a = 9, 1$",
+        "From (i)', when $a=9$, $b=12$; when $a=1$, $b=-4$",
+        "Therefore, $a=9, b=12$ or $a=1, b=-4$"
+       ],
+       "answer": "$a=9, b=12$ or $a=1, b=-4$",
+       "notes": "Stem not printed on this page; numbered boxes 2 and 3 are solutions to a previous-page question.",
+       "_key": "p61-k3",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p61-k4",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p61-k5",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the general term of the following geometric sequences",
+       "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The 3rd term is 18, and the 5th term is 162",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The 2nd term is $-6$, and the 5th term is 48",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The 3rd term is 12, and the 7th term is 192",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p61-k6",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "When the 3 numbers 1, x, 12 form a geometric sequence",
+       "text": "When the 3 numbers $1, x, 12$ form a geometric sequence in this order, find the value of $x$.",
+       "_key": "p61-k7",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "When the 3 numbers − 2, a, b form an arithmetic sequence",
+       "text": "When the 3 numbers $-2, a, b$ form an arithmetic sequence in this order, and $a, b, 18$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+       "_key": "p61-k8",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p61-k9",
+       "source_page": 61,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 62,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "continues": false,
+       "_key": "p62-k1",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the general term of the following geometric sequences",
+       "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The 2nd term is 6, and the 4th term is 54",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The 3rd term is 27, and the 5th term is 243",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The 3rd term is $-28$, and the 5th term is $-112$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The 2nd term is 14, and the 5th term is 112",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The 4th term is 16, and the 7th term is $-128$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The 3rd term is $-20$, and the 6th term is 160.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "The 2nd term is 3, and the 6th term is 768.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "The 3rd term is 9, and the 7th term is $\\frac{729}{16}$.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "The 4th term is $\\frac{2}{9}$, and the 8th term is 18.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p62-k2",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "When the 3 numbers 1, x, 25 form a geometric sequence",
+       "text": "When the 3 numbers $1, x, 25$ form a geometric sequence in this order, find the value of $x$.",
+       "_key": "p62-k3",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "When the 3 numbers 1/2, x, 8 form a geometric sequence",
+       "text": "When the 3 numbers $\\frac{1}{2}, x, 8$ form a geometric sequence in this order, find the value of $x$.",
+       "_key": "p62-k4",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "When the 3 numbers a, b, 2 form an arithmetic sequence",
+       "text": "When the 3 numbers $a, b, 2$ form an arithmetic sequence in this order, and $a, 2, b$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+       "_key": "p62-k5",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Budgeting for a Green Energy Initiative",
+       "text": "Budgeting for a Green Energy Initiative. A corporate sustainability department is planning a 3-year budget to phase out fossil fuels. They are tracking their yearly funding allocations across three consecutive stages, modeled under two different economic forecasts: Model 1 (Linear Expansion): Under steady conditions, the funding for Year 1 is capped at -5 hundred thousand LE (initial infrastructure debt), followed by Year 2 (a) and Year 3 (b). These three numbers form an arithmetic sequence. Model 2 (Compounding Scale): If a clean-energy breakthrough occurs, the budget shifts gears. The allocations for Year 2 (a), Year 3 (b), and a newly projected Year 4 budget of 45 hundred thousand LE form a geometric sequence. Determine the exact budget values for a (Year 2) and b (Year 3) that satisfy both planning models simultaneously so the company can transition smoothly.",
+       "notes": "Boxed star Challenge; label printed as 'Challenge'.",
+       "_key": "p62-k6",
+       "source_page": 62,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 63,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of Geometric Sequence (1)",
+       "text": "2-9 Sum of Geometric Sequence (1) — Chapter 2 Sequences",
+       "_key": "p63-k1",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the sum of a geometric sequence of n terms.",
+       "text": "Learning Outcomes: Calculate the sum of a geometric sequence of n terms.",
+       "_key": "p63-k2",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The sum S_n of a geometric sequence with the first term a and the",
+       "claim": "The sum $S_n$ of a geometric sequence with first term $a$ and common ratio $r$ from the first term to the $n$-th term, when $r \\neq 1$, is $S_n=\\frac{a(1-r^n)}{1-r}$ (formula to use when the common ratio r is less than 1).",
+       "formula": "$S_n=\\frac{a(1-r^n)}{1-r}$",
+       "notes": "Side note: 'Formula to use when the common ratio r is less than 1'. Same Point! box as k4.",
+       "_key": "p63-k3",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a (r^n − 1) / r − 1",
+       "claim": "Equivalently, when $r \\neq 1$, $S_n=\\frac{a(r^n-1)}{r-1}$ (formula to use when the common ratio r is greater than 1).",
+       "formula": "$S_n=\\frac{a(r^n-1)}{r-1}$",
+       "notes": "Side note: 'Formula to use when the common ratio r is greater than 1'.",
+       "_key": "p63-k4",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p63-k5",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p63-k6",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the sum S of the following geometric sequences.",
+       "text": "Find the sum $S$ of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 4, the common ratio 3, and the number of terms 5.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 8, the common ratio $\\frac{1}{2}$, and the number of terms 6.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p63-k7",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Find the sum S_n from the first term to the n-th term",
+       "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequence: $2,-6,18,-54,\\dots$",
+       "_key": "p63-k8",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p63-k9",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Since a = 4, r = 3, n = 5 :",
+       "stem": "Warm Up 1: find the sum S of the given geometric sequences.",
+       "solution": [],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Since $a=4, r=3, n=5$",
+         "solution": [
+          "$S=\\frac{4(3^5-1)}{3-1}$",
+          "$=2(3^5-1)$",
+          "$=484$"
+         ],
+         "answer": "$484$",
+         "notes": "Side note: since r is greater than 1, use $S_n=\\frac{a(r^n-1)}{r-1}$.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Since $a=8, r=\\frac12, n=6$",
+         "solution": [
+          "$S=\\frac{8\\{1-(\\frac12)^6\\}}{1-\\frac12}$",
+          "$=\\frac{16\\{1-(\\frac12)^6\\}}{2-1}$",
+          "$=16\\{1-(\\frac12)^6\\}$",
+          "$=\\frac{63}{4}$"
+         ],
+         "answer": "$\\frac{63}{4}$",
+         "notes": "Side notes: since r is less than 1, use $S_n=\\frac{a(1-r^n)}{1-r}$; 'Multiply numerator and denominator by 2'.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p63-k10",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Since a = 2, r = −3 :",
+       "stem": "Warm Up 2: find $S_n$ for $2,-6,18,-54,\\dots$",
+       "solution": [
+        "Since $a=2, r=-3$",
+        "$S_n=\\frac{2\\{1-(-3)^n\\}}{1-(-3)}$",
+        "$=\\frac{1-(-3)^n}{2}$"
+       ],
+       "notes": "Side note: since r is less than 1, use $S_n=\\frac{a(1-r^n)}{1-r}$.",
+       "_key": "p63-k11",
+       "source_page": 63,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 64,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems. (Try section)",
+       "notes": "Try header; contains numbered questions 1 and 2 as separate records.",
+       "_key": "p64-k1",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the sum S of the following geometric sequences.",
+       "text": "Find the sum $S$ of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 3, the common ratio 2, and the number of terms 5",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 6, the common ratio $-2$, and the number of terms 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 6, the common ratio $\\frac{1}{2}$, and the number of terms 6",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p64-k2",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the sum S_n from the first term to the n-th term",
+       "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 3, the common ratio $-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$8, -4, 2, -1, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p64-k3",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box, 'Work with a partner'.",
+       "_key": "p64-k4",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems. (Exercise section)",
+       "_key": "p64-k5",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the sum S of the following geometric sequences.",
+       "text": "Find the sum $S$ of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 5, the common ratio 3, and the number of terms 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 1, the common ratio $-3$, and the number of terms 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 1, the common ratio $\\frac{1}{3}$, and the number of terms 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The first term 3, the common ratio 2, and the number of terms 10",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The first term 2, the common ratio $-3$, and the number of terms 6",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The first term 1, the common ratio $\\frac{1}{2}$, and the number of terms 8",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p64-k6",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the sum S_n from the first term to the n-th term",
+       "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 7, and the common ratio 2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term 2, and the common ratio $\\frac{1}{3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$2, 6, 18, 54, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$1, -3, 9, -27, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The first term 4, and the common ratio 2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The first term 16, and the common ratio $-\\frac{1}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$1, -2, 4, -8, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p64-k7",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "An environmental tech company designs sequential water filters",
+       "text": "An environmental tech company designs sequential water filters where each stage traps a third of the remaining microplastics compared to the previous stage. The filtration scale progresses geometrically: $3, 1, \\frac{1}{3}, \\frac{1}{9}, \\dots$ mg/L removed per stage. Calculate the total mass of contaminants removed if the system uses 4 filtration stages in total.",
+       "_key": "p64-k8",
+       "source_page": 64,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 65,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of Geometric Sequence (2)",
+       "text": "Sum of Geometric Sequence (2)",
+       "_key": "p65-k1",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the general term of a geometric sequence",
+       "text": "Learning Outcomes: Calculate the general term of a geometric sequence, find certain terms in it, and also the sum of all or some of its terms.",
+       "_key": "p65-k2",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p65-k3",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the first term and common ratio of the following geometric sequences.",
+       "text": "Find the first term and common ratio of the following geometric sequences.",
+       "parts": [
+        {
+         "label": "1",
+         "stem": "The sum from the first term to the 3rd term is 35, the sum from the 3rd term to the 5th term is 140",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "stem": "The sum from the first term to the 3rd term is 21, the sum from the first term to the 6th term is 189",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "3",
+         "stem": "The 3rd term is 4, the sum from the first term to the 3rd term is 7",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p65-k4",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p65-k5",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Let a be the first term and r be the common ratio.",
+       "stem": "Warm Up 1: The sum from the first term to the 3rd term is 35, the sum from the 3rd term to the 5th term is 140. Find the first term and common ratio.",
+       "solution": [
+        "Let $a$ be the first term and $r$ the common ratio.",
+        "Sum from 1st to 3rd term is 35: $a+ar+ar^2=35$ ...(i)",
+        "Sum from 3rd to 5th term is 140: $ar^2+ar^3+ar^4=140$ ...(ii)",
+        "From (ii), $r^2(a+ar+ar^2)=140$ (side note: transform into a form where (i) can be substituted)",
+        "Substitute (i): $35r^2=140$",
+        "Solving this, $r=\\pm2$",
+        "When $r=2$, from (i): $a+2a+4a=35$",
+        "Solving this, $a=5$",
+        "When $r=-2$, from (i): $a-2a+4a=35$",
+        "Solving this, $a=\\frac{35}{3}$"
+       ],
+       "answer": "First term: 5, Common ratio: 2 or First term: $\\frac{35}{3}$, Common ratio: $-2$",
+       "notes": "Side note printed beside step: 'Transform into a form where (i) can be substituted.' Example numbered 1 in a square badge, not labelled 'Example'.",
+       "_key": "p65-k6",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Since the sum from the first term to the 6th term is 189",
+       "stem": "Warm Up 2: The sum from the first term to the 3rd term is 21, the sum from the first term to the 6th term is 189. Find the first term and common ratio.",
+       "solution": [
+        "Let $a$ be the first term and $r$ the common ratio.",
+        "Sum from 1st to 3rd term is 21: $a+ar+ar^2=21$ ...(i)",
+        "Sum from 1st to 6th term is 189: $a+ar+ar^2+ar^3+ar^4+ar^5=189$ ...(ii)",
+        "From (ii), $(a+ar+ar^2)+r^3(a+ar+ar^2)=189$ (side note: transform into a form where (i) can be substituted)",
+        "Substitute (i): $21+21r^3=189$",
+        "Solving this in the real number range, $r=2$",
+        "From (i), $a+2a+4a=21$",
+        "Solving this, $a=3$"
+       ],
+       "answer": "First term: 3, Common ratio: 2",
+       "notes": "Side note printed beside step: 'Transform into a form where (i) can be substituted.'",
+       "_key": "p65-k7",
+       "source_page": 65,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 66,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": 3,
+       "quote": "Let a be the first term and r be the common ratio.",
+       "continues": false,
+       "stem": "",
+       "solution": [
+        "Let $a$ be the first term and $r$ be the common ratio.",
+        "Since the 3rd term is 4, $ar^2 = 4$ ......(i)",
+        "Since the sum from the first term to the 3rd term is 7, $a + ar + ar^2 = 7$ ......(ii)",
+        "Since $r \\neq 0$, from (i), $a = \\frac{4}{r^2}$",
+        "Substitute this into (ii): $\\frac{4}{r^2} + \\frac{4}{r^2} \\times r + \\frac{4}{r^2} \\times r^2 = 7$ (side note: Multiply both sides by $r^2$)",
+        "$4 + 4r + 4r^2 = 7r^2$",
+        "Solving this, $r = 2, -\\frac{2}{3}$",
+        "When $r = 2$, from (i), $4a = 4$",
+        "Solving this, $a = 1$",
+        "$r = -\\frac{2}{3}$, from (i), $\\frac{4}{9}a = 4$",
+        "Solving this, $a = 9$"
+       ],
+       "answer": "First term: 1, Common ratio: 2 or First term: 9, Common ratio: $-\\frac{2}{3}$",
+       "notes": "Example number 3 is printed as a boxed number badge; the stem is on the previous page. A side note 'Multiply both sides by r^2' is attached to the substitution step.",
+       "_key": "p66-k1",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the first term and common ratio of the following geometric sequences.",
+       "continues": false,
+       "text": "Find the first term and common ratio of the following geometric sequences.",
+       "parts": [],
+       "_key": "p66-k2",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "The sum from the first to the 3rd term is 21",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 21, and the sum from the 3rd to the 5th term is 84",
+       "_key": "p66-k3",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The sum from the first to the 3rd term is 26",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 26, and the sum from the first to the 6th term is 728",
+       "_key": "p66-k4",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "The 2nd term is 3, and the sum from the first to the 3rd term is 13",
+       "continues": false,
+       "text": "The 2nd term is 3, and the sum from the first to the 3rd term is 13",
+       "_key": "p66-k5",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "continues": false,
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p66-k6",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the first term and common ratio of the following geometric sequences.",
+       "continues": false,
+       "text": "Find the first term and common ratio of the following geometric sequences.",
+       "_key": "p66-k7",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "The sum from the first to the 3rd term is 9",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 9, and the sum from the 4th to the 6th term is $-72$",
+       "_key": "p66-k8",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "The sum from the first to the 3rd term is 9, and the sum from the 3rd",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 9, and the sum from the 3rd to the 5th term is 36",
+       "_key": "p66-k9",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "The sum from the first to the 3rd term is 78",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 78, and the sum from the 3rd to the 5th term is 702",
+       "_key": "p66-k10",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "The sum of the first and the 2nd terms is 3",
+       "continues": false,
+       "text": "The sum of the first and the 2nd terms is 3, and the sum from the first to the 4th term is 51",
+       "_key": "p66-k11",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "The sum from the first to the 3rd term is 65",
+       "continues": false,
+       "text": "The sum from the first to the 3rd term is 65, and the sum from the first to the 6th term is 1820",
+       "_key": "p66-k12",
+       "source_page": 66,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 67,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "quote": "The sum of the first and the 2nd terms is – 8",
+       "label": "Exercise",
+       "number": 6,
+       "text": "The sum of the first and the 2nd terms is $-8$, and the sum from the first to the 4th term is $-80$",
+       "notes": "Part of the Exercise whose earlier items are on the previous page; the item prints only a number badge 6.",
+       "_key": "p67-k1",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "quote": "The 2nd term is 6, and the sum from the first to the 3rd term is 21",
+       "label": "Exercise",
+       "number": 7,
+       "text": "The 2nd term is 6, and the sum from the first to the 3rd term is 21",
+       "_key": "p67-k2",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "quote": "The 3rd term is 12, and the sum from the first to the 3rd term is 9",
+       "label": "Exercise",
+       "number": 8,
+       "text": "The 3rd term is 12, and the sum from the first to the 3rd term is 9",
+       "_key": "p67-k3",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "quote": "The 3rd term is 20, and the sum from the first to the 3rd term is 35",
+       "label": "Exercise",
+       "number": 9,
+       "text": "The 3rd term is 20, and the sum from the first to the 3rd term is 35",
+       "_key": "p67-k4",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "quote": "If S_n is the sum of the first n terms of the geometric sequence",
+       "label": "Challenge",
+       "number": null,
+       "text": "If $S_n$ is the sum of the first n terms of the geometric sequence such that $S_8 = 255,\\ S_6 = 63$ and $a_8 - a_7 = 64$, find $a_{10}$.",
+       "_key": "p67-k5",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "open_prompt",
+       "quote": "How does changing the common ratio r from a value greater than 1",
+       "label": "Reflect",
+       "number": null,
+       "text": "How does changing the common ratio r from a value greater than 1 to a value between 0 and 1 fundamentally alter the real-world behavior modeled by a geometric sequence?",
+       "_key": "p67-k6",
+       "source_page": 67,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Find the general term from the first term and ratio",
+      "description": "Find the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio, or from its first few listed terms.",
+      "evidence_keys": [
+       "p57-k6",
+       "p57-k8",
+       "p57-k11",
+       "p58-k2",
+       "p59-k3"
+      ]
+     },
+     {
+      "label": "Find the common ratio and missing terms",
+      "description": "Find the common ratio and the missing terms of a geometric sequence from neighbouring known terms.",
+      "evidence_keys": [
+       "p57-k12",
+       "p58-k6",
+       "p59-k4",
+       "p59-k9"
+      ]
+     },
+     {
+      "label": "Find the general term from two given terms",
+      "description": "Find the general term of a geometric sequence when two of its terms are given, by solving for a and r.",
+      "evidence_keys": [
+       "p60-k7",
+       "p60-k11",
+       "p61-k6",
+       "p62-k2"
+      ]
+     },
+     {
+      "label": "Use b² = ac for three terms in a geometric sequence",
+      "description": "Use b² = ac to find an unknown middle term, including problems that combine an arithmetic and a geometric sequence.",
+      "evidence_keys": [
+       "p60-k3",
+       "p60-k8",
+       "p60-k9",
+       "p61-k7",
+       "p61-k8",
+       "p62-k5"
+      ]
+     },
+     {
+      "label": "Calculate the sum of the first n terms",
+      "description": "Calculate the sum S_n of the first n terms of a geometric sequence with the formula, choosing the form that suits r<1 or r>1.",
+      "evidence_keys": [
+       "p63-k3",
+       "p63-k4",
+       "p63-k7",
+       "p63-k10",
+       "p64-k2",
+       "p64-k3"
+      ]
+     },
+     {
+      "label": "Find the first term and ratio from sum conditions",
+      "description": "Find the first term and common ratio of a geometric sequence from conditions on sums of some of its terms.",
+      "evidence_keys": [
+       "p65-k4",
+       "p65-k6",
+       "p65-k7",
+       "p66-k3",
+       "p66-k4",
+       "p66-k8"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p57-k4",
+      "objective": 1
+     },
+     {
+      "key": "p57-k5",
+      "objective": 1
+     },
+     {
+      "key": "p57-k6",
+      "objective": 1
+     },
+     {
+      "key": "p57-k7",
+      "objective": 1
+     },
+     {
+      "key": "p57-k8",
+      "objective": 1
+     },
+     {
+      "key": "p57-k9",
+      "objective": 1
+     },
+     {
+      "key": "p57-k11",
+      "objective": 1
+     },
+     {
+      "key": "p57-k12",
+      "objective": 2
+     },
+     {
+      "key": "p58-k2",
+      "objective": 1
+     },
+     {
+      "key": "p58-k3",
+      "objective": 1
+     },
+     {
+      "key": "p58-k4",
+      "objective": 1
+     },
+     {
+      "key": "p58-k5",
+      "objective": 1
+     },
+     {
+      "key": "p58-k6",
+      "objective": 2
+     },
+     {
+      "key": "p58-k7",
+      "objective": 2
+     },
+     {
+      "key": "p59-k3",
+      "objective": 1
+     },
+     {
+      "key": "p59-k4",
+      "objective": 2
+     },
+     {
+      "key": "p59-k8",
+      "objective": 1
+     },
+     {
+      "key": "p59-k9",
+      "objective": 2
+     },
+     {
+      "key": "p59-k10",
+      "objective": 3
+     },
+     {
+      "key": "p60-k2",
+      "objective": 3
+     },
+     {
+      "key": "p60-k3",
+      "objective": 4
+     },
+     {
+      "key": "p60-k4",
+      "objective": 4
+     },
+     {
+      "key": "p60-k7",
+      "objective": 3
+     },
+     {
+      "key": "p60-k8",
+      "objective": 4
+     },
+     {
+      "key": "p60-k9",
+      "objective": 4
+     },
+     {
+      "key": "p60-k11",
+      "objective": 3
+     },
+     {
+      "key": "p61-k1",
+      "objective": 3
+     },
+     {
+      "key": "p61-k2",
+      "objective": 4
+     },
+     {
+      "key": "p61-k3",
+      "objective": 4
+     },
+     {
+      "key": "p61-k6",
+      "objective": 3
+     },
+     {
+      "key": "p61-k7",
+      "objective": 4
+     },
+     {
+      "key": "p61-k8",
+      "objective": 4
+     },
+     {
+      "key": "p62-k1",
+      "objective": 3
+     },
+     {
+      "key": "p62-k2",
+      "objective": 3
+     },
+     {
+      "key": "p62-k3",
+      "objective": 4
+     },
+     {
+      "key": "p62-k4",
+      "objective": 4
+     },
+     {
+      "key": "p62-k5",
+      "objective": 4
+     },
+     {
+      "key": "p62-k6",
+      "objective": 4
+     },
+     {
+      "key": "p63-k3",
+      "objective": 5
+     },
+     {
+      "key": "p63-k4",
+      "objective": 5
+     },
+     {
+      "key": "p63-k7",
+      "objective": 5
+     },
+     {
+      "key": "p63-k8",
+      "objective": 5
+     },
+     {
+      "key": "p63-k10",
+      "objective": 5
+     },
+     {
+      "key": "p63-k11",
+      "objective": 5
+     },
+     {
+      "key": "p64-k1",
+      "objective": 5
+     },
+     {
+      "key": "p64-k2",
+      "objective": 5
+     },
+     {
+      "key": "p64-k3",
+      "objective": 5
+     },
+     {
+      "key": "p64-k4",
+      "objective": 5
+     },
+     {
+      "key": "p64-k5",
+      "objective": 5
+     },
+     {
+      "key": "p64-k6",
+      "objective": 5
+     },
+     {
+      "key": "p64-k7",
+      "objective": 5
+     },
+     {
+      "key": "p64-k8",
+      "objective": 5
+     },
+     {
+      "key": "p65-k4",
+      "objective": 6
+     },
+     {
+      "key": "p65-k6",
+      "objective": 6
+     },
+     {
+      "key": "p65-k7",
+      "objective": 6
+     },
+     {
+      "key": "p66-k1",
+      "objective": 6
+     },
+     {
+      "key": "p66-k2",
+      "objective": 6
+     },
+     {
+      "key": "p66-k3",
+      "objective": 6
+     },
+     {
+      "key": "p66-k4",
+      "objective": 6
+     },
+     {
+      "key": "p66-k5",
+      "objective": 6
+     },
+     {
+      "key": "p66-k7",
+      "objective": 6
+     },
+     {
+      "key": "p66-k8",
+      "objective": 6
+     },
+     {
+      "key": "p66-k9",
+      "objective": 6
+     },
+     {
+      "key": "p66-k10",
+      "objective": 6
+     },
+     {
+      "key": "p66-k11",
+      "objective": 6
+     },
+     {
+      "key": "p66-k12",
+      "objective": 6
+     },
+     {
+      "key": "p67-k1",
+      "objective": 6
+     },
+     {
+      "key": "p67-k2",
+      "objective": 6
+     },
+     {
+      "key": "p67-k3",
+      "objective": 6
+     },
+     {
+      "key": "p67-k4",
+      "objective": 6
+     },
+     {
+      "key": "p67-k5",
+      "objective": 6
+     },
+     {
+      "key": "p67-k6",
+      "objective": 5
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": []
+}

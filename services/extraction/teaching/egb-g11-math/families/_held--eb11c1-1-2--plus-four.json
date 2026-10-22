@@ -1,0 +1,40 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-2:plus-four",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-2",
+ "parent_question_id": "q:eb11c1-1-2:bk-exercise-2-a",
+ "source_page": 6,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the expansion of $(x+{=a})^4$.",
+ "answer": "x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}",
+ "solution": [
+  "$(x+{=a})^4 = {}^4C_0 x^4 + {}^4C_1 x^3({=a}) + {}^4C_2 x^2({=a})^2 + {}^4C_3 x({=a})^3 + {}^4C_4 ({=a})^4$.",
+  "The combinations are 1, 4, 6, 4, 1.",
+  "Terms: $x^4$; $4\\cdot{=a} = {=4*a}$, so ${=4*a}x^3$; $6\\cdot{=a**2} = {=6*a**2}$, so ${=6*a**2}x^2$; $4\\cdot{=a**3} = {=4*a**3}$, so ${=4*a**3}x$; ${=a}^4 = {=a**4}$.",
+  "The expansion is $x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x^4 + {=4*a}*x^3 + {=6*a**2}*x^2 + {=4*a**3}*x + {=a**4}",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point: (x+a)^4 with small positive a, modelled on book (x+1)^4."
+}

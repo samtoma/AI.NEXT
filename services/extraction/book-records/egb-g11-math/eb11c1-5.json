@@ -1,0 +1,1501 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c1-5",
+    "syllabus_ref": "Concept 5",
+    "title": "Inequalities",
+    "module": "Unit 1 Algebraic Proofs",
+    "pages": [
+      31,
+      39
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c1-5:heading-1",
+      "type": "heading",
+      "source_page": 31,
+      "quote": "Concept 5 · Inequalities",
+      "text": "Concept 5 · Inequalities",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 31,
+      "quote": "Prove that algebraic inequalities are correct in various math situations (conditional).",
+      "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (conditional).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-1",
+      "type": "linking_text",
+      "source_page": 31,
+      "quote": "You are a bio-engineer designing a biodegradable capsule",
+      "text": "You are a bio-engineer designing a biodegradable capsule to deliver a life-saving drug to a specific tumour inside the human body. To ensure the drug releases at the perfect rate, you need the capsule to have the maximum possible volume, but you have a strict limit on the amount of expensive raw polymer available to create its outer surface area.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:figure-1",
+      "type": "figure",
+      "source_page": 31,
+      "quote": "Exact mathematical equation",
+      "caption": "Illustration of a capsule with labels: 'Exact mathematical equation', 'Single Equation', 'Specific Case: V=f(S) Traditional equation' (crossed out in a panel), 'VOLUME (to maximize)', 'LIFE-SAVING DRUG', 'SURFACE AREA (limited raw polymer)', and a small crossed-out capsule labelled 'Specific Case: V=f(S)'.",
+      "notes": "Illustrative picture referred to by the text; labels read from image.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3428,
+          0.1888,
+          0.6716,
+          0.3661
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-2",
+      "type": "linking_text",
+      "source_page": 31,
+      "quote": "How do you find the absolute best design when you can't",
+      "text": "How do you find the absolute best design when you can't just use an exact equation to give you a single answer? You use inequalities. While regular equations tell us exactly when things are equal, inequalities tell us the optimal limits of what is physically possible—the absolute maximums and minimums. In life sciences, economics, and logistics, the most powerful tool for finding these bounds is a beautiful, universal mathematical law known as the AM-GM Inequality.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 31,
+      "quote": "How can algebraic techniques and the structural properties of positive real numbers",
+      "text": "Guiding question: How can algebraic techniques and the structural properties of positive real numbers be used to establish definitive upper and lower bounds for variable expressions, and how does equality emerge as a special boundary condition?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:method-1",
+      "type": "method",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 31,
+      "quote": "To prove the inequality LHS > RHS, calculate their difference LHS – RHS",
+      "claim": "To prove the inequality LHS > RHS, calculate their difference LHS – RHS and show that it is positive (LHS – RHS > 0).",
+      "formula": "$LHS - RHS > 0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:method-2",
+      "type": "method",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 31,
+      "quote": "If a condition like a > b is given, rewrite it as a – b > 0",
+      "claim": "If a condition like a > b is given, rewrite it as a − b > 0 to use in your proof.",
+      "formula": "$a-b>0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-2",
+      "type": "heading",
+      "source_page": 31,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 31,
+      "quote": "If a > b and x > y, prove that 2(ax + by) > (a + b)(x + y)",
+      "text": "Prove the following inequalities. If $a>b$ and $x>y$, prove that $2(ax+by)>(a+b)(x+y)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 31,
+      "quote": "If x > 3 and y > −5, prove that xy + 5x > 3y + 15",
+      "text": "Prove the following inequalities. If $x>3$ and $y>-5$, prove that $xy+5x>3y+15$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-3",
+      "type": "heading",
+      "source_page": 32,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "[Proof] LHS − RHS = 2(ax + by) − (a + b)(x + y)",
+      "stem": "Proof (question not printed on this page; from the proof it is: if a > b and x > y, prove that 2(ax + by) > (a + b)(x + y))",
+      "solution": [
+        "LHS − RHS $= 2(ax+by)-(a+b)(x+y)$",
+        "$= 2ax+2by-ax-ay-bx-by$",
+        "$= ax-ay-bx+by$",
+        "$= a(x-y)-b(x-y)$",
+        "$= (a-b)(x-y)$",
+        "Since $a>b$ and $x>y$, we have $a-b>0$ and $x-y>0$,",
+        "$(a-b)(x-y)>0$",
+        "Therefore, $2(ax+by)>(a+b)(x+y)$"
+      ],
+      "notes": "Stem is not printed; inferred from the proof. Terms a(x − y) and b(x − y) are highlighted in pink.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-3",
+      "type": "linking_text",
+      "belongs_to": "eb11c1-5:explanation-1",
+      "source_page": 32,
+      "quote": "Start with “LHS−RHS = ”",
+      "text": "Margin note (beside first line): Start with “LHS−RHS = ”",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-4",
+      "type": "linking_text",
+      "belongs_to": "eb11c1-5:explanation-1",
+      "source_page": 32,
+      "quote": "Factor the expression. Factor out the common factor",
+      "text": "Margin note (beside line ax − ay − bx + by): Factor the expression. Factor out the common factor from the first and second terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-5",
+      "type": "linking_text",
+      "belongs_to": "eb11c1-5:explanation-1",
+      "source_page": 32,
+      "quote": "If A > 0 and B > 0, then AB > 0",
+      "text": "Margin note (beside (a − b)(x − y) > 0): If A > 0 and B > 0, then AB > 0",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:explanation-2",
+      "type": "worked_example",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "[Proof] LHS − RHS = xy + 5x − (3y + 15)",
+      "stem": "Proof (question is the Warm Up on the previous page: if x > 3 and y > −5, prove that xy + 5x > 3y + 15)",
+      "solution": [
+        "LHS − RHS $= xy+5x-(3y+15)$",
+        "$= xy+5x-3y-15$",
+        "$= x(y+5)-3(y+5)$",
+        "$= (x-3)(y+5)$",
+        "Since $x>3$ and $y>-5$, we have $x-3>0$ and $y+5>0$,",
+        "$(x-3)(y+5)>0$",
+        "Therefore, $xy+5x>3y+15$"
+      ],
+      "notes": "Terms x(y + 5) and 3(y + 5) highlighted in pink.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-6",
+      "type": "linking_text",
+      "belongs_to": "eb11c1-5:explanation-2",
+      "source_page": 32,
+      "quote": "Start by writing “LHS−RHS = ”",
+      "text": "Margin note (beside first line): Start by writing “LHS−RHS = ”",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-7",
+      "type": "linking_text",
+      "belongs_to": "eb11c1-5:explanation-2",
+      "source_page": 32,
+      "quote": "Factor the expression; factor out the common factors",
+      "text": "Margin note (beside xy + 5x − 3y − 15): Factor the expression; factor out the common factors from the two preceding and succeeding terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-4",
+      "type": "heading",
+      "source_page": 32,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-8",
+      "type": "linking_text",
+      "source_page": 32,
+      "quote": "Prove the following inequalities.",
+      "text": "Prove the following inequalities.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-1",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If a > b and c > d, prove that ac + bd > ad + bc",
+      "text": "If $a>b$ and $c>d$, prove that $ac+bd>ad+bc$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-2",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If x > 2 and y > 1, prove that xy + 2 > x + 2y",
+      "text": "If $x>2$ and $y>1$, prove that $xy+2>x+2y$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-9",
+      "type": "linking_text",
+      "source_page": 32,
+      "quote": "Work with a partner Collaborate with your group to solve",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-5",
+      "type": "heading",
+      "source_page": 32,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-10",
+      "type": "linking_text",
+      "source_page": 32,
+      "quote": "Prove the following inequalities.",
+      "text": "Prove the following inequalities.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If x > y, prove that 3x − 4y > 2x − 3y",
+      "text": "If $x>y$, prove that $3x-4y>2x-3y$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If a > c and b > d, prove that ab + cd > ad + bc",
+      "text": "If $a>c$ and $b>d$, prove that $ab+cd>ad+bc$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If a > 1 and b > 1, prove that ab + 1 > a + b",
+      "text": "If $a>1$ and $b>1$, prove that $ab+1>a+b$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "If a > b > x > y, prove that ax + by > ay + bx",
+      "text": "If $a>b>x>y$, prove that $ax+by>ay+bx$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 32,
+      "quote": "Challenge — Rearrangement If a > b > c > 0 and x > y > z > 0",
+      "text": "Challenge — Rearrangement: If $a>b>c>0$ and $x>y>z>0$, prove that $ax+by+cz>ay+bz+cx$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 33,
+      "quote": "Prove that algebraic inequalities are correct in various math situations",
+      "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (unconditional).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-1",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-1",
+      "source_page": 33,
+      "quote": "To prove LHS ≥ RHS, calculate their difference",
+      "claim": "To prove LHS ≥ RHS, calculate their difference and show that LHS − RHS ≥ 0.",
+      "formula": "$LHS - RHS \\ge 0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:method-3",
+      "type": "method",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "quote": "To prove an inequality for all real numbers, use completing the square",
+      "claim": "To prove an inequality for all real numbers, use completing the square to form $X^2$ or $X^2 + Y^2$.",
+      "formula": "$X^2$ or $X^2+Y^2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-2",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "quote": "For inequalities with ≥ or ≤, you must state the condition for equality.",
+      "claim": "For inequalities with ≥ or ≤, you must state the condition for equality.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-3",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "quote": "For real numbers X, Y : X² ≥ 0. Equality holds when X = 0",
+      "claim": "For real numbers X, Y: $X^2 \\ge 0$. Equality holds when $X = 0$.",
+      "formula": "$X^2 \\ge 0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-4",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "quote": "X² + Y² ≥ 0. Equality holds when X = 0 and Y = 0",
+      "claim": "$X^2+Y^2 \\ge 0$. Equality holds when $X = 0$ and $Y = 0$.",
+      "formula": "$X^2+Y^2 \\ge 0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "quote": "Prove the following inequalities. Also, determine when equality holds.",
+      "text": "Prove the following inequalities. Also, determine when equality holds.",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "$a^2+4b^2 \\ge 4ab$"
+        },
+        {
+          "label": "2",
+          "stem": "$x^2+y^2 \\ge 2(x-y-1)$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:explanation-3",
+      "type": "worked_example",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 33,
+      "pages": [
+        33,
+        34
+      ],
+      "quote": "[Proof] LHS − RHS = a² + 4b² − 4ab",
+      "stem": "Prove $a^2+4b^2 \\ge 4ab$ and determine when equality holds (Warm Up 1).",
+      "solution": [
+        "LHS − RHS = $a^2+4b^2-4ab$ (side note: Start with \"LHS−RHS\")",
+        "$= a^2-4ab+4b^2$ (side note: Complete the square to form $X^2$)",
+        "$= (a-2b)^2-4b^2+4b^2$",
+        "$= (a-2b)^2 \\ge 0$ (side note: $X^2 \\ge 0$)",
+        "Therefore, $a^2+4b^2 \\ge 4ab$",
+        "Also, equality holds when $a-2b=0$, that is, when $a=2b$ (side note: Equality holds when $X=0$)",
+        "LHS − RHS = $x^2+y^2-2(x-y-1)$",
+        "$= x^2-2x+y^2+2y+2$",
+        "$= (x-1)^2-1+(y+1)^2-1+2$",
+        "$= (x-1)^2+(y+1)^2 \\ge 0$",
+        "Therefore, $x^2+y^2 \\ge 2(x-y-1)$.",
+        "Also, equality holds when $x-1=0$ and $y+1=0$, that is, when $x=1$ and $y=-1$"
+      ],
+      "answer": "Equality holds when $a=2b$",
+      "solution_provenance": "book_worked",
+      "notes": "Printed as 'Explanation 1 [Proof]'. Side notes in right column attached to steps. Printed line '= (a−2b)^2 − 4b^2 + 4b^2' is as printed.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-3",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "Prove the following inequalities. Also, determine when equality holds.",
+      "text": "Prove the following inequalities. Also, determine when equality holds: $(a^2+b^2)(x^2+y^2) \\ge (ax+by)^2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-4",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "a² + 5b² ≥ 4ab",
+      "text": "Prove the following inequalities. Also, determine when equality holds: $a^2+5b^2 \\ge 4ab$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "9x² ≥ y (6x − y)",
+      "text": "Prove the following inequalities. Also, determine when equality holds except for 5: $9x^2 \\ge y(6x-y)$",
+      "notes": "Shared instruction 'Prove the following inequalities. Also, determine when equality holds except for 5.' printed once above items 1–6.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "2 (x² + y²) ≥ (x + y)²",
+      "text": "Prove the inequality and determine when equality holds: $2(x^2+y^2) \\ge (x+y)^2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "(2x − y)² ≥ 3 (x² − y²)",
+      "text": "Prove the inequality and determine when equality holds: $(2x-y)^2 \\ge 3(x^2-y^2)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "(2a + 3b)² ≥ 12ab",
+      "text": "Prove the inequality and determine when equality holds: $(2a+3b)^2 \\ge 12ab$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "x² + 2 > 2x",
+      "text": "Prove the inequality and determine when equality holds: $x^2+2 > 2x$",
+      "notes": "Strict inequality; the instruction says 'except for 5', i.e. equality question does not apply to item 5.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "x² + y² − 6x + 8y + 25 ≥ 0",
+      "text": "Prove the inequality and determine when equality holds: $x^2+y^2-6x+8y+25 \\ge 0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-2",
+      "source_page": 34,
+      "quote": "Challenge — Never Negative",
+      "text": "You are a data analyst at a factory that produces precision drone components using two machines, X and Y. Due to mechanical wear, calibration drifts, and energy spikes, the daily overhead cost (in dollars) based on the settings x and y is modelled by Overhead Cost = $x^2+2y^2-10x+12y+43$. Prove that no matter what settings x and y are chosen, the factory will never have a negative overhead cost.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:figure-2",
+      "type": "figure",
+      "lo": "eb11c1-5:objective-2",
+      "belongs_to": "eb11c1-5:challenge-2",
+      "source_page": 34,
+      "quote": "Drone Manufacturing Factory",
+      "caption": "Illustration titled 'Drone Manufacturing Factory' showing two machines (Machine X and Machine Y), with labels Mechanical Wear, Energy Spikes and Daily Overhead Cost C(x,y) = x² + 2y² − 10x + 12y + 43 on a central screen with a 3D surface graph. Small text, read at low resolution; verify.",
+      "notes": "Mostly decorative; small text hard to read.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.4038,
+          0.5931,
+          0.6462,
+          0.6943
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-6",
+      "type": "heading",
+      "source_page": 35,
+      "quote": "Proving Inequalities (3)",
+      "text": "1-15 Proving Inequalities (3)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 35,
+      "quote": "Prove that algebraic inequalities are correct in various math situations",
+      "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (including those with roots).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:method-4",
+      "type": "method",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "To prove inequalities with radicals, calculate the difference of their squares",
+      "claim": "To prove inequalities with radicals, calculate the difference of their squares, (LHS)^2 − (RHS)^2.",
+      "formula": "$(LHS)^2-(RHS)^2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-5",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "When LHS > 0, RHS > 0 : (LHS)² > (RHS)² ⟺ LHS > RHS",
+      "claim": "When LHS > 0 and RHS > 0: (LHS)^2 > (RHS)^2 if and only if LHS > RHS.",
+      "formula": "$(LHS)^2>(RHS)^2 \\iff LHS>RHS$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-6",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "(LHS)² ≥ (RHS)² ⟺ LHS ≥ RHS",
+      "claim": "(LHS)^2 ≥ (RHS)^2 if and only if LHS ≥ RHS (under the same condition LHS>0, RHS>0).",
+      "formula": "$(LHS)^2\\ge(RHS)^2 \\iff LHS\\ge RHS$",
+      "notes": "Printed as continuation line of the first bullet, without its own bullet.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-7",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "When a > 0, √a > 0",
+      "claim": "When a > 0, the square root of a is greater than 0.",
+      "formula": "$a>0 \\Rightarrow \\sqrt{a}>0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-7",
+      "type": "heading",
+      "source_page": 35,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-11",
+      "type": "linking_text",
+      "source_page": 35,
+      "quote": "Prove the following inequalities. Also, determine when equality holds for 1.",
+      "text": "Prove the following inequalities. Also, determine when equality holds for 1.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "If a > 0 and b > 0, √((a²+b²)/2) ≥ (a+b)/2",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{\\dfrac{a^2+b^2}{2}}\\ge\\dfrac{a+b}{2}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-5",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "quote": "If a > 0 and b > 0, √a + 4√b > √(a + 16b)",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{a}+4\\sqrt{b}>\\sqrt{a+16b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-8",
+      "type": "heading",
+      "source_page": 35,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:explanation-4",
+      "type": "worked_example",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 35,
+      "pages": [
+        35,
+        36
+      ],
+      "quote": "[Proof] (LHS)² – (RHS)² = (√((a²+b²)/2))² − ((a+b)/2)²",
+      "stem": "Prove that if a > 0 and b > 0, √((a²+b²)/2) ≥ (a+b)/2, and determine when equality holds (Warm Up 1).",
+      "solution": [
+        "$(LHS)^2-(RHS)^2=\\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2-\\left(\\frac{a+b}{2}\\right)^2$ (side note: Calculate (LHS)² − (RHS)²)",
+        "$=\\frac{a^2+b^2}{2}-\\frac{a^2+2ab+b^2}{4}$",
+        "$=\\frac{a^2-2ab+b^2}{4}$",
+        "$=\\left(\\frac{a-b}{2}\\right)^2\\ge 0$ (side note: X² ≥ 0)",
+        "Thus, $\\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2\\ge\\left(\\frac{a+b}{2}\\right)^2$ ...(i) (side note: Showed (LHS)² ≥ (RHS)²)",
+        "Since a > 0, b > 0, $\\sqrt{\\frac{a^2+b^2}{2}}>0$, $\\frac{a+b}{2}>0$ ...(ii) (side note: Must show LHS > 0, RHS > 0)",
+        "From (i) and (ii), $\\sqrt{\\frac{a^2+b^2}{2}}\\ge\\frac{a+b}{2}$ (side note: Proved LHS ≥ RHS)",
+        "Also, equality holds when $\\frac{a-b}{2}=0$, that is, when $a=b$. (side note: Equality holds when X = 0)",
+        "$(\\text{LHS})^2-(\\text{RHS})^2=(\\sqrt{a}+4\\sqrt{b})^2-(\\sqrt{a+16b})^2$",
+        "$=a+8\\sqrt{ab}+16b-(a+16b)$",
+        "$=a+8\\sqrt{ab}+16b-a-16b$",
+        "$=8\\sqrt{ab}>0$",
+        "Thus, $(\\sqrt{a}+4\\sqrt{b})^2>(\\sqrt{a+16b})^2$ ......(i)",
+        "Since $a>0, b>0$, $\\sqrt{a}+4\\sqrt{b}>0$, $\\sqrt{a+16b}>0$ ...... (ii)",
+        "From (i) and (ii), $\\sqrt{a}+4\\sqrt{b}>\\sqrt{a+16b}$"
+      ],
+      "answer": "Equality holds when $a=b$",
+      "solution_provenance": "book_worked",
+      "notes": "Printed as '1 [Proof]' under Explanation; stem inferred from Warm Up 1. Side notes printed in right column.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-5",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "Prove the following inequalities. Also, determine if equality holds for 1",
+      "text": "Prove the following inequalities. Also, determine if equality holds for 1",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-6",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, √(2(a + b)) ≥ √a + √b",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{2(a+b)}\\ge\\sqrt{a}+\\sqrt{b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-7",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, 2√a + √b > √(4a + b)",
+      "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+\\sqrt{b}>\\sqrt{4a+b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-12",
+      "type": "linking_text",
+      "source_page": 36,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "Prove the following inequalities. Also, determine if equality holds for 1 to 3",
+      "text": "Prove the following inequalities. Also, determine if equality holds for 1 to 3",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0, 2 + a ≥ √(3 + 6a)",
+      "text": "If $a>0$, $2+a\\ge\\sqrt{3+6a}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, √(2(a² + b²)) ≥ a + b",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{2(a^2+b^2)}\\ge a+b$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-14",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, √((a + b)/2) ≥ (√a + √b)/2",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{\\frac{a+b}{2}}\\ge\\frac{\\sqrt{a}+\\sqrt{b}}{2}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-15",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, √a + √b > √(a + b)",
+      "text": "If $a>0$ and $b>0$, $\\sqrt{a}+\\sqrt{b}>\\sqrt{a+b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-16",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > 0 and b > 0, 2√a + 3√b > √(4a + 9b)",
+      "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+3\\sqrt{b}>\\sqrt{4a+9b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-17",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > b > 0, √(a − b) > √a − √b",
+      "text": "If $a>b>0$, $\\sqrt{a-b}>\\sqrt{a}-\\sqrt{b}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-9",
+      "type": "heading",
+      "source_page": 36,
+      "quote": "Challenge — A Root Inequality",
+      "text": "Challenge — A Root Inequality",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-3",
+      "source_page": 36,
+      "quote": "If a > b, where a and b are two positive numbers, prove that",
+      "text": "If $a>b$, where $a$ and $b$ are two positive numbers, prove that $\\sqrt{a-b}<\\sqrt{a}-\\frac{b}{2\\sqrt{a}}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-10",
+      "type": "heading",
+      "source_page": 37,
+      "quote": "Proving Inequalities (4) (AM-GM Inequality)",
+      "text": "Proving Inequalities (4) (AM-GM Inequality)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:printed-objective-4",
+      "type": "printed_objective",
+      "source_page": 37,
+      "quote": "Applies the arithmetic-geometric mean inequality to prove inequalities",
+      "text": "Learning Outcomes: Applies the arithmetic-geometric mean inequality to prove inequalities and find max values.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-8",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "The Arithmetic-Geometric Mean (AM-GM) Inequality",
+      "claim": "When a > 0, b > 0, (a+b)/2 ≥ √(ab), or a + b ≥ 2√(ab).",
+      "formula": "$a>0,\\ b>0,\\ \\frac{a+b}{2}\\ge\\sqrt{ab}$, or $a+b\\ge 2\\sqrt{ab}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-9",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "Equality holds when a = b",
+      "claim": "Equality holds when a = b.",
+      "formula": "$a=b$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:rule-10",
+      "type": "rule",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "The AM-GM inequality is highly useful when the product of the terms simplifies to a constant.",
+      "claim": "The AM-GM inequality is highly useful when the product of the terms simplifies to a constant. Example: a + 1/a ⇒ a × 1/a = 1.",
+      "formula": "$a+\\frac{1}{a}\\Rightarrow a\\times\\frac{1}{a}=1$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-6",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "Prove the following inequalities. Also, determine if equality holds.",
+      "text": "Prove the following inequalities. Also, determine if equality holds.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-7",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "If a > 0 and b > 0, b/a + a/b ≥ 2",
+      "text": "If $a>0$ and $b>0$, $\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:warm-up-8",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "quote": "If a > 0 and b > 0, (a + b)(1/a + 1/b) ≥ 4",
+      "text": "If $a>0$ and $b>0$, $(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\ge 4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:explanation-5",
+      "type": "worked_example",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 37,
+      "pages": [
+        37,
+        38
+      ],
+      "quote": "[Proof] Since b/a > 0, a/b > 0, By the AM-GM inequality",
+      "stem": "Warm Up 1: If a > 0 and b > 0, prove b/a + a/b ≥ 2 and determine if equality holds.",
+      "solution": [
+        "Since $\\frac{b}{a}>0,\\ \\frac{a}{b}>0$, (side note: Always write this)",
+        "By the AM-GM inequality, $\\frac{b}{a}+\\frac{a}{b}\\ge 2\\sqrt{\\frac{b}{a}\\times\\frac{a}{b}}$",
+        "$\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+        "Therefore, $\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+        "Also, equality holds when $\\frac{b}{a}=\\frac{a}{b}$ (side note: Multiply both sides by ab)",
+        "$b^2=a^2$",
+        "Since $a>0, b>0, a=b$",
+        "Thus, equality holds when $a=b$",
+        "$(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)=a\\times\\frac{1}{a}+\\frac{a}{b}+\\frac{b}{a}+b\\times\\frac{1}{b}$",
+        "$=\\frac{a}{b}+\\frac{b}{a}+2$ ...... (i)",
+        "Since $\\frac{a}{b}>0,\\ \\frac{b}{a}>0$ [side note: Always write this]",
+        "By the AM-GM inequality, $\\frac{a}{b}+\\frac{b}{a}\\ge 2\\sqrt{\\frac{a}{b}\\times\\frac{b}{a}}$",
+        "$\\frac{a}{b}+\\frac{b}{a}\\ge 2$",
+        "$\\frac{a}{b}+\\frac{b}{a}+2\\ge 4$ [side note: Add 2 to both sides to match (i)]",
+        "Therefore, $(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\ge 4$ [side note: Showed (Expression (i)) ≥ 4]",
+        "Also, equality holds when $\\frac{a}{b}=\\frac{b}{a}$ [side note: Multiply both sides by ab]",
+        "$a^2=b^2$",
+        "Since $a>0, b>0, a=b$",
+        "Thus, equality holds when $a=b$"
+      ],
+      "answer": "Equality holds when $a=b$",
+      "solution_provenance": "book_worked",
+      "notes": "Labelled 'Explanation 1' with Proof; side notes in margin: 'Always write this', 'Multiply both sides by ab'. Solution for Warm Up 2 not on this page.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-8",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "Prove the following inequalities. Also, determine if equality holds.",
+      "text": "Prove the following inequalities. Also, determine if equality holds.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-9",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, b/3a + 12a/b ≥ 4",
+      "text": "If $a>0$ and $b>0$, $\\frac{b}{3a}+\\frac{12a}{b}\\ge 4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:try-10",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, (a + 1/b)(b + 9/a) ≥ 16",
+      "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{1}{b}\\right)\\left(b+\\frac{9}{a}\\right)\\ge 16$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-13",
+      "type": "linking_text",
+      "source_page": 38,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-18",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "Prove the following inequalities. Also, determine if equality holds.",
+      "text": "Prove the following inequalities. Also, determine if equality holds.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-19",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0, a + 4/a ≥ 4",
+      "text": "If $a>0$, $a+\\frac{4}{a}\\ge 4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-20",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, 3ab + 4/ab ≥ 4√3",
+      "text": "If $a>0$ and $b>0$, $3ab+\\frac{4}{ab}\\ge 4\\sqrt{3}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-21",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, a + b + 9/(a + b) ≥ 6",
+      "text": "If $a>0$ and $b>0$, $a+b+\\frac{9}{a+b}\\ge 6$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-22",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If x > 0, (x + 1/x)(x + 4/x) ≥ 9",
+      "text": "If $x>0$, $\\left(x+\\frac{1}{x}\\right)\\left(x+\\frac{4}{x}\\right)\\ge 9$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-23",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, (a + 8b)(2/a + 1/b) ≥ 18",
+      "text": "If $a>0$ and $b>0$, $(a+8b)\\left(\\frac{2}{a}+\\frac{1}{b}\\right)\\ge 18$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:exercise-24",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 38,
+      "quote": "If a > 0 and b > 0, (a + 3/b)(b + 3/a) ≥ 12",
+      "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{3}{b}\\right)\\left(b+\\frac{3}{a}\\right)\\ge 12$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-11",
+      "type": "heading",
+      "source_page": 39,
+      "quote": "Challenge — Maximum Area",
+      "text": "Challenge — Maximum Area",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:challenge-4",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "A rectangle has a perimeter of 200 cm.",
+      "text": "A rectangle has a perimeter of 200 cm. Using the relation between A.M. and G.M., prove that the area of the rectangle ≤ 2500 cm².",
+      "notes": "Label is the box title 'Challenge — Maximum Area'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:figure-3",
+      "type": "figure",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "Perimeter = 200 cm",
+      "caption": "A rectangle labelled 'Perimeter = 200 cm' above it, with the vertical side marked W (double arrow) and the horizontal side marked L (double arrow).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.2317,
+          0.1364,
+          0.5002,
+          0.2636
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-5:heading-12",
+      "type": "heading",
+      "source_page": 39,
+      "quote": "Reflect",
+      "text": "Reflect",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:linking-text-14",
+      "type": "linking_text",
+      "source_page": 39,
+      "quote": "We proved in the lesson that the AM-GM Inequality",
+      "text": "We proved in the lesson that the AM-GM Inequality ($\\frac{a+b}{2} \\ge \\sqrt{ab}$) always holds true, provided that the numbers are non-negative ($a, b \\ge 0$).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:question-for-reflection-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "What happens if we try to break this condition",
+      "text": "What happens if we try to break this condition and apply the inequality to negative numbers? Suppose that $a = -2$ and $b = -8$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:unlabelled-exercise-1",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "Calculate their Arithmetic Mean (AM).",
+      "text": "Calculate their Arithmetic Mean (AM).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:unlabelled-exercise-2",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "Attempt to calculate their Geometric Mean (GM).",
+      "text": "Attempt to calculate their Geometric Mean (GM).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:unlabelled-exercise-3",
+      "type": "exercise",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "Does the inequality sign (≥) still hold true",
+      "text": "Does the inequality sign ($\\ge$) still hold true and remain valid?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:open-prompt-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-5:objective-4",
+      "source_page": 39,
+      "quote": "Explain the algebraic and logical breakdown that occurs here",
+      "text": "Explain the algebraic and logical breakdown that occurs here, and why defining “domains and restrictions” in inequalities is vital to prevent medical and engineering models from collapsing in the real world.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c1-5:objective-1",
+      "label": "Prove conditional inequalities",
+      "description": "Prove a conditional inequality by calculating LHS − RHS, factorising it and using the given conditions (e.g. a > b rewritten as a − b > 0) to show the result is positive.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c1-5:method-1",
+        "eb11c1-5:method-2",
+        "eb11c1-5:explanation-1",
+        "eb11c1-5:exercise-3"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:objective-2",
+      "label": "Prove by completing the square",
+      "description": "Prove an inequality for all real numbers by completing the square to form X² or X² + Y², and determine when equality holds.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c1-5:method-3",
+        "eb11c1-5:explanation-3",
+        "eb11c1-5:exercise-10"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:objective-3",
+      "label": "Prove inequalities with roots",
+      "description": "Prove inequalities containing square roots by calculating (LHS)² − (RHS)², showing LHS > 0 and RHS > 0, and determine when equality holds.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c1-5:method-4",
+        "eb11c1-5:explanation-4",
+        "eb11c1-5:exercise-15"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-5:objective-4",
+      "label": "Apply the AM-GM inequality",
+      "description": "Apply the AM-GM inequality for positive a and b to prove inequalities, determine when equality holds (a = b), and find maximum values such as an area.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c1-5:rule-8",
+        "eb11c1-5:explanation-5",
+        "eb11c1-5:exercise-22"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (4)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (4)",
+    "2026-10-21: 12 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 3 cropped"
+  ]
+}

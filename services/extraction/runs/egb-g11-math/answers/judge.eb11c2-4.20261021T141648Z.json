@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "3a27583e75eff057f1b408a18fad6cfe6761e4f58dbe848eca59043e5614f534",
+  "generated_sha256": "fa0a024627b36b1e6b88e2425891cc46bd3c06e705383c99e7e1e25083e18c9d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c2-4:example-1",
+    "verdict": "equivalent",
+    "reason": "Both give the same difference sequence -2, -4, -6, -8, ..."
+   }
+  ]
+ }
+}

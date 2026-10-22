@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-2-1:linear-divisor",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-2-1",
+ "parent_question_id": "q:eb11c1-2-1:bk-challenge-1",
+ "source_page": 11,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "m + n"
+  },
+  {
+   "name": "p",
+   "let": "m * n"
+  },
+  {
+   "require": "abs(s) >= 2",
+   "why": "middle coefficient must not be 0 or +-1"
+  },
+  {
+   "name": "gm",
+   "let": "('+ ' + str(m)) if m > 0 else ('- ' + str(-m))"
+  },
+  {
+   "name": "gn",
+   "let": "('+ ' + str(n)) if n > 0 else ('- ' + str(-n))"
+  },
+  {
+   "name": "gs",
+   "let": "('+ ' + str(s)) if s > 0 else ('- ' + str(-s))"
+  },
+  {
+   "name": "gp",
+   "let": "('+ ' + str(p)) if p > 0 else ('- ' + str(-p))"
+  }
+ ],
+ "stem": "Use long division to divide $x^2 {gs}x {gp}$ by $x {gm}$. Find the quotient.",
+ "answer": "x {gn}",
+ "solution": [
+  "Divide the leading terms: $x^2 \\div x = x$, so the first term of the quotient is $x$.",
+  "Multiply: $x(x {gm}) = x^2 {gm}x$. Subtract it from $x^2 {gs}x {gp}$ to get ${=n}x {gp}$.",
+  "Divide the leading terms: ${=n}x \\div x = {=n}$, so the next term of the quotient is ${=n}$.",
+  "Multiply: ${=n}(x {gm}) = {=n}x {gp}$. Subtract to get $0$, so the remainder is $0$.",
+  "The quotient is $x {gn}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x + ({=n})",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "notes": "Exact division of a quadratic by a linear factor (x+m)(x+n). Coefficients avoid 0 and +-1 so the printed polynomials are clean.",
+ "proposed_misconceptions": []
+}

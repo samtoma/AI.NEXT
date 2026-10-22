@@ -1,0 +1,1439 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:eb11c4-1-1:w002#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w002",
+      "template_id": "wt:eb11c4-1-1:exercise-1-b",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−2) and B(6), point C divides segment AB internally in the ratio 3:1. Mark C on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          4
+        ]
+      },
+      "construction": "Points mode, range [-6,6]: tap the single value 4. C = (1·(-2) + 3·6)/(3+1) = 16/4 = 4, a whole number inside the range, so the answer set is {4}.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check the sign of a = −2.",
+      "hint_step": 2,
+      "why": "Fires on marking -4. 'a = -2' has no meaning in this question, as there is no (x - a) = 0 step. The hint misdirects a student who flipped a sign for another reason. / Fires if the student marks -4 instead of 4, which is in range. The hint 'Check the sign of a = −2' refers to a variable the question never defines, and it comes from the (x−a)=0 template. The coordinate of A is already given correctly as −2, and flipping it would give 5, not -4. So the hint misdirects a student who negated the final result."
+    },
+    {
+      "key": "q:eb11c4-1-1:w003#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w003",
+      "template_id": "wt:eb11c4-1-1:exercise-1-c",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−2) and B(6), point D divides segment AB externally in the ratio 5:3. Mark D on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          18
+        ]
+      },
+      "construction": "External division with m:n = 5:3: D = (5·6 − 3·(−2))/(5−3) = 36/2 = 18. Use {\"mode\":\"points\",\"range\":[-6,18],\"targets\":[18]} (24 wide, whole numbers, 18 inside). Student taps 18.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Dividing two negatives: check the sign of the quotient.",
+      "hint_step": 3,
+      "why": "Fires only if −18 is marked, which is unlikely and would need the range to include −18. The hint about dividing two negatives does not match this computation: (30+6)/2 has no quotient of two negatives. The usual sign slip here is in 5·6 − 3·(−2), so the hint would send the student to the wrong step. / The flipped answer is -18, which cannot sit in any valid range that also contains 18 (needs width 36 > 24), so it practically never fires. The hint about dividing two negatives is also irrelevant here: the quotient is 36/2, with a positive denominator 5−3."
+    },
+    {
+      "key": "q:eb11c4-1-1:w005#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w005",
+      "template_id": "wt:eb11c4-1-1:exercise-2-b",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(4) and B(10), point C divides segment AB internally in the ratio 2:1. Mark C on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          8
+        ]
+      },
+      "construction": "Range [0,12]; tap 8 only. C=(1*4+2*10)/3=8, a whole number inside the range.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "All the numbers here are positive; recheck your arithmetic.",
+      "hint_step": 2,
+      "why": "Fires only if the student marks -8, which needs a range containing negatives. All inputs are positive and a natural range is [0,12], so the predicate essentially never fires. A negative mark would not come from this misconception. The hint also says nothing about the ratio step. / The predicate almost never fires on this question because the answer is positive. The hint is also generic ('recheck your arithmetic') and does not help find a specific step."
+    },
+    {
+      "key": "q:eb11c4-1-1:w007#hint:missed-values",
+      "question_id": "q:eb11c4-1-1:w007",
+      "template_id": "wt:eb11c4-1-1:exercise-2-d",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(4) and B(10), mark the midpoint M of segment AB on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          7
+        ]
+      },
+      "construction": "Mode points, range [0,12], targets [7]: the student taps 7 only. 7 is a whole number inside the range, and the range is 12 wide, so every limit is met. The spec example range [-6,6] cannot hold 7, so a wider range is needed.",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "hint": "Add the coordinates and halve.",
+      "hint_step": 1,
+      "why": "The only target is 7, so this fires when the student marks nothing or marks a wrong point only. The hint 'Add the coordinates and halve' is mathematically right and does not state 7. But it gives away the whole procedure for the midpoint, which is the step the student must find. The predicate text 'Part of the answer set' also suits a multi-target set, not a single point. Because the hint hands over the method, it is marked not ok."
+    },
+    {
+      "key": "q:eb11c4-1-1:w008#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w008",
+      "template_id": "wt:eb11c4-1-1:try-1-b",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−5) and B(7), point C divides segment AB internally in the ratio 2:1. Mark C on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          3
+        ]
+      },
+      "construction": "Use mode points, range [-6,8] (14 wide, within ±20). C = (1·(−5) + 2·7)/3 = 9/3 = 3. Tap 3 on the line as the only marker. Target 3 is a whole number inside the range, so every limit is met.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check the sign of a = −5 when substituting.",
+      "hint_step": 2,
+      "why": "Fires when the student marks −3 instead of 3. The hint about the sign of a = −5 when substituting suits (x − a) = 0 style problems. Here the sign slip comes from the section formula and the hint would not clearly point to the step. It is a poor fit and also restates a value from the question. / Fires when the student marks −3 instead of 3. Such a slip has no clear cause in the substitution, because no natural wrong calculation here gives −3. The hint blames the sign of a = −5, which is a guess about the error, and it may send the student to recheck a value that was fine."
+    },
+    {
+      "key": "q:eb11c4-1-1:w009#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w009",
+      "template_id": "wt:eb11c4-1-1:try-1-c",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−5) and B(7), point D divides segment AB externally in the ratio 2:5. Mark D on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -13
+        ]
+      },
+      "construction": "External division with m:n = 2:5: D = (2·7 − 5·(−5))/(2 − 5) = 39/(−3) = −13. Check: AD = 8, DB = 20, ratio 2:5, and D lies outside AB on A's side. Use {\"mode\":\"points\",\"range\":[-16,8],\"targets\":[-13]} (24 wide, within ±20, −13 inside). Student taps −13 only.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Take care with the signs when subtracting m·b from n·a.",
+      "hint_step": 2,
+      "why": "The question's answer −13 has negative 13, and a range containing both ±13 would need width 26 > 24, so a flipped mark (13) cannot be built with −13 in range; the predicate essentially cannot fire. Also the hint says 'subtracting m·b from n·a', i.e. n·a − m·b, which reverses the correct m·b − n·a and is misleading. / The hint reverses the subtraction: the numerator is m·b − n·a, not n·a − m·b, so it is mathematically misleading. The flipped value +13 is also not tappable in any valid range containing −13, since that needs width 26 > 24, so the predicate cannot meaningfully fire here."
+    },
+    {
+      "key": "q:eb11c4-1-1:w010#hint:missed-values",
+      "question_id": "q:eb11c4-1-1:w010",
+      "template_id": "wt:eb11c4-1-1:try-1-d",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−5) and B(7), mark the midpoint M of segment AB on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap 1 only. Midpoint (−5+7)/2 = 1 is a whole number inside the range. (B=7 lies outside the range but need not be marked.)",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "hint": "Add the two coordinates and halve.",
+      "hint_step": 1,
+      "why": "The answer set has one element. Missing it means marking nothing or a wrong value only, so 'part of the set' is not what happened. The hint 'Add the two coordinates and halve' also gives the method away, which is the very step being asked. / With a single target, missed-values fires only when the student marks nothing or marks a different value (a wrong point is both missing and extra). The hint 'Add the two coordinates and halve' states the midpoint formula, i.e. the rule/procedure that gives the answer away. A student who marked nothing is not helped by it specifically."
+    },
+    {
+      "key": "q:eb11c4-1-1:w010#hint:extra-values",
+      "question_id": "q:eb11c4-1-1:w010",
+      "template_id": "wt:eb11c4-1-1:try-1-d",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−5) and B(7), mark the midpoint M of segment AB on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap 1 only. Midpoint (−5+7)/2 = 1 is a whole number inside the range. (B=7 lies outside the range but need not be marked.)",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "hint": "Only one point is asked for.",
+      "hint_step": 1,
+      "why": "Fires when the student marks 1 plus another point, e.g. also marking an endpoint like -5. The hint 'Only one point is asked for' is mathematically right and does not reveal the value, but with the answer being one point it fires for any wrong tap (e.g. 6 or -6), so it is misleading for a student who marked a single wrong point and mostly describes a different error (marking endpoints too). It does not help find the faulty step."
+    },
+    {
+      "key": "q:eb11c4-1-1:w010#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w010",
+      "template_id": "wt:eb11c4-1-1:try-1-d",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−5) and B(7), mark the midpoint M of segment AB on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          1
+        ]
+      },
+      "construction": "Points mode, range [-6,6]; tap 1 only. Midpoint (−5+7)/2 = 1 is a whole number inside the range. (B=7 lies outside the range but need not be marked.)",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Add with signs before halving.",
+      "hint_step": 2,
+      "why": "Fires when -1 is marked instead of 1. 'Add with signs before halving' is mathematically fine and does not give the answer away. But the can_emit table lists sign-flipped for points mode, and the nature of the error here (a sign slip in -5+7 giving -1, or an ordering slip) is plausible. However the hint says to 'add' while the student may have done it right and flipped the final sign, so it may point to the wrong step. When in doubt, false. / Fires when the student marks -1 (negative of 1). That could come from sign mistakes, e.g. computing (−5−7)/2 = −6 does not give −1; -1 arises mainly from a slip or from the 7−5 / 2 order confusion, so it is not really a sign issue. The hint 'Add with signs before halving' mostly restates the formula (reveals method) and is not clearly the right diagnosis; marking -1 is unlikely to be a typical error here."
+    },
+    {
+      "key": "q:eb11c4-1-1:w011#hint:sign-flipped",
+      "question_id": "q:eb11c4-1-1:w011",
+      "template_id": "wt:eb11c4-1-1:warm-up-1-b",
+      "lo_id": "lo:eb11c4-1-1",
+      "kind": "number_line_marker",
+      "stem": "For A(−4) and B(8), point C divides segment AB internally in the ratio 2:1. Mark the coordinate of C on the number line.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          4
+        ]
+      },
+      "construction": "Points mode, range [-6,6], tap 4. C=(1*(-4)+2*8)/3=4, a whole number inside the range.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "hint": "Check the sign when you substitute a = −4 into the formula.",
+      "hint_step": 2,
+      "why": "It fires when the student marks -4, the negative of 4. -4 is A itself, so it is not really a sign slip in the formula. The usual error here is swapping the ratio, which gives 0. The hint points at substituting a = -4, which doesn't fit the likely mistake. Given the doubt, false. / Fires when -4 is marked, but that is also the coordinate of A, so the cause is ambiguous. The hint about substituting a = -4 into a formula is a poor fit for that error."
+    },
+    {
+      "key": "q:eb11c4-1-2:w003#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-2:w003",
+      "template_id": "wt:eb11c4-1-2:challenge-2-r",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "A welding arm is at A(−3, 4). Plot the point R symmetric to A with respect to the origin.",
+      "reading": {
+        "target": [
+          3,
+          -4
+        ]
+      },
+      "construction": "Reflecting A(-3,4) through the origin negates both coordinates, giving R(3,-4). Tap the lattice point at x=3, y=-4 on the default -5..5 grid. It is a whole-number point inside the range, so the instrument can grade it.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "The origin reflection changes both signs.",
+      "hint_step": 1,
+      "why": "Fires when student plots e.g. (3,4) or (-3,-4) (a reflected target; one-axis reflection). Hint 'origin reflection changes both signs' is mathematically right and doesn't give coordinates, but it essentially states the rule/step that yields the answer; for a student who changed only one sign it identifies the error, yet it gives away the full rule for the construction. Borderline; being strict, it reveals the rule."
+    },
+    {
+      "key": "q:eb11c4-1-2:w006#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-2:w006",
+      "template_id": "wt:eb11c4-1-2:exercise-2-r",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "For A(−3, 2), plot the point R symmetric to A with respect to the origin.",
+      "reading": {
+        "target": [
+          3,
+          -2
+        ]
+      },
+      "construction": "Tap the lattice point (3,-2): the reflection in the origin negates both coordinates of A(-3,2). It lies within -5..5.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "The first number is across (x), the second is up (y).",
+      "hint_step": 3,
+      "why": "Fires for a swapped target such as (−2,3) or (2,−3). The hint about x being across and y being up is mathematically fine. But the can_emit table lists swapped-coordinates for the single-target case, and here the swap of the target (3,−2) is (−2,3). A student who reflects and then swaps is plausible, and the hint helps them. It does not give the answer away. Still, the question is about reflecting, not reading coordinates, so the swap is rare. The hint is correct and non-leaking, though only weakly relevant. Marked false because it is not tied to the reflection step."
+    },
+    {
+      "key": "q:eb11c4-1-2:w007#hint:off-target",
+      "question_id": "q:eb11c4-1-2:w007",
+      "template_id": "wt:eb11c4-1-2:exercise-4-p",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "For A(−4, −2), plot the point P symmetric to A with respect to the $x$-axis.",
+      "reading": {
+        "target": [
+          -4,
+          2
+        ]
+      },
+      "construction": "Tap the lattice point (-4, 2): reflection in the x-axis keeps x=-4 and negates y=-2 to 2. It lies within -5..5.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Reflection keeps the distances from the axes.",
+      "hint_step": 1,
+      "why": "It can fire, for example on A itself, (-4,-2), or on any point with no pattern. But the hint 'Reflection keeps the distances from the axes' is vague and does not help find the step they got wrong, and for A itself it could mislead, since A also keeps its distances. A student who plots A or a random point is not helped to see that the y-sign must change. So the hint is not ok."
+    },
+    {
+      "key": "q:eb11c4-1-2:w010#hint:off-target",
+      "question_id": "q:eb11c4-1-2:w010",
+      "template_id": "wt:eb11c4-1-2:exercise-5-p",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "For A(1, −2), plot the point P symmetric to A with respect to the $x$-axis.",
+      "reading": {
+        "target": [
+          1,
+          2
+        ]
+      },
+      "construction": "Tap the lattice point (1,2) on the −5..5 grid. It is A(1,−2) reflected in the x-axis: x stays 1 and y changes sign to 2.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Reflection keeps the distances from the axes.",
+      "hint_step": 1,
+      "why": "Fires on e.g. (1,-2) unchanged or (3,3)-type points. Hint 'Reflection keeps the distances from the axes' is true but too vague and does not say which coordinate flips; it also fits the student who plots the point unchanged poorly. Not helpful enough, so reject."
+    },
+    {
+      "key": "q:eb11c4-1-2:w017#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-2:w017",
+      "template_id": "wt:eb11c4-1-2:try-3-q",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "For A(−1, 2), plot the point Q symmetric to A with respect to the $y$-axis.",
+      "reading": {
+        "target": [
+          1,
+          2
+        ]
+      },
+      "construction": "Reflection of A(-1,2) in the y-axis negates x only: Q = (1,2). Tap lattice point (1,2) on the -5..5 grid; it is in range, so reachable.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "The first number is across (x), the second is up (y).",
+      "hint_step": 3,
+      "why": "Swapped point would be (2,-1)... target (1,2) swapped is (2,1). A student tapping (2,1) fires it, and the hint about x across, y up is correct and non-revealing. But the question asks for one point, and the grader can emit swapped-coordinates for single targets, so it can fire; however it is a plausible but rare error for a reflection, and the hint is generic. Marked false because it is unlikely to help someone who reflected incorrectly rather than misread axes."
+    },
+    {
+      "key": "q:eb11c4-1-2:w017#hint:off-target",
+      "question_id": "q:eb11c4-1-2:w017",
+      "template_id": "wt:eb11c4-1-2:try-3-q",
+      "lo_id": "lo:eb11c4-1-2",
+      "kind": "pair_plotter",
+      "stem": "For A(−1, 2), plot the point Q symmetric to A with respect to the $y$-axis.",
+      "reading": {
+        "target": [
+          1,
+          2
+        ]
+      },
+      "construction": "Reflection of A(-1,2) in the y-axis negates x only: Q = (1,2). Tap lattice point (1,2) on the -5..5 grid; it is in range, so reachable.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Reflection keeps the distances from the axes.",
+      "hint_step": 1,
+      "why": "Fires when neither coordinate matches, with no pattern, e.g. (3,3). The hint 'Reflection keeps the distances from the axes' is true in general but is misleading here: reflection in the y-axis keeps the distance from the x-axis only the y-coordinate, and the distance from the y-axis; it is vague and not actionable for a random miss. Also gives little pointer to the wrong step."
+    },
+    {
+      "key": "q:eb11c4-1-3:w001#hint:off-target",
+      "question_id": "q:eb11c4-1-3:w001",
+      "template_id": "wt:eb11c4-1-3:exercise-12",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point P on the $x$-axis equidistant from A(−1, 2) and B(4, 3), and plot it.",
+      "reading": {
+        "target": [
+          2,
+          0
+        ]
+      },
+      "construction": "P=(s,0). PA²=(s+1)²+4, PB²=(s-4)²+9. Equating: 10s=20, so s=2. Tap lattice point (2,0) on the default −5..5 grid.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Set PA² equal to PB² and solve for s.",
+      "hint_step": 2,
+      "why": "Tapping e.g. (0,0) or (4,0) fires it. The hint refers to 's', which the question never defines. It also hands over the whole method to a student with no recognisable pattern, so it is not tied to any specific error. / Tapping e.g. (1,0) fires it. The hint hands over the whole method (PA²=PB²). It also uses 's', which the question never defines. For a student with no pattern it is a full procedure, not a pointer to a faulty step, so I mark it false."
+    },
+    {
+      "key": "q:eb11c4-1-3:w002#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-3:w002",
+      "template_id": "wt:eb11c4-1-3:exercise-14",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point P on the $x$-axis equidistant from A(−1, 2) and B(3, 8), and plot it.",
+      "reading": {
+        "target": [
+          8.5,
+          0
+        ]
+      },
+      "construction": "P=(s,0): (s+1)^2+4=(s-3)^2+64 gives 8s=68, s=8.5. Tap grid point (8.5, 0), which is on the board (x 1..9, step 0.5, y 0 within -2..2).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "A point on the x-axis has y = 0.",
+      "hint_step": 1,
+      "why": "The swapped point (0, 8.5) is off the board (x 1..9, y -2..2), so it can never be tapped and this predicate cannot fire here. The hint also half-states y = 0, part of the answer. / The swap of (8.5,0) is (0,8.5), which is off this board (x 1..9, y -2..2), so it can never be tapped and the predicate never fires. The hint also states y=0, which gives away part of the answer."
+    },
+    {
+      "key": "q:eb11c4-1-3:w002#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-3:w002",
+      "template_id": "wt:eb11c4-1-3:exercise-14",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point P on the $x$-axis equidistant from A(−1, 2) and B(3, 8), and plot it.",
+      "reading": {
+        "target": [
+          8.5,
+          0
+        ]
+      },
+      "construction": "P=(s,0): (s+1)^2+4=(s-3)^2+64 gives 8s=68, s=8.5. Tap grid point (8.5, 0), which is on the board (x 1..9, step 0.5, y 0 within -2..2).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check signs when expanding.",
+      "hint_step": 2,
+      "why": "The target (8.5, 0) has y = 0, so reflecting it in y changes nothing. Reflecting x gives (-8.5, 0), which is off the board. It cannot fire, and the hint about expanding signs is unrelated. / The reflection of (8.5,0) is (-8.5,0) (or the same point), which is off the board, so it cannot fire. The hint 'Check signs when expanding' also does not match any tappable error."
+    },
+    {
+      "key": "q:eb11c4-1-3:w003#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-3:w003",
+      "template_id": "wt:eb11c4-1-3:exercise-15",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = 2x - 3$ equidistant from A(1, 4) and B(3, −2), and plot it.",
+      "reading": {
+        "target": [
+          2,
+          1
+        ]
+      },
+      "construction": "Q=(s,2s-3). Equal distances to A and B means Q lies on the perpendicular bisector of AB. The midpoint is (2,1) and AB has slope -3, so the bisector is x=3y-1. Substituting y=2x-3 gives x=2, y=1. Q=(2,1) is on the line (2*2-3=1), and QA²=1+9=10=QB². Tap the lattice point (2,1), which is inside the -5..5 grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Put s in the first coordinate and the line's value in the second.",
+      "hint_step": 4,
+      "why": "Can fire (tapping (1,2)), but the hint refers to 's', a symbol the student's question never defines, so it is confusing. It also doesn't point to the step the student got wrong. / It can fire here: tapping (1,2) instead of (2,1) does it. But the hint talks about 's', and the question never defines s, so the student has no s to put in the first coordinate. The wording does not fit the question as the student sees it."
+    },
+    {
+      "key": "q:eb11c4-1-3:w004#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-3:w004",
+      "template_id": "wt:eb11c4-1-3:exercise-16",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = x - 1$ equidistant from A(−1, 5) and B(7, −1), and plot it.",
+      "reading": {
+        "target": [
+          3,
+          2
+        ]
+      },
+      "construction": "Let Q=(s,s-1). Equal squared distances: (s+1)^2+(s-6)^2 = (s-7)^2+s^2 → 2s^2-10s+37 = 2s^2-14s+49 → s=3. Q=(3,2), a lattice point inside −5..5 on the default grid. Tap (3,2). Check: QA²=16+9=25, QB²=16+9=25.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Put s in the first coordinate and the line's value in the second.",
+      "hint_step": 4,
+      "why": "Fires when the student taps (2,3), which is not on the line. The hint refers to 's', a symbol the question never introduces, so the student can't tell what it means. It is also vague about which value goes where."
+    },
+    {
+      "key": "q:eb11c4-1-3:w005#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-3:w005",
+      "template_id": "wt:eb11c4-1-3:exercise-17",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = -x + 1$ equidistant from A(1, 2) and B(−3, 6), and plot it.",
+      "reading": {
+        "target": [
+          -2,
+          3
+        ]
+      },
+      "construction": "Q=(s,1-s). Equal squared distances: (s-1)^2+(1-s-2)^2=(s+3)^2+(1-s-6)^2 gives 2s^2+2s+2=2s^2+4s+34... recheck: (s-1)^2+(s+1)^2=2s^2+2; (s+3)^2+(s+5)^2=2s^2+16s+34; so 2=16s+34, s=-2. Q=(-2,3), which is on y=-x+1 (3=2+1... -(-2)+1=3). Distances to A and B are both sqrt(10). It is a lattice point in -5..5, so tap (-2,3).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Put s in the first coordinate and the line's value in the second.",
+      "hint_step": 4,
+      "why": "Fires when the student taps (3,-2). The hint refers to 's', a parameter the student never sees in the question, so it is confusing. It also assumes a particular parametrisation."
+    },
+    {
+      "key": "q:eb11c4-1-3:w005#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-3:w005",
+      "template_id": "wt:eb11c4-1-3:exercise-17",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = -x + 1$ equidistant from A(1, 2) and B(−3, 6), and plot it.",
+      "reading": {
+        "target": [
+          -2,
+          3
+        ]
+      },
+      "construction": "Q=(s,1-s). Equal squared distances: (s-1)^2+(1-s-2)^2=(s+3)^2+(1-s-6)^2 gives 2s^2+2s+2=2s^2+4s+34... recheck: (s-1)^2+(s+1)^2=2s^2+2; (s+3)^2+(s+5)^2=2s^2+16s+34; so 2=16s+34, s=-2. Q=(-2,3), which is on y=-x+1 (3=2+1... -(-2)+1=3). Distances to A and B are both sqrt(10). It is a lattice point in -5..5, so tap (-2,3).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check signs in each bracket.",
+      "hint_step": 2,
+      "why": "A reflected point such as (2,-3) or (2,3) is not on the line y=-x+1. The error would be in the y-rule or the final reading, not in signs 'in each bracket'. A plotting-only student has no brackets. The hint is a poor fit and unlikely to help find the faulty step."
+    },
+    {
+      "key": "q:eb11c4-1-3:w007#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-3:w007",
+      "template_id": "wt:eb11c4-1-3:try-8",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = 3x + 1$ equidistant from A(4, −5) and B(2, −3), and plot it.",
+      "reading": {
+        "target": [
+          -4,
+          -11
+        ]
+      },
+      "construction": "Let Q=(s,3s+1). |QA|²=10s²+28s+52, |QB|²=10s²+20s+20. Equal gives 8s=-32, s=-4, so Q=(-4,-11). It lies on the board (x -8..0, y -12..-4). Tap (-4,-11).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Put s in the first coordinate and the line's value in the second.",
+      "hint_step": 4,
+      "why": "The swapped point (-11,-4) has x=-11, outside the board x range -8..0, so the student cannot tap it and the predicate never fires here. The hint also refers to an undefined 's'. / The swapped point is (-11,-4). Its x of -11 is outside the board (x -8..0), so it can't be tapped and the predicate never fires on this board."
+    },
+    {
+      "key": "q:eb11c4-1-3:w007#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-3:w007",
+      "template_id": "wt:eb11c4-1-3:try-8",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point Q on the line $y = 3x + 1$ equidistant from A(4, −5) and B(2, −3), and plot it.",
+      "reading": {
+        "target": [
+          -4,
+          -11
+        ]
+      },
+      "construction": "Let Q=(s,3s+1). |QA|²=10s²+28s+52, |QB|²=10s²+20s+20. Equal gives 8s=-32, s=-4, so Q=(-4,-11). It lies on the board (x -8..0, y -12..-4). Tap (-4,-11).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the sign of s after dividing.",
+      "hint_step": 3,
+      "why": "The reflections of the target, such as (4,11), (4,-11) and (-4,11), all lie off the board (x -8..0, y -12..-4), so no tap can land on them and the predicate cannot fire. The hint's 'after dividing' also fits poorly, since s comes from a linear equation, not a division sign slip. / The reflected points (4,-11), (-4,11) and (4,11) all lie outside the board (x -8..0, y -12..-4), so the predicate can't fire here."
+    },
+    {
+      "key": "q:eb11c4-1-3:w008#hint:off-target",
+      "question_id": "q:eb11c4-1-3:w008",
+      "template_id": "wt:eb11c4-1-3:warm-up-4",
+      "lo_id": "lo:eb11c4-1-3",
+      "kind": "pair_plotter",
+      "stem": "Find the point P on the $x$-axis equidistant from A(−2, 1) and B(3, 4), and plot it.",
+      "reading": {
+        "target": [
+          2,
+          0
+        ]
+      },
+      "construction": "Let P=(s,0). (s+2)²+1² = (s−3)²+4² gives 10s=20, so s=2. Tap the lattice point (2,0), which is inside the −5..5 grid. Check: AP²=16+1=17 and BP²=1+16=17.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Set AP² equal to BP² using the distance formula, then solve for s.",
+      "hint_step": 2,
+      "why": "It fires for any other wrong point, for example (1,0) or (3,0). The method is right and gives nothing away. But it says 'solve for s' and the question never defines s, so a student who plotted a stray point may not know what s is."
+    },
+    {
+      "key": "q:eb11c4-1-4:w001#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w001",
+      "template_id": "wt:eb11c4-1-4:exercise-18-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(2, −3) and C(−2, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+      "reading": {
+        "target": [
+          10,
+          -15
+        ]
+      },
+      "construction": "Q = (2C − 3B)/(2−3) = ((−4−6)/(−1), (6+9)/(−1)) = (10, −15). Tap lattice point (10, −15), which is on the board (x −2..12, y −15..0).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (−15,10) lies outside the board (x −2..12, y −15..0), so no tap can produce it and the predicate never fires here. / The swapped point (−15, 10) lies off the board (x only −2..12, y only −15..0), so the student can't tap it and the predicate can't fire here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w001#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w001",
+      "template_id": "wt:eb11c4-1-4:exercise-18-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(2, −3) and C(−2, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+      "reading": {
+        "target": [
+          10,
+          -15
+        ]
+      },
+      "construction": "Q = (2C − 3B)/(2−3) = ((−4−6)/(−1), (6+9)/(−1)) = (10, −15). Tap lattice point (10, −15), which is on the board (x −2..12, y −15..0).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check signs of the products you subtract.",
+      "hint_step": 2,
+      "why": "Reflections of the target, such as (−10,−15), (10,15) and (−10,15), are off the board or not tappable. The predicate can't fire. The hint about signs of products is also vague. / The reflected targets (−10,−15), (10,15) and (−10,15) are all off the board, so the predicate can't fire on this board."
+    },
+    {
+      "key": "q:eb11c4-1-4:w002#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w002",
+      "template_id": "wt:eb11c4-1-4:exercise-18-c",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For C(−2, 3) and A(2, 3), plot the midpoint M of segment CA.",
+      "reading": {
+        "target": [
+          0,
+          3
+        ]
+      },
+      "construction": "Midpoint = ((-2+2)/2, (3+3)/2) = (0,3). Tap lattice point (0,3), which is inside the −5..5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add with signs before halving.",
+      "hint_step": 2,
+      "why": "The target (0,3) lies on an axis, so there is no quadrant. The only reflection that changes it is (0,-3). A student who adds the x's with signs correctly gets 0, and the y's are both +3, so a sign slip is not a natural cause. The hint 'Add with signs before halving' does not fit the error that fires it, and it hardly applies to this question. / The only reflection of (0,3) that differs from it is (0,−3), and that is not a quadrant error. Both y-values are positive, so there is no sign-adding step to correct, and 'add with signs before halving' does not help the student who tapped (0,−3). The 'wrong quadrant' wording does not fit a point on an axis either."
+    },
+    {
+      "key": "q:eb11c4-1-4:w003#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w003",
+      "template_id": "wt:eb11c4-1-4:exercise-19-a",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(6, −3) and C(1, 7), plot the point P dividing segment BC internally in the ratio 3:2.",
+      "reading": {
+        "target": [
+          3,
+          3
+        ]
+      },
+      "construction": "P = (2B+3C)/5 = ((12+3)/5, (-6+21)/5) = (3,3). Tap lattice point (3,3) on the default -5..5 grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The target (3,3) is symmetric, so swapping x and y gives the target itself. A swapped point is then correct and this predicate can never fire here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w004#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w004",
+      "template_id": "wt:eb11c4-1-4:exercise-19-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For C(1, 7) and A(−2, 1), plot the point Q dividing segment CA externally in the ratio 3:2.",
+      "reading": {
+        "target": [
+          -8,
+          -11
+        ]
+      },
+      "construction": "Q = (3·A − 2·C)/(3−2) = ((−6−2)/1, (3−14)/1) = (−8, −11). Tap lattice point (−8, −11); it lies inside x −10..4? x=−8 yes, y=−11 within −12..2 yes.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (−11,−8) has x = −11, outside the board's x range −10..4, so the student cannot tap it and the predicate never fires on this question. / The swapped point (−11, −8) has x=−11, outside the board (x −10..4), so it cannot be tapped and the predicate never fires on this question."
+    },
+    {
+      "key": "q:eb11c4-1-4:w004#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w004",
+      "template_id": "wt:eb11c4-1-4:exercise-19-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For C(1, 7) and A(−2, 1), plot the point Q dividing segment CA externally in the ratio 3:2.",
+      "reading": {
+        "target": [
+          -8,
+          -11
+        ]
+      },
+      "construction": "Q = (3·A − 2·C)/(3−2) = ((−6−2)/1, (3−14)/1) = (−8, −11). Tap lattice point (−8, −11); it lies inside x −10..4? x=−8 yes, y=−11 within −12..2 yes.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "The denominator n−m is negative here; keep its sign.",
+      "hint_step": 3,
+      "why": "Every reflection of (−8,−11) — (8,−11), (−8,11), (8,11) — lies off the board (x>4 or y>2), so it cannot be plotted and the predicate never fires. The hint also would not apply. / Reflections of the target (8,−11), (−8,11), (8,11) all lie outside the board (x≤4, y≤2), so none can be plotted; the predicate cannot fire here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w006#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w006",
+      "template_id": "wt:eb11c4-1-4:exercise-20-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −5) and C(3, 0), plot the point Q dividing segment BC externally in the ratio 1:3.",
+      "reading": {
+        "target": [
+          0,
+          -7.5
+        ]
+      },
+      "construction": "External division with m:n=1:3: Q=((1*3-3*1)/(1-3),(1*0-3*(-5))/(1-3))=(0,-7.5). Check: QB=(1,2.5), QC=(3,7.5), ratio 1:3 with Q outside the segment beyond B. (0,-7.5) is a grid point on the board (x -2..2, y -8..0, step 0.5), so tap it.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point of (0,-7.5) is (-7.5,0), which is off the board (x only -2..2), so a student cannot tap it and the predicate cannot fire here. / The swapped point (-7.5,0) lies off this board (x only -2..2), so a student cannot plot it and the predicate never fires here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w006#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w006",
+      "template_id": "wt:eb11c4-1-4:exercise-20-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −5) and C(3, 0), plot the point Q dividing segment BC externally in the ratio 1:3.",
+      "reading": {
+        "target": [
+          0,
+          -7.5
+        ]
+      },
+      "construction": "External division with m:n=1:3: Q=((1*3-3*1)/(1-3),(1*0-3*(-5))/(1-3))=(0,-7.5). Check: QB=(1,2.5), QC=(3,7.5), ratio 1:3 with Q outside the segment beyond B. (0,-7.5) is a grid point on the board (x -2..2, y -8..0, step 0.5), so tap it.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the sign of the numerator.",
+      "hint_step": 3,
+      "why": "Reflections of (0,-7.5) are (0,7.5) (or the same point when x is negated); y=7.5 is off the board, so it cannot be tapped. The predicate cannot fire, and the hint about the numerator's sign is not suited to it. / Reflections of (0,-7.5) are either itself (x-reflection) or (0,7.5), which is off the board (y only -8..0). It cannot fire, so the hint is never shown."
+    },
+    {
+      "key": "q:eb11c4-1-4:w007#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w007",
+      "template_id": "wt:eb11c4-1-4:exercise-20-c",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −5) and C(3, 0), plot the midpoint M of segment BC.",
+      "reading": {
+        "target": [
+          2,
+          -2.5
+        ]
+      },
+      "construction": "Midpoint = ((1+3)/2, (-5+0)/2) = (2, -2.5). On the board x 0..4, y -4..0 step 0.5, (2,-2.5) is a grid point; tap it.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (-2.5, 2) is off the board (x runs 0..4, y runs -4..0), so a student cannot tap it. The predicate can never fire here. / The swap (-2.5, 2) lies off the board (x must be 0..4, y -4..0), so it cannot be tapped and the predicate never fires here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w007#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w007",
+      "template_id": "wt:eb11c4-1-4:exercise-20-c",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −5) and C(3, 0), plot the midpoint M of segment BC.",
+      "reading": {
+        "target": [
+          2,
+          -2.5
+        ]
+      },
+      "construction": "Midpoint = ((1+3)/2, (-5+0)/2) = (2, -2.5). On the board x 0..4, y -4..0 step 0.5, (2,-2.5) is a grid point; tap it.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the sign of the sum before halving.",
+      "hint_step": 3,
+      "why": "Every sign-reflection of (2,-2.5) is off the board: (2,2.5), (-2,-2.5) and (-2,2.5) all fall outside it. The predicate cannot fire. The hint about the sign of the sum is also misleading, because the sum is not what changes sign. / Reflections of (2,-2.5) such as (2,2.5), (-2,-2.5), (-2,2.5) are all off this board, so it cannot fire. The hint's 'sign of the sum' wording also fits poorly."
+    },
+    {
+      "key": "q:eb11c4-1-4:w008#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w008",
+      "template_id": "wt:eb11c4-1-4:exercise-20-d",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For A(−4, 5), B(1, −5) and C(3, 0), plot the centroid G of triangle ABC.",
+      "reading": {
+        "target": [
+          0,
+          0
+        ]
+      },
+      "construction": "G = ((-4+1+3)/3, (5-5+0)/3) = (0,0). Tap the origin on the default -5..5 grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The target is (0,0), so its swap is (0,0) itself. Any swapped plot is the correct answer and is graded correct, so this predicate can never fire here. The hint 'x goes across, y goes up' would never be shown. / The target is (0,0), so its swap is (0,0). Any wrong point cannot be a swap of the target, so the predicate never fires. The hint is also unreachable."
+    },
+    {
+      "key": "q:eb11c4-1-4:w008#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w008",
+      "template_id": "wt:eb11c4-1-4:exercise-20-d",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For A(−4, 5), B(1, −5) and C(3, 0), plot the centroid G of triangle ABC.",
+      "reading": {
+        "target": [
+          0,
+          0
+        ]
+      },
+      "construction": "G = ((-4+1+3)/3, (5-5+0)/3) = (0,0). Tap the origin on the default -5..5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add the three values with signs, then divide by 3.",
+      "hint_step": 2,
+      "why": "Reflecting (0,0) gives (0,0), so no wrong point is a reflection of the target and the predicate cannot fire. The hint also says 'add the three values with signs', which does not fit a quadrant error. / Reflecting (0,0) gives (0,0), so no wrong point can be a reflected target. The predicate can never fire for this question, so the hint is never shown."
+    },
+    {
+      "key": "q:eb11c4-1-4:w009#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w009",
+      "template_id": "wt:eb11c4-1-4:exercise-22",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(−3, 1) with respect to the point P(2, 0).",
+      "reading": {
+        "target": [
+          7,
+          -1
+        ]
+      },
+      "construction": "B = 2P - A = (2*2-(-3), 2*0-1) = (7,-1). Tap lattice point (7,-1); it lies within x -2..8, y -3..3, so it is reachable.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point of the target (7,−1) is (−1,7). y=7 is off the board (y only −3..3), so the student can't tap it and the predicate can't fire here. The hint is also generic and doesn't match this board. / Swapped point (-1,7) is off the board (y max 3), so a student cannot tap it and the predicate cannot fire here. The hint also does not address the cause."
+    },
+    {
+      "key": "q:eb11c4-1-4:w010#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w010",
+      "template_id": "wt:eb11c4-1-4:exercise-23",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(7, 4) with respect to the point M(−3, 5).",
+      "reading": {
+        "target": [
+          -13,
+          6
+        ]
+      },
+      "construction": "B = 2M − A = (−6−7, 10−4) = (−13, 6). Tap lattice point (−13, 6), inside the board x −14..2, y 0..8.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (6, −13) is off the board (x max 2, y min 0), so the predicate cannot fire on this question. The hint is also generic and does not address the midpoint step. / The swapped point of (−13,6) is (6,−13), which is off the board (x max 2, y min 0). A student cannot tap it, so the predicate never fires."
+    },
+    {
+      "key": "q:eb11c4-1-4:w010#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w010",
+      "template_id": "wt:eb11c4-1-4:exercise-23",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(7, 4) with respect to the point M(−3, 5).",
+      "reading": {
+        "target": [
+          -13,
+          6
+        ]
+      },
+      "construction": "B = 2M − A = (−6−7, 10−4) = (−13, 6). Tap lattice point (−13, 6), inside the board x −14..2, y 0..8.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "M is the midpoint of AB: set each average equal to M's coordinate.",
+      "hint_step": 2,
+      "why": "The reflected targets (13, 6), (−13, −6) and (13, −6) are all off the board (x max 2, y min 0), so the predicate cannot fire. The hint itself is correct and does not give the answer away. / The reflected targets (13,6), (−13,−6) and (13,−6) are all off the board (x max 2, y min 0). A student cannot tap them, so the predicate never fires."
+    },
+    {
+      "key": "q:eb11c4-1-4:w011#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w011",
+      "template_id": "wt:eb11c4-1-4:exercise-24",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(4, −8) with respect to the point P(−3, 2).",
+      "reading": {
+        "target": [
+          -10,
+          12
+        ]
+      },
+      "construction": "P is the midpoint of AB, so B = 2P − A = (−6−4, 4+8) = (−10, 12). It lies inside the board (x −12..4, y −2..14). Tap (−10, 12).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point is (12, −10), which is off the board (x ≤ 4, y ≥ −2). The student cannot tap it, so the predicate cannot fire here. / The swapped point of the target is (12, −10). It is off the board (x max 4, y min −2), so the student can't tap it and the predicate never fires here. The hint is also unrelated to a midpoint reflection error."
+    },
+    {
+      "key": "q:eb11c4-1-4:w011#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w011",
+      "template_id": "wt:eb11c4-1-4:exercise-24",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(4, −8) with respect to the point P(−3, 2).",
+      "reading": {
+        "target": [
+          -10,
+          12
+        ]
+      },
+      "construction": "P is the midpoint of AB, so B = 2P − A = (−6−4, 4+8) = (−10, 12). It lies inside the board (x −12..4, y −2..14). Tap (−10, 12).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "P is the midpoint of AB: set each average equal to P's coordinate.",
+      "hint_step": 2,
+      "why": "The reflected targets (10,12), (−10,−12) and (10,−12) are all off the board, so the predicate cannot fire. The hint also does not address a sign or quadrant error. / Every sign-reflection of the target, (10,12), (−10,−12) and (10,−12), is off the board. The predicate can't fire on this board. The midpoint-averaging hint also doesn't address a sign or quadrant slip."
+    },
+    {
+      "key": "q:eb11c4-1-4:w012#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w012",
+      "template_id": "wt:eb11c4-1-4:exercise-25",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point Q symmetric to P(0, −4) with respect to the point A(−4, 1).",
+      "reading": {
+        "target": [
+          -8,
+          6
+        ]
+      },
+      "construction": "Q = 2A − P = (2·(−4) − 0, 2·1 − (−4)) = (−8, 6). Tap lattice point (−8, 6); it lies within x −10..0, y 0..8.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (6, −8) is off the board (x −10..0, y 0..8), so no tap can produce it. The predicate can never fire on this board. / The swapped point of the target is (6, −8), which is off this board (x −10..0, y 0..8), so no tap can produce it and the predicate cannot fire here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w012#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w012",
+      "template_id": "wt:eb11c4-1-4:exercise-25",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point Q symmetric to P(0, −4) with respect to the point A(−4, 1).",
+      "reading": {
+        "target": [
+          -8,
+          6
+        ]
+      },
+      "construction": "Q = 2A − P = (2·(−4) − 0, 2·1 − (−4)) = (−8, 6). Tap lattice point (−8, 6); it lies within x −10..0, y 0..8.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "A is the midpoint of PQ: set each average equal to A's coordinate.",
+      "hint_step": 2,
+      "why": "Every reflection of the target, (8, 6), (−8, −6) and (8, −6), is off the board, so no tap can produce one. The predicate can never fire on this board. / Every reflection of the target ((8,6), (−8,−6), (8,−6)) lies off this board, so the predicate cannot fire here. The hint itself is mathematically sound and does not give the answer."
+    },
+    {
+      "key": "q:eb11c4-1-4:w013#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w013",
+      "template_id": "wt:eb11c4-1-4:exercise-26",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(−4, 2) with respect to the point P(−1, −3).",
+      "reading": {
+        "target": [
+          2,
+          -8
+        ]
+      },
+      "construction": "B = 2P − A = (2·(−1)−(−4), 2·(−3)−2) = (2, −8). Tap lattice point (2,−8); it is inside the board x −6..6, y −10..2.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (−8, 2) has x = −8, which is off the board (x −6..6), so the student can't tap it and the predicate can't fire here. The hint is also generic and doesn't address the midpoint step. / The swapped point (−8, 2) has x = −8, outside the board x −6..6, so a student cannot tap it. The predicate can never fire here, and the hint is of no use."
+    },
+    {
+      "key": "q:eb11c4-1-4:w014#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w014",
+      "template_id": "wt:eb11c4-1-4:try-10",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −4) and C(−4, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+      "reading": {
+        "target": [
+          11,
+          -18
+        ]
+      },
+      "construction": "External division 2:3: Q = (2*C - 3*B)/(2-3) = ((-8-3)/(-1), (6+12)/(-1)) = (11,-18). Tap lattice point (11,-18) on the board (x 0..12, y -18..0, y step 2). It is on the board and y=-18 sits on the step.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point is (−18, 11), which is off this board (x 0..12, y −18..0), so no tap can produce it and the predicate never fires. / The swapped point (-18,11) lies outside the board (x 0..12, y -18..0), so no tap can produce it and the predicate cannot fire here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w014#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w014",
+      "template_id": "wt:eb11c4-1-4:try-10",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(1, −4) and C(−4, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+      "reading": {
+        "target": [
+          11,
+          -18
+        ]
+      },
+      "construction": "External division 2:3: Q = (2*C - 3*B)/(2-3) = ((-8-3)/(-1), (6+12)/(-1)) = (11,-18). Tap lattice point (11,-18) on the board (x 0..12, y -18..0, y step 2). It is on the board and y=-18 sits on the step.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check signs of the products you subtract.",
+      "hint_step": 2,
+      "why": "Every sign-reflection of (11, −18), such as (−11, −18), (11, 18) or (−11, 18), is off the board, so the predicate cannot fire. / Every sign-reflection of (11,-18), such as (-11,-18), (11,18) or (-11,18), lies off the board, so the predicate cannot fire. The hint is also vague."
+    },
+    {
+      "key": "q:eb11c4-1-4:w016#hint:off-target",
+      "question_id": "q:eb11c4-1-4:w016",
+      "template_id": "wt:eb11c4-1-4:try-12",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For A(−3, 4), B(1, −4) and C(−4, 3), plot the centroid G of triangle ABC.",
+      "reading": {
+        "target": [
+          -2,
+          1
+        ]
+      },
+      "construction": "Centroid = ((-3+1-4)/3, (4-4+3)/3) = (-2, 1). Tap lattice point (-2,1) on the default -5..5 grid; it is a whole number within range.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Divide by 3 for the centroid.",
+      "hint_step": 1,
+      "why": "This fires for any point matching neither coordinate and not a swap or reflection, so the cause is unknown. A student who skipped the division by 3 would get (-6,3), which is off the grid and cannot be tapped. The hint 'Divide by 3' assumes one specific error and does not locate the step the student got wrong."
+    },
+    {
+      "key": "q:eb11c4-1-4:w017#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w017",
+      "template_id": "wt:eb11c4-1-4:try-13",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(1, −2) with respect to the point P(2, 3).",
+      "reading": {
+        "target": [
+          3,
+          8
+        ]
+      },
+      "construction": "B = 2P − A = (4−1, 6+2) = (3,8). Tap lattice point (3,8); it lies within x −2..6, y −2..10.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (8,3) has x=8, beyond the board's x max of 6, so it cannot be tapped. The predicate cannot fire on this question. / The swapped point (8,3) is off the board (x max 6), so a student cannot tap it and the predicate never fires here."
+    },
+    {
+      "key": "q:eb11c4-1-4:w017#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w017",
+      "template_id": "wt:eb11c4-1-4:try-13",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point B symmetric to A(1, −2) with respect to the point P(2, 3).",
+      "reading": {
+        "target": [
+          3,
+          8
+        ]
+      },
+      "construction": "B = 2P − A = (4−1, 6+2) = (3,8). Tap lattice point (3,8); it lies within x −2..6, y −2..10.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "P is the midpoint of AB: set each average equal to P's coordinate.",
+      "hint_step": 2,
+      "why": "Reflections of (3,8) are (-3,8), (3,-8), (-3,-8), all off the board (min -2). The predicate cannot fire here. The midpoint hint also doesn't match a signs error. / The reflected targets (-3,8), (3,-8) and (-3,-8) are all off the board (x min -2, y min -2), so the predicate cannot fire for this question."
+    },
+    {
+      "key": "q:eb11c4-1-4:w018#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w018",
+      "template_id": "wt:eb11c4-1-4:try-14",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point Q symmetric to P(3, 2) with respect to the point A(−1, 5).",
+      "reading": {
+        "target": [
+          -5,
+          8
+        ]
+      },
+      "construction": "Q = 2A − P = (2·(−1)−3, 2·5−2) = (−5, 8). Tap lattice point (−5, 8), which lies inside the board x −6..2, y 0..10.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (8, −5) is off this board (x only −6..2, y only 0..10), so the student cannot tap it and the predicate can never fire here. / The swapped point (8, −5) is off the board (x max 2, y min 0), so a student cannot tap it and the predicate cannot fire on this question."
+    },
+    {
+      "key": "q:eb11c4-1-4:w018#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w018",
+      "template_id": "wt:eb11c4-1-4:try-14",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "Plot the point Q symmetric to P(3, 2) with respect to the point A(−1, 5).",
+      "reading": {
+        "target": [
+          -5,
+          8
+        ]
+      },
+      "construction": "Q = 2A − P = (2·(−1)−3, 2·5−2) = (−5, 8). Tap lattice point (−5, 8), which lies inside the board x −6..2, y 0..10.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "A is the midpoint of PQ: set each average equal to A's coordinate.",
+      "hint_step": 2,
+      "why": "The reflections of the target, (5,8), (−5,−8), (5,−8), all lie outside the board, so the student cannot tap them and the predicate cannot fire here. / Every reflection of the target, such as (5, 8), (−5, −8) or (5, −8), is off the board, so the predicate cannot fire here. Sign errors that stay on the board land in off-target."
+    },
+    {
+      "key": "q:eb11c4-1-4:w019#off-target",
+      "question_id": "q:eb11c4-1-4:w019",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(3, 7) and C(5, 2), plot the point Q dividing segment BC externally in the ratio 1:3.",
+      "reading": {
+        "target": [
+          2,
+          9.5
+        ]
+      },
+      "construction": "External division with BQ:QC=1:3: Q=(1·C−3·B)/(1−3)=((5−9)/(−2),(2−21)/(−2))=(2,9.5). Check: Q=B+t(2,−5) with t=−1/2 gives (2,9.5); BQ=½|BC|, QC=1.5|BC|, ratio 1:3. Tap (2,9.5) on the board (x 0..4, y 2..10, step 0.5).",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "misconception_id": "mc:eb11c4-1-1:external-uses-internal-formula",
+      "misconception_label": "Uses the internal formula for an external ratio",
+      "misconception_description": "The student uses $\\frac{na+mb}{m+n}$ (plus in the numerator and denominator) for an externally divided segment.",
+      "why": "This is a catch-all that fires for any wrong point with no pattern. The internal-formula error gives (3B+C)/4 = (3.5, 5.75), which is off the half-step grid. The student would have to round it, and rounding could give 5.5 or 6, so it is not reliably distinguishable. Other slips (wrong ratio order, arithmetic errors) fire it just as often. It does not specifically signal this misconception. / The internal-formula point is (3.5,5.75) (or (4.5,3.25) for 3:1), which is not on the 0.5-step board or is off it, so the student cannot plot it. Off-target is the catch-all for any wrong point and would mostly fire for other errors, so it cannot identify this misconception."
+    },
+    {
+      "key": "q:eb11c4-1-4:w019#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w019",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(3, 7) and C(5, 2), plot the point Q dividing segment BC externally in the ratio 1:3.",
+      "reading": {
+        "target": [
+          2,
+          9.5
+        ]
+      },
+      "construction": "External division with BQ:QC=1:3: Q=(1·C−3·B)/(1−3)=((5−9)/(−2),(2−21)/(−2))=(2,9.5). Check: Q=B+t(2,−5) with t=−1/2 gives (2,9.5); BQ=½|BC|, QC=1.5|BC|, ratio 1:3. Tap (2,9.5) on the board (x 0..4, y 2..10, step 0.5).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The swapped point (9.5, 2) is outside the board (x only runs 0..4), so the student cannot tap it and the predicate never fires here. / The swapped point (9.5,2) lies outside the board (x only goes 0..4), so the predicate cannot fire on this question. The hint is also generic."
+    },
+    {
+      "key": "q:eb11c4-1-4:w019#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w019",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-b",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For B(3, 7) and C(5, 2), plot the point Q dividing segment BC externally in the ratio 1:3.",
+      "reading": {
+        "target": [
+          2,
+          9.5
+        ]
+      },
+      "construction": "External division with BQ:QC=1:3: Q=(1·C−3·B)/(1−3)=((5−9)/(−2),(2−21)/(−2))=(2,9.5). Check: Q=B+t(2,−5) with t=−1/2 gives (2,9.5); BQ=½|BC|, QC=1.5|BC|, ratio 1:3. Tap (2,9.5) on the board (x 0..4, y 2..10, step 0.5).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the signs in numerator and denominator.",
+      "hint_step": 2,
+      "why": "The reflected target, such as (-2, 9.5), is outside the board (x runs 0..4), so the student cannot tap it and the predicate never fires here. The 'quadrant' wording also does not suit a shifted board. / Reflections of the target, such as (−2,9.5), (2,−9.5) and (−2,−9.5), are off the board (x≥0, y≥2), so this predicate cannot fire here. The hint about signs would fit the wrong-sign error in principle, but the student can never be shown it."
+    },
+    {
+      "key": "q:eb11c4-1-4:w020#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-1-4:w020",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-c",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For C(5, 2) and A(−2, −3), plot the midpoint M of segment CA.",
+      "reading": {
+        "target": [
+          1.5,
+          -0.5
+        ]
+      },
+      "construction": "Midpoint = ((5+(-2))/2, (2+(-3))/2) = (1.5, -0.5). On the board x -1..4, y -2..2 step 0.5 this is a grid point; tap it.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Add with signs before halving.",
+      "hint_step": 3,
+      "why": "A reflection of the target, such as (1.5, 0.5), does not come mainly from a sign error in the sum. Adding 2 and -3 with the wrong sign gives a different value, so the hint does not point this student to their step. Most reflections also fall off the board."
+    },
+    {
+      "key": "q:eb11c4-1-4:w021#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-1-4:w021",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-d",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For A(−2, −3), B(3, 7) and C(5, 2), plot the centroid G of triangle ABC.",
+      "reading": {
+        "target": [
+          2,
+          2
+        ]
+      },
+      "construction": "Tap lattice point (2,2): x=(−2+3+5)/3=2, y=(−3+7+2)/3=2. Within the −5..5 grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "x goes across, y goes up.",
+      "hint_step": 4,
+      "why": "The target is (2,2), so swapping x and y gives the same point. A swapped point is the correct one, so this predicate can never fire as an error on this question. The hint is also generic and does not help with the centroid. / The target is (2,2), so swapping x and y gives the same point. The predicate can never fire on this question."
+    },
+    {
+      "key": "q:eb11c4-1-4:w021#hint:off-target",
+      "question_id": "q:eb11c4-1-4:w021",
+      "template_id": "wt:eb11c4-1-4:warm-up-6-d",
+      "lo_id": "lo:eb11c4-1-4",
+      "kind": "pair_plotter",
+      "stem": "For A(−2, −3), B(3, 7) and C(5, 2), plot the centroid G of triangle ABC.",
+      "reading": {
+        "target": [
+          2,
+          2
+        ]
+      },
+      "construction": "Tap lattice point (2,2): x=(−2+3+5)/3=2, y=(−3+7+2)/3=2. Within the −5..5 grid.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "hint": "Divide each sum by 3, not 2.",
+      "hint_step": 1,
+      "why": "Dividing by 2 gives (3,3), which fires off-target. But off-target covers any error with no pattern, such as a wrong sum or a misread vertex. The hint assumes one specific error and would mislead the other students. / The predicate fires for any non-pattern point, but the hint assumes a divide-by-2 error. It would mislead students who erred another way."
+    },
+    {
+      "key": "q:eb11c4-2-2:w003#hint:intercept-wrong",
+      "question_id": "q:eb11c4-2-2:w003",
+      "template_id": "wt:eb11c4-2-2:exercise-7-b",
+      "lo_id": "lo:eb11c4-2-2",
+      "kind": "line_drawer",
+      "stem": "Find the line passing through the point $(2, 1)$ and parallel to the $x$-axis. Drag the two points so the line is that line.",
+      "reading": {
+        "mode": "equation",
+        "m": 0,
+        "b": 1
+      },
+      "construction": "Equation mode, y = 1: drag the handles to (0,1) and (3,1). The line is horizontal through (2,1). m=0 is a whole number, b=1 is within -5..5, and the points are distinct lattice points.",
+      "predicate": "intercept-wrong",
+      "predicate_meaning": "Correct slope, wrong intercept — a line parallel to the answer",
+      "hint": "Every point on the line has the y-value of the given point. Check where your line meets the y-axis.",
+      "hint_step": 2,
+      "why": "Fires for a horizontal line at the wrong height, e.g. y=2 through (0,2) and (3,2). The hint says every point on the line has the y-value of the given point. That states that the answer is y=1, so it gives the answer away."
+    },
+    {
+      "key": "q:eb11c4-2-2:w016#hint:off-target",
+      "question_id": "q:eb11c4-2-2:w016",
+      "template_id": "wt:eb11c4-2-2:warm-up-1-f",
+      "lo_id": "lo:eb11c4-2-2",
+      "kind": "line_drawer",
+      "stem": "Draw the line passing through the two points $(1, -1)$ and $(4, 0)$. Drag the two handles onto these points.",
+      "reading": {
+        "mode": "points",
+        "through": [
+          [
+            1,
+            -1
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      "construction": "Points mode: place handles at (1,-1) and (4,0). Neither point nor its swap ((-1,1),(0,4)) is (-3,-2) or (1,1); both are lattice points within ±5. The line has slope 1/3 and intercept -4/3, which equation mode cannot express, so points mode is the right one.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither the slope nor the intercept matches",
+      "hint": "Place one handle at each named point; the line through them is the answer.",
+      "hint_step": 1,
+      "why": "It only restates the task, so it doesn't help the student find which step went wrong. In points mode the named points are the answer, so it effectively gives the answer away."
+    },
+    {
+      "key": "q:eb11c4-2-3:w001#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-2-3:w001",
+      "template_id": "wt:eb11c4-2-3:challenge-5",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "A targeting laser line is $y = 2x$. A calibration sensor is at $A(5, 0)$. The receiver $B$ is the exact symmetric reflection of $A$ across the laser line. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          -3,
+          4
+        ]
+      },
+      "construction": "Reflect A(5,0) across y=2x: the foot of the perpendicular from A is (1,2), so B = 2(1,2) - (5,0) = (-3,4). Check: the midpoint (1,2) lies on y=2x, and AB direction (-8,4) is perpendicular to (1,2). (-3,4) is a lattice point inside -5..5, so tapping it on the default grid works.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Check which of your two numbers is s (across) and which is t (up).",
+      "hint_step": 3,
+      "why": "Fires when the student taps (4,-3). The hint talks about 's (across)' and 't (up)', which are variables this question never defines, so it points at nothing the student has seen. It should say x and y."
+    },
+    {
+      "key": "q:eb11c4-2-3:w001#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-2-3:w001",
+      "template_id": "wt:eb11c4-2-3:challenge-5",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "A targeting laser line is $y = 2x$. A calibration sensor is at $A(5, 0)$. The receiver $B$ is the exact symmetric reflection of $A$ across the laser line. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          -3,
+          4
+        ]
+      },
+      "construction": "Reflect A(5,0) across y=2x: the foot of the perpendicular from A is (1,2), so B = 2(1,2) - (5,0) = (-3,4). Check: the midpoint (1,2) lies on y=2x, and AB direction (-8,4) is perpendicular to (1,2). (-3,4) is a lattice point inside -5..5, so tapping it on the default grid works.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the signs when you solve the two equations.",
+      "hint_step": 3,
+      "why": "Fires on (3,-4), (-3,-4) or (3,4). The sign slip is real, but 'the two equations' assumes a particular solution method that the question does not set up. A student who used the perpendicular-and-midpoint construction has no 'two equations' to recheck, so the hint is a poor fit."
+    },
+    {
+      "key": "q:eb11c4-2-3:w005#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-2-3:w005",
+      "template_id": "wt:eb11c4-2-3:exercise-24",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(1, 2)$ with respect to the line $x+2y-10=0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          3,
+          6
+        ]
+      },
+      "construction": "Reflection of A(1,2) in x+2y-10=0: value at A is -5, normal (1,2), so B = (1,2) + 2(1,2) = (3,6). Midpoint (2,4) lies on the line (2+8-10=0) and AB is parallel to the normal. Tap (3,6), which is on the board (x -2..8, y -2..8).",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Check which of your two numbers is s (across) and which is t (up).",
+      "hint_step": 3,
+      "why": "Fires if the student taps (6,3). But the hint refers to 's' and 't' and to solving equations, which are not in this question, so it is confusing. It also doesn't point to the real slip of reading the pair in the wrong order."
+    },
+    {
+      "key": "q:eb11c4-2-3:w005#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-2-3:w005",
+      "template_id": "wt:eb11c4-2-3:exercise-24",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(1, 2)$ with respect to the line $x+2y-10=0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          3,
+          6
+        ]
+      },
+      "construction": "Reflection of A(1,2) in x+2y-10=0: value at A is -5, normal (1,2), so B = (1,2) + 2(1,2) = (3,6). Midpoint (2,4) lies on the line (2+8-10=0) and AB is parallel to the normal. Tap (3,6), which is on the board (x -2..8, y -2..8).",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the signs when you solve the two equations.",
+      "hint_step": 3,
+      "why": "Reflections of (3,6) in the axes, such as (-3,-6), (3,-6) and (-3,6), fall outside the board (x -2..8, y -2..8), so it can hardly fire here. The hint about 'signs when you solve the two equations' also doesn't fit this question, which has no such equations."
+    },
+    {
+      "key": "q:eb11c4-2-3:w006#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-2-3:w006",
+      "template_id": "wt:eb11c4-2-3:exercise-25",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(4, -1)$ with respect to the line $4x-2y-3=0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          -2,
+          2
+        ]
+      },
+      "construction": "Value of 4x-2y-3 at A = 16+2-3 = 15; |n|^2 = 20. B = A - 2*(15/20)*(4,-2) = (4,-1) - (6,-3) = (-2,2). Check: midpoint (1,0.5) gives 4-1-3=0, on the line; AB = (-6,3) is parallel to the normal (4,-2). (-2,2) lies in the default -5..5 grid, so tap it.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Check which of your two numbers is s (across) and which is t (up).",
+      "hint_step": 3,
+      "why": "Fires when the student taps (2,-2). The hint talks about 's' and 't' (across and up), which are not in this question. They look like leftovers from another question, so the wording would confuse. It also doesn't point to the real slip here, which is a reflection step."
+    },
+    {
+      "key": "q:eb11c4-2-3:w006#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-2-3:w006",
+      "template_id": "wt:eb11c4-2-3:exercise-25",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(4, -1)$ with respect to the line $4x-2y-3=0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          -2,
+          2
+        ]
+      },
+      "construction": "Value of 4x-2y-3 at A = 16+2-3 = 15; |n|^2 = 20. B = A - 2*(15/20)*(4,-2) = (4,-1) - (6,-3) = (-2,2). Check: midpoint (1,0.5) gives 4-1-3=0, on the line; AB = (-6,3) is parallel to the normal (4,-2). (-2,2) lies in the default -5..5 grid, so tap it.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the signs when you solve the two equations.",
+      "hint_step": 3,
+      "why": "Fires on a sign-flipped point such as (2,2), (-2,-2) or (2,-2). The hint says 'when you solve the two equations'. This question has no pair of equations (the standard method is the perpendicular plus the midpoint, or the reflection formula), so the hint doesn't match the student's method."
+    },
+    {
+      "key": "q:eb11c4-2-3:w008#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-2-3:w008",
+      "template_id": "wt:eb11c4-2-3:try-17",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(0, 4)$ with respect to the line $2x-y-1=0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          4,
+          2
+        ]
+      },
+      "construction": "Reflection of A(0,4) in 2x-y-1=0: f(A)=-5, normal (2,-1), |n|^2=5, B=A-2(-5)/5*(2,-1)=(4,2). Check: midpoint (2,3) gives 4-3-1=0 on the line; AB=(4,-2) is parallel to the normal. Tap (4,2) on the default grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Check which of your two numbers is s (across) and which is t (up).",
+      "hint_step": 3,
+      "why": "Fires when the student taps (2,4). But the hint refers to 's' and 't', which do not appear in this question (it has x and y), so it would confuse the student. It looks copied from another problem."
+    },
+    {
+      "key": "q:eb11c4-2-3:w009#hint:swapped-coordinates",
+      "question_id": "q:eb11c4-2-3:w009",
+      "template_id": "wt:eb11c4-2-3:unlabelled-exercise-3",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(-4, 3)$ with respect to the line $3x - y + 5 = 0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          2,
+          1
+        ]
+      },
+      "construction": "Reflection: 3(-4)-3+5=-10, normal (3,-1), |n|^2=10, B = A - 2(-10)/10*(3,-1) = (-4,3)+(6,-2) = (2,1). Midpoint (-1,2) lies on the line (-3-2+5=0) and AB is parallel to the normal. Tap (2,1), within the -5..5 grid.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "hint": "Check which of your two numbers is s (across) and which is t (up).",
+      "hint_step": 3,
+      "why": "Fires on tapping (1,2), but the hint talks about s (across) and t (up) and solving two equations — variables that do not exist in this reflection question, so it is a stale hint that cannot guide the student."
+    },
+    {
+      "key": "q:eb11c4-2-3:w009#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-2-3:w009",
+      "template_id": "wt:eb11c4-2-3:unlabelled-exercise-3",
+      "lo_id": "lo:eb11c4-2-3",
+      "kind": "pair_plotter",
+      "stem": "Point $B$ is symmetric to $A(-4, 3)$ with respect to the line $3x - y + 5 = 0$. Work out $B$ and tap it on the grid.",
+      "reading": {
+        "target": [
+          2,
+          1
+        ]
+      },
+      "construction": "Reflection: 3(-4)-3+5=-10, normal (3,-1), |n|^2=10, B = A - 2(-10)/10*(3,-1) = (-4,3)+(6,-2) = (2,1). Midpoint (-1,2) lies on the line (-3-2+5=0) and AB is parallel to the normal. Tap (2,1), within the -5..5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Check the signs when you solve the two equations.",
+      "hint_step": 3,
+      "why": "Fires on e.g. (-2,1), (2,-1) or (-2,-1), but the hint says to check signs when solving 'the two equations' — this question has no such parametric setup, so it does not point to the step they got wrong."
+    },
+    {
+      "key": "q:eb11c4-3-4:w003#hint:wrong-quadrant",
+      "question_id": "q:eb11c4-3-4:w003",
+      "template_id": "wt:eb11c4-3-4:warm-up-21",
+      "lo_id": "lo:eb11c4-3-4",
+      "kind": "pair_plotter",
+      "stem": "Find the coordinates of the points of intersection of the circles $x^2+y^2=10$ and $x^2+y^2+2x-y=5$. Plot both points.",
+      "reading": {
+        "targets": [
+          [
+            -1,
+            3
+          ],
+          [
+            -3,
+            -1
+          ]
+        ]
+      },
+      "construction": "Subtracting the circles gives y=2x+5. Substituting gives x²+4x+3=0, so x=-1 or -3, giving (-1,3) and (-3,-1). Both satisfy both circles: 1+9=10 and 1+9-2-3... =5; 9+1=10 and 10-6+1=5. Use the several-points form with targets [[-1,3],[-3,-1]] and the default grid -5..5. Tap both lattice points.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Recheck the signs when finding y.",
+      "hint_step": 3,
+      "why": "Fires when every wrong point is a target reflected, for example (1,3) and (3,-1), or (-1,-3) and (-3,1). Many of these come from a sign slip in x, such as solving x²+4x+3=0 as x=1,3, but the hint says to recheck signs when finding y. That misdirects the student, so it is not reliably helpful."
+    }
+  ]
+}

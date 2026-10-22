@@ -1,0 +1,1315 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "06e60cef75f5cbfbdbf137090d5766a9662014312471481925bbb463fdc5b5c3",
+  "generated_sha256": "3abab18e7fc96833a2ca258b72f9dfdf7529930cf9da75b216550fae5b7bdb0b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-5:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-5:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Show LHS − RHS is positive (or ≥ 0) by factorising or completing the square, or use AM-GM for positive numbers; equality is the case where the square or the difference is exactly 0.",
+      "solution": [
+       "To prove LHS > RHS, calculate LHS − RHS and show it is positive.",
+       "Use factorising with given conditions such as a − b > 0, or complete the square to get X² or X² + Y² ≥ 0.",
+       "For positive numbers, AM-GM gives a + b ≥ 2√(ab), which gives a bound when the product is constant.",
+       "Equality is the boundary case: it holds when X = 0 (and Y = 0), or when a = b in AM-GM.",
+       "So inequalities give bounds, and equality shows where the bound is reached."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-1",
+      "kind": "explanation",
+      "answer": "ac + bd − (ad + bc) = (a − b)(c − d) > 0, so ac + bd > ad + bc.",
+      "solution": [
+       "LHS − RHS = ac + bd − ad − bc",
+       "= a(c − d) − b(c − d)",
+       "= (a − b)(c − d)",
+       "Since a > b and c > d, a − b > 0 and c − d > 0.",
+       "So (a − b)(c − d) > 0.",
+       "Therefore ac + bd > ad + bc."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-2",
+      "kind": "explanation",
+      "answer": "xy + 2 − (x + 2y) = (x − 2)(y − 1) > 0, so xy + 2 > x + 2y.",
+      "solution": [
+       "LHS − RHS = xy + 2 − x − 2y",
+       "= x(y − 1) − 2(y − 1)",
+       "= (x − 2)(y − 1)",
+       "Since x > 2 and y > 1, x − 2 > 0 and y − 1 > 0.",
+       "So (x − 2)(y − 1) > 0.",
+       "Therefore xy + 2 > x + 2y."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-1",
+      "kind": "explanation",
+      "answer": "3x − 4y − (2x − 3y) = x − y > 0, so 3x − 4y > 2x − 3y.",
+      "solution": [
+       "LHS − RHS = 3x − 4y − (2x − 3y)",
+       "= 3x − 4y − 2x + 3y",
+       "= x − y",
+       "Since x > y, x − y > 0.",
+       "Therefore 3x − 4y > 2x − 3y."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-2",
+      "kind": "explanation",
+      "answer": "ab + cd − (ad + bc) = (a − c)(b − d) > 0, so ab + cd > ad + bc.",
+      "solution": [
+       "LHS − RHS = ab + cd − ad − bc",
+       "= a(b − d) − c(b − d)",
+       "= (a − c)(b − d)",
+       "Since a > c and b > d, a − c > 0 and b − d > 0.",
+       "So (a − c)(b − d) > 0.",
+       "Therefore ab + cd > ad + bc."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-3",
+      "kind": "explanation",
+      "answer": "ab + 1 − (a + b) = (a − 1)(b − 1) > 0, so ab + 1 > a + b.",
+      "solution": [
+       "LHS − RHS = ab + 1 − a − b",
+       "= a(b − 1) − (b − 1)",
+       "= (a − 1)(b − 1)",
+       "Since a > 1 and b > 1, a − 1 > 0 and b − 1 > 0.",
+       "So (a − 1)(b − 1) > 0.",
+       "Therefore ab + 1 > a + b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-4",
+      "kind": "explanation",
+      "answer": "ax + by − (ay + bx) = (a − b)(x − y) > 0, so ax + by > ay + bx.",
+      "solution": [
+       "LHS − RHS = ax + by − ay − bx",
+       "= a(x − y) − b(x − y)",
+       "= (a − b)(x − y)",
+       "Since a > b and x > y, a − b > 0 and x − y > 0.",
+       "So (a − b)(x − y) > 0.",
+       "Therefore ax + by > ay + bx."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:challenge-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (a − c)(x − y) + (b − c)(y − z) > 0, so ax + by + cz > ay + bz + cx.",
+      "solution": [
+       "LHS − RHS = ax + by + cz − ay − bz − cx",
+       "= a(x − y) + b(y − z) + c(z − x)",
+       "Write z − x = −(x − y) − (y − z).",
+       "So the expression = a(x − y) + b(y − z) − c(x − y) − c(y − z)",
+       "= (a − c)(x − y) + (b − c)(y − z)",
+       "Since a > b > c, a − c > 0 and b − c > 0. Since x > y > z, x − y > 0 and y − z > 0.",
+       "So each product is positive and their sum is positive.",
+       "Therefore ax + by + cz > ay + bz + cx."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a group on the try questions, not a question with an answer of its own.",
+      "solution": [
+       "The activity only asks students to solve the try section together and discuss it.",
+       "The answers are given under try-3 and try-4."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c1-5:exercise-6",
+      "kind": "value",
+      "answer": "Proved: 2(x²+y²) − (x+y)² = (x − y)² ≥ 0; equality holds when x = y",
+      "solution": [
+       "LHS − RHS = 2x² + 2y² − (x² + 2xy + y²)",
+       "= x² − 2xy + y²",
+       "= (x − y)² ≥ 0, since X² ≥ 0.",
+       "Therefore 2(x²+y²) ≥ (x+y)².",
+       "Equality holds when x − y = 0, that is, x = y."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-7",
+      "kind": "value",
+      "answer": "Proved: (2x−y)² − 3(x²−y²) = (x − 2y)² ≥ 0; equality holds when x = 2y",
+      "solution": [
+       "LHS − RHS = 4x² − 4xy + y² − 3x² + 3y²",
+       "= x² − 4xy + 4y²",
+       "= (x − 2y)² ≥ 0, since X² ≥ 0.",
+       "Therefore (2x−y)² ≥ 3(x²−y²).",
+       "Equality holds when x − 2y = 0, that is, x = 2y."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-8",
+      "kind": "value",
+      "answer": "Proved: (2a+3b)² − 12ab = (2a)² + (3b)² ≥ 0; equality holds when a = 0 and b = 0",
+      "solution": [
+       "LHS − RHS = 4a² + 12ab + 9b² − 12ab",
+       "= 4a² + 9b²",
+       "= (2a)² + (3b)² ≥ 0, since X² + Y² ≥ 0.",
+       "Therefore (2a+3b)² ≥ 12ab.",
+       "Equality holds when 2a = 0 and 3b = 0, that is, a = 0 and b = 0."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-4",
+       "eb11c1-5:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-9",
+      "kind": "value",
+      "answer": "Proved: x² + 2 − 2x = (x − 1)² + 1 > 0; equality never holds (strict inequality)",
+      "solution": [
+       "LHS − RHS = x² + 2 − 2x",
+       "= x² − 2x + 1 + 1",
+       "= (x − 1)² + 1",
+       "Since (x − 1)² ≥ 0, (x − 1)² + 1 ≥ 1 > 0.",
+       "Therefore x² + 2 > 2x.",
+       "The inequality is strict, so equality never holds."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-10",
+      "kind": "value",
+      "answer": "Proved: x²+y²−6x+8y+25 = (x−3)² + (y+4)² ≥ 0; equality holds when x = 3 and y = −4",
+      "solution": [
+       "LHS − RHS = x² − 6x + y² + 8y + 25",
+       "= (x − 3)² − 9 + (y + 4)² − 16 + 25",
+       "= (x − 3)² + (y + 4)² ≥ 0, since X² + Y² ≥ 0.",
+       "Equality holds when x − 3 = 0 and y + 4 = 0, that is, x = 3 and y = −4."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-4",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:challenge-2",
+      "kind": "explanation",
+      "answer": "The cost equals (x − 5)² + 2(y + 3)² ≥ 0 for all x, y, so it is never negative (it is 0 at x = 5, y = −3).",
+      "solution": [
+       "Cost = x² − 10x + 2y² + 12y + 43",
+       "= (x − 5)² − 25 + 2(y² + 6y) + 43",
+       "= (x − 5)² − 25 + 2[(y + 3)² − 9] + 43",
+       "= (x − 5)² + 2(y + 3)² + (−25 − 18 + 43)",
+       "= (x − 5)² + 2(y + 3)²",
+       "Squares are never negative, so the cost is ≥ 0 for all x and y.",
+       "The minimum cost 0 occurs when x = 5 and y = −3."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-4",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "(LHS)² − (RHS)² = (a²+b²)/2 − (a+b)²/4",
+       "= (2a²+2b² − a² − 2ab − b²)/4 = (a−b)²/4",
+       "= ((a−b)/2)² ≥ 0, so (LHS)² ≥ (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "So LHS ≥ RHS.",
+       "Equality holds when (a−b)/2 = 0, that is, a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7",
+       "eb11c1-5:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-5",
+      "kind": "explanation",
+      "answer": "Proved: (√a+4√b)² − (√(a+16b))² = 8√(ab) > 0, so √a + 4√b > √(a+16b).",
+      "solution": [
+       "(LHS)² − (RHS)² = a + 8√(ab) + 16b − (a + 16b)",
+       "= 8√(ab) > 0",
+       "So (LHS)² > (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "Therefore √a + 4√b > √(a+16b)."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7",
+       "eb11c1-5:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-6",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "(LHS)² − (RHS)² = 2(a+b) − (√a+√b)²",
+       "= 2a + 2b − a − 2√(ab) − b",
+       "= a + b − 2√(ab)",
+       "= (√a − √b)² ≥ 0 (also this is AM-GM: a + b ≥ 2√(ab)).",
+       "So (LHS)² ≥ (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "So √(2(a+b)) ≥ √a + √b.",
+       "Equality holds when √a = √b, that is, a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7",
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-7",
+      "kind": "explanation",
+      "answer": "Proved: (2√a+√b)² − (4a+b) = 4√(ab) > 0, so 2√a + √b > √(4a+b).",
+      "solution": [
+       "(LHS)² − (RHS)² = 4a + 4√(ab) + b − (4a + b)",
+       "= 4√(ab) > 0",
+       "So (LHS)² > (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "Therefore 2√a + √b > √(4a+b)."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-12",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 1",
+      "solution": [
+       "(LHS)² − (RHS)² = (2+a)² − (3+6a)",
+       "= 4 + 4a + a² − 3 − 6a",
+       "= a² − 2a + 1 = (a − 1)² ≥ 0",
+       "So (LHS)² ≥ (RHS)².",
+       "Since a > 0, 2 + a > 0 and √(3+6a) > 0.",
+       "So 2 + a ≥ √(3+6a).",
+       "Equality holds when a − 1 = 0, that is, a = 1."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-13",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "(LHS)² − (RHS)² = 2(a²+b²) − (a+b)²",
+       "= 2a² + 2b² − a² − 2ab − b²",
+       "= a² − 2ab + b² = (a − b)² ≥ 0",
+       "So (LHS)² ≥ (RHS)².",
+       "Since a > 0 and b > 0, √(2(a²+b²)) > 0 and a + b > 0.",
+       "So √(2(a²+b²)) ≥ a + b.",
+       "Equality holds when a − b = 0, that is, a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-14",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "(LHS)² − (RHS)² = (a+b)/2 − (√a+√b)²/4",
+       "= (2a + 2b − a − 2√(ab) − b)/4",
+       "= (a + b − 2√(ab))/4",
+       "= ((√a − √b)/2)² ≥ 0",
+       "So (LHS)² ≥ (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "So √((a+b)/2) ≥ (√a+√b)/2.",
+       "Equality holds when √a = √b, that is, a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-15",
+      "kind": "explanation",
+      "answer": "Proved: (√a+√b)² − (a+b) = 2√(ab) > 0, so √a + √b > √(a+b). Equality does not hold.",
+      "solution": [
+       "(LHS)² − (RHS)² = a + 2√(ab) + b − (a + b)",
+       "= 2√(ab) > 0",
+       "So (LHS)² > (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "Therefore √a + √b > √(a+b)."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-16",
+      "kind": "explanation",
+      "answer": "Proved: (2√a+3√b)² − (4a+9b) = 12√(ab) > 0, so 2√a + 3√b > √(4a+9b). Equality does not hold.",
+      "solution": [
+       "(LHS)² − (RHS)² = 4a + 12√(ab) + 9b − (4a + 9b)",
+       "= 12√(ab) > 0",
+       "So (LHS)² > (RHS)².",
+       "Since a > 0 and b > 0, LHS > 0 and RHS > 0.",
+       "Therefore 2√a + 3√b > √(4a+9b)."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-17",
+      "kind": "explanation",
+      "answer": "Proved: (√(a−b))² − (√a−√b)² = 2√b(√a − √b) > 0, so √(a−b) > √a − √b.",
+      "solution": [
+       "(LHS)² − (RHS)² = (a − b) − (a − 2√(ab) + b)",
+       "= 2√(ab) − 2b",
+       "= 2√b(√a − √b)",
+       "Since a > b > 0, (√a)² > (√b)² with both positive, so √a > √b, so √a − √b > 0.",
+       "Also √b > 0, so the difference is positive and (LHS)² > (RHS)².",
+       "Since a − b > 0, LHS > 0; and RHS = √a − √b > 0.",
+       "Therefore √(a−b) > √a − √b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:challenge-3",
+      "kind": "explanation",
+      "answer": "Proved: (√a − b/(2√a))² − (√(a−b))² = b²/(4a) > 0, so √(a−b) < √a − b/(2√a).",
+      "solution": [
+       "(RHS)² − (LHS)² = a − b + b²/(4a) − (a − b)",
+       "= b²/(4a) > 0, since a > 0 and b > 0.",
+       "So (RHS)² > (LHS)².",
+       "LHS: a − b > 0, so √(a−b) > 0.",
+       "RHS = (2a − b)/(2√a). Since a > b > 0, 2a − b > 0, so RHS > 0.",
+       "From these, LHS < RHS.",
+       "Therefore √(a−b) < √a − b/(2√a)."
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-5",
+       "eb11c1-5:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-7",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "Since b/a > 0 and a/b > 0, use AM-GM.",
+       "b/a + a/b ≥ 2√((b/a)(a/b))",
+       "= 2√1 = 2",
+       "Equality holds when b/a = a/b, so b² = a².",
+       "Since a > 0 and b > 0, a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-8",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = b",
+      "solution": [
+       "(a+b)(1/a + 1/b) = 1 + a/b + b/a + 1 = a/b + b/a + 2",
+       "Since a/b > 0 and b/a > 0, AM-GM gives a/b + b/a ≥ 2√1 = 2.",
+       "Add 2: a/b + b/a + 2 ≥ 4.",
+       "So (a+b)(1/a + 1/b) ≥ 4.",
+       "Equality holds when a/b = b/a, so a² = b², and a = b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-9",
+      "kind": "value",
+      "answer": "Proved; equality holds when b = 6a",
+      "solution": [
+       "Since b/(3a) > 0 and 12a/b > 0, use AM-GM.",
+       "b/(3a) + 12a/b ≥ 2√((b/(3a))(12a/b))",
+       "= 2√4 = 4",
+       "Equality holds when b/(3a) = 12a/b, so b² = 36a².",
+       "Since a > 0 and b > 0, b = 6a."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-10",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 3",
+      "solution": [
+       "(a + 1/b)(b + 9/a) = ab + 9 + 1 + 9/(ab) = ab + 9/(ab) + 10",
+       "Since ab > 0 and 9/(ab) > 0, AM-GM gives ab + 9/(ab) ≥ 2√9 = 6.",
+       "Add 10: ab + 9/(ab) + 10 ≥ 16.",
+       "Equality holds when ab = 9/(ab), so (ab)² = 9, and ab = 3."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-19",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 2",
+      "solution": [
+       "Since a > 0 and 4/a > 0, use AM-GM.",
+       "a + 4/a ≥ 2√(a · 4/a) = 2√4 = 4",
+       "Equality holds when a = 4/a, so a² = 4.",
+       "Since a > 0, a = 2."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-20",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 2/√3",
+      "solution": [
+       "Since 3ab > 0 and 4/(ab) > 0, use AM-GM.",
+       "3ab + 4/(ab) ≥ 2√(3ab · 4/(ab)) = 2√12 = 4√3",
+       "Equality holds when 3ab = 4/(ab), so (ab)² = 4/3.",
+       "Since ab > 0, ab = 2/√3."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-21",
+      "kind": "value",
+      "answer": "Proved; equality holds when a + b = 3",
+      "solution": [
+       "Since a + b > 0 and 9/(a+b) > 0, use AM-GM.",
+       "(a+b) + 9/(a+b) ≥ 2√9 = 6",
+       "Equality holds when a + b = 9/(a+b), so (a+b)² = 9.",
+       "Since a + b > 0, a + b = 3."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-22",
+      "kind": "value",
+      "answer": "Proved; equality holds when x = √2",
+      "solution": [
+       "(x + 1/x)(x + 4/x) = x² + 4 + 1 + 4/x² = x² + 4/x² + 5",
+       "Since x² > 0 and 4/x² > 0, AM-GM gives x² + 4/x² ≥ 2√4 = 4.",
+       "Add 5: the expression ≥ 9.",
+       "Equality holds when x² = 4/x², so x⁴ = 4, x² = 2.",
+       "Since x > 0, x = √2."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-23",
+      "kind": "value",
+      "answer": "Proved; equality holds when a = 4b",
+      "solution": [
+       "(a + 8b)(2/a + 1/b) = 2 + a/b + 16b/a + 8 = a/b + 16b/a + 10",
+       "Since a/b > 0 and 16b/a > 0, AM-GM gives a/b + 16b/a ≥ 2√16 = 8.",
+       "Add 10: the expression ≥ 18.",
+       "Equality holds when a/b = 16b/a, so a² = 16b².",
+       "Since a > 0 and b > 0, a = 4b."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-24",
+      "kind": "value",
+      "answer": "Proved; equality holds when ab = 3",
+      "solution": [
+       "(a + 3/b)(b + 3/a) = ab + 3 + 3 + 9/(ab) = ab + 9/(ab) + 6",
+       "Since ab > 0 and 9/(ab) > 0, AM-GM gives ab + 9/(ab) ≥ 2√9 = 6.",
+       "Add 6: the expression ≥ 12.",
+       "Equality holds when ab = 9/(ab), so (ab)² = 9, and ab = 3."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:challenge-4",
+      "kind": "explanation",
+      "answer": "Area = LW ≤ 2500 cm², with equality when L = W = 50 cm.",
+      "solution": [
+       "Let the length be L and the width be W, both positive.",
+       "Perimeter 2(L + W) = 200, so L + W = 100.",
+       "By AM-GM, (L + W)/2 ≥ √(LW).",
+       "So 50 ≥ √(LW).",
+       "Both sides are positive, so squaring gives LW ≤ 2500.",
+       "Area ≤ 2500 cm², with equality when L = W = 50."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:question-for-reflection-1",
+      "kind": "explanation",
+      "answer": "The inequality fails: AM = −5 but √(ab) = 4, and −5 ≥ 4 is false.",
+      "solution": [
+       "AM = (−2 + −8)/2 = −5.",
+       "ab = (−2)(−8) = 16, so √(ab) = 4.",
+       "AM-GM would say −5 ≥ 4, which is false.",
+       "So the AM-GM inequality does not hold for negative numbers."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "-5",
+      "solution": [
+       "AM = (a + b)/2 = (−2 + (−8))/2",
+       "= −10/2",
+       "= −5"
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-2",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "GM = √(ab) = √((−2)(−8))",
+       "= √16",
+       "= 4"
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-3",
+      "kind": "value",
+      "answer": "No",
+      "solution": [
+       "AM = −5 and GM = 4.",
+       "The inequality needs AM ≥ GM, that is −5 ≥ 4.",
+       "This is false, so the sign does not hold."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:open-prompt-1",
+      "kind": "explanation",
+      "answer": "AM-GM was proved only for positive numbers; with negatives the AM is negative while √(ab) is positive, so the inequality breaks, and stating domains keeps models valid.",
+      "solution": [
+       "The rule (a+b)/2 ≥ √(ab) needs a > 0 and b > 0.",
+       "For a = −2, b = −8: the AM is −5, which is negative, but √(ab) = 4 is positive, so −5 ≥ 4 is false.",
+       "The proof relies on √a and √b being positive; for negative numbers that step is not valid.",
+       "So the conditions (domains and restrictions) must be stated before using an inequality.",
+       "In medical or engineering models, ignoring them could give a false bound, for example claiming a maximum or minimum that does not exist, so the model would fail."
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-7"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-5:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Compute LHS − RHS, factorise or complete the square, and use the given conditions (a > b means a − b > 0), squares (X² ≥ 0) or AM-GM for positive numbers to fix its sign. This gives the bound. Equality is the boundary case where the square term is 0 (e.g. X = 0) or the AM-GM terms are equal (a = b)."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = 2ax+2by−ax−ay−bx−by = (a−b)(x−y). Since a−b>0 and x−y>0, the product is >0, so 2(ax+by)>(a+b)(x+y)."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-2",
+      "kind": "explanation",
+      "answer": "LHS − RHS = xy+5x−3y−15 = (x−3)(y+5) > 0 since x−3>0 and y+5>0."
+     },
+     {
+      "ref": "eb11c1-5:try-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = ac+bd−ad−bc = a(c−d)−b(c−d) = (a−b)(c−d) > 0 since a−b>0 and c−d>0."
+     },
+     {
+      "ref": "eb11c1-5:try-2",
+      "kind": "explanation",
+      "answer": "LHS − RHS = xy+2−x−2y = x(y−1)−2(y−1) = (x−2)(y−1) > 0 since x−2>0 and y−1>0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = 3x−4y−2x+3y = x−y > 0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-2",
+      "kind": "explanation",
+      "answer": "LHS − RHS = ab+cd−ad−bc = a(b−d)−c(b−d) = (a−c)(b−d) > 0 since a−c>0 and b−d>0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-3",
+      "kind": "explanation",
+      "answer": "LHS − RHS = ab+1−a−b = (a−1)(b−1) > 0 since a−1>0 and b−1>0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-4",
+      "kind": "explanation",
+      "answer": "LHS − RHS = ax+by−ay−bx = a(x−y)−b(x−y) = (a−b)(x−y) > 0 since a>b and x>y."
+     },
+     {
+      "ref": "eb11c1-5:challenge-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = ax+by+cz−ay−bz−cx = a(x−y)+b(y−z)−c(x−z). Write x−z=(x−y)+(y−z). Then it equals (a−c)(x−y)+(b−c)(y−z) > 0, since a>c, x>y, b>c and y>z."
+     },
+     {
+      "ref": "eb11c1-5:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Group activity with no single answer: work the try questions together (complete the square to X² or X²+Y², state when equality holds) and compare. Try 3: equality when ay=bx. Try 4: (a−2b)²+b² ≥ 0, equality when a=b=0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-6",
+      "kind": "explanation",
+      "answer": "2(x²+y²)−(x+y)² = x²−2xy+y² = (x−y)² ≥ 0. Equality holds when x = y."
+     },
+     {
+      "ref": "eb11c1-5:exercise-7",
+      "kind": "explanation",
+      "answer": "(2x−y)²−3(x²−y²) = x²−4xy+4y² = (x−2y)² ≥ 0. Equality holds when x = 2y."
+     },
+     {
+      "ref": "eb11c1-5:exercise-8",
+      "kind": "explanation",
+      "answer": "(2a+3b)²−12ab = 4a²+9b² ≥ 0. Equality holds when a = 0 and b = 0."
+     },
+     {
+      "ref": "eb11c1-5:exercise-9",
+      "kind": "explanation",
+      "answer": "x²+2−2x = (x−1)²+1 ≥ 1 > 0, so x²+2 > 2x for all x. It is a strict inequality, so equality never holds."
+     },
+     {
+      "ref": "eb11c1-5:exercise-10",
+      "kind": "explanation",
+      "answer": "x²+y²−6x+8y+25 = (x−3)²+(y+4)² ≥ 0. Equality holds when x = 3 and y = −4."
+     },
+     {
+      "ref": "eb11c1-5:challenge-2",
+      "kind": "explanation",
+      "answer": "Cost = (x−5)²+2(y+3)² (since 25+18=43), which is ≥ 0 for all x, y. So the cost is never negative. It is 0 only when x=5, y=−3."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-4",
+      "kind": "explanation",
+      "answer": "(LHS)²−(RHS)² = (a²+b²)/2 − (a+b)²/4 = ((a−b)/2)² ≥ 0. Both sides are >0 since a,b>0, so LHS ≥ RHS. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-5",
+      "kind": "explanation",
+      "answer": "(LHS)²−(RHS)² = a+8√(ab)+16b−(a+16b) = 8√(ab) > 0. Both sides are >0, so √a+4√b > √(a+16b). It is strict, so there is no equality."
+     },
+     {
+      "ref": "eb11c1-5:try-6",
+      "kind": "explanation",
+      "answer": "(LHS)²−(RHS)² = 2(a+b)−(a+b+2√(ab))... = a+b−2√(ab) = (√a−√b)² ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:try-7",
+      "kind": "explanation",
+      "answer": "(2√a+√b)²−(4a+b) = 4√(ab) > 0. Both sides are >0, so 2√a+√b > √(4a+b). It is strict, so there is no equality."
+     },
+     {
+      "ref": "eb11c1-5:exercise-12",
+      "kind": "explanation",
+      "answer": "(2+a)²−(3+6a) = a²−2a+1 = (a−1)² ≥ 0. Both sides are >0, so 2+a ≥ √(3+6a). Equality holds when a = 1."
+     },
+     {
+      "ref": "eb11c1-5:exercise-13",
+      "kind": "explanation",
+      "answer": "2(a²+b²)−(a+b)² = (a−b)² ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:exercise-14",
+      "kind": "explanation",
+      "answer": "(LHS)²−(RHS)² = (a+b)/2 − (a+b+2√(ab))/4 = (√a−√b)²/4 ≥ 0. Both sides are >0, so the inequality holds. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:exercise-15",
+      "kind": "explanation",
+      "answer": "(√a+√b)²−(a+b) = 2√(ab) > 0. Both sides are >0, so the inequality holds. It is strict, so there is no equality."
+     },
+     {
+      "ref": "eb11c1-5:exercise-16",
+      "kind": "explanation",
+      "answer": "(2√a+3√b)²−(4a+9b) = 12√(ab) > 0. Both sides are >0, so the inequality holds. It is strict, so there is no equality."
+     },
+     {
+      "ref": "eb11c1-5:exercise-17",
+      "kind": "explanation",
+      "answer": "(√(a−b))²−(√a−√b)² = a−b−(a−2√(ab)+b) = 2√b(√a−√b) > 0, since a>b gives √a>√b. Also √(a−b)>0 and √a−√b>0, so √(a−b) > √a−√b."
+     },
+     {
+      "ref": "eb11c1-5:challenge-3",
+      "kind": "explanation",
+      "answer": "RHS = (2a−b)/(2√a) > 0 since a>b>0. (RHS)²−(LHS)² = a−b+b²/(4a)−(a−b) = b²/(4a) > 0. With LHS>0 and RHS>0, √(a−b) < √a − b/(2√a)."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-7",
+      "kind": "explanation",
+      "answer": "Since b/a>0 and a/b>0, AM-GM gives b/a+a/b ≥ 2√((b/a)(a/b)) = 2. Equality holds when b/a=a/b, i.e. a = b."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-8",
+      "kind": "explanation",
+      "answer": "(a+b)(1/a+1/b) = 2 + a/b + b/a ≥ 2+2 = 4 by AM-GM, since a/b>0 and b/a>0. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:try-9",
+      "kind": "explanation",
+      "answer": "b/(3a) and 12a/b are positive, so by AM-GM the sum is ≥ 2√((b/(3a))(12a/b)) = 2√4 = 4. Equality holds when b/(3a)=12a/b, i.e. b = 6a."
+     },
+     {
+      "ref": "eb11c1-5:try-10",
+      "kind": "explanation",
+      "answer": "Expand: (a+1/b)(b+9/a) = ab+9+1+9/(ab) = ab+9/(ab)+10 ≥ 2√9+10 = 16 by AM-GM. Equality holds when ab = 3."
+     },
+     {
+      "ref": "eb11c1-5:exercise-19",
+      "kind": "explanation",
+      "answer": "a+4/a ≥ 2√4 = 4 by AM-GM, since a>0 and 4/a>0. Equality holds when a = 4/a, i.e. a = 2."
+     },
+     {
+      "ref": "eb11c1-5:exercise-20",
+      "kind": "explanation",
+      "answer": "By AM-GM, 3ab+4/(ab) ≥ 2√12 = 4√3. Equality holds when 3ab=4/(ab), i.e. ab = 2/√3 = 2√3/3."
+     },
+     {
+      "ref": "eb11c1-5:exercise-21",
+      "kind": "explanation",
+      "answer": "Let t=a+b>0. Then t+9/t ≥ 2√9 = 6 by AM-GM. Equality holds when a+b = 3."
+     },
+     {
+      "ref": "eb11c1-5:exercise-22",
+      "kind": "explanation",
+      "answer": "The product is x²+4/x²+5 ≥ 2·2+5 = 9 by AM-GM. Equality holds when x² = 4/x², i.e. x = √2."
+     },
+     {
+      "ref": "eb11c1-5:exercise-23",
+      "kind": "explanation",
+      "answer": "The product is 10 + a/b + 16b/a ≥ 10+2√16 = 18 by AM-GM. Equality holds when a/b=16b/a, i.e. a = 4b."
+     },
+     {
+      "ref": "eb11c1-5:exercise-24",
+      "kind": "explanation",
+      "answer": "The product is ab+9/(ab)+6 ≥ 6+6 = 12 by AM-GM. Equality holds when ab = 3."
+     },
+     {
+      "ref": "eb11c1-5:challenge-4",
+      "kind": "explanation",
+      "answer": "Perimeter 200 gives L+W=100. AM-GM: √(LW) ≤ (L+W)/2 = 50, so LW ≤ 2500 cm². Equality holds when L = W = 50 (a square)."
+     },
+     {
+      "ref": "eb11c1-5:question-for-reflection-1",
+      "kind": "explanation",
+      "answer": "For a=−2, b=−8: AM = −5 and GM = √16 = 4. The claim −5 ≥ 4 is false, so AM-GM fails for negative numbers."
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "-5"
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-2",
+      "kind": "value",
+      "answer": "4 (√((−2)(−8)) = √16 = 4; this is positive, so it does not match the negative mean)"
+     },
+     {
+      "ref": "eb11c1-5:unlabelled-exercise-3",
+      "kind": "explanation",
+      "answer": "No. AM = −5 is not ≥ GM = 4, so the inequality fails."
+     },
+     {
+      "ref": "eb11c1-5:open-prompt-1",
+      "kind": "explanation",
+      "answer": "The proof uses (√a−√b)² ≥ 0, which needs √a and √b to be real, so a, b ≥ 0. For negative numbers √a and √b are not real. Also √(ab) is always positive, so it cannot be compared with a negative mean, and the inequality breaks (−5 < 4). Domains and restrictions are vital because a model applied outside the conditions where its proof holds gives wrong bounds. In medicine or engineering that could mean wrong dosages, volumes or safety limits."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c1-5:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-5:warm-up-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (a − b)(x − y) > 0, so 2(ax + by) > (a + b)(x + y).",
+      "solution": [
+       "LHS − RHS $= 2(ax+by)-(a+b)(x+y)$",
+       "$= 2ax+2by-ax-ay-bx-by$",
+       "$= ax-ay-bx+by$",
+       "$= a(x-y)-b(x-y)$",
+       "$= (a-b)(x-y)$",
+       "Since $a>b$ and $x>y$, we have $a-b>0$ and $x-y>0$",
+       "So $(a-b)(x-y)>0$",
+       "Therefore $2(ax+by)>(a+b)(x+y)$"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-2",
+      "kind": "explanation",
+      "answer": "LHS − RHS = (x − 3)(y + 5) > 0, so xy + 5x > 3y + 15.",
+      "solution": [
+       "LHS − RHS $= xy+5x-(3y+15)$",
+       "$= xy+5x-3y-15$",
+       "$= x(y+5)-3(y+5)$",
+       "$= (x-3)(y+5)$",
+       "Since $x>3$ and $y>-5$, we have $x-3>0$ and $y+5>0$",
+       "So $(x-3)(y+5)>0$",
+       "Therefore $xy+5x>3y+15$"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-1",
+       "eb11c1-5:method-2",
+       "eb11c1-5:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-3:1",
+      "kind": "value",
+      "answer": "a = 2b",
+      "solution": [
+       "LHS − RHS $= a^2+4b^2-4ab$",
+       "$= a^2-4ab+4b^2$",
+       "$= (a-2b)^2$ (complete the square)",
+       "$(a-2b)^2 \\ge 0$, so $a^2+4b^2 \\ge 4ab$",
+       "Equality holds when $a-2b=0$",
+       "Equality holds when a = 2b"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-3:2",
+      "kind": "value",
+      "answer": "x = 1, y = -1",
+      "solution": [
+       "LHS − RHS $= x^2+y^2-2(x-y-1)$",
+       "$= x^2-2x+y^2+2y+2$",
+       "$= (x-1)^2-1+(y+1)^2-1+2$",
+       "$= (x-1)^2+(y+1)^2 \\ge 0$, so $x^2+y^2 \\ge 2(x-y-1)$",
+       "Equality holds when $x-1=0$ and $y+1=0$",
+       "Equality holds when x = 1, y = -1"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-4",
+       "eb11c1-5:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-3",
+      "kind": "value",
+      "answer": "ay = bx",
+      "solution": [
+       "LHS − RHS $= (a^2+b^2)(x^2+y^2)-(ax+by)^2$",
+       "$= a^2x^2+a^2y^2+b^2x^2+b^2y^2-a^2x^2-2abxy-b^2y^2$",
+       "$= a^2y^2-2abxy+b^2x^2$",
+       "$= (ay-bx)^2 \\ge 0$, so the inequality is proved",
+       "Equality holds when $ay-bx=0$",
+       "Equality holds when ay = bx"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-4",
+      "kind": "value",
+      "answer": "a = 0, b = 0",
+      "solution": [
+       "LHS − RHS $= a^2+5b^2-4ab$",
+       "$= a^2-4ab+4b^2+b^2$",
+       "$= (a-2b)^2+b^2 \\ge 0$, so $a^2+5b^2 \\ge 4ab$",
+       "Equality holds when $a-2b=0$ and $b=0$",
+       "So $b=0$ and then $a=0$",
+       "Equality holds when a = 0, b = 0"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-5",
+      "kind": "value",
+      "answer": "y = 3x",
+      "solution": [
+       "LHS − RHS $= 9x^2-y(6x-y)$",
+       "$= 9x^2-6xy+y^2$",
+       "$= (3x-y)^2 \\ge 0$, so $9x^2 \\ge y(6x-y)$",
+       "Equality holds when $3x-y=0$",
+       "Equality holds when y = 3x"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-3",
+       "eb11c1-5:rule-1",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-5",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = b",
+      "solution": [
+       "The first inequality printed under this instruction is $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$",
+       "$(LHS)^2-(RHS)^2 = 2(a+b)-(a+2\\sqrt{ab}+b)$",
+       "$= a+b-2\\sqrt{ab}$",
+       "$= (\\sqrt a-\\sqrt b)^2 \\ge 0$, so $(LHS)^2 \\ge (RHS)^2$ ...(i)",
+       "Since $a>0, b>0$: $\\sqrt{2(a+b)}>0$ and $\\sqrt a+\\sqrt b>0$ ...(ii)",
+       "From (i) and (ii), $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$",
+       "Equality holds when $\\sqrt a-\\sqrt b=0$, that is, when $a=b$",
+       "Yes, equality holds when a = b"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-11",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = 1",
+      "solution": [
+       "The first inequality printed under this instruction is: if $a>0$, $2+a\\ge\\sqrt{3+6a}$",
+       "$(LHS)^2-(RHS)^2 = (2+a)^2-(3+6a)$",
+       "$= 4+4a+a^2-3-6a$",
+       "$= a^2-2a+1$",
+       "$= (a-1)^2 \\ge 0$, so $(LHS)^2 \\ge (RHS)^2$ ...(i)",
+       "Since $a>0$: $2+a>0$ and $\\sqrt{3+6a}>0$ ...(ii)",
+       "From (i) and (ii), $2+a\\ge\\sqrt{3+6a}$",
+       "Equality holds when $a-1=0$",
+       "Yes, equality holds when a = 1"
+      ],
+      "grounded_in": [
+       "eb11c1-5:method-4",
+       "eb11c1-5:rule-3",
+       "eb11c1-5:rule-6",
+       "eb11c1-5:rule-7",
+       "eb11c1-5:rule-2",
+       "eb11c1-5:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:warm-up-6",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = b",
+      "solution": [
+       "The first inequality printed under this instruction is: if $a>0$, $b>0$, $\\frac ba+\\frac ab\\ge2$",
+       "Since $\\frac ba>0$ and $\\frac ab>0$, use AM-GM",
+       "$\\frac ba+\\frac ab\\ge2\\sqrt{\\frac ba\\times\\frac ab}=2\\sqrt1=2$",
+       "Equality holds when $\\frac ba=\\frac ab$",
+       "Multiply both sides by $ab$: $b^2=a^2$",
+       "Since $a>0, b>0$, $a=b$",
+       "Yes, equality holds when a = b"
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:try-8",
+      "kind": "value",
+      "answer": "Yes, equality holds when b = 6a",
+      "solution": [
+       "The first inequality printed under this instruction is: if $a>0$, $b>0$, $\\frac{b}{3a}+\\frac{12a}{b}\\ge4$",
+       "Since $\\frac{b}{3a}>0$ and $\\frac{12a}{b}>0$, use AM-GM",
+       "$\\frac{b}{3a}+\\frac{12a}{b}\\ge2\\sqrt{\\frac{b}{3a}\\times\\frac{12a}{b}}=2\\sqrt4=4$",
+       "Equality holds when $\\frac{b}{3a}=\\frac{12a}{b}$",
+       "Multiply both sides by $3ab$: $b^2=36a^2$",
+       "Since $a>0, b>0$, $b=6a$",
+       "Yes, equality holds when b = 6a"
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-5:exercise-18",
+      "kind": "value",
+      "answer": "Yes, equality holds when a = 2",
+      "solution": [
+       "The first inequality printed under this instruction is: if $a>0$, $a+\\frac4a\\ge4$",
+       "Since $a>0$ and $\\frac4a>0$, use AM-GM",
+       "$a+\\frac4a\\ge2\\sqrt{a\\times\\frac4a}=2\\sqrt4=4$",
+       "Equality holds when $a=\\frac4a$",
+       "So $a^2=4$, and since $a>0$, $a=2$",
+       "Yes, equality holds when a = 2"
+      ],
+      "grounded_in": [
+       "eb11c1-5:rule-8",
+       "eb11c1-5:rule-9",
+       "eb11c1-5:rule-10",
+       "eb11c1-5:explanation-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-5:warm-up-1",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=2ax+2by-(ax+ay+bx+by)=ax-ay-bx+by=(a-b)(x-y)$. Since $a>b$ and $x>y$, $a-b>0$ and $x-y>0$, so the product is $>0$. Hence $2(ax+by)>(a+b)(x+y)$."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-2",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=xy+5x-3y-15=x(y+5)-3(y+5)=(x-3)(y+5)$. Since $x>3$ and $y>-5$, $x-3>0$ and $y+5>0$, so the product is $>0$. Hence $xy+5x>3y+15$."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-3:1",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=a^2-4ab+4b^2=(a-2b)^2\\ge0$, so $a^2+4b^2\\ge4ab$. Equality holds when $a=2b$."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-3:2",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=x^2-2x+y^2+2y+2=(x-1)^2+(y+1)^2\\ge0$, so $x^2+y^2\\ge2(x-y-1)$. Equality holds when $x=1$ and $y=-1$."
+     },
+     {
+      "ref": "eb11c1-5:try-3",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=a^2y^2+b^2x^2-2abxy=(ay-bx)^2\\ge0$. Equality holds when $ay=bx$."
+     },
+     {
+      "ref": "eb11c1-5:try-4",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=a^2-4ab+5b^2=(a-2b)^2+b^2\\ge0$. Equality holds when $a-2b=0$ and $b=0$, that is, $a=0$ and $b=0$."
+     },
+     {
+      "ref": "eb11c1-5:exercise-5",
+      "kind": "explanation",
+      "answer": "This is item 1 of the exercise. LHS − RHS $=9x^2-6xy+y^2=(3x-y)^2\\ge0$. Equality holds when $y=3x$. The other items of this exercise are answered under their own refs."
+     },
+     {
+      "ref": "eb11c1-5:exercise-6",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=2x^2+2y^2-x^2-2xy-y^2=(x-y)^2\\ge0$. Equality holds when $x=y$."
+     },
+     {
+      "ref": "eb11c1-5:exercise-7",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=4x^2-4xy+y^2-3x^2+3y^2=x^2-4xy+4y^2=(x-2y)^2\\ge0$. Equality holds when $x=2y$."
+     },
+     {
+      "ref": "eb11c1-5:exercise-8",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=4a^2+12ab+9b^2-12ab=4a^2+9b^2\\ge0$. Equality holds when $a=0$ and $b=0$."
+     },
+     {
+      "ref": "eb11c1-5:exercise-9",
+      "kind": "explanation",
+      "answer": "LHS − RHS $=x^2-2x+2=(x-1)^2+1\\ge1>0$, so $x^2+2>2x$. The inequality is strict, so equality never holds."
+     },
+     {
+      "ref": "eb11c1-5:exercise-10",
+      "kind": "explanation",
+      "answer": "LHS $=(x-3)^2+(y+4)^2\\ge0$. Equality holds when $x=3$ and $y=-4$."
+     },
+     {
+      "ref": "eb11c1-5:challenge-2",
+      "kind": "explanation",
+      "answer": "Cost $=(x-5)^2-25+2(y+3)^2-18+43=(x-5)^2+2(y+3)^2\\ge0$ for all real $x,y$, so the cost is never negative. It equals 0 only at $x=5$, $y=-3$."
+     },
+     {
+      "ref": "eb11c1-5:try-5",
+      "kind": "explanation",
+      "answer": "This is the instruction for the Try items. Item 1: $(LHS)^2-(RHS)^2=2a+2b-(a+2\\sqrt{ab}+b)=(\\sqrt a-\\sqrt b)^2\\ge0$, and both sides are $>0$, so $\\sqrt{2(a+b)}\\ge\\sqrt a+\\sqrt b$. Equality holds when $a=b$. Item 2: $(2\\sqrt a+\\sqrt b)^2-(4a+b)=4\\sqrt{ab}>0$, and both sides are $>0$, so the inequality holds. It is strict, so equality does not hold."
+     },
+     {
+      "ref": "eb11c1-5:exercise-11",
+      "kind": "explanation",
+      "answer": "This is the instruction for the exercise items. Item 1: $(2+a)^2-(3+6a)=(a-1)^2\\ge0$, and both sides are $>0$. Equality holds when $a=1$. Item 2: $2(a^2+b^2)-(a+b)^2=(a-b)^2\\ge0$. Equality holds when $a=b$. Item 3: $\\frac{a+b}{2}-\\frac{(\\sqrt a+\\sqrt b)^2}{4}=\\frac{(\\sqrt a-\\sqrt b)^2}{4}\\ge0$. Equality holds when $a=b$. Item 4: $(\\sqrt a+\\sqrt b)^2-(a+b)=2\\sqrt{ab}>0$, strict. Item 5: $(2\\sqrt a+3\\sqrt b)^2-(4a+9b)=12\\sqrt{ab}>0$, strict. Item 6: $(a-b)-(\\sqrt a-\\sqrt b)^2=2\\sqrt b(\\sqrt a-\\sqrt b)>0$, strict. In each item, show both sides are positive."
+     },
+     {
+      "ref": "eb11c1-5:warm-up-6",
+      "kind": "explanation",
+      "answer": "This is the instruction for the Warm Up. By AM-GM with $\\frac ba,\\frac ab>0$: $\\frac ba+\\frac ab\\ge2$, with equality when $a=b$. For item 2, $(a+b)(\\frac1a+\\frac1b)=\\frac ab+\\frac ba+2\\ge4$, with equality when $a=b$."
+     },
+     {
+      "ref": "eb11c1-5:try-8",
+      "kind": "explanation",
+      "answer": "This is the instruction for the Try items. Item 1: by AM-GM, $\\frac{b}{3a}+\\frac{12a}{b}\\ge2\\sqrt{4}=4$. Equality holds when $b=6a$. Item 2: $(a+\\frac1b)(b+\\frac9a)=ab+\\frac{9}{ab}+10\\ge2\\sqrt9+10=16$. Equality holds when $ab=3$."
+     },
+     {
+      "ref": "eb11c1-5:exercise-18",
+      "kind": "explanation",
+      "answer": "This is the instruction for the exercise items. In each item, state the terms are positive and apply AM-GM. Item 1: $a+\\frac4a\\ge2\\sqrt4=4$. Equality holds when $a=2$. Item 2: $3ab+\\frac4{ab}\\ge2\\sqrt{12}=4\\sqrt3$. Equality holds when $ab=\\frac{2}{\\sqrt3}$. Item 3: $(a+b)+\\frac{9}{a+b}\\ge2\\sqrt9=6$. Equality holds when $a+b=3$. Item 4: the product expands to $x^2+\\frac4{x^2}+5\\ge4+5=9$. Equality holds when $x=\\sqrt2$. Item 5: the product expands to $10+\\frac ab+\\frac{16b}{a}\\ge10+8=18$. Equality holds when $a=4b$. Item 6: the product expands to $ab+\\frac9{ab}+6\\ge6+6=12$. Equality holds when $ab=3$."
+     }
+    ]
+   }
+  }
+ ]
+}

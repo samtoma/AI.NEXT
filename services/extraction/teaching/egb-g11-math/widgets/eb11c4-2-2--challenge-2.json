@@ -1,0 +1,50 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-2-2:challenge-2",
+ "lo_id": "lo:eb11c4-2-2",
+ "book_item": "eb11c4-2:challenge-2",
+ "parent_question_id": "q:eb11c4-2-2:bk-challenge-2",
+ "parent_kind": "question",
+ "tier": "advanced",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 0,
+  "b": 2,
+  "grid": {
+   "x": [
+    -5,
+    10
+   ],
+   "y": [
+    -3,
+    5
+   ]
+  }
+ },
+ "stem": "Sensor West is at $A(-4, 2)$ and Sensor East is at $B(9, 2)$ on a grid where $x$ is the distance from the research station and $y$ is the sea-surface height. Draw the straight-line boundary connecting the two sensors. Drag the two points so the line is that boundary.",
+ "solution": [
+  "Both sensors have the same $y$-coordinate, $2$.",
+  "So the boundary is horizontal.",
+  "The equation is $y=2$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "vertical-line",
+   "step": 1,
+   "text": "The sensors differ in distance but not in height. Think which direction the line runs."
+  },
+  {
+   "predicate": "intercept-wrong",
+   "step": 2,
+   "text": "Every point on the boundary has the sensors' height. Check where your line meets the y-axis."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Compare the y-coordinates of the two sensors."
+  }
+ ],
+ "notes": "Grid widened so B (9,2) is on the board."
+}

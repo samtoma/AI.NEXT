@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-1:cubic-common",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-1",
+ "parent_question_id": "q:eb11c1-3-1:bk-exercise-1-e",
+ "source_page": 16,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "r",
+   "randint": [
+    "p + 2",
+    7
+   ]
+  }
+ ],
+ "constraints": [
+  "q != p",
+  "r - p >= 2"
+ ],
+ "stem": "Simplify the following rational expression. $\\frac{ {=m}x^3-{=m*(p+q)}x^2+{=m*p*q}x}{x^3+{=r-p}x^2-{=p*r}x}$",
+ "solution": [
+  "Factorise the top, taking out the common factor ${=m}x$: ${=m}x^3-{=m*(p+q)}x^2+{=m*p*q}x={=m}x\\left(x^2-{=p+q}x+{=p*q}\\right)={=m}x(x-{=p})(x-{=q})$.",
+  "Factorise the bottom, taking out $x$: $x^3+{=r-p}x^2-{=p*r}x=x\\left(x^2+{=r-p}x-{=p*r}\\right)=x(x-{=p})(x+{=r})$.",
+  "Cancel the common factors $x$ and $(x-{=p})$.",
+  "The answer is $\\frac{ {=m}(x-{=q})}{x+{=r}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=m}*(x - {=q})/(x + {=r})",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: take out a common factor x (and constant m), factorise two quadratics, cancel two factors. Follows book exercise 1(e) pattern. Constraints keep all printed coefficients positive and not 1: r-p>=2, m>=2, q!=p so no squared factor; x-q and x+r share no factor since q,r>0."
+}

@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "b081ad4fe6790c0a388c14f4e6fb4ffeae80f0e9d883a5b7f6a7c4c8acd5be1b",
+  "generated_sha256": "f4d88303e1201e8c5b3877e50a8fa7deb2957b3c9a05654273bbbb4a16965957",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c4-2:worked-example-4",
+    "verdict": "equivalent",
+    "reason": "Same line x + 3y - 18 = 0; the solver's y = -x/3 + 6 is just the same equation rearranged."
+   }
+  ]
+ }
+}

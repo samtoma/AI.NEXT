@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-1:compare",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-1",
+ "parent_question_id": "q:eb11c1-4-1:bk-exercise-3",
+ "source_page": 23,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "let": "p * k + b"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the values of the constants $a$ and $b$ for which the following is an identity in $x$: $a(x+{=k})+b={=p}x+{=q}$",
+ "solution": [
+  "Expand the left-hand side: $a(x+{=k})+b=ax+({=k}a+b)$.",
+  "Compare with ${=p}x+{=q}$ the coefficients of $x$: $a={=p}$.",
+  "Compare the constant terms: ${=k}a+b={=q}$.",
+  "Substitute $a={=p}$: ${=k*p}+b={=q}$, so $b={=b}$.",
+  "Answer: a = {=p}, b = {=b}."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "a = {=p}, b = {=b}",
+  "form": null,
+  "variables": [
+   "a",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: expand one bracket, compare coefficients of x and constants. Unique solution; b>0 keeps q positive so the stem prints cleanly."
+}

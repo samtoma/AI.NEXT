@@ -1,0 +1,546 @@
+{
+ "book": "egb-g11-math",
+ "stage": "final",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "5ddfed15427ab6b640b6908346441953b12ffdba74bd0c1172d25d31e777b83d",
+  "generated_sha256": "cb5b8099638381ad2e3284c30f2c9005e09d3867c05043ced309e5fa419f03a0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:eb11c1-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no new entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written, and the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-2-1",
+   "entries": [
+    {
+     "id": "mc:eb11c1-2-1:subtraction-sign-slip",
+     "lo_id": "lo:eb11c1-2-1",
+     "label": "Subtracting without changing signs",
+     "description": "The student multiplies the divisor correctly but then adds, or subtracts only some terms, so the signs of the line being taken away are not all reversed.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the right term to multiply by and built the right line underneath. The slip comes at the next move: subtracting means changing the sign of every term in that line, not just the first."
+      },
+      {
+       "step": 2,
+       "text_md": "Take the box volume $4x^3+4x^2-9x-9$ divided by $2x^2-x-3$. The first quotient term is $2x$, and $2x(2x^2-x-3)=4x^3-2x^2-6x$. The $x^2$ terms are $4x^2-(-2x^2)=6x^2$."
+      },
+      {
+       "step": 3,
+       "text_md": "If the sign is not changed you get $4x^2-2x^2=2x^2$ instead. Everything after that is built on the wrong line, so the division will not finish at $0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Put the line you are subtracting in brackets with a minus in front, then work down term by term: $x^3$, $x^2$, $x$, constant. Here that gives $6x^2-3x-9$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c1-2:caution-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "I checked the arithmetic against the canonical solution. 2x(2x²-x-3)=4x³-2x²-6x. Subtracting gives 6x²-3x-9. Not changing the sign gives 4x²-2x²=2x² instead. The error is supported by caution-1. The refutation cites nothing outside the book."
+     }
+    },
+    {
+     "id": "mc:eb11c1-2-1:partial-multiplication",
+     "lo_id": "lo:eb11c1-2-1",
+     "label": "Multiplying only the leading term of the divisor",
+     "description": "The student multiplies the quotient term by the first term of the divisor only and leaves the other terms of the divisor out of the line they subtract.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You chose the right quotient term, $2x$, by comparing leading terms. The next step then needs the whole divisor, not just its first term."
+      },
+      {
+       "step": 2,
+       "text_md": "In the box problem the divisor is $2x^2-x-3$. Using only $2x^2$ gives $2x\\cdot 2x^2=4x^3$. Subtracting that from $4x^3+4x^2-9x-9$ leaves $4x^2-9x-9$."
+      },
+      {
+       "step": 3,
+       "text_md": "That is not what is really left over. The full product is $4x^3-2x^2-6x$, and it leaves $6x^2-3x-9$. The two leftovers differ, so the later steps and the final answer go wrong."
+      },
+      {
+       "step": 4,
+       "text_md": "Each time, multiply the quotient term by every term of the divisor, write the whole line, and only then subtract."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c1-2:caution-1"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "Using only 4x³ leaves 4x²-9x-9. The full product leaves 6x²-3x-9. Both are correct, and they match the canonical step. The error is supported by caution-1."
+     }
+    },
+    {
+     "id": "mc:eb11c1-2-1:stopping-too-early",
+     "lo_id": "lo:eb11c1-2-1",
+     "label": "Stopping before the remainder has lower degree than the divisor",
+     "description": "The student stops dividing after one or two steps, while what is left still has degree at least that of the divisor.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You carried out a step correctly and then stopped, probably because the working looked finished. The test for stopping is the degree of what is left."
+      },
+      {
+       "step": 2,
+       "text_md": "In the box problem, after the first step the quotient is $2x$ and what is left is $6x^2-3x-9$. That has degree $2$, the same as the divisor $2x^2-x-3$, so $2x^2-x-3$ still divides into it."
+      },
+      {
+       "step": 3,
+       "text_md": "The next term is $6x^2\\div 2x^2=3$. Then $3(2x^2-x-3)=6x^2-3x-9$, and subtracting leaves $0$. The height is $2x+3$, not $2x$."
+      },
+      {
+       "step": 4,
+       "text_md": "After each subtraction, compare the degree of what is left with the degree of the divisor. Stop only when it is lower."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c1-2:caution-2"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "After the first step 6x²-3x-9 still has degree 2, equal to the divisor's degree. The next term is 3, and the result is 2x+3 with remainder 0, which matches the canonical answer. The error is supported by caution-2."
+     }
+    },
+    {
+     "id": "mc:eb11c1-2-1:remainder-must-be-zero",
+     "lo_id": "lo:eb11c1-2-1",
+     "label": "Believing the remainder must always be zero",
+     "description": "The student thinks a non-zero remainder means the division has gone wrong, so they hunt for a mistake or force the remainder to vanish.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "It is natural to expect a zero remainder, because the box problem works out that way: the last subtraction leaves $0$ and the height is exactly $2x+3$."
+      },
+      {
+       "step": 2,
+       "text_md": "That is a special case, though. The rule for stopping is not that the remainder is $0$. It is that what is left has lower degree than the divisor."
+      },
+      {
+       "step": 3,
+       "text_md": "So a leftover of lower degree, such as a term in $x$ when dividing by a quadratic, is a correct remainder. It does not signal an error, and you should not change the working to get rid of it."
+      },
+      {
+       "step": 4,
+       "text_md": "When the division stops, state both parts: the quotient, and the remainder, which may be $0$ or may be a lower-degree expression."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c1-2:caution-3"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The refutation is mathematically correct. It states the stopping rule as lower degree, not zero remainder, which matches caution-3. It stays consistent with the canonical remainder of 0 for the box problem. It cites no outside references."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-3-1",
+   "entries": [],
+   "dropped": [
+    {
+     "id": "mc:eb11c1-3-1:cancel-terms-not-factors",
+     "lo_id": "lo:eb11c1-3-1",
+     "label": "Cancels matching terms across + or − signs",
+     "aliases": [],
+     "verdict": "UNCLEAR",
+     "reason": "The error is real and matches the book's caution. The refutation's maths checks out: cancelling x^2 gives 3x/(-9), the x=1 test gives -1/2 against -1/3, and the factorised form x/(x-3) matches the canonical answer. The signal is flawed, though. The example -4/(3x^2+7x+2) comes from (x^2-4)/(3x^2+7x+2) with x^2 deleted from the top only. The bottom still has 3x^2, so no matching terms were cancelled. That is not the described error, and a student could be misdiagnosed from it. The x=1 substitution check also goes slightly beyond the book's method. Since the signal is not sound, I do not confirm the entry."
+    }
+   ],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry has supporting evidence. I wrote no entries. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-3-3",
+   "entries": [
+    {
+     "id": "mc:eb11c1-3-3:add-tops-and-bottoms",
+     "lo_id": "lo:eb11c1-3-3",
+     "label": "Adds numerators and denominators separately",
+     "description": "The student treats the sum or difference of two rational expressions like adding whole numbers, adding the numerators together and the denominators together.",
+     "signal": "For 1/(x+1) + 1/(x-2) the student writes 2/(2x-1).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are treating $\\frac{1}{x+1}+\\frac{1}{x-2}$ as if you can add the tops and add the bottoms, giving $\\frac{2}{2x-1}$. It is natural to want a quick rule, but this one does not work for fractions."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it with $x=3$. The original is $\\frac{1}{4}+\\frac{1}{1}=\\frac{5}{4}$. Your answer gives $\\frac{2}{5}$. The two do not match, so the rule has changed the value."
+      },
+      {
+       "step": 3,
+       "text_md": "The bottoms tell you the size of the pieces. You can only add pieces that are the same size, so both fractions must first be written over the same denominator."
+      },
+      {
+       "step": 4,
+       "text_md": "Do that by multiplying each fraction top and bottom by the factor the other denominator has and it lacks: $\\frac{(x-2)}{(x+1)(x-2)}+\\frac{(x+1)}{(x-2)(x+1)}$. Now the denominators are equal."
+      },
+      {
+       "step": 5,
+       "text_md": "Only the numerators are combined: $\\frac{(x-2)+(x+1)}{(x+1)(x-2)}=\\frac{2x-1}{(x+1)(x-2)}$. At $x=3$ this is $\\frac{5}{4}$, which matches."
+      },
+      {
+       "step": 6,
+       "text_md": "Next time: factorise the denominators, build a common denominator, then combine the numerators over it. The denominator is never added."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c1-3:caution-2"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The error is the one named in the book's caution. The signal is correct: (1+1)/((x+1)+(x-2)) = 2/(2x-1). The x=3 check is correct (5/4 against 2/5). The corrected method and result match the book's worked example. It cites no outside references."
+     }
+    },
+    {
+     "id": "mc:eb11c1-3-3:stops-before-reducing",
+     "lo_id": "lo:eb11c1-3-3",
+     "label": "Leaves the result unreduced",
+     "description": "The student finds the common denominator and combines the numerators correctly but stops there, without factorising the numerator and cancelling common factors.",
+     "signal": "For the first warm-up the student gives (x^2-4)/(x(x-1)(x-2)) instead of (x+2)/(x(x-1)).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your working up to the combined fraction is right, and you have the numerator correct. The step missing is the last one: reducing the fraction."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $\\frac{x+4}{x(x-2)}-\\frac{3}{(x-1)(x-2)}$. Over the common denominator the numerator is $(x+4)(x-1)-3x=x^2-4$, giving $\\frac{x^2-4}{x(x-1)(x-2)}$."
+      },
+      {
+       "step": 3,
+       "text_md": "Look at the numerator. $x^2-4=(x-2)(x+2)$, and $(x-2)$ is also a factor of the denominator. So the fraction can still be simplified."
+      },
+      {
+       "step": 4,
+       "text_md": "Cancel the common factor: $\\frac{(x-2)(x+2)}{x(x-1)(x-2)}=\\frac{x+2}{x(x-1)}$. The question asks you to simplify, so this is the form to give."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time: after combining, always try to factorise the numerator and cancel any factor it shares with the denominator."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "expl:eb11c1-3-3:bk-explanation-3"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The numerator (x+4)(x-1)-3x = x^2-4 is correct. The factorisation and cancellation match the canonical warm-up solution and the book's explanation, and the final answer (x+2)/(x(x-1)) is correct. The refutation targets the missing reduction step. The signal is realistic. It cites no outside references."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-3-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-4-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-4-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. I added no entries; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-4-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. Entries were left out and the runtime will use the canonical solution."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-4-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns, wrong options or widget predicates were supplied for this objective, so no error is supported by evidence. I added no entries, and the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-5-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options/widget predicates were supplied for this objective, so no error is evidenced. No entries were added; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-5-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no entry is supported. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-5-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. I added no entries; the runtime falls back to the canonical solutions."
+    },
+    {
+     "kind": "terminology",
+     "text": "The book's terms (LHS, RHS, (LHS)² − (RHS)², 'equality holds when X = 0') are used as printed. None are in doubt."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c1-5-4",
+   "entries": [
+    {
+     "id": "mc:eb11c1-5-4:amgm-without-positivity-check",
+     "lo_id": "lo:eb11c1-5-4",
+     "label": "Uses AM-GM without checking the numbers are positive",
+     "description": "The student applies AM-GM, that the arithmetic mean is at least the geometric mean, to numbers that may be negative, without first checking that each one is greater than 0.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You may be treating AM-GM as a rule that works for any two numbers. The inequality $\\frac{a+b}{2}\\ge\\sqrt{ab}$ is only promised when $a>0$ and $b>0$. The rule isn't wrong. It just has a condition that has to be checked first."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it on $a=-2$ and $b=-8$. The arithmetic mean is $\\frac{-2+(-8)}{2}=-5$. The geometric mean is $\\sqrt{(-2)(-8)}=\\sqrt{16}=4$."
+      },
+      {
+       "step": 3,
+       "text_md": "AM-GM would need $-5\\ge 4$, which is false. So the inequality sign does not hold when the numbers are negative."
+      },
+      {
+       "step": 4,
+       "text_md": "This is why the worked solutions begin with a line such as \"Since $\\frac{b}{a}>0$ and $\\frac{a}{b}>0$\" before they use AM-GM. That line is the condition being checked."
+      },
+      {
+       "step": 5,
+       "text_md": "Before using AM-GM, write down why each of the two terms is greater than 0. This usually comes from the given $a>0$ and $b>0$. If you can't say why a term is positive, don't use AM-GM on it."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c1-5-4:bk-unlabelled-exercise-3"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:eb11c1-5-4:bk-explanation-5"
+      }
+     ],
+     "covers": [],
+     "verdict": {
+      "verdict": "CONFIRMED",
+      "reason": "The counterexample a=-2, b=-8 matches the book's exercise: AM=-5, GM=4, and -5≥4 is false. The condition a>0, b>0 matches the book's repeated 'Since b/a>0 and a/b>0 (always write this)' step. The refutation is mathematically correct and argues against the error of skipping the positivity check. It doesn't just restate the method, and it adds nothing outside the book. It names no question ids, page numbers or review history. There is no signal and no attached options."
+     }
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 18,
+  "entries": 7,
+  "dropped": 1,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 15
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-5-2:fixedpoint-adv",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-5-2",
+ "parent_question_id": "q:eb11c2-5-2:bk-exercise-5-d",
+ "source_page": 97,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    -4,
+    -3,
+    -2
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "let": "c*(1-p)"
+  },
+  {
+   "name": "a1",
+   "let": "c+d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by $a_1 = {=a1}, \\ a_{n+1} = {=p}a_n + {=q}$. Write $a_n$ in terms of $n$.",
+ "solution": [
+  "Solve $c = ({=p})c + {=q}$: $c = {=c}$.",
+  "Then $a_{n+1} - {=c} = ({=p})(a_n - {=c})$, so $b_n = a_n - {=c}$ is a geometric sequence with ratio ${=p}$.",
+  "$b_1 = a_1 - {=c} = {=d}$, so $b_n = {=d}\\times({=p})^{n-1}$.",
+  "$a_n = b_n + {=c} = {=d}\\times({=p})^{n-1} + {=c}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=d}*({=p})^(n-1) + {=c}",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Negative ratio, b_1 not 1. q=c(1-p)>0. Check p=-3,c=1,d=-2: a1=-1,q=4,a2=7; formula -2*(-3)+1=7 ok."
+}

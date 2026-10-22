@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-3-1:expand-lin",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-3-1",
+ "parent_question_id": "none-supplied",
+ "source_page": null,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    7
+   ]
+  },
+  {
+   "name": "t1",
+   "let": "a + b"
+  },
+  {
+   "name": "t2",
+   "let": "2*a + b"
+  },
+  {
+   "name": "t3",
+   "let": "3*a + b"
+  },
+  {
+   "name": "t4",
+   "let": "4*a + b"
+  }
+ ],
+ "stem": "Write $\\sum_{r=1}^{4} ({=a}r + {=b})$ as a sum of terms, then find its value.",
+ "answer": "t1 + t2 + t3 + t4",
+ "solution": [
+  "Replace $r$ by $1, 2, 3, 4$ in turn: $\\sum_{r=1}^{4} ({=a}r + {=b}) = ({=a}\\times 1 + {=b}) + ({=a}\\times 2 + {=b}) + ({=a}\\times 3 + {=b}) + ({=a}\\times 4 + {=b})$.",
+  "The terms are ${=t1} + {=t2} + {=t3} + {=t4}$.",
+  "Adding, the value is ${=t1 + t2 + t3 + t4}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder. Basic: expand a short sigma with lower limit 1 and add."
+}

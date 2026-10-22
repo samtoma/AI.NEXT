@@ -19,10 +19,12 @@ class ConfigsTest(unittest.TestCase):
     def test_the_five_books_are_valid_and_the_shipped_ones_agree_with_their_bundles(self):
         books = book_config.all_books()
         self.assertEqual([b.book for b in books],
-                         ["prep3-math-en", "prep3-parallel", "prep3-social-ar", "prep3-arabic-ar", "g10-math"])
+                         ["prep3-math-en", "prep3-parallel", "prep3-social-ar", "prep3-arabic-ar", "g10-math",
+                          "egb-g11-math"])
         # four loadable since 2026-10-12 (Samuel's answer 49: the whole Grade 10 book on production); the
-        # book-record ingestion of the Prep-3 maths book is going through the line (2026-10-16)
-        self.assertEqual([b.status for b in books], ["loadable", "ingest", "loadable", "loadable", "loadable"])
+        # book-record ingestion of the Prep-3 maths book is going through the line (2026-10-16), and of the
+        # Egyptian Baccalaureate Grade 11 maths book, Part One (2026-10-21)
+        self.assertEqual([b.status for b in books], ["loadable", "ingest", "loadable", "loadable", "loadable", "ingest"])
         self.assertEqual(book_config.check_all(), [])
         # a load asks the strict question, and every loadable book passes it; an ingest book has nothing to load
         for b in books:
@@ -46,7 +48,8 @@ class ConfigsTest(unittest.TestCase):
     def test_course_subjects_replace_the_old_hardcoded_map(self):
         self.assertEqual(book_config.course_subjects(), {
             "course:prep3-math-en": "math", "course:prep3-parallel-math-en": "math", "course:prep3-social-ar": "social",
-            "course:prep3-arabic-ar": "arabic", "course:us-g10-math-en": "math"})
+            "course:prep3-arabic-ar": "arabic", "course:us-g10-math-en": "math",
+            "course:egb-g11-math-en": "math"})
 
 
 class Grade10ConfigTest(unittest.TestCase):

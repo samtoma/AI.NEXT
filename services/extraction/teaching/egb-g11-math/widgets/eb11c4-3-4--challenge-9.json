@@ -1,0 +1,48 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-4:challenge-9",
+ "lo_id": "lo:eb11c4-3-4",
+ "book_item": "eb11c4-3:challenge-9",
+ "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+ "parent_kind": "teaching",
+ "tier": "advanced",
+ "kind": "pair_plotter",
+ "spec": {
+  "targets": [
+   [
+    3,
+    -4
+   ],
+   [
+    -4,
+    3
+   ]
+  ]
+ },
+ "stem": "Two radar stations cover the ranges $x^2+y^2=25$ and $(x+5)^2+(y+5)^2=65$. Find the points where their boundaries intersect and plot them.",
+ "solution": [
+  "Expand Beta: $x^2+y^2+10x+10y+50=65$.",
+  "Subtract using $x^2+y^2=25$: $10x+10y=-10$, so $y=-1-x$.",
+  "Substitute: $x^2+x-12=0$, so $x=3$ or $-4$.",
+  "The points are $(3,-4)$ and $(-4,3)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-points",
+   "step": 3,
+   "text": "Take both roots of the quadratic."
+  },
+  {
+   "predicate": "extra-points",
+   "step": 2,
+   "text": "Each point must lie on the line found by eliminating the squares."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 1,
+   "text": "Recheck the signs when expanding the second circle."
+  }
+ ],
+ "notes": "Swapped points form the same set."
+}

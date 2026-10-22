@@ -1,0 +1,31 @@
+{
+  "config_version": 1,
+  "book": "egb-g11-math",
+  "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+  "course_id": "course:egb-g11-math-en",
+  "curriculum": "eg-baccalaureate-en",
+  "subject": "math",
+  "grade": "11",
+  "language": "en",
+  "direction": "ltr",
+  "id_prefixes": [
+    "eb11c"
+  ],
+  "load_order": 50,
+  "status": "ingest",
+  "sources": {
+    "pdf": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "epub": null,
+    "teacher_pdf": null
+  },
+  "page_offsets": [],
+  "objectives_mode": "printed",
+  "sacred_content": false,
+  "bundles": [],
+  "content_files": [],
+  "lesson_titles_note": "Egyptian Baccalaureate, Grade 11 (2nd year) Mathematics, Part One (Ministry of Education and Technical Education, 2026; 204 pages: 4 chapters, 18 concepts). A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-21, branch egy-bac-g11-maths-ingestion). Its course, course:egb-g11-math-en, and its curriculum, eg-baccalaureate-en, are not yet in the app (app/src/lib/courses.ts, curricula.ts): nothing is shown to students until they are added. Lesson slugs are eb11c<chapter>-<concept>. Part Two is a separate PDF, not yet received. Each concept is printed as numbered sections (1-1 … 4-26, 88 in all), and every section prints its Learning Outcomes: those are the objectives (objectives_mode printed), about five per lesson. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
+  "program": {
+    "id": "program:eg-baccalaureate-en",
+    "label": "Egyptian Baccalaureate"
+  }
+}

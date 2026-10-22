@@ -1,0 +1,72 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-1-2:nth-term",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-1-2",
+ "parent_question_id": "q:eb11c2-1-2:bk-try-3-a",
+ "source_page": 44,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    20
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    8,
+    15
+   ]
+  },
+  {
+   "name": "t2",
+   "let": "a + d"
+  },
+  {
+   "name": "t3",
+   "let": "a + 2 * d"
+  },
+  {
+   "name": "t4",
+   "let": "a + 3 * d"
+  },
+  {
+   "name": "an",
+   "let": "a + (n - 1) * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "The sequence ${=a}, {=t2}, {=t3}, {=t4}, \\dots$ is an arithmetic sequence. Find its term number {=n}, $a_{{=n}}$.",
+ "answer": "an",
+ "solution": [
+  "The first term is $a={=a}$.",
+  "The common difference is $d={=t2}-({=a})={=d}$.",
+  "Use $a_n=a+(n-1)d$ with $n={=n}$: $a_{{=n}}={=a}+({=n}-1)\\times({=d})$.",
+  "$a_{{=n}}={=an}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: read a and d from the first terms, then apply a_n=a+(n-1)d. Only a basic family written; standard and advanced have book models but were not requested first."
+}

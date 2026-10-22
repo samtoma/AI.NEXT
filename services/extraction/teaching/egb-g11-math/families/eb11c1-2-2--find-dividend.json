@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-2-2:find-dividend",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-2-2",
+ "parent_question_id": "q:eb11c1-2-2:bk-exercise-12",
+ "source_page": 13,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "m",
+   "let": "p * q"
+  },
+  {
+   "name": "c",
+   "let": "p * q + r"
+  }
+ ],
+ "stem": "When the polynomial $A$ is divided by $x+{=p}$, the quotient is $x+{=q}$ and the remainder is ${=r}$. Find $A$ in expanded form.",
+ "solution": [
+  "Use $A = B \\times Q + R$ with $B = x+{=p}$, $Q = x+{=q}$ and $R = {=r}$.",
+  "$A = (x+{=p})(x+{=q}) + {=r}$.",
+  "Multiply: $(x+{=p})(x+{=q}) = x^2 + {=q}x + {=p}x + {=m} = x^2 + {=s}x + {=m}$.",
+  "Add the remainder: $x^2 + {=s}x + {=m} + {=r} = x^2 + {=s}x + {=c}$.",
+  "So $A = x^2 + {=s}x + {=c}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "x^2 + {=s}*x + {=c}",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: A = BQ + R with linear B and Q, positive small constants so the expansion has no sign traps. Modelled on bk-exercise-12 (find A)."
+}

@@ -1,0 +1,4340 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "52cb2851dae9e5bb0366aaf2900eace236075299ea0aeda044a03df00b8f684b",
+  "generated_sha256": "854171181fee3be72041bc2949881c19dbb40f3c3133ce55829c29d99415c6fb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "eb11c4-1",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:warm-up-1-b",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:warm-up-1#b",
+     "parent_question_id": "q:eb11c4-1-1:bk-warm-up-1-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -10,
+       10
+      ],
+      "targets": [
+       4
+      ]
+     },
+     "stem": "For A(−4) and B(8), point C divides segment AB internally in the ratio 2:1. Mark the coordinate of C on the number line.",
+     "solution": [
+      "Internal division in ratio m:n with m=2, n=1: $x=\\frac{n\\cdot a+m\\cdot b}{m+n}$.",
+      "$x=\\frac{1\\times(-4)+2\\times 8}{2+1}$.",
+      "$x=\\frac{12}{3}=4$, so C(4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Cross-multiply: each end is weighted by the OTHER part of the ratio. Then divide by the sum of the ratio parts."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point C is asked for. Mark just the point that divides AB internally, which lies between A and B."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check the sign when you substitute a = −4 into the formula."
+      }
+     ],
+     "notes": "Marking the coordinate on the line."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:warm-up-1-d",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:warm-up-1#d",
+     "parent_question_id": "q:eb11c4-1-1:bk-warm-up-1-d",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -10,
+       10
+      ],
+      "targets": [
+       2
+      ]
+     },
+     "stem": "For A(−4) and B(8), mark the coordinate of the midpoint M of segment AB on the number line.",
+     "solution": [
+      "The midpoint is the average: $x=\\frac{a+b}{2}$.",
+      "$x=\\frac{-4+8}{2}=2$, so M(2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "The midpoint is the number halfway between the two coordinates: add them and halve."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point M is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Add the coordinates with their signs before halving."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:try-1-b",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:try-1#b",
+     "parent_question_id": "q:eb11c4-1-1:bk-try-1-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -8,
+       8
+      ],
+      "targets": [
+       3
+      ]
+     },
+     "stem": "For A(−5) and B(7), point C divides segment AB internally in the ratio 2:1. Mark C on the number line.",
+     "solution": [
+      "Internal division with m=2, n=1: $x=\\frac{n a+m b}{m+n}$.",
+      "$x=\\frac{1\\times(-5)+2\\times 7}{3}$.",
+      "$x=\\frac{9}{3}=3$, so C(3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Cross-multiply: each end is weighted by the other part of the ratio, then divide by the sum of the parts."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point C is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check the sign of a = −5 when substituting."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:try-1-c",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:try-1#c",
+     "parent_question_id": "q:eb11c4-1-1:bk-try-1-c",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -16,
+       8
+      ],
+      "targets": [
+       -13
+      ]
+     },
+     "stem": "For A(−5) and B(7), point D divides segment AB externally in the ratio 2:5. Mark D on the number line.",
+     "solution": [
+      "External division with m=2, n=5: $x=\\frac{n a-m b}{n-m}$; D lies outside AB.",
+      "$x=\\frac{5\\times(-5)-2\\times 7}{5-2}$.",
+      "$x=\\frac{-39}{3}=-13$, so D(−13)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "For an external ratio the formula has a minus in the numerator and in the denominator."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "D lies outside segment AB, on the side of the smaller ratio part. Mark one point."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Take care with the signs when subtracting m·b from n·a."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:try-1-d",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:try-1#d",
+     "parent_question_id": "q:eb11c4-1-1:bk-try-1-d",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -8,
+       8
+      ],
+      "targets": [
+       1
+      ]
+     },
+     "stem": "For A(−5) and B(7), mark the midpoint M of segment AB on the number line.",
+     "solution": [
+      "Midpoint: $x=\\frac{a+b}{2}$.",
+      "$x=\\frac{-5+7}{2}=1$, so M(1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Add the two coordinates and halve."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Add with signs before halving."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-1-b",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-1#b",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-1-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       4
+      ]
+     },
+     "stem": "For A(−2) and B(6), point C divides segment AB internally in the ratio 3:1. Mark C on the number line.",
+     "solution": [
+      "Internal division with m=3, n=1: $x=\\frac{n a+m b}{m+n}$.",
+      "$x=\\frac{1\\times(-2)+3\\times 6}{4}$.",
+      "$x=\\frac{16}{4}=4$, so C(4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Cross-multiply: weight each end by the other part of the ratio, then divide by the sum."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point C is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check the sign of a = −2."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-1-c",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-1#c",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-1-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       18
+      ],
+      "targets": [
+       18
+      ]
+     },
+     "stem": "For A(−2) and B(6), point D divides segment AB externally in the ratio 5:3. Mark D on the number line.",
+     "solution": [
+      "External division with m=5, n=3: $x=\\frac{n a-m b}{n-m}$.",
+      "$x=\\frac{3\\times(-2)-5\\times 6}{3-5}$.",
+      "$x=\\frac{-36}{-2}=18$, so D(18)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "For an external ratio use subtraction in both numerator and denominator."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "D lies outside AB. Mark one point."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 3,
+       "text": "Dividing two negatives: check the sign of the quotient."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-1-d",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-1#d",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-1-d",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -6,
+       6
+      ],
+      "targets": [
+       2
+      ]
+     },
+     "stem": "For A(−2) and B(6), mark the midpoint M of segment AB on the number line.",
+     "solution": [
+      "Midpoint: $x=\\frac{a+b}{2}$.",
+      "$x=\\frac{-2+6}{2}=2$, so M(2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Add the coordinates and halve."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Add with signs before halving."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-2-b",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-2#b",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-2-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       0,
+       12
+      ],
+      "targets": [
+       8
+      ]
+     },
+     "stem": "For A(4) and B(10), point C divides segment AB internally in the ratio 2:1. Mark C on the number line.",
+     "solution": [
+      "Internal division with m=2, n=1: $x=\\frac{n a+m b}{m+n}$.",
+      "$x=\\frac{1\\times 4+2\\times 10}{3}$.",
+      "$x=\\frac{24}{3}=8$, so C(8)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Cross-multiply: weight each end by the other part of the ratio, then divide by the sum."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point C is asked for, between A and B."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "All the numbers here are positive; recheck your arithmetic."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-2-c",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-2#c",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-2-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -2,
+       12
+      ],
+      "targets": [
+       1
+      ]
+     },
+     "stem": "For A(4) and B(10), point D divides segment AB externally in the ratio 1:3. Mark D on the number line.",
+     "solution": [
+      "External division with m=1, n=3: $x=\\frac{n a-m b}{n-m}$.",
+      "$x=\\frac{3\\times 4-1\\times 10}{3-1}$.",
+      "$x=\\frac{2}{2}=1$, so D(1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "For an external ratio use subtraction in numerator and denominator."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "D lies outside AB. Mark one point."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Check which product is subtracted from which."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:exercise-2-d",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:exercise-2#d",
+     "parent_question_id": "q:eb11c4-1-1:bk-exercise-2-d",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       0,
+       12
+      ],
+      "targets": [
+       7
+      ]
+     },
+     "stem": "For A(4) and B(10), mark the midpoint M of segment AB on the number line.",
+     "solution": [
+      "Midpoint: $x=\\frac{a+b}{2}$.",
+      "$x=\\frac{4+10}{2}=7$, so M(7)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Add the coordinates and halve."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point is asked for."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-1:challenge-1-b",
+     "lo_id": "lo:eb11c4-1-1",
+     "book_item": "eb11c4-1:challenge-1#b",
+     "parent_question_id": "q:eb11c4-1-1:bk-challenge-1-b",
+     "parent_kind": "question",
+     "tier": "advanced",
+     "kind": "number_line_marker",
+     "spec": {
+      "mode": "points",
+      "range": [
+       -12,
+       0
+      ],
+      "targets": [
+       -7
+      ]
+     },
+     "stem": "Pod A is at depth −8 km and pod B at −3 km on the trench wall axis. Point C divides AB internally in the ratio 1:4. Mark C on the number line.",
+     "solution": [
+      "Internal division with m=1, n=4: $x=\\frac{n a+m b}{m+n}$.",
+      "$x=\\frac{4\\times(-8)+1\\times(-3)}{5}$.",
+      "$x=\\frac{-35}{5}=-7$, so C is at −7 km."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missed-values",
+       "step": 1,
+       "text": "Cross-multiply: weight each end by the other part of the ratio, then divide by the sum."
+      },
+      {
+       "predicate": "extra-values",
+       "step": 1,
+       "text": "Only one point C is asked for."
+      },
+      {
+       "predicate": "sign-flipped",
+       "step": 2,
+       "text": "Both coordinates are negative; keep their signs."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-2-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:unlabelled-exercise-2#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -3,
+       -2
+      ]
+     },
+     "stem": "For A(−3, 2), plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of the y-coordinate.",
+      "A(−3, 2) gives P(−3, −2).",
+      "Plot P(−3, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Reflecting in the x-axis changes only one coordinate's sign; the other stays."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes; only a sign changes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-2-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:unlabelled-exercise-2#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       2
+      ]
+     },
+     "stem": "For A(−3, 2), plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of the x-coordinate.",
+      "A(−3, 2) gives Q(3, 2).",
+      "Plot Q(3, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Reflecting in the y-axis changes only one coordinate's sign; the other stays."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes; only a sign changes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-2-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:unlabelled-exercise-2#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       -2
+      ]
+     },
+     "stem": "For A(−3, 2), plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(−3, 2) gives R(3, −2).",
+      "Plot R(3, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Reflecting in the origin changes the signs of both coordinates."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes; only signs change."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:try-3-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:try-3#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -1,
+       -2
+      ]
+     },
+     "stem": "For A(−1, 2), plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of y.",
+      "A(−1, 2) gives P(−1, −2).",
+      "Plot P(−1, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the x-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:try-3-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:try-3#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       1,
+       2
+      ]
+     },
+     "stem": "For A(−1, 2), plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of x.",
+      "A(−1, 2) gives Q(1, 2).",
+      "Plot Q(1, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the y-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:try-3-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:try-3#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       1,
+       -2
+      ]
+     },
+     "stem": "For A(−1, 2), plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(−1, 2) gives R(1, −2).",
+      "Plot R(1, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "The origin reflection changes both signs."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-4-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-4#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -4,
+       2
+      ]
+     },
+     "stem": "For A(−4, −2), plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of y.",
+      "A(−4, −2) gives P(−4, 2).",
+      "Plot P(−4, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the x-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-4-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-4#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       4,
+       -2
+      ]
+     },
+     "stem": "For A(−4, −2), plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of x.",
+      "A(−4, −2) gives Q(4, −2).",
+      "Plot Q(4, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the y-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-4-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-4#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       4,
+       2
+      ]
+     },
+     "stem": "For A(−4, −2), plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(−4, −2) gives R(4, 2).",
+      "Plot R(4, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "The origin reflection changes both signs."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-5-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-5#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       1,
+       2
+      ]
+     },
+     "stem": "For A(1, −2), plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of y.",
+      "A(1, −2) gives P(1, 2).",
+      "Plot P(1, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the x-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-5-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-5#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -1,
+       -2
+      ]
+     },
+     "stem": "For A(1, −2), plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of x.",
+      "A(1, −2) gives Q(−1, −2).",
+      "Plot Q(−1, −2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the y-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-5-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-5#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -1,
+       2
+      ]
+     },
+     "stem": "For A(1, −2), plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(1, −2) gives R(−1, 2).",
+      "Plot R(−1, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "The origin reflection changes both signs."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-6-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-6#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -3,
+       -4
+      ]
+     },
+     "stem": "For A(−3, 4), plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of y.",
+      "A(−3, 4) gives P(−3, −4).",
+      "Plot P(−3, −4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the x-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-6-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-6#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       4
+      ]
+     },
+     "stem": "For A(−3, 4), plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of x.",
+      "A(−3, 4) gives Q(3, 4).",
+      "Plot Q(3, 4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the y-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:exercise-6-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:exercise-6#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       -4
+      ]
+     },
+     "stem": "For A(−3, 4), plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(−3, 4) gives R(3, −4).",
+      "Plot R(3, −4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "The origin reflection changes both signs."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:challenge-2-p",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:challenge-2#a",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -3,
+       -4
+      ]
+     },
+     "stem": "A welding arm is at A(−3, 4). Plot the point P symmetric to A with respect to the $x$-axis.",
+     "solution": [
+      "Symmetric about the x-axis: change the sign of y.",
+      "A(−3, 4) gives P(−3, −4).",
+      "Plot P(−3, −4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the x-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:challenge-2-q",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:challenge-2#b",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       4
+      ]
+     },
+     "stem": "A welding arm is at A(−3, 4). Plot the point Q symmetric to A with respect to the $y$-axis.",
+     "solution": [
+      "Symmetric about the y-axis: change the sign of x.",
+      "A(−3, 4) gives Q(3, 4).",
+      "Plot Q(3, 4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Only one coordinate changes sign for the y-axis reflection."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-2:challenge-2-r",
+     "lo_id": "lo:eb11c4-1-2",
+     "book_item": "eb11c4-1:challenge-2#c",
+     "parent_question_id": "expl:eb11c4-1-2:bk-unlabelled-exercise-2-a",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       -4
+      ]
+     },
+     "stem": "A welding arm is at A(−3, 4). Plot the point R symmetric to A with respect to the origin.",
+     "solution": [
+      "Symmetric about the origin: change both signs.",
+      "A(−3, 4) gives R(3, −4).",
+      "Plot R(3, −4)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "The origin reflection changes both signs."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The first number is across (x), the second is up (y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Reflection keeps the distances from the axes."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:warm-up-4",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:warm-up-4",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       0
+      ]
+     },
+     "stem": "Find the point P on the $x$-axis equidistant from A(−2, 1) and B(3, 4), and plot it.",
+     "solution": [
+      "P is on the x-axis, so P = (s, 0).",
+      "AP = BP gives $(s+2)^2+1=(s-3)^2+16$.",
+      "$4s+5=-6s+25$, so $s=2$.",
+      "Plot P(2, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 1,
+       "text": "A point on the x-axis has y = 0; the unknown is its first coordinate."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the signs when you expand the squares."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Set AP² equal to BP² using the distance formula, then solve for s."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:exercise-12",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:exercise-12",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       0
+      ]
+     },
+     "stem": "Find the point P on the $x$-axis equidistant from A(−1, 2) and B(4, 3), and plot it.",
+     "solution": [
+      "Let P = (s, 0).",
+      "PA = PB gives $(s+1)^2+4=(s-4)^2+9$.",
+      "$2s+5=-8s+25$, so $s=2$.",
+      "Plot P(2, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 1,
+       "text": "A point on the x-axis has y = 0."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the signs when expanding the squares."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Set PA² equal to PB² and solve for s."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:try-7",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:try-7",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       0,
+       3
+      ]
+     },
+     "stem": "Find the point P on the $y$-axis equidistant from A(4, 2) and B(1, −1), and plot it.",
+     "solution": [
+      "P is on the y-axis, so P = (0, t).",
+      "PA = PB gives $16+(t-2)^2=1+(t+1)^2$.",
+      "$20-4t=2+2t$, so $t=3$.",
+      "Plot P(0, 3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 1,
+       "text": "A point on the y-axis has x = 0; the unknown is its second coordinate."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs when expanding the squares."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Set PA² equal to PB² and solve for t."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:exercise-15",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:exercise-15",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       1
+      ]
+     },
+     "stem": "Find the point Q on the line $y = 2x - 3$ equidistant from A(1, 4) and B(3, −2), and plot it.",
+     "solution": [
+      "Q is on the line, so Q = (s, 2s−3).",
+      "AQ = BQ gives $(s-1)^2+(2s-7)^2=(s-3)^2+(2s-1)^2$.",
+      "$-20s=-40$, so $s=2$.",
+      "$y=2(2)-3=1$; plot Q(2, 1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Put s in the first coordinate and the line's value in the second."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs in each bracket."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write Q with the line's rule in its y-coordinate, then set the two squared distances equal."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:exercise-16",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:exercise-16",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       2
+      ]
+     },
+     "stem": "Find the point Q on the line $y = x - 1$ equidistant from A(−1, 5) and B(7, −1), and plot it.",
+     "solution": [
+      "Q = (s, s−1).",
+      "AQ = BQ gives $(s+1)^2+(s-6)^2=(s-7)^2+s^2$.",
+      "$4s=12$, so $s=3$.",
+      "$y=3-1=2$; plot Q(3, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Put s in the first coordinate and the line's value in the second."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs in each bracket."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write Q with the line's rule in its y-coordinate, then set the squared distances equal."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:exercise-17",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:exercise-17",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -2,
+       3
+      ]
+     },
+     "stem": "Find the point Q on the line $y = -x + 1$ equidistant from A(1, 2) and B(−3, 6), and plot it.",
+     "solution": [
+      "Q = (s, −s+1).",
+      "AQ = BQ gives $(s-1)^2+(-s-1)^2=(s+3)^2+(-s-5)^2$.",
+      "$16s=-32$, so $s=-2$.",
+      "$y=2+1=3$; plot Q(−2, 3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Put s in the first coordinate and the line's value in the second."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs in each bracket."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write Q with the line's rule in its y-coordinate, then set the squared distances equal."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:try-8",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:try-8",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -4,
+       -11
+      ],
+      "grid": {
+       "x": [
+        -8,
+        0
+       ],
+       "y": [
+        -12,
+        -4
+       ]
+      }
+     },
+     "stem": "Find the point Q on the line $y = 3x + 1$ equidistant from A(4, −5) and B(2, −3), and plot it.",
+     "solution": [
+      "Q = (s, 3s+1).",
+      "AQ = BQ gives $(s-4)^2+(3s+6)^2=(s-2)^2+(3s+4)^2$.",
+      "$8s=-32$, so $s=-4$.",
+      "$y=3(-4)+1=-11$; plot Q(−4, −11)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "Put s in the first coordinate and the line's value in the second."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the sign of s after dividing."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Write Q with the line's rule in its y-coordinate, then set the squared distances equal."
+      }
+     ],
+     "notes": "Grid holds the book's numbers."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-3:exercise-14",
+     "lo_id": "lo:eb11c4-1-3",
+     "book_item": "eb11c4-1:exercise-14",
+     "parent_question_id": "expl:eb11c4-1-3:bk-warm-up-4",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       8.5,
+       0
+      ],
+      "grid": {
+       "x": [
+        1,
+        9
+       ],
+       "y": [
+        -2,
+        2
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "Find the point P on the $x$-axis equidistant from A(−1, 2) and B(3, 8), and plot it.",
+     "solution": [
+      "Let P = (s, 0).",
+      "PA = PB gives $(s+1)^2+4=(s-3)^2+64$.",
+      "$8s=68$, so $s=\\frac{17}{2}$.",
+      "Plot P(8.5, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 1,
+       "text": "A point on the x-axis has y = 0."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs when expanding."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Set PA² equal to PB² and solve for s."
+      }
+     ],
+     "notes": "Half-step grid."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:warm-up-6-b",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:warm-up-6#b",
+     "parent_question_id": "q:eb11c4-1-4:bk-warm-up-6-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       9.5
+      ],
+      "grid": {
+       "x": [
+        0,
+        4
+       ],
+       "y": [
+        2,
+        10
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "For B(3, 7) and C(5, 2), plot the point Q dividing segment BC externally in the ratio 1:3.",
+     "solution": [
+      "External division m=1, n=3: $\\left(\\frac{n x_1-m x_2}{n-m},\\frac{n y_1-m y_2}{n-m}\\right)$.",
+      "$x=\\frac{3\\times3-1\\times5}{2}=2$.",
+      "$y=\\frac{3\\times7-1\\times2}{2}=\\frac{19}{2}$.",
+      "Plot Q(2, 9.5)."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:eb11c4-1-1:external-uses-internal-formula"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check the signs in numerator and denominator."
+      }
+     ],
+     "notes": "Diagnostic is weak but off-target is the only catch-all; kept mapped per lesson's own list? Misconception belongs to lo 1-1 listed in 1-4 as inherited."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:warm-up-6-c",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:warm-up-6#c",
+     "parent_question_id": "q:eb11c4-1-4:bk-warm-up-6-c",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       1.5,
+       -0.5
+      ],
+      "grid": {
+       "x": [
+        -1,
+        4
+       ],
+       "y": [
+        -2,
+        2
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "For C(5, 2) and A(−2, −3), plot the midpoint M of segment CA.",
+     "solution": [
+      "Midpoint: average each coordinate.",
+      "$x=\\frac{5+(-2)}{2}=\\frac32$.",
+      "$y=\\frac{2+(-3)}{2}=-\\frac12$.",
+      "Plot M(1.5, −0.5)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Add with signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Average the x's and average the y's separately."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:warm-up-6-d",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:warm-up-6#d",
+     "parent_question_id": "q:eb11c4-1-4:bk-warm-up-6-d",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       2
+      ]
+     },
+     "stem": "For A(−2, −3), B(3, 7) and C(5, 2), plot the centroid G of triangle ABC.",
+     "solution": [
+      "Centroid: average the three x's and the three y's.",
+      "$x=\\frac{-2+3+5}{3}=2$.",
+      "$y=\\frac{-3+7+2}{3}=2$.",
+      "Plot G(2, 2)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the three values with signs, then divide by 3."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Divide each sum by 3, not 2."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:try-10",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:try-10",
+     "parent_question_id": "q:eb11c4-1-4:bk-try-10",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       11,
+       -18
+      ],
+      "grid": {
+       "x": [
+        0,
+        12
+       ],
+       "y": [
+        -18,
+        0
+       ],
+       "step": [
+        1,
+        2
+       ]
+      }
+     },
+     "stem": "For B(1, −4) and C(−4, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+     "solution": [
+      "External division m=2, n=3: divide $n\\cdot(\\text{first})-m\\cdot(\\text{second})$ by $n-m$.",
+      "$x=\\frac{3\\times1-2\\times(-4)}{1}=11$.",
+      "$y=\\frac{3\\times(-4)-2\\times3}{1}=-18$.",
+      "Plot Q(11, −18)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs of the products you subtract."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "External division subtracts in the numerator and the denominator."
+      }
+     ],
+     "notes": "The y axis counts in twos."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:try-11",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:try-11",
+     "parent_question_id": "q:eb11c4-1-4:bk-try-11",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -1,
+       0
+      ]
+     },
+     "stem": "For A(−3, 4) and B(1, −4), plot the midpoint M of segment AB.",
+     "solution": [
+      "Average each coordinate.",
+      "$x=\\frac{-3+1}{2}=-1$.",
+      "$y=\\frac{4+(-4)}{2}=0$.",
+      "Plot M(−1, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add with signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Average x's and y's separately."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:try-12",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:try-12",
+     "parent_question_id": "q:eb11c4-1-4:bk-try-12",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -2,
+       1
+      ]
+     },
+     "stem": "For A(−3, 4), B(1, −4) and C(−4, 3), plot the centroid G of triangle ABC.",
+     "solution": [
+      "Average the three x's and the three y's.",
+      "$x=\\frac{-3+1-4}{3}=-2$.",
+      "$y=\\frac{4-4+3}{3}=1$.",
+      "Plot G(−2, 1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the three values with signs, then divide by 3."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Divide by 3 for the centroid."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-18-b",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-18#b",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-18-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       10,
+       -15
+      ],
+      "grid": {
+       "x": [
+        -2,
+        12
+       ],
+       "y": [
+        -15,
+        0
+       ]
+      }
+     },
+     "stem": "For B(2, −3) and C(−2, 3), plot the point Q dividing segment BC externally in the ratio 2:3.",
+     "solution": [
+      "External division m=2, n=3: $\\frac{n(\\cdot)-m(\\cdot)}{n-m}$.",
+      "$x=\\frac{3\\times2-2\\times(-2)}{1}=10$.",
+      "$y=\\frac{3\\times(-3)-2\\times3}{1}=-15$.",
+      "Plot Q(10, −15)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs of the products you subtract."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "External division subtracts in numerator and denominator."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-18-c",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-18#c",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-18-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       0,
+       3
+      ]
+     },
+     "stem": "For C(−2, 3) and A(2, 3), plot the midpoint M of segment CA.",
+     "solution": [
+      "Average each coordinate.",
+      "$x=\\frac{-2+2}{2}=0$.",
+      "$y=\\frac{3+3}{2}=3$.",
+      "Plot M(0, 3)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add with signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Average x's and y's separately."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-19-a",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-19#a",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-19-a",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       3
+      ]
+     },
+     "stem": "For B(6, −3) and C(1, 7), plot the point P dividing segment BC internally in the ratio 3:2.",
+     "solution": [
+      "Internal division m=3, n=2: $\\frac{n(\\text{B})+m(\\text{C})}{m+n}$.",
+      "$x=\\frac{2\\times6+3\\times1}{5}=3$.",
+      "$y=\\frac{2\\times(-3)+3\\times7}{5}=3$.",
+      "Plot P(3, 3)."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:eb11c4-1-4:swapped-ratio-weights"
+      }
+     ],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Check signs when substituting."
+      }
+     ],
+     "notes": "Off-target is the only catch-all for a wrong weighting; mapping is approximate."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-19-b",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-19#b",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-19-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -8,
+       -11
+      ],
+      "grid": {
+       "x": [
+        -10,
+        4
+       ],
+       "y": [
+        -12,
+        2
+       ]
+      }
+     },
+     "stem": "For C(1, 7) and A(−2, 1), plot the point Q dividing segment CA externally in the ratio 3:2.",
+     "solution": [
+      "External division m=3, n=2: $\\frac{n(\\text{C})-m(\\text{A})}{n-m}$.",
+      "$x=\\frac{2\\times1-3\\times(-2)}{-1}=-8$.",
+      "$y=\\frac{2\\times7-3\\times1}{-1}=-11$.",
+      "Plot Q(−8, −11)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "The denominator n−m is negative here; keep its sign."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "External division subtracts in numerator and denominator."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-19-c",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-19#c",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-19-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       -1
+      ]
+     },
+     "stem": "For A(−2, 1) and B(6, −3), plot the midpoint M of segment AB.",
+     "solution": [
+      "Average each coordinate.",
+      "$x=\\frac{-2+6}{2}=2$.",
+      "$y=\\frac{1-3}{2}=-1$.",
+      "Plot M(2, −1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add with signs before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Average x's and y's separately."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-20-b",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-20#b",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-20-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       0,
+       -7.5
+      ],
+      "grid": {
+       "x": [
+        -2,
+        2
+       ],
+       "y": [
+        -8,
+        0
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "For B(1, −5) and C(3, 0), plot the point Q dividing segment BC externally in the ratio 1:3.",
+     "solution": [
+      "External division m=1, n=3: $\\frac{n(\\text{B})-m(\\text{C})}{n-m}$.",
+      "$x=\\frac{3\\times1-1\\times3}{2}=0$.",
+      "$y=\\frac{3\\times(-5)-1\\times0}{2}=-\\frac{15}{2}$.",
+      "Plot Q(0, −7.5)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the sign of the numerator."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "External division subtracts in numerator and denominator."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-20-c",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-20#c",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-20-c",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       -2.5
+      ],
+      "grid": {
+       "x": [
+        0,
+        4
+       ],
+       "y": [
+        -4,
+        0
+       ],
+       "step": 0.5
+      }
+     },
+     "stem": "For B(1, −5) and C(3, 0), plot the midpoint M of segment BC.",
+     "solution": [
+      "Average each coordinate.",
+      "$x=\\frac{1+3}{2}=2$.",
+      "$y=\\frac{-5+0}{2}=-\\frac52$.",
+      "Plot M(2, −2.5)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the sign of the sum before halving."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Average x's and y's separately."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-20-d",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-20#d",
+     "parent_question_id": "q:eb11c4-1-4:bk-exercise-20-d",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       0,
+       0
+      ]
+     },
+     "stem": "For A(−4, 5), B(1, −5) and C(3, 0), plot the centroid G of triangle ABC.",
+     "solution": [
+      "Average the three x's and the three y's.",
+      "$x=\\frac{-4+1+3}{3}=0$.",
+      "$y=\\frac{5-5+0}{3}=0$.",
+      "Plot G(0, 0)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Add the three values with signs, then divide by 3."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Divide by 3 for the centroid."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:try-13",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:try-13",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       8
+      ],
+      "grid": {
+       "x": [
+        -2,
+        6
+       ],
+       "y": [
+        -2,
+        10
+       ]
+      }
+     },
+     "stem": "Plot the point B symmetric to A(1, −2) with respect to the point P(2, 3).",
+     "solution": [
+      "Let B = (s, t); P is the midpoint of AB.",
+      "$\\frac{1+s}{2}=2$, so $s=3$.",
+      "$\\frac{-2+t}{2}=3$, so $t=8$.",
+      "Plot B(3, 8)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "P is the midpoint of AB: set each average equal to P's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The symmetric point is as far beyond P as A is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:try-14",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:try-14",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -5,
+       8
+      ],
+      "grid": {
+       "x": [
+        -6,
+        2
+       ],
+       "y": [
+        0,
+        10
+       ]
+      }
+     },
+     "stem": "Plot the point Q symmetric to P(3, 2) with respect to the point A(−1, 5).",
+     "solution": [
+      "Let Q = (s, t); A is the midpoint of PQ.",
+      "$\\frac{3+s}{2}=-1$, so $s=-5$.",
+      "$\\frac{2+t}{2}=5$, so $t=8$.",
+      "Plot Q(−5, 8)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "A is the midpoint of PQ: set each average equal to A's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "The symmetric point is as far beyond A as P is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-22",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-22",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       7,
+       -1
+      ],
+      "grid": {
+       "x": [
+        -2,
+        8
+       ],
+       "y": [
+        -3,
+        3
+       ]
+      }
+     },
+     "stem": "Plot the point B symmetric to A(−3, 1) with respect to the point P(2, 0).",
+     "solution": [
+      "Let B = (s, t); P is the midpoint of AB.",
+      "$\\frac{-3+s}{2}=2$, so $s=7$.",
+      "$\\frac{1+t}{2}=0$, so $t=-1$.",
+      "Plot B(7, −1)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "P is the midpoint of AB: set each average equal to P's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "B is as far beyond P as A is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-23",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-23",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -13,
+       6
+      ],
+      "grid": {
+       "x": [
+        -14,
+        2
+       ],
+       "y": [
+        0,
+        8
+       ]
+      }
+     },
+     "stem": "Plot the point B symmetric to A(7, 4) with respect to the point M(−3, 5).",
+     "solution": [
+      "Let B = (s, t); M is the midpoint of AB.",
+      "$\\frac{7+s}{2}=-3$, so $s=-13$.",
+      "$\\frac{4+t}{2}=5$, so $t=6$.",
+      "Plot B(−13, 6)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "M is the midpoint of AB: set each average equal to M's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "B is as far beyond M as A is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-24",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-24",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -10,
+       12
+      ],
+      "grid": {
+       "x": [
+        -12,
+        4
+       ],
+       "y": [
+        -2,
+        14
+       ]
+      }
+     },
+     "stem": "Plot the point B symmetric to A(4, −8) with respect to the point P(−3, 2).",
+     "solution": [
+      "Let B = (s, t); P is the midpoint of AB.",
+      "$\\frac{4+s}{2}=-3$, so $s=-10$.",
+      "$\\frac{-8+t}{2}=2$, so $t=12$.",
+      "Plot B(−10, 12)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "P is the midpoint of AB: set each average equal to P's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "B is as far beyond P as A is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-25",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-25",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -8,
+       6
+      ],
+      "grid": {
+       "x": [
+        -10,
+        0
+       ],
+       "y": [
+        0,
+        8
+       ]
+      }
+     },
+     "stem": "Plot the point Q symmetric to P(0, −4) with respect to the point A(−4, 1).",
+     "solution": [
+      "Let Q = (s, t); A is the midpoint of PQ.",
+      "$\\frac{0+s}{2}=-4$, so $s=-8$.",
+      "$\\frac{-4+t}{2}=1$, so $t=6$.",
+      "Plot Q(−8, 6)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "A is the midpoint of PQ: set each average equal to A's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Q is as far beyond A as P is on the other side."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-1-4:exercise-26",
+     "lo_id": "lo:eb11c4-1-4",
+     "book_item": "eb11c4-1:exercise-26",
+     "parent_question_id": "expl:eb11c4-1-4:bk-worked-example-3",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       -8
+      ],
+      "grid": {
+       "x": [
+        -6,
+        6
+       ],
+       "y": [
+        -10,
+        2
+       ]
+      }
+     },
+     "stem": "Plot the point B symmetric to A(−4, 2) with respect to the point P(−1, −3).",
+     "solution": [
+      "Let B = (s, t); P is the midpoint of AB.",
+      "$\\frac{-4+s}{2}=-1$, so $s=2$.",
+      "$\\frac{2+t}{2}=-3$, so $t=-8$.",
+      "Plot B(2, −8)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 4,
+       "text": "x goes across, y goes up."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "P is the midpoint of AB: set each average equal to P's coordinate."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "B is as far beyond P as A is on the other side."
+      }
+     ],
+     "notes": ""
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c4-1-1",
+     "need_kind": "number line with larger range/fractions",
+     "description": "warm-up-1 part c (D(−28)) and challenge-1 part c (D(−23))",
+     "why": "number_line_marker ranges are limited to ±20, so −28 and −23 cannot be marked."
+    },
+    {
+     "lo_id": "lo:eb11c4-1-1",
+     "need_kind": "number line with non-integer targets",
+     "description": "challenge-1 part d: midpoint of A(−8) and B(−3) is −5.5",
+     "why": "number_line_marker targets must be whole numbers."
+    },
+    {
+     "lo_id": "lo:eb11c4-1-3",
+     "need_kind": "plotter for non-lattice points",
+     "description": "warm-up-5 Q(13/8, 9/4) and exercise-13 P(0, 5/6)",
+     "why": "No grid step reaches 1/8, 1/4 or 1/6 on a 16-step board."
+    },
+    {
+     "lo_id": "lo:eb11c4-1-4",
+     "need_kind": "plotter for non-lattice points",
+     "description": "warm-up-6 a, exercise-18 a and d, exercise-19 d, exercise-20 a, try-9",
+     "why": "Answers such as (4/3, 11/3), (2, −9/5), (2/3, 1), (−15/4, 13/4) are not on any usable grid step."
+    }
+   ],
+   "notes": "Distance, quadrant-identification, unknown-coordinate and m+n parts are readings or calculations, not constructions, so they have no widgets. Division, midpoint, centroid, reflection, equidistant and symmetric-point answers are built by marking or plotting the computed point. A few diagnostics map off-target to lesson misconceptions only approximately, and the rest are hint-only."
+  },
+  {
+   "lesson": "eb11c4-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:warm-up-1-a",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:warm-up-1#a",
+     "parent_question_id": "q:eb11c4-2-2:bk-warm-up-1-a",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 0,
+      "b": -4
+     },
+     "stem": "Find the line passing through the point $(3, -4)$ and parallel to the $x$-axis. Drag the two points so the line is that line.",
+     "solution": [
+      "A line parallel to the $x$-axis is horizontal, so every point on it has the same $y$-value.",
+      "It passes through $(3,-4)$, so that value is $-4$.",
+      "The equation is $y=-4$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "A line parallel to the x-axis runs left to right. Check which axis your line is parallel to."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "Every point on the line must have the same y-value as the given point. Check where your line crosses the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Think about the gradient of a line parallel to the x-axis, then make it pass through the given point."
+      }
+     ],
+     "notes": "Horizontal line: m=0 in equation mode."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:warm-up-1-c",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:warm-up-1#c",
+     "parent_question_id": "q:eb11c4-2-2:bk-warm-up-1-c",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        -3,
+        1
+       ],
+       [
+        -3,
+        2
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(-3, 1)$ and $(-3, 2)$. Drag the two handles onto these points.",
+     "solution": [
+      "The two points have the same $x$-coordinate, $-3$.",
+      "So the line is vertical and every point on it has $x=-3$.",
+      "The equation is $x=-3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): the first number is how far across, the second how far up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the x-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": "Points mode: vertical line cannot be given in equation mode."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:warm-up-1-d",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:warm-up-1#d",
+     "parent_question_id": "q:eb11c4-2-2:bk-warm-up-1-d",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        -2,
+        3
+       ],
+       [
+        -5,
+        3
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(-2, 3)$ and $(-5, 3)$. Drag the two handles onto these points.",
+     "solution": [
+      "The two points have the same $y$-coordinate, $3$.",
+      "So the line is horizontal.",
+      "The equation is $y=3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): the first number is how far across, the second how far up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the y-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:warm-up-1-f",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:warm-up-1#f",
+     "parent_question_id": "q:eb11c4-2-2:bk-warm-up-1-f",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        1,
+        -1
+       ],
+       [
+        4,
+        0
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(1, -1)$ and $(4, 0)$. Drag the two handles onto these points.",
+     "solution": [
+      "Gradient: $\\frac{0-(-1)}{4-1}=\\frac13$.",
+      "Use $y-(-1)=\\frac13(x-1)$.",
+      "So $y=\\frac13x-\\frac43$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y) when you place the handles; the gradient is change in y over change in x."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Place one handle at each named point; the line through them is the answer."
+      }
+     ],
+     "notes": "Book answer has b=-4/3, so points mode used."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:try-5",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:try-5",
+     "parent_question_id": "q:eb11c4-2-2:bk-try-5",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        -2,
+        -2
+       ],
+       [
+        2,
+        -2
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(-2,-2)$ and $(2,-2)$. Drag the two handles onto these points.",
+     "solution": [
+      "Both points have $y=-2$.",
+      "So the line is horizontal.",
+      "The equation is $y=-2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Check you are reading each pair as (x, y)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the y-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-a",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#a",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-a",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 0,
+      "b": 5
+     },
+     "stem": "Find the line passing through the point $(-4, 5)$ and parallel to the $x$-axis. Drag the two points so the line is that line.",
+     "solution": [
+      "A line parallel to the $x$-axis is horizontal: all its points share one $y$-value.",
+      "It passes through $(-4,5)$, so $y=5$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "A line parallel to the x-axis runs left to right, not up and down."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "Every point on the line has the y-value of the given point. Check where your line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Decide the gradient of a line parallel to the x-axis first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-b",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#b",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-b",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 0,
+      "b": 1
+     },
+     "stem": "Find the line passing through the point $(2, 1)$ and parallel to the $x$-axis. Drag the two points so the line is that line.",
+     "solution": [
+      "A line parallel to the $x$-axis is horizontal: all its points share one $y$-value.",
+      "It passes through $(2,1)$, so $y=1$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "A line parallel to the x-axis runs left to right, not up and down."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "Every point on the line has the y-value of the given point. Check where your line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Decide the gradient of a line parallel to the x-axis first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-j",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#j",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-j",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        4,
+        0
+       ],
+       [
+        4,
+        3
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(4, 0)$ and $(4, 3)$. Drag the two handles onto these points.",
+     "solution": [
+      "Both points have $x=4$.",
+      "So the line is vertical.",
+      "The equation is $x=4$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): first across, then up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the x-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-l",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#l",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-l",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        -5,
+        -3
+       ],
+       [
+        -5,
+        2
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(-5, -3)$ and $(-5, 2)$. Drag the two handles onto these points.",
+     "solution": [
+      "Both points have $x=-5$.",
+      "So the line is vertical.",
+      "The equation is $x=-5$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): first across, then up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the x-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-m",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#m",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-m",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        -2,
+        3
+       ],
+       [
+        -3,
+        3
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(-2, 3)$ and $(-3, 3)$. Drag the two handles onto these points.",
+     "solution": [
+      "Both points have $y=3$.",
+      "So the line is horizontal.",
+      "The equation is $y=3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): first across, then up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the y-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-n",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#n",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-n",
+     "parent_kind": "question",
+     "tier": "basic",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        4,
+        -2
+       ],
+       [
+        1,
+        -2
+       ]
+      ]
+     },
+     "stem": "Draw the line passing through the two points $(4, -2)$ and $(1, -2)$. Drag the two handles onto these points.",
+     "solution": [
+      "Both points have $y=-2$.",
+      "So the line is horizontal.",
+      "The equation is $y=-2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "points-swapped",
+       "step": 1,
+       "text": "Read each pair as (x, y): first across, then up."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the y-coordinates of the two points, then place each handle at its point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-p",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#p",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-p",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": -1,
+      "b": 4
+     },
+     "stem": "Find the line passing through the point $(-1, 5)$ with gradient $-1$. Drag the two points so the line is that line.",
+     "solution": [
+      "Use $y-y_1=m(x-x_1)$ with $m=-1$ and $(-1,5)$.",
+      "$y-5=-(x+1)$.",
+      "$y=-x+4$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "A negative gradient means the line falls as you move right."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "The line must pass through the given point. Substitute it into y − y₁ = m(x − x₁) to find where the line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from y − y₁ = m(x − x₁) with the given gradient and point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-q",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#q",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-q",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 1,
+      "b": -5
+     },
+     "stem": "Find the line passing through the point $(-3, -8)$ with gradient $1$. Drag the two points so the line is that line. (Use a point you can place on the board.)",
+     "solution": [
+      "Use $y-y_1=m(x-x_1)$ with $m=1$ and $(-3,-8)$.",
+      "$y+8=x+3$.",
+      "$y=x-5$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "The line must pass through the given point. Substitute it into y − y₁ = m(x − x₁) to find where the line meets the y-axis."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "A gradient of 1 means the line rises as you move right."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from y − y₁ = m(x − x₁) with the given gradient and point."
+      }
+     ],
+     "notes": "The given point lies off the default board, but the line y=x-5 has lattice points on it (e.g. (0,-5), (5,0))."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-r",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#r",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-r",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": -2,
+      "b": 3
+     },
+     "stem": "Find the line passing through the point $(2, -1)$ with gradient $-2$. Drag the two points so the line is that line.",
+     "solution": [
+      "Use $y-y_1=m(x-x_1)$ with $m=-2$ and $(2,-1)$.",
+      "$y+1=-2(x-2)$.",
+      "$y=-2x+3$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "A negative gradient means the line falls as you move right."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 1,
+       "text": "Gradient is rise over run: how far up (or down) for one step across."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "The line must pass through the given point. Substitute it to find where the line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Start from y − y₁ = m(x − x₁) with the given gradient and point."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:exercise-7-s",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:exercise-7#s",
+     "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-s",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 4,
+      "b": -2
+     },
+     "stem": "Find the line passing through the two points $(1, 2)$ and $(3, 10)$. Drag the two points so the line is that line.",
+     "solution": [
+      "Gradient: $\\frac{10-2}{3-1}=4$.",
+      "$y-2=4(x-1)$.",
+      "$y=4x-2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-inverted",
+       "step": 1,
+       "text": "Gradient is change in y over change in x, between the two given points."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "Subtract the coordinates of the points in the same order top and bottom."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "Use one of the given points in y − y₁ = m(x − x₁) to find where the line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the gradient from the two points first."
+      }
+     ],
+     "notes": "Points (1,2),(3,10) are off the default board, but the line has board points (0,-2),(1,2)."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-2:challenge-2",
+     "lo_id": "lo:eb11c4-2-2",
+     "book_item": "eb11c4-2:challenge-2",
+     "parent_question_id": "q:eb11c4-2-2:bk-challenge-2",
+     "parent_kind": "question",
+     "tier": "advanced",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 0,
+      "b": 2,
+      "grid": {
+       "x": [
+        -5,
+        10
+       ],
+       "y": [
+        -3,
+        5
+       ]
+      }
+     },
+     "stem": "Sensor West is at $A(-4, 2)$ and Sensor East is at $B(9, 2)$ on a grid where $x$ is the distance from the research station and $y$ is the sea-surface height. Draw the straight-line boundary connecting the two sensors. Drag the two points so the line is that boundary.",
+     "solution": [
+      "Both sensors have the same $y$-coordinate, $2$.",
+      "So the boundary is horizontal.",
+      "The equation is $y=2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "vertical-line",
+       "step": 1,
+       "text": "The sensors differ in distance but not in height. Think which direction the line runs."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "Every point on the boundary has the sensors' height. Check where your line meets the y-axis."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Compare the y-coordinates of the two sensors."
+      }
+     ],
+     "notes": "Grid widened so B (9,2) is on the board."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:try-14",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:try-14",
+     "parent_question_id": "q:eb11c4-2-3:bk-try-14",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": -2,
+      "b": -1
+     },
+     "stem": "Find the line passing through the point $(1,-3)$ and parallel to $6x + 3y - 5 = 0$. Drag the two points so the line is that line.",
+     "solution": [
+      "$6x+3y-5=0$ gives $y=-2x+\\frac53$, gradient $-2$.",
+      "A parallel line has the same gradient, $-2$.",
+      "$y+3=-2(x-1)$, so $y=-2x-1$ (that is $2x+y+1=0$)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "Rewrite the given line as y = mx + c and read its gradient with its sign."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 2,
+       "text": "Parallel lines have the same gradient, not a reciprocal."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 3,
+       "text": "Your line is parallel but must pass through the given point; use it in y − y₁ = m(x − x₁)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the gradient of the given line first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:exercise-17",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:exercise-17",
+     "parent_question_id": "q:eb11c4-2-3:bk-exercise-17",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 2,
+      "b": -4
+     },
+     "stem": "Find the line passing through the point $(1,-2)$ and parallel to $2x - y + 5 = 0$. Drag the two points so the line is that line.",
+     "solution": [
+      "$2x-y+5=0$ gives $y=2x+5$, gradient $2$.",
+      "A parallel line has gradient $2$.",
+      "$y+2=2(x-1)$, so $y=2x-4$ (that is $2x-y-4=0$)."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "Rewrite the given line as y = mx + c and read its gradient with its sign."
+      },
+      {
+       "predicate": "slope-inverted",
+       "step": 2,
+       "text": "Parallel lines have the same gradient, not a reciprocal."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 3,
+       "text": "Your line is parallel but must pass through the given point; use it in y − y₁ = m(x − x₁)."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the gradient of the given line first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:exercise-23-a",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:exercise-23#a",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 2,
+      "b": 2
+     },
+     "stem": "Draw the perpendicular bisector of the line segment $AB$ with $A(-2, 3)$ and $B(2, 1)$. Drag the two points so the line is that bisector.",
+     "solution": [
+      "Gradient of $AB$: $\\frac{1-3}{2+2}=-\\frac12$, so the perpendicular gradient is $2$.",
+      "Midpoint of $AB$: $(0, 2)$.",
+      "$y-2=2(x-0)$, so $y=2x+2$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-inverted",
+       "step": 1,
+       "text": "A perpendicular gradient is the negative reciprocal of the gradient of AB."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "Take the reciprocal of the gradient of AB and also change its sign."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "The bisector passes through the midpoint of AB. Check that your line goes through it."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the gradient of AB and the midpoint of AB first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:exercise-23-c",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:exercise-23#c",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "spec": {
+      "mode": "equation",
+      "m": 2,
+      "b": 1
+     },
+     "stem": "Draw the perpendicular bisector of the line segment $AB$ with $A(0, 6)$ and $B(4, 4)$. Drag the two points so the line is that bisector.",
+     "solution": [
+      "Gradient of $AB$: $\\frac{4-6}{4-0}=-\\frac12$, so the perpendicular gradient is $2$.",
+      "Midpoint of $AB$: $(2, 5)$.",
+      "$y-5=2(x-2)$, so $y=2x+1$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "slope-inverted",
+       "step": 1,
+       "text": "A perpendicular gradient is the negative reciprocal of the gradient of AB."
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "step": 1,
+       "text": "Take the reciprocal of the gradient of AB and also change its sign."
+      },
+      {
+       "predicate": "intercept-wrong",
+       "step": 2,
+       "text": "The bisector passes through the midpoint of AB. Check that your line goes through it."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "Find the gradient of AB and the midpoint of AB first."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:try-17",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:try-17",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       4,
+       2
+      ]
+     },
+     "stem": "Point $B$ is symmetric to $A(0, 4)$ with respect to the line $2x-y-1=0$. Work out $B$ and tap it on the grid.",
+     "solution": [
+      "Let $B=(s,t)$. The line has gradient 2, so $AB$ has gradient $-\\frac12$: $s+2t-8=0$.",
+      "The midpoint $(\\frac s2,\\frac{t+4}2)$ lies on the line: $2s-t-6=0$.",
+      "Solving gives $s=4$, $t=2$, so $B=(4,2)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check which of your two numbers is s (across) and which is t (up)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the signs when you solve the two equations."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "AB must be perpendicular to the line, and the midpoint of AB must lie on it."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:exercise-24",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:exercise-24",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       6
+      ],
+      "grid": {
+       "x": [
+        -2,
+        8
+       ],
+       "y": [
+        -2,
+        8
+       ]
+      }
+     },
+     "stem": "Point $B$ is symmetric to $A(1, 2)$ with respect to the line $x+2y-10=0$. Work out $B$ and tap it on the grid.",
+     "solution": [
+      "Let $B=(s,t)$. The line has gradient $-\\frac12$, so $AB$ has gradient 2: $t=2s$.",
+      "The midpoint lies on the line: $s+2t=15$.",
+      "Substituting: $5s=15$, so $s=3$, $t=6$, $B=(3,6)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check which of your two numbers is s (across) and which is t (up)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the signs when you solve the two equations."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "AB must be perpendicular to the line, and the midpoint of AB must lie on it."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:exercise-25",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:exercise-25",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -2,
+       2
+      ]
+     },
+     "stem": "Point $B$ is symmetric to $A(4, -1)$ with respect to the line $4x-2y-3=0$. Work out $B$ and tap it on the grid.",
+     "solution": [
+      "Let $B=(s,t)$. The line has gradient 2, so $AB$ has gradient $-\\frac12$: $s+2t-2=0$.",
+      "The midpoint lies on the line: $2s-t+6=0$.",
+      "Solving gives $s=-2$, $t=2$, so $B=(-2,2)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check which of your two numbers is s (across) and which is t (up)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the signs when you solve the two equations."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "AB must be perpendicular to the line, and the midpoint of AB must lie on it."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:unlabelled-exercise-3",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:unlabelled-exercise-3",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       2,
+       1
+      ]
+     },
+     "stem": "Point $B$ is symmetric to $A(-4, 3)$ with respect to the line $3x - y + 5 = 0$. Work out $B$ and tap it on the grid.",
+     "solution": [
+      "Let $B=(s,t)$. The line has gradient 3, so $AB$ has gradient $-\\frac13$: $s+3t-5=0$.",
+      "The midpoint lies on the line: $3s-t-5=0$.",
+      "Solving gives $s=2$, $t=1$, so $B=(2,1)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check which of your two numbers is s (across) and which is t (up)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the signs when you solve the two equations."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "AB must be perpendicular to the line, and the midpoint of AB must lie on it."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-2-3:challenge-5",
+     "lo_id": "lo:eb11c4-2-3",
+     "book_item": "eb11c4-2:challenge-5",
+     "parent_question_id": "expl:eb11c4-2-3:bk-warm-up-4-a",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -3,
+       4
+      ]
+     },
+     "stem": "A targeting laser line is $y = 2x$. A calibration sensor is at $A(5, 0)$. The receiver $B$ is the exact symmetric reflection of $A$ across the laser line. Work out $B$ and tap it on the grid.",
+     "solution": [
+      "Let $B=(s,t)$. The line has gradient 2, so $AB$ has gradient $-\\frac12$: $s+2t-5=0$.",
+      "The midpoint $(\\frac{5+s}2,\\frac t2)$ lies on $y=2x$: $t=2s+10$.",
+      "Substituting: $5s+15=0$, so $s=-3$, $t=4$, $B=(-3,4)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check which of your two numbers is s (across) and which is t (up)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Check the signs when you solve the two equations."
+      },
+      {
+       "predicate": "off-target",
+       "step": 1,
+       "text": "AB must be perpendicular to the line, and the midpoint of AB must lie on it."
+      }
+     ],
+     "notes": ""
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c4-2-2",
+     "need_kind": "line_drawer vertical line through a point",
+     "description": "Warm-up 1(b), try-4, exercise-7 d–i: a vertical line x = a through one point or perpendicular to the x-axis.",
+     "why": "line_drawer equation mode cannot take a vertical line (that is a wrong answer there), and points mode needs two named points; these parts name one point and a direction."
+    },
+    {
+     "lo_id": "lo:eb11c4-2-2",
+     "need_kind": "line_drawer with intercept outside −5..5",
+     "description": "Warm-up 1(e), try-3 (y=6), try-7 (y=2x+10), try-8, exercise-7 c, k, o, t.",
+     "why": "b must be a whole number in −5..5 in equation mode, and points mode names points within ±5; these answers or points lie past that."
+    },
+    {
+     "lo_id": "lo:eb11c4-2-3",
+     "need_kind": "line_drawer with fractional gradient",
+     "description": "Warm-up 5 and 6, try-15, exercise-18 to 22 and perpendicular bisectors (exercise-23 b, try-16): gradients like 3/2, −2/3, −2/5.",
+     "why": "m must be a whole number or the reciprocal of one; these gradients are neither."
+    },
+    {
+     "lo_id": "lo:eb11c4-2-3",
+     "need_kind": "line_drawer with intercept outside −5..5",
+     "description": "Unlabelled exercise 2 (x+3y−18=0, y-intercept 6).",
+     "why": "The y-intercept is outside −5..5."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "eb11c4-3",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-2:warm-up-10",
+     "lo_id": "lo:eb11c4-3-2",
+     "book_item": "eb11c4-3:warm-up-10",
+     "parent_question_id": "expl:eb11c4-3-2:bk-warm-up-10",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        1,
+        -1
+       ],
+       [
+        -1,
+        3
+       ]
+      ]
+     },
+     "stem": "Find the coordinates of the points of intersection of the circle $(x+2)^2+y^2=10$ and the line $y=-2x+1$. Plot both points.",
+     "solution": [
+      "Substitute $y=-2x+1$ into the circle: $5x^2-5=0$.",
+      "So $x=\\pm1$.",
+      "$x=1$ gives $y=-1$; $x=-1$ gives $y=3$.",
+      "The points are $(1,-1)$ and $(-1,3)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 2,
+       "text": "A circle and a line can meet twice. Solve the quadratic in x fully, taking both roots."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 3,
+       "text": "Each point must satisfy both equations. Find y from the line for each x you found."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check the order: first x, then the y found from the line."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when you substitute each x into the line to get y."
+      }
+     ],
+     "notes": "Plotting the solved points; no circle is shown."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-2:try-10",
+     "lo_id": "lo:eb11c4-3-2",
+     "book_item": "eb11c4-3:try-10",
+     "parent_question_id": "expl:eb11c4-3-2:bk-warm-up-10",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        0,
+        2
+       ],
+       [
+        2,
+        0
+       ]
+      ]
+     },
+     "stem": "Find the coordinates of the points of intersection of the circle $x^2+y^2=4$ and the line $x+y=2$. Plot both points.",
+     "solution": [
+      "Write $y=2-x$ and substitute: $x^2+(2-x)^2=4$.",
+      "Simplify: $2x^2-4x=0$, so $x=0$ or $x=2$.",
+      "$x=0$ gives $y=2$; $x=2$ gives $y=0$.",
+      "The points are $(0,2)$ and $(2,0)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 2,
+       "text": "Factor the quadratic and take both roots, each gives a point."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 3,
+       "text": "Each point must lie on the line as well as the circle. Find y from the line for each x."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when finding y from the line."
+      }
+     ],
+     "notes": "Swapped points form the same set, so swapped-coordinates cannot be distinguished."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-2:exercise-28-a",
+     "lo_id": "lo:eb11c4-3-2",
+     "book_item": "eb11c4-3:exercise-28#a",
+     "parent_question_id": "q:eb11c4-3-2:bk-exercise-28-a",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       3,
+       -1
+      ]
+     },
+     "stem": "Find the point of intersection of the circle $x^2+y^2=10$ and the line $y=3x-10$. Plot it.",
+     "solution": [
+      "Substitute $y=3x-10$: $x^2+(3x-10)^2=10$.",
+      "Simplify: $10x^2-60x+90=0$, so $(x-3)^2=0$ and $x=3$ only.",
+      "$y=3\\cdot3-10=-1$.",
+      "The line touches the circle at $(3,-1)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The x value comes first; find y by putting x into the line."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when you substitute x into the line."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Substitute the line into the circle and simplify to a quadratic in x; look at its roots."
+      }
+     ],
+     "notes": "Tangent case: one point."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-2:exercise-28-b",
+     "lo_id": "lo:eb11c4-3-2",
+     "book_item": "eb11c4-3:exercise-28#b",
+     "parent_question_id": "q:eb11c4-3-2:bk-exercise-28-b",
+     "parent_kind": "question",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "target": [
+       -2,
+       1
+      ]
+     },
+     "stem": "Find the point of intersection of the circle $x^2+y^2=5$ and the line $2x-y+5=0$. Plot it.",
+     "solution": [
+      "From the line, $y=2x+5$; substitute: $x^2+(2x+5)^2=5$.",
+      "Simplify: $5x^2+20x+20=0$, so $(x+2)^2=0$ and $x=-2$.",
+      "$y=2(-2)+5=1$.",
+      "The point is $(-2,1)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "The x value comes first; find y from the line."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when you substitute x into the line."
+      },
+      {
+       "predicate": "off-target",
+       "step": 2,
+       "text": "Substitute the line into the circle and solve the quadratic in x."
+      }
+     ],
+     "notes": "Tangent case."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-2:exercise-28-c",
+     "lo_id": "lo:eb11c4-3-2",
+     "book_item": "eb11c4-3:exercise-28#c",
+     "parent_question_id": "expl:eb11c4-3-2:bk-warm-up-10",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        -2,
+        1
+       ],
+       [
+        4,
+        -1
+       ]
+      ]
+     },
+     "stem": "Find the coordinates of the points of intersection of the circle $(x-1)^2+y^2=10$ and the line $x+3y-1=0$. Plot both points.",
+     "solution": [
+      "From the line, $x=1-3y$.",
+      "Substitute: $9y^2+y^2=10$, so $y=\\pm1$.",
+      "$y=1$ gives $x=-2$; $y=-1$ gives $x=4$.",
+      "The points are $(-2,1)$ and $(4,-1)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 2,
+       "text": "Take both roots of the equation for y."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 3,
+       "text": "Each point must be on the line; find x from the line for each y."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Here you solved for y first; remember the pair is written (x, y)."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when finding x from the line."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-4:warm-up-21",
+     "lo_id": "lo:eb11c4-3-4",
+     "book_item": "eb11c4-3:warm-up-21",
+     "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+     "parent_kind": "teaching",
+     "tier": "basic",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        -3,
+        -1
+       ],
+       [
+        -1,
+        3
+       ]
+      ]
+     },
+     "stem": "Find the coordinates of the points of intersection of the circles $x^2+y^2=10$ and $x^2+y^2+2x-y=5$. Plot both points.",
+     "solution": [
+      "Subtract the equations: $-2x+y=5$, so $y=2x+5$.",
+      "Substitute into $x^2+y^2=10$: $5x^2+20x+15=0$, so $x=-3$ or $-1$.",
+      "$x=-3$ gives $y=-1$; $x=-1$ gives $y=3$.",
+      "The points are $(-3,-1)$ and $(-1,3)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 2,
+       "text": "Take both roots of the quadratic in x."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 3,
+       "text": "Find y from the line obtained by subtracting the circles."
+      },
+      {
+       "predicate": "swapped-coordinates",
+       "step": 3,
+       "text": "Check the order: x first, then y."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 3,
+       "text": "Recheck the signs when finding y."
+      }
+     ],
+     "notes": ""
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-4:exercise-52",
+     "lo_id": "lo:eb11c4-3-4",
+     "book_item": "eb11c4-3:exercise-52",
+     "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+     "parent_kind": "teaching",
+     "tier": "standard",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        1
+       ]
+      ]
+     },
+     "stem": "Find the coordinates of the points of intersection of the circles $x^2+y^2=5$ and $(x-2)^2+(y-2)^2=1$. Plot both points.",
+     "solution": [
+      "Expand the second: $x^2+y^2-4x-4y+7=0$.",
+      "Subtract using $x^2+y^2=5$: $12-4x-4y=0$, so $y=3-x$.",
+      "Substitute: $2x^2-6x+4=0$, so $x=1$ or $2$.",
+      "The points are $(1,2)$ and $(2,1)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 3,
+       "text": "Take both roots of the quadratic."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 2,
+       "text": "Each point must lie on the line found by eliminating the squared terms."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 2,
+       "text": "Recheck the signs when expanding and subtracting."
+      }
+     ],
+     "notes": "Swapped points form the same set."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:eb11c4-3-4:challenge-9",
+     "lo_id": "lo:eb11c4-3-4",
+     "book_item": "eb11c4-3:challenge-9",
+     "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+     "parent_kind": "teaching",
+     "tier": "advanced",
+     "kind": "pair_plotter",
+     "spec": {
+      "targets": [
+       [
+        3,
+        -4
+       ],
+       [
+        -4,
+        3
+       ]
+      ]
+     },
+     "stem": "Two radar stations cover the ranges $x^2+y^2=25$ and $(x+5)^2+(y+5)^2=65$. Find the points where their boundaries intersect and plot them.",
+     "solution": [
+      "Expand Beta: $x^2+y^2+10x+10y+50=65$.",
+      "Subtract using $x^2+y^2=25$: $10x+10y=-10$, so $y=-1-x$.",
+      "Substitute: $x^2+x-12=0$, so $x=3$ or $-4$.",
+      "The points are $(3,-4)$ and $(-4,3)$."
+     ],
+     "diagnostics": [],
+     "hints": [
+      {
+       "predicate": "missing-points",
+       "step": 3,
+       "text": "Take both roots of the quadratic."
+      },
+      {
+       "predicate": "extra-points",
+       "step": 2,
+       "text": "Each point must lie on the line found by eliminating the squares."
+      },
+      {
+       "predicate": "wrong-quadrant",
+       "step": 1,
+       "text": "Recheck the signs when expanding the second circle."
+      }
+     ],
+     "notes": "Swapped points form the same set."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c4-3-1",
+     "need_kind": "circle equation from center/radius/points",
+     "description": "Writing the equation of a circle (centre-radius, diameter ends, three points, tangent to axes, centre on a line) and identifying a figure from its equation.",
+     "why": "The answer is an algebraic equation; circle_builder works on a fixed circle of radius 5 and cannot take an equation, centre or radius. Needs an equation-entry or circle-from-centre-and-radius widget."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-1",
+     "need_kind": "range of k",
+     "description": "Range of k for which an equation represents a circle (warm-up-9, try-9, exercises 25–27, challenge-4).",
+     "why": "The answer is an inequality in k; number_line_marker only marks whole-number points or intervals with whole endpoints, and many ends are irrational or fractional."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-2",
+     "need_kind": "count, tangency constants, chord length",
+     "description": "Number of intersection points, tangent constants m/r/k, chord length and k for a given chord length.",
+     "why": "Answers are numbers, irrational values or inequalities with no construction on an existing instrument."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-3",
+     "need_kind": "tangent line equations",
+     "description": "Equations of tangents at a point or from an external point, e.g. 4x+3y=25.",
+     "why": "line_drawer cannot draw these lines in general (slope not whole or reciprocal, intercepts off the board, y=1 etc.), and the part asks for an equation."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-4",
+     "need_kind": "circle position classification and circle equations",
+     "description": "Positional relationship of two circles (letters A–E), circle touching another, circle through intersection points.",
+     "why": "Classification by letter and equation answers; no instrument fits."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-4",
+     "need_kind": "line through intersection points",
+     "description": "Equation of the common chord line (warm-up-20, try-22, exercise-51).",
+     "why": "The part asks for an equation; the lines are x+y=1 (fits) but others have fractional intercepts or are vertical (x=1/2), and writing it is not a construction."
+    },
+    {
+     "lo_id": "lo:eb11c4-3-4",
+     "need_kind": "fractional intersection points",
+     "description": "try-23 has point (8/5, -6/5).",
+     "why": "pair_plotter targets must be whole numbers; a grid with step 0.2 would exceed 16 steps per axis for the needed range."
+    }
+   ],
+   "notes": ""
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:eb11c4-1-1",
+   "need_kind": "number line with larger range/fractions",
+   "description": "warm-up-1 part c (D(−28)) and challenge-1 part c (D(−23))",
+   "why": "number_line_marker ranges are limited to ±20, so −28 and −23 cannot be marked."
+  },
+  {
+   "lo_id": "lo:eb11c4-1-1",
+   "need_kind": "number line with non-integer targets",
+   "description": "challenge-1 part d: midpoint of A(−8) and B(−3) is −5.5",
+   "why": "number_line_marker targets must be whole numbers."
+  },
+  {
+   "lo_id": "lo:eb11c4-1-3",
+   "need_kind": "plotter for non-lattice points",
+   "description": "warm-up-5 Q(13/8, 9/4) and exercise-13 P(0, 5/6)",
+   "why": "No grid step reaches 1/8, 1/4 or 1/6 on a 16-step board."
+  },
+  {
+   "lo_id": "lo:eb11c4-1-4",
+   "need_kind": "plotter for non-lattice points",
+   "description": "warm-up-6 a, exercise-18 a and d, exercise-19 d, exercise-20 a, try-9",
+   "why": "Answers such as (4/3, 11/3), (2, −9/5), (2/3, 1), (−15/4, 13/4) are not on any usable grid step."
+  },
+  {
+   "lo_id": "lo:eb11c4-2-2",
+   "need_kind": "line_drawer vertical line through a point",
+   "description": "Warm-up 1(b), try-4, exercise-7 d–i: a vertical line x = a through one point or perpendicular to the x-axis.",
+   "why": "line_drawer equation mode cannot take a vertical line (that is a wrong answer there), and points mode needs two named points; these parts name one point and a direction."
+  },
+  {
+   "lo_id": "lo:eb11c4-2-2",
+   "need_kind": "line_drawer with intercept outside −5..5",
+   "description": "Warm-up 1(e), try-3 (y=6), try-7 (y=2x+10), try-8, exercise-7 c, k, o, t.",
+   "why": "b must be a whole number in −5..5 in equation mode, and points mode names points within ±5; these answers or points lie past that."
+  },
+  {
+   "lo_id": "lo:eb11c4-2-3",
+   "need_kind": "line_drawer with fractional gradient",
+   "description": "Warm-up 5 and 6, try-15, exercise-18 to 22 and perpendicular bisectors (exercise-23 b, try-16): gradients like 3/2, −2/3, −2/5.",
+   "why": "m must be a whole number or the reciprocal of one; these gradients are neither."
+  },
+  {
+   "lo_id": "lo:eb11c4-2-3",
+   "need_kind": "line_drawer with intercept outside −5..5",
+   "description": "Unlabelled exercise 2 (x+3y−18=0, y-intercept 6).",
+   "why": "The y-intercept is outside −5..5."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-1",
+   "need_kind": "circle equation from center/radius/points",
+   "description": "Writing the equation of a circle (centre-radius, diameter ends, three points, tangent to axes, centre on a line) and identifying a figure from its equation.",
+   "why": "The answer is an algebraic equation; circle_builder works on a fixed circle of radius 5 and cannot take an equation, centre or radius. Needs an equation-entry or circle-from-centre-and-radius widget."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-1",
+   "need_kind": "range of k",
+   "description": "Range of k for which an equation represents a circle (warm-up-9, try-9, exercises 25–27, challenge-4).",
+   "why": "The answer is an inequality in k; number_line_marker only marks whole-number points or intervals with whole endpoints, and many ends are irrational or fractional."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-2",
+   "need_kind": "count, tangency constants, chord length",
+   "description": "Number of intersection points, tangent constants m/r/k, chord length and k for a given chord length.",
+   "why": "Answers are numbers, irrational values or inequalities with no construction on an existing instrument."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-3",
+   "need_kind": "tangent line equations",
+   "description": "Equations of tangents at a point or from an external point, e.g. 4x+3y=25.",
+   "why": "line_drawer cannot draw these lines in general (slope not whole or reciprocal, intercepts off the board, y=1 etc.), and the part asks for an equation."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-4",
+   "need_kind": "circle position classification and circle equations",
+   "description": "Positional relationship of two circles (letters A–E), circle touching another, circle through intersection points.",
+   "why": "Classification by letter and equation answers; no instrument fits."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-4",
+   "need_kind": "line through intersection points",
+   "description": "Equation of the common chord line (warm-up-20, try-22, exercise-51).",
+   "why": "The part asks for an equation; the lines are x+y=1 (fits) but others have fractional intercepts or are vertical (x=1/2), and writing it is not a construction."
+  },
+  {
+   "lo_id": "lo:eb11c4-3-4",
+   "need_kind": "fractional intersection points",
+   "description": "try-23 has point (8/5, -6/5).",
+   "why": "pair_plotter targets must be whole numbers; a grid with step 0.2 would exceed 16 steps per axis for the needed range."
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-2-4:pairs-sums",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-2-4",
+ "parent_question_id": "q:eb11c2-2-4:bk-challenge-4",
+ "source_page": 67,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "s2",
+   "let": "a * (1 + r)"
+  },
+  {
+   "name": "s4",
+   "let": "a * (1 + r) * (1 + r * r)"
+  },
+  {
+   "name": "t",
+   "let": "s4 - s2"
+  }
+ ],
+ "constraints": [],
+ "stem": "$S_n$ is the sum of the first $n$ terms of a geometric sequence with positive common ratio, where $S_2 = {=s2}$ and $S_4 = {=s4}$. Find the first term $a_1$.",
+ "answer": "a",
+ "solution": [
+  "$S_4 - S_2 = a_3 + a_4 = {=s4} - {=s2} = {=t}$.",
+  "$a_3 + a_4 = r^2(a_1 + a_2)$, so $r^2 = \\frac{{=t}}{{=s2}} = {=r*r}$.",
+  "The ratio is positive, so $r = {=r}$.",
+  "$S_2 = a_1(1 + r)$, so ${=s2} = a_1 \\times {=1+r}$ and $a_1 = {=a}$."
+ ],
+ "notes": "Standard: S4-S2 = a3+a4 = r^2 S2, as in the book's S8-S6 trick. Positive ratio stated to avoid sign ambiguity."
+}

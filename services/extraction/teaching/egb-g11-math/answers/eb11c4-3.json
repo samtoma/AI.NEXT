@@ -1,0 +1,4954 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c4-3",
+  "source": "book-records/egb-g11-math/eb11c4-3.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 132,
+      "cost_usd": 2.1577,
+      "calls": [
+        {
+          "call": "answers.eb11c4-3",
+          "cost_usd": 2.1577,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c4-3:guiding-question-1",
+      "record_id": "eb11c4-3:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 180,
+      "question": {
+        "text": "How can we use the coordinate geometry of circles to model boundaries, calculate overlapping regions, and determine the exact intersection points of wireless signals in modern communication systems?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c5a9a48621d1095a2dafdf799134987d",
+      "kind": "explanation",
+      "answer": "Each signal is a circle (x−a)²+(y−b)²=r²; solving the circle equations together gives the exact points where the signals meet.",
+      "solution": [
+        "Each tower is the center (a, b) and its distance is the radius r, so its signal boundary is $(x-a)^2+(y-b)^2=r^2$.",
+        "Two circles overlap when $r-r'<d<r+r'$, where d is the distance between the centers.",
+        "To find where two boundaries meet, solve their equations simultaneously. Subtracting gives the line through the intersection points.",
+        "Substitute that line into one circle to get the exact points. A third circle picks out the one true location.",
+        "So circle equations model the boundaries and the simultaneous solution gives the intersection points."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:rule-20",
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-8"
+      ],
+      "checks": {
+        "resolve_answer": "Each tower's signal range is a circle $(x-a)^2+(y-b)^2=r^2$ (a boundary/inside region). Overlap regions are where the circle inequalities hold together; exact positions come from solving the circle equations simultaneously (subtract them to get the line through the intersection points, then substitute) — this is trilateration.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-1",
+      "record_id": "eb11c4-3:warm-up-1",
+      "part": null,
+      "type": "exercise",
+      "page": 180,
+      "question": {
+        "text": "Find the equation of the circle with center $(3,-2)$ and radius 5",
+        "stem": "",
+        "notes": "Preceded by instruction 'Solve the following problems.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "c8782717c2817f7951a2b4ec9bcf64fa",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+2)^2=25",
+      "solution": [
+        "Center and radius are known, so use $(x-a)^2+(y-b)^2=r^2$.",
+        "Center $(3,-2)$ gives $a=3$, $b=-2$; radius $r=5$.",
+        "The equation is $(x-3)^2+(y+2)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:method-1",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "$(x-3)^2+(y+2)^2=25$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-1:a",
+      "record_id": "eb11c4-3:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equations of the following circles.",
+        "stem": "Center $(-3,1)$, radius 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d6cccac9a28858fb90a40d236f7b21dd",
+      "kind": "value",
+      "answer": "(x+3)^2+(y-1)^2=4",
+      "solution": [
+        "Use $(x-a)^2+(y-b)^2=r^2$ with center $(-3,1)$, $r=2$.",
+        "$(x+3)^2+(y-1)^2=2^2$.",
+        "The equation is $(x+3)^2+(y-1)^2=4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "$(x+3)^2+(y-1)^2=4$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-1:b",
+      "record_id": "eb11c4-3:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equations of the following circles.",
+        "stem": "Center is the origin, radius 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2feb35d1ce828ec97878ed94ec0b9d6b",
+      "kind": "value",
+      "answer": "x^2+y^2=16",
+      "solution": [
+        "The center is the origin, so use $x^2+y^2=r^2$.",
+        "$r=4$, so $r^2=16$.",
+        "The equation is $x^2+y^2=16$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$x^2+y^2=16$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-2",
+      "record_id": "eb11c4-3:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Determine what kind of figure $x^2+y^2-4x-6y+4=0$ represents.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f9b7e8f071501058f325e1c15daa6e47",
+      "kind": "value",
+      "answer": "A circle with center (2, 3) and radius 3",
+      "solution": [
+        "Complete the square for $x$ and $y$: $(x-2)^2-4+(y-3)^2-9+4=0$.",
+        "Simplify: $(x-2)^2+(y-3)^2=9=3^2$.",
+        "Since $9>0$, it is a circle with center $(2,3)$ and radius 3."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with center (2, 3) and radius 3, since $(x-2)^2+(y-3)^2=9$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-1:a",
+      "record_id": "eb11c4-3:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equations of the following circles.",
+        "stem": "Center $(3,4)$, radius 6",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9a13b71cefd3f542d9ba9abd63a383c3",
+      "kind": "value",
+      "answer": "(x-3)^2+(y-4)^2=36",
+      "solution": [
+        "Use $(x-a)^2+(y-b)^2=r^2$ with center $(3,4)$, $r=6$.",
+        "$r^2=36$.",
+        "The equation is $(x-3)^2+(y-4)^2=36$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "$(x-3)^2+(y-4)^2=36$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-1:b",
+      "record_id": "eb11c4-3:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equations of the following circles.",
+        "stem": "Center $(-2,6)$, radius $2\\sqrt{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "86ac4f65413f96b294afa9d3f58eb677",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-6)^2=12",
+      "solution": [
+        "Use $(x-a)^2+(y-b)^2=r^2$ with center $(-2,6)$.",
+        "$r^2=(2\\sqrt3)^2=12$.",
+        "The equation is $(x+2)^2+(y-6)^2=12$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "$(x+2)^2+(y-6)^2=12$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-1:c",
+      "record_id": "eb11c4-3:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equations of the following circles.",
+        "stem": "Center is the origin, radius 5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2caea5c8b986076b40e58d2de42b9c84",
+      "kind": "value",
+      "answer": "x^2+y^2=25",
+      "solution": [
+        "The center is the origin, so use $x^2+y^2=r^2$.",
+        "$r^2=25$.",
+        "The equation is $x^2+y^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$x^2+y^2=25$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-2:a",
+      "record_id": "eb11c4-3:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Determine what kind of figures the following equations represent.",
+        "stem": "$x^2+y^2-4x+8y+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "215cc400b00bfaa49ffee331a9715de8",
+      "kind": "value",
+      "answer": "A circle with center (2, -4) and radius 4",
+      "solution": [
+        "Complete the square: $(x-2)^2-4+(y+4)^2-16+4=0$.",
+        "Simplify: $(x-2)^2+(y+4)^2=16$.",
+        "Since $16>0$, it is a circle with center $(2,-4)$ and radius 4."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with center (2, -4) and radius 4, since $(x-2)^2+(y+4)^2=16$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-2:b",
+      "record_id": "eb11c4-3:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Determine what kind of figures the following equations represent.",
+        "stem": "$x^2+y^2-4x=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1aa8cc7a069b2a8005a196969d05c6d1",
+      "kind": "value",
+      "answer": "A circle with center (2, 0) and radius 2",
+      "solution": [
+        "Complete the square: $(x-2)^2-4+y^2=0$.",
+        "Simplify: $(x-2)^2+y^2=4$.",
+        "Since $4>0$, it is a circle with center $(2,0)$ and radius 2."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with center (2, 0) and radius 2, since $(x-2)^2+y^2=4$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-2:c",
+      "record_id": "eb11c4-3:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Determine what kind of figures the following equations represent.",
+        "stem": "$x^2+y^2+2x-4y-20=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2759709a7572f443127ebff2fce840e2",
+      "kind": "value",
+      "answer": "A circle with center (-1, 2) and radius 5",
+      "solution": [
+        "Complete the square: $(x+1)^2-1+(y-2)^2-4-20=0$.",
+        "Simplify: $(x+1)^2+(y-2)^2=25$.",
+        "Since $25>0$, it is a circle with center $(-1,2)$ and radius 5."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with center (-1, 2) and radius 5, since $(x+1)^2+(y-2)^2=25$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-2:d",
+      "record_id": "eb11c4-3:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Determine what kind of figures the following equations represent.",
+        "stem": "$x^2+y^2+4x-6y=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ba1089389c3759d2cf8c4ae7083103b5",
+      "kind": "value",
+      "answer": "A circle with center (-2, 3) and radius sqrt(13)",
+      "solution": [
+        "Complete the square: $(x+2)^2-4+(y-3)^2-9=0$.",
+        "Simplify: $(x+2)^2+(y-3)^2=13$.",
+        "Since $13>0$, it is a circle with center $(-2,3)$ and radius $\\sqrt{13}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "A circle with center (-2, 3) and radius $\\sqrt{13}$, since $(x+2)^2+(y-3)^2=13$",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-1",
+      "record_id": "eb11c4-3:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 181,
+      "question": {
+        "text": "Find the equation of the circle passing through the two points A(2,5) and B(8,1) such that its center lies on the straight line whose equation is $x+y=8$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e9a7358c5cddef62493a3cfd21c0593f",
+      "kind": "value",
+      "answer": "(x-5)^2+(y-3)^2=13",
+      "solution": [
+        "The center lies on x+y=8, so set the center as $(a, 8-a)$.",
+        "Equal radii to A and B: $(a-2)^2+(3-a)^2=(a-8)^2+(7-a)^2$.",
+        "Simplify: $2a^2-10a+13=2a^2-30a+113$, so $a=5$.",
+        "The center is (5, 3) and $r^2=(5-2)^2+(3-5)^2=13$.",
+        "The equation is $(x-5)^2+(y-3)^2=13$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2",
+        "eb11c4-3:rule-5",
+        "eb11c4-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x-5)^2+(y-3)^2=13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-3",
+      "record_id": "eb11c4-3:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 182,
+      "question": {
+        "text": "A circle with center $(2,3)$ passing through point $(4,6)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5e2a0ea499136f19d57d59f15a3a2f08",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=13",
+      "solution": [
+        "The center is (2, 3).",
+        "The radius is the distance to (4, 6): $r=\\sqrt{(2-4)^2+(3-6)^2}=\\sqrt{13}$.",
+        "The equation is $(x-2)^2+(y-3)^2=13$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-5",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2+(y-3)^2=13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-4",
+      "record_id": "eb11c4-3:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 182,
+      "question": {
+        "text": "A circle with 2 points $A(1,3)$ and $B(3,-5)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6e292ce58e4c1de57e35445baeee924b",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=17",
+      "solution": [
+        "The center is the midpoint of AB: $(\\frac{1+3}{2},\\frac{3-5}{2})=(2,-1)$.",
+        "The radius is the distance to A: $\\sqrt{(2-1)^2+(-1-3)^2}=\\sqrt{17}$.",
+        "The equation is $(x-2)^2+(y+1)^2=17$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2+(y+1)^2=17",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-5",
+      "record_id": "eb11c4-3:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 182,
+      "question": {
+        "text": "A circle passing through 3 points $(1,1)$, $(2,-1)$, and $(3,2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3728083053ff8122193d9e4bd903a9b6",
+      "kind": "value",
+      "answer": "x^2+y^2-5x-y+4=0",
+      "solution": [
+        "Three points are known, so use $x^2+y^2+lx+my+n=0$.",
+        "(1,1): $l+m+n+2=0$.",
+        "(2,−1): $2l-m+n+5=0$.",
+        "(3,2): $3l+2m+n+13=0$.",
+        "Solving gives $l=-5$, $m=-1$, $n=4$.",
+        "The equation is $x^2+y^2-5x-y+4=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-5x-y+4=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-3",
+      "record_id": "eb11c4-3:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with center $(-3,1)$ passing through point $(4,-2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "78754c7cf64cbabcdc9988496ba64dd3",
+      "kind": "value",
+      "answer": "(x+3)^2+(y-1)^2=58",
+      "solution": [
+        "The center is (−3, 1).",
+        "$r^2=(4+3)^2+(-2-1)^2=49+9=58$.",
+        "The equation is $(x+3)^2+(y-1)^2=58$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-5",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x+3)^2+(y-1)^2=58",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-4",
+      "record_id": "eb11c4-3:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with 2 points $(3,4)$ and $(5,-2)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0e836c8d99ef9b001bf98ede2196a47f",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-1)^2=10",
+      "solution": [
+        "The center is the midpoint: $(\\frac{3+5}{2},\\frac{4-2}{2})=(4,1)$.",
+        "$r^2=(4-3)^2+(1-4)^2=1+9=10$.",
+        "The equation is $(x-4)^2+(y-1)^2=10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "(x-4)^2+(y-1)^2=10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-5",
+      "record_id": "eb11c4-3:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle passing through 3 points $(0,1)$, $(-1,2)$, and $(3,1)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d5ba836a1e5459da947a73f938911b66",
+      "kind": "value",
+      "answer": "x^2+y^2-3x-7y+6=0",
+      "solution": [
+        "Use $x^2+y^2+lx+my+n=0$.",
+        "(0,1): $m+n+1=0$.",
+        "(−1,2): $-l+2m+n+5=0$.",
+        "(3,1): $3l+m+n+10=0$.",
+        "Solving gives $l=-3$, $m=-7$, $n=6$.",
+        "The equation is $x^2+y^2-3x-7y+6=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-3x-7y+6=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:activity-1",
+      "record_id": "eb11c4-3:activity-1",
+      "part": null,
+      "type": "activity",
+      "page": 183,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question 3 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "05c57da0d3a4993374f7d808e59b1c4f",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 3: x^2+y^2-3x-7y+6=0 (circle through (0,1), (-1,2), (3,1), found by substituting the points into x^2+y^2+lx+my+n=0).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-3",
+      "record_id": "eb11c4-3:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with center $(1,-3)$ passing through point $(-3,0)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "06a4236c966806980518d0bc72911bef",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+3)^2=25",
+      "solution": [
+        "The center is (1, −3).",
+        "$r^2=(-3-1)^2+(0+3)^2=16+9=25$.",
+        "The equation is $(x-1)^2+(y+3)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-5",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2+(y+3)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-4",
+      "record_id": "eb11c4-3:exercise-4",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with center $(-4,1)$ passing through point $(3,-2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "667287fc8811c38e1bd44e4023e11b2c",
+      "kind": "value",
+      "answer": "(x+4)^2+(y-1)^2=58",
+      "solution": [
+        "The center is (−4, 1).",
+        "$r^2=(3+4)^2+(-2-1)^2=49+9=58$.",
+        "The equation is $(x+4)^2+(y-1)^2=58$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-5",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x+4)^2+(y-1)^2=58",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-5",
+      "record_id": "eb11c4-3:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with center $(2,-1)$ passing through the origin",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8c7b112e1b955671c2c0ad94c25895b7",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=5",
+      "solution": [
+        "The center is (2, −1).",
+        "$r^2=(0-2)^2+(0+1)^2=5$.",
+        "The equation is $(x-2)^2+(y+1)^2=5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-5",
+        "eb11c4-3:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2+(y+1)^2=5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-6",
+      "record_id": "eb11c4-3:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with the origin as its center passing through point $(4,-3)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e6a56ebd4209ab7ab9af98f5bbbac9ce",
+      "kind": "value",
+      "answer": "x^2+y^2=25",
+      "solution": [
+        "The center is the origin, so use $x^2+y^2=r^2$.",
+        "$r^2=4^2+(-3)^2=25$.",
+        "The equation is $x^2+y^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-1",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-7",
+      "record_id": "eb11c4-3:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with 2 points $(4,7)$ and $(-2,-1)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e5f31aedf52bb81fc16a06158cb58c3c",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-3)^2=25",
+      "solution": [
+        "The center is the midpoint: $(\\frac{4-2}{2},\\frac{7-1}{2})=(1,3)$.",
+        "$r^2=(4-1)^2+(7-3)^2=9+16=25$.",
+        "The equation is $(x-1)^2+(y-3)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2+(y-3)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-8",
+      "record_id": "eb11c4-3:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with 2 points $(4,-2)$ and $(-6,-2)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bf4c5c42b9084561f0fb1892c3e8f275",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=25",
+      "solution": [
+        "The center is the midpoint: $(\\frac{4-6}{2},\\frac{-2-2}{2})=(-1,-2)$.",
+        "$r^2=(4+1)^2+(-2+2)^2=25$.",
+        "The equation is $(x+1)^2+(y+2)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y+2)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-9",
+      "record_id": "eb11c4-3:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with 2 points $(-3,0)$ and $(-1,2)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "920b497e1d14790b3ad84bbd1eddc5fe",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-1)^2=2",
+      "solution": [
+        "The center is the midpoint: $(\\frac{-3-1}{2},\\frac{0+2}{2})=(-2,1)$.",
+        "$r^2=(-3+2)^2+(0-1)^2=2$.",
+        "The equation is $(x+2)^2+(y-1)^2=2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2)^2+(y-1)^2=2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-10",
+      "record_id": "eb11c4-3:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle with 2 points $(-3,6)$ and $(3,-2)$ as both ends of its diameter",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0387c2f077d08fb69f5bde71e5a2d489",
+      "kind": "value",
+      "answer": "x^2+(y-2)^2=25",
+      "solution": [
+        "The center is the midpoint: $(\\frac{-3+3}{2},\\frac{6-2}{2})=(0,2)$.",
+        "$r^2=(-3-0)^2+(6-2)^2=9+16=25$.",
+        "The equation is $x^2+(y-2)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-6",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+(y-2)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-11",
+      "record_id": "eb11c4-3:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle passing through 3 points $(0,0)$, $(-1,1)$, and $(2,4)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "59614d76ea7647fb128a69273f6857c9",
+      "kind": "value",
+      "answer": "x^2+y^2-2x-4y=0",
+      "solution": [
+        "Use $x^2+y^2+lx+my+n=0$.",
+        "(0,0): $n=0$.",
+        "(−1,1): $2-l+m=0$.",
+        "(2,4): $20+2l+4m=0$.",
+        "Solving gives $l=-2$, $m=-4$.",
+        "The equation is $x^2+y^2-2x-4y=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-2x-4y=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-12",
+      "record_id": "eb11c4-3:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle passing through 3 points $(-4,6)$, $(0,8)$, and $(3,-1)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "aa50351f929ccd96d4e172bc0d3be48a",
+      "kind": "value",
+      "answer": "x^2+y^2-6y-16=0",
+      "solution": [
+        "Use $x^2+y^2+lx+my+n=0$.",
+        "(−4,6): $52-4l+6m+n=0$.",
+        "(0,8): $64+8m+n=0$.",
+        "(3,−1): $10+3l-m+n=0$.",
+        "Solving gives $l=0$, $m=-6$, $n=-16$.",
+        "The equation is $x^2+y^2-6y-16=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-6y-16=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-13",
+      "record_id": "eb11c4-3:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "A circle passing through 3 points $(1,1)$, $(5,-1)$, and $(-3,-7)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b23b897d3dde6a263aae9aaf6114c2a3",
+      "kind": "value",
+      "answer": "x^2+y^2-2x+8y-8=0",
+      "solution": [
+        "Use $x^2+y^2+lx+my+n=0$.",
+        "(1,1): $l+m+n+2=0$.",
+        "(5,−1): $5l-m+n+26=0$.",
+        "(−3,−7): $-3l-7m+n+58=0$.",
+        "Solving gives $l=-2$, $m=8$, $n=-8$.",
+        "The equation is $x^2+y^2-2x+8y-8=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-2x+8y-8=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-2",
+      "record_id": "eb11c4-3:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 183,
+      "question": {
+        "text": "During an electrophysiology study of the heart, cardiologists map the electrical activity of a patient's atrium to locate the origin point of an abnormal heart rhythm (arrhythmia). The wavefront of the electrical anomaly spreads outward in a perfect circle. A mapping catheter detects the electrical wave passing through three specific sensor coordinates on a diagnostic grid: Sensor 1: (0, 2), Sensor 2: (2, 0), Sensor 3: (4, 6). Find the mathematical equation of the circle formed by this electrical wave to determine its center point (the arrhythmia focus) and its radius.",
+        "stem": "",
+        "notes": "Printed 'atrium' as \"patient's atrium\"; star Challenge box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "4e26a9505b3d091706f97ca3aa2cd6a1",
+      "kind": "value",
+      "answer": "x^2+y^2-6x-6y+8=0, center (3, 3), radius sqrt(10)",
+      "solution": [
+        "Three points are known, so use $x^2+y^2+lx+my+n=0$.",
+        "Through $(0,2)$: $2m+n+4=0$ ...(i).",
+        "Through $(2,0)$: $2l+n+4=0$ ...(ii).",
+        "Through $(4,6)$: $4l+6m+n+52=0$ ...(iii).",
+        "From (i) and (ii), $l=m$. Then (iii) gives $10l+n+52=0$; with $n=-2l-4$ this gives $8l+48=0$, so $l=-6$, $m=-6$, $n=8$.",
+        "The equation is $x^2+y^2-6x-6y+8=0$.",
+        "Complete the square: $(x-3)^2+(y-3)^2=10$.",
+        "The center is $(3,3)$ and the radius is $\\sqrt{10}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-7",
+        "eb11c4-3:example-1",
+        "eb11c4-3:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "$x^2+y^2-6x-6y+8=0$, i.e. $(x-3)^2+(y-3)^2=10$; center (3, 3), radius $\\sqrt{10}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-6",
+      "record_id": "eb11c4-3:warm-up-6",
+      "part": null,
+      "type": "exercise",
+      "page": 184,
+      "question": {
+        "text": "A circle with center $(4,-2)$ tangent to the $x$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a472dd0e8289bf706a3ec6889ceec514",
+      "kind": "value",
+      "answer": "(x-4)^2+(y+2)^2=4",
+      "solution": [
+        "The circle touches the x-axis, so the radius is the distance from the center (4, −2) to the x-axis.",
+        "$r=2$.",
+        "The equation is $(x-4)^2+(y+2)^2=4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8",
+        "eb11c4-3:caution-1",
+        "eb11c4-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x-4)^2+(y+2)^2=4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-7",
+      "record_id": "eb11c4-3:warm-up-7",
+      "part": null,
+      "type": "exercise",
+      "page": 184,
+      "question": {
+        "text": "A circle passing through point $(-2,1)$ and tangent to both the $x$-axis and the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "426fb7b5db226c83ac661be706ef780a",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-1)^2=1 and (x+5)^2+(y-5)^2=25",
+      "solution": [
+        "(−2, 1) is in the second quadrant, so the center is (−r, r).",
+        "The distance to (−2, 1) is r: $(-2+r)^2+(1-r)^2=r^2$.",
+        "Simplify: $r^2-6r+5=0$, so $r=1$ or $5$.",
+        "The equations are $(x+1)^2+(y-1)^2=1$ and $(x+5)^2+(y-5)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-2",
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y-1)^2=1 and (x+5)^2+(y-5)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-8",
+      "record_id": "eb11c4-3:warm-up-8",
+      "part": null,
+      "type": "exercise",
+      "page": 184,
+      "question": {
+        "text": "A circle whose center lies on the line $y=-x$, passing through 2 points $(5,2)$ and $(-2,3)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "01705545427cc8242e2619c7e451188b",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+1)^2=25",
+      "solution": [
+        "The center is on y = −x, so set it as (a, −a).",
+        "(5,2): $(5-a)^2+(2+a)^2=r^2$.",
+        "(−2,3): $(-2-a)^2+(3+a)^2=r^2$.",
+        "Solving gives $a=1$, $r^2=25$.",
+        "The equation is $(x-1)^2+(y+1)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2+(y+1)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-6",
+      "record_id": "eb11c4-3:try-6",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(-2, 3)$ tangent to the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c74df4c4df318d3b182502fbd72eff47",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-3)^2=4",
+      "solution": [
+        "The circle touches the y-axis, so the radius is the distance from (−2, 3) to the y-axis.",
+        "$r=2$.",
+        "The equation is $(x+2)^2+(y-3)^2=4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8",
+        "eb11c4-3:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2)^2+(y-3)^2=4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-7",
+      "record_id": "eb11c4-3:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle passing through point $(1, 2)$ and tangent to both the $x$-axis and the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7cea5aecad633373a6aecf9916a50351",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-1)^2=1 and (x-5)^2+(y-5)^2=25",
+      "solution": [
+        "(1, 2) is in the first quadrant, so the center is (r, r).",
+        "$(1-r)^2+(2-r)^2=r^2$.",
+        "Simplify: $r^2-6r+5=0$, so $r=1$ or $5$.",
+        "The equations are $(x-1)^2+(y-1)^2=1$ and $(x-5)^2+(y-5)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-2",
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)^2+(y-1)^2=1 and (x-5)^2+(y-5)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-8",
+      "record_id": "eb11c4-3:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle whose center lies on the line $y = x + 5$, passing through the origin and point $(1, 2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e28530df58eb6c6cad713806e7b0de7f",
+      "kind": "value",
+      "answer": "(x+5/2)^2+(y-5/2)^2=25/2",
+      "solution": [
+        "The center is on y = x + 5, so set it as (a, a+5).",
+        "Origin: $a^2+(a+5)^2=r^2$.",
+        "(1,2): $(1-a)^2+(a+3)^2=r^2$.",
+        "Equate: $2a^2+10a+25=2a^2+4a+10$, so $a=-\\frac52$.",
+        "The center is (−5/2, 5/2) and $r^2=\\frac{25}{4}+\\frac{25}{4}=\\frac{25}{2}$.",
+        "The equation is $(x+\\frac52)^2+(y-\\frac52)^2=\\frac{25}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x+5/2)^2+(y-5/2)^2=25/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:activity-2",
+      "record_id": "eb11c4-3:activity-2",
+      "part": null,
+      "type": "activity",
+      "page": 185,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question 3 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9dad21c6a3dcc9486b35a814e6e4fa83",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 3: (x+5/2)^2+(y-5/2)^2=25/2 (center (a, a+5) equidistant from the origin and (1,2) gives a = -5/2).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-14",
+      "record_id": "eb11c4-3:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(-1, 4)$ tangent to the $x$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "14d1a1d3941ba88c8c1f1679a8900bb7",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-4)^2=16",
+      "solution": [
+        "The circle touches the x-axis, so $r$ = the y-coordinate distance = 4.",
+        "The equation is $(x+1)^2+(y-4)^2=16$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y-4)^2=16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-15",
+      "record_id": "eb11c4-3:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(3, -4)$ tangent to the $x$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3d219fff649531c13b5ff4d0e2ca7d80",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+4)^2=16",
+      "solution": [
+        "The circle touches the x-axis, so $r=4$.",
+        "The equation is $(x-3)^2+(y+4)^2=16$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x-3)^2+(y+4)^2=16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-16",
+      "record_id": "eb11c4-3:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(5, -4)$ tangent to the $x$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d058eadb11064ecc5934e419d72f20e6",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+4)^2=16",
+      "solution": [
+        "The circle touches the x-axis, so $r=4$.",
+        "The equation is $(x-5)^2+(y+4)^2=16$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x-5)^2+(y+4)^2=16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-17",
+      "record_id": "eb11c4-3:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(-1, 6)$ tangent to the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1ad0345a2d55ea076f57474cd1f53159",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-6)^2=1",
+      "solution": [
+        "The circle touches the y-axis, so $r=1$ (distance of x = −1 from the y-axis).",
+        "The equation is $(x+1)^2+(y-6)^2=1$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y-6)^2=1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-18",
+      "record_id": "eb11c4-3:exercise-18",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(2, -5)$ tangent to the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2aa46905ea8effb6de39a13e2a504b6a",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+5)^2=4",
+      "solution": [
+        "The circle touches the y-axis, so $r=2$.",
+        "The equation is $(x-2)^2+(y+5)^2=4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2+(y+5)^2=4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-19",
+      "record_id": "eb11c4-3:exercise-19",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle with center $(-3, -4)$ tangent to the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "07ccbaa666e36fee59712f822b018f0c",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+4)^2=9",
+      "solution": [
+        "The circle touches the y-axis, so $r=3$.",
+        "The equation is $(x+3)^2+(y+4)^2=9$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+3)^2+(y+4)^2=9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-20",
+      "record_id": "eb11c4-3:exercise-20",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle passing through point $(-1, -2)$ and tangent to both the $x$-axis and the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "db3ffdf8a892bd7703a732f6482e4aab",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+      "solution": [
+        "(−1, −2) is in the third quadrant, so the center is (−r, −r).",
+        "$(-1+r)^2+(-2+r)^2=r^2$, so $r^2-6r+5=0$ and $r=1$ or $5$.",
+        "The equations are $(x+1)^2+(y+1)^2=1$ and $(x+5)^2+(y+5)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-2",
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-21",
+      "record_id": "eb11c4-3:exercise-21",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle passing through point $(-2, -1)$ and tangent to both the $x$-axis and the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1553e6dd3db96f1cbe17be05f09686f9",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+      "solution": [
+        "(−2, −1) is in the third quadrant, so the center is (−r, −r).",
+        "$(-2+r)^2+(-1+r)^2=r^2$, so $r^2-6r+5=0$ and $r=1$ or $5$.",
+        "The equations are $(x+1)^2+(y+1)^2=1$ and $(x+5)^2+(y+5)^2=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-2",
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-22",
+      "record_id": "eb11c4-3:exercise-22",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle passing through point $(8, -1)$ and tangent to both the $x$-axis and the $y$-axis",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3e5f6900edb67d856c1aadb7a5950864",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+5)^2=25 and (x-13)^2+(y+13)^2=169",
+      "solution": [
+        "(8, −1) is in the fourth quadrant, so the center is (r, −r).",
+        "$(8-r)^2+(-1+r)^2=r^2$, so $r^2-18r+65=0$ and $r=5$ or $13$.",
+        "The equations are $(x-5)^2+(y+5)^2=25$ and $(x-13)^2+(y+13)^2=169$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-2",
+        "eb11c4-3:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "(x-5)^2+(y+5)^2=25 and (x-13)^2+(y+13)^2=169",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-23",
+      "record_id": "eb11c4-3:exercise-23",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle whose center lies on the line $y = x + 1$, passing through 2 points $(3, 4)$ and $(1, 4)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "03bc79a90f58d179b5d983b8f25c55f1",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=2",
+      "solution": [
+        "Set the center as (a, a+1).",
+        "$(3-a)^2+(3-a)^2=(1-a)^2+(3-a)^2$ gives $(3-a)^2=(1-a)^2$, so $a=2$.",
+        "The center is (2, 3) and $r^2=1+1=2$.",
+        "The equation is $(x-2)^2+(y-3)^2=2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2)^2+(y-3)^2=2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-24",
+      "record_id": "eb11c4-3:exercise-24",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "A circle whose center lies on the line $y = 2x - 6$, passing through 2 points $(3, 7)$ and $(-1, 3)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0b5c5dab291692e95b19518ceb654534",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-2)^2=26",
+      "solution": [
+        "Set the center as (a, 2a−6).",
+        "$(3-a)^2+(13-2a)^2=(-1-a)^2+(9-2a)^2$.",
+        "Simplify: $-58a+178=-34a+82$, so $a=4$.",
+        "The center is (4, 2) and $r^2=1+25=26$.",
+        "The equation is $(x-4)^2+(y-2)^2=26$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x-4)^2+(y-2)^2=26",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-3",
+      "record_id": "eb11c4-3:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 185,
+      "question": {
+        "text": "An arc-based radiotherapy gantry rotates in a circular path. Its center of rotation is constrained to the track along the x-axis. The trajectory must intersect two spatial calibration checkpoints: P1(-2, 2) and P2(1, 1). Find the circle's standard equation, its center of rotation, and the exact beam radius.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "fe5813a50a27cb8a5ff811b0b5f2d1dc",
+      "kind": "value",
+      "answer": "(x+1)^2+y^2=5; center (-1, 0); radius √5",
+      "solution": [
+        "The center is on the x-axis: (a, 0).",
+        "$(-2-a)^2+4=(1-a)^2+1$, so $6a=-6$ and $a=-1$.",
+        "$r^2=(1+1)^2... $ use P2: $(1+1)^2+1^2=5$, so $r=\\sqrt5$.",
+        "The equation is $(x+1)^2+y^2=5$, center (−1, 0), radius $\\sqrt5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-2",
+        "eb11c4-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "Equation (x+1)^2+y^2=5; center (-1, 0); radius √5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-9",
+      "record_id": "eb11c4-3:warm-up-9",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "Find the range of values for the constant $k$ such that the equation $x^2+y^2-2kx+2ky+4k+6=0$ represents a circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5d08088a849be99d1e0205408e662c5a",
+      "kind": "value",
+      "answer": "k<-1 or k>3",
+      "solution": [
+        "Complete the square: $(x-k)^2+(y+k)^2=2k^2-4k-6$.",
+        "It is a circle when $2k^2-4k-6>0$.",
+        "Solving gives $k<-1$ or $k>3$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9",
+        "eb11c4-3:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "k < -1 or k > 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-9",
+      "record_id": "eb11c4-3:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "Find the range of values for the constant $k$ such that the equation $x^2+y^2+2kx-4ky+4k^2+6=0$ represents a circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "022962babe095b7b2a612e0ccf862f1b",
+      "kind": "value",
+      "answer": "k<-√6 or k>√6",
+      "solution": [
+        "Complete the square: $(x+k)^2-k^2+(y-2k)^2-4k^2+4k^2+6=0$.",
+        "So $(x+k)^2+(y-2k)^2=k^2-6$.",
+        "It is a circle when $k^2-6>0$.",
+        "So $k<-\\sqrt6$ or $k>\\sqrt6$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "k < -√6 or k > √6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-25",
+      "record_id": "eb11c4-3:exercise-25",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "Find the range of values for the constant $k$ such that the equation $x^2+y^2+2x-y+k=0$ represents a circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "52b95abbeb870afb8f43502bbbf79496",
+      "kind": "value",
+      "answer": "k<5/4",
+      "solution": [
+        "Complete the square: $(x+1)^2+(y-\\frac12)^2=\\frac54-k$.",
+        "It is a circle when $\\frac54-k>0$.",
+        "So $k<\\frac54$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "k < 5/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-26",
+      "record_id": "eb11c4-3:exercise-26",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "Find the range of values for the constant $k$ such that the equation $x^2+y^2+6kx-2ky+28k+6=0$ represents a circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "005083d9a501f9d1bff1ab5ec44228a3",
+      "kind": "value",
+      "answer": "k<-1/5 or k>3",
+      "solution": [
+        "Complete the square: $(x+3k)^2+(y-k)^2=10k^2-28k-6$.",
+        "It is a circle when $5k^2-14k-3>0$, i.e. $(5k+1)(k-3)>0$.",
+        "So $k<-\\frac15$ or $k>3$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "k < -1/5 or k > 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-27",
+      "record_id": "eb11c4-3:exercise-27",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "Find the range of values for the constant $k$ such that the equation $x^2+y^2+2kx-2(k+3)y+4k^2+1=0$ represents a circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "439f7a06883533d2b73a9c4844b0af7c",
+      "kind": "value",
+      "answer": "-1<k<4",
+      "solution": [
+        "Complete the square: $(x+k)^2+(y-(k+3))^2=k^2+(k+3)^2-4k^2-1=-2k^2+6k+8$.",
+        "It is a circle when $-2k^2+6k+8>0$, i.e. $k^2-3k-4<0$.",
+        "So $(k-4)(k+1)<0$ and $-1<k<4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "-1 < k < 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-4",
+      "record_id": "eb11c4-3:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 186,
+      "question": {
+        "text": "An automated ultrasonic welder generates an acoustic stress boundary modeled by the equation $x^2+y^2+6x-2ky+2k^2-4k+9=0$. For a stable, real circular safety perimeter to exist around the machine, the radius of this equation must be a real, positive number. Determine the exact range of values for the power setting constant k that guarantees this equation represents a real circle.",
+        "stem": "",
+        "notes": "Side-column box with photo of a robotic welding arm (decorative). Printed 'x^2+y^2+6x-2ky+2k^2-4k+9=0' read from the image."
+      },
+      "needs_page": false,
+      "question_fingerprint": "f1dc91033fe312b783f3ffc34db55c1f",
+      "kind": "value",
+      "answer": "0<k<4",
+      "solution": [
+        "Complete the square: $(x+3)^2-9+(y-k)^2-k^2+2k^2-4k+9=0$.",
+        "So $(x+3)^2+(y-k)^2=-k^2+4k$.",
+        "It is a circle when $-k^2+4k>0$, i.e. $k(k-4)<0$.",
+        "So $0<k<4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "0 < k < 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-10",
+      "record_id": "eb11c4-3:warm-up-10",
+      "part": null,
+      "type": "exercise",
+      "page": 187,
+      "question": {
+        "text": "Find the coordinates of the points of intersection of the circle $(x+2)^2+y^2=10$ and the line $y=-2x+1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3077ccf46229af6ff08e8099d3c047c7",
+      "kind": "value",
+      "answer": "(1,-1), (-1,3)",
+      "solution": [
+        "Substitute $y=-2x+1$ into the circle: $5x^2-5=0$.",
+        "$x=\\pm1$.",
+        "$x=1$ gives $y=-1$; $x=-1$ gives $y=3$.",
+        "The points are (1, −1) and (−1, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-3",
+        "eb11c4-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "(1, -1), (-1, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-11",
+      "record_id": "eb11c4-3:warm-up-11",
+      "part": null,
+      "type": "exercise",
+      "page": 187,
+      "question": {
+        "text": "Find the number of points of intersection of the circle $x^2+y^2=2$ and the line $x-y+3=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "873571e2f211fe4a8b7f822c72264967",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "$y=x+3$; substitute: $2x^2+6x+7=0$.",
+        "$D=36-56=-20<0$.",
+        "So there are 0 points of intersection."
+      ],
+      "grounded_in": [
+        "eb11c4-3:example-4",
+        "eb11c4-3:rule-12",
+        "eb11c4-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-10",
+      "record_id": "eb11c4-3:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the coordinates of the points of intersection of the circle $x^2+y^2=4$ and the line $x+y=2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "de403d1883139a440d53f8fab9ab4f9c",
+      "kind": "value",
+      "answer": "(0,2), (2,0)",
+      "solution": [
+        "$y=2-x$; substitute: $x^2+(2-x)^2=4$.",
+        "$2x^2-4x=0$, so $x=0$ or $2$.",
+        "$x=0$ gives $y=2$; $x=2$ gives $y=0$.",
+        "The points are (0, 2) and (2, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-10",
+        "eb11c4-3:rule-11",
+        "eb11c4-3:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(0, 2), (2, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-11",
+      "record_id": "eb11c4-3:try-11",
+      "part": null,
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the number of points of intersection of the circle $x^2+y^2=10$ and the line $y=2x-5$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7d8b55a1ddf03bbe2440c1f5e3f33c86",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "Substitute $y=2x-5$: $x^2+(2x-5)^2=10$.",
+        "$5x^2-20x+15=0$, i.e. $x^2-4x+3=0$.",
+        "$D=16-12=4>0$.",
+        "So there are 2 points of intersection."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-12",
+        "eb11c4-3:method-2",
+        "eb11c4-3:example-4"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:activity-3",
+      "record_id": "eb11c4-3:activity-3",
+      "part": null,
+      "type": "activity",
+      "page": 188,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7799436d66dcee37a991ae69f7d31641",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 2: the line y=2x-5 meets x^2+y^2=10 at 2 points (D>0; x=1 and x=3).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-28:a",
+      "record_id": "eb11c4-3:exercise-28",
+      "part": "a",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the coordinates of the points of intersection for the following circles and lines.",
+        "stem": "$x^2+y^2=10,\\ y=3x-10$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "086758edc67cd2d1774694ab940e8081",
+      "kind": "value",
+      "answer": "(3, -1)",
+      "solution": [
+        "Substitute $y=3x-10$ into $x^2+y^2=10$.",
+        "$x^2+(3x-10)^2=10$ gives $10x^2-60x+90=0$, so $x^2-6x+9=0$.",
+        "$(x-3)^2=0$, so $x=3$.",
+        "From $y=3x-10$, $y=-1$.",
+        "The point of intersection is $(3,-1)$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-10",
+        "eb11c4-3:rule-11",
+        "eb11c4-3:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(3, -1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-28:b",
+      "record_id": "eb11c4-3:exercise-28",
+      "part": "b",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the coordinates of the points of intersection for the following circles and lines.",
+        "stem": "$x^2+y^2=5,\\ 2x-y+5=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8a199ce7c9c7d059fc62f1a088b37da4",
+      "kind": "value",
+      "answer": "(-2, 1)",
+      "solution": [
+        "From $2x-y+5=0$, $y=2x+5$.",
+        "Substitute into $x^2+y^2=5$: $5x^2+20x+20=0$, so $x^2+4x+4=0$.",
+        "$x=-2$.",
+        "Then $y=2(-2)+5=1$.",
+        "The point of intersection is $(-2,1)$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-10",
+        "eb11c4-3:rule-11",
+        "eb11c4-3:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(-2, 1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-28:c",
+      "record_id": "eb11c4-3:exercise-28",
+      "part": "c",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the coordinates of the points of intersection for the following circles and lines.",
+        "stem": "$(x-1)^2+y^2=10,\\ x+3y-1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "05ee2256785e12d241e7b75fb0dc6965",
+      "kind": "value",
+      "answer": "(-2, 1), (4, -1)",
+      "solution": [
+        "From $x+3y-1=0$, $x=1-3y$.",
+        "Substitute into $(x-1)^2+y^2=10$: $9y^2+y^2=10$, so $y^2=1$, $y=\\pm1$.",
+        "When $y=1$, $x=-2$; when $y=-1$, $x=4$.",
+        "The points are $(-2,1)$ and $(4,-1)$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-10",
+        "eb11c4-3:rule-11",
+        "eb11c4-3:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(-2, 1), (4, -1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-29:a",
+      "record_id": "eb11c4-3:exercise-29",
+      "part": "a",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the number of points of intersection for the following circles and lines.",
+        "stem": "$x^2+y^2=5,\\ y=x+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f917fc5a788036267c7af89994956316",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "Substitute $y=x+2$ into $x^2+y^2=5$: $2x^2+4x-1=0$.",
+        "$D=4^2-4\\cdot2\\cdot(-1)=24>0$.",
+        "So there are 2 points of intersection."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-12",
+        "eb11c4-3:method-2",
+        "eb11c4-3:example-4"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-29:b",
+      "record_id": "eb11c4-3:exercise-29",
+      "part": "b",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the number of points of intersection for the following circles and lines.",
+        "stem": "$x^2+y^2=2,\\ 2x+3y-6=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "beba2417627ab450ecdf482c4f07e743",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "From $2x+3y-6=0$, $y=\\frac{6-2x}{3}$.",
+        "Substitute into $x^2+y^2=2$ and multiply by 9: $13x^2-24x+18=0$.",
+        "$D=(-24)^2-4\\cdot13\\cdot18=576-936=-360<0$.",
+        "So there are 0 points of intersection."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-12",
+        "eb11c4-3:method-2",
+        "eb11c4-3:example-4"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-29:c",
+      "record_id": "eb11c4-3:exercise-29",
+      "part": "c",
+      "type": "exercise",
+      "page": 188,
+      "question": {
+        "text": "Find the number of points of intersection for the following circles and lines.",
+        "stem": "$(x+1)^2+(y-2)^2=5,\\ x+2y+2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3bc5dfaafd72ddf9f3514549a289d949",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "From $x+2y+2=0$, $x=-2y-2$.",
+        "Substitute into $(x+1)^2+(y-2)^2=5$: $(-2y-1)^2+(y-2)^2=5$.",
+        "This simplifies to $5y^2=0$, i.e. $5y^2+0y+0=0$, so $D=0$.",
+        "$D=0$ means the line is tangent: 1 point of intersection."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-12",
+        "eb11c4-3:method-2",
+        "eb11c4-3:example-4"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-12",
+      "record_id": "eb11c4-3:warm-up-12",
+      "part": null,
+      "type": "exercise",
+      "page": 189,
+      "question": {
+        "text": "If the circle $x^2+y^2=5$ and the line $y=2x-k$ intersect at 2 distinct points, find the range of values for the constant $k$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4a6cc44a2b926f6fbb7c5b555bd3cba7",
+      "kind": "value",
+      "answer": "-5<k<5",
+      "solution": [
+        "Substitute $y=2x-k$: $5x^2-4kx+k^2-5=0$.",
+        "$D=16k^2-20(k^2-5)=-4k^2+100>0$.",
+        "So $-5<k<5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-3",
+        "eb11c4-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "-5 < k < 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-13",
+      "record_id": "eb11c4-3:warm-up-13",
+      "part": null,
+      "type": "exercise",
+      "page": 189,
+      "question": {
+        "text": "If the circle $x^2+y^2=r^2$ and the line $2x+y-5=0$ are tangent, find the value of the radius $r$ of the circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "60495ee815e9f027dfbdbec277c4b4bb",
+      "kind": "value",
+      "answer": "√5",
+      "solution": [
+        "Tangent means $r=d$.",
+        "The center is (0,0), so $d=\\frac{|-5|}{\\sqrt{2^2+1^2}}=\\sqrt5$.",
+        "So $r=\\sqrt5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-13",
+        "eb11c4-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "r = √5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-12",
+      "record_id": "eb11c4-3:try-12",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=4$ and the line $y=mx+4$ are tangent, find the value of the constant $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f697a169d898d7282dc3a8f05bbc2922",
+      "kind": "value",
+      "answer": "m = √3 or m = -√3",
+      "solution": [
+        "Substitute $y=mx+4$: $(1+m^2)x^2+8mx+12=0$.",
+        "Tangent means $D=0$: $64m^2-48(1+m^2)=0$.",
+        "$16m^2=48$, so $m^2=3$.",
+        "$m=\\pm\\sqrt3$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-2",
+        "eb11c4-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "m = √3 or m = -√3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-13",
+      "record_id": "eb11c4-3:try-13",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=r^2$ and the line $x-3y-10=0$ have no points of intersection, find the range of values for the radius $r$ of the circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bd95d74bd1f3339913388f132eab0f0b",
+      "kind": "value",
+      "answer": "0<r<√10",
+      "solution": [
+        "No intersection means $r<d$.",
+        "$d=\\frac{|-10|}{\\sqrt{1+9}}=\\sqrt{10}$.",
+        "With $r>0$: $0<r<\\sqrt{10}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "0 < r < √10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:activity-4",
+      "record_id": "eb11c4-3:activity-4",
+      "part": null,
+      "type": "activity",
+      "page": 190,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1112ffb7a95248e07fdfa88b85c92f86",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 2: x^2+y^2=r^2 and x-3y-10=0 have no common points when r < d = √10, i.e. 0 < r < √10.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-30",
+      "record_id": "eb11c4-3:exercise-30",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=8$ and the line $y=x+m$ are tangent, find the value of the constant $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "de21930a76b475b566d80f55a358d081",
+      "kind": "value",
+      "answer": "m = 4 or m = -4",
+      "solution": [
+        "Substitute $y=x+m$: $2x^2+2mx+m^2-8=0$.",
+        "Tangent means $D=0$: $4m^2-8(m^2-8)=-4m^2+64=0$.",
+        "$m^2=16$, so $m=\\pm4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-2",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "m = 4 or m = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-31",
+      "record_id": "eb11c4-3:exercise-31",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=10$ and the line $y=3x+n$ have no points of intersection, find the range of values for the constant $n$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9418eaa0ddfd6e86e6293b89f818a511",
+      "kind": "value",
+      "answer": "n<-10 or n>10",
+      "solution": [
+        "Substitute $y=3x+n$: $10x^2+6nx+n^2-10=0$.",
+        "No intersection means $D<0$: $36n^2-40(n^2-10)=-4n^2+400<0$.",
+        "$n^2>100$, so $n<-10$ or $n>10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n < -10 or n > 10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-32",
+      "record_id": "eb11c4-3:exercise-32",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=5$ and the line $y=2x+m$ have points of intersection, find the range of values for the constant $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "43257491050fe530289c3f72ef5aa4fe",
+      "kind": "value",
+      "answer": "-5≤m≤5",
+      "solution": [
+        "Substitute $y=2x+m$: $5x^2+4mx+m^2-5=0$.",
+        "Having points of intersection (touching or crossing) means $D\\ge0$: $16m^2-20(m^2-5)=-4m^2+100\\ge0$.",
+        "So $-5\\le m\\le5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "-5 ≤ m ≤ 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-33",
+      "record_id": "eb11c4-3:exercise-33",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=r^2$ and the line $y=x+2$ are tangent, find the value of the radius $r$ of the circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4ec09e63484e2524d8545d5c590e19aa",
+      "kind": "value",
+      "answer": "√2",
+      "solution": [
+        "Tangent means $r=d$.",
+        "$d=\\frac{|2|}{\\sqrt{1+1}}=\\sqrt2$.",
+        "So $r=\\sqrt2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-13",
+        "eb11c4-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "r = √2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-34",
+      "record_id": "eb11c4-3:exercise-34",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "If the circle $x^2+y^2=r^2$ and the line $4x-y+17=0$ intersect at 2 distinct points, find the range of values for the radius $r$ of the circle.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a4daf1f5f2928b388f86aa6866fca7e8",
+      "kind": "value",
+      "answer": "r>√17",
+      "solution": [
+        "Two distinct points means $r>d$.",
+        "$d=\\frac{17}{\\sqrt{16+1}}=\\sqrt{17}$.",
+        "So $r>\\sqrt{17}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "r > √17",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-5",
+      "record_id": "eb11c4-3:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 190,
+      "question": {
+        "text": "A coastal radar station maps its coverage area as a circular zone centered at the origin: $x^2+y^2=r^2$. A straight international shipping lane follows the path modeled by the linear equation $3x+4y-10=0$. To comply with maritime privacy laws, the radar's signal must remain completely clear of the shipping lane, meaning they share no points of intersection. Since a radius must be a positive physical distance ($r>0$), determine the exact range of values for the radius $r$ to maintain this separation.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3bd3429d34da376e8cd9a469ddffaf06",
+      "kind": "value",
+      "answer": "0<r<2",
+      "solution": [
+        "No intersection means $r<d$.",
+        "$d=\\frac{|-10|}{\\sqrt{9+16}}=2$.",
+        "With $r>0$: $0<r<2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "0 < r < 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-14",
+      "record_id": "eb11c4-3:warm-up-14",
+      "part": null,
+      "type": "exercise",
+      "page": 191,
+      "question": {
+        "text": "Find the length of the chord cut off by the circle $x^2+y^2=4$ on the line $x+y-1=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0968d0fd5d601235b3055132644e373b",
+      "kind": "value",
+      "answer": "√14",
+      "solution": [
+        "$d=\\frac{|-1|}{\\sqrt2}=\\frac1{\\sqrt2}$.",
+        "$l^2=4-\\frac12=\\frac72$, so $l=\\frac{\\sqrt{14}}2$.",
+        "Chord length $=2l=\\sqrt{14}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-4",
+        "eb11c4-3:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "√14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-15",
+      "record_id": "eb11c4-3:warm-up-15",
+      "part": null,
+      "type": "exercise",
+      "page": 191,
+      "question": {
+        "text": "Find the value of the constant $k$ such that the length of the line segment connecting the 2 points of intersection of the circle $x^2+y^2=3$ and the line $x-y+k=0$ is 2",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2a4579fbe7d3a8e4bd1e905ca4843e48",
+      "kind": "value",
+      "answer": "k = 2 or k = -2",
+      "solution": [
+        "Chord is 2, so $l=1$; $r^2=3$.",
+        "$d^2=r^2-l^2=3-1=2$.",
+        "$d=\\frac{|k|}{\\sqrt2}$, so $\\frac{k^2}{2}=2$ and $k^2=4$.",
+        "$k=\\pm2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-15",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "k = 2 or k = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-14",
+      "record_id": "eb11c4-3:try-14",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the length of the chord cut off by the circle $(x-2)^2+(y+1)^2=9$ on the line $x+2y-5=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f3c4f73efca11ebe12985c0e40918a49",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "Center (2, −1), $r=3$.",
+        "$d=\\frac{|2-2-5|}{\\sqrt5}=\\sqrt5$.",
+        "$l^2=9-5=4$, so $l=2$.",
+        "Chord $=2l=4$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-4",
+        "eb11c4-3:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-15",
+      "record_id": "eb11c4-3:try-15",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the value of the constant $k$ such that the length of the line segment connecting the 2 points of intersection of the circle $x^2+y^2=16$ and the line $y=x+k$ is $\\sqrt{2}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "431ae728fa361f51b7223e9937114f43",
+      "kind": "value",
+      "answer": "k = √31 or k = -√31",
+      "solution": [
+        "$r^2=16$; chord $\\sqrt2$, so $l=\\frac{\\sqrt2}2$ and $l^2=\\frac12$.",
+        "$d^2=16-\\frac12=\\frac{31}2$.",
+        "$d=\\frac{|k|}{\\sqrt2}$, so $\\frac{k^2}2=\\frac{31}2$ and $k^2=31$.",
+        "$k=\\pm\\sqrt{31}$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-15",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "k = √31 or k = -√31",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:activity-5",
+      "record_id": "eb11c4-3:activity-5",
+      "part": null,
+      "type": "activity",
+      "page": 192,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9f54c5e0fa2ec64f3e6071e6916a5d89",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 2: use r^2 = d^2 + l^2 with d the distance from the center to the line; for x^2+y^2=16, y=x+k, chord √2 gives k = ±√31.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-35",
+      "record_id": "eb11c4-3:exercise-35",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the length of the chord cut off by the circle $x^2+y^2=10$ on the line $2x-y=5$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ce4269f832d636a7df8a757296b106f0",
+      "kind": "value",
+      "answer": "2√5",
+      "solution": [
+        "$d=\\frac{|-5|}{\\sqrt5}=\\sqrt5$.",
+        "$l^2=10-5=5$, so $l=\\sqrt5$.",
+        "Chord $=2\\sqrt5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-4",
+        "eb11c4-3:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "2√5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-36",
+      "record_id": "eb11c4-3:exercise-36",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the length of the chord cut off by the circle $(x-2)^2+(y-1)^2=5$ on the line $x+y=4$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "492ce2b08165a71b164ad4dcd13bd2bd",
+      "kind": "value",
+      "answer": "3√2",
+      "solution": [
+        "Center (2, 1), $r^2=5$; line $x+y-4=0$.",
+        "$d=\\frac{|2+1-4|}{\\sqrt2}=\\frac1{\\sqrt2}$.",
+        "$l^2=5-\\frac12=\\frac92$, so $l=\\frac{3\\sqrt2}2$.",
+        "Chord $=2l=3\\sqrt2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-4",
+        "eb11c4-3:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "3√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-37",
+      "record_id": "eb11c4-3:exercise-37",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the length of the chord cut off by the circle $x^2+y^2=3$ on the line $x-y=2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2186a06884ae5e3fbc3457f3f5ccc420",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "Line $x-y-2=0$: $d=\\frac2{\\sqrt2}=\\sqrt2$.",
+        "$l^2=3-2=1$, so $l=1$.",
+        "Chord $=2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-4",
+        "eb11c4-3:rule-15"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-38",
+      "record_id": "eb11c4-3:exercise-38",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the value of the constant $k$ such that the length of the line segment connecting the 2 points of intersection of the circle $x^2+y^2=10$ and the line $y=x+k$ is $4\\sqrt{2}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "288f4ca59e84d8f46d35dac50e964be6",
+      "kind": "value",
+      "answer": "k = 2 or k = -2",
+      "solution": [
+        "Chord $4\\sqrt2$, so $l=2\\sqrt2$ and $l^2=8$.",
+        "$d^2=10-8=2$.",
+        "$d=\\frac{|k|}{\\sqrt2}$, so $k^2=4$.",
+        "$k=\\pm2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-15",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "k = 2 or k = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-39",
+      "record_id": "eb11c4-3:exercise-39",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the value of the constant $k$ such that the length of the line segment connecting the 2 points of intersection of the circle $(x-1)^2+y^2=5$ and the line $y=x+k$ is $3\\sqrt{2}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e379b06aac6352af5a92dfcc2ce6d76b",
+      "kind": "value",
+      "answer": "k = 0 or k = -2",
+      "solution": [
+        "Center (1, 0), $r^2=5$; chord $3\\sqrt2$, so $l^2=\\frac92$.",
+        "$d^2=5-\\frac92=\\frac12$.",
+        "Line $x-y+k=0$: $d=\\frac{|1+k|}{\\sqrt2}$, so $(1+k)^2=1$.",
+        "$1+k=\\pm1$, so $k=0$ or $-2$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-15",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "k = 0 or k = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-6",
+      "record_id": "eb11c4-3:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 192,
+      "question": {
+        "text": "Find the value of the constant $k$ such that the length of the line segment connecting the 2 points of intersection of the circle $x^2+y^2+4x-2y-7=0$ and the line $y=x+k$ is 4",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e5489f2dbd8e9cfbc120459efd0090e6",
+      "kind": "value",
+      "answer": "k = 7 or k = -1",
+      "solution": [
+        "Complete the square: $(x+2)^2+(y-1)^2=12$, center (−2, 1).",
+        "Chord 4, so $l=2$; $d^2=12-4=8$.",
+        "Line $x-y+k=0$: $d=\\frac{|-2-1+k|}{\\sqrt2}$, so $(k-3)^2=16$.",
+        "$k-3=\\pm4$, so $k=7$ or $-1$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-15",
+        "eb11c4-3:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "k = 7 or k = -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-16",
+      "record_id": "eb11c4-3:warm-up-16",
+      "part": null,
+      "type": "exercise",
+      "page": 193,
+      "question": {
+        "text": "Find the equations of the following tangents. Tangent to the circle $x^2+y^2=25$ at point $(4,3)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8949550d893b8a1f553b54d1285e48aa",
+      "kind": "value",
+      "answer": "4x+3y=25",
+      "solution": [
+        "The point $(4,3)$ is on the circle, so use $ax+by=r^2$.",
+        "$a=4$, $b=3$, $r^2=25$.",
+        "The tangent is $4x+3y=25$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16",
+        "eb11c4-3:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "$4x+3y=25$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-17",
+      "record_id": "eb11c4-3:warm-up-17",
+      "part": null,
+      "type": "exercise",
+      "page": 193,
+      "question": {
+        "text": "Find the equations of the following tangents. Tangent drawn from point P(1, 3) to the circle $x^2+y^2=5$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a7041369eafe8ab232b3d5872bffd8d6",
+      "kind": "value",
+      "answer": "2x+y=5 and -x+2y=5",
+      "solution": [
+        "Let the point of tangency be $(a,b)$; the tangent is $ax+by=5$.",
+        "It passes through $P(1,3)$: $a+3b=5$ ...(i).",
+        "$(a,b)$ is on the circle: $a^2+b^2=5$ ...(ii).",
+        "From (i), $a=-3b+5$. Substitute into (ii): $(-3b+5)^2+b^2=5$, so $b=1,2$.",
+        "When $b=1$, $a=2$; when $b=2$, $a=-1$.",
+        "The tangents are $2x+y=5$ and $-x+2y=5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16",
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "$2x+y=5$ and $-x+2y=5$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-16",
+      "record_id": "eb11c4-3:try-16",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Find the equations of the following tangents.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "575256dc47767ebf7c89a6a61ccbd3e8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line 'Find the equations of the following tangents'; the tasks are the separate questions 1 and 2 (try-17 and try-18).",
+      "solution": [
+        "The record holds no circle or point to work with.",
+        "Answer try-17 and try-18 instead."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the instruction line; the questions are try-17 and try-18.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-17",
+      "record_id": "eb11c4-3:try-17",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent to the circle $x^2+y^2=34$ at point $(5,3)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "39262373660373e96217021ab77f1e9b",
+      "kind": "value",
+      "answer": "5x+3y=34",
+      "solution": [
+        "Use $ax+by=r^2$ at (5, 3).",
+        "$5x+3y=34$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16",
+        "eb11c4-3:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "5x+3y=34",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-18",
+      "record_id": "eb11c4-3:try-18",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent drawn from point $(-2,4)$ to the circle $x^2+y^2=10$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8f69736d445ff7e82236a48f10d6c5b6",
+      "kind": "value",
+      "answer": "-3x+y=10 and x+3y=10",
+      "solution": [
+        "Let the point of tangency be (a, b); the tangent is $ax+by=10$.",
+        "It passes through (−2, 4): $-2a+4b=10$, so $a=2b-5$.",
+        "On the circle: $a^2+b^2=10$, so $(2b-5)^2+b^2=10$, giving $b=1$ or $3$.",
+        "$b=1$ gives $a=-3$; $b=3$ gives $a=1$.",
+        "The tangents are $-3x+y=10$ and $x+3y=10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "-3x+y=10 and x+3y=10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:work-with-a-partner-1",
+      "record_id": "eb11c4-3:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 194,
+      "question": {
+        "text": "Collaborate with your group to solve question 2 then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "05693de6a9e41c9512f5250e6a882da3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+        "The activity only asks students to work together and discuss.",
+        "No data is given to compute an answer."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Discussion of question 2: tangents from (-2,4) to x^2+y^2=10 touch at (-3,1) and (1,3), giving -3x+y=10 and x+3y=10.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-40",
+      "record_id": "eb11c4-3:exercise-40",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Find the equations of the following tangents.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "575256dc47767ebf7c89a6a61ccbd3e8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line 'Find the equations of the following tangents'; the tasks are the separate questions 1 to 6 (exercise-41 to exercise-46).",
+      "solution": [
+        "The record holds no circle or point to work with.",
+        "Answer exercise-41 to exercise-46 instead."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-41 to exercise-46.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-41",
+      "record_id": "eb11c4-3:exercise-41",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent to the circle $x^2+y^2=10$ at point $(3,-1)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bbb6ecc0538b7d412b7db4080066a2f6",
+      "kind": "value",
+      "answer": "3x-y=10",
+      "solution": [
+        "Use $ax+by=r^2$ at (3, −1): $3x-y=10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16"
+      ],
+      "checks": {
+        "resolve_answer": "3x-y=10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-42",
+      "record_id": "eb11c4-3:exercise-42",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent to the circle $x^2+y^2=29$ at point $(-5,-2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "44f5f2cdda2439d76385fa7a014b9f1a",
+      "kind": "value",
+      "answer": "-5x-2y=29",
+      "solution": [
+        "Use $ax+by=r^2$ at (−5, −2): $-5x-2y=29$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16"
+      ],
+      "checks": {
+        "resolve_answer": "5x+2y=-29",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-43",
+      "record_id": "eb11c4-3:exercise-43",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent to the circle $x^2+y^2=5$ at point $(-2,1)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "070b4d73f80686dc4c841d4c6d4f73b4",
+      "kind": "value",
+      "answer": "-2x+y=5",
+      "solution": [
+        "Use $ax+by=r^2$ at (−2, 1): $-2x+y=5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16"
+      ],
+      "checks": {
+        "resolve_answer": "-2x+y=5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-44",
+      "record_id": "eb11c4-3:exercise-44",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent drawn from point $(-1,3)$ to the circle $x^2+y^2=5$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "55aa30ebacbfd84cb945c42f51a27eda",
+      "kind": "value",
+      "answer": "-2x+y=5 and x+2y=5",
+      "solution": [
+        "Let the point of tangency be (a, b); the tangent is $ax+by=5$.",
+        "Through (−1, 3): $-a+3b=5$, so $a=3b-5$.",
+        "$(3b-5)^2+b^2=5$ gives $b=1$ or $2$.",
+        "$b=1$ gives $a=-2$; $b=2$ gives $a=1$.",
+        "The tangents are $-2x+y=5$ and $x+2y=5$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "-2x+y=5 and x+2y=5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-45",
+      "record_id": "eb11c4-3:exercise-45",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent drawn from point $(2,1)$ to the circle $x^2+y^2=1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d2355da1a428086666f98c3b058c9903",
+      "kind": "value",
+      "answer": "y=1 and 4x-3y=5",
+      "solution": [
+        "Let the point of tangency be (a, b); the tangent is $ax+by=1$.",
+        "Through (2, 1): $2a+b=1$, so $b=1-2a$.",
+        "$a^2+(1-2a)^2=1$ gives $5a^2-4a=0$, so $a=0$ or $\\frac45$.",
+        "$a=0$ gives $b=1$ (tangent $y=1$); $a=\\frac45$ gives $b=-\\frac35$ (tangent $4x-3y=5$)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "y=1 and 4x-3y=5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-46",
+      "record_id": "eb11c4-3:exercise-46",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "Tangent drawn from point $(2,6)$ to the circle $x^2+y^2=20$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ee54f00411dd7512115e6b1ef4c96c0e",
+      "kind": "value",
+      "answer": "2x+y=10 and -x+2y=10",
+      "solution": [
+        "Let the point of tangency be (a, b); the tangent is $ax+by=20$.",
+        "Through (2, 6): $2a+6b=20$, so $a=10-3b$.",
+        "$(10-3b)^2+b^2=20$ gives $b=2$ or $4$.",
+        "$b=2$ gives $a=4$; $b=4$ gives $a=-2$.",
+        "Tangents: $4x+2y=20$ i.e. $2x+y=10$, and $-2x+4y=20$ i.e. $-x+2y=10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "4x+2y=20 (2x+y=10) and -2x+4y=20 (-x+2y=10)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-7",
+      "record_id": "eb11c4-3:challenge-7",
+      "part": null,
+      "type": "exercise",
+      "page": 194,
+      "question": {
+        "text": "An autonomous delivery drone is navigating an industrial yard. The yard contains a circular high-voltage storage tank centered at the origin, with its hazard zone modeled by the equation $x^2+y^2=20$. The drone is currently hovering at a staging point mapped at the coordinates P(2, 6). To safely inspect the perimeter without entering the hazard zone, the drone must align its optical sensors along a path that is perfectly tangent to the circle from its current position. Find the equations of the two available tangent sightlines the drone can utilize, and pinpoint the exact coordinates where these lines touch the boundary of the hazard zone.",
+        "stem": "",
+        "notes": "Figure in k12 belongs to the Challenge box. Photo labels: P appears at left of image though P(2,6) is in the text; verify."
+      },
+      "needs_page": true,
+      "question_fingerprint": "aff62e44e666dfa503713e2daedf2280",
+      "kind": "value",
+      "answer": "Tangents: 2x+y=10 touching at (4, 2); -x+2y=10 touching at (-2, 4)",
+      "solution": [
+        "P(2,6) is not on the circle, so let the point of tangency be $(a,b)$; the tangent is $ax+by=20$.",
+        "It passes through $(2,6)$: $2a+6b=20$, so $a=10-3b$ ...(i).",
+        "$(a,b)$ is on the circle: $a^2+b^2=20$ ...(ii).",
+        "Substitute: $(10-3b)^2+b^2=20$ gives $b^2-6b+8=0$, so $b=2,4$.",
+        "When $b=2$, $a=4$; when $b=4$, $a=-2$.",
+        "Tangent at $(4,2)$: $4x+2y=20$, i.e. $2x+y=10$.",
+        "Tangent at $(-2,4)$: $-2x+4y=20$, i.e. $-x+2y=10$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-16",
+        "eb11c4-3:rule-17",
+        "eb11c4-3:explanation-6"
+      ],
+      "checks": {
+        "resolve_answer": "Tangents: $2x+y=10$ and $-x+2y=10$; touching points (4, 2) and (-2, 4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-18",
+      "record_id": "eb11c4-3:warm-up-18",
+      "part": null,
+      "type": "exercise",
+      "page": 195,
+      "question": {
+        "text": "State the positional relationship between the circle $x^2+y^2=4$ and the circle $(x-4)^2+y^2=9$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c9f494e345cca45f54adbbd861855428",
+      "kind": "value",
+      "answer": "They intersect at 2 points",
+      "solution": [
+        "Centers (0,0) and (4,0), so $d=4$.",
+        "Radii: $r=3$, $r'=2$.",
+        "$3-2<4<3+2$, so $r-r'<d<r+r'$.",
+        "The circles intersect at 2 points."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-20",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "The circles intersect at 2 points",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-19",
+      "record_id": "eb11c4-3:warm-up-19",
+      "part": null,
+      "type": "exercise",
+      "page": 195,
+      "question": {
+        "text": "Find the equation of the circle with center $(3,1)$ that touches the circle $(x-1)^2+(y+3)^2=5$ internally.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e7c1daef6db939a31fde6ec9b8389104",
+      "kind": "value",
+      "answer": "(x-3)^2+(y-1)^2=45",
+      "solution": [
+        "The given circle has center (1, −3) and radius $\\sqrt5$.",
+        "$d=\\sqrt{(3-1)^2+(1+3)^2}=2\\sqrt5$.",
+        "Internal touching: $r-r'=d$, so $r-\\sqrt5=2\\sqrt5$ and $r=3\\sqrt5$.",
+        "The equation is $(x-3)^2+(y-1)^2=45$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-21",
+        "eb11c4-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x-3)^2+(y-1)^2=45",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-19:a",
+      "record_id": "eb11c4-3:try-19",
+      "part": "a",
+      "type": "exercise",
+      "page": 196,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter. Options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points.",
+        "stem": "Circle $x^2+y^2=9$ and circle $(x-3)^2+(y-4)^2=4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f3cee843398fa3379127b38ae372b920",
+      "kind": "value",
+      "answer": "B",
+      "solution": [
+        "Centers: $(0,0)$ and $(3,4)$; $d=\\sqrt{3^2+4^2}=5$.",
+        "Radii: $r=3$ and $r'=2$.",
+        "$r+r'=5=d$, so the circles touch externally.",
+        "Answer: B."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-19",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "B",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-19:b",
+      "record_id": "eb11c4-3:try-19",
+      "part": "b",
+      "type": "exercise",
+      "page": 196,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter. Options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points.",
+        "stem": "Circle $(x-1)^2+y^2=52$ and circle $x^2+y^2+2x-6y=3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f733d2f4a6e63e014c29d63ad0e1211c",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+        "First circle: center $(1,0)$, $r=\\sqrt{52}=2\\sqrt{13}$.",
+        "Second: complete the square: $(x+1)^2+(y-3)^2=13$, center $(-1,3)$, $r'=\\sqrt{13}$.",
+        "$d=\\sqrt{(1+1)^2+(0-3)^2}=\\sqrt{13}$.",
+        "$r-r'=2\\sqrt{13}-\\sqrt{13}=\\sqrt{13}=d$, so the circles touch internally.",
+        "Answer: C."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-21",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "C",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-20",
+      "record_id": "eb11c4-3:try-20",
+      "part": null,
+      "type": "exercise",
+      "page": 196,
+      "question": {
+        "text": "Find the equation of the circle with center $(-3,-9)$ that touches the circle $(x+6)^2+(y+5)^2=1$ externally.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c5b9a74b335494f2a2dd83ce0a3b1986",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+9)^2=16",
+      "solution": [
+        "The given circle has center (−6, −5) and radius 1.",
+        "$d=\\sqrt{(-3+6)^2+(-9+5)^2}=5$.",
+        "External touching: $r+r'=d$, so $r+1=5$ and $r=4$.",
+        "The equation is $(x+3)^2+(y+9)^2=16$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-19",
+        "eb11c4-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x+3)^2+(y+9)^2=16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-47",
+      "record_id": "eb11c4-3:exercise-47",
+      "part": null,
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": "Exercise heading box with intro line; questions 1 and 2 follow as separate records."
+      },
+      "needs_page": true,
+      "question_fingerprint": "434cab32dea8e176a191c22f6b4ecaa2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are the separate questions 1 and 2.",
+      "solution": [
+        "The record holds no circles to work with.",
+        "Answer exercise-48 and exercise-49 instead."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-48 and exercise-49.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-48:a",
+      "record_id": "eb11c4-3:exercise-48",
+      "part": "a",
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter.",
+        "stem": "Circle $x^2+y^2=4$ and circle $(x-1)^2+y^2=1$",
+        "notes": "Followed by a box of options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ba501f4c273bcf588e15e5923c99f183",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+        "Centers $(0,0)$ and $(1,0)$; $d=1$.",
+        "Radii $r=2$, $r'=1$.",
+        "$r-r'=1=d$, so the circles touch internally.",
+        "Answer: C."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-21",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "C",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-48:b",
+      "record_id": "eb11c4-3:exercise-48",
+      "part": "b",
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter.",
+        "stem": "Circle $x^2+y^2=18$ and circle $(x+2)^2+(y-2)^2=2$",
+        "notes": "Followed by a box of options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points."
+      },
+      "needs_page": true,
+      "question_fingerprint": "739c8c75b65b5f2726bae5e7eb622cec",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+        "Centers $(0,0)$ and $(-2,2)$; $d=\\sqrt{8}=2\\sqrt2$.",
+        "Radii $r=\\sqrt{18}=3\\sqrt2$, $r'=\\sqrt2$.",
+        "$r-r'=2\\sqrt2=d$, so the circles touch internally.",
+        "Answer: C."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-21",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "C",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-48:c",
+      "record_id": "eb11c4-3:exercise-48",
+      "part": "c",
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter.",
+        "stem": "Circle $(x+3)^2+y^2=16$ and circle $x^2+y^2-2x-8y-8=0$",
+        "notes": "Followed by a box of options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points."
+      },
+      "needs_page": true,
+      "question_fingerprint": "7f80e58c398cf60668145c4320f69f4d",
+      "kind": "value",
+      "answer": "E",
+      "solution": [
+        "First circle: center $(-3,0)$, $r=4$.",
+        "Second: complete the square: $(x-1)^2+(y-4)^2=25$, center $(1,4)$, $r'=5$.",
+        "$d=\\sqrt{4^2+4^2}=4\\sqrt2\\approx5.66$.",
+        "$r'-r=1<d<9=r+r'$, so the circles intersect at 2 points.",
+        "Answer: E."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-20",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "E",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-48:d",
+      "record_id": "eb11c4-3:exercise-48",
+      "part": "d",
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Choose the positional relationship of the following 2 circles from A to E, and answer with the letter.",
+        "stem": "Circle $x^2+(y-3)^2=45$ and circle $x^2+y^2+2x-2y=3$",
+        "notes": "Followed by a box of options: A. Are external to each other; B. Touch externally; C. Touch internally; D. One is inside the other; E. Intersect at 2 points."
+      },
+      "needs_page": true,
+      "question_fingerprint": "0580240f9e65cddb7b22103faca406d0",
+      "kind": "value",
+      "answer": "D",
+      "solution": [
+        "First circle: center $(0,3)$, $r=\\sqrt{45}=3\\sqrt5$.",
+        "Second: complete the square: $(x+1)^2+(y-1)^2=5$, center $(-1,1)$, $r'=\\sqrt5$.",
+        "$d=\\sqrt{1+4}=\\sqrt5$.",
+        "$r-r'=2\\sqrt5>\\sqrt5=d$, so one circle is inside the other.",
+        "Answer: D."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-22",
+        "eb11c4-3:rule-9",
+        "eb11c4-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "D",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-49",
+      "record_id": "eb11c4-3:exercise-49",
+      "part": null,
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Find the equation of the circle with center $(3,-9)$ that touches the circle $(x-3)^2+y^2=9$ internally.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dcec3a694e059aae7a1a3f94b0145e52",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+9)^2=144",
+      "solution": [
+        "The given circle has center (3, 0) and radius 3.",
+        "$d=9$.",
+        "Internal touching: $r-r'=d$, so $r-3=9$ and $r=12$.",
+        "The equation is $(x-3)^2+(y+9)^2=144$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-21",
+        "eb11c4-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "(x-3)^2+(y+9)^2=144",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-8",
+      "record_id": "eb11c4-3:challenge-8",
+      "part": null,
+      "type": "exercise",
+      "page": 197,
+      "question": {
+        "text": "Find the equation of the circle with center $(-1,-2)$ that touches the circle $x^2+y^2-4x-4y+4=0$ externally.",
+        "stem": "",
+        "notes": "Boxed Challenge (star heading)."
+      },
+      "needs_page": false,
+      "question_fingerprint": "a57d35e6abb3ccc3e5dcacee625b0789",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=9",
+      "solution": [
+        "Complete the square: $(x-2)^2+(y-2)^2=4$, center (2, 2), radius 2.",
+        "$d=\\sqrt{(-1-2)^2+(-2-2)^2}=5$.",
+        "External touching: $r+2=5$, so $r=3$.",
+        "The equation is $(x+1)^2+(y+2)^2=9$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-3",
+        "eb11c4-3:rule-19"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)^2+(y+2)^2=9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-20",
+      "record_id": "eb11c4-3:warm-up-20",
+      "part": null,
+      "type": "exercise",
+      "page": 198,
+      "question": {
+        "text": "Find the equation of the line passing through the points of intersection of the circles $x^2+y^2=4$ and $x^2+y^2+2x-4y=9$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6523abb80646f28076b164bc88c78203",
+      "kind": "value",
+      "answer": "y=(1/2)x-5/4",
+      "solution": [
+        "Subtract (ii) from (i): $-2x+4y=-5$.",
+        "$y=\\frac12x-\\frac54$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-7",
+        "eb11c4-3:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "y = x/2 - 5/4 (i.e. 2x-4y=5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-21",
+      "record_id": "eb11c4-3:warm-up-21",
+      "part": null,
+      "type": "exercise",
+      "page": 198,
+      "question": {
+        "text": "Find the coordinates of the points of intersection of the circles $x^2+y^2=10$ and $x^2+y^2+2x-y=5$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8048d19f8b33489207f82ab0c897ebd5",
+      "kind": "value",
+      "answer": "(-3,-1), (-1,3)",
+      "solution": [
+        "Subtract: $-2x+y=5$, so $y=2x+5$.",
+        "Substitute into $x^2+y^2=10$: $5x^2+20x+15=0$, so $x=-3$ or $-1$.",
+        "$x=-3$ gives $y=-1$; $x=-1$ gives $y=3$.",
+        "The points are (−3, −1) and (−1, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-8",
+        "eb11c4-3:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "(-3, -1), (-1, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-21",
+      "record_id": "eb11c4-3:try-21",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5427c644c2ddda6a28176d0f470b5085",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are try-22 and try-23.",
+      "solution": [
+        "The record holds no circles to work with.",
+        "Answer try-22 and try-23 instead."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the instruction line; the questions are try-22 and try-23.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-22",
+      "record_id": "eb11c4-3:try-22",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Find the equation of the line passing through the points of intersection of the circles $x^2+y^2=6$ and $x^2+y^2+3x+3y=9$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "92af64137cd3ddbef0d3186ef7746810",
+      "kind": "value",
+      "answer": "x+y=1",
+      "solution": [
+        "Subtract the second equation from the first: $-3x-3y=-3$.",
+        "$x+y=1$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:explanation-7",
+        "eb11c4-3:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x+y=1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-23",
+      "record_id": "eb11c4-3:try-23",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Find the coordinates of the points of intersection of the circles $x^2+y^2=4$ and $(x-4)^2+(y-2)^2=16$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "88f7a7daf8d5fedf4742dbc955ee4e43",
+      "kind": "value",
+      "answer": "(0,2), (8/5,-6/5)",
+      "solution": [
+        "Expand the second: $x^2+y^2-8x-4y+4=0$. With $x^2+y^2=4$: $8-8x-4y=0$, so $y=2-2x$.",
+        "Substitute into $x^2+y^2=4$: $5x^2-8x=0$, so $x=0$ or $\\frac85$.",
+        "$x=0$ gives $y=2$; $x=\\frac85$ gives $y=-\\frac65$.",
+        "The points are (0, 2) and (8/5, −6/5)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-8"
+      ],
+      "checks": {
+        "resolve_answer": "(0, 2), (8/5, -6/5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-50",
+      "record_id": "eb11c4-3:exercise-50",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5427c644c2ddda6a28176d0f470b5085",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are exercise-51 and exercise-52.",
+      "solution": [
+        "The record holds no circles to work with.",
+        "Answer exercise-51 and exercise-52 instead."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-51 and exercise-52.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-51:a",
+      "record_id": "eb11c4-3:exercise-51",
+      "part": "a",
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Find the equation of the line passing through the points of intersection of the following 2 circles.",
+        "stem": "The circles $x^2+y^2=10$ and $x^2+y^2-12x+6y=3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5a21420d4fe58dc7470a322d2b53c8ce",
+      "kind": "value",
+      "answer": "12x-6y-7=0 (that is, y=2x-7/6)",
+      "solution": [
+        "Write the equations: $x^2+y^2-10=0$ ...(i) and $x^2+y^2-12x+6y-3=0$ ...(ii).",
+        "Subtract (ii) from (i): $12x-6y-7=0$.",
+        "The line is $12x-6y-7=0$, i.e. $y=2x-\\frac76$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-7"
+      ],
+      "checks": {
+        "resolve_answer": "$12x-6y-7=0$ (i.e. $y=2x-\\frac{7}{6}$)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-51:b",
+      "record_id": "eb11c4-3:exercise-51",
+      "part": "b",
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Find the equation of the line passing through the points of intersection of the following 2 circles.",
+        "stem": "The circles $x^2+y^2=4$ and $(x-1)^2+y^2=4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7f3363d967335333473187615b08e3cb",
+      "kind": "value",
+      "answer": "x=1/2",
+      "solution": [
+        "Expand: $(x-1)^2+y^2=4$ becomes $x^2+y^2-2x-3=0$ ...(ii); the first is $x^2+y^2-4=0$ ...(i).",
+        "Subtract (ii) from (i): $2x-1=0$.",
+        "The line is $x=\\frac12$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-7"
+      ],
+      "checks": {
+        "resolve_answer": "$x=\\frac{1}{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-52",
+      "record_id": "eb11c4-3:exercise-52",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Find the coordinates of the points of intersection of the circles $x^2+y^2=5$ and $(x-2)^2+(y-2)^2=1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f276bcea6bea9e089b362a27cc69647d",
+      "kind": "value",
+      "answer": "(1,2), (2,1)",
+      "solution": [
+        "Expand the second: $x^2+y^2-4x-4y+7=0$. With $x^2+y^2=5$: $12-4x-4y=0$, so $y=3-x$.",
+        "Substitute into $x^2+y^2=5$: $2x^2-6x+4=0$, so $x=1$ or $2$.",
+        "$x=1$ gives $y=2$; $x=2$ gives $y=1$.",
+        "The points are (1, 2) and (2, 1)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-8"
+      ],
+      "checks": {
+        "resolve_answer": "(1, 2), (2, 1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-9",
+      "record_id": "eb11c4-3:challenge-9",
+      "part": null,
+      "type": "exercise",
+      "page": 199,
+      "question": {
+        "text": "Two omnidirectional radar stations are tracking a drone. Station Alpha is covering the range of $x^2+y^2=25$. Station Beta is covering the range of $(x+5)^2+(y+5)^2=65$. To pinpoint the exact locations where the drone transitions between both radar perimeters, find the intersection points of their signal boundaries.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "26b407ed3eb77a65411bbbd67cab3c12",
+      "kind": "value",
+      "answer": "(3,-4), (-4,3)",
+      "solution": [
+        "Expand Beta: $x^2+y^2+10x+10y+50=65$. With $x^2+y^2=25$: $10x+10y=-10$, so $y=-1-x$.",
+        "Substitute into $x^2+y^2=25$: $x^2+x-12=0$, so $x=3$ or $-4$.",
+        "$x=3$ gives $y=-4$; $x=-4$ gives $y=3$.",
+        "The points are (3, −4) and (−4, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:method-4",
+        "eb11c4-3:explanation-8"
+      ],
+      "checks": {
+        "resolve_answer": "(3, -4), (-4, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:warm-up-22",
+      "record_id": "eb11c4-3:warm-up-22",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Find the equation of the circle passing through the points of intersection of two circles $x^2+y^2-2x-6y+5=0$ and $x^2+y^2=5$, and point $(3,0)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8a6947e807ba35eeaa557d8e27c862ba",
+      "kind": "value",
+      "answer": "x^2+y^2+2x+6y-15=0",
+      "solution": [
+        "Write $k(x^2+y^2-2x-6y+5)+(x^2+y^2-5)=0$.",
+        "Through (3, 0): $8k+4=0$, so $k=-\\frac12$.",
+        "Substitute: $\\frac12x^2+\\frac12y^2+x+3y-\\frac{15}2=0$.",
+        "Make the coefficients of $x^2$ and $y^2$ equal 1: $x^2+y^2+2x+6y-15=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2+2x+6y-15=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:try-24",
+      "record_id": "eb11c4-3:try-24",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Find the equation of the circle passing through the points of intersection of two circles $x^2+y^2-4x-2y-8=0$ and $x^2+y^2=4$, and the origin.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c0210190cd798a599dbbc8af9d8b211f",
+      "kind": "value",
+      "answer": "x^2+y^2+4x+2y=0",
+      "solution": [
+        "Write $k(x^2+y^2-4x-2y-8)+(x^2+y^2-4)=0$.",
+        "Through the origin: $-8k-4=0$, so $k=-\\frac12$.",
+        "Substitute: $\\frac12x^2+\\frac12y^2+2x+y=0$.",
+        "Multiply by 2: $x^2+y^2+4x+2y=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2+4x+2y=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-53",
+      "record_id": "eb11c4-3:exercise-53",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Solve the following problems. Find the equation of the circle passing through the points of intersection of 2 circles $x^2+y^2-2x-4y+3=0$ and $x^2+y^2=4$, and point $(3,0)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "176ae32d9d4d70c0518f69a7927924dc",
+      "kind": "value",
+      "answer": "x^2+y^2+10x+20y-39=0",
+      "solution": [
+        "Write $k(x^2+y^2-2x-4y+3)+(x^2+y^2-4)=0$ ...(i).",
+        "It passes through $(3,0)$: $k(9-6+3)+9-4=0$, so $6k+5=0$, $k=-\\frac56$.",
+        "Substitute into (i) and multiply by 6: $-5(x^2+y^2-2x-4y+3)+6(x^2+y^2-4)=0$.",
+        "Simplify: $x^2+y^2+10x+20y-39=0$ (coefficients of $x^2$ and $y^2$ are 1)."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "$x^2+y^2+10x+20y-39=0$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-54",
+      "record_id": "eb11c4-3:exercise-54",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Find the equation of the circle passing through the points of intersection of 2 circles $x^2+y^2-6x-8y=0$ and $x^2+y^2-1=0$, and point $(-3,2)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "59e1b9977214d12c724ae83770a23352",
+      "kind": "value",
+      "answer": "x^2+y^2+24x+32y-5=0",
+      "solution": [
+        "Write $k(x^2+y^2-6x-8y)+(x^2+y^2-1)=0$.",
+        "Through (−3, 2): $15k+12=0$, so $k=-\\frac45$.",
+        "Substitute: $\\frac15x^2+\\frac15y^2+\\frac{24}5x+\\frac{32}5y-1=0$.",
+        "Multiply by 5: $x^2+y^2+24x+32y-5=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2+24x+32y-5=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:exercise-55",
+      "record_id": "eb11c4-3:exercise-55",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Find the equation of the circle passing through the points of intersection of 2 circles $x^2+y^2-2x-2y=0$ and $x^2+y^2-6x-4y+12=0$, and point $(4,0)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0a109367fd33cc2aa873042d6b4f18a4",
+      "kind": "value",
+      "answer": "x^2+y^2-10x-6y+24=0",
+      "solution": [
+        "Write $k(x^2+y^2-2x-2y)+(x^2+y^2-6x-4y+12)=0$.",
+        "Through (4, 0): $8k+4=0$, so $k=-\\frac12$.",
+        "Substitute: $\\frac12x^2+\\frac12y^2-5x-3y+12=0$.",
+        "Multiply by 2: $x^2+y^2-10x-6y+24=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "x^2+y^2-10x-6y+24=0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-3:challenge-10",
+      "record_id": "eb11c4-3:challenge-10",
+      "part": null,
+      "type": "exercise",
+      "page": 200,
+      "question": {
+        "text": "Find the equation of the circle passing through the points of intersection of 2 circles $x^2+y^2-2x-6y+6=0$ and $x^2+y^2+4x-2y-11=0$, and point $(2,2)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "89cf2cce6b24847eb106bfe13e61461e",
+      "kind": "value",
+      "answer": "3x^2+3y^2+6x-10y-16=0",
+      "solution": [
+        "Write $k(x^2+y^2-2x-6y+6)+(x^2+y^2+4x-2y-11)=0$.",
+        "Through (2, 2): $-2k+1=0$, so $k=\\frac12$.",
+        "Substitute: $\\frac32x^2+\\frac32y^2+3x-5y-8=0$.",
+        "Multiply by 2: $3x^2+3y^2+6x-10y-16=0$; dividing by 3 gives coefficient 1: $x^2+y^2+2x-\\frac{10}3y-\\frac{16}3=0$."
+      ],
+      "grounded_in": [
+        "eb11c4-3:rule-23",
+        "eb11c4-3:caution-3"
+      ],
+      "checks": {
+        "resolve_answer": "3x^2+3y^2+6x-10y-16=0 (i.e. x^2+y^2+2x-(10/3)y-16/3=0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:37:58+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

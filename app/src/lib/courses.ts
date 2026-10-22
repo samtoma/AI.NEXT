@@ -64,6 +64,11 @@ export const PREP3_ARABIC_AR = "course:prep3-arabic-ar";
  * this is the id the app gates, orders and labels by.
  */
 export const US_G10_MATH_EN = "course:us-g10-math-en";
+/**
+ * Grade 11 Mathematics, Egyptian Baccalaureate (2nd year), Part One — the
+ * book-record ingestion of 2026-10-21 (books/egb-g11-math.json).
+ */
+export const EGB_G11_MATH_EN = "course:egb-g11-math-en";
 
 /* ------------------------------------------------------------------ */
 /* The shape                                                           */
@@ -526,6 +531,38 @@ export const COURSES = {
       exampleFallbacks: null,
       askExamples: null,
       // Answer 9 (decisions.md #30, 2026-09-25): English only — no Arabic phrase in any prompt.
+      arabicTouches: false,
+    },
+  },
+  [EGB_G11_MATH_EN]: {
+    subject: "math-en",
+    curriculum: "eg-baccalaureate-en",
+    grades: ["11"],
+    label: "Mathematics — Grade 11 (Egyptian Baccalaureate)",
+    cardLabel: "Mathematics — Grade 11",
+    book: "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    cite: { name: "Mathematics II", edition: "Egyptian Baccalaureate · Grade XI, Part One" },
+    homeCopy: {
+      source: "Mathematics II, the Egyptian Baccalaureate Grade XI textbook (Part One)",
+      syllabus: "Mathematics II · Grade XI, Part One",
+    },
+    pipelineBook: "egb-g11-math",
+    // Part One only, four chapters and no printed school terms.
+    terms: null,
+    probing: false,
+    // As the Grade 10 course: the book's own name and printed lesson titles, no
+    // National example ids, the widgets of its own lessons' live widget questions.
+    tutor: {
+      lessonBookName: "this book",
+      askBookFallback: "this book",
+      lessonRefLead: "section",
+      syllabusLine: null,
+      lessonTitles: null,
+      bookLessonTitles: true,
+      figureLedSlugPrefix: null,
+      lessonWidgets: "module-questions",
+      exampleFallbacks: null,
+      askExamples: null,
       arabicTouches: false,
     },
   },

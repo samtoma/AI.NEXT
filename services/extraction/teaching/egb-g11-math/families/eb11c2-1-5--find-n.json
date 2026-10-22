@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-1-5:find-n",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-1-5",
+ "parent_question_id": "q:eb11c2-1-5:bk-warm-up-8",
+ "source_page": 54,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "require": "2*a - d >= 2",
+   "why": "keeps the linear coefficient positive and not 1"
+  },
+  {
+   "name": "N",
+   "randint": [
+    4,
+    12
+   ]
+  },
+  {
+   "name": "S",
+   "let": "N * (2*a + (N-1)*d) / 2"
+  },
+  {
+   "name": "o",
+   "let": "-2*S / (d*N)"
+  }
+ ],
+ "constraints": [],
+ "stem": "In an arithmetic sequence with the first term ${=a}$ and the common difference ${=d}$, find how many terms from the first term sum up to ${=S}$.",
+ "answer": "N",
+ "solution": [
+  "$a={=a}$, $d={=d}$ and $S_n={=S}$.",
+  "$S_n=\\frac12n\\{2a+(n-1)d\\}$, so ${=S}=\\frac12n\\{{=2*a}+(n-1)\\times{=d}\\}$.",
+  "Multiply out: ${=d}n^2+{=2*a-d}n-{=2*S}=0$.",
+  "Solving gives $n={=N}$ or $n={=o}$.",
+  "$n$ must be a natural number, so $n={=N}$."
+ ],
+ "notes": "Basic: positive a and d so the second root is always negative; one quadratic, mirrors warm-up-8."
+}

@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-2:minus-five",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-2",
+ "parent_question_id": "q:eb11c1-1-2:bk-exercise-2-h",
+ "source_page": 6,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "require": "p != q",
+   "why": "keep the two coefficients different"
+  },
+  {
+   "name": "c0",
+   "let": "p**5"
+  },
+  {
+   "name": "c1",
+   "let": "5*p**4*q"
+  },
+  {
+   "name": "c2",
+   "let": "10*p**3*q**2"
+  },
+  {
+   "name": "c3",
+   "let": "10*p**2*q**3"
+  },
+  {
+   "name": "c4",
+   "let": "5*p*q**4"
+  },
+  {
+   "name": "c5",
+   "let": "q**5"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the expansion of $({=p}x-{=q}y)^5$.",
+ "answer": "{=c0}x^5 - {=c1}x^4y + {=c2}x^3y^2 - {=c3}x^2y^3 + {=c4}xy^4 - {=c5}y^5",
+ "solution": [
+  "$({=p}x-{=q}y)^5 = {}^5C_0 ({=p}x)^5 + {}^5C_1 ({=p}x)^4(-{=q}y) + {}^5C_2 ({=p}x)^3(-{=q}y)^2 + {}^5C_3 ({=p}x)^2(-{=q}y)^3 + {}^5C_4 ({=p}x)(-{=q}y)^4 + {}^5C_5 (-{=q}y)^5$.",
+  "The combinations are 1, 5, 10, 10, 5, 1.",
+  "Terms: ${=c0}x^5$; $5\\cdot{=p**4}\\cdot{=q} = {=c1}$; $10\\cdot{=p**3}\\cdot{=q**2} = {=c2}$; $10\\cdot{=p**2}\\cdot{=q**3} = {=c3}$; $5\\cdot{=p}\\cdot{=q**4} = {=c4}$; ${=q}^5 = {=c5}$. The signs alternate because $-{=q}y$ is raised to odd and even powers.",
+  "The expansion is ${=c0}x^5 - {=c1}x^4y + {=c2}x^3y^2 - {=c3}x^2y^3 + {=c4}xy^4 - {=c5}y^5$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=c0}*x^5 - {=c1}*x^4*y + {=c2}*x^3*y^2 - {=c3}*x^2*y^3 + {=c4}*x*y^4 - {=c5}*y^5",
+  "form": "expanded",
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: both terms have coefficients and the second is negative, n=5, as in book (2x-3y)^6. Largest coefficient 3840."
+}

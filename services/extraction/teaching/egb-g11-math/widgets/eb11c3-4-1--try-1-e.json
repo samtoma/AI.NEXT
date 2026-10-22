@@ -1,0 +1,49 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-4-1:try-1-e",
+ "lo_id": "lo:eb11c3-4-1",
+ "book_item": "eb11c3-4:try-1#e",
+ "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   1,
+   -1,
+   2,
+   -2
+  ]
+ },
+ "stem": "Solve $x^4-5x^2+4=0$. Tap every solution on the number line.",
+ "solution": [
+  "Only $x^4$, $x^2$ and a constant appear, so treat $x^2$ as a chunk: $(x^2)^2-5x^2+4=0$.",
+  "Factorise: $(x^2-1)(x^2-4)=0$.",
+  "$x^2=1$ gives $x=\\pm1$.",
+  "$x^2=4$ gives $x=\\pm2$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Each equation of the form $x^2=k$ with $k>0$ gives two solutions, one positive and one negative."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 2,
+   "text": "Solve each bracket separately: $x^2$ equals the number that makes that bracket zero."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 3,
+   "text": "Taking the square root gives both signs, so check each value has its partner."
+  }
+ ],
+ "notes": ""
+}

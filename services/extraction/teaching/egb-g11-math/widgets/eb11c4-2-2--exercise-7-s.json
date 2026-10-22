@@ -1,0 +1,45 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-2-2:exercise-7-s",
+ "lo_id": "lo:eb11c4-2-2",
+ "book_item": "eb11c4-2:exercise-7#s",
+ "parent_question_id": "q:eb11c4-2-2:bk-exercise-7-s",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "spec": {
+  "mode": "equation",
+  "m": 4,
+  "b": -2
+ },
+ "stem": "Find the line passing through the two points $(1, 2)$ and $(3, 10)$. Drag the two points so the line is that line.",
+ "solution": [
+  "Gradient: $\\frac{10-2}{3-1}=4$.",
+  "$y-2=4(x-1)$.",
+  "$y=4x-2$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "slope-inverted",
+   "step": 1,
+   "text": "Gradient is change in y over change in x, between the two given points."
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "step": 1,
+   "text": "Subtract the coordinates of the points in the same order top and bottom."
+  },
+  {
+   "predicate": "intercept-wrong",
+   "step": 2,
+   "text": "Use one of the given points in y − y₁ = m(x − x₁) to find where the line meets the y-axis."
+  },
+  {
+   "predicate": "off-target",
+   "step": 1,
+   "text": "Find the gradient from the two points first."
+  }
+ ],
+ "notes": "Points (1,2),(3,10) are off the default board, but the line has board points (0,-2),(1,2)."
+}

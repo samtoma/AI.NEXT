@@ -1,0 +1,178 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-5",
+  "source": "book-records/egb-g11-math/eb11c2-5.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 7,
+      "cost_usd": 0.0427,
+      "calls": [
+        {
+          "call": "check-printed.eb11c2-5",
+          "cost_usd": 0.0313,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c2-5",
+          "cost_usd": 0.0114,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c2-5:explanation-1",
+      "record_id": "eb11c2-5:explanation-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 92,
+      "printed": "$a_2=8,\\ a_3=26,\\ a_4=80$",
+      "blind": "a_2 = 8, a_3 = 26, a_4 = 80",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "ea950472ec8b0c8a1604f17edebadb4b",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-2:a",
+      "record_id": "eb11c2-5:explanation-2",
+      "part": "a",
+      "type": "worked_example",
+      "page": 92,
+      "printed": "$a_n=5n-6$",
+      "blind": "CANNOT ANSWER: the sequences of Warm Up 2 (part a) are not given in the question or the lesson text.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "658123bbe0cd1e308aa776c9f604e47d",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequences of Warm Up 2 (part a) are not given in the question or the lesson text.",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-2:b",
+      "record_id": "eb11c2-5:explanation-2",
+      "part": "b",
+      "type": "worked_example",
+      "page": 92,
+      "printed": "$a_n=2\\times3^{n-1}$",
+      "blind": "CANNOT ANSWER: the sequences of Warm Up 2 (part b) are not given in the question or the lesson text.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "4d1b968c8159dfd40c4a63a0656d88f8",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequences of Warm Up 2 (part b) are not given in the question or the lesson text.",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-3",
+      "record_id": "eb11c2-5:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 94,
+      "printed": "$a_n=(n-2)^2$",
+      "blind": "a_n = n^2 - 4n + 4 = (n-2)^2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "8f9d7d3b73eee35470353a5e461d4039",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-5:explanation-3",
+        "verdict": "equivalent",
+        "reason": "Both give a_n=(n-2)^2; the solver's expansion is the same."
+      },
+      "how": "judged equivalent: Both give a_n=(n-2)^2; the solver's expansion is the same.",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-4",
+      "record_id": "eb11c2-5:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 96,
+      "printed": "$a_n=3^n-2$",
+      "blind": "a_n = 3^n - 2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "c43362fd76dfd79a30934b8c85dace6c",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-5",
+      "record_id": "eb11c2-5:explanation-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 104,
+      "printed": "$a_n=n+2$",
+      "blind": "a_2 = 4, a_3 = 5, a_4 = 6; estimate a_n = n + 2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "01f82e276d8f34e3d421aea71f16888e",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-5:explanation-5",
+        "verdict": "equivalent",
+        "reason": "Both estimate a_n=n+2; the solver also lists a_2=4, a_3=5, a_4=6, which agree with it."
+      },
+      "how": "judged equivalent: Both estimate a_n=n+2; the solver also lists a_2=4, a_3=5, a_4=6, which agree with it.",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-5:explanation-6",
+      "record_id": "eb11c2-5:explanation-6",
+      "part": null,
+      "type": "worked_example",
+      "page": 104,
+      "printed": "The estimation $a_n=n+2$ is correct",
+      "blind": "[1] n=1: a_1=3=1+2, so (A) holds. [2] Assume a_k=k+2. Then a_{k+1}=(a_k^2-1)/(k+1)=((k+2)^2-1)/(k+1)=(k^2+4k+3)/(k+1)=(k+1)(k+3)/(k+1)=k+3=(k+1)+2, so (A) holds for n=k+1. By [1] and [2], a_n=n+2 holds for all natural numbers n.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "166e2d631f6bc7c200e70ca99bd05d6f",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-5:explanation-6",
+        "verdict": "equivalent",
+        "reason": "The solver proves by induction that a_n=n+2 holds, which is the printed conclusion."
+      },
+      "how": "judged equivalent: The solver proves by induction that a_n=n+2 holds, which is the printed conclusion.",
+      "made": {
+        "at": "2026-10-21T14:17:15+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

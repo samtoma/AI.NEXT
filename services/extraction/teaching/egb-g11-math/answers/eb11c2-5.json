@@ -1,0 +1,3013 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-5",
+  "source": "book-records/egb-g11-math/eb11c2-5.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 77,
+      "cost_usd": 1.3926,
+      "calls": [
+        {
+          "call": "answers.eb11c2-5",
+          "cost_usd": 1.3926,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c2-5:guiding-question-1",
+      "record_id": "eb11c2-5:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 91,
+      "question": {
+        "text": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c818928892645a8d107a1c90ded2f257",
+      "kind": "explanation",
+      "answer": "By mathematical induction: show the pattern holds at the start, then show that if it holds at one step it holds at the next.",
+      "solution": [
+        "A recurrence relation gives each term from the one before it.",
+        "[1] Show the statement is true for the first case, n = 1.",
+        "[2] Assume it is true for n = k, then show it must be true for n = k + 1.",
+        "Then it is true for 1, so for 2, so for 3, and so on forever.",
+        "So the process stays predictable for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:definition-1",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "By mathematical induction: show the pattern holds at the start (n=1), then show that if it holds for n=k it must hold for n=k+1. The step then carries on forever, so the pattern holds for every n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-1",
+      "record_id": "eb11c2-5:warm-up-1",
+      "part": null,
+      "type": "exercise",
+      "page": 92,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1 = 2,\\ a_{n+1} = 3a_n + 2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3bf01a03cc24aa40c7482a67e63006a6",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 26, a_4 = 80",
+      "solution": [
+        "Put n=1: a_2 = 3×2+2 = 8.",
+        "Put n=2: a_3 = 3×8+2 = 26.",
+        "Put n=3: a_4 = 3×26+2 = 80.",
+        "So a_2 = 8, a_3 = 26, a_4 = 80."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 8, a_3 = 26, a_4 = 80",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-2:a",
+      "record_id": "eb11c2-5:warm-up-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 92,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = -1,\\ a_{n+1} = a_n + 5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c0fcdc0f25f329672776398619ed4855",
+      "kind": "value",
+      "answer": "a_n = 5n - 6",
+      "solution": [
+        "a_{n+1}=a_n+5 is an arithmetic sequence with first term -1 and common difference 5.",
+        "a_n = -1+(n-1)×5.",
+        "a_n = 5n-6."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4",
+        "eb11c2-5:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 5n - 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-2:b",
+      "record_id": "eb11c2-5:warm-up-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 92,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 2,\\ a_{n+1} = 3a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ce11e1c5ec29331d357acc792429f385",
+      "kind": "value",
+      "answer": "a_n = 2×3^{n-1}",
+      "solution": [
+        "a_{n+1}=3a_n is a geometric sequence with first term 2 and common ratio 3.",
+        "a_n = 2×3^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5",
+        "eb11c2-5:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2·3^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-1",
+      "record_id": "eb11c2-5:try-1",
+      "part": null,
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b68a3f4e748fd0bb4cab22433f66e529",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Try 2 and Try 3.",
+      "solution": [
+        "The item has no problem of its own.",
+        "Answer Try 2 (parts a, b) and Try 3 (parts a to d) separately."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "This is only the instruction line; the answers are in Try 2 (terms) and Try 3 (general terms).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-2:a",
+      "record_id": "eb11c2-5:try-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-6,\\ a_{n+1}=2a_n+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "62b15e588ce1884bca6640b710fe92a3",
+      "kind": "value",
+      "answer": "a_2 = -9, a_3 = -15, a_4 = -27",
+      "solution": [
+        "a_2 = 2×(-6)+3 = -9.",
+        "a_3 = 2×(-9)+3 = -15.",
+        "a_4 = 2×(-15)+3 = -27.",
+        "So a_2 = -9, a_3 = -15, a_4 = -27."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = -9, a_3 = -15, a_4 = -27",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-2:b",
+      "record_id": "eb11c2-5:try-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=3a_n-n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "47693cd24c7984ef4586a83416f41a9f",
+      "kind": "value",
+      "answer": "a_2 = 5, a_3 = 13, a_4 = 36",
+      "solution": [
+        "n=1: a_2 = 3×2-1 = 5.",
+        "n=2: a_3 = 3×5-2 = 13.",
+        "n=3: a_4 = 3×13-3 = 36.",
+        "So a_2 = 5, a_3 = 13, a_4 = 36."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 5, a_3 = 13, a_4 = 36",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-3:a",
+      "record_id": "eb11c2-5:try-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=a_n+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1a42fda19abbf0e470399ab05a3e37de",
+      "kind": "value",
+      "answer": "a_n = 3n - 2",
+      "solution": [
+        "Arithmetic sequence, first term 1, common difference 3.",
+        "a_n = 1+(n-1)×3 = 3n-2."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-3:b",
+      "record_id": "eb11c2-5:try-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=4,\\ a_{n+1}=a_n-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "58af50f26f73defdc83c13a586e348b7",
+      "kind": "value",
+      "answer": "a_n = 6 - 2n",
+      "solution": [
+        "Arithmetic sequence, first term 4, common difference -2.",
+        "a_n = 4+(n-1)×(-2) = 6-2n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 6 - 2n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-3:c",
+      "record_id": "eb11c2-5:try-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=3,\\ a_{n+1}=5a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0aed0f4aa34a068c5f22a8837957edc8",
+      "kind": "value",
+      "answer": "a_n = 3×5^{n-1}",
+      "solution": [
+        "Geometric sequence, first term 3, common ratio 5.",
+        "a_n = 3×5^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3·5^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-3:d",
+      "record_id": "eb11c2-5:try-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-3,\\ a_{n+1}=-2a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "156347f579d66280747b59bbfe9f9c99",
+      "kind": "value",
+      "answer": "a_n = -3×(-2)^{n-1}",
+      "solution": [
+        "Geometric sequence, first term -3, common ratio -2.",
+        "a_n = -3×(-2)^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3·(-2)^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-1",
+      "record_id": "eb11c2-5:exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b68a3f4e748fd0bb4cab22433f66e529",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Exercise 2 and Exercise 3.",
+      "solution": [
+        "The item has no problem of its own.",
+        "Answer Exercise 2 (parts a to f) and Exercise 3 (parts a to h) separately."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "This is only the instruction line; the answers are in Exercise 2 (terms) and Exercise 3 (general terms).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:a",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=-2a_n+5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5c3d5771ff0486b2636926522d8bc8d3",
+      "kind": "value",
+      "answer": "a_2 = 3, a_3 = -1, a_4 = 7",
+      "solution": [
+        "a_2 = -2×1+5 = 3.",
+        "a_3 = -2×3+5 = -1.",
+        "a_4 = -2×(-1)+5 = 7."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 3, a_3 = -1, a_4 = 7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:b",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-6,\\ a_{n+1}=a_n+n^2-2n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b4965c149d0b3337e6afddedc9795a3e",
+      "kind": "value",
+      "answer": "a_2 = -7, a_3 = -7, a_4 = -4",
+      "solution": [
+        "n=1: a_2 = -6+1²-2×1 = -7.",
+        "n=2: a_3 = -7+2²-2×2 = -7.",
+        "n=3: a_4 = -7+3²-2×3 = -4."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = -7, a_3 = -7, a_4 = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:c",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=3,\\ a_{n+1}=3a_n-n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "413393a9a63f6a6cd0425907e992ba55",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 22, a_4 = 63",
+      "solution": [
+        "n=1: a_2 = 3×3-1 = 8.",
+        "n=2: a_3 = 3×8-2 = 22.",
+        "n=3: a_4 = 3×22-3 = 63."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 8, a_3 = 22, a_4 = 63",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:d",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-2,\\ a_{n+1}=a_n-n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4a0da373bc7fa6bed0038468969b450f",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -8",
+      "solution": [
+        "n=1: a_2 = -2-1 = -3.",
+        "n=2: a_3 = -3-2 = -5.",
+        "n=3: a_4 = -5-3 = -8."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = -3, a_3 = -5, a_4 = -8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:e",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "e",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dbd0da21fcb771ac744cb3f4ce1de024",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 8, a_4 = 14",
+      "solution": [
+        "n=1: a_2 = 2+2×1 = 4.",
+        "n=2: a_3 = 4+2×2 = 8.",
+        "n=3: a_4 = 8+2×3 = 14."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 4, a_3 = 8, a_4 = 14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-2:f",
+      "record_id": "eb11c2-5:exercise-2",
+      "part": "f",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-2,\\ a_{n+1}=a_n+3^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "191545f636168c123880e4e8155bbb48",
+      "kind": "value",
+      "answer": "a_2 = 1, a_3 = 10, a_4 = 37",
+      "solution": [
+        "n=1: a_2 = -2+3 = 1.",
+        "n=2: a_3 = 1+9 = 10.",
+        "n=3: a_4 = 10+27 = 37."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 1, a_3 = 10, a_4 = 37",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:a",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=a_n+6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "98228bfffd9d7f56a55afbcb04fee80e",
+      "kind": "value",
+      "answer": "a_n = 6n - 5",
+      "solution": [
+        "Arithmetic, first term 1, difference 6.",
+        "a_n = 1+(n-1)×6 = 6n-5."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 6n - 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:b",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=3,\\ a_{n+1}=a_n-5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "24f1bc5ad375b3990fda26d7a60c2431",
+      "kind": "value",
+      "answer": "a_n = 8 - 5n",
+      "solution": [
+        "Arithmetic, first term 3, difference -5.",
+        "a_n = 3+(n-1)×(-5) = 8-5n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8 - 5n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:c",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=4,\\ a_{n+1}=3a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cea26aa5c5f176697eedc795a90fa739",
+      "kind": "value",
+      "answer": "a_n = 4×3^{n-1}",
+      "solution": [
+        "Geometric, first term 4, ratio 3.",
+        "a_n = 4×3^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4·3^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:d",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=-5a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1232443a0291cffe38119a824ec49152",
+      "kind": "value",
+      "answer": "a_n = 2×(-5)^{n-1}",
+      "solution": [
+        "Geometric, first term 2, ratio -5.",
+        "a_n = 2×(-5)^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2·(-5)^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:e",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "e",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-2,\\ a_{n+1}=a_n+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "54c31afb428e65268d7a7fbe13ee7115",
+      "kind": "value",
+      "answer": "a_n = 3n - 5",
+      "solution": [
+        "Arithmetic, first term -2, difference 3.",
+        "a_n = -2+(n-1)×3 = 3n-5."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n - 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:f",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "f",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=4,\\ a_{n+1}=a_n-4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f92de1fabf3270f1c1ed202793603e22",
+      "kind": "value",
+      "answer": "a_n = 8 - 4n",
+      "solution": [
+        "Arithmetic, first term 4, difference -4.",
+        "a_n = 4+(n-1)×(-4) = 8-4n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8 - 4n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:g",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "g",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=4a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9910c22d3d70fe1203658a03bf5c303e",
+      "kind": "value",
+      "answer": "a_n = 4^{n-1}",
+      "solution": [
+        "Geometric, first term 1, ratio 4.",
+        "a_n = 1×4^{n-1} = 4^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-3:h",
+      "record_id": "eb11c2-5:exercise-3",
+      "part": "h",
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=-2,\\ a_{n+1}=-4a_n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3d79939e9d86d60739bbbe32ea11023a",
+      "kind": "value",
+      "answer": "a_n = -2×(-4)^{n-1}",
+      "solution": [
+        "Geometric, first term -2, ratio -4.",
+        "a_n = -2×(-4)^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -2·(-4)^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:challenge-1",
+      "record_id": "eb11c2-5:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 93,
+      "question": {
+        "text": "Solve the recurrence relation for $a_n$: $a_n=6a_{n-1}-11a_{n-2}+6a_{n-3}$ for $n\\ge 3$. Given initial conditions: $a_0=0$, $a_1=1$, and $a_2=6$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "92b7b2117dd9348ff422ced0c67e94fe",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this relation links three earlier terms, and the lesson only teaches a_{n+1}=a_n+d, a_{n+1}=ra_n, a_{n+1}=a_n+f(n) and a_{n+1}=pa_n+q.",
+      "solution": [
+        "The lesson's methods need a_{n+1} to depend on only one earlier term a_n.",
+        "This relation uses a_{n-1}, a_{n-2} and a_{n-3}, so none of those methods applies.",
+        "So it cannot be solved with the lesson's methods."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1",
+        "eb11c2-5:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 1/2 - 2·2^n + (3/2)·3^n (that is, a_n = (1 - 2^{n+2} + 3^{n+1})/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:work-with-a-partner-1",
+      "record_id": "eb11c2-5:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 93,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e42a1324897aea62e9379676c90c4568",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity telling students to work on the try section. It has no single answer of its own.",
+      "solution": [
+        "The activity only asks students to solve the try exercises together and discuss them.",
+        "The try exercises are answered under their own references."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Group activity with no single answer: solve the try problems with your partner (find the terms by substituting n=1,2,3 into the recurrence, and use the arithmetic or geometric general term formula), then compare answers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-3",
+      "record_id": "eb11c2-5:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 94,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=a_n+2n-3$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3d483cf28e5a2e787ec6c941f7a2d3cc",
+      "kind": "value",
+      "answer": "a_n = (n-2)^2",
+      "solution": [
+        "a_{n+1}-a_n = 2n-3, so f(n)=2n-3.",
+        "For n≥2: a_n = 1+Σ_{k=1}^{n-1}(2k-3).",
+        "= 1+2×(1/2)(n-1)n-3(n-1) = n²-4n+4 = (n-2)².",
+        "This also holds for n=1, so a_n = (n-2)²."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (n-2)^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-4:a",
+      "record_id": "eb11c2-5:try-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 94,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+n^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "01037e09fe5842bd135113efe00fe86e",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/6",
+      "solution": [
+        "f(n)=n², so for n≥2: a_n = 2+Σ_{k=1}^{n-1}k².",
+        "Using Σ_{k=1}^{m}k² = m(m+1)(2m+1)/6 with m=n-1: a_n = 2+(n-1)n(2n-1)/6.",
+        "For n=1 this gives 2, which is a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2 + (n-1)n(2n-1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-4:b",
+      "record_id": "eb11c2-5:try-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 94,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=a_n+3^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2290c406d19c510ff06389fc085d6da9",
+      "kind": "value",
+      "answer": "a_n = (3^n - 1)/2",
+      "solution": [
+        "f(n)=3^n, so a_n = 1+Σ_{k=1}^{n-1}3^k.",
+        "The sum is a geometric sum: 3+3²+...+3^{n-1} = 3(3^{n-1}-1)/(3-1).",
+        "a_n = 1+(3^n-3)/2 = (3^n-1)/2.",
+        "For n=1 it gives 1 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (3^n - 1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:work-with-a-partner-2",
+      "record_id": "eb11c2-5:work-with-a-partner-2",
+      "part": null,
+      "type": "activity",
+      "page": 94,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": "Side box; on the previous page the record is the same activity but here it is printed on page 94 as well; check whether duplicate."
+      },
+      "needs_page": true,
+      "question_fingerprint": "7545b723a6759a1cb80210050a95a583",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a side note asking students to work in a group; it has no question to answer.",
+      "solution": [
+        "It only tells students to solve the Try section together and discuss."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "This is a group-work prompt (collaborate on the Try section and discuss the answers); it is a duplicate of the box on the previous page and has no answer of its own.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:a",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "99baf1d0020de0b3c07b17f7ce2182e3",
+      "kind": "value",
+      "answer": "a_n = n² - n + 2",
+      "solution": [
+        "f(n)=2n, so a_n = 2+Σ_{k=1}^{n-1}2k.",
+        "= 2+2×(1/2)(n-1)n = 2+n²-n.",
+        "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n^2 - n + 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:b",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+3n^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a69ee1606bb16c1217401b0cc18a85e2",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(2n-1)/2",
+      "solution": [
+        "f(n)=3n², so a_n = 2+3Σ_{k=1}^{n-1}k².",
+        "= 2+3×(n-1)n(2n-1)/6 = 2+(n-1)n(2n-1)/2.",
+        "n=1 gives 2, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2 + (n-1)n(2n-1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:c",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=1,\\ a_{n+1}=a_n+2^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3dc176d3947022eaeac24be02a736b12",
+      "kind": "value",
+      "answer": "a_n = 2^n - 1",
+      "solution": [
+        "f(n)=2^n, so a_n = 1+Σ_{k=1}^{n-1}2^k.",
+        "Geometric sum: 2+2²+...+2^{n-1} = 2(2^{n-1}-1)/(2-1) = 2^n-2.",
+        "a_n = 1+2^n-2 = 2^n-1.",
+        "n=1 gives 1 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2^n - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:d",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+3n+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "00638e5d1098b893eda4b4a153e11c19",
+      "kind": "value",
+      "answer": "a_n = (3n² - n + 2)/2",
+      "solution": [
+        "f(n)=3n+1, so a_n = 2+Σ_{k=1}^{n-1}(3k+1).",
+        "= 2+3×(1/2)(n-1)n+(n-1) = 2+(3n²-3n)/2+n-1.",
+        "= (3n²-n+2)/2.",
+        "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (3n^2 - n + 2)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:e",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "e",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n+2n^2+n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ae3a25e1f06e4cdb06a16afac5352f6d",
+      "kind": "value",
+      "answer": "a_n = 2 + (n-1)n(4n+1)/6",
+      "solution": [
+        "f(n)=2n²+n, so a_n = 2+2Σk²+Σk (k=1 to n-1).",
+        "= 2+(n-1)n(2n-1)/3+(n-1)n/2.",
+        "= 2+(n-1)n[2(2n-1)+3]/6 = 2+(n-1)n(4n+1)/6.",
+        "n=1 gives 2, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2 + n(n-1)(4n+1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:f",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "f",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=2,\\ a_{n+1}=a_n-3^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "696f853d7e7224dbb756719d2a7dcd19",
+      "kind": "value",
+      "answer": "a_n = (7 - 3^n)/2",
+      "solution": [
+        "f(n)=-3^n, so a_n = 2-Σ_{k=1}^{n-1}3^k.",
+        "Geometric sum: 3+...+3^{n-1} = 3(3^{n-1}-1)/2 = (3^n-3)/2.",
+        "a_n = 2-(3^n-3)/2 = (7-3^n)/2.",
+        "n=1 gives 2 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (7 - 3^n)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-4:g",
+      "record_id": "eb11c2-5:exercise-4",
+      "part": "g",
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1=4,\\ a_{n+1}=a_n-4^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5a8b77e5021f91df8d17a29ebde89d14",
+      "kind": "value",
+      "answer": "a_n = (16 - 4^n)/3",
+      "solution": [
+        "f(n)=-4^n, so a_n = 4-Σ_{k=1}^{n-1}4^k.",
+        "Geometric sum: 4+...+4^{n-1} = 4(4^{n-1}-1)/3 = (4^n-4)/3.",
+        "a_n = 4-(4^n-4)/3 = (16-4^n)/3.",
+        "n=1 gives 4 = a_1, so it holds for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (16 - 4^n)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:challenge-2",
+      "record_id": "eb11c2-5:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 95,
+      "question": {
+        "text": "A tech startup launches with a 400,000 LE cash reserve ($a_1 = 4$ hundred thousand). They burn an amount of 4n thousand LE at the end of each quarter: $a_1=4,\\ a_{n+1}=a_n-0.04n$. Find an explicit formula for the general term $a_n$ to predict the company's cash reserve at the start of any quarter.",
+        "stem": "",
+        "notes": "Starred Challenge box."
+      },
+      "needs_page": false,
+      "question_fingerprint": "133afd84d002e24c7e8f839d13b5fd5f",
+      "kind": "value",
+      "answer": "a_n = 4 - 0.02n(n-1)",
+      "solution": [
+        "Here f(n) = -0.04n, so a_{n+1} - a_n = -0.04n.",
+        "For n ≥ 2: $a_n = 4 + \\sum_{k=1}^{n-1}(-0.04k)$.",
+        "$\\sum_{k=1}^{n-1}k = \\frac{1}{2}(n-1)n$.",
+        "So $a_n = 4 - 0.04 \\times \\frac{1}{2}(n-1)n = 4 - 0.02n(n-1)$.",
+        "For n = 1 this gives 4, so the formula also holds for n = 1.",
+        "Answer: $a_n = 4 - 0.02n(n-1)$ hundred thousand LE."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-6",
+        "eb11c2-5:rule-7",
+        "eb11c2-5:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4 - 0.02n(n-1) = -0.02n^2 + 0.02n + 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-4",
+      "record_id": "eb11c2-5:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 96,
+      "question": {
+        "text": "Warm Up: Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=3a_n+4$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6240a3c5548a889057c7b1720e6342f5",
+      "kind": "value",
+      "answer": "a_n = 3^n - 2",
+      "solution": [
+        "Replace a_{n+1}, a_n by c: c=3c+4, so c=-2.",
+        "a_{n+1}+2 = 3(a_n+2).",
+        "Let b_n = a_n+2: geometric with ratio 3, b_1 = 1+2 = 3.",
+        "b_n = 3×3^{n-1} = 3^n.",
+        "a_n = 3^n-2."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5",
+        "eb11c2-5:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3^n - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-5:a",
+      "record_id": "eb11c2-5:try-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 1,\\ a_{n+1} = 5a_n + 8$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4eae88a9929540a0dadfaa8750603984",
+      "kind": "value",
+      "answer": "a_n = 3×5^{n-1} - 2",
+      "solution": [
+        "c=5c+8 gives c=-2.",
+        "a_{n+1}+2 = 5(a_n+2).",
+        "b_n = a_n+2 is geometric, ratio 5, b_1 = 3.",
+        "b_n = 3×5^{n-1}.",
+        "a_n = 3×5^{n-1}-2."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3·5^{n-1} - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-5:b",
+      "record_id": "eb11c2-5:try-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 4,\\ a_{n+1} = -2a_n + 3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4f9d429e7090589056aa0f79d092eec3",
+      "kind": "value",
+      "answer": "a_n = 3×(-2)^{n-1} + 1",
+      "solution": [
+        "c=-2c+3 gives c=1.",
+        "a_{n+1}-1 = -2(a_n-1).",
+        "b_n = a_n-1 is geometric, ratio -2, b_1 = 3.",
+        "b_n = 3×(-2)^{n-1}.",
+        "a_n = 3×(-2)^{n-1}+1."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3·(-2)^{n-1} + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:a",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 2,\\ a_{n+1} = 2a_n - 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a12b287ff0725e192126e21d15af518f",
+      "kind": "value",
+      "answer": "a_n = 2^{n-1} + 1",
+      "solution": [
+        "c=2c-1 gives c=1.",
+        "a_{n+1}-1 = 2(a_n-1).",
+        "b_n = a_n-1: ratio 2, b_1 = 1.",
+        "b_n = 2^{n-1}.",
+        "a_n = 2^{n-1}+1."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2^{n-1} + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:b",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = -3,\\ a_{n+1} = 4a_n + 3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "12ba316bd545096082b584efc022936c",
+      "kind": "value",
+      "answer": "a_n = -2×4^{n-1} - 1",
+      "solution": [
+        "c=4c+3 gives c=-1.",
+        "a_{n+1}+1 = 4(a_n+1).",
+        "b_n = a_n+1: ratio 4, b_1 = -2.",
+        "b_n = -2×4^{n-1}.",
+        "a_n = -2×4^{n-1}-1."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -2·4^{n-1} - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:c",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 3,\\ a_{n+1} = 3a_n - 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9751bc78670966a400474c7f5387a4e4",
+      "kind": "value",
+      "answer": "a_n = 2×3^{n-1} + 1",
+      "solution": [
+        "c=3c-2 gives c=1.",
+        "a_{n+1}-1 = 3(a_n-1).",
+        "b_n = a_n-1: ratio 3, b_1 = 2.",
+        "b_n = 2×3^{n-1}.",
+        "a_n = 2×3^{n-1}+1."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2·3^{n-1} + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:d",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "d",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = -2,\\ a_{n+1} = -3a_n + 4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b7ad593f33b6281ad668943ae64840bd",
+      "kind": "value",
+      "answer": "a_n = (-3)^n + 1",
+      "solution": [
+        "c=-3c+4 gives c=1.",
+        "a_{n+1}-1 = -3(a_n-1).",
+        "b_n = a_n-1: ratio -3, b_1 = -3.",
+        "b_n = -3×(-3)^{n-1} = (-3)^n.",
+        "a_n = (-3)^n+1."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-3)^n + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:e",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "e",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 1,\\ a_{n+1} = \\frac{1}{3}a_n + 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "03db21a648151c78328a20eba6e69710",
+      "kind": "value",
+      "answer": "a_n = 3 - 2×(1/3)^{n-1}",
+      "solution": [
+        "c=(1/3)c+2 gives (2/3)c=2, so c=3.",
+        "a_{n+1}-3 = (1/3)(a_n-3).",
+        "b_n = a_n-3: ratio 1/3, b_1 = 1-3 = -2.",
+        "b_n = -2×(1/3)^{n-1}.",
+        "a_n = 3-2×(1/3)^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3 - 2·(1/3)^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-5:f",
+      "record_id": "eb11c2-5:exercise-5",
+      "part": "f",
+      "type": "exercise",
+      "page": 97,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+        "stem": "$a_1 = 2,\\ a_{n+1} = \\frac{2}{3}a_n - \\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c8c9dec4ee0df3f80c6fc78014908483",
+      "kind": "value",
+      "answer": "a_n = (7/2)×(2/3)^{n-1} - 3/2",
+      "solution": [
+        "c=(2/3)c-1/2 gives (1/3)c=-1/2, so c=-3/2.",
+        "a_{n+1}+3/2 = (2/3)(a_n+3/2).",
+        "b_n = a_n+3/2: ratio 2/3, b_1 = 2+3/2 = 7/2.",
+        "b_n = (7/2)×(2/3)^{n-1}.",
+        "a_n = (7/2)(2/3)^{n-1}-3/2."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-1",
+        "eb11c2-5:method-2",
+        "eb11c2-5:method-3",
+        "eb11c2-5:method-4",
+        "eb11c2-5:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (7/2)·(2/3)^{n-1} - 3/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-5",
+      "record_id": "eb11c2-5:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 98,
+      "question": {
+        "text": "Use mathematical induction to prove that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "86b448d75365890a75f6953ffdc98180",
+      "kind": "explanation",
+      "answer": "The equality $1+2+\\dots+n=\\frac{1}{2}n(n+1)$ is proved for all natural numbers by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] When n = 1: LHS = 1 and RHS = $\\frac{1}{2}\\times1\\times2=1$. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $1+2+\\dots+k=\\frac{1}{2}k(k+1)$ (i).",
+        "When n = k+1, LHS = $1+2+\\dots+k+(k+1)$.",
+        "By (i), this is $\\frac{1}{2}k(k+1)+(k+1)$.",
+        "Factor out $\\frac{1}{2}(k+1)$: $=\\frac{1}{2}(k+1)(k+2)$.",
+        "This equals $\\frac{1}{2}(k+1)\\{(k+1)+1\\}$, which is the RHS for n = k+1. So (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS=1, RHS=(1/2)(1)(2)=1. [2] Assume 1+...+k=(1/2)k(k+1). Then 1+...+k+(k+1)=(1/2)k(k+1)+(k+1)=(1/2)(k+1)(k+2)=(1/2)(k+1){(k+1)+1}, so it holds for n=k+1. Hence it holds for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-6:a",
+      "record_id": "eb11c2-5:try-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$1+3+5+\\dots+(2n-1)=n^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "54f10a16bc7e01c42a5cb83a5f05b868",
+      "kind": "explanation",
+      "answer": "Proved: 1+3+5+...+(2n-1)=n² holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 1, RHS = 1² = 1. So (A) holds.",
+        "[2] Assume n=k: 1+3+...+(2k-1) = k².",
+        "For n=k+1: LHS = k²+(2k+1) = (k+1)² = RHS.",
+        "So (A) holds for n=k+1. By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "Let (A) be the equality. [1] n=1: LHS = 1, RHS = 1^2 = 1. [2] Assume 1+3+...+(2k-1) = k^2. Then for n=k+1: LHS = k^2 + (2k+1) = (k+1)^2 = RHS. So (A) holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-6:b",
+      "record_id": "eb11c2-5:try-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$1\\times2+2\\times3+3\\times4+\\dots+n(n+1)=\\frac{1}{3}n(n+1)(n+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3808d9deb929b2d005d222527126098e",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 1×2 = 2, RHS = (1/3)×1×2×3 = 2. So (A) holds.",
+        "[2] Assume n=k: 1×2+...+k(k+1) = (1/3)k(k+1)(k+2).",
+        "For n=k+1: LHS = (1/3)k(k+1)(k+2)+(k+1)(k+2).",
+        "= (1/3)(k+1)(k+2)(k+3) = (1/3)(k+1){(k+1)+1}{(k+1)+2} = RHS.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS = 1×2 = 2, RHS = (1/3)·1·2·3 = 2. [2] Assume the sum up to n=k equals (1/3)k(k+1)(k+2). For n=k+1: LHS = (1/3)k(k+1)(k+2) + (k+1)(k+2) = (1/3)(k+1)(k+2)(k+3) = (1/3)(k+1){(k+1)+1}{(k+1)+2} = RHS. So it holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-6:a",
+      "record_id": "eb11c2-5:exercise-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$1^2+3^2+5^2+\\dots+(2n-1)^2=\\frac{1}{3}n(2n-1)(2n+1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6b292c3f21f5ca7a81f8b37597f683b4",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 1, RHS = (1/3)×1×1×3 = 1. So (A) holds.",
+        "[2] Assume n=k: 1²+3²+...+(2k-1)² = (1/3)k(2k-1)(2k+1).",
+        "For n=k+1: LHS = (1/3)k(2k-1)(2k+1)+(2k+1)².",
+        "= (1/3)(2k+1){k(2k-1)+3(2k+1)} = (1/3)(2k+1)(2k²+5k+3).",
+        "= (1/3)(2k+1)(2k+3)(k+1) = (1/3)(k+1){2(k+1)-1}{2(k+1)+1} = RHS.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS = 1, RHS = (1/3)·1·1·3 = 1. [2] Assume the sum up to n=k equals (1/3)k(2k-1)(2k+1). For n=k+1: LHS = (1/3)k(2k-1)(2k+1) + (2k+1)^2 = (1/3)(2k+1)(2k^2+5k+3) = (1/3)(k+1)(2k+1)(2k+3) = (1/3)(k+1){2(k+1)-1}{2(k+1)+1} = RHS. So it holds for all n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-6:b",
+      "record_id": "eb11c2-5:exercise-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$3+3\\times4+3\\times4^2+\\dots+3\\times4^{n-1}=4^n-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "41ec83127f266c23d89f7a996bda67bf",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 3, RHS = 4-1 = 3. So (A) holds.",
+        "[2] Assume n=k: 3+3×4+...+3×4^{k-1} = 4^k-1.",
+        "For n=k+1: LHS = 4^k-1+3×4^k = 4×4^k-1 = 4^{k+1}-1 = RHS.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS = 3, RHS = 4-1 = 3. [2] Assume 3+3×4+...+3×4^{k-1} = 4^k - 1. For n=k+1: LHS = 4^k - 1 + 3×4^k = 4×4^k - 1 = 4^{k+1} - 1 = RHS. So it holds for all n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-6:c",
+      "record_id": "eb11c2-5:exercise-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$1\\times3+2\\times4+3\\times5+\\dots+n(n+2)=\\frac{1}{6}n(n+1)(2n+7)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ad98b34d6ddb738492dd1d64859fdd15",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 1×3 = 3, RHS = (1/6)×1×2×9 = 3. So (A) holds.",
+        "[2] Assume n=k: 1×3+...+k(k+2) = (1/6)k(k+1)(2k+7).",
+        "For n=k+1: LHS = (1/6)k(k+1)(2k+7)+(k+1)(k+3).",
+        "= (1/6)(k+1){k(2k+7)+6(k+3)} = (1/6)(k+1)(2k²+13k+18).",
+        "= (1/6)(k+1)(k+2)(2k+9) = (1/6)(k+1){(k+1)+1}{2(k+1)+7} = RHS.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS = 1×3 = 3, RHS = (1/6)·1·2·9 = 3. [2] Assume the sum up to n=k equals (1/6)k(k+1)(2k+7). For n=k+1: LHS = (1/6)k(k+1)(2k+7) + (k+1)(k+3) = (1/6)(k+1)(2k^2+13k+18) = (1/6)(k+1)(k+2)(2k+9) = (1/6)(k+1){(k+1)+1}{2(k+1)+7} = RHS. So it holds for all n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-6:d",
+      "record_id": "eb11c2-5:exercise-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 99,
+      "question": {
+        "text": "Use mathematical induction to prove the following equalities.",
+        "stem": "$1+10+10^2+\\dots+10^n=\\frac{1}{9}(10^{n+1}-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2645cc7f96bd5ce3c4dbcace95393bd5",
+      "kind": "explanation",
+      "answer": "Proved: the equality holds for all natural numbers n by induction.",
+      "solution": [
+        "Call the equality (A).",
+        "[1] n=1: LHS = 1+10 = 11, RHS = (1/9)(100-1) = 11. So (A) holds.",
+        "[2] Assume n=k: 1+10+...+10^k = (1/9)(10^{k+1}-1).",
+        "For n=k+1: LHS = (1/9)(10^{k+1}-1)+10^{k+1}.",
+        "= (1/9)(10^{k+1}-1+9×10^{k+1}) = (1/9)(10^{k+2}-1) = RHS.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:worked-example-1",
+        "eb11c2-5:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: LHS = 1+10 = 11, RHS = (1/9)(100-1) = 11. [2] Assume 1+10+...+10^k = (1/9)(10^{k+1}-1). For n=k+1: LHS = (1/9)(10^{k+1}-1) + 10^{k+1} = (1/9)(10·10^{k+1} - 1) = (1/9)(10^{k+2}-1) = RHS. So it holds for all n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-7",
+      "record_id": "eb11c2-5:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "When $n$ is a natural number greater than or equal to 3, prove the following inequality. $3^n > 5n+1$",
+        "stem": "",
+        "notes": "Printed as a 'Try' box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c94a3860d5481fea8c33282704118569",
+      "kind": "explanation",
+      "answer": "Proved: 3^n > 5n+1 for all natural numbers n ≥ 3.",
+      "solution": [
+        "Call the inequality (A).",
+        "[1] n=3: LHS = 27, RHS = 16. 27>16, so (A) holds.",
+        "[2] Assume k≥3 and 3^k > 5k+1. Multiply both sides by 3: 3^{k+1} > 15k+3 ...(i)",
+        "Compare: 15k+3-(5(k+1)+1) = 10k-3 > 0, so 15k+3 > 5(k+1)+1 ...(ii)",
+        "From (i),(ii): 3^{k+1} > 5(k+1)+1. So (A) holds for n=k+1.",
+        "By [1] and [2], (A) holds for all n ≥ 3."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:warm-up-6",
+        "eb11c2-5:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "Let (A) be 3^n > 5n+1. [1] n=3: LHS = 27 > 16 = RHS. [2] Assume k≥3 and 3^k > 5k+1. Multiply by 3: 3^{k+1} > 15k+3. Since 15k+3 - (5(k+1)+1) = 10k-3 > 0, 3^{k+1} > 5(k+1)+1. So (A) holds for all n≥3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-7",
+      "record_id": "eb11c2-5:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "When $n$ is a natural number, prove the following inequality. $3^n > 2n$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ef8ee717d8baf26098acf3471334b128",
+      "kind": "explanation",
+      "answer": "Proved: 3^n > 2n for all natural numbers n.",
+      "solution": [
+        "Call the inequality (A).",
+        "[1] n=1: LHS = 3, RHS = 2. 3>2, so (A) holds.",
+        "[2] Assume k≥1 and 3^k > 2k. Multiply by 3: 3^{k+1} > 6k ...(i)",
+        "6k-2(k+1) = 4k-2 > 0 for k≥1, so 6k > 2(k+1) ...(ii)",
+        "From (i),(ii): 3^{k+1} > 2(k+1). So (A) holds for n=k+1.",
+        "By [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:warm-up-6",
+        "eb11c2-5:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "Let (A) be 3^n > 2n. [1] n=1: 3 > 2. [2] Assume 3^k > 2k. Multiply by 3: 3^{k+1} > 6k. Since 6k - 2(k+1) = 4k-2 > 0, 3^{k+1} > 2(k+1). So (A) holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-8",
+      "record_id": "eb11c2-5:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "When $n$ is a natural number greater than or equal to 4, prove the following inequality. $2^n > 3n+1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "956f9ce2e0991c34b97439104ca96c83",
+      "kind": "explanation",
+      "answer": "Proved: 2^n > 3n+1 for all natural numbers n ≥ 4.",
+      "solution": [
+        "Call the inequality (A).",
+        "[1] n=4: LHS = 16, RHS = 13. 16>13, so (A) holds.",
+        "[2] Assume k≥4 and 2^k > 3k+1. Multiply by 2: 2^{k+1} > 6k+2 ...(i)",
+        "6k+2-(3(k+1)+1) = 3k-2 > 0 for k≥4, so 6k+2 > 3(k+1)+1 ...(ii)",
+        "From (i),(ii): 2^{k+1} > 3(k+1)+1. So (A) holds for n=k+1.",
+        "By [1] and [2], (A) holds for all n ≥ 4."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:warm-up-6",
+        "eb11c2-5:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "Let (A) be 2^n > 3n+1. [1] n=4: 16 > 13. [2] Assume k≥4 and 2^k > 3k+1. Multiply by 2: 2^{k+1} > 6k+2. Since 6k+2 - (3(k+1)+1) = 3k-2 > 0, 2^{k+1} > 3(k+1)+1. So (A) holds for all n≥4.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:challenge-3",
+      "record_id": "eb11c2-5:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 101,
+      "question": {
+        "text": "When $h > 0$ and $n$ is a natural number greater than or equal to 3, prove the following inequality. $(1+h)^n > 1 + nh^2$",
+        "stem": "",
+        "notes": "Printed in a 'Challenge' box with a star."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c2c23de7dc64cc32f5db1774494a1e9d",
+      "kind": "explanation",
+      "answer": "Proved: (1+h)^n > 1+nh² for h>0 and all natural numbers n ≥ 3.",
+      "solution": [
+        "Call the inequality (A).",
+        "[1] n=3: (1+h)³ = 1+3h+3h²+h³. Since h>0, 3h+h³>0, so (1+h)³ > 1+3h². (A) holds.",
+        "[2] Assume k≥3 and (1+h)^k > 1+kh². Multiply both sides by 1+h (positive): (1+h)^{k+1} > (1+kh²)(1+h) = 1+h+kh²+kh³ ...(i)",
+        "Compare with 1+(k+1)h²: (1+h+kh²+kh³)-(1+kh²+h²) = h(kh²-h+1).",
+        "kh²-h+1 ≥ 3h²-h+1 = 3(h-1/6)²+11/12 > 0, so the difference is positive ...(ii)",
+        "From (i),(ii): (1+h)^{k+1} > 1+(k+1)h². So (A) holds for n=k+1.",
+        "By [1] and [2], (A) holds for all n ≥ 3."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:warm-up-6",
+        "eb11c2-5:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=3: (1+h)^3 = 1+3h+3h^2+h^3 > 1+3h^2 since 3h+h^3 > 0. [2] Assume k≥3 and (1+h)^k > 1+kh^2. Multiply by (1+h)>0: (1+h)^{k+1} > 1+h+kh^2+kh^3. We need h+kh^3 ≥ h^2: if h≤1 then h ≥ h^2; if h>1 then kh^3 > h^2. So (1+h)^{k+1} > 1+(k+1)h^2. Holds for all n≥3.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-7",
+      "record_id": "eb11c2-5:warm-up-7",
+      "part": null,
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "Prove that $n^3+(n+1)^3+(n+2)^3$ is a multiple of 9 for all natural numbers $n$, using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7b16d32b7cbb932f312a8703362acda5",
+      "kind": "explanation",
+      "answer": "$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9 for all natural numbers n, proved by induction.",
+      "solution": [
+        "Let (A) be \"$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9\".",
+        "[1] When n = 1: $1+8+27=36=9\\times4$. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $k^3+(k+1)^3+(k+2)^3=9m$ with m an integer.",
+        "When n = k+1: $(k+1)^3+(k+2)^3+(k+3)^3 = 9m-k^3+(k+3)^3$.",
+        "$(k+3)^3-k^3=9k^2+27k+27$.",
+        "So the sum is $9m+9k^2+27k+27=9(m+k^2+3k+3)$.",
+        "$m+k^2+3k+3$ is an integer, so (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: 1+8+27=36=9·4, a multiple of 9. [2] Assume k^3+(k+1)^3+(k+2)^3=9m (m an integer). Then (k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3=9m+9k^2+27k+27=9(m+k^2+3k+3), a multiple of 9. So it holds for n=k+1, and therefore for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-8",
+      "record_id": "eb11c2-5:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 102,
+      "question": {
+        "text": "Prove that $n^3+2n$ is a multiple of 3 for all natural numbers $n$, using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5522e884609ffc449677a84accad9954",
+      "kind": "explanation",
+      "answer": "$n^3+2n$ is a multiple of 3 for all natural numbers n, proved by induction.",
+      "solution": [
+        "Let (A) be \"$n^3+2n$ is a multiple of 3\".",
+        "[1] When n = 1: $1+2=3$, a multiple of 3. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $k^3+2k=3m$ with m an integer.",
+        "When n = k+1: $(k+1)^3+2(k+1)=k^3+3k^2+3k+1+2k+2$.",
+        "$=(k^3+2k)+3k^2+3k+3$.",
+        "$=3m+3k^2+3k+3=3(m+k^2+k+1)$.",
+        "$m+k^2+k+1$ is an integer, so (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: 1+2=3, a multiple of 3. [2] Assume k^3+2k=3m (m an integer). Then (k+1)^3+2(k+1)=k^3+3k^2+3k+1+2k+2=(k^3+2k)+3k^2+3k+3=3m+3(k^2+k+1)=3(m+k^2+k+1), a multiple of 3. So it holds for n=k+1, and therefore for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:activity-1",
+      "record_id": "eb11c2-5:activity-1",
+      "part": null,
+      "type": "activity",
+      "page": 102,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "585348a37a42e3140d6549123f305d33",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity telling students to work on the try section. It has no single answer of its own.",
+      "solution": [
+        "The activity only asks students to solve the try exercise together and discuss it.",
+        "The try exercise is answered under its own reference."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "Group activity with no single answer. Solve try-8 with your partner using induction: n=1 gives 3, and k^3+2k=3m implies (k+1)^3+2(k+1)=3(m+k^2+k+1). Then compare answers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-9",
+      "record_id": "eb11c2-5:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8032942655974afa93cb98789c1a4834",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the actual questions are Exercise 10 and Exercise 11.",
+      "solution": [
+        "The item has no problem of its own.",
+        "Answer the multiple/divisibility proofs separately."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "This is only the instruction line; the proofs are in Exercises 10 and 11 (divisibility by induction).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-10",
+      "record_id": "eb11c2-5:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "Prove that $2n^3 - 3n^2 + n$ is a multiple of 6 for all natural numbers $n$, using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1026cb2a834db99173158afa931d349d",
+      "kind": "explanation",
+      "answer": "$2n^3-3n^2+n$ is a multiple of 6 for all natural numbers n, proved by induction.",
+      "solution": [
+        "Let (A) be \"$2n^3-3n^2+n$ is a multiple of 6\".",
+        "[1] When n = 1: $2-3+1=0=6\\times0$. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $2k^3-3k^2+k=6m$ with m an integer.",
+        "When n = k+1: $2(k+1)^3-3(k+1)^2+(k+1)=2k^3+6k^2+6k+2-3k^2-6k-3+k+1$.",
+        "$=2k^3+3k^2+k$.",
+        "$=(2k^3-3k^2+k)+6k^2=6m+6k^2=6(m+k^2)$.",
+        "$m+k^2$ is an integer, so (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: 2-3+1=0=6·0, a multiple of 6. [2] Assume 2k^3-3k^2+k=6m (m an integer). Then 2(k+1)^3-3(k+1)^2+(k+1)=2k^3+6k^2+6k+2-3k^2-6k-3+k+1=(2k^3-3k^2+k)+6k^2=6m+6k^2=6(m+k^2), a multiple of 6. So it holds for n=k+1, and therefore for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-11",
+      "record_id": "eb11c2-5:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "Prove that $4n^3 - n$ is divisible by 3 for all natural numbers $n$, using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "df35dc3215be334291c5a6c19a66071b",
+      "kind": "explanation",
+      "answer": "$4n^3-n$ is divisible by 3 for all natural numbers n, proved by induction.",
+      "solution": [
+        "Let (A) be \"$4n^3-n$ is a multiple of 3\".",
+        "[1] When n = 1: $4-1=3$, a multiple of 3. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $4k^3-k=3m$ with m an integer.",
+        "When n = k+1: $4(k+1)^3-(k+1)=4k^3+12k^2+12k+4-k-1$.",
+        "$=(4k^3-k)+12k^2+12k+3$.",
+        "$=3m+12k^2+12k+3=3(m+4k^2+4k+1)$.",
+        "$m+4k^2+4k+1$ is an integer, so (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: 4-1=3, divisible by 3. [2] Assume 4k^3-k=3m (m an integer). Then 4(k+1)^3-(k+1)=4k^3+12k^2+12k+4-k-1=(4k^3-k)+12k^2+12k+3=3m+3(4k^2+4k+1)=3(m+4k^2+4k+1), divisible by 3. So it holds for n=k+1, and therefore for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:challenge-4",
+      "record_id": "eb11c2-5:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 103,
+      "question": {
+        "text": "Prove that for any integer $n \\ge 1$: $(n+1)^n - 1$ is a multiple of $n^2$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c36a91d3168bea46e4a322a35364519c",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the proof needs the binomial expansion of $(n+1)^n$, which the lesson does not teach. The lesson's induction steps (n = k to n = k+1) do not apply to this statement.",
+      "solution": [
+        "The statement has n in both the base and the exponent.",
+        "Assuming it for n = k gives no useful link to $(k+2)^{k+1}-1$ using the lesson's methods.",
+        "So it cannot be proved with the lesson's methods."
+      ],
+      "grounded_in": [
+        "eb11c2-5:method-6",
+        "eb11c2-5:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "By the binomial theorem, (n+1)^n-1 = C(n,1)n + C(n,2)n^2 + ... + n^n = n^2 + C(n,2)n^2 + ... + n^n. The first term is n·n=n^2, and every later term has a factor n^j with j≥2. So every term is a multiple of n^2, and the sum is a multiple of n^2 for all n≥1. (For n=1: 2-1=1=1^2·1.)",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-8",
+      "record_id": "eb11c2-5:warm-up-8",
+      "part": null,
+      "type": "exercise",
+      "page": 104,
+      "question": {
+        "text": "Find $a_2, a_3, a_4$ and estimate the general term of this sequence.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6bea0b28001768883e28277875304c99",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 5, a_4 = 6; a_n = n + 2",
+      "solution": [
+        "$a_2=\\frac{a_1^2-1}{2}=\\frac{9-1}{2}=4$.",
+        "$a_3=\\frac{a_2^2-1}{3}=\\frac{16-1}{3}=5$.",
+        "$a_4=\\frac{a_3^2-1}{4}=\\frac{25-1}{4}=6$.",
+        "The terms 3, 4, 5, 6, ... go up by 1 each time.",
+        "So estimate $a_n=n+2$."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 4, a_3 = 5, a_4 = 6; estimate a_n = n + 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:warm-up-9",
+      "record_id": "eb11c2-5:warm-up-9",
+      "part": null,
+      "type": "exercise",
+      "page": 104,
+      "question": {
+        "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "64b260a2be47b15ed3149239eccfa85f",
+      "kind": "explanation",
+      "answer": "The estimation $a_n=n+2$ is correct for all natural numbers.",
+      "solution": [
+        "Let (A) be $a_n=n+2$.",
+        "[1] When n = 1: $a_1=1+2=3$, which matches the given $a_1=3$. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $a_k=k+2$.",
+        "Then $a_{k+1}=\\frac{a_k^2-1}{k+1}=\\frac{(k+2)^2-1}{k+1}$.",
+        "$(k+2)^2-1=k^2+4k+3=(k+1)(k+3)$, so $a_{k+1}=k+3=(k+1)+2$.",
+        "So (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers, so the estimation is correct."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: a_1=1+2=3, which holds. [2] Assume a_k=k+2. Then a_{k+1}=(a_k^2-1)/(k+1)=((k+2)^2-1)/(k+1)=(k+1)(k+3)/(k+1)=k+3=(k+1)+2, so it holds for n=k+1. Hence a_n=n+2 for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-9",
+      "record_id": "eb11c2-5:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "For the sequence {a_n} determined by $a_1=-1, a_{n+1}=a_n^2+2na_n-2$, solve the following problems. Find $a_2, a_3, a_4$ and estimate the general term.",
+        "stem": "",
+        "notes": "Intro sentence shared with Try 2."
+      },
+      "needs_page": true,
+      "question_fingerprint": "6e870da54711288a13c37da847c8eb75",
+      "kind": "value",
+      "answer": "a_2 = -3, a_3 = -5, a_4 = -7; a_n = 1 - 2n",
+      "solution": [
+        "n=1: a_2 = (-1)²+2×1×(-1)-2 = 1-2-2 = -3.",
+        "n=2: a_3 = (-3)²+2×2×(-3)-2 = 9-12-2 = -5.",
+        "n=3: a_4 = (-5)²+2×3×(-5)-2 = 25-30-2 = -7.",
+        "Terms -1, -3, -5, -7 drop by 2 each time, so estimate a_n = -1-2(n-1) = 1-2n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = -3, a_3 = -5, a_4 = -7; estimate a_n = -2n + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:try-10",
+      "record_id": "eb11c2-5:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f6d463f12e3b7c057da04d783bee9694",
+      "kind": "explanation",
+      "answer": "The estimation $a_n=1-2n$ is correct for all natural numbers.",
+      "solution": [
+        "From try-9: $a_1=-1$, $a_2=1-2-2=-3$, $a_3=9-12-2=-5$, $a_4=25-30-2=-7$. These terms go down by 2 each time, so the estimate is $a_n=1-2n$.",
+        "Let (A) be $a_n=1-2n$.",
+        "[1] When n = 1: $a_1=1-2=-1$. So (A) holds for n = 1.",
+        "[2] Assume (A) holds for n = k: $a_k=1-2k$.",
+        "Then $a_{k+1}=a_k^2+2ka_k-2=a_k(a_k+2k)-2$.",
+        "Substitute $a_k=1-2k$: $=(1-2k)\\times1-2=-2k-1$.",
+        "$-2k-1=1-2(k+1)$, so (A) holds for n = k+1.",
+        "From [1] and [2], (A) holds for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "Here a_1=-1, a_2=-3, a_3=-5, a_4=-7, so the estimate is a_n=-2n+1. [1] n=1: a_1=-2+1=-1, which holds. [2] Assume a_k=-2k+1. Then a_{k+1}=a_k^2+2k·a_k-2=(1-2k)^2+2k(1-2k)-2=1-4k+4k^2+2k-4k^2-2=-2k-1=-2(k+1)+1, so it holds for n=k+1. Hence a_n=-2n+1 for all natural numbers n.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-12:a",
+      "record_id": "eb11c2-5:exercise-12",
+      "part": "a",
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "Solve the following problems. For the sequence {a_n} determined by $a_1=1, a_{n+1}=a_n^2-n^2a_n+(n+1)^2$, solve the following problems.",
+        "stem": "Find $a_2, a_3, a_4$ and estimate the general term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b20e32eff4fc62942fbe7f5709b13bbf",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 9, a_4 = 16; a_n = n²",
+      "solution": [
+        "n=1: a_2 = 1²-1²×1+2² = 4.",
+        "n=2: a_3 = 4²-2²×4+3² = 16-16+9 = 9.",
+        "n=3: a_4 = 9²-3²×9+4² = 81-81+16 = 16.",
+        "Terms 1, 4, 9, 16 are squares, so estimate a_n = n²."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 4, a_3 = 9, a_4 = 16; estimate a_n = n^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-12:b",
+      "record_id": "eb11c2-5:exercise-12",
+      "part": "b",
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "Solve the following problems. For the sequence {a_n} determined by $a_1=1, a_{n+1}=a_n^2-n^2a_n+(n+1)^2$, solve the following problems.",
+        "stem": "Prove that the estimation in (a) is correct using mathematical induction.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2b7560e54a80f39c526e5918982737b2",
+      "kind": "explanation",
+      "answer": "The estimate a_n = n² is correct, proved by induction.",
+      "solution": [
+        "Call a_n = n² (A).",
+        "[1] n=1: a_1 = 1 = 1². So (A) holds.",
+        "[2] Assume n=k: a_k = k².",
+        "a_{k+1} = a_k²-k²a_k+(k+1)² = k⁴-k²×k²+(k+1)² = (k+1)².",
+        "So (A) holds for n=k+1.",
+        "By [1] and [2], a_n = n² for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: a_1 = 1 = 1^2. [2] Assume a_k = k^2. Then a_{k+1} = k^4 - k^2·k^2 + (k+1)^2 = (k+1)^2. So a_n = n^2 holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-13:a",
+      "record_id": "eb11c2-5:exercise-13",
+      "part": "a",
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "For the sequence {a_n} determined by $a_1=1, a_{n+1}=\\frac{a_n-4}{a_n-3}$, solve the following problems.",
+        "stem": "Find $a_2, a_3, a_4$ and estimate the general term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "08c1f96f2fef142f1065fe0082465974",
+      "kind": "value",
+      "answer": "a_2 = 3/2, a_3 = 5/3, a_4 = 7/4; a_n = (2n-1)/n",
+      "solution": [
+        "a_2 = (1-4)/(1-3) = (-3)/(-2) = 3/2.",
+        "a_3 = (3/2-4)/(3/2-3) = (-5/2)/(-3/2) = 5/3.",
+        "a_4 = (5/3-4)/(5/3-3) = (-7/3)/(-4/3) = 7/4.",
+        "Terms 1/1, 3/2, 5/3, 7/4: numerator 2n-1, denominator n.",
+        "Estimate a_n = (2n-1)/n."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_2 = 3/2, a_3 = 5/3, a_4 = 7/4; estimate a_n = (2n-1)/n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:exercise-13:b",
+      "record_id": "eb11c2-5:exercise-13",
+      "part": "b",
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "For the sequence {a_n} determined by $a_1=1, a_{n+1}=\\frac{a_n-4}{a_n-3}$, solve the following problems.",
+        "stem": "Prove that the estimation in (a) is correct using mathematical induction.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7f5e1240a09b9ab3e5b4a6597e94c58d",
+      "kind": "explanation",
+      "answer": "The estimate a_n = (2n-1)/n is correct, proved by induction.",
+      "solution": [
+        "Call a_n = (2n-1)/n (A).",
+        "[1] n=1: a_1 = 1/1 = 1. So (A) holds.",
+        "[2] Assume n=k: a_k = (2k-1)/k.",
+        "a_{k+1} = ((2k-1)/k-4)/((2k-1)/k-3) = ((-2k-1)/k)/((-k-1)/k) = (2k+1)/(k+1).",
+        "(2k+1)/(k+1) = (2(k+1)-1)/(k+1), so (A) holds for n=k+1.",
+        "By [1] and [2], a_n = (2n-1)/n for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "[1] n=1: a_1 = (2-1)/1 = 1. [2] Assume a_k = (2k-1)/k. Then a_{k+1} = ((2k-1)/k - 4)/((2k-1)/k - 3) = (-2k-1)/(-k-1) = (2k+1)/(k+1) = (2(k+1)-1)/(k+1). So a_n = (2n-1)/n holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:challenge-5",
+      "record_id": "eb11c2-5:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 105,
+      "question": {
+        "text": "Three numbers, A, B, C in that order, are in geometric sequence with common ratio $r$. Given further that A, 2B, C in that order are in arithmetic sequence, determine the possible values of $r$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ffc156670272ccfebd3d355c09d32f9c",
+      "kind": "value",
+      "answer": "r = 2 + √3 or r = 2 - √3",
+      "solution": [
+        "A, B, C is geometric with ratio r, so B = Ar and C = Ar².",
+        "A, 2B, C is arithmetic, so the middle term 2B is the mean of A and C: 4B = A + C.",
+        "Substitute: 4Ar = A + Ar².",
+        "Divide by A (A ≠ 0): r² - 4r + 1 = 0.",
+        "Solve: $r=\\frac{4\\pm\\sqrt{16-4}}{2}=2\\pm\\sqrt3$.",
+        "Answer: r = 2 + √3 or r = 2 - √3."
+      ],
+      "grounded_in": [
+        "eb11c2-5:rule-2",
+        "eb11c2-5:rule-3",
+        "eb11c2-5:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "r = 2 + √3 or r = 2 - √3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-5:reflect-1",
+      "record_id": "eb11c2-5:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 105,
+      "question": {
+        "text": "How can mathematical induction help us confirm the correctness of a general formula for a sequence defined by a recurrence relation? Explain your answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a076f87e99407050d870b2ef9f9b79a0",
+      "kind": "explanation",
+      "answer": "Induction proves that a guessed formula for a_n is true for every n, not just the first few terms checked.",
+      "solution": [
+        "First, work out the first few terms from the recurrence and guess the general term.",
+        "[1] Check that the formula gives the correct first term at n = 1.",
+        "[2] Assume $a_k$ equals the formula, then use the recurrence to find $a_{k+1}$ and show it also equals the formula with n = k+1.",
+        "Since the recurrence builds each term from the one before, true for 1 means true for 2, then 3, and so on.",
+        "So the formula is correct for all natural numbers."
+      ],
+      "grounded_in": [
+        "eb11c2-5:explanation-5",
+        "eb11c2-5:explanation-6",
+        "eb11c2-5:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "A formula guessed from the first few terms may fail later. Induction proves it for every n. First check the formula gives the first term (n=1). Then assume it holds for a_k and use the recurrence to compute a_{k+1}, showing the result equals the formula with n=k+1. Because each term comes from the previous one, the formula then holds for all natural numbers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:15:31+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

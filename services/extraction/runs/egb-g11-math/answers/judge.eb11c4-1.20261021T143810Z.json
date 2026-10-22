@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "b3238cf5358d294efaa7cbf6c73df08d65a7adb359db1fd36dbeaf1b3400543d",
+  "generated_sha256": "03b88838e0a67c5c8d7b1ab6911713ad31eab9b829b5e3ff93b55991c3d817ff",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c4-1:explanation-2",
+    "verdict": "equivalent",
+    "reason": "Same point (13/8, 9/4); I checked that it lies on y=2x−1 and is equidistant from A and B."
+   }
+  ]
+ }
+}

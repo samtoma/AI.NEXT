@@ -1,0 +1,3718 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "216d62fd3f0a90bc7b504f4cf0962e829fcbef620cf6cbae650d3abe0f566054",
+  "generated_sha256": "275abde8bd9d4df2997827869bdb7ec262536b8372705470b8bde2548a2309cf",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "pages": [
+    {
+     "printed": 40,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Concept 1 · Arithmetic sequences",
+       "label": "",
+       "number": null,
+       "text": "Concept 1 · Arithmetic sequences",
+       "_key": "p40-k1",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Find the general term for a sequence, and deduce some of its terms.",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Find the general term for a sequence, and deduce some of its terms.",
+       "_key": "p40-k2",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "quote": "Imagine you are a personal trainer designing a recovery program",
+       "label": "",
+       "number": null,
+       "text": "Imagine you are a personal trainer designing a recovery program for an injured athlete. You have them jog for 10 minutes a day on week one, increasing it by exactly 3 minutes every subsequent week (13 minutes, then 16, then 19...). This constant linear increase is an arithmetic sequence in action. In medicine and biology, these fixed patterns govern critical processes like the hourly rate at which the liver clears toxins or how cells divide over time. Instead of adding the schedule week by week to find your patient's training duration on Week 24 or their total accumulated running time over several months, arithmetic formulas deliver these exact answers instantly.",
+       "_key": "p40-k3",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "quote": "ATHLETE RECOVERY JOGGING PROGRAM",
+       "label": "",
+       "number": null,
+       "caption": "Illustration 'Athlete Recovery Jogging Program': Week 1 shows a jogger with a timer reading 10 minutes; Week 2 timer 13 minutes (+3 min); Week 3 timer 16 minutes (+3 min); Week 4 timer 19 minutes (+3 min).",
+       "_key": "p40-k4",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "quote": "Guiding Question: How can constant rates of additive change be modeled",
+       "label": "",
+       "number": null,
+       "text": "Guiding Question: How can constant rates of additive change be modeled mathematically to determine both specific individual terms and total cumulative sums across a sequence?",
+       "_key": "p40-k5",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "definition",
+       "quote": "A list of numbers arranged in a row is called a sequence",
+       "label": "",
+       "number": null,
+       "claim": "A list of numbers arranged in a row is called a sequence, and each number in the sequence is called a term.",
+       "_key": "p40-k6",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "convention",
+       "quote": "The terms of a sequence are called the first term, the 2nd term",
+       "label": "",
+       "number": null,
+       "claim": "The terms of a sequence are called the first term, the 2nd term, the 3rd term, etc., in order from the beginning. The term in the n-th position is called the n-th term.",
+       "_key": "p40-k7",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "convention",
+       "quote": "To express a sequence generally, we write it as follows",
+       "label": "",
+       "number": null,
+       "claim": "To express a sequence generally, write it by attaching the term number to a single letter: $a_1, a_2, a_3, \\dots, a_n, \\dots$ ($a_1$ is the first term, $a_n$ is the $n$-th term, per side note).",
+       "formula": "$a_1, a_2, a_3, \\dots, a_n, \\dots$",
+       "_key": "p40-k8",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "convention",
+       "quote": "This sequence is also denoted as {a_n}.",
+       "label": "",
+       "number": null,
+       "claim": "The sequence is also denoted as $\\{a_n\\}$.",
+       "formula": "$\\{a_n\\}$",
+       "_key": "p40-k9",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "quote": "Example: {a_n} : 2, 4, 8, 16, ...",
+       "label": "Example",
+       "number": null,
+       "stem": "$\\{a_n\\}: 2, 4, 8, 16, \\dots$",
+       "solution": [
+        "$a_1=2,\\ a_2=4,\\ a_3=8,\\ a_4=16,\\ \\dots$"
+       ],
+       "notes": "Unnumbered example inside the Point box.",
+       "_key": "p40-k10",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "definition",
+       "quote": "When a_n is expressed as an expression in terms of n",
+       "label": "",
+       "number": null,
+       "claim": "When $a_n$ is expressed as an expression in terms of $n$, substituting 1, 2, 3, … for $n$ gives $a_1, a_2, a_3, \\dots$. Such an expression in terms of $n$ is called the general term of the sequence $\\{a_n\\}$.",
+       "_key": "p40-k11",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "quote": "Example: a_n = −2n+7",
+       "label": "Example",
+       "number": null,
+       "stem": "$a_n=-2n+7$",
+       "solution": [
+        "$a_1=-2\\times1+7=5$",
+        "$a_2=-2\\times2+7=3$",
+        "$a_3=-2\\times3+7=1$"
+       ],
+       "notes": "Unnumbered example inside the Point box. Side note: '−2n+7 is a general term.'",
+       "_key": "p40-k12",
+       "source_page": 40,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 41,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p41-k1",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "When the general term of the sequence {a_n} is given by",
+       "text": "When the general term of the sequence $\\{a_n\\}$ is given by $a_n=\\frac{n}{n+1}$, find the first term through the 3rd term of this sequence.",
+       "_key": "p41-k2",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Deduce the general term of the following sequences {a_n}.",
+       "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$0, 1, 4, 9, 16, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$2, -4, 6, -8, 10, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1, \\frac{2}{3}, \\frac{3}{5}, \\frac{4}{7}, \\frac{5}{9}, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p41-k3",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p41-k4",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute n = 1, 2, 3 into a_n = n/(n+1)",
+       "text": "1. Substitute $n=1,2,3$ into $a_n=\\frac{n}{n+1}$: $a_1=\\frac{1}{1+1}=\\frac{1}{2}$, $a_2=\\frac{2}{2+1}=\\frac{2}{3}$, $a_3=\\frac{3}{3+1}=\\frac{3}{4}$.",
+       "_key": "p41-k5",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Create a formula by considering the regularity.",
+       "text": "2. Create a formula by considering the regularity. (a) Since it is $(\\text{term number}-1)^2$, $a_n=(n-1)^2$.",
+       "_key": "p41-k6",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "For sequences with alternating signs, consider the regularity of the sign part",
+       "text": "(b) For sequences with alternating signs, consider the sign part and the number part separately. Sign: the first term is \"+\" and it alternates, $(-1)^{n-1}$. Number: it is $2\\times(\\text{term number})$, $2n$. Therefore, $a_n=(-1)^{n-1}\\times 2n$.",
+       "_key": "p41-k7",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "For fractional sequences, consider the regularity of the denominator and",
+       "text": "(c) For fractional sequences, consider the denominator and numerator separately. The denominator is $2\\times(\\text{term number})-1$, so $2n-1$. The numerator is (term number), so $n$. Therefore, $a_n=\\frac{n}{2n-1}$.",
+       "_key": "p41-k8",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "If the first term is \" − \" and it alternates, it is ( − 1)^n.",
+       "text": "Side note: If the first term is \"−\" and it alternates, it is $(-1)^n$.",
+       "_key": "p41-k9",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Even numbers are 2n.",
+       "text": "Side note: Even numbers are $2n$.",
+       "_key": "p41-k10",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Odd numbers are 2n−1",
+       "text": "Side note: Odd numbers are $2n-1$.",
+       "_key": "p41-k11",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p41-k12",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p41-k13",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "When the general term of the sequence {a_n} is given by the following",
+       "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_n=2n-3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_n=2\\times 3^n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_n=n^2-7n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_n=\\frac{n}{2n+1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p41-k14",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Deduce the general term of the following sequences {a_n}.",
+       "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$0, 1, 8, 27, 64, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$-3, 6, -9, 12, -15, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$2, 5, 8, 11, 14, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$1, \\frac{3}{4}, \\frac{5}{9}, \\frac{7}{16}, \\frac{9}{25}, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p41-k15",
+       "source_page": 41,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 42,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Exercise",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p42-k1",
+       "source_page": 42,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p42-k2",
+       "source_page": 42,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "When the general term of the sequence {a n} is given by the following",
+       "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_n = 5n-8$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_n = -3n+1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_n = -2n-4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_n = 3^n - 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$a_n = (-3)^n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$a_n = 3\\times(-2)^n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$a_n = n^2-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$a_n = n^2+n+1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$a_n = n^2+2n+4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$a_n = \\frac{1}{3n-2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$a_n = \\frac{2n}{n+3}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$a_n = \\frac{n+1}{2n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p42-k3",
+       "source_page": 42,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Deduce the general term of the following sequences {a_n}.",
+       "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$0, 2, 4, 6, 8, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$1, 4, 9, 16, 25, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$0, 3, 6, 9, 12, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$-5, 10, -15, 20, -25, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$1, -\\frac13, \\frac15, -\\frac17, \\frac19, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$-1, 4, -7, 10, -13, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$7^2, 8^2, 9^2, 10^2, 11^2, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$4, 9, 14, 19, 24, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$6, 13, 20, 27, 34, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$\\frac12, \\frac23, \\frac34, \\frac45, \\frac56, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$1\\times3, 2\\times9, 3\\times27, 4\\times81, 5\\times243, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p42-k4",
+       "source_page": 42,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Deduce the general term then find the 20th term.",
+       "text": "$1\\times\\frac12, 2\\times\\frac13, 3\\times\\frac14, 4\\times\\frac15, 5\\times\\frac16, \\dots$ Deduce the general term then find the 20th term.",
+       "notes": "Boxed star Challenge.",
+       "_key": "p42-k5",
+       "source_page": 42,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 43,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Arithmetic Sequence (1)",
+       "label": "",
+       "number": null,
+       "text": "2-2 Arithmetic Sequence (1) — Chapter 2 Sequences",
+       "_key": "p43-k1",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Calculate the general term of an arithmetic sequence",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence, and find some specific terms in it.",
+       "_key": "p43-k2",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "definition",
+       "quote": "A sequence obtained by successively adding a constant number d",
+       "label": "",
+       "number": null,
+       "claim": "A sequence obtained by successively adding a constant number d to each preceding term is called an arithmetic sequence, and the constant number d is called the common difference.",
+       "_key": "p43-k3",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "quote": "An arithmetic sequence with the first term 1 and the common difference 3",
+       "label": "",
+       "number": null,
+       "text": "Example: An arithmetic sequence with the first term 1 and the common difference 3: 1, 4, 7, 10, 13, ... (each step +3)",
+       "_key": "p43-k4",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "The general term of an arithmetic sequence with the first term a",
+       "label": "",
+       "number": null,
+       "claim": "The general term of an arithmetic sequence with first term a and common difference d is a_n = a + (n-1)d.",
+       "formula": "$a_n = a + (n-1)d$",
+       "_key": "p43-k5",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "figure",
+       "quote": "a_n is obtained by adding \"d\" to \"a\" exactly (n – 1) times",
+       "label": "",
+       "number": null,
+       "caption": "Side note diagram: terms a, a_2, a_3, ..., a_{n-1}, a_n with +d arrows between consecutive terms, a brace beneath; text: a_n is obtained by adding \"d\" to \"a\" exactly (n – 1) times.",
+       "_key": "p43-k6",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "quote": "Warm Up",
+       "label": "",
+       "number": null,
+       "text": "Warm Up",
+       "_key": "p43-k7",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p43-k8",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "quote": "Find the first term and the common difference of the following arithmetic",
+       "label": "Warm Up",
+       "number": 1,
+       "text": "Find the first term and the common difference of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$2, 5, 8, 11, \\ldots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$3, -2, -7, -12, -17, \\ldots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p43-k9",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "quote": "The following sequences are arithmetic sequences. Find the common",
+       "label": "Warm Up",
+       "number": 2,
+       "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$A, 2, -1, B, \\ldots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$13, A, B, -2, \\ldots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p43-k10",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "quote": "For the arithmetic sequence {a n} with the first term 8",
+       "label": "Warm Up",
+       "number": 3,
+       "text": "For the arithmetic sequence $\\{a_n\\}$ with the first term 8 and the common difference $-6$, find the general term. Also, find the 20th term.",
+       "_key": "p43-k11",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "quote": "Explanation",
+       "label": "",
+       "number": null,
+       "text": "Explanation",
+       "_key": "p43-k12",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "worked_example",
+       "quote": "First term: 2, Common difference: 3",
+       "label": "Explanation",
+       "number": 1,
+       "stem": "Warm Up 1: find first term and common difference of (a) 2, 5, 8, 11, ... (b) 3, -2, -7, -12, -17, ...",
+       "solution": [],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "First term: 2, Common difference: 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "First term: 3, Common difference: -5",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p43-k13",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "figure",
+       "quote": "2, 5, 8, 11, ... +3 +3 +3",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p43-k13",
+       "caption": "Dotted side diagram: 2, 5, 8, 11, ... with +3 arrows between terms.",
+       "_key": "p43-k14",
+       "source_page": 43,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "figure",
+       "quote": "3, -2, -7, -12, -17, ... -5",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p43-k13",
+       "caption": "Dotted side diagram: 3, -2, -7, -12, -17, ... with -5 arrows between terms.",
+       "_key": "p43-k15",
+       "source_page": 43,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "worked_example",
+       "quote": "Common difference: −3, A: 5, B: −4",
+       "label": "Explanation",
+       "number": 2,
+       "stem": "Warm Up 2: (a) A, 2, -1, B, ... (b) 13, A, B, -2, ...",
+       "solution": [
+        "(a) Diagram A, 2, -1, B with -3 arrows between terms.",
+        "(b) Diagram 13, A, B, -2 with d arrows; the three steps from 13 to -2 total -15.",
+        "Let the expected common difference be d, 3d = −15 Therefore, d = −5"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "Common difference: −3, A: 5, B: −4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "Common difference: −5, A: 8, B: 3",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Arrow diagrams within the example are in solution; no separate figure records.",
+       "_key": "p43-k16",
+       "source_page": 43,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 44,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "continues": true,
+       "quote": "The general term is found by substituting a = 8, d = −6 into",
+       "stem": "Find the general term and the 20th term (part 3 of the example; a = 8, d = −6).",
+       "solution": [
+        "$a_n = a + (n-1)d$",
+        "$a_n = 8 + (n-1)\\times(-6)$",
+        "$= 8 - 6n + 6$",
+        "$= -6n + 14$",
+        "The 20th term is found by substituting n = 20 into $a_n = -6n+14$",
+        "$a_{20} = -6\\times 20 + 14$",
+        "$= -106$"
+       ],
+       "answer": "$a_n = -6n+14$; $a_{20} = -106$",
+       "notes": "Continues example from previous page, part labelled 3 in a blue box. Answers printed in red underlined.",
+       "_key": "p44-k1",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "notes": "Heading 'Try' with intro; sub-questions follow as k3-k5.",
+       "_key": "p44-k2",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the first term and the common difference of the following arithmetic",
+       "text": "Find the first term and the common difference of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$1, 5, 9, 13, 17, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$23, 19, 15, 11, 7, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p44-k3",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The following sequences are arithmetic sequences. Find the common",
+       "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$2, 9, A, B, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$A, 17, B, 5, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p44-k4",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "For the following arithmetic sequences {a n}, find the general term.",
+       "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "First term 4, common difference 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "First term 2, common difference −3",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p44-k5",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p44-k6",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the first term and the common difference of the following arithmetic",
+       "text": "Find the first term and the common difference of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$3, 5, 7, 9, 11, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$-13, -9, -5, -1, 3, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$-2, 1, 4, 7, 10, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$10, 7, 4, 1, -2, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$6, \\frac{16}{3}, \\frac{14}{3}, 4, \\frac{10}{3}, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$-4, -\\frac{9}{2}, -5, -\\frac{11}{2}, -6, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3.",
+       "_key": "p44-k7",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box.",
+       "_key": "p44-k8",
+       "source_page": 44,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 45,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "The following sequences are arithmetic sequences. Find the common",
+       "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$8, 15, A, B, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$7, 13, A, B, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$A, 9, 4, B, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$A, 15, B, 9, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$11, A, B, 20, \\dots$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$17, A, B, 5, C, \\dots$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p45-k1",
+       "source_page": 45,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "",
+       "number": 3,
+       "quote": "For the following arithmetic sequences {a n}, find the general term. Also, find",
+       "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term 5, and the common difference 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term $-2$, and the common difference 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 10, and the common difference $-3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The first term $-\\frac{1}{2}$, and the common difference $-\\frac{1}{2}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p45-k2",
+       "source_page": 45,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "",
+       "number": 4,
+       "quote": "For the following arithmetic sequences {a n}, find the general term. Also, find",
+       "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term $-7$, and the common difference 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term $-2$, and the common difference $-3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term 7, and the common difference $\\frac{1}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The first term $\\frac{2}{3}$, and the common difference $-\\frac{1}{3}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p45-k3",
+       "source_page": 45,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "In an arithmetic sequence, the sum of the 3rd. and 7th. terms is 38",
+       "text": "In an arithmetic sequence, the sum of the 3rd and 7th terms is 38, and the ratio of the 4th term to the 12th term is $\\frac{2}{5}$. Find the first term of this sequence and the common difference.",
+       "_key": "p45-k4",
+       "source_page": 45,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 46,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Arithmetic Sequence (2)",
+       "text": "Arithmetic Sequence (2) (2-3, Chapter 2 Sequences)",
+       "_key": "p46-k1",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the general term of an arithmetic sequence",
+       "text": "Calculate the general term of an arithmetic sequence, and find some specific terms in it.",
+       "notes": "Learning Outcomes box in right column; placed first as the objectives box.",
+       "_key": "p46-k2",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The general term a_n of an arithmetic sequence {a_n} is",
+       "claim": "The general term a_n of an arithmetic sequence {a_n} is a + (n − 1)d.",
+       "formula": "$a_n = a + (n-1)d$",
+       "_key": "p46-k3",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When finding the general term of an arithmetic sequence, first find the",
+       "claim": "When finding the general term of an arithmetic sequence, first find the first term a and the common difference d.",
+       "_key": "p46-k4",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When the sequence a, b, c is an arithmetic sequence in this order:",
+       "claim": "When a, b, c is an arithmetic sequence in this order, 2b = a + c.",
+       "formula": "$2b = a + c$",
+       "_key": "p46-k5",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Considering a, b, c: 2b = (a + d) + (c − d) = a + c",
+       "text": "Side note: Considering a, b, c with +d from a to b and +d from b to c: 2b = (a + d) + (c − d) = a + c.",
+       "notes": "Margin note beside the Point box, with arrows labelled +d.",
+       "_key": "p46-k6",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p46-k7",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p46-k8",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the general term of the arithmetic sequence {a_n} whose 3rd term is 10",
+       "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ whose 3rd term is 10 and the 8th term is 50",
+       "_key": "p46-k9",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "For the arithmetic sequence {a_n} with the common difference 4 and the 8th",
+       "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference 4 and the 8th term 33, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find which term number is 113",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the first term number that is greater than 500",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p46-k10",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 3,
+       "quote": "When the 3 numbers x, 6, x² form an arithmetic sequence in this order",
+       "text": "When the 3 numbers $x$, 6, $x^2$ form an arithmetic sequence in this order, find the value of $x$",
+       "_key": "p46-k11",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p46-k12",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "Let the general term be a_n = a + (n − 1)d.",
+       "stem": "Explanation of Warm Up 1: find the general term of the arithmetic sequence with a_3 = 10 and a_8 = 50.",
+       "solution": [
+        "Let the general term be $a_n = a + (n-1)d$.",
+        "Since $a_3 = 10$, $10 = a + (3-1)d$. Simplifying this, $10 = a + 2d$ ......(i)",
+        "Since $a_8 = 50$, $50 = a + (8-1)d$. Simplifying this, $50 = a + 7d$ ......(ii)",
+        "Solving (i) and (ii) as a system of equations, $a = -6$, $d = 8$",
+        "Therefore, the general term is $a_n = -6 + (n-1)\\times 8 = 8n-14$"
+       ],
+       "answer": "$a_n = 8n-14$",
+       "notes": "Explanation numbered 1 corresponds to Warm Up 1; only this one is printed on the page.",
+       "_key": "p46-k13",
+       "source_page": 46,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 47,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "Let the general term of {a_n} be a_n = a + (n − 1)d.",
+       "continues": true,
+       "stem": "",
+       "solution": [
+        "Let the general term of $\\{a_n\\}$ be $a_n = a + (n-1)d$.",
+        "Since the common difference is 4 and $a_8 = 33$, $33 = a + (8-1)\\times 4$",
+        "Solving this, $a = 5$",
+        "Therefore, the general term of $\\{a_n\\}$ is $a_n = 5 + (n-1)\\times 4$",
+        "$a_n = 4n+1$",
+        "(a) We need to find $n$ such that $a_n = 113$; $113 = 4n+1$. Solving this, $n = 28$. Therefore, the 28th term.",
+        "(b) We need to find the smallest natural number $n$ such that $a_n > 500$; $4n+1 > 500$. Solving this, $n > \\frac{499}{4} = 124.75$. Therefore, the 125th term."
+       ],
+       "answer": "a_n = 4n+1; (a) the 28th term; (b) the 125th term",
+       "parts": [
+        {
+         "label": "a",
+         "answer": "the 28th term",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "the 125th term",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Continuation of previous example (printed marker 2 is its second part, i.e. problem 2 of an example). Side notes: 'First find the general term'; 'Convert to decimal to consider'.",
+       "_key": "p47-k1",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "First find the general term",
+       "text": "Side note beside the start: First find the general term.",
+       "belongs_to_key": "p47-k1",
+       "_key": "p47-k2",
+       "source_page": 47,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Convert to decimal to consider",
+       "text": "Side note beside part (b): Convert to decimal to consider.",
+       "belongs_to_key": "p47-k1",
+       "_key": "p47-k3",
+       "source_page": 47,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "worked_example",
+       "label": "Example",
+       "number": 3,
+       "quote": "Since x, 6, x² form an arithmetic sequence in this order:",
+       "stem": "Since $x, 6, x^2$ form an arithmetic sequence in this order:",
+       "solution": [
+        "$2\\times 6 = x + x^2$",
+        "Solving this, $x = -4, 3$"
+       ],
+       "answer": "$x=-4, 3$",
+       "notes": "Side note: 2b = a + c. Number 3 is printed in a blue box; may be the example number.",
+       "_key": "p47-k4",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "2b = a + c",
+       "text": "Side note beside example 3: $2b = a + c$.",
+       "belongs_to_key": "p47-k4",
+       "_key": "p47-k5",
+       "source_page": 47,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p47-k6",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p47-k7",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p47-k8",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the general term of the following arithmetic sequences",
+       "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term is $-5$, the 17th term is 75",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The common difference is 3, the 16th term is 81",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The 6th term is 2, the 15th term is $-25$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p47-k9",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "For the arithmetic sequence {a_n} with first term 1",
+       "text": "For the arithmetic sequence $\\{a_n\\}$ with first term 1 and common difference 3, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Determine which term is 40",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the first term that is greater than 100",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p47-k10",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "When the 3 numbers x², x, − 8 form an arithmetic sequence",
+       "text": "When the 3 numbers $x^2, x, -8$ form an arithmetic sequence in this order, find the value of $x$",
+       "_key": "p47-k11",
+       "source_page": 47,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 48,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Exercise",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p48-k1",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p48-k2",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the general term of the following arithmetic sequences",
+       "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The first term is 6, the 4th term is 18",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The first term is 20, the 8th term is $-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The first term is $-8$, the 8th term is 55",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The first term is $-18$, the 10th term is $-63$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The common difference is 2, the 8th term is 4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The common difference is $-4$, the 5th term is $-7$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "The common difference is $-7$, the 6th term is $-24$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "The common difference is $\\frac{2}{5}$, the 30th term is $\\frac{23}{5}$.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "The 4th term is 14, the 10th term is 62",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "The 3rd term is 30, the 10th term is 2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "The 10th term is 49, the 23rd term is 10",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "The 3rd term is 6, the 10th term is 62",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p48-k3",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "For the arithmetic sequence {a n} with the common difference −5",
+       "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference $-5$ and the 13th term $-7$, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Determine which term is $-52$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the first term that is smaller than $-300$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p48-k4",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "where the 10th term is −20 and the 20th",
+       "text": "For the arithmetic sequence $\\{a_n\\}$ where the 10th term is $-20$ and the 20th term is $-50$, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Determine which term is $-110$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the first term that is smaller than $-500$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p48-k5",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "When the 3 numbers a, 6, 2a form an arithmetic sequence",
+       "text": "When the 3 numbers $a, 6, 2a$ form an arithmetic sequence in this order, find the value of $a$",
+       "_key": "p48-k6",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "When the 3 numbers − 3, x, x² form an arithmetic sequence",
+       "text": "When the 3 numbers $-3, x, x^2$ form an arithmetic sequence in this order, find the value of $x$",
+       "_key": "p48-k7",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "When the 4 numbers 2, x, y, z form an arithmetic sequence",
+       "text": "When the 4 numbers $2, x, y, z$ form an arithmetic sequence in this order, and $2x, y+1, z-y$ also form an arithmetic sequence in this order, find the values of $x, y, z$",
+       "_key": "p48-k8",
+       "source_page": 48,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 49,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of Arithmetic Sequence (1)",
+       "text": "2-4 Sum of Arithmetic Sequence (1) — Chapter 2 Sequences",
+       "_key": "p49-k1",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the general term of an arithmetic sequence.",
+       "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence. Find some specific terms in an arithmetic sequence. Find the sum of an arithmetic sequence.",
+       "_key": "p49-k2",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "In a sequence with n terms, n is called the number of terms",
+       "claim": "In a sequence with n terms, n is called the number of terms, and the last term is called the last term.",
+       "notes": "Point! box",
+       "_key": "p49-k3",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "Let S_n be the sum from the first term to the n–th term",
+       "claim": "S_n denotes the sum from the first term to the n-th term of an arithmetic sequence.",
+       "notation": {
+        "printed": "S_n",
+        "normalised": "$S_n$",
+        "notes": ""
+       },
+       "_key": "p49-k4",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When the first term is a, the last term is l, the number of terms is n,",
+       "claim": "When the first term is a, the last term is l and the number of terms is n, the sum is S_n = 1/2 n(a + l).",
+       "formula": "$S_n=\\frac{1}{2}n(a+l)$",
+       "_key": "p49-k5",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When the first term is a, the common difference is d, the number of terms is n,",
+       "claim": "When the first term is a, the common difference is d and the number of terms is n, S_n = 1/2 n{2a + (n–1)d}.",
+       "formula": "$S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$",
+       "_key": "p49-k6",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute l = a + (n–1)d into the above formula.",
+       "text": "Side note: Substitute $l=a+(n-1)d$ into the above formula.",
+       "_key": "p49-k7",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "When the number of terms n is unknown, first find n using",
+       "claim": "When the number of terms n is unknown, first find n using l = a + (n–1)d.",
+       "formula": "$l=a+(n-1)d$",
+       "_key": "p49-k8",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p49-k9",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Find the sum of the following arithmetic sequences.",
+       "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The sum $S_7$ of a sequence with the first term 8, the last term 22, the number of terms 7",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The sum $S$ of a sequence with the first term 2, the common difference 3, the last term 47",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The sum $S_{13}$ of a sequence with the first term 20, the common difference $-5$, the number of terms 13",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 1, the common difference 4",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p49-k10",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "For the arithmetic sequence 90, 84, 78, ..., find the sum",
+       "text": "For the arithmetic sequence 90, 84, 78, ..., find the sum from the 10th term to the 20th term.",
+       "_key": "p49-k11",
+       "source_page": 49,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 50,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p50-k1",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "(a) Since a = 8, l = 22, n = 7",
+       "continues": true,
+       "stem": "Explanation of numbered problem 1 (a)–(d) from the previous page: sums of arithmetic sequences.",
+       "solution": [
+        "(a) Since $a=8, l=22, n=7$: $S_7=\\frac{1}{2}\\times 7(8+22)=105$",
+        "(b) First find the number of terms. Let $n$ be the number of terms. Since the first term is 2, the common difference is 3, the last term is 47: $47=2+(n-1)\\times 3$. Solving this, $n=16$. $S=\\frac{1}{2}\\times 16(2+47)=392$",
+        "(c) Since $a=20, d=-5, n=13$: $S_{13}=\\frac{1}{2}\\times 13\\{2\\times 20+(13-1)\\times(-5)\\}=-130$",
+        "(d) Since $a=1, d=4$: $S_n=\\frac{1}{2}n\\{2\\times 1+(n-1)\\times 4\\}=\\frac{1}{2}n(2+4n-4)=\\frac{1}{2}n(4n-2)=2n^2-n$"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "105",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "392",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "-130",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "2n^2 - n",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Printed as numbered point 1 of the Explanation; the problem statement is on the previous page.",
+       "_key": "p50-k2",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "l = a+(n−1)d",
+       "claim": "Side note beside (b): the last term is $l=a+(n-1)d$.",
+       "formula": "$l=a+(n-1)d$",
+       "_key": "p50-k3",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since the number of terms is n, evaluate the expression in terms of n.",
+       "text": "Side note beside (d): Since the number of terms is $n$, evaluate the expression in terms of $n$.",
+       "_key": "p50-k4",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "The required sum can be calculated by S20 − S9",
+       "stem": "Explanation of numbered problem 2 (sum of the sequence 90, 84, 78, ... from the previous page).",
+       "solution": [
+        "The required sum can be calculated by $S_{20}-S_9$",
+        "Since $a=90, d=-6$:",
+        "$S_{20}=\\frac{1}{2}\\times 20\\{2\\times 90+(20-1)\\times(-6)\\}=660$",
+        "$S_9=\\frac{1}{2}\\times 9\\{2\\times 90+(9-1)\\times(-6)\\}=594$",
+        "Therefore, $660-594=66$"
+       ],
+       "answer": "66",
+       "notes": "The answer 66 is printed in red/underlined.",
+       "_key": "p50-k5",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "a1 + a2 + a3+ ... +a9 + a10+ ... +a20",
+       "caption": "Side diagram: terms $a_1+a_2+a_3+\\dots+a_9+a_{10}+\\dots+a_{20}$ with a brace under $a_1$ to $a_9$ labelled $S_9$, a brace under $a_{10}$ to $a_{20}$ labelled 'Required Sum', and a larger brace under the whole labelled $S_{20}$.",
+       "_key": "p50-k6",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p50-k7",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p50-k8",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p50-k9",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the sum of the following arithmetic sequences.",
+       "text": "Find the sum of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The sum $S_{10}$ of a sequence with the first term 7, the last term 13, the number of terms 10",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The sum $S$ of a sequence with the first term 5, the common difference 3, the last term 44",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The sum $S_{12}$ of a sequence with the first term $-6$, the common difference 3, the number of terms 12",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 2, the common difference $-3$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p50-k10",
+       "source_page": 50,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 51,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "find the sum from the 20th term to the 30th term",
+       "text": "For the arithmetic sequence with first term 48 and common difference $-2$, find the sum from the 20th term to the 30th term",
+       "continues": false,
+       "notes": "Label 'Try' inferred from previous page's Try box; page prints only the number 2.",
+       "_key": "p51-k1",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "find the sum of the odd terms from the first term to the 11th term",
+       "text": "For the arithmetic sequence 94, 89, 84, ..., find the sum of the odd terms from the first term to the 11th term.",
+       "notes": "Side-column Challenge box.",
+       "_key": "p51-k2",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p51-k3",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p51-k4",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the sum of the following arithmetic sequences.",
+       "text": "Find the sum of the following arithmetic sequences.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The sum $S_{10}$ of sequence: the first term 3, the last term 21, the number of terms 10",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The sum $S_8$ of sequence: the first term 5, the last term 33, the number of terms 8",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The sum $S_{10}$ of sequence: the first term 2, the last term 29, the number of terms 10",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The sum $S$ of sequence: the first term 3, the common difference 4, last term 75",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The sum $S$ of sequence: the first term 2, the common difference 5, last term 57",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The sum $S$ of sequence: the first term 4, the common difference 3, last term 100",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "The sum $S_{15}$: the first term 10, the common difference $-3$, the number of terms 15",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "The sum $S_{11}$: the first term $-4$, the common difference 4, the number of terms 11",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "The sum $S_{18}$: the first term 3, the common difference 2, the number of terms 18",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 0, the common difference 5",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 3, the common difference $-4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term $-4$, the common difference $-2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p51-k5",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "For the arithmetic sequence −9, −3, 3, ..., find the sum from the 11th term to the 20th term.",
+       "text": "For the arithmetic sequence $-9, -3, 3, \\ldots$, find the sum from the 11th term to the 20th term.",
+       "_key": "p51-k6",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "first term −53 and the common difference 4, find the sum from the 10th term to the 25th term.",
+       "text": "For the arithmetic sequence with the first term $-53$ and the common difference 4, find the sum from the 10th term to the 25th term.",
+       "_key": "p51-k7",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "For the arithmetic sequence 74, 69, 64, ..., find the sum from the 8th term to the 18th term.",
+       "text": "For the arithmetic sequence $74, 69, 64, \\ldots$, find the sum from the 8th term to the 18th term.",
+       "_key": "p51-k8",
+       "source_page": 51,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 52,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of Arithmetic Sequence (2) (Sum of Natural Numbers)",
+       "text": "Sum of Arithmetic Sequence (2) (Sum of Natural Numbers)",
+       "_key": "p52-k1",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the general term of an arithmetic sequence.",
+       "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence. Find some specific terms in an arithmetic sequence. Find the sum of an arithmetic sequence (natural numbers).",
+       "_key": "p52-k2",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Use arithmetic sequences for problems involving sums of natural",
+       "claim": "Use arithmetic sequences for problems involving sums of natural numbers or multiples.",
+       "_key": "p52-k3",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The sum S_n of an arithmetic sequence from the first term to the n–th term",
+       "claim": "The sum S_n of an arithmetic sequence from the first term to the n-th term: when the first term is a, the last term is l, and the number of terms is n, S_n = (1/2) n (a + l).",
+       "formula": "$S_n=\\frac{1}{2}n(a+l)$",
+       "_key": "p52-k4",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When the first term is a, the common difference is d, and the number of",
+       "claim": "When the first term is a, the common difference is d, and the number of terms is n, S_n = (1/2) n {2a + (n-1)d}.",
+       "formula": "$S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$",
+       "_key": "p52-k5",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "When the number of terms n is unknown, first find n using",
+       "claim": "When the number of terms n is unknown, first find n using l = a + (n-1)d.",
+       "formula": "$l=a+(n-1)d$",
+       "_key": "p52-k6",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "1",
+         "stem": "The sum of natural numbers from 1 to 100",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "stem": "The sum of natural numbers from 101 to 200",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "3",
+         "stem": "The sum of multiples of 3 among 2-digit natural numbers.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p52-k7",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Since the required sum is 1 + 2 + 3 + … + 100:",
+       "stem": "Warm Up 1: sum of natural numbers from 1 to 100. Side notes: write out the terms concretely and consider the first term, the last term, and the number of terms; S_n = (1/2)n(a+l).",
+       "solution": [
+        "Since the required sum is $1+2+3+\\dots+100$: first term 1, last term 100, number of terms 100.",
+        "$1+2+3+\\dots+100=\\frac{1}{2}\\times100(1+100)$",
+        "$=5050$"
+       ],
+       "answer": "5050",
+       "_key": "p52-k8",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Since the required sum is 101 + 102 + 103 + … + 200:",
+       "stem": "Warm Up 2: sum of natural numbers from 101 to 200. Side note: there are 100 natural numbers from 101 to 200.",
+       "solution": [
+        "Since the required sum is $101+102+103+\\dots+200$: first term 101, last term 200, number of terms 100.",
+        "$101+102+103+\\dots+200=\\frac{1}{2}\\times100(101+200)$",
+        "$=15050$"
+       ],
+       "answer": "15050",
+       "_key": "p52-k9",
+       "source_page": 52,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 53,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "Since the required sum is 12 + 15 + 18 + … + 99:",
+       "continues": true,
+       "stem": "Calculate the sum of an arithmetic sequence with the first term 12, the common difference 3, and the last term 99",
+       "solution": [
+        "Since the required sum is 12 + 15 + 18 + … + 99:",
+        "Calculate the sum of an arithmetic sequence with the first term 12, the common difference 3, and the last term 99",
+        "First, find the number of terms. Let $n$ be the number of terms.",
+        "$99 = 12 + (n-1)\\times 3$. Solving this, $n = 30$",
+        "$12+15+18+\\dots+99 = \\frac{1}{2}\\times 30(12+99)$",
+        "$= 1665$"
+       ],
+       "answer": "$1665$",
+       "notes": "Continuation is the third numbered point (marked 3) of the example; example number not printed on this page. Side note printed beside it.",
+       "_key": "p53-k1",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since the number of terms n is unknown, find n using",
+       "text": "Side note: Since the number of terms $n$ is unknown, find $n$ using $l = a + (n-1)d$.",
+       "continues": false,
+       "_key": "p53-k2",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "The sum of natural numbers from 1 to 200",
+       "text": "Find the following sums. The sum of natural numbers from 1 to 200",
+       "continues": false,
+       "_key": "p53-k3",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The sum of natural numbers from 201 to 300",
+       "text": "Find the following sums. The sum of natural numbers from 201 to 300",
+       "continues": false,
+       "_key": "p53-k4",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "The sum of all 2-digit natural numbers that are multiples of 5",
+       "text": "Find the following sums. The sum of all 2-digit natural numbers that are multiples of 5",
+       "continues": false,
+       "_key": "p53-k5",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": 4,
+       "quote": "leave a remainder of 3 when divided by 5",
+       "text": "Find the following sums. The sum of all 2-digit natural numbers that leave a remainder of 3 when divided by 5",
+       "continues": false,
+       "_key": "p53-k6",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "continues": false,
+       "_key": "p53-k7",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "The sum of natural numbers from 1 to 150",
+       "text": "Find the following sums. The sum of natural numbers from 1 to 150",
+       "continues": false,
+       "_key": "p53-k8",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "The sum of natural numbers from 81 to 150",
+       "text": "Find the following sums. The sum of natural numbers from 81 to 150",
+       "continues": false,
+       "_key": "p53-k9",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "The sum of natural numbers from 301 to 400",
+       "text": "Find the following sums. The sum of natural numbers from 301 to 400",
+       "continues": false,
+       "_key": "p53-k10",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "The sum of 2-digit natural numbers.",
+       "text": "Find the following sums. The sum of 2-digit natural numbers.",
+       "continues": false,
+       "_key": "p53-k11",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "The sum of 2-digit odd numbers.",
+       "text": "Find the following sums. The sum of 2-digit odd numbers.",
+       "continues": false,
+       "_key": "p53-k12",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "The sum of multiples of 4 from 1 to 100",
+       "text": "Find the following sums. The sum of multiples of 4 from 1 to 100",
+       "continues": false,
+       "_key": "p53-k13",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "that leave a remainder of 1 when divided by 4",
+       "text": "Find the following sums. The sum of all natural numbers from 1 to 100 that leave a remainder of 1 when divided by 4",
+       "continues": false,
+       "_key": "p53-k14",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 8,
+       "quote": "The sum of all multiples of 6 from 10 to 100",
+       "text": "Find the following sums. The sum of all multiples of 6 from 10 to 100",
+       "continues": false,
+       "_key": "p53-k15",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 9,
+       "quote": "that are not divisible by 6",
+       "text": "Find the following sums. The sum of all natural numbers from 10 to 100 that are not divisible by 6",
+       "continues": false,
+       "_key": "p53-k16",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find The sum of numbers which are not divisible by 4 from 1 to 100",
+       "text": "Find The sum of numbers which are not divisible by 4 from 1 to 100",
+       "continues": false,
+       "_key": "p53-k17",
+       "source_page": 53,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 54,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Sum of Arithmetic Sequence (3)",
+       "label": "",
+       "number": null,
+       "text": "2-6 Sum of Arithmetic Sequence (3)",
+       "_key": "p54-k1",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Find the sum of an arithmetic sequence.",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Find the sum of an arithmetic sequence. Determine the number of terms in an arithmetic sequence.",
+       "_key": "p54-k2",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "quote": "The sum Sn of an arithmetic sequence from the first term to the n-th term is:",
+       "label": "",
+       "number": null,
+       "claim": "The sum $S_n$ of an arithmetic sequence from the first term to the n-th term, when the first term is a, the last term is l and the number of terms is n, is given by the formula.",
+       "formula": "$S_n = \\frac{1}{2}n(a+l)$",
+       "_key": "p54-k3",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "quote": "When the first term is a, the common difference is d",
+       "label": "",
+       "number": null,
+       "claim": "When the first term is a, the common difference is d, and the number of terms is n, the sum is given by the formula.",
+       "formula": "$S_n = \\frac{1}{2}n\\{2a+(n-1)d\\}$",
+       "_key": "p54-k4",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "To find the maximum value of the sum of an arithmetic sequence with a negative common difference",
+       "label": "",
+       "number": null,
+       "claim": "To find the maximum value of the sum of an arithmetic sequence with a negative common difference, calculate the sum of the positive terms. Example: arithmetic sequence with first term 11, common difference -3: 11, 8, 5, 2, -1, -4, ... The sum up to here (the last positive term, 2) is maximum.",
+       "_key": "p54-k5",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "quote": "Warm Up",
+       "label": "",
+       "number": null,
+       "text": "Warm Up",
+       "_key": "p54-k6",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p54-k7",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "quote": "In an arithmetic sequence with the first term 4 and the common difference 3",
+       "label": "Warm Up",
+       "number": 1,
+       "text": "In an arithmetic sequence with the first term 4 and the common difference 3, find how many terms from the first term sum up to 50",
+       "_key": "p54-k8",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "quote": "Find the general term of the arithmetic sequence {a n} where the first term is",
+       "label": "Warm Up",
+       "number": 2,
+       "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is $-60$ and the sum from the first term to the 15th term is $-60$",
+       "_key": "p54-k9",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "quote": "For an arithmetic sequence with the first term 65 and the common difference",
+       "label": "Warm Up",
+       "number": 3,
+       "text": "For an arithmetic sequence with the first term 65 and the common difference $-4$, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+       "_key": "p54-k10",
+       "source_page": 54,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 55,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p55-k1",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "Assume the sum from the first term to the n-th term",
+       "stem": "Assume the sum from the first term to the $n$-th term of an arithmetic sequence with the first term 4 and the common difference 3 is 50",
+       "solution": [
+        "$50 = \\frac{1}{2}n\\{2\\times 4+(n-1)\\times 3\\}$",
+        "Simplifying gives $3n^2+5n-100=0$",
+        "Solving this gives $n=5,\\ -\\frac{20}{3}$. Since $n$ is a natural number, the 5th term."
+       ],
+       "answer": "the 5th term",
+       "notes": "Explanation point 1 (numbered box, no 'Example' label).",
+       "_key": "p55-k2",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "Let d be the common difference of the required arithmetic sequence",
+       "stem": "Find the general term of the arithmetic sequence with first term −60 and sum to the 15th term −60 (stem inferred from the solution)",
+       "solution": [
+        "Let $d$ be the common difference of the required arithmetic sequence.",
+        "Since the first term is −60 and the sum to the 15th term is −60: $-60=\\frac{1}{2}\\times 15\\{2\\times(-60)+(15-1)d\\}$",
+        "Solving this gives $d=8$",
+        "Therefore, the general term is $a_n=-60+(n-1)\\times 8$",
+        "Simplifying gives $a_n=8n-68$"
+       ],
+       "answer": "$a_n=8n-68$",
+       "notes": "Explanation point 2; no stem printed, only inferred from the solution.",
+       "_key": "p55-k3",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "worked_example",
+       "label": "",
+       "number": 3,
+       "quote": "The general term of this sequence is a_n= 65+(n−1)×(−4)",
+       "stem": "Find the number of terms giving the maximum sum for the sequence with first term 65 and common difference −4, and the sum (stem inferred; refers to the Warm Up)",
+       "solution": [
+        "The general term of this sequence is $a_n=65+(n-1)\\times(-4)=-4n+69$",
+        "Here, solving $-4n+69>0$ gives $n<\\frac{69}{4}=17.25$",
+        "In other words, terms from the first to the 17th are positive, and terms from the 18th onwards are negative.",
+        "Therefore, the sum up to the 17th term is maximum.",
+        "The sum at that time is the sum of an arithmetic sequence with first term 65, common difference −4, and 17 terms: $\\frac{1}{2}\\times 17\\{2\\times 65+(17-1)\\times(-4)\\}=561$"
+       ],
+       "answer": "the 17th term; 561",
+       "notes": "Explanation point 3; stem not printed on this page.",
+       "_key": "p55-k4",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "You are solving for when the sum is positive",
+       "claim": "Common Mistakes: for $S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$, you are solving for when the sum is positive ($S_n>0$) instead of finding until which term the sequence remains positive ($a_n>0$).",
+       "formula": "$S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$",
+       "_key": "p55-k5",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "To find the general term, you need the first term",
+       "text": "Side note (to point 2): To find the general term, you need the first term $a$ and the common difference $d$.",
+       "_key": "p55-k6",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Find up to which term the terms are positive.",
+       "text": "Side note (to point 3): Find up to which term the terms are positive.",
+       "_key": "p55-k7",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "positive terms negative terms",
+       "caption": "Side note with braces: $a_1, a_2, a_3, \\dots, a_{17}$ labelled 'positive terms'; $a_{18}, a_{19}, \\dots$ labelled 'negative terms'.",
+       "_key": "p55-k8",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p55-k9",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p55-k10",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "In an arithmetic sequence with the first term 17 and the common difference",
+       "text": "In an arithmetic sequence with the first term 17 and the common difference −2, find how many terms from the first term sum up to −63",
+       "_key": "p55-k11",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the general term of the arithmetic sequence {a_n} where the first term is",
+       "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is 8 and the sum from the first term to the 13th term is −130",
+       "_key": "p55-k12",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "For an arithmetic sequence with the first term 70 and the common difference",
+       "text": "For an arithmetic sequence with the first term 70 and the common difference −4, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+       "_key": "p55-k13",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Try",
+       "number": 4,
+       "quote": "Find the general term of the arithmetic sequence {a_n} where the sum from",
+       "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the sum from the first term to the 10th term is 10, and the sum from the first term to the 20th term is 40",
+       "_key": "p55-k14",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p55-k15",
+       "source_page": 55,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 56,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p56-k1",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find n such that the sum of the first n terms",
+       "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 3 and the common difference 2 is 63",
+       "_key": "p56-k2",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "the first term 24 and the common difference −4 is −28",
+       "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 24 and the common difference $-4$ is $-28$",
+       "_key": "p56-k3",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Find the general term of the arithmetic sequence",
+       "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ with the first term 4 and the sum of the first 6 terms 114",
+       "_key": "p56-k4",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "For a sequence with the first term 20, the common difference −6",
+       "text": "For a sequence with the first term 20, the common difference $-6$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+       "_key": "p56-k5",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "For a sequence with the first term 126, the common difference −13",
+       "text": "For a sequence with the first term 126, the common difference $-13$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+       "_key": "p56-k6",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "where the 3rd term 10 and the sum of first 10 terms 175",
+       "text": "Find the general term of sequence $\\{a_n\\}$ where the 3rd term 10 and the sum of first 10 terms 175",
+       "_key": "p56-k7",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "where sum of first 6 terms is 3 and the sum of",
+       "text": "Find the general term of $\\{a_n\\}$ where sum of first 6 terms is 3 and the sum of first 10 terms is 65",
+       "_key": "p56-k8",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 8,
+       "quote": "where sum of first 20 terms is 400 and the sum",
+       "text": "Find the general term of $\\{a_n\\}$ where sum of first 20 terms is 400 and the sum of first 30 terms is 900",
+       "_key": "p56-k9",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "The 15th of the arithmetic sequence is 33 and the 50th term is 103.",
+       "text": "The 15th of the arithmetic sequence is 33 and the 50th term is 103. What is the first 79 terms of the arithmetic sequence?",
+       "notes": "Printed 'The 15th of the arithmetic sequence' (missing 'term'); wording 'What is the first 79 terms' probably means sum.",
+       "_key": "p56-k10",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "If the water level in a lake decreases by a fixed amount each day",
+       "text": "\"If the water level in a lake decreases by a fixed amount each day, how can understanding arithmetic sequences help us predict when the water will run out?\"",
+       "_key": "p56-k11",
+       "source_page": 56,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Terms and general term of a sequence",
+      "description": "Find the first terms of a sequence from its general term, and deduce a general term from the pattern of given terms.",
+      "evidence_keys": [
+       "p40-k11",
+       "p40-k12",
+       "p41-k2",
+       "p41-k3",
+       "p42-k3",
+       "p42-k4"
+      ]
+     },
+     {
+      "label": "First term, common difference and missing terms",
+      "description": "Identify the first term and common difference of an arithmetic sequence and fill in missing terms.",
+      "evidence_keys": [
+       "p43-k3",
+       "p43-k9",
+       "p43-k10",
+       "p44-k3",
+       "p44-k4",
+       "p45-k1"
+      ]
+     },
+     {
+      "label": "General term from first term and common difference",
+      "description": "Write the general term a_n = a + (n-1)d of an arithmetic sequence and use it to find a specific term.",
+      "evidence_keys": [
+       "p43-k5",
+       "p43-k11",
+       "p44-k5",
+       "p45-k2",
+       "p45-k3"
+      ]
+     },
+     {
+      "label": "General term from other conditions",
+      "description": "Find the general term, or locate a term number, of an arithmetic sequence from two terms or other given conditions.",
+      "evidence_keys": [
+       "p46-k9",
+       "p46-k10",
+       "p47-k9",
+       "p47-k10",
+       "p48-k3",
+       "p48-k4"
+      ]
+     },
+     {
+      "label": "Arithmetic mean condition",
+      "description": "Use 2b = a + c for three numbers in arithmetic sequence to find an unknown value.",
+      "evidence_keys": [
+       "p46-k5",
+       "p46-k11",
+       "p47-k11",
+       "p48-k6",
+       "p48-k7"
+      ]
+     },
+     {
+      "label": "Sum of an arithmetic sequence",
+      "description": "Find the sum S_n of an arithmetic sequence, including partial ranges and sums of natural numbers or multiples.",
+      "evidence_keys": [
+       "p49-k5",
+       "p49-k6",
+       "p49-k10",
+       "p51-k5",
+       "p52-k7",
+       "p53-k5",
+       "p53-k8"
+      ]
+     },
+     {
+      "label": "Number of terms, general term and maximum from sums",
+      "description": "Use sum conditions to find the number of terms or the general term, and find the number of terms giving the maximum sum.",
+      "evidence_keys": [
+       "p54-k8",
+       "p54-k9",
+       "p54-k10",
+       "p55-k11",
+       "p55-k12",
+       "p56-k2",
+       "p56-k5"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p40-k4",
+      "objective": 2
+     },
+     {
+      "key": "p40-k5",
+      "objective": 6
+     },
+     {
+      "key": "p40-k6",
+      "objective": 1
+     },
+     {
+      "key": "p40-k7",
+      "objective": 1
+     },
+     {
+      "key": "p40-k8",
+      "objective": 1
+     },
+     {
+      "key": "p40-k9",
+      "objective": 1
+     },
+     {
+      "key": "p40-k10",
+      "objective": 1
+     },
+     {
+      "key": "p40-k11",
+      "objective": 1
+     },
+     {
+      "key": "p40-k12",
+      "objective": 1
+     },
+     {
+      "key": "p41-k2",
+      "objective": 1
+     },
+     {
+      "key": "p41-k3",
+      "objective": 1
+     },
+     {
+      "key": "p41-k14",
+      "objective": 1
+     },
+     {
+      "key": "p41-k15",
+      "objective": 1
+     },
+     {
+      "key": "p42-k3",
+      "objective": 1
+     },
+     {
+      "key": "p42-k4",
+      "objective": 1
+     },
+     {
+      "key": "p42-k5",
+      "objective": 1
+     },
+     {
+      "key": "p43-k3",
+      "objective": 2
+     },
+     {
+      "key": "p43-k5",
+      "objective": 3
+     },
+     {
+      "key": "p43-k6",
+      "objective": 3
+     },
+     {
+      "key": "p43-k9",
+      "objective": 2
+     },
+     {
+      "key": "p43-k10",
+      "objective": 2
+     },
+     {
+      "key": "p43-k11",
+      "objective": 3
+     },
+     {
+      "key": "p43-k13",
+      "objective": 2
+     },
+     {
+      "key": "p43-k14",
+      "objective": 2
+     },
+     {
+      "key": "p43-k15",
+      "objective": 2
+     },
+     {
+      "key": "p43-k16",
+      "objective": 2
+     },
+     {
+      "key": "p44-k1",
+      "objective": 3
+     },
+     {
+      "key": "p44-k2",
+      "objective": 2
+     },
+     {
+      "key": "p44-k3",
+      "objective": 2
+     },
+     {
+      "key": "p44-k4",
+      "objective": 2
+     },
+     {
+      "key": "p44-k5",
+      "objective": 3
+     },
+     {
+      "key": "p44-k6",
+      "objective": 2
+     },
+     {
+      "key": "p44-k7",
+      "objective": 2
+     },
+     {
+      "key": "p45-k1",
+      "objective": 2
+     },
+     {
+      "key": "p45-k2",
+      "objective": 3
+     },
+     {
+      "key": "p45-k3",
+      "objective": 3
+     },
+     {
+      "key": "p45-k4",
+      "objective": 4
+     },
+     {
+      "key": "p46-k3",
+      "objective": 3
+     },
+     {
+      "key": "p46-k4",
+      "objective": 4
+     },
+     {
+      "key": "p46-k5",
+      "objective": 5
+     },
+     {
+      "key": "p46-k9",
+      "objective": 4
+     },
+     {
+      "key": "p46-k10",
+      "objective": 4
+     },
+     {
+      "key": "p46-k11",
+      "objective": 5
+     },
+     {
+      "key": "p46-k13",
+      "objective": 4
+     },
+     {
+      "key": "p47-k1",
+      "objective": 4
+     },
+     {
+      "key": "p47-k4",
+      "objective": 5
+     },
+     {
+      "key": "p47-k9",
+      "objective": 4
+     },
+     {
+      "key": "p47-k10",
+      "objective": 4
+     },
+     {
+      "key": "p47-k11",
+      "objective": 5
+     },
+     {
+      "key": "p48-k3",
+      "objective": 4
+     },
+     {
+      "key": "p48-k4",
+      "objective": 4
+     },
+     {
+      "key": "p48-k5",
+      "objective": 4
+     },
+     {
+      "key": "p48-k6",
+      "objective": 5
+     },
+     {
+      "key": "p48-k7",
+      "objective": 5
+     },
+     {
+      "key": "p48-k8",
+      "objective": 5
+     },
+     {
+      "key": "p49-k3",
+      "objective": 6
+     },
+     {
+      "key": "p49-k4",
+      "objective": 6
+     },
+     {
+      "key": "p49-k5",
+      "objective": 6
+     },
+     {
+      "key": "p49-k6",
+      "objective": 6
+     },
+     {
+      "key": "p49-k8",
+      "objective": 6
+     },
+     {
+      "key": "p49-k10",
+      "objective": 6
+     },
+     {
+      "key": "p49-k11",
+      "objective": 6
+     },
+     {
+      "key": "p50-k2",
+      "objective": 6
+     },
+     {
+      "key": "p50-k3",
+      "objective": 6
+     },
+     {
+      "key": "p50-k5",
+      "objective": 6
+     },
+     {
+      "key": "p50-k6",
+      "objective": 6
+     },
+     {
+      "key": "p50-k10",
+      "objective": 6
+     },
+     {
+      "key": "p51-k1",
+      "objective": 6
+     },
+     {
+      "key": "p51-k2",
+      "objective": 6
+     },
+     {
+      "key": "p51-k5",
+      "objective": 6
+     },
+     {
+      "key": "p51-k6",
+      "objective": 6
+     },
+     {
+      "key": "p51-k7",
+      "objective": 6
+     },
+     {
+      "key": "p51-k8",
+      "objective": 6
+     },
+     {
+      "key": "p52-k3",
+      "objective": 6
+     },
+     {
+      "key": "p52-k4",
+      "objective": 6
+     },
+     {
+      "key": "p52-k5",
+      "objective": 6
+     },
+     {
+      "key": "p52-k6",
+      "objective": 6
+     },
+     {
+      "key": "p52-k7",
+      "objective": 6
+     },
+     {
+      "key": "p52-k8",
+      "objective": 6
+     },
+     {
+      "key": "p52-k9",
+      "objective": 6
+     },
+     {
+      "key": "p53-k1",
+      "objective": 6
+     },
+     {
+      "key": "p53-k3",
+      "objective": 6
+     },
+     {
+      "key": "p53-k4",
+      "objective": 6
+     },
+     {
+      "key": "p53-k5",
+      "objective": 6
+     },
+     {
+      "key": "p53-k6",
+      "objective": 6
+     },
+     {
+      "key": "p53-k8",
+      "objective": 6
+     },
+     {
+      "key": "p53-k9",
+      "objective": 6
+     },
+     {
+      "key": "p53-k10",
+      "objective": 6
+     },
+     {
+      "key": "p53-k11",
+      "objective": 6
+     },
+     {
+      "key": "p53-k12",
+      "objective": 6
+     },
+     {
+      "key": "p53-k13",
+      "objective": 6
+     },
+     {
+      "key": "p53-k14",
+      "objective": 6
+     },
+     {
+      "key": "p53-k15",
+      "objective": 6
+     },
+     {
+      "key": "p53-k16",
+      "objective": 6
+     },
+     {
+      "key": "p53-k17",
+      "objective": 6
+     },
+     {
+      "key": "p54-k3",
+      "objective": 6
+     },
+     {
+      "key": "p54-k4",
+      "objective": 6
+     },
+     {
+      "key": "p54-k5",
+      "objective": 7
+     },
+     {
+      "key": "p54-k8",
+      "objective": 7
+     },
+     {
+      "key": "p54-k9",
+      "objective": 7
+     },
+     {
+      "key": "p54-k10",
+      "objective": 7
+     },
+     {
+      "key": "p55-k2",
+      "objective": 7
+     },
+     {
+      "key": "p55-k3",
+      "objective": 7
+     },
+     {
+      "key": "p55-k4",
+      "objective": 7
+     },
+     {
+      "key": "p55-k5",
+      "objective": 7
+     },
+     {
+      "key": "p55-k8",
+      "objective": 7
+     },
+     {
+      "key": "p55-k11",
+      "objective": 7
+     },
+     {
+      "key": "p55-k12",
+      "objective": 7
+     },
+     {
+      "key": "p55-k13",
+      "objective": 7
+     },
+     {
+      "key": "p55-k14",
+      "objective": 7
+     },
+     {
+      "key": "p56-k1",
+      "objective": 7
+     },
+     {
+      "key": "p56-k2",
+      "objective": 7
+     },
+     {
+      "key": "p56-k3",
+      "objective": 7
+     },
+     {
+      "key": "p56-k4",
+      "objective": 7
+     },
+     {
+      "key": "p56-k5",
+      "objective": 7
+     },
+     {
+      "key": "p56-k6",
+      "objective": 7
+     },
+     {
+      "key": "p56-k7",
+      "objective": 7
+     },
+     {
+      "key": "p56-k8",
+      "objective": 7
+     },
+     {
+      "key": "p56-k9",
+      "objective": 7
+     },
+     {
+      "key": "p56-k10",
+      "objective": 7
+     },
+     {
+      "key": "p56-k11",
+      "objective": 7
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": []
+}

@@ -1,0 +1,57 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "5830a8fa089b1cf9554b5da63c46b17d5d663022dd1b1f4f3295ae526cbf88c6",
+  "generated_sha256": "04478cab67a741941e1317018ea10c3ef4660ca51a1c6d602a452156d92b932d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c2-1:explanation-1:a",
+    "verdict": "equivalent",
+    "reason": "Same first term 2 and difference 3."
+   },
+   {
+    "ref": "eb11c2-1:explanation-1:b",
+    "verdict": "equivalent",
+    "reason": "Same first term 3 and difference -5."
+   },
+   {
+    "ref": "eb11c2-1:explanation-2:a",
+    "verdict": "equivalent",
+    "reason": "A=5, B=-4 match; the printed common difference is extra."
+   },
+   {
+    "ref": "eb11c2-1:explanation-2:b",
+    "verdict": "equivalent",
+    "reason": "A=8, B=3 match; the printed common difference is extra."
+   },
+   {
+    "ref": "eb11c2-1:worked-example-1:a",
+    "verdict": "different",
+    "reason": "Printed answer is 'the 28th term'; the solver gave d=8, a=-6, which is not the same."
+   },
+   {
+    "ref": "eb11c2-1:worked-example-1:b",
+    "verdict": "different",
+    "reason": "Printed answer is 'the 125th term'; the solver gave the formula a_n=8n-14, which is not the same."
+   },
+   {
+    "ref": "eb11c2-1:worked-example-4",
+    "verdict": "equivalent",
+    "reason": "The 5th term means n=5."
+   },
+   {
+    "ref": "eb11c2-1:worked-example-6",
+    "verdict": "equivalent",
+    "reason": "Both give n=17 and maximum sum 561."
+   }
+  ]
+ }
+}

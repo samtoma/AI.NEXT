@@ -1,0 +1,27 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "12cd7330673a21f9ba8ce9fadaa2f70c19ca5b0542efcba96c8615d46d9592a8",
+  "generated_sha256": "27d2c8188db234c642a02a997b109a9008d2d772adc6724f93c162bf9356e83f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c2-4:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "trim",
+    "note": "Question 1 text ('Find the first term of the 10th group...') is inside the crop at the bottom and is not part of the figure."
+   }
+  ]
+ }
+}

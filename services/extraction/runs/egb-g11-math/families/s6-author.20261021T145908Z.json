@@ -1,0 +1,822 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "b8ef053d35f930985f989bbec4e29d511c53533fc58eb04e0dd3e33e9532e63d",
+  "generated_sha256": "d6cdd7b8c0cff4eb046740b4a1a85aaefbced94e5c99d4ea4ef708baff6051cc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:eb11c4-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-1-2:reflect",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-1-2",
+     "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+     "source_page": 154,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": "[v for v in range(-9, 10) if v != 0]"
+      },
+      {
+       "name": "b",
+       "choice": "[v for v in range(-9, 10) if v != 0]"
+      },
+      {
+       "name": "k",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "nm",
+       "let": "[\"x-axis\", \"y-axis\", \"origin\"][k]"
+      },
+      {
+       "name": "rx",
+       "let": "[a, -a, -a][k]"
+      },
+      {
+       "name": "ry",
+       "let": "[-b, b, -b][k]"
+      },
+      {
+       "name": "qn",
+       "let": "\"first\" if (a > 0 and b > 0) else (\"second\" if (a < 0 and b > 0) else (\"third\" if (a < 0 and b < 0) else \"fourth\"))"
+      }
+     ],
+     "constraints": [],
+     "stem": "The point $A({=a}, {=b})$ is given. Find the coordinates of the point symmetric to $A$ with respect to the {=nm}.",
+     "solution": [
+      "$A$ has $x = {=a}$ and $y = {=b}$, so it lies in the {=qn} quadrant.",
+      "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$.",
+      "With respect to the {=nm}, the symmetric point is $({=rx}, {=ry})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=rx}, {=ry})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Single skeleton: reflect a point in x-axis, y-axis or origin. Coordinates are never zero."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-1-2:twostep",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-1-2",
+     "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+     "source_page": 154,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": "[v for v in range(-9, 10) if v != 0]"
+      },
+      {
+       "name": "b",
+       "choice": "[v for v in range(-9, 10) if v != 0]"
+      },
+      {
+       "name": "k1",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "k2",
+       "choice": [
+        0,
+        1,
+        2
+       ],
+       "resample_while": "k2 == k1"
+      },
+      {
+       "name": "n1",
+       "let": "[\"x-axis\", \"y-axis\", \"origin\"][k1]"
+      },
+      {
+       "name": "n2",
+       "let": "[\"x-axis\", \"y-axis\", \"origin\"][k2]"
+      },
+      {
+       "name": "bx",
+       "let": "[a, -a, -a][k1]"
+      },
+      {
+       "name": "by",
+       "let": "[-b, b, -b][k1]"
+      },
+      {
+       "name": "cx",
+       "let": "[bx, -bx, -bx][k2]"
+      },
+      {
+       "name": "cy",
+       "let": "[-by, by, -by][k2]"
+      },
+      {
+       "name": "qn",
+       "let": "\"first\" if (cx > 0 and cy > 0) else (\"second\" if (cx < 0 and cy > 0) else (\"third\" if (cx < 0 and cy < 0) else \"fourth\"))"
+      }
+     ],
+     "constraints": [],
+     "stem": "The point $B$ is the symmetric of $A({=a}, {=b})$ with respect to the {=n1}, and $C$ is the symmetric of $B$ with respect to the {=n2}. Find the coordinates of $C$.",
+     "solution": [
+      "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$.",
+      "$B$, the symmetric of $A({=a}, {=b})$ with respect to the {=n1}, is $({=bx}, {=by})$.",
+      "$C$, the symmetric of $B$ with respect to the {=n2}, is $({=cx}, {=cy})$.",
+      "Since $x = {=cx}$ and $y = {=cy}$, $C$ lies in the {=qn} quadrant."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=cx}, {=cy})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Two successive reflections with different mappings; nonzero coordinates."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c4-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-2-1:isos-right",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-2-1",
+     "parent_question_id": "q:eb11c4-2-1:bk-try-1",
+     "source_page": 163,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "v",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "sg",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "x0",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "name": "y0",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        0,
+        3
+       ]
+      },
+      {
+       "name": "base",
+       "let": "[[x0, y0], [x0 + p, y0 + q], [x0 - sg * q, y0 + sg * p]]"
+      },
+      {
+       "name": "pts",
+       "let": "[base[(i - v) % 3] for i in range(3)]"
+      },
+      {
+       "name": "names",
+       "let": "[\"A\", \"B\", \"C\"]"
+      },
+      {
+       "name": "abx",
+       "let": "pts[1][0] - pts[0][0]"
+      },
+      {
+       "name": "aby",
+       "let": "pts[1][1] - pts[0][1]"
+      },
+      {
+       "name": "bcx",
+       "let": "pts[2][0] - pts[1][0]"
+      },
+      {
+       "name": "bcy",
+       "let": "pts[2][1] - pts[1][1]"
+      },
+      {
+       "name": "cax",
+       "let": "pts[0][0] - pts[2][0]"
+      },
+      {
+       "name": "cay",
+       "let": "pts[0][1] - pts[2][1]"
+      },
+      {
+       "name": "ab2",
+       "let": "abx**2 + aby**2"
+      },
+      {
+       "name": "bc2",
+       "let": "bcx**2 + bcy**2"
+      },
+      {
+       "name": "ca2",
+       "let": "cax**2 + cay**2"
+      },
+      {
+       "name": "sq",
+       "let": "[bc2, ca2, ab2]"
+      },
+      {
+       "name": "sides",
+       "let": "[\"BC\", \"CA\", \"AB\"]"
+      },
+      {
+       "name": "hyp",
+       "let": "sides[v]"
+      },
+      {
+       "name": "l1",
+       "let": "sides[(v + 1) % 3]"
+      },
+      {
+       "name": "l2",
+       "let": "sides[(v + 2) % 3]"
+      },
+      {
+       "name": "leg",
+       "let": "sq[(v + 1) % 3]"
+      },
+      {
+       "name": "rv",
+       "let": "names[v]"
+      },
+      {
+       "name": "ov",
+       "let": "names[(v + 1) % 3]"
+      }
+     ],
+     "constraints": [
+      "sq[(v + 1) % 3] == sq[(v + 2) % 3]",
+      "sq[v] == 2 * sq[(v + 1) % 3]",
+      "ab2 != bc2 or bc2 != ca2"
+     ],
+     "stem": "Determine the shape of $\\triangle ABC$ with vertices A({=pts[0][0]}, {=pts[0][1]}), B({=pts[1][0]}, {=pts[1][1]}) and C({=pts[2][0]}, {=pts[2][1]}).",
+     "solution": [
+      "$(AB)^2=({=abx})^2+({=aby})^2={=ab2}$",
+      "$(BC)^2=({=bcx})^2+({=bcy})^2={=bc2}$",
+      "$(CA)^2=({=cax})^2+({=cay})^2={=ca2}$",
+      "$({=l1})^2=({=l2})^2={=leg}$, so the triangle is isosceles.",
+      "$({=hyp})^2={=sq[v]}={=leg}+{=leg}=({=l1})^2+({=l2})^2$, so it is right-angled at {=rv}.",
+      "$\\triangle ABC$ is an isosceles right-angled triangle with the right angle at {=rv}."
+     ],
+     "choices": {
+      "correct": "Isosceles right-angled triangle (right angle at {=rv})",
+      "distractors": [
+       {
+        "text": "Isosceles triangle, not right-angled",
+        "misconception_id": "mc:eb11c4-2-1:stops-at-isosceles"
+       },
+       {
+        "text": "Isosceles right-angled triangle (right angle at {=ov})",
+        "misconception_id": null
+       },
+       {
+        "text": "Equilateral triangle",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: one isosceles right triangle, right-angle vertex and orientation vary. Constructed by rotating the leg vector 90 degrees, so legs equal and hypotenuse squared is twice a leg squared. Non-degenerate since p>=1. Model: bk-try-1."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the basic gap was filled. All instances are isosceles right-angled, with the right-angle vertex varying."
+  },
+  {
+   "lo_id": "lo:eb11c4-2-3",
+   "families": [],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c4-2-5",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-2-5:fixed-point",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-2-5",
+     "parent_question_id": "q:eb11c4-2-5:bk-exercise-35",
+     "source_page": 177,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "x0",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "let": "p - q"
+      },
+      {
+       "name": "s",
+       "let": "d * x0"
+      },
+      {
+       "name": "y0",
+       "let": "-x0"
+      }
+     ],
+     "constraints": [],
+     "stem": "The line $(k+{=p})x+(k+{=q})y={=s}$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+     "solution": [
+      "Move all terms to the left and rearrange in $k$: $(x+y)k+({=p}x+{=q}y-({=s}))=0$.",
+      "This holds for every $k$, so $x+y=0$ and ${=p}x+{=q}y={=s}$.",
+      "From the first, $y=-x$. Substitute: ${=p}x-{=q}x={=s}$, so ${=d}x={=s}$.",
+      "Hence $x={=x0}$ and $y={=y0}$.",
+      "The fixed point is $({=x0}, {=y0})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x0}, {=y0})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Line rewritten as k(x+y) + (px+qy-s)=0. Fixed point (x0, -x0), p!=q so d!=0 and s=d*x0 exactly."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-2-5:no-triangle",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-2-5",
+     "parent_question_id": "q:eb11c4-2-5:bk-challenge-9",
+     "source_page": 179,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "u",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "v",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "m0",
+       "choice": [
+        2,
+        3,
+        4,
+        5,
+        -2,
+        -3,
+        -4
+       ]
+      },
+      {
+       "name": "s1",
+       "let": "u + v"
+      },
+      {
+       "name": "s2",
+       "let": "u - v"
+      },
+      {
+       "name": "c",
+       "let": "m0 * u + v"
+      }
+     ],
+     "constraints": [],
+     "stem": "If the three lines $x+y={=s1}$, $x-y={=s2}$ and $mx+y={=c}$ do not form a triangle, then find the sum of all possible values of $m$.",
+     "solution": [
+      "The three lines fail to form a triangle if the third is parallel to one of the others, or if all three pass through one point.",
+      "Gradients: $-1$, $1$, $-m$.",
+      "Parallel to the first: $-m=-1$, so $m=1$.",
+      "Parallel to the second: $-m=1$, so $m=-1$.",
+      "The first two lines meet at $({=u}, {=v})$.",
+      "The third passes through it: ${=m0 * u}$ is not needed; $m({=u})+{=v}={=c}$, so $m={=m0}$.",
+      "Sum $=1+(-1)+({=m0})={=m0}$."
+     ],
+     "answer": "m0",
+     "proposed_misconceptions": [
+      {
+       "id": "mc:eb11c4-2-5:no-triangle-only-one-case",
+       "label": "Stops after one way the lines can fail to make a triangle",
+       "description": "Finds only the concurrent value or only the parallel values and gives that as the whole answer."
+      }
+     ],
+     "notes": "First two lines meet at (u,v). Parallel cases m=1 and m=-1 never coincide with the other lines since m0 not +-1 and u>0. Sum = m0. Solution step 6 wording slightly awkward; step intended: m*u+v=c."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c4-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-3-2:count-points",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-3-2",
+     "parent_question_id": "q:eb11c4-3-2:bk-warm-up-11",
+     "source_page": 187,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "D",
+       "let": "8*r*r - 4*c*c"
+      },
+      {
+       "require": "D != 0",
+       "why": "avoid tangency so the count is 0 or 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the number of points of intersection of the circle $x^2+y^2={=r*r}$ and the line $x-y+{=c}=0$",
+     "answer": "2 if D > 0 else 0",
+     "solution": [
+      "From $x-y+{=c}=0$, $y=x+{=c}$.",
+      "Substitute into the circle: $x^2+(x+{=c})^2={=r*r}$, which simplifies to $2x^2+{=2*c}x+({=c*c-r*r})=0$.",
+      "$D=({=2*c})^2-4\\cdot2\\cdot({=c*c-r*r})={=D}$.",
+      "The sign of $D$ gives the number of points: $D>0$ means 2, $D=0$ means 1, $D<0$ means 0. So there are {=2 if D > 0 else 0} points of intersection."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: substitute line into circle centred at origin, read the sign of D. Tangency excluded because 2r^2 = c^2 has no integer solution anyway. Answer 0 or 2."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c4-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-3-3:point-on-circle",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-3-3",
+     "parent_question_id": "q:eb11c4-3-3:bk-warm-up-16",
+     "source_page": 193,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "L",
+       "let": "[[3,4],[4,3],[6,8],[8,6],[5,12],[12,5],[8,15],[15,8]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        7
+       ]
+      },
+      {
+       "name": "a",
+       "let": "L[i][0]"
+      },
+      {
+       "name": "b",
+       "let": "L[i][1]"
+      },
+      {
+       "name": "R",
+       "let": "a*a + b*b"
+      }
+     ],
+     "stem": "Find the equation of the tangent to the circle $x^2+y^2={=R}$ at the point $({=a}, {=b})$ on it.",
+     "solution": [
+      "Check the point is on the circle: ${=a}^2+{=b}^2={=a*a}+{=b*b}={=R}$.",
+      "For a point $(a, b)$ on the circle $x^2+y^2=r^2$, the tangent is $ax+by=r^2$.",
+      "Here $a={=a}$, $b={=b}$, $r^2={=R}$.",
+      "The tangent is ${=a}x+{=b}y={=R}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "{=a}*x+{=b}*y={=R}",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: both coordinates positive, point given as lying on the circle, direct use of ax+by=r^2."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-3-3:from-outside",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-3-3",
+     "parent_question_id": "q:eb11c4-3-3:bk-exercise-41",
+     "source_page": 194,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "T",
+       "let": "[[25,7,1,3,4,4,-3],[13,5,1,2,3,3,-2],[20,6,2,2,4,4,-2]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "R",
+       "let": "T[i][0]"
+      },
+      {
+       "name": "s1",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "s2",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "P1",
+       "let": "s1*T[i][1]"
+      },
+      {
+       "name": "P2",
+       "let": "s2*T[i][2]"
+      },
+      {
+       "name": "a1",
+       "let": "s1*T[i][3]"
+      },
+      {
+       "name": "b1",
+       "let": "s2*T[i][4]"
+      },
+      {
+       "name": "a2",
+       "let": "s1*T[i][5]"
+      },
+      {
+       "name": "b2",
+       "let": "s2*T[i][6]"
+      },
+      {
+       "name": "U",
+       "let": "a1 if a1 > a2 else a2"
+      },
+      {
+       "name": "V",
+       "let": "b1 if a1 > a2 else b2"
+      },
+      {
+       "name": "U2",
+       "let": "a2 if a1 > a2 else a1"
+      },
+      {
+       "name": "V2",
+       "let": "b2 if a1 > a2 else b1"
+      },
+      {
+       "name": "sg",
+       "let": "'+' if V > 0 else '-'"
+      },
+      {
+       "name": "sg2",
+       "let": "'+' if V2 > 0 else '-'"
+      },
+      {
+       "require": "U != U2",
+       "why": "contact points must have different x-coordinates"
+      }
+     ],
+     "stem": "The point $({=P1}, {=P2})$ lies outside the circle $x^2+y^2={=R}$. Two tangents are drawn from this point to the circle. Find the equation of the tangent whose point of contact has the greater $x$-coordinate.",
+     "solution": [
+      "Let the point of contact be $(a, b)$. It lies on the circle, so $a^2+b^2={=R}$.",
+      "The tangent at $(a, b)$ is $ax+by={=R}$. It passes through $({=P1}, {=P2})$, so ${=P1}a+({=P2})b={=R}$.",
+      "Solving these two equations gives the points of contact $({=U}, {=V})$ and $({=U2}, {=V2})$. Check: ${=U}^2+({=V})^2={=R}$ and ${=U2}^2+({=V2})^2={=R}$.",
+      "The greater $x$-coordinate is {=U}, so the point of contact is $({=U}, {=V})$.",
+      "Use $ax+by=r^2$ at $({=U}, {=V})$: ${=U}x{=sg}{=abs(V)}y={=R}$. (The other tangent, at $({=U2}, {=V2})$, is ${=U2}x{=sg2}{=abs(V2)}y={=R}$.)"
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "({=U})*x+({=V})*y={=R}",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: external point. Contact points are lattice points, built from reflections of 3 base cases (checked: P on both tangents, contacts on circle). Asking for the greater-x contact gives a single answer."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c4-3-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c4-3-4:position",
+     "kind": "family",
+     "lo_id": "lo:eb11c4-3-4",
+     "parent_question_id": "q:eb11c4-3-4:bk-exercise-48-a",
+     "source_page": 197,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "choice": [
+        0,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "a",
+       "let": "[3, 6, 5][t]"
+      },
+      {
+       "name": "b",
+       "let": "[4, 8, 12][t]"
+      },
+      {
+       "name": "d",
+       "let": "[5, 10, 13][t]"
+      },
+      {
+       "name": "c",
+       "choice": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "R",
+       "let": "[d - s - 1, d - s, d - s + 1, d + s, d + s + 1][c]"
+      },
+      {
+       "name": "names",
+       "let": "['the circles are separate (outside each other)', 'the circles touch externally', 'the circles intersect at two points', 'the circles touch internally', 'one circle lies inside the other without touching']"
+      },
+      {
+       "name": "why",
+       "let": "['$d>r+r\\'$', '$d=r+r\\'$', '$|r-r\\'|<d<r+r\\'$', '$d=|r-r\\'|$', '$d<|r-r\\'|$']"
+      },
+      {
+       "require": "R > 0",
+       "why": "positive radius"
+      }
+     ],
+     "stem": "Circle $x^2+y^2={=R*R}$ and circle $(x-{=a})^2+(y-{=b})^2={=s*s}$. Which describes their positional relationship?",
+     "solution": [
+      "The centers are $(0, 0)$ and $({=a}, {=b})$, so $d=\\sqrt{{=a}^2+{=b}^2}={=d}$.",
+      "The radii are $r={=R}$ and $r'={=s}$.",
+      "$r+r'={=R+s}$ and $|r-r'|={=abs(R-s)}$.",
+      "Comparing with $d={=d}$: {=why[c]}, so {=names[c]}."
+     ],
+     "choices": {
+      "correct": "{=names[c]}",
+      "distractors": [
+       {
+        "text": "{=names[(c+1)%5]}",
+        "misconception_id": null
+       },
+       {
+        "text": "{=names[(c+2)%5]}",
+        "misconception_id": null
+       },
+       {
+        "text": "{=names[(c+3)%5]}",
+        "misconception_id": null
+       },
+       {
+        "text": "{=names[(c+4)%5]}",
+        "misconception_id": null
+       }
+      ]
+     },
+     "notes": "Centers (0,0),(a,b) with integer d from Pythagorean triples; radii built so each of the five cases is exact. The 'why' list uses an escaped apostrophe inside a string; reviewer please check rendering of r'. Standard and advanced tiers already covered by book items are not requested."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

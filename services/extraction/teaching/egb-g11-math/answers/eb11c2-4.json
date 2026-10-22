@@ -1,0 +1,1116 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-4",
+  "source": "book-records/egb-g11-math/eb11c2-4.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 28,
+      "cost_usd": 0.4729,
+      "calls": [
+        {
+          "call": "answers.eb11c2-4",
+          "cost_usd": 0.4729,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c2-4:guiding-question-1",
+      "record_id": "eb11c2-4:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 85,
+      "question": {
+        "text": "Guiding Question: How can we discover a hidden, constant pattern in a sequence of numbers when the initial differences between them keep changing?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2cb595e9d6fab7e64b3ae4b76c65af55",
+      "kind": "explanation",
+      "answer": "Write the difference sequence; if the differences follow a pattern (for example an arithmetic sequence), use it to build the general term.",
+      "solution": [
+        "Find the differences between adjacent terms to get the difference sequence {b_n}.",
+        "If the differences keep changing, look at the differences themselves: they may form a regular pattern, such as an arithmetic sequence.",
+        "Find the formula for b_n from that pattern.",
+        "Then use $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$ for $n\\ge 2$.",
+        "Check whether the formula also holds for $n=1$."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-1",
+        "eb11c2-4:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "Write the difference sequence (differences of adjacent terms). If those differences are not constant, take differences again (or see they form an arithmetic sequence, e.g. 3, 5, 7, ...). The hidden constant pattern appears in the difference sequence, and then $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$ gives the general term (check $n=1$).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:warm-up-1:1",
+      "record_id": "eb11c2-4:warm-up-1",
+      "part": "1",
+      "type": "exercise",
+      "page": 86,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, 5, 12, 23, 38, 57, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b2cf68b1793f4bcf01e8aa2ec4173121",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - 3n + 3",
+      "solution": [
+        "Write the difference sequence {b_n}: 3, 7, 11, 15, 19, ...",
+        "It is arithmetic with first term 3 and common difference 4, so b_n = 3 + (n-1)×4 = 4n - 1.",
+        "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (4k - 1) = 2 + 2n(n-1) - (n-1) = 2n^2 - 3n + 3.",
+        "Check n = 1: 2 - 3 + 3 = 2 = a_1, so the formula holds for n = 1.",
+        "a_n = 2n^2 - 3n + 3."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1",
+        "eb11c2-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n^2 - 3n + 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:warm-up-1:2",
+      "record_id": "eb11c2-4:warm-up-1",
+      "part": "2",
+      "type": "exercise",
+      "page": 86,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, 3, 6, 15, 42, 123, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "74b95ebb4c10fd8351582505c755c91c",
+      "kind": "value",
+      "answer": "a_n = (3^(n-1) + 3)/2",
+      "solution": [
+        "Write the difference sequence {b_n}: 1, 3, 9, 27, 81, ...",
+        "It is geometric with first term 1 and common ratio 3, so b_n = 3^(n-1).",
+        "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} 3^(k-1) = 2 + (3^(n-1) - 1)/(3 - 1) = (3^(n-1) + 3)/2.",
+        "Check n = 1: (1 + 3)/2 = 2 = a_1, so the formula holds for n = 1.",
+        "a_n = (3^(n-1) + 3)/2."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (3^{n-1} + 3)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:try-1:a",
+      "record_id": "eb11c2-4:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, 10, 24, 44, 70, 102, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "26e20daba7e01fb1da17f81f6dc1a800",
+      "kind": "value",
+      "answer": "a_n = 3n^2 - n",
+      "solution": [
+        "Difference sequence {b_n}: 8, 14, 20, 26, 32, ...",
+        "It is arithmetic with first term 8 and common difference 6, so b_n = 8 + (n-1)×6 = 6n + 2.",
+        "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (6k + 2) = 2 + 3n(n-1) + 2(n-1) = 3n^2 - n.",
+        "Check n = 1: 3 - 1 = 2 = a_1, so the formula holds for n = 1.",
+        "a_n = 3n^2 - n."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1",
+        "eb11c2-4:caution-1",
+        "eb11c2-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n^2 - n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:try-1:b",
+      "record_id": "eb11c2-4:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$5, 7, 11, 19, 35, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8a921a8613c2450ad1b6836dbc64556f",
+      "kind": "value",
+      "answer": "a_n = 2^n + 3",
+      "solution": [
+        "Difference sequence {b_n}: 2, 4, 8, 16, ...",
+        "It is geometric with first term 2 and common ratio 2, so b_n = 2^n.",
+        "For n ≥ 2: a_n = 5 + sum_{k=1}^{n-1} 2^k = 5 + 2(2^(n-1) - 1)/(2 - 1) = 2^n + 3.",
+        "Check n = 1: 2 + 3 = 5 = a_1, so the formula holds for n = 1.",
+        "a_n = 2^n + 3."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2^n + 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-1:a",
+      "record_id": "eb11c2-4:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, 2, 5, 14, 41, 122, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d2aac65aed460e3ae86fc0d1058cdab3",
+      "kind": "value",
+      "answer": "a_n = (3^(n-1) + 1)/2",
+      "solution": [
+        "Difference sequence {b_n}: 1, 3, 9, 27, 81, ...",
+        "It is geometric with first term 1 and common ratio 3, so b_n = 3^(n-1).",
+        "For n ≥ 2: a_n = 1 + sum_{k=1}^{n-1} 3^(k-1) = 1 + (3^(n-1) - 1)/2 = (3^(n-1) + 1)/2.",
+        "Check n = 1: (1 + 1)/2 = 1 = a_1, so the formula holds for n = 1.",
+        "a_n = (3^(n-1) + 1)/2."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (3^{n-1} + 1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-1:b",
+      "record_id": "eb11c2-4:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$5, 8, 9, 8, 5, 0, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "54595ca71de6bbbe9c2a5657d52248b4",
+      "kind": "value",
+      "answer": "a_n = -n^2 + 6n",
+      "solution": [
+        "Difference sequence {b_n}: 3, 1, -1, -3, -5, ...",
+        "It is arithmetic with first term 3 and common difference -2, so b_n = 3 + (n-1)×(-2) = 5 - 2n.",
+        "For n ≥ 2: a_n = 5 + sum_{k=1}^{n-1} (5 - 2k) = 5 + 5(n-1) - n(n-1) = -n^2 + 6n.",
+        "Check n = 1: -1 + 6 = 5 = a_1, so the formula holds for n = 1.",
+        "a_n = -n^2 + 6n."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1",
+        "eb11c2-4:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -n^2 + 6n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-1:c",
+      "record_id": "eb11c2-4:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, 3, 1, 5, -3, 13, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ca106b6f71faa7f4ba3722e85bb5d476",
+      "kind": "value",
+      "answer": "a_n = (7 - (-2)^(n-1))/3",
+      "solution": [
+        "Difference sequence {b_n}: 1, -2, 4, -8, 16, ...",
+        "It is geometric with first term 1 and common ratio -2, so b_n = (-2)^(n-1).",
+        "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (-2)^(k-1) = 2 + ((-2)^(n-1) - 1)/(-2 - 1) = 2 + (1 - (-2)^(n-1))/3 = (7 - (-2)^(n-1))/3.",
+        "Check n = 1: (7 - 1)/3 = 2 = a_1, so the formula holds for n = 1.",
+        "a_n = (7 - (-2)^(n-1))/3."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (7 - (-2)^{n-1})/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-1:d",
+      "record_id": "eb11c2-4:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, 6, 15, 28, 45, 66, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2ff6c6f1f7ce5e22ad11c8d00fa31a52",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - n",
+      "solution": [
+        "Difference sequence {b_n}: 5, 9, 13, 17, 21, ...",
+        "It is arithmetic with first term 5 and common difference 4, so b_n = 5 + (n-1)×4 = 4n + 1.",
+        "For n ≥ 2: a_n = 1 + sum_{k=1}^{n-1} (4k + 1) = 1 + 2n(n-1) + (n-1) = 2n^2 - n.",
+        "Check n = 1: 2 - 1 = 1 = a_1, so the formula holds for n = 1.",
+        "a_n = 2n^2 - n."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1",
+        "eb11c2-4:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n^2 - n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-1:e",
+      "record_id": "eb11c2-4:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$5, 4, 7, -2, 25, -56, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7bb8440d31e867f8016995374c9b40d2",
+      "kind": "value",
+      "answer": "a_n = (19 + (-3)^(n-1))/4",
+      "solution": [
+        "Difference sequence {b_n}: -1, 3, -9, 27, -81, ...",
+        "It is geometric with first term -1 and common ratio -3, so b_n = -(-3)^(n-1).",
+        "For n ≥ 2: a_n = 5 - sum_{k=1}^{n-1} (-3)^(k-1) = 5 - ((-3)^(n-1) - 1)/(-3 - 1) = 5 + ((-3)^(n-1) - 1)/4 = (19 + (-3)^(n-1))/4.",
+        "Check n = 1: (19 + 1)/4 = 5 = a_1, so the formula holds for n = 1.",
+        "a_n = (19 + (-3)^(n-1))/4."
+      ],
+      "grounded_in": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (19 + (-3)^{n-1})/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:challenge-1",
+      "record_id": "eb11c2-4:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 87,
+      "question": {
+        "text": "An oncology team monitors a tissue mass over six weeks and records its volume mm^3 as: 1, 3, 7, 13, 21, 31, …. Find its general formula $a_n$. If volume exceeds 130 mm^3 by week 12, immediate surgery is required. Calculate $a_{12}$ to determine if the patient needs surgery.",
+        "stem": "",
+        "notes": "Printed 'mm³as :1, 3, 7, ...' with odd italic formatting."
+      },
+      "needs_page": false,
+      "question_fingerprint": "3ce69bbbfd5e459e650a75fdb364aec6",
+      "kind": "value",
+      "answer": "a_n = n^2 - n + 1; a_12 = 133, so Yes, surgery is required (133 > 130)",
+      "solution": [
+        "Difference sequence of 1, 3, 7, 13, 21, 31 is 2, 4, 6, 8, 10, ...",
+        "It is arithmetic with first term 2 and common difference 2, so $b_n = 2n$.",
+        "For $n\\ge2$: $a_n = 1+\\sum_{k=1}^{n-1}2k = 1+2\\times\\frac12(n-1)n = n^2-n+1$.",
+        "For $n=1$: $1-1+1=1=a_1$, so the formula holds for $n=1$.",
+        "So $a_n = n^2-n+1$.",
+        "$a_{12}=144-12+1=133$.",
+        "Since 133 > 130, yes, surgery is required."
+      ],
+      "grounded_in": [
+        "eb11c2-4:rule-2",
+        "eb11c2-4:method-1",
+        "eb11c2-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = n^2 - n + 1$ (differences 2, 4, 6, 8, 10 give $b_n=2n$; formula holds for n=1). $a_{12} = 133 > 130$, so Yes, the patient needs surgery.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:warm-up-2",
+      "record_id": "eb11c2-4:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 88,
+      "question": {
+        "text": "Find the first term of the 10th group.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9acc2f6cf8621f2a6747a36d3f80d4ab",
+      "kind": "value",
+      "answer": "164",
+      "solution": [
+        "{a_n}: $a_n=2n$. Group sizes {b_n}: $b_n=2n-1$.",
+        "Terms up to the 9th group: $\\frac12\\times9\\times\\{2\\times1+8\\times2\\}=81$.",
+        "The first term of the 10th group is the 82nd term of {a_n}.",
+        "$2\\times82=164$.",
+        "The answer is 164."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "164",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:warm-up-3",
+      "record_id": "eb11c2-4:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 88,
+      "question": {
+        "text": "Find the sum of the terms included in the $n$-th group.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1779aa82b131c297f6f2eb25bd0f8f02",
+      "kind": "value",
+      "answer": "2(2n-1)(n^2-n+1)",
+      "solution": [
+        "The last term of the n-th group is the $n^2$-th term of {a_n}, so it is $2n^2$.",
+        "The first term is the $\\{(n-1)^2+1\\}$-th term, so it is $2(n^2-2n+2)$.",
+        "The number of terms in the group is $2n-1$.",
+        "Sum $=\\frac12(2n-1)\\{2(n^2-2n+2)+2n^2\\}$.",
+        "The answer is $2(2n-1)(n^2-n+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$2(2n-1)(n^2-n+1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:warm-up-4",
+      "record_id": "eb11c2-4:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 88,
+      "question": {
+        "text": "Find which group and which position 88 is in.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2a0663b7160f7ffd84245a6b1f732d5f",
+      "kind": "value",
+      "answer": "7th group, 8th term",
+      "solution": [
+        "$2n=88$ gives $n=44$, so 88 is the 44th term of {a_n}.",
+        "The last term of the n-th group is the $n^2$-th term of {a_n}.",
+        "$6^2=36$ and $7^2=49$, so the 44th term is in the 7th group.",
+        "$44-36=8$.",
+        "88 is the 8th term of the 7th group."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "7th group, 8th position",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:try-2",
+      "record_id": "eb11c2-4:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "Find the first term of the 10th group.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8289ed2b7c4edc457816e6d818b88b06",
+      "kind": "value",
+      "answer": "91",
+      "solution": [
+        "{a_n}: odd numbers, $a_n=2n-1$. Group sizes are 1, 2, 3, ..., so the n-th group has n terms.",
+        "Terms up to the 9th group: $\\frac12\\times9\\times10=45$.",
+        "The first term of the 10th group is the 46th term of {a_n}.",
+        "$2\\times46-1=91$.",
+        "The answer is 91."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "163",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:try-3",
+      "record_id": "eb11c2-4:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "Find the sum of the terms included in the 10th group.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2567ed018eb2085c8d026e0640d83a35",
+      "kind": "value",
+      "answer": "1000",
+      "solution": [
+        "The 10th group has 10 terms.",
+        "Its first term is the 46th term of {a_n}: 91.",
+        "Its last term is the 55th term: $2\\times55-1=109$.",
+        "Sum $=\\frac12\\times10\\times(91+109)=1000$.",
+        "The answer is 1000."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "3439",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:try-4",
+      "record_id": "eb11c2-4:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "Find which group and which position 101 is in.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "180eb309d70d9cc0f6781a7c4dad906b",
+      "kind": "value",
+      "answer": "10th group, 6th term",
+      "solution": [
+        "$2n-1=101$ gives $n=51$, so 101 is the 51st term of {a_n}.",
+        "Terms up to the n-th group: $\\frac12n(n+1)$. This is 45 for $n=9$ and 55 for $n=10$.",
+        "$45<51\\le55$, so 101 is in the 10th group.",
+        "$51-45=6$.",
+        "101 is the 6th term of the 10th group."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "8th group, 2nd position",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-2:a",
+      "record_id": "eb11c2-4:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$",
+        "stem": "Find the first term of the 10th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e746c23bc8bf2ddffd1086dda032ca1c",
+      "kind": "value",
+      "answer": "46",
+      "solution": [
+        "{a_n}: $a_n=n$. The n-th group has n terms.",
+        "Terms up to the 9th group: $\\frac12\\times9\\times10=45$.",
+        "The first term of the 10th group is the 46th term of {a_n}.",
+        "The answer is 46."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "46",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-2:b",
+      "record_id": "eb11c2-4:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$",
+        "stem": "Find the sum of the terms included in the 10th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ef4074f3db946bf276382d203c9de33e",
+      "kind": "value",
+      "answer": "505",
+      "solution": [
+        "The 10th group has 10 terms.",
+        "The first term is 46 and the last term is 55.",
+        "Sum $=\\frac12\\times10\\times(46+55)=505$.",
+        "The answer is 505."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "505",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-2:c",
+      "record_id": "eb11c2-4:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$",
+        "stem": "Find which group and which position 124 is in.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9f751a3f934103f5c24d51335b740a37",
+      "kind": "value",
+      "answer": "16th group, 4th term",
+      "solution": [
+        "$a_n=n$, so 124 is the 124th term of {a_n}.",
+        "Terms up to the n-th group: $\\frac12n(n+1)$. This is 120 for $n=15$ and 136 for $n=16$.",
+        "$120<124\\le136$, so 124 is in the 16th group.",
+        "$124-120=4$.",
+        "124 is the 4th term of the 16th group."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "16th group, 4th position",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-3:a",
+      "record_id": "eb11c2-4:exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1, 4 | 7, 10, 13, 16 | 19, 22, 25, 28, 31, 34 | 37, 40, \\dots$",
+        "stem": "Find the first term of the 10th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b865f68011e932a80123d4370dbaba4f",
+      "kind": "value",
+      "answer": "271",
+      "solution": [
+        "{a_n}: $a_n=3n-2$. Group sizes 2, 4, 6, ... so $b_n=2n$.",
+        "Terms up to the 9th group: $\\frac12\\times9\\times\\{2\\times2+8\\times2\\}=90$.",
+        "The first term of the 10th group is the 91st term of {a_n}.",
+        "$3\\times91-2=271$.",
+        "The answer is 271."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "271",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-3:b",
+      "record_id": "eb11c2-4:exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1, 4 | 7, 10, 13, 16 | 19, 22, 25, 28, 31, 34 | 37, 40, \\dots$",
+        "stem": "Find the sum of the terms included in the 10th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8bfe84c6bcc330046ac6680a657d4b0f",
+      "kind": "value",
+      "answer": "5990",
+      "solution": [
+        "The 10th group has $2\\times10=20$ terms.",
+        "The first term is the 91st term of {a_n}: 271.",
+        "The last term is the 110th term: $3\\times110-2=328$.",
+        "Sum $=\\frac12\\times20\\times(271+328)=5990$.",
+        "The answer is 5990."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "5990",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:exercise-3:c",
+      "record_id": "eb11c2-4:exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$1, 4 | 7, 10, 13, 16 | 19, 22, 25, 28, 31, 34 | 37, 40, \\dots$",
+        "stem": "Find which group and which position 100 is in.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4329f87dae2eee2c04ea9fed35577ad4",
+      "kind": "value",
+      "answer": "6th group, 4th term",
+      "solution": [
+        "$3n-2=100$ gives $n=34$, so 100 is the 34th term of {a_n}.",
+        "Terms up to the n-th group: $n(n+1)$. This is 30 for $n=5$ and 42 for $n=6$.",
+        "$30<34\\le42$, so 100 is in the 6th group.",
+        "$34-30=4$.",
+        "100 is the 4th term of the 6th group."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "6th group, 4th position",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:challenge-2:a",
+      "record_id": "eb11c2-4:challenge-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$",
+        "stem": "Find the first term of the 12th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9f2f8f2f690e72f0683f69940faabbf5",
+      "kind": "value",
+      "answer": "310",
+      "solution": [
+        "{a_n}: $a_n=4n-2$. Group sizes 2, 3, 4, ... so $b_n=n+1$.",
+        "Terms up to the 11th group: $\\frac12\\times11\\times\\{2\\times2+10\\times1\\}=77$.",
+        "The first term of the 12th group is the 78th term of {a_n}.",
+        "$4\\times78-2=310$.",
+        "The answer is 310."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "310",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:challenge-2:b",
+      "record_id": "eb11c2-4:challenge-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$",
+        "stem": "Derive a formula for the sum of all terms in the n-th group.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "aeb50e5566148cff8b9e9fa7303958e8",
+      "kind": "value",
+      "answer": "2(n+1)(n^2+2n-1)",
+      "solution": [
+        "Terms up to the n-th group: $\\frac12n\\{4+(n-1)\\}=\\frac12n(n+3)$, so the last term is the $\\frac12n(n+3)$-th term of {a_n}: $2n^2+6n-2$.",
+        "Terms up to the (n-1)-th group: $\\frac12(n-1)(n+2)$, so the first term is the $\\frac12n(n+1)$-th term of {a_n}: $2n^2+2n-2$.",
+        "The n-th group has $n+1$ terms.",
+        "Sum $=\\frac12(n+1)\\{(2n^2+2n-2)+(2n^2+6n-2)\\}=\\frac12(n+1)(4n^2+8n-4)$.",
+        "The sum is $2(n+1)(n^2+2n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$2(n+1)(n^2+2n-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:challenge-2:c",
+      "record_id": "eb11c2-4:challenge-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$",
+        "stem": "Determine in which group and at which position the number 202 appears.",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "df5d5a623527c4096ae62435d6db74d4",
+      "kind": "value",
+      "answer": "9th group, 7th term",
+      "solution": [
+        "$4n-2=202$ gives $n=51$, so 202 is the 51st term of {a_n}.",
+        "Terms up to the n-th group: $\\frac12n(n+3)$. This is 44 for $n=8$ and 54 for $n=9$.",
+        "$44<51\\le54$, so 202 is in the 9th group.",
+        "$51-44=7$.",
+        "202 is the 7th term of the 9th group."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "9th group, 7th position",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:challenge-2:d",
+      "record_id": "eb11c2-4:challenge-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 90,
+      "question": {
+        "text": "$2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$",
+        "stem": "Challenge extension: Find the total sum of all terms from Group 1 up to Group 12",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ba8af3398d6c1558901181d7b1ec5dcc",
+      "kind": "value",
+      "answer": "16200",
+      "solution": [
+        "Terms up to the 12th group: $\\frac12\\times12\\times15=90$.",
+        "So we need the sum of the first 90 terms of {a_n}, an arithmetic sequence with $a_n=4n-2$.",
+        "The first term is 2 and the 90th term is $4\\times90-2=358$.",
+        "Sum $=\\frac12\\times90\\times(2+358)=16200$.",
+        "The answer is 16200."
+      ],
+      "grounded_in": [
+        "eb11c2-4:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "16200",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-4:reflect-1",
+      "record_id": "eb11c2-4:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 90,
+      "question": {
+        "text": "When analyzing an unfamiliar sequence of real-world data, what indicators or visual clues would lead you to choose difference sequence method over a group sequence method?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "454b236d9c7bd7689b83e1be97af3bf1",
+      "kind": "explanation",
+      "answer": "Choose the difference sequence method when the data is one unbroken list whose adjacent differences form a simple pattern; choose grouping when the list is visibly split into blocks with a regular number of terms.",
+      "solution": [
+        "The difference method fits a single list of values with no breaks, where it is hard to guess the general term.",
+        "A clue: the differences between adjacent terms are not constant but themselves form a regular pattern, such as an arithmetic sequence.",
+        "The group method fits data that is divided into blocks (separators like |) whose sizes follow a regular pattern.",
+        "So check the differences first; if the data is already in groups of regular size, use the group method."
+      ],
+      "grounded_in": [
+        "eb11c2-4:rule-1",
+        "eb11c2-4:caution-2"
+      ],
+      "checks": {
+        "resolve_answer": "Choose the difference sequence method when the data is one continuous list with no visible blocks, and the differences between neighbouring terms follow a simple pattern (constant or arithmetic, e.g. a steadily growing change, as in 1, 3, 7, 13, 21). Choose the group method when the terms visibly split into blocks (separators, resets, repeating segments) with a regular number of terms in each block.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:13:38+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

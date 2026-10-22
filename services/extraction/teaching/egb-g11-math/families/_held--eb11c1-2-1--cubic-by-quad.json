@@ -1,0 +1,138 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-2-1:cubic-by-quad",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-2-1",
+ "parent_question_id": "q:eb11c1-2-1:bk-challenge-1",
+ "source_page": 11,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "abs(a) < 2"
+  },
+  {
+   "name": "b",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "d == 0"
+  },
+  {
+   "name": "r1",
+   "choice": [
+    -3,
+    -2,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "r0",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "r0 == 0"
+  },
+  {
+   "name": "A2",
+   "let": "d + a * c"
+  },
+  {
+   "name": "A1",
+   "let": "a * d + b * c + r1"
+  },
+  {
+   "name": "A0",
+   "let": "b * d + r0"
+  },
+  {
+   "name": "K1",
+   "let": "a * d + r1"
+  },
+  {
+   "require": "abs(A2) > 1 and abs(A1) > 1 and abs(K1) > 1 and A0 != 0 and abs(b * d) > 0 and abs(b*c) > 1 and abs(a*c) > 1 and abs(a*d) > 1",
+   "why": "clean, no 1x or 0 terms"
+  },
+  {
+   "name": "tA",
+   "let": "(' + ' if a > 0 else ' - ') + str(abs(a)) + 'x'"
+  },
+  {
+   "name": "tb",
+   "let": "(' + ' if b > 0 else ' - ') + str(abs(b))"
+  },
+  {
+   "name": "D",
+   "let": "'x^2' + tA + tb"
+  },
+  {
+   "name": "N",
+   "let": "str(c) + 'x^3' + (' + ' if A2 > 0 else ' - ') + str(abs(A2)) + 'x^2' + (' + ' if A1 > 0 else ' - ') + str(abs(A1)) + 'x' + (' + ' if A0 > 0 else ' - ') + str(abs(A0))"
+  },
+  {
+   "name": "L1",
+   "let": "str(c) + 'x^3' + (' + ' if a * c > 0 else ' - ') + str(abs(a * c)) + 'x^2' + (' + ' if b * c > 0 else ' - ') + str(abs(b * c)) + 'x'"
+  },
+  {
+   "name": "Rm1",
+   "let": "str(d) + 'x^2' + (' + ' if K1 > 0 else ' - ') + str(abs(K1)) + 'x' + (' + ' if A0 > 0 else ' - ') + str(abs(A0))"
+  },
+  {
+   "name": "L2",
+   "let": "str(d) + 'x^2' + (' + ' if a * d > 0 else ' - ') + str(abs(a * d)) + 'x' + (' + ' if b * d > 0 else ' - ') + str(abs(b * d))"
+  },
+  {
+   "name": "Q",
+   "let": "str(c) + 'x' + (' + ' if d > 0 else ' - ') + str(abs(d))"
+  },
+  {
+   "name": "Rs",
+   "let": "str(r1) + 'x' + (' + ' if r0 > 0 else ' - ') + str(abs(r0))"
+  }
+ ],
+ "constraints": [],
+ "stem": "Divide $ {=N} $ by $ {=D} $ using long division. Find the remainder.",
+ "answer": "Rs",
+ "solution": [
+  "Divide $ {=c}x^3 $ by $x^2$ to get ${=c}x$. Multiply: ${=c}x({=D})={=L1}$.",
+  "Subtract (change every sign of the line taken away): the line left is ${=Rm1}$.",
+  "Divide ${=d}x^2$ by $x^2$ to get ${=d}$. Multiply: ${=d}({=D})={=L2}$.",
+  "Subtract: what is left is ${=Rs}$. Its degree is less than the degree of the divisor, so we stop.",
+  "The quotient is ${=Q}$ and the remainder is ${=Rs}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=Rs}",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Dividend built as D*Q+R, nonzero remainder. Remainder is linear. Stem asks for remainder only; quotient shown in solution. Constraints avoid 1x terms and zero coefficients."
+}

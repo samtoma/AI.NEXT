@@ -1,0 +1,155 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 4,
+ "from_runs": {
+  "run": "runs/egb-g11-math/g2/g2r.unit04.20261021T151737Z.json"
+ },
+ "by": null,
+ "items": {
+  "eb11c4-2:WE1": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "The stem only says 'find the equations of the lines (a)–(f)'. The points or lines for part (a) are not shown, so a student cannot reach $y=-4$. The book's working does not give the data to repair it.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "Warm Up data (points or lines) for part (a) missing from stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c4-2:WE2": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "The data for part (b) are missing from the stem. $x=-3$ cannot be derived from what the student reads, and the working gives no data to restore it.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "Warm Up data for part (b) missing from stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c4-2:WE3": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "The two points for part (c) are not in the stem. The working only says their x-coordinates are equal, so the points cannot be restored.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The two points for part (c) are missing from the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c4-2:WE4": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "The two points for part (d) are not in the stem. The working only says their y-coordinates are equal, so the points cannot be restored.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The two points for part (d) are missing from the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c4-3:Ex3-1:1": {
+   "verdict": "exclude",
+   "class": "book error",
+   "confidence": "high",
+   "note": "Completing the square on $x^2+y^2-6x+2y+6=0$ gives $(x-3)^2+(y+1)^2=4$, a circle with centre $(3,-1)$ and radius 2. The printed $(x-3)^2+(y+2)^2=25$ does not follow from this stem. The stem also asks 'what kind of figure'. Right answer by the agent's own derivation: (x-3)^2+(y+1)^2=4.",
+   "if_corrected": {
+    "answer": "(x-3)^2+(y+1)^2=4",
+    "defect": "Printed answer has centre (3,-2) and r=5, which does not match the stem's equation. The answer may belong to another question, and a stray hint is pasted into the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 5,
+  "recommended": 5,
+  "unanswered": [],
+  "by_verdict": {
+   "exclude": 5
+  },
+  "by_class": {
+   "stem damaged": 4,
+   "book error": 1
+  },
+  "by_confidence": {
+   "high": 5
+  },
+  "live": [],
+  "live_question_ids": [],
+  "not_live": {},
+  "low_confidence": [],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "eb11c4-2:WE1",
+   "eb11c4-2:WE2",
+   "eb11c4-2:WE3",
+   "eb11c4-2:WE4",
+   "eb11c4-3:Ex3-1:1"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "held": 5
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ },
+ "questions": {
+  "eb11c4-2:WE1": {
+   "question": "q:eb11c4-2-2:bk-worked-example-1-a",
+   "book_ref": "eb11c4-2:worked-example-1:a",
+   "facts": {
+    "stem": "Explanation of the Warm Up: find the equations of the lines (a)–(f) (parts as printed). (a)",
+    "answer": "y = -4",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c4-2:WE2": {
+   "question": "q:eb11c4-2-2:bk-worked-example-1-b",
+   "book_ref": "eb11c4-2:worked-example-1:b",
+   "facts": {
+    "stem": "Explanation of the Warm Up: find the equations of the lines (a)–(f) (parts as printed). (b)",
+    "answer": "x = -3",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c4-2:WE3": {
+   "question": "q:eb11c4-2-2:bk-worked-example-1-c",
+   "book_ref": "eb11c4-2:worked-example-1:c",
+   "facts": {
+    "stem": "Explanation of the Warm Up: find the equations of the lines (a)–(f) (parts as printed). (c)",
+    "answer": "x = -3",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c4-2:WE4": {
+   "question": "q:eb11c4-2-2:bk-worked-example-1-d",
+   "book_ref": "eb11c4-2:worked-example-1:d",
+   "facts": {
+    "stem": "Explanation of the Warm Up: find the equations of the lines (a)–(f) (parts as printed). (d)",
+    "answer": "y = 3",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c4-3:Ex3-1:1": {
+   "question": "q:eb11c4-3-1:bk-warm-up-2-1",
+   "book_ref": "eb11c4-3:warm-up-2:1",
+   "facts": {
+    "stem": "Determine what kind of figure $x^2+y^2-6x+2y+6=0$ represents Since the center and radius are known, use $(x-a)^2+(y-b)^2=r^2$.",
+    "answer": "(x-3)^2+(y+2)^2=25",
+    "hold_reason": "answer_mismatch"
+   }
+  }
+ },
+ "line": "book-records (book_record_g2.py)"
+}

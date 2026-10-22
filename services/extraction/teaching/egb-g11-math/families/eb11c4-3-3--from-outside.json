@@ -1,0 +1,114 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-3-3:from-outside",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-3-3",
+ "parent_question_id": "q:eb11c4-3-3:bk-exercise-41",
+ "source_page": 194,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[25,7,1,3,4,4,-3],[13,5,1,2,3,3,-2],[20,6,2,2,4,4,-2]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "R",
+   "let": "T[i][0]"
+  },
+  {
+   "name": "s1",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "P1",
+   "let": "s1*T[i][1]"
+  },
+  {
+   "name": "P2",
+   "let": "s2*T[i][2]"
+  },
+  {
+   "name": "a1",
+   "let": "s1*T[i][3]"
+  },
+  {
+   "name": "b1",
+   "let": "s2*T[i][4]"
+  },
+  {
+   "name": "a2",
+   "let": "s1*T[i][5]"
+  },
+  {
+   "name": "b2",
+   "let": "s2*T[i][6]"
+  },
+  {
+   "name": "U",
+   "let": "a1 if a1 > a2 else a2"
+  },
+  {
+   "name": "V",
+   "let": "b1 if a1 > a2 else b2"
+  },
+  {
+   "name": "U2",
+   "let": "a2 if a1 > a2 else a1"
+  },
+  {
+   "name": "V2",
+   "let": "b2 if a1 > a2 else b1"
+  },
+  {
+   "name": "sg",
+   "let": "'+' if V > 0 else '-'"
+  },
+  {
+   "name": "sg2",
+   "let": "'+' if V2 > 0 else '-'"
+  },
+  {
+   "require": "U != U2",
+   "why": "contact points must have different x-coordinates"
+  }
+ ],
+ "stem": "The point $({=P1}, {=P2})$ lies outside the circle $x^2+y^2={=R}$. Two tangents are drawn from this point to the circle. Find the equation of the tangent whose point of contact has the greater $x$-coordinate.",
+ "solution": [
+  "Let the point of contact be $(a, b)$. It lies on the circle, so $a^2+b^2={=R}$.",
+  "The tangent at $(a, b)$ is $ax+by={=R}$. It passes through $({=P1}, {=P2})$, so ${=P1}a+({=P2})b={=R}$.",
+  "Solving these two equations gives the points of contact $({=U}, {=V})$ and $({=U2}, {=V2})$. Check: ${=U}^2+({=V})^2={=R}$ and ${=U2}^2+({=V2})^2={=R}$.",
+  "The greater $x$-coordinate is {=U}, so the point of contact is $({=U}, {=V})$.",
+  "Use $ax+by=r^2$ at $({=U}, {=V})$: ${=U}x{=sg}{=abs(V)}y={=R}$. (The other tangent, at $({=U2}, {=V2})$, is ${=U2}x{=sg2}{=abs(V2)}y={=R}$.)"
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "({=U})*x+({=V})*y={=R}",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: external point. Contact points are lattice points, built from reflections of 3 base cases (checked: P on both tangents, contacts on circle). Asking for the greater-x contact gives a single answer."
+}

@@ -1,0 +1,30 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-4:oddterms",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-4",
+ "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+ "source_page": 6,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    4,
+    11
+   ]
+  }
+ ],
+ "stem": "Find the value of $\\binom{{=n}}{1}+\\binom{{=n}}{3}+\\binom{{=n}}{5}+\\dots$, the sum of the combinations with odd lower index, by substituting $x=1$ and $x=-1$ in $(1+x)^{{=n}}$.",
+ "answer": "2**(n-1)",
+ "solution": [
+  "$(1+x)^{{=n}}=\\binom{{=n}}{0}+\\binom{{=n}}{1}x+\\binom{{=n}}{2}x^2+\\dots+\\binom{{=n}}{{=n}}x^{{=n}}$.",
+  "Put $x=1$: $2^{{=n}}=E+O$, where $E$ is the sum of the even-index terms and $O$ the sum of the odd-index terms.",
+  "Put $x=-1$: $0=E-O$, so $E=O$.",
+  "Hence $2O=2^{{=n}}$ and $O=2^{{=n-1}}$.",
+  "The sum is ${=2**(n-1)}$."
+ ],
+ "notes": "Standard: two substitutions, x=1 and x=-1."
+}

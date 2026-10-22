@@ -1,0 +1,133 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "6bd6e230efd2c3b12aa51e5d752ecdeb6ba841f92d7f9a38b11e43208eca7717",
+ "keys": [
+  "eb11c2-1:WE1",
+  "eb11c2-1:WE2",
+  "eb11c2-1:WE3",
+  "eb11c2-1:WE4"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 1
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "4cdab4490455e2e9d5046fa2aa588dba387108323f0606bb4e52df534eb8a67e",
+  "generated_sha256": "ca3df5c6e17389cc148cc475f86f5c02d8d733a7c8f383389fb4b82687e64bd8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "eb11c2-1:WE1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c2-1:WE1",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "Stem repair is rebuilt from the working's givens, not from the book's problem text; a person should confirm the wording.",
+    "note": "Stem refers to a previous page. Working gives a=8, l=22, n=7: $S_7=\\frac{7}{2}(30)=105$ ✓ matches printed answer. Restore stem from givens.",
+    "own_value": "105",
+    "book_quote": "$S_7=\\frac{1}{2}\\times 7(8+22)=105$",
+    "fix": {
+     "answer_type": "numeric",
+     "key": "105",
+     "stem": "Find the sum of the arithmetic sequence with first term 8, last term 22 and 7 terms."
+    }
+   },
+   "ver": {
+    "key": "eb11c2-1:WE1",
+    "own_answer": "105",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "7/2×(8+22)=105."
+   }
+  },
+  {
+   "key": "eb11c2-1:WE2",
+   "state": "held",
+   "rec": {
+    "key": "eb11c2-1:WE2",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "Stem repair is rebuilt from the working's givens, not from the book's problem text; a person should confirm the wording.",
+    "note": "Working: a=2, d=3, l=47 gives n=16, $S=8\\times49=392$ ✓ matches printed answer. Stem restored from the givens.",
+    "own_value": "392",
+    "book_quote": "$S=\\frac{1}{2}\\times 16(2+47)=392$",
+    "fix": {
+     "answer_type": "numeric",
+     "key": "392",
+     "stem": "Find the sum of the arithmetic sequence with first term 2, common difference 3 and last term 47."
+    }
+   },
+   "ver": {
+    "key": "eb11c2-1:WE2",
+    "own_answer": "392",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "n=16, S=8×49=392."
+   }
+  },
+  {
+   "key": "eb11c2-1:WE3",
+   "state": "held",
+   "rec": {
+    "key": "eb11c2-1:WE3",
+    "verdict": "fix",
+    "class": "stem damaged",
+    "confidence": "low",
+    "why_low": "Stem repair is rebuilt from the working's givens, not from the book's problem text; a person should confirm the wording.",
+    "note": "Working: a=20, d=-5, n=13: $\\frac{13}{2}(40-60)=-130$ ✓ matches printed answer. Stem restored from the givens.",
+    "own_value": "-130",
+    "book_quote": "$S_{13}=\\frac{1}{2}\\times 13\\{2\\times 20+(13-1)\\times(-5)\\}=-130$",
+    "fix": {
+     "answer_type": "numeric",
+     "key": "-130",
+     "stem": "Find the sum of the first 13 terms of the arithmetic sequence with first term 20 and common difference -5."
+    }
+   },
+   "ver": {
+    "key": "eb11c2-1:WE3",
+    "own_answer": "-130",
+    "verdict": "confirmed",
+    "other_correct_answers": false,
+    "note": "13/2×(40−60)=−130."
+   }
+  },
+  {
+   "key": "eb11c2-1:WE4",
+   "state": "held",
+   "rec": {
+    "key": "eb11c2-1:WE4",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "Arithmetic checks: $S_{20}=660$, $S_9=594$, difference 66. But the stem omits what is asked. The working's $S_{20}-S_9$ suggests terms 10 to 20, but this is not stated. The previous page's problem 2 is needed.",
+    "own_value": "66"
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "fix/confirmed": 3,
+  "hold": 1
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage G2R --run <runId>"
+ }
+}

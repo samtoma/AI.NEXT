@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-4-1:common-x",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-4-1",
+ "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+ "source_page": 144,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "q <= p"
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "m",
+   "let": "p * q"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve the equation $x^3 + {=s}x^2 + {=m}x = 0$. Give all the solutions.",
+ "answer": "",
+ "solution": [
+  "Take out the common factor $x$: $x(x^2 + {=s}x + {=m}) = 0$.",
+  "Factorise the quadratic: $x^2 + {=s}x + {=m} = (x + {=p})(x + {=q})$.",
+  "So $x(x + {=p})(x + {=q}) = 0$.",
+  "Set each factor equal to zero: $x = 0$, $x = -{=p}$ or $x = -{=q}$.",
+  "Answer: $x = 0,\\ -{=p},\\ -{=q}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[0, -{=p}, -{=q}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry point: common factor x then a factorisable quadratic. All roots real, distinct."
+}

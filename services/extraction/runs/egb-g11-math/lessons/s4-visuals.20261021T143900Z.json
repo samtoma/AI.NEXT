@@ -1,0 +1,374 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v9",
+ "collect_version": "collect-6",
+ "book": "egb-g11-math",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "e3c3d177f0aa6887e3c98706df53db29801258ce7ca22ab881017277736a83cf",
+  "args_sha256": "a29117471949ac1784eb7f9aafb7667dac18f68da53a1646caa3777cedb6713f",
+  "generated_sha256": "032421bc060ec8d065117e6006cfa92db5fe7c6042e592ae1d710da3f27429e8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "eb11c3-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c3-1:figure-1",
+    "eb11c3-1:figure-2"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:eb11c3-1-1",
+     "question": null,
+     "kind": "venn_diagram",
+     "spec": {
+      "universe": "Complex Numbers",
+      "sets": [
+       {
+        "label": "Imaginary Numbers"
+       },
+       {
+        "label": "Real Numbers"
+       }
+      ],
+      "items": [
+       {
+        "text": "−2i",
+        "in": [
+         "Imaginary Numbers"
+        ]
+       },
+       {
+        "text": "8i",
+        "in": [
+         "Imaginary Numbers"
+        ]
+       },
+       {
+        "text": "7",
+        "in": [
+         "Real Numbers"
+        ]
+       },
+       {
+        "text": "−√3",
+        "in": [
+         "Real Numbers"
+        ]
+       }
+      ],
+      "animate": "sequence"
+     },
+     "caption": "Complex numbers include imaginary numbers like −2i and 8i, and real numbers like 7 and −√3.",
+     "printed_page": 106,
+     "figure_id": "eb11c3-1:figure-2",
+     "src": "eb11c3-1__figure-2.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c3-1:figure-1",
+     "src": "eb11c3-1__figure-1.png",
+     "ref": null,
+     "printed_page": 106,
+     "reason": "Photograph-style illustration of a technician and MRI machine with a small complex-plane diagram; the text is too small to read and it is not a drawable figure.",
+     "needed_kind": "photo/illustration (not a supported kind)"
+    }
+   ],
+   "counts": {
+    "visuals": 1,
+    "viz_gaps": 1,
+    "compared": 1
+   }
+  },
+  {
+   "lesson": "eb11c3-2",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c3-2:figure-1",
+    "eb11c3-2:figure-2",
+    "eb11c3-2:figure-3",
+    "eb11c3-2:figure-4",
+    "eb11c3-2:figure-5"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:eb11c3-2-2",
+     "question": "eb11c3-2:example-2",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       -4,
+       -12
+      ],
+      "domain": [
+       -4,
+       8
+      ],
+      "markers": [
+       {
+        "x": -2,
+        "label": "−2"
+       },
+       {
+        "x": 6,
+        "label": "6"
+       }
+      ],
+      "reveals": [
+       "roots"
+      ],
+      "axes": {
+       "x": "m"
+      },
+      "animate": "draw"
+     },
+     "caption": "An upward parabola crosses the m-axis at m = −2 and m = 6.",
+     "printed_page": 119,
+     "figure_id": "eb11c3-2:figure-2",
+     "src": "eb11c3-2__figure-2.png"
+    },
+    {
+     "n": 2,
+     "lo": "lo:eb11c3-2-2",
+     "question": "eb11c3-2:example-3",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       4,
+       -12
+      ],
+      "domain": [
+       -8,
+       4
+      ],
+      "markers": [
+       {
+        "x": -6,
+        "label": "−6"
+       },
+       {
+        "x": 2,
+        "label": "2"
+       }
+      ],
+      "reveals": [
+       "roots"
+      ],
+      "axes": {
+       "x": "k"
+      },
+      "animate": "draw"
+     },
+     "caption": "An upward parabola crosses the k-axis at k = −6 and k = 2.",
+     "printed_page": 119,
+     "figure_id": "eb11c3-2:figure-3",
+     "src": "eb11c3-2__figure-3.png"
+    },
+    {
+     "n": 3,
+     "lo": "lo:eb11c3-2-5",
+     "question": "eb11c3-2:challenge-6",
+     "kind": "function_graph",
+     "spec": {
+      "fn": "quadratic",
+      "coefs": [
+       1,
+       0,
+       -4
+      ],
+      "domain": [
+       -3.5,
+       3.5
+      ],
+      "markers": [
+       {
+        "x": -2,
+        "label": "α"
+       },
+       {
+        "x": 2,
+        "label": "β"
+       }
+      ],
+      "reveals": [
+       "roots"
+      ],
+      "axes": {
+       "x": "x",
+       "y": "y"
+      },
+      "animate": "draw"
+     },
+     "caption": "An upward parabola with its vertex below the x-axis crosses it at α on the left and β on the right.",
+     "printed_page": 129,
+     "figure_id": "eb11c3-2:figure-4",
+     "src": "eb11c3-2__figure-4.png"
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c3-2:figure-1",
+     "src": "eb11c3-2__figure-1.png",
+     "ref": null,
+     "printed_page": 115,
+     "reason": "Decorative illustration (curve with DNA, animals, text labels); not a drawable maths figure.",
+     "needed_kind": "illustration / image display"
+    },
+    {
+     "figure_id": "eb11c3-2:figure-5",
+     "src": "eb11c3-2__figure-5.png",
+     "ref": null,
+     "printed_page": 130,
+     "reason": "Three conditions drawn as separate stacked rays/intervals with open circles, plus a shaded overlap; number_line has a single line only.",
+     "needed_kind": "number_line with several stacked interval rows and a shaded common region"
+    }
+   ],
+   "counts": {
+    "visuals": 3,
+    "viz_gaps": 2,
+    "compared": 3
+   }
+  },
+  {
+   "lesson": "eb11c3-3",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c3-3:figure-1",
+    "eb11c3-3:figure-2",
+    "eb11c3-3:figure-3",
+    "eb11c3-3:figure-4",
+    "eb11c3-3:figure-5",
+    "eb11c3-3:figure-6",
+    "eb11c3-3:figure-7",
+    "eb11c3-3:figure-8"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c3-3:figure-1",
+     "src": "eb11c3-3__figure-1.png",
+     "ref": null,
+     "printed_page": 132,
+     "reason": "Illustrative photo, no maths values",
+     "needed_kind": "photograph / decorative image"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-2",
+     "src": "eb11c3-3__figure-2.png",
+     "ref": "eb11c3-3:challenge-1",
+     "printed_page": 133,
+     "reason": "Illustrative picture of a whiteboard with text and a sketch; no supported maths figure",
+     "needed_kind": "photograph / decorative image"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-3",
+     "src": "eb11c3-3__figure-3.png",
+     "ref": null,
+     "printed_page": 138,
+     "reason": "Synthetic division table layout with arrows; no kind draws a worked table",
+     "needed_kind": "synthetic_division_table"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-4",
+     "src": "eb11c3-3__figure-4.png",
+     "ref": null,
+     "printed_page": 138,
+     "reason": "Synthetic division table layout; no kind draws it",
+     "needed_kind": "synthetic_division_table"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-5",
+     "src": "eb11c3-3__figure-5.png",
+     "ref": null,
+     "printed_page": 138,
+     "reason": "Synthetic division table with boxed remainder; no kind draws it",
+     "needed_kind": "synthetic_division_table"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-6",
+     "src": "eb11c3-3__figure-6.png",
+     "ref": "eb11c3-3:worked-example-2",
+     "printed_page": 140,
+     "reason": "Synthetic division table; no kind draws it",
+     "needed_kind": "synthetic_division_table"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-7",
+     "src": "eb11c3-3__figure-7.png",
+     "ref": null,
+     "printed_page": 141,
+     "reason": "Synthetic division table; no kind draws it",
+     "needed_kind": "synthetic_division_table"
+    },
+    {
+     "figure_id": "eb11c3-3:figure-8",
+     "src": "eb11c3-3__figure-8.png",
+     "ref": null,
+     "printed_page": 141,
+     "reason": "Synthetic division table; no kind draws it",
+     "needed_kind": "synthetic_division_table"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 8,
+    "compared": 0
+   }
+  },
+  {
+   "lesson": "eb11c3-4",
+   "mode": "visuals",
+   "rerun_figures": [
+    "eb11c3-4:figure-1"
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "eb11c3-4:figure-1",
+     "src": "eb11c3-4__figure-1.png",
+     "ref": null,
+     "printed_page": 144,
+     "reason": "The figure is an illustration of a water tank with pipes and a control valve labelled x = 1. It is not a mathematical graph or diagram, and no listed kind can draw it faithfully.",
+     "needed_kind": "illustration or photograph of a physical object (water tank with pipes)"
+    }
+   ],
+   "counts": {
+    "visuals": 0,
+    "viz_gaps": 1,
+    "compared": 0
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 4,
+   "S4 Compare": 2
+  },
+  "per_lesson": {
+   "eb11c3-1": 2,
+   "eb11c3-2": 2,
+   "eb11c3-3": 1,
+   "eb11c3-4": 1
+  },
+  "total": 6
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book egb-g11-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book egb-g11-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

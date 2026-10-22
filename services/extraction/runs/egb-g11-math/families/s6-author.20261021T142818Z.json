@@ -1,0 +1,1618 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "b99a3b7af7b4f359be78a2ccc8343ec36d74b364bd75bbbf5dd8e02bb4c6dc73",
+  "generated_sha256": "a169de6b79da7c6d41842ff77684252c52b54cf3e0c05ad2f020b149134a6cb8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:eb11c2-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-1-1:altsign-linear",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-1-1",
+     "parent_question_id": "q:eb11c2-1-1:bk-exercise-2-d",
+     "source_page": 42,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        4,
+        8
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "m1",
+       "let": "p + q"
+      },
+      {
+       "name": "m2",
+       "let": "2*p + q"
+      },
+      {
+       "name": "m3",
+       "let": "3*p + q"
+      },
+      {
+       "name": "m4",
+       "let": "4*p + q"
+      },
+      {
+       "name": "m5",
+       "let": "5*p + q"
+      }
+     ],
+     "constraints": [
+      "p + q > 0"
+     ],
+     "stem": "Deduce the general term of the sequence $\\{a_n\\}$: ${=m1}, -{=m2}, {=m3}, -{=m4}, {=m5}, \\dots$ Give $a_n$ as a formula in $n$.",
+     "answer": "",
+     "solution": [
+      "The first term is positive and the signs alternate, so the sign part is $(-1)^{n+1}$.",
+      "Ignoring signs, the numbers ${=m1}, {=m2}, {=m3}, {=m4}, {=m5}$ increase by ${=p}$ each time, so they are ${=p}n$ plus a constant.",
+      "For $n=1$: ${=p}\\times1{=signed(q)}={=m1}$, so the numbers are ${=p}n{=signed(q)}$.",
+      "So $a_n=(-1)^{n+1}({=p}n{=signed(q)})$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = (-1)^(n+1)*({=p}*n + {=q})",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: combines alternating sign with first term positive (so (-1)^(n+1), not the book's (-1)^n) and an arithmetic magnitude pa+q needing a shift. Equivalent forms such as (-1)^(n-1) should be accepted by the marker. Check signed() renders readable signs; q is never 0."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-1-2:nth-term",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-1-2",
+     "parent_question_id": "q:eb11c2-1-2:bk-try-3-a",
+     "source_page": 44,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        20
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        8,
+        15
+       ]
+      },
+      {
+       "name": "t2",
+       "let": "a + d"
+      },
+      {
+       "name": "t3",
+       "let": "a + 2 * d"
+      },
+      {
+       "name": "t4",
+       "let": "a + 3 * d"
+      },
+      {
+       "name": "an",
+       "let": "a + (n - 1) * d"
+      }
+     ],
+     "constraints": [],
+     "stem": "The sequence ${=a}, {=t2}, {=t3}, {=t4}, \\dots$ is an arithmetic sequence. Find its term number {=n}, $a_{{=n}}$.",
+     "answer": "an",
+     "solution": [
+      "The first term is $a={=a}$.",
+      "The common difference is $d={=t2}-({=a})={=d}$.",
+      "Use $a_n=a+(n-1)d$ with $n={=n}$: $a_{{=n}}={=a}+({=n}-1)\\times({=d})$.",
+      "$a_{{=n}}={=an}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: read a and d from the first terms, then apply a_n=a+(n-1)d. Only a basic family written; standard and advanced have book models but were not requested first."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One basic family written; standard/advanced not requested this pass."
+  },
+  {
+   "lo_id": "lo:eb11c2-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-1-3:middle-term",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-1-3",
+     "parent_question_id": "q:eb11c2-1-3:bk-challenge-3",
+     "source_page": 48,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "d",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "d == 0"
+      },
+      {
+       "name": "a",
+       "randint": [
+        -10,
+        10
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a + 2 * d"
+      },
+      {
+       "name": "s",
+       "let": "a + c"
+      }
+     ],
+     "stem": "The three numbers ${=a}, x, {=c}$ form an arithmetic sequence in this order. Find the value of $x$.",
+     "answer": "a + d",
+     "solution": [
+      "Since ${=a}, x, {=c}$ form an arithmetic sequence, the middle term satisfies $2x = {=a} + {=paren(c)}$.",
+      "$2x = {=s}$.",
+      "$x = {=a + d}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses 2b = a + c from the objective description. c = a + 2d so x is always a whole number. Basic entry point; the book's challenge-3 uses the same idea with unknowns."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the listed basic gap was filled."
+  },
+  {
+   "lo_id": "lo:eb11c2-1-5",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-1-5:find-n",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-1-5",
+     "parent_question_id": "q:eb11c2-1-5:bk-warm-up-8",
+     "source_page": 54,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "require": "2*a - d >= 2",
+       "why": "keeps the linear coefficient positive and not 1"
+      },
+      {
+       "name": "N",
+       "randint": [
+        4,
+        12
+       ]
+      },
+      {
+       "name": "S",
+       "let": "N * (2*a + (N-1)*d) / 2"
+      },
+      {
+       "name": "o",
+       "let": "-2*S / (d*N)"
+      }
+     ],
+     "constraints": [],
+     "stem": "In an arithmetic sequence with the first term ${=a}$ and the common difference ${=d}$, find how many terms from the first term sum up to ${=S}$.",
+     "answer": "N",
+     "solution": [
+      "$a={=a}$, $d={=d}$ and $S_n={=S}$.",
+      "$S_n=\\frac12n\\{2a+(n-1)d\\}$, so ${=S}=\\frac12n\\{{=2*a}+(n-1)\\times{=d}\\}$.",
+      "Multiply out: ${=d}n^2+{=2*a-d}n-{=2*S}=0$.",
+      "Solving gives $n={=N}$ or $n={=o}$.",
+      "$n$ must be a natural number, so $n={=N}$."
+     ],
+     "notes": "Basic: positive a and d so the second root is always negative; one quadratic, mirrors warm-up-8."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-2-1:two-terms",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-2-1",
+     "parent_question_id": "q:eb11c2-2-1:bk-exercise-1-d",
+     "source_page": 59,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3,
+        -2,
+        -3
+       ]
+      },
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "let": "p + 3"
+      },
+      {
+       "name": "ap",
+       "let": "a * r ** (p - 1)"
+      },
+      {
+       "name": "aq",
+       "let": "a * r ** (q - 1)"
+      }
+     ],
+     "constraints": [],
+     "stem": "$\\{a_n\\}$ is a geometric sequence in which $a_{{=p}} = {=ap}$ and $a_{{=q}} = {=aq}$. Find the common ratio, the first term, and hence the general term $a_n$. Write your answer in the form $a_n = a \\times r^{n-1}$, putting a negative ratio in brackets.",
+     "answer": "a_n = {=a} * ({=r})^(n-1)",
+     "solution": [
+      "Since $a_n = ar^{n-1}$, we have $a_{{=p}} = ar^{{=p - 1}} = {=ap}$ and $a_{{=q}} = ar^{{=q - 1}} = {=aq}$.",
+      "Divide the second equation by the first: $r^3 = \\frac{{=aq}}{{=ap}} = {=r ** 3}$.",
+      "So $r = {=r}$.",
+      "Then $a \\times {=paren(r)}^{{=p - 1}} = {=ap}$, so $a = {=a}$.",
+      "$a_n = {=a} \\times {=paren(r)}^{n-1}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=a} * ({=r})^(n-1)",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Two listed terms three places apart, so r^3 has a unique real root (no ± ambiguity). All values integers, max about 1215. Marker always brackets r; equivalent forms like a*r^(n-1) with r positive should match."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced gap was filled, as requested. The family uses a gap of 3 between the two given terms so the cube root is unique."
+  },
+  {
+   "lo_id": "lo:eb11c2-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-2-2:middle-term",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-2-2",
+     "parent_question_id": "q:eb11c2-2-2:bk-exercise-5",
+     "source_page": 62,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "let": "p * k * k"
+      },
+      {
+       "name": "m",
+       "let": "p * k"
+      }
+     ],
+     "constraints": [],
+     "stem": "When the 3 numbers ${=p}, x, {=c}$ form a geometric sequence in this order, find the values of $x$.",
+     "solution": [
+      "The numbers ${=p}, x, {=c}$ are geometric, so $x^2 = {=p} \\times {=c}$.",
+      "$x^2 = {=p*c}$.",
+      "$x = \\pm {=m}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=m}, -{=m}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: b^2 = ac with a perfect square product (p*c = (pk)^2). Both signs required, as in the book's exercise 5."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-2-3:from-two-terms",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-2-3",
+     "parent_question_id": "q:eb11c2-2-3:bk-try-7-b",
+     "source_page": 64,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3,
+        -2,
+        -3
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        5,
+        7
+       ]
+      },
+      {
+       "name": "t3",
+       "let": "a * r ** 2"
+      },
+      {
+       "name": "t6",
+       "let": "a * r ** 5"
+      },
+      {
+       "name": "q",
+       "let": "r ** 3"
+      },
+      {
+       "name": "rn",
+       "let": "r ** n"
+      },
+      {
+       "name": "S",
+       "let": "a * (r ** n - 1) / (r - 1)"
+      }
+     ],
+     "constraints": [],
+     "stem": "In a geometric sequence the third term is ${=t3}$ and the sixth term is ${=t6}$. Find the sum $S$ of the first {=n} terms of the sequence.",
+     "answer": "S",
+     "solution": [
+      "Let the first term be $a$ and the common ratio $r$. Then $ar^2 = {=t3}$ and $ar^5 = {=t6}$.",
+      "Dividing: $r^3 = \\frac{{=t6}}{{=t3}} = {=q}$, so $r = {=r}$.",
+      "$a = \\frac{{=t3}}{r^2} = \\frac{{=t3}}{{=r**2}} = {=a}$.",
+      "$S_{{=n}} = \\frac{a(r^{{=n}}-1)}{r-1} = \\frac{{=a}\\left(({=r})^{{=n}}-1\\right)}{{=r-1}} = \\frac{{=a}\\times({=rn}-1)}{{=r-1}}$.",
+      "$S = {=S}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Two-step: find r and a from third and sixth terms (nth-term formula from the preceding lesson), then apply the S_n formula. r in {2,3,-2,-3}; r^3 gives a unique real r; all sums are integers."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-2-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-2-4:ratio-s2",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-2-4",
+     "parent_question_id": "q:eb11c2-2-4:bk-challenge-4",
+     "source_page": 67,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "p",
+       "let": "a * r"
+      },
+      {
+       "name": "q",
+       "let": "a * (1 + r)"
+      }
+     ],
+     "constraints": [],
+     "stem": "A geometric sequence has $a_2 = {=p}$ and the sum of its first two terms $S_2 = {=q}$. Find its common ratio.",
+     "answer": "r",
+     "solution": [
+      "$S_2 = a_1 + a_2$, so $a_1 = {=q} - {=p} = {=a}$.",
+      "The common ratio is $r = \\frac{a_2}{a_1} = \\frac{{=p}}{{=a}} = {=r}$."
+     ],
+     "notes": "Basic: first term from S2 - a2, then ratio. Ratio is a positive integer."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-2-4:pairs-sums",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-2-4",
+     "parent_question_id": "q:eb11c2-2-4:bk-challenge-4",
+     "source_page": 67,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "s2",
+       "let": "a * (1 + r)"
+      },
+      {
+       "name": "s4",
+       "let": "a * (1 + r) * (1 + r * r)"
+      },
+      {
+       "name": "t",
+       "let": "s4 - s2"
+      }
+     ],
+     "constraints": [],
+     "stem": "$S_n$ is the sum of the first $n$ terms of a geometric sequence with positive common ratio, where $S_2 = {=s2}$ and $S_4 = {=s4}$. Find the first term $a_1$.",
+     "answer": "a",
+     "solution": [
+      "$S_4 - S_2 = a_3 + a_4 = {=s4} - {=s2} = {=t}$.",
+      "$a_3 + a_4 = r^2(a_1 + a_2)$, so $r^2 = \\frac{{=t}}{{=s2}} = {=r*r}$.",
+      "The ratio is positive, so $r = {=r}$.",
+      "$S_2 = a_1(1 + r)$, so ${=s2} = a_1 \\times {=1+r}$ and $a_1 = {=a}$."
+     ],
+     "notes": "Standard: S4-S2 = a3+a4 = r^2 S2, as in the book's S8-S6 trick. Positive ratio stated to avoid sign ambiguity."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-1:expand-lin",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-1",
+     "parent_question_id": "none-supplied",
+     "source_page": null,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        7
+       ]
+      },
+      {
+       "name": "t1",
+       "let": "a + b"
+      },
+      {
+       "name": "t2",
+       "let": "2*a + b"
+      },
+      {
+       "name": "t3",
+       "let": "3*a + b"
+      },
+      {
+       "name": "t4",
+       "let": "4*a + b"
+      }
+     ],
+     "stem": "Write $\\sum_{r=1}^{4} ({=a}r + {=b})$ as a sum of terms, then find its value.",
+     "answer": "t1 + t2 + t3 + t4",
+     "solution": [
+      "Replace $r$ by $1, 2, 3, 4$ in turn: $\\sum_{r=1}^{4} ({=a}r + {=b}) = ({=a}\\times 1 + {=b}) + ({=a}\\times 2 + {=b}) + ({=a}\\times 3 + {=b}) + ({=a}\\times 4 + {=b})$.",
+      "The terms are ${=t1} + {=t2} + {=t3} + {=t4}$.",
+      "Adding, the value is ${=t1 + t2 + t3 + t4}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book questions were supplied for this objective, so parent_question_id is a placeholder. Basic: expand a short sigma with lower limit 1 and add."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-1:write-sigma",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-1",
+     "parent_question_id": "none-supplied",
+     "source_page": null,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "m",
+       "let": "n - 1"
+      }
+     ],
+     "stem": "Which expression, written with $\\sum$, equals ${=a + b} + {=2*a + b} + {=3*a + b} + \\dots + ({=a}\\times {=n} + {=b})$, whose general term is $({=a}r + {=b})$ for $r = 1, 2, 3, \\dots, {=n}$?",
+     "choices": {
+      "correct": "$\\sum_{r=1}^{{=n}} ({=a}r + {=b})$",
+      "distractors": [
+       {
+        "text": "$\\sum_{r=0}^{{=m}} ({=a}r + {=b})$",
+        "misconception_id": "mc:eb11c2-3-1:limits-shift"
+       },
+       {
+        "text": "$\\sum_{r=1}^{{=n}} {=a}(r + {=b})$",
+        "misconception_id": "mc:eb11c2-3-1:bad-general-term"
+       },
+       {
+        "text": "$\\sum_{r=1}^{{=n}} ({=a + b})r$",
+        "misconception_id": "mc:eb11c2-3-1:bad-general-term"
+       }
+      ]
+     },
+     "answer": "",
+     "solution": [
+      "Terms are ${=a}\\times 1 + {=b}$, ${=a}\\times 2 + {=b}$, ... so the general term is ${=a}r + {=b}$.",
+      "The first term has $r = 1$ and the last has $r = {=n}$.",
+      "So the sum is $\\sum_{r=1}^{{=n}} ({=a}r + {=b})$."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:eb11c2-3-1:limits-shift",
+       "label": "Wrong limits",
+       "description": "Starts the index at 0 and stops at n-1, which changes the terms."
+      },
+      {
+       "id": "mc:eb11c2-3-1:bad-general-term",
+       "label": "Wrong general term",
+       "description": "Writes a general term that does not reproduce the terms given, by factoring or grouping wrongly."
+      }
+     ],
+     "notes": "No book questions supplied; parent is placeholder. Standard: write a sum using sigma."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-1:expand-sq",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-1",
+     "parent_question_id": "none-supplied",
+     "source_page": null,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        4,
+        6
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "t0",
+       "let": "p*p - k*p"
+      },
+      {
+       "name": "t1",
+       "let": "(p+1)**2 - k*(p+1)"
+      },
+      {
+       "name": "t2",
+       "let": "(p+2)**2 - k*(p+2)"
+      },
+      {
+       "name": "t3",
+       "let": "(p+3)**2 - k*(p+3)"
+      },
+      {
+       "name": "q",
+       "let": "p + 3"
+      }
+     ],
+     "stem": "Write $\\sum_{r={=p}}^{{=q}} (r^2 - {=k}r)$ as a sum of terms, then find its value.",
+     "answer": "t0 + t1 + t2 + t3",
+     "solution": [
+      "The index runs from $r = {=p}$ to $r = {=q}$, so there are four terms.",
+      "The terms are $({=p}^2 - {=k}\\times {=p}) + ({=p+1}^2 - {=k}\\times {=p+1}) + ({=p+2}^2 - {=k}\\times {=p+2}) + ({=q}^2 - {=k}\\times {=q})$.",
+      "That is ${=t0} + {=t1} + {=t2} + {=t3}$.",
+      "The value is ${=t0 + t1 + t2 + t3}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "No book questions supplied; parent is placeholder. Advanced: lower limit not 1 and quadratic general term; all terms positive."
+    }
+   ],
+   "infeasible": [],
+   "notes": "The book-question list was empty, so parent_question_id is the placeholder \"none-supplied\" and source_page is null. Replace both when a real parent is known."
+  },
+  {
+   "lo_id": "lo:eb11c2-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-3:consec-telescope",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-3",
+     "parent_question_id": "q:eb11c2-3-3:bk-exercise-4-a",
+     "source_page": 77,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        "m + 4",
+        "m + 10"
+       ]
+      },
+      {
+       "name": "num",
+       "let": "n + 1 - m"
+      },
+      {
+       "name": "den",
+       "let": "m * (n + 1)"
+      },
+      {
+       "name": "g",
+       "let": "gcd(num, den)"
+      }
+     ],
+     "constraints": [
+      "gcd(num, den) >= 1"
+     ],
+     "stem": "Find the sum $\\frac{1}{{=m}\\times{=m+1}}+\\frac{1}{{=m+1}\\times{=m+2}}+\\frac{1}{{=m+2}\\times{=m+3}}+\\dots+\\frac{1}{{=n}\\times{=n+1}}$. Give the answer as a fraction in its simplest form, written a/b.",
+     "answer": "str(num // g) + \"/\" + str(den // g)",
+     "solution": [
+      "Split each term: $\\frac{1}{k(k+1)}=\\frac{1}{k}-\\frac{1}{k+1}$.",
+      "Write the sum: $\\left(\\frac{1}{{=m}}-\\frac{1}{{=m+1}}\\right)+\\left(\\frac{1}{{=m+1}}-\\frac{1}{{=m+2}}\\right)+\\dots+\\left(\\frac{1}{{=n}}-\\frac{1}{{=n+1}}\\right)$.",
+      "Cancel the terms that add to zero; what remains is $\\frac{1}{{=m}}-\\frac{1}{{=n+1}}$.",
+      "$\\frac{1}{{=m}}-\\frac{1}{{=n+1}}=\\frac{{=num}}{{=den}}$, which in simplest form is $\\frac{{=num // g}}{{=den // g}}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: unit-difference partial fractions 1/(k(k+1)), numeric start m (1-4) and end n; answer = 1/m - 1/(n+1) reduced. num<den always so answer is never a whole number. Answer string a/b matches book style (e.g. 1425/1984)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-3-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-4:value-sum",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-4",
+     "parent_question_id": "q:eb11c2-3-4:bk-try-4-s",
+     "source_page": 79,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        4,
+        6
+       ]
+      },
+      {
+       "name": "G",
+       "let": "(r**n-1)/(r-1)"
+      },
+      {
+       "name": "T",
+       "let": "n*r**n"
+      },
+      {
+       "name": "S",
+       "let": "(T-G)/(r-1)"
+      }
+     ],
+     "stem": "Use the method $S - rS$ to find the value of $S = 1 + 2\\times {=r} + 3\\times {=r}^2 + \\dots + {=n}\\times {=r}^{{=n-1}}$ (the sum of {=n} terms).",
+     "answer": "S",
+     "solution": [
+      "The terms are (1, 2, 3, ...) times powers of {=r}, so multiply S by the ratio {=r}: ${=r}S = 1\\times {=r} + 2\\times {=r}^2 + \\dots + {=n-1}\\times {=r}^{{=n-1}} + {=n}\\times {=r}^{{=n}}$.",
+      "Subtract: $S - {=r}S = 1 + {=r} + {=r}^2 + \\dots + {=r}^{{=n-1}} - {=n}\\times {=r}^{{=n}}$ (the sign of the last term changes).",
+      "The geometric part has {=n} terms, first term 1 and ratio {=r}: $\\frac{{=r}^{{=n}}-1}{{=r}-1} = {=G}$.",
+      "The last term is ${=n}\\times {=r}^{{=n}} = {=T}$, so $S - {=r}S = {=G} - {=T}$.",
+      "Divide by $1-{=r}$: $S = {=S}$."
+     ],
+     "notes": "Numeric instance of the book's S-rS method, no symbolic n. Answer is exactly integral (S is a sum of integers)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-4:formula-sum",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-4",
+     "parent_question_id": "q:eb11c2-3-4:bk-exercise-6",
+     "source_page": 80,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "let": "r-1"
+      },
+      {
+       "name": "m",
+       "let": "r-2"
+      }
+     ],
+     "stem": "Find the sum $S = 2\\times 1 + 3\\times {=r} + 4\\times {=r}^2 + 5\\times {=r}^3 + \\dots + (n+1)\\times {=r}^{{=r-r+0}n-1}$ in terms of $n$.",
+     "answer": "",
+     "solution": [
+      "placeholder"
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "((({=r-1})*n+{=r-2})*{=r}^n-{=r-2})/({=r-1})^2",
+      "form": null,
+      "variables": [
+       "n"
+      ],
+      "tolerance": null
+     },
+     "notes": "PLACEHOLDER"
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-3-5",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-3-5:sn-to-an",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-3-5",
+     "parent_question_id": "q:eb11c2-3-5:bk-exercise-11",
+     "source_page": 84,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        "p + 1",
+        "p + 8"
+       ]
+      },
+      {
+       "name": "c",
+       "let": "b - p"
+      },
+      {
+       "name": "d",
+       "let": "2 * p"
+      },
+      {
+       "name": "s1",
+       "let": "p + b"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$ in which the sum of the first $n$ terms is $S_n = {=p}n^2 + {=b}n$. Write your answer as $a_n = \\ldots$",
+     "answer": "",
+     "solution": [
+      "For $n \\geq 2$: $a_n = S_n - S_{n-1} = ({=p}n^2 + {=b}n) - \\{{=p}(n-1)^2 + {=b}(n-1)\\}$.",
+      "Simplify: $a_n = {=d}n + {=c}$.",
+      "For $n = 1$: $a_1 = S_1 = {=p} + {=b} = {=s1}$.",
+      "Put $n = 1$ in ${=d}n + {=c}$: ${=d} + {=c} = {=s1}$, which matches $a_1$.",
+      "So $a_n = {=d}n + {=c}$ for all $n$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=d}*n + {=c}",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: quadratic S_n with no constant term, so n=1 check always agrees (c = b - p >= 1). Check: p(2n-1)+b = 2pn + b - p. The 'answer' field is unused for expression families; marker carries the key."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-4-1:square-diff",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-4-1",
+     "parent_question_id": "q:eb11c2-4-1:bk-warm-up-1-1",
+     "source_page": 86,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "T",
+       "let": "[n**2 + s*n + t for n in range(1, 8)]"
+      }
+     ],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$: ${=T[0]}, {=T[1]}, {=T[2]}, {=T[3]}, {=T[4]}, {=T[5]}, \\dots$ Write your answer as $a_n = \\dots$",
+     "solution": [
+      "Write the difference sequence $\\{b_n\\}$: ${=T[1]-T[0]}, {=T[2]-T[1]}, {=T[3]-T[2]}, {=T[4]-T[3]}, {=T[5]-T[4]}, \\dots$",
+      "It is arithmetic with first term ${=s+3}$ and common difference $2$, so $b_n = {=s+3} + (n-1)\\times 2 = 2n + {=s+1}$.",
+      "For $n \\ge 2$: $a_n = a_1 + \\sum_{k=1}^{n-1} (2k + {=s+1}) = {=T[0]} + n(n-1) + {=s+1}(n-1) = n^2 + {=s}n + {=t}$.",
+      "Check $n = 1$: $1 + {=s} + {=t} = {=T[0]} = a_1$, so the formula holds for $n = 1$.",
+      "$a_n = n^2 + {=s}n + {=t}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = n**2 + {=s}*n + {=t}",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: differences are arithmetic with common difference 2, so a_n = n^2 + s n + t with small positive coefficients; same skeleton as the book's warm-up. Formula always holds for n=1."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-4-1:geometric-diff",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-4-1",
+     "parent_question_id": "q:eb11c2-4-1:bk-try-1-b",
+     "source_page": 87,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "T",
+       "let": "[m*r**(n-1) + q for n in range(1, 6)]"
+      }
+     ],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$: ${=T[0]}, {=T[1]}, {=T[2]}, {=T[3]}, {=T[4]}, \\dots$ Write your answer as $a_n = \\dots$",
+     "solution": [
+      "Write the difference sequence $\\{b_n\\}$: ${=T[1]-T[0]}, {=T[2]-T[1]}, {=T[3]-T[2]}, {=T[4]-T[3]}, \\dots$",
+      "It is geometric with first term ${=m*(r-1)}$ and common ratio ${=r}$, so $b_n = {=m*(r-1)}\\times {=r}^{n-1}$.",
+      "For $n \\ge 2$: $a_n = {=T[0]} + \\sum_{k=1}^{n-1} {=m*(r-1)}\\times {=r}^{k-1} = {=T[0]} + {=m*(r-1)}\\cdot\\frac{{=r}^{n-1} - 1}{{=r} - 1} = {=T[0]} + {=m}({=r}^{n-1} - 1) = {=m}\\times {=r}^{n-1} + {=q}$.",
+      "Check $n = 1$: ${=m}\\times 1 + {=q} = {=T[0]} = a_1$, so the formula holds for $n = 1$.",
+      "$a_n = {=m}\\times {=r}^{n-1} + {=q}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=m}*{=r}**(n-1) + {=q}",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: geometric difference sequence whose first term is not equal to its ratio, with the geometric sum formula; a_n = m r^(n-1) + q. Formula holds at n=1. Sums have exactly n-1 terms."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-4-2:first-natural",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-4-2",
+     "parent_question_id": "q:eb11c2-4-2:bk-exercise-2-a",
+     "source_page": 90,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        4,
+        9
+       ]
+      },
+      {
+       "name": "ord",
+       "let": "['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th'][n]"
+      },
+      {
+       "name": "m",
+       "let": "n - 1"
+      },
+      {
+       "name": "before",
+       "let": "m * n / 2"
+      }
+     ],
+     "constraints": [],
+     "stem": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$ The $n$-th group has $n$ terms. Find the first term of the {=ord} group.",
+     "answer": "before + 1",
+     "solution": [
+      "The sequence is $a_n=n$, and the $n$-th group has $n$ terms.",
+      "The number of terms in the first {=m} groups is $1+2+\\dots+{=m}=\\frac12\\times{=m}\\times{=n}={=before}$.",
+      "The first term of the {=ord} group is the $({=before}+1)$-th term of $\\{a_n\\}$, that is the {=before + 1}-th term.",
+      "Since $a_n=n$, the first term is {=before + 1}.",
+      "The answer is {=before + 1}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: a_n=n, triangular groups, n from 4 to 9 (book standard item uses n=10). Answer = n(n-1)/2+1."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-5-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-1:geometric-term",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-1",
+     "parent_question_id": "q:eb11c2-5-1:bk-exercise-3-g",
+     "source_page": 93,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "choice": [
+        2,
+        3,
+        5,
+        -1,
+        -2,
+        4
+       ]
+      },
+      {
+       "name": "r",
+       "choice": [
+        2,
+        3,
+        4,
+        5,
+        -2,
+        -3
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1={=c}, \\ a_{n+1}={=r}a_n$",
+     "solution": [
+      "The relation $a_{n+1}={=r}a_n$ means each term is {=r} times the previous one, so the sequence is geometric with first term {=c} and common ratio {=r}.",
+      "$a_n = a_1 r^{n-1} = ({=c})\\times({=r})^{n-1}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=c}*({=r})**(n-1)",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Geometric recurrence with first term not 1 and possibly negative ratio. Same skeleton as book 3-g."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-1:third-term",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-1",
+     "parent_question_id": "q:eb11c2-5-1:bk-exercise-3-a",
+     "source_page": 93,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "let": "s * m"
+      },
+      {
+       "name": "op",
+       "let": "'+' if s == 1 else '-'"
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        20
+       ]
+      },
+      {
+       "name": "e",
+       "let": "p - 3 * d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_3={=p}, \\ a_{n+1}=a_n {=op} {=m}$",
+     "solution": [
+      "The relation $a_{n+1}=a_n {=op} {=m}$ means the sequence is arithmetic with common difference {=d}.",
+      "Counting from the third term: $a_n = a_3+(n-3)d = {=p}+(n-3)\\times({=d})$.",
+      "$a_n = {=d}n + ({=e})$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=d}*n + ({=e})",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Twist: the given term is a_3, not a_1, so the formula a_1+(n-1)d cannot be applied directly."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-5-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-2:fixedpoint-basic",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-2",
+     "parent_question_id": "q:eb11c2-5-2:bk-exercise-5-a",
+     "source_page": 97,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "let": "m*(p-1)"
+      },
+      {
+       "name": "a1",
+       "let": "1-m"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by $a_1 = {=a1}, \\ a_{n+1} = {=p}a_n + {=q}$. Write $a_n$ in terms of $n$.",
+     "solution": [
+      "Solve $c = {=p}c + {=q}$: $c = -{=m}$.",
+      "Then $a_{n+1} + {=m} = {=p}(a_n + {=m})$, so $b_n = a_n + {=m}$ is a geometric sequence with ratio ${=p}$.",
+      "$b_1 = a_1 + {=m} = 1$, so $b_n = {=p}^{n-1}$.",
+      "$a_n = b_n - {=m} = {=p}^{n-1} - {=m}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=p}^(n-1) - {=m}",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "c=-m, b_1=1, so a_n=p^(n-1)-m. Check p=2,m=1: a1=0,a2=1,formula 2^1-1=1 ok."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-2:fixedpoint-adv",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-2",
+     "parent_question_id": "q:eb11c2-5-2:bk-exercise-5-d",
+     "source_page": 97,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "choice": [
+        -4,
+        -3,
+        -2
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "let": "c*(1-p)"
+      },
+      {
+       "name": "a1",
+       "let": "c+d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by $a_1 = {=a1}, \\ a_{n+1} = {=p}a_n + {=q}$. Write $a_n$ in terms of $n$.",
+     "solution": [
+      "Solve $c = ({=p})c + {=q}$: $c = {=c}$.",
+      "Then $a_{n+1} - {=c} = ({=p})(a_n - {=c})$, so $b_n = a_n - {=c}$ is a geometric sequence with ratio ${=p}$.",
+      "$b_1 = a_1 - {=c} = {=d}$, so $b_n = {=d}\\times({=p})^{n-1}$.",
+      "$a_n = b_n + {=c} = {=d}\\times({=p})^{n-1} + {=c}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "a_n = {=d}*({=p})^(n-1) + {=c}",
+      "form": null,
+      "variables": [
+       "a",
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Negative ratio, b_1 not 1. q=c(1-p)>0. Check p=-3,c=1,d=-2: a1=-1,q=4,a2=7; formula -2*(-3)+1=7 ok."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-5-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for this objective is empty. A family needs a parent_question_id and source_page from a book question of this objective, and I have no canonical solution to model the book's method and notation on. Any id I wrote would be invented."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no book question exists to serve as parent, and no book solution shows the induction layout (n=1, assume n=k, prove n=k+1) that the family must follow."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: with no book questions I cannot tell which harder exercises or twists the book uses. Re-run once the objective's book questions are supplied."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c2-5-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-4:arithmetic-rec",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-4",
+     "parent_question_id": "q:eb11c2-5-4:bk-challenge-5",
+     "source_page": 105,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        2,
+        7
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a - d"
+      },
+      {
+       "name": "t2",
+       "let": "a + d"
+      },
+      {
+       "name": "t3",
+       "let": "a + 2*d"
+      },
+      {
+       "name": "t4",
+       "let": "a + 3*d"
+      }
+     ],
+     "constraints": [],
+     "stem": "A sequence is defined by $a_1={=a}$ and $a_{n+1}=a_n+{=d}$ for $n\\ge 1$. Write out the first four terms, estimate the general term $a_n$ as an expression in $n$, and prove your estimate by mathematical induction. Give $a_n$ in terms of $n$.",
+     "answer": "",
+     "solution": [
+      "First terms: $a_1={=a}$, $a_2={=t2}$, $a_3={=t3}$, $a_4={=t4}$.",
+      "Each term is {=d} more than the one before, so we estimate $a_n={=a}+{=d}(n-1)={=d}n+({=c})$.",
+      "Check $n=1$: ${=d}\\cdot 1+({=c})={=a}=a_1$, true.",
+      "Assume $a_k={=d}k+({=c})$ for some $k\\ge 1$.",
+      "Then $a_{k+1}=a_k+{=d}={=d}k+({=c})+{=d}={=d}(k+1)+({=c})$, which is the formula with $n=k+1$.",
+      "By induction the formula holds for all $n\\ge 1$: $a_n={=d}n+({=c})$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=d})*n + ({=c})",
+      "form": null,
+      "variables": [
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Answer is the general term; marker accepts equivalent expressions. c=a-d may be 0 or negative; marker parenthesised."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c2-5-4:affine-rec",
+     "kind": "family",
+     "lo_id": "lo:eb11c2-5-4",
+     "parent_question_id": "q:eb11c2-5-4:bk-challenge-5",
+     "source_page": 105,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "p",
+       "let": "c + 1"
+      },
+      {
+       "name": "k",
+       "let": "m - 1"
+      },
+      {
+       "name": "t2",
+       "let": "p*m - 1"
+      },
+      {
+       "name": "t3",
+       "let": "p*m*m - 1"
+      },
+      {
+       "name": "t4",
+       "let": "p*m*m*m - 1"
+      },
+      {
+       "name": "p2",
+       "let": "p*m"
+      },
+      {
+       "name": "p3",
+       "let": "p*m*m"
+      },
+      {
+       "name": "p4",
+       "let": "p*m*m*m"
+      }
+     ],
+     "constraints": [],
+     "stem": "A sequence is defined by $a_1={=c}$ and $a_{n+1}={=m}a_n+{=k}$ for $n\\ge 1$. Find $a_2$, $a_3$, $a_4$, estimate the general term $a_n$ as an expression in $n$, and prove your estimate by mathematical induction. Give $a_n$ in terms of $n$.",
+     "answer": "",
+     "solution": [
+      "$a_2={=m}\\cdot{=c}+{=k}={=t2}$, $a_3={=m}\\cdot{=t2}+{=k}={=t3}$, $a_4={=m}\\cdot{=t3}+{=k}={=t4}$.",
+      "Add 1 to each term: $a_1+1={=p}$, $a_2+1={=p2}$, $a_3+1={=p3}$, $a_4+1={=p4}$. These are {=p} times powers of {=m}.",
+      "So we estimate $a_n+1={=p}\\cdot{=m}^{n-1}$, that is $a_n={=p}\\cdot{=m}^{n-1}-1$.",
+      "Check $n=1$: ${=p}\\cdot 1-1={=c}=a_1$, true.",
+      "Assume $a_k={=p}\\cdot{=m}^{k-1}-1$ for some $k\\ge 1$.",
+      "Then $a_{k+1}={=m}\\left({=p}\\cdot{=m}^{k-1}-1\\right)+{=k}={=p}\\cdot{=m}^{k}-{=m}+{=k}={=p}\\cdot{=m}^{k}-1$, which is the formula with $n=k+1$.",
+      "By induction the formula holds for all $n\\ge 1$: $a_n={=p}\\cdot{=m}^{n-1}-1$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=p}*{=m}^(n-1) - 1",
+      "form": null,
+      "variables": [
+       "n"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Recurrence a_{n+1}=m a_n+(m-1) has fixed point -1, so a_n=(c+1)m^(n-1)-1. Only 9 distinct instances (m 3 values, c 3 values)."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Advanced tier not requested (gaps were basic and standard). The only book question is a geometric/arithmetic ratio question, so parent is used loosely for the nearest sequence skill."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,1520 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "16a6410d70b1225f48446f7bfb84852ad39075cdced02bada6c24172e6bd862b",
+  "generated_sha256": "05db220cd082809a40e5e8930699a585b5fcb8bad88fa612b3040eea313b158a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c3-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c3-3:open-prompt-1",
+      "kind": "explanation",
+      "answer": "They let us test a model at a value quickly (Remainder Theorem), find where it equals zero (Factor Theorem) and simplify the work (synthetic division).",
+      "solution": [
+       "The Remainder Theorem gives the value P(a) directly, so we can test the model at a given year without dividing.",
+       "If P(a) = 0, then x − a is a factor, so we can see when the model reaches zero.",
+       "Synthetic division is a fast way to test values and to find the quotient.",
+       "So economists can test values and predict trends efficiently."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:rule-9",
+       "eb11c3-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-1",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+       "Divisor 3x − 2, so substitute x = 2/3.",
+       "P(2/3) = 3(2/3)^4 − 8(2/3)^3 − 5(2/3)^2 + 12.",
+       "= 16/27 − 64/27 − 60/27 + 324/27 = 216/27.",
+       "The remainder is 8."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2",
+       "eb11c3-3:explanation-1",
+       "eb11c3-3:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-2",
+      "kind": "value",
+      "answer": "a = 13/3",
+      "solution": [
+       "Divisor x + 3, so substitute x = −3.",
+       "P(−3) = (−3)^3 + a(−3)^2 + 3(−3) + 1 = 9a − 35.",
+       "Set 9a − 35 = 4.",
+       "9a = 39, so a = 13/3."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-1",
+      "kind": "value",
+      "answer": "-1/8",
+      "solution": [
+       "Divisor 2x − 1, so substitute x = 1/2.",
+       "P(1/2) = 1/8 − 5/4 + 2 − 1.",
+       "= 1/8 − 10/8 + 8/8 = −1/8.",
+       "The remainder is −1/8."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-2",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+       "Divisor x − 3, so substitute x = 3.",
+       "P(3) = 27 + 9a + 9 + 1 = 9a + 37.",
+       "Set 9a + 37 = 1.",
+       "9a = −36, so a = −4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-1",
+      "kind": "value",
+      "answer": "Try 1: remainder -1/8; Try 2: a = -4",
+      "solution": [
+       "Try 1: substitute x = 1/2 for 2x − 1, giving P(1/2) = −1/8.",
+       "Try 2: substitute x = 3 for x − 3, giving 9a + 37 = 1.",
+       "So a = −4.",
+       "Answers: −1/8 and a = −4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-1",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "Divisor x + 2, so substitute x = −2.",
+       "P(−2) = −8 + 8 + 6 − 4.",
+       "The remainder is 2."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-2",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+       "Divisor x − 1, so substitute x = 1.",
+       "P(1) = 3 + 2 − 5 + 6.",
+       "The remainder is 6."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-3",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+       "Divisor 3x − 2, so substitute x = 2/3.",
+       "P(2/3) = 6(8/27) − 4/9 + 2/3 − 2.",
+       "= 16/9 − 4/9 + 6/9 − 18/9 = 0.",
+       "The remainder is 0."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-4",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "Divisor 2x + 1, so substitute x = −1/2.",
+       "P(−1/2) = 4(−1/8) − 2(1/4) − 4(−1/2) + 3.",
+       "= −1/2 − 1/2 + 2 + 3.",
+       "The remainder is 4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-5",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+       "Divisor x + 1, so substitute x = −1.",
+       "P(−1) = −1 − 1 − a − 4 = −6 − a.",
+       "Set −6 − a = −2.",
+       "a = −4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-6",
+      "kind": "value",
+      "answer": "a = -16",
+      "solution": [
+       "Divisor x + 3, so substitute x = −3.",
+       "P(−3) = −27 + 36 + 15 + a = 24 + a.",
+       "Set 24 + a = 8.",
+       "a = −16."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-7",
+      "kind": "value",
+      "answer": "a = -4",
+      "solution": [
+       "Divisible by x − 2 means the remainder P(2) = 0.",
+       "P(2) = 8 − 12 + 8 + a = 4 + a.",
+       "Set 4 + a = 0.",
+       "a = −4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-1",
+      "kind": "value",
+      "answer": "a = 10",
+      "solution": [
+       "Divisible by 2x + 1 means P(−1/2) = 0.",
+       "P(−1/2) = 2(−1/8) − 3(1/4) + a(−1/2) + 6.",
+       "= −1/4 − 3/4 − a/2 + 6 = 5 − a/2.",
+       "Set 5 − a/2 = 0, so a = 10."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2",
+       "eb11c3-3:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:1",
+      "kind": "explanation",
+      "answer": "We would substitute x = −2 instead of x = −1/2, and the value of a becomes −11.",
+      "solution": [
+       "For divisor x + 2, divisibility means P(−2) = 0.",
+       "P(−2) = 2(−8) − 3(4) − 2a + 6 = −22 − 2a.",
+       "Set −22 − 2a = 0, so a = −11.",
+       "So the substitution value and the value of a change (from 10 to −11)."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:2",
+      "kind": "explanation",
+      "answer": "The divisor decides which value of x we substitute, so it decides the equation for a and hence the value of a needed.",
+      "solution": [
+       "For a divisor ax − b we substitute x = b/a.",
+       "Setting P(b/a) = 0 gives an equation in the unknown a.",
+       "A different divisor gives a different equation, so generally a different value of a."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-2",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:3",
+      "kind": "explanation",
+      "answer": "Yes, if P vanishes at each of the corresponding values, i.e. each remainder is zero.",
+      "solution": [
+       "P is divisible by x − a exactly when P(a) = 0.",
+       "If P(a) = 0 and P(b) = 0, then both x − a and x − b are factors.",
+       "So P can have as many linear factors as it has values with P = 0, at most its degree."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-3",
+      "kind": "value",
+      "answer": "2x + 1",
+      "solution": [
+       "x² + 2x − 3 = (x − 1)(x + 3).",
+       "P(x) = (x − 1)(x + 3)Q(x) + ax + b.",
+       "P(1) = 3 gives a + b = 3.",
+       "P(−3) = −5 gives −3a + b = −5.",
+       "Solving gives a = 2, b = 1.",
+       "The remainder is 2x + 1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-3",
+      "kind": "value",
+      "answer": "2x - 1",
+      "solution": [
+       "x² + x − 6 = (x − 2)(x + 3).",
+       "P(x) = (x − 2)(x + 3)Q(x) + ax + b.",
+       "P(2) = 3 gives 2a + b = 3.",
+       "P(−3) = −7 gives −3a + b = −7.",
+       "Subtract: 5a = 10, so a = 2, b = −1.",
+       "The remainder is 2x − 1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-2",
+      "kind": "value",
+      "answer": "2x - 1",
+      "solution": [
+       "This is the try section (try-3).",
+       "x² + x − 6 = (x − 2)(x + 3).",
+       "2a + b = 3 and −3a + b = −7 give a = 2, b = −1.",
+       "The remainder is 2x − 1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-9",
+      "kind": "value",
+      "answer": "2x + 3",
+      "solution": [
+       "P(x) = (x − 1)(x + 2)Q(x) + ax + b.",
+       "P(1) = 5 gives a + b = 5.",
+       "P(−2) = −1 gives −2a + b = −1.",
+       "Subtract: 3a = 6, so a = 2, b = 3.",
+       "The remainder is 2x + 3."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-10",
+      "kind": "value",
+      "answer": "3x - 2",
+      "solution": [
+       "x² + x − 6 = (x − 2)(x + 3).",
+       "P(2) = 4 gives 2a + b = 4.",
+       "P(−3) = −11 gives −3a + b = −11.",
+       "Subtract: 5a = 15, so a = 3, b = −2.",
+       "The remainder is 3x − 2."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-3",
+      "kind": "value",
+      "answer": "x - 1",
+      "solution": [
+       "x² + 2x − 3 = (x − 1)(x + 3).",
+       "Divisible by x − 1 means P(1) = 0, so a + b = 0.",
+       "P(−3) = −4 gives −3a + b = −4.",
+       "Subtract: 4a = 4, so a = 1, b = −1.",
+       "The remainder is x − 1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-4",
+      "kind": "value",
+      "answer": "3x - 2",
+      "solution": [
+       "x² + x − 2 = (x + 2)(x − 1); let the remainder be ax + b.",
+       "x² − x − 6 = (x + 2)(x − 3), remainder 7x + 6, so P(−2) = −8.",
+       "x² + 2x − 3 = (x + 3)(x − 1), remainder 4x − 3, so P(1) = 1.",
+       "So −2a + b = −8 and a + b = 1.",
+       "Subtract: 3a = 9, so a = 3, b = −2.",
+       "The remainder is 3x − 2."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-4",
+      "kind": "value",
+      "answer": "x",
+      "solution": [
+       "x² − 1 = (x − 1)(x + 1); let the remainder be ax + b.",
+       "x² − x − 2 = (x − 2)(x + 1), remainder 3x + 2, so P(−1) = −1.",
+       "x² + 2x − 3 = (x + 3)(x − 1), remainder 7x − 6, so P(1) = 1.",
+       "So a + b = 1 and −a + b = −1.",
+       "Adding gives b = 0, so a = 1.",
+       "The remainder is x."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-11",
+      "kind": "value",
+      "answer": "3x - 1",
+      "solution": [
+       "x² − x − 2 = (x − 2)(x + 1); let the remainder be ax + b.",
+       "x² − 2x − 3 = (x − 3)(x + 1), remainder 2x − 2, so P(−1) = −4.",
+       "x² − 4 = (x − 2)(x + 2), remainder −x + 7, so P(2) = 5.",
+       "So 2a + b = 5 and −a + b = −4.",
+       "Subtract: 3a = 9, so a = 3, b = −1.",
+       "The remainder is 3x − 1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-12",
+      "kind": "value",
+      "answer": "7x - 12",
+      "solution": [
+       "x² − 5x + 6 = (x − 2)(x − 3); let the remainder be ax + b.",
+       "x² − 3x + 2 = (x − 1)(x − 2), remainder −x + 4, so P(2) = 2.",
+       "x² − 4x + 3 = (x − 1)(x − 3), remainder 3x, so P(3) = 9.",
+       "So 2a + b = 2 and 3a + b = 9.",
+       "Subtract: a = 7, b = −12.",
+       "The remainder is 7x − 12."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-13",
+      "kind": "value",
+      "answer": "x^2 + 3x - 4",
+      "solution": [
+       "The divisor has degree 3, so the remainder R has degree at most 2.",
+       "R leaves remainder x − 5 on division by (x + 1)², so R = k(x + 1)² + x − 5.",
+       "P(2) = 6 and the divisor term vanishes at x = 2, so R(2) = 6.",
+       "9k − 3 = 6, so k = 1.",
+       "R = (x + 1)² + x − 5 = x² + 3x − 4.",
+       "The remainder is x² + 3x − 4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-4",
+      "kind": "value",
+      "answer": "56",
+      "solution": [
+       "Divisor x + 1, so substitute x = −1.",
+       "P(−1) = (−1)^57 + 57 = −1 + 57.",
+       "The remainder is 56."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-5",
+      "kind": "value",
+      "answer": "Quotient x^2 - 2x + 9, remainder -7",
+      "solution": [
+       "Coefficients of x³ + 0x² + 5x + 11: 1, 0, 5, 11.",
+       "Divisor x + 2, so write −2 on the left.",
+       "Bring down 1; 1 × (−2) = −2; 0 + (−2) = −2.",
+       "−2 × (−2) = 4; 5 + 4 = 9.",
+       "9 × (−2) = −18; 11 − 18 = −7.",
+       "Bottom row 1, −2, 9, −7: quotient x² − 2x + 9, remainder −7."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-1",
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5",
+       "eb11c3-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the polynomials A and B of the try section are not given here.",
+      "solution": [
+       "The activity refers to the try section, whose A and B are not listed.",
+       "Without them no division can be done."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-5",
+      "kind": "value",
+      "answer": "x = √3 and x = -√3",
+      "solution": [
+       "x = 1/2 is a double root, so divide by x − 1/2 twice using synthetic division.",
+       "Coefficients 4, −4, −11, 12, −3 with 1/2: 4, −2, −12, 6, remainder 0.",
+       "Again with 1/2 on 4, −2, −12, 6: 4, 0, −12, remainder 0.",
+       "Quotient 4x² − 12 = 0, so x² = 3.",
+       "Other intercepts: x = √3 and x = −√3."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-8",
+       "eb11c3-3:method-5",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the expressions to factorise in the try section are not given here.",
+      "solution": [
+       "The activity refers to try-6, whose expressions are not listed.",
+       "Without them nothing can be factorised."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-6",
+      "kind": "value",
+      "answer": "a = -12, b = 2",
+      "solution": [
+       "(x − 1) is a factor, so P(1) = 0: 1 − 3 + a + b + 12 = 0, so a + b = −10.",
+       "(x + 2) is a factor, so P(−2) = 0: 16 + 24 + 4a − 2b + 12 = 0, so 2a − b = −26.",
+       "Add the two equations: 3a = −36, so a = −12.",
+       "Then b = −10 + 12 = 2."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:challenge-7",
+      "kind": "value",
+      "answer": "x = 1, x = -2, x = 2 + √10, x = 2 - √10",
+      "solution": [
+       "With a = −12, b = 2: P(x) = x⁴ − 3x³ − 12x² + 2x + 12.",
+       "Synthetic division by x − 1: 1, −2, −14, −12, remainder 0.",
+       "Synthetic division of x³ − 2x² − 14x − 12 by x + 2: 1, −4, −6, remainder 0.",
+       "So P(x) = (x − 1)(x + 2)(x² − 4x − 6).",
+       "x² − 4x − 6 = 0 gives x = 2 ± √10.",
+       "Roots: 1, −2, 2 + √10, 2 − √10."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-6",
+       "eb11c3-3:rule-8",
+       "eb11c3-3:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:reflect-1",
+      "kind": "explanation",
+      "answer": "Factors show where a polynomial is zero and break a complicated expression into simple parts, which helps in solving equations and analysing real systems.",
+      "solution": [
+       "Each factor x − a shows a value where P(a) = 0.",
+       "Simple factors are easier to solve and study than one big polynomial.",
+       "In real models, the zeros show when a quantity reaches zero, so we can analyse and predict behaviour."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-6"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-3:open-prompt-1",
+      "kind": "explanation",
+      "answer": "The Remainder Theorem gives the model's value at a given year, e.g. P(5), with no long division. The Factor Theorem shows when the model reaches zero. Synthetic division tests values and simplifies the calculation quickly."
+     },
+     {
+      "ref": "eb11c3-3:warm-up-1",
+      "kind": "value",
+      "answer": "8"
+     },
+     {
+      "ref": "eb11c3-3:warm-up-2",
+      "kind": "value",
+      "answer": "a = 13/3"
+     },
+     {
+      "ref": "eb11c3-3:try-1",
+      "kind": "value",
+      "answer": "-1/8"
+     },
+     {
+      "ref": "eb11c3-3:try-2",
+      "kind": "value",
+      "answer": "a = -4"
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity with no question of its own. The try answers are -1/8 and a = -4."
+     },
+     {
+      "ref": "eb11c3-3:exercise-1",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c3-3:exercise-2",
+      "kind": "value",
+      "answer": "6"
+     },
+     {
+      "ref": "eb11c3-3:exercise-3",
+      "kind": "value",
+      "answer": "0"
+     },
+     {
+      "ref": "eb11c3-3:exercise-4",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "eb11c3-3:exercise-5",
+      "kind": "value",
+      "answer": "a = -4"
+     },
+     {
+      "ref": "eb11c3-3:exercise-6",
+      "kind": "value",
+      "answer": "a = -16"
+     },
+     {
+      "ref": "eb11c3-3:exercise-7",
+      "kind": "value",
+      "answer": "a = -4"
+     },
+     {
+      "ref": "eb11c3-3:challenge-1",
+      "kind": "value",
+      "answer": "a = 10"
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:1",
+      "kind": "explanation",
+      "answer": "The condition becomes P(-2) = 0 instead of P(-1/2) = 0. This gives -16 - 12 - 2a + 6 = 0, so a = -11 instead of 10."
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:2",
+      "kind": "explanation",
+      "answer": "The divisor fixes the root, and so the equation P(root) = 0. This is a linear equation in a, so each divisor gives a different single value of a."
+     },
+     {
+      "ref": "eb11c3-3:challenge-2:3",
+      "kind": "explanation",
+      "answer": "Yes. P is divisible by several distinct linear factors exactly when P vanishes at every one of those roots. Then it is divisible by their product. A polynomial of degree n has at most n distinct linear factors."
+     },
+     {
+      "ref": "eb11c3-3:warm-up-3",
+      "kind": "value",
+      "answer": "2x + 1"
+     },
+     {
+      "ref": "eb11c3-3:try-3",
+      "kind": "value",
+      "answer": "2x - 1"
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity with no question of its own. The try answer is 2x - 1."
+     },
+     {
+      "ref": "eb11c3-3:exercise-9",
+      "kind": "value",
+      "answer": "2x + 3"
+     },
+     {
+      "ref": "eb11c3-3:exercise-10",
+      "kind": "value",
+      "answer": "3x - 2"
+     },
+     {
+      "ref": "eb11c3-3:challenge-3",
+      "kind": "value",
+      "answer": "x - 1"
+     },
+     {
+      "ref": "eb11c3-3:warm-up-4",
+      "kind": "value",
+      "answer": "3x - 2"
+     },
+     {
+      "ref": "eb11c3-3:try-4",
+      "kind": "value",
+      "answer": "x"
+     },
+     {
+      "ref": "eb11c3-3:exercise-11",
+      "kind": "value",
+      "answer": "3x - 1"
+     },
+     {
+      "ref": "eb11c3-3:exercise-12",
+      "kind": "value",
+      "answer": "7x - 12"
+     },
+     {
+      "ref": "eb11c3-3:exercise-13",
+      "kind": "value",
+      "answer": "x^2 + 3x - 4"
+     },
+     {
+      "ref": "eb11c3-3:challenge-4",
+      "kind": "value",
+      "answer": "56"
+     },
+     {
+      "ref": "eb11c3-3:warm-up-5",
+      "kind": "value",
+      "answer": "Quotient x^2 - 2x + 9, remainder -7"
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity with no question of its own."
+     },
+     {
+      "ref": "eb11c3-3:challenge-5",
+      "kind": "value",
+      "answer": "x = √3 and x = -√3 (P(x) = (2x-1)^2 (x^2 - 3)); x = 1/2 is the double intercept given"
+     },
+     {
+      "ref": "eb11c3-3:work-with-a-partner-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity with no question of its own."
+     },
+     {
+      "ref": "eb11c3-3:challenge-6",
+      "kind": "value",
+      "answer": "a = -12, b = 2"
+     },
+     {
+      "ref": "eb11c3-3:challenge-7",
+      "kind": "value",
+      "answer": "x = 1, x = -2, x = 2 + √10, x = 2 - √10"
+     },
+     {
+      "ref": "eb11c3-3:reflect-1",
+      "kind": "explanation",
+      "answer": "Factors show the roots, where the model is zero or changes sign. They also split a complicated polynomial into simpler pieces that are easier to solve and analyse. In real systems this helps find break-even points, equilibria and stability conditions."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c3-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c3-3:exercise-8",
+      "kind": "value",
+      "answer": "Problem 1: 2x + 3; Problem 2: 3x - 2",
+      "solution": [
+       "Problem 1: write $P(x)=(x-1)(x+2)Q(x)+ax+b$.",
+       "$P(1)=5$ gives $a+b=5$.",
+       "$P(-2)=-1$ gives $-2a+b=-1$.",
+       "Subtract: $3a=6$, so $a=2$ and $b=3$.",
+       "Problem 2: factorise $x^2+x-6=(x-2)(x+3)$ and write $P(x)=(x-2)(x+3)Q(x)+ax+b$.",
+       "$P(2)=4$ gives $2a+b=4$; $P(-3)=-11$ gives $-3a+b=-11$.",
+       "Subtract: $5a=15$, so $a=3$ and $b=-2$.",
+       "Answers: problem 1 remainder $2x+3$; problem 2 remainder $3x-2$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:rule-1",
+       "eb11c3-3:rule-4",
+       "eb11c3-3:rule-5",
+       "eb11c3-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-5:a",
+      "kind": "value",
+      "answer": "quotient x^2 + x + 6, remainder 0",
+      "solution": [
+       "Coefficients of $x^3+0x^2+5x-6$: 1, 0, 5, -6 (insert 0 for the missing $x^2$ term).",
+       "Divisor $x-1$, so write 1 on the left.",
+       "Bring down 1; $1\\times1=1$, $0+1=1$; $1\\times1=1$, $5+1=6$; $6\\times1=6$, $-6+6=0$.",
+       "Bottom row: 1, 1, 6, remainder 0.",
+       "Quotient $x^2+x+6$, remainder 0."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-1",
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5",
+       "eb11c3-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-5:b",
+      "kind": "value",
+      "answer": "quotient 3x^2 + 4x + 9, remainder 26",
+      "solution": [
+       "Coefficients: 3, -5, -3, -1; divisor $x-3$, write 3 on the left.",
+       "Bring down 3; $3\\times3=9$, $-5+9=4$; $4\\times3=12$, $-3+12=9$; $9\\times3=27$, $-1+27=26$.",
+       "Bottom row: 3, 4, 9, remainder 26.",
+       "Quotient $3x^2+4x+9$, remainder 26."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:a",
+      "kind": "value",
+      "answer": "quotient x^2 + 2x - 1, remainder 4",
+      "solution": [
+       "Coefficients of $x^3+0x^2-5x+6$: 1, 0, -5, 6; divisor $x-2$, write 2 on the left.",
+       "Bring down 1; $1\\times2=2$, $0+2=2$; $2\\times2=4$, $-5+4=-1$; $-1\\times2=-2$, $6-2=4$.",
+       "Bottom row: 1, 2, -1, remainder 4.",
+       "Quotient $x^2+2x-1$, remainder 4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-1",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5",
+       "eb11c3-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:b",
+      "kind": "value",
+      "answer": "quotient x^2 + 3x + 2, remainder -1",
+      "solution": [
+       "Coefficients: 1, 2, -1, -3; divisor $x-1$, write 1 on the left.",
+       "Bring down 1; $2+1=3$; $-1+3=2$; $-3+2=-1$.",
+       "Bottom row: 1, 3, 2, remainder -1.",
+       "Quotient $x^2+3x+2$, remainder -1."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:c",
+      "kind": "value",
+      "answer": "quotient 4x + 2, remainder 4",
+      "solution": [
+       "Coefficients: 4, -2, 2; divisor $x-1$, write 1 on the left.",
+       "Bring down 4; $-2+4=2$; $2+2=4$.",
+       "Bottom row: 4, 2, remainder 4.",
+       "Quotient $4x+2$, remainder 4."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:d",
+      "kind": "value",
+      "answer": "quotient 3x^3 - x^2 + 2x - 6, remainder 0",
+      "solution": [
+       "Coefficients of $3x^4+5x^3+0x^2-2x-12$: 3, 5, 0, -2, -12 (insert 0 for $x^2$).",
+       "Divisor $x+2$, so write $-2$ on the left.",
+       "Bring down 3; $3\\times(-2)=-6$, $5-6=-1$; $-1\\times(-2)=2$, $0+2=2$; $2\\times(-2)=-4$, $-2-4=-6$; $-6\\times(-2)=12$, $-12+12=0$.",
+       "Bottom row: 3, -1, 2, -6, remainder 0.",
+       "Quotient $3x^3-x^2+2x-6$, remainder 0."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-1",
+       "eb11c3-3:method-2",
+       "eb11c3-3:method-3",
+       "eb11c3-3:method-4",
+       "eb11c3-3:method-5",
+       "eb11c3-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-6:a",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x+2)",
+      "solution": [
+       "Let $P(x)=x^3+2x^2-x-2$; constant term $-2$, try $\\pm1,\\pm2$.",
+       "$P(1)=1+2-1-2=0$, so $x-1$ is a factor.",
+       "Synthetic division by 1: 1, 2, -1, -2 gives 1, 3, 2, remainder 0.",
+       "$P(x)=(x-1)(x^2+3x+2)$.",
+       "Factorise the quadratic: $(x-1)(x+1)(x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:worked-example-2",
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:warm-up-6:b",
+      "kind": "value",
+      "answer": "(x-2)^2(x^2-2x-4)",
+      "solution": [
+       "Let $P(x)=x^4-6x^3+8x^2+8x-16$; try $\\pm1,\\pm2,\\pm4...$.",
+       "$P(2)=16-48+32+16-16=0$, so $x-2$ is a factor.",
+       "Synthetic division by 2: 1, -6, 8, 8, -16 gives 1, -4, 0, 8, remainder 0.",
+       "$P(x)=(x-2)(x^3-4x^2+8)$.",
+       "Let $Q(x)=x^3-4x^2+8$; $Q(2)=8-16+8=0$.",
+       "Synthetic division by 2: 1, -4, 0, 8 gives 1, -2, -4, remainder 0.",
+       "$Q(x)=(x-2)(x^2-2x-4)$; the quadratic cannot be factorised further.",
+       "$P(x)=(x-2)^2(x^2-2x-4)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9",
+       "eb11c3-3:method-1",
+       "eb11c3-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:a",
+      "kind": "value",
+      "answer": "(x-1)(x-3)(x+2)",
+      "solution": [
+       "Constant term 6; $P(1)=1-2-5+6=0$.",
+       "Synthetic division by 1: 1, -2, -5, 6 gives 1, -1, -6, remainder 0.",
+       "$P(x)=(x-1)(x^2-x-6)$.",
+       "$x^2-x-6=(x-3)(x+2)$.",
+       "$P(x)=(x-1)(x-3)(x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:b",
+      "kind": "value",
+      "answer": "(x+2)^2(x-5)",
+      "solution": [
+       "Constant term $-20$; $P(1)=-36$, $P(-1)=-6$, $P(2)=-52$, $P(-2)=-8-4+32-20=0$.",
+       "Synthetic division by $-2$: 1, -1, -16, -20 gives 1, -3, -10, remainder 0.",
+       "$P(x)=(x+2)(x^2-3x-10)$.",
+       "$x^2-3x-10=(x-5)(x+2)$.",
+       "$P(x)=(x+2)^2(x-5)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:c",
+      "kind": "value",
+      "answer": "(x+1)(2x+1)(x-2)",
+      "solution": [
+       "$P(1)=2-1-5-2=-6$; $P(-1)=-2-1+5-2=0$.",
+       "Synthetic division by $-1$: 2, -1, -5, -2 gives 2, -3, -2, remainder 0.",
+       "$P(x)=(x+1)(2x^2-3x-2)$.",
+       "$2x^2-3x-2=(2x+1)(x-2)$.",
+       "$P(x)=(x+1)(2x+1)(x-2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:d",
+      "kind": "value",
+      "answer": "(x-2)(2x^2+x+1)",
+      "solution": [
+       "$P(1)=-4$, $P(-1)=-2-3+1-2=-6$, $P(2)=16-12-2-2=0$.",
+       "Synthetic division by 2: 2, -3, -1, -2 gives 2, 1, 1, remainder 0.",
+       "$P(x)=(x-2)(2x^2+x+1)$.",
+       "The quadratic cannot be factorised further, so leave it."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:e",
+      "kind": "value",
+      "answer": "(x+1)(x-2)(x-3)(x+7)",
+      "solution": [
+       "$P(1)=32$; $P(-1)=1-3-27-13+42=0$.",
+       "Synthetic division by $-1$: 1, 3, -27, 13, 42 gives 1, 2, -29, 42, remainder 0.",
+       "$P(x)=(x+1)(x^3+2x^2-29x+42)$.",
+       "Let $Q(x)=x^3+2x^2-29x+42$; $Q(2)=8+8-58+42=0$.",
+       "Synthetic division by 2: 1, 2, -29, 42 gives 1, 4, -21, remainder 0.",
+       "$x^2+4x-21=(x+7)(x-3)$.",
+       "$P(x)=(x+1)(x-2)(x-3)(x+7)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:try-6:f",
+      "kind": "value",
+      "answer": "(x-1)^2(x^2-2x+3)",
+      "solution": [
+       "$P(1)=1-4+8-8+3=0$.",
+       "Synthetic division by 1: 1, -4, 8, -8, 3 gives 1, -3, 5, -3, remainder 0.",
+       "$P(x)=(x-1)(x^3-3x^2+5x-3)$.",
+       "$Q(1)=1-3+5-3=0$; synthetic division by 1: 1, -3, 5, -3 gives 1, -2, 3, remainder 0.",
+       "$x^2-2x+3$ cannot be factorised further.",
+       "$P(x)=(x-1)^2(x^2-2x+3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:a",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x-3)",
+      "solution": [
+       "$P(-1)=-1+7-6=0$.",
+       "Synthetic division by $-1$: 1, 0, -7, -6 gives 1, -1, -6, remainder 0.",
+       "$x^2-x-6=(x-3)(x+2)$.",
+       "$P(x)=(x+1)(x+2)(x-3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:caution-3",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:b",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x+3)",
+      "solution": [
+       "$P(1)=1+4+1-6=0$.",
+       "Synthetic division by 1: 1, 4, 1, -6 gives 1, 5, 6, remainder 0.",
+       "$x^2+5x+6=(x+2)(x+3)$.",
+       "$P(x)=(x-1)(x+2)(x+3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:c",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x+3)",
+      "solution": [
+       "$P(1)=24$; $P(-1)=-1+6-11+6=0$.",
+       "Synthetic division by $-1$: 1, 6, 11, 6 gives 1, 5, 6, remainder 0.",
+       "$x^2+5x+6=(x+2)(x+3)$.",
+       "$P(x)=(x+1)(x+2)(x+3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:d",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)",
+      "solution": [
+       "$P(1)=1-3+2=0$.",
+       "Synthetic division by 1: 1, 0, -3, 2 gives 1, 1, -2, remainder 0.",
+       "$x^2+x-2=(x-1)(x+2)$.",
+       "$P(x)=(x-1)^2(x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:caution-3",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:e",
+      "kind": "value",
+      "answer": "(x+2)^2(x-3)",
+      "solution": [
+       "$P(1)=-18$, $P(-1)=-4$, $P(2)=-16$, $P(-2)=-8+4+16-12=0$.",
+       "Synthetic division by $-2$: 1, 1, -8, -12 gives 1, -1, -6, remainder 0.",
+       "$x^2-x-6=(x-3)(x+2)$.",
+       "$P(x)=(x+2)^2(x-3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:f",
+      "kind": "value",
+      "answer": "(x+1)^2(x-5)",
+      "solution": [
+       "Constant term $-5$; $P(-1)=-1-3+9-5=0$.",
+       "Synthetic division by $-1$: 1, -3, -9, -5 gives 1, -4, -5, remainder 0.",
+       "$x^2-4x-5=(x-5)(x+1)$.",
+       "$P(x)=(x+1)^2(x-5)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:g",
+      "kind": "value",
+      "answer": "(x+1)(2x-1)(x-2)",
+      "solution": [
+       "$P(1)=-2$; $P(-1)=-2-3+3+2=0$.",
+       "Synthetic division by $-1$: 2, -3, -3, 2 gives 2, -5, 2, remainder 0.",
+       "$2x^2-5x+2=(2x-1)(x-2)$.",
+       "$P(x)=(x+1)(2x-1)(x-2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:h",
+      "kind": "value",
+      "answer": "(x-1)(3x-2)(x+2)",
+      "solution": [
+       "$P(1)=3+1-8+4=0$.",
+       "Synthetic division by 1: 3, 1, -8, 4 gives 3, 4, -4, remainder 0.",
+       "$3x^2+4x-4=(3x-2)(x+2)$.",
+       "$P(x)=(x-1)(3x-2)(x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:i",
+      "kind": "value",
+      "answer": "(x+1)^2(2x+3)",
+      "solution": [
+       "$P(1)=20$; $P(-1)=-2+7-8+3=0$.",
+       "Synthetic division by $-1$: 2, 7, 8, 3 gives 2, 5, 3, remainder 0.",
+       "$2x^2+5x+3=(2x+3)(x+1)$.",
+       "$P(x)=(x+1)^2(2x+3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:j",
+      "kind": "value",
+      "answer": "(x-2)(2x^2-3x-3)",
+      "solution": [
+       "$P(1)=4$, $P(-1)=-2-7-3+6=-6$, $P(2)=16-28+6+6=0$.",
+       "Synthetic division by 2: 2, -7, 3, 6 gives 2, -3, -3, remainder 0.",
+       "$2x^2-3x-3$ cannot be factorised further, so leave it.",
+       "$P(x)=(x-2)(2x^2-3x-3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:k",
+      "kind": "value",
+      "answer": "(x+2)(x^2+2x-2)",
+      "solution": [
+       "$P(1)=3$, $P(-1)=-3$, $P(2)=24$, $P(-2)=-8+16-4-4=0$.",
+       "Synthetic division by $-2$: 1, 4, 2, -4 gives 1, 2, -2, remainder 0.",
+       "$x^2+2x-2$ cannot be factorised further.",
+       "$P(x)=(x+2)(x^2+2x-2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:l",
+      "kind": "value",
+      "answer": "(x-1)(x^2-2x-2)",
+      "solution": [
+       "$P(1)=1-3+2=0$.",
+       "Synthetic division by 1: 1, -3, 0, 2 gives 1, -2, -2, remainder 0.",
+       "$x^2-2x-2$ cannot be factorised further.",
+       "$P(x)=(x-1)(x^2-2x-2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:caution-3",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:m",
+      "kind": "value",
+      "answer": "(x-1)(x-2)(x-3)(x-4)",
+      "solution": [
+       "Constant term 24; $P(1)=1-10+35-50+24=0$.",
+       "Synthetic division by 1: 1, -10, 35, -50, 24 gives 1, -9, 26, -24, remainder 0.",
+       "$Q(x)=x^3-9x^2+26x-24$; $Q(2)=8-36+52-24=0$.",
+       "Synthetic division by 2: 1, -9, 26, -24 gives 1, -7, 12, remainder 0.",
+       "$x^2-7x+12=(x-3)(x-4)$.",
+       "$P(x)=(x-1)(x-2)(x-3)(x-4)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:n",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)(x-5)",
+      "solution": [
+       "$P(1)=1-5-3+17-10=0$.",
+       "Synthetic division by 1: 1, -5, -3, 17, -10 gives 1, -4, -7, 10, remainder 0.",
+       "$Q(x)=x^3-4x^2-7x+10$; $Q(1)=0$.",
+       "Synthetic division by 1: 1, -4, -7, 10 gives 1, -3, -10, remainder 0.",
+       "$x^2-3x-10=(x-5)(x+2)$.",
+       "$P(x)=(x-1)^2(x+2)(x-5)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:o",
+      "kind": "value",
+      "answer": "(x-2)(x+2)(2x+3)(x-4)",
+      "solution": [
+       "$P(2)=32-40-80+40+48=0$.",
+       "Synthetic division by 2: 2, -5, -20, 20, 48 gives 2, -1, -22, -24, remainder 0.",
+       "$Q(x)=2x^3-x^2-22x-24$; $Q(-2)=-16-4+44-24=0$.",
+       "Synthetic division by $-2$: 2, -1, -22, -24 gives 2, -5, -12, remainder 0.",
+       "$2x^2-5x-12=(2x+3)(x-4)$.",
+       "$P(x)=(x-2)(x+2)(2x+3)(x-4)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:p",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x^2-5x+3)",
+      "solution": [
+       "$P(1)=1-4-4+13-6=0$.",
+       "Synthetic division by 1: 1, -4, -4, 13, -6 gives 1, -3, -7, 6, remainder 0.",
+       "$Q(x)=x^3-3x^2-7x+6$; $Q(-2)=-8-12+14+6=0$.",
+       "Synthetic division by $-2$: 1, -3, -7, 6 gives 1, -5, 3, remainder 0.",
+       "$x^2-5x+3$ cannot be factorised further.",
+       "$P(x)=(x-1)(x+2)(x^2-5x+3)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:q",
+      "kind": "value",
+      "answer": "(x+1)(x-3)(x^2-2x+2)",
+      "solution": [
+       "$P(1)=-4$; $P(-1)=1+4+3-2-6=0$.",
+       "Synthetic division by $-1$: 1, -4, 3, 2, -6 gives 1, -5, 8, -6, remainder 0.",
+       "$Q(x)=x^3-5x^2+8x-6$; $Q(3)=27-45+24-6=0$.",
+       "Synthetic division by 3: 1, -5, 8, -6 gives 1, -2, 2, remainder 0.",
+       "$x^2-2x+2$ cannot be factorised further.",
+       "$P(x)=(x+1)(x-3)(x^2-2x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:r",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x^2-x+2)",
+      "solution": [
+       "$P(1)=1-1+1+1-2=0$.",
+       "Synthetic division by 1: 1, -1, 1, 1, -2 gives 1, 0, 1, 2, remainder 0.",
+       "$Q(x)=x^3+x+2$ (the $x^2$ coefficient is 0); $Q(-1)=-1-1+2=0$.",
+       "Synthetic division by $-1$: 1, 0, 1, 2 gives 1, -1, 2, remainder 0.",
+       "$x^2-x+2$ cannot be factorised further.",
+       "$P(x)=(x-1)(x+1)(x^2-x+2)$."
+      ],
+      "grounded_in": [
+       "eb11c3-3:method-6",
+       "eb11c3-3:method-7",
+       "eb11c3-3:caution-3",
+       "eb11c3-3:rule-9"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-3:exercise-8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems' and has no problem of its own; the problems are the separate exercises (1, 2 and the Challenge)."
+     },
+     {
+      "ref": "eb11c3-3:try-5:a",
+      "kind": "value",
+      "answer": "Quotient x^2 + x + 6, remainder 0"
+     },
+     {
+      "ref": "eb11c3-3:try-5:b",
+      "kind": "value",
+      "answer": "Quotient 3x^2 + 4x + 9, remainder 26"
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:a",
+      "kind": "value",
+      "answer": "Quotient x^2 + 2x - 1, remainder 4"
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:b",
+      "kind": "value",
+      "answer": "Quotient x^2 + 3x + 2, remainder -1"
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:c",
+      "kind": "value",
+      "answer": "Quotient 4x + 2, remainder 4"
+     },
+     {
+      "ref": "eb11c3-3:exercise-14:d",
+      "kind": "value",
+      "answer": "Quotient 3x^3 - x^2 + 2x - 6, remainder 0"
+     },
+     {
+      "ref": "eb11c3-3:warm-up-6:a",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x+2)"
+     },
+     {
+      "ref": "eb11c3-3:warm-up-6:b",
+      "kind": "value",
+      "answer": "(x-2)^2(x^2-2x-4)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:a",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x-3)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:b",
+      "kind": "value",
+      "answer": "(x+2)^2(x-5)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:c",
+      "kind": "value",
+      "answer": "(x+1)(x-2)(2x+1)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:d",
+      "kind": "value",
+      "answer": "(x-2)(2x^2+x+1)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:e",
+      "kind": "value",
+      "answer": "(x+1)(x-2)(x-3)(x+7)"
+     },
+     {
+      "ref": "eb11c3-3:try-6:f",
+      "kind": "value",
+      "answer": "(x-1)^2(x^2-2x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:a",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x-3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:b",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:c",
+      "kind": "value",
+      "answer": "(x+1)(x+2)(x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:d",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:e",
+      "kind": "value",
+      "answer": "(x+2)^2(x-3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:f",
+      "kind": "value",
+      "answer": "(x+1)^2(x-5)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:g",
+      "kind": "value",
+      "answer": "(x-2)(x+1)(2x-1)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:h",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(3x-2)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:i",
+      "kind": "value",
+      "answer": "(x+1)^2(2x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:j",
+      "kind": "value",
+      "answer": "(x-2)(2x^2-3x-3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:k",
+      "kind": "value",
+      "answer": "(x+2)(x^2+2x-2)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:l",
+      "kind": "value",
+      "answer": "(x-1)(x^2-2x-2)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:m",
+      "kind": "value",
+      "answer": "(x-1)(x-2)(x-3)(x-4)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:n",
+      "kind": "value",
+      "answer": "(x-1)^2(x+2)(x-5)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:o",
+      "kind": "value",
+      "answer": "(x-2)(x+2)(x-4)(2x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:p",
+      "kind": "value",
+      "answer": "(x-1)(x+2)(x^2-5x+3)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:q",
+      "kind": "value",
+      "answer": "(x+1)(x-3)(x^2-2x+2)"
+     },
+     {
+      "ref": "eb11c3-3:exercise-15:r",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x^2-x+2)"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-2-4:ratio-s2",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-2-4",
+ "parent_question_id": "q:eb11c2-2-4:bk-challenge-4",
+ "source_page": 67,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "let": "a * r"
+  },
+  {
+   "name": "q",
+   "let": "a * (1 + r)"
+  }
+ ],
+ "constraints": [],
+ "stem": "A geometric sequence has $a_2 = {=p}$ and the sum of its first two terms $S_2 = {=q}$. Find its common ratio.",
+ "answer": "r",
+ "solution": [
+  "$S_2 = a_1 + a_2$, so $a_1 = {=q} - {=p} = {=a}$.",
+  "The common ratio is $r = \\frac{a_2}{a_1} = \\frac{{=p}}{{=a}} = {=r}$."
+ ],
+ "notes": "Basic: first term from S2 - a2, then ratio. Ratio is a positive integer."
+}

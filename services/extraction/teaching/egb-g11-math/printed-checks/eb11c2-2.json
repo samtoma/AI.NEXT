@@ -1,0 +1,291 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-2",
+  "source": "book-records/egb-g11-math/eb11c2-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 12,
+      "cost_usd": 0.044,
+      "calls": [
+        {
+          "call": "check-printed.eb11c2-2",
+          "cost_usd": 0.0314,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c2-2",
+          "cost_usd": 0.0126,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c2-2:worked-example-1:a",
+      "record_id": "eb11c2-2:worked-example-1",
+      "part": "a",
+      "type": "worked_example",
+      "page": 58,
+      "printed": "$a_n = 2 \\times 3^{n-1}$",
+      "blind": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-2:figure-3"
+      ],
+      "question_fingerprint": "28e947a9af1af13c2e3c422308e5c9a1",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:worked-example-1:b",
+      "record_id": "eb11c2-2:worked-example-1",
+      "part": "b",
+      "type": "worked_example",
+      "page": 58,
+      "printed": "$a_n = 5 \\times 2^{n-1}$",
+      "blind": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-2:figure-3"
+      ],
+      "question_fingerprint": "e2d70bea8dbb12e78b34adde67fb1e26",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:worked-example-1:c",
+      "record_id": "eb11c2-2:worked-example-1",
+      "part": "c",
+      "type": "worked_example",
+      "page": 58,
+      "printed": "$a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$",
+      "blind": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-2:figure-3"
+      ],
+      "question_fingerprint": "c10ba2ed09f8364b597852da18950602",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequence is on the previous page and not given.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:worked-example-2",
+      "record_id": "eb11c2-2:worked-example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 58,
+      "printed": "common ratio $\\frac{1}{2}$, A = 48, B = 6",
+      "blind": "r = 1/2, A = 48, B = 6",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-2:figure-4"
+      ],
+      "question_fingerprint": "fd01ca07843fc3c48a8f456c66cb2da6",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-2:worked-example-2",
+        "verdict": "equivalent",
+        "reason": "Same ratio 1/2, A=48, B=6."
+      },
+      "how": "judged equivalent: Same ratio 1/2, A=48, B=6.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:explanation-1",
+      "record_id": "eb11c2-2:explanation-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 60,
+      "printed": "$a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$",
+      "blind": "a_n = 3·2^{n-1} (r = 2, a = 3) or a_n = -3·(-2)^{n-1} (r = -2, a = -3)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "30cc0bb52e002d27383b202e89db63ab",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-2:explanation-1",
+        "verdict": "equivalent",
+        "reason": "Same two general terms (3·2^{n-1} or -3·(-2)^{n-1})."
+      },
+      "how": "judged equivalent: Same two general terms (3·2^{n-1} or -3·(-2)^{n-1}).",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:example-1",
+      "record_id": "eb11c2-2:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 61,
+      "printed": "$x=\\pm4$",
+      "blind": "x = 4 or x = -4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "82fd5228956b6ca10a7ed375f1dd337d",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-2:example-1",
+        "verdict": "equivalent",
+        "reason": "x=±4 is x=4 or x=-4."
+      },
+      "how": "judged equivalent: x=±4 is x=4 or x=-4.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:example-2",
+      "record_id": "eb11c2-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 61,
+      "printed": "$a=9, b=12$ or $a=1, b=-4$",
+      "blind": "a = 9, b = 12 or a = 1, b = -4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "3cb1b1829daa78bb80bb21f8cc0facca",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-8:a",
+      "record_id": "eb11c2-2:warm-up-8",
+      "part": "a",
+      "type": "worked_example",
+      "page": 63,
+      "printed": "$484$",
+      "blind": "484",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "41e919abfe33d616a29db5336ce86121",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-8:b",
+      "record_id": "eb11c2-2:warm-up-8",
+      "part": "b",
+      "type": "worked_example",
+      "page": 63,
+      "printed": "$\\frac{63}{4}$",
+      "blind": "63/4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "5ba56ccb102dab5f95cd20e1495266c2",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:worked-example-3",
+      "record_id": "eb11c2-2:worked-example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 65,
+      "printed": "First term: 5, Common ratio: 2 or First term: $\\frac{35}{3}$, Common ratio: $-2$",
+      "blind": "a = 5, r = 2 or a = 35/3, r = -2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "8193a521237479b2e4ccdef056182a88",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-2:worked-example-3",
+        "verdict": "equivalent",
+        "reason": "Same two pairs: (5,2) and (35/3,-2)."
+      },
+      "how": "judged equivalent: Same two pairs: (5,2) and (35/3,-2).",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:worked-example-4",
+      "record_id": "eb11c2-2:worked-example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 65,
+      "printed": "First term: 3, Common ratio: 2",
+      "blind": "a = 3, r = 2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "fe63e59d911acbbab9258e2e0cff673a",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-2:worked-example-4",
+        "verdict": "equivalent",
+        "reason": "Same first term 3 and ratio 2."
+      },
+      "how": "judged equivalent: Same first term 3 and ratio 2.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-2:example-3",
+      "record_id": "eb11c2-2:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 66,
+      "printed": "First term: 1, Common ratio: 2 or First term: 9, Common ratio: $-\\frac{2}{3}$",
+      "blind": "CANNOT ANSWER: only the setup (a first term, r common ratio) is given, with no conditions.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "aecb34b6a47584b6692ac08d780ee28d",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: only the setup (a first term, r common ratio) is given, with no conditions.",
+      "made": {
+        "at": "2026-10-21T14:16:20+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

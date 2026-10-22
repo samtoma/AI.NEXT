@@ -1,0 +1,685 @@
+{
+  "format": "ainext.teaching-visuals/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c4-2",
+  "source": "book-records/egb-g11-math/eb11c4-2.json",
+  "visuals": [
+    {
+      "figure": "eb11c4-2:figure-1",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 4,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3,
+            "y": 0,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": 0,
+            "toDeg": 90,
+            "right": true,
+            "step": 3
+          },
+          {
+            "type": "label",
+            "x": 1.5,
+            "y": -0.9,
+            "text": "(AC)² = (AB)² + (BC)²",
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "A right triangle ABC with the right angle at B, so (AC)² = (AB)² + (BC)².",
+      "withheld": [],
+      "page": 162,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-2",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-1",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                6
+              ],
+              [
+                4,
+                9
+              ],
+              [
+                3,
+                2
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 6,
+            "label": "B(0, 6)",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4,
+            "y": 9,
+            "label": "A(4, 9)",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3,
+            "y": 2,
+            "label": "C(3, 2)",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              6
+            ],
+            "to": [
+              4,
+              9
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              6
+            ],
+            "to": [
+              3,
+              2
+            ],
+            "ticks": 1,
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              6
+            ],
+            "fromDeg": -53.13,
+            "toDeg": 36.87,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Triangle with B(0, 6), A(4, 9), C(3, 2), a right angle at B and AB and BC marked equal.",
+      "withheld": [],
+      "page": 163,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-3",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-2",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -6,
+          6
+        ],
+        "yRange": [
+          -6,
+          6
+        ],
+        "points": [
+          {
+            "x": -3,
+            "y": -2,
+            "label": "(x₁, y₁)"
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "label": "(x₂, y₂)"
+          },
+          {
+            "x": 2,
+            "y": -2
+          }
+        ],
+        "segments": [
+          [
+            0,
+            1
+          ],
+          {
+            "from": 0,
+            "to": 2,
+            "label": "x₂ − x₁"
+          },
+          {
+            "from": 2,
+            "to": 1,
+            "label": "y₂ − y₁"
+          }
+        ],
+        "scale": "none",
+        "animate": "plot-sequence",
+        "interactive": false
+      },
+      "caption": "A line through (x₁, y₁) and (x₂, y₂) with a right triangle showing the run x₂ − x₁ and the rise y₂ − y₁.",
+      "withheld": [],
+      "page": 164,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-4",
+      "for_item": "eb11c4-2:challenge-2",
+      "lo": "lo:eb11c4-2-2",
+      "kind": "coordinate_plot",
+      "spec": {
+        "xRange": [
+          -6,
+          11
+        ],
+        "yRange": [
+          -1,
+          6
+        ],
+        "points": [
+          {
+            "x": -4,
+            "y": 2,
+            "label": "A(-4, 2)"
+          },
+          {
+            "x": 9,
+            "y": 2,
+            "label": "B(9, 2)"
+          }
+        ],
+        "segments": [
+          [
+            0,
+            1
+          ]
+        ],
+        "axes": {
+          "x": "Distance from the research station",
+          "y": "Sea-surface height"
+        },
+        "scale": "numbers",
+        "animate": "plot-sequence",
+        "interactive": false
+      },
+      "caption": "Sensors A(-4, 2) and B(9, 2) joined by a segment on the grid.",
+      "withheld": [
+        "y = 2"
+      ],
+      "page": 166,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-6",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-3",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -6,
+              2
+            ],
+            "to": [
+              6,
+              -2
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "label",
+            "x": 6,
+            "y": -2.6,
+            "text": "l",
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              1,
+              3
+            ],
+            "to": [
+              0,
+              0
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              -1,
+              -3
+            ],
+            "ticks": 1,
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 1,
+            "y": 3,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -1,
+            "y": -3,
+            "label": "B",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "M",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              0,
+              0
+            ],
+            "fromDeg": -18.43,
+            "toDeg": 71.57,
+            "right": true,
+            "step": 4
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Line l is perpendicular to AB at its midpoint M, so AM = MB.",
+      "withheld": [],
+      "page": 172,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-7",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-4",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "segment",
+            "from": [
+              -4,
+              -1
+            ],
+            "to": [
+              6,
+              1.5
+            ],
+            "label": "ax + by + c = 0",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0.27,
+            "y": 3.16,
+            "label": "(x₁, y₁)",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0.27,
+              3.16
+            ],
+            "to": [
+              1,
+              0.25
+            ],
+            "dashed": true,
+            "label": "d",
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              1,
+              0.25
+            ],
+            "fromDeg": 14.04,
+            "toDeg": 104.04,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "The distance d from the point (x₁, y₁) to the line ax + by + c = 0, measured along the perpendicular.",
+      "withheld": [],
+      "page": 174,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-8",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-4",
+      "kind": "geo_scene",
+      "spec": {
+        "elements": [
+          {
+            "type": "polygon",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                6,
+                -2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "fill": true,
+            "step": 1
+          },
+          {
+            "type": "segment",
+            "from": [
+              -2,
+              0.67
+            ],
+            "to": [
+              8,
+              -2.67
+            ],
+            "arrow": "both",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 6,
+            "y": -2,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 3,
+            "y": 3,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              3,
+              3
+            ],
+            "to": [
+              1.8,
+              -0.6
+            ],
+            "dashed": true,
+            "step": 3
+          },
+          {
+            "type": "angle",
+            "at": [
+              1.8,
+              -0.6
+            ],
+            "fromDeg": -18.43,
+            "toDeg": 71.57,
+            "right": true,
+            "step": 3
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Triangle ABC with line AB extended and the perpendicular height dropped from C to AB.",
+      "withheld": [],
+      "page": 176,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    },
+    {
+      "figure": "eb11c4-2:figure-9",
+      "for_item": null,
+      "lo": "lo:eb11c4-2-5",
+      "kind": "geo_scene",
+      "spec": {
+        "panels": [
+          {
+            "label": "Two parallel lines",
+            "elements": [
+              {
+                "type": "segment",
+                "from": [
+                  0,
+                  0
+                ],
+                "to": [
+                  2,
+                  4
+                ],
+                "parallel": 1,
+                "step": 1
+              },
+              {
+                "type": "segment",
+                "from": [
+                  1.5,
+                  0
+                ],
+                "to": [
+                  3.5,
+                  4
+                ],
+                "parallel": 1,
+                "step": 2
+              },
+              {
+                "type": "segment",
+                "from": [
+                  -1,
+                  1.8
+                ],
+                "to": [
+                  4,
+                  3.8
+                ],
+                "step": 3
+              }
+            ]
+          },
+          {
+            "label": "Three lines through one point",
+            "elements": [
+              {
+                "type": "segment",
+                "from": [
+                  -2,
+                  2.5
+                ],
+                "to": [
+                  2,
+                  -2.5
+                ],
+                "step": 1
+              },
+              {
+                "type": "segment",
+                "from": [
+                  -3,
+                  0.5
+                ],
+                "to": [
+                  3,
+                  -0.5
+                ],
+                "step": 2
+              },
+              {
+                "type": "segment",
+                "from": [
+                  -1,
+                  -3
+                ],
+                "to": [
+                  1,
+                  3
+                ],
+                "step": 3
+              },
+              {
+                "type": "point",
+                "x": 0,
+                "y": 0,
+                "label": "",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        "animate": "sequence"
+      },
+      "caption": "Top: two parallel lines crossed by a third line. Bottom: three lines meeting at one point.",
+      "withheld": [],
+      "page": 178,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "figure": "eb11c4-2:figure-5",
+      "for_item": null,
+      "reason": "Photo-style illustration of a robotic surgery scene with 3D laser lines meeting at a tumour point in a 3D grid; no 2D kind can show it.",
+      "needed_kind": "3-D scene or photo/illustration display",
+      "page": 168,
+      "made": {
+        "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+        "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+        "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "at": "2026-10-21T14:56:07+00:00",
+      "by": "runbook/lesson.workflow.js S4 (lesson-v9, collect-6)",
+      "run": "runs/egb-g11-math/lessons/s4-visuals.20261021T145356Z.json",
+      "script_sha256": "d7118e168391b5bfd24e4bc34c2de3e2d0b9e9344a68ee5df133b76e364c7f95",
+      "counts": {
+        "visuals": 8,
+        "viz_gaps": 1,
+        "compared": 8
+      }
+    }
+  ]
+}

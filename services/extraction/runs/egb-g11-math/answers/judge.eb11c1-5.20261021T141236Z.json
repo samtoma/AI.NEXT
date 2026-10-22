@@ -1,0 +1,22 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "7d7ca17af2ac478421cdc28d686376e65e5708f156c6dfa53e7a8e4a5ebb8d84",
+  "generated_sha256": "67950f7503c92c19d669e140f9e1747c8f738105c0b1b160d8c3c7bb819eff6b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c1-5:explanation-5",
+    "verdict": "equivalent",
+    "reason": "Both conclude equality holds exactly when a = b; the solver adds the AM-GM proof."
+   }
+  ]
+ }
+}

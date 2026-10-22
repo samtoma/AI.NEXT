@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-4-1:geometric-diff",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-4-1",
+ "parent_question_id": "q:eb11c2-4-1:bk-try-1-b",
+ "source_page": 87,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "T",
+   "let": "[m*r**(n-1) + q for n in range(1, 6)]"
+  }
+ ],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$: ${=T[0]}, {=T[1]}, {=T[2]}, {=T[3]}, {=T[4]}, \\dots$ Write your answer as $a_n = \\dots$",
+ "solution": [
+  "Write the difference sequence $\\{b_n\\}$: ${=T[1]-T[0]}, {=T[2]-T[1]}, {=T[3]-T[2]}, {=T[4]-T[3]}, \\dots$",
+  "It is geometric with first term ${=m*(r-1)}$ and common ratio ${=r}$, so $b_n = {=m*(r-1)}\\times {=r}^{n-1}$.",
+  "For $n \\ge 2$: $a_n = {=T[0]} + \\sum_{k=1}^{n-1} {=m*(r-1)}\\times {=r}^{k-1} = {=T[0]} + {=m*(r-1)}\\cdot\\frac{{=r}^{n-1} - 1}{{=r} - 1} = {=T[0]} + {=m}({=r}^{n-1} - 1) = {=m}\\times {=r}^{n-1} + {=q}$.",
+  "Check $n = 1$: ${=m}\\times 1 + {=q} = {=T[0]} = a_1$, so the formula holds for $n = 1$.",
+  "$a_n = {=m}\\times {=r}^{n-1} + {=q}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=m}*{=r}**(n-1) + {=q}",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: geometric difference sequence whose first term is not equal to its ratio, with the geometric sum formula; a_n = m r^(n-1) + q. Formula holds at n=1. Sums have exactly n-1 terms."
+}

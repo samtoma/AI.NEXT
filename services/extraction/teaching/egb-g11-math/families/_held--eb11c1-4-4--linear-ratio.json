@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-4:linear-ratio",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-4",
+ "parent_question_id": "q:eb11c1-4-4:bk-try-8",
+ "source_page": 30,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "n == m"
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "N",
+   "let": "p*m + q*n"
+  },
+  {
+   "name": "D",
+   "let": "r*m + s*n"
+  },
+  {
+   "name": "v",
+   "let": "N/D"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1"
+ ],
+ "stem": "If $a:b={=m}:{=n}$, find the value of $\\frac{{=p}a+{=q}b}{{=r}a+{=s}b}$",
+ "answer": "str(numerator(v)) + '/' + str(denominator(v)) if denominator(v) != 1 else str(numerator(v))",
+ "solution": [
+  "Let $a={=m}k$ and $b={=n}k$, where $k\\neq0$.",
+  "Numerator: ${=p}({=m}k)+{=q}({=n}k)={=N}k$.",
+  "Denominator: ${=r}({=m}k)+{=s}({=n}k)={=D}k$.",
+  "Cancel $k$: value $=\\frac{{=N}}{{=D}}$, which in lowest terms is ${=v}$."
+ ],
+ "notes": "Basic entry: two-term ratio, linear expression, substitute a=mk, b=nk and cancel k. All coefficients positive so the denominator is never zero. Answer string is a whole number or a/b in lowest terms (Fraction exact).",
+ "proposed_misconceptions": []
+}

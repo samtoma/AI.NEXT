@@ -1,0 +1,75 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-3-2:two-remainders",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-3-2",
+ "parent_question_id": "q:eb11c3-3-2:bk-exercise-9",
+ "source_page": 135,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "a == 0"
+  },
+  {
+   "name": "b",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "r1",
+   "let": "a * p + b"
+  },
+  {
+   "name": "r2",
+   "let": "b - a * q"
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  }
+ ],
+ "constraints": [],
+ "stem": "If a polynomial $P(x)$ is divided by $x-{=p}$, the remainder is ${=r1}$, and when divided by $x+{=q}$, the remainder is ${=r2}$. Find the remainder when $P(x)$ is divided by $(x-{=p})(x+{=q})$.",
+ "solution": [
+  "Write $P(x) = (x-{=p})(x+{=q})Q(x) + ax + b$, since the divisor has degree 2 and the remainder has the form $ax+b$.",
+  "Put $x={=p}$: $P({=p}) = {=r1}$, so ${=p}a + b = {=r1}$.",
+  "Put $x=-{=q}$: $P(-{=q}) = {=r2}$, so $-{=q}a + b = {=r2}$.",
+  "Subtract the second equation from the first: ${=s}a = {=r1 - r2}$, so $a = {=a}$.",
+  "Then $b = {=r1} - {=p}\\times({=a}) = {=b}$.",
+  "The remainder is ${=linear(a, b)}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=a})*x + ({=b})",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: factored divisor with roots p and -q; remainder values are built from a chosen ax+b so a, b are always integers. a is nonzero so the remainder is genuinely linear; b may be 0."
+}

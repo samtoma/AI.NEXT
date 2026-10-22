@@ -1,0 +1,2985 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c2-1",
+    "syllabus_ref": "Concept 1",
+    "title": "Arithmetic Sequences",
+    "module": "Unit 2 Sequences",
+    "pages": [
+      40,
+      56
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c2-1:heading-1",
+      "type": "heading",
+      "source_page": 40,
+      "quote": "Concept 1 · Arithmetic sequences",
+      "text": "Concept 1 · Arithmetic sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 40,
+      "quote": "Find the general term for a sequence, and deduce some of its terms.",
+      "text": "Learning Outcomes: Find the general term for a sequence, and deduce some of its terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-1",
+      "type": "linking_text",
+      "source_page": 40,
+      "quote": "Imagine you are a personal trainer designing a recovery program",
+      "text": "Imagine you are a personal trainer designing a recovery program for an injured athlete. You have them jog for 10 minutes a day on week one, increasing it by exactly 3 minutes every subsequent week (13 minutes, then 16, then 19...). This constant linear increase is an arithmetic sequence in action. In medicine and biology, these fixed patterns govern critical processes like the hourly rate at which the liver clears toxins or how cells divide over time. Instead of adding the schedule week by week to find your patient's training duration on Week 24 or their total accumulated running time over several months, arithmetic formulas deliver these exact answers instantly.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-1",
+      "type": "figure",
+      "source_page": 40,
+      "quote": "ATHLETE RECOVERY JOGGING PROGRAM",
+      "caption": "Illustration 'Athlete Recovery Jogging Program': Week 1 shows a jogger with a timer reading 10 minutes; Week 2 timer 13 minutes (+3 min); Week 3 timer 16 minutes (+3 min); Week 4 timer 19 minutes (+3 min).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3457,
+          0.1928,
+          0.6601,
+          0.3285
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-1:open-prompt-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "Guiding Question: How can constant rates of additive change be modeled",
+      "text": "Guiding Question: How can constant rates of additive change be modeled mathematically to determine both specific individual terms and total cumulative sums across a sequence?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:definition-1",
+      "type": "definition",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "A list of numbers arranged in a row is called a sequence",
+      "claim": "A list of numbers arranged in a row is called a sequence, and each number in the sequence is called a term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:convention-1",
+      "type": "convention",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "The terms of a sequence are called the first term, the 2nd term",
+      "claim": "The terms of a sequence are called the first term, the 2nd term, the 3rd term, etc., in order from the beginning. The term in the n-th position is called the n-th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:convention-2",
+      "type": "convention",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "To express a sequence generally, we write it as follows",
+      "claim": "To express a sequence generally, write it by attaching the term number to a single letter: $a_1, a_2, a_3, \\dots, a_n, \\dots$ ($a_1$ is the first term, $a_n$ is the $n$-th term, per side note).",
+      "formula": "$a_1, a_2, a_3, \\dots, a_n, \\dots$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:convention-3",
+      "type": "convention",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "This sequence is also denoted as {a_n}.",
+      "claim": "The sequence is also denoted as $\\{a_n\\}$.",
+      "formula": "$\\{a_n\\}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "Example: {a_n} : 2, 4, 8, 16, ...",
+      "stem": "$\\{a_n\\}: 2, 4, 8, 16, \\dots$",
+      "solution": [
+        "$a_1=2,\\ a_2=4,\\ a_3=8,\\ a_4=16,\\ \\dots$"
+      ],
+      "notes": "Unnumbered example inside the Point box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:definition-2",
+      "type": "definition",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "When a_n is expressed as an expression in terms of n",
+      "claim": "When $a_n$ is expressed as an expression in terms of $n$, substituting 1, 2, 3, … for $n$ gives $a_1, a_2, a_3, \\dots$. Such an expression in terms of $n$ is called the general term of the sequence $\\{a_n\\}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:example-2",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 40,
+      "quote": "Example: a_n = −2n+7",
+      "stem": "$a_n=-2n+7$",
+      "solution": [
+        "$a_1=-2\\times1+7=5$",
+        "$a_2=-2\\times2+7=3$",
+        "$a_3=-2\\times3+7=1$"
+      ],
+      "notes": "Unnumbered example inside the Point box. Side note: '−2n+7 is a general term.'",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-2",
+      "type": "heading",
+      "source_page": 41,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-1",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 41,
+      "quote": "When the general term of the sequence {a_n} is given by",
+      "text": "When the general term of the sequence $\\{a_n\\}$ is given by $a_n=\\frac{n}{n+1}$, find the first term through the 3rd term of this sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-2",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 41,
+      "quote": "Deduce the general term of the following sequences {a_n}.",
+      "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$0, 1, 4, 9, 16, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$2, -4, 6, -8, 10, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$1, \\frac{2}{3}, \\frac{3}{5}, \\frac{4}{7}, \\frac{5}{9}, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-3",
+      "type": "heading",
+      "source_page": 41,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-2",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "Substitute n = 1, 2, 3 into a_n = n/(n+1)",
+      "text": "1. Substitute $n=1,2,3$ into $a_n=\\frac{n}{n+1}$: $a_1=\\frac{1}{1+1}=\\frac{1}{2}$, $a_2=\\frac{2}{2+1}=\\frac{2}{3}$, $a_3=\\frac{3}{3+1}=\\frac{3}{4}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-3",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "Create a formula by considering the regularity.",
+      "text": "2. Create a formula by considering the regularity. (a) Since it is $(\\text{term number}-1)^2$, $a_n=(n-1)^2$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-4",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "For sequences with alternating signs, consider the regularity of the sign part",
+      "text": "(b) For sequences with alternating signs, consider the sign part and the number part separately. Sign: the first term is \"+\" and it alternates, $(-1)^{n-1}$. Number: it is $2\\times(\\text{term number})$, $2n$. Therefore, $a_n=(-1)^{n-1}\\times 2n$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-5",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "For fractional sequences, consider the regularity of the denominator and",
+      "text": "(c) For fractional sequences, consider the denominator and numerator separately. The denominator is $2\\times(\\text{term number})-1$, so $2n-1$. The numerator is (term number), so $n$. Therefore, $a_n=\\frac{n}{2n-1}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-6",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "If the first term is \" − \" and it alternates, it is ( − 1)^n.",
+      "text": "Side note: If the first term is \"−\" and it alternates, it is $(-1)^n$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-7",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "Even numbers are 2n.",
+      "text": "Side note: Even numbers are $2n$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-8",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "Odd numbers are 2n−1",
+      "text": "Side note: Odd numbers are $2n-1$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-4",
+      "type": "heading",
+      "source_page": 41,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-9",
+      "type": "linking_text",
+      "source_page": 41,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-3",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 41,
+      "quote": "When the general term of the sequence {a_n} is given by the following",
+      "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_n=2n-3$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_n=2\\times 3^n$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_n=n^2-7n$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_n=\\frac{n}{2n+1}$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-4",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 41,
+      "quote": "Deduce the general term of the following sequences {a_n}.",
+      "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$0, 1, 8, 27, 64, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$-3, 6, -9, 12, -15, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$2, 5, 8, 11, 14, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$1, \\frac{3}{4}, \\frac{5}{9}, \\frac{7}{16}, \\frac{9}{25}, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-5",
+      "type": "heading",
+      "source_page": 42,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-10",
+      "type": "linking_text",
+      "source_page": 42,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 42,
+      "quote": "When the general term of the sequence {a n} is given by the following",
+      "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a_n = 5n-8$"
+        },
+        {
+          "label": "b",
+          "stem": "$a_n = -3n+1$"
+        },
+        {
+          "label": "c",
+          "stem": "$a_n = -2n-4$"
+        },
+        {
+          "label": "d",
+          "stem": "$a_n = 3^n - 1$"
+        },
+        {
+          "label": "e",
+          "stem": "$a_n = (-3)^n$"
+        },
+        {
+          "label": "f",
+          "stem": "$a_n = 3\\times(-2)^n$"
+        },
+        {
+          "label": "g",
+          "stem": "$a_n = n^2-1$"
+        },
+        {
+          "label": "h",
+          "stem": "$a_n = n^2+n+1$"
+        },
+        {
+          "label": "i",
+          "stem": "$a_n = n^2+2n+4$"
+        },
+        {
+          "label": "j",
+          "stem": "$a_n = \\frac{1}{3n-2}$"
+        },
+        {
+          "label": "k",
+          "stem": "$a_n = \\frac{2n}{n+3}$"
+        },
+        {
+          "label": "l",
+          "stem": "$a_n = \\frac{n+1}{2n-1}$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 42,
+      "quote": "Deduce the general term of the following sequences {a_n}.",
+      "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$0, 2, 4, 6, 8, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$1, 4, 9, 16, 25, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$0, 3, 6, 9, 12, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$-5, 10, -15, 20, -25, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "$1, -\\frac13, \\frac15, -\\frac17, \\frac19, \\dots$"
+        },
+        {
+          "label": "f",
+          "stem": "$-1, 4, -7, 10, -13, \\dots$"
+        },
+        {
+          "label": "g",
+          "stem": "$7^2, 8^2, 9^2, 10^2, 11^2, \\dots$"
+        },
+        {
+          "label": "h",
+          "stem": "$4, 9, 14, 19, 24, \\dots$"
+        },
+        {
+          "label": "i",
+          "stem": "$6, 13, 20, 27, 34, \\dots$"
+        },
+        {
+          "label": "j",
+          "stem": "$\\frac12, \\frac23, \\frac34, \\frac45, \\frac56, \\dots$"
+        },
+        {
+          "label": "k",
+          "stem": "$1\\times3, 2\\times9, 3\\times27, 4\\times81, 5\\times243, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-1",
+      "source_page": 42,
+      "quote": "Deduce the general term then find the 20th term.",
+      "text": "$1\\times\\frac12, 2\\times\\frac13, 3\\times\\frac14, 4\\times\\frac15, 5\\times\\frac16, \\dots$ Deduce the general term then find the 20th term.",
+      "notes": "Boxed star Challenge.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-6",
+      "type": "heading",
+      "source_page": 43,
+      "quote": "Arithmetic Sequence (1)",
+      "text": "2-2 Arithmetic Sequence (1) — Chapter 2 Sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 43,
+      "quote": "Calculate the general term of an arithmetic sequence",
+      "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence, and find some specific terms in it.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:definition-3",
+      "type": "definition",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "A sequence obtained by successively adding a constant number d",
+      "claim": "A sequence obtained by successively adding a constant number d to each preceding term is called an arithmetic sequence, and the constant number d is called the common difference.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-11",
+      "type": "linking_text",
+      "source_page": 43,
+      "quote": "An arithmetic sequence with the first term 1 and the common difference 3",
+      "text": "Example: An arithmetic sequence with the first term 1 and the common difference 3: 1, 4, 7, 10, 13, ... (each step +3)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-1",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "The general term of an arithmetic sequence with the first term a",
+      "claim": "The general term of an arithmetic sequence with first term a and common difference d is a_n = a + (n-1)d.",
+      "formula": "$a_n = a + (n-1)d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-2",
+      "type": "figure",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "a_n is obtained by adding \"d\" to \"a\" exactly (n – 1) times",
+      "caption": "Side note diagram: terms a, a_2, a_3, ..., a_{n-1}, a_n with +d arrows between consecutive terms, a brace beneath; text: a_n is obtained by adding \"d\" to \"a\" exactly (n – 1) times.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6902,
+          0.3346,
+          0.938,
+          0.4501
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-7",
+      "type": "heading",
+      "source_page": 43,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-12",
+      "type": "linking_text",
+      "source_page": 43,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "Find the first term and the common difference of the following arithmetic",
+      "text": "Find the first term and the common difference of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$2, 5, 8, 11, \\ldots$"
+        },
+        {
+          "label": "b",
+          "stem": "$3, -2, -7, -12, -17, \\ldots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "The following sequences are arithmetic sequences. Find the common",
+      "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$A, 2, -1, B, \\ldots$"
+        },
+        {
+          "label": "b",
+          "stem": "$13, A, B, -2, \\ldots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "For the arithmetic sequence {a n} with the first term 8",
+      "text": "For the arithmetic sequence $\\{a_n\\}$ with the first term 8 and the common difference $-6$, find the general term. Also, find the 20th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-8",
+      "type": "heading",
+      "source_page": 43,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "quote": "First term: 2, Common difference: 3",
+      "stem": "Warm Up 1: find first term and common difference of (a) 2, 5, 8, 11, ... (b) 3, -2, -7, -12, -17, ...",
+      "parts": [
+        {
+          "label": "a",
+          "answer": "First term: 2, Common difference: 3",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "First term: 3, Common difference: -5",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-3",
+      "type": "figure",
+      "lo": "eb11c2-1:objective-2",
+      "belongs_to": "eb11c2-1:explanation-1",
+      "source_page": 43,
+      "quote": "2, 5, 8, 11, ... +3 +3 +3",
+      "caption": "Dotted side diagram: 2, 5, 8, 11, ... with +3 arrows between terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6922,
+          0.6984,
+          0.8403,
+          0.7479
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": false
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-4",
+      "type": "figure",
+      "lo": "eb11c2-1:objective-2",
+      "belongs_to": "eb11c2-1:explanation-1",
+      "source_page": 43,
+      "quote": "3, -2, -7, -12, -17, ... -5",
+      "caption": "Dotted side diagram: 3, -2, -7, -12, -17, ... with -5 arrows between terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6893,
+          0.7406,
+          0.8941,
+          0.7901
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": false
+      }
+    },
+    {
+      "id": "eb11c2-1:explanation-2",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 43,
+      "pages": [
+        43,
+        44
+      ],
+      "quote": "Common difference: −3, A: 5, B: −4",
+      "stem": "Warm Up 2: (a) A, 2, -1, B, ... (b) 13, A, B, -2, ...",
+      "solution": [
+        "(a) Diagram A, 2, -1, B with -3 arrows between terms.",
+        "(b) Diagram 13, A, B, -2 with d arrows; the three steps from 13 to -2 total -15.",
+        "Let the expected common difference be d, 3d = −15 Therefore, d = −5",
+        "$a_n = a + (n-1)d$",
+        "$a_n = 8 + (n-1)\\times(-6)$",
+        "$= 8 - 6n + 6$",
+        "$= -6n + 14$",
+        "The 20th term is found by substituting n = 20 into $a_n = -6n+14$",
+        "$a_{20} = -6\\times 20 + 14$",
+        "$= -106$"
+      ],
+      "answer": "$a_n = -6n+14$; $a_{20} = -106$",
+      "parts": [
+        {
+          "label": "a",
+          "answer": "Common difference: −3, A: 5, B: −4",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "Common difference: −5, A: 8, B: 3",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "solution_provenance": "book_worked",
+      "notes": "Arrow diagrams within the example are in solution; no separate figure records.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-1",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "notes": "Heading 'Try' with intro; sub-questions follow as k3-k5.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-2",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "Find the first term and the common difference of the following arithmetic",
+      "text": "Find the first term and the common difference of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$1, 5, 9, 13, 17, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$23, 19, 15, 11, 7, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-3",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "The following sequences are arithmetic sequences. Find the common",
+      "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$2, 9, A, B, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$A, 17, B, 5, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-4",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "For the following arithmetic sequences {a n}, find the general term.",
+      "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "First term 4, common difference 3"
+        },
+        {
+          "label": "b",
+          "stem": "First term 2, common difference −3"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 44,
+      "quote": "Find the first term and the common difference of the following arithmetic",
+      "text": "Find the first term and the common difference of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$3, 5, 7, 9, 11, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$-13, -9, -5, -1, 3, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$-2, 1, 4, 7, 10, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$10, 7, 4, 1, -2, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "$6, \\frac{16}{3}, \\frac{14}{3}, 4, \\frac{10}{3}, \\dots$"
+        },
+        {
+          "label": "f",
+          "stem": "$-4, -\\frac{9}{2}, -5, -\\frac{11}{2}, -6, \\dots$"
+        }
+      ],
+      "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-13",
+      "type": "linking_text",
+      "source_page": 44,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-5",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 45,
+      "quote": "The following sequences are arithmetic sequences. Find the common",
+      "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$8, 15, A, B, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$7, 13, A, B, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$A, 9, 4, B, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$A, 15, B, 9, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "$11, A, B, 20, \\dots$"
+        },
+        {
+          "label": "f",
+          "stem": "$17, A, B, 5, C, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-6",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 45,
+      "quote": "For the following arithmetic sequences {a n}, find the general term. Also, find",
+      "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 5, and the common difference 4"
+        },
+        {
+          "label": "b",
+          "stem": "The first term $-2$, and the common difference 3"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 10, and the common difference $-3$"
+        },
+        {
+          "label": "d",
+          "stem": "The first term $-\\frac{1}{2}$, and the common difference $-\\frac{1}{2}$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-7",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 45,
+      "quote": "For the following arithmetic sequences {a n}, find the general term. Also, find",
+      "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term $-7$, and the common difference 3"
+        },
+        {
+          "label": "b",
+          "stem": "The first term $-2$, and the common difference $-3$"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 7, and the common difference $\\frac{1}{2}$"
+        },
+        {
+          "label": "d",
+          "stem": "The first term $\\frac{2}{3}$, and the common difference $-\\frac{1}{3}$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 45,
+      "quote": "In an arithmetic sequence, the sum of the 3rd. and 7th. terms is 38",
+      "text": "In an arithmetic sequence, the sum of the 3rd and 7th terms is 38, and the ratio of the 4th term to the 12th term is $\\frac{2}{5}$. Find the first term of this sequence and the common difference.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-9",
+      "type": "heading",
+      "source_page": 46,
+      "quote": "Arithmetic Sequence (2)",
+      "text": "Arithmetic Sequence (2) (2-3, Chapter 2 Sequences)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 46,
+      "quote": "Calculate the general term of an arithmetic sequence",
+      "text": "Calculate the general term of an arithmetic sequence, and find some specific terms in it.",
+      "notes": "Learning Outcomes box in right column; placed first as the objectives box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-2",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-2",
+      "source_page": 46,
+      "quote": "The general term a_n of an arithmetic sequence {a_n} is",
+      "claim": "The general term a_n of an arithmetic sequence {a_n} is a + (n − 1)d.",
+      "formula": "$a_n = a + (n-1)d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-3",
+      "type": "rule",
+      "source_page": 46,
+      "quote": "When finding the general term of an arithmetic sequence, first find the",
+      "claim": "When finding the general term of an arithmetic sequence, first find the first term a and the common difference d.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-4",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 46,
+      "quote": "When the sequence a, b, c is an arithmetic sequence in this order:",
+      "claim": "When a, b, c is an arithmetic sequence in this order, 2b = a + c.",
+      "formula": "$2b = a + c$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-14",
+      "type": "linking_text",
+      "source_page": 46,
+      "quote": "Considering a, b, c: 2b = (a + d) + (c − d) = a + c",
+      "text": "Side note: Considering a, b, c with +d from a to b and +d from b to c: 2b = (a + d) + (c − d) = a + c.",
+      "notes": "Margin note beside the Point box, with arrows labelled +d.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-10",
+      "type": "heading",
+      "source_page": 46,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-15",
+      "type": "linking_text",
+      "source_page": 46,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 46,
+      "quote": "Find the general term of the arithmetic sequence {a_n} whose 3rd term is 10",
+      "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ whose 3rd term is 10 and the 8th term is 50",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-5",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 46,
+      "quote": "For the arithmetic sequence {a_n} with the common difference 4 and the 8th",
+      "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference 4 and the 8th term 33, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find which term number is 113"
+        },
+        {
+          "label": "b",
+          "stem": "Find the first term number that is greater than 500"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-6",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 46,
+      "quote": "When the 3 numbers x, 6, x² form an arithmetic sequence in this order",
+      "text": "When the 3 numbers $x$, 6, $x^2$ form an arithmetic sequence in this order, find the value of $x$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-11",
+      "type": "heading",
+      "source_page": 46,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 46,
+      "pages": [
+        46,
+        47
+      ],
+      "quote": "Let the general term be a_n = a + (n − 1)d.",
+      "stem": "Explanation of Warm Up 1: find the general term of the arithmetic sequence with a_3 = 10 and a_8 = 50.",
+      "solution": [
+        "Let the general term be $a_n = a + (n-1)d$.",
+        "Since $a_3 = 10$, $10 = a + (3-1)d$. Simplifying this, $10 = a + 2d$ ......(i)",
+        "Since $a_8 = 50$, $50 = a + (8-1)d$. Simplifying this, $50 = a + 7d$ ......(ii)",
+        "Solving (i) and (ii) as a system of equations, $a = -6$, $d = 8$",
+        "Therefore, the general term is $a_n = -6 + (n-1)\\times 8 = 8n-14$",
+        "Let the general term of $\\{a_n\\}$ be $a_n = a + (n-1)d$.",
+        "Since the common difference is 4 and $a_8 = 33$, $33 = a + (8-1)\\times 4$",
+        "Solving this, $a = 5$",
+        "Therefore, the general term of $\\{a_n\\}$ is $a_n = 5 + (n-1)\\times 4$",
+        "$a_n = 4n+1$",
+        "(a) We need to find $n$ such that $a_n = 113$; $113 = 4n+1$. Solving this, $n = 28$. Therefore, the 28th term.",
+        "(b) We need to find the smallest natural number $n$ such that $a_n > 500$; $4n+1 > 500$. Solving this, $n > \\frac{499}{4} = 124.75$. Therefore, the 125th term."
+      ],
+      "answer": "$a_n = 8n-14$",
+      "parts": [
+        {
+          "label": "a",
+          "answer": "the 28th term",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "the 125th term",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "solution_provenance": "book_worked",
+      "notes": "Explanation numbered 1 corresponds to Warm Up 1; only this one is printed on the page.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-16",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-1:worked-example-1",
+      "source_page": 47,
+      "quote": "First find the general term",
+      "text": "Side note beside the start: First find the general term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-17",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-1:worked-example-1",
+      "source_page": 47,
+      "quote": "Convert to decimal to consider",
+      "text": "Side note beside part (b): Convert to decimal to consider.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:example-3",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 47,
+      "quote": "Since x, 6, x² form an arithmetic sequence in this order:",
+      "stem": "Since $x, 6, x^2$ form an arithmetic sequence in this order:",
+      "solution": [
+        "$2\\times 6 = x + x^2$",
+        "Solving this, $x = -4, 3$"
+      ],
+      "answer": "$x=-4, 3$",
+      "solution_provenance": "book_worked",
+      "notes": "Side note: 2b = a + c. Number 3 is printed in a blue box; may be the example number.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-18",
+      "type": "linking_text",
+      "belongs_to": "eb11c2-1:example-3",
+      "source_page": 47,
+      "quote": "2b = a + c",
+      "text": "Side note beside example 3: $2b = a + c$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-12",
+      "type": "heading",
+      "source_page": 47,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-19",
+      "type": "linking_text",
+      "source_page": 47,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-20",
+      "type": "linking_text",
+      "source_page": 47,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-5",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 47,
+      "quote": "Find the general term of the following arithmetic sequences",
+      "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term is $-5$, the 17th term is 75"
+        },
+        {
+          "label": "b",
+          "stem": "The common difference is 3, the 16th term is 81"
+        },
+        {
+          "label": "c",
+          "stem": "The 6th term is 2, the 15th term is $-25$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-6",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 47,
+      "quote": "For the arithmetic sequence {a_n} with first term 1",
+      "text": "For the arithmetic sequence $\\{a_n\\}$ with first term 1 and common difference 3, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Determine which term is 40"
+        },
+        {
+          "label": "b",
+          "stem": "Find the first term that is greater than 100"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-7",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 47,
+      "quote": "When the 3 numbers x², x, − 8 form an arithmetic sequence",
+      "text": "When the 3 numbers $x^2, x, -8$ form an arithmetic sequence in this order, find the value of $x$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-13",
+      "type": "heading",
+      "source_page": 48,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-21",
+      "type": "linking_text",
+      "source_page": 48,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "Find the general term of the following arithmetic sequences",
+      "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term is 6, the 4th term is 18"
+        },
+        {
+          "label": "b",
+          "stem": "The first term is 20, the 8th term is $-1$"
+        },
+        {
+          "label": "c",
+          "stem": "The first term is $-8$, the 8th term is 55"
+        },
+        {
+          "label": "d",
+          "stem": "The first term is $-18$, the 10th term is $-63$"
+        },
+        {
+          "label": "e",
+          "stem": "The common difference is 2, the 8th term is 4"
+        },
+        {
+          "label": "f",
+          "stem": "The common difference is $-4$, the 5th term is $-7$"
+        },
+        {
+          "label": "g",
+          "stem": "The common difference is $-7$, the 6th term is $-24$"
+        },
+        {
+          "label": "h",
+          "stem": "The common difference is $\\frac{2}{5}$, the 30th term is $\\frac{23}{5}$."
+        },
+        {
+          "label": "i",
+          "stem": "The 4th term is 14, the 10th term is 62"
+        },
+        {
+          "label": "j",
+          "stem": "The 3rd term is 30, the 10th term is 2"
+        },
+        {
+          "label": "k",
+          "stem": "The 10th term is 49, the 23rd term is 10"
+        },
+        {
+          "label": "l",
+          "stem": "The 3rd term is 6, the 10th term is 62"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "For the arithmetic sequence {a n} with the common difference −5",
+      "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference $-5$ and the 13th term $-7$, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Determine which term is $-52$"
+        },
+        {
+          "label": "b",
+          "stem": "Find the first term that is smaller than $-300$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "where the 10th term is −20 and the 20th",
+      "text": "For the arithmetic sequence $\\{a_n\\}$ where the 10th term is $-20$ and the 20th term is $-50$, solve the following problems.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Determine which term is $-110$"
+        },
+        {
+          "label": "b",
+          "stem": "Find the first term that is smaller than $-500$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "When the 3 numbers a, 6, 2a form an arithmetic sequence",
+      "text": "When the 3 numbers $a, 6, 2a$ form an arithmetic sequence in this order, find the value of $a$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "When the 3 numbers − 3, x, x² form an arithmetic sequence",
+      "text": "When the 3 numbers $-3, x, x^2$ form an arithmetic sequence in this order, find the value of $x$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-3",
+      "source_page": 48,
+      "quote": "When the 4 numbers 2, x, y, z form an arithmetic sequence",
+      "text": "When the 4 numbers $2, x, y, z$ form an arithmetic sequence in this order, and $2x, y+1, z-y$ also form an arithmetic sequence in this order, find the values of $x, y, z$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-14",
+      "type": "heading",
+      "source_page": 49,
+      "quote": "Sum of Arithmetic Sequence (1)",
+      "text": "2-4 Sum of Arithmetic Sequence (1) — Chapter 2 Sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-4",
+      "type": "printed_objective",
+      "source_page": 49,
+      "quote": "Calculate the general term of an arithmetic sequence.",
+      "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence. Find some specific terms in an arithmetic sequence. Find the sum of an arithmetic sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:definition-4",
+      "type": "definition",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "In a sequence with n terms, n is called the number of terms",
+      "claim": "In a sequence with n terms, n is called the number of terms, and the last term is called the last term.",
+      "notes": "Point! box",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:convention-4",
+      "type": "convention",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "Let S_n be the sum from the first term to the n–th term",
+      "claim": "S_n denotes the sum from the first term to the n-th term of an arithmetic sequence.",
+      "notation": {
+        "printed": "S_n",
+        "normalised": "$S_n$"
+      },
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-5",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "When the first term is a, the last term is l, the number of terms is n,",
+      "claim": "When the first term is a, the last term is l and the number of terms is n, the sum is S_n = 1/2 n(a + l).",
+      "formula": "$S_n=\\frac{1}{2}n(a+l)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-6",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "When the first term is a, the common difference is d, the number of terms is n,",
+      "claim": "When the first term is a, the common difference is d and the number of terms is n, S_n = 1/2 n{2a + (n–1)d}.",
+      "formula": "$S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-22",
+      "type": "linking_text",
+      "source_page": 49,
+      "quote": "Substitute l = a + (n–1)d into the above formula.",
+      "text": "Side note: Substitute $l=a+(n-1)d$ into the above formula.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:method-1",
+      "type": "method",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "When the number of terms n is unknown, first find n using",
+      "claim": "When the number of terms n is unknown, first find n using l = a + (n–1)d.",
+      "formula": "$l=a+(n-1)d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-15",
+      "type": "heading",
+      "source_page": 49,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-8",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "Find the sum of the following arithmetic sequences.",
+      "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The sum $S_7$ of a sequence with the first term 8, the last term 22, the number of terms 7"
+        },
+        {
+          "label": "b",
+          "stem": "The sum $S$ of a sequence with the first term 2, the common difference 3, the last term 47"
+        },
+        {
+          "label": "c",
+          "stem": "The sum $S_{13}$ of a sequence with the first term 20, the common difference $-5$, the number of terms 13"
+        },
+        {
+          "label": "d",
+          "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 1, the common difference 4"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:unlabelled-exercise-9",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 49,
+      "quote": "For the arithmetic sequence 90, 84, 78, ..., find the sum",
+      "text": "For the arithmetic sequence 90, 84, 78, ..., find the sum from the 10th term to the 20th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-16",
+      "type": "heading",
+      "source_page": 50,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-2",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 50,
+      "quote": "(a) Since a = 8, l = 22, n = 7",
+      "stem": "Explanation of numbered problem 1 (a)–(d) from the previous page: sums of arithmetic sequences.",
+      "solution": [
+        "(a) Since $a=8, l=22, n=7$: $S_7=\\frac{1}{2}\\times 7(8+22)=105$",
+        "(b) First find the number of terms. Let $n$ be the number of terms. Since the first term is 2, the common difference is 3, the last term is 47: $47=2+(n-1)\\times 3$. Solving this, $n=16$. $S=\\frac{1}{2}\\times 16(2+47)=392$",
+        "(c) Since $a=20, d=-5, n=13$: $S_{13}=\\frac{1}{2}\\times 13\\{2\\times 20+(13-1)\\times(-5)\\}=-130$",
+        "(d) Since $a=1, d=4$: $S_n=\\frac{1}{2}n\\{2\\times 1+(n-1)\\times 4\\}=\\frac{1}{2}n(2+4n-4)=\\frac{1}{2}n(4n-2)=2n^2-n$"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "answer": "105",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "392",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "c",
+          "answer": "-130",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "d",
+          "answer": "2n^2 - n",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "notes": "Printed as numbered point 1 of the Explanation; the problem statement is on the previous page.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-7",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 50,
+      "quote": "l = a+(n−1)d",
+      "claim": "Side note beside (b): the last term is $l=a+(n-1)d$.",
+      "formula": "$l=a+(n-1)d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-23",
+      "type": "linking_text",
+      "source_page": 50,
+      "quote": "Since the number of terms is n, evaluate the expression in terms of n.",
+      "text": "Side note beside (d): Since the number of terms is $n$, evaluate the expression in terms of $n$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-3",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 50,
+      "quote": "The required sum can be calculated by S20 − S9",
+      "stem": "Explanation of numbered problem 2 (sum of the sequence 90, 84, 78, ... from the previous page).",
+      "solution": [
+        "The required sum can be calculated by $S_{20}-S_9$",
+        "Since $a=90, d=-6$:",
+        "$S_{20}=\\frac{1}{2}\\times 20\\{2\\times 90+(20-1)\\times(-6)\\}=660$",
+        "$S_9=\\frac{1}{2}\\times 9\\{2\\times 90+(9-1)\\times(-6)\\}=594$",
+        "Therefore, $660-594=66$"
+      ],
+      "answer": "66",
+      "solution_provenance": "book_worked",
+      "notes": "The answer 66 is printed in red/underlined.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-5",
+      "type": "figure",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 50,
+      "quote": "a1 + a2 + a3+ ... +a9 + a10+ ... +a20",
+      "caption": "Side diagram: terms $a_1+a_2+a_3+\\dots+a_9+a_{10}+\\dots+a_{20}$ with a brace under $a_1$ to $a_9$ labelled $S_9$, a brace under $a_{10}$ to $a_{20}$ labelled 'Required Sum', and a larger brace under the whole labelled $S_{20}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.682,
+          0.5089,
+          0.8997,
+          0.5709
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-17",
+      "type": "heading",
+      "source_page": 50,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-24",
+      "type": "linking_text",
+      "source_page": 50,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-25",
+      "type": "linking_text",
+      "source_page": 50,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-8",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 50,
+      "quote": "Find the sum of the following arithmetic sequences.",
+      "text": "Find the sum of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The sum $S_{10}$ of a sequence with the first term 7, the last term 13, the number of terms 10"
+        },
+        {
+          "label": "b",
+          "stem": "The sum $S$ of a sequence with the first term 5, the common difference 3, the last term 44"
+        },
+        {
+          "label": "c",
+          "stem": "The sum $S_{12}$ of a sequence with the first term $-6$, the common difference 3, the number of terms 12"
+        },
+        {
+          "label": "d",
+          "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 2, the common difference $-3$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-9",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "find the sum from the 20th term to the 30th term",
+      "text": "For the arithmetic sequence with first term 48 and common difference $-2$, find the sum from the 20th term to the 30th term",
+      "notes": "Label 'Try' inferred from previous page's Try box; page prints only the number 2.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-4",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "find the sum of the odd terms from the first term to the 11th term",
+      "text": "For the arithmetic sequence 94, 89, 84, ..., find the sum of the odd terms from the first term to the 11th term.",
+      "notes": "Side-column Challenge box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-18",
+      "type": "heading",
+      "source_page": 51,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-26",
+      "type": "linking_text",
+      "source_page": 51,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "Find the sum of the following arithmetic sequences.",
+      "text": "Find the sum of the following arithmetic sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The sum $S_{10}$ of sequence: the first term 3, the last term 21, the number of terms 10"
+        },
+        {
+          "label": "b",
+          "stem": "The sum $S_8$ of sequence: the first term 5, the last term 33, the number of terms 8"
+        },
+        {
+          "label": "c",
+          "stem": "The sum $S_{10}$ of sequence: the first term 2, the last term 29, the number of terms 10"
+        },
+        {
+          "label": "d",
+          "stem": "The sum $S$ of sequence: the first term 3, the common difference 4, last term 75"
+        },
+        {
+          "label": "e",
+          "stem": "The sum $S$ of sequence: the first term 2, the common difference 5, last term 57"
+        },
+        {
+          "label": "f",
+          "stem": "The sum $S$ of sequence: the first term 4, the common difference 3, last term 100"
+        },
+        {
+          "label": "g",
+          "stem": "The sum $S_{15}$: the first term 10, the common difference $-3$, the number of terms 15"
+        },
+        {
+          "label": "h",
+          "stem": "The sum $S_{11}$: the first term $-4$, the common difference 4, the number of terms 11"
+        },
+        {
+          "label": "i",
+          "stem": "The sum $S_{18}$: the first term 3, the common difference 2, the number of terms 18"
+        },
+        {
+          "label": "j",
+          "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 0, the common difference 5"
+        },
+        {
+          "label": "k",
+          "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 3, the common difference $-4$"
+        },
+        {
+          "label": "l",
+          "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term $-4$, the common difference $-2$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "For the arithmetic sequence −9, −3, 3, ..., find the sum from the 11th term to the 20th term.",
+      "text": "For the arithmetic sequence $-9, -3, 3, \\ldots$, find the sum from the 11th term to the 20th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "first term −53 and the common difference 4, find the sum from the 10th term to the 25th term.",
+      "text": "For the arithmetic sequence with the first term $-53$ and the common difference 4, find the sum from the 10th term to the 25th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 51,
+      "quote": "For the arithmetic sequence 74, 69, 64, ..., find the sum from the 8th term to the 18th term.",
+      "text": "For the arithmetic sequence $74, 69, 64, \\ldots$, find the sum from the 8th term to the 18th term.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-19",
+      "type": "heading",
+      "source_page": 52,
+      "quote": "Sum of Arithmetic Sequence (2) (Sum of Natural Numbers)",
+      "text": "Sum of Arithmetic Sequence (2) (Sum of Natural Numbers)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-5",
+      "type": "printed_objective",
+      "source_page": 52,
+      "quote": "Calculate the general term of an arithmetic sequence.",
+      "text": "Learning Outcomes: Calculate the general term of an arithmetic sequence. Find some specific terms in an arithmetic sequence. Find the sum of an arithmetic sequence (natural numbers).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-8",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "Use arithmetic sequences for problems involving sums of natural",
+      "claim": "Use arithmetic sequences for problems involving sums of natural numbers or multiples.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-9",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "The sum S_n of an arithmetic sequence from the first term to the n–th term",
+      "claim": "The sum S_n of an arithmetic sequence from the first term to the n-th term: when the first term is a, the last term is l, and the number of terms is n, S_n = (1/2) n (a + l).",
+      "formula": "$S_n=\\frac{1}{2}n(a+l)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-10",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "When the first term is a, the common difference is d, and the number of",
+      "claim": "When the first term is a, the common difference is d, and the number of terms is n, S_n = (1/2) n {2a + (n-1)d}.",
+      "formula": "$S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:method-2",
+      "type": "method",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "When the number of terms n is unknown, first find n using",
+      "claim": "When the number of terms n is unknown, first find n using l = a + (n-1)d.",
+      "formula": "$l=a+(n-1)d$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-7",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "Find the following sums.",
+      "text": "Find the following sums.",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "The sum of natural numbers from 1 to 100"
+        },
+        {
+          "label": "2",
+          "stem": "The sum of natural numbers from 101 to 200"
+        },
+        {
+          "label": "3",
+          "stem": "The sum of multiples of 3 among 2-digit natural numbers."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:explanation-3",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "quote": "Since the required sum is 1 + 2 + 3 + … + 100:",
+      "stem": "Warm Up 1: sum of natural numbers from 1 to 100. Side notes: write out the terms concretely and consider the first term, the last term, and the number of terms; S_n = (1/2)n(a+l).",
+      "solution": [
+        "Since the required sum is $1+2+3+\\dots+100$: first term 1, last term 100, number of terms 100.",
+        "$1+2+3+\\dots+100=\\frac{1}{2}\\times100(1+100)$",
+        "$=5050$"
+      ],
+      "answer": "5050",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:explanation-4",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 52,
+      "pages": [
+        52,
+        53
+      ],
+      "quote": "Since the required sum is 101 + 102 + 103 + … + 200:",
+      "stem": "Warm Up 2: sum of natural numbers from 101 to 200. Side note: there are 100 natural numbers from 101 to 200.",
+      "solution": [
+        "Since the required sum is $101+102+103+\\dots+200$: first term 101, last term 200, number of terms 100.",
+        "$101+102+103+\\dots+200=\\frac{1}{2}\\times100(101+200)$",
+        "$=15050$",
+        "Since the required sum is 12 + 15 + 18 + … + 99:",
+        "Calculate the sum of an arithmetic sequence with the first term 12, the common difference 3, and the last term 99",
+        "First, find the number of terms. Let $n$ be the number of terms.",
+        "$99 = 12 + (n-1)\\times 3$. Solving this, $n = 30$",
+        "$12+15+18+\\dots+99 = \\frac{1}{2}\\times 30(12+99)$",
+        "$= 1665$"
+      ],
+      "answer": "15050",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-27",
+      "type": "linking_text",
+      "source_page": 53,
+      "quote": "Since the number of terms n is unknown, find n using",
+      "text": "Side note: Since the number of terms $n$ is unknown, find $n$ using $l = a + (n-1)d$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-10",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of natural numbers from 1 to 200",
+      "text": "Find the following sums. The sum of natural numbers from 1 to 200",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-11",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of natural numbers from 201 to 300",
+      "text": "Find the following sums. The sum of natural numbers from 201 to 300",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-12",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of all 2-digit natural numbers that are multiples of 5",
+      "text": "Find the following sums. The sum of all 2-digit natural numbers that are multiples of 5",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-13",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "leave a remainder of 3 when divided by 5",
+      "text": "Find the following sums. The sum of all 2-digit natural numbers that leave a remainder of 3 when divided by 5",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-28",
+      "type": "linking_text",
+      "source_page": 53,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-14",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of natural numbers from 1 to 150",
+      "text": "Find the following sums. The sum of natural numbers from 1 to 150",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-15",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of natural numbers from 81 to 150",
+      "text": "Find the following sums. The sum of natural numbers from 81 to 150",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-16",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of natural numbers from 301 to 400",
+      "text": "Find the following sums. The sum of natural numbers from 301 to 400",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-17",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of 2-digit natural numbers.",
+      "text": "Find the following sums. The sum of 2-digit natural numbers.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-18",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of 2-digit odd numbers.",
+      "text": "Find the following sums. The sum of 2-digit odd numbers.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-19",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of multiples of 4 from 1 to 100",
+      "text": "Find the following sums. The sum of multiples of 4 from 1 to 100",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-20",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "that leave a remainder of 1 when divided by 4",
+      "text": "Find the following sums. The sum of all natural numbers from 1 to 100 that leave a remainder of 1 when divided by 4",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-21",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "The sum of all multiples of 6 from 10 to 100",
+      "text": "Find the following sums. The sum of all multiples of 6 from 10 to 100",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-22",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "that are not divisible by 6",
+      "text": "Find the following sums. The sum of all natural numbers from 10 to 100 that are not divisible by 6",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-5",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-4",
+      "source_page": 53,
+      "quote": "Find The sum of numbers which are not divisible by 4 from 1 to 100",
+      "text": "Find The sum of numbers which are not divisible by 4 from 1 to 100",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-20",
+      "type": "heading",
+      "source_page": 54,
+      "quote": "Sum of Arithmetic Sequence (3)",
+      "text": "2-6 Sum of Arithmetic Sequence (3)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:printed-objective-6",
+      "type": "printed_objective",
+      "source_page": 54,
+      "quote": "Find the sum of an arithmetic sequence.",
+      "text": "Learning Outcomes: Find the sum of an arithmetic sequence. Determine the number of terms in an arithmetic sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-11",
+      "type": "rule",
+      "source_page": 54,
+      "quote": "The sum Sn of an arithmetic sequence from the first term to the n-th term is:",
+      "claim": "The sum $S_n$ of an arithmetic sequence from the first term to the n-th term, when the first term is a, the last term is l and the number of terms is n, is given by the formula.",
+      "formula": "$S_n = \\frac{1}{2}n(a+l)$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-12",
+      "type": "rule",
+      "source_page": 54,
+      "quote": "When the first term is a, the common difference is d",
+      "claim": "When the first term is a, the common difference is d, and the number of terms is n, the sum is given by the formula.",
+      "formula": "$S_n = \\frac{1}{2}n\\{2a+(n-1)d\\}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:rule-13",
+      "type": "rule",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 54,
+      "quote": "To find the maximum value of the sum of an arithmetic sequence with a negative common difference",
+      "claim": "To find the maximum value of the sum of an arithmetic sequence with a negative common difference, calculate the sum of the positive terms. Example: arithmetic sequence with first term 11, common difference -3: 11, 8, 5, 2, -1, -4, ... The sum up to here (the last positive term, 2) is maximum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-21",
+      "type": "heading",
+      "source_page": 54,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-29",
+      "type": "linking_text",
+      "source_page": 54,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-8",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 54,
+      "quote": "In an arithmetic sequence with the first term 4 and the common difference 3",
+      "text": "In an arithmetic sequence with the first term 4 and the common difference 3, find how many terms from the first term sum up to 50",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-9",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 54,
+      "quote": "Find the general term of the arithmetic sequence {a n} where the first term is",
+      "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is $-60$ and the sum from the first term to the 15th term is $-60$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:warm-up-10",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 54,
+      "quote": "For an arithmetic sequence with the first term 65 and the common difference",
+      "text": "For an arithmetic sequence with the first term 65 and the common difference $-4$, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-22",
+      "type": "heading",
+      "source_page": 55,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-4",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "Assume the sum from the first term to the n-th term",
+      "stem": "Assume the sum from the first term to the $n$-th term of an arithmetic sequence with the first term 4 and the common difference 3 is 50",
+      "solution": [
+        "$50 = \\frac{1}{2}n\\{2\\times 4+(n-1)\\times 3\\}$",
+        "Simplifying gives $3n^2+5n-100=0$",
+        "Solving this gives $n=5,\\ -\\frac{20}{3}$. Since $n$ is a natural number, the 5th term."
+      ],
+      "answer": "the 5th term",
+      "solution_provenance": "book_worked",
+      "notes": "Explanation point 1 (numbered box, no 'Example' label).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-5",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "Let d be the common difference of the required arithmetic sequence",
+      "stem": "Find the general term of the arithmetic sequence with first term −60 and sum to the 15th term −60 (stem inferred from the solution)",
+      "solution": [
+        "Let $d$ be the common difference of the required arithmetic sequence.",
+        "Since the first term is −60 and the sum to the 15th term is −60: $-60=\\frac{1}{2}\\times 15\\{2\\times(-60)+(15-1)d\\}$",
+        "Solving this gives $d=8$",
+        "Therefore, the general term is $a_n=-60+(n-1)\\times 8$",
+        "Simplifying gives $a_n=8n-68$"
+      ],
+      "answer": "$a_n=8n-68$",
+      "solution_provenance": "book_worked",
+      "notes": "Explanation point 2; no stem printed, only inferred from the solution.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:worked-example-6",
+      "type": "worked_example",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "The general term of this sequence is a_n= 65+(n−1)×(−4)",
+      "stem": "Find the number of terms giving the maximum sum for the sequence with first term 65 and common difference −4, and the sum (stem inferred; refers to the Warm Up)",
+      "solution": [
+        "The general term of this sequence is $a_n=65+(n-1)\\times(-4)=-4n+69$",
+        "Here, solving $-4n+69>0$ gives $n<\\frac{69}{4}=17.25$",
+        "In other words, terms from the first to the 17th are positive, and terms from the 18th onwards are negative.",
+        "Therefore, the sum up to the 17th term is maximum.",
+        "The sum at that time is the sum of an arithmetic sequence with first term 65, common difference −4, and 17 terms: $\\frac{1}{2}\\times 17\\{2\\times 65+(17-1)\\times(-4)\\}=561$"
+      ],
+      "answer": "the 17th term; 561",
+      "solution_provenance": "book_worked",
+      "notes": "Explanation point 3; stem not printed on this page.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:caution-1",
+      "type": "caution",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "You are solving for when the sum is positive",
+      "claim": "Common Mistakes: for $S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$, you are solving for when the sum is positive ($S_n>0$) instead of finding until which term the sequence remains positive ($a_n>0$).",
+      "formula": "$S_n=\\frac{1}{2}n\\{2\\times 65+(n-1)(-4)\\}>0$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-30",
+      "type": "linking_text",
+      "source_page": 55,
+      "quote": "To find the general term, you need the first term",
+      "text": "Side note (to point 2): To find the general term, you need the first term $a$ and the common difference $d$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-31",
+      "type": "linking_text",
+      "source_page": 55,
+      "quote": "Find up to which term the terms are positive.",
+      "text": "Side note (to point 3): Find up to which term the terms are positive.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:figure-6",
+      "type": "figure",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "positive terms negative terms",
+      "caption": "Side note with braces: $a_1, a_2, a_3, \\dots, a_{17}$ labelled 'positive terms'; $a_{18}, a_{19}, \\dots$ labelled 'negative terms'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6926,
+          0.4937,
+          0.9254,
+          0.5318
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-1:heading-23",
+      "type": "heading",
+      "source_page": 55,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-32",
+      "type": "linking_text",
+      "source_page": 55,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-14",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "In an arithmetic sequence with the first term 17 and the common difference",
+      "text": "In an arithmetic sequence with the first term 17 and the common difference −2, find how many terms from the first term sum up to −63",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-15",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "Find the general term of the arithmetic sequence {a_n} where the first term is",
+      "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is 8 and the sum from the first term to the 13th term is −130",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-16",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "For an arithmetic sequence with the first term 70 and the common difference",
+      "text": "For an arithmetic sequence with the first term 70 and the common difference −4, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:try-17",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 55,
+      "quote": "Find the general term of the arithmetic sequence {a_n} where the sum from",
+      "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the sum from the first term to the 10th term is 10, and the sum from the first term to the 20th term is 40",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:linking-text-33",
+      "type": "linking_text",
+      "source_page": 55,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-23",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-24",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "Find n such that the sum of the first n terms",
+      "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 3 and the common difference 2 is 63",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-25",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "the first term 24 and the common difference −4 is −28",
+      "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 24 and the common difference $-4$ is $-28$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-26",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "Find the general term of the arithmetic sequence",
+      "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ with the first term 4 and the sum of the first 6 terms 114",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-27",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "For a sequence with the first term 20, the common difference −6",
+      "text": "For a sequence with the first term 20, the common difference $-6$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-28",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "For a sequence with the first term 126, the common difference −13",
+      "text": "For a sequence with the first term 126, the common difference $-13$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-29",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "where the 3rd term 10 and the sum of first 10 terms 175",
+      "text": "Find the general term of sequence $\\{a_n\\}$ where the 3rd term 10 and the sum of first 10 terms 175",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-30",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "where sum of first 6 terms is 3 and the sum of",
+      "text": "Find the general term of $\\{a_n\\}$ where sum of first 6 terms is 3 and the sum of first 10 terms is 65",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:exercise-31",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "where sum of first 20 terms is 400 and the sum",
+      "text": "Find the general term of $\\{a_n\\}$ where sum of first 20 terms is 400 and the sum of first 30 terms is 900",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:challenge-6",
+      "type": "exercise",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "The 15th of the arithmetic sequence is 33 and the 50th term is 103.",
+      "text": "The 15th of the arithmetic sequence is 33 and the 50th term is 103. What is the first 79 terms of the arithmetic sequence?",
+      "notes": "Printed 'The 15th of the arithmetic sequence' (missing 'term'); wording 'What is the first 79 terms' probably means sum.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-1:objective-5",
+      "source_page": 56,
+      "quote": "If the water level in a lake decreases by a fixed amount each day",
+      "text": "\"If the water level in a lake decreases by a fixed amount each day, how can understanding arithmetic sequences help us predict when the water will run out?\"",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c2-1:objective-1",
+      "label": "General term of a sequence",
+      "description": "Calculate terms of a sequence from its general term, and deduce the general term of a sequence from the pattern of its first few terms.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:example-2",
+        "eb11c2-1:unlabelled-exercise-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:objective-2",
+      "label": "General term of an arithmetic sequence",
+      "description": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms using a_n = a + (n-1)d.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c2-1:definition-3",
+        "eb11c2-1:explanation-2",
+        "eb11c2-1:rule-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:objective-3",
+      "label": "General term from given conditions",
+      "description": "Determine the general term of an arithmetic sequence from two given conditions, find which term has a given value, and use 2b = a + c when three numbers form an arithmetic sequence.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c2-1:rule-4",
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:exercise-8"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:objective-4",
+      "label": "Sum of an arithmetic sequence",
+      "description": "Calculate the sum S_n of an arithmetic sequence, including sums of a block of terms, sums of natural numbers or multiples, finding the number of terms first when unknown.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c2-1:rule-6",
+        "eb11c2-1:worked-example-2",
+        "eb11c2-1:exercise-10"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-1:objective-5",
+      "label": "Use a given sum",
+      "description": "Determine the number of terms or the general term from a given sum, and determine the number of terms giving the maximum sum of an arithmetic sequence.",
+      "order_in_parent": 5,
+      "evidence": [
+        "eb11c2-1:rule-13",
+        "eb11c2-1:worked-example-6",
+        "eb11c2-1:exercise-27"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (5)",
+    "2026-10-21: 20 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 6 cropped"
+  ]
+}

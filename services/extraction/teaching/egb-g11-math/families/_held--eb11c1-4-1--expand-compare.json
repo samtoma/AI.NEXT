@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-1:expand-compare",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-1",
+ "parent_question_id": "q:eb11c1-4-1:bk-exercise-3",
+ "source_page": 23,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "let": "p * m"
+  },
+  {
+   "name": "s",
+   "let": "p + m"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the values of $a$ and $b$ for which the following is an identity in $x$: $(x+{=p})(x+a)=x^2+bx+{=q}$",
+ "answer": "",
+ "solution": [
+  "Expand the left side: $(x+{=p})(x+a)=x^2+({=p}+a)x+{=p}a$.",
+  "Compare with $x^2+bx+{=q}$: the coefficient of $x$ gives $b={=p}+a$, and the constant term gives ${=p}a={=q}$.",
+  "From the constant term, $a={=m}$.",
+  "Then $b={=p}+{=m}={=s}$.",
+  "Answer: a = {=m}, b = {=s}."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=m}, {=s}]",
+  "form": null,
+  "variables": [
+   "a",
+   "b"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: expand one side, compare coefficients of x and constant term. Unknown a is determined uniquely by the constant term, so no swapped-root ambiguity."
+}

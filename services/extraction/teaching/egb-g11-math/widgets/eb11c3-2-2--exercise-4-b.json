@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-2-2:exercise-4-b",
+ "lo_id": "lo:eb11c3-2-2",
+ "book_item": "eb11c3-2:exercise-4#b",
+ "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -20,
+   0
+  ],
+  "from": -18,
+  "to": -2,
+  "openFrom": true,
+  "openTo": true
+ },
+ "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2+(m+6)x-2m=0$ has two distinct imaginary solutions. Mark the interval for $m$ and set each end hollow or filled.",
+ "solution": [
+  "Two distinct imaginary solutions means $D<0$.",
+  "$D=(m+6)^2-4(-2m)=m^2+20m+36$.",
+  "$m^2+20m+36<0$, so $(m+2)(m+18)<0$.",
+  "$-18<m<-2$, both ends excluded."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "step": 1,
+   "text": "Is the condition on $D$ strict or does it include $D=0$?"
+  },
+  {
+   "predicate": "interval-wrong",
+   "step": 3,
+   "text": "Factorise the inequality and decide where the product of the factors is negative."
+  }
+ ],
+ "notes": "Open both ends."
+}

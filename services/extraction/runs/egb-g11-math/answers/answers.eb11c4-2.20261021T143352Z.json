@@ -1,0 +1,2996 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "e36a2c9612eff7cb097329ffa56f99a0ef721f1db56d7ada73c7be1cdbf9de35",
+  "generated_sha256": "c9255c48b2a0ccbedb729fd334be85f44e8348031f45d1fbc79c96e521cb9540",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c4-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-2:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Write each path as a line equation; solve two equations together to get the common point, and test that the other lines pass through it. Distances and gradients then fix the shapes they bound.",
+      "solution": [
+       "Write each path as a line equation, using a point and gradient or two points.",
+       "Solve two of the equations simultaneously to get their intersection point.",
+       "Substitute that point into the other line: if it satisfies it, all the lines meet at one point.",
+       "Use distance and gradient to find the sides and angles of the regions the lines enclose.",
+       "Use the distance-to-a-line formula for the height and half base times height for the area."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-24"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "Isosceles right-angled triangle (right angle at B)",
+      "solution": [
+       "$(AB)^2=16+9=25$",
+       "$(BC)^2=9+16=25$",
+       "$(CA)^2=1+49=50$",
+       "$(AB)^2=(BC)^2$, so it is isosceles.",
+       "$(CA)^2=(AB)^2+(BC)^2$, so it is right-angled at B.",
+       "It is an isosceles right-angled triangle."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-2",
+      "kind": "value",
+      "answer": "Equilateral triangle",
+      "solution": [
+       "$(AB)^2=(3+1)^2+(2-0)^2=20$",
+       "$(BC)^2=(2+\\sqrt3)^2+(1-2\\sqrt3)^2=7+4\\sqrt3+13-4\\sqrt3=20$",
+       "$(CA)^2=(\\sqrt3-2)^2+(-1-2\\sqrt3)^2=7-4\\sqrt3+13+4\\sqrt3=20$",
+       "All three are equal, so the triangle is equilateral."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:activity-1",
+      "kind": "value",
+      "answer": "Equilateral triangle",
+      "solution": [
+       "Question (2) is the triangle with A(3, 2), B(−1, 0), C($1+\\sqrt3$, $1-2\\sqrt3$).",
+       "$(AB)^2=(BC)^2=(CA)^2=20$.",
+       "So the triangle is equilateral."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-2",
+      "kind": "value",
+      "answer": "Equilateral triangle",
+      "solution": [
+       "$(AB)^2=0+4=4$",
+       "$(BC)^2=(\\sqrt3)^2+1^2=4$",
+       "$(CA)^2=(\\sqrt3)^2+(-1)^2=4$",
+       "All equal, so it is equilateral."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-3",
+      "kind": "value",
+      "answer": "Isosceles right-angled triangle (right angle at B)",
+      "solution": [
+       "$(AB)^2=16+36=52$",
+       "$(BC)^2=36+16=52$",
+       "$(CA)^2=100+4=104$",
+       "$(AB)^2=(BC)^2$, so it is isosceles.",
+       "$(CA)^2=52+52$, so it is right-angled at B."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-4",
+      "kind": "value",
+      "answer": "Right-angled triangle (right angle at A)",
+      "solution": [
+       "$(AB)^2=16+9=25$",
+       "$(BC)^2=4+121=125$",
+       "$(CA)^2=36+64=100$",
+       "No two are equal, so it is not isosceles.",
+       "$(BC)^2=(AB)^2+(CA)^2$ (125 = 25 + 100), so it is right-angled at A."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-5",
+      "kind": "value",
+      "answer": "Isosceles right-angled triangle (right angle at C)",
+      "solution": [
+       "$(AB)^2=25+1=26$",
+       "$(BC)^2=9+4=13$",
+       "$(CA)^2=4+9=13$",
+       "$(BC)^2=(CA)^2$, so it is isosceles.",
+       "$(AB)^2=(BC)^2+(CA)^2$ (26 = 13 + 13), so it is right-angled at C."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-1",
+      "kind": "value",
+      "answer": "k = 2",
+      "solution": [
+       "$(AB)^2=(2k-1)^2+(k-2)^2=5k^2-8k+5$",
+       "$(BC)^2=(4-2k)^2+(5-k)^2=5k^2-26k+41$",
+       "Isosceles: $(AB)^2=(BC)^2$ gives $18k=36$, so $k=2$.",
+       "Check: $(AB)^2=9$, $(BC)^2=9$, $(CA)^2=9+9=18=(AB)^2+(BC)^2$, so it is right-angled at B.",
+       "So $k=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-4",
+      "kind": "value",
+      "answer": "x = 3",
+      "solution": [
+       "A line perpendicular to the x-axis through (3, 5) has the x-coordinate of the point.",
+       "So $x=3$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-5",
+      "kind": "value",
+      "answer": "y = -2",
+      "solution": [
+       "Both points have y-coordinate −2.",
+       "So $y=-2$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-6",
+      "kind": "value",
+      "answer": "x = -4",
+      "solution": [
+       "Both points have x-coordinate −4.",
+       "So $x=-4$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-7",
+      "kind": "value",
+      "answer": "y = 2x + 10",
+      "solution": [
+       "$y-4=2(x+3)$",
+       "$y=2x+6+4$",
+       "$y=2x+10$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-8",
+      "kind": "value",
+      "answer": "y = -7/2 x - 13",
+      "solution": [
+       "Gradient: $\\frac{1-(-6)}{-4-(-2)}=\\frac{7}{-2}=-\\frac72$",
+       "$y+6=-\\frac72(x+2)$",
+       "$y=-\\frac72x-7-6$",
+       "$y=-\\frac72x-13$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-1",
+      "kind": "value",
+      "answer": "Question 5: y = -2; Question 6: x = -4",
+      "solution": [
+       "Question 5: both points have y = −2, so $y=-2$.",
+       "Question 6: both points have x = −4, so $x=-4$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9",
+       "eb11c4-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-2",
+      "kind": "value",
+      "answer": "a = 7",
+      "solution": [
+       "Line through A(2, 3) and B(4, −1): $y-3=\\frac{-1-3}{4-2}(x-2)$",
+       "This gives $y=-2x+7$.",
+       "C(a−1, 2−a) lies on it: $2-a=-2(a-1)+7$",
+       "$2-a=-2a+9$, so $a=7$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-3",
+      "kind": "value",
+      "answer": "x + y - 2 = 0",
+      "solution": [
+       "Solve $2x-3y+1=0$ and $x+2y-3=0$ together: $x=1,\\ y=1$.",
+       "Line through (1, 1) and (−1, 3): $y-1=\\frac{3-1}{-1-1}(x-1)$",
+       "$y-1=-(x-1)$",
+       "$x+y-2=0$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-10",
+      "kind": "value",
+      "answer": "a = -1",
+      "solution": [
+       "Gradient of AB: $\\frac{9-5}{4-2}=2$",
+       "Line AB: $y-5=2(x-2)$, so $y=2x+1$.",
+       "C(−1, a) lies on it: $a=2(-1)+1=-1$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2",
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-11",
+      "kind": "value",
+      "answer": "x + 3y - 23 = 0",
+      "solution": [
+       "Solve $x+2y=10$ and $2x+3y=7$: from the first, $x=10-2y$.",
+       "$20-4y+3y=7$, so $y=13$ and $x=-16$.",
+       "Gradient through (−16, 13) and (5, 6): $\\frac{6-13}{5+16}=-\\frac13$",
+       "$y-6=-\\frac13(x-5)$",
+       "$3y-18=-x+5$, so $x+3y-23=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-9",
+      "kind": "value",
+      "answer": "a = 1",
+      "solution": [
+       "Gradient of AB: $\\frac{-3-(-1)}{-2-1}=\\frac23$",
+       "Line AB: $y+1=\\frac23(x-1)$",
+       "C(4, a): $a+1=\\frac23(3)=2$",
+       "$a=1$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2",
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-10",
+      "kind": "value",
+      "answer": "a = 7",
+      "solution": [
+       "Gradient of AB: $\\frac{1-2}{3-1}=-\\frac12$",
+       "Line AB: $y-2=-\\frac12(x-1)$",
+       "C(a, −1): $-3=-\\frac12(a-1)$",
+       "$a-1=6$, so $a=7$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2",
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-11",
+      "kind": "value",
+      "answer": "a = 5",
+      "solution": [
+       "Gradient of AB: $\\frac{7+9}{5+3}=2$",
+       "Line AB: $y+9=2(x+3)$, so $y=2x-3$.",
+       "C(a+3, 3a−2): $3a-2=2(a+3)-3$",
+       "$3a-2=2a+3$, so $a=5$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2",
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-12",
+      "kind": "value",
+      "answer": "x + y - 1 = 0",
+      "solution": [
+       "Solve $3x+5y=1$ and $7x+8y=6$: multiply by 8 and 5: $24x+40y=8$, $35x+40y=30$.",
+       "Subtract: $11x=22$, so $x=2$ and $y=-1$.",
+       "Gradient through (2, −1) and (−1, 2): $\\frac{2+1}{-1-2}=-1$",
+       "$y+1=-(x-2)$",
+       "$x+y-1=0$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-13",
+      "kind": "value",
+      "answer": "2x - 5y + 1 = 0",
+      "solution": [
+       "Solve $x+2y=4$ and $2x-y=3$: $y=2x-3$, so $x+4x-6=4$, $x=2$, $y=1$.",
+       "Gradient through (2, 1) and (−3, −1): $\\frac{-1-1}{-3-2}=\\frac25$",
+       "$y-1=\\frac25(x-2)$",
+       "$5y-5=2x-4$, so $2x-5y+1=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-5",
+      "kind": "value",
+      "answer": "3x - 2y - 14 = 0",
+      "solution": [
+       "$3x-2y+1=0$ gives $y=\\frac32x+\\frac12$, gradient $\\frac32$.",
+       "Parallel line has the same gradient $\\frac32$.",
+       "$y+4=\\frac32(x-2)$",
+       "$2y+8=3x-6$, so $3x-2y-14=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-6",
+      "kind": "value",
+      "answer": "5x - 3y + 25 = 0",
+      "solution": [
+       "$3x+5y+1=0$ gives $y=-\\frac35x-\\frac15$, gradient $-\\frac35$.",
+       "Perpendicular gradient: $\\frac53$.",
+       "$y-5=\\frac53(x+2)$",
+       "$3y-15=5x+10$, so $5x-3y+25=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-14",
+      "kind": "value",
+      "answer": "2x + y + 1 = 0",
+      "solution": [
+       "$6x+3y-5=0$ gives $y=-2x+\\frac53$, gradient $-2$.",
+       "Parallel: gradient $-2$.",
+       "$y+3=-2(x-1)$",
+       "$y=-2x-1$, so $2x+y+1=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-15",
+      "kind": "value",
+      "answer": "3x - 2y - 4 = 0",
+      "solution": [
+       "$2x+3y+4=0$ gives gradient $-\\frac23$.",
+       "Perpendicular gradient: $\\frac32$.",
+       "$y-1=\\frac32(x-2)$",
+       "$2y-2=3x-6$, so $3x-2y-4=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:activity-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question (1) asks about a list of lines that is not given here, so no parallel or perpendicular pairs can be identified.",
+      "solution": [
+       "Question (1) asks which lines are parallel or perpendicular.",
+       "The equations of those lines are not given.",
+       "So the answer cannot be found."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-17",
+      "kind": "value",
+      "answer": "2x - y - 4 = 0",
+      "solution": [
+       "$2x-y+5=0$ gives $y=2x+5$, gradient 2.",
+       "$y+2=2(x-1)$",
+       "$y=2x-4$, so $2x-y-4=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-18",
+      "kind": "value",
+      "answer": "2x + 3y - 4 = 0",
+      "solution": [
+       "$2x+3y=0$ gives $y=-\\frac23x$, gradient $-\\frac23$.",
+       "$y-2=-\\frac23(x+1)$",
+       "$3y-6=-2x-2$, so $2x+3y-4=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-19",
+      "kind": "value",
+      "answer": "3x + 2y - 7 = 0",
+      "solution": [
+       "$3x+2y+1=0$ gives gradient $-\\frac32$.",
+       "$y+1=-\\frac32(x-3)$",
+       "$2y+2=-3x+9$, so $3x+2y-7=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-20",
+      "kind": "value",
+      "answer": "x - 2y - 12 = 0",
+      "solution": [
+       "$2x+y-1=0$ gives $y=-2x+1$, gradient $-2$.",
+       "Perpendicular gradient: $\\frac12$.",
+       "$y+5=\\frac12(x-2)$",
+       "$2y+10=x-2$, so $x-2y-12=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-21",
+      "kind": "value",
+      "answer": "2x + 5y - 13 = 0",
+      "solution": [
+       "$5x-2y+3=0$ gives $y=\\frac52x+\\frac32$, gradient $\\frac52$.",
+       "Perpendicular gradient: $-\\frac25$.",
+       "$y-3=-\\frac25(x+1)$",
+       "$5y-15=-2x-2$, so $2x+5y-13=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-22",
+      "kind": "value",
+      "answer": "2x + 3y + 19 = 0",
+      "solution": [
+       "$3x-2y-7=0$ gives gradient $\\frac32$.",
+       "Perpendicular gradient: $-\\frac23$.",
+       "$y+5=-\\frac23(x+2)$",
+       "$3y+15=-2x-4$, so $2x+3y+19=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-4",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "$L_1$: $y=-\\frac23x+\\frac{10}{3}$, gradient $-\\frac23$.",
+       "$L_2$: $y=\\frac k2x+\\frac52$, gradient $\\frac k2$.",
+       "Perpendicular: $\\frac k2=\\frac32$, so $k=3$.",
+       "$L_3$: gradient $-\\frac4m$.",
+       "Parallel: $-\\frac4m=-\\frac23$, so $m=6$.",
+       "$\\frac mk=\\frac63=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-2",
+      "kind": "value",
+      "answer": "x + 3y - 18 = 0",
+      "solution": [
+       "Gradient of AB: $\\frac{-1-11}{1-5}=3$, so the perpendicular gradient is $-\\frac13$.",
+       "Midpoint of AB: $(3, 5)$.",
+       "$y-5=-\\frac13(x-3)$",
+       "$x+3y-18=0$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-4",
+       "eb11c4-2:rule-22",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-3",
+      "kind": "value",
+      "answer": "B(2, 1)",
+      "solution": [
+       "Let B = (s, t). $l$ has gradient 3.",
+       "AB ⊥ $l$: $\\frac{t-3}{s+4}=-\\frac13$, so $s+3t-5=0$ ...(i)",
+       "Midpoint $(\\frac{s-4}{2},\\frac{t+3}{2})$ lies on $l$: $\\frac{3(s-4)}{2}-\\frac{t+3}{2}+5=0$",
+       "This gives $3s-t-5=0$ ...(ii)",
+       "From (ii), $t=3s-5$. In (i): $s+9s-15-5=0$, so $s=2$, $t=1$.",
+       "B is (2, 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-5",
+       "eb11c4-2:rule-23"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-17",
+      "kind": "value",
+      "answer": "B(4, 2)",
+      "solution": [
+       "Let B = (s, t). The line $y=2x-1$ has gradient 2.",
+       "AB ⊥ line: $\\frac{t-4}{s}=-\\frac12$, so $s+2t-8=0$ ...(i)",
+       "Midpoint $(\\frac s2,\\frac{t+4}{2})$ on the line: $s-\\frac{t+4}{2}-1=0$, so $2s-t-6=0$ ...(ii)",
+       "From (ii) $t=2s-6$. In (i): $5s-20=0$, so $s=4$, $t=2$.",
+       "B is (4, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-23",
+       "eb11c4-2:worked-example-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-2",
+      "kind": "value",
+      "answer": "B(4, 2)",
+      "solution": [
+       "Question (2) is to find B symmetric to A(0, 4) about $2x-y-1=0$.",
+       "AB ⊥ line gives $s+2t-8=0$; midpoint on line gives $2s-t-6=0$.",
+       "Solving: $s=4$, $t=2$.",
+       "B is (4, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-23"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-24",
+      "kind": "value",
+      "answer": "B(3, 6)",
+      "solution": [
+       "Let B = (s, t). The line has gradient $-\\frac12$, so AB has gradient 2.",
+       "$\\frac{t-2}{s-1}=2$, so $t=2s$ ...(i)",
+       "Midpoint $(\\frac{1+s}{2},\\frac{2+t}{2})$ on the line: $1+s+4+2t-20=0$, so $s+2t=15$ ...(ii)",
+       "Substitute (i): $5s=15$, so $s=3$, $t=6$.",
+       "B is (3, 6)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-23",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-25",
+      "kind": "value",
+      "answer": "B(-2, 2)",
+      "solution": [
+       "Let B = (s, t). The line $4x-2y-3=0$ has gradient 2, so AB has gradient $-\\frac12$.",
+       "$\\frac{t+1}{s-4}=-\\frac12$, so $s+2t-2=0$ ...(i)",
+       "Midpoint $(\\frac{4+s}{2},\\frac{t-1}{2})$ on the line: $2(4+s)-(t-1)-3=0$, so $2s-t+6=0$ ...(ii)",
+       "From (ii) $t=2s+6$. In (i): $5s+10=0$, so $s=-2$, $t=2$.",
+       "B is (−2, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-23",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-5",
+      "kind": "value",
+      "answer": "B(-3, 4)",
+      "solution": [
+       "The line $y=2x$ has gradient 2. Let B = (s, t).",
+       "AB ⊥ line: $\\frac{t}{s-5}=-\\frac12$, so $s+2t-5=0$ ...(i)",
+       "Midpoint $(\\frac{5+s}{2},\\frac t2)$ on $y=2x$: $\\frac t2=5+s$, so $t=2s+10$ ...(ii)",
+       "In (i): $5s+15=0$, so $s=-3$, $t=4$.",
+       "B is (−3, 4)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-23",
+       "eb11c4-2:rule-21"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-19",
+      "kind": "value",
+      "answer": "√5",
+      "solution": [
+       "$d=\\frac{|3+2(-2)-4|}{\\sqrt{1+4}}$",
+       "$=\\frac{5}{\\sqrt5}$",
+       "$=\\sqrt5$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-20",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+       "Rewrite $y=3x-2$ as $3x-y-2=0$.",
+       "$d=\\frac{|3(-1)-5-2|}{\\sqrt{9+1}}$",
+       "$=\\frac{10}{\\sqrt{10}}=\\sqrt{10}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-3",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+       "Question (2) is the perpendicular from (−1, 5) to $y=3x-2$.",
+       "Rewrite as $3x-y-2=0$.",
+       "$d=\\frac{|-3-5-2|}{\\sqrt{10}}=\\sqrt{10}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-27",
+      "kind": "value",
+      "answer": "6√13/13",
+      "solution": [
+       "$d=\\frac{|2(-3)-3(2)+6|}{\\sqrt{4+9}}$",
+       "$=\\frac{6}{\\sqrt{13}}$",
+       "$=\\frac{6\\sqrt{13}}{13}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-28",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+       "Rewrite as $12x-5y-7=0$.",
+       "$d=\\frac{|12(-3)-5(7)-7|}{\\sqrt{144+25}}$",
+       "$=\\frac{78}{13}=6$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-29",
+      "kind": "value",
+      "answer": "4√5",
+      "solution": [
+       "Rewrite $y=2x-3$ as $2x-y-3=0$.",
+       "$d=\\frac{|2(-8)-1-3|}{\\sqrt{4+1}}$",
+       "$=\\frac{20}{\\sqrt5}=4\\sqrt5$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-30",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "Origin is (0, 0).",
+       "$d=\\frac{|0-0-5|}{\\sqrt{9+16}}$",
+       "$=\\frac55=1$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-31",
+      "kind": "value",
+      "answer": "√13",
+      "solution": [
+       "Length of perpendicular = distance from point to line.",
+       "$d=\\frac{|3(2)+2(3)+1|}{\\sqrt{9+4}}$",
+       "$=\\frac{13}{\\sqrt{13}}=\\sqrt{13}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-32",
+      "kind": "value",
+      "answer": "10",
+      "solution": [
+       "$d=\\frac{|3(13)+4(4)-5|}{\\sqrt{9+16}}$",
+       "$=\\frac{50}{5}=10$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-33",
+      "kind": "value",
+      "answer": "√10/5",
+      "solution": [
+       "Rewrite $y=3x+1$ as $3x-y+1=0$.",
+       "$d=\\frac{|3(1)-2+1|}{\\sqrt{9+1}}$",
+       "$=\\frac{2}{\\sqrt{10}}=\\frac{\\sqrt{10}}{5}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-6",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+       "Rewrite $y=\\frac13x+2$ as $x-3y+6=0$.",
+       "$d=\\frac{|-1-3(5)+6|}{\\sqrt{1+9}}$",
+       "$=\\frac{10}{\\sqrt{10}}=\\sqrt{10}$"
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-8",
+      "kind": "value",
+      "answer": "10",
+      "solution": [
+       "Base: $AB=\\sqrt{2^2+6^2}=2\\sqrt{10}$.",
+       "Line AB: $y-1=3(x-1)$, so $3x-y-2=0$.",
+       "Height: distance from C: $\\frac{|-9+1-2|}{\\sqrt{10}}=\\sqrt{10}$.",
+       "Area $=\\frac12\\times2\\sqrt{10}\\times\\sqrt{10}=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:explanation-3",
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the vertices of the triangles in the try section are not given here.",
+      "solution": [
+       "The task refers to the try section's triangles.",
+       "Their vertices are not given, so no area can be found."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-7",
+      "kind": "value",
+      "answer": "5 mm²",
+      "solution": [
+       "Base: $AB=\\sqrt{3^2+4^2}=5$.",
+       "Line AB: $y-1=\\frac43(x+2)$, so $4x-3y+11=0$.",
+       "Height: distance from C(−21, −21): $\\frac{|-84+63+11|}{\\sqrt{16+9}}=\\frac{10}{5}=2$.",
+       "Area $=\\frac12\\times5\\times2=5$ mm²."
+      ],
+      "grounded_in": [
+       "eb11c4-2:explanation-3",
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-9",
+      "kind": "value",
+      "answer": "(1/2, -3/2)",
+      "solution": [
+       "Rearrange in k: $(x+y+1)k+(-4x+2y+5)=0$.",
+       "Set $x+y+1=0$ and $-4x+2y+5=0$.",
+       "Solving gives $x=\\frac12$, $y=-\\frac32$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:explanation-4",
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-22",
+      "kind": "value",
+      "answer": "(-2, 3)",
+      "solution": [
+       "Rearrange in k: $(2x-y+7)k+(x-2y+8)=0$.",
+       "Set $2x-y+7=0$ and $x-2y+8=0$.",
+       "From the first $y=2x+7$; then $x-4x-14+8=0$, so $x=-2$.",
+       "$y=3$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5",
+       "eb11c4-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-5",
+      "kind": "value",
+      "answer": "(-2, 3)",
+      "solution": [
+       "The try section line is $(2k+1)x-(k+2)y+7k+8=0$.",
+       "Rearrange: $(2x-y+7)k+(x-2y+8)=0$.",
+       "Solve $2x-y+7=0$ and $x-2y+8=0$: $x=-2$, $y=3$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-36",
+      "kind": "value",
+      "answer": "(1, 1)",
+      "solution": [
+       "Rearrange in k: $(x-2y+1)k+(3x-y-2)=0$.",
+       "Set $x-2y+1=0$ and $3x-y-2=0$.",
+       "From the first $x=2y-1$; then $6y-3-y-2=0$, so $y=1$.",
+       "$x=1$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-37",
+      "kind": "value",
+      "answer": "(-3, 1)",
+      "solution": [
+       "Rearrange in k: $(x+3y)k+(3x+2y+7)=0$.",
+       "Set $x+3y=0$ and $3x+2y+7=0$.",
+       "From the first $x=-3y$; then $-9y+2y+7=0$, so $y=1$.",
+       "$x=-3$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-8",
+      "kind": "value",
+      "answer": "(4, 1)",
+      "solution": [
+       "Move all terms left: $-(k-2)x+(k-3)y+3k-5=0$.",
+       "Rearrange in k: $(-x+y+3)k+(2x-3y-5)=0$.",
+       "Set $-x+y+3=0$ and $2x-3y-5=0$.",
+       "From the first $y=x-3$; then $2x-3x+9-5=0$, so $x=4$.",
+       "$y=1$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-10",
+      "kind": "value",
+      "answer": "a = -4, -3, 6",
+      "solution": [
+       "Gradients: (i) 1, (ii) −2, (iii) $-\\frac a3$.",
+       "(i) ∥ (iii): $-\\frac a3=1$, so $a=-3$.",
+       "(ii) ∥ (iii): $-\\frac a3=-2$, so $a=6$.",
+       "(i) and (ii) meet at $(-1,0)$; (iii) passes through it: $0=\\frac a3+\\frac43$, so $a=-4$.",
+       "So $a=-4,-3,6$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:rule-20"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-23",
+      "kind": "value",
+      "answer": "a = -1/2, 1, -1",
+      "solution": [
+       "Gradients: $x-2y+8=0$ is $\\frac12$; $x+y-1=0$ is $-1$; $ax+y-5=0$ is $-a$.",
+       "Parallel to first: $-a=\\frac12$, so $a=-\\frac12$.",
+       "Parallel to second: $-a=-1$, so $a=1$.",
+       "First two lines meet at $(-2,3)$.",
+       "Third passes through it: $-2a+3-5=0$, so $a=-1$.",
+       "So $a=-\\frac12,1,-1$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-6",
+      "kind": "value",
+      "answer": "a = -1/2, 1, -1",
+      "solution": [
+       "The try section lines are $x-2y+8=0$, $x+y-1=0$, $ax+y-5=0$.",
+       "Parallel cases: $a=-\\frac12$ and $a=1$.",
+       "Concurrent case: the first two meet at $(-2,3)$, giving $a=-1$.",
+       "So $a=-\\frac12,1,-1$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-39",
+      "kind": "value",
+      "answer": "a = 3/2, -9/2, 11/10",
+      "solution": [
+       "Gradients: $\\frac12$, $-\\frac32$, $\\frac a3$.",
+       "Parallel to first: $\\frac a3=\\frac12$, so $a=\\frac32$.",
+       "Parallel to second: $\\frac a3=-\\frac32$, so $a=-\\frac92$.",
+       "First two meet: adding gives $4x=5$, $x=\\frac54$, $y=\\frac98$.",
+       "Third passes through it: $\\frac{5a}{4}-\\frac{27}{8}+2=0$, so $10a=11$, $a=\\frac{11}{10}$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-40",
+      "kind": "value",
+      "answer": "a = 1, -3/2, 2",
+      "solution": [
+       "Rewrite: $y=x+1$ (gradient 1), $y=-\\frac32x+6$ (gradient $-\\frac32$), $y=ax-a+1$ (gradient $a$).",
+       "Parallel to first: $a=1$.",
+       "Parallel to second: $a=-\\frac32$.",
+       "First two meet at $(2,3)$.",
+       "Third passes through it: $2a-3=a-1$, so $a=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-9",
+      "kind": "value",
+      "answer": "15",
+      "solution": [
+       "Gradients: $-\\frac12$, $-3$, $-\\frac m4$.",
+       "Parallel to first: $m=2$.",
+       "Parallel to second: $m=12$.",
+       "First two meet at $(-1,1)$.",
+       "Third passes through it: $-m+4-3=0$, so $m=1$.",
+       "Sum $=2+12+1=15$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:reflect-1",
+      "kind": "explanation",
+      "answer": "Line intersections give exact meeting points and triangles give distances and areas, so they help in navigation, construction and design.",
+      "solution": [
+       "Navigation: two bearings modelled as lines meet at one point, giving a position.",
+       "Construction: perpendicular lines and distances to lines set out walls and supports.",
+       "Design: triangle shapes and areas from coordinates give lengths and material amounts.",
+       "Three lines that meet at a single point do not form a triangle, which can be checked from the equations."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-27",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-2:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Find each path's equation, solve two equations simultaneously to get the intersection point, and check that the other lines pass through it by substitution. Distances between points, the distance from a point to a line and the area $\\frac12\\times$base$\\times$height give the sizes of the regions the lines enclose."
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-1",
+      "kind": "explanation",
+      "answer": "Isosceles right-angled triangle with $\\angle B=90^\\circ$: $(AB)^2=(BC)^2=25$ and $(CA)^2=50$."
+     },
+     {
+      "ref": "eb11c4-2:try-2",
+      "kind": "explanation",
+      "answer": "Equilateral triangle: $(AB)^2=(BC)^2=(CA)^2=20$."
+     },
+     {
+      "ref": "eb11c4-2:activity-1",
+      "kind": "explanation",
+      "answer": "Discussion activity. Question (2) is the triangle with A(3, 2), B(−1, 0), C($1+\\sqrt3$, $1-2\\sqrt3$). It is equilateral, since all three squared sides equal 20."
+     },
+     {
+      "ref": "eb11c4-2:exercise-2",
+      "kind": "explanation",
+      "answer": "Equilateral triangle: $(AB)^2=(BC)^2=(CA)^2=4$."
+     },
+     {
+      "ref": "eb11c4-2:exercise-3",
+      "kind": "explanation",
+      "answer": "Isosceles right-angled triangle with $\\angle B=90^\\circ$: $(AB)^2=(BC)^2=52$ and $(CA)^2=104$."
+     },
+     {
+      "ref": "eb11c4-2:exercise-4",
+      "kind": "explanation",
+      "answer": "Right-angled triangle with the right angle at A, not isosceles: $(AB)^2=25$, $(CA)^2=100$ and $(BC)^2=125$."
+     },
+     {
+      "ref": "eb11c4-2:exercise-5",
+      "kind": "explanation",
+      "answer": "Isosceles right-angled triangle with $\\angle C=90^\\circ$: $(BC)^2=(CA)^2=13$ and $(AB)^2=26$."
+     },
+     {
+      "ref": "eb11c4-2:challenge-1",
+      "kind": "value",
+      "answer": "k = 2"
+     },
+     {
+      "ref": "eb11c4-2:try-4",
+      "kind": "value",
+      "answer": "x = 3"
+     },
+     {
+      "ref": "eb11c4-2:try-5",
+      "kind": "value",
+      "answer": "y = -2"
+     },
+     {
+      "ref": "eb11c4-2:try-6",
+      "kind": "value",
+      "answer": "x = -4"
+     },
+     {
+      "ref": "eb11c4-2:try-7",
+      "kind": "value",
+      "answer": "y = 2x + 10"
+     },
+     {
+      "ref": "eb11c4-2:try-8",
+      "kind": "value",
+      "answer": "y = -7/2 x - 13 (that is, 7x + 2y + 26 = 0)"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Question (5) gives y = -2, since the y-coordinates are equal. Question (6) gives x = -4, since the x-coordinates are equal."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-2",
+      "kind": "value",
+      "answer": "a = 7"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-3",
+      "kind": "value",
+      "answer": "x + y - 2 = 0"
+     },
+     {
+      "ref": "eb11c4-2:try-10",
+      "kind": "value",
+      "answer": "a = -1"
+     },
+     {
+      "ref": "eb11c4-2:try-11",
+      "kind": "value",
+      "answer": "x + 3y - 23 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-9",
+      "kind": "value",
+      "answer": "a = 1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-10",
+      "kind": "value",
+      "answer": "a = 7"
+     },
+     {
+      "ref": "eb11c4-2:exercise-11",
+      "kind": "value",
+      "answer": "a = 5"
+     },
+     {
+      "ref": "eb11c4-2:exercise-12",
+      "kind": "value",
+      "answer": "x + y - 1 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-13",
+      "kind": "value",
+      "answer": "2x - 5y + 1 = 0"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-5",
+      "kind": "value",
+      "answer": "3x - 2y - 14 = 0"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-6",
+      "kind": "value",
+      "answer": "5x - 3y + 25 = 0"
+     },
+     {
+      "ref": "eb11c4-2:try-14",
+      "kind": "value",
+      "answer": "2x + y + 1 = 0"
+     },
+     {
+      "ref": "eb11c4-2:try-15",
+      "kind": "value",
+      "answer": "3x - 2y - 4 = 0"
+     },
+     {
+      "ref": "eb11c4-2:activity-2",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: question (1) is the identification of parallel and perpendicular lines, and the list of lines is not given in the text."
+     },
+     {
+      "ref": "eb11c4-2:exercise-17",
+      "kind": "value",
+      "answer": "2x - y - 4 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-18",
+      "kind": "value",
+      "answer": "2x + 3y - 4 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-19",
+      "kind": "value",
+      "answer": "3x + 2y - 7 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-20",
+      "kind": "value",
+      "answer": "x - 2y - 12 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-21",
+      "kind": "value",
+      "answer": "2x + 5y - 13 = 0"
+     },
+     {
+      "ref": "eb11c4-2:exercise-22",
+      "kind": "value",
+      "answer": "2x + 3y + 19 = 0"
+     },
+     {
+      "ref": "eb11c4-2:challenge-4",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-2",
+      "kind": "value",
+      "answer": "x + 3y - 18 = 0"
+     },
+     {
+      "ref": "eb11c4-2:unlabelled-exercise-3",
+      "kind": "value",
+      "answer": "(2, 1)"
+     },
+     {
+      "ref": "eb11c4-2:try-17",
+      "kind": "value",
+      "answer": "(4, 2)"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-2",
+      "kind": "value",
+      "answer": "Question (2) is try-17: B = (4, 2)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-24",
+      "kind": "value",
+      "answer": "(3, 6)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-25",
+      "kind": "value",
+      "answer": "(-2, 2)"
+     },
+     {
+      "ref": "eb11c4-2:challenge-5",
+      "kind": "value",
+      "answer": "(-3, 4)"
+     },
+     {
+      "ref": "eb11c4-2:try-19",
+      "kind": "value",
+      "answer": "√5"
+     },
+     {
+      "ref": "eb11c4-2:try-20",
+      "kind": "value",
+      "answer": "√10"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-3",
+      "kind": "value",
+      "answer": "Question (2) is try-20: √10"
+     },
+     {
+      "ref": "eb11c4-2:exercise-27",
+      "kind": "value",
+      "answer": "6√13/13"
+     },
+     {
+      "ref": "eb11c4-2:exercise-28",
+      "kind": "value",
+      "answer": "6"
+     },
+     {
+      "ref": "eb11c4-2:exercise-29",
+      "kind": "value",
+      "answer": "4√5"
+     },
+     {
+      "ref": "eb11c4-2:exercise-30",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-31",
+      "kind": "value",
+      "answer": "√13"
+     },
+     {
+      "ref": "eb11c4-2:exercise-32",
+      "kind": "value",
+      "answer": "10"
+     },
+     {
+      "ref": "eb11c4-2:exercise-33",
+      "kind": "value",
+      "answer": "√10/5"
+     },
+     {
+      "ref": "eb11c4-2:challenge-6",
+      "kind": "value",
+      "answer": "√10"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-8",
+      "kind": "value",
+      "answer": "10"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-4",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the vertices of the triangles in the try section are not given in the text."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-9",
+      "kind": "value",
+      "answer": "(1/2, -3/2)"
+     },
+     {
+      "ref": "eb11c4-2:try-22",
+      "kind": "value",
+      "answer": "(-2, 3)"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-5",
+      "kind": "value",
+      "answer": "Try section (try-22): fixed point (-2, 3)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-36",
+      "kind": "value",
+      "answer": "(1, 1)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-37",
+      "kind": "value",
+      "answer": "(-3, 1)"
+     },
+     {
+      "ref": "eb11c4-2:challenge-8",
+      "kind": "value",
+      "answer": "(4, 1)"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-10",
+      "kind": "value",
+      "answer": "a = -4, -3, 6"
+     },
+     {
+      "ref": "eb11c4-2:try-23",
+      "kind": "value",
+      "answer": "a = -1/2, 1, -1"
+     },
+     {
+      "ref": "eb11c4-2:work-with-a-partner-6",
+      "kind": "value",
+      "answer": "Try section (try-23): a = -1/2, 1, -1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-39",
+      "kind": "value",
+      "answer": "a = 3/2, -9/2, 11/10"
+     },
+     {
+      "ref": "eb11c4-2:exercise-40",
+      "kind": "value",
+      "answer": "a = 1, -3/2, 2"
+     },
+     {
+      "ref": "eb11c4-2:challenge-9",
+      "kind": "value",
+      "answer": "15"
+     },
+     {
+      "ref": "eb11c4-2:reflect-1",
+      "kind": "explanation",
+      "answer": "Navigation: two bearing lines intersect at a ship's position. Construction: lines are checked for being parallel or perpendicular, and triangle areas are found from coordinates. Design: lines meeting at a single point are used to place elements, and distances from points to lines set safe margins."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c4-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-2:try-1",
+      "kind": "value",
+      "answer": "Isosceles right-angled triangle (right angle at A)",
+      "solution": [
+       "$(AB)^2=(1+1)^2+(1-2)^2=4+1=5$",
+       "$(BC)^2=(0-1)^2+(4-1)^2=1+9=10$",
+       "$(CA)^2=(-1-0)^2+(2-4)^2=1+4=5$",
+       "$(AB)^2=(CA)^2$, so the triangle is isosceles",
+       "$(BC)^2=(AB)^2+(CA)^2$ (10 = 5 + 5), so it is right-angled at A",
+       "△ABC is an isosceles right-angled triangle."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-1",
+      "kind": "value",
+      "answer": "Isosceles right-angled triangle (right angle at A)",
+      "solution": [
+       "$(AB)^2=(-1-0)^2+(-2-2)^2=1+16=17$",
+       "$(BC)^2=(4+1)^2+(1+2)^2=25+9=34$",
+       "$(CA)^2=(0-4)^2+(2-1)^2=16+1=17$",
+       "$(AB)^2=(CA)^2$, so isosceles",
+       "$(BC)^2=(AB)^2+(CA)^2$ (34 = 17 + 17), so right-angled at A",
+       "△ABC is an isosceles right-angled triangle."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-1",
+       "eb11c4-2:rule-3",
+       "eb11c4-2:rule-4",
+       "eb11c4-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "y = -4",
+      "solution": [
+       "The line is parallel to the x-axis, so $y=y_1$",
+       "The point is (3, −4), so $y_1=-4$",
+       "The equation is y = -4."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "x = -3",
+      "solution": [
+       "The line is parallel to the y-axis, so $x=x_1$",
+       "The point is (−3, 8), so $x_1=-3$",
+       "The equation is x = -3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-8",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "x = -3",
+      "solution": [
+       "The x-coordinates of the 2 points are equal (−3)",
+       "So $x=x_1$",
+       "The equation is x = -3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-10",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:d",
+      "kind": "value",
+      "answer": "y = 3",
+      "solution": [
+       "The y-coordinates of the 2 points are equal (3)",
+       "So $y=y_1$",
+       "The equation is y = 3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:e",
+      "kind": "value",
+      "answer": "y = 3x - 7",
+      "solution": [
+       "Use $y-y_1=a(x-x_1)$ with point (2, −1) and gradient 3",
+       "$y-(-1)=3(x-2)$",
+       "$y+1=3x-6$",
+       "y = 3x - 7."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:f",
+      "kind": "value",
+      "answer": "y = (1/3)x - 4/3",
+      "solution": [
+       "Gradient: $a=\\frac{0-(-1)}{4-1}=\\frac{1}{3}$",
+       "Use point (1, −1): $y-(-1)=\\frac13(x-1)$",
+       "$y=\\frac13x-\\frac13-1$",
+       "y = (1/3)x - 4/3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12",
+       "eb11c4-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-3",
+      "kind": "value",
+      "answer": "y = 6",
+      "solution": [
+       "Parallel to the x-axis, so $y=y_1$",
+       "The point is (2, 6)",
+       "The equation is y = 6."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the answers are in parts (a)–(t) of question 1.",
+      "solution": [
+       "The line is only an instruction; the questions are the parts a–t.",
+       "Answer each part separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:a",
+      "kind": "value",
+      "answer": "y = 5",
+      "solution": [
+       "Parallel to the x-axis: $y=y_1$",
+       "y = 5."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:b",
+      "kind": "value",
+      "answer": "y = 1",
+      "solution": [
+       "Parallel to the x-axis: $y=y_1$",
+       "y = 1."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:c",
+      "kind": "value",
+      "answer": "y = -7",
+      "solution": [
+       "Parallel to the x-axis: $y=y_1$",
+       "y = -7."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:d",
+      "kind": "value",
+      "answer": "x = 1",
+      "solution": [
+       "Perpendicular to the x-axis: $x=x_1$",
+       "x = 1."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:e",
+      "kind": "value",
+      "answer": "x = -3",
+      "solution": [
+       "Perpendicular to the x-axis: $x=x_1$",
+       "x = -3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:f",
+      "kind": "value",
+      "answer": "x = 3",
+      "solution": [
+       "Perpendicular to the x-axis: $x=x_1$",
+       "x = 3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:g",
+      "kind": "value",
+      "answer": "x = 2",
+      "solution": [
+       "Parallel to the y-axis: $x=x_1$",
+       "x = 2."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:h",
+      "kind": "value",
+      "answer": "x = 4",
+      "solution": [
+       "Parallel to the y-axis: $x=x_1$",
+       "x = 4."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:i",
+      "kind": "value",
+      "answer": "x = -6",
+      "solution": [
+       "Parallel to the y-axis: $x=x_1$",
+       "x = -6."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:j",
+      "kind": "value",
+      "answer": "x = 4",
+      "solution": [
+       "The x-coordinates are equal (4)",
+       "x = 4."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:k",
+      "kind": "value",
+      "answer": "x = -1",
+      "solution": [
+       "The x-coordinates are equal (−1)",
+       "x = -1."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:l",
+      "kind": "value",
+      "answer": "x = -5",
+      "solution": [
+       "The x-coordinates are equal (−5)",
+       "x = -5."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:m",
+      "kind": "value",
+      "answer": "y = 3",
+      "solution": [
+       "The y-coordinates are equal (3)",
+       "y = 3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:n",
+      "kind": "value",
+      "answer": "y = -2",
+      "solution": [
+       "The y-coordinates are equal (−2)",
+       "y = -2."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:o",
+      "kind": "value",
+      "answer": "y = 6",
+      "solution": [
+       "The y-coordinates are equal (6)",
+       "y = 6."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:p",
+      "kind": "value",
+      "answer": "y = -x + 4",
+      "solution": [
+       "$y-5=-1(x-(-1))$",
+       "$y-5=-x-1$",
+       "y = -x + 4."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:q",
+      "kind": "value",
+      "answer": "y = x - 5",
+      "solution": [
+       "$y-(-8)=1(x-(-3))$",
+       "$y+8=x+3$",
+       "y = x - 5."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:r",
+      "kind": "value",
+      "answer": "y = -2x + 3",
+      "solution": [
+       "$y-(-1)=-2(x-2)$",
+       "$y+1=-2x+4$",
+       "y = -2x + 3."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:s",
+      "kind": "value",
+      "answer": "y = 4x - 2",
+      "solution": [
+       "Gradient $=\\frac{10-2}{3-1}=4$",
+       "$y-2=4(x-1)$",
+       "y = 4x - 2."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:t",
+      "kind": "value",
+      "answer": "y = 2x - 6",
+      "solution": [
+       "Gradient $=\\frac{2-(-8)}{4-(-1)}=\\frac{10}{5}=2$",
+       "$y-2=2(x-4)$",
+       "y = 2x - 6."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-2",
+      "kind": "value",
+      "answer": "y = 2",
+      "solution": [
+       "A(−4, 2) and B(9, 2) have equal y-coordinates",
+       "So the line is $y=y_1$",
+       "The boundary is y = 2."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-9",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-3",
+      "kind": "value",
+      "answer": "3x + 13y = 0",
+      "solution": [
+       "Solve $6x+5y+7=0$ and $3x-2y+5=0$",
+       "Multiply the second by 2: $6x-4y+10=0$",
+       "Subtract from the first: $9y-3=0$, so $y=\\frac13$",
+       "$3x=2y-5=\\frac23-5=-\\frac{13}{3}$, so $x=-\\frac{13}{9}$",
+       "Intersection point: $(-\\frac{13}{9},\\frac13)$",
+       "Gradient from (0, 0): $\\frac{1/3}{-13/9}=-\\frac{3}{13}$",
+       "$y=-\\frac{3}{13}x$, that is 3x + 13y = 0."
+      ],
+      "grounded_in": [
+       "eb11c4-2:worked-example-3",
+       "eb11c4-2:rule-13",
+       "eb11c4-2:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:a",
+      "kind": "value",
+      "answer": "Gradient 2; parallel to (d)",
+      "solution": [
+       "$y=2x+3$ has gradient 2",
+       "(d) $2x-y-1=0$ gives $y=2x-1$, gradient 2",
+       "Equal gradients, so (a) is parallel to (d)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:b",
+      "kind": "value",
+      "answer": "Gradient -3; perpendicular to (c)",
+      "solution": [
+       "$y=-3x+2$ has gradient −3",
+       "(c) $x-3y+1=0$ gives $y=\\frac13x+\\frac13$, gradient $\\frac13$",
+       "$-3=-\\frac{1}{1/3}$, negative reciprocals, so (b) is perpendicular to (c)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:c",
+      "kind": "value",
+      "answer": "Gradient 1/3; perpendicular to (b)",
+      "solution": [
+       "$x-3y+1=0$ gives $y=\\frac13x+\\frac13$, gradient $\\frac13$",
+       "(b) has gradient −3, the negative reciprocal",
+       "So (c) is perpendicular to (b)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:d",
+      "kind": "value",
+      "answer": "Gradient 2; parallel to (a)",
+      "solution": [
+       "$2x-y-1=0$ gives $y=2x-1$, gradient 2",
+       "(a) also has gradient 2",
+       "So (d) is parallel to (a)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:e",
+      "kind": "value",
+      "answer": "Gradient -1/3; neither parallel nor perpendicular to any other line in the list",
+      "solution": [
+       "$x+3y+3=0$ gives $y=-\\frac13x-1$, gradient $-\\frac13$",
+       "Other gradients are 2, −3, 1/3, 2",
+       "None equals −1/3 and none is its negative reciprocal (3)",
+       "So (e) is neither parallel nor perpendicular to the others."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-12",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:a",
+      "kind": "value",
+      "answer": "Gradient 3; parallel to (d)",
+      "solution": [
+       "$y=3x+1$ has gradient 3",
+       "(d) $6x-2y=5$ gives $y=3x-\\frac52$, gradient 3",
+       "So (a) is parallel to (d)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:b",
+      "kind": "value",
+      "answer": "Gradient 4; perpendicular to (f)",
+      "solution": [
+       "$y=4x-1$ has gradient 4",
+       "(f) $x+4y-4=0$ gives $y=-\\frac14x+1$, gradient $-\\frac14$",
+       "Negative reciprocals, so (b) is perpendicular to (f)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:c",
+      "kind": "value",
+      "answer": "Gradient -4; parallel to (e)",
+      "solution": [
+       "$y=-4x-7$ has gradient −4",
+       "(e) $8x+2y-3=0$ gives $y=-4x+\\frac32$, gradient −4",
+       "So (c) is parallel to (e)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:d",
+      "kind": "value",
+      "answer": "Gradient 3; parallel to (a)",
+      "solution": [
+       "$6x-2y=5$ gives $y=3x-\\frac52$, gradient 3",
+       "(a) has gradient 3",
+       "So (d) is parallel to (a)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:e",
+      "kind": "value",
+      "answer": "Gradient -4; parallel to (c)",
+      "solution": [
+       "$8x+2y-3=0$ gives $y=-4x+\\frac32$, gradient −4",
+       "(c) has gradient −4",
+       "So (e) is parallel to (c)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-13:f",
+      "kind": "value",
+      "answer": "Gradient -1/4; perpendicular to (b)",
+      "solution": [
+       "$x+4y-4=0$ gives $y=-\\frac14x+1$, gradient $-\\frac14$",
+       "(b) has gradient 4, the negative reciprocal",
+       "So (f) is perpendicular to (b)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-14",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:a",
+      "kind": "value",
+      "answer": "Gradient 3; perpendicular to (f)",
+      "solution": [
+       "$y=3x-1$ has gradient 3",
+       "(f) $x+3y-2=0$ gives $y=-\\frac13x+\\frac23$, gradient $-\\frac13$",
+       "Negative reciprocals, so (a) is perpendicular to (f)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:b",
+      "kind": "value",
+      "answer": "Gradient -3; parallel to (d)",
+      "solution": [
+       "$y=-3x+4$ has gradient −3",
+       "(d) $6x+2y+5=0$ gives $y=-3x-\\frac52$, gradient −3",
+       "So (b) is parallel to (d)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:c",
+      "kind": "value",
+      "answer": "Gradient 1; parallel to (e)",
+      "solution": [
+       "$y=x-3$ has gradient 1",
+       "(e) $2x-2y-1=0$ gives $y=x-\\frac12$, gradient 1",
+       "So (c) is parallel to (e)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:d",
+      "kind": "value",
+      "answer": "Gradient -3; parallel to (b)",
+      "solution": [
+       "$6x+2y+5=0$ gives $y=-3x-\\frac52$, gradient −3",
+       "(b) has gradient −3",
+       "So (d) is parallel to (b)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:e",
+      "kind": "value",
+      "answer": "Gradient 1; parallel to (c)",
+      "solution": [
+       "$2x-2y-1=0$ gives $y=x-\\frac12$, gradient 1",
+       "(c) has gradient 1",
+       "So (e) is parallel to (c)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:f",
+      "kind": "value",
+      "answer": "Gradient -1/3; perpendicular to (a)",
+      "solution": [
+       "$x+3y-2=0$ gives $y=-\\frac13x+\\frac23$, gradient $-\\frac13$",
+       "(a) has gradient 3, the negative reciprocal",
+       "So (f) is perpendicular to (a)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:a",
+      "kind": "value",
+      "answer": "Gradient 2; perpendicular to (f)",
+      "solution": [
+       "$y=2x-1$ has gradient 2",
+       "(f) $3x+6y-1=0$ gives $y=-\\frac12x+\\frac16$, gradient $-\\frac12$",
+       "Negative reciprocals, so (a) is perpendicular to (f)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:b",
+      "kind": "value",
+      "answer": "Gradient -1; parallel to (d)",
+      "solution": [
+       "$y=-x+4$ has gradient −1",
+       "(d) $x+y+3=0$ gives $y=-x-3$, gradient −1",
+       "So (b) is parallel to (d)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:c",
+      "kind": "value",
+      "answer": "Gradient 3/2; perpendicular to (e)",
+      "solution": [
+       "$y=\\frac32x+6$ has gradient $\\frac32$",
+       "(e) $2x+3y+8=0$ gives $y=-\\frac23x-\\frac83$, gradient $-\\frac23$",
+       "Negative reciprocals, so (c) is perpendicular to (e)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:d",
+      "kind": "value",
+      "answer": "Gradient -1; parallel to (b)",
+      "solution": [
+       "$x+y+3=0$ gives $y=-x-3$, gradient −1",
+       "(b) has gradient −1",
+       "So (d) is parallel to (b)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-20",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:e",
+      "kind": "value",
+      "answer": "Gradient -2/3; perpendicular to (c)",
+      "solution": [
+       "$2x+3y+8=0$ gives $y=-\\frac23x-\\frac83$, gradient $-\\frac23$",
+       "(c) has gradient $\\frac32$, the negative reciprocal",
+       "So (e) is perpendicular to (c)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:f",
+      "kind": "value",
+      "answer": "Gradient -1/2; perpendicular to (a)",
+      "solution": [
+       "$3x+6y-1=0$ gives $y=-\\frac12x+\\frac16$, gradient $-\\frac12$",
+       "(a) has gradient 2, the negative reciprocal",
+       "So (f) is perpendicular to (a)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-21",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-16",
+      "kind": "value",
+      "answer": "2x - 3y - 5 = 0",
+      "solution": [
+       "Gradient of AB: $\\frac{-4-2}{3-(-1)}=-\\frac32$",
+       "Perpendicular gradient: $\\frac23$",
+       "Midpoint: $\\left(\\frac{-1+3}{2},\\frac{2-4}{2}\\right)=(1,-1)$",
+       "$y+1=\\frac23(x-1)$",
+       "$3y+3=2x-2$",
+       "2x - 3y - 5 = 0."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-22",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:a",
+      "kind": "value",
+      "answer": "2x - y + 2 = 0",
+      "solution": [
+       "Gradient of AB: $\\frac{1-3}{2+2}=-\\frac12$; perpendicular gradient 2",
+       "Midpoint: (0, 2)",
+       "$y-2=2(x-0)$",
+       "2x - y + 2 = 0."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-22",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:b",
+      "kind": "value",
+      "answer": "3x - 2y - 6 = 0",
+      "solution": [
+       "Gradient of AB: $\\frac{-2-2}{5+1}=-\\frac23$; perpendicular gradient $\\frac32$",
+       "Midpoint: (2, 0)",
+       "$y-0=\\frac32(x-2)$",
+       "$2y=3x-6$",
+       "3x - 2y - 6 = 0."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-22",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:c",
+      "kind": "value",
+      "answer": "2x - y + 1 = 0",
+      "solution": [
+       "Gradient of AB: $\\frac{4-6}{4-0}=-\\frac12$; perpendicular gradient 2",
+       "Midpoint: (2, 5)",
+       "$y-5=2(x-2)$",
+       "y = 2x + 1",
+       "2x - y + 1 = 0."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-22",
+       "eb11c4-2:rule-21",
+       "eb11c4-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-7:1",
+      "kind": "value",
+      "answer": "3√13/13",
+      "solution": [
+       "$d=\\frac{|3(-2)+(-2)(1)+5|}{\\sqrt{3^2+(-2)^2}}$",
+       "$=\\frac{|-3|}{\\sqrt{13}}=\\frac{3}{\\sqrt{13}}$",
+       "$=\\frac{3\\sqrt{13}}{13}$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:warm-up-7:2",
+      "kind": "value",
+      "answer": "√10/2",
+      "solution": [
+       "Rewrite $3x-y=5$ as $3x-y-5=0$",
+       "$OH=\\frac{|3\\cdot0+(-1)\\cdot0-5|}{\\sqrt{3^2+(-1)^2}}=\\frac{5}{\\sqrt{10}}$",
+       "$=\\frac{\\sqrt{10}}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-18",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Find the following values'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-26",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Find the following values'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-6",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+       "Rewrite $y=\\frac13x+2$ as $x-3y+6=0$",
+       "$d=\\frac{|1(-1)+(-3)(5)+6|}{\\sqrt{1^2+(-3)^2}}$",
+       "$=\\frac{|-10|}{\\sqrt{10}}=\\frac{10}{\\sqrt{10}}$",
+       "The distance is √10."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-24",
+       "eb11c4-2:rule-25",
+       "eb11c4-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-21:a",
+      "kind": "value",
+      "answer": "30",
+      "solution": [
+       "Base: $AB=\\sqrt{(-3-1)^2+(-3-5)^2}=\\sqrt{80}=4\\sqrt5$",
+       "Line AB: gradient $\\frac{-3-5}{-3-1}=2$, $y-5=2(x-1)$, so $2x-y+3=0$",
+       "Height: $\\frac{|2\\cdot3-(-6)+3|}{\\sqrt5}=\\frac{15}{\\sqrt5}=3\\sqrt5$",
+       "Area $=\\frac12\\times4\\sqrt5\\times3\\sqrt5=30$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:try-21:b",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+       "Base: $AB=\\sqrt{(2+2)^2+(-1-1)^2}=\\sqrt{20}=2\\sqrt5$",
+       "Line AB: gradient $\\frac{-1-1}{2+2}=-\\frac12$, $y-1=-\\frac12(x+2)$, so $x+2y=0$",
+       "Height: $\\frac{|0+2\\cdot4|}{\\sqrt5}=\\frac{8}{\\sqrt5}$",
+       "Area $=\\frac12\\times2\\sqrt5\\times\\frac{8}{\\sqrt5}=8$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:a",
+      "kind": "value",
+      "answer": "9",
+      "solution": [
+       "Base: $AB=\\sqrt{(2-0)^2+(-2+6)^2}=\\sqrt{20}=2\\sqrt5$",
+       "Line AB: gradient $\\frac{-2+6}{2}=2$, $y+6=2x$, so $2x-y-6=0$",
+       "Height: $\\frac{|2\\cdot1-5-6|}{\\sqrt5}=\\frac{9}{\\sqrt5}$",
+       "Area $=\\frac12\\times2\\sqrt5\\times\\frac9{\\sqrt5}=9$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:b",
+      "kind": "value",
+      "answer": "34",
+      "solution": [
+       "Base: $AB=\\sqrt{(-3+2)^2+(-5-4)^2}=\\sqrt{82}$",
+       "Line AB: gradient $\\frac{-5-4}{-3+2}=9$, $y-4=9(x+2)$, so $9x-y+22=0$",
+       "Height: $\\frac{|9\\cdot5-(-1)+22|}{\\sqrt{82}}=\\frac{68}{\\sqrt{82}}$",
+       "Area $=\\frac12\\times\\sqrt{82}\\times\\frac{68}{\\sqrt{82}}=34$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:c",
+      "kind": "value",
+      "answer": "7",
+      "solution": [
+       "Base: $AB=\\sqrt{(0-2)^2+(1-5)^2}=\\sqrt{20}=2\\sqrt5$",
+       "Line AB: gradient $\\frac{1-5}{0-2}=2$, $y-1=2x$, so $2x-y+1=0$",
+       "Height: $\\frac{|2\\cdot4-2+1|}{\\sqrt5}=\\frac{7}{\\sqrt5}$",
+       "Area $=\\frac12\\times2\\sqrt5\\times\\frac7{\\sqrt5}=7$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:challenge-7",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+       "Base: $AB=\\sqrt{(1+2)^2+(5-1)^2}=5$",
+       "Line AB: gradient $\\frac43$, $y-1=\\frac43(x+2)$, so $4x-3y+11=0$",
+       "Height: $\\frac{|4(-21)-3(-21)+11|}{\\sqrt{16+9}}=\\frac{10}{5}=2$",
+       "Area $=\\frac12\\times5\\times2=5$ (square mm)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-2",
+       "eb11c4-2:method-3",
+       "eb11c4-2:rule-24",
+       "eb11c4-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-35",
+      "kind": "value",
+      "answer": "(3, -3)",
+      "solution": [
+       "Rearrange with respect to k: $(x+y)k+(2x-6)=0$",
+       "Identity in k: $x+y=0$ and $2x-6=0$",
+       "$x=3$, then $y=-3$",
+       "The fixed point is (3, −3)."
+      ],
+      "grounded_in": [
+       "eb11c4-2:method-4",
+       "eb11c4-2:method-5",
+       "eb11c4-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-38",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are the numbered parts below it.",
+      "solution": [
+       "Answer each numbered question separately."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-39",
+      "kind": "value",
+      "answer": "a = 3/2, -9/2 or 11/10",
+      "solution": [
+       "Gradients: $x-2y+1=0$ gives $\\frac12$; $3x+2y=6$ gives $-\\frac32$; $ax-3y+2=0$ gives $\\frac a3$",
+       "Case 1, parallel to the first: $\\frac a3=\\frac12$, so $a=\\frac32$",
+       "Case 1, parallel to the second: $\\frac a3=-\\frac32$, so $a=-\\frac92$",
+       "Case 2: first two lines meet where $4x+1=6$, so $x=\\frac54$, $y=\\frac98$",
+       "Third line passes through it: $a\\cdot\\frac54-3\\cdot\\frac98+2=0$, so $\\frac{5a}{4}=\\frac{11}{8}$, $a=\\frac{11}{10}$",
+       "So $a=\\frac32,-\\frac92$ or $\\frac{11}{10}$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-2:exercise-40",
+      "kind": "value",
+      "answer": "a = 1, -3/2 or 2",
+      "solution": [
+       "Gradients: $x-y=-1$ gives 1; $3x+2y=12$ gives $-\\frac32$; $ax-y=a-1$ gives $a$",
+       "Case 1, parallel: $a=1$ or $a=-\\frac32$",
+       "Case 2: first two lines meet: $y=x+1$, $3x+2x+2=12$, so $x=2$, $y=3$",
+       "Third line passes through (2, 3): $2a-3=a-1$, so $a=2$",
+       "So $a=1,-\\frac32$ or $2$."
+      ],
+      "grounded_in": [
+       "eb11c4-2:rule-26",
+       "eb11c4-2:rule-27",
+       "eb11c4-2:method-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-2:try-1",
+      "kind": "explanation",
+      "answer": "Isosceles right-angled triangle: $(AB)^2=5$, $(BC)^2=10$, $(CA)^2=5$, so $(AB)^2=(CA)^2$ and $(BC)^2=(AB)^2+(CA)^2$; right angle at A."
+     },
+     {
+      "ref": "eb11c4-2:exercise-1",
+      "kind": "explanation",
+      "answer": "Isosceles right-angled triangle: $(AB)^2=17$, $(BC)^2=34$, $(CA)^2=17$, so $(AB)^2=(CA)^2$ and $(BC)^2=(AB)^2+(CA)^2$; right angle at A."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "y = -4"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "x = -3"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "x = -3"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:d",
+      "kind": "value",
+      "answer": "y = 3"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:e",
+      "kind": "value",
+      "answer": "y = 3x - 7"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-1:f",
+      "kind": "value",
+      "answer": "y = (1/3)x - 4/3"
+     },
+     {
+      "ref": "eb11c4-2:try-3",
+      "kind": "value",
+      "answer": "y = 6"
+     },
+     {
+      "ref": "eb11c4-2:exercise-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are exercise-7 parts."
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:a",
+      "kind": "value",
+      "answer": "y = 5"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:b",
+      "kind": "value",
+      "answer": "y = 1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:c",
+      "kind": "value",
+      "answer": "y = -7"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:d",
+      "kind": "value",
+      "answer": "x = 1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:e",
+      "kind": "value",
+      "answer": "x = -3"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:f",
+      "kind": "value",
+      "answer": "x = 3"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:g",
+      "kind": "value",
+      "answer": "x = 2"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:h",
+      "kind": "value",
+      "answer": "x = 4"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:i",
+      "kind": "value",
+      "answer": "x = -6"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:j",
+      "kind": "value",
+      "answer": "x = 4"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:k",
+      "kind": "value",
+      "answer": "x = -1"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:l",
+      "kind": "value",
+      "answer": "x = -5"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:m",
+      "kind": "value",
+      "answer": "y = 3"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:n",
+      "kind": "value",
+      "answer": "y = -2"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:o",
+      "kind": "value",
+      "answer": "y = 6"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:p",
+      "kind": "value",
+      "answer": "y = -x + 4"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:q",
+      "kind": "value",
+      "answer": "y = x - 5"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:r",
+      "kind": "value",
+      "answer": "y = -2x + 3"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:s",
+      "kind": "value",
+      "answer": "y = 4x - 2"
+     },
+     {
+      "ref": "eb11c4-2:exercise-7:t",
+      "kind": "value",
+      "answer": "y = 2x - 6"
+     },
+     {
+      "ref": "eb11c4-2:challenge-2",
+      "kind": "value",
+      "answer": "y = 2"
+     },
+     {
+      "ref": "eb11c4-2:try-9",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are try-10 and try-11."
+     },
+     {
+      "ref": "eb11c4-2:exercise-8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are exercise-9 to exercise-13."
+     },
+     {
+      "ref": "eb11c4-2:challenge-3",
+      "kind": "value",
+      "answer": "y = -(3/13)x, i.e. 3x + 13y = 0 (passes through the intersection (-13/9, 1/3))"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:a",
+      "kind": "explanation",
+      "answer": "Gradient 2; parallel to (d)."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:b",
+      "kind": "explanation",
+      "answer": "Gradient -3; perpendicular to (c)."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:c",
+      "kind": "explanation",
+      "answer": "Gradient 1/3; perpendicular to (b)."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:d",
+      "kind": "explanation",
+      "answer": "Gradient 2; parallel to (a)."
+     },
+     {
+      "ref": "eb11c4-2:warm-up-4:e",
+      "excluded": false,
+      "kind": "explanation",
+      "answer": "Gradient -1/3; neither parallel nor perpendicular to any of the other lines."
+     },
+     {
+      "ref": "eb11c4-2:try-12",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are try-13 to try-15."
+     },
+     {
+      "ref": "eb11c4-2:try-13:a",
+      "kind": "explanation",
+      "answer": "Gradient 3; parallel to (d)."
+     },
+     {
+      "ref": "eb11c4-2:try-13:b",
+      "kind": "explanation",
+      "answer": "Gradient 4; perpendicular to (f)."
+     },
+     {
+      "ref": "eb11c4-2:try-13:c",
+      "kind": "explanation",
+      "answer": "Gradient -4; parallel to (e)."
+     },
+     {
+      "ref": "eb11c4-2:try-13:d",
+      "kind": "explanation",
+      "answer": "Gradient 3; parallel to (a)."
+     },
+     {
+      "ref": "eb11c4-2:try-13:e",
+      "kind": "explanation",
+      "answer": "Gradient -4; parallel to (c)."
+     },
+     {
+      "ref": "eb11c4-2:try-13:f",
+      "kind": "explanation",
+      "answer": "Gradient -1/4; perpendicular to (b)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-14",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are exercise-15 to exercise-22."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:a",
+      "kind": "explanation",
+      "answer": "Gradient 3; perpendicular to (f)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:b",
+      "kind": "explanation",
+      "answer": "Gradient -3; parallel to (d)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:c",
+      "kind": "explanation",
+      "answer": "Gradient 1; parallel to (e)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:d",
+      "kind": "explanation",
+      "answer": "Gradient -3; parallel to (b)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:e",
+      "kind": "explanation",
+      "answer": "Gradient 1; parallel to (c)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-15:f",
+      "kind": "explanation",
+      "answer": "Gradient -1/3; perpendicular to (a)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:a",
+      "kind": "explanation",
+      "answer": "Gradient 2; perpendicular to (f)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:b",
+      "kind": "explanation",
+      "answer": "Gradient -1; parallel to (d)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:c",
+      "kind": "explanation",
+      "answer": "Gradient 3/2; perpendicular to (e)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:d",
+      "kind": "explanation",
+      "answer": "Gradient -1; parallel to (b)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:e",
+      "kind": "explanation",
+      "answer": "Gradient -2/3; perpendicular to (c)."
+     },
+     {
+      "ref": "eb11c4-2:exercise-16:f",
+      "kind": "explanation",
+      "answer": "Gradient -1/2; perpendicular to (a)."
+     },
+     {
+      "ref": "eb11c4-2:try-16",
+      "kind": "value",
+      "answer": "2x - 3y - 5 = 0 (i.e. y = (2/3)x - 5/3)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:a",
+      "kind": "value",
+      "answer": "y = 2x + 2"
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:b",
+      "kind": "value",
+      "answer": "3x - 2y - 6 = 0 (i.e. y = (3/2)x - 3)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-23:c",
+      "kind": "value",
+      "answer": "y = 2x + 1"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-7:1",
+      "kind": "value",
+      "answer": "3√13/13"
+     },
+     {
+      "ref": "eb11c4-2:warm-up-7:2",
+      "kind": "value",
+      "answer": "√10/2"
+     },
+     {
+      "ref": "eb11c4-2:try-18",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Find the following values.'; the actual questions are try-19 and try-20."
+     },
+     {
+      "ref": "eb11c4-2:exercise-26",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Find the following values.'; the actual questions are exercise-27 to exercise-33."
+     },
+     {
+      "ref": "eb11c4-2:try-21:a",
+      "kind": "value",
+      "answer": "30"
+     },
+     {
+      "ref": "eb11c4-2:try-21:b",
+      "kind": "value",
+      "answer": "8"
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:a",
+      "kind": "value",
+      "answer": "9"
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:b",
+      "kind": "value",
+      "answer": "34"
+     },
+     {
+      "ref": "eb11c4-2:exercise-34:c",
+      "kind": "value",
+      "answer": "7"
+     },
+     {
+      "ref": "eb11c4-2:challenge-7",
+      "kind": "value",
+      "answer": "5 (square mm)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-35",
+      "kind": "value",
+      "answer": "(3, -3)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-38",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems.'; the actual questions are exercise-39 and exercise-40."
+     },
+     {
+      "ref": "eb11c4-2:exercise-39",
+      "kind": "value",
+      "answer": "a = 3/2, a = -9/2, or a = 11/10"
+     },
+     {
+      "ref": "eb11c4-2:exercise-40",
+      "kind": "value",
+      "answer": "a = 1, a = -3/2, or a = 2"
+     },
+     {
+      "ref": "eb11c4-2:challenge-9",
+      "kind": "value",
+      "answer": "15"
+     },
+     {
+      "ref": "eb11c4-2:challenge-1",
+      "kind": "value",
+      "answer": "k = 2"
+     },
+     {
+      "ref": "eb11c4-2:challenge-4",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-2:challenge-5",
+      "kind": "value",
+      "answer": "(-3, 4)"
+     },
+     {
+      "ref": "eb11c4-2:challenge-6",
+      "kind": "value",
+      "answer": "√10"
+     },
+     {
+      "ref": "eb11c4-2:try-22",
+      "kind": "value",
+      "answer": "(-2, 3)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-36",
+      "kind": "value",
+      "answer": "(1, 1)"
+     },
+     {
+      "ref": "eb11c4-2:exercise-37",
+      "kind": "value",
+      "answer": "(-3, 1)"
+     },
+     {
+      "ref": "eb11c4-2:challenge-8",
+      "kind": "value",
+      "answer": "(4, 1)"
+     }
+    ]
+   }
+  }
+ ]
+}

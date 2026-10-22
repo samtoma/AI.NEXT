@@ -1,0 +1,3906 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "c2c62060afa2ffe1b97bbd752e545b4c532b06eb2dc79dfe1cca4425c6053cb1",
+  "generated_sha256": "054bd20e3bf3092610c7b316a3aa74e0ab651f06a9ff3c09ced7296045ff57ec",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c4-2",
+   "pages": [
+    {
+     "printed": 162,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Shapes of Triangles",
+       "text": "Shapes of Triangles (4-7, Chapter 4 Geometry and Equations)",
+       "_key": "p162-k1",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 2 · Triangles and Lines",
+       "text": "Concept 2 · Triangles and Lines",
+       "_key": "p162-k2",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "In modern medicine, precisely locating a target inside",
+       "text": "In modern medicine, precisely locating a target inside the human body is vital. In Stereotactic Radiosurgery, multiple narrow beams of radiation are aimed from different angles to intersect precisely at a tumor. By modeling the beams as straight lines in a three-dimensional coordinate system, medical physicists calculate their exact equations so they intersect at a single point (the tumor) while minimizing damage to healthy tissue. If the lines do not intersect correctly, or form an accidental triangle around the tumor, the treatment fails.",
+       "_key": "p162-k3",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "open_prompt",
+       "label": "Guiding Question",
+       "number": null,
+       "quote": "How can we use the algebraic equations of straight lines",
+       "text": "How can we use the algebraic equations of straight lines to guarantee that multiple paths intersect at a single, exact target point, and how do we determine the geometric boundaries of the areas they influence?",
+       "_key": "p162-k4",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Use coordinates to determine types of triangles (isosceles, right-angled, etc.)",
+       "text": "Learning Outcomes: Use coordinates to determine types of triangles (isosceles, right-angled, etc.).",
+       "_key": "p162-k5",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "To determine the shape of △ABC, calculate (AB)²",
+       "claim": "To determine the shape of triangle ABC, calculate (AB)^2, (BC)^2 and (CA)^2.",
+       "formula": "$(AB)^2, (BC)^2, (CA)^2$",
+       "_key": "p162-k6",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If (AB)² = (BC)² = (CA)², △ABC is an Equilateral triangle",
+       "claim": "If (AB)^2 = (BC)^2 = (CA)^2, triangle ABC is an equilateral triangle.",
+       "formula": "$(AB)^2=(BC)^2=(CA)^2$",
+       "_key": "p162-k7",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If (AB)² = (BC)² ≠ (CA)², △ABC is an Isosceles triangle",
+       "claim": "If (AB)^2 = (BC)^2 ≠ (CA)^2, triangle ABC is an isosceles triangle.",
+       "formula": "$(AB)^2=(BC)^2\\neq(CA)^2$",
+       "_key": "p162-k8",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If (AC)² = (AB)² + (BC)², △ABC is a Right-angled triangle",
+       "claim": "If (AC)^2 = (AB)^2 + (BC)^2, triangle ABC is a right-angled triangle.",
+       "formula": "$(AC)^2=(AB)^2+(BC)^2$",
+       "_key": "p162-k9",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Note: If both conditions are met, it is an",
+       "claim": "If both conditions are met, the triangle is an isosceles right-angled triangle.",
+       "_key": "p162-k10",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "(AC)²=(AB)²+(BC)²",
+       "caption": "Right triangle ABC shaded yellow with right angle at B (marked with small square), A at top, C at bottom right; label below reads (AC)²=(AB)²+(BC)².",
+       "notes": "Side-column figure.",
+       "_key": "p162-k11",
+       "source_page": 162,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 163,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p163-k1",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "",
+       "number": null,
+       "quote": "Determine the shape of △ABC with vertices A(4, 9), B(0, 6), and C(3, 2).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(4, 9), B(0, 6), and C(3, 2).",
+       "parts": [],
+       "_key": "p163-k2",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p163-k3",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "B(0, 6) A(4, 9) C(3, 2)",
+       "caption": "Yellow triangle with vertices B(0, 6), A(4, 9), C(3, 2). Right-angle mark at B; tick marks on sides AB and BC (equal sides). Read from figure.",
+       "notes": "Side figure beside the explanation.",
+       "_key": "p163-k4",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "(AB)²= (0 – 4)²+(6 – 9)² = 25 ...... (i)",
+       "text": "$(AB)^2=(0-4)^2+(6-9)^2=25$ ...... (i); $(BC)^2=(3-0)^2+(2-6)^2=25$ ...... (ii); $(CA)^2=(3-4)^2+(2-9)^2=50$ ...... (iii). From (i) and (ii), $\\triangle ABC$ is an isosceles triangle. From (i), (ii), and (iii), since $(CA)^2=(AB)^2+(BC)^2$, $\\triangle ABC$ is a right-angled triangle. Therefore, $\\triangle ABC$ is an Isosceles right-angled triangle with $\\angle B=90^\\circ$.",
+       "_key": "p163-k5",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p163-k6",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Determine the shape of △ABC with vertices A( − 1, 2), B(1, 1), and C(0, 4).",
+       "text": "Solve the following problems. Determine the shape of $\\triangle ABC$ with vertices A(−1, 2), B(1, 1), and C(0, 4).",
+       "parts": [],
+       "_key": "p163-k7",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "A(3, 2), B(−1, 0), and C(1 +√3, 1−2√3).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(3, 2), B(−1, 0), and C($1+\\sqrt{3}$, $1-2\\sqrt{3}$).",
+       "parts": [],
+       "_key": "p163-k8",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "activity",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+       "parts": [],
+       "_key": "p163-k9",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p163-k10",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "A(0, 2), B( − 1, − 2), and C(4, 1).",
+       "text": "Solve the following problems. Determine the shape of $\\triangle ABC$ with vertices A(0, 2), B(−1, −2), and C(4, 1).",
+       "parts": [],
+       "_key": "p163-k11",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "A(2, 2), B(2, 0), and C(√3 + 2, 1).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(2, 2), B(2, 0), and C($\\sqrt{3}+2$, 1).",
+       "parts": [],
+       "_key": "p163-k12",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "A(1, 2), B(5, 8), and C(11, 4).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(1, 2), B(5, 8), and C(11, 4).",
+       "parts": [],
+       "_key": "p163-k13",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "A( − 3, 4), B(1, 7), and C(3, − 4).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(−3, 4), B(1, 7), and C(3, −4).",
+       "parts": [],
+       "_key": "p163-k14",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "A( − 1, 1), B(4, 2), and C(1, 4).",
+       "text": "Determine the shape of $\\triangle ABC$ with vertices A(−1, 1), B(4, 2), and C(1, 4).",
+       "parts": [],
+       "_key": "p163-k15",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If A (1,2), B (2k, k) and C (4,5) and the triangle ABC",
+       "text": "If A(1,2), B(2k, k) and C(4,5) and the triangle ABC is an isosceles and right triangle at B, then find k.",
+       "parts": [],
+       "_key": "p163-k16",
+       "source_page": 163,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 164,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Equation of a Straight Line",
+       "label": "",
+       "number": null,
+       "text": "Equation of a Straight Line (4-8, Chapter 4 Geometry and Equations)",
+       "_key": "p164-k1",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Find the equation of the straight line in its different forms",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Find the equation of the straight line in its different forms.",
+       "_key": "p164-k2",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "quote": "Equation of a line parallel to an axis",
+       "label": "",
+       "number": null,
+       "text": "Point! — Equation of a line parallel to an axis",
+       "_key": "p164-k3",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "quote": "passing through point (x1, y1) and parallel to the x−axis is y = y1",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through point (x1, y1) and parallel to the x-axis is y = y1.",
+       "formula": "$y=y_1$",
+       "_key": "p164-k4",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "perpendicular to the x−axis is x = x1",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through point (x1, y1) and perpendicular to the x-axis is x = x1.",
+       "formula": "$x=x_1$",
+       "_key": "p164-k5",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "quote": "parallel to the y−axis is x = x1",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through point (x1, y1) and parallel to the y-axis is x = x1.",
+       "formula": "$x=x_1$",
+       "_key": "p164-k6",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "quote": "line passing through 2 points (x1, y1) and (x2, y1) is y = y1",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through 2 points (x1, y1) and (x2, y1) is y = y1.",
+       "formula": "$y=y_1$",
+       "notes": "Side note beside it: 'The y-coordinates of the 2 points are equal.' Printed highlighted y1 in the second point.",
+       "_key": "p164-k7",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "quote": "The y-coordinates of the 2 points are equal.",
+       "label": "",
+       "number": null,
+       "text": "Side note: The y-coordinates of the 2 points are equal.",
+       "_key": "p164-k8",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "quote": "line passing through 2 points (x1, y1) and (x1, y2) is x = x1",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through 2 points (x1, y1) and (x1, y2) is x = x1.",
+       "formula": "$x=x_1$",
+       "notes": "Printed second point is (x1, y2).",
+       "_key": "p164-k9",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "quote": "The x-coordinates of the 2 points are equal.",
+       "label": "",
+       "number": null,
+       "text": "Side note: The x-coordinates of the 2 points are equal.",
+       "_key": "p164-k10",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "rule",
+       "quote": "If the gradient and a point on the line are known",
+       "label": "",
+       "number": null,
+       "claim": "If the gradient and a point on the line are known, the equation of the line can be determined.",
+       "_key": "p164-k11",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "rule",
+       "quote": "point (x1, y1) with gradient a is y − y1 = a (x − x1)",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a line passing through point (x1, y1) with gradient a is y − y1 = a(x − x1).",
+       "formula": "$y-y_1=a(x-x_1)$",
+       "_key": "p164-k12",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "rule",
+       "quote": "The gradient of a line passing through 2 points",
+       "label": "",
+       "number": null,
+       "claim": "The gradient of a line passing through 2 points (x1, y1) and (x2, y2) (x1 ≠ x2) is a = (y2 − y1)/(x2 − x1).",
+       "formula": "$a=\\dfrac{y_2-y_1}{x_2-x_1}$",
+       "_key": "p164-k13",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "figure",
+       "quote": "(x2, y2)  (x1, y1)  y2 − y1  x2 − x1",
+       "label": "",
+       "number": null,
+       "caption": "Side figure: a blue line rising to the right through points (x1, y1) (lower) and (x2, y2) (upper); a red right-angled triangle shows horizontal side x2 − x1 and vertical side y2 − y1.",
+       "notes": "Linked to the gradient formula.",
+       "_key": "p164-k14",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "quote": "Find the equations of the following lines.",
+       "label": "Warm Up",
+       "number": null,
+       "text": "Find the equations of the following lines.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The line passing through point (3, −4) and parallel to the x-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The line passing through point (−3, 8) and parallel to the y-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The line passing through two points (−3, 1) and (−3, 2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The line passing through two points (−2, 3) and (−5, 3)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The line passing through point (2, −1) with gradient 3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The line passing through two points (1, −1) and (4, 0)",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p164-k15",
+       "source_page": 164,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 165,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Explanation",
+       "label": "",
+       "number": null,
+       "text": "Explanation",
+       "continues": true,
+       "notes": "Printed answers/explanations for the previous page's Warm Up (a)–(f).",
+       "_key": "p165-k1",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Since the x-coordinates of the 2 points are equal,",
+       "stem": "Explanation of the Warm Up: find the equations of the lines (a)–(f) (parts as printed).",
+       "solution": [
+        "(a) y = −4",
+        "(b) x = −3",
+        "(c) Since the x-coordinates of the 2 points are equal, x = −3",
+        "(d) Since the y-coordinates of the 2 points are equal, y = 3",
+        "(e) y − (−1) = 3(x−2); y = 3x−7",
+        "(f) y−(−1) = (0 − (−1))/(4 − 1) (x−1); y = \\frac{1}{3}x - \\frac{4}{3}"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "",
+         "answer": "$y=-4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "",
+         "answer": "$x=-3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "",
+         "answer": "$x=-3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "",
+         "answer": "$y=3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "",
+         "answer": "$y=3x-7$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "",
+         "answer": "$y=\\frac{1}{3}x-\\frac{4}{3}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Recorded as printed solution text; original question not on this page.",
+       "_key": "p165-k2",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Express the equation in the form y = mx + k.",
+       "text": "Side note beside (e): Express the equation in the form $y = mx + k$.",
+       "_key": "p165-k3",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a = (y2 − y1)/(x2 − x1)",
+       "claim": "Side note beside (f): the gradient is computed as the difference of y-coordinates over the difference of x-coordinates.",
+       "formula": "$a = \\frac{y_2 - y_1}{x_2 - x_1}$",
+       "notes": "Gradient is written a here, while the other note uses m; check.",
+       "_key": "p165-k4",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p165-k5",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "The line passing through point (2, 6) and parallel to the x-axis",
+       "text": "Find the equations of the following lines. The line passing through point $(2,6)$ and parallel to the $x$-axis",
+       "_key": "p165-k6",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The line passing through point (3, 5) and perpendicular to the x-axis",
+       "text": "The line passing through point $(3,5)$ and perpendicular to the $x$-axis",
+       "_key": "p165-k7",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "The line passing through two points ( − 2, − 2) and (2, − 2)",
+       "text": "The line passing through two points $(-2,-2)$ and $(2,-2)$",
+       "_key": "p165-k8",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": 4,
+       "quote": "The line passing through two points ( − 4, 2) and ( − 4, 8)",
+       "text": "The line passing through two points $(-4,2)$ and $(-4,8)$",
+       "_key": "p165-k9",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Try",
+       "number": 5,
+       "quote": "The line passing through point ( − 3, 4) with gradient 2",
+       "text": "The line passing through point $(-3,4)$ with gradient 2",
+       "_key": "p165-k10",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 6,
+       "quote": "The line passing through two points ( − 2, − 6) and ( − 4, 1)",
+       "text": "The line passing through two points $(-2,-6)$ and $(-4,1)$",
+       "_key": "p165-k11",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve questions (5 and 6) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve questions (5 and 6) then discuss the answer.",
+       "_key": "p165-k12",
+       "source_page": 165,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 166,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "continues": false,
+       "_key": "p166-k1",
+       "source_page": 166,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the equations of the following lines.",
+       "text": "Find the equations of the following lines.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "The line passing through point $(-4, 5)$ and parallel to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The line passing through point $(2, 1)$ and parallel to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "The line passing through point $(-4, -7)$ and parallel to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The line passing through point $(1, -2)$ and perpendicular to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The line passing through point $(-3, -4)$ and perpendicular to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The line passing through point $(3, -5)$ and perpendicular to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "The line passing through point $(2, -7)$ and parallel to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "The line passing through point $(4, 3)$ and parallel to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "The line passing through point $(-6, -2)$ and parallel to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "The line passing through two points $(4, 0)$ and $(4, 3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "The line passing through two points $(-1, 2)$ and $(-1, 6)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "The line passing through two points $(-5, -3)$ and $(-5, 2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "m",
+         "stem": "The line passing through two points $(-2, 3)$ and $(-3, 3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "n",
+         "stem": "The line passing through two points $(4, -2)$ and $(1, -2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "o",
+         "stem": "The line passing through two points $(-3, 6)$ and $(2, 6)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "p",
+         "stem": "The line passing through point $(-1, 5)$ with gradient $-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "q",
+         "stem": "The line passing through point $(-3, -8)$ with gradient $1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "r",
+         "stem": "The line passing through point $(2, -1)$ with gradient $-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "s",
+         "stem": "The line passing through two points $(1, 2)$ and $(3, 10)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "t",
+         "stem": "The line passing through two points $(-1, -8)$ and $(4, 2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "continues": false,
+       "_key": "p166-k2",
+       "source_page": 166,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "★ Challenge",
+       "text": "Challenge",
+       "continues": false,
+       "_key": "p166-k3",
+       "source_page": 166,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A(-4, 2) y=2 B(9, 2)",
+       "caption": "Photo of a coastal estuary with coordinate axes overlaid (x from -5 to 10, y from 1 to 5). Horizontal line y=2 drawn through sensor buoys at A(-4, 2) on the left and B(9, 2) on the right.",
+       "notes": "Values read from figure; verify.",
+       "continues": false,
+       "_key": "p166-k4",
+       "source_page": 166,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "An environmental research team is monitoring sea-level changes",
+       "text": "An environmental research team is monitoring sea-level changes in a sensitive coastal estuary. They have set up a grid system where: The x-axis represents the distance from a central research station. The y-axis represents the local sea-surface height. During a tidal study, sensors at two different monitoring stations record identical, stable sea-surface heights: Sensor West is located at coordinates A(-4, 2). Sensor East is located at coordinates B(9, 2). To map the uniform boundary of this water level across the estuary, the team needs to find the equation of the straight-line boundary connecting these two sensors.",
+       "continues": false,
+       "_key": "p166-k5",
+       "source_page": 166,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 167,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Application of the Equation of a Straight Line",
+       "label": "",
+       "number": null,
+       "text": "4-9 Application of the Equation of a Straight Line (Chapter 4 Geometry and Equations)",
+       "_key": "p167-k1",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "The equation of the straight line in its different forms",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: The equation of the straight line in its different forms, and its application in geometric situations.",
+       "_key": "p167-k2",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "quote": "An equation of the form ax + by + c= 0",
+       "label": "",
+       "number": null,
+       "claim": "An equation of the form ax + by + c = 0 (where a ≠ 0 or b ≠ 0) also represents a straight line.",
+       "formula": "$ax+by+c=0$ (where $a\\neq 0$ or $b\\neq 0$)",
+       "notes": "Under the 'Point!' box heading.",
+       "_key": "p167-k3",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "quote": "The equation of a straight line can be found when",
+       "label": "",
+       "number": null,
+       "claim": "The equation of a straight line can be found when the gradient and a point on the line are known.",
+       "_key": "p167-k4",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "The gradient of a line can be found using two points on the line",
+       "label": "",
+       "number": null,
+       "claim": "The gradient of a line can be found using two points on the line.",
+       "_key": "p167-k5",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "quote": "Warm Up",
+       "label": "",
+       "number": null,
+       "text": "Warm Up",
+       "_key": "p167-k6",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p167-k7",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "quote": "Given that three points A(2, 3), B(4, − 1), and C(a − 1, 2 − a)",
+       "label": "Warm Up",
+       "number": 1,
+       "text": "Given that three points A(2, 3), B(4, −1), and C(a−1, 2−a) lie on the same straight line, find the value of the constant a.",
+       "_key": "p167-k8",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "quote": "Find the equation of the line passing through the intersection of 2 lines",
+       "label": "Warm Up",
+       "number": 2,
+       "text": "Find the equation of the line passing through the intersection of 2 lines 2x − 3y + 1 = 0 and x + 2y−3 = 0, and passing through point (−1, 3).",
+       "_key": "p167-k9",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "quote": "Explanation",
+       "label": "",
+       "number": null,
+       "text": "Explanation",
+       "_key": "p167-k10",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "quote": "The equation of the line passing through 2 points A(2, 3) and B(4, − 1) is:",
+       "label": "",
+       "number": null,
+       "stem": "Warm Up 1: find a so that A(2, 3), B(4, −1), C(a−1, 2−a) are collinear.",
+       "solution": [
+        "The equation of the line passing through 2 points A(2, 3) and B(4, −1) is: $y-3=\\frac{-1-3}{4-2}(x-2)$",
+        "Simplifying this gives $y=-2x+7$ ...(i)",
+        "Since (i) passes through C(a − 1, 2 − a):",
+        "$2-a=-2(a-1)+7$",
+        "Solving this gives $a=7$"
+       ],
+       "answer": "$a=7$",
+       "notes": "Explanation heading numbered 1; margin notes give hints.",
+       "_key": "p167-k11",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "quote": "Solving this system of equations gives x = 1, y = 1",
+       "label": "",
+       "number": null,
+       "stem": "Warm Up 2: 2x − 3y + 1 = 0 (i), x + 2y − 3 = 0 (ii); line through their intersection and (−1, 3).",
+       "solution": [
+        "$2x-3y+1=0$ ...(i)",
+        "$x+2y-3=0$ ...(ii)",
+        "Solving this system of equations gives $x=1,\\ y=1$",
+        "The equation of the line passing through 2 points (1, 1) and (−1, 3) is: $y-1=\\frac{3-1}{-1-1}(x-1)$",
+        "That is, $x+y-2=0$"
+       ],
+       "answer": "$x+y-2=0$",
+       "_key": "p167-k12",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "linking_text",
+       "quote": "Find the equation of the line from 2 points whose coordinates are known.",
+       "label": "",
+       "number": null,
+       "text": "Margin note: Find the equation of the line from 2 points whose coordinates are known.",
+       "_key": "p167-k13",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "quote": "Substitute the coordinates of point C into (i).",
+       "label": "",
+       "number": null,
+       "text": "Margin note: Substitute the coordinates of point C into (i).",
+       "_key": "p167-k14",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "quote": "Solve the equations of the 2 lines simultaneously to find the point of intersection.",
+       "label": "",
+       "number": null,
+       "text": "Margin note: Solve the equations of the 2 lines simultaneously to find the point of intersection.",
+       "_key": "p167-k15",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "linking_text",
+       "quote": "The coordinates of the intersection of (i) and (ii) are (1, 1).",
+       "label": "",
+       "number": null,
+       "text": "Margin note: The coordinates of the intersection of (i) and (ii) are (1, 1).",
+       "_key": "p167-k16",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "linking_text",
+       "quote": "Answer in the form ax + by + c = 0 as in the question.",
+       "label": "",
+       "number": null,
+       "text": "Margin note: Answer in the form ax + by + c = 0 as in the question.",
+       "_key": "p167-k17",
+       "source_page": 167,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 168,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p168-k1",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Given that three points A(2, 5), B(4, 9), and C( − 1, a)",
+       "text": "Given that three points A(2, 5), B(4, 9), and C(−1, a) lie on the same straight line, find the value of the constant $a$.",
+       "_key": "p168-k2",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the equation of the line passing through the intersection of 2 lines",
+       "text": "Find the equation of the line passing through the intersection of 2 lines $x+2y-10=0$ and $2x+3y-7=0$, and passing through point (5, 6).",
+       "notes": "Printed '3y—7' with a long dash; recorded as minus.",
+       "_key": "p168-k3",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+       "_key": "p168-k4",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p168-k5",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Given that three points A(1, − 1), B( − 2, − 3), and C(4, a)",
+       "text": "Given that three points A(1, −1), B(−2, −3), and C(4, a) lie on the same straight line, find the value of the constant $a$.",
+       "_key": "p168-k6",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Given that three points A(1, 2), B(3, 1), and C(a, − 1)",
+       "text": "Given that three points A(1, 2), B(3, 1), and C(a, −1) lie on the same straight line, find the value of the constant $a$.",
+       "_key": "p168-k7",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Given that three points A( − 3, − 9), B(5, 7), and C(a + 3, 3a − 2)",
+       "text": "Given that three points A(−3, −9), B(5, 7), and C(a+3, 3a−2) lie on the same straight line, find the value of the constant $a$.",
+       "_key": "p168-k8",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "3x + 5y − 1 = 0 and 7x + 8y − 6 = 0",
+       "text": "Find the equation of the line passing through the intersection of 2 lines $3x+5y-1=0$ and $7x+8y-6=0$, and passing through point (−1, 2).",
+       "_key": "p168-k9",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "x + 2y − 4 = 0 and 2x − y − 3 = 0",
+       "text": "Find the equation of the line passing through the intersection of 2 lines $x+2y-4=0$ and $2x-y-3=0$, and passing through point (−3, −1).",
+       "_key": "p168-k10",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "open_prompt",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Robotic Needle Biopsy Guidance",
+       "text": "Robotic Needle Biopsy Guidance. In robotic-assisted surgery, a computer system guides a biopsy needle to a deep-seated tumor. The target tumor is located at the precise intersection of two diagnostic imaging paths (modeled as straight lines on a coordinate grid, where 1 unit = 1 millimeter): Laser Scan Path A: $6x+5y+7=0$; Laser Scan Path B: $3x-2y+5=0$. The Clinical Challenge: The surgical robot's mechanical arm is anchored at the system's coordinate origin (0,0) (the home calibration point). To perform the biopsy, the robotic arm must insert a rigid needle along a perfectly straight trajectory from the origin (0,0) directly to the tumor at the intersection point. The software engineers must calculate the exact linear equation of this needle trajectory to program the robotic arm's path.",
+       "_key": "p168-k11",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Robotic Needle Biopsy Guidance",
+       "caption": "Photo-style illustration of a robotic surgery setup with a patient, coloured laser lines crossing at a point labelled 'TUMOR' / 'INTERSECTION TARGET' inside a 3D coordinate grid with mm scale labels.",
+       "notes": "Mostly decorative; axis labels too small to read reliably.",
+       "_key": "p168-k12",
+       "source_page": 168,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 169,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Parallel and Perpendicular Lines",
+       "text": "Parallel and Perpendicular Lines",
+       "_key": "p169-k1",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Apply the conditions for parallelism and perpendicularity of straight lines",
+       "text": "Learning Outcomes: Apply the conditions for parallelism and perpendicularity of straight lines to solve geometric problems.",
+       "_key": "p169-k2",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "An equation of the form ax + by + c= 0",
+       "claim": "An equation of the form ax + by + c = 0 (where a ≠ 0 or b ≠ 0) also represents a straight line.",
+       "formula": "$ax+by+c=0$",
+       "_key": "p169-k3",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Problems concerning parallel or perpendicular lines use gradients.",
+       "claim": "Problems concerning parallel or perpendicular lines use gradients.",
+       "_key": "p169-k4",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "For 2 lines y = m1x + k1 and y = m2x + k2",
+       "claim": "For 2 lines y = m_1 x + k_1 and y = m_2 x + k_2 (the following conditions).",
+       "formula": "$y=m_1x+k_1,\\ y=m_2x+k_2$",
+       "_key": "p169-k5",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "2 lines are parallel ⟹ m1 = m2, that is, gradients are equal.",
+       "claim": "2 lines are parallel implies m_1 = m_2, that is, gradients are equal.",
+       "formula": "$m_1=m_2$",
+       "_key": "p169-k6",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "2 lines are perpendicular ⟹ m1 = −1/m2, that is, gradients are negative reciprocals",
+       "claim": "2 lines are perpendicular implies m_1 = -1/m_2, that is, gradients are negative reciprocals.",
+       "formula": "$m_1=-\\frac{1}{m_2}$",
+       "_key": "p169-k7",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Solve problems concerning parallel or perpendicular lines by transforming",
+       "claim": "Solve problems concerning parallel or perpendicular lines by transforming the equation into the form y = mx + k.",
+       "formula": "$y=mx+k$",
+       "_key": "p169-k8",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p169-k9",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p169-k10",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Identify which of the following lines are parallel to each other and which are perpendicular.",
+       "text": "Identify which of the following lines are parallel to each other and which are perpendicular.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$y=2x+3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$y=-3x+2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$x-3y+1=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$2x-y-1=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$x+3y+3=0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p169-k11",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Find the equation of the line passing through point (2, − 4) and parallel to",
+       "text": "Find the equation of the line passing through point $(2,-4)$ and parallel to $3x-2y+1=0$",
+       "_key": "p169-k12",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 3,
+       "quote": "Find the equation of the line passing through point ( − 2, 5) and",
+       "text": "Find the equation of the line passing through point $(-2,5)$ and perpendicular to $3x+5y+1=0$",
+       "_key": "p169-k13",
+       "source_page": 169,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 170,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Explanation",
+       "label": "",
+       "number": null,
+       "text": "Explanation",
+       "_key": "p170-k1",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Find the gradient of each line.",
+       "label": "",
+       "number": null,
+       "text": "Step 1: Find the gradient of each line. (a) $y = 2x + 3$, the gradient is 2. (b) $y = -3x + 2$, the gradient is $-3$. (c) $x - 3y + 1 = 0$, so $y = \\frac{1}{3}x + \\frac{1}{3}$, the gradient is $\\frac{1}{3}$. (d) $2x - y - 1 = 0$, so $y = 2x - 1$, the gradient is 2. (e) $x + 3y + 3 = 0$, so $y = -\\frac{1}{3}x - 1$, the gradient is $-\\frac{1}{3}$. Side note: Transform the equation into the form $y = mx + k$.",
+       "notes": "Numbered step 1 of the explanation, with lettered working (a)-(e) and a side note.",
+       "_key": "p170-k2",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "quote": "Parallel lines are (a) and (d) .",
+       "label": "",
+       "number": null,
+       "text": "Parallel lines are (a) and (d). Side note: Choose those with equal gradients.",
+       "_key": "p170-k3",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "quote": "Perpendicular lines are (b) and (c) .",
+       "label": "",
+       "number": null,
+       "text": "Perpendicular lines are (b) and (c). Side note: Choose those whose gradients are negative reciprocals.",
+       "_key": "p170-k4",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "quote": "3x − 2y + 1 = 0",
+       "label": "",
+       "number": null,
+       "text": "Step 2: $3x - 2y + 1 = 0$ (side note: Transform into the form $y = mx + k$ and find the gradient.) $y = \\frac{3}{2}x + \\frac{1}{2}$, the gradient is $\\frac{3}{2}$. Therefore, the required parallel line passes through point $(2, -4)$ and has a gradient of $\\frac{3}{2}$ (side note: The gradient of a parallel line is the same.). $y - (-4) = \\frac{3}{2}(x - 2)$. Simplifying this gives $3x - 2y - 14 = 0$ (side note: Match the equation to the form in the question $(ax + by + c = 0)$.)",
+       "notes": "Final equation printed in red.",
+       "_key": "p170-k5",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "quote": "3x + 5y + 1 = 0",
+       "label": "",
+       "number": null,
+       "text": "Step 3: $3x + 5y + 1 = 0$ (side note: Transform into the form $y = mx + k$ and find the gradient.) $y = -\\frac{3}{5}x - \\frac{1}{5}$, the gradient is $-\\frac{3}{5}$. Therefore, the required perpendicular line passes through point $(-2, 5)$ and has a gradient of $\\frac{5}{3}$ (side note: The gradient of a perpendicular line is the negative reciprocal.). $y - 5 = \\frac{5}{3}\\{x - (-2)\\}$. Simplifying this gives $5x - 3y + 25 = 0$ (side note: Match the equation to the form in the question.)",
+       "notes": "Final equation printed in red; printed without spaces as 5x−3y+25 = 0. Curly braces printed around x − (−2).",
+       "_key": "p170-k6",
+       "source_page": 170,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 171,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p171-k1",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Identify which of the following lines are parallel to each other",
+       "text": "Identify which of the following lines are parallel to each other and which are perpendicular.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$y = 3x + 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$y = 4x - 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$y = -4x - 7$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$6x - 2y = 5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$8x + 2y - 3 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$x + 4y - 4 = 0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p171-k2",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the equation of the line passing through point (1, – 3)",
+       "text": "Find the equation of the line passing through point $(1,-3)$ and parallel to $6x + 3y - 5 = 0$.",
+       "_key": "p171-k3",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "Find the equation of the line passing through point (2, 1) and perpendicular",
+       "text": "Find the equation of the line passing through point $(2,1)$ and perpendicular to $2x + 3y + 4 = 0$.",
+       "_key": "p171-k4",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "activity",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (1) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve question (1) then discuss the answer.",
+       "_key": "p171-k5",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p171-k6",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Identify which of the following lines are parallel to each other",
+       "text": "Identify which of the following lines are parallel to each other and which are perpendicular.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$y = 3x - 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$y = -3x + 4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$y = x - 3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$6x + 2y + 5 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$2x - 2y - 1 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$x + 3y - 2 = 0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p171-k7",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Identify which of the following lines are parallel to each other",
+       "text": "Identify which of the following lines are parallel to each other and which are perpendicular.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$y = 2x - 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$y = -x + 4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$y = \\frac{3}{2}x + 6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$x + y + 3 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$2x + 3y + 8 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$3x + 6y - 1 = 0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p171-k8",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "point (1, –2) and parallel to",
+       "text": "Find the equation of the line passing through point $(1,-2)$ and parallel to $2x - y + 5 = 0$.",
+       "_key": "p171-k9",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "point (–1, 2) and parallel to",
+       "text": "Find the equation of the line passing through point $(-1,2)$ and parallel to $2x + 3y = 0$.",
+       "_key": "p171-k10",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "point (3, –1) and parallel to",
+       "text": "Find the equation of the line passing through point $(3,-1)$ and parallel to $3x + 2y + 1 = 0$.",
+       "_key": "p171-k11",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "point (2, –5) and perpendicular",
+       "text": "Find the equation of the line passing through point $(2,-5)$ and perpendicular to $2x + y - 1 = 0$.",
+       "_key": "p171-k12",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "point (–1, 3) and perpendicular",
+       "text": "Find the equation of the line passing through point $(-1,3)$ and perpendicular to $5x - 2y + 3 = 0$.",
+       "_key": "p171-k13",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 8,
+       "quote": "point (–2, –5) and",
+       "text": "Find the equation of the line passing through point $(-2,-5)$ and perpendicular to $3x - 2y - 7 = 0$.",
+       "_key": "p171-k14",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "For the straight lines L1:2x + 3y – 10 = 0",
+       "text": "For the straight lines $L_1: 2x + 3y - 10 = 0$, $L_2: kx - 2y + 5 = 0$, $L_3: 4x + my - 1 = 0$, if $L_1$ is perpendicular to $L_2$ and $L_1$ is parallel to $L_3$, then find $m/k$.",
+       "_key": "p171-k15",
+       "source_page": 171,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 172,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Perpendicular Bisector and Symmetric Points with Respect to a Line",
+       "text": "4-11 Perpendicular Bisector and Symmetric Points with Respect to a Line",
+       "_key": "p172-k1",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Derive the equation of the perpendicular bisector of a line segment",
+       "text": "Derive the equation of the perpendicular bisector of a line segment and identify the symmetry points of a straight line, applying these concepts in geometric contexts.",
+       "_key": "p172-k2",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A M B l",
+       "caption": "Line l with segment AB perpendicular to l; M is the midpoint of AB lying on l, a right-angle mark at M, equal-length tick marks on AM and MB; A above l, B below l. Points A, B, M and line l labelled.",
+       "notes": "Side-column figure.",
+       "_key": "p172-k3",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Since the perpendicular bisector of line segment (AB) is perpendicular",
+       "claim": "The perpendicular bisector of segment (AB) is perpendicular to line AB and passes through the midpoint of (AB), so it is found using the gradient of line (AB) and the coordinates of the midpoint of segment (AB).",
+       "_key": "p172-k4",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "To find the coordinates of point B(s, t), which is symmetric to point A",
+       "claim": "To find the coordinates of point B(s, t) symmetric to point A with respect to line l, express two conditions as equations and solve them simultaneously: the line segment (AB) is perpendicular to l, and the midpoint of (AB) lies on line l.",
+       "_key": "p172-k5",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p172-k6",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p172-k7",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Given points A(5, 11) and B(1, – 1), find the equation of the perpendicular",
+       "text": "Given points $A(5, 11)$ and $B(1, -1)$, find the equation of the perpendicular bisector of line segment (AB).",
+       "_key": "p172-k8",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Find the coordinates of point B symmetric to point A( – 4, 3) with respect to",
+       "text": "Find the coordinates of point B symmetric to point $A(-4, 3)$ with respect to line $3x - y + 5 = 0$.",
+       "_key": "p172-k9",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p172-k10",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "The gradient of line (AB) is",
+       "stem": "Warm Up 1: perpendicular bisector of segment (AB), A(5, 11), B(1, -1).",
+       "solution": [
+        "The gradient of line (AB) is $\\frac{-1-11}{1-5} = 3$, so the gradient of the perpendicular line is $-\\frac{1}{3}$.",
+        "The coordinates of the midpoint of segment (AB) are $\\left(\\frac{5+1}{2}, \\frac{11-1}{2}\\right)$, which is $(3, 5)$.",
+        "Therefore the perpendicular bisector of (AB) is a line passing through $(3,5)$ with gradient $-\\frac{1}{3}$, so: $y - 5 = -\\frac{1}{3}(x-3)$. Simplifying this gives $x + 3y - 18 = 0$."
+       ],
+       "answer": "$x + 3y - 18 = 0$",
+       "notes": "Unlabelled explanation of Warm Up 1; side note beside it: gradient of a perpendicular line is the negative reciprocal.",
+       "_key": "p172-k11",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "Let the coordinates of point B be (s, t), and the line 3x – y+5 = 0 be l.",
+       "stem": "Warm Up 2: point B(s, t) symmetric to A(-4, 3) with respect to l: 3x - y + 5 = 0.",
+       "solution": [
+        "Let the coordinates of point B be $(s, t)$, and the line $3x - y + 5 = 0$ be $l$.",
+        "The gradient of line (AB) is $\\frac{t-3}{s+4}$, and the gradient of $l$ is 3.",
+        "Since $(AB) \\perp l$, $\\frac{t-3}{s+4} = -\\frac{1}{3}$.",
+        "Simplifying this gives $s + 3t - 5 = 0$ ......(i)",
+        "Also, since the coordinates of the midpoint of segment (AB) $\\left(\\frac{-4+s}{2}, \\frac{3+t}{2}\\right)$ lie on $l$,"
+       ],
+       "notes": "Solution continues on the next page; no final answer on this page.",
+       "_key": "p172-k12",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "The gradient of a perpendicular line is the negative reciprocal.",
+       "text": "Side note (beside Explanation 1): The gradient of a perpendicular line is the negative reciprocal.",
+       "_key": "p172-k13",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Transform l into y = 3x + 5 to find the gradient.",
+       "text": "Side note (beside Explanation 2): Transform $l$ into $y = 3x + 5$ to find the gradient.",
+       "_key": "p172-k14",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "The gradient of a perpendicular line is the negative reciprocal.",
+       "text": "Side note (beside Explanation 2): The gradient of a perpendicular line is the negative reciprocal.",
+       "_key": "p172-k15",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute x = (-4+s)/2, y = (3+t)/2 into the equation of l",
+       "text": "Side note: Substitute $x = \\frac{-4+s}{2}$, $y = \\frac{3+t}{2}$ into the equation of $l$.",
+       "_key": "p172-k16",
+       "source_page": 172,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 173,
+     "records": [
+      {
+       "key": "k1",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Simplifying this gives 3s − t − 5 = 0 ......(ii)",
+       "continues": true,
+       "text": "Substituting gives $3\\cdot\\frac{-4+s}{2}-\\frac{3+t}{2}+5=0$; simplifying this gives $3s-t-5=0$ ......(ii). Solving (i) and (ii) simultaneously gives $s=2, t=1$. Therefore, the coordinates of point B are B(2, 1).",
+       "notes": "Continues the previous page's substitution step; the final answer B(2, 1) is underlined in print.",
+       "_key": "p173-k1",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Given points A( − 1, 2) and B(3, − 4), find the equation",
+       "text": "Solve the following problems. Given points A(−1, 2) and B(3, −4), find the equation of the perpendicular bisector of line segment (AB).",
+       "parts": [],
+       "_key": "p173-k2",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the coordinates of point B symmetric to point A(0, 4)",
+       "text": "Find the coordinates of point B symmetric to point A(0, 4) with respect to line $2x-y-1=0$",
+       "parts": [],
+       "_key": "p173-k3",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "notes": "Side-column box, placed beside the Try exercises.",
+       "_key": "p173-k4",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the equations of the perpendicular bisectors of the following line",
+       "text": "Solve the following problems. Find the equations of the perpendicular bisectors of the following line segments AB.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "A(−2, 3), B(2, 1)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "A(−1, 2), B(5, −2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "A(0, 6), B(4, 4)",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p173-k5",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the coordinates of point B symmetric to point A(1, 2)",
+       "text": "Find the coordinates of point B symmetric to point A(1, 2) with respect to line $x+2y-10=0$",
+       "parts": [],
+       "_key": "p173-k6",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Find the coordinates of point B symmetric to point A(4, − 1)",
+       "text": "Find the coordinates of point B symmetric to point A(4, −1) with respect to line $4x-2y-3=0$",
+       "parts": [],
+       "_key": "p173-k7",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "In an ophthalmic surgical laser system, a targeting laser line is",
+       "text": "In an ophthalmic surgical laser system, a targeting laser line is modeled by the equation y = 2x. If a calibration sensor is placed at point A(5, 0), the signal receiver must be positioned at point B, which is the exact symmetric reflection of point A across the laser line. Find the coordinates of target point B to ensure accurate system calibration.",
+       "parts": [],
+       "_key": "p173-k8",
+       "source_page": 173,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 174,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the perpendicular distance from a point to a straight line",
+       "text": "Learning Outcomes: Calculate the perpendicular distance from a point to a straight line and apply this skill in solving geometric problems.",
+       "_key": "p174-k1",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "(x1, y1) ax+by+c=0 d",
+       "caption": "Point (x_1, y_1) above the line ax+by+c=0, with a dotted perpendicular segment labelled d dropped from the point to the line; right-angle mark at the foot. Labels read from figure.",
+       "notes": "Side-column figure; small labels, verify.",
+       "_key": "p174-k2",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Point!",
+       "text": "Point!",
+       "_key": "p174-k3",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The distance d between point (x1, y1 ) and line ax + by + c = 0 is:",
+       "claim": "The distance d between the point (x_1, y_1) and the line ax+by+c=0 is d = |ax_1+by_1+c| / sqrt(a^2+b^2).",
+       "formula": "$d=\\dfrac{|ax_1+by_1+c|}{\\sqrt{a^2+b^2}}$",
+       "_key": "p174-k4",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "To find the length of the perpendicular dropped from a point to a line",
+       "claim": "To find the length of the perpendicular dropped from a point to a line, just find the distance between the point and the line.",
+       "_key": "p174-k5",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p174-k6",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the following values.",
+       "text": "Find the following values.",
+       "parts": [
+        {
+         "label": "1",
+         "stem": "The distance $d$ between point $(-2, 1)$ and line $3x-2y+5=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "stem": "The length of the perpendicular OH dropped from the origin O to line $3x-y=5$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p174-k7",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p174-k8",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "d = | 3·(−2) + (−2)·1 + 5 | / √(3² + (−2)²)",
+       "stem": "Distance d between point (-2, 1) and line 3x-2y+5=0",
+       "solution": [
+        "$d=\\dfrac{|3\\cdot(-2)+(-2)\\cdot 1+5|}{\\sqrt{3^2+(-2)^2}}$",
+        "$=\\dfrac{|-3|}{\\sqrt{13}}$",
+        "$=\\dfrac{3}{\\sqrt{13}}$",
+        "$=\\dfrac{3\\sqrt{13}}{13}$"
+       ],
+       "answer": "$\\dfrac{3\\sqrt{13}}{13}$",
+       "misprints": [
+        {
+         "field": "solution[0]",
+         "printed": "(−2)·1",
+         "intended": "(−2)·... check",
+         "notes": "Printed substitutes a=3,b=-2 with x1=-2,y1=1: 3(-2)+(-2)(1)+5 = -3; consistent, no real error."
+        }
+       ],
+       "notes": "Misprint entry is a non-issue; printed solution is consistent.",
+       "_key": "p174-k9",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "The length of the perpendicular dropped from a point to a line is the distance",
+       "stem": "The length of the perpendicular dropped from a point to a line is the distance between the point and the line. Transforming 3x - y = 5 gives 3x - y - 5 = 0.",
+       "solution": [
+        "Transforming $3x-y=5$ gives $3x-y-5=0$",
+        "$OH=\\dfrac{|3\\cdot 0+(-1)\\cdot 0-5|}{\\sqrt{3^2+(-1)^2}}$",
+        "$=\\dfrac{\\sqrt{10}}{2}$"
+       ],
+       "answer": "$\\dfrac{\\sqrt{10}}{2}$",
+       "notes": "Printed result sqrt(10)/2 equals 5/sqrt(10); consistent.",
+       "_key": "p174-k10",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Transform into the form ax + by + c = 0 so the formula can be used.",
+       "text": "Side note: Transform into the form ax + by + c = 0 so the formula can be used.",
+       "notes": "Side note attached to the line 'Transforming 3x - y = 5 gives 3x - y - 5 = 0' by a dotted line.",
+       "_key": "p174-k11",
+       "source_page": 174,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 175,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following values.",
+       "text": "Find the following values.",
+       "parts": [],
+       "continues": false,
+       "_key": "p175-k1",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "The distance between point (3, − 2) and line x + 2y − 4 = 0",
+       "text": "The distance between point $(3,-2)$ and line $x+2y-4=0$",
+       "continues": false,
+       "_key": "p175-k2",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "The length of the perpendicular dropped from point ( − 1, 5) to line y = 3x − 2",
+       "text": "The length of the perpendicular dropped from point $(-1,5)$ to line $y=3x-2$",
+       "continues": false,
+       "_key": "p175-k3",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "continues": false,
+       "_key": "p175-k4",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the following values.",
+       "text": "Find the following values.",
+       "continues": false,
+       "_key": "p175-k5",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "The distance between point ( − 3, 2) and line 2x − 3y + 6 = 0",
+       "text": "The distance between point $(-3,2)$ and line $2x-3y+6=0$",
+       "continues": false,
+       "_key": "p175-k6",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "The distance between point ( − 3, 7) and line 12x − 5y = 7",
+       "text": "The distance between point $(-3,7)$ and line $12x-5y=7$",
+       "continues": false,
+       "_key": "p175-k7",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "The distance between point ( − 8, 1) and line y = 2x − 3",
+       "text": "The distance between point $(-8,1)$ and line $y=2x-3$",
+       "continues": false,
+       "_key": "p175-k8",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "The distance between the origin and line 3x—4y—5 = 0",
+       "text": "The distance between the origin and line $3x-4y-5=0$",
+       "continues": false,
+       "_key": "p175-k9",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "perpendicular dropped from point (2, 3) to line 3x + 2y + 1 = 0",
+       "text": "The length of the perpendicular dropped from point $(2,3)$ to line $3x+2y+1=0$",
+       "continues": false,
+       "_key": "p175-k10",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "perpendicular dropped from point (13, 4) to line 3x + 4y − 5 = 0",
+       "text": "The length of the perpendicular dropped from point $(13,4)$ to line $3x+4y-5=0$",
+       "continues": false,
+       "_key": "p175-k11",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "perpendicular dropped from point (1, 2) to line y = 3x + 1",
+       "text": "The length of the perpendicular dropped from point $(1,2)$ to line $y=3x+1$",
+       "continues": false,
+       "_key": "p175-k12",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "In stereotactic radiosurgery, a narrow radiation beam is modeled",
+       "text": "In stereotactic radiosurgery, a narrow radiation beam is modeled by the line $y=\\frac{1}{3}x+2$. A critical nerve center (modeled as a point) is located nearby at P(−1, 5). To prevent radiation damage, medical physicists must calculate the shortest (perpendicular) distance from the nerve center to the path of the radiation beam. Find this distance to ensure it meets the required safety margin.",
+       "continues": false,
+       "_key": "p175-k13",
+       "source_page": 175,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 176,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Area of a Triangle",
+       "text": "Area of a Triangle (4-13, Chapter 4 Geometry and Equations)",
+       "_key": "p176-k1",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Determine the area of a triangle using coordinates.",
+       "text": "Learning Outcomes: Determine the area of a triangle using coordinates.",
+       "_key": "p176-k2",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Find the base.",
+       "caption": "Triangle ABC with A at left, B at lower right, C at top; line AB is extended on both sides; a dotted red perpendicular from C to line AB with a right-angle mark. Triangle shaded yellow. No numeric values.",
+       "_key": "p176-k3",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "How to find the area of △ABC on the coordinate plane:",
+       "text": "Point! How to find the area of △ABC on the coordinate plane:",
+       "_key": "p176-k4",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "For the base, find the distance between 2 points A and B",
+       "claim": "For the base, find the distance between 2 points A and B.",
+       "_key": "p176-k5",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "For the height, find the distance between point C and line (AB)",
+       "claim": "For the height, find the distance between point C and line (AB).",
+       "_key": "p176-k6",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the area of △ABC with vertices A(1, 1), B(3, 7), and C( − 3, − 1)",
+       "text": "Find the area of $\\triangle ABC$ with vertices $A(1,1)$, $B(3,7)$, and $C(-3,-1)$.",
+       "_key": "p176-k7",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "The equation of line (AB) is y − 1 =",
+       "stem": "Find the area of △ABC with vertices A(1,1), B(3,7), C(−3,−1) (Warm Up), explained step by step.",
+       "solution": [
+        "Find the base: $AB=\\sqrt{(3-1)^2+(7-1)^2}=2\\sqrt{10}\\ldots(i)$",
+        "Find the equation of line AB, needed for the height: $y-1=\\frac{7-1}{3-1}(x-1)$",
+        "Simplifying gives $3x-y-2=0$",
+        "Find the height: distance between C and line AB is $\\frac{|3\\cdot(-3)+(-1)\\cdot(-1)-2|}{\\sqrt{3^2+(-1)^2}}=\\sqrt{10}\\ldots(ii)$",
+        "From (i) and (ii), the area is $\\frac12\\times2\\sqrt{10}\\times\\sqrt{10}=10$"
+       ],
+       "answer": "$10$",
+       "notes": "Side-column notes 'Find the base.', 'Find the equation of line AB, which is needed for the height calculation.', 'Find the height.' annotate the steps. Printed '(AB) =' with brackets around AB.",
+       "_key": "p176-k8",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p176-k9",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the areas of △ABC given the following vertices.",
+       "text": "Find the areas of △ABC given the following vertices.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$A(1,5), B(-3,-3), C(3,-6)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$A(-2,1), B(2,-1), C(0,4)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p176-k10",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the areas of △ABC given the following vertices.",
+       "text": "Find the areas of △ABC given the following vertices.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$A(0,-6), B(2,-2), C(1,5)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$A(-2,4), B(-3,-5), C(5,-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$A(2,5), B(0,1), C(4,2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p176-k11",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "In reconstructive burn surgery, a patient requires a triangular skin graft.",
+       "text": "In reconstructive burn surgery, a patient requires a triangular skin graft. A surgical imaging system maps the wound boundaries onto a coordinate grid (where 1 unit = 1 mm) with vertices at A(-2, 1), B(1, 5), and C(-21, -21). To harvest the correct amount of donor tissue, the surgical team must calculate the exact surface area of the triangular wound. Find the area of triangle ABC.",
+       "notes": "Picture of surgery beside text is decorative.",
+       "_key": "p176-k12",
+       "source_page": 176,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 177,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Line Passing Through a Fixed Point",
+       "text": "Line Passing Through a Fixed Point",
+       "_key": "p177-k1",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Determine the line passing through a fixed point.",
+       "text": "Learning Outcomes: Determine the line passing through a fixed point.",
+       "_key": "p177-k2",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Steps to solve problems involving lines “passing through a fixed point",
+       "text": "Point! Steps to solve problems involving lines “passing through a fixed point for all values of k”:",
+       "_key": "p177-k3",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Rearrange the equation of the line with respect to k and treat it as an identity in k.",
+       "claim": "Step 1: Rearrange the equation of the line with respect to k and treat it as an identity in k.",
+       "formula": "",
+       "_key": "p177-k4",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "From the identity in k, (ax + by + c)k + (a'x + b'y + c') = 0,",
+       "claim": "Step 2: From the identity in k, (ax+by+c)k+(a'x+b'y+c')=0, create the system ax+by+c=0 and a'x+b'y+c'=0 and solve it.",
+       "formula": "$(ax+by+c)k+(a'x+b'y+c')=0 \\Rightarrow \\begin{cases} ax+by+c=0 \\\\ a'x+b'y+c'=0 \\end{cases}$",
+       "_key": "p177-k5",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "The line (k − 4)x + (k + 2)y + k + 5 = 0 passes through a fixed point",
+       "text": "The line $(k-4)x+(k+2)y+k+5=0$ passes through a fixed point regardless of $k$. Find the coordinates of that fixed point.",
+       "parts": [],
+       "_key": "p177-k6",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Rearranging (k − 4)x + (k + 2)y + k + 5 = 0 with respect to k gives:",
+       "stem": "Find the fixed point of $(k-4)x+(k+2)y+k+5=0$ (Warm Up).",
+       "solution": [
+        "Rearranging with respect to $k$: $(x+y+1)k+(-4x+2y+5)=0$",
+        "Since this must hold for all $k$: $x+y+1=0$ and $-4x+2y+5=0$",
+        "Solving gives $x=\\frac{1}{2}, y=-\\frac{3}{2}$",
+        "Therefore the fixed point is $\\left(\\frac{1}{2},-\\frac{3}{2}\\right)$"
+       ],
+       "answer": "$\\left(\\frac{1}{2},-\\frac{3}{2}\\right)$",
+       "_key": "p177-k7",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Treat it as an identity in k.",
+       "text": "Side note: Treat it as an identity in k.",
+       "belongs_to_key": "p177-k7",
+       "_key": "p177-k8",
+       "source_page": 177,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "The line (2k + 1)x − (k + 2)y + 7k + 8 = 0 passes through a fixed point",
+       "text": "The line $(2k+1)x-(k+2)y+7k+8=0$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+       "parts": [],
+       "_key": "p177-k9",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p177-k10",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "The line (k + 2)x + ky − 6 = 0 passes through a fixed point",
+       "text": "Solve the following problems. The line $(k+2)x+ky-6=0$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+       "parts": [],
+       "_key": "p177-k11",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "The line (k + 3)x − (2k + 1)y + k − 2 = 0 passes through a fixed point",
+       "text": "The line $(k+3)x-(2k+1)y+k-2=0$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+       "parts": [],
+       "_key": "p177-k12",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "The line (k + 3)x + (3k + 2)y + 7 = 0 passes through a fixed point",
+       "text": "The line $(k+3)x+(3k+2)y+7=0$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+       "parts": [],
+       "_key": "p177-k13",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "The line − (k − 2)x + (k − 3)y = − 3k + 5 passes through a fixed point",
+       "text": "The line $-(k-2)x+(k-3)y=-3k+5$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+       "parts": [],
+       "_key": "p177-k14",
+       "source_page": 177,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 178,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Conditions for Not Forming a Triangle",
+       "text": "Conditions for Not Forming a Triangle (4-15, Chapter 4 Geometry and Equations)",
+       "_key": "p178-k1",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Derive and explain the conditions under which a triangle does not form",
+       "text": "Learning Outcomes: Derive and explain the conditions under which a triangle does not form (collinearity of points).",
+       "_key": "p178-k2",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "There are 2 cases for the conditions where 3 lines do not form a triangle",
+       "claim": "Three lines do not form a triangle in 2 cases. Case 1: 2 lines are parallel, so the gradients of the 2 lines are the same.",
+       "_key": "p178-k3",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "3 lines intersect at 1 point",
+       "claim": "Case 2: the 3 lines intersect at 1 point. Find the point of intersection of 2 lines, and the remaining line also passes through that point.",
+       "_key": "p178-k4",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "",
+       "caption": "Side picture: top, three lines with two parallel (marked with red arrows) crossed by a third line; bottom, three lines meeting at a single point marked in red. No values.",
+       "notes": "No printed quote; decorative-looking illustration illustrating the two cases.",
+       "_key": "p178-k5",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "If the 3 lines x − y + 1 = 0, 2x + y + 2 = 0",
+       "text": "If the 3 lines $x-y+1=0$, $2x+y+2=0$, and $ax+3y-4=0$ do not form a triangle, find the value of the constant $a$.",
+       "_key": "p178-k6",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "First, check the condition where 2 of the given 3 lines are parallel.",
+       "text": "Explanation: First, check the condition where 2 of the given 3 lines are parallel. Transforming the 3 lines gives: $y=x+1$ (i), $y=-2x-2$ (ii), $y=-\\frac{a}{3}x+\\frac{4}{3}$ (iii). Since (i) and (ii) are not parallel, check the cases where (i) and (iii) are parallel, and (ii) and (iii) are parallel.",
+       "_key": "p178-k7",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "(i) and (iii) are parallel when: 1 = −a/3, so a = −3",
+       "text": "(i) and (iii) are parallel when $1=-\\frac{a}{3}$, so $a=-3$. (ii) and (iii) are parallel when $-2=-\\frac{a}{3}$, so $a=6$.",
+       "_key": "p178-k8",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Next, check the condition where the 3 lines intersect at 1 point.",
+       "text": "Next, check the condition where the 3 lines intersect at 1 point. Solving (i) and (ii) simultaneously, the point of intersection is $(-1,0)$. Since (iii) passes through point $(-1,0)$, $0=-\\frac{a}{3}\\cdot(-1)+\\frac{4}{3}$, so $a=-4$. Therefore, $a=-4,-3,6$.",
+       "_key": "p178-k9",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Transform into y = mx + k form to see the gradients.",
+       "text": "Side notes: 'Transform into $y=mx+k$ form to see the gradients.'; 'The gradients of the 2 lines are the same.'; 'Find the point of intersection of the 2 lines that do not have the constant a.'; 'The remaining line passes through this point.'",
+       "_key": "p178-k10",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "If the 3 lines x − 2y + 8 = 0, x + y − 1 = 0",
+       "text": "If the 3 lines $x-2y+8=0$, $x+y-1=0$, and $ax+y-5=0$ do not form a triangle, find the value of the constant $a$.",
+       "_key": "p178-k11",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p178-k12",
+       "source_page": 178,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 179,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p179-k1",
+       "source_page": 179,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "If the 3 lines x − 2y + 1 = 0, 3x + 2y = 6",
+       "text": "If the 3 lines $x-2y+1=0$, $3x+2y=6$, and $ax-3y+2=0$ do not form a triangle, find the value of the constant $a$.",
+       "_key": "p179-k2",
+       "source_page": 179,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If the 3 lines x − y = − 1, 3x + 2y = 12",
+       "text": "If the 3 lines $x-y=-1$, $3x+2y=12$, and $ax-y=a-1$ do not form a triangle, find the value of the constant $a$.",
+       "_key": "p179-k3",
+       "source_page": 179,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If the three lines x + 2y − 1 = 0 , 3x + y +2 = 0",
+       "text": "If the three lines $x+2y-1=0$, $3x+y+2=0$ and $mx+4y-3=0$ do not form a triangle, then find the sum of all possible values of m.",
+       "_key": "p179-k4",
+       "source_page": 179,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "How might the intersection of lines and triangles be used",
+       "text": "How might the intersection of lines and triangles be used to solve problems (e.g., navigation, construction, or design)?",
+       "_key": "p179-k5",
+       "source_page": 179,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Classify triangles from coordinates",
+      "description": "Find the squared side lengths from vertex coordinates and decide whether a triangle is equilateral, isosceles, right-angled or isosceles right-angled.",
+      "evidence_keys": [
+       "p162-k6",
+       "p162-k9",
+       "p163-k2",
+       "p163-k11"
+      ]
+     },
+     {
+      "label": "Find the equation of a straight line",
+      "description": "Find the equation of a line parallel or perpendicular to an axis, or from a point and gradient, or from two points.",
+      "evidence_keys": [
+       "p164-k12",
+       "p164-k13",
+       "p165-k2",
+       "p165-k10",
+       "p165-k11"
+      ]
+     },
+     {
+      "label": "Use line equations for collinearity and intersections",
+      "description": "Use the gradient and the intersection of two lines to find an unknown so that points are collinear, and to find the line through an intersection point and a given point.",
+      "evidence_keys": [
+       "p167-k8",
+       "p167-k9",
+       "p167-k11",
+       "p167-k12",
+       "p168-k2",
+       "p168-k3"
+      ]
+     },
+     {
+      "label": "Decide parallel and perpendicular lines",
+      "description": "Rewrite equations as y = mx + k, compare gradients to decide whether lines are parallel or perpendicular, and find a line through a point parallel or perpendicular to a given line.",
+      "evidence_keys": [
+       "p169-k6",
+       "p169-k7",
+       "p169-k8",
+       "p169-k11",
+       "p169-k12",
+       "p169-k13",
+       "p171-k3",
+       "p171-k4"
+      ]
+     },
+     {
+      "label": "Find perpendicular bisectors and symmetric points",
+      "description": "Find the equation of the perpendicular bisector of a segment, and the point symmetric to a given point with respect to a line, using gradient and midpoint conditions.",
+      "evidence_keys": [
+       "p172-k4",
+       "p172-k5",
+       "p172-k8",
+       "p172-k9",
+       "p173-k2",
+       "p173-k3"
+      ]
+     },
+     {
+      "label": "Calculate the distance from a point to a line",
+      "description": "Use the distance formula d = |ax1+by1+c|/sqrt(a^2+b^2) to find the distance or perpendicular length from a point to a line.",
+      "evidence_keys": [
+       "p174-k4",
+       "p174-k7",
+       "p174-k9",
+       "p175-k2",
+       "p175-k3"
+      ]
+     },
+     {
+      "label": "Find the area of a triangle from coordinates",
+      "description": "Find a triangle's area using the distance between two vertices as the base and the distance from the third vertex to that line as the height.",
+      "evidence_keys": [
+       "p176-k5",
+       "p176-k6",
+       "p176-k7",
+       "p176-k8",
+       "p176-k10"
+      ]
+     },
+     {
+      "label": "Find the fixed point of a family of lines",
+      "description": "Rearrange the line equation as an identity in k and solve the resulting system to find the point all the lines pass through.",
+      "evidence_keys": [
+       "p177-k4",
+       "p177-k5",
+       "p177-k6",
+       "p177-k7",
+       "p177-k9"
+      ]
+     },
+     {
+      "label": "Decide when three lines do not form a triangle",
+      "description": "Find the constant for which three lines fail to form a triangle, by checking for two parallel lines or three lines meeting at one point.",
+      "evidence_keys": [
+       "p178-k3",
+       "p178-k4",
+       "p178-k5",
+       "p178-k6",
+       "p178-k11",
+       "p179-k2"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p162-k6",
+      "objective": 1
+     },
+     {
+      "key": "p162-k7",
+      "objective": 1
+     },
+     {
+      "key": "p162-k8",
+      "objective": 1
+     },
+     {
+      "key": "p162-k9",
+      "objective": 1
+     },
+     {
+      "key": "p162-k10",
+      "objective": 1
+     },
+     {
+      "key": "p162-k11",
+      "objective": 1
+     },
+     {
+      "key": "p162-k4",
+      "objective": 3
+     },
+     {
+      "key": "p163-k2",
+      "objective": 1
+     },
+     {
+      "key": "p163-k4",
+      "objective": 1
+     },
+     {
+      "key": "p163-k7",
+      "objective": 1
+     },
+     {
+      "key": "p163-k8",
+      "objective": 1
+     },
+     {
+      "key": "p163-k9",
+      "objective": 1
+     },
+     {
+      "key": "p163-k11",
+      "objective": 1
+     },
+     {
+      "key": "p163-k12",
+      "objective": 1
+     },
+     {
+      "key": "p163-k13",
+      "objective": 1
+     },
+     {
+      "key": "p163-k14",
+      "objective": 1
+     },
+     {
+      "key": "p163-k15",
+      "objective": 1
+     },
+     {
+      "key": "p163-k16",
+      "objective": 1
+     },
+     {
+      "key": "p164-k4",
+      "objective": 2
+     },
+     {
+      "key": "p164-k5",
+      "objective": 2
+     },
+     {
+      "key": "p164-k6",
+      "objective": 2
+     },
+     {
+      "key": "p164-k7",
+      "objective": 2
+     },
+     {
+      "key": "p164-k9",
+      "objective": 2
+     },
+     {
+      "key": "p164-k11",
+      "objective": 2
+     },
+     {
+      "key": "p164-k12",
+      "objective": 2
+     },
+     {
+      "key": "p164-k13",
+      "objective": 2
+     },
+     {
+      "key": "p164-k14",
+      "objective": 2
+     },
+     {
+      "key": "p164-k15",
+      "objective": 2
+     },
+     {
+      "key": "p165-k2",
+      "objective": 2
+     },
+     {
+      "key": "p165-k4",
+      "objective": 2
+     },
+     {
+      "key": "p165-k6",
+      "objective": 2
+     },
+     {
+      "key": "p165-k7",
+      "objective": 2
+     },
+     {
+      "key": "p165-k8",
+      "objective": 2
+     },
+     {
+      "key": "p165-k9",
+      "objective": 2
+     },
+     {
+      "key": "p165-k10",
+      "objective": 2
+     },
+     {
+      "key": "p165-k11",
+      "objective": 2
+     },
+     {
+      "key": "p165-k12",
+      "objective": 2
+     },
+     {
+      "key": "p166-k1",
+      "objective": 2
+     },
+     {
+      "key": "p166-k2",
+      "objective": 2
+     },
+     {
+      "key": "p166-k4",
+      "objective": 2
+     },
+     {
+      "key": "p166-k5",
+      "objective": 2
+     },
+     {
+      "key": "p167-k3",
+      "objective": 3
+     },
+     {
+      "key": "p167-k4",
+      "objective": 3
+     },
+     {
+      "key": "p167-k5",
+      "objective": 3
+     },
+     {
+      "key": "p167-k8",
+      "objective": 3
+     },
+     {
+      "key": "p167-k9",
+      "objective": 3
+     },
+     {
+      "key": "p167-k11",
+      "objective": 3
+     },
+     {
+      "key": "p167-k12",
+      "objective": 3
+     },
+     {
+      "key": "p168-k1",
+      "objective": 3
+     },
+     {
+      "key": "p168-k2",
+      "objective": 3
+     },
+     {
+      "key": "p168-k3",
+      "objective": 3
+     },
+     {
+      "key": "p168-k5",
+      "objective": 3
+     },
+     {
+      "key": "p168-k6",
+      "objective": 3
+     },
+     {
+      "key": "p168-k7",
+      "objective": 3
+     },
+     {
+      "key": "p168-k8",
+      "objective": 3
+     },
+     {
+      "key": "p168-k9",
+      "objective": 3
+     },
+     {
+      "key": "p168-k10",
+      "objective": 3
+     },
+     {
+      "key": "p168-k11",
+      "objective": 3
+     },
+     {
+      "key": "p168-k12",
+      "objective": 3
+     },
+     {
+      "key": "p169-k3",
+      "objective": 4
+     },
+     {
+      "key": "p169-k4",
+      "objective": 4
+     },
+     {
+      "key": "p169-k5",
+      "objective": 4
+     },
+     {
+      "key": "p169-k6",
+      "objective": 4
+     },
+     {
+      "key": "p169-k7",
+      "objective": 4
+     },
+     {
+      "key": "p169-k8",
+      "objective": 4
+     },
+     {
+      "key": "p169-k11",
+      "objective": 4
+     },
+     {
+      "key": "p169-k12",
+      "objective": 4
+     },
+     {
+      "key": "p169-k13",
+      "objective": 4
+     },
+     {
+      "key": "p171-k1",
+      "objective": 4
+     },
+     {
+      "key": "p171-k2",
+      "objective": 4
+     },
+     {
+      "key": "p171-k3",
+      "objective": 4
+     },
+     {
+      "key": "p171-k4",
+      "objective": 4
+     },
+     {
+      "key": "p171-k5",
+      "objective": 4
+     },
+     {
+      "key": "p171-k6",
+      "objective": 4
+     },
+     {
+      "key": "p171-k7",
+      "objective": 4
+     },
+     {
+      "key": "p171-k8",
+      "objective": 4
+     },
+     {
+      "key": "p171-k9",
+      "objective": 4
+     },
+     {
+      "key": "p171-k10",
+      "objective": 4
+     },
+     {
+      "key": "p171-k11",
+      "objective": 4
+     },
+     {
+      "key": "p171-k12",
+      "objective": 4
+     },
+     {
+      "key": "p171-k13",
+      "objective": 4
+     },
+     {
+      "key": "p171-k14",
+      "objective": 4
+     },
+     {
+      "key": "p171-k15",
+      "objective": 4
+     },
+     {
+      "key": "p172-k3",
+      "objective": 5
+     },
+     {
+      "key": "p172-k4",
+      "objective": 5
+     },
+     {
+      "key": "p172-k5",
+      "objective": 5
+     },
+     {
+      "key": "p172-k8",
+      "objective": 5
+     },
+     {
+      "key": "p172-k9",
+      "objective": 5
+     },
+     {
+      "key": "p172-k11",
+      "objective": 5
+     },
+     {
+      "key": "p172-k12",
+      "objective": 5
+     },
+     {
+      "key": "p173-k2",
+      "objective": 5
+     },
+     {
+      "key": "p173-k3",
+      "objective": 5
+     },
+     {
+      "key": "p173-k4",
+      "objective": 5
+     },
+     {
+      "key": "p173-k5",
+      "objective": 5
+     },
+     {
+      "key": "p173-k6",
+      "objective": 5
+     },
+     {
+      "key": "p173-k7",
+      "objective": 5
+     },
+     {
+      "key": "p173-k8",
+      "objective": 5
+     },
+     {
+      "key": "p174-k2",
+      "objective": 6
+     },
+     {
+      "key": "p174-k4",
+      "objective": 6
+     },
+     {
+      "key": "p174-k5",
+      "objective": 6
+     },
+     {
+      "key": "p174-k7",
+      "objective": 6
+     },
+     {
+      "key": "p174-k9",
+      "objective": 6
+     },
+     {
+      "key": "p174-k10",
+      "objective": 6
+     },
+     {
+      "key": "p175-k1",
+      "objective": 6
+     },
+     {
+      "key": "p175-k2",
+      "objective": 6
+     },
+     {
+      "key": "p175-k3",
+      "objective": 6
+     },
+     {
+      "key": "p175-k4",
+      "objective": 6
+     },
+     {
+      "key": "p175-k5",
+      "objective": 6
+     },
+     {
+      "key": "p175-k6",
+      "objective": 6
+     },
+     {
+      "key": "p175-k7",
+      "objective": 6
+     },
+     {
+      "key": "p175-k8",
+      "objective": 6
+     },
+     {
+      "key": "p175-k9",
+      "objective": 6
+     },
+     {
+      "key": "p175-k10",
+      "objective": 6
+     },
+     {
+      "key": "p175-k11",
+      "objective": 6
+     },
+     {
+      "key": "p175-k12",
+      "objective": 6
+     },
+     {
+      "key": "p175-k13",
+      "objective": 6
+     },
+     {
+      "key": "p176-k3",
+      "objective": 7
+     },
+     {
+      "key": "p176-k5",
+      "objective": 7
+     },
+     {
+      "key": "p176-k6",
+      "objective": 7
+     },
+     {
+      "key": "p176-k7",
+      "objective": 7
+     },
+     {
+      "key": "p176-k8",
+      "objective": 7
+     },
+     {
+      "key": "p176-k9",
+      "objective": 7
+     },
+     {
+      "key": "p176-k10",
+      "objective": 7
+     },
+     {
+      "key": "p176-k11",
+      "objective": 7
+     },
+     {
+      "key": "p176-k12",
+      "objective": 7
+     },
+     {
+      "key": "p177-k4",
+      "objective": 8
+     },
+     {
+      "key": "p177-k5",
+      "objective": 8
+     },
+     {
+      "key": "p177-k6",
+      "objective": 8
+     },
+     {
+      "key": "p177-k7",
+      "objective": 8
+     },
+     {
+      "key": "p177-k9",
+      "objective": 8
+     },
+     {
+      "key": "p177-k10",
+      "objective": 8
+     },
+     {
+      "key": "p177-k11",
+      "objective": 8
+     },
+     {
+      "key": "p177-k12",
+      "objective": 8
+     },
+     {
+      "key": "p177-k13",
+      "objective": 8
+     },
+     {
+      "key": "p177-k14",
+      "objective": 8
+     },
+     {
+      "key": "p178-k3",
+      "objective": 9
+     },
+     {
+      "key": "p178-k4",
+      "objective": 9
+     },
+     {
+      "key": "p178-k5",
+      "objective": 9
+     },
+     {
+      "key": "p178-k6",
+      "objective": 9
+     },
+     {
+      "key": "p178-k11",
+      "objective": 9
+     },
+     {
+      "key": "p178-k12",
+      "objective": 9
+     },
+     {
+      "key": "p179-k1",
+      "objective": 9
+     },
+     {
+      "key": "p179-k2",
+      "objective": 9
+     },
+     {
+      "key": "p179-k3",
+      "objective": 9
+     },
+     {
+      "key": "p179-k4",
+      "objective": 9
+     },
+     {
+      "key": "p179-k5",
+      "objective": 9
+     }
+    ],
+    "prompt_figures": [
+     {
+      "key": "p166-k5",
+      "figures": [
+       "p166-k4"
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": []
+}

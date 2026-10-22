@@ -1,0 +1,1359 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "ac5cc74fd2489650f7003b75092a2fda62c270483691e424d1913a071fa28f1a",
+  "generated_sha256": "10baf71ad6d4672446a096e09d3a1325a411983045bb34e1f1c49a3d6e06c0dc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:eb11c1-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-1:power-two",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-1",
+     "parent_question_id": "q:eb11c1-1-1:bk-exercise-1-e",
+     "source_page": 6,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        4,
+        6
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        "n - 1"
+       ]
+      },
+      {
+       "name": "a",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "sg",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "rows",
+       "let": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1],[1,5,10,10,5,1],[1,6,15,20,15,6,1]]"
+      },
+      {
+       "name": "c",
+       "let": "rows[n][r]"
+      },
+      {
+       "name": "s",
+       "let": "'+' if sg == 1 else '-'"
+      },
+      {
+       "name": "m",
+       "let": "n - r"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the coefficient of $x^{{=2*r}}$ in the expansion of $({=a}x^2 {=s} {=b})^{{=n}}$.",
+     "answer": "c * a**r * (sg*b)**m",
+     "solution": [
+      "The general term of $({=a}x^2 {=s} {=b})^{{=n}}$ is ${}_{{=n}}C_k ({=a}x^2)^k ({=sg*b})^{{=n}-k}$.",
+      "$(x^2)^k = x^{2k}$, so $x^{{=2*r}}$ needs $2k = {=2*r}$, that is $k = {=r}$.",
+      "The term is ${}_{{=n}}C_{{=r}} ({=a}x^2)^{{=r}} ({=sg*b})^{{=m}}$.",
+      "${}_{{=n}}C_{{=r}} = {=c}$, $({=a})^{{=r}} = {=a**r}$ and $({=sg*b})^{{=m}} = {=(sg*b)**m}$.",
+      "The coefficient is ${=c} \\times {=a**r} \\times ({=(sg*b)**m}) = {=c * a**r * (sg*b)**m}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist: x^2 inside the binomial, so the index k is half the target power; sign of the second term matters."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-2:plus-four",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-2",
+     "parent_question_id": "q:eb11c1-1-2:bk-exercise-2-a",
+     "source_page": 6,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the expansion of $(x+{=a})^4$.",
+     "answer": "x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}",
+     "solution": [
+      "$(x+{=a})^4 = {}^4C_0 x^4 + {}^4C_1 x^3({=a}) + {}^4C_2 x^2({=a})^2 + {}^4C_3 x({=a})^3 + {}^4C_4 ({=a})^4$.",
+      "The combinations are 1, 4, 6, 4, 1.",
+      "Terms: $x^4$; $4\\cdot{=a} = {=4*a}$, so ${=4*a}x^3$; $6\\cdot{=a**2} = {=6*a**2}$, so ${=6*a**2}x^2$; $4\\cdot{=a**3} = {=4*a**3}$, so ${=4*a**3}x$; ${=a}^4 = {=a**4}$.",
+      "The expansion is $x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "x^4 + {=4*a}*x^3 + {=6*a**2}*x^2 + {=4*a**3}*x + {=a**4}",
+      "form": "expanded",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry point: (x+a)^4 with small positive a, modelled on book (x+1)^4."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-2:minus-five",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-2",
+     "parent_question_id": "q:eb11c1-1-2:bk-exercise-2-h",
+     "source_page": 6,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "require": "p != q",
+       "why": "keep the two coefficients different"
+      },
+      {
+       "name": "c0",
+       "let": "p**5"
+      },
+      {
+       "name": "c1",
+       "let": "5*p**4*q"
+      },
+      {
+       "name": "c2",
+       "let": "10*p**3*q**2"
+      },
+      {
+       "name": "c3",
+       "let": "10*p**2*q**3"
+      },
+      {
+       "name": "c4",
+       "let": "5*p*q**4"
+      },
+      {
+       "name": "c5",
+       "let": "q**5"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the expansion of $({=p}x-{=q}y)^5$.",
+     "answer": "{=c0}x^5 - {=c1}x^4y + {=c2}x^3y^2 - {=c3}x^2y^3 + {=c4}xy^4 - {=c5}y^5",
+     "solution": [
+      "$({=p}x-{=q}y)^5 = {}^5C_0 ({=p}x)^5 + {}^5C_1 ({=p}x)^4(-{=q}y) + {}^5C_2 ({=p}x)^3(-{=q}y)^2 + {}^5C_3 ({=p}x)^2(-{=q}y)^3 + {}^5C_4 ({=p}x)(-{=q}y)^4 + {}^5C_5 (-{=q}y)^5$.",
+      "The combinations are 1, 5, 10, 10, 5, 1.",
+      "Terms: ${=c0}x^5$; $5\\cdot{=p**4}\\cdot{=q} = {=c1}$; $10\\cdot{=p**3}\\cdot{=q**2} = {=c2}$; $10\\cdot{=p**2}\\cdot{=q**3} = {=c3}$; $5\\cdot{=p}\\cdot{=q**4} = {=c4}$; ${=q}^5 = {=c5}$. The signs alternate because $-{=q}y$ is raised to odd and even powers.",
+      "The expansion is ${=c0}x^5 - {=c1}x^4y + {=c2}x^3y^2 - {=c3}x^2y^3 + {=c4}xy^4 - {=c5}y^5$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=c0}*x^5 - {=c1}*x^4*y + {=c2}*x^3*y^2 - {=c3}*x^2*y^3 + {=c4}*x*y^4 - {=c5}*y^5",
+      "form": "expanded",
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: both terms have coefficients and the second is negative, n=5, as in book (2x-3y)^6. Largest coefficient 3840."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-3:coeff-xyz",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-3",
+     "parent_question_id": "q:eb11c1-1-3:bk-exercise-3-a",
+     "source_page": 8,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "choice": [
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        "n - 2"
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        "n - p - 1"
+       ]
+      },
+      {
+       "name": "r",
+       "let": "n - p - q"
+      },
+      {
+       "name": "f",
+       "let": "[1, 1, 2, 6, 24, 120, 720]"
+      },
+      {
+       "name": "tx",
+       "let": "\"x\" if p == 1 else \"x^\" + str(p)"
+      },
+      {
+       "name": "ty",
+       "let": "\"y\" if q == 1 else \"y^\" + str(q)"
+      },
+      {
+       "name": "tz",
+       "let": "\"z\" if r == 1 else \"z^\" + str(r)"
+      },
+      {
+       "name": "d",
+       "let": "f[p] * f[q] * f[r]"
+      },
+      {
+       "name": "ans",
+       "let": "f[n] / d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the coefficient of ${=tx}{=ty}{=tz}$ in the expansion of $(x+y+z)^{{=n}}$.",
+     "answer": "ans",
+     "solution": [
+      "The exponents of x, y and z add up to {=p} + {=q} + {=r} = {=n}, which is the power of the expression, so n = {=n}, p = {=p}, q = {=q}, r = {=r}.",
+      "The coefficient is $\\frac{n!}{p!q!r!} = \\frac{{=n}!}{{=p}!\\,{=q}!\\,{=r}!}$.",
+      "$\\frac{{=f[n]}}{{=d}} = {=ans}$.",
+      "The coefficient is {=ans}."
+     ],
+     "notes": "Basic entry point: (x+y+z)^n with n 4-6 and every exponent at least 1, coefficient n!/(p!q!r!) as in the book exercises 3 and 4. Factorials come from a lookup table. Exponent 1 is not printed, as in the book (xy^5z). The coefficient is always a whole number.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-1-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-4:sumcoef",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-4",
+     "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+     "source_page": 6,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        4,
+        9
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "If $(1+x)^{{=n}} = c_0 + c_1x + c_2x^2 + \\dots + c_{{=n}}x^{{=n}}$, find the numerical value of $c_0 + c_1 + c_2 + \\dots + c_{{=n}}$.",
+     "answer": "2**n",
+     "solution": [
+      "The identity $(1+x)^{{=n}} = c_0 + c_1x + \\dots + c_{{=n}}x^{{=n}}$ holds for every value of $x$.",
+      "Substitute $x=1$: the right side becomes $c_0 + c_1 + \\dots + c_{{=n}}$.",
+      "The left side becomes $(1+1)^{{=n}} = 2^{{=n}}$.",
+      "So $c_0 + c_1 + \\dots + c_{{=n}} = {=2**n}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Same skeleton as the book question, with n varied. Substitute x=1."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-1-4:weighted",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-1-4",
+     "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+     "source_page": 6,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        3,
+        6
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        4
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Using the binomial expansion of $(1+x)^{{=n}}$, find the value of $^{{=n}}C_0 + {=k}\\,{}^{{=n}}C_1 + {=k}^2\\,{}^{{=n}}C_2 + \\dots + {=k}^{{=n}}\\,{}^{{=n}}C_{{=n}}$.",
+     "answer": "(1+k)**n",
+     "solution": [
+      "Expand: $(1+x)^{{=n}} = {}^{{=n}}C_0 + {}^{{=n}}C_1x + {}^{{=n}}C_2x^2 + \\dots + {}^{{=n}}C_{{=n}}x^{{=n}}$.",
+      "The required sum has the powers ${=k}, {=k}^2, \\dots$ multiplying the coefficients, so substitute $x={=k}$.",
+      "The right side becomes $^{{=n}}C_0 + {=k}\\,{}^{{=n}}C_1 + \\dots + {=k}^{{=n}}\\,{}^{{=n}}C_{{=n}}$, the required sum.",
+      "The left side is $(1+{=k})^{{=n}} = {=(1+k)**n}$.",
+      "So the sum equals ${=(1+k)**n}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Sum of k^r nCr = (1+k)^n; substitute x=k. n<=6, k<=4 so max 5^6=15625."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-2-1:linear-divisor",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-2-1",
+     "parent_question_id": "q:eb11c1-2-1:bk-challenge-1",
+     "source_page": 11,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "name": "n",
+       "choice": [
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "let": "m + n"
+      },
+      {
+       "name": "p",
+       "let": "m * n"
+      },
+      {
+       "require": "abs(s) >= 2",
+       "why": "middle coefficient must not be 0 or +-1"
+      },
+      {
+       "name": "gm",
+       "let": "('+ ' + str(m)) if m > 0 else ('- ' + str(-m))"
+      },
+      {
+       "name": "gn",
+       "let": "('+ ' + str(n)) if n > 0 else ('- ' + str(-n))"
+      },
+      {
+       "name": "gs",
+       "let": "('+ ' + str(s)) if s > 0 else ('- ' + str(-s))"
+      },
+      {
+       "name": "gp",
+       "let": "('+ ' + str(p)) if p > 0 else ('- ' + str(-p))"
+      }
+     ],
+     "stem": "Use long division to divide $x^2 {gs}x {gp}$ by $x {gm}$. Find the quotient.",
+     "answer": "x {gn}",
+     "solution": [
+      "Divide the leading terms: $x^2 \\div x = x$, so the first term of the quotient is $x$.",
+      "Multiply: $x(x {gm}) = x^2 {gm}x$. Subtract it from $x^2 {gs}x {gp}$ to get ${=n}x {gp}$.",
+      "Divide the leading terms: ${=n}x \\div x = {=n}$, so the next term of the quotient is ${=n}$.",
+      "Multiply: ${=n}(x {gm}) = {=n}x {gp}$. Subtract to get $0$, so the remainder is $0$.",
+      "The quotient is $x {gn}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "x + ({=n})",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "notes": "Exact division of a quadratic by a linear factor (x+m)(x+n). Coefficients avoid 0 and +-1 so the printed polynomials are clean.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-2-1:remainder-quad",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-2-1",
+     "parent_question_id": "q:eb11c1-2-1:bk-challenge-1",
+     "source_page": 11,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "c",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "r1",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "r0",
+       "choice": [
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "name": "c2",
+       "let": "a + c"
+      },
+      {
+       "name": "c1",
+       "let": "b + a * c + r1"
+      },
+      {
+       "name": "c0",
+       "let": "b * c + r0"
+      },
+      {
+       "name": "e1",
+       "let": "a * c + r1"
+      },
+      {
+       "require": "abs(c2) >= 2 and abs(c1) >= 2 and abs(e1) >= 2 and c0 != 0",
+       "why": "clean printed coefficients, no zero or unit terms"
+      },
+      {
+       "name": "ga",
+       "let": "('+ ' + str(a)) if a > 0 else ('- ' + str(-a))"
+      },
+      {
+       "name": "gb",
+       "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+      },
+      {
+       "name": "gc",
+       "let": "('+ ' + str(c)) if c > 0 else ('- ' + str(-c))"
+      },
+      {
+       "name": "g2",
+       "let": "('+ ' + str(c2)) if c2 > 0 else ('- ' + str(-c2))"
+      },
+      {
+       "name": "g1",
+       "let": "('+ ' + str(c1)) if c1 > 0 else ('- ' + str(-c1))"
+      },
+      {
+       "name": "g0",
+       "let": "('+ ' + str(c0)) if c0 > 0 else ('- ' + str(-c0))"
+      },
+      {
+       "name": "ge1",
+       "let": "('+ ' + str(e1)) if e1 > 0 else ('- ' + str(-e1))"
+      },
+      {
+       "name": "gac",
+       "let": "('+ ' + str(a * c)) if a * c > 0 else ('- ' + str(-a * c))"
+      },
+      {
+       "name": "gbc",
+       "let": "('+ ' + str(b * c)) if b * c > 0 else ('- ' + str(-b * c))"
+      },
+      {
+       "name": "gr0",
+       "let": "('+ ' + str(r0)) if r0 > 0 else ('- ' + str(-r0))"
+      }
+     ],
+     "stem": "Use long division to divide $x^3 {g2}x^2 {g1}x {g0}$ by $x^2 {ga}x {gb}$. Find the remainder.",
+     "answer": "{=r1}x {gr0}",
+     "solution": [
+      "Divide the leading terms: $x^3 \\div x^2 = x$, so the first term of the quotient is $x$.",
+      "Multiply: $x(x^2 {ga}x {gb}) = x^3 {ga}x^2 {gb}x$. Subtract it from the dividend to get ${=c}x^2 {ge1}x {g0}$.",
+      "Divide the leading terms: ${=c}x^2 \\div x^2 = {=c}$, so the next term of the quotient is ${=c}$.",
+      "Multiply: ${=c}(x^2 {ga}x {gb}) = {=c}x^2 {gac}x {gbc}$. Subtract it to get ${=r1}x {gr0}$.",
+      "This has degree 1, which is less than the degree 2 of the divisor, so stop. The quotient is $x {gc}$ and the remainder is ${=r1}x {gr0}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=r1})*x + ({=r0})",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "notes": "Cubic divided by monic quadratic with non-zero linear remainder; dividend built as (x^2+ax+b)(x+c)+r1x+r0. Two division steps, stop when degree of remainder < 2.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-2-2:find-dividend",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-2-2",
+     "parent_question_id": "q:eb11c1-2-2:bk-exercise-12",
+     "source_page": 13,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "m",
+       "let": "p * q"
+      },
+      {
+       "name": "c",
+       "let": "p * q + r"
+      }
+     ],
+     "stem": "When the polynomial $A$ is divided by $x+{=p}$, the quotient is $x+{=q}$ and the remainder is ${=r}$. Find $A$ in expanded form.",
+     "solution": [
+      "Use $A = B \\times Q + R$ with $B = x+{=p}$, $Q = x+{=q}$ and $R = {=r}$.",
+      "$A = (x+{=p})(x+{=q}) + {=r}$.",
+      "Multiply: $(x+{=p})(x+{=q}) = x^2 + {=q}x + {=p}x + {=m} = x^2 + {=s}x + {=m}$.",
+      "Add the remainder: $x^2 + {=s}x + {=m} + {=r} = x^2 + {=s}x + {=c}$.",
+      "So $A = x^2 + {=s}x + {=c}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "x^2 + {=s}*x + {=c}",
+      "form": "expanded",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: A = BQ + R with linear B and Q, positive small constants so the expansion has no sign traps. Modelled on bk-exercise-12 (find A)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-3-1:cubic-common",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-3-1",
+     "parent_question_id": "q:eb11c1-3-1:bk-exercise-1-e",
+     "source_page": 16,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "r",
+       "randint": [
+        "p + 2",
+        7
+       ]
+      }
+     ],
+     "constraints": [
+      "q != p",
+      "r - p >= 2"
+     ],
+     "stem": "Simplify the following rational expression. $\\frac{ {=m}x^3-{=m*(p+q)}x^2+{=m*p*q}x}{x^3+{=r-p}x^2-{=p*r}x}$",
+     "solution": [
+      "Factorise the top, taking out the common factor ${=m}x$: ${=m}x^3-{=m*(p+q)}x^2+{=m*p*q}x={=m}x\\left(x^2-{=p+q}x+{=p*q}\\right)={=m}x(x-{=p})(x-{=q})$.",
+      "Factorise the bottom, taking out $x$: $x^3+{=r-p}x^2-{=p*r}x=x\\left(x^2+{=r-p}x-{=p*r}\\right)=x(x-{=p})(x+{=r})$.",
+      "Cancel the common factors $x$ and $(x-{=p})$.",
+      "The answer is $\\frac{ {=m}(x-{=q})}{x+{=r}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=m}*(x - {=q})/(x + {=r})",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: take out a common factor x (and constant m), factorise two quadratics, cancel two factors. Follows book exercise 1(e) pattern. Constraints keep all printed coefficients positive and not 1: r-p>=2, m>=2, q!=p so no squared factor; x-q and x+r share no factor since q,r>0."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-3-3:same-denominator",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-3-3",
+     "parent_question_id": "q:eb11c1-3-3:bk-exercise-3",
+     "source_page": 18,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "r",
+       "let": "k*k + s"
+      }
+     ],
+     "constraints": [
+      "r - s == k*k"
+     ],
+     "stem": "Simplify the following expression: $\\frac{x^2-{=r}}{x+{=k}}+\\frac{{=s}}{x+{=k}}$",
+     "solution": [
+      "The denominators are the same, so combine the numerators: $\\frac{x^2-{=r}+{=s}}{x+{=k}}$.",
+      "$x^2-{=r}+{=s}=x^2-{=k*k}$, which factorises as $(x-{=k})(x+{=k})$, so the expression is $\\frac{(x-{=k})(x+{=k})}{x+{=k}}$.",
+      "Cancel $(x+{=k})$.",
+      "The answer is $x-{=k}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "x - {=k}",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: same denominator, combine numerators, difference of squares, cancel. Mirrors book exercise 3. 25 distinct instances."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-3-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-3-4:one-over-x",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-3-4",
+     "parent_question_id": "q:eb11c1-3-4:bk-try-4-1",
+     "source_page": 20,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        6
+       ],
+       "resample_while": "q == p"
+      }
+     ],
+     "constraints": [
+      "p != q"
+     ],
+     "stem": "Simplify the following expression to a single rational expression. $\\dfrac{{=p}+\\dfrac{1}{x}}{{=q}+\\dfrac{1}{x}}$",
+     "answer": "({=p}*x+1)/({=q}*x+1)",
+     "solution": [
+      "The only small fraction is $\\frac{1}{x}$, so multiply the top and the bottom by $x$.",
+      "Top: $x\\left({=p}+\\frac{1}{x}\\right)={=p}x+1$.",
+      "Bottom: $x\\left({=q}+\\frac{1}{x}\\right)={=q}x+1$.",
+      "The answer is $\\dfrac{{=p}x+1}{{=q}x+1}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=p}*x + 1)/({=q}*x + 1)",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: a single inner fraction 1/x, multiply top and bottom by x. p,q in 2..6 distinct, so no common factor and no coefficient 1; answer is already in lowest terms."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-4-1:compare",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-4-1",
+     "parent_question_id": "q:eb11c1-4-1:bk-exercise-3",
+     "source_page": 23,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        7
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "let": "p * k + b"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the values of the constants $a$ and $b$ for which the following is an identity in $x$: $a(x+{=k})+b={=p}x+{=q}$",
+     "solution": [
+      "Expand the left-hand side: $a(x+{=k})+b=ax+({=k}a+b)$.",
+      "Compare with ${=p}x+{=q}$ the coefficients of $x$: $a={=p}$.",
+      "Compare the constant terms: ${=k}a+b={=q}$.",
+      "Substitute $a={=p}$: ${=k*p}+b={=q}$, so $b={=b}$.",
+      "Answer: a = {=p}, b = {=b}."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "a = {=p}, b = {=b}",
+      "form": null,
+      "variables": [
+       "a",
+       "b"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: expand one bracket, compare coefficients of x and constants. Unique solution; b>0 keeps q positive so the stem prints cleanly."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-4-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. There is also no canonical solution to model, and I can't confirm the book's method or notation for proving equalities by simplifying."
+    },
+    {
+     "tier": "standard",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. There is no book model of a typical exercise to follow, so I would be inventing the skeleton."
+    },
+    {
+     "tier": "advanced",
+     "reason": "The objective has no book questions, so there is no valid parent_question_id or source_page. I have no harder exercise or twist from the book to base a family on."
+    }
+   ],
+   "notes": "I wrote no families. The book-question list for this objective is empty, and the spec requires each family's parent_question_id to be a book question of this objective. Any parent id I made up would fail the check. I also have no book solutions to model the method on. Please re-run once the objective's book questions and canonical solutions have been supplied."
+  },
+  {
+   "lo_id": "lo:eb11c1-4-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book question list for this objective is empty. A family needs a parent_question_id and source_page from a real book question of this objective. I have no book solution to model, so I would be guessing the book's method and notation. The objective is also a proof task ('prove that…'), which does not map onto a numeric, mcq or expression answer that can be checked blind without the book's own wording."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: no parent book question, no canonical solution, no printed page. Writing proof-style items without the book's method would risk teaching a technique the book does not use."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: no book questions are given for this objective, so there is nothing to base a harder exercise on, and no parent to cite."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-4-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-4-4:linear-ratio",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-4-4",
+     "parent_question_id": "q:eb11c1-4-4:bk-try-8",
+     "source_page": 30,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        6
+       ],
+       "resample_while": "n == m"
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "N",
+       "let": "p*m + q*n"
+      },
+      {
+       "name": "D",
+       "let": "r*m + s*n"
+      },
+      {
+       "name": "v",
+       "let": "N/D"
+      }
+     ],
+     "constraints": [
+      "gcd(m, n) == 1"
+     ],
+     "stem": "If $a:b={=m}:{=n}$, find the value of $\\frac{{=p}a+{=q}b}{{=r}a+{=s}b}$",
+     "answer": "str(numerator(v)) + '/' + str(denominator(v)) if denominator(v) != 1 else str(numerator(v))",
+     "solution": [
+      "Let $a={=m}k$ and $b={=n}k$, where $k\\neq0$.",
+      "Numerator: ${=p}({=m}k)+{=q}({=n}k)={=N}k$.",
+      "Denominator: ${=r}({=m}k)+{=s}({=n}k)={=D}k$.",
+      "Cancel $k$: value $=\\frac{{=N}}{{=D}}$, which in lowest terms is ${=v}$."
+     ],
+     "notes": "Basic entry: two-term ratio, linear expression, substitute a=mk, b=nk and cancel k. All coefficients positive so the denominator is never zero. Answer string is a whole number or a/b in lowest terms (Fraction exact).",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-4-4:signed-ratio",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-4-4",
+     "parent_question_id": "q:eb11c1-4-4:bk-exercise-19",
+     "source_page": 30,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "N",
+       "let": "m*m + n*n + p*p"
+      },
+      {
+       "name": "D",
+       "let": "-m*n - n*p + p*m"
+      },
+      {
+       "require": "D != 0",
+       "why": "denominator must be nonzero"
+      },
+      {
+       "name": "v",
+       "let": "N/D"
+      }
+     ],
+     "constraints": [
+      "gcd(gcd(m, n), p) == 1"
+     ],
+     "stem": "If $x:y:z={=m}:-{=n}:{=p}$, find the value of $\\frac{x^2+y^2+z^2}{xy+yz+zx}$",
+     "answer": "str(numerator(v)) + '/' + str(denominator(v)) if denominator(v) != 1 else str(numerator(v))",
+     "solution": [
+      "Let $x={=m}k$, $y=-{=n}k$, $z={=p}k$, where $k\\neq0$.",
+      "Numerator: $x^2+y^2+z^2=({=m*m}+{=n*n}+{=p*p})k^2={=N}k^2$.",
+      "Denominator: $xy+yz+zx=({=-m*n})k^2+({=-n*p})k^2+({=p*m})k^2={=D}k^2$.",
+      "Cancel $k^2$: value $=\\frac{{=N}}{{=D}}$, which in lowest terms is ${=v}$."
+     ],
+     "notes": "Advanced: three-term ratio with a negative term and mixed products, parent ex-19. Denominator nonzero by require; answer may be negative or whole.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-5-1",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The list of book questions for this objective is empty. Each family needs a real parent_question_id and source_page, and I also need the book's canonical solution to follow its method and notation. I would have to invent the parent and the method, so I wrote no family."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there is no book question to cite as the parent and no book solution to model. The standard tier would need the book's typical exercise, and I can't see one."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there is no book question to cite as the parent and no book solution to model. The advanced tier would need the book's harder exercises, and I can't see any."
+    }
+   ],
+   "notes": "The input listed no book questions or misconceptions for lo:eb11c1-5-1. The spec requires parent_question_id to come from that list, so I wrote nothing rather than invent a parent. To fill the gaps, supply this objective's book questions with their page numbers and solutions. Each family would then use the method in the objective description: compute LHS − RHS, factorise it, rewrite the conditions (for example a > b becomes a − b > 0), and conclude the result is positive."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-5-2:two-squares",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-5-2",
+     "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+     "source_page": 33,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        9
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "c",
+       "let": "p*p + q*q"
+      }
+     ],
+     "constraints": [],
+     "stem": "Prove that $a^2+b^2+{=c} \\ge {=2*p}a+{=2*q}b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $a+b$ at equality.",
+     "answer": "p + q",
+     "solution": [
+      "LHS − RHS $= a^2+b^2+{=c}-{=2*p}a-{=2*q}b$",
+      "$= (a^2-{=2*p}a+{=p*p}) + (b^2-{=2*q}b+{=q*q})$",
+      "$= (a-{=p})^2+(b-{=q})^2$ (complete the square)",
+      "$(a-{=p})^2 \\ge 0$ and $(b-{=q})^2 \\ge 0$, so the sum is $\\ge 0$ and the inequality holds",
+      "Equality holds when $a-{=p}=0$ and $b-{=q}=0$, i.e. $a={=p}$, $b={=q}$",
+      "So $a+b={=p+q}$"
+     ],
+     "notes": "Sum of two squares; numeric answer p+q avoids typing a pair."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-5-2:scaled-sq",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-5-2",
+     "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+     "source_page": 33,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "A",
+       "let": "m*m"
+      },
+      {
+       "name": "B",
+       "let": "n*n"
+      }
+     ],
+     "constraints": [],
+     "stem": "Prove that ${=A}a^2+{=B}b^2+{=A*p*p+B*q*q} \\ge {=2*A*p}a-{=2*B*q}b$ for all real numbers $a$ and $b$, by completing the square. Equality holds for exactly one pair $(a, b)$. Find the value of $ab$ at equality.",
+     "answer": "-p*q",
+     "solution": [
+      "LHS − RHS $= {=A}a^2+{=B}b^2+{=A*p*p+B*q*q}-{=2*A*p}a+{=2*B*q}b$",
+      "$= {=A}(a^2-{=2*p}a+{=p*p}) + {=B}(b^2+{=2*q}b+{=q*q})$",
+      "$= {=A}(a-{=p})^2+{=B}(b+{=q})^2$ (complete the square)",
+      "Both terms are $\\ge 0$, so LHS − RHS $\\ge 0$ and the inequality holds",
+      "Equality holds when $a-{=p}=0$ and $b+{=q}=0$, i.e. $a={=p}$, $b=-{=q}$",
+      "So $ab={=-p*q}$"
+     ],
+     "notes": "Check: A(a-p)^2+B(b+q)^2 expands to the stated difference. Coefficients factored before completing squares."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c1-5-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "No book questions were supplied for lo:eb11c1-5-3, so no valid parent_question_id or source_page exists. There is also no canonical solution to model, so the book's method for (LHS)²−(RHS)² proofs would have to be guessed."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same as basic: the book-question list is empty, so there is no parent question and no book solution to follow."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same as basic: the book-question list is empty, so there is no parent question and no book 'harder exercise' twist to model."
+    }
+   ],
+   "notes": "The book-question list and the misconception catalogue are both empty for this objective. To proceed, supply the objective's book questions with page numbers and canonical solutions. Families can then be written for the basic, standard and advanced tiers, using the method (LHS)²−(RHS)², then LHS>0 and RHS>0, then the equality case."
+  },
+  {
+   "lo_id": "lo:eb11c1-5-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c1-5-4:wall-fence",
+     "kind": "family",
+     "lo_id": "lo:eb11c1-5-4",
+     "parent_question_id": "q:eb11c1-5-4:bk-warm-up-6",
+     "source_page": 37,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A farmer fences a rectangular field using a straight wall as one side, so fencing is needed only for the other three sides.",
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "L",
+       "let": "4 * m"
+      },
+      {
+       "name": "x",
+       "let": "m"
+      },
+      {
+       "name": "y",
+       "let": "2 * m"
+      },
+      {
+       "name": "A",
+       "let": "2 * m * m"
+      }
+     ],
+     "constraints": [],
+     "stem": "A farmer has {=L} m of fencing and builds a rectangular field against a long straight wall, so the wall forms one side and fencing is used only for the other three sides. Let the two sides perpendicular to the wall each have length $x$ m and the side parallel to the wall have length $y$ m, so $2x+y={=L}$. Use the AM-GM inequality on the positive numbers $2x$ and $y$ to find the maximum possible area of the field, in square metres.",
+     "answer": "A",
+     "solution": [
+      "The area is $xy$, with $2x>0$ and $y>0$ and $2x+y={=L}$.",
+      "By AM-GM: $\\sqrt{2x\\cdot y}\\le\\frac{2x+y}{2}=\\frac{{=L}}{2}={=L/2}$.",
+      "Square both sides: $2xy\\le {=(L/2)**2}$, so $xy\\le {=A}$.",
+      "Equality holds when $2x=y$, so $2x=y={=L/2}$, that is $x={=x}$ and $y={=y}$.",
+      "The maximum area is {=A} square metres."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Twist on the rectangle-with-fixed-perimeter case: AM-GM is applied to 2x and y, not x and y. Max area = L^2/8 = 2m^2 with L=4m; x=m, y=2m."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

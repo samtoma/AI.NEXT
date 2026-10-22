@@ -1,0 +1,48 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-4:exercise-52",
+ "lo_id": "lo:eb11c4-3-4",
+ "book_item": "eb11c4-3:exercise-52",
+ "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "pair_plotter",
+ "spec": {
+  "targets": [
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    1
+   ]
+  ]
+ },
+ "stem": "Find the coordinates of the points of intersection of the circles $x^2+y^2=5$ and $(x-2)^2+(y-2)^2=1$. Plot both points.",
+ "solution": [
+  "Expand the second: $x^2+y^2-4x-4y+7=0$.",
+  "Subtract using $x^2+y^2=5$: $12-4x-4y=0$, so $y=3-x$.",
+  "Substitute: $2x^2-6x+4=0$, so $x=1$ or $2$.",
+  "The points are $(1,2)$ and $(2,1)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-points",
+   "step": 3,
+   "text": "Take both roots of the quadratic."
+  },
+  {
+   "predicate": "extra-points",
+   "step": 2,
+   "text": "Each point must lie on the line found by eliminating the squared terms."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 2,
+   "text": "Recheck the signs when expanding and subtracting."
+  }
+ ],
+ "notes": "Swapped points form the same set."
+}

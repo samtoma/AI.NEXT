@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-5-4:min-value",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-5-4",
+ "parent_question_id": "q:eb11c1-5-4:bk-warm-up-6",
+ "source_page": 37,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "b",
+   "let": "a * m * m"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $x>0$, find the minimum value of the expression ${=a}x+\\frac{{=b}}{x}$.",
+ "answer": "2 * a * m",
+ "solution": [
+  "Since $x>0$, both ${=a}x>0$ and $\\frac{{=b}}{x}>0$, so AM-GM can be used.",
+  "${=a}x+\\frac{{=b}}{x}\\ge 2\\sqrt{{=a}x\\times\\frac{{=b}}{x}}$",
+  "$=2\\sqrt{{=a*b}}$",
+  "$=2\\times{=a*m}={=2*a*m}$",
+  "Equality holds when ${=a}x=\\frac{{=b}}{x}$, so $x^2={=m*m}$ and $x={=m}$ (as $x>0$), so the value is reached.",
+  "The minimum value is ${=2*a*m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: apply AM-GM to a sum of two positive terms whose product is constant, then check equality is attained. b = a*m^2 so ab = (am)^2 is a perfect square; minimum 2am at x = m."
+}

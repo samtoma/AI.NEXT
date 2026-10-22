@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-2-2:middle-term",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-2-2",
+ "parent_question_id": "q:eb11c2-2-2:bk-exercise-5",
+ "source_page": 62,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "let": "p * k * k"
+  },
+  {
+   "name": "m",
+   "let": "p * k"
+  }
+ ],
+ "constraints": [],
+ "stem": "When the 3 numbers ${=p}, x, {=c}$ form a geometric sequence in this order, find the values of $x$.",
+ "solution": [
+  "The numbers ${=p}, x, {=c}$ are geometric, so $x^2 = {=p} \\times {=c}$.",
+  "$x^2 = {=p*c}$.",
+  "$x = \\pm {=m}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=m}, -{=m}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: b^2 = ac with a perfect square product (p*c = (pk)^2). Both signs required, as in the book's exercise 5."
+}

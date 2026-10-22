@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-5-4:arithmetic-rec",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-5-4",
+ "parent_question_id": "q:eb11c2-5-4:bk-challenge-5",
+ "source_page": 105,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a - d"
+  },
+  {
+   "name": "t2",
+   "let": "a + d"
+  },
+  {
+   "name": "t3",
+   "let": "a + 2*d"
+  },
+  {
+   "name": "t4",
+   "let": "a + 3*d"
+  }
+ ],
+ "constraints": [],
+ "stem": "A sequence is defined by $a_1={=a}$ and $a_{n+1}=a_n+{=d}$ for $n\\ge 1$. Write out the first four terms, estimate the general term $a_n$ as an expression in $n$, and prove your estimate by mathematical induction. Give $a_n$ in terms of $n$.",
+ "answer": "",
+ "solution": [
+  "First terms: $a_1={=a}$, $a_2={=t2}$, $a_3={=t3}$, $a_4={=t4}$.",
+  "Each term is {=d} more than the one before, so we estimate $a_n={=a}+{=d}(n-1)={=d}n+({=c})$.",
+  "Check $n=1$: ${=d}\\cdot 1+({=c})={=a}=a_1$, true.",
+  "Assume $a_k={=d}k+({=c})$ for some $k\\ge 1$.",
+  "Then $a_{k+1}=a_k+{=d}={=d}k+({=c})+{=d}={=d}(k+1)+({=c})$, which is the formula with $n=k+1$.",
+  "By induction the formula holds for all $n\\ge 1$: $a_n={=d}n+({=c})$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=d})*n + ({=c})",
+  "form": null,
+  "variables": [
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Answer is the general term; marker accepts equivalent expressions. c=a-d may be 0 or negative; marker parenthesised."
+}

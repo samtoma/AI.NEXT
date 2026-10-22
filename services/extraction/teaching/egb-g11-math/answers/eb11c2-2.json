@@ -1,0 +1,3742 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-2",
+  "source": "book-records/egb-g11-math/eb11c2-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 101,
+      "cost_usd": 1.6323,
+      "calls": [
+        {
+          "call": "answers.eb11c2-2",
+          "cost_usd": 1.6323,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c2-2:guiding-question-1",
+      "record_id": "eb11c2-2:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 57,
+      "question": {
+        "text": "How do processes with small starting values escalate rapidly, and how can we mathematically predict their cumulative impact over time?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e910d86cf406d98adca8b00b77c58d7b",
+      "kind": "explanation",
+      "answer": "Repeated multiplication by a ratio r>1 makes terms grow faster and faster, and a_n = ar^{n-1} and S_n predict the term and the total.",
+      "solution": [
+        "Each step multiplies the previous term by the same ratio r (definition of a geometric sequence).",
+        "With r = 2, 1, 2, 4, 8, 16, ... the terms double every step, so even a small first term becomes huge.",
+        "The n-th term is predicted by $a_n = ar^{n-1}$.",
+        "The total after n steps is $S_n=\\frac{a(r^n-1)}{r-1}$ when r>1.",
+        "So we predict growth with $a_n = ar^{n-1}$ and the cumulative effect with $S_n$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:definition-1",
+        "eb11c2-2:rule-1",
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "Repeated multiplication by a ratio r>1 makes terms grow exponentially, as in a_n = a r^{n-1} (e.g. bacteria doubling). Their cumulative total is predicted with S_n = a(r^n - 1)/(r - 1).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-1:a",
+      "record_id": "eb11c2-2:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 57,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 2, the common ratio 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "64c1be2f983a030450c9d20492cb9cec",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1}",
+      "solution": [
+        "First term a = 2 and common ratio r = 3.",
+        "Use $a_n = ar^{n-1}$.",
+        "$a_n = 2 \\times 3^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times 3^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-1:b",
+      "record_id": "eb11c2-2:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 57,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$5, 10, 20, 40, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "794a676c0b2d8bcb4555f41221daad88",
+      "kind": "value",
+      "answer": "a_n = 5 × 2^{n-1}",
+      "solution": [
+        "First term is 5, second term is 10.",
+        "$5r = 10$, so $r = 2$.",
+        "$a_n = 5 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 5\\times 2^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-1:c",
+      "record_id": "eb11c2-2:warm-up-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 57,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$-4, 6, -9, \\frac{27}{2}, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0a72b448d5556a5f83cf20d7f2c89d0b",
+      "kind": "value",
+      "answer": "a_n = -4 × (-3/2)^{n-1}",
+      "solution": [
+        "First term is $-4$, second term is 6.",
+        "$-4r = 6$, so $r = -\\frac{3}{2}$.",
+        "Use parentheses for the negative fraction: $a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = -4\\times(-\\frac{3}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-2",
+      "record_id": "eb11c2-2:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 57,
+      "question": {
+        "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. $A, 24, 12, B, \\ldots$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d812e15a405b74ef790c53512e8dd283",
+      "kind": "value",
+      "answer": "common ratio 1/2, A = 48, B = 6",
+      "solution": [
+        "Let $r$ be the common ratio: $24r = 12$, so $r = \\frac{1}{2}$.",
+        "A × 1/2 = 24, so $A = 24 \\div \\frac12 = 48$.",
+        "$B = 12 \\times \\frac12 = 6$.",
+        "Common ratio 1/2, A = 48, B = 6."
+      ],
+      "grounded_in": [
+        "eb11c2-2:definition-1",
+        "eb11c2-2:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "common ratio 1/2, A = 48, B = 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:a",
+      "record_id": "eb11c2-2:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 3, the common ratio 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a8e4b091f8ac6f4389cd1ab80b77ed62",
+      "kind": "value",
+      "answer": "a_n = 3 × 4^{n-1}",
+      "solution": [
+        "a = 3, r = 4.",
+        "$a_n = 3 \\times 4^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times 4^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:b",
+      "record_id": "eb11c2-2:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 5, the common ratio $-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "916244a34d96828c85d1bbc5be2a675f",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2)^{n-1}",
+      "solution": [
+        "a = 5, r = $-2$.",
+        "Put the negative ratio in parentheses: $a_n = 5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 5\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:c",
+      "record_id": "eb11c2-2:try-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 8, the common ratio $-\\frac{1}{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bc8528eb96a4af9336ab3a348a764c9f",
+      "kind": "value",
+      "answer": "a_n = 8 × (-1/3)^{n-1}",
+      "solution": [
+        "a = 8, r = $-\\frac13$.",
+        "$a_n = 8 \\times \\left(-\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 8\\times(-\\frac{1}{3})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:d",
+      "record_id": "eb11c2-2:try-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$2, 6, 18, 54, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "99bd82aad3a8a62848029c452ace45ca",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1}",
+      "solution": [
+        "First term 2, second term 6: $2r = 6$, so $r = 3$.",
+        "$a_n = 2 \\times 3^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times 3^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:e",
+      "record_id": "eb11c2-2:try-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$-8, 12, -18, 27, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a42276debfa439e4adbb8fb5784f53af",
+      "kind": "value",
+      "answer": "a_n = -8 × (-3/2)^{n-1}",
+      "solution": [
+        "First term $-8$, second term 12: $-8r = 12$, so $r = -\\frac32$.",
+        "$a_n = -8 \\times \\left(-\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = -8\\times(-\\frac{3}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-1:f",
+      "record_id": "eb11c2-2:try-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$2, \\frac{2}{3}, \\frac{2}{9}, \\frac{2}{27}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3525af1467946f1a57280faf0e6b783a",
+      "kind": "value",
+      "answer": "a_n = 2 × (1/3)^{n-1}",
+      "solution": [
+        "First term 2, second term $\\frac23$: $2r = \\frac23$, so $r = \\frac13$.",
+        "$a_n = 2 \\times \\left(\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times(\\frac{1}{3})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-2",
+      "record_id": "eb11c2-2:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. A, $-18$, 6, B, ...",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ef3a82af6fb8f610e7179cfb08ece247",
+      "kind": "value",
+      "answer": "common ratio -1/3, A = 54, B = -2",
+      "solution": [
+        "$-18r = 6$, so $r = -\\frac13$.",
+        "A × (−1/3) = −18, so $A = -18 \\div \\left(-\\frac13\\right) = 54$.",
+        "$B = 6 \\times \\left(-\\frac13\\right) = -2$.",
+        "Common ratio $-\\frac13$, A = 54, B = −2."
+      ],
+      "grounded_in": [
+        "eb11c2-2:definition-1",
+        "eb11c2-2:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "common ratio -1/3, A = 54, B = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:a",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 5, the common ratio 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4f691b4ce0bcde13d27fc2808830edd4",
+      "kind": "value",
+      "answer": "a_n = 5 × 2^{n-1}",
+      "solution": [
+        "a = 5, r = 2.",
+        "$a_n = 5 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 5\\times 2^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:b",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 2, the common ratio 5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f073baf76307752016c5c8516c47e1a2",
+      "kind": "value",
+      "answer": "a_n = 2 × 5^{n-1}",
+      "solution": [
+        "a = 2, r = 5.",
+        "$a_n = 2 \\times 5^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times 5^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:c",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 7, the common ratio 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f9d2b09689f7d3b71915fb2d4b07f9b0",
+      "kind": "value",
+      "answer": "a_n = 7 × 4^{n-1}",
+      "solution": [
+        "a = 7, r = 4.",
+        "$a_n = 7 \\times 4^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 7\\times 4^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:d",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 2, the common ratio -3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "437cce9fc573e006881d523ee2903b93",
+      "kind": "value",
+      "answer": "a_n = 2 × (-3)^{n-1}",
+      "solution": [
+        "a = 2, r = $-3$.",
+        "$a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:e",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 3, the common ratio -5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a9c5abe2e1bb07070bd81e3c43ebf968",
+      "kind": "value",
+      "answer": "a_n = 3 × (-5)^{n-1}",
+      "solution": [
+        "a = 3, r = $-5$.",
+        "$a_n = 3 \\times (-5)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times(-5)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:f",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 4, the common ratio -2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "46862760d63751e37081d2b9e93bee49",
+      "kind": "value",
+      "answer": "a_n = 4 × (-2)^{n-1}",
+      "solution": [
+        "a = 4, r = $-2$.",
+        "$a_n = 4 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 4\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:g",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "g",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 4, the common ratio $\\frac{1}{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7501ff1187c53917f980be1ed15b9ff2",
+      "kind": "value",
+      "answer": "a_n = 4 × (1/3)^{n-1}",
+      "solution": [
+        "a = 4, r = $\\frac13$.",
+        "$a_n = 4 \\times \\left(\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 4\\times(\\frac{1}{3})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:h",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "h",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 3, the common ratio $-\\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d68238351ea09a1daff7e24ca7726e74",
+      "kind": "value",
+      "answer": "a_n = 3 × (-1/2)^{n-1}",
+      "solution": [
+        "a = 3, r = $-\\frac12$.",
+        "$a_n = 3 \\times \\left(-\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times(-\\frac{1}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:i",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "i",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The first term 6, the common ratio $\\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a112a57c2371a576d36faece381a6cb5",
+      "kind": "value",
+      "answer": "a_n = 6 × (1/2)^{n-1}",
+      "solution": [
+        "a = 6, r = $\\frac12$.",
+        "$a_n = 6 \\times \\left(\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 6\\times(\\frac{1}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:j",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "j",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$3, 6, 12, 24, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "51a835ee7c3764404f7b7910bb5f2e03",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1}",
+      "solution": [
+        "First term 3, second term 6: $3r = 6$, $r = 2$.",
+        "$a_n = 3 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times 2^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:k",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "k",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$2, -6, 18, -54, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1f3e91dc5fabc7f9751f0233bbcd902c",
+      "kind": "value",
+      "answer": "a_n = 2 × (-3)^{n-1}",
+      "solution": [
+        "$2r = -6$, so $r = -3$.",
+        "$a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:l",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "l",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$5, -10, 20, -40, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4525926faac325947b94f7635c6b4926",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2)^{n-1}",
+      "solution": [
+        "$5r = -10$, so $r = -2$.",
+        "$a_n = 5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 5\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:m",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "m",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$48, 24, 12, 6, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a0b8d4dbfdeb887223062cea67aa10e2",
+      "kind": "value",
+      "answer": "a_n = 48 × (1/2)^{n-1}",
+      "solution": [
+        "$48r = 24$, so $r = \\frac12$.",
+        "$a_n = 48 \\times \\left(\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 48\\times(\\frac{1}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:n",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "n",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$\\frac{1}{6}, \\frac{1}{4}, \\frac{3}{8}, \\frac{9}{16}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d22a2958372a8c0cdb0f9cea1d805fef",
+      "kind": "value",
+      "answer": "a_n = (1/6) × (3/2)^{n-1}",
+      "solution": [
+        "$\\frac16 r = \\frac14$, so $r = \\frac32$.",
+        "$a_n = \\frac16 \\times \\left(\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = \\frac{1}{6}\\times(\\frac{3}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:o",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "o",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$8, 16\\sqrt{2}, 64, 128\\sqrt{2}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d24d0a3bd77336cf2ae1b7482671498e",
+      "kind": "value",
+      "answer": "a_n = 8 × (2√2)^{n-1}",
+      "solution": [
+        "$8r = 16\\sqrt2$, so $r = 2\\sqrt2$.",
+        "$a_n = 8 \\times (2\\sqrt2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 8\\times(2\\sqrt{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:p",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "p",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$3, -\\frac{15}{2}, \\frac{75}{4}, -\\frac{375}{8}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8d9962b45837387a12beb7080f79ae42",
+      "kind": "value",
+      "answer": "a_n = 3 × (-5/2)^{n-1}",
+      "solution": [
+        "$3r = -\\frac{15}{2}$, so $r = -\\frac52$.",
+        "$a_n = 3 \\times \\left(-\\frac52\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times(-\\frac{5}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:q",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "q",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$9, -3\\sqrt{3}, 3, -\\sqrt{3}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b76f44ff4e9236669d0dac3f978f75bf",
+      "kind": "value",
+      "answer": "a_n = 9 × (-√3/3)^{n-1}",
+      "solution": [
+        "$9r = -3\\sqrt3$, so $r = -\\frac{3\\sqrt3}{9} = -\\frac{\\sqrt3}{3}$.",
+        "$a_n = 9 \\times \\left(-\\frac{\\sqrt3}{3}\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 9\\times(-\\frac{\\sqrt{3}}{3})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-1:r",
+      "record_id": "eb11c2-2:exercise-1",
+      "part": "r",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "$5, -\\frac{10}{3}, \\frac{20}{9}, -\\frac{40}{27}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cdcd54ba08697f5c69f2a9217e1d92a2",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2/3)^{n-1}",
+      "solution": [
+        "$5r = -\\frac{10}{3}$, so $r = -\\frac23$.",
+        "$a_n = 5 \\times \\left(-\\frac23\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1",
+        "eb11c2-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 5\\times(-\\frac{2}{3})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-2:a",
+      "record_id": "eb11c2-2:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "The following sequences are geometric sequences. Find the common ratio and the numbers that fit in A and B.",
+        "stem": "A, $-3$, 9, B, ...",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "85cb0688e948cc4fb88bc193b64b36dc",
+      "kind": "value",
+      "answer": "common ratio -3, A = 1, B = -27",
+      "solution": [
+        "$-3r = 9$, so $r = -3$.",
+        "$A = -3 \\div (-3) = 1$.",
+        "$B = 9 \\times (-3) = -27$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "common ratio -3, A = 1, B = -27",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-2:b",
+      "record_id": "eb11c2-2:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "The following sequences are geometric sequences. Find the common ratio and the numbers that fit in A and B.",
+        "stem": "A, $\\frac{1}{3}$, $\\frac{1}{9}$, B, ...",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a7bbff755197df6bcff02e06a02cb39a",
+      "kind": "value",
+      "answer": "common ratio 1/3, A = 1, B = 1/27",
+      "solution": [
+        "$\\frac13 r = \\frac19$, so $r = \\frac13$.",
+        "$A = \\frac13 \\div \\frac13 = 1$.",
+        "$B = \\frac19 \\times \\frac13 = \\frac1{27}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "common ratio 1/3, A = 1, B = 1/27",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-2:c",
+      "record_id": "eb11c2-2:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "The following sequences are geometric sequences. Find the common ratio and the numbers that fit in A and B.",
+        "stem": "A, $-\\frac{1}{4}$, $\\frac{1}{8}$, B, ...",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5b001842c318b9eb3f82f8f4e551a7c0",
+      "kind": "value",
+      "answer": "common ratio -1/2, A = 1/2, B = -1/16",
+      "solution": [
+        "$-\\frac14 r = \\frac18$, so $r = -\\frac12$.",
+        "$A = -\\frac14 \\div \\left(-\\frac12\\right) = \\frac12$.",
+        "$B = \\frac18 \\times \\left(-\\frac12\\right) = -\\frac1{16}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "common ratio -1/2, A = 1/2, B = -1/16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:challenge-1",
+      "record_id": "eb11c2-2:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 59,
+      "question": {
+        "text": "In an increasing geometric sequence, if $a_3 + a_5 = 80$ and $a_4 = 24$, then find $a_7$.",
+        "stem": "",
+        "notes": "Printed 'and' is italic inside the math."
+      },
+      "needs_page": false,
+      "question_fingerprint": "85351814b8f241b812723ad86477021f",
+      "kind": "value",
+      "answer": "648",
+      "solution": [
+        "Let the general term be $a_n = ar^{n-1}$; $a_4 = ar^3 = 24$.",
+        "Then $a_3 = 24/r$ and $a_5 = 24r$.",
+        "$24/r + 24r = 80$, so $24 + 24r^2 = 80r$, i.e. $3r^2 - 10r + 3 = 0$.",
+        "$r = 3$ or $r = 1/3$.",
+        "The sequence is increasing (terms positive), so $r = 3$.",
+        "$a_7 = a_4 \\times r^3 = 24 \\times 27 = 648$.",
+        "Answer: 648."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "648",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-3:a",
+      "record_id": "eb11c2-2:warm-up-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Find the general term of the following geometric sequences {a_n}.",
+        "stem": "The 4th term is 24, the 6th term is 96",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "329ca2286428072856b53db0d891b20c",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1} or a_n = -3 × (-2)^{n-1}",
+      "solution": [
+        "$ar^3 = 24$ (i), $ar^5 = 96$ (ii).",
+        "Divide (ii) by (i): $r^2 = 4$, so $r = \\pm2$.",
+        "$r = 2$: $8a = 24$, $a = 3$. $r = -2$: $-8a = 24$, $a = -3$.",
+        "$a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times 2^{n-1}$ or $a_n = -3\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-3:b",
+      "record_id": "eb11c2-2:warm-up-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "Find the general term of the following geometric sequences {a_n}.",
+        "stem": "The 3rd term is 12, the 6th term is $-96$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "586c23e99f5638bcb0bf67b05adc963a",
+      "kind": "value",
+      "answer": "a_n = 3 × (-2)^{n-1}",
+      "solution": [
+        "$ar^2 = 12$ (i), $ar^5 = -96$ (ii).",
+        "Divide (ii) by (i): $r^3 = -8$, so $r = -2$.",
+        "(i): $4a = 12$, $a = 3$.",
+        "$a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-4",
+      "record_id": "eb11c2-2:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "When the 3 numbers 2, x, 8 form a geometric sequence in this order, find the value of x.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bd4b4fb2cb1aa4c8ae8d05035b6aa85a",
+      "kind": "value",
+      "answer": "x = 4 or x = -4",
+      "solution": [
+        "2, x, 8 form a geometric sequence, so $x^2 = 2 \\times 8$.",
+        "$x^2 = 16$.",
+        "$x = \\pm 4$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-4",
+        "eb11c2-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 4 or x = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-5",
+      "record_id": "eb11c2-2:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 60,
+      "question": {
+        "text": "When the 3 numbers 6, a, b form an arithmetic sequence in this order, and a, b, 16 form a geometric sequence in this order, find the values of a and b.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9ad1eef71e0fc9a8024b0a1fab876f10",
+      "kind": "value",
+      "answer": "a = 9, b = 12 or a = 1, b = -4",
+      "solution": [
+        "6, a, b arithmetic: $2a = 6 + b$, so $b = 2a - 6$.",
+        "a, b, 16 geometric: $b^2 = 16a$.",
+        "Substitute: $(2a-6)^2 = 16a$, giving $4a^2 - 40a + 36 = 0$.",
+        "$a = 9$ or $a = 1$.",
+        "When $a = 9$, $b = 12$; when $a = 1$, $b = -4$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-2",
+        "eb11c2-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 9, b = 12 or a = 1, b = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-3:a",
+      "record_id": "eb11c2-2:try-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 18, and the 5th term is 162",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0b294711bd0f9bcd050aa43126c1b044",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1} or a_n = 2 × (-3)^{n-1}",
+      "solution": [
+        "$ar^2 = 18$ (i), $ar^4 = 162$ (ii).",
+        "Divide: $r^2 = 9$, so $r = \\pm3$.",
+        "In both cases $9a = 18$, so $a = 2$.",
+        "$a_n = 2 \\times 3^{n-1}$ or $a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times 3^{n-1}$ or $a_n = 2\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-3:b",
+      "record_id": "eb11c2-2:try-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 2nd term is $-6$, and the 5th term is 48",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "220e9ff3e8e16412028fa04d19570d58",
+      "kind": "value",
+      "answer": "a_n = 3 × (-2)^{n-1}",
+      "solution": [
+        "$ar = -6$ (i), $ar^4 = 48$ (ii).",
+        "Divide: $r^3 = -8$, so $r = -2$.",
+        "(i): $-2a = -6$, $a = 3$.",
+        "$a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-3:c",
+      "record_id": "eb11c2-2:try-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 12, and the 7th term is 192",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "42b98faddc5ac3b4c3bc9eb8962058d5",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1} or a_n = 3 × (-2)^{n-1}",
+      "solution": [
+        "$ar^2 = 12$ (i), $ar^6 = 192$ (ii).",
+        "Divide: $r^4 = 16$, so $r = \\pm2$.",
+        "In both cases $4a = 12$, so $a = 3$.",
+        "$a_n = 3 \\times 2^{n-1}$ or $a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times 2^{n-1}$ or $a_n = 3\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-4",
+      "record_id": "eb11c2-2:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "When the 3 numbers $1, x, 12$ form a geometric sequence in this order, find the value of $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0fc89946c3f8b7fe43a46c20053f598f",
+      "kind": "value",
+      "answer": "x = 2√3 or x = -2√3",
+      "solution": [
+        "1, x, 12 geometric: $x^2 = 1 \\times 12$.",
+        "$x^2 = 12$.",
+        "$x = \\pm 2\\sqrt{3}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-4",
+        "eb11c2-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2√3 or x = -2√3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-5",
+      "record_id": "eb11c2-2:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 61,
+      "question": {
+        "text": "When the 3 numbers $-2, a, b$ form an arithmetic sequence in this order, and $a, b, 18$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c19e550413459c6eaf6a6f2355dc55c7",
+      "kind": "value",
+      "answer": "a = 2, b = 6 or a = 1/2, b = 3",
+      "solution": [
+        "-2, a, b arithmetic: $2a = -2 + b$, so $b = 2a + 2$.",
+        "a, b, 18 geometric: $b^2 = 18a$.",
+        "Substitute: $(2a+2)^2 = 18a$, so $4a^2 - 10a + 4 = 0$, i.e. $2a^2 - 5a + 2 = 0$.",
+        "$a = 2$ or $a = 1/2$.",
+        "When $a = 2$, $b = 6$; when $a = 1/2$, $b = 3$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-2",
+        "eb11c2-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 2, b = 6 or a = 1/2, b = 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-3",
+      "record_id": "eb11c2-2:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "27c289612180de40e0b60e568155dfb6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the actual questions are exercises 1 to 4 answered separately.",
+      "solution": [
+        "The item contains no data to solve.",
+        "Its questions are answered in their own parts."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the section header 'Solve the following problems.'; the questions are the separate items (exercise-4 to exercise-7).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:a",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 2nd term is 6, and the 4th term is 54",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4add5c42568609ef4c6263ddf675b5c1",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1} or a_n = -2 × (-3)^{n-1}",
+      "solution": [
+        "$ar = 6$, $ar^3 = 54$.",
+        "Divide: $r^2 = 9$, $r = \\pm3$.",
+        "$r = 3$: $a = 2$. $r = -3$: $-3a = 6$, $a = -2$.",
+        "$a_n = 2 \\times 3^{n-1}$ or $-2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 2\\times 3^{n-1}$ or $a_n = -2\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:b",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 27, and the 5th term is 243",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b4844a95e4b3e1c87976d5d58c3a9a16",
+      "kind": "value",
+      "answer": "a_n = 3 × 3^{n-1} or a_n = 3 × (-3)^{n-1}",
+      "solution": [
+        "$ar^2 = 27$, $ar^4 = 243$.",
+        "Divide: $r^2 = 9$, $r = \\pm3$.",
+        "$9a = 27$, so $a = 3$ in both cases.",
+        "$a_n = 3 \\times 3^{n-1}$ or $3 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 3\\times 3^{n-1}$ (= $3^n$) or $a_n = 3\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:c",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is $-28$, and the 5th term is $-112$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "64bf51f40e22ec95396bc3ecb6c1653a",
+      "kind": "value",
+      "answer": "a_n = -7 × 2^{n-1} or a_n = -7 × (-2)^{n-1}",
+      "solution": [
+        "$ar^2 = -28$, $ar^4 = -112$.",
+        "Divide: $r^2 = 4$, $r = \\pm2$.",
+        "$4a = -28$, so $a = -7$ in both cases.",
+        "$a_n = -7 \\times 2^{n-1}$ or $-7 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = -7\\times 2^{n-1}$ or $a_n = -7\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:d",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 2nd term is 14, and the 5th term is 112",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "94cef0ab0a3be46947d3e4c7d911ba6f",
+      "kind": "value",
+      "answer": "a_n = 7 × 2^{n-1}",
+      "solution": [
+        "$ar = 14$, $ar^4 = 112$.",
+        "Divide: $r^3 = 8$, so $r = 2$.",
+        "$2a = 14$, $a = 7$.",
+        "$a_n = 7 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 7\\times 2^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:e",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "e",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 4th term is 16, and the 7th term is $-128$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0372c9e979f3f12bfc1af6668afb80a4",
+      "kind": "value",
+      "answer": "a_n = -2 × (-2)^{n-1}",
+      "solution": [
+        "$ar^3 = 16$, $ar^6 = -128$.",
+        "Divide: $r^3 = -8$, so $r = -2$.",
+        "$-8a = 16$, $a = -2$.",
+        "$a_n = -2 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = -2\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:f",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "f",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is $-20$, and the 6th term is 160.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6a6c0ab8f8bc0a0bc0161caf8dc4d009",
+      "kind": "value",
+      "answer": "a_n = -5 × (-2)^{n-1}",
+      "solution": [
+        "$ar^2 = -20$, $ar^5 = 160$.",
+        "Divide: $r^3 = -8$, so $r = -2$.",
+        "$4a = -20$, $a = -5$.",
+        "$a_n = -5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = -5\\times(-2)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:g",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "g",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 2nd term is 3, and the 6th term is 768.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ebd4a5b3f0eca74176e4f514814e736f",
+      "kind": "value",
+      "answer": "a_n = (3/4) × 4^{n-1} or a_n = -(3/4) × (-4)^{n-1}",
+      "solution": [
+        "$ar = 3$, $ar^5 = 768$.",
+        "Divide: $r^4 = 256$, so $r = \\pm4$.",
+        "$r = 4$: $4a = 3$, $a = \\frac34$. $r = -4$: $-4a = 3$, $a = -\\frac34$.",
+        "$a_n = \\frac34 \\times 4^{n-1}$ or $-\\frac34 \\times (-4)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = \\frac{3}{4}\\times 4^{n-1}$ or $a_n = -\\frac{3}{4}\\times(-4)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:h",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "h",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 9, and the 7th term is $\\frac{729}{16}$.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "512b32a02f3d24c1f66e77a160c2d9ac",
+      "kind": "value",
+      "answer": "a_n = 4 × (3/2)^{n-1} or a_n = 4 × (-3/2)^{n-1}",
+      "solution": [
+        "$ar^2 = 9$, $ar^6 = \\frac{729}{16}$.",
+        "Divide: $r^4 = \\frac{81}{16}$, so $r = \\pm\\frac32$.",
+        "$r^2 = \\frac94$, so $\\frac94 a = 9$, $a = 4$.",
+        "$a_n = 4 \\times \\left(\\frac32\\right)^{n-1}$ or $4 \\times \\left(-\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = 4\\times(\\frac{3}{2})^{n-1}$ or $a_n = 4\\times(-\\frac{3}{2})^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-4:i",
+      "record_id": "eb11c2-2:exercise-4",
+      "part": "i",
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+        "stem": "The 4th term is $\\frac{2}{9}$, and the 8th term is 18.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8da843a3b817dd5e6c601a23b7906375",
+      "kind": "value",
+      "answer": "a_n = (2/243) × 3^{n-1} or a_n = -(2/243) × (-3)^{n-1}",
+      "solution": [
+        "$ar^3 = \\frac29$, $ar^7 = 18$.",
+        "Divide: $r^4 = 81$, so $r = \\pm3$.",
+        "$r = 3$: $27a = \\frac29$, $a = \\frac2{243}$. $r = -3$: $-27a = \\frac29$, $a = -\\frac2{243}$.",
+        "$a_n = \\frac2{243} \\times 3^{n-1}$ or $-\\frac2{243} \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "$a_n = \\frac{2}{243}\\times 3^{n-1}$ or $a_n = -\\frac{2}{243}\\times(-3)^{n-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-5",
+      "record_id": "eb11c2-2:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "When the 3 numbers $1, x, 25$ form a geometric sequence in this order, find the value of $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5ac34f4b47b03582f85f14f205e81dcd",
+      "kind": "value",
+      "answer": "x = 5 or x = -5",
+      "solution": [
+        "1, x, 25 geometric: $x^2 = 25$.",
+        "$x = \\pm 5$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-4",
+        "eb11c2-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 5 or x = -5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-6",
+      "record_id": "eb11c2-2:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "When the 3 numbers $\\frac{1}{2}, x, 8$ form a geometric sequence in this order, find the value of $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "45da471a45a9a2a4a515e04a795ed358",
+      "kind": "value",
+      "answer": "x = 2 or x = -2",
+      "solution": [
+        "1/2, x, 8 geometric: $x^2 = \\frac12 \\times 8$.",
+        "$x^2 = 4$.",
+        "$x = \\pm 2$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-4",
+        "eb11c2-2:example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2 or x = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-7",
+      "record_id": "eb11c2-2:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "When the 3 numbers $a, b, 2$ form an arithmetic sequence in this order, and $a, 2, b$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e5715a42020f66c4b4639fc09028a861",
+      "kind": "value",
+      "answer": "a = 2, b = 2 or a = -4, b = -1",
+      "solution": [
+        "a, b, 2 arithmetic: $2b = a + 2$, so $a = 2b - 2$.",
+        "a, 2, b geometric: $2^2 = ab$, so $ab = 4$.",
+        "Substitute: $(2b-2)b = 4$, so $b^2 - b - 2 = 0$.",
+        "$b = 2$ or $b = -1$.",
+        "When $b = 2$, $a = 2$; when $b = -1$, $a = -4$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-2",
+        "eb11c2-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 2, b = 2 or a = -4, b = -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:challenge-2",
+      "record_id": "eb11c2-2:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 62,
+      "question": {
+        "text": "Budgeting for a Green Energy Initiative. A corporate sustainability department is planning a 3-year budget to phase out fossil fuels. They are tracking their yearly funding allocations across three consecutive stages, modeled under two different economic forecasts: Model 1 (Linear Expansion): Under steady conditions, the funding for Year 1 is capped at -5 hundred thousand LE (initial infrastructure debt), followed by Year 2 (a) and Year 3 (b). These three numbers form an arithmetic sequence. Model 2 (Compounding Scale): If a clean-energy breakthrough occurs, the budget shifts gears. The allocations for Year 2 (a), Year 3 (b), and a newly projected Year 4 budget of 45 hundred thousand LE form a geometric sequence. Determine the exact budget values for a (Year 2) and b (Year 3) that satisfy both planning models simultaneously so the company can transition smoothly.",
+        "stem": "",
+        "notes": "Boxed star Challenge; label printed as 'Challenge'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "c5651900830c29d35b2373570d7e430b",
+      "kind": "value",
+      "answer": "a = 5, b = 15 or a = 5/4, b = 15/2 (hundred thousand LE)",
+      "solution": [
+        "-5, a, b arithmetic: $2a = -5 + b$, so $b = 2a + 5$.",
+        "a, b, 45 geometric: $b^2 = 45a$.",
+        "Substitute: $(2a+5)^2 = 45a$, so $4a^2 - 25a + 25 = 0$.",
+        "$a = 5$ or $a = 5/4$.",
+        "When $a = 5$, $b = 15$; when $a = 5/4$, $b = 15/2$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-2",
+        "eb11c2-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 5, b = 15 or a = 5/4, b = 15/2 (hundred thousand LE)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-6:a",
+      "record_id": "eb11c2-2:warm-up-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 63,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 4, the common ratio 3, and the number of terms 5.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "37bf7dd9db6c2fd2642efe68ae52a538",
+      "kind": "value",
+      "answer": "484",
+      "solution": [
+        "a = 4, r = 3, n = 5; r > 1 so use $S = \\frac{a(r^n-1)}{r-1}$.",
+        "$S = \\frac{4(3^5-1)}{3-1} = 2 \\times 242 = 484$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6",
+        "eb11c2-2:warm-up-8"
+      ],
+      "checks": {
+        "resolve_answer": "484",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-6:b",
+      "record_id": "eb11c2-2:warm-up-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 63,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 8, the common ratio $\\frac{1}{2}$, and the number of terms 6.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1ffa10299b8bf0c837ba926f4abfcf86",
+      "kind": "value",
+      "answer": "63/4",
+      "solution": [
+        "a = 8, r = 1/2, n = 6; r < 1 so use $S = \\frac{a(1-r^n)}{1-r}$.",
+        "$S = \\frac{8(1-\\frac1{64})}{\\frac12} = 16 \\times \\frac{63}{64}$.",
+        "$S = \\frac{63}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:warm-up-8"
+      ],
+      "checks": {
+        "resolve_answer": "63/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-7",
+      "record_id": "eb11c2-2:warm-up-7",
+      "part": null,
+      "type": "exercise",
+      "page": 63,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequence: $2,-6,18,-54,\\dots$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3f03f4fbacc66e504b76cab8d28b636a",
+      "kind": "value",
+      "answer": "S_n = (1 - (-3)^n)/2",
+      "solution": [
+        "a = 2, r = $-3$ (r < 1).",
+        "$S_n = \\frac{2\\{1-(-3)^n\\}}{1-(-3)}$.",
+        "$S_n = \\frac{1-(-3)^n}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:warm-up-9"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = \\frac{1-(-3)^n}{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-6",
+      "record_id": "eb11c2-2:try-6",
+      "part": null,
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Solve the following problems. (Try section)",
+        "stem": "",
+        "notes": "Try header; contains numbered questions 1 and 2 as separate records."
+      },
+      "needs_page": true,
+      "question_fingerprint": "362fc486c3c98b979124d4e506564fb1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try heading; its questions are parts 1 and 2 answered separately.",
+      "solution": [
+        "The item has no data to solve."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the Try header; the questions are try-7 and try-8.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-7:a",
+      "record_id": "eb11c2-2:try-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 3, the common ratio 2, and the number of terms 5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a2b3fe98040f58ba926fae52a78f9695",
+      "kind": "value",
+      "answer": "93",
+      "solution": [
+        "a = 3, r = 2, n = 5; r > 1.",
+        "$S = \\frac{3(2^5-1)}{2-1} = 3 \\times 31 = 93$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "93",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-7:b",
+      "record_id": "eb11c2-2:try-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 6, the common ratio $-2$, and the number of terms 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "76c4340d34da48d570bc7e2496334c5c",
+      "kind": "value",
+      "answer": "-30",
+      "solution": [
+        "a = 6, r = $-2$, n = 4; r < 1.",
+        "$S = \\frac{6\\{1-(-2)^4\\}}{1-(-2)} = \\frac{6 \\times (-15)}{3}$.",
+        "$S = -30$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "-30",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-7:c",
+      "record_id": "eb11c2-2:try-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 6, the common ratio $\\frac{1}{2}$, and the number of terms 6",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c6018d14d6021d4716202d6eb181a175",
+      "kind": "value",
+      "answer": "189/16",
+      "solution": [
+        "a = 6, r = 1/2, n = 6; r < 1.",
+        "$S = \\frac{6(1-\\frac1{64})}{\\frac12} = 12 \\times \\frac{63}{64}$.",
+        "$S = \\frac{189}{16}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "189/16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-8:a",
+      "record_id": "eb11c2-2:try-8",
+      "part": "a",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "The first term 3, the common ratio $-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4f170ad3a28d33fd4b8f00a8975a2cc3",
+      "kind": "value",
+      "answer": "S_n = 1 - (-2)^n",
+      "solution": [
+        "a = 3, r = $-2$.",
+        "$S_n = \\frac{3\\{1-(-2)^n\\}}{1-(-2)} = \\frac{3\\{1-(-2)^n\\}}{3}$.",
+        "$S_n = 1-(-2)^n$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = 1-(-2)^n$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-8:b",
+      "record_id": "eb11c2-2:try-8",
+      "part": "b",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "$8, -4, 2, -1, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "322237fbd1f44496fd5eaf8918ca6fd1",
+      "kind": "value",
+      "answer": "S_n = (16/3)(1 - (-1/2)^n)",
+      "solution": [
+        "a = 8, $r = -4 \\div 8 = -\\frac12$.",
+        "$S_n = \\frac{8\\{1-(-\\frac12)^n\\}}{1+\\frac12} = \\frac{16}{3}\\{1-(-\\frac12)^n\\}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = \\frac{16}{3}\\left\\{1-(-\\frac{1}{2})^n\\right\\}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:work-with-a-partner-1",
+      "record_id": "eb11c2-2:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 64,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": "Side box, 'Work with a partner'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "8ec92c599f751006e2a7e1686f2faaae",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a group on the try section; it has no single answer of its own.",
+      "solution": [
+        "The box asks students to solve the try section together and discuss.",
+        "The try answers are given under their own references."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "Group discussion activity: solve the try problems using S_n = a(1 - r^n)/(1 - r) (r<1) or a(r^n - 1)/(r - 1) (r>1), then compare answers with the group.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-8",
+      "record_id": "eb11c2-2:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Solve the following problems. (Exercise section)",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b50f10849224b1aba50506d645b64dde",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise heading; its questions are parts 1 and 2 answered separately.",
+      "solution": [
+        "The item has no data to solve."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the Exercise header; the questions are exercise-9 and exercise-10.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:a",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "a",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 5, the common ratio 3, and the number of terms 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cef495e6f3587ba1e98558af0cff2398",
+      "kind": "value",
+      "answer": "200",
+      "solution": [
+        "a = 5, r = 3, n = 4; r > 1.",
+        "$S = \\frac{5(3^4-1)}{3-1} = \\frac{5 \\times 80}{2} = 200$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "200",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:b",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "b",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 1, the common ratio $-3$, and the number of terms 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "87b71f2730b6d259731aed73afa70194",
+      "kind": "value",
+      "answer": "-20",
+      "solution": [
+        "a = 1, r = $-3$, n = 4.",
+        "$S = \\frac{1-(-3)^4}{1-(-3)} = \\frac{1-81}{4}$.",
+        "$S = -20$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "-20",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:c",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "c",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 1, the common ratio $\\frac{1}{3}$, and the number of terms 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "af5ce4427eeb88e9be2d5e8bfb8d9b5c",
+      "kind": "value",
+      "answer": "13/9",
+      "solution": [
+        "a = 1, r = 1/3, n = 3.",
+        "$S = \\frac{1-\\frac1{27}}{\\frac23} = \\frac{26}{27} \\times \\frac32$.",
+        "$S = \\frac{13}{9}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "13/9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:d",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "d",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 3, the common ratio 2, and the number of terms 10",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8114b4ac213d3945b670d7024467d069",
+      "kind": "value",
+      "answer": "3069",
+      "solution": [
+        "a = 3, r = 2, n = 10.",
+        "$S = \\frac{3(2^{10}-1)}{2-1} = 3 \\times 1023$.",
+        "$S = 3069$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "3069",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:e",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "e",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 2, the common ratio $-3$, and the number of terms 6",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "61d621be28438c201ddfd871b27b20f2",
+      "kind": "value",
+      "answer": "-364",
+      "solution": [
+        "a = 2, r = $-3$, n = 6.",
+        "$S = \\frac{2\\{1-(-3)^6\\}}{1-(-3)} = \\frac{2(1-729)}{4}$.",
+        "$S = -364$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "-364",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-9:f",
+      "record_id": "eb11c2-2:exercise-9",
+      "part": "f",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S$ of the following geometric sequences.",
+        "stem": "The first term 1, the common ratio $\\frac{1}{2}$, and the number of terms 8",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "22b23a72240450178a8ff5730f9d2d7c",
+      "kind": "value",
+      "answer": "255/128",
+      "solution": [
+        "a = 1, r = 1/2, n = 8.",
+        "$S = \\frac{1-\\frac1{256}}{\\frac12} = 2 \\times \\frac{255}{256}$.",
+        "$S = \\frac{255}{128}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "255/128",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:a",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "a",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "The first term 7, and the common ratio 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b7c31cd11bd03f053e8569b4c2f07a14",
+      "kind": "value",
+      "answer": "S_n = 7(2^n - 1)",
+      "solution": [
+        "a = 7, r = 2 (r > 1).",
+        "$S_n = \\frac{7(2^n-1)}{2-1} = 7(2^n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = 7(2^n-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:b",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "b",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "The first term 2, and the common ratio $\\frac{1}{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ebf3088a5d9250aa82840211548b182d",
+      "kind": "value",
+      "answer": "S_n = 3(1 - (1/3)^n)",
+      "solution": [
+        "a = 2, r = 1/3 (r < 1).",
+        "$S_n = \\frac{2\\{1-(\\frac13)^n\\}}{\\frac23} = 3\\{1-(\\frac13)^n\\}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = 3\\left\\{1-(\\frac{1}{3})^n\\right\\}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:c",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "c",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "$2, 6, 18, 54, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "10642fb284570bba86f38feda8842be3",
+      "kind": "value",
+      "answer": "S_n = 3^n - 1",
+      "solution": [
+        "a = 2, $r = 6 \\div 2 = 3$.",
+        "$S_n = \\frac{2(3^n-1)}{3-1} = 3^n-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = 3^n-1$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:d",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "d",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "$1, -3, 9, -27, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ba56144b160aee2954e02db2f3757b42",
+      "kind": "value",
+      "answer": "S_n = (1 - (-3)^n)/4",
+      "solution": [
+        "a = 1, r = $-3$.",
+        "$S_n = \\frac{1-(-3)^n}{1-(-3)} = \\frac{1-(-3)^n}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = \\frac{1-(-3)^n}{4}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:e",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "e",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "The first term 4, and the common ratio 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "251db7f40d28b5693241e332b69f7699",
+      "kind": "value",
+      "answer": "S_n = 4(2^n - 1)",
+      "solution": [
+        "a = 4, r = 2.",
+        "$S_n = \\frac{4(2^n-1)}{2-1} = 4(2^n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = 4(2^n-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:f",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "f",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "The first term 16, and the common ratio $-\\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0f57f555b510afdf3927247ca9b65fc7",
+      "kind": "value",
+      "answer": "S_n = (32/3)(1 - (-1/2)^n)",
+      "solution": [
+        "a = 16, r = $-\\frac12$.",
+        "$S_n = \\frac{16\\{1-(-\\frac12)^n\\}}{1+\\frac12}$.",
+        "$S_n = \\frac{32}{3}\\{1-(-\\frac12)^n\\}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = \\frac{32}{3}\\left\\{1-(-\\frac{1}{2})^n\\right\\}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-10:g",
+      "record_id": "eb11c2-2:exercise-10",
+      "part": "g",
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+        "stem": "$1, -2, 4, -8, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5896f89046eaaf820a77945165a65171",
+      "kind": "value",
+      "answer": "S_n = (1 - (-2)^n)/3",
+      "solution": [
+        "a = 1, r = $-2$.",
+        "$S_n = \\frac{1-(-2)^n}{1-(-2)} = \\frac{1-(-2)^n}{3}$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$S_n = \\frac{1-(-2)^n}{3}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:challenge-3",
+      "record_id": "eb11c2-2:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 64,
+      "question": {
+        "text": "An environmental tech company designs sequential water filters where each stage traps a third of the remaining microplastics compared to the previous stage. The filtration scale progresses geometrically: $3, 1, \\frac{1}{3}, \\frac{1}{9}, \\dots$ mg/L removed per stage. Calculate the total mass of contaminants removed if the system uses 4 filtration stages in total.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b68604ac57ad2845556a5961122a1ce9",
+      "kind": "value",
+      "answer": "40/9 mg/L",
+      "solution": [
+        "Sequence 3, 1, 1/3, 1/9: a = 3, r = 1/3, n = 4.",
+        "$S = \\frac{3(1-\\frac1{81})}{1-\\frac13} = \\frac92 \\times \\frac{80}{81}$.",
+        "Total removed = $\\frac{40}{9}$ mg/L."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "40/9 mg/L",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-10:1",
+      "record_id": "eb11c2-2:warm-up-10",
+      "part": "1",
+      "type": "exercise",
+      "page": 65,
+      "question": {
+        "text": "Find the first term and common ratio of the following geometric sequences.",
+        "stem": "The sum from the first term to the 3rd term is 35, the sum from the 3rd term to the 5th term is 140",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e3b51aeaa9d1f35f0849a80b5273d7aa",
+      "kind": "value",
+      "answer": "First term 5, common ratio 2 or first term 35/3, common ratio -2",
+      "solution": [
+        "$a+ar+ar^2 = 35$ (i); $ar^2+ar^3+ar^4 = 140$ (ii).",
+        "(ii) gives $r^2(a+ar+ar^2) = 140$; substitute (i): $35r^2 = 140$, $r = \\pm2$.",
+        "$r = 2$: $7a = 35$, $a = 5$.",
+        "$r = -2$: $3a = 35$, $a = \\frac{35}{3}$.",
+        "First term 5, ratio 2 or first term 35/3, ratio −2."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 5, common ratio 2; or first term 35/3, common ratio -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-10:2",
+      "record_id": "eb11c2-2:warm-up-10",
+      "part": "2",
+      "type": "exercise",
+      "page": 65,
+      "question": {
+        "text": "Find the first term and common ratio of the following geometric sequences.",
+        "stem": "The sum from the first term to the 3rd term is 21, the sum from the first term to the 6th term is 189",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0489aa2e377bbddfec6b1f4d48d6d8c5",
+      "kind": "value",
+      "answer": "First term 3, common ratio 2",
+      "solution": [
+        "$a+ar+ar^2 = 21$ (i); sum of 6 terms $= 189$ (ii).",
+        "(ii): $(a+ar+ar^2)+r^3(a+ar+ar^2) = 189$; substitute (i): $21+21r^3 = 189$.",
+        "$r^3 = 8$, so $r = 2$.",
+        "(i): $7a = 21$, $a = 3$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-4"
+      ],
+      "checks": {
+        "resolve_answer": "first term 3, common ratio 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:warm-up-10:3",
+      "record_id": "eb11c2-2:warm-up-10",
+      "part": "3",
+      "type": "exercise",
+      "page": 65,
+      "question": {
+        "text": "Find the first term and common ratio of the following geometric sequences.",
+        "stem": "The 3rd term is 4, the sum from the first term to the 3rd term is 7",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ae967194a7429cfba521093c709a9962",
+      "kind": "value",
+      "answer": "First term 1, common ratio 2 or first term 9, common ratio -2/3",
+      "solution": [
+        "$ar^2 = 4$ (i); $a+ar+ar^2 = 7$ (ii).",
+        "From (i), $a = \\frac4{r^2}$; substitute into (ii) and multiply by $r^2$: $4+4r+4r^2 = 7r^2$.",
+        "Solving: $r = 2$ or $r = -\\frac23$.",
+        "$r = 2$: $4a = 4$, $a = 1$.",
+        "$r = -\\frac23$: $\\frac49 a = 4$, $a = 9$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 1, common ratio 2; or first term 9, common ratio -2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-9",
+      "record_id": "eb11c2-2:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "Find the first term and common ratio of the following geometric sequences.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cd3b78449d718ab775e53c7076707129",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try heading; its questions are try-10, try-11 and try-12, answered separately.",
+      "solution": [
+        "The item has no data to solve."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the Try header; the questions are try-10, try-11 and try-12.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-10",
+      "record_id": "eb11c2-2:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 21, and the sum from the 3rd to the 5th term is 84",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "94d02cd7d5a06e759ac9350793854ab8",
+      "kind": "value",
+      "answer": "a = 3, r = 2 or a = 7, r = -2",
+      "solution": [
+        "$a + ar + ar^2 = 21$ ...(i)",
+        "$ar^2 + ar^3 + ar^4 = 84$ ...(ii)",
+        "(ii) is $r^2(a+ar+ar^2) = 84$; substitute (i): $21r^2 = 84$.",
+        "$r^2 = 4$, $r = \\pm 2$.",
+        "$r = 2$: $a+2a+4a = 21$, $a = 3$.",
+        "$r = -2$: $a-2a+4a = 21$, $3a = 21$, $a = 7$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 3, ratio 2 or first term 7, ratio -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-11",
+      "record_id": "eb11c2-2:try-11",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 26, and the sum from the first to the 6th term is 728",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e0a89215e8b6cfde721e9c3f5daea635",
+      "kind": "value",
+      "answer": "a = 2, r = 3",
+      "solution": [
+        "$a + ar + ar^2 = 26$ ...(i)",
+        "Sum of first 6 terms: $(a+ar+ar^2) + r^3(a+ar+ar^2) = 728$.",
+        "Substitute (i): $26 + 26r^3 = 728$, so $r^3 = 27$.",
+        "$r = 3$ (real).",
+        "From (i): $a + 3a + 9a = 26$, $a = 2$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-4"
+      ],
+      "checks": {
+        "resolve_answer": "First term 2, common ratio 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:try-12",
+      "record_id": "eb11c2-2:try-12",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The 2nd term is 3, and the sum from the first to the 3rd term is 13",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "710890a54ab1f98a4be1778d32c4a153",
+      "kind": "value",
+      "answer": "a = 1, r = 3 or a = 9, r = 1/3",
+      "solution": [
+        "2nd term is 3: $ar = 3$ ...(i)",
+        "$a + ar + ar^2 = 13$ ...(ii)",
+        "From (i), $a = 3/r$. Substitute into (ii): $\\frac3r + 3 + 3r = 13$.",
+        "Multiply by r: $3 + 3r^2 = 10r$, so $3r^2 - 10r + 3 = 0$.",
+        "$r = 3$ or $r = 1/3$.",
+        "$r = 3$: $a = 1$. $r = 1/3$: $a = 9$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 1, ratio 3 or first term 9, ratio 1/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-11",
+      "record_id": "eb11c2-2:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "Find the first term and common ratio of the following geometric sequences.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cd3b78449d718ab775e53c7076707129",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise heading; its questions are exercises 12 to 16, answered separately.",
+      "solution": [
+        "The item has no data to solve."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the Exercise header; the questions are exercise-12 to exercise-16.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-12",
+      "record_id": "eb11c2-2:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 9, and the sum from the 4th to the 6th term is $-72$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bbcdcd44ed7b26adf5ea57161c6880ae",
+      "kind": "value",
+      "answer": "a = 3, r = -2",
+      "solution": [
+        "$a + ar + ar^2 = 9$ ...(i)",
+        "4th to 6th terms: $ar^3 + ar^4 + ar^5 = r^3(a+ar+ar^2) = -72$.",
+        "Substitute (i): $9r^3 = -72$, $r^3 = -8$.",
+        "$r = -2$ (real).",
+        "From (i): $a - 2a + 4a = 9$, $3a = 9$, $a = 3$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-3",
+        "eb11c2-2:worked-example-4"
+      ],
+      "checks": {
+        "resolve_answer": "First term 3, common ratio -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-13",
+      "record_id": "eb11c2-2:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 9, and the sum from the 3rd to the 5th term is 36",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "72036a9615060b63db071b26427f32f6",
+      "kind": "value",
+      "answer": "a = 9/7, r = 2 or a = 3, r = -2",
+      "solution": [
+        "$a + ar + ar^2 = 9$ ...(i)",
+        "$ar^2 + ar^3 + ar^4 = r^2(a+ar+ar^2) = 36$.",
+        "Substitute (i): $9r^2 = 36$, $r = \\pm 2$.",
+        "$r = 2$: $7a = 9$, $a = 9/7$.",
+        "$r = -2$: $3a = 9$, $a = 3$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 9/7, ratio 2 or first term 3, ratio -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-14",
+      "record_id": "eb11c2-2:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 78, and the sum from the 3rd to the 5th term is 702",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b0283fd296c241c01b11ddfe99e359c7",
+      "kind": "value",
+      "answer": "a = 6, r = 3 or a = 78/7, r = -3",
+      "solution": [
+        "$a + ar + ar^2 = 78$ ...(i)",
+        "$r^2(a+ar+ar^2) = 702$.",
+        "Substitute (i): $78r^2 = 702$, $r^2 = 9$, $r = \\pm 3$.",
+        "$r = 3$: $13a = 78$, $a = 6$.",
+        "$r = -3$: $a - 3a + 9a = 7a = 78$, $a = 78/7$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 6, ratio 3 or first term 78/7, ratio -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-15",
+      "record_id": "eb11c2-2:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum of the first and the 2nd terms is 3, and the sum from the first to the 4th term is 51",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0ce1886bac584390d917788609cf78a4",
+      "kind": "value",
+      "answer": "a = 3/5, r = 4 or a = -1, r = -4",
+      "solution": [
+        "$a + ar = 3$ ...(i)",
+        "Sum of first 4: $(a+ar) + r^2(a+ar) = 51$.",
+        "Substitute (i): $3 + 3r^2 = 51$, $r^2 = 16$, $r = \\pm 4$.",
+        "$r = 4$: $5a = 3$, $a = 3/5$.",
+        "$r = -4$: $a - 4a = 3$, $a = -1$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-4"
+      ],
+      "checks": {
+        "resolve_answer": "First term 3/5, ratio 4 or first term -1, ratio -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-16",
+      "record_id": "eb11c2-2:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 66,
+      "question": {
+        "text": "The sum from the first to the 3rd term is 65, and the sum from the first to the 6th term is 1820",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bd2a411f84b7b2087c5a05ddbd9f889f",
+      "kind": "value",
+      "answer": "a = 5, r = 3",
+      "solution": [
+        "$a + ar + ar^2 = 65$ ...(i)",
+        "Sum of first 6: $65 + 65r^3 = 1820$.",
+        "$r^3 = 27$, $r = 3$.",
+        "From (i): $a + 3a + 9a = 65$, $13a = 65$, $a = 5$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-4"
+      ],
+      "checks": {
+        "resolve_answer": "First term 5, common ratio 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-17",
+      "record_id": "eb11c2-2:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 67,
+      "question": {
+        "text": "The sum of the first and the 2nd terms is $-8$, and the sum from the first to the 4th term is $-80$",
+        "stem": "",
+        "notes": "Part of the Exercise whose earlier items are on the previous page; the item prints only a number badge 6."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c9da868e4a5493e550b6a3eac018e0a0",
+      "kind": "value",
+      "answer": "First term -2, common ratio 3 or first term 4, common ratio -3",
+      "solution": [
+        "$a+ar = -8$ (i); $a+ar+ar^2+ar^3 = -80$ (ii).",
+        "(ii): $(a+ar)+r^2(a+ar) = -80$; substitute (i): $-8-8r^2 = -80$.",
+        "$r^2 = 9$, so $r = \\pm3$.",
+        "$r = 3$: $4a = -8$, $a = -2$.",
+        "$r = -3$: $-2a = -8$, $a = 4$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:worked-example-4",
+        "eb11c2-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term -2, common ratio 3; or first term 4, common ratio -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-18",
+      "record_id": "eb11c2-2:exercise-18",
+      "part": null,
+      "type": "exercise",
+      "page": 67,
+      "question": {
+        "text": "The 2nd term is 6, and the sum from the first to the 3rd term is 21",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "16ccc9e4c922372d28330d2f940d7230",
+      "kind": "value",
+      "answer": "a = 3, r = 2 or a = 12, r = 1/2",
+      "solution": [
+        "$ar = 6$ ...(i)",
+        "$a + ar + ar^2 = 21$ ...(ii)",
+        "From (i), $a = 6/r$. Substitute: $\\frac6r + 6 + 6r = 21$.",
+        "Multiply by r: $6 + 6r^2 = 15r$, so $2r^2 - 5r + 2 = 0$.",
+        "$r = 2$ or $r = 1/2$.",
+        "$r = 2$: $a = 3$. $r = 1/2$: $a = 12$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 3, ratio 2 or first term 12, ratio 1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-19",
+      "record_id": "eb11c2-2:exercise-19",
+      "part": null,
+      "type": "exercise",
+      "page": 67,
+      "question": {
+        "text": "The 3rd term is 12, and the sum from the first to the 3rd term is 9",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "163e97e4ceaefe7e9bb5cbaac5355335",
+      "kind": "value",
+      "answer": "a = 3, r = -2",
+      "solution": [
+        "$ar^2 = 12$ ...(i)",
+        "$a + ar + ar^2 = 9$ ...(ii)",
+        "From (i), $a = 12/r^2$. Substitute: $12 + 12r + 12r^2 = 9r^2$.",
+        "$3r^2 + 12r + 12 = 0$, so $(r+2)^2 = 0$, $r = -2$.",
+        "$4a = 12$, $a = 3$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 3, common ratio -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:exercise-20",
+      "record_id": "eb11c2-2:exercise-20",
+      "part": null,
+      "type": "exercise",
+      "page": 67,
+      "question": {
+        "text": "The 3rd term is 20, and the sum from the first to the 3rd term is 35",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3dea6462da5878d51310d8c2f5e19ffe",
+      "kind": "value",
+      "answer": "a = 5, r = 2 or a = 45, r = -2/3",
+      "solution": [
+        "$ar^2 = 20$ ...(i)",
+        "$a + ar + ar^2 = 35$ ...(ii)",
+        "From (i), $a = 20/r^2$. Substitute and multiply by $r^2$: $20 + 20r + 20r^2 = 35r^2$.",
+        "$3r^2 - 4r - 4 = 0$, so $r = 2$ or $r = -2/3$.",
+        "$r = 2$: $4a = 20$, $a = 5$.",
+        "$r = -2/3$: $\\frac49 a = 20$, $a = 45$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "First term 5, ratio 2 or first term 45, ratio -2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:challenge-4",
+      "record_id": "eb11c2-2:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 67,
+      "question": {
+        "text": "If $S_n$ is the sum of the first n terms of the geometric sequence such that $S_8 = 255,\\ S_6 = 63$ and $a_8 - a_7 = 64$, find $a_{10}$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "47dbd1ff70d5d4390db39ccf153261dc",
+      "kind": "value",
+      "answer": "512",
+      "solution": [
+        "$S_8 - S_6 = a_7 + a_8 = 255 - 63 = 192$.",
+        "$a_8 - a_7 = 64$.",
+        "Adding: $2a_8 = 256$, $a_8 = 128$; then $a_7 = 64$.",
+        "Common ratio $r = 128/64 = 2$.",
+        "$a_{10} = a_8 \\times r^2 = 128 \\times 4 = 512$."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-1",
+        "eb11c2-2:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "512",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-2:reflect-1",
+      "record_id": "eb11c2-2:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 67,
+      "question": {
+        "text": "How does changing the common ratio r from a value greater than 1 to a value between 0 and 1 fundamentally alter the real-world behavior modeled by a geometric sequence?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a040c09722d6cde044ddba043dba40af",
+      "kind": "explanation",
+      "answer": "If r>1 the terms grow without bound and the sum explodes; if 0<r<1 the terms shrink toward 0 (decay) and the sum stays limited.",
+      "solution": [
+        "With r>1, each term is bigger than the one before, so the quantity grows faster and faster (growth); use $S_n=\\frac{a(r^n-1)}{r-1}$.",
+        "With 0<r<1, each term is a fraction of the one before, so the quantity gets smaller (decay); use $S_n=\\frac{a(1-r^n)}{1-r}$.",
+        "So changing r changes the behavior from growth to decay, and the total from huge to limited."
+      ],
+      "grounded_in": [
+        "eb11c2-2:rule-5",
+        "eb11c2-2:rule-6",
+        "eb11c2-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "With r>1 terms grow without bound (exponential growth, e.g. bacteria or compounding), and sums explode. With 0<r<1 terms shrink toward 0 (decay, e.g. filtering or depreciation), and the sums stay bounded, approaching a/(1-r).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:10:04+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

@@ -167,6 +167,64 @@
         "AINEXT_DEV_OPERATOR_PICKER": "on",
         "AINEXT_BOOTSTRAP_OPERATOR_EMAIL": "samuel.s.toma@gmail.com"
       }
+    },
+    {
+      "name": "egb-g11-student",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3015"
+      ],
+      "cwd": "app",
+      "port": 3015,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "off",
+        "AINEXT_PUBLIC_URL": "http://egb.localhost:3015",
+        "AINEXT_CONSOLE_URL": "http://localhost:3016",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3015",
+        "AINEXT_BOOK_STATEMENTS_DIR": "../services/extraction/compiled/egb-g11-math/content",
+        "AINEXT_DIST_DIR": ".next-egb"
+      }
+    },
+    {
+      "name": "egb-g11-console",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3016",
+        "-H",
+        "127.0.0.1"
+      ],
+      "cwd": "app",
+      "port": 3016,
+      "env": {
+        "DATABASE_URL": "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "DATABASE_URL_OPERATOR": "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "DATABASE_URL_MAINT": "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_egb_g11_scratch",
+        "AINEXT_ENVIRONMENT": "mvp1",
+        "AINEXT_COURSE_GATING": "off",
+        "AINEXT_PUBLIC_URL": "http://egb.localhost:3015",
+        "AINEXT_CONSOLE_URL": "http://localhost:3016",
+        "AINEXT_MAIL_TRANSPORT": "console",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "PORT": "3016",
+        "AINEXT_BOOK_STATEMENTS_DIR": "../services/extraction/compiled/egb-g11-math/content",
+        "AINEXT_DIST_DIR": ".next-egb-admin",
+        "AINEXT_SURFACE": "admin",
+        "AINEXT_DEV_OPERATOR_PICKER": "on"
+      }
     }
   ]
 }

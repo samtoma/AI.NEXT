@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-1-1:altsign-linear",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-1-1",
+ "parent_question_id": "q:eb11c2-1-1:bk-exercise-2-d",
+ "source_page": 42,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    4,
+    8
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "m1",
+   "let": "p + q"
+  },
+  {
+   "name": "m2",
+   "let": "2*p + q"
+  },
+  {
+   "name": "m3",
+   "let": "3*p + q"
+  },
+  {
+   "name": "m4",
+   "let": "4*p + q"
+  },
+  {
+   "name": "m5",
+   "let": "5*p + q"
+  }
+ ],
+ "constraints": [
+  "p + q > 0"
+ ],
+ "stem": "Deduce the general term of the sequence $\\{a_n\\}$: ${=m1}, -{=m2}, {=m3}, -{=m4}, {=m5}, \\dots$ Give $a_n$ as a formula in $n$.",
+ "answer": "",
+ "solution": [
+  "The first term is positive and the signs alternate, so the sign part is $(-1)^{n+1}$.",
+  "Ignoring signs, the numbers ${=m1}, {=m2}, {=m3}, {=m4}, {=m5}$ increase by ${=p}$ each time, so they are ${=p}n$ plus a constant.",
+  "For $n=1$: ${=p}\\times1{=signed(q)}={=m1}$, so the numbers are ${=p}n{=signed(q)}$.",
+  "So $a_n=(-1)^{n+1}({=p}n{=signed(q)})$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = (-1)^(n+1)*({=p}*n + {=q})",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: combines alternating sign with first term positive (so (-1)^(n+1), not the book's (-1)^n) and an arithmetic magnitude pa+q needing a shift. Equivalent forms such as (-1)^(n-1) should be accepted by the marker. Check signed() renders readable signs; q is never 0."
+}

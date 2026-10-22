@@ -1,0 +1,57 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "e058e79cc0194e2fd60e5134e4574ff30992ee2f580b0017854cb23b126a31ce",
+  "generated_sha256": "d3b9e609c29889a3c49ce76eb9f8ee2966f1bde2eca186e99ceb78ab6dc22747",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-5:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-5:explanation-1",
+      "kind": "value",
+      "answer": "a_2 = 8, a_3 = 26, a_4 = 80"
+     },
+     {
+      "ref": "eb11c2-5:explanation-2:a",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the sequences of Warm Up 2 (part a) are not given in the question or the lesson text."
+     },
+     {
+      "ref": "eb11c2-5:explanation-2:b",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the sequences of Warm Up 2 (part b) are not given in the question or the lesson text."
+     },
+     {
+      "ref": "eb11c2-5:explanation-3",
+      "kind": "value",
+      "answer": "a_n = n^2 - 4n + 4 = (n-2)^2"
+     },
+     {
+      "ref": "eb11c2-5:explanation-4",
+      "kind": "value",
+      "answer": "a_n = 3^n - 2"
+     },
+     {
+      "ref": "eb11c2-5:explanation-5",
+      "kind": "value",
+      "answer": "a_2 = 4, a_3 = 5, a_4 = 6; estimate a_n = n + 2"
+     },
+     {
+      "ref": "eb11c2-5:explanation-6",
+      "kind": "explanation",
+      "answer": "[1] n=1: a_1=3=1+2, so (A) holds. [2] Assume a_k=k+2. Then a_{k+1}=(a_k^2-1)/(k+1)=((k+2)^2-1)/(k+1)=(k^2+4k+3)/(k+1)=(k+1)(k+3)/(k+1)=k+3=(k+1)+2, so (A) holds for n=k+1. By [1] and [2], a_n=n+2 holds for all natural numbers n."
+     }
+    ]
+   }
+  }
+ ]
+}

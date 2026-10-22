@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "d1f171e33052e798e7279258f8265bcb5cfee84baf1bd00e4db7ac8a77096f80",
+  "generated_sha256": "324a623ee287155f0d523966806260b2e658cc67b5c7e1cb40ea9010b96fbbb2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c1-3:example-1",
+    "verdict": "equivalent",
+    "reason": "Same reduced fraction (x-1)/x; solver only states the excluded values, implicit in the original."
+   },
+   {
+    "ref": "eb11c1-3:explanation-1:a",
+    "verdict": "equivalent",
+    "reason": "Both are 4b^3/(3a^2)."
+   },
+   {
+    "ref": "eb11c1-3:explanation-2",
+    "verdict": "equivalent",
+    "reason": "Same expression (x+1)(x-3)/((x+2)(x+4))."
+   },
+   {
+    "ref": "eb11c1-3:explanation-5",
+    "verdict": "equivalent",
+    "reason": "Both are 1/x."
+   }
+  ]
+ }
+}

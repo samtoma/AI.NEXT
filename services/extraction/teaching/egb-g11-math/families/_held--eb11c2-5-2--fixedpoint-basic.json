@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-5-2:fixedpoint-basic",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-5-2",
+ "parent_question_id": "q:eb11c2-5-2:bk-exercise-5-a",
+ "source_page": 97,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "let": "m*(p-1)"
+  },
+  {
+   "name": "a1",
+   "let": "1-m"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by $a_1 = {=a1}, \\ a_{n+1} = {=p}a_n + {=q}$. Write $a_n$ in terms of $n$.",
+ "solution": [
+  "Solve $c = {=p}c + {=q}$: $c = -{=m}$.",
+  "Then $a_{n+1} + {=m} = {=p}(a_n + {=m})$, so $b_n = a_n + {=m}$ is a geometric sequence with ratio ${=p}$.",
+  "$b_1 = a_1 + {=m} = 1$, so $b_n = {=p}^{n-1}$.",
+  "$a_n = b_n - {=m} = {=p}^{n-1} - {=m}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=p}^(n-1) - {=m}",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "c=-m, b_1=1, so a_n=p^(n-1)-m. Check p=2,m=1: a1=0,a2=1,formula 2^1-1=1 ok."
+}

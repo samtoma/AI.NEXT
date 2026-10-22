@@ -1,0 +1,1067 @@
+{
+ "book": "egb-g11-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "2f654c51df326eb22465843f87ad6461bda9be9baff5645b29927d802af6007d",
+  "generated_sha256": "3c156ddee26f4ca16bb2e52d599b21e8e62b7ceed4ba2ccd6b8082b45a889ca9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:eb11c3-1-1",
+   "entries": [
+    {
+     "id": "mc:eb11c3-1-1:imaginary-part-includes-i",
+     "lo_id": "lo:eb11c3-1-1",
+     "label": "Writes the imaginary part with the i attached",
+     "description": "The student gives the imaginary part of a + bi as bi (for example -2i for 3 - 2i) instead of the real number b.",
+     "signal": "Imaginary part stated as 2i, -2i, or 3i; or equations such as x + y = 3i after equating imaginary parts.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You spotted the right piece of the number: in $3-2i$ the imaginary part is the term with $i$ in it. The slip is in what you write down, because $-2i$ is the whole term, not the part."
+      },
+      {
+       "step": 2,
+       "text_md": "Write the number as $a+bi$. The real part is $a$ and the imaginary part is $b$. So $3-2i$ has $a=3$, $b=-2$, and the imaginary part is $-2$. The $i$ is not included in the imaginary part."
+      },
+      {
+       "step": 3,
+       "text_md": "The same rule handles the awkward cases. $2i=0+2i$ has real part $0$ and imaginary part $2$. $-i=0+(-1)i$ has imaginary part $-1$. $-8=-8+0i$ has imaginary part $0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Keeping the $i$ also breaks equations. Take $(2x+y)+(x+y)i=2+3i$. The imaginary parts are $x+y$ and $3$, so $x+y=3$. If you wrote $x+y=3i$, you would be setting a real number equal to something with $i$, and you could not solve for real $x,y$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time: write the number as $a+bi$, circle $b$ and leave the $i$ outside. Then equate real parts with real parts and imaginary parts with imaginary parts."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c3-1:linking-text-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The remark 'When b ≠ 0, a + bi is called an imaginary number' was not used: no wrong turn or caution ties it to a distinct error."
+    },
+    {
+     "kind": "other",
+     "text": "No distractors were supplied, so assignments is empty."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-1-2",
+   "entries": [
+    {
+     "id": "mc:eb11c3-1-2:mix-real-and-imaginary-parts",
+     "lo_id": "lo:eb11c3-1-2",
+     "label": "Adds real and imaginary parts together",
+     "description": "The student combines the real part and the imaginary part into one term (or one total) instead of keeping them separate.",
+     "signal": "A sum like (2+3i)+(5+8i) given as 18i, or a single number with no i when both parts were non-zero.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are adding correctly, but you are adding everything into one pile. Treating $2+3i+5+8i$ as $18i$ merges the plain numbers with the $i$ terms. Adding the numbers within each kind is right."
+      },
+      {
+       "step": 2,
+       "text_md": "The real parts and the imaginary parts are different kinds of term, like $x$ and plain numbers when you treat $i$ as a variable. Take $(2+3i)+(5+8i)$. The real parts are $2$ and $5$. The imaginary parts are $3i$ and $8i$. Merging them would give $18i$, but the real part $7$ has vanished."
+      },
+      {
+       "step": 3,
+       "text_md": "The same applies to subtraction: in $(3-2i)-(2+5i)$ the $3$ and $-2$ are real, and the $-2i$ and $-5i$ are imaginary. Putting them together would lose the form $a+bi$."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, expand the brackets, then add the real parts on their own and the $i$ parts on their own. $(2+3i)+(5+8i)$ gives $7$ and $11i$, so the answer is $7+11i$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-1-2:i-squared-not-minus-one",
+     "lo_id": "lo:eb11c3-1-2",
+     "label": "Forgets that i × i = −1 when expanding",
+     "description": "When multiplying out brackets, the student leaves $i^2$ in the answer or treats it as $1$ or $i$, instead of substituting $i^2=-1$.",
+     "signal": "Answers such as 5 - 4i for (i-2)^2, or -4 - i for (2+3i)(1-2i), or an answer still containing i^2.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Your expansion is fine. The slip comes after it, with the $i\\times i$ term. $i\\times i$ is $i^2$, and the book's rule is $i^2=-1$. It is not $1$, and it cannot stay in the answer."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at $(i-2)^2=i^2-4i+4$. If you take $i^2=1$, you get $1-4i+4=5-4i$. Substituting $i^2=-1$ gives $-1-4i+4=3-4i$. These differ, and the second is the book's answer."
+      },
+      {
+       "step": 3,
+       "text_md": "The sign matters again in $(2+3i)(1-2i)=2-4i+3i-6i^2$. The term $-6i^2$ becomes $-6\\times(-1)=+6$, which gives $2-4i+3i+6=8-i$. If you use $+1$ you get $-4-i$, which is wrong."
+      },
+      {
+       "step": 4,
+       "text_md": "Once you have expanded, find every $i^2$ and replace it with $-1$. Then collect the real parts and the $i$ parts to get the form $a+bi$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were supplied, so there are no assignments. I did not use sign errors when subtracting a bracket or errors with higher powers of i, because the evidence does not support them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No book caution boxes, worked-example remarks, re-solve wrong turns, or wrong options/widget predicates were supplied for this objective, so no error is supported by evidence. No entries were written, and the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-1-4",
+   "entries": [
+    {
+     "id": "mc:eb11c3-1-4:negative-has-no-square-root",
+     "lo_id": "lo:eb11c3-1-4",
+     "label": "Thinks a negative number has no square root",
+     "description": "The student says $\\sqrt{-n}$ is undefined or impossible, so they refuse to answer or write \"no solution\" instead of using $i$.",
+     "signal": "\"No square root\", \"undefined\" or \"not possible\" written for something like $\\sqrt{-6}$ or the square roots of $-12$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that no ordinary (real) number squares to give a negative: $3^2=9$ and $(-3)^2=9$. It is sensible to stop there, but the number $i$ was introduced to get past exactly that point."
+      },
+      {
+       "step": 2,
+       "text_md": "With $i^2=-1$, the number $i\\sqrt{6}$ can be squared: $(i\\sqrt6)^2=i^2\\times 6=-1\\times 6=-6$. So it really is a square root of $-6$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same works for $-i\\sqrt6$, because $(-i\\sqrt6)^2=-6$ too. That is why $-6$ has two square roots, $\\pm i\\sqrt6$, just as $9$ has $\\pm3$."
+      },
+      {
+       "step": 4,
+       "text_md": "So never write \"no square root\". Use $\\sqrt{-a}=i\\sqrt{a}$, and write $\\pm$ when the question asks for the square roots."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-1:caution-2"
+      },
+      {
+       "type": "remark",
+       "ref": "eb11c3-1:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-1-4:sqrt-negative-equals-minus-sqrt",
+     "lo_id": "lo:eb11c3-1-4",
+     "label": "Treats $\\sqrt{-n}$ as $-\\sqrt{n}$",
+     "description": "The student moves the minus sign out of the root and gets $-\\sqrt{n}$, a real negative number, instead of $i\\sqrt{n}$.",
+     "signal": "$\\sqrt{-9}$ written as $-3$, or $\\sqrt{-7}$ written as $-\\sqrt7$, with no $i$ in the answer.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You noticed that the minus sign is part of the problem, and you pulled it out of the root. But the minus sign inside the root has to become $i$, not a minus sign in front."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it by squaring. If $\\sqrt{-9}=-3$, then $(-3)^2$ would have to be $-9$. But $(-3)^2=+9$, so $-3$ is not a square root of $-9$."
+      },
+      {
+       "step": 3,
+       "text_md": "Now try $3i$: $(3i)^2=9i^2=9\\times(-1)=-9$. This works, so $\\sqrt{-9}=3i$."
+      },
+      {
+       "step": 4,
+       "text_md": "Use $\\sqrt{-n}=i\\sqrt{n}$. A minus sign written outside the root stays outside: $-\\sqrt{-36}=-6i$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-1:caution-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The evidence names no wrong options and no re-solve wrong turns, so errors such as $\\sqrt{-a}\\times\\sqrt{-b}=\\sqrt{ab}$ or $i^2=1$ are not included. They are plausible but unsupported."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-2-1",
+   "entries": [
+    {
+     "id": "mc:eb11c3-2-1:leaves-negative-root-unconverted",
+     "lo_id": "lo:eb11c3-2-1",
+     "label": "Stops at the square root of a negative number",
+     "description": "The student reaches a square root of a negative number, such as $\\sqrt{-8}$, and either leaves it as it is or writes 'no solution' instead of expressing it in terms of $i$.",
+     "signal": "Final answer contains $\\sqrt{-8}$ or similar left unconverted, or says 'no solution' for an equation like $x^2+8=0$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the first part correctly: you isolated $x^2$ and took the square root with $\\pm$. The only gap is that a root of a negative number is not a finished answer in this chapter."
+      },
+      {
+       "step": 2,
+       "text_md": "Here we solve in the complex numbers, where a negative square root is written using $i$. So $x^2+8=0$ is not 'no solution'. It gives $x^2=-8$, so $x=\\pm\\sqrt{-8}$, and $\\sqrt{-8}$ can be rewritten."
+      },
+      {
+       "step": 3,
+       "text_md": "Take $i$ out of the root: $\\sqrt{-8}=i\\sqrt{8}=2i\\sqrt{2}$. So $x=\\pm 2i\\sqrt{2}$, not $\\pm\\sqrt{-8}$."
+      },
+      {
+       "step": 4,
+       "text_md": "The same applies inside longer answers. For $(x-3)^2=-8$, stopping at $x=3\\pm\\sqrt{-8}$ is unfinished. Converting gives $x=3\\pm 2i\\sqrt{2}$."
+      },
+      {
+       "step": 5,
+       "text_md": "Whenever the number under a root is negative, whether in a square-root solution or in the quadratic formula, rewrite it as $i$ times the root of the positive number, then simplify, e.g. $\\sqrt{-64}=8i$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only the book's caution supports an entry. No re-solve wrong turns were supplied and there are no distractors, so I kept to one entry."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-2-2",
+   "entries": [
+    {
+     "id": "mc:eb11c3-2-2:negative-d-no-solutions",
+     "lo_id": "lo:eb11c3-2-2",
+     "label": "D < 0 means no solutions at all",
+     "description": "The student finds D < 0 and concludes the equation has no solutions, instead of two distinct imaginary solutions.",
+     "signal": "States 'no solutions' when D is negative.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You calculated $D$ correctly and saw it was negative. It is natural to say 'no solutions' because the graph never reaches the $x$-axis. But the discriminant tells us about the solutions of the equation, and the book counts imaginary ones."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $3x^2+4x+7=0$. Here $D=4^2-4\\times3\\times7=16-84=-68<0$. 'No solutions' would be an incomplete answer."
+      },
+      {
+       "step": 3,
+       "text_md": "The book's conclusion is that this equation has two distinct imaginary solutions. A negative $D$ changes the kind of solutions, not how many there are."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: if $D<0$, write 'two distinct imaginary solutions'. If you are asked for a range of a constant, solve $D<0$ and give that as your answer."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-2-2:zero-d-no-solutions",
+     "lo_id": "lo:eb11c3-2-2",
+     "label": "D = 0 means no solutions",
+     "description": "The student finds D = 0 and concludes the equation has no solutions, instead of one repeated solution.",
+     "signal": "States 'no solutions' when D equals zero.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You may be reading $D=0$ as 'nothing', so that nothing is left to give a solution. The zero belongs to the discriminant, not to the number of solutions."
+      },
+      {
+       "step": 2,
+       "text_md": "Look at the question where the equation $x^2-(a+1)x+4=0$ must have a repeated solution. The book sets $D=(a+1)^2-16=0$. This gives $a=3$ or $a=-5$. If $D=0$ meant 'no solutions', these values of $a$ would be impossible, yet the question asks for them."
+      },
+      {
+       "step": 3,
+       "text_md": "So $D=0$ means the equation has a repeated solution: the two solutions are the same value, so it counts as one repeated real solution."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: if $D=0$, write 'a repeated solution'. If you are asked for a constant that gives a repeated solution, set $D=0$ and solve for the constant."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-2-2:positive-d-one-solution",
+     "lo_id": "lo:eb11c3-2-2",
+     "label": "D > 0 means only one solution",
+     "description": "The student finds D > 0 and concludes there is only one solution, instead of two distinct real solutions.",
+     "signal": "States 'one solution' when D is positive.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You may be thinking that a positive $D$ gives a single answer, such as one value of $\\sqrt{D}$. But the formula uses $\\pm\\sqrt{D}$, and that gives two values of $x$."
+      },
+      {
+       "step": 2,
+       "text_md": "In the book's example $x^2+kx+3-k=0$, $D=(k-2)(k+6)$. When $D>0$, that is, when $k<-6$ or $k>2$, the book says the equation has two distinct real solutions. It does not say one."
+      },
+      {
+       "step": 3,
+       "text_md": "Only $D=0$ makes the $+$ and $-$ give the same value, which is why that case is called a repeated solution. When $D>0$ the two values differ."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: if $D>0$, write 'two distinct real solutions'."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-4"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The D<0 caution says 'complex solutions' but the book's solutions say 'imaginary'. I used 'imaginary' throughout."
+    },
+    {
+     "kind": "terminology",
+     "text": "'Repeated solution' is used for D=0; the caution says 'one repeated real solution'. I used 'a repeated solution' as in the worked solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "No distractors or widget predicates were supplied, so there are no assignments. Sign slips such as the inequality reversal in the range questions have no supporting evidence, so I did not write entries for them."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-2-3",
+   "entries": [
+    {
+     "id": "mc:eb11c3-2-3:swap-sum-product",
+     "lo_id": "lo:eb11c3-2-3",
+     "label": "Swaps sum and product",
+     "description": "The student uses $c/a$ for the sum of the solutions and $-b/a$ for the product.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know the sum and product both come from the coefficients, which is the right idea. The slip is attaching them the wrong way round: taking the sum as $c/a$ and the product as $-b/a$."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it on $3x^2-6x-5=0$. Here $a=3$, $b=-6$, $c=-5$. Swapped, you would get sum $=-5/3$ and product $=2$. The book's working gives sum $=-b/a=6/3=2$ and product $=c/a=-5/3$."
+      },
+      {
+       "step": 3,
+       "text_md": "The sign gives a check. In $x^2-2x+3=0$ the sum is $2$ and the product is $3$, so the swap would give $3$ and $2$ instead."
+      },
+      {
+       "step": 4,
+       "text_md": "Remember it as: the sum $\\alpha+\\beta$ uses $b$, the middle coefficient, with a minus sign: $-b/a$. The product $\\alpha\\beta$ uses $c$, the last term: $c/a$. Write these down before you use them."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-5"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-2-3:forget-divide-by-a",
+     "lo_id": "lo:eb11c3-2-3",
+     "label": "Ignores the coefficient a",
+     "description": "The student takes the sum as $-b$ and the product as $c$, without dividing by $a$ when $a\\neq1$.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right pieces, $-b$ and $c$. But the formulas are $-b/a$ and $c/a$, and the division by $a$ matters whenever $a$ is not $1$."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $2x^2-6x-3=0$. Without dividing by $a$ you would get $\\alpha+\\beta=6$ and $\\alpha\\beta=-3$. With $a=2$ the correct values are $\\alpha+\\beta=3$ and $\\alpha\\beta=-\\frac32$."
+      },
+      {
+       "step": 3,
+       "text_md": "The wrong values carry through. Using them, $\\alpha^2+\\beta^2$ would be $36+6=42$, not the correct $(3)^2-2(-\\frac32)=12$."
+      },
+      {
+       "step": 4,
+       "text_md": "Each time, write down $a$, $b$ and $c$ first. Then compute $-b/a$ and $c/a$ before you do anything else with $\\alpha$ and $\\beta$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-6"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-2-4",
+   "entries": [
+    {
+     "id": "mc:eb11c3-2-4:forgets-leading-coefficient",
+     "lo_id": "lo:eb11c3-2-4",
+     "label": "Drops the coefficient a of x²",
+     "description": "The student finds the two solutions correctly but writes (x − α)(x − β) without the leading factor a.",
+     "signal": "For a quadratic with a ≠ 1, such as 2x² − 3x + 2, the answer has the right two brackets but no factor 2 in front.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the solutions correctly and put them into brackets of the form $(x-\\alpha)$. That is the hard part. The slip is that the form is $a(x-\\alpha)(x-\\beta)$, and the $a$ went missing."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it on $2x^2-3x+2$, whose solutions are $x=\\frac{3\\pm i\\sqrt{7}}{4}$. The two brackets alone multiply out to something starting with $x^2$, not $2x^2$. So they cannot equal the original expression."
+      },
+      {
+       "step": 3,
+       "text_md": "The brackets only record where the expression is zero. Any multiple of them is zero at the same places. The factor $a$ is what makes the product match the original expression."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, write down $a$ before you solve. It is the number in front of $x^2$. Put it in front of the brackets: $2\\left(x-\\frac{3+i\\sqrt{7}}{4}\\right)\\left(x-\\frac{3-i\\sqrt{7}}{4}\\right)$. When $a=1$ you can leave it out."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-7"
+      },
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-8"
+      },
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-10"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-2-4:says-it-does-not-factorise",
+     "lo_id": "lo:eb11c3-2-4",
+     "label": "Thinks it cannot be factorised unless the discriminant is a perfect square",
+     "description": "The student expects neat integer factors and stops, or forces a wrong split of the middle term, when the discriminant is not a perfect square or is negative.",
+     "signal": "The answer says it does not factorise, or gives integer brackets that do not multiply back to the original.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are looking for integer brackets by splitting the middle term. That works for some quadratics, so it is a natural first try. But not every quadratic factorises into integers."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x^2+4x+2$. No two integers multiply to $2$ and add to $4$. But $D=16-8=8$ gives $x=-2\\pm\\sqrt{2}$, so it factorises as $(x+2-\\sqrt{2})(x+2+\\sqrt{2})$."
+      },
+      {
+       "step": 3,
+       "text_md": "The same holds when $D$ is negative. For $x^2+2x+5$, $D=-16$ and $x=-1\\pm 2i$. Over the complex numbers this gives $(x+1-2i)(x+1+2i)$. A negative discriminant does not stop you."
+      },
+      {
+       "step": 4,
+       "text_md": "So don't hunt for integer pairs. Solve $ax^2+bx+c=0$ with the quadratic formula, whatever $D$ is. Then write $a(x-\\alpha)(x-\\beta)$ using the two solutions."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-9"
+      },
+      {
+       "type": "remark",
+       "ref": "eb11c3-2:caution-9"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The book uses 'D' for the discriminant in its solutions and 'quadratic formula'. I used both."
+    },
+    {
+     "kind": "evidence",
+     "text": "There are no wrong options or widget predicates, so no distractors were assigned."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-2-5",
+   "entries": [
+    {
+     "id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped",
+     "lo_id": "lo:eb11c3-2-5",
+     "label": "Sum of roots taken as the x-coefficient without its sign change",
+     "description": "The student writes the sum of the solutions as $b$ instead of $-b$, so the condition on $\\alpha+\\beta$ points the wrong way.",
+     "signal": "The range for the constant comes out with the sum condition reversed, e.g. $m>0$ where the book has $m<0$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You correctly saw that two negative solutions need $\\alpha+\\beta<0$. The slip is in reading the sum off the equation: you used the coefficient of $x$ as it stands, but the sum is its opposite."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x^2-2mx+m+6=0$. The coefficient of $x$ is $-2m$, but $\\alpha+\\beta=-(-2m)=2m$. Writing $-2m<0$ gives $m>0$, which is the wrong direction."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it. With $m=4$ the equation is $x^2-8x+10=0$. Its solutions add to $8$, so they are positive, even though $m>0$. With $m=-3$ the equation is $x^2+6x+3=0$. Its solutions add to $-6$, so they are negative. The correct condition is $2m<0$, so $m<0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Each time, write $\\alpha+\\beta=-\\dfrac{b}{a}$ first, with the minus sign, and only then put in $<0$ or $>0$. Check the result with one value of the constant."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-2:caution-11"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The side note \"Discriminant D is not needed\" is attached to step (iii) of the two-distinct-negative-solutions example, where D>0 is actually used in the canonical solution. Its meaning is ambiguous (possibly about the different-signs case), so I did not build an entry on it."
+    },
+    {
+     "kind": "evidence",
+     "text": "No distractors or widget predicates were supplied, so there are no assignments."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-3-1",
+   "entries": [
+    {
+     "id": "mc:eb11c3-3-1:substitutes-constant-not-root",
+     "lo_id": "lo:eb11c3-3-1",
+     "label": "Substitutes the constant b instead of b/a",
+     "description": "For a divisor $ax - b$ with $a \\neq 1$, the student substitutes $x = b$ (for example $x = 2$ for $3x - 2$) instead of $x = \\frac{b}{a}$.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know the remainder comes from substituting a number into the polynomial, and you took the number from the divisor. That part is right. The slip is reading off the $2$ in $3x - 2$ and ignoring the $3$ in front of $x$."
+      },
+      {
+       "step": 2,
+       "text_md": "The number to substitute is the value of $x$ that makes the divisor equal to $0$. For $x - 3$ that is $x = 3$. For $3x - 2$, solve $3x - 2 = 0$ and you get $x = \\frac{2}{3}$. If you put $x = 2$ in, the divisor becomes $3(2) - 2 = 4$, not $0$, so it is the wrong test."
+      },
+      {
+       "step": 3,
+       "text_md": "Try it on $3x^4 - 8x^3 - 5x^2 + 12$ divided by $3x - 2$. With $x = 2$ you get $48 - 64 - 20 + 12 = -24$. With $x = \\frac{2}{3}$ you get $\\frac{16}{27} - \\frac{64}{27} - \\frac{60}{27} + \\frac{324}{27} = 8$. The remainder is $8$, so $-24$ is wrong."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, set the divisor equal to $0$ and solve for $x$ first. Then substitute that value, which is $\\frac{b}{a}$ for $ax - b$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-3:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-3-2",
+   "entries": [
+    {
+     "id": "mc:eb11c3-3-2:constant-remainder-for-quadratic-divisor",
+     "lo_id": "lo:eb11c3-3-2",
+     "label": "Writing the remainder as a single constant for a quadratic divisor",
+     "description": "The student writes P(x) = (x − α)(x − β)Q(x) + r with one constant r, as they would for a linear divisor, instead of allowing a remainder ax + b.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using the pattern that works for a linear divisor like $x-1$, where the remainder is a single number. That habit is sensible, but the divisor here is a quadratic."
+      },
+      {
+       "step": 2,
+       "text_md": "The remainder must have lower degree than the divisor. A quadratic divisor has degree 2, so the remainder can have degree 1. It has the form $ax+b$, with two unknowns."
+      },
+      {
+       "step": 3,
+       "text_md": "Test the single-number version on this case. $P(x)$ leaves remainder 3 on division by $x-1$ and $-5$ on division by $x+3$, and the divisor is $x^2+2x-3=(x-1)(x+3)$. Write $P(x)=(x-1)(x+3)Q(x)+r$. Then $P(1)=r=3$ and $P(-3)=r=-5$. One number cannot be both 3 and $-5$, so the form is too small."
+      },
+      {
+       "step": 4,
+       "text_md": "With $P(x)=(x-1)(x+3)Q(x)+ax+b$ you get $a+b=3$ and $-3a+b=-5$. These give $a=2$, $b=1$, so the remainder is $2x+1$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time: factorise the quadratic, write the remainder as $ax+b$, substitute each root to get two equations, and solve them simultaneously."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-3:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is the book's caution that the remainder's degree must be lower than the divisor's. No wrong options or widget predicates were supplied, and no other error had evidence, so only one entry is written."
+    },
+    {
+     "kind": "evidence",
+     "text": "The constant-remainder error is inferred from that caution. The book does not describe it directly."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-3-3",
+   "entries": [
+    {
+     "id": "mc:eb11c3-3-3:skips-zero-for-missing-term",
+     "lo_id": "lo:eb11c3-3-3",
+     "label": "Leaves out the zero for a missing term",
+     "description": "The student writes only the coefficients that appear in the polynomial, so a missing power such as $x^2$ gets no place in the row.",
+     "signal": "Quotient is one degree too low and the remainder is wrong, e.g. $x-3$ with remainder 0 for $x^3-5x+6$ divided by $x-2$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You wrote down the coefficients you could see and ran the division on them. That is a natural move, and your multiply-and-add steps may be perfectly accurate. The slip is that each place in the row stands for a power of $x$, and a missing power still needs its place."
+      },
+      {
+       "step": 2,
+       "text_md": "Try $x^3-5x+6$ divided by $x-2$. Using only $1, -5, 6$ with $2$ on the left: bring down $1$; $-5+2=-3$; $6-6=0$. That gives $x-3$ with remainder $0$."
+      },
+      {
+       "step": 3,
+       "text_md": "A cubic divided by $x-2$ should give a quotient with an $x^2$ term. The row $1,-5,6$ has only three places, so it treats $-5$ as the $x^2$ coefficient. It has quietly turned the polynomial into $x^2-5x+6$, which is a different polynomial."
+      },
+      {
+       "step": 4,
+       "text_md": "Written in full, $x^3-5x+6$ is $x^3+0x^2-5x+6$, with coefficients $1, 0, -5, 6$. The row becomes $1, 2, -1$ with remainder $4$, so the quotient is $x^2+2x-1$ and the remainder is $4$."
+      },
+      {
+       "step": 5,
+       "text_md": "Before you start, write the polynomial in descending powers and put a $0$ in every power that is missing. Then check that the number of coefficients is the degree plus one."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-3:caution-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c3-3-3:quotient-remainder-mixed-up",
+     "lo_id": "lo:eb11c3-3-3",
+     "label": "Mixes up the quotient coefficients with the remainder",
+     "description": "The student reads the bottom row wrongly: they count the last number as a quotient coefficient, or they take the remainder from the wrong place.",
+     "signal": "Quotient has the same degree as the original polynomial, e.g. $3x^3+4x^2+9x+26$, or the remainder is not the final number in the bottom row.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the arithmetic correctly and got the right bottom row. The slip is in how you read it. All the numbers in the bottom row look alike, but the last one plays a different role from the others."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $3x^3-5x^2-3x-1$ divided by $x-3$. The bottom row is $3, 4, 9, 26$. If all four numbers are quotient coefficients, you get $3x^3+4x^2+9x+26$. That has the same degree as the polynomial you started with. Dividing by $x-3$ should lower the degree by one."
+      },
+      {
+       "step": 3,
+       "text_md": "The last number is the leftover after the final addition, so it is the remainder. The numbers before it belong to the quotient, starting one power lower than the original. Here the quotient is $3x^2+4x+9$ and the remainder is $26$."
+      },
+      {
+       "step": 4,
+       "text_md": "When you finish, separate the last number of the bottom row from the rest. The last number is the remainder. The others are the quotient's coefficients, starting with a power one lower than the polynomial's highest power."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c3-3:caution-4"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-3-4",
+   "entries": [
+    {
+     "id": "mc:eb11c3-3-4:forces-quadratic-to-factorise",
+     "lo_id": "lo:eb11c3-3-4",
+     "label": "Forces the leftover quadratic to split into brackets",
+     "description": "After dividing out x − a, the student insists the quadratic quotient must factorise and writes made-up brackets instead of leaving it as it is.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have done the hard part correctly: you found a value $a$ with $P(a)=0$ and divided out $x-a$. Then you felt the quadratic left over had to break into two brackets. That is a natural thought, because many quadratics do."
+      },
+      {
+       "step": 2,
+       "text_md": "Not every quadratic does. Take $x^3+4x^2+2x-4$. Since $P(-2)=0$, dividing by $x+2$ gives $(x+2)(x^2+2x-2)$."
+      },
+      {
+       "step": 3,
+       "text_md": "To split $x^2+2x-2$ you would need two whole numbers that multiply to $-2$ and add to $2$. The pairs that multiply to $-2$ are $1,-2$ and $-1,2$. They add to $-1$ and $1$, so none works."
+      },
+      {
+       "step": 4,
+       "text_md": "Brackets you force into place will not multiply back to $x^2+2x-2$. So the factorisation is already complete: $(x+2)(x^2+2x-2)$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, look for two numbers with the right product and sum. If none exist, stop and leave the quadratic as it is. Multiply your brackets out to check that they give the quadratic back."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c3-3:linking-text-17"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No re-solve wrong turns or caution boxes were supplied; only one remark was available, so only one entry is written. Common sign slips (P(-2)=0 giving x−2 rather than x+2) were not supported by the supplied evidence and are omitted."
+    },
+    {
+     "kind": "evidence",
+     "text": "There are no distractors for this objective, so there are no assignments."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-4-1",
+   "entries": [
+    {
+     "id": "mc:eb11c3-4-1:drops-linear-factor-root",
+     "lo_id": "lo:eb11c3-4-1",
+     "label": "Gives only the Quadratic Formula roots and forgets the linear factor's solution",
+     "description": "After factorising into a linear factor and a quadratic that will not factorise, the student applies the Quadratic Formula and reports only those two roots, leaving out the solution from the linear factor.",
+     "signal": "A cubic answer with only two solutions, such as only $-1\\pm\\sqrt3 i$ for $x^3-8=0$.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You factorised correctly and used the Quadratic Formula properly on the part that would not factorise. The slip is stopping there: the quadratic gives only some of the solutions."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x^3-8=0$. It factorises as $(x-2)(x^2+2x+4)=0$. The Quadratic Formula on $x^2+2x+4$ gives $x=-1\\pm\\sqrt3 i$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the equation is $(x-2)(x^2+2x+4)=0$, so it is true when either factor is $0$. The factor $x-2=0$ gives $x=2$ as well. An answer of just $-1\\pm\\sqrt3 i$ misses it, and a cubic should leave you with three solutions here."
+      },
+      {
+       "step": 4,
+       "text_md": "Whenever you write $(x-a)(ax^2+bx+c)=0$, list the solutions as $x=a$ together with the roots from the Quadratic Formula. Here the answer is $x=2,\\ -1\\pm\\sqrt3 i$. Before you finish, count your solutions against the degree."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c3-4:method-5 p.142"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were supplied, and the book prints no caution box for this objective. The single entry rests on the book's method remark and is a plausible error, not an observed one."
+    },
+    {
+     "kind": "evidence",
+     "text": "The remark's symbols are loose: it uses a for both the root and the leading coefficient. I did not reproduce that notation in the student text."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-4-2",
+   "entries": [
+    {
+     "id": "mc:eb11c3-4-2:lists-given-solutions-as-other",
+     "lo_id": "lo:eb11c3-4-2",
+     "label": "Lists the given solutions again as the 'other' solutions",
+     "description": "After finding the full factorisation, the student writes all the solutions, including the ones the question already gave, instead of only the remaining one.",
+     "signal": "Final answer lists every root, e.g. $x=1, -3, -2$, where only the new root was asked for.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have solved the cubic correctly and found every root. The slip is in what to report: the question says the equation already has certain solutions and asks for the *other* solutions."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x^3+4x^2+ax+b=0$ with $-3$ and $1$ given. After finding $a=1$, $b=-6$, we get $(x-1)(x+2)(x+3)=0$, with roots $1$, $-2$, $-3$."
+      },
+      {
+       "step": 3,
+       "text_md": "The question already told us $-3$ and $1$ are solutions, so they are not 'other' ones. Writing $x=1,-2,-3$ answers a different question from the one asked."
+      },
+      {
+       "step": 4,
+       "text_md": "Once you have the roots, cross out the ones the question gave you. Here only $x=-2$ is left, so write: the other solution is $x=-2$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c3-4:linking-text-5"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The remark about not including $2+i$ refers to a complex-solution example not shown here; I applied it by analogy to the real-root questions. No wrong turns from the independent re-solve were supplied, so no other errors were added."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-4-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is a side note deriving ω²+ω+1=0 from ω³=1 and ω≠1. It describes a derivation, not a student error. There are no caution boxes, no re-solve wrong turns and no wrong options or widget predicates, so no entry is supported. I left the catalogue empty and the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c3-4-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 17,
+  "entries": 21,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 22
+ }
+}

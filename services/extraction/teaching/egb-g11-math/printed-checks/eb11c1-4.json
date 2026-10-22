@@ -1,0 +1,159 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c1-4",
+  "source": "book-records/egb-g11-math/eb11c1-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 6,
+      "cost_usd": 0.0348,
+      "calls": [
+        {
+          "call": "check-printed.eb11c1-4",
+          "cost_usd": 0.0242,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c1-4",
+          "cost_usd": 0.0106,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c1-4:explanation-1",
+      "record_id": "eb11c1-4:explanation-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 22,
+      "printed": "$a=1$, $b=-2$, $c=7$",
+      "blind": "a = 1, b = -2, c = 7",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "0415c6009d4766351702dbbdaa2f1a43",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-4:explanation-2",
+      "record_id": "eb11c1-4:explanation-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 22,
+      "printed": "$a=1$, $b=2$",
+      "blind": "a = 1, b = 2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "f56223edf431c32a8957ba2f4cc0a6fc",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-4:explanation-3",
+      "record_id": "eb11c1-4:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 24,
+      "printed": "$(x+y)^2-(x-y)^2=4xy$",
+      "blind": "LHS $=(x^2+2xy+y^2)-(x^2-2xy+y^2)=4xy=$ RHS, so the equality is proved.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "2e7562e9ab1ae5915dc0f2387d6a4462",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-4:explanation-3",
+        "verdict": "equivalent",
+        "reason": "Both conclude the identity (x+y)^2-(x-y)^2=4xy is proved; solver shows the work."
+      },
+      "how": "judged equivalent: Both conclude the identity (x+y)^2-(x-y)^2=4xy is proved; solver shows the work.",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-4:explanation-4",
+      "record_id": "eb11c1-4:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 24,
+      "printed": "$(a^2+b^2)(c^2+d^2)=(ac-bd)^2+(ad+bc)^2$",
+      "blind": "LHS $=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. RHS $=a^2c^2-2abcd+b^2d^2+a^2d^2+2abcd+b^2c^2=a^2c^2+a^2d^2+b^2c^2+b^2d^2$. The two sides are the same, so the equality is proved.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "a37732d5674b10bacd572f0465426332",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-4:explanation-4",
+        "verdict": "equivalent",
+        "reason": "Both conclude the identity is true; solver's expansion shows both sides equal."
+      },
+      "how": "judged equivalent: Both conclude the identity is true; solver's expansion shows both sides equal.",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-4:worked-example-2",
+      "record_id": "eb11c1-4:worked-example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 29,
+      "printed": "$\\frac{ab}{a^2+b^2}=\\frac{cd}{c^2+d^2}$",
+      "blind": "Let $a/b=c/d=k$, so $a=bk$ and $c=dk$. Then $ab/(a^2+b^2)=b^2k/(b^2(k^2+1))=k/(k^2+1)$. Also $cd/(c^2+d^2)=d^2k/(d^2(k^2+1))=k/(k^2+1)$. The two sides are equal, so the equality is proved.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "97f3d42b1b891beb525ac86332a08ef9",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-4:worked-example-2",
+        "verdict": "equivalent",
+        "reason": "Both conclude ab/(a²+b²)=cd/(c²+d²); solver proves it via a/b=c/d=k."
+      },
+      "how": "judged equivalent: Both conclude ab/(a²+b²)=cd/(c²+d²); solver proves it via a/b=c/d=k.",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-4:worked-example-3",
+      "record_id": "eb11c1-4:worked-example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 29,
+      "printed": "$\\frac{3}{2}$",
+      "blind": "3/2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "e11019e71ac37657337e35bdcb94dd37",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:26+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

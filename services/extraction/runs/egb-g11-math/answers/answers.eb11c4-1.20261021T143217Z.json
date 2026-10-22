@@ -1,0 +1,2232 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "21f155014e0498be7f3be14ed7bd6996b5072f93daa1ec37a3ad3a46e3f71f5a",
+  "generated_sha256": "798b8c7eb1542c51ca50abb8a9ced3525d5663dc658966a014f0025374b18bd9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c4-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-1:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question (2) refers to a printed question whose data is not given here.",
+      "solution": [
+       "The activity only says to solve question (2) of the page.",
+       "The points or data of that question are not given.",
+       "So it cannot be answered."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-1:warm-up-3",
+      "kind": "value",
+      "answer": "x = -1 or x = 7",
+      "solution": [
+       "Distance rule: $\\sqrt{(x-3)^2+(1-(-2))^2}=5$.",
+       "Square both sides: $(x-3)^2+9=25$.",
+       "$(x-3)^2=16$.",
+       "$x-3=4$ or $x-3=-4$.",
+       "x = 7 or x = -1."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-5",
+      "kind": "value",
+      "answer": "x = 0 or x = -2",
+      "solution": [
+       "$\\sqrt{(x+1)^2+(1-3)^2}=\\sqrt5$.",
+       "Square both sides: $(x+1)^2+4=5$.",
+       "$(x+1)^2=1$.",
+       "$x+1=1$ or $x+1=-1$.",
+       "x = 0 or x = -2."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-8",
+      "kind": "value",
+      "answer": "x = 7 or x = -1",
+      "solution": [
+       "$\\sqrt{(x-3)^2+(2-(-1))^2}=5$.",
+       "Square both sides: $(x-3)^2+9=25$.",
+       "$(x-3)^2=16$.",
+       "$x-3=\\pm4$.",
+       "x = 7 or x = -1."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-9",
+      "kind": "value",
+      "answer": "y = -1 or y = -5",
+      "solution": [
+       "$\\sqrt{(-2-1)^2+(y+3)^2}=\\sqrt{13}$.",
+       "Square both sides: $9+(y+3)^2=13$.",
+       "$(y+3)^2=4$.",
+       "$y+3=\\pm2$.",
+       "y = -1 or y = -5."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-10",
+      "kind": "value",
+      "answer": "x = 6 or x = -14",
+      "solution": [
+       "$\\sqrt{(x+4)^2+(3+2)^2}=5\\sqrt5$.",
+       "Square both sides: $(x+4)^2+25=125$.",
+       "$(x+4)^2=100$.",
+       "$x+4=\\pm10$.",
+       "x = 6 or x = -14."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question (2) refers to a printed question whose points are not given here.",
+      "solution": [
+       "The activity only says to solve question (2).",
+       "The points of that question are not given.",
+       "So it cannot be answered."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-1:challenge-3",
+      "kind": "value",
+      "answer": "x = 3 or x = -2",
+      "solution": [
+       "$\\sqrt{(3x-1-x)^2+(-5-7)^2}=13$.",
+       "Square both sides: $(2x-1)^2+144=169$.",
+       "$(2x-1)^2=25$.",
+       "$2x-1=5$ or $2x-1=-5$.",
+       "x = 3 or x = -2."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-4",
+      "kind": "value",
+      "answer": "P(2, 0)",
+      "solution": [
+       "P is on the x-axis, so let P = (s, 0).",
+       "AP = BP gives $(s+2)^2+1=(s-3)^2+16$.",
+       "$4s+5=-6s+25$.",
+       "$10s=20$, so s = 2.",
+       "P(2, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:explanation-1",
+       "eb11c4-1:rule-6",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-5",
+      "kind": "value",
+      "answer": "Q(13/8, 9/4)",
+      "solution": [
+       "Q is on y = 2x - 1, so let Q = (s, 2s-1).",
+       "AQ = BQ gives $(s-1)^2+(2s-5)^2=(s-3)^2+(2s-2)^2$.",
+       "Simplifying gives s = 13/8.",
+       "y = 2(13/8) - 1 = 9/4.",
+       "Q(13/8, 9/4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:explanation-2",
+       "eb11c4-1:rule-8",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-7",
+      "kind": "value",
+      "answer": "P(0, 3)",
+      "solution": [
+       "P is on the y-axis, so let P = (0, t).",
+       "PA = PB gives $16+(t-2)^2=1+(t+1)^2$.",
+       "$20-4t=2+2t$.",
+       "$6t=18$, so t = 3.",
+       "P(0, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-7",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-8",
+      "kind": "value",
+      "answer": "Q(-4, -11)",
+      "solution": [
+       "Q is on y = 3x + 1, so let Q = (s, 3s+1).",
+       "AQ = BQ gives $(s-4)^2+(3s+6)^2=(s-2)^2+(3s+4)^2$.",
+       "$10s^2+28s+52=10s^2+20s+20$.",
+       "$8s=-32$, so s = -4.",
+       "y = 3(-4)+1 = -11. Q(-4, -11)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-8",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-12",
+      "kind": "value",
+      "answer": "P(2, 0)",
+      "solution": [
+       "Let P = (s, 0).",
+       "PA = PB gives $(s+1)^2+4=(s-4)^2+9$.",
+       "$2s+5=-8s+25$.",
+       "$10s=20$, so s = 2.",
+       "P(2, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-6",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-13",
+      "kind": "value",
+      "answer": "P(0, 5/6)",
+      "solution": [
+       "Let P = (0, t).",
+       "PA = PB gives $25+(t-2)^2=9+(t-5)^2$.",
+       "$29-4t=34-10t$.",
+       "$6t=5$, so t = 5/6.",
+       "P(0, 5/6)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-7",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-14",
+      "kind": "value",
+      "answer": "P(17/2, 0)",
+      "solution": [
+       "Let P = (s, 0).",
+       "PA = PB gives $(s+1)^2+4=(s-3)^2+64$.",
+       "$2s+5=-6s+73$.",
+       "$8s=68$, so s = 17/2.",
+       "P(17/2, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-6",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-15",
+      "kind": "value",
+      "answer": "Q(2, 1)",
+      "solution": [
+       "Let Q = (s, 2s-3).",
+       "AQ = BQ gives $(s-1)^2+(2s-7)^2=(s-3)^2+(2s-1)^2$.",
+       "$5s^2-30s+50=5s^2-10s+10$.",
+       "$-20s=-40$, so s = 2.",
+       "y = 2(2)-3 = 1. Q(2, 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-8",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-16",
+      "kind": "value",
+      "answer": "Q(3, 2)",
+      "solution": [
+       "Let Q = (s, s-1).",
+       "AQ = BQ gives $(s+1)^2+(s-6)^2=(s-7)^2+s^2$.",
+       "$2s^2-10s+37=2s^2-14s+49$.",
+       "$4s=12$, so s = 3.",
+       "y = 3-1 = 2. Q(3, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-8",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-17",
+      "kind": "value",
+      "answer": "Q(-2, 3)",
+      "solution": [
+       "Let Q = (s, -s+1).",
+       "AQ = BQ gives $(s-1)^2+(-s-1)^2=(s+3)^2+(-s-5)^2$.",
+       "$2s^2+2=2s^2+16s+34$.",
+       "$16s=-32$, so s = -2.",
+       "y = 2+1 = 3. Q(-2, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-8",
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-4",
+      "kind": "value",
+      "answer": "CD = 3√5",
+      "solution": [
+       "CA = CB: $1+(y-1)^2=1+(y-5)^2$, so y - 1 = -(y - 5), giving y = 3. C(3, 3).",
+       "DA = DB: $(x-2)^2+1=(x-4)^2+25$, so $-4x+5=-8x+41$, giving x = 9. D(9, 0).",
+       "$CD=\\sqrt{(9-3)^2+(0-3)^2}=\\sqrt{45}$.",
+       "CD = 3√5."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:method-2",
+       "eb11c4-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the activity only refers to questions (3 and 4) without giving their data.",
+      "solution": [
+       "The activity says to solve questions (3 and 4) in a group.",
+       "It is not clear which printed questions are meant.",
+       "So it cannot be answered."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-1:challenge-5",
+      "kind": "value",
+      "answer": "G(4/3, -2/3)",
+      "solution": [
+       "CA = CB: $4+(y-3)^2=36+(y-1)^2$.",
+       "$13-6y=37-2y$.",
+       "$-4y=24$, so y = -6. C(0, -6).",
+       "G = ((-2+6+0)/3, (3+1-6)/3).",
+       "G(4/3, -2/3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5",
+       "eb11c4-1:rule-12",
+       "eb11c4-1:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-13",
+      "kind": "value",
+      "answer": "B(3, 8)",
+      "solution": [
+       "Let B = (s, t).",
+       "The midpoint of AB is ((1+s)/2, (-2+t)/2) and it equals P(2, 3).",
+       "(1+s)/2 = 2, so s = 3.",
+       "(-2+t)/2 = 3, so t = 8.",
+       "B(3, 8)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-14",
+      "kind": "value",
+      "answer": "Q(-5, 8)",
+      "solution": [
+       "Let Q = (s, t).",
+       "The midpoint of PQ is ((3+s)/2, (2+t)/2) and it equals A(-1, 5).",
+       "(3+s)/2 = -1, so s = -5.",
+       "(2+t)/2 = 5, so t = 8.",
+       "Q(-5, 8)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the activity only refers to question (2) without giving its data.",
+      "solution": [
+       "The activity says to solve question (2) in a group.",
+       "The question's data is not given.",
+       "So it cannot be answered."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-1:exercise-22",
+      "kind": "value",
+      "answer": "B(7, -1)",
+      "solution": [
+       "Let B = (s, t).",
+       "Midpoint of AB: ((-3+s)/2, (1+t)/2) = P(2, 0).",
+       "(-3+s)/2 = 2, so s = 7.",
+       "(1+t)/2 = 0, so t = -1.",
+       "B(7, -1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-23",
+      "kind": "value",
+      "answer": "B(-13, 6)",
+      "solution": [
+       "Let B = (s, t).",
+       "Midpoint of AB: ((7+s)/2, (4+t)/2) = M(-3, 5).",
+       "(7+s)/2 = -3, so s = -13.",
+       "(4+t)/2 = 5, so t = 6.",
+       "B(-13, 6)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-24",
+      "kind": "value",
+      "answer": "B(-10, 12)",
+      "solution": [
+       "Let B = (s, t).",
+       "Midpoint of AB: ((4+s)/2, (-8+t)/2) = P(-3, 2).",
+       "(4+s)/2 = -3, so s = -10.",
+       "(-8+t)/2 = 2, so t = 12.",
+       "B(-10, 12)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-25",
+      "kind": "value",
+      "answer": "Q(-8, 6)",
+      "solution": [
+       "Let Q = (s, t).",
+       "Midpoint of PQ: ((0+s)/2, (-4+t)/2) = A(-4, 1).",
+       "s/2 = -4, so s = -8.",
+       "(-4+t)/2 = 1, so t = 6.",
+       "Q(-8, 6)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-26",
+      "kind": "value",
+      "answer": "B(2, -8)",
+      "solution": [
+       "Let B = (s, t).",
+       "Midpoint of AB: ((-4+s)/2, (2+t)/2) = P(-1, -3).",
+       "(-4+s)/2 = -1, so s = 2.",
+       "(2+t)/2 = -3, so t = -8.",
+       "B(2, -8)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:method-3",
+       "eb11c4-1:warm-up-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-6",
+      "kind": "value",
+      "answer": "-9",
+      "solution": [
+       "A is the midpoint of BC.",
+       "(m+4)/2 = 1, so m = -2.",
+       "(5+n)/2 = -1, so n = -7.",
+       "m + n = -2 + (-7) = -9."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-13",
+       "eb11c4-1:rule-11"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:reflect-1",
+      "kind": "explanation",
+      "answer": "Changing the ratio m : n slides the point along the line of the segment; ratios and reference distances let us describe a location relative to known points.",
+      "solution": [
+       "For an internal ratio m : n, the point lies on segment AB. A larger m compared with n puts it closer to B, and a smaller m puts it closer to A.",
+       "With ratio 1 : 1 the point is the midpoint.",
+       "For an external ratio, the point lies on the extension of AB, outside the segment.",
+       "Ratios and distances from reference points fix a position, for example on a map or when sharing a distance between two places."
+      ],
+      "grounded_in": [
+       "eb11c4-1:definition-2",
+       "eb11c4-1:definition-3",
+       "eb11c4-1:rule-2",
+       "eb11c4-1:rule-3",
+       "eb11c4-1:rule-4"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-1:work-with-a-partner-1",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: question (2) and its points are not given."
+     },
+     {
+      "ref": "eb11c4-1:warm-up-3",
+      "kind": "value",
+      "answer": "x = -1 or x = 7"
+     },
+     {
+      "ref": "eb11c4-1:try-5",
+      "kind": "value",
+      "answer": "x = 0 or x = -2"
+     },
+     {
+      "ref": "eb11c4-1:exercise-8",
+      "kind": "value",
+      "answer": "x = -1 or x = 7"
+     },
+     {
+      "ref": "eb11c4-1:exercise-9",
+      "kind": "value",
+      "answer": "y = -1 or y = -5"
+     },
+     {
+      "ref": "eb11c4-1:exercise-10",
+      "kind": "value",
+      "answer": "x = 6 or x = -14"
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-2",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: question (2) is not identifiable from the given text."
+     },
+     {
+      "ref": "eb11c4-1:challenge-3",
+      "kind": "value",
+      "answer": "x = 3 or x = -2"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-4",
+      "kind": "value",
+      "answer": "(2, 0)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-5",
+      "kind": "value",
+      "answer": "(13/8, 9/4)"
+     },
+     {
+      "ref": "eb11c4-1:try-7",
+      "kind": "value",
+      "answer": "(0, 3)"
+     },
+     {
+      "ref": "eb11c4-1:try-8",
+      "kind": "value",
+      "answer": "(-4, -11)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-12",
+      "kind": "value",
+      "answer": "(2, 0)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-13",
+      "kind": "value",
+      "answer": "(0, 5/6)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-14",
+      "kind": "value",
+      "answer": "(17/2, 0)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-15",
+      "kind": "value",
+      "answer": "(2, 1)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-16",
+      "kind": "value",
+      "answer": "(3, 2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-17",
+      "kind": "value",
+      "answer": "(-2, 3)"
+     },
+     {
+      "ref": "eb11c4-1:challenge-4",
+      "kind": "value",
+      "answer": "3√5"
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-3",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: questions (3) and (4) are not identifiable from the given text."
+     },
+     {
+      "ref": "eb11c4-1:challenge-5",
+      "kind": "value",
+      "answer": "G(4/3, -2/3)"
+     },
+     {
+      "ref": "eb11c4-1:try-13",
+      "kind": "value",
+      "answer": "B(3, 8)"
+     },
+     {
+      "ref": "eb11c4-1:try-14",
+      "kind": "value",
+      "answer": "Q(-5, 8)"
+     },
+     {
+      "ref": "eb11c4-1:work-with-a-partner-4",
+      "kind": "value",
+      "answer": "Q(-5, 8) (question 2 taken as Try 14)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-22",
+      "kind": "value",
+      "answer": "B(7, -1)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-23",
+      "kind": "value",
+      "answer": "B(-13, 6)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-24",
+      "kind": "value",
+      "answer": "B(-10, 12)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-25",
+      "kind": "value",
+      "answer": "Q(-8, 6)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-26",
+      "kind": "value",
+      "answer": "B(2, -8)"
+     },
+     {
+      "ref": "eb11c4-1:challenge-6",
+      "kind": "value",
+      "answer": "-9"
+     },
+     {
+      "ref": "eb11c4-1:reflect-1",
+      "kind": "explanation",
+      "answer": "Changing the ratio $m:n$ slides the dividing point along the segment. A larger $m$ moves it toward B, and a larger $n$ moves it toward A. Equal ratios $1:1$ give the midpoint. Internal ratios keep the point between A and B. External ratios put it outside the segment. Ratios and reference distances let us describe positions relative to known points. Examples are maps, dividing a road into parts, and placing objects at set fractions of a distance."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c4-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-1:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Giving every point a number (coordinate) lets us use formulas to measure distances, split segments in a ratio and find midpoints exactly.",
+      "solution": [
+       "Each point gets a coordinate, so a position becomes a number.",
+       "The distance formula $AB=|b-a|$ gives exact lengths.",
+       "The division formulas give the exact point that splits a path in a ratio m:n (internally or externally).",
+       "The midpoint formula finds the balance point.",
+       "So paths can be partitioned precisely and checked by calculation."
+      ],
+      "grounded_in": [
+       "eb11c4-1:definition-1",
+       "eb11c4-1:rule-1",
+       "eb11c4-1:rule-2",
+       "eb11c4-1:rule-3",
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:a",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+       "$AB=|b-a|=|8-(-4)|$",
+       "$=12$",
+       "The distance AB is 12."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:b",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "Internal ratio m:n = 2:1, so m = 2, n = 1, a = -4, b = 8.",
+       "$\\frac{na+mb}{m+n}=\\frac{1\\times(-4)+2\\times 8}{2+1}$",
+       "$=\\frac{12}{3}=4$",
+       "C(4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:c",
+      "kind": "value",
+      "answer": "-28",
+      "solution": [
+       "External ratio 2:3, so m = 2, n = 3, a = -4, b = 8.",
+       "$\\frac{-na+mb}{m-n}=\\frac{-3\\times(-4)+2\\times 8}{2-3}$",
+       "$=\\frac{28}{-1}=-28$",
+       "D(-28)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:d",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "$M=\\frac{a+b}{2}=\\frac{-4+8}{2}$",
+       "$=2$",
+       "M(2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-1:a",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+       "$AB=|7-(-5)|$",
+       "$=12$",
+       "The distance is 12."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-1:b",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+       "m = 2, n = 1, a = -5, b = 7.",
+       "$\\frac{1\\times(-5)+2\\times 7}{2+1}=\\frac{9}{3}$",
+       "$=3$",
+       "C(3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-1:c",
+      "kind": "value",
+      "answer": "-13",
+      "solution": [
+       "External ratio 2:5, m = 2, n = 5, a = -5, b = 7.",
+       "$\\frac{-5\\times(-5)+2\\times 7}{2-5}=\\frac{39}{-3}$",
+       "$=-13$",
+       "D(-13)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-1:d",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "$M=\\frac{-5+7}{2}$",
+       "$=1$",
+       "M(1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:a",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+       "$AB=|6-(-2)|$",
+       "$=8$",
+       "The distance is 8."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:b",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "m = 3, n = 1, a = -2, b = 6.",
+       "$\\frac{1\\times(-2)+3\\times 6}{3+1}=\\frac{16}{4}$",
+       "$=4$",
+       "C(4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:c",
+      "kind": "value",
+      "answer": "18",
+      "solution": [
+       "External ratio 5:3, m = 5, n = 3, a = -2, b = 6.",
+       "$\\frac{-3\\times(-2)+5\\times 6}{5-3}=\\frac{36}{2}$",
+       "$=18$",
+       "D(18)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:d",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "$M=\\frac{-2+6}{2}$",
+       "$=2$",
+       "M(2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:a",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+       "$AB=|10-4|$",
+       "$=6$",
+       "The distance is 6."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:b",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+       "m = 2, n = 1, a = 4, b = 10.",
+       "$\\frac{1\\times 4+2\\times 10}{2+1}=\\frac{24}{3}$",
+       "$=8$",
+       "C(8)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:c",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "External ratio 1:3, m = 1, n = 3, a = 4, b = 10.",
+       "$\\frac{-3\\times 4+1\\times 10}{1-3}=\\frac{-2}{-2}$",
+       "$=1$",
+       "D(1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:d",
+      "kind": "value",
+      "answer": "7",
+      "solution": [
+       "$M=\\frac{4+10}{2}$",
+       "$=7$",
+       "M(7)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:a",
+      "kind": "value",
+      "answer": "5 km",
+      "solution": [
+       "A(-8), B(-3).",
+       "$AB=|-3-(-8)|$",
+       "$=5$",
+       "The tether is 5 km long."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:b",
+      "kind": "value",
+      "answer": "-7",
+      "solution": [
+       "Internal ratio 1:4, m = 1, n = 4, a = -8, b = -3.",
+       "$\\frac{4\\times(-8)+1\\times(-3)}{1+4}=\\frac{-35}{5}$",
+       "$=-7$",
+       "C(-7), a depth of 7 km."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:c",
+      "kind": "value",
+      "answer": "-23",
+      "solution": [
+       "External ratio 3:4, m = 3, n = 4, a = -8, b = -3.",
+       "$\\frac{-4\\times(-8)+3\\times(-3)}{3-4}=\\frac{23}{-1}$",
+       "$=-23$",
+       "D(-23), a depth of 23 km."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:d",
+      "kind": "value",
+      "answer": "-11/2",
+      "solution": [
+       "$M=\\frac{-8+(-3)}{2}$",
+       "$=-\\frac{11}{2}$",
+       "M(-11/2), a depth of 5.5 km."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:a",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+       "x = 2 > 0 and y = 3 > 0.",
+       "Both positive: first quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:b",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+       "x = 2 > 0 and y = -3 < 0.",
+       "Fourth quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:c",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+       "x = -2 < 0 and y = 3 > 0.",
+       "Second quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:d",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+       "x = -2 < 0 and y = -3 < 0.",
+       "Third quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:a",
+      "kind": "value",
+      "answer": "P(-3, -2)",
+      "solution": [
+       "Symmetric about the x-axis: change the sign of the y-coordinate.",
+       "A(-3, 2) gives P(-3, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:b",
+      "kind": "value",
+      "answer": "Q(3, 2)",
+      "solution": [
+       "Symmetric about the y-axis: change the sign of the x-coordinate.",
+       "A(-3, 2) gives Q(3, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:c",
+      "kind": "value",
+      "answer": "R(3, -2)",
+      "solution": [
+       "Symmetric about the origin: change both signs.",
+       "A(-3, 2) gives R(3, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-2:a",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+       "x = -4 < 0, y = 2 > 0.",
+       "Second quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-2:b",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+       "x = 1 > 0, y = 2 > 0.",
+       "First quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-2:c",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+       "x = 3 > 0, y = -2 < 0.",
+       "Fourth quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-2:d",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+       "x = -3 < 0, y = -1 < 0.",
+       "Third quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-3:a",
+      "kind": "value",
+      "answer": "P(-1, -2)",
+      "solution": [
+       "About the x-axis: change the sign of y.",
+       "A(-1, 2) gives P(-1, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-3:b",
+      "kind": "value",
+      "answer": "Q(1, 2)",
+      "solution": [
+       "About the y-axis: change the sign of x.",
+       "A(-1, 2) gives Q(1, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-3:c",
+      "kind": "value",
+      "answer": "R(1, -2)",
+      "solution": [
+       "About the origin: change both signs.",
+       "A(-1, 2) gives R(1, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:a",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+       "x = -3 < 0, y = 1 > 0.",
+       "Second quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:b",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+       "x = 2 > 0, y = -8 < 0.",
+       "Fourth quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:c",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+       "x = 4 > 0, y = 4 > 0.",
+       "First quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:d",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+       "x = -6 < 0, y = -4 < 0.",
+       "Third quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:e",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+       "x = -2 < 0, y = 6 > 0.",
+       "Second quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:f",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+       "x = 3 > 0, y = -3 < 0.",
+       "Fourth quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:g",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+       "x = -5 < 0, y = -7 < 0.",
+       "Third quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:h",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+       "x = 1 > 0, y = 4 > 0.",
+       "First quadrant."
+      ],
+      "grounded_in": [
+       "eb11c4-1:convention-1",
+       "eb11c4-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:a",
+      "kind": "value",
+      "answer": "P(-4, 2)",
+      "solution": [
+       "About the x-axis: change the sign of y.",
+       "A(-4, -2) gives P(-4, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:b",
+      "kind": "value",
+      "answer": "Q(4, -2)",
+      "solution": [
+       "About the y-axis: change the sign of x.",
+       "A(-4, -2) gives Q(4, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:c",
+      "kind": "value",
+      "answer": "R(4, 2)",
+      "solution": [
+       "About the origin: change both signs.",
+       "A(-4, -2) gives R(4, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:a",
+      "kind": "value",
+      "answer": "P(1, 2)",
+      "solution": [
+       "About the x-axis: change the sign of y.",
+       "A(1, -2) gives P(1, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:b",
+      "kind": "value",
+      "answer": "Q(-1, -2)",
+      "solution": [
+       "About the y-axis: change the sign of x.",
+       "A(1, -2) gives Q(-1, -2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:c",
+      "kind": "value",
+      "answer": "R(-1, 2)",
+      "solution": [
+       "About the origin: change both signs.",
+       "A(1, -2) gives R(-1, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:a",
+      "kind": "value",
+      "answer": "P(-3, -4)",
+      "solution": [
+       "About the x-axis: change the sign of y.",
+       "A(-3, 4) gives P(-3, -4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:b",
+      "kind": "value",
+      "answer": "Q(3, 4)",
+      "solution": [
+       "About the y-axis: change the sign of x.",
+       "A(-3, 4) gives Q(3, 4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:c",
+      "kind": "value",
+      "answer": "R(3, -4)",
+      "solution": [
+       "About the origin: change both signs.",
+       "A(-3, 4) gives R(3, -4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:a",
+      "kind": "value",
+      "answer": "P(-3, -4)",
+      "solution": [
+       "About the x-axis: change the sign of y.",
+       "A(-3, 4) gives P(-3, -4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:b",
+      "kind": "value",
+      "answer": "Q(3, 4)",
+      "solution": [
+       "About the y-axis: change the sign of x.",
+       "A(-3, 4) gives Q(3, 4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:c",
+      "kind": "value",
+      "answer": "R(3, -4)",
+      "solution": [
+       "About the origin: change both signs.",
+       "A(-3, 4) gives R(3, -4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-2:?",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+       "$AB=\\sqrt{(5-2)^2+(10-6)^2}$",
+       "$=\\sqrt{3^2+4^2}=\\sqrt{25}$",
+       "$=5$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-4:a",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+       "$AB=\\sqrt{(1-4)^2+(2-3)^2}$",
+       "$=\\sqrt{9+1}$",
+       "$=\\sqrt{10}$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-4:b",
+      "kind": "value",
+      "answer": "√7",
+      "solution": [
+       "$AB=\\sqrt{(0-\\sqrt3)^2+(1-(-1))^2}$",
+       "$=\\sqrt{3+4}$",
+       "$=\\sqrt{7}$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-4:c",
+      "kind": "value",
+      "answer": "2√5",
+      "solution": [
+       "$OA=\\sqrt{(2-0)^2+(-4-0)^2}$",
+       "$=\\sqrt{4+16}=\\sqrt{20}$",
+       "$=2\\sqrt5$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:a",
+      "kind": "value",
+      "answer": "5√5",
+      "solution": [
+       "$AB=\\sqrt{(11-1)^2+(7-2)^2}$",
+       "$=\\sqrt{100+25}=\\sqrt{125}$",
+       "$=5\\sqrt5$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:b",
+      "kind": "value",
+      "answer": "4√2",
+      "solution": [
+       "$AB=\\sqrt{(-1-3)^2+(3-(-1))^2}$",
+       "$=\\sqrt{16+16}=\\sqrt{32}$",
+       "$=4\\sqrt2$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:c",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+       "$OA=\\sqrt{(-3-0)^2+(4-0)^2}$",
+       "$=\\sqrt{9+16}=\\sqrt{25}$",
+       "$=5$"
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+       "The line contains no question or data.",
+       "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-11",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+       "The line contains no question or data.",
+       "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+       "eb11c4-1:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:a",
+      "kind": "value",
+      "answer": "(4/3, 11/3)",
+      "solution": [
+       "Segment BA: first point B(3, 7), second point A(-2, -3), m:n = 1:2.",
+       "$x=\\frac{2\\times3+1\\times(-2)}{1+2}=\\frac43$",
+       "$y=\\frac{2\\times7+1\\times(-3)}{1+2}=\\frac{11}{3}$",
+       "P(4/3, 11/3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-9",
+       "eb11c4-1:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:b",
+      "kind": "value",
+      "answer": "(2, 19/2)",
+      "solution": [
+       "Segment BC: B(3, 7), C(5, 2), external 1:3.",
+       "$x=\\frac{-3\\times3+1\\times5}{1-3}=\\frac{-4}{-2}=2$",
+       "$y=\\frac{-3\\times7+1\\times2}{1-3}=\\frac{-19}{-2}=\\frac{19}{2}$",
+       "Q(2, 19/2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-10",
+       "eb11c4-1:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:c",
+      "kind": "value",
+      "answer": "(3/2, -1/2)",
+      "solution": [
+       "C(5, 2), A(-2, -3).",
+       "$x=\\frac{5+(-2)}{2}=\\frac32$",
+       "$y=\\frac{2+(-3)}{2}=-\\frac12$",
+       "M(3/2, -1/2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-11",
+       "eb11c4-1:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:d",
+      "kind": "value",
+      "answer": "(2, 2)",
+      "solution": [
+       "$x=\\frac{-2+3+5}{3}=2$",
+       "$y=\\frac{-3+7+2}{3}=2$",
+       "G(2, 2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-12",
+       "eb11c4-1:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-9",
+      "kind": "value",
+      "answer": "(-15/4, 13/4)",
+      "solution": [
+       "A(-3, 4) first, C(-4, 3) second, m:n = 3:1.",
+       "$x=\\frac{1\\times(-3)+3\\times(-4)}{4}=-\\frac{15}{4}$",
+       "$y=\\frac{1\\times4+3\\times3}{4}=\\frac{13}{4}$",
+       "P(-15/4, 13/4)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-10",
+      "kind": "value",
+      "answer": "(11, -18)",
+      "solution": [
+       "B(1, -4) first, C(-4, 3) second, external 2:3.",
+       "$x=\\frac{-3\\times1+2\\times(-4)}{2-3}=\\frac{-11}{-1}=11$",
+       "$y=\\frac{-3\\times(-4)+2\\times3}{2-3}=\\frac{18}{-1}=-18$",
+       "Q(11, -18)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-11",
+      "kind": "value",
+      "answer": "(-1, 0)",
+      "solution": [
+       "A(-3, 4), B(1, -4).",
+       "$x=\\frac{-3+1}{2}=-1$",
+       "$y=\\frac{4+(-4)}{2}=0$",
+       "M(-1, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-11"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:try-12",
+      "kind": "value",
+      "answer": "(-2, 1)",
+      "solution": [
+       "$x=\\frac{-3+1+(-4)}{3}=-2$",
+       "$y=\\frac{4+(-4)+3}{3}=1$",
+       "G(-2, 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:a",
+      "kind": "value",
+      "answer": "(2, -9/5)",
+      "solution": [
+       "A(2, 3) first, B(2, -3) second, m:n = 4:1.",
+       "$x=\\frac{1\\times2+4\\times2}{5}=2$",
+       "$y=\\frac{1\\times3+4\\times(-3)}{5}=-\\frac95$",
+       "P(2, -9/5)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:b",
+      "kind": "value",
+      "answer": "(10, -15)",
+      "solution": [
+       "B(2, -3) first, C(-2, 3) second, external 2:3.",
+       "$x=\\frac{-3\\times2+2\\times(-2)}{2-3}=\\frac{-10}{-1}=10$",
+       "$y=\\frac{-3\\times(-3)+2\\times3}{2-3}=\\frac{15}{-1}=-15$",
+       "Q(10, -15)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:c",
+      "kind": "value",
+      "answer": "(0, 3)",
+      "solution": [
+       "C(-2, 3), A(2, 3).",
+       "$x=\\frac{-2+2}{2}=0$",
+       "$y=\\frac{3+3}{2}=3$",
+       "M(0, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-11"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:d",
+      "kind": "value",
+      "answer": "(2/3, 1)",
+      "solution": [
+       "$x=\\frac{2+2+(-2)}{3}=\\frac23$",
+       "$y=\\frac{3+(-3)+3}{3}=1$",
+       "G(2/3, 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:a",
+      "kind": "value",
+      "answer": "(3, 3)",
+      "solution": [
+       "B(6, -3) first, C(1, 7) second, m:n = 3:2.",
+       "$x=\\frac{2\\times6+3\\times1}{5}=3$",
+       "$y=\\frac{2\\times(-3)+3\\times7}{5}=3$",
+       "P(3, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:b",
+      "kind": "value",
+      "answer": "(-8, -11)",
+      "solution": [
+       "C(1, 7) first, A(-2, 1) second, external 3:2.",
+       "$x=\\frac{-2\\times1+3\\times(-2)}{3-2}=-8$",
+       "$y=\\frac{-2\\times7+3\\times1}{3-2}=-11$",
+       "Q(-8, -11)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:c",
+      "kind": "value",
+      "answer": "(2, -1)",
+      "solution": [
+       "A(-2, 1), B(6, -3).",
+       "$x=\\frac{-2+6}{2}=2$",
+       "$y=\\frac{1+(-3)}{2}=-1$",
+       "M(2, -1)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-11"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:d",
+      "kind": "value",
+      "answer": "(5/3, 5/3)",
+      "solution": [
+       "$x=\\frac{-2+6+1}{3}=\\frac53$",
+       "$y=\\frac{1+(-3)+7}{3}=\\frac53$",
+       "G(5/3, 5/3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:a",
+      "kind": "value",
+      "answer": "(-2/3, -5/3)",
+      "solution": [
+       "B(1, -5) first, A(-4, 5) second, m:n = 1:2.",
+       "$x=\\frac{2\\times1+1\\times(-4)}{3}=-\\frac23$",
+       "$y=\\frac{2\\times(-5)+1\\times5}{3}=-\\frac53$",
+       "P(-2/3, -5/3)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:b",
+      "kind": "value",
+      "answer": "(0, -15/2)",
+      "solution": [
+       "B(1, -5) first, C(3, 0) second, external 1:3.",
+       "$x=\\frac{-3\\times1+1\\times3}{1-3}=0$",
+       "$y=\\frac{-3\\times(-5)+1\\times0}{1-3}=-\\frac{15}{2}$",
+       "Q(0, -15/2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:c",
+      "kind": "value",
+      "answer": "(2, -5/2)",
+      "solution": [
+       "B(1, -5), C(3, 0).",
+       "$x=\\frac{1+3}{2}=2$",
+       "$y=\\frac{-5+0}{2}=-\\frac52$",
+       "M(2, -5/2)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-11"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:d",
+      "kind": "value",
+      "answer": "(0, 0)",
+      "solution": [
+       "$x=\\frac{-4+1+3}{3}=0$",
+       "$y=\\frac{5+(-5)+0}{3}=0$",
+       "G(0, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-1:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-1:exercise-21",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+       "The line contains no question or data.",
+       "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+       "eb11c4-1:method-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-1:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Giving every point a numerical coordinate turns positions into numbers, so distances come from $|b-a|$, division points from the ratio formulas, and midpoints from averages. A path can be split exactly in a chosen ratio, and balance points or safe boundaries can be calculated precisely."
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:a",
+      "kind": "value",
+      "answer": "12"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:b",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:c",
+      "kind": "value",
+      "answer": "-28"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-1:d",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-1:try-1:a",
+      "kind": "value",
+      "answer": "12"
+     },
+     {
+      "ref": "eb11c4-1:try-1:b",
+      "kind": "value",
+      "answer": "3"
+     },
+     {
+      "ref": "eb11c4-1:try-1:c",
+      "kind": "value",
+      "answer": "-13"
+     },
+     {
+      "ref": "eb11c4-1:try-1:d",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:a",
+      "kind": "value",
+      "answer": "8"
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:b",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:c",
+      "kind": "value",
+      "answer": "18"
+     },
+     {
+      "ref": "eb11c4-1:exercise-1:d",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:a",
+      "kind": "value",
+      "answer": "6"
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:b",
+      "kind": "value",
+      "answer": "8"
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:c",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c4-1:exercise-2:d",
+      "kind": "value",
+      "answer": "7"
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:a",
+      "kind": "value",
+      "answer": "5 km"
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:b",
+      "kind": "value",
+      "answer": "-7 km"
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:c",
+      "kind": "value",
+      "answer": "-23 km"
+     },
+     {
+      "ref": "eb11c4-1:challenge-1:d",
+      "kind": "value",
+      "answer": "-11/2 km (-5.5 km)"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:a",
+      "kind": "value",
+      "answer": "first quadrant"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:b",
+      "kind": "value",
+      "answer": "fourth quadrant"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:c",
+      "kind": "value",
+      "answer": "second quadrant"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-1:d",
+      "kind": "value",
+      "answer": "third quadrant"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:a",
+      "kind": "value",
+      "answer": "P(-3, -2)"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:b",
+      "kind": "value",
+      "answer": "Q(3, 2)"
+     },
+     {
+      "ref": "eb11c4-1:unlabelled-exercise-2:c",
+      "kind": "value",
+      "answer": "R(3, -2)"
+     },
+     {
+      "ref": "eb11c4-1:try-2:a",
+      "kind": "value",
+      "answer": "second quadrant"
+     },
+     {
+      "ref": "eb11c4-1:try-2:b",
+      "kind": "value",
+      "answer": "first quadrant"
+     },
+     {
+      "ref": "eb11c4-1:try-2:c",
+      "kind": "value",
+      "answer": "fourth quadrant"
+     },
+     {
+      "ref": "eb11c4-1:try-2:d",
+      "kind": "value",
+      "answer": "third quadrant"
+     },
+     {
+      "ref": "eb11c4-1:try-3:a",
+      "kind": "value",
+      "answer": "P(-1, -2)"
+     },
+     {
+      "ref": "eb11c4-1:try-3:b",
+      "kind": "value",
+      "answer": "Q(1, 2)"
+     },
+     {
+      "ref": "eb11c4-1:try-3:c",
+      "kind": "value",
+      "answer": "R(1, -2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:a",
+      "kind": "value",
+      "answer": "second quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:b",
+      "kind": "value",
+      "answer": "fourth quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:c",
+      "kind": "value",
+      "answer": "first quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:d",
+      "kind": "value",
+      "answer": "third quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:e",
+      "kind": "value",
+      "answer": "second quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:f",
+      "kind": "value",
+      "answer": "fourth quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:g",
+      "kind": "value",
+      "answer": "third quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-3:h",
+      "kind": "value",
+      "answer": "first quadrant"
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:a",
+      "kind": "value",
+      "answer": "P(-4, 2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:b",
+      "kind": "value",
+      "answer": "Q(4, -2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-4:c",
+      "kind": "value",
+      "answer": "R(4, 2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:a",
+      "kind": "value",
+      "answer": "P(1, 2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:b",
+      "kind": "value",
+      "answer": "Q(-1, -2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-5:c",
+      "kind": "value",
+      "answer": "R(-1, 2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:a",
+      "kind": "value",
+      "answer": "P(-3, -4)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:b",
+      "kind": "value",
+      "answer": "Q(3, 4)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-6:c",
+      "kind": "value",
+      "answer": "R(3, -4)"
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:a",
+      "kind": "value",
+      "answer": "P(-3, -4)"
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:b",
+      "kind": "value",
+      "answer": "Q(3, 4)"
+     },
+     {
+      "ref": "eb11c4-1:challenge-2:c",
+      "kind": "value",
+      "answer": "R(3, -4)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-2:?",
+      "kind": "value",
+      "answer": "5"
+     },
+     {
+      "ref": "eb11c4-1:try-4:a",
+      "kind": "value",
+      "answer": "$\\sqrt{10}$"
+     },
+     {
+      "ref": "eb11c4-1:try-4:b",
+      "kind": "value",
+      "answer": "$\\sqrt{7}$"
+     },
+     {
+      "ref": "eb11c4-1:try-4:c",
+      "kind": "value",
+      "answer": "$2\\sqrt{5}$"
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:a",
+      "kind": "value",
+      "answer": "$5\\sqrt{5}$"
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:b",
+      "kind": "value",
+      "answer": "$4\\sqrt{2}$"
+     },
+     {
+      "ref": "eb11c4-1:exercise-7:c",
+      "kind": "value",
+      "answer": "5"
+     },
+     {
+      "ref": "eb11c4-1:try-6",
+      "kind": "value",
+      "answer": "(1) P(0, 3); (2) Q(-4, -11)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-11",
+      "kind": "value",
+      "answer": "(1) P(2, 0); (2) P(0, 5/6); (3) P(17/2, 0); (4) Q(2, 1); (5) Q(3, 2); (6) Q(-2, 3)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:a",
+      "kind": "value",
+      "answer": "P(4/3, 11/3)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:b",
+      "kind": "value",
+      "answer": "Q(2, 19/2)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:c",
+      "kind": "value",
+      "answer": "M(3/2, -1/2)"
+     },
+     {
+      "ref": "eb11c4-1:warm-up-6:d",
+      "kind": "value",
+      "answer": "G(2, 2)"
+     },
+     {
+      "ref": "eb11c4-1:try-9",
+      "kind": "value",
+      "answer": "P(-15/4, 13/4)"
+     },
+     {
+      "ref": "eb11c4-1:try-10",
+      "kind": "value",
+      "answer": "Q(11, -18)"
+     },
+     {
+      "ref": "eb11c4-1:try-11",
+      "kind": "value",
+      "answer": "M(-1, 0)"
+     },
+     {
+      "ref": "eb11c4-1:try-12",
+      "kind": "value",
+      "answer": "G(-2, 1)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:a",
+      "kind": "value",
+      "answer": "P(2, -9/5)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:b",
+      "kind": "value",
+      "answer": "Q(10, -15)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:c",
+      "kind": "value",
+      "answer": "M(0, 3)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-18:d",
+      "kind": "value",
+      "answer": "G(2/3, 1)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:a",
+      "kind": "value",
+      "answer": "P(3, 3)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:b",
+      "kind": "value",
+      "answer": "Q(-8, -11)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:c",
+      "kind": "value",
+      "answer": "M(2, -1)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-19:d",
+      "kind": "value",
+      "answer": "G(5/3, 5/3)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:a",
+      "kind": "value",
+      "answer": "P(-2/3, -5/3)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:b",
+      "kind": "value",
+      "answer": "Q(0, -15/2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:c",
+      "kind": "value",
+      "answer": "M(2, -5/2)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-20:d",
+      "kind": "value",
+      "answer": "G(0, 0)"
+     },
+     {
+      "ref": "eb11c4-1:exercise-21",
+      "kind": "value",
+      "answer": "(1) B(7, -1); (2) B(-13, 6); (3) B(-10, 12); (4) Q(-8, 6); (5) B(2, -8)"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,121 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "139241fc74453042110f2d88ea38314b31b2d6ee624a9ea2a0041e787c152a1a",
+  "generated_sha256": "b59b6f60ea9fd2f3d2de4d8eec5a96e9d83e8f8c00b038d719db60c6704a1214",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c3-2-3:sum-roots",
+   "spec_sha": "5f44bd91eb974a7f574de62cf7a672f38a8245008011bffb0960ea4713197515",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-3:g004-sum-ro",
+     "stem_sha": "f2e12a70f3f38b7f",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "Sum = -b/a = -1/1 = -1"
+    },
+    {
+     "instance_id": "q:eb11c3-2-3:g006-sum-ro",
+     "stem_sha": "f287080b4fccff86",
+     "answer": {
+      "value": "1"
+     },
+     "working": "Sum = -b/a = 5/5 = 1"
+    },
+    {
+     "instance_id": "q:eb11c3-2-3:g008-sum-ro",
+     "stem_sha": "5f8cd699c3caa7a3",
+     "answer": {
+      "value": "-2"
+     },
+     "working": "Sum = -b/a = -6/3 = -2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "notes": "No options were supplied, so distractors are vacuously fine. The keys (-1, 1, -2) and the -b/a solutions are correct. The problem is the context. g004 (x²+x+3, discriminant -11) and g006 (5x²-5x+20, discriminant -375) have no real roots. The stems still say \"the two solutions\", which misleads a Grade 11 student looking for real roots. Only g008 (discriminant 216) has real roots. Choose coefficients with a positive discriminant, or say the roots are complex."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-2-5:integer-roots",
+   "spec_sha": "20a2fb687aaa6d2e158d0b4b3d340abbc5849539f07bcdf7f7202519f47cc327",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-5:g003-intege",
+     "stem_sha": "ef955280af8dd410",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-2-5:g004-intege",
+     "stem_sha": "cd7280c01a27cdc2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-2-5:g009-intege",
+     "stem_sha": "476f348ffaf810ec",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys verified by sum/product. Keys match answer_check. No options listed. Monic coefficient makes the answer unique.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-3-2:two-remainders",
+   "spec_sha": "0b5f8c5662c890145eab723b85ba5414aa78519b298e6b31153829d79c12c078",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-3-2:g001-two-re",
+     "stem_sha": "566418b03b86c9aa",
+     "answer": {
+      "plain": "-x+4"
+     },
+     "working": "R=ax+b; 3a+b=1, -3a+b=7 → a=-1, b=4"
+    },
+    {
+     "instance_id": "q:eb11c3-3-2:g005-two-re",
+     "stem_sha": "6bace4395481c357",
+     "answer": {
+      "plain": "-3*x-2"
+     },
+     "working": "R=ax+b; 3a+b=-11, -4a+b=10 → a=-3, b=-2"
+    },
+    {
+     "instance_id": "q:eb11c3-3-2:g006-two-re",
+     "stem_sha": "88fb5c67d4c3c2ed",
+     "answer": {
+      "plain": "-x-2"
+     },
+     "working": "R=ax+b; 3a+b=-5, -5a+b=3 → a=-1, b=-2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand and each key and worked solution is correct. The family has no wrong options, so there are no distractors to judge. The only blemish is cosmetic: the display key \"(-3)x - 2\" is written differently from \"-x + 4\". It is the same expression as its answer_check, so I did not fail it.",
+    "distractors": []
+   }
+  }
+ ]
+}

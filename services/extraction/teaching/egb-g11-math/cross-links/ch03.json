@@ -1,0 +1,79 @@
+{
+ "format": "ainext.cross-links/1",
+ "book": "egb-g11-math",
+ "chapter": 3,
+ "run": "runs/egb-g11-math/links/xlinks-ch03.20261021T142342Z.json",
+ "runs": [
+  "runs/egb-g11-math/links/xlinks-ch03.20261021T142342Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "prior_objectives": 38,
+ "links": [
+  {
+   "src": "lo:eb11c1-2-2",
+   "dst": "lo:eb11c3-3-2",
+   "signal": "recall",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "eb11c3-3:linking-text-8",
+     "printed_page": 136,
+     "quote": "Refer to 1-5: $A = B \\times Q + R$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The quote is the explicit reference to A = B×Q + R. The step P(x)=(x−α)(x−β)Q(x)+ax+b is that relation with a quadratic divisor and a remainder of degree less than 2. The dst text only cites it and does not derive it, so the removal test fails to remove the link."
+   },
+   "key": "lo:eb11c1-2-2->lo:eb11c3-3-2",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Use A = B × Q + R to find the dividend A or the divisor B when the quotient and the remainder are given.",
+   "dst_statement": "Determine the remainder ax + b when a polynomial is divided by a quadratic expression, by writing P(x) = (x − α)(x − β)Q(x) + ax + b, substituting the roots and solving simultaneous equations.",
+   "fingerprint": "db09a53a504d40fc2fd1179b9fa15999",
+   "reason": "STEP: writes P(x)=(x-α)(x-β)Q(x)+ax+b | RESULT: A = B×Q + R | WHY NOT LOCAL: referenced back to chapter 1",
+   "run": "runs/egb-g11-math/links/xlinks-ch03.20261021T142342Z.json"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:eb11c1-4-1->lo:eb11c3-1-1",
+   "src": "lo:eb11c1-4-1",
+   "dst": "lo:eb11c3-1-1",
+   "why": "the link checker said REJECTED: Test 3: the dst lesson states the equality rule for complex numbers (real parts equal, imaginary parts equal), so the step is justified locally. Coefficient comparison in identities is not needed.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Test 3: the dst lesson states the equality rule for complex numbers (real parts equal, imaginary parts equal), so the step is justified locally. Coefficient comparison in identities is not needed."
+   },
+   "cross": true
+  },
+  {
+   "key": "lo:eb11c1-3-4->lo:eb11c3-1-3",
+   "src": "lo:eb11c1-3-4",
+   "dst": "lo:eb11c3-1-3",
+   "why": "the link checker said REJECTED: Test 3: dst teaches multiplying by the conjugate itself. The step is also not really compound-fraction simplification. A student can justify it without src.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Test 3: dst teaches multiplying by the conjugate itself. The step is also not really compound-fraction simplification. A student can justify it without src."
+   },
+   "cross": true
+  },
+  {
+   "key": "lo:eb11c1-2-1->lo:eb11c3-3-3",
+   "src": "lo:eb11c1-2-1",
+   "dst": "lo:eb11c3-3-3",
+   "why": "the link checker said REJECTED: Test 2/3: the step uses synthetic division, which dst teaches itself (side note 'use synthetic division'). Factorising a cubic after finding a root needs only the factor theorem, and the quotient comes from the synthetic method. Long division is not required.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Test 2/3: the step uses synthetic division, which dst teaches itself (side note 'use synthetic division'). Factorising a cubic after finding a root needs only the factor theorem, and the quotient comes from the synthetic method. Long division is not required."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
+ "outside_book": [],
+ "failures": [],
+ "decisions": [],
+ "made": "2026-10-21"
+}

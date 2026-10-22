@@ -1,0 +1,90 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "2926f38be2a4a3d904806cee947293b00217d1d2bad5ea194c829aa5a2242bf0",
+  "generated_sha256": "5c6266c9a83c9995eb8ba142b79283ae927a9ff843572625f25f191feb0eb716",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 18,
+  "proposed": [
+   {
+    "src": "lo:eb11c1-5-1",
+    "dst": "lo:eb11c2-5-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE41",
+      "printed_page": 100,
+      "quote": "$6k-3(k+1)=6k-3k-3=3k-3>0$"
+     }
+    ],
+    "reason": "STEP: compares 6k with 3(k+1) by computing the difference and showing it is positive | RESULT: prove an inequality by calculating LHS − RHS and showing the result is positive | WHY NOT LOCAL: the induction lesson uses this difference method without teaching it"
+   },
+   {
+    "src": "lo:eb11c1-1-2",
+    "dst": "lo:eb11c2-5-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-5:linking-text-17",
+      "printed_page": 102,
+      "quote": "$9m-k^3+k^3+9k^2+27k+27$"
+     }
+    ],
+    "reason": "STEP: expands (k+3)^3 into k^3+9k^2+27k+27 to factor out 9 | RESULT: Binomial Theorem expansion of (a+b)^3 | WHY NOT LOCAL: the sequences chapter never teaches the binomial expansion"
+   },
+   {
+    "src": "lo:eb11c1-3-3",
+    "dst": "lo:eb11c2-3-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE29",
+      "printed_page": 76,
+      "quote": "$=\\frac13\\left(\\frac12-\\frac15\\right)+\\frac13\\left(\\frac15-\\frac18\\right)$"
+     }
+    ],
+    "reason": "STEP: splits each fraction into a difference of two fractions, which is valid because subtracting fractions with different denominators gives back the term | RESULT: add/subtract rational expressions with a common denominator, so 1/a − 1/b = (b−a)/(ab) | WHY NOT LOCAL: the lesson states the decomposition formula but not the rational-expression arithmetic behind it"
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "rationalizing denominators",
+    "anchor": "WE29",
+    "quote": "$\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
+    "printed_page": 76,
+    "note": "Rationalizing with conjugates is earlier-grade algebra."
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "The step is present and uses the difference method (LHS−RHS, then show it is positive) taught by src. The induction lesson does not teach that method itself, so removal test passes. A student could still do it with basic algebra, but the link is reasonable."
+    },
+    {
+     "i": 1,
+     "verdict": "REJECTED",
+     "note": "Removal test: expanding (k+3)^3 is earlier-grade algebra (cube of a sum), and src is the binomial theorem for general n. The step does not need it."
+    },
+    {
+     "i": 2,
+     "verdict": "REJECTED",
+     "note": "Removal test: the step is applying the partial-fraction formula that the dst lesson states, and the cancellation is the point of the lesson. Fraction subtraction is earlier-grade knowledge. Test 2 also fails because the step does not need the rational-expression arithmetic as a new result."
+    }
+   ]
+  }
+ }
+}

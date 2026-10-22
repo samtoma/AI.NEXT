@@ -1,0 +1,2101 @@
+{
+ "format": "ainext.filing/1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "made": "2026-10-21",
+ "made_by": "book_record_filing.py accept (file-v1)",
+ "run": "runs/egb-g11-math/filing/filing-ch04.20261021T143124Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c4-1",
+   "title": "Coordinate Geometry Basics",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-1:objective-1",
+     "label": "Divide number-line segments",
+     "description": "Calculate the distance between two points on a number line and the coordinate of the point dividing a segment internally or externally in a given ratio, including the mid-point."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-1:objective-2",
+     "label": "Quadrants and reflections",
+     "description": "Determine the quadrant of a point and find the coordinates of its symmetric points with respect to the x−axis, the y−axis and the origin."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-1:objective-3",
+     "label": "Distance and equidistant points",
+     "description": "Calculate the distance between two points on the coordinate plane, find an unknown coordinate from a given distance, and determine the coordinates of a point equidistant from two points."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-1:objective-4",
+     "label": "Division points, centroid and symmetric points",
+     "description": "Calculate the coordinates of internal and external division points, the mid-point and the centroid of a triangle on the coordinate plane, and determine the point symmetric to a given point with respect to another point using the mid-point."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c4-1:definition-1",
+     "type": "definition",
+     "page": 150,
+     "text": "On a number line, one real number $a$ corresponds to point P; $a$ is called the coordinate of P, and P with coordinate $a$ is denoted P($a$). $P(a)$",
+     "A": {
+      "objective": 1,
+      "why": "Coordinate of a point on a number line starts the number-line section."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines the coordinate of a point on a number line."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "b26a4378c8460a72"
+    },
+    {
+     "key": "eb11c4-1:rule-1",
+     "type": "rule",
+     "page": 150,
+     "text": "The distance AB between A($a$) and B($b$) on a number line is given by AB = |b − a|. Side note: since distance cannot be negative, we use the absolute value. $AB=|b-a|$",
+     "A": {
+      "objective": 1,
+      "why": "Distance on a number line AB = |b − a|."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Distance between two points on a number line."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "364661ac8d4c323a"
+    },
+    {
+     "key": "eb11c4-1:definition-2",
+     "type": "definition",
+     "page": 150,
+     "text": "If P is on segment AB such that AP:PB = m : n, P is said to divide AB internally in the ratio m : n. $AP:PB=m:n$",
+     "A": {
+      "objective": 1,
+      "why": "Defines internal division of a segment in ratio m:n on a number line."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines internal division of a segment."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "e877f8b16ee269b7"
+    },
+    {
+     "key": "eb11c4-1:definition-3",
+     "type": "definition",
+     "page": 150,
+     "text": "If Q is on the extension of segment AB such that AQ:QB = m : n, Q is said to divide AB externally in the ratio m : n. $AQ:QB=m:n$",
+     "A": {
+      "objective": 1,
+      "why": "Defines external division of a segment in ratio m:n."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Defines external division of a segment."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "7f356f21d488cf7e"
+    },
+    {
+     "key": "eb11c4-1:figure-1",
+     "type": "figure",
+     "page": 150,
+     "text": "Two number lines with arrow labelled x. Top: A(a), P, B(b), with arcs m (A to P) and n (P to B); caption 'Point P is a point m away from A and n away from B.' Bottom: A(a), B(b), Q on the line, with a large arc m from A to Q and a small arc n from B to Q; caption 'Point Q is a point m away from A and n away from B.'",
+     "A": {
+      "objective": 1,
+      "why": "Number-line figure showing internal and external division points."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Internal and external division points on number lines."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "806406157864b37e"
+    },
+    {
+     "key": "eb11c4-1:rule-3",
+     "type": "rule",
+     "page": 150,
+     "text": "(ii) The coordinate of Q dividing AB externally in the ratio m : n is Q((−na + mb)/(m − n)). $Q\\left(\\frac{-na+mb}{m-n}\\right)$",
+     "A": {
+      "objective": 1,
+      "why": "Formula (ii) for external division on a number line."
+     },
+     "B": {
+      "objective": 1,
+      "why": "External division coordinate on a number line."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "fce84bf1d7dc89aa"
+    },
+    {
+     "key": "eb11c4-1:caution-1",
+     "type": "caution",
+     "page": 150,
+     "text": "Side note beside formulas (i) and (ii): shows (na+mb)/(m+n) and (−na+mb)/(m−n); be careful with the order of multiplication (cross-multiply).",
+     "A": {
+      "objective": 1,
+      "why": "Warns about order of multiplication in the number-line division formulas."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Caution on number-line division formulas' order."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "0a9fb73b11612b04"
+    },
+    {
+     "key": "eb11c4-1:rule-4",
+     "type": "rule",
+     "page": 150,
+     "text": "(iii) The coordinate of the midpoint M (dividing AB internally in 1:1) is M((a+b)/2). $M\\left(\\frac{a+b}{2}\\right)$",
+     "A": {
+      "objective": 1,
+      "why": "Midpoint formula on a number line."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Midpoint coordinate on a number line."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "7284b23431be8bcf"
+    },
+    {
+     "key": "eb11c4-1:figure-2",
+     "type": "figure",
+     "page": 150,
+     "text": "Number line with arrow x: points A(a), M, B(b); two equal arcs each labelled 1 (A to M and M to B), segment AB highlighted in blue.",
+     "A": {
+      "objective": 1,
+      "why": "Number line showing the midpoint as 1:1 division."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Midpoint M on a number line."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "68569d0b23d3f6c3"
+    },
+    {
+     "key": "eb11c4-1:figure-3",
+     "type": "figure",
+     "page": 152,
+     "text": "Illustration of an underwater research habitat beside a trench wall, with a vertical axis 'Position along trench wall'. Labelled points from top: Sea level (0 km), Pod B, Hub M, Sensor C, Pod A (with axis break), Outpost D. A dome-shaped habitat, fish and jellyfish are shown. No numeric values besides 0 km are printed; positions are only schematic.",
+     "A": {
+      "objective": 1,
+      "why": "Trench-wall vertical axis with points is the number-line application of distances and division."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Decorative illustration introducing the lesson's idea."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "38257dcc7c84a52d"
+    },
+    {
+     "key": "eb11c4-1:figure-4",
+     "type": "figure",
+     "page": 153,
+     "text": "Coordinate plane with x- and y-axes meeting at origin O; Quadrant I upper right, Quadrant II upper left, Quadrant III lower left, Quadrant IV lower right.",
+     "A": {
+      "objective": 2,
+      "why": "Shows the four quadrants of the coordinate plane."
+     },
+     "B": {
+      "objective": 2,
+      "why": "The four quadrants of the plane."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "7018bfd8a53ddba1"
+    },
+    {
+     "key": "eb11c4-1:figure-5",
+     "type": "figure",
+     "page": 153,
+     "text": "Coordinate plane with points A (x=2, y=3) in (a) Quadrant I, C (x=−2, y=3) in (b) Quadrant II, D (x=−2, y=−3) in (c) Quadrant III, B (x=2, y=−3) in (d) Quadrant IV; dashed lines to axes labelled 3, −3, −2, 2.",
+     "A": {
+      "objective": 2,
+      "why": "Points placed in each of the four quadrants."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Points shown in each of the four quadrants."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "61624480c320492f"
+    },
+    {
+     "key": "eb11c4-1:figure-6",
+     "type": "figure",
+     "page": 153,
+     "text": "Coordinate plane with A(−3, 2), Q(3, 2) (symmetric with respect to the y-axis), P(−3, −2) (symmetric with respect to the x-axis), R(3, −2) (symmetric with respect to the origin); dashed rectangle, diagonal A to R through O, tick marks; axis labels −3, 3, 2, −2.",
+     "A": {
+      "objective": 2,
+      "why": "Shows symmetric points about the x-axis, y-axis and origin."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Symmetric points about the axes and origin."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d77586c3e874c101"
+    },
+    {
+     "key": "eb11c4-1:method-1",
+     "type": "method",
+     "page": 155,
+     "text": "In problems where the distance between 2 points is known, square both sides.",
+     "A": {
+      "objective": 3,
+      "why": "Square both sides when a distance between two points is given."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Squaring both sides when a distance is given."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "7404a4fbca0d8d60"
+    },
+    {
+     "key": "eb11c4-1:figure-7",
+     "type": "figure",
+     "page": 155,
+     "text": "Coordinate axes x, y with origin O. Point A at (x1, y1) and point B at (x2, y2) with dotted guide lines to axis values x1, x2, y1, y2. Right triangle ABC shaded yellow with right angle at lower right; horizontal leg labelled |x2 − x1|, vertical leg labelled |y2 − y1|, hypotenuse AB. Caption: Use the Pythagorean theorem.",
+     "A": {
+      "objective": 3,
+      "why": "Pythagorean-theorem figure behind the distance formula."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Distance formula derived by the Pythagorean theorem."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "a4855c9d3b7c8db0"
+    },
+    {
+     "key": "eb11c4-1:method-2",
+     "type": "method",
+     "page": 156,
+     "text": "To find a point equidistant from two points, assign variables to its coordinates based on the given conditions.",
+     "A": {
+      "objective": 3,
+      "why": "Finding a point equidistant from two points by assigning variables."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Method for finding an equidistant point."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0383b61b7eecb2d1"
+    },
+    {
+     "key": "eb11c4-1:rule-6",
+     "type": "rule",
+     "page": 156,
+     "text": "A point on the x-axis: the required point is (s, 0). $(s, 0)$",
+     "A": {
+      "objective": 3,
+      "why": "Point on x-axis written (s, 0) for equidistant problems."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Form of a point on the x-axis for equidistant problems."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "a12200558fdde37b"
+    },
+    {
+     "key": "eb11c4-1:rule-7",
+     "type": "rule",
+     "page": 156,
+     "text": "A point on the y-axis: the required point is (0, t). $(0, t)$",
+     "A": {
+      "objective": 3,
+      "why": "Point on y-axis written (0, t) for equidistant problems."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Form of a point on the y-axis for equidistant problems."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0ec974064153df33"
+    },
+    {
+     "key": "eb11c4-1:rule-8",
+     "type": "rule",
+     "page": 156,
+     "text": "A point on the line y = ax + b: the required point is (s, as+b). $(s, as+b)$",
+     "A": {
+      "objective": 3,
+      "why": "Point on a line written (s, as+b) for equidistant problems."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Form of a point on a line for equidistant problems."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "2b2a3ba7d4371b5a"
+    },
+    {
+     "key": "eb11c4-1:figure-8",
+     "type": "figure",
+     "page": 156,
+     "text": "Coordinate axes with points A(−2, 1) in the second quadrant, B(3, 4) in the first quadrant, and P(s, 0) on the x-axis; segments AP and BP drawn with equal-length tick marks.",
+     "A": {
+      "objective": 3,
+      "why": "Equidistant point P on the x-axis from A and B."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Point P on the x-axis equidistant from A and B."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0adb58ec56dd518e"
+    },
+    {
+     "key": "eb11c4-1:figure-9",
+     "type": "figure",
+     "page": 156,
+     "text": "Axes with line y = 2x − 1 (y-intercept −1 marked), points A(1, 4), Q(s, 2s−1) on the line, and B(3, 1); segments AQ and BQ drawn with equal-length tick marks.",
+     "A": {
+      "objective": 3,
+      "why": "Equidistant point Q on a line from A and B."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Point on y=2x−1 equidistant from A and B."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "fa71ca32a75ca097"
+    },
+    {
+     "key": "eb11c4-1:rule-9",
+     "type": "rule",
+     "page": 158,
+     "text": "(a) The point P dividing segment AB internally in the ratio m : n has coordinates ((n x₁ + m x₂)/(m + n), (n y₁ + m y₂)/(m + n)). $P\\left(\\frac{nx_1+mx_2}{m+n},\\frac{ny_1+my_2}{m+n}\\right)$",
+     "A": {
+      "objective": 4,
+      "why": "Internal division point formula on the plane."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Internal division point on the plane."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "87b33eacf0f9c888"
+    },
+    {
+     "key": "eb11c4-1:rule-10",
+     "type": "rule",
+     "page": 158,
+     "text": "(b) The point Q dividing segment AB externally in the ratio m : n has coordinates ((−n x₁ + m x₂)/(m − n), (−n y₁ + m y₂)/(m − n)). $Q\\left(\\frac{-nx_1+mx_2}{m-n},\\frac{-ny_1+my_2}{m-n}\\right)$",
+     "A": {
+      "objective": 4,
+      "why": "External division point formula on the plane."
+     },
+     "B": {
+      "objective": 4,
+      "why": "External division point on the plane."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "690b10b13179eb60"
+    },
+    {
+     "key": "eb11c4-1:rule-11",
+     "type": "rule",
+     "page": 158,
+     "text": "(c) Since the midpoint M divides segment AB internally in the ratio 1:1, its coordinates are M((x₁+x₂)/2, (y₁+y₂)/2). $M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$",
+     "A": {
+      "objective": 4,
+      "why": "Midpoint formula on the plane."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Midpoint formula on the coordinate plane."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "5705c92a66cb7892"
+    },
+    {
+     "key": "eb11c4-1:caution-2",
+     "type": "caution",
+     "page": 158,
+     "text": "Side note beside (a) and (b): the formulas are written as (na+mb)/(m+n) and (−na+mb)/(m−n); pay attention to the order of multiplication (n goes with the first point, m with the second). $\\frac{na+mb}{m+n},\\ \\frac{-na+mb}{m-n}$",
+     "A": {
+      "objective": 4,
+      "why": "Warns about the order of multiplication in the plane division formulas."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Caution on the plane division formulas' order of multiplication."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "92835e29999fa7c3"
+    },
+    {
+     "key": "eb11c4-1:figure-10",
+     "type": "figure",
+     "page": 160,
+     "text": "Side figure: a line segment with points B (left, top), A (middle) and C (right, lower); A lies on the segment between B and C.",
+     "A": {
+      "objective": 4,
+      "why": "Side figure for the symmetric-point problem with A as midpoint of BC."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Figure for finding a point symmetric about A using the midpoint."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "21514b7af521d053"
+    },
+    {
+     "key": "eb11c4-1:method-3",
+     "type": "method",
+     "page": 160,
+     "text": "When finding symmetric points, first draw a diagram to understand the relative positions of the points. Next, let the required coordinates be (s, t) and express the midpoint in terms of s, t. $(s, t)$",
+     "A": {
+      "objective": 4,
+      "why": "Method for symmetric points using the midpoint with (s, t)."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Method for symmetric points using the midpoint."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "88aeaef5e0176530"
+    },
+    {
+     "key": "eb11c4-1:figure-11",
+     "type": "figure",
+     "page": 160,
+     "text": "Side figure: a horizontal segment with three points: A(−3, 2) on the left, P(2, 6) in the middle, B(s, t) on the right.",
+     "A": {
+      "objective": 4,
+      "why": "Figure of P as midpoint of A and B(s, t) for the symmetric point."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Symmetric point with P(2,6) as midpoint of A and B(s,t)."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "3fbcc79089af2478"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c4-2",
+   "title": "Triangles and Lines",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-2:objective-1",
+     "label": "Classify triangles from coordinates",
+     "description": "Determine whether a triangle with given vertices is equilateral, isosceles, right-angled or isosceles right-angled by calculating (AB)^2, (BC)^2 and (CA)^2."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-2:objective-2",
+     "label": "Find equations of straight lines",
+     "description": "Find the equation of a straight line through a point with a given gradient, through two points, or parallel to an axis, and use it to find a constant making three points collinear or a line pass through an intersection point."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-2:objective-3",
+     "label": "Parallel, perpendicular, symmetric",
+     "description": "Use gradients to identify parallel and perpendicular lines, find lines through a point parallel or perpendicular to a given line, and determine perpendicular bisectors and symmetric points."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-2:objective-4",
+     "label": "Distance and triangle area",
+     "description": "Calculate the distance from a point to a line using the formula, and use it to find the length of a perpendicular and the area of a triangle from its vertices."
+    },
+    {
+     "n": 5,
+     "id": "eb11c4-2:objective-5",
+     "label": "Fixed points; no triangle",
+     "description": "Determine the fixed point of a line through all values of k, and find the constant for which three lines do not form a triangle."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c4-2:rule-1",
+     "type": "rule",
+     "page": 162,
+     "text": "To determine the shape of triangle ABC, calculate (AB)^2, (BC)^2 and (CA)^2. $(AB)^2, (BC)^2, (CA)^2$",
+     "A": {
+      "objective": 1,
+      "why": "Method of calculating squared side lengths to classify the triangle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Calculate (AB)², (BC)², (CA)² to determine the triangle's shape."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "fec9b9e942011bb2"
+    },
+    {
+     "key": "eb11c4-2:rule-2",
+     "type": "rule",
+     "page": 162,
+     "text": "If (AB)^2 = (BC)^2 = (CA)^2, triangle ABC is an equilateral triangle. $(AB)^2=(BC)^2=(CA)^2$",
+     "A": {
+      "objective": 1,
+      "why": "Equal squared sides give an equilateral triangle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Equilateral test by squared lengths."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "e49176001476c8b2"
+    },
+    {
+     "key": "eb11c4-2:rule-3",
+     "type": "rule",
+     "page": 162,
+     "text": "If (AB)^2 = (BC)^2 ≠ (CA)^2, triangle ABC is an isosceles triangle. $(AB)^2=(BC)^2\\neq(CA)^2$",
+     "A": {
+      "objective": 1,
+      "why": "Two equal squared sides give an isosceles triangle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Isosceles test by squared lengths."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "3503c05943b09f93"
+    },
+    {
+     "key": "eb11c4-2:rule-4",
+     "type": "rule",
+     "page": 162,
+     "text": "If (AC)^2 = (AB)^2 + (BC)^2, triangle ABC is a right-angled triangle. $(AC)^2=(AB)^2+(BC)^2$",
+     "A": {
+      "objective": 1,
+      "why": "Pythagorean condition gives a right-angled triangle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Right-angle test by squared lengths."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "ba76e6a342eb532b"
+    },
+    {
+     "key": "eb11c4-2:rule-5",
+     "type": "rule",
+     "page": 162,
+     "text": "If both conditions are met, the triangle is an isosceles right-angled triangle.",
+     "A": {
+      "objective": 1,
+      "why": "Both conditions give an isosceles right-angled triangle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Both conditions give an isosceles right-angled triangle."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "c4291103a5e1b068"
+    },
+    {
+     "key": "eb11c4-2:figure-1",
+     "type": "figure",
+     "page": 162,
+     "text": "Right triangle ABC shaded yellow with right angle at B (marked with small square), A at top, C at bottom right; label below reads (AC)²=(AB)²+(BC)².",
+     "A": {
+      "objective": 1,
+      "why": "Right triangle illustrating (AC)²=(AB)²+(BC)²."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Right triangle with (AC)²=(AB)²+(BC)²."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "cba33c9091d1c22e"
+    },
+    {
+     "key": "eb11c4-2:figure-2",
+     "type": "figure",
+     "page": 163,
+     "text": "Yellow triangle with vertices B(0, 6), A(4, 9), C(3, 2). Right-angle mark at B; tick marks on sides AB and BC (equal sides). Read from figure.",
+     "A": {
+      "objective": 1,
+      "why": "Triangle ABC from the example showing isosceles right shape."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Triangle with vertices B(0,6), A(4,9), C(3,2) shows it is isosceles right-angled."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "e852fa40daf71213"
+    },
+    {
+     "key": "eb11c4-2:rule-6",
+     "type": "rule",
+     "page": 164,
+     "text": "The equation of a line passing through point (x1, y1) and parallel to the x-axis is y = y1. $y=y_1$",
+     "A": {
+      "objective": 2,
+      "why": "Line parallel to the x-axis through a point is y = y1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line parallel to x-axis is y = y1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "65b49d589c60157a"
+    },
+    {
+     "key": "eb11c4-2:rule-7",
+     "type": "rule",
+     "page": 164,
+     "text": "The equation of a line passing through point (x1, y1) and perpendicular to the x-axis is x = x1. $x=x_1$",
+     "A": {
+      "objective": 2,
+      "why": "Line perpendicular to the x-axis through a point is x = x1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line perpendicular to x-axis is x = x1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "b5997e1f8bec6edf"
+    },
+    {
+     "key": "eb11c4-2:rule-8",
+     "type": "rule",
+     "page": 164,
+     "text": "The equation of a line passing through point (x1, y1) and parallel to the y-axis is x = x1. $x=x_1$",
+     "A": {
+      "objective": 2,
+      "why": "Line parallel to the y-axis through a point is x = x1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line parallel to y-axis is x = x1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "aaf29620a80f7cd0"
+    },
+    {
+     "key": "eb11c4-2:rule-9",
+     "type": "rule",
+     "page": 164,
+     "text": "The equation of a line passing through 2 points (x1, y1) and (x2, y1) is y = y1. $y=y_1$",
+     "A": {
+      "objective": 2,
+      "why": "Line through two points with equal y is y = y1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line through two points with equal y is y = y1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "209d596677583c4d"
+    },
+    {
+     "key": "eb11c4-2:rule-10",
+     "type": "rule",
+     "page": 164,
+     "text": "The equation of a line passing through 2 points (x1, y1) and (x1, y2) is x = x1. $x=x_1$",
+     "A": {
+      "objective": 2,
+      "why": "Line through two points with equal x is x = x1."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line through two points with equal x is x = x1."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "ad022eb9d219055e"
+    },
+    {
+     "key": "eb11c4-2:rule-11",
+     "type": "rule",
+     "page": 164,
+     "text": "If the gradient and a point on the line are known, the equation of the line can be determined.",
+     "A": {
+      "objective": 2,
+      "why": "Gradient and a point determine the line's equation."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Equation is determined by the gradient and a point."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "3db654177f98347a"
+    },
+    {
+     "key": "eb11c4-2:rule-13",
+     "type": "rule",
+     "page": 164,
+     "text": "The gradient of a line passing through 2 points (x1, y1) and (x2, y2) (x1 ≠ x2) is a = (y2 − y1)/(x2 − x1). $a=\\dfrac{y_2-y_1}{x_2-x_1}$",
+     "A": {
+      "objective": 2,
+      "why": "Gradient from two points, used to find the line through two points."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Gradient of a line through two points."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "ffabdd012351aed3"
+    },
+    {
+     "key": "eb11c4-2:figure-3",
+     "type": "figure",
+     "page": 164,
+     "text": "Side figure: a blue line rising to the right through points (x1, y1) (lower) and (x2, y2) (upper); a red right-angled triangle shows horizontal side x2 − x1 and vertical side y2 − y1.",
+     "A": {
+      "objective": 2,
+      "why": "Illustrates the gradient from two points."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Shows the gradient from two points on a line."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d8c86178d2e9bb3a"
+    },
+    {
+     "key": "eb11c4-2:rule-14",
+     "type": "rule",
+     "page": 165,
+     "text": "Side note beside (f): the gradient is computed as the difference of y-coordinates over the difference of x-coordinates. $a = \\frac{y_2 - y_1}{x_2 - x_1}$",
+     "A": {
+      "objective": 2,
+      "why": "Side note on gradient from two points in part (f)."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Gradient formula from two points, used in finding line equations."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "12fba0ecb5110c5d"
+    },
+    {
+     "key": "eb11c4-2:figure-4",
+     "type": "figure",
+     "page": 166,
+     "text": "Photo of a coastal estuary with coordinate axes overlaid (x from -5 to 10, y from 1 to 5). Horizontal line y=2 drawn through sensor buoys at A(-4, 2) on the left and B(9, 2) on the right.",
+     "A": {
+      "objective": 2,
+      "why": "Horizontal line y=2 through two points, a line parallel to an axis."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Horizontal line y=2 through two points illustrates a line parallel to an axis."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "4350b331acd9614b"
+    },
+    {
+     "key": "eb11c4-2:rule-15",
+     "type": "rule",
+     "page": 167,
+     "text": "An equation of the form ax + by + c = 0 (where a ≠ 0 or b ≠ 0) also represents a straight line. $ax+by+c=0$ (where $a\\neq 0$ or $b\\neq 0$)",
+     "A": {
+      "objective": 2,
+      "why": "ax+by+c=0 represents a straight line, used in finding equations."
+     },
+     "B": {
+      "objective": 2,
+      "why": "General form ax+by+c=0 represents a straight line, used for line equations."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "20fa1212af695b14"
+    },
+    {
+     "key": "eb11c4-2:rule-16",
+     "type": "rule",
+     "page": 167,
+     "text": "The equation of a straight line can be found when the gradient and a point on the line are known.",
+     "A": {
+      "objective": 2,
+      "why": "Equation found from gradient and a point."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Equation of a line from gradient and a point."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "7fbeedd32df3603d"
+    },
+    {
+     "key": "eb11c4-2:rule-17",
+     "type": "rule",
+     "page": 167,
+     "text": "The gradient of a line can be found using two points on the line.",
+     "A": {
+      "objective": 2,
+      "why": "Gradient found from two points on the line."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Gradient from two points, used to write line through two points."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "464cd378a6766c36"
+    },
+    {
+     "key": "eb11c4-2:figure-5",
+     "type": "figure",
+     "page": 168,
+     "text": "Photo-style illustration of a robotic surgery setup with a patient, coloured laser lines crossing at a point labelled 'TUMOR' / 'INTERSECTION TARGET' inside a 3D coordinate grid with mm scale labels.",
+     "A": {
+      "objective": 2,
+      "why": "Lines crossing at an intersection point, the line-through-intersection application."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Decorative real-world intro picture of intersecting laser lines."
+     },
+     "status": "disagreed",
+     "filed": null,
+     "fingerprint": "b7ca5434ff2e6c30"
+    },
+    {
+     "key": "eb11c4-2:rule-18",
+     "type": "rule",
+     "page": 169,
+     "text": "An equation of the form ax + by + c = 0 (where a ≠ 0 or b ≠ 0) also represents a straight line. $ax+by+c=0$",
+     "A": {
+      "objective": 3,
+      "why": "General line form introduced before parallel/perpendicular gradient problems."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Restates general form ax+by+c=0 at the start of the parallel/perpendicular section, to read gradients."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "c1eb1f423fa8220e"
+    },
+    {
+     "key": "eb11c4-2:rule-19",
+     "type": "rule",
+     "page": 169,
+     "text": "Problems concerning parallel or perpendicular lines use gradients.",
+     "A": {
+      "objective": 3,
+      "why": "Parallel or perpendicular problems use gradients."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Parallel and perpendicular problems use gradients."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "87dceaef84ec6812"
+    },
+    {
+     "key": "eb11c4-2:convention-1",
+     "type": "convention",
+     "page": 169,
+     "text": "For 2 lines y = m_1 x + k_1 and y = m_2 x + k_2 (the following conditions). $y=m_1x+k_1,\\ y=m_2x+k_2$",
+     "A": {
+      "objective": 3,
+      "why": "Sets up two lines with gradients m1 and m2 for the conditions."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Sets up two lines in y = mx + k form for parallel/perpendicular conditions."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0ec0179b217db018"
+    },
+    {
+     "key": "eb11c4-2:rule-20",
+     "type": "rule",
+     "page": 169,
+     "text": "2 lines are parallel implies m_1 = m_2, that is, gradients are equal. $m_1=m_2$",
+     "A": {
+      "objective": 3,
+      "why": "Parallel lines have equal gradients."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Parallel lines have equal gradients."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "c03bd5894ba9b4b1"
+    },
+    {
+     "key": "eb11c4-2:method-1",
+     "type": "method",
+     "page": 169,
+     "text": "Solve problems concerning parallel or perpendicular lines by transforming the equation into the form y = mx + k. $y=mx+k$",
+     "A": {
+      "objective": 3,
+      "why": "Rewrite as y = mx + k to read gradients."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Method for parallel/perpendicular problems by writing y = mx + k."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "bcca7dc4b9cf6f78"
+    },
+    {
+     "key": "eb11c4-2:figure-6",
+     "type": "figure",
+     "page": 172,
+     "text": "Line l with segment AB perpendicular to l; M is the midpoint of AB lying on l, a right-angle mark at M, equal-length tick marks on AM and MB; A above l, B below l. Points A, B, M and line l labelled.",
+     "A": {
+      "objective": 3,
+      "why": "Perpendicular bisector of AB with midpoint M on l."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Shows a segment AB perpendicular to l with midpoint M on l, for symmetry/bisector."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "d6cd404a463d5fba"
+    },
+    {
+     "key": "eb11c4-2:rule-22",
+     "type": "rule",
+     "page": 172,
+     "text": "The perpendicular bisector of segment (AB) is perpendicular to line AB and passes through the midpoint of (AB), so it is found using the gradient of line (AB) and the coordinates of the midpoint of segment (AB).",
+     "A": {
+      "objective": 3,
+      "why": "Perpendicular bisector uses gradient and midpoint."
+     },
+     "B": {
+      "objective": 3,
+      "why": "States how to find a perpendicular bisector."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "f33e4f2ceabd46f1"
+    },
+    {
+     "key": "eb11c4-2:rule-23",
+     "type": "rule",
+     "page": 172,
+     "text": "To find the coordinates of point B(s, t) symmetric to point A with respect to line l, express two conditions as equations and solve them simultaneously: the line segment (AB) is perpendicular to l, and the midpoint of (AB) lies on line l.",
+     "A": {
+      "objective": 3,
+      "why": "Finding the symmetric point with respect to a line."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Gives how to find the symmetric point with respect to a line."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "0d0eede9b0e4a110"
+    },
+    {
+     "key": "eb11c4-2:figure-7",
+     "type": "figure",
+     "page": 174,
+     "text": "Point (x_1, y_1) above the line ax+by+c=0, with a dotted perpendicular segment labelled d dropped from the point to the line; right-angle mark at the foot. Labels read from figure.",
+     "A": {
+      "objective": 4,
+      "why": "Perpendicular distance d from a point to a line."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Illustrates distance d from a point to the line ax+by+c=0."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "8904cad6d578766a"
+    },
+    {
+     "key": "eb11c4-2:rule-25",
+     "type": "rule",
+     "page": 174,
+     "text": "To find the length of the perpendicular dropped from a point to a line, just find the distance between the point and the line.",
+     "A": {
+      "objective": 4,
+      "why": "Perpendicular length equals the point-to-line distance."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Perpendicular length equals the point-to-line distance."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "195772f50e069713"
+    },
+    {
+     "key": "eb11c4-2:figure-8",
+     "type": "figure",
+     "page": 176,
+     "text": "Triangle ABC with A at left, B at lower right, C at top; line AB is extended on both sides; a dotted red perpendicular from C to line AB with a right-angle mark. Triangle shaded yellow. No numeric values.",
+     "A": {
+      "objective": 4,
+      "why": "Triangle with perpendicular height from C to line AB for area."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Shows triangle ABC with perpendicular from C to AB for area."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "808aa7192c9febea"
+    },
+    {
+     "key": "eb11c4-2:method-2",
+     "type": "method",
+     "page": 176,
+     "text": "For the base, find the distance between 2 points A and B.",
+     "A": {
+      "objective": 4,
+      "why": "Base of the triangle is the distance between A and B."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Base of the triangle is the distance between A and B, used for area."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "873dc4d8cdd4b226"
+    },
+    {
+     "key": "eb11c4-2:method-3",
+     "type": "method",
+     "page": 176,
+     "text": "For the height, find the distance between point C and line (AB).",
+     "A": {
+      "objective": 4,
+      "why": "Height is the distance from C to line AB."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Height of the triangle is the distance from C to line AB."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "40597074e55b6399"
+    },
+    {
+     "key": "eb11c4-2:method-4",
+     "type": "method",
+     "page": 177,
+     "text": "Step 1: Rearrange the equation of the line with respect to k and treat it as an identity in k.",
+     "A": {
+      "objective": 5,
+      "why": "Step 1 for finding the fixed point: arrange as an identity in k."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Step 1 rearranges the line with respect to k to find the fixed point."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "b572e77fb2d0706c"
+    },
+    {
+     "key": "eb11c4-2:method-5",
+     "type": "method",
+     "page": 177,
+     "text": "Step 2: From the identity in k, (ax+by+c)k+(a'x+b'y+c')=0, create the system ax+by+c=0 and a'x+b'y+c'=0 and solve it. $(ax+by+c)k+(a'x+b'y+c')=0 \\Rightarrow \\begin{cases} ax+by+c=0 \\\\ a'x+b'y+c'=0 \\end{cases}$",
+     "A": {
+      "objective": 5,
+      "why": "Step 2 solves the system from the identity in k."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Step 2 solves the system from the identity in k to get the fixed point."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "894ba34202bf43fc"
+    },
+    {
+     "key": "eb11c4-2:rule-26",
+     "type": "rule",
+     "page": 178,
+     "text": "Three lines do not form a triangle in 2 cases. Case 1: 2 lines are parallel, so the gradients of the 2 lines are the same.",
+     "A": {
+      "objective": 5,
+      "why": "Condition for three lines not forming a triangle: parallel case."
+     },
+     "B": {
+      "objective": 5,
+      "why": "States the case of two parallel lines for three lines not forming a triangle."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "a6e04021708d59fc"
+    },
+    {
+     "key": "eb11c4-2:figure-9",
+     "type": "figure",
+     "page": 178,
+     "text": "Side picture: top, three lines with two parallel (marked with red arrows) crossed by a third line; bottom, three lines meeting at a single point marked in red. No values.",
+     "A": {
+      "objective": 5,
+      "why": "Shows the two cases where three lines form no triangle."
+     },
+     "B": {
+      "objective": 5,
+      "why": "Shows parallel lines and concurrent lines, the two cases where three lines form no triangle."
+     },
+     "status": "agreed",
+     "filed": 5,
+     "fingerprint": "f079a288f74828f6"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c4-3",
+   "title": "Circles",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-3:objective-1",
+     "label": "Equation of a circle",
+     "description": "Determine the equation of a circle from its center and radius, a point on it, the ends of a diameter, three points, tangency to the axes or a center on a line; identify a figure from its equation and find the values of k for which an equation represents a circle."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-3:objective-2",
+     "label": "Circle and line intersections",
+     "description": "Calculate the points of intersection of a circle and a line, determine their number using the discriminant D, find constants or radii for tangency, and compute the length of a chord."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-3:objective-3",
+     "label": "Tangents to a circle",
+     "description": "Derive the equation of a tangent to a circle x²+y²=r², at a given point on it or drawn from a point not on it."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-3:objective-4",
+     "label": "Two circles: positions and intersections",
+     "description": "Determine the positional relationship between two circles using r, r' and d, find the equation of a circle that touches a given circle, and find the points of intersection of two circles, the line through them, and a circle passing through those points and another point."
+    }
+   ],
+   "entries": [
+    {
+     "key": "eb11c4-3:figure-1",
+     "type": "figure",
+     "page": 180,
+     "text": "Illustration of cell towers over a city map with overlapping concentric circular signal rings, a satellite at upper right, and a marked device location where the circles overlap. Labels too small to read.",
+     "A": {
+      "objective": 0,
+      "why": "Decorative intro illustration of signal circles for the whole lesson."
+     },
+     "B": {
+      "objective": 0,
+      "why": "Decorative lesson-opening illustration of signal circles."
+     },
+     "status": "agreed",
+     "filed": 0,
+     "fingerprint": "7e017da499a3feda"
+    },
+    {
+     "key": "eb11c4-3:rule-1",
+     "type": "rule",
+     "page": 180,
+     "text": "The equation of a circle with center (a, b) and radius r is (x − a)² + (y − b)² = r² (Standard form). When the origin is the center, x² + y² = r². $(x-a)^2+(y-b)^2=r^2$; $x^2+y^2=r^2$",
+     "A": {
+      "objective": 1,
+      "why": "Standard form of a circle's equation."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Standard form of a circle equation."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "c61cfd2f60422633"
+    },
+    {
+     "key": "eb11c4-3:rule-2",
+     "type": "rule",
+     "page": 180,
+     "text": "The equation of a circle can also be expressed as x² + y² + lx + my + n = 0 (General form). $x^2+y^2+lx+my+n=0$",
+     "A": {
+      "objective": 1,
+      "why": "General form of a circle's equation."
+     },
+     "B": {
+      "objective": 1,
+      "why": "General form of a circle equation."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "c1ec2e3efd1a30f1"
+    },
+    {
+     "key": "eb11c4-3:method-1",
+     "type": "method",
+     "page": 180,
+     "text": "When the center and radius of the circle are known, use (x − a)² + (y − b)² = r². $(x-a)^2+(y-b)^2=r^2$",
+     "A": {
+      "objective": 1,
+      "why": "Use standard form when center and radius are known."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Use standard form with center and radius."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "849138c77a4a3f54"
+    },
+    {
+     "key": "eb11c4-3:rule-3",
+     "type": "rule",
+     "page": 180,
+     "text": "When x² + y² + lx + my + n = 0 is transformed into (x − a)² + (y − b)² = k, if k > 0, it represents a circle with center (a, b) and radius √k. $(x-a)^2+(y-b)^2=k$, radius $\\sqrt{k}$",
+     "A": {
+      "objective": 1,
+      "why": "Identifies when an equation represents a circle (k>0)."
+     },
+     "B": {
+      "objective": 1,
+      "why": "k>0 means the equation represents a circle."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "5e4267079954ff39"
+    },
+    {
+     "key": "eb11c4-3:figure-2",
+     "type": "figure",
+     "page": 182,
+     "text": "Circle with a diameter drawn through its center; the center is marked on the diameter with equal-length tick marks on both halves, and the radius r is marked with an arc from the center to the left end. Both ends of the diameter lie on the circle.",
+     "A": {
+      "objective": 1,
+      "why": "Diameter and radius figure for finding a circle from diameter ends."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Diameter, center and radius."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "352d2ddf2ae1e365"
+    },
+    {
+     "key": "eb11c4-3:rule-4",
+     "type": "rule",
+     "page": 182,
+     "text": "When the center and radius of a circle are known, use (x − a)² + (y − b)² = r². $(x-a)^2+(y-b)^2=r^2$",
+     "A": {
+      "objective": 1,
+      "why": "Use standard form given center and radius."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Center and radius known: standard form."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "9d167e2ecb85d3c9"
+    },
+    {
+     "key": "eb11c4-3:rule-5",
+     "type": "rule",
+     "page": 182,
+     "text": "The radius of a circle can be found by the distance between the center and a point on the circle (blanks 'center' and 'point on the circle' are filled in red).",
+     "A": {
+      "objective": 1,
+      "why": "Radius from center to a point on the circle."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Radius as distance from center to a point."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "6aa326295a079d54"
+    },
+    {
+     "key": "eb11c4-3:rule-6",
+     "type": "rule",
+     "page": 182,
+     "text": "When the coordinates of both ends of a diameter are known, the center of the circle is the midpoint of the diameter (blank 'midpoint of the diameter' filled in red).",
+     "A": {
+      "objective": 1,
+      "why": "Center is the midpoint of a diameter."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Center is the midpoint of the diameter."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "1aacda8d673c5735"
+    },
+    {
+     "key": "eb11c4-3:rule-7",
+     "type": "rule",
+     "page": 182,
+     "text": "When 3 points on the circle are known, use x² + y² + lx + my + n = 0. $x^2+y^2+lx+my+n=0$",
+     "A": {
+      "objective": 1,
+      "why": "Three points on the circle use general form."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Three points: use general form."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "b04f5488a2ec2403"
+    },
+    {
+     "key": "eb11c4-3:figure-3",
+     "type": "figure",
+     "page": 182,
+     "text": "Circle with center labelled (2, 3) and a point on the circle labelled (4, 6); radius r drawn between them.",
+     "A": {
+      "objective": 1,
+      "why": "Circle from center and a point on it."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Circle from center and a point on it."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "1057a8a40c0f9e79"
+    },
+    {
+     "key": "eb11c4-3:figure-4",
+     "type": "figure",
+     "page": 182,
+     "text": "Circle with diameter AB, A(1, 3) at top and B(3, −5) at bottom; center marked at the midpoint of the diameter, radius r drawn from the center to A.",
+     "A": {
+      "objective": 1,
+      "why": "Circle from the ends of a diameter."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Circle from the ends of diameter AB."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "7335f33792a3a85c"
+    },
+    {
+     "key": "eb11c4-3:caution-1",
+     "type": "caution",
+     "page": 184,
+     "text": "When finding the equation of a circle tangent to an axis, always draw a diagram to visualize.",
+     "A": {
+      "objective": 1,
+      "why": "Circle tangent to an axis: draw a diagram to find its equation."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Draw a diagram for circles tangent to an axis."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "65e527798d9648e2"
+    },
+    {
+     "key": "eb11c4-3:rule-8",
+     "type": "rule",
+     "page": 184,
+     "text": "The radius of a circle tangent to the x-axis or y-axis can be found by the distance between the center and the point of tangency.",
+     "A": {
+      "objective": 1,
+      "why": "Radius of a circle tangent to an axis."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Radius of a circle tangent to an axis."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "d4936ee7357b5bee"
+    },
+    {
+     "key": "eb11c4-3:figure-5",
+     "type": "figure",
+     "page": 184,
+     "text": "Coordinate axes with a circle below the x-axis, center labelled (4, −2), a radius marked 2 drawn from the center up to the x-axis (tangent point).",
+     "A": {
+      "objective": 1,
+      "why": "Circle tangent to the x-axis."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Circle tangent to the x-axis with center (4,−2)."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "dc5a4a17e5dc2373"
+    },
+    {
+     "key": "eb11c4-3:figure-6",
+     "type": "figure",
+     "page": 184,
+     "text": "Circle in the second quadrant tangent to both axes, center labelled (−r, r), radius r marked; point near −2 on the x-axis and 1 marked on the y-axis.",
+     "A": {
+      "objective": 1,
+      "why": "Circle tangent to both axes."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Circle tangent to both axes with center (−r, r)."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "5f471f46765a0649"
+    },
+    {
+     "key": "eb11c4-3:figure-7",
+     "type": "figure",
+     "page": 184,
+     "text": "Two circles tangent to both axes in the second quadrant (radius 1 and radius 5), with x-axis marks −5, −2, −1, O and y-axis marks 1 and 5; the point (−2,1) is on the circles.",
+     "A": {
+      "objective": 1,
+      "why": "Circles tangent to both axes through a point."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Two circles tangent to both axes through (−2,1)."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "33073916a1868b33"
+    },
+    {
+     "key": "eb11c4-3:figure-8",
+     "type": "figure",
+     "page": 185,
+     "text": "Coordinate plane with the line y = −x and a circle centred on it; points marked with coordinates labelled 3, 2, −2, −1, 1, 5 on the axes (e.g. (5, 2) and (−2, 3) on the circle); origin O. Values read from a small picture; verify.",
+     "A": {
+      "objective": 1,
+      "why": "Circle with center on the line y = −x."
+     },
+     "B": {
+      "objective": 1,
+      "why": "Circle with center on line y=−x through given points."
+     },
+     "status": "agreed",
+     "filed": 1,
+     "fingerprint": "292a9ad6152517f4"
+    },
+    {
+     "key": "eb11c4-3:rule-11",
+     "type": "rule",
+     "page": 187,
+     "text": "When finding the coordinates, find the solutions to the simultaneous equations.",
+     "A": {
+      "objective": 2,
+      "why": "Finding intersection coordinates of circle and line."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Coordinates of intersection by simultaneous equations."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "8b1c946b295746dd"
+    },
+    {
+     "key": "eb11c4-3:rule-12",
+     "type": "rule",
+     "page": 187,
+     "text": "When finding the number of points, create a quadratic equation and check the sign of the discriminant D.",
+     "A": {
+      "objective": 2,
+      "why": "Number of points via discriminant D."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Number of points via the discriminant."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "a20402725970f92c"
+    },
+    {
+     "key": "eb11c4-3:table-1",
+     "type": "table",
+     "page": 187,
+     "text": "Sign of discriminant D, number of points of intersection of a circle and a line, and position relationship between circle and line Sign of $D$, $D>0$, $D=0$, $D<0$ / Number of points of intersection, 2 points, 1 point, 0 points / Position relationship between circle and line, Intersects at two distinct points, Touches, Has no points of intersection",
+     "A": {
+      "objective": 2,
+      "why": "D sign versus number of intersection points."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Sign of D versus number of intersection points."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "9e6d2c62843749b6"
+    },
+    {
+     "key": "eb11c4-3:figure-9",
+     "type": "figure",
+     "page": 187,
+     "text": "Circle centred at origin O with radius r marked on axes x and y; a line (green) crosses the circle at two points marked in red.",
+     "A": {
+      "objective": 2,
+      "why": "Line crossing circle at two points."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line crossing the circle at two points."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d721246b78e9282d"
+    },
+    {
+     "key": "eb11c4-3:figure-10",
+     "type": "figure",
+     "page": 187,
+     "text": "Circle centred at origin O with radius r on x and y axes; a line touches the circle at one red point.",
+     "A": {
+      "objective": 2,
+      "why": "Line touching circle at one point."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line touching the circle at one point."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "418f105e2fdc6916"
+    },
+    {
+     "key": "eb11c4-3:figure-11",
+     "type": "figure",
+     "page": 187,
+     "text": "Circle centred at origin O with radius r on x and y axes; a line lies outside the circle without touching it.",
+     "A": {
+      "objective": 2,
+      "why": "Line missing the circle."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line missing the circle."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "83d0bd72b26ee07f"
+    },
+    {
+     "key": "eb11c4-3:method-2",
+     "type": "method",
+     "page": 189,
+     "text": "If the equation of the line is unknown, use the discriminant based on the positional relationship: intersects at 2 distinct points ⇒ D > 0, tangent ⇒ D = 0, has no points of intersection ⇒ D < 0. $D>0$, $D=0$, $D<0$",
+     "A": {
+      "objective": 2,
+      "why": "Use discriminant for tangency constants."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Unknown line constant found using discriminant."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "3169bb1a743d6465"
+    },
+    {
+     "key": "eb11c4-3:method-3",
+     "type": "method",
+     "page": 189,
+     "text": "If the radius of the circle is unknown, use the size relationship between radius r and distance d between the center of the circle and the line, based on the positional relationship.",
+     "A": {
+      "objective": 2,
+      "why": "Use r and d to find unknown radius."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Unknown radius found using r and d relationship."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d3cd03e5f9859d01"
+    },
+    {
+     "key": "eb11c4-3:table-2",
+     "type": "table",
+     "page": 189,
+     "text": "Positional relationship between a circle and a line (with small diagrams of line crossing, touching, missing the circle, showing r and d from centre O) and size relationship between r and d. Positional relationship between a circle and a line:, Intersects at two distinct points, Touches, Has no points of intersection / Size relationship between r and d :, r > d, r = d, r < d",
+     "A": {
+      "objective": 2,
+      "why": "Relation of r and d to line-circle position."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Line-circle position related to r and d."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "0fe1b5b79e09b01e"
+    },
+    {
+     "key": "eb11c4-3:rule-13",
+     "type": "rule",
+     "page": 190,
+     "text": "When the circle and line are tangent, the radius equals the distance: r = d. $r=d$",
+     "A": {
+      "objective": 2,
+      "why": "Tangency means r = d."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Tangency of line and circle gives r=d."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "e5b996bb81a13012"
+    },
+    {
+     "key": "eb11c4-3:rule-14",
+     "type": "rule",
+     "page": 191,
+     "text": "In problems finding the length of a chord, first draw a diagram and use Pythagoras' theorem.",
+     "A": {
+      "objective": 2,
+      "why": "Chord length uses Pythagoras."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Chord length problems: diagram and Pythagoras."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "30d5b787c90f127d"
+    },
+    {
+     "key": "eb11c4-3:convention-1",
+     "type": "convention",
+     "page": 191,
+     "text": "Let r denote the radius of the circle, d the length of the perpendicular drawn from the centre of the circle to the chord, and l half the length of the chord.",
+     "A": {
+      "objective": 2,
+      "why": "Notation for chord length computation."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Defines r, d, l for chord length."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "01b5be521a7d6783"
+    },
+    {
+     "key": "eb11c4-3:rule-15",
+     "type": "rule",
+     "page": 191,
+     "text": "Since the perpendicular from the centre to the chord bisects the chord, r² = d² + l². $r^2 = d^2 + l^2$",
+     "A": {
+      "objective": 2,
+      "why": "r² = d² + l² for chord length."
+     },
+     "B": {
+      "objective": 2,
+      "why": "r²=d²+l² for chord length."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "d52baf5a4f37e5f5"
+    },
+    {
+     "key": "eb11c4-3:figure-12",
+     "type": "figure",
+     "page": 191,
+     "text": "Circle with centre O; a chord drawn with a shaded right triangle formed by the radius r, the perpendicular d from O to the chord, and half-chord l. Labels O, d, l, r, right-angle mark.",
+     "A": {
+      "objective": 2,
+      "why": "Right triangle for chord length."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Right triangle with r, d, l for chord length."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "a324846d2e0c7490"
+    },
+    {
+     "key": "eb11c4-3:figure-13",
+     "type": "figure",
+     "page": 191,
+     "text": "Coordinate axes with circle of radius 2 centred at O; line x+y−1=0 drawn in pink crossing the circle; shaded right triangle with d, l and radius 2 labelled; axis marks −2, 2 on x-axis, 2, −2 on y-axis.",
+     "A": {
+      "objective": 2,
+      "why": "Chord of a circle cut by a line."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Chord length of circle cut by x+y−1=0 using right triangle."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "1c6293d5bd12e21b"
+    },
+    {
+     "key": "eb11c4-3:figure-14",
+     "type": "figure",
+     "page": 192,
+     "text": "Circle centred at origin O with radius √3 (axis marks √3, -√3 on x and y axes), line x-y+k=0 cutting the circle in a chord; perpendicular d from centre to the chord drawn; right triangle shaded pink with half chord labelled 1 and radius √3.",
+     "A": {
+      "objective": 2,
+      "why": "Chord with given half-length to find k."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Chord of length 2 cut by line x-y+k=0 using d, half-chord and radius."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "80be2b2329ffcdca"
+    },
+    {
+     "key": "eb11c4-3:caution-2",
+     "type": "caution",
+     "page": 192,
+     "text": "When removing the absolute value sign, add ±.",
+     "A": {
+      "objective": 2,
+      "why": "Absolute value in distance formula in chord/tangency problems."
+     },
+     "B": {
+      "objective": 2,
+      "why": "Absolute value from the distance formula when solving for k in tangency/chord problems."
+     },
+     "status": "agreed",
+     "filed": 2,
+     "fingerprint": "45f28815418e16ac"
+    },
+    {
+     "key": "eb11c4-3:rule-17",
+     "type": "rule",
+     "page": 193,
+     "text": "For the equation of a tangent drawn from a point not on the circle, take the coordinates of the point of tangency as (a, b).",
+     "A": {
+      "objective": 3,
+      "why": "Tangent from an external point uses point of tangency (a, b)."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Method for a tangent from a point not on the circle."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "e48c5c8deef8ee1b"
+    },
+    {
+     "key": "eb11c4-3:figure-15",
+     "type": "figure",
+     "page": 193,
+     "text": "Circle x²+y²=r² centred at origin O with radius r marked on both axes (r, −r). A tangent line ax+by=r² touches the circle at the point of tangency (a, b) in the second quadrant (upper left). Axes x and y labelled.",
+     "A": {
+      "objective": 3,
+      "why": "Tangent ax+by=r² at point (a, b)."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Tangent ax+by=r² at the point (a, b) on the circle."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "13cb7ff1c874e597"
+    },
+    {
+     "key": "eb11c4-3:figure-16",
+     "type": "figure",
+     "page": 193,
+     "text": "Circle centred at O with radius √5 (marked √5 and −√5 on axes). External point P at (1, 3) (3 marked on y-axis, 1 on x-axis). Two tangent lines from P touch the circle at (−1, 2) and (2, 1). Caption: 'There are 2 tangents drawn from a point outside the circle.' Points read from figure; verify.",
+     "A": {
+      "objective": 3,
+      "why": "Two tangents from an outside point."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Two tangents from an outside point to a circle."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "509d9e660e0e04be"
+    },
+    {
+     "key": "eb11c4-3:figure-17",
+     "type": "figure",
+     "page": 194,
+     "text": "Aerial photo of a circular storage tank with a red hazard zone ring, labelled x²+y²=20. A drone at point P on the left (on the x-axis line) with two tangent lines drawn to the circle, touching at points labelled T1 (upper) and T2 (lower). Points read from image; verify labels.",
+     "A": {
+      "objective": 3,
+      "why": "Tangents from a point to a circle."
+     },
+     "B": {
+      "objective": 3,
+      "why": "Tangents drawn from an outside point P to the circle x²+y²=20."
+     },
+     "status": "agreed",
+     "filed": 3,
+     "fingerprint": "26df4400571a2f9c"
+    },
+    {
+     "key": "eb11c4-3:rule-18",
+     "type": "rule",
+     "page": 195,
+     "text": "Circles that are external to each other (separate): the sum of the radii is less than the distance between centres. $r+r'<d$",
+     "A": {
+      "objective": 4,
+      "why": "External circles: r+r'<d."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Separate circles rule r+r'<d."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "e7b11089d71b4b73"
+    },
+    {
+     "key": "eb11c4-3:figure-18",
+     "type": "figure",
+     "page": 195,
+     "text": "Two circles with centres O (larger, radius r) and O' (smaller, radius r'), side by side and not touching; segment OO' labelled d.",
+     "A": {
+      "objective": 4,
+      "why": "Separate circles."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Two separate circles with distance d."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "88db7426605e1972"
+    },
+    {
+     "key": "eb11c4-3:rule-19",
+     "type": "rule",
+     "page": 195,
+     "text": "Circles that touch externally: the sum of the radii equals the distance between centres. $r+r'=d$",
+     "A": {
+      "objective": 4,
+      "why": "Touch externally: r+r'=d."
+     },
+     "B": {
+      "objective": 4,
+      "why": "External touching rule r+r'=d."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "20c6f01244835c46"
+    },
+    {
+     "key": "eb11c4-3:figure-19",
+     "type": "figure",
+     "page": 195,
+     "text": "Two circles with centres O and O' touching externally at one point; radii r and r' and distance d marked along OO'.",
+     "A": {
+      "objective": 4,
+      "why": "Circles touching externally."
+     },
+     "B": {
+      "objective": 4,
+      "why": "External tangency of two circles."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "6ef7e1edb608c9fb"
+    },
+    {
+     "key": "eb11c4-3:figure-20",
+     "type": "figure",
+     "page": 195,
+     "text": "Two overlapping circles with centres O and O', radii r and r', distance d marked; they cross at two points.",
+     "A": {
+      "objective": 4,
+      "why": "Circles intersecting at two points."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Two circles crossing at two points."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "bd65b820826a7bd4"
+    },
+    {
+     "key": "eb11c4-3:rule-21",
+     "type": "rule",
+     "page": 195,
+     "text": "Circles that touch internally: the difference of the radii equals the distance between centres. $r-r'=d$",
+     "A": {
+      "objective": 4,
+      "why": "Touch internally: r−r'=d."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Internal touching rule r−r'=d."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "6509b871e1ea76e0"
+    },
+    {
+     "key": "eb11c4-3:figure-21",
+     "type": "figure",
+     "page": 195,
+     "text": "A smaller circle inside a larger one touching it internally at one point; centres O and O' close together, with r, r' and d marked.",
+     "A": {
+      "objective": 4,
+      "why": "Circles touching internally."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Internal tangency of two circles."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "a14d4f55c136fa41"
+    },
+    {
+     "key": "eb11c4-3:rule-22",
+     "type": "rule",
+     "page": 195,
+     "text": "When one circle is inside the other (no touching): the difference of the radii is greater than the distance between centres. $r-r'>d$",
+     "A": {
+      "objective": 4,
+      "why": "One circle inside the other: r−r'>d."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Position rule r−r'>d for a circle inside another."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "9e4140876dde423d"
+    },
+    {
+     "key": "eb11c4-3:figure-22",
+     "type": "figure",
+     "page": 195,
+     "text": "A smaller circle entirely inside a larger circle without touching; centres O and O' with r, r' and d marked.",
+     "A": {
+      "objective": 4,
+      "why": "Circle inside another without touching."
+     },
+     "B": {
+      "objective": 4,
+      "why": "One circle inside another without touching, with r, r', d."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "1f1975dcea53d005"
+    },
+    {
+     "key": "eb11c4-3:figure-23",
+     "type": "figure",
+     "page": 196,
+     "text": "Two intersecting circles with centers O' (left) and O (right) on a horizontal line; the radius of the left circle is marked 2, the radius of the right circle is marked 3, and the distance between the centers is marked 4.",
+     "A": {
+      "objective": 4,
+      "why": "Example of two intersecting circles with r, r', d."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Two circles with radii 2 and 3 and d=4 illustrate the intersecting-circles example."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "41e610f9c5f69869"
+    },
+    {
+     "key": "eb11c4-3:method-4",
+     "type": "method",
+     "page": 198,
+     "text": "To find the coordinates of the points of intersection of two circles, or the equation of the line passing through the points of intersection, create and solve simultaneous equations.",
+     "A": {
+      "objective": 4,
+      "why": "Intersection points and common line of two circles."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Intersection points of two circles and their common line by simultaneous equations."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "36da70a735d53bc6"
+    },
+    {
+     "key": "eb11c4-3:caution-3",
+     "type": "caution",
+     "page": 200,
+     "text": "When writing the final equation of a circle, ensure the coefficients of x² and y² equal 1.",
+     "A": {
+      "objective": 4,
+      "why": "Final circle equation through intersection points needs x², y² coefficients 1."
+     },
+     "B": {
+      "objective": 4,
+      "why": "Final-equation check for the circle through the intersection points of two circles."
+     },
+     "status": "agreed",
+     "filed": 4,
+     "fingerprint": "fa1cb97e2e381adc"
+    }
+   ]
+  }
+ ]
+}

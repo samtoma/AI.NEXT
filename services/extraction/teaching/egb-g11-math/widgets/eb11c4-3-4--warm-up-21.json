@@ -1,0 +1,53 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-4:warm-up-21",
+ "lo_id": "lo:eb11c4-3-4",
+ "book_item": "eb11c4-3:warm-up-21",
+ "parent_question_id": "expl:eb11c4-3-4:bk-worked-example-1",
+ "parent_kind": "teaching",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "spec": {
+  "targets": [
+   [
+    -3,
+    -1
+   ],
+   [
+    -1,
+    3
+   ]
+  ]
+ },
+ "stem": "Find the coordinates of the points of intersection of the circles $x^2+y^2=10$ and $x^2+y^2+2x-y=5$. Plot both points.",
+ "solution": [
+  "Subtract the equations: $-2x+y=5$, so $y=2x+5$.",
+  "Substitute into $x^2+y^2=10$: $5x^2+20x+15=0$, so $x=-3$ or $-1$.",
+  "$x=-3$ gives $y=-1$; $x=-1$ gives $y=3$.",
+  "The points are $(-3,-1)$ and $(-1,3)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-points",
+   "step": 2,
+   "text": "Take both roots of the quadratic in x."
+  },
+  {
+   "predicate": "extra-points",
+   "step": 3,
+   "text": "Find y from the line obtained by subtracting the circles."
+  },
+  {
+   "predicate": "swapped-coordinates",
+   "step": 3,
+   "text": "Check the order: x first, then y."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 3,
+   "text": "Recheck the signs when finding y."
+  }
+ ],
+ "notes": ""
+}

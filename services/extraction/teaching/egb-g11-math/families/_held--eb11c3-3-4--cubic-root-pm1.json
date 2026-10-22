@@ -1,0 +1,113 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-3-4:cubic-root-pm1",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-3-4",
+ "parent_question_id": "q:eb11c3-3-4:bk-exercise-15-b",
+ "source_page": 141,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "r1",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "r2 == 0 or r2 == r1"
+  },
+  {
+   "name": "r3",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "r3 == 0 or r3 == r1 or r3 == r2"
+  },
+  {
+   "name": "A",
+   "let": "-(r1 + r2 + r3)"
+  },
+  {
+   "name": "B",
+   "let": "r1*r2 + r1*r3 + r2*r3"
+  },
+  {
+   "name": "C",
+   "let": "-(r1*r2*r3)"
+  },
+  {
+   "name": "b",
+   "let": "-(r2 + r3)"
+  },
+  {
+   "name": "c",
+   "let": "r2*r3"
+  },
+  {
+   "require": "A != 0 and B != 0 and b != 0",
+   "why": "keep every term of the cubic and quotient present"
+  },
+  {
+   "name": "t2",
+   "let": "(\"+ \" if A > 0 else \"- \") + (str(abs(A)) if abs(A) != 1 else \"\") + \"x^2\""
+  },
+  {
+   "name": "t1",
+   "let": "(\"+ \" if B > 0 else \"- \") + (str(abs(B)) if abs(B) != 1 else \"\") + \"x\""
+  },
+  {
+   "name": "t0",
+   "let": "(\"+ \" if C > 0 else \"- \") + str(abs(C))"
+  },
+  {
+   "name": "q1",
+   "let": "(\"+ \" if b > 0 else \"- \") + (str(abs(b)) if abs(b) != 1 else \"\") + \"x\""
+  },
+  {
+   "name": "q0",
+   "let": "(\"+ \" if c > 0 else \"- \") + str(abs(c))"
+  },
+  {
+   "name": "f1",
+   "let": "\"(x \" + (\"- \" if r1 > 0 else \"+ \") + str(abs(r1)) + \")\""
+  },
+  {
+   "name": "f2",
+   "let": "\"(x \" + (\"- \" if r2 > 0 else \"+ \") + str(abs(r2)) + \")\""
+  },
+  {
+   "name": "f3",
+   "let": "\"(x \" + (\"- \" if r3 > 0 else \"+ \") + str(abs(r3)) + \")\""
+  }
+ ],
+ "constraints": [],
+ "stem": "Factorise completely: $x^3 {=t2} {=t1} {=t0}$",
+ "answer": "f1 + f2 + f3",
+ "solution": [
+  "Let $P(x)=x^3 {=t2} {=t1} {=t0}$. The constant term is {=C}; try its divisors in $P(a)$.",
+  "$P({=r1})=0$, so $x {=\"- \" if r1 > 0 else \"+ \"}{=abs(r1)}$ is a factor.",
+  "Divide $P(x)$ by this factor (synthetic division by {=r1}): the quotient is $x^2 {=q1} {=q0}$ with remainder 0.",
+  "Factorise the quotient: $x^2 {=q1} {=q0} = {=f2}{=f3}$.",
+  "So $P(x)={=f1}{=f2}{=f3}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=f1}*{=f2}*{=f3}",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: cubic with three distinct nonzero integer roots, one of them 1 or -1 (the first value to test, as in book exercise 15). Roots in [-4,4]; all coefficients nonzero. Quotient always factorises over integers."
+}

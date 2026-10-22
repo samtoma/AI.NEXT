@@ -1,0 +1,107 @@
+{
+ "stage": "S1-links",
+ "workflow": "links-cross",
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "embedded": {
+  "source": "runbook/links-cross.workflow.js",
+  "source_sha256": "a802c115b5ab4fff18b5a3f8e287946baf8538ecb5ec56bb2e43d5464411bffa",
+  "args_sha256": "b689e194fad5ec84ba8a05c471e8d17ac8a6676c60c9fe0a8d075095b095d634",
+  "generated_sha256": "324e5faf9bfb5f4e3af725e63659495ebcea1aa89f3d92256596c71c68a7dfd3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 55,
+  "proposed": [
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c4-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE21",
+      "printed_page": 188,
+      "quote": "$D=6^2-4\\cdot2\\cdot7=-20<0$"
+     },
+     {
+      "kind": "text",
+      "anchor": "eb11c4-3:rule-12",
+      "printed_page": 187,
+      "quote": "create a quadratic equation and check the sign of the discriminant D"
+     }
+    ],
+    "reason": "STEP: computes discriminant D of the quadratic from substituting line into circle and reads its sign to count intersection points | RESULT: the sign of the discriminant determines whether a quadratic has real distinct, repeated or no real solutions | WHY NOT LOCAL: this chapter only applies D and never teaches what its sign means for solutions"
+   },
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c4-3-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 189,
+      "quote": "$=-4k^2+100>0$"
+     }
+    ],
+    "reason": "STEP: sets D>0 for two intersection points and solves for the range of k | RESULT: discriminant sign conditions give number of real roots and the range of a constant | WHY NOT LOCAL: the discriminant meaning is taught in the earlier chapter"
+   },
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c4-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 189,
+      "quote": "$=-4k^2+100>0$"
+     }
+    ],
+    "reason": "STEP: uses D>0 for two intersection points to bound k | RESULT: discriminant sign gives root count | WHY NOT LOCAL: not taught in this chapter"
+   },
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c4-3-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c4-3:linking-text-27",
+      "printed_page": 186,
+      "quote": "This equation represents a circle when $2k^2-4k-6>0$. Solving this gives $k<-1$ or $k>3$."
+     }
+    ],
+    "reason": "STEP: solves a quadratic inequality in k for the circle condition | RESULT: solving quadratic inequalities from roots of the quadratic | WHY NOT LOCAL: inequality solving is not taught here"
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Step is there: D computed and its sign is read to count the intersection points. It needs the meaning of the sign of D (negative gives no real roots), which src teaches. A student can't get that from dst, which only applies D. Passes all three tests."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Step is there: D>0 is set for two distinct intersection points, then solved for k. It rests on D>0 meaning two distinct real roots, which src teaches. dst only applies D here, so the removal test does not remove the need."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Same step as i=1, within dst lo 3-2. D>0 is used for two intersection points, and the sign meaning comes from src. Not taught locally."
+    },
+    {
+     "i": 3,
+     "verdict": "REJECTED",
+     "note": "Removal test decided. The step is a quadratic inequality in k, 2k^2-4k-6>0. The circle condition r^2>0 is stated in dst itself. Solving the inequality is earlier-grade algebra and does not need the discriminant lesson, which is about the nature of roots."
+    }
+   ]
+  }
+ }
+}

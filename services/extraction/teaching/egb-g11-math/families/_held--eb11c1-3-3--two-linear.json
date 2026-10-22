@@ -1,0 +1,54 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-3:two-linear",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-3",
+ "parent_question_id": "q:eb11c1-3-3:bk-exercise-6",
+ "source_page": 18,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    "p + 1",
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  }
+ ],
+ "constraints": [
+  "p != q"
+ ],
+ "stem": "Simplify $\\frac{1}{x+{=p}}+\\frac{1}{x+{=q}}$ by writing it as a single fraction.",
+ "answer": "(2*x+s)/((x+p)*(x+q))",
+ "solution": [
+  "The denominators are different, so use the common denominator $(x+{=p})(x+{=q})$.",
+  "Rewrite each fraction: $\\frac{x+{=q}}{(x+{=p})(x+{=q})}+\\frac{x+{=p}}{(x+{=p})(x+{=q})}$.",
+  "Add the numerators: $(x+{=q})+(x+{=p})=2x+{=s}$.",
+  "The numerator $2x+{=s}$ has no factor in common with the denominator, so nothing cancels.",
+  "The answer is $\\frac{2x+{=s}}{(x+{=p})(x+{=q})}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(2*x+{=s})/((x+{=p})*(x+{=q}))",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: two unit-numerator fractions with already factorised distinct linear denominators; the numerator never cancels (p,q positive, so 2x+p+q shares no factor). Modelled on bk-exercise-6."
+}

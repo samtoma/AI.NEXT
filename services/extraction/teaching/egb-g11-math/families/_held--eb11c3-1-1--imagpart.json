@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-1-1:imagpart",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-1-1",
+ "parent_question_id": "q:eb11c3-1-1:bk-exercise-2-b",
+ "source_page": 108,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "require": "a != abs(b)",
+   "why": "keeps the four options distinct"
+  },
+  {
+   "name": "s",
+   "let": "'-' if b < 0 else '+'"
+  },
+  {
+   "name": "c",
+   "let": "abs(b)"
+  }
+ ],
+ "constraints": [],
+ "stem": "What is the imaginary part of the complex number $z = {=a} {=s} {=c}i$?",
+ "answer": "{=b}",
+ "solution": [
+  "A complex number is written $a + bi$, where $a$ and $b$ are real numbers.",
+  "Here the real part is ${=a}$.",
+  "The imaginary part is the real coefficient of $i$, written without the $i$.",
+  "Writing $z = {=a} + ({=b})i$, the imaginary part is ${=b}$."
+ ],
+ "choices": {
+  "correct": "${=b}$",
+  "distractors": [
+   {
+    "text": "${=b}i$",
+    "misconception_id": "mc:eb11c3-1-1:imaginary-part-includes-i"
+   },
+   {
+    "text": "${=a}$",
+    "misconception_id": "mc:eb11c3-1-1:parts-swapped"
+   },
+   {
+    "text": "${=-b}$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "distinct_by_choices": false,
+ "proposed_misconceptions": [
+  {
+   "id": "mc:eb11c3-1-1:parts-swapped",
+   "label": "Gives the real part as the imaginary part",
+   "description": "The student answers with a, the real part, when asked for the imaginary part of a + bi."
+  }
+ ],
+ "notes": "Basic: identify the imaginary part of a + bi with b of either sign. Distractors: bi form (catalogued), real part swapped, sign flipped. a != |b| keeps options distinct; |b| >= 2."
+}

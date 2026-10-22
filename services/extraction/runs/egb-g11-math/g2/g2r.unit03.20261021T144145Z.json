@@ -1,0 +1,84 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "egb-g11-math",
+ "chapter": 3,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "d8ac2dfd18e2205a067e838c080bd07313d874bd530942ad30f30e8bb483c29a",
+ "keys": [
+  "eb11c3-1:WE1",
+  "eb11c3-2:WE2",
+  "eb11c3-2:WE3"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 0
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "b7d72e3595e4308bbace523d1b9c66f9c0f8388bef17fccf1f081bd683ab23f8",
+  "generated_sha256": "3f7c7c0eb691d30c010afacc801621cb5eac96662bdd5d63f4b9857cf6e01491",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "eb11c3-1:WE1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c3-1:WE1",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "The stem is only a warm-up instruction (reverse the sign of the imaginary part) with no number. Part (c)'s number is missing, so the key 6 cannot be checked or derived.",
+    "own_value": "cannot derive: the number is missing from the stem",
+    "defect": "The Warm Up 1(c) expression is missing from the stem. The working is only an instruction, so nothing shows the intended number. Key 6 is not supported."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c3-2:WE2",
+   "state": "held",
+   "rec": {
+    "key": "eb11c3-2:WE2",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "For $3x^2-6x-5=0$: $\\alpha+\\beta=2$, $\\alpha\\beta=-5/3$, so $\\alpha^2+\\beta^2=4+10/3=22/3$. The book's working uses sum 3 and product $-3/2$, which is a different equation. The stem and working do not match.",
+    "own_value": "22/3",
+    "correct_answer": "22/3",
+    "defect": "The working uses $\\alpha+\\beta=3$ and $\\alpha\\beta=-3/2$, which do not belong to $3x^2-6x-5=0$. The equation was changed or garbled, and the working does not show the intended one. Key 12 does not follow from the stem."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c3-2:WE3",
+   "state": "held",
+   "rec": {
+    "key": "eb11c3-2:WE3",
+    "verdict": "exclude",
+    "class": "stem damaged",
+    "confidence": "high",
+    "note": "For $3x^2-6x-5=0$: $2(\\alpha+\\beta)/(\\alpha\\beta)=4/(-5/3)=-12/5$. The book's working uses sum 3 and product $-3/2$, giving $-4$, which belongs to a different equation. The stem and working do not match.",
+    "own_value": "-12/5",
+    "correct_answer": "-12/5",
+    "defect": "The working uses $\\alpha+\\beta=3$ and $\\alpha\\beta=-3/2$, which do not match $3x^2-6x-5=0$. The stem equation is wrong or garbled, and the working does not show the intended one. Key $-4$ does not follow from the stem."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "exclude": 3
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage G2R --run <runId>"
+ }
+}

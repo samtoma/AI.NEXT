@@ -1,0 +1,4013 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "egb-g11-math",
+ "chapter": 3,
+ "module": "module:eb11c3",
+ "packet_sha256": "b3a33290636738f95ff55a7e8e82fe8c588a23862854363eaa53ba25add3e861",
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "c54369e5bf274fbf9bbadbcd2e27001fc1a0c100abedba1f9a1e288a94dbcae5",
+  "generated_sha256": "5521256b52d6e19b8de1dd5550210dd9345ba935e783cbe2147df79a0f6db701",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 0,
+ "lessons": [
+  {
+   "slug": "eb11c3-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Identify parts; equate complex numbers",
+       "statement": "Identify the real and imaginary parts of a complex number a + bi and use equality of complex numbers to find real x and y.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:definition-3",
+         "printed_page": 106,
+         "quote": "The part a is called the real part"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 107,
+         "quote": "$a=3$, $b=-2$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 107,
+         "quote": "$2x+y=2$, $x+y=3$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-2:a",
+         "printed_page": 108,
+         "quote": "$(2x+y)+(3x-y)i=8+7i$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:unlabelled-exercise-1:a",
+        "eb11c3-1:unlabelled-exercise-1:b",
+        "eb11c3-1:unlabelled-exercise-1:c",
+        "eb11c3-1:unlabelled-exercise-1:d",
+        "eb11c3-1:unlabelled-exercise-2",
+        "eb11c3-1:unlabelled-exercise-3:a",
+        "eb11c3-1:unlabelled-exercise-3:b",
+        "eb11c3-1:unlabelled-exercise-3:c",
+        "eb11c3-1:unlabelled-exercise-3:d",
+        "eb11c3-1:unlabelled-exercise-4:a",
+        "eb11c3-1:unlabelled-exercise-4:b",
+        "eb11c3-1:exercise-1:a",
+        "eb11c3-1:exercise-1:b",
+        "eb11c3-1:exercise-1:c",
+        "eb11c3-1:exercise-1:d",
+        "eb11c3-1:exercise-1:e",
+        "eb11c3-1:exercise-1:f",
+        "eb11c3-1:exercise-1:g",
+        "eb11c3-1:exercise-1:h",
+        "eb11c3-1:exercise-2:a",
+        "eb11c3-1:exercise-2:b",
+        "eb11c3-1:exercise-2:c",
+        "eb11c3-1:exercise-2:d",
+        "eb11c3-1:exercise-2:e",
+        "eb11c3-1:challenge-1"
+       ],
+       "worked_examples": [
+        "WE1",
+        "WE2"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Add, subtract, multiply, powers of i",
+       "statement": "Calculate sums, differences, products and powers of complex numbers, substituting i² = −1, and give the answer in the form a + bi.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-1:rule-4",
+         "printed_page": 109,
+         "quote": "substitute i² = −1"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 109,
+         "quote": "$(i-2)^2=i^2-4i+4$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-3:j",
+         "printed_page": 110,
+         "quote": "$i^5+i^3+i$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-1:a",
+        "eb11c3-1:warm-up-1:b",
+        "eb11c3-1:warm-up-1:c",
+        "eb11c3-1:try-1:a",
+        "eb11c3-1:try-1:b",
+        "eb11c3-1:try-1:c",
+        "eb11c3-1:exercise-3:a",
+        "eb11c3-1:exercise-3:b",
+        "eb11c3-1:exercise-3:c",
+        "eb11c3-1:exercise-3:d",
+        "eb11c3-1:exercise-3:e",
+        "eb11c3-1:exercise-3:f",
+        "eb11c3-1:exercise-3:g",
+        "eb11c3-1:exercise-3:h",
+        "eb11c3-1:exercise-3:i",
+        "eb11c3-1:exercise-3:j",
+        "eb11c3-1:exercise-3:k",
+        "eb11c3-1:exercise-3:l",
+        "eb11c3-1:challenge-2"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Conjugates and dividing complex numbers",
+       "statement": "State the complex conjugate of a complex number and divide complex numbers by multiplying by the conjugate of the denominator.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:definition-5",
+         "printed_page": 111,
+         "quote": "are called complex conjugates"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 111,
+         "quote": "$\\dfrac{(1-i)(2-3i)}{(2+3i)(2-3i)}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-5:b",
+         "printed_page": 112,
+         "quote": "$\\frac{3+i}{2+i}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-2:a",
+        "eb11c3-1:warm-up-2:b",
+        "eb11c3-1:warm-up-2:c",
+        "eb11c3-1:warm-up-2:d",
+        "eb11c3-1:warm-up-3:a",
+        "eb11c3-1:warm-up-3:b",
+        "eb11c3-1:try-2:a",
+        "eb11c3-1:try-2:b",
+        "eb11c3-1:try-2:c",
+        "eb11c3-1:try-2:d",
+        "eb11c3-1:try-3:a",
+        "eb11c3-1:try-3:b",
+        "eb11c3-1:exercise-4:a",
+        "eb11c3-1:exercise-4:b",
+        "eb11c3-1:exercise-4:c",
+        "eb11c3-1:exercise-4:d",
+        "eb11c3-1:exercise-4:e",
+        "eb11c3-1:exercise-4:f",
+        "eb11c3-1:exercise-4:g",
+        "eb11c3-1:exercise-4:h",
+        "eb11c3-1:exercise-4:i",
+        "eb11c3-1:exercise-5:a",
+        "eb11c3-1:exercise-5:b",
+        "eb11c3-1:exercise-5:c",
+        "eb11c3-1:exercise-5:d",
+        "eb11c3-1:exercise-5:e",
+        "eb11c3-1:exercise-5:f",
+        "eb11c3-1:exercise-5:g",
+        "eb11c3-1:exercise-5:h",
+        "eb11c3-1:challenge-3"
+       ],
+       "worked_examples": [
+        "WE4",
+        "WE5",
+        "WE6",
+        "WE7"
+       ],
+       "key": "A3"
+      },
+      {
+       "label": "Square roots of negative numbers",
+       "statement": "Express square roots of negative numbers in terms of i and calculate with them.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-1:rule-8",
+         "printed_page": 113,
+         "quote": "$a>0,\\ \\sqrt{-a}=i\\sqrt{a}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 113,
+         "quote": "$\\pm\\sqrt{-6}=\\pm i\\sqrt{6}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-7:a",
+         "printed_page": 114,
+         "quote": "$\\sqrt{-2}\\times\\sqrt{-6}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-4",
+        "eb11c3-1:warm-up-5:a",
+        "eb11c3-1:warm-up-5:b",
+        "eb11c3-1:try-4:a",
+        "eb11c3-1:try-4:b",
+        "eb11c3-1:try-4:c",
+        "eb11c3-1:try-4:d",
+        "eb11c3-1:try-5:a",
+        "eb11c3-1:try-5:b",
+        "eb11c3-1:try-5:c",
+        "eb11c3-1:exercise-6:a",
+        "eb11c3-1:exercise-6:b",
+        "eb11c3-1:exercise-6:c",
+        "eb11c3-1:exercise-6:d",
+        "eb11c3-1:exercise-6:e",
+        "eb11c3-1:exercise-6:f",
+        "eb11c3-1:exercise-6:g",
+        "eb11c3-1:exercise-6:h",
+        "eb11c3-1:exercise-7:a",
+        "eb11c3-1:exercise-7:b",
+        "eb11c3-1:exercise-7:c",
+        "eb11c3-1:exercise-7:d",
+        "eb11c3-1:exercise-7:e",
+        "eb11c3-1:exercise-7:f",
+        "eb11c3-1:exercise-7:g",
+        "eb11c3-1:exercise-7:h",
+        "eb11c3-1:challenge-4"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Real and imaginary parts",
+       "statement": "State the real part and the imaginary part of a complex number a + bi, including real numbers and numbers such as 2i.",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-1:heading-1",
+         "printed_page": 106,
+         "quote": "Complex number"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 107,
+         "quote": "$a=3$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-1:c",
+         "printed_page": 108,
+         "quote": "$\\frac{2-\\sqrt{5}i}{3}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:open-prompt-1",
+        "eb11c3-1:unlabelled-exercise-1:a",
+        "eb11c3-1:unlabelled-exercise-1:b",
+        "eb11c3-1:unlabelled-exercise-1:c",
+        "eb11c3-1:unlabelled-exercise-1:d",
+        "eb11c3-1:unlabelled-exercise-3:a",
+        "eb11c3-1:unlabelled-exercise-3:b",
+        "eb11c3-1:unlabelled-exercise-3:c",
+        "eb11c3-1:unlabelled-exercise-3:d",
+        "eb11c3-1:exercise-1:a",
+        "eb11c3-1:exercise-1:b",
+        "eb11c3-1:exercise-1:c",
+        "eb11c3-1:exercise-1:d",
+        "eb11c3-1:exercise-1:e",
+        "eb11c3-1:exercise-1:f",
+        "eb11c3-1:exercise-1:g",
+        "eb11c3-1:exercise-1:h"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Equality of complex numbers",
+       "statement": "Find the values of real numbers x and y by equating the real and imaginary parts of two equal complex numbers.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:rule-2",
+         "printed_page": 106,
+         "quote": "if a + bi = c + di, then a = c, b = d"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 107,
+         "quote": "$2x+y=2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-2:b",
+         "printed_page": 108,
+         "quote": "$(x+1)-5i=4+(2y+1)i$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:unlabelled-exercise-2",
+        "eb11c3-1:unlabelled-exercise-4:a",
+        "eb11c3-1:unlabelled-exercise-4:b",
+        "eb11c3-1:exercise-2:a",
+        "eb11c3-1:exercise-2:b",
+        "eb11c3-1:exercise-2:c",
+        "eb11c3-1:exercise-2:d",
+        "eb11c3-1:exercise-2:e",
+        "eb11c3-1:challenge-1"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Add, subtract, multiply complex numbers",
+       "statement": "Calculate sums, differences, products and powers of complex numbers, substituting i² = −1 and giving the answer in the form a + bi.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:rule-4",
+         "printed_page": 109,
+         "quote": "substitute i² = −1"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 109,
+         "quote": "(substitute i² = −1)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-3:j",
+         "printed_page": 110,
+         "quote": "$i^5+i^3+i$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-1:a",
+        "eb11c3-1:warm-up-1:b",
+        "eb11c3-1:warm-up-1:c",
+        "eb11c3-1:try-1:a",
+        "eb11c3-1:try-1:b",
+        "eb11c3-1:try-1:c",
+        "eb11c3-1:activity-1",
+        "eb11c3-1:exercise-3:a",
+        "eb11c3-1:exercise-3:b",
+        "eb11c3-1:exercise-3:c",
+        "eb11c3-1:exercise-3:d",
+        "eb11c3-1:exercise-3:e",
+        "eb11c3-1:exercise-3:f",
+        "eb11c3-1:exercise-3:g",
+        "eb11c3-1:exercise-3:h",
+        "eb11c3-1:exercise-3:i",
+        "eb11c3-1:exercise-3:j",
+        "eb11c3-1:exercise-3:k",
+        "eb11c3-1:exercise-3:l",
+        "eb11c3-1:challenge-2"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Conjugates and division",
+       "statement": "State the complex conjugate of a complex number and divide complex numbers by multiplying numerator and denominator by the conjugate of the denominator, answering in the form a + bi.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:definition-5",
+         "printed_page": 111,
+         "quote": "are called complex conjugates"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 111,
+         "quote": "$=\\dfrac{-1-5i}{13}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-5:b",
+         "printed_page": 112,
+         "quote": "$\\frac{3+i}{2+i}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-2:a",
+        "eb11c3-1:warm-up-2:b",
+        "eb11c3-1:warm-up-2:c",
+        "eb11c3-1:warm-up-2:d",
+        "eb11c3-1:warm-up-3:a",
+        "eb11c3-1:warm-up-3:b",
+        "eb11c3-1:try-2:a",
+        "eb11c3-1:try-2:b",
+        "eb11c3-1:try-2:c",
+        "eb11c3-1:try-2:d",
+        "eb11c3-1:try-3:a",
+        "eb11c3-1:try-3:b",
+        "eb11c3-1:exercise-4:a",
+        "eb11c3-1:exercise-4:b",
+        "eb11c3-1:exercise-4:c",
+        "eb11c3-1:exercise-4:d",
+        "eb11c3-1:exercise-4:e",
+        "eb11c3-1:exercise-4:f",
+        "eb11c3-1:exercise-4:g",
+        "eb11c3-1:exercise-4:h",
+        "eb11c3-1:exercise-4:i",
+        "eb11c3-1:exercise-5:a",
+        "eb11c3-1:exercise-5:b",
+        "eb11c3-1:exercise-5:c",
+        "eb11c3-1:exercise-5:d",
+        "eb11c3-1:exercise-5:e",
+        "eb11c3-1:exercise-5:f",
+        "eb11c3-1:exercise-5:g",
+        "eb11c3-1:exercise-5:h",
+        "eb11c3-1:challenge-3"
+       ],
+       "worked_examples": [
+        "WE4",
+        "WE5",
+        "WE6",
+        "WE7"
+       ],
+       "key": "B4"
+      },
+      {
+       "label": "Square roots of negative numbers",
+       "statement": "Express square roots of negative numbers in terms of i and calculate with them.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-1:rule-8",
+         "printed_page": 113,
+         "quote": "the square root of −a equals i times the square root of a"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 113,
+         "quote": "$\\pm i\\sqrt{6}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-1:exercise-7:g",
+         "printed_page": 114,
+         "quote": "$(\\sqrt{3}+\\sqrt{-5})^2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-1:warm-up-4",
+        "eb11c3-1:warm-up-5:a",
+        "eb11c3-1:warm-up-5:b",
+        "eb11c3-1:try-4:a",
+        "eb11c3-1:try-4:b",
+        "eb11c3-1:try-4:c",
+        "eb11c3-1:try-4:d",
+        "eb11c3-1:try-5:a",
+        "eb11c3-1:try-5:b",
+        "eb11c3-1:try-5:c",
+        "eb11c3-1:exercise-6:a",
+        "eb11c3-1:exercise-6:b",
+        "eb11c3-1:exercise-6:c",
+        "eb11c3-1:exercise-6:d",
+        "eb11c3-1:exercise-6:e",
+        "eb11c3-1:exercise-6:f",
+        "eb11c3-1:exercise-6:g",
+        "eb11c3-1:exercise-6:h",
+        "eb11c3-1:exercise-7:a",
+        "eb11c3-1:exercise-7:b",
+        "eb11c3-1:exercise-7:c",
+        "eb11c3-1:exercise-7:d",
+        "eb11c3-1:exercise-7:e",
+        "eb11c3-1:exercise-7:f",
+        "eb11c3-1:exercise-7:g",
+        "eb11c3-1:exercise-7:h",
+        "eb11c3-1:challenge-4",
+        "eb11c3-1:reflect-1"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Identify the real and imaginary parts of a complex number a + bi (including real numbers and numbers such as 2i) and use equality of complex numbers to find real x and y.",
+      "label": "Parts and equality of complex numbers",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1",
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c3-1:definition-3",
+        "printed_page": 106,
+        "quote": "The part a is called the real part"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE1",
+        "printed_page": 107,
+        "quote": "$a=3$, $b=-2$"
+       },
+       {
+        "kind": "definition",
+        "anchor": "eb11c3-1:rule-2",
+        "printed_page": 106,
+        "quote": "if a + bi = c + di, then a = c, b = d"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 107,
+        "quote": "$2x+y=2$, $x+y=3$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-1:exercise-2:b",
+        "printed_page": 108,
+        "quote": "$(x+1)-5i=4+(2y+1)i$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-1:open-prompt-1",
+       "eb11c3-1:unlabelled-exercise-1:a",
+       "eb11c3-1:unlabelled-exercise-1:b",
+       "eb11c3-1:unlabelled-exercise-1:c",
+       "eb11c3-1:unlabelled-exercise-1:d",
+       "eb11c3-1:unlabelled-exercise-2",
+       "eb11c3-1:unlabelled-exercise-3:a",
+       "eb11c3-1:unlabelled-exercise-3:b",
+       "eb11c3-1:unlabelled-exercise-3:c",
+       "eb11c3-1:unlabelled-exercise-3:d",
+       "eb11c3-1:unlabelled-exercise-4:a",
+       "eb11c3-1:unlabelled-exercise-4:b",
+       "eb11c3-1:exercise-1:a",
+       "eb11c3-1:exercise-1:b",
+       "eb11c3-1:exercise-1:c",
+       "eb11c3-1:exercise-1:d",
+       "eb11c3-1:exercise-1:e",
+       "eb11c3-1:exercise-1:f",
+       "eb11c3-1:exercise-1:g",
+       "eb11c3-1:exercise-1:h",
+       "eb11c3-1:exercise-2:a",
+       "eb11c3-1:exercise-2:b",
+       "eb11c3-1:exercise-2:c",
+       "eb11c3-1:exercise-2:d",
+       "eb11c3-1:exercise-2:e",
+       "eb11c3-1:challenge-1"
+      ],
+      "worked_examples": [
+       "WE1",
+       "WE2"
+      ],
+      "terms": [
+       "complex number",
+       "real part",
+       "imaginary part",
+       "equality of complex numbers",
+       "i"
+      ],
+      "term_flags": [
+       {
+        "term": "imaginary part",
+        "why": "For a + bi the book's imaginary part is the coefficient b; some curricula state it as bi."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate sums, differences, products and powers of complex numbers, substituting i² = −1, and give the answer in the form a + bi.",
+      "label": "Add, subtract, multiply complex numbers",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-1:rule-4",
+        "printed_page": 109,
+        "quote": "substitute i² = −1"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 109,
+        "quote": "$(i-2)^2=i^2-4i+4$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-1:exercise-3:j",
+        "printed_page": 110,
+        "quote": "$i^5+i^3+i$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-1:warm-up-1:a",
+       "eb11c3-1:warm-up-1:b",
+       "eb11c3-1:warm-up-1:c",
+       "eb11c3-1:try-1:a",
+       "eb11c3-1:try-1:b",
+       "eb11c3-1:try-1:c",
+       "eb11c3-1:activity-1",
+       "eb11c3-1:exercise-3:a",
+       "eb11c3-1:exercise-3:b",
+       "eb11c3-1:exercise-3:c",
+       "eb11c3-1:exercise-3:d",
+       "eb11c3-1:exercise-3:e",
+       "eb11c3-1:exercise-3:f",
+       "eb11c3-1:exercise-3:g",
+       "eb11c3-1:exercise-3:h",
+       "eb11c3-1:exercise-3:i",
+       "eb11c3-1:exercise-3:j",
+       "eb11c3-1:exercise-3:k",
+       "eb11c3-1:exercise-3:l",
+       "eb11c3-1:challenge-2"
+      ],
+      "worked_examples": [
+       "WE3"
+      ],
+      "terms": [
+       "complex number",
+       "i²",
+       "power"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "State the complex conjugate of a complex number and divide complex numbers by multiplying numerator and denominator by the conjugate of the denominator, answering in the form a + bi.",
+      "label": "Conjugates and dividing complex numbers",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c3-1:definition-5",
+        "printed_page": 111,
+        "quote": "are called complex conjugates"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 111,
+        "quote": "$\\dfrac{(1-i)(2-3i)}{(2+3i)(2-3i)}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-1:exercise-5:b",
+        "printed_page": 112,
+        "quote": "$\\frac{3+i}{2+i}$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-1:warm-up-2:a",
+       "eb11c3-1:warm-up-2:b",
+       "eb11c3-1:warm-up-2:c",
+       "eb11c3-1:warm-up-2:d",
+       "eb11c3-1:warm-up-3:a",
+       "eb11c3-1:warm-up-3:b",
+       "eb11c3-1:try-2:a",
+       "eb11c3-1:try-2:b",
+       "eb11c3-1:try-2:c",
+       "eb11c3-1:try-2:d",
+       "eb11c3-1:try-3:a",
+       "eb11c3-1:try-3:b",
+       "eb11c3-1:exercise-4:a",
+       "eb11c3-1:exercise-4:b",
+       "eb11c3-1:exercise-4:c",
+       "eb11c3-1:exercise-4:d",
+       "eb11c3-1:exercise-4:e",
+       "eb11c3-1:exercise-4:f",
+       "eb11c3-1:exercise-4:g",
+       "eb11c3-1:exercise-4:h",
+       "eb11c3-1:exercise-4:i",
+       "eb11c3-1:exercise-5:a",
+       "eb11c3-1:exercise-5:b",
+       "eb11c3-1:exercise-5:c",
+       "eb11c3-1:exercise-5:d",
+       "eb11c3-1:exercise-5:e",
+       "eb11c3-1:exercise-5:f",
+       "eb11c3-1:exercise-5:g",
+       "eb11c3-1:exercise-5:h",
+       "eb11c3-1:challenge-3"
+      ],
+      "worked_examples": [
+       "WE4",
+       "WE5",
+       "WE6",
+       "WE7"
+      ],
+      "terms": [
+       "complex conjugate",
+       "denominator",
+       "numerator"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Express square roots of negative numbers in terms of i and calculate with them.",
+      "label": "Square roots of negative numbers",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-1:rule-8",
+        "printed_page": 113,
+        "quote": "$a>0,\\ \\sqrt{-a}=i\\sqrt{a}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE8",
+        "printed_page": 113,
+        "quote": "$\\pm\\sqrt{-6}=\\pm i\\sqrt{6}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-1:exercise-7:g",
+        "printed_page": 114,
+        "quote": "$(\\sqrt{3}+\\sqrt{-5})^2$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-1:warm-up-4",
+       "eb11c3-1:warm-up-5:a",
+       "eb11c3-1:warm-up-5:b",
+       "eb11c3-1:try-4:a",
+       "eb11c3-1:try-4:b",
+       "eb11c3-1:try-4:c",
+       "eb11c3-1:try-4:d",
+       "eb11c3-1:try-5:a",
+       "eb11c3-1:try-5:b",
+       "eb11c3-1:try-5:c",
+       "eb11c3-1:exercise-6:a",
+       "eb11c3-1:exercise-6:b",
+       "eb11c3-1:exercise-6:c",
+       "eb11c3-1:exercise-6:d",
+       "eb11c3-1:exercise-6:e",
+       "eb11c3-1:exercise-6:f",
+       "eb11c3-1:exercise-6:g",
+       "eb11c3-1:exercise-6:h",
+       "eb11c3-1:exercise-7:a",
+       "eb11c3-1:exercise-7:b",
+       "eb11c3-1:exercise-7:c",
+       "eb11c3-1:exercise-7:d",
+       "eb11c3-1:exercise-7:e",
+       "eb11c3-1:exercise-7:f",
+       "eb11c3-1:exercise-7:g",
+       "eb11c3-1:exercise-7:h",
+       "eb11c3-1:challenge-4",
+       "eb11c3-1:reflect-1"
+      ],
+      "worked_examples": [
+       "WE8",
+       "WE9"
+      ],
+      "terms": [
+       "square root",
+       "i"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'The part a is called the real part' appears in the anchored text. As a definition, it properly defines the real part of a complex number, which the objective requires students to identify."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$a=3$, $b=-2$' appears in the anchored text. As a worked example, it demonstrates identifying real and imaginary parts of the complex number 3-2i, directly supporting the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'if a + bi = c + di, then a = c, b = d' appears in the anchored text. As a definition, it establishes the equality rule that students need to use to find real x and y."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$2x+y=2$, $x+y=3$' appears in the anchored text. As a worked example, it demonstrates the process of using equality of complex numbers to set up and solve for real variables x and y."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$(x+1)-5i=4+(2y+1)i$' appears in the anchored text. As an exercise, it provides practice in using equality of complex numbers to find real x and y."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'substitute i² = −1' appears in the anchored text. As an intro/definition, it explains the key rule needed for calculating with complex numbers."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$(i-2)^2=i^2-4i+4$' appears in the anchored text. As a worked example, it demonstrates calculating powers of complex numbers and substituting i² = −1."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$i^5+i^3+i$' appears in the anchored text. As an exercise, it provides practice in calculating with powers of complex numbers."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'are called complex conjugates' appears in the anchored text. As a definition, it defines complex conjugates, which the objective requires students to state."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$\\dfrac{(1-i)(2-3i)}{(2+3i)(2-3i)}$' appears in the anchored text. As a worked example, it demonstrates the method of dividing complex numbers by multiplying by the conjugate of the denominator."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$\\frac{3+i}{2+i}$' appears in the anchored text. As an exercise, it provides practice in dividing complex numbers and expressing the answer in the form a+bi."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$a>0,\\ \\sqrt{-a}=i\\sqrt{a}$' appears in the anchored text. As an intro/definition, it explains the rule for expressing square roots of negative numbers in terms of i."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$\\pm\\sqrt{-6}=\\pm i\\sqrt{6}$' appears in the anchored text. As a worked example, it demonstrates expressing square roots of negative numbers in terms of i."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The quote '$(\\sqrt{3}+\\sqrt{-5})^2$' appears in the anchored text. As an exercise, it provides practice in calculating with square roots of negative numbers expressed in terms of i."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c3-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Solve quadratics over complex numbers",
+       "statement": "Solve quadratic equations in the set of complex numbers using square roots, factorisation or the quadratic formula, expressing negative square roots in terms of i.",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-2:heading-1",
+         "printed_page": 115,
+         "quote": "Quadratic equations"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:method-7",
+         "printed_page": 115,
+         "quote": "Solve using the quadratic formula"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 116,
+         "quote": "Solve the following quadratic equations"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-1:g",
+         "printed_page": 117,
+         "quote": "$x^2+x+1=0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:open-prompt-1",
+        "eb11c3-2:warm-up-1:a",
+        "eb11c3-2:warm-up-1:b",
+        "eb11c3-2:warm-up-1:c",
+        "eb11c3-2:try-1:a",
+        "eb11c3-2:try-1:b",
+        "eb11c3-2:try-1:c",
+        "eb11c3-2:try-1:d",
+        "eb11c3-2:exercise-1:a",
+        "eb11c3-2:exercise-1:b",
+        "eb11c3-2:exercise-1:c",
+        "eb11c3-2:exercise-1:d",
+        "eb11c3-2:exercise-1:e",
+        "eb11c3-2:exercise-1:f",
+        "eb11c3-2:exercise-1:g",
+        "eb11c3-2:exercise-1:h",
+        "eb11c3-2:exercise-1:i",
+        "eb11c3-2:exercise-1:j",
+        "eb11c3-2:exercise-2:a",
+        "eb11c3-2:exercise-2:b",
+        "eb11c3-2:exercise-2:c",
+        "eb11c3-2:exercise-2:d",
+        "eb11c3-2:exercise-2:e",
+        "eb11c3-2:exercise-2:f",
+        "eb11c3-2:exercise-2:g",
+        "eb11c3-2:exercise-2:h",
+        "eb11c3-2:exercise-2:i",
+        "eb11c3-2:challenge-1"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Use the discriminant",
+       "statement": "Determine the nature of the solutions of a quadratic equation using the discriminant, and find the range of a constant for which the solutions are real, repeated or imaginary.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-2:definition-1",
+         "printed_page": 118,
+         "quote": "is called the Discriminant"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 118,
+         "quote": "Therefore, it has two distinct imaginary solutions."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 119,
+         "quote": "it has a repeated solution"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-3:a",
+         "printed_page": 120,
+         "quote": "$x^2-5x+3=0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-2",
+        "eb11c3-2:warm-up-3",
+        "eb11c3-2:warm-up-4",
+        "eb11c3-2:try-2:a",
+        "eb11c3-2:try-2:b",
+        "eb11c3-2:try-2:c",
+        "eb11c3-2:try-3",
+        "eb11c3-2:try-4",
+        "eb11c3-2:exercise-3:a",
+        "eb11c3-2:exercise-3:b",
+        "eb11c3-2:exercise-3:c",
+        "eb11c3-2:exercise-3:d",
+        "eb11c3-2:exercise-3:e",
+        "eb11c3-2:exercise-3:f",
+        "eb11c3-2:exercise-4:a",
+        "eb11c3-2:exercise-4:b",
+        "eb11c3-2:exercise-4:c",
+        "eb11c3-2:challenge-2:a",
+        "eb11c3-2:challenge-2:b",
+        "eb11c3-2:challenge-2:c"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Roots and coefficients relationships",
+       "statement": "Calculate sums, products and expressions in the roots of a quadratic equation, find constants from a stated relationship between the two roots, and find ranges of a constant from the signs of the roots.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-5",
+         "printed_page": 121,
+         "quote": "the sum is $-b/a$ and the product is $c/a$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 121,
+         "quote": "Product of two solutions is"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 124,
+         "quote": "The other solution can be expressed as $\\alpha+5$."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-6:a",
+         "printed_page": 123,
+         "quote": "$\\alpha^2 + \\beta^2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-5",
+        "eb11c3-2:warm-up-6:a",
+        "eb11c3-2:warm-up-6:b",
+        "eb11c3-2:warm-up-6:c",
+        "eb11c3-2:warm-up-6:d",
+        "eb11c3-2:try-5",
+        "eb11c3-2:try-6:a",
+        "eb11c3-2:try-6:b",
+        "eb11c3-2:try-6:c",
+        "eb11c3-2:try-6:d",
+        "eb11c3-2:exercise-5:a",
+        "eb11c3-2:exercise-5:b",
+        "eb11c3-2:exercise-5:c",
+        "eb11c3-2:exercise-6:a",
+        "eb11c3-2:exercise-6:b",
+        "eb11c3-2:exercise-6:c",
+        "eb11c3-2:exercise-6:d",
+        "eb11c3-2:exercise-7:a",
+        "eb11c3-2:exercise-7:b",
+        "eb11c3-2:exercise-7:c",
+        "eb11c3-2:exercise-7:d",
+        "eb11c3-2:challenge-3:a",
+        "eb11c3-2:challenge-3:b",
+        "eb11c3-2:challenge-3:c",
+        "eb11c3-2:challenge-3:d",
+        "eb11c3-2:unlabelled-exercise-1",
+        "eb11c3-2:try-7",
+        "eb11c3-2:try-8",
+        "eb11c3-2:exercise-8",
+        "eb11c3-2:exercise-9",
+        "eb11c3-2:exercise-10",
+        "eb11c3-2:exercise-11",
+        "eb11c3-2:exercise-12",
+        "eb11c3-2:exercise-13",
+        "eb11c3-2:challenge-4",
+        "eb11c3-2:warm-up-11",
+        "eb11c3-2:try-13",
+        "eb11c3-2:try-14",
+        "eb11c3-2:try-15",
+        "eb11c3-2:activity-1",
+        "eb11c3-2:exercise-21",
+        "eb11c3-2:exercise-22",
+        "eb11c3-2:exercise-23",
+        "eb11c3-2:exercise-24",
+        "eb11c3-2:challenge-7:a",
+        "eb11c3-2:challenge-7:b",
+        "eb11c3-2:challenge-7:c",
+        "eb11c3-2:reflect-1"
+       ],
+       "worked_examples": [
+        "WE14",
+        "WE15",
+        "WE19"
+       ],
+       "key": "A3"
+      },
+      {
+       "label": "Factorise quadratics over complex numbers",
+       "statement": "Factorise quadratic expressions, including quartics in x², over the set of complex numbers using the solutions of the equation.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-9",
+         "printed_page": 126,
+         "quote": "can be factorised as a(x − α)(x − β)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 126,
+         "quote": "factorise (a) 2x² − 3x + 2"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-14:a",
+         "printed_page": 126,
+         "quote": "$x^2+4x+5$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-7:a",
+        "eb11c3-2:warm-up-7:b",
+        "eb11c3-2:try-9:a",
+        "eb11c3-2:try-9:b",
+        "eb11c3-2:try-9:c",
+        "eb11c3-2:exercise-14:a",
+        "eb11c3-2:exercise-14:b",
+        "eb11c3-2:exercise-14:c",
+        "eb11c3-2:exercise-14:d",
+        "eb11c3-2:exercise-14:e",
+        "eb11c3-2:exercise-14:f",
+        "eb11c3-2:exercise-14:g",
+        "eb11c3-2:exercise-14:h",
+        "eb11c3-2:challenge-5"
+       ],
+       "worked_examples": [
+        "WE16"
+       ],
+       "key": "A4"
+      },
+      {
+       "label": "Form equation from roots",
+       "statement": "Form a quadratic equation from given roots or from expressions in the roots of another equation, and find two numbers from their sum and product.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-10",
+         "printed_page": 127,
+         "quote": "x² − (α+β)x + αβ = 0"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE17",
+         "printed_page": 127,
+         "quote": "Therefore, one such equation is"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE18",
+         "printed_page": 127,
+         "quote": "Solving this gives"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-16:b",
+         "printed_page": 129,
+         "quote": "$1+4i,\\ 1-4i$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-8",
+        "eb11c3-2:warm-up-9",
+        "eb11c3-2:warm-up-10",
+        "eb11c3-2:try-10",
+        "eb11c3-2:try-11",
+        "eb11c3-2:try-12",
+        "eb11c3-2:exercise-15",
+        "eb11c3-2:exercise-16:a",
+        "eb11c3-2:exercise-16:b",
+        "eb11c3-2:exercise-16:c",
+        "eb11c3-2:exercise-17:a",
+        "eb11c3-2:exercise-17:b",
+        "eb11c3-2:exercise-18",
+        "eb11c3-2:exercise-19",
+        "eb11c3-2:exercise-20",
+        "eb11c3-2:challenge-6"
+       ],
+       "worked_examples": [
+        "WE17",
+        "WE18"
+       ],
+       "key": "A5"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Solve quadratic equations",
+       "statement": "Solve quadratic equations in the set of complex numbers, using square roots, factorisation or the quadratic formula, expressing negative square roots in terms of i.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 116,
+         "quote": "Solve the following quadratic equations"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:printed-objective-1",
+         "printed_page": 115,
+         "quote": "Solve quadratic equations in the set of complex numbers."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-1:g",
+         "printed_page": 117,
+         "quote": "$x^2+x+1=0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:open-prompt-1",
+        "eb11c3-2:warm-up-1:a",
+        "eb11c3-2:warm-up-1:b",
+        "eb11c3-2:warm-up-1:c",
+        "eb11c3-2:try-1:a",
+        "eb11c3-2:try-1:b",
+        "eb11c3-2:try-1:c",
+        "eb11c3-2:try-1:d",
+        "eb11c3-2:exercise-1:a",
+        "eb11c3-2:exercise-1:b",
+        "eb11c3-2:exercise-1:c",
+        "eb11c3-2:exercise-1:d",
+        "eb11c3-2:exercise-1:e",
+        "eb11c3-2:exercise-1:f",
+        "eb11c3-2:exercise-1:g",
+        "eb11c3-2:exercise-1:h",
+        "eb11c3-2:exercise-1:i",
+        "eb11c3-2:exercise-1:j",
+        "eb11c3-2:exercise-2:a",
+        "eb11c3-2:exercise-2:b",
+        "eb11c3-2:exercise-2:c",
+        "eb11c3-2:exercise-2:d",
+        "eb11c3-2:exercise-2:e",
+        "eb11c3-2:exercise-2:f",
+        "eb11c3-2:exercise-2:g",
+        "eb11c3-2:exercise-2:h",
+        "eb11c3-2:exercise-2:i",
+        "eb11c3-2:challenge-1"
+       ],
+       "worked_examples": [
+        "WE10"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Use the discriminant",
+       "statement": "Determine the nature of the solutions of a quadratic equation using the discriminant D, and find the range of a constant for real, repeated or imaginary solutions.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 119,
+         "quote": "it has two distinct imaginary solutions"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c3-2:definition-1",
+         "printed_page": 118,
+         "quote": "called the Discriminant"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-3:a",
+         "printed_page": 120,
+         "quote": "$x^2-5x+3=0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-2",
+        "eb11c3-2:warm-up-3",
+        "eb11c3-2:warm-up-4",
+        "eb11c3-2:try-2:a",
+        "eb11c3-2:try-2:b",
+        "eb11c3-2:try-2:c",
+        "eb11c3-2:try-3",
+        "eb11c3-2:try-4",
+        "eb11c3-2:exercise-3:a",
+        "eb11c3-2:exercise-3:b",
+        "eb11c3-2:exercise-3:c",
+        "eb11c3-2:exercise-3:d",
+        "eb11c3-2:exercise-3:e",
+        "eb11c3-2:exercise-3:f",
+        "eb11c3-2:exercise-4:a",
+        "eb11c3-2:exercise-4:b",
+        "eb11c3-2:exercise-4:c",
+        "eb11c3-2:challenge-2:a",
+        "eb11c3-2:challenge-2:b",
+        "eb11c3-2:challenge-2:c"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Roots and coefficients",
+       "statement": "Calculate the sum and product of the roots of a quadratic equation and use them to find values of expressions in α and β, or unknown constants given a relationship between the two solutions.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 121,
+         "quote": "sum of two solutions is"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-5",
+         "printed_page": 121,
+         "quote": "the sum is $-b/a$ and the product is $c/a$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-6:b",
+         "printed_page": 123,
+         "quote": "$\\alpha^3 + \\beta^3$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 124,
+         "quote": "Let one solution be $\\alpha$."
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-5",
+        "eb11c3-2:warm-up-6:a",
+        "eb11c3-2:warm-up-6:b",
+        "eb11c3-2:warm-up-6:c",
+        "eb11c3-2:warm-up-6:d",
+        "eb11c3-2:try-5",
+        "eb11c3-2:try-6:a",
+        "eb11c3-2:try-6:b",
+        "eb11c3-2:try-6:c",
+        "eb11c3-2:try-6:d",
+        "eb11c3-2:exercise-5:a",
+        "eb11c3-2:exercise-5:b",
+        "eb11c3-2:exercise-5:c",
+        "eb11c3-2:exercise-6:a",
+        "eb11c3-2:exercise-6:b",
+        "eb11c3-2:exercise-6:c",
+        "eb11c3-2:exercise-6:d",
+        "eb11c3-2:exercise-7:a",
+        "eb11c3-2:exercise-7:b",
+        "eb11c3-2:exercise-7:c",
+        "eb11c3-2:exercise-7:d",
+        "eb11c3-2:challenge-3:a",
+        "eb11c3-2:challenge-3:b",
+        "eb11c3-2:challenge-3:c",
+        "eb11c3-2:challenge-3:d",
+        "eb11c3-2:unlabelled-exercise-1",
+        "eb11c3-2:try-7",
+        "eb11c3-2:try-8",
+        "eb11c3-2:exercise-8",
+        "eb11c3-2:exercise-9",
+        "eb11c3-2:exercise-10",
+        "eb11c3-2:exercise-11",
+        "eb11c3-2:exercise-12",
+        "eb11c3-2:exercise-13",
+        "eb11c3-2:challenge-4"
+       ],
+       "worked_examples": [
+        "WE14",
+        "WE15"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Factorise over complex numbers",
+       "statement": "Factorise quadratic expressions over the set of complex numbers as a(x − α)(x − β).",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 126,
+         "quote": "factorise"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-9",
+         "printed_page": 126,
+         "quote": "a(x − α)(x − β)"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-14:g",
+         "printed_page": 126,
+         "quote": "$x^4-9$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-7:a",
+        "eb11c3-2:warm-up-7:b",
+        "eb11c3-2:try-9:a",
+        "eb11c3-2:try-9:b",
+        "eb11c3-2:try-9:c",
+        "eb11c3-2:exercise-14:a",
+        "eb11c3-2:exercise-14:b",
+        "eb11c3-2:exercise-14:c",
+        "eb11c3-2:exercise-14:d",
+        "eb11c3-2:exercise-14:e",
+        "eb11c3-2:exercise-14:f",
+        "eb11c3-2:exercise-14:g",
+        "eb11c3-2:exercise-14:h",
+        "eb11c3-2:challenge-5"
+       ],
+       "worked_examples": [
+        "WE16"
+       ],
+       "key": "B4"
+      },
+      {
+       "label": "Form equations; signs of roots",
+       "statement": "Form a quadratic equation from given roots, and determine the range of a constant from the signs of the two solutions using D, α+β and αβ.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE17",
+         "printed_page": 127,
+         "quote": "one such equation is"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-2:rule-10",
+         "printed_page": 127,
+         "quote": "x² − (α+β)x + αβ = 0"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE19",
+         "printed_page": 130,
+         "quote": "two distinct negative solutions"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-2:exercise-24",
+         "printed_page": 131,
+         "quote": "two distinct negative solutions"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-2:warm-up-8",
+        "eb11c3-2:warm-up-9",
+        "eb11c3-2:warm-up-10",
+        "eb11c3-2:try-10",
+        "eb11c3-2:try-11",
+        "eb11c3-2:try-12",
+        "eb11c3-2:exercise-15",
+        "eb11c3-2:exercise-16:a",
+        "eb11c3-2:exercise-16:b",
+        "eb11c3-2:exercise-16:c",
+        "eb11c3-2:exercise-17:a",
+        "eb11c3-2:exercise-17:b",
+        "eb11c3-2:exercise-18",
+        "eb11c3-2:exercise-19",
+        "eb11c3-2:exercise-20",
+        "eb11c3-2:challenge-6",
+        "eb11c3-2:warm-up-11",
+        "eb11c3-2:try-13",
+        "eb11c3-2:try-14",
+        "eb11c3-2:try-15",
+        "eb11c3-2:activity-1",
+        "eb11c3-2:exercise-21",
+        "eb11c3-2:exercise-22",
+        "eb11c3-2:exercise-23",
+        "eb11c3-2:exercise-24",
+        "eb11c3-2:challenge-7:a",
+        "eb11c3-2:challenge-7:b",
+        "eb11c3-2:challenge-7:c",
+        "eb11c3-2:reflect-1"
+       ],
+       "worked_examples": [
+        "WE17",
+        "WE18",
+        "WE19"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Solve quadratic equations in the set of complex numbers, using square roots, factorisation or the quadratic formula, expressing negative square roots in terms of i.",
+      "label": "Solve quadratic equations",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "eb11c3-2:heading-1",
+        "printed_page": 115,
+        "quote": "Quadratic equations"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-2:printed-objective-1",
+        "printed_page": 115,
+        "quote": "Solve quadratic equations in the set of complex numbers."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE10",
+        "printed_page": 116,
+        "quote": "Solve the following quadratic equations"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-2:exercise-1:g",
+        "printed_page": 117,
+        "quote": "$x^2+x+1=0$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-2:open-prompt-1",
+       "eb11c3-2:warm-up-1:a",
+       "eb11c3-2:warm-up-1:b",
+       "eb11c3-2:warm-up-1:c",
+       "eb11c3-2:try-1:a",
+       "eb11c3-2:try-1:b",
+       "eb11c3-2:try-1:c",
+       "eb11c3-2:try-1:d",
+       "eb11c3-2:exercise-1:a",
+       "eb11c3-2:exercise-1:b",
+       "eb11c3-2:exercise-1:c",
+       "eb11c3-2:exercise-1:d",
+       "eb11c3-2:exercise-1:e",
+       "eb11c3-2:exercise-1:f",
+       "eb11c3-2:exercise-1:g",
+       "eb11c3-2:exercise-1:h",
+       "eb11c3-2:exercise-1:i",
+       "eb11c3-2:exercise-1:j",
+       "eb11c3-2:exercise-2:a",
+       "eb11c3-2:exercise-2:b",
+       "eb11c3-2:exercise-2:c",
+       "eb11c3-2:exercise-2:d",
+       "eb11c3-2:exercise-2:e",
+       "eb11c3-2:exercise-2:f",
+       "eb11c3-2:exercise-2:g",
+       "eb11c3-2:exercise-2:h",
+       "eb11c3-2:exercise-2:i",
+       "eb11c3-2:challenge-1"
+      ],
+      "worked_examples": [
+       "WE10"
+      ],
+      "terms": [
+       "quadratic equation",
+       "set of complex numbers",
+       "square root",
+       "factorisation",
+       "quadratic formula",
+       "i"
+      ],
+      "term_flags": [
+       {
+        "term": "set of complex numbers",
+        "why": "Other curricula say 'complex numbers' or ℂ without 'the set of'."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the nature of the solutions of a quadratic equation using the discriminant, and find the range of a constant for which the solutions are real, repeated or imaginary.",
+      "label": "Use the discriminant",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c3-2:definition-1",
+        "printed_page": 118,
+        "quote": "is called the Discriminant"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 118,
+        "quote": "Therefore, it has two distinct imaginary solutions."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE13",
+        "printed_page": 119,
+        "quote": "it has a repeated solution"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-2:exercise-3:a",
+        "printed_page": 120,
+        "quote": "$x^2-5x+3=0$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-2:warm-up-2",
+       "eb11c3-2:warm-up-3",
+       "eb11c3-2:warm-up-4",
+       "eb11c3-2:try-2:a",
+       "eb11c3-2:try-2:b",
+       "eb11c3-2:try-2:c",
+       "eb11c3-2:try-3",
+       "eb11c3-2:try-4",
+       "eb11c3-2:exercise-3:a",
+       "eb11c3-2:exercise-3:b",
+       "eb11c3-2:exercise-3:c",
+       "eb11c3-2:exercise-3:d",
+       "eb11c3-2:exercise-3:e",
+       "eb11c3-2:exercise-3:f",
+       "eb11c3-2:exercise-4:a",
+       "eb11c3-2:exercise-4:b",
+       "eb11c3-2:exercise-4:c",
+       "eb11c3-2:challenge-2:a",
+       "eb11c3-2:challenge-2:b",
+       "eb11c3-2:challenge-2:c"
+      ],
+      "worked_examples": [
+       "WE11",
+       "WE12",
+       "WE13"
+      ],
+      "terms": [
+       "discriminant",
+       "real solutions",
+       "repeated solution",
+       "imaginary solutions",
+       "distinct solutions"
+      ],
+      "term_flags": [
+       {
+        "term": "imaginary solutions",
+        "why": "The book uses 'imaginary' for non-real complex solutions; other curricula say 'non-real'."
+       },
+       {
+        "term": "repeated solution",
+        "why": "Often called 'equal roots' or 'double root' elsewhere."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate sums, products and expressions in the roots of a quadratic equation, and find constants from a stated relationship between the two solutions.",
+      "label": "Roots and coefficients",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-2:rule-5",
+        "printed_page": 121,
+        "quote": "the sum is $-b/a$ and the product is $c/a$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE14",
+        "printed_page": 121,
+        "quote": "Product of two solutions is"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-2:exercise-6:b",
+        "printed_page": 123,
+        "quote": "$\\alpha^3 + \\beta^3$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE15",
+        "printed_page": 124,
+        "quote": "The other solution can be expressed as $\\alpha+5$."
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-2:warm-up-5",
+       "eb11c3-2:warm-up-6:a",
+       "eb11c3-2:warm-up-6:b",
+       "eb11c3-2:warm-up-6:c",
+       "eb11c3-2:warm-up-6:d",
+       "eb11c3-2:try-5",
+       "eb11c3-2:try-6:a",
+       "eb11c3-2:try-6:b",
+       "eb11c3-2:try-6:c",
+       "eb11c3-2:try-6:d",
+       "eb11c3-2:exercise-5:a",
+       "eb11c3-2:exercise-5:b",
+       "eb11c3-2:exercise-5:c",
+       "eb11c3-2:exercise-6:a",
+       "eb11c3-2:exercise-6:b",
+       "eb11c3-2:exercise-6:c",
+       "eb11c3-2:exercise-6:d",
+       "eb11c3-2:exercise-7:a",
+       "eb11c3-2:exercise-7:b",
+       "eb11c3-2:exercise-7:c",
+       "eb11c3-2:exercise-7:d",
+       "eb11c3-2:challenge-3:a",
+       "eb11c3-2:challenge-3:b",
+       "eb11c3-2:challenge-3:c",
+       "eb11c3-2:challenge-3:d",
+       "eb11c3-2:unlabelled-exercise-1",
+       "eb11c3-2:try-7",
+       "eb11c3-2:try-8",
+       "eb11c3-2:exercise-8",
+       "eb11c3-2:exercise-9",
+       "eb11c3-2:exercise-10",
+       "eb11c3-2:exercise-11",
+       "eb11c3-2:exercise-12",
+       "eb11c3-2:exercise-13",
+       "eb11c3-2:challenge-4"
+      ],
+      "worked_examples": [
+       "WE14",
+       "WE15"
+      ],
+      "terms": [
+       "sum of solutions",
+       "product of solutions",
+       "roots",
+       "α and β"
+      ],
+      "term_flags": [
+       {
+        "term": "roots",
+        "why": "The book mostly says 'solutions'; 'roots' is used by other curricula for the same thing."
+       }
+      ]
+     },
+     {
+      "statement": "Factorise quadratic expressions, including quartics in x², over the set of complex numbers as a(x − α)(x − β) using the solutions of the equation.",
+      "label": "Factorise over complex numbers",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-2:rule-9",
+        "printed_page": 126,
+        "quote": "a(x − α)(x − β)"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE16",
+        "printed_page": 126,
+        "quote": "factorise (a) 2x² − 3x + 2"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-2:exercise-14:g",
+        "printed_page": 126,
+        "quote": "$x^4-9$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-2:warm-up-7:a",
+       "eb11c3-2:warm-up-7:b",
+       "eb11c3-2:try-9:a",
+       "eb11c3-2:try-9:b",
+       "eb11c3-2:try-9:c",
+       "eb11c3-2:exercise-14:a",
+       "eb11c3-2:exercise-14:b",
+       "eb11c3-2:exercise-14:c",
+       "eb11c3-2:exercise-14:d",
+       "eb11c3-2:exercise-14:e",
+       "eb11c3-2:exercise-14:f",
+       "eb11c3-2:exercise-14:g",
+       "eb11c3-2:exercise-14:h",
+       "eb11c3-2:challenge-5"
+      ],
+      "worked_examples": [
+       "WE16"
+      ],
+      "terms": [
+       "factorise",
+       "set of complex numbers",
+       "quartic"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Form a quadratic equation from given roots or from expressions in the roots of another equation, find two numbers from their sum and product, and determine the range of a constant from the signs of the two solutions using D, α+β and αβ.",
+      "label": "Form equations; signs of roots",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A5"
+       ],
+       "b": [
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-2:rule-10",
+        "printed_page": 127,
+        "quote": "x² − (α+β)x + αβ = 0"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE17",
+        "printed_page": 127,
+        "quote": "Therefore, one such equation is"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE18",
+        "printed_page": 127,
+        "quote": "Solving this gives"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE19",
+        "printed_page": 130,
+        "quote": "two distinct negative solutions"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-2:exercise-24",
+        "printed_page": 131,
+        "quote": "two distinct negative solutions"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-2:warm-up-8",
+       "eb11c3-2:warm-up-9",
+       "eb11c3-2:warm-up-10",
+       "eb11c3-2:try-10",
+       "eb11c3-2:try-11",
+       "eb11c3-2:try-12",
+       "eb11c3-2:exercise-15",
+       "eb11c3-2:exercise-16:a",
+       "eb11c3-2:exercise-16:b",
+       "eb11c3-2:exercise-16:c",
+       "eb11c3-2:exercise-17:a",
+       "eb11c3-2:exercise-17:b",
+       "eb11c3-2:exercise-18",
+       "eb11c3-2:exercise-19",
+       "eb11c3-2:exercise-20",
+       "eb11c3-2:challenge-6",
+       "eb11c3-2:warm-up-11",
+       "eb11c3-2:try-13",
+       "eb11c3-2:try-14",
+       "eb11c3-2:try-15",
+       "eb11c3-2:activity-1",
+       "eb11c3-2:exercise-21",
+       "eb11c3-2:exercise-22",
+       "eb11c3-2:exercise-23",
+       "eb11c3-2:exercise-24",
+       "eb11c3-2:challenge-7:a",
+       "eb11c3-2:challenge-7:b",
+       "eb11c3-2:challenge-7:c",
+       "eb11c3-2:reflect-1"
+      ],
+      "worked_examples": [
+       "WE17",
+       "WE18",
+       "WE19"
+      ],
+      "terms": [
+       "discriminant",
+       "sum of solutions",
+       "product of solutions",
+       "distinct negative solutions",
+       "quadratic equation"
+      ],
+      "term_flags": [
+       {
+        "term": "D",
+        "why": "D denotes the discriminant; other curricula use Δ."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading 'Quadratic equations' names the topic/skill for solving quadratic equations in complex numbers."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro/definition states the exact objective: solving quadratic equations in complex numbers."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates solving quadratic equations using square roots, factorisation, and quadratic formula, with solutions expressed in terms of i."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to solve a quadratic equation ($x^2+x+1=0$), which requires expressing complex solutions."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Definition clearly states what the discriminant is and that it determines type and number of solutions."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates using discriminant (D < 0) to conclude two distinct imaginary solutions."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates finding ranges of constant k for which solutions are real (D>0), repeated (D=0), or imaginary (D<0)."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to determine nature of solutions, practicing the core skill of the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Intro/rule states the formulas for sum (-b/a) and product (c/a) of roots, fundamental to the objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates calculating sum and product of roots, then using these to compute expressions like α²+β²."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to calculate α³ + β³, practicing the skill of computing expressions in roots."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates finding constants from a stated relationship (difference = 5) between solutions."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Intro/rule states the factorisation form a(x − α)(x − β), which is exactly the objective."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false,
+      "note": "Quote is present but the actual working/solution steps are missing from the anchored text (shows only '(a)  (b)' with no content), so the skill is not demonstrated."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks to factorise x⁴-9 over complex numbers, including quartic expressions as required by objective."
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Intro/rule states the formula for forming a quadratic equation from given roots."
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates forming a quadratic equation from given complex roots using sum and product."
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates finding two numbers given their sum and product."
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates finding range of constant using discriminant (D>0), sum (α+β<0), and product (αβ>0) conditions."
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks students to find range of k for two distinct negative solutions, practicing the combined skill from the objective."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c3-3",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Use the Remainder Theorem to find the remainder when a polynomial is divided by a linear expression x − a or ax − b, and to find an unknown coefficient or make a divisibility condition hold.",
+       "label": "Remainder Theorem, linear divisors",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:rule-2",
+         "printed_page": 132,
+         "quote": "The remainder when P(x) is divided by the linear expression ax − b is P(b/a)."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 132,
+         "quote": "Substitute $x = \\frac{2}{3}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-7",
+         "printed_page": 133,
+         "quote": "is divisible by $x-2$, find the value of $a$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:open-prompt-1",
+        "eb11c3-3:warm-up-1",
+        "eb11c3-3:warm-up-2",
+        "eb11c3-3:try-1",
+        "eb11c3-3:try-2",
+        "eb11c3-3:work-with-a-partner-1",
+        "eb11c3-3:exercise-1",
+        "eb11c3-3:exercise-2",
+        "eb11c3-3:exercise-3",
+        "eb11c3-3:exercise-4",
+        "eb11c3-3:exercise-5",
+        "eb11c3-3:exercise-6",
+        "eb11c3-3:exercise-7",
+        "eb11c3-3:challenge-1",
+        "eb11c3-3:challenge-2:1",
+        "eb11c3-3:challenge-2:2",
+        "eb11c3-3:challenge-2:3"
+       ],
+       "worked_examples": [
+        "WE20"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine the remainder ax + b when a polynomial is divided by a quadratic expression, by writing P(x) = (x − α)(x − β)Q(x) + ax + b and solving simultaneous equations from known remainders.",
+       "label": "Remainder on quadratic divisor",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:rule-4",
+         "printed_page": 134,
+         "quote": "P(x) = (x − α)(x − β)Q(x) + ax + b"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 134,
+         "quote": "Solving the simultaneous equations (i) and (ii) gives $a=2$, $b=1$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:try-4",
+         "printed_page": 137,
+         "quote": "Find the remainder when $P(x)$ is divided by $x^2-1$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:warm-up-3",
+        "eb11c3-3:try-3",
+        "eb11c3-3:work-with-a-partner-2",
+        "eb11c3-3:exercise-8",
+        "eb11c3-3:exercise-9",
+        "eb11c3-3:exercise-10",
+        "eb11c3-3:challenge-3",
+        "eb11c3-3:warm-up-4",
+        "eb11c3-3:try-4",
+        "eb11c3-3:exercise-11",
+        "eb11c3-3:exercise-12",
+        "eb11c3-3:exercise-13",
+        "eb11c3-3:challenge-4"
+       ],
+       "worked_examples": [
+        "WE21"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Use synthetic division to find the quotient and remainder when a polynomial is divided by x − a.",
+       "label": "Synthetic division",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:method-5",
+         "printed_page": 138,
+         "quote": "Repeat steps 3 and 4 until the right end of the 3rd row is filled."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-14:d",
+         "printed_page": 139,
+         "quote": "$A = 3x^4 + 5x^3 - 2x - 12,\\ B = x + 2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:warm-up-5",
+        "eb11c3-3:try-5:a",
+        "eb11c3-3:try-5:b",
+        "eb11c3-3:work-with-a-partner-3",
+        "eb11c3-3:exercise-14:a",
+        "eb11c3-3:exercise-14:b",
+        "eb11c3-3:exercise-14:c",
+        "eb11c3-3:exercise-14:d",
+        "eb11c3-3:challenge-5"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      },
+      {
+       "statement": "Factorise polynomials using the Factor Theorem, finding a value a with P(a) = 0 from the divisors of the constant term and then dividing.",
+       "label": "Factorise using Factor Theorem",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:method-6",
+         "printed_page": 140,
+         "quote": "find a value a such that P(a) = 0"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE22",
+         "printed_page": 140,
+         "quote": "$=(x-1)(x+1)(x+2)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-15:o",
+         "printed_page": 141,
+         "quote": "$2x^4-5x^3-20x^2+20x+48$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:warm-up-6:a",
+        "eb11c3-3:warm-up-6:b",
+        "eb11c3-3:try-6:a",
+        "eb11c3-3:try-6:b",
+        "eb11c3-3:try-6:c",
+        "eb11c3-3:try-6:d",
+        "eb11c3-3:try-6:e",
+        "eb11c3-3:try-6:f",
+        "eb11c3-3:work-with-a-partner-4",
+        "eb11c3-3:exercise-15:a",
+        "eb11c3-3:exercise-15:b",
+        "eb11c3-3:exercise-15:c",
+        "eb11c3-3:exercise-15:d",
+        "eb11c3-3:exercise-15:e",
+        "eb11c3-3:exercise-15:f",
+        "eb11c3-3:exercise-15:g",
+        "eb11c3-3:exercise-15:h",
+        "eb11c3-3:exercise-15:i",
+        "eb11c3-3:exercise-15:j",
+        "eb11c3-3:exercise-15:k",
+        "eb11c3-3:exercise-15:l",
+        "eb11c3-3:exercise-15:m",
+        "eb11c3-3:exercise-15:n",
+        "eb11c3-3:exercise-15:o",
+        "eb11c3-3:exercise-15:p",
+        "eb11c3-3:exercise-15:q",
+        "eb11c3-3:exercise-15:r",
+        "eb11c3-3:challenge-6",
+        "eb11c3-3:challenge-7",
+        "eb11c3-3:reflect-1"
+       ],
+       "worked_examples": [
+        "WE22"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Remainder Theorem, linear divisors",
+       "statement": "Calculate the remainder when a polynomial is divided by a linear expression x − a or ax − b by evaluating P(a) or P(b/a), and find an unknown coefficient (or a divisibility condition) from a given remainder.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:rule-1",
+         "printed_page": 132,
+         "quote": "the remainder when polynomial P(x) is divided by the linear expression x − a is P(a)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 132,
+         "quote": "Substitute $x = \\frac{2}{3}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-5",
+         "printed_page": 133,
+         "quote": "find the value of $a$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:open-prompt-1",
+        "eb11c3-3:warm-up-1",
+        "eb11c3-3:warm-up-2",
+        "eb11c3-3:try-1",
+        "eb11c3-3:try-2",
+        "eb11c3-3:work-with-a-partner-1",
+        "eb11c3-3:exercise-1",
+        "eb11c3-3:exercise-2",
+        "eb11c3-3:exercise-3",
+        "eb11c3-3:exercise-4",
+        "eb11c3-3:exercise-5",
+        "eb11c3-3:exercise-6",
+        "eb11c3-3:exercise-7",
+        "eb11c3-3:challenge-1",
+        "eb11c3-3:challenge-2:1",
+        "eb11c3-3:challenge-2:2",
+        "eb11c3-3:challenge-2:3",
+        "eb11c3-3:challenge-4"
+       ],
+       "worked_examples": [
+        "WE20"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Remainder for quadratic divisors",
+       "statement": "Determine the remainder ax + b when a polynomial is divided by a quadratic expression, by writing P(x) = (x − α)(x − β)Q(x) + ax + b, substituting the roots and solving simultaneous equations.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:rule-4",
+         "printed_page": 134,
+         "quote": "P(x) = (x − α)(x − β)Q(x) + ax + b"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 134,
+         "quote": "Solving the simultaneous equations (i) and (ii) gives $a=2$, $b=1$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-10",
+         "printed_page": 135,
+         "quote": "Find the remainder when $P(x)$ is divided by $x^2+x-6$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:warm-up-3",
+        "eb11c3-3:try-3",
+        "eb11c3-3:work-with-a-partner-2",
+        "eb11c3-3:exercise-8",
+        "eb11c3-3:exercise-9",
+        "eb11c3-3:exercise-10",
+        "eb11c3-3:challenge-3",
+        "eb11c3-3:warm-up-4",
+        "eb11c3-3:try-4",
+        "eb11c3-3:exercise-11",
+        "eb11c3-3:exercise-12",
+        "eb11c3-3:exercise-13"
+       ],
+       "worked_examples": [
+        "WE21"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Synthetic division",
+       "statement": "Use synthetic division to find the quotient and remainder when a polynomial is divided by x − a, inserting a zero coefficient for missing terms.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:rule-8",
+         "printed_page": 138,
+         "quote": "using Synthetic Division makes it easy to find the quotient and remainder"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-14:d",
+         "printed_page": 139,
+         "quote": "$A = 3x^4 + 5x^3 - 2x - 12,\\ B = x + 2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:warm-up-5",
+        "eb11c3-3:try-5:a",
+        "eb11c3-3:try-5:b",
+        "eb11c3-3:work-with-a-partner-3",
+        "eb11c3-3:exercise-14:a",
+        "eb11c3-3:exercise-14:b",
+        "eb11c3-3:exercise-14:c",
+        "eb11c3-3:exercise-14:d"
+       ],
+       "worked_examples": [],
+       "key": "B3"
+      },
+      {
+       "label": "Factorise using Factor Theorem",
+       "statement": "Factorise cubic and quartic polynomials by finding a value a with P(a) = 0 from the divisors of the constant term, then dividing out the factor x − a.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-3:method-6",
+         "printed_page": 140,
+         "quote": "find a value a such that P(a) = 0"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE22",
+         "printed_page": 140,
+         "quote": "$=(x-1)(x+1)(x+2)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-3:exercise-15:a",
+         "printed_page": 141,
+         "quote": "$x^3-7x-6$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-3:challenge-5",
+        "eb11c3-3:warm-up-6:a",
+        "eb11c3-3:warm-up-6:b",
+        "eb11c3-3:try-6:a",
+        "eb11c3-3:try-6:b",
+        "eb11c3-3:try-6:c",
+        "eb11c3-3:try-6:d",
+        "eb11c3-3:try-6:e",
+        "eb11c3-3:try-6:f",
+        "eb11c3-3:work-with-a-partner-4",
+        "eb11c3-3:exercise-15:a",
+        "eb11c3-3:exercise-15:b",
+        "eb11c3-3:exercise-15:c",
+        "eb11c3-3:exercise-15:d",
+        "eb11c3-3:exercise-15:e",
+        "eb11c3-3:exercise-15:f",
+        "eb11c3-3:exercise-15:g",
+        "eb11c3-3:exercise-15:h",
+        "eb11c3-3:exercise-15:i",
+        "eb11c3-3:exercise-15:j",
+        "eb11c3-3:exercise-15:k",
+        "eb11c3-3:exercise-15:l",
+        "eb11c3-3:exercise-15:m",
+        "eb11c3-3:exercise-15:n",
+        "eb11c3-3:exercise-15:o",
+        "eb11c3-3:exercise-15:p",
+        "eb11c3-3:exercise-15:q",
+        "eb11c3-3:exercise-15:r",
+        "eb11c3-3:challenge-6",
+        "eb11c3-3:challenge-7",
+        "eb11c3-3:reflect-1"
+       ],
+       "worked_examples": [
+        "WE22"
+       ],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Use the Remainder Theorem to find the remainder when a polynomial is divided by a linear expression x − a or ax − b, by evaluating P(a) or P(b/a), and find an unknown coefficient or make a divisibility condition hold.",
+      "label": "Remainder Theorem, linear divisors",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-3:rule-1",
+        "printed_page": 132,
+        "quote": "the remainder when polynomial P(x) is divided by the linear expression x − a is P(a)"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE20",
+        "printed_page": 132,
+        "quote": "Substitute $x = \\frac{2}{3}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-3:exercise-7",
+        "printed_page": 133,
+        "quote": "is divisible by $x-2$, find the value of $a$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-3:open-prompt-1",
+       "eb11c3-3:warm-up-1",
+       "eb11c3-3:warm-up-2",
+       "eb11c3-3:try-1",
+       "eb11c3-3:try-2",
+       "eb11c3-3:work-with-a-partner-1",
+       "eb11c3-3:exercise-1",
+       "eb11c3-3:exercise-2",
+       "eb11c3-3:exercise-3",
+       "eb11c3-3:exercise-4",
+       "eb11c3-3:exercise-5",
+       "eb11c3-3:exercise-6",
+       "eb11c3-3:exercise-7",
+       "eb11c3-3:challenge-1",
+       "eb11c3-3:challenge-2:1",
+       "eb11c3-3:challenge-2:2",
+       "eb11c3-3:challenge-2:3"
+      ],
+      "worked_examples": [
+       "WE20"
+      ],
+      "terms": [
+       "Remainder Theorem",
+       "polynomial",
+       "linear expression",
+       "remainder",
+       "coefficient",
+       "divisible"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Determine the remainder ax + b when a polynomial is divided by a quadratic expression, by writing P(x) = (x − α)(x − β)Q(x) + ax + b, substituting the roots and solving simultaneous equations.",
+      "label": "Remainder for quadratic divisors",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-3:rule-4",
+        "printed_page": 134,
+        "quote": "P(x) = (x − α)(x − β)Q(x) + ax + b"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE21",
+        "printed_page": 134,
+        "quote": "Solving the simultaneous equations (i) and (ii) gives $a=2$, $b=1$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-3:exercise-10",
+        "printed_page": 135,
+        "quote": "Find the remainder when $P(x)$ is divided by $x^2+x-6$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-3:warm-up-3",
+       "eb11c3-3:try-3",
+       "eb11c3-3:work-with-a-partner-2",
+       "eb11c3-3:exercise-8",
+       "eb11c3-3:exercise-9",
+       "eb11c3-3:exercise-10",
+       "eb11c3-3:challenge-3",
+       "eb11c3-3:warm-up-4",
+       "eb11c3-3:try-4",
+       "eb11c3-3:exercise-11",
+       "eb11c3-3:exercise-12",
+       "eb11c3-3:exercise-13",
+       "eb11c3-3:challenge-4"
+      ],
+      "worked_examples": [
+       "WE21"
+      ],
+      "terms": [
+       "remainder",
+       "quadratic expression",
+       "quotient",
+       "simultaneous equations",
+       "polynomial"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Use synthetic division to find the quotient and remainder when a polynomial is divided by x − a, inserting a zero coefficient for missing terms.",
+      "label": "Synthetic division",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-3:rule-8",
+        "printed_page": 138,
+        "quote": "using Synthetic Division makes it easy to find the quotient and remainder"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-3:exercise-14:d",
+        "printed_page": 139,
+        "quote": "$A = 3x^4 + 5x^3 - 2x - 12,\\ B = x + 2$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-3:warm-up-5",
+       "eb11c3-3:try-5:a",
+       "eb11c3-3:try-5:b",
+       "eb11c3-3:work-with-a-partner-3",
+       "eb11c3-3:exercise-14:a",
+       "eb11c3-3:exercise-14:b",
+       "eb11c3-3:exercise-14:c",
+       "eb11c3-3:exercise-14:d",
+       "eb11c3-3:challenge-5"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "synthetic division",
+       "quotient",
+       "remainder",
+       "coefficient"
+      ],
+      "term_flags": [
+       {
+        "term": "synthetic division",
+        "why": "Other curricula may know this as Ruffini's rule or Horner's method."
+       }
+      ]
+     },
+     {
+      "statement": "Factorise polynomials using the Factor Theorem, finding a value a with P(a) = 0 from the divisors of the constant term, then dividing out the factor x − a.",
+      "label": "Factorise using Factor Theorem",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-3:method-6",
+        "printed_page": 140,
+        "quote": "find a value a such that P(a) = 0"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE22",
+        "printed_page": 140,
+        "quote": "$=(x-1)(x+1)(x+2)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-3:exercise-15:a",
+        "printed_page": 141,
+        "quote": "$x^3-7x-6$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-3:warm-up-6:a",
+       "eb11c3-3:warm-up-6:b",
+       "eb11c3-3:try-6:a",
+       "eb11c3-3:try-6:b",
+       "eb11c3-3:try-6:c",
+       "eb11c3-3:try-6:d",
+       "eb11c3-3:try-6:e",
+       "eb11c3-3:try-6:f",
+       "eb11c3-3:work-with-a-partner-4",
+       "eb11c3-3:exercise-15:a",
+       "eb11c3-3:exercise-15:b",
+       "eb11c3-3:exercise-15:c",
+       "eb11c3-3:exercise-15:d",
+       "eb11c3-3:exercise-15:e",
+       "eb11c3-3:exercise-15:f",
+       "eb11c3-3:exercise-15:g",
+       "eb11c3-3:exercise-15:h",
+       "eb11c3-3:exercise-15:i",
+       "eb11c3-3:exercise-15:j",
+       "eb11c3-3:exercise-15:k",
+       "eb11c3-3:exercise-15:l",
+       "eb11c3-3:exercise-15:m",
+       "eb11c3-3:exercise-15:n",
+       "eb11c3-3:exercise-15:o",
+       "eb11c3-3:exercise-15:p",
+       "eb11c3-3:exercise-15:q",
+       "eb11c3-3:exercise-15:r",
+       "eb11c3-3:challenge-6",
+       "eb11c3-3:challenge-7",
+       "eb11c3-3:reflect-1"
+      ],
+      "worked_examples": [
+       "WE22"
+      ],
+      "terms": [
+       "Factor Theorem",
+       "factorise",
+       "polynomial",
+       "divisors",
+       "constant term",
+       "cubic",
+       "quartic"
+      ],
+      "term_flags": [
+       {
+        "term": "divisors of the constant term",
+        "why": "Other curricula may say factors of the constant term (rational root theorem candidates)."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The intro/definition text is present and defines the Remainder Theorem that the objective requires using"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked_example demonstrates evaluating P(b/a) for divisor ax−b and also shows finding an unknown coefficient, both required by the objective"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise requires using the Remainder Theorem to establish a divisibility condition and find an unknown coefficient, as stated in the objective"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The intro text presents the formula P(x) = (x − α)(x − β)Q(x) + ax + b that is central to the objective"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked_example demonstrates the complete method: setting up the form, substituting roots, and solving simultaneous equations to find a and b"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to find a remainder ax + b when dividing by a quadratic, requiring the method described in the objective"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The intro text explains that synthetic division finds the quotient and remainder for division by x − a"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The exercise requires synthetic division on a polynomial with missing terms (3x⁴ + 5x³ [missing x²] − 2x − 12)"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The intro text defines the Factor Theorem method of finding a value where P(a) = 0"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The worked_example demonstrates the complete Factor Theorem process: finding P(1) = 0, dividing out (x−1), and continuing to full factorization"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The exercise asks students to factorize a cubic polynomial, requiring application of the Factor Theorem method"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c3-4",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Solve cubic and quartic equations by factorising (using x^3+a^3, the Factor Theorem, or treating x^2 as a chunk) and finding all real and complex solutions.",
+       "label": "Solve cubic and quartic equations",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-4:heading-1",
+         "printed_page": 142,
+         "quote": "High-Degree Equations"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:method-2",
+         "printed_page": 142,
+         "quote": "otherwise use the Factor Theorem"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 143,
+         "quote": "$x^4-7x^2-18=0$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:exercise-1:d",
+         "printed_page": 144,
+         "quote": "$x^3 + 6x^2 + 11x + 6 = 0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-1:a",
+        "eb11c3-4:warm-up-1:b",
+        "eb11c3-4:warm-up-1:c",
+        "eb11c3-4:warm-up-1:d",
+        "eb11c3-4:try-1:a",
+        "eb11c3-4:try-1:b",
+        "eb11c3-4:try-1:c",
+        "eb11c3-4:try-1:d",
+        "eb11c3-4:try-1:e",
+        "eb11c3-4:try-1:f",
+        "eb11c3-4:exercise-1:a",
+        "eb11c3-4:exercise-1:b",
+        "eb11c3-4:exercise-1:c",
+        "eb11c3-4:exercise-1:d",
+        "eb11c3-4:exercise-1:e",
+        "eb11c3-4:exercise-1:f",
+        "eb11c3-4:exercise-1:g",
+        "eb11c3-4:exercise-1:h",
+        "eb11c3-4:exercise-1:i",
+        "eb11c3-4:exercise-1:j",
+        "eb11c3-4:exercise-1:k",
+        "eb11c3-4:exercise-1:l",
+        "eb11c3-4:exercise-1:m",
+        "eb11c3-4:exercise-1:n",
+        "eb11c3-4:exercise-1:o",
+        "eb11c3-4:exercise-1:p",
+        "eb11c3-4:exercise-1:q",
+        "eb11c3-4:challenge-1",
+        "eb11c3-4:challenge-2",
+        "eb11c3-4:challenge-3"
+       ],
+       "worked_examples": [
+        "WE23"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine unknown coefficients of a cubic equation from given solutions by substitution, and find the other solutions.",
+       "label": "Find cubic coefficients from solutions",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-4:heading-7",
+         "printed_page": 145,
+         "quote": "Determination of Cubic Equation"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-2",
+         "printed_page": 145,
+         "quote": "calculate by substituting the solution into the given equation"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:exercise-5",
+         "printed_page": 146,
+         "quote": "has $1-3i$ as a solution"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-2",
+        "eb11c3-4:try-2",
+        "eb11c3-4:try-3",
+        "eb11c3-4:exercise-2",
+        "eb11c3-4:exercise-3",
+        "eb11c3-4:exercise-4",
+        "eb11c3-4:exercise-5",
+        "eb11c3-4:exercise-6",
+        "eb11c3-4:challenge-4"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Simplify expressions involving the cube root of unity ω using ω^3=1 and ω^2+ω+1=0.",
+       "label": "Simplify expressions with ω",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-4:heading-12",
+         "printed_page": 147,
+         "quote": "Cube Roots of Unity"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-4",
+         "printed_page": 147,
+         "quote": "$\\omega^2+\\omega+1=0$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE24",
+         "printed_page": 147,
+         "quote": "$\\omega^9=(\\omega^3)^3=1^3=1$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:try-4:c",
+         "printed_page": 147,
+         "quote": "$(1+\\omega)(1+\\omega^2)$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-3:a",
+        "eb11c3-4:warm-up-3:b",
+        "eb11c3-4:warm-up-3:c",
+        "eb11c3-4:challenge-5",
+        "eb11c3-4:try-4:a",
+        "eb11c3-4:try-4:b",
+        "eb11c3-4:try-4:c",
+        "eb11c3-4:exercise-7:a",
+        "eb11c3-4:exercise-7:b",
+        "eb11c3-4:exercise-7:c"
+       ],
+       "worked_examples": [
+        "WE24"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Determine the value of a constant that gives a cubic equation a repeated root, using the Factor Theorem and the discriminant.",
+       "label": "Cubics with repeated roots",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "eb11c3-4:heading-13",
+         "printed_page": 148,
+         "quote": "Cubic Equation with Repeated Roots"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-8",
+         "printed_page": 148,
+         "quote": "discriminant D"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE25",
+         "printed_page": 148,
+         "quote": "$D=(-3)^2-4\\times1\\times a=0$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:exercise-8",
+         "printed_page": 149,
+         "quote": "has a repeated root"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-4",
+        "eb11c3-4:try-5",
+        "eb11c3-4:exercise-8",
+        "eb11c3-4:exercise-9",
+        "eb11c3-4:exercise-10",
+        "eb11c3-4:challenge-6"
+       ],
+       "worked_examples": [
+        "WE25"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Solve cubic and quartic equations by factorising (sum of cubes, Factor Theorem, treating x^2 as a chunk) and using the Quadratic Formula for non-factorisable parts.",
+       "label": "Solve higher-degree equations",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 143,
+         "quote": "Use the Factor Theorem."
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:method-2",
+         "printed_page": 142,
+         "quote": "use the Factor Theorem"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:exercise-1:d",
+         "printed_page": 144,
+         "quote": "$x^3 + 6x^2 + 11x + 6 = 0$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-1:a",
+        "eb11c3-4:warm-up-1:b",
+        "eb11c3-4:warm-up-1:c",
+        "eb11c3-4:warm-up-1:d",
+        "eb11c3-4:try-1:a",
+        "eb11c3-4:try-1:b",
+        "eb11c3-4:try-1:c",
+        "eb11c3-4:try-1:d",
+        "eb11c3-4:try-1:e",
+        "eb11c3-4:try-1:f",
+        "eb11c3-4:work-with-a-partner-1",
+        "eb11c3-4:exercise-1:a",
+        "eb11c3-4:exercise-1:b",
+        "eb11c3-4:exercise-1:c",
+        "eb11c3-4:exercise-1:d",
+        "eb11c3-4:exercise-1:e",
+        "eb11c3-4:exercise-1:f",
+        "eb11c3-4:exercise-1:g",
+        "eb11c3-4:exercise-1:h",
+        "eb11c3-4:exercise-1:i",
+        "eb11c3-4:exercise-1:j",
+        "eb11c3-4:exercise-1:k",
+        "eb11c3-4:exercise-1:l",
+        "eb11c3-4:exercise-1:m",
+        "eb11c3-4:exercise-1:n",
+        "eb11c3-4:exercise-1:o",
+        "eb11c3-4:exercise-1:p",
+        "eb11c3-4:exercise-1:q",
+        "eb11c3-4:challenge-1",
+        "eb11c3-4:challenge-2",
+        "eb11c3-4:challenge-3",
+        "eb11c3-4:guiding-question-1",
+        "eb11c3-4:reflect-1"
+       ],
+       "worked_examples": [
+        "WE23"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine unknown real coefficients of a cubic equation from given solutions (including complex ones) by substitution, and find the other solutions.",
+       "label": "Determine cubic coefficients",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-2",
+         "printed_page": 145,
+         "quote": "calculate by substituting the solution into the given equation"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:warm-up-2",
+         "printed_page": 145,
+         "quote": "has $2+i$ as a solution"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-2",
+        "eb11c3-4:try-2",
+        "eb11c3-4:try-3",
+        "eb11c3-4:exercise-2",
+        "eb11c3-4:exercise-3",
+        "eb11c3-4:exercise-4",
+        "eb11c3-4:exercise-5",
+        "eb11c3-4:exercise-6",
+        "eb11c3-4:challenge-4"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      },
+      {
+       "statement": "Simplify and evaluate expressions in the cube root of unity ω using ω^3=1 and ω^2+ω+1=0.",
+       "label": "Evaluate cube roots of unity",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE24",
+         "printed_page": 147,
+         "quote": "$\\omega^9=(\\omega^3)^3=1^3=1$"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-4",
+         "printed_page": 147,
+         "quote": "$\\omega^2+\\omega+1=0$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:try-4:c",
+         "printed_page": 147,
+         "quote": "$(1+\\omega)(1+\\omega^2)$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-3:a",
+        "eb11c3-4:warm-up-3:b",
+        "eb11c3-4:warm-up-3:c",
+        "eb11c3-4:challenge-5",
+        "eb11c3-4:try-4:a",
+        "eb11c3-4:try-4:b",
+        "eb11c3-4:try-4:c",
+        "eb11c3-4:exercise-7:a",
+        "eb11c3-4:exercise-7:b",
+        "eb11c3-4:exercise-7:c"
+       ],
+       "worked_examples": [
+        "WE24"
+       ],
+       "key": "B3"
+      },
+      {
+       "statement": "Find the value of a constant making a cubic equation have a repeated root, using the Factor Theorem and considering the two cases (shared root or discriminant D=0).",
+       "label": "Find repeated-root constants",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE25",
+         "printed_page": 148,
+         "quote": "has a repeated root"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c3-4:rule-6",
+         "printed_page": 148,
+         "quote": "two cases"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c3-4:try-5",
+         "printed_page": 149,
+         "quote": "has a repeated root"
+        }
+       ],
+       "exercise_items": [
+        "eb11c3-4:warm-up-4",
+        "eb11c3-4:try-5",
+        "eb11c3-4:exercise-8",
+        "eb11c3-4:exercise-9",
+        "eb11c3-4:exercise-10",
+        "eb11c3-4:challenge-6"
+       ],
+       "worked_examples": [
+        "WE25"
+       ],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Solve cubic and quartic equations by factorising (sum of cubes, the Factor Theorem, or treating x^2 as a chunk), using the Quadratic Formula for non-factorisable parts, and find all real and complex solutions.",
+      "label": "Solve higher-degree equations",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "eb11c3-4:heading-1",
+        "printed_page": 142,
+        "quote": "High-Degree Equations"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-4:method-2",
+        "printed_page": 142,
+        "quote": "otherwise use the Factor Theorem"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE23",
+        "printed_page": 143,
+        "quote": "$x^4-7x^2-18=0$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-4:exercise-1:d",
+        "printed_page": 144,
+        "quote": "$x^3 + 6x^2 + 11x + 6 = 0$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-4:guiding-question-1",
+       "eb11c3-4:warm-up-1:a",
+       "eb11c3-4:warm-up-1:b",
+       "eb11c3-4:warm-up-1:c",
+       "eb11c3-4:warm-up-1:d",
+       "eb11c3-4:try-1:a",
+       "eb11c3-4:try-1:b",
+       "eb11c3-4:try-1:c",
+       "eb11c3-4:try-1:d",
+       "eb11c3-4:try-1:e",
+       "eb11c3-4:try-1:f",
+       "eb11c3-4:work-with-a-partner-1",
+       "eb11c3-4:exercise-1:a",
+       "eb11c3-4:exercise-1:b",
+       "eb11c3-4:exercise-1:c",
+       "eb11c3-4:exercise-1:d",
+       "eb11c3-4:exercise-1:e",
+       "eb11c3-4:exercise-1:f",
+       "eb11c3-4:exercise-1:g",
+       "eb11c3-4:exercise-1:h",
+       "eb11c3-4:exercise-1:i",
+       "eb11c3-4:exercise-1:j",
+       "eb11c3-4:exercise-1:k",
+       "eb11c3-4:exercise-1:l",
+       "eb11c3-4:exercise-1:m",
+       "eb11c3-4:exercise-1:n",
+       "eb11c3-4:exercise-1:o",
+       "eb11c3-4:exercise-1:p",
+       "eb11c3-4:exercise-1:q",
+       "eb11c3-4:challenge-1",
+       "eb11c3-4:challenge-2",
+       "eb11c3-4:challenge-3",
+       "eb11c3-4:reflect-1"
+      ],
+      "worked_examples": [
+       "WE23"
+      ],
+      "terms": [
+       "cubic equation",
+       "quartic equation",
+       "Factor Theorem",
+       "sum of cubes",
+       "Quadratic Formula",
+       "real solutions",
+       "complex solutions"
+      ],
+      "term_flags": [
+       {
+        "term": "Factor Theorem",
+        "why": "Other curricula may call this the Factor Theorem within the Remainder Theorem, or just 'testing roots'."
+       },
+       {
+        "term": "solution",
+        "why": "Other curricula may say 'root' or 'zero'."
+       }
+      ]
+     },
+     {
+      "statement": "Determine unknown coefficients of a cubic equation from given solutions (including complex ones) by substitution, and find the other solutions.",
+      "label": "Determine cubic coefficients",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "eb11c3-4:heading-7",
+        "printed_page": 145,
+        "quote": "Determination of Cubic Equation"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-4:rule-2",
+        "printed_page": 145,
+        "quote": "calculate by substituting the solution into the given equation"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-4:warm-up-2",
+        "printed_page": 145,
+        "quote": "has $2+i$ as a solution"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-4:exercise-5",
+        "printed_page": 146,
+        "quote": "has $1-3i$ as a solution"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-4:warm-up-2",
+       "eb11c3-4:try-2",
+       "eb11c3-4:try-3",
+       "eb11c3-4:exercise-2",
+       "eb11c3-4:exercise-3",
+       "eb11c3-4:exercise-4",
+       "eb11c3-4:exercise-5",
+       "eb11c3-4:exercise-6",
+       "eb11c3-4:challenge-4"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "cubic equation",
+       "coefficient",
+       "solution",
+       "complex solution",
+       "substitution"
+      ],
+      "term_flags": [
+       {
+        "term": "solution",
+        "why": "Other curricula may say 'root' or 'zero'."
+       }
+      ]
+     },
+     {
+      "statement": "Simplify and evaluate expressions involving the cube root of unity ω using ω^3=1 and ω^2+ω+1=0.",
+      "label": "Simplify expressions with ω",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "eb11c3-4:heading-12",
+        "printed_page": 147,
+        "quote": "Cube Roots of Unity"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-4:rule-4",
+        "printed_page": 147,
+        "quote": "$\\omega^2+\\omega+1=0$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE24",
+        "printed_page": 147,
+        "quote": "$\\omega^9=(\\omega^3)^3=1^3=1$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c3-4:try-4:c",
+        "printed_page": 147,
+        "quote": "$(1+\\omega)(1+\\omega^2)$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-4:warm-up-3:a",
+       "eb11c3-4:warm-up-3:b",
+       "eb11c3-4:warm-up-3:c",
+       "eb11c3-4:challenge-5",
+       "eb11c3-4:try-4:a",
+       "eb11c3-4:try-4:b",
+       "eb11c3-4:try-4:c",
+       "eb11c3-4:exercise-7:a",
+       "eb11c3-4:exercise-7:b",
+       "eb11c3-4:exercise-7:c"
+      ],
+      "worked_examples": [
+       "WE24"
+      ],
+      "terms": [
+       "cube root of unity",
+       "ω"
+      ],
+      "term_flags": [
+       {
+        "term": "cube root of unity",
+        "why": "Other curricula may say 'complex cube roots of 1' or 'primitive cube root of unity'."
+       }
+      ]
+     },
+     {
+      "statement": "Find the value of a constant that gives a cubic equation a repeated root, using the Factor Theorem and the two cases (shared root or discriminant D=0).",
+      "label": "Find repeated-root constants",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "eb11c3-4:heading-13",
+        "printed_page": 148,
+        "quote": "Cubic Equation with Repeated Roots"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-4:rule-6",
+        "printed_page": 148,
+        "quote": "two cases"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c3-4:rule-8",
+        "printed_page": 148,
+        "quote": "discriminant D"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE25",
+        "printed_page": 148,
+        "quote": "$D=(-3)^2-4\\times1\\times a=0$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c3-4:warm-up-4",
+       "eb11c3-4:try-5",
+       "eb11c3-4:exercise-8",
+       "eb11c3-4:exercise-9",
+       "eb11c3-4:exercise-10",
+       "eb11c3-4:challenge-6"
+      ],
+      "worked_examples": [
+       "WE25"
+      ],
+      "terms": [
+       "repeated root",
+       "cubic equation",
+       "Factor Theorem",
+       "discriminant"
+      ],
+      "term_flags": [
+       {
+        "term": "repeated root",
+        "why": "Other curricula may say 'double root' or 'equal roots'."
+       },
+       {
+        "term": "discriminant",
+        "why": "Same idea as the quadratic discriminant, here applied to a quadratic factor."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading names the topic 'High-Degree Equations'"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro explains the Factor Theorem method for cubics"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates solving quartic using x² as chunk"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise requires solving a cubic equation"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading names the topic 'Determination of Cubic Equation'"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro explains substitution method for finding coefficients"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks to find coefficients given complex solution 2+i"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks to find coefficients given complex solution 1-3i"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading names the topic 'Cube Roots of Unity'"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro states the key property ω²+ω+1=0"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates simplifying powers of ω"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Exercise asks student to evaluate expressions involving ω"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Heading names the topic 'Cubic Equation with Repeated Roots'"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro explains the two-cases approach for repeated roots"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Intro introduces discriminant D=0 condition"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Worked example demonstrates using discriminant to find constant"
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 0,
+  "batches": 0,
+  "mappers": [],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:eb11c3-1-1",
+    "dst": "lo:eb11c3-1-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE3",
+      "printed_page": 109,
+      "quote": "answer in the form a + bi"
+     }
+    ],
+    "reason": "Answers are given in a+bi form, using the real/imaginary-part notion."
+   },
+   {
+    "src": "lo:eb11c3-1-2",
+    "dst": "lo:eb11c3-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 111,
+      "quote": "(1-i)(2-3i)"
+     }
+    ],
+    "reason": "Division expands products with i²=−1."
+   },
+   {
+    "src": "lo:eb11c3-1-2",
+    "dst": "lo:eb11c3-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "eb11c3-1:try-5:c",
+      "printed_page": 114,
+      "quote": "(3+\\sqrt{-2})^2"
+     }
+    ],
+    "reason": "Expanding a square with i terms uses complex multiplication."
+   },
+   {
+    "src": "lo:eb11c3-1-4",
+    "dst": "lo:eb11c3-2-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-2:caution-1",
+      "printed_page": 115,
+      "quote": "express it in a form in terms of i"
+     }
+    ],
+    "reason": "Solving with negative square roots requires expressing them with i."
+   },
+   {
+    "src": "lo:eb11c3-2-1",
+    "dst": "lo:eb11c3-2-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-2:linking-text-5",
+      "printed_page": 118,
+      "quote": "Inside the square root of the Quadratic Formula."
+     }
+    ],
+    "reason": "Discriminant is defined from the quadratic formula."
+   },
+   {
+    "src": "lo:eb11c3-2-1",
+    "dst": "lo:eb11c3-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "exercise",
+      "anchor": "eb11c3-2:warm-up-5",
+      "printed_page": 121,
+      "quote": "Find the sum and product of the two solutions"
+     }
+    ],
+    "reason": "Roots of the quadratic equation are the solutions found earlier."
+   },
+   {
+    "src": "lo:eb11c3-2-3",
+    "dst": "lo:eb11c3-2-5",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE17",
+      "printed_page": 127,
+      "quote": "Sum of solutions"
+     }
+    ],
+    "reason": "Forming equations uses sum and product of roots."
+   },
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c3-2-5",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE19",
+      "printed_page": 130,
+      "quote": "From $D>0$"
+     }
+    ],
+    "reason": "Sign analysis uses discriminant condition."
+   },
+   {
+    "src": "lo:eb11c3-2-1",
+    "dst": "lo:eb11c3-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-2:rule-9",
+      "printed_page": 126,
+      "quote": "If α and β are the two solutions of ax² + bx + c = 0"
+     }
+    ],
+    "reason": "Factorisation uses solutions of the equation."
+   },
+   {
+    "src": "lo:eb11c3-3-1",
+    "dst": "lo:eb11c3-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE21",
+      "printed_page": 134,
+      "quote": "Since the remainder when divided by $x-1$ is 3, $P(1)=3$"
+     }
+    ],
+    "reason": "Uses P(a) evaluation."
+   },
+   {
+    "src": "lo:eb11c3-3-1",
+    "dst": "lo:eb11c3-3-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 140,
+      "quote": "$P(1)=1^3+2\\times1^2-1-2=0$"
+     }
+    ],
+    "reason": "Factor Theorem finds a with P(a)=0 by evaluation."
+   },
+   {
+    "src": "lo:eb11c3-3-3",
+    "dst": "lo:eb11c3-3-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE22",
+      "printed_page": 140,
+      "quote": "use synthetic division"
+     }
+    ],
+    "reason": "Dividing out the factor uses synthetic division."
+   },
+   {
+    "src": "lo:eb11c3-3-4",
+    "dst": "lo:eb11c3-4-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE23",
+      "printed_page": 143,
+      "quote": "Since formulas cannot be used, use the Factor Theorem."
+     }
+    ],
+    "reason": "Cubic solving factorises via Factor Theorem."
+   },
+   {
+    "src": "lo:eb11c3-2-1",
+    "dst": "lo:eb11c3-4-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE23",
+      "printed_page": 143,
+      "quote": "find solutions using the quadratic formula"
+     }
+    ],
+    "reason": "Quadratic part solved by formula."
+   },
+   {
+    "src": "lo:eb11c3-1-2",
+    "dst": "lo:eb11c3-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-4:linking-text-4",
+      "printed_page": 145,
+      "quote": "$(2+i)^3+a(2+i)^2+b(2+i)+5=0$"
+     }
+    ],
+    "reason": "Substituting a complex root requires expanding powers."
+   },
+   {
+    "src": "lo:eb11c3-1-1",
+    "dst": "lo:eb11c3-4-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-4:linking-text-5",
+      "printed_page": 145,
+      "quote": "Compare real and imaginary parts of both sides (see 3-1)"
+     }
+    ],
+    "reason": "Refers back to equality of complex numbers."
+   },
+   {
+    "src": "lo:eb11c3-3-4",
+    "dst": "lo:eb11c3-4-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-4:rule-5",
+      "printed_page": 148,
+      "quote": "first use the factor theorem to factor the cubic"
+     }
+    ],
+    "reason": "Repeated root method begins with Factor Theorem."
+   },
+   {
+    "src": "lo:eb11c3-2-2",
+    "dst": "lo:eb11c3-4-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE25",
+      "printed_page": 148,
+      "quote": "let $D$ be the discriminant of this expression"
+     }
+    ],
+    "reason": "Case 2 uses discriminant D=0."
+   },
+   {
+    "src": "lo:eb11c3-4-1",
+    "dst": "lo:eb11c3-4-3",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c3-4:linking-text-8",
+      "printed_page": 147,
+      "quote": "$\\omega^3-1=0 \\to (\\omega-1)(\\omega^2+\\omega+1)=0$"
+     }
+    ],
+    "reason": "Derivation factorises ω³−1."
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "Text doesn't recall identifying real/imaginary parts or equality."
+    },
+    {
+     "i": 1,
+     "verdict": "CONFIRMED",
+     "note": "Uses multiplication of complex numbers as a step in division."
+    },
+    {
+     "i": 2,
+     "verdict": "CONFIRMED",
+     "note": "Squaring a binomial with i, requires complex multiplication."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Uses expressing negative roots in terms of i."
+    },
+    {
+     "i": 4,
+     "verdict": "REJECTED",
+     "note": "Side note only mentions the formula's square root; doesn't show reliance on solving complex quadratics."
+    },
+    {
+     "i": 5,
+     "verdict": "UNCLEAR",
+     "note": "Sum/product of solutions; no evident reliance on solving quadratics."
+    },
+    {
+     "i": 6,
+     "verdict": "CONFIRMED",
+     "note": "Uses sum and product of solutions to form the equation."
+    },
+    {
+     "i": 7,
+     "verdict": "CONFIRMED",
+     "note": "Uses D>0 discriminant condition as a step."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "Factorisation uses solutions of the equation, obtained by solving."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Uses P(1)=3 remainder theorem as step."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "Evaluates P(1)=0 using remainder/factor theorem idea."
+    },
+    {
+     "i": 11,
+     "verdict": "CONFIRMED",
+     "note": "Uses synthetic division as step."
+    },
+    {
+     "i": 12,
+     "verdict": "CONFIRMED",
+     "note": "Uses Factor Theorem to solve cubic/quartics."
+    },
+    {
+     "i": 13,
+     "verdict": "CONFIRMED",
+     "note": "Uses quadratic formula for leftover quadratic parts."
+    },
+    {
+     "i": 14,
+     "verdict": "CONFIRMED",
+     "note": "Expands powers of 2+i in a+bi form."
+    },
+    {
+     "i": 15,
+     "verdict": "CONFIRMED",
+     "note": "Explicitly refers back to 3-1 to compare real and imaginary parts."
+    },
+    {
+     "i": 16,
+     "verdict": "CONFIRMED",
+     "note": "Uses factor theorem to factor the cubic."
+    },
+    {
+     "i": 17,
+     "verdict": "CONFIRMED",
+     "note": "Uses discriminant D=0 for repeated root."
+    },
+    {
+     "i": 18,
+     "verdict": "REJECTED",
+     "note": "Derivation of ω²+ω+1=0 uses factoring x³−1, not solving cubic equations in general; weak link."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 8,
+   "S1 Reconcile": 4,
+   "S1 Evidence": 4,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "eb11c3-1": 4,
+   "eb11c3-2": 4,
+   "eb11c3-3": 4,
+   "eb11c3-4": 4
+  },
+  "total": 18
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book egb-g11-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

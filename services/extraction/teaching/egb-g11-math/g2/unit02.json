@@ -1,0 +1,136 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 2,
+ "from_runs": {
+  "run": "runs/egb-g11-math/g2/g2r.unit02.20261021T142710Z.json"
+ },
+ "by": null,
+ "items": {
+  "eb11c2-1:WE1": {
+   "verdict": "hold",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the fix is refused: the stem was rewritten, not repaired (similarity 0.38, -15 characters)). The agent's reading: Stem refers to a previous page. Working gives a=8, l=22, n=7: $S_7=\\frac{7}{2}(30)=105$ ✓ matches printed answer. Restore stem from givens.",
+   "why_low": "the recommendation to put it live did not survive the checks: the fix is refused: the stem was rewritten, not repaired (similarity 0.38, -15 characters)"
+  },
+  "eb11c2-1:WE2": {
+   "verdict": "hold",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the fix is refused: the stem was rewritten, not repaired (similarity 0.36, -3 characters)). The agent's reading: Working: a=2, d=3, l=47 gives n=16, $S=8\\times49=392$ ✓ matches printed answer. Stem restored from the givens.",
+   "why_low": "the recommendation to put it live did not survive the checks: the fix is refused: the stem was rewritten, not repaired (similarity 0.36, -3 characters)"
+  },
+  "eb11c2-1:WE3": {
+   "verdict": "hold",
+   "class": "refused",
+   "confidence": "low",
+   "note": "NOT RECOMMENDED LIVE (the fix is refused: the stem was rewritten, not repaired (similarity 0.35, +7 characters)). The agent's reading: Working: a=20, d=-5, n=13: $\\frac{13}{2}(40-60)=-130$ ✓ matches printed answer. Stem restored from the givens.",
+   "why_low": "the recommendation to put it live did not survive the checks: the fix is refused: the stem was rewritten, not repaired (similarity 0.35, +7 characters)"
+  },
+  "eb11c2-1:WE4": {
+   "verdict": "hold",
+   "class": "needs the page image",
+   "confidence": "high",
+   "note": "Arithmetic checks: $S_{20}=660$, $S_9=594$, difference 66. But the stem omits what is asked. The working's $S_{20}-S_9$ suggests terms 10 to 20, but this is not stated. The previous page's problem 2 is needed."
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 4,
+  "recommended": 4,
+  "unanswered": [],
+  "by_verdict": {
+   "hold": 4
+  },
+  "by_class": {
+   "refused": 3,
+   "needs the page image": 1
+  },
+  "by_confidence": {
+   "low": 3,
+   "high": 1
+  },
+  "live": [],
+  "live_question_ids": [],
+  "not_live": {
+   "eb11c2-1:WE1": {
+    "agent_verdict": "fix",
+    "recommended": "hold",
+    "kind": "refused",
+    "why": "the fix is refused: the stem was rewritten, not repaired (similarity 0.38, -15 characters)"
+   },
+   "eb11c2-1:WE2": {
+    "agent_verdict": "fix",
+    "recommended": "hold",
+    "kind": "refused",
+    "why": "the fix is refused: the stem was rewritten, not repaired (similarity 0.36, -3 characters)"
+   },
+   "eb11c2-1:WE3": {
+    "agent_verdict": "fix",
+    "recommended": "hold",
+    "kind": "refused",
+    "why": "the fix is refused: the stem was rewritten, not repaired (similarity 0.35, +7 characters)"
+   }
+  },
+  "low_confidence": [
+   "eb11c2-1:WE1",
+   "eb11c2-1:WE2",
+   "eb11c2-1:WE3"
+  ],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "held": 4
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ },
+ "questions": {
+  "eb11c2-1:WE1": {
+   "question": "q:eb11c2-1-4:bk-worked-example-2-a",
+   "book_ref": "eb11c2-1:worked-example-2:a",
+   "facts": {
+    "stem": "Explanation of numbered problem 1 (a)–(d) from the previous page: sums of arithmetic sequences. (a)",
+    "answer": "105",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c2-1:WE2": {
+   "question": "q:eb11c2-1-4:bk-worked-example-2-b",
+   "book_ref": "eb11c2-1:worked-example-2:b",
+   "facts": {
+    "stem": "Explanation of numbered problem 1 (a)–(d) from the previous page: sums of arithmetic sequences. (b)",
+    "answer": "392",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c2-1:WE3": {
+   "question": "q:eb11c2-1-4:bk-worked-example-2-c",
+   "book_ref": "eb11c2-1:worked-example-2:c",
+   "facts": {
+    "stem": "Explanation of numbered problem 1 (a)–(d) from the previous page: sums of arithmetic sequences. (c)",
+    "answer": "-130",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c2-1:WE4": {
+   "question": "q:eb11c2-1-4:bk-worked-example-3",
+   "book_ref": "eb11c2-1:worked-example-3",
+   "facts": {
+    "stem": "Explanation of numbered problem 2 (sum of the sequence 90, 84, 78, ... from the previous page).",
+    "answer": "66",
+    "hold_reason": "unverified"
+   }
+  }
+ },
+ "line": "book-records (book_record_g2.py)"
+}

@@ -1,0 +1,306 @@
+{
+ "stage": "S2-provenance",
+ "workflow": "provenance",
+ "prompts_version": "prov-v1",
+ "embedded": {
+  "source": "runbook/provenance.workflow.js",
+  "source_sha256": "5edee323825251f4dae0e0d1a2ccf74ae963b74bfadadca14287c9ef83569f14",
+  "args_sha256": "9d0ce1d64311263ce5ff6bbee1b8b0b367260fd79cdfb17e0e35006803c48ab6",
+  "generated_sha256": "42c77edabf9e7c0cb0deba61d6a111f76bc1e9da9407eaf30bd54316143935dc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "egb-g11-math",
+ "results": [
+  {
+   "id": "eb11c1-1:rule-1",
+   "page": 4,
+   "provenance": "checked",
+   "note": "Page shows nCr = nPr/r! under 'Calculating nCr' heading"
+  },
+  {
+   "id": "eb11c1-1:rule-2",
+   "page": 4,
+   "provenance": "checked",
+   "note": "Page explicitly states nC0 = 1 nCn = 1"
+  },
+  {
+   "id": "eb11c1-1:rule-3",
+   "page": 4,
+   "provenance": "checked",
+   "note": "Page shows the formula and includes side labels 'Exponent of ( )' and 'Exponent of b'"
+  },
+  {
+   "id": "eb11c1-1:rule-4",
+   "page": 4,
+   "provenance": "checked",
+   "note": "Page shows Binomial Theorem expansion with general term nCr a^(n-r) b^r for r from 0 to n"
+  },
+  {
+   "id": "eb11c1-1:rule-5",
+   "page": 7,
+   "provenance": "checked",
+   "note": "The page explicitly states in the Point! box that when expanding (a+b+c)^n, the term containing a^p b^q c^r is (n!/(p!q!r!)) a^p b^q c^r, which directly matches the claim."
+  },
+  {
+   "id": "eb11c1-1:method-1",
+   "page": 9,
+   "provenance": "checked",
+   "note": "The text 'For proof problems using the Binomial Theorem, use the expansion of (1 + x)ⁿ' is present in the Point! section on page 9."
+  },
+  {
+   "id": "eb11c1-1:method-2",
+   "page": 9,
+   "provenance": "checked",
+   "note": "The text 'Substitute an appropriate value for x to derive the required equality.' is present in the Point! section on page 9."
+  },
+  {
+   "id": "eb11c1-2:rule-1",
+   "page": 10,
+   "provenance": "checked",
+   "note": "Exact match in the Point! box"
+  },
+  {
+   "id": "eb11c1-2:rule-2",
+   "page": 10,
+   "provenance": "checked",
+   "note": "Exact match in the Point! box"
+  },
+  {
+   "id": "eb11c1-2:caution-1",
+   "page": 10,
+   "provenance": "re-audited",
+   "first_note": "Content is present but the claim restructures and reorders the text differently from how it appears in the Common Mistakes box",
+   "note": "The Common Mistakes box lists both errors. It says subtraction errors often happen after multiplication, especially forgetting to change signs or combine like terms. It also lists partial multiplication, meaning multiplying only by the leading term of the divisor instead of the entire divisor. The claim condenses this wording but adds nothing."
+  },
+  {
+   "id": "eb11c1-2:rule-3",
+   "page": 12,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-2:rule-4",
+   "page": 12,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-2:caution-2",
+   "page": 12,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-2:caution-3",
+   "page": 12,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-3:definition-1",
+   "page": 14,
+   "provenance": "checked",
+   "note": "The exact text \"Dividing both the numerator and denominator of a rational expression by their common factor is called reducing.\" appears in the Point! box on the page."
+  },
+  {
+   "id": "eb11c1-3:definition-2",
+   "page": 14,
+   "provenance": "checked",
+   "note": "The exact text \"A rational expression that cannot be reduced further is called an irreducible rational expression.\" appears in the Point! box on the page."
+  },
+  {
+   "id": "eb11c1-3:rule-1",
+   "page": 14,
+   "provenance": "checked",
+   "note": "The page states: \"When there are polynomials in the denominator or numerator of a rational expression, first factorise them to check if they can be reduced.\" This supports the claim (the order of \"numerator or denominator\" is reversed on the page but the substantive content is identical)."
+  },
+  {
+   "id": "eb11c1-3:caution-1",
+   "page": 15,
+   "provenance": "checked",
+   "note": "The Common Mistakes box on page 15 contains the exact statement: 'Students often mistakenly cross out identical variables or numbers in the numerator and denominator, even when they are separated by addition or subtraction signs.'"
+  },
+  {
+   "id": "eb11c1-3:rule-2",
+   "page": 17,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-3:rule-3",
+   "page": 17,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-3:rule-4",
+   "page": 17,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-3:caution-2",
+   "page": 17,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-3:definition-3",
+   "page": 19,
+   "provenance": "checked",
+   "note": "Text on page states: 'Expressions that contain rational expressions in the denominator or numerator, like the one on the right, are called compound fractions.' The claim is directly supported."
+  },
+  {
+   "id": "eb11c1-3:rule-5",
+   "page": 19,
+   "provenance": "checked",
+   "note": "Text on page states: 'When calculating compound fractions, multiply the numerator and denominator by the same expression.' The claim is directly supported."
+  },
+  {
+   "id": "eb11c1-4:definition-1",
+   "page": 21,
+   "provenance": "checked",
+   "note": "Exact text found in Point! box"
+  },
+  {
+   "id": "eb11c1-4:rule-1",
+   "page": 21,
+   "provenance": "checked",
+   "note": "Identity condition with ⇔ symbol showing equivalence"
+  },
+  {
+   "id": "eb11c1-4:method-1",
+   "page": 21,
+   "provenance": "checked",
+   "note": "Complete method stated in descending order passage"
+  },
+  {
+   "id": "eb11c1-4:method-2",
+   "page": 21,
+   "provenance": "checked",
+   "note": "Exact text for rational expression identities method"
+  },
+  {
+   "id": "eb11c1-4:rule-2",
+   "page": 24,
+   "provenance": "checked",
+   "note": "The full claim is verbatim in the green Point! box on page 24"
+  },
+  {
+   "id": "eb11c1-4:method-3",
+   "page": 26,
+   "provenance": "checked",
+   "note": "The method is stated in the Point! box: express one variable from the conditional equation in terms of the others and substitute it to eliminate that variable"
+  },
+  {
+   "id": "eb11c1-4:rule-3",
+   "page": 26,
+   "provenance": "checked",
+   "note": "The example is given in the Point! box: If x + y = 1, substitute y = 1 − x to eliminate y"
+  },
+  {
+   "id": "eb11c1-4:definition-2",
+   "page": 28,
+   "provenance": "checked",
+   "note": "Definition of proportion is stated exactly as claimed: 'An equation expressing that ratios or values of ratios are equal, like a/b = c/d or x : y : z = a : b : c, is called a proportion.'"
+  },
+  {
+   "id": "eb11c1-4:method-4",
+   "page": 28,
+   "provenance": "checked",
+   "note": "Method for a/b = c/d is stated exactly as claimed: 'For problems with condition a/b = c/d, first let a/b = c/d = k and express as a = bk, c = dk'"
+  },
+  {
+   "id": "eb11c1-4:method-5",
+   "page": 28,
+   "provenance": "checked",
+   "note": "Method for x : y : z = a : b : c is stated exactly as claimed: 'For problems with condition x : y : z = a : b : c, let k be a constant and express as x = ak, y = bk, z = ck'"
+  },
+  {
+   "id": "eb11c1-5:method-1",
+   "page": 31,
+   "provenance": "checked",
+   "note": "Exactly stated in the Point! box: 'To prove the inequality LHS > RHS, calculate their difference LHS – RHS and show that it is positive . (LHS – RHS > 0)'"
+  },
+  {
+   "id": "eb11c1-5:method-2",
+   "page": 31,
+   "provenance": "checked",
+   "note": "Exactly stated in the Point! box: 'If a condition like a > b is given, rewrite it as a – b > 0 to use in your proof.'"
+  },
+  {
+   "id": "eb11c1-5:rule-1",
+   "page": 33,
+   "provenance": "checked",
+   "note": "Text states exactly: 'To prove LHS ≥ RHS, calculate their difference and show that LHS − RHS ≥ 0' - matches claim completely"
+  },
+  {
+   "id": "eb11c1-5:method-3",
+   "page": 33,
+   "provenance": "checked",
+   "note": "Text states: 'To prove an inequality for all real numbers, use completing the square to form X² or X² + Y²' - matches claim exactly"
+  },
+  {
+   "id": "eb11c1-5:rule-2",
+   "page": 33,
+   "provenance": "checked",
+   "note": "Text states exactly: 'For inequalities with ≥ or ≤, you must state the condition for equality.' - matches claim word-for-word"
+  },
+  {
+   "id": "eb11c1-5:rule-3",
+   "page": 33,
+   "provenance": "checked",
+   "note": "Text states exactly: 'For real numbers X, Y : X² ≥ 0. Equality holds when X = 0' - matches claim exactly"
+  },
+  {
+   "id": "eb11c1-5:rule-4",
+   "page": 33,
+   "provenance": "checked",
+   "note": "Text states exactly: 'X² + Y² ≥ 0. Equality holds when X = 0 and Y = 0' - matches claim exactly"
+  },
+  {
+   "id": "eb11c1-5:method-4",
+   "page": 35,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-5:rule-5",
+   "page": 35,
+   "provenance": "checked",
+   "note": ""
+  },
+  {
+   "id": "eb11c1-5:rule-6",
+   "page": 35,
+   "provenance": "re-audited",
+   "first_note": "Condition not explicitly stated with this property",
+   "note": "Page shows (LHS)^2 ≥ (RHS)^2 ⟺ LHS ≥ RHS under the bullet 'When LHS>0, RHS>0'."
+  },
+  {
+   "id": "eb11c1-5:rule-7",
+   "page": 35,
+   "provenance": "unsupported",
+   "first_note": "Page shows √a ≥ 0 (non-strict), claim says √a > 0 (strict)",
+   "note": "Page prints 'When a > 0, √a ≥ 0' (underlined ≥ 0 shown as '> 0' hard to read; it reads ≥ 0), not strict."
+  },
+  {
+   "id": "eb11c1-5:rule-8",
+   "page": 37,
+   "provenance": "checked",
+   "note": "Page states: 'When a > 0, b > 0, (a+b)/2 ≥ √(ab), or a + b ≥ 2√(ab)' under the AM-GM Inequality section"
+  },
+  {
+   "id": "eb11c1-5:rule-9",
+   "page": 37,
+   "provenance": "checked",
+   "note": "Page explicitly states: 'Equality holds when a = b'"
+  },
+  {
+   "id": "eb11c1-5:rule-10",
+   "page": 37,
+   "provenance": "checked",
+   "note": "Page states the AM-GM inequality is useful when product simplifies to a constant, with example 'a + 1/a ⇒ a × 1/a = 1'"
+  }
+ ]
+}

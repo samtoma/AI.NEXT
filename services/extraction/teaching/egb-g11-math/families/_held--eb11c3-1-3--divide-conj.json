@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-1-3:divide-conj",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-1-3",
+ "parent_question_id": "q:eb11c3-1-3:bk-example-1",
+ "source_page": 111,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "A",
+   "let": "p * c + q * d"
+  },
+  {
+   "name": "B",
+   "let": "q * c - p * d"
+  },
+  {
+   "require": "B > 0",
+   "why": "imaginary part of numerator positive so it prints cleanly"
+  },
+  {
+   "name": "N",
+   "let": "c * c + d * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Write $\\dfrac{ {=A} + {=B}i}{ {=c} - {=d}i}$ in the form $a + bi$.",
+ "answer": "",
+ "solution": [
+  "The conjugate of the denominator ${=c}-{=d}i$ is ${=c}+{=d}i$. Multiply numerator and denominator by it: $\\dfrac{({=A}+{=B}i)({=c}+{=d}i)}{({=c}-{=d}i)({=c}+{=d}i)}$.",
+  "Denominator: $({=c}-{=d}i)({=c}+{=d}i)={=c*c}-{=d*d}i^2={=c*c}+{=d*d}={=N}$.",
+  "Numerator: $({=A}+{=B}i)({=c}+{=d}i)={=A*c}+{=A*d}i+{=B*c}i+{=B*d}i^2=({=A*c}-{=B*d})+({=A*d}+{=B*c})i={=N*p}+{=N*q}i$.",
+  "Divide by ${=N}$: $\\dfrac{ {=N*p}+{=N*q}i}{ {=N}}={=p}+{=q}i$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=p} + {=q}*i",
+  "form": null,
+  "variables": [
+   "i"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Numerator built as (p+qi)(c-di) so the quotient is the whole-number complex p+qi; the conjugate of the divisor is c+di. Requires q*c-p*d>0 so the numerator prints as A + Bi."
+}

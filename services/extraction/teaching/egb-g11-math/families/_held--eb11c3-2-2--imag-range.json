@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-2-2:imag-range",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-2-2",
+ "parent_question_id": "q:eb11c3-2-2:bk-exercise-4-a",
+ "source_page": 120,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "-2*m - p"
+  },
+  {
+   "name": "hi",
+   "let": "2*m - p"
+  },
+  {
+   "name": "q",
+   "let": "m*m"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the range of values of the constant $k$ for which the quadratic equation $x^2-(k+{=p})x+{=q}=0$ has two distinct imaginary solutions. Give your answer as an interval for $k$.",
+ "answer": "",
+ "solution": [
+  "Two distinct imaginary solutions means $D<0$.",
+  "$D=(k+{=p})^2-4\\times1\\times{=q}=(k+{=p})^2-{=4*q}$.",
+  "$(k+{=p})^2<{=4*q}$, so $-{=2*m}<k+{=p}<{=2*m}$.",
+  "Subtract {=p} from each part: ${=lo}<k<{=hi}$."
+ ],
+ "marker": {
+  "kind": "interval",
+  "answer": "interval({=lo}, {=hi}, false, false)",
+  "form": null,
+  "variables": [
+   "k"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: D is a perfect-square-difference in (k+p); solving D<0 gives a bounded open interval. Bounds are integers; strict inequality since distinct imaginary needs D<0."
+}

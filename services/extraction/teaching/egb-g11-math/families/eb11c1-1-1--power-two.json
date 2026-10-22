@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-1:power-two",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-1",
+ "parent_question_id": "q:eb11c1-1-1:bk-exercise-1-e",
+ "source_page": 6,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    4,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    2,
+    "n - 1"
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "sg",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "rows",
+   "let": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1],[1,5,10,10,5,1],[1,6,15,20,15,6,1]]"
+  },
+  {
+   "name": "c",
+   "let": "rows[n][r]"
+  },
+  {
+   "name": "s",
+   "let": "'+' if sg == 1 else '-'"
+  },
+  {
+   "name": "m",
+   "let": "n - r"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the coefficient of $x^{{=2*r}}$ in the expansion of $({=a}x^2 {=s} {=b})^{{=n}}$.",
+ "answer": "c * a**r * (sg*b)**m",
+ "solution": [
+  "The general term of $({=a}x^2 {=s} {=b})^{{=n}}$ is ${}_{{=n}}C_k ({=a}x^2)^k ({=sg*b})^{{=n}-k}$.",
+  "$(x^2)^k = x^{2k}$, so $x^{{=2*r}}$ needs $2k = {=2*r}$, that is $k = {=r}$.",
+  "The term is ${}_{{=n}}C_{{=r}} ({=a}x^2)^{{=r}} ({=sg*b})^{{=m}}$.",
+  "${}_{{=n}}C_{{=r}} = {=c}$, $({=a})^{{=r}} = {=a**r}$ and $({=sg*b})^{{=m}} = {=(sg*b)**m}$.",
+  "The coefficient is ${=c} \\times {=a**r} \\times ({=(sg*b)**m}) = {=c * a**r * (sg*b)**m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist: x^2 inside the binomial, so the index k is half the target power; sign of the second term matters."
+}

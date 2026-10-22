@@ -1,0 +1,5223 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-3",
+  "source": "book-records/egb-g11-math/eb11c2-3.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 138,
+      "cost_usd": 2.1978,
+      "calls": [
+        {
+          "call": "answers.eb11c2-3",
+          "cost_usd": 2.1978,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c2-3:open-prompt-1",
+      "record_id": "eb11c2-3:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 68,
+      "question": {
+        "text": "Guiding Question: How can we simplify operations on sequences, such as multiplying terms or adding nested sums, to find a clear algebraic formula?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "66ebfdf3cca860cc97acc098ef9893e3",
+      "kind": "explanation",
+      "answer": "Summation notation Σ writes a long sum of terms compactly, so we can use the Σ rules and formulas to get one algebraic formula in n.",
+      "solution": [
+        "Σ with a general term a_k stands for a_1 + a_2 + ... + a_n.",
+        "A constant factor comes out of the sum, and a sum or difference splits into separate sums.",
+        "The formulas for Σc, Σk, Σk², Σk³ and geometric sums then give a formula in n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:definition-1",
+        "eb11c2-3:rule-4",
+        "eb11c2-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "Using summation notation $\\sum$ with a general term $a_k$ and the formulas for $k$, $k^2$, $k^3$ and geometric sums, we can write and add many terms at once as a single closed formula in $n$.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-1:a",
+      "record_id": "eb11c2-3:unlabelled-exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{5} 2k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "837548edc166a57d92e17c7c3d9a8adc",
+      "kind": "value",
+      "answer": "2+4+6+8+10",
+      "solution": [
+        "Substitute k = 1, 2, 3, 4, 5 into 2k.",
+        "Terms: 2, 4, 6, 8, 10.",
+        "Answer: 2+4+6+8+10."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1",
+        "eb11c2-3:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "2+4+6+8+10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-1:b",
+      "record_id": "eb11c2-3:unlabelled-exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} (k^2-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ce91b3b1927a98e1ccd3c2727753096c",
+      "kind": "value",
+      "answer": "-2+1+6",
+      "solution": [
+        "Substitute k = 1, 2, 3 into k^2 - 3.",
+        "1-3 = -2, 4-3 = 1, 9-3 = 6.",
+        "Answer: -2+1+6."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "-2+1+6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-1:c",
+      "record_id": "eb11c2-3:unlabelled-exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} 3^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d86a9b04b7a14096ee02d0397e5a764a",
+      "kind": "value",
+      "answer": "3+9+27+81",
+      "solution": [
+        "Substitute k = 1, 2, 3, 4 into 3^k.",
+        "Terms: 3, 9, 27, 81.",
+        "Answer: 3+9+27+81."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+9+27+81",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-1:d",
+      "record_id": "eb11c2-3:unlabelled-exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5f8dd77ac9ab5b1bf850f95d66e24b8d",
+      "kind": "value",
+      "answer": "2+2+2",
+      "solution": [
+        "The general term is the constant 2, so every term is 2.",
+        "There are 3 terms (k = 1, 2, 3).",
+        "Answer: 2+2+2."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2+2+2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-2:a",
+      "record_id": "eb11c2-3:unlabelled-exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$3+7+11+\\dots+(4n-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9f402aba0a8b12e1a144cbe8b2f81c12",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(4k-1)$",
+      "solution": [
+        "The last term is 4n-1, so change n to k.",
+        "Write 4k-1 inside Σ, with k=1 below and n above.",
+        "Answer: $\\sum_{k=1}^{n}(4k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(4k-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-2:b",
+      "record_id": "eb11c2-3:unlabelled-exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 68,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$6^2+7^2+8^2+\\dots+15^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fbada932264e6fec5bdcc24518ef08a9",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{10}(k+5)^2$",
+      "solution": [
+        "The terms are 6^2, 7^2, ... so the general term is $a_n=(n+5)^2$.",
+        "15^2 is the 10th term (k+5=15 gives k=10).",
+        "Answer: $\\sum_{k=1}^{10}(k+5)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{10}(k+5)^2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-3:a",
+      "record_id": "eb11c2-3:unlabelled-exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{5}(2k+1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9ec8d9f5ffda58dfc269634b6dc01b40",
+      "kind": "value",
+      "answer": "3+5+7+9+11",
+      "solution": [
+        "Substitute k = 1 to 5 into 2k+1.",
+        "Terms: 3, 5, 7, 9, 11.",
+        "Answer: 3+5+7+9+11."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+5+7+9+11",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-3:b",
+      "record_id": "eb11c2-3:unlabelled-exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3}(3k^2+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7cb1b726a5c0e1fb8955c86c09690894",
+      "kind": "value",
+      "answer": "5+14+29",
+      "solution": [
+        "Substitute k = 1, 2, 3 into 3k^2+2.",
+        "3+2 = 5, 12+2 = 14, 27+2 = 29.",
+        "Answer: 5+14+29."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "5+14+29",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-3:c",
+      "record_id": "eb11c2-3:unlabelled-exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4}2^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "39e69c5e5abff97cff42d471454eed00",
+      "kind": "value",
+      "answer": "2+4+8+16",
+      "solution": [
+        "Substitute k = 1 to 4 into 2^k.",
+        "Terms: 2, 4, 8, 16.",
+        "Answer: 2+4+8+16."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2+4+8+16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-3:d",
+      "record_id": "eb11c2-3:unlabelled-exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{6}3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e16ae09c2da8c916e3f51f748d941a06",
+      "kind": "value",
+      "answer": "3+3+3+3+3+3",
+      "solution": [
+        "The general term is the constant 3.",
+        "There are 6 terms.",
+        "Answer: 3+3+3+3+3+3."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+3+3+3+3+3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-4:a",
+      "record_id": "eb11c2-3:unlabelled-exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$5+8+11+\\dots+(3n+2)$",
+        "notes": "Same exercise as the previous page's last record is printed here as Try 2, so not a continuation."
+      },
+      "needs_page": true,
+      "question_fingerprint": "6d3389a6ac1ede8099e100f571cd0e31",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(3k+2)$",
+      "solution": [
+        "The last term is 3n+2, so change n to k.",
+        "Check: k=1 gives 5, k=2 gives 8.",
+        "Answer: $\\sum_{k=1}^{n}(3k+2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(3k+2)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-4:b",
+      "record_id": "eb11c2-3:unlabelled-exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "The sum from the 1st to the n-th term of the sequence $a_n=2n+1$",
+        "notes": "Same exercise as the previous page's last record is printed here as Try 2, so not a continuation."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ff0201689c21b23bb1087a81a7b7d230",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(2k+1)$",
+      "solution": [
+        "The general term is 2n+1; change n to k.",
+        "The last index is n.",
+        "Answer: $\\sum_{k=1}^{n}(2k+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(2k+1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-4:c",
+      "record_id": "eb11c2-3:unlabelled-exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$4^2+5^2+6^2+\\dots+13^2$",
+        "notes": "Same exercise as the previous page's last record is printed here as Try 2, so not a continuation."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ebc6334db04f2502686acb93caf17039",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{10}(k+3)^2$",
+      "solution": [
+        "The terms 4^2, 5^2, ... have general term $(n+3)^2$.",
+        "13^2: k+3=13 gives k=10.",
+        "Answer: $\\sum_{k=1}^{10}(k+3)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{10}(k+3)^2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:unlabelled-exercise-4:d",
+      "record_id": "eb11c2-3:unlabelled-exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 69,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$2+5+8+\\dots+29$",
+        "notes": "Same exercise as the previous page's last record is printed here as Try 2, so not a continuation."
+      },
+      "needs_page": true,
+      "question_fingerprint": "84d7126ba56e37f5d1648514113bde09",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{10}(3k-1)$",
+      "solution": [
+        "The terms 2, 5, 8, ... go up by 3, so the general term is 3n-1.",
+        "29: 3k-1=29 gives k=10.",
+        "Answer: $\\sum_{k=1}^{10}(3k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{10}(3k-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:a",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{5} 3k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "786c43cf75cf46266d9656030422ce00",
+      "kind": "value",
+      "answer": "3+6+9+12+15",
+      "solution": [
+        "Substitute k = 1 to 5 into 3k.",
+        "Answer: 3+6+9+12+15."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+6+9+12+15",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:b",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} (4k-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1c2e1805f832bb79d2e1cf3747cd5bc6",
+      "kind": "value",
+      "answer": "2+6+10+14",
+      "solution": [
+        "Substitute k = 1 to 4 into 4k-2.",
+        "Answer: 2+6+10+14."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "2+6+10+14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:c",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{5} (2k-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "594f90d2fc5071b9356f3beaff6ffac7",
+      "kind": "value",
+      "answer": "-1+1+3+5+7",
+      "solution": [
+        "Substitute k = 1 to 5 into 2k-3.",
+        "Answer: -1+1+3+5+7."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "-1+1+3+5+7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:d",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} k^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "80ba81707bb326430c6f8f63d2563c16",
+      "kind": "value",
+      "answer": "1+4+9+16",
+      "solution": [
+        "Substitute k = 1 to 4 into k^2.",
+        "Answer: 1+4+9+16."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "1+4+9+16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:e",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} (2k^2+3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "07a2dcc7a1d9359cdf8330ce1f846812",
+      "kind": "value",
+      "answer": "5+11+21",
+      "solution": [
+        "Substitute k = 1, 2, 3 into 2k^2+3.",
+        "2+3=5, 8+3=11, 18+3=21.",
+        "Answer: 5+11+21."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "5+11+21",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:f",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} (k^2-2k)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a24ec664bafd82e4f4d9afbc90cb4e6a",
+      "kind": "value",
+      "answer": "-1+0+3+8",
+      "solution": [
+        "Substitute k = 1 to 4 into k^2-2k.",
+        "1-2=-1, 4-4=0, 9-6=3, 16-8=8.",
+        "Answer: -1+0+3+8."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "-1+0+3+8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:g",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "g",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} 3^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3861a3c83f5c3d59a48405da79a56233",
+      "kind": "value",
+      "answer": "3+9+27",
+      "solution": [
+        "Substitute k = 1, 2, 3 into 3^k.",
+        "Answer: 3+9+27."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+9+27",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:h",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "h",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} (5^k+3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a72e7072e27791023fa1eb4885394337",
+      "kind": "value",
+      "answer": "8+28+128",
+      "solution": [
+        "Substitute k = 1, 2, 3 into 5^k+3.",
+        "5+3=8, 25+3=28, 125+3=128.",
+        "Answer: 8+28+128."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "8+28+128",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:i",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "i",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} (2^k-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "42c965520c8c4515fb685c5be0b7ea5a",
+      "kind": "value",
+      "answer": "-1+1+5+13",
+      "solution": [
+        "Substitute k = 1 to 4 into 2^k-3.",
+        "2-3=-1, 4-3=1, 8-3=5, 16-3=13.",
+        "Answer: -1+1+5+13."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "-1+1+5+13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:j",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "j",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{4} 5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "13d63a8199e5ecdd1bbc929cca0f9c84",
+      "kind": "value",
+      "answer": "5+5+5+5",
+      "solution": [
+        "The general term is the constant 5, with 4 terms.",
+        "Answer: 5+5+5+5."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "5+5+5+5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:k",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "k",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{3} 3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e52b5078ec56ad14a8a101ae5c4a0c33",
+      "kind": "value",
+      "answer": "3+3+3",
+      "solution": [
+        "The general term is the constant 3, with 3 terms.",
+        "Answer: 3+3+3."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "3+3+3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-1:l",
+      "record_id": "eb11c2-3:exercise-1",
+      "part": "l",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+        "stem": "$\\sum_{k=1}^{5} 4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "833da31a0a2f9dcf7c508205aea3307d",
+      "kind": "value",
+      "answer": "4+4+4+4+4",
+      "solution": [
+        "The general term is the constant 4, with 5 terms.",
+        "Answer: 4+4+4+4+4."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "4+4+4+4+4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:a",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$1+3+5+\\dots+(2n-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "231e7365849687f25f00e0e6bf658edb",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(2k-1)$",
+      "solution": [
+        "The last term is 2n-1; change n to k.",
+        "Answer: $\\sum_{k=1}^{n}(2k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(2k-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:b",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$1+7+25+79+\\dots+(3^n-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "621340126e0eb8a3d397c2f5c8a594fb",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(3^k-2)$",
+      "solution": [
+        "The last term is 3^n-2; change n to k.",
+        "Check: k=1 gives 1, k=2 gives 7, k=3 gives 25, k=4 gives 79.",
+        "Answer: $\\sum_{k=1}^{n}(3^k-2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(3^k-2)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:c",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$1+2+4+8+\\dots+2^{n-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e1267cc62b38cb7a312fc0e219d1579a",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}2^{k-1}$",
+      "solution": [
+        "The last term is 2^{n-1}; change n to k.",
+        "Answer: $\\sum_{k=1}^{n}2^{k-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}2^{k-1}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:d",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "The sum from the 1st to the n-th term of sequence $a_n=7n-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a239efb0ca9ae836433ac9bdb1e347df",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(7k-1)$",
+      "solution": [
+        "Change n to k in $a_n=7n-1$.",
+        "Answer: $\\sum_{k=1}^{n}(7k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(7k-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:e",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "e",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "The sum from the 1st to the n-th term of sequence $a_n=4n+5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "de41d7435acf3682dd9983c27c5d1888",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(4k+5)$",
+      "solution": [
+        "Change n to k in $a_n=4n+5$.",
+        "Answer: $\\sum_{k=1}^{n}(4k+5)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(4k+5)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:f",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "f",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "The sum from the 1st to the n-th term of sequence $a_n=3n-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "12a24b43ac9d441ce745f547c2f64093",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(3k-2)$",
+      "solution": [
+        "Change n to k in $a_n=3n-2$.",
+        "Answer: $\\sum_{k=1}^{n}(3k-2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(3k-2)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:g",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "g",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$7^2+8^2+9^2+\\dots+21^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "eebab32e2ec3452fb70c48abd0e7c100",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{15}(k+6)^2$",
+      "solution": [
+        "General term: $(n+6)^2$ (7^2 is the 1st term).",
+        "21^2: k+6=21 gives k=15.",
+        "Answer: $\\sum_{k=1}^{15}(k+6)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{15}(k+6)^2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:h",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "h",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$12^2+13^2+14^2+\\dots+18^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b6adb8c119606f4ad971660301e91abf",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{7}(k+11)^2$",
+      "solution": [
+        "General term: $(n+11)^2$.",
+        "18^2: k+11=18 gives k=7.",
+        "Answer: $\\sum_{k=1}^{7}(k+11)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{7}(k+11)^2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:i",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "i",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$10^2+11^2+12^2+\\dots+20^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f857746806334b24b4bca70a034159ee",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{11}(k+9)^2$",
+      "solution": [
+        "General term: $(n+9)^2$.",
+        "20^2: k+9=20 gives k=11.",
+        "Answer: $\\sum_{k=1}^{11}(k+9)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{11}(k+9)^2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:j",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "j",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$8+16+24+\\dots+56$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ca94ac77d0c21763247567d6d31f1024",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{7}8k$",
+      "solution": [
+        "Terms go up by 8, first term 8, so general term 8n.",
+        "56: 8k=56 gives k=7.",
+        "Answer: $\\sum_{k=1}^{7}8k$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{7}8k$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:k",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "k",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$7+13+19+\\dots+73$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9dc4e400299a1f984ba6a6619da5eca2",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{12}(6k+1)$",
+      "solution": [
+        "Terms go up by 6, first term 7, so general term 6n+1.",
+        "73: 6k+1=73 gives k=12.",
+        "Answer: $\\sum_{k=1}^{12}(6k+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{12}(6k+1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-2:l",
+      "record_id": "eb11c2-3:exercise-2",
+      "part": "l",
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "Express the following expressions using the summation symbol Σ.",
+        "stem": "$4+9+14+\\dots+119$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d3c2e64a39577032f522e4f745cd69f6",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{24}(5k-1)$",
+      "solution": [
+        "Terms go up by 5, first term 4, so general term 5n-1.",
+        "119: 5k-1=119 gives k=24.",
+        "Answer: $\\sum_{k=1}^{24}(5k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{24}(5k-1)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-1",
+      "record_id": "eb11c2-3:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 70,
+      "question": {
+        "text": "A green-tech startup is expanding its network of solar-powered charging stations across a metropolitan area. A startup installs 1 solar panel in (Week 1), 4 in (Week 2), 7 in (Week 3), and (3n - 2) panels in (Week n). Write a single mathematical expression using the summation symbol Σ to represent the total cumulative panels installed from Week 1 through Week n.",
+        "stem": "",
+        "notes": "Boxed 'Challenge' with star; recorded as exercise. Mismatch: first sentence says 'A startup' as printed."
+      },
+      "needs_page": false,
+      "question_fingerprint": "c57258ae5732de612b748842bcc993c2",
+      "kind": "value",
+      "answer": "$\\sum_{k=1}^{n}(3k-2)$",
+      "solution": [
+        "The number of panels in week n is 3n-2.",
+        "Change n to k to get the general term 3k-2.",
+        "Put k=1 below Σ and n above it.",
+        "The total is $\\sum_{k=1}^{n}(3k-2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-2",
+        "eb11c2-3:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sum_{k=1}^{n}(3k-2)$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-1:a",
+      "record_id": "eb11c2-3:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 71,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9ad9e5bcf98c3603c805ad483386074d",
+      "kind": "value",
+      "answer": "-3n",
+      "solution": [
+        "Use $\\sum c = nc$ with c = -3.",
+        "Answer: -3n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "-3n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-1:b",
+      "record_id": "eb11c2-3:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 71,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (5k+4)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dd4150647b507c279f5f14a56be216cc",
+      "kind": "value",
+      "answer": "(1/2)n(5n+13)",
+      "solution": [
+        "Split: $5\\sum k+\\sum 4$.",
+        "$=5\\times\\frac12 n(n+1)+4n$.",
+        "$=\\frac12 n\\{5(n+1)+8\\}$.",
+        "Answer: $\\frac12 n(5n+13)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-4",
+        "eb11c2-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "n(5n+13)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-1:c",
+      "record_id": "eb11c2-3:warm-up-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 71,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4bcdd3f33c30c324939b724f23a8819c",
+      "kind": "value",
+      "answer": "(1/6)n(n+1)(10n-1)",
+      "solution": [
+        "Write as $\\sum_{k=1}^{n}k(5k-2)=\\sum(5k^2-2k)$.",
+        "$=5\\times\\frac16 n(n+1)(2n+1)-2\\times\\frac12 n(n+1)$.",
+        "$=\\frac16 n(n+1)\\{5(2n+1)-6\\}$.",
+        "Answer: $\\frac16 n(n+1)(10n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-4",
+        "eb11c2-3:rule-6",
+        "eb11c2-3:rule-14"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(10n-1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-1:d",
+      "record_id": "eb11c2-3:warm-up-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 71,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{4} (2k-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fa368a27acc43300b6ba8ca2482240ff",
+      "kind": "value",
+      "answer": "16",
+      "solution": [
+        "$\\sum_{k=1}^{4}(2k-1)=2\\sum k-\\sum 1$.",
+        "$=2\\times\\frac12\\times4\\times5-4$.",
+        "$=20-4=16$.",
+        "Answer: 16."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-1:a",
+      "record_id": "eb11c2-3:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 72,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}3$",
+        "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "0e595b9aa4603b344ae4196b69a6b18b",
+      "kind": "value",
+      "answer": "3n",
+      "solution": [
+        "Use $\\sum c = nc$ with c = 3.",
+        "Answer: 3n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "3n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-1:b",
+      "record_id": "eb11c2-3:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 72,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}(2k-3)$",
+        "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "69b6a28377f16dfced5b8573ccae53ce",
+      "kind": "value",
+      "answer": "n(n-2)",
+      "solution": [
+        "$\\sum(2k-3)=2\\sum k-\\sum 3$.",
+        "$=2\\times\\frac12 n(n+1)-3n$.",
+        "$=n^2+n-3n=n^2-2n$.",
+        "Answer: n(n-2)."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n(n-2) = n^2-2n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-1:c",
+      "record_id": "eb11c2-3:try-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 72,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}(k-1)(3k-1)$",
+        "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "83c638ca1eb53e8674d34b1b8368b787",
+      "kind": "value",
+      "answer": "(1/2)n(n-1)(2n+1)",
+      "solution": [
+        "Expand: $(k-1)(3k-1)=3k^2-4k+1$.",
+        "$\\sum=3\\sum k^2-4\\sum k+\\sum 1$.",
+        "$=\\frac12 n(n+1)(2n+1)-2n(n+1)+n$.",
+        "$=\\frac12 n\\{(n+1)(2n+1)-4(n+1)+2\\}=\\frac12 n(2n^2-n-1)$.",
+        "Answer: $\\frac12 n(n-1)(2n+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-4",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n(n-1)(2n+1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-1:d",
+      "record_id": "eb11c2-3:try-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 72,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$1\\times3+2\\times5+3\\times7+\\dots+n(2n+1)$",
+        "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "65ddaaa6f9562f40ba539f93c871e82f",
+      "kind": "value",
+      "answer": "(1/6)n(n+1)(4n+5)",
+      "solution": [
+        "Write as $\\sum k(2k+1)=\\sum(2k^2+k)$.",
+        "$=2\\times\\frac16 n(n+1)(2n+1)+\\frac12 n(n+1)$.",
+        "$=\\frac16 n(n+1)\\{2(2n+1)+3\\}$.",
+        "Answer: $\\frac16 n(n+1)(4n+5)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-4",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-14"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(4n+5)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-1:e",
+      "record_id": "eb11c2-3:try-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 72,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{5}(3k-2)$",
+        "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'"
+      },
+      "needs_page": true,
+      "question_fingerprint": "542f7b1c8f2531e8f6f421e693773cca",
+      "kind": "value",
+      "answer": "35",
+      "solution": [
+        "$\\sum_{k=1}^{5}(3k-2)=3\\sum k-\\sum 2$.",
+        "$=3\\times\\frac12\\times5\\times6-2\\times5$.",
+        "$=45-10=35$.",
+        "Answer: 35."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "35",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:a",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "a",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b8e5f90da02ba936fa8c20ea809517f7",
+      "kind": "value",
+      "answer": "6n",
+      "solution": [
+        "$\\sum c=nc$ with c=6.",
+        "Answer: 6n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "6n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:b",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "b",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (-4)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "436b147da3cd38755136414f4279c279",
+      "kind": "value",
+      "answer": "-4n",
+      "solution": [
+        "$\\sum c=nc$ with c=-4.",
+        "Answer: -4n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "-4n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:c",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "c",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6a9f6b180f18b3955d459a33e0f68350",
+      "kind": "value",
+      "answer": "n",
+      "solution": [
+        "$\\sum c=nc$ with c=1.",
+        "Answer: n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:d",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "d",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (4k-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f0fb74281c20d2826a02959368683d9c",
+      "kind": "value",
+      "answer": "n(2n+1)",
+      "solution": [
+        "$4\\sum k-\\sum 1=4\\times\\frac12 n(n+1)-n$.",
+        "$=2n^2+2n-n=2n^2+n$.",
+        "Answer: n(2n+1)."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n(2n+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:e",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "e",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (3k+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "59d485cdd4413bf97540609bb079940e",
+      "kind": "value",
+      "answer": "(1/2)n(3n+7)",
+      "solution": [
+        "$3\\sum k+\\sum 2=\\frac32 n(n+1)+2n$.",
+        "$=\\frac12 n\\{3(n+1)+4\\}$.",
+        "Answer: $\\frac12 n(3n+7)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "n(3n+7)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:f",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "f",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (6k-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4697721640dbf647afd0b5e57c1acb69",
+      "kind": "value",
+      "answer": "3n^2",
+      "solution": [
+        "$6\\sum k-\\sum 3=3n(n+1)-3n$.",
+        "$=3n^2$.",
+        "Answer: 3n^2."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "3n^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:g",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "g",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k(k-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "141aec076e491b0d974d8e2376f6e125",
+      "kind": "value",
+      "answer": "(1/6)n(n+1)(2n-5)",
+      "solution": [
+        "Expand: $k(k-2)=k^2-2k$.",
+        "$\\sum k^2-2\\sum k=\\frac16 n(n+1)(2n+1)-n(n+1)$.",
+        "$=\\frac16 n(n+1)\\{(2n+1)-6\\}$.",
+        "Answer: $\\frac16 n(n+1)(2n-5)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(2n-5)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:h",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "h",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k(2k-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a8f08f4306df63ca287443409b028a47",
+      "kind": "value",
+      "answer": "(2/3)n(n+1)(n-1)",
+      "solution": [
+        "Expand: $k(2k-2)=2k^2-2k$.",
+        "$2\\sum k^2-2\\sum k=\\frac13 n(n+1)(2n+1)-n(n+1)$.",
+        "$=\\frac13 n(n+1)\\{(2n+1)-3\\}=\\frac13 n(n+1)(2n-2)$.",
+        "Answer: $\\frac23 n(n+1)(n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "2n(n+1)(n-1)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:i",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "i",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (k-1)^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9dd7b53161ff9612a3008c0cd8b12405",
+      "kind": "value",
+      "answer": "(1/6)n(n-1)(2n-1)",
+      "solution": [
+        "Expand: $(k-1)^2=k^2-2k+1$.",
+        "$\\sum k^2-2\\sum k+\\sum 1=\\frac16 n(n+1)(2n+1)-n(n+1)+n$.",
+        "$=\\frac16 n\\{(n+1)(2n+1)-6(n+1)+6\\}=\\frac16 n(2n^2-3n+1)$.",
+        "Answer: $\\frac16 n(n-1)(2n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n(n-1)(2n-1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:j",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "j",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$1\\times4+2\\times5+3\\times6+\\dots+n(n+3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b98c4a830e392ed762c0581e2dae8ad1",
+      "kind": "value",
+      "answer": "(1/3)n(n+1)(n+5)",
+      "solution": [
+        "Write as $\\sum k(k+3)=\\sum(k^2+3k)$.",
+        "$=\\frac16 n(n+1)(2n+1)+\\frac32 n(n+1)$.",
+        "$=\\frac16 n(n+1)\\{(2n+1)+9\\}=\\frac16 n(n+1)(2n+10)$.",
+        "Answer: $\\frac13 n(n+1)(n+5)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-14"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(n+5)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:k",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "k",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$1\\times5+2\\times8+3\\times11+\\dots+n(3n+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a16e999f3be263515b63f4274bbdaa45",
+      "kind": "value",
+      "answer": "(1/2)n(n+1)(2n+3)",
+      "solution": [
+        "Write as $\\sum k(3k+2)=\\sum(3k^2+2k)$.",
+        "$=\\frac12 n(n+1)(2n+1)+n(n+1)$.",
+        "$=\\frac12 n(n+1)\\{(2n+1)+2\\}$.",
+        "Answer: $\\frac12 n(n+1)(2n+3)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-14"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(2n+3)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:l",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "l",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$2\\times5+3\\times6+4\\times7+\\dots+(n+1)(n+4)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6bcdc1825cf7e0c9727e9bad4905d38c",
+      "kind": "value",
+      "answer": "(1/3)n(n+4)(n+5)",
+      "solution": [
+        "The k-th term is $(k+1)(k+4)=k^2+5k+4$, k = 1 to n.",
+        "$\\sum=\\frac16 n(n+1)(2n+1)+\\frac52 n(n+1)+4n$.",
+        "$=\\frac16 n\\{(n+1)(2n+1)+15(n+1)+24\\}=\\frac16 n(2n^2+18n+40)$.",
+        "Answer: $\\frac13 n(n+4)(n+5)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-14"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+4)(n+5)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:m",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "m",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{20} (2k-7)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c528f49886f4240732cb4ba13854c54f",
+      "kind": "value",
+      "answer": "280",
+      "solution": [
+        "$2\\sum k-\\sum 7$ with n=20.",
+        "$=2\\times\\frac12\\times20\\times21-7\\times20$.",
+        "$=420-140=280$.",
+        "Answer: 280."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "280",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:n",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "n",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{8} (4k+5)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b0ebd5efa4cdf77a022e947af74399ad",
+      "kind": "value",
+      "answer": "184",
+      "solution": [
+        "$4\\sum k+\\sum 5$ with n=8.",
+        "$=4\\times\\frac12\\times8\\times9+5\\times8$.",
+        "$=144+40=184$.",
+        "Answer: 184."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "184",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-18:o",
+      "record_id": "eb11c2-3:exercise-18",
+      "part": "o",
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{10} (2k-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3b0e0a2ca570caed18079e93672252be",
+      "kind": "value",
+      "answer": "100",
+      "solution": [
+        "$2\\sum k-\\sum 1$ with n=10.",
+        "$=2\\times\\frac12\\times10\\times11-10$.",
+        "$=110-10=100$.",
+        "Answer: 100."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "100",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-2",
+      "record_id": "eb11c2-3:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 73,
+      "question": {
+        "text": "Find the following sum: $\\sum_{r=4}^{8} (r^2+r+5)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b5967652d99bde382490a39474eb3f9f",
+      "kind": "value",
+      "answer": "245",
+      "solution": [
+        "Write out the terms: r=4: 25, r=5: 35, r=6: 47, r=7: 61, r=8: 77.",
+        "Add: 25+35+47+61+77 = 245.",
+        "Answer: 245."
+      ],
+      "grounded_in": [
+        "eb11c2-3:definition-1",
+        "eb11c2-3:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "245",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-2:a",
+      "record_id": "eb11c2-3:warm-up-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 74,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k^2(k+1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "446e769b787eb3b59829345fd9d7171d",
+      "kind": "value",
+      "answer": "(1/12)n(n+1)(n+2)(3n+1)",
+      "solution": [
+        "Expand: $k^2(k+1)=k^3+k^2$.",
+        "$=\\{\\frac12 n(n+1)\\}^2+\\frac16 n(n+1)(2n+1)$.",
+        "$=\\frac1{12}n(n+1)\\{3n(n+1)+2(2n+1)\\}=\\frac1{12}n(n+1)(3n^2+7n+2)$.",
+        "Factorise: $3n^2+7n+2=(n+2)(3n+1)$.",
+        "Answer: $\\frac1{12}n(n+1)(n+2)(3n+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:warm-up-3",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(n+2)(3n+1)/12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-2:b",
+      "record_id": "eb11c2-3:warm-up-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 74,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 2\\times(-3)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "57de7a87018013c8b3675bb81ba61341",
+      "kind": "value",
+      "answer": "(1-(-3)^n)/2",
+      "solution": [
+        "Geometric: first term a=2, ratio r=-3 (r<1).",
+        "$\\frac{2\\{1-(-3)^n\\}}{1-(-3)}=\\frac{2\\{1-(-3)^n\\}}{4}$.",
+        "Answer: $\\frac{1-(-3)^n}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-8",
+        "eb11c2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "(1-(-3)^n)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-2:c",
+      "record_id": "eb11c2-3:warm-up-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 74,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 4^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "95f17b7d0bed3bbcb2b1418424ea23b2",
+      "kind": "value",
+      "answer": "4(4^n-1)/3",
+      "solution": [
+        "$4^k=4\\times4^{k-1}$: first term 4, ratio 4 (r>1).",
+        "$\\frac{4(4^n-1)}{4-1}$.",
+        "Answer: $\\frac{4(4^n-1)}{3}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "4(4^n-1)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-2:a",
+      "record_id": "eb11c2-3:try-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k^2(k-2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0f54e5cebb4e9e15b11dc76f924374da",
+      "kind": "value",
+      "answer": "(1/12)n(n+1)(3n^2-5n-4)",
+      "solution": [
+        "Expand: $k^2(k-2)=k^3-2k^2$.",
+        "$\\{\\frac12 n(n+1)\\}^2-2\\times\\frac16 n(n+1)(2n+1)$.",
+        "$=\\frac1{12}n(n+1)\\{3n(n+1)-4(2n+1)\\}$.",
+        "Answer: $\\frac1{12}n(n+1)(3n^2-5n-4)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-6",
+        "eb11c2-3:rule-7",
+        "eb11c2-3:warm-up-3"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(3n^2-5n-4)/12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-2:b",
+      "record_id": "eb11c2-3:try-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 3\\times(-2)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b03a6dbf18a5b04ec1bd8cd38bcc3605",
+      "kind": "value",
+      "answer": "1-(-2)^n",
+      "solution": [
+        "First term 3, ratio -2.",
+        "$\\frac{3\\{1-(-2)^n\\}}{1-(-2)}=\\frac{3\\{1-(-2)^n\\}}{3}$.",
+        "Answer: $1-(-2)^n$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-8",
+        "eb11c2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "1-(-2)^n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-2:c",
+      "record_id": "eb11c2-3:try-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 4^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a0d30a36bbecc932b36fafaa00ec9746",
+      "kind": "value",
+      "answer": "(4^n-1)/3",
+      "solution": [
+        "First term 1, ratio 4 (r>1).",
+        "$\\frac{1\\times(4^n-1)}{4-1}$.",
+        "Answer: $\\frac{4^n-1}{3}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "(4^n-1)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-2:d",
+      "record_id": "eb11c2-3:try-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (-5)^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7146d6d74bbadbf11cabf4729846be71",
+      "kind": "value",
+      "answer": "5((-5)^n-1)/6",
+      "solution": [
+        "$(-5)^k=-5\\times(-5)^{k-1}$: first term -5, ratio -5 (r<1).",
+        "$\\frac{-5\\{1-(-5)^n\\}}{1-(-5)}=\\frac{-5\\{1-(-5)^n\\}}{6}$.",
+        "Answer: $\\frac{5\\{(-5)^n-1\\}}{6}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "5((-5)^n-1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:work-with-a-partner-1",
+      "record_id": "eb11c2-3:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 75,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "00c058e51ae9f3173915a7b8ea7f9de8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the parts of the try and exercise sums are not given, only the activity instruction.",
+      "solution": [
+        "The sums to be found in try-2 and exercise-3 are not shown.",
+        "So no values can be read from the question."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the activity prompt has no specific values (the sums are not given).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:a",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k(k^2-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "95b775def4338480665ec8a2b6ae99f2",
+      "kind": "value",
+      "answer": "(1/4)n(n+1)(n+2)(n-1)",
+      "solution": [
+        "Expand: $k(k^2-1)=k^3-k$.",
+        "$\\{\\frac12 n(n+1)\\}^2-\\frac12 n(n+1)=\\frac14 n(n+1)\\{n(n+1)-2\\}$.",
+        "$n^2+n-2=(n+2)(n-1)$.",
+        "Answer: $\\frac14 n(n+1)(n+2)(n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-6",
+        "eb11c2-3:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "(n-1)n(n+1)(n+2)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:b",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k^2(k+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "afde4ee4e98eef02b09a1f97f356383b",
+      "kind": "value",
+      "answer": "(1/12)n(n+1)(3n^2+11n+4)",
+      "solution": [
+        "Expand: $k^2(k+2)=k^3+2k^2$.",
+        "$\\{\\frac12 n(n+1)\\}^2+\\frac13 n(n+1)(2n+1)$.",
+        "$=\\frac1{12}n(n+1)\\{3n(n+1)+4(2n+1)\\}$.",
+        "Answer: $\\frac1{12}n(n+1)(3n^2+11n+4)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(3n^2+11n+4)/12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:c",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k(k^2+2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "17f6e2c06a021eed391e308528ae672a",
+      "kind": "value",
+      "answer": "(1/4)n(n+1)(n^2+n+4)",
+      "solution": [
+        "Expand: $k(k^2+2)=k^3+2k$.",
+        "$\\{\\frac12 n(n+1)\\}^2+n(n+1)=\\frac14 n(n+1)\\{n(n+1)+4\\}$.",
+        "Answer: $\\frac14 n(n+1)(n^2+n+4)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-5",
+        "eb11c2-3:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(n^2+n+4)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:d",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} k^2(k-3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b9e9ed71aea206f2c9d4e1e16375d7d5",
+      "kind": "value",
+      "answer": "(1/4)n(n+1)(n^2-3n-2)",
+      "solution": [
+        "Expand: $k^2(k-3)=k^3-3k^2$.",
+        "$\\{\\frac12 n(n+1)\\}^2-\\frac12 n(n+1)(2n+1)$.",
+        "$=\\frac14 n(n+1)\\{n(n+1)-2(2n+1)\\}$.",
+        "Answer: $\\frac14 n(n+1)(n^2-3n-2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-6",
+        "eb11c2-3:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "n(n+1)(n^2-3n-2)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:e",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "e",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 6\\times 3^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bc8ff440e5cd6dc2f86c0811ff4bf4f3",
+      "kind": "value",
+      "answer": "3(3^n-1)",
+      "solution": [
+        "First term 6, ratio 3 (r>1).",
+        "$\\frac{6(3^n-1)}{3-1}$.",
+        "Answer: $3(3^n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "3(3^n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:f",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "f",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 2\\times(-1)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8608531da0a9047ae255eda39e8e37d4",
+      "kind": "value",
+      "answer": "1-(-1)^n",
+      "solution": [
+        "First term 2, ratio -1.",
+        "$\\frac{2\\{1-(-1)^n\\}}{1-(-1)}$.",
+        "Answer: $1-(-1)^n$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "1-(-1)^n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:g",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "g",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 4\\times 2^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cb20b62dfc237d63c33d51eea1832d2b",
+      "kind": "value",
+      "answer": "4(2^n-1)",
+      "solution": [
+        "First term 4, ratio 2 (r>1).",
+        "$\\frac{4(2^n-1)}{2-1}$.",
+        "Answer: $4(2^n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "4(2^n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:h",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "h",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 8\\times(-3)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "31cd1bc138ae0f63bca72b65ef5da85c",
+      "kind": "value",
+      "answer": "2(1-(-3)^n)",
+      "solution": [
+        "First term 8, ratio -3.",
+        "$\\frac{8\\{1-(-3)^n\\}}{1-(-3)}=\\frac{8\\{1-(-3)^n\\}}{4}$.",
+        "Answer: $2\\{1-(-3)^n\\}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "2(1-(-3)^n)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:i",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "i",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 3^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a1a6bf12aa84d68139fa46d02bd8beaf",
+      "kind": "value",
+      "answer": "(3^n-1)/2",
+      "solution": [
+        "First term 1, ratio 3 (r>1).",
+        "$\\frac{3^n-1}{3-1}$.",
+        "Answer: $\\frac{3^n-1}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "(3^n-1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:j",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "j",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{4} (-2)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "48b509c332bf934c818d68a74b6f5da5",
+      "kind": "value",
+      "answer": "-5",
+      "solution": [
+        "First term 1, ratio -2, 4 terms: $\\frac{1-(-2)^4}{1-(-2)}$.",
+        "$=\\frac{1-16}{3}=-5$.",
+        "Check: 1-2+4-8 = -5.",
+        "Answer: -5."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9",
+        "eb11c2-3:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "-5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:k",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "k",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (-2)^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a41e9ff526f6822c9dd4ad4b7afe1a80",
+      "kind": "value",
+      "answer": "(1-(-2)^n)/3",
+      "solution": [
+        "First term 1, ratio -2.",
+        "$\\frac{1-(-2)^n}{1-(-2)}$.",
+        "Answer: $\\frac{1-(-2)^n}{3}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9",
+        "eb11c2-3:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "(1-(-2)^n)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:l",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "l",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{3} 3^{k-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5635491d316848880d823233d48d7e6c",
+      "kind": "value",
+      "answer": "13",
+      "solution": [
+        "First term 1, ratio 3, 3 terms: $\\frac{3^3-1}{3-1}$.",
+        "$=\\frac{26}{2}=13$.",
+        "Check: 1+3+9 = 13.",
+        "Answer: 13."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:m",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "m",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} (-3)^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4392a37a89c7bff0dd9abd7c5b712c3c",
+      "kind": "value",
+      "answer": "3((-3)^n-1)/4",
+      "solution": [
+        "$(-3)^k=-3\\times(-3)^{k-1}$: first term -3, ratio -3.",
+        "$\\frac{-3\\{1-(-3)^n\\}}{1-(-3)}=\\frac{-3\\{1-(-3)^n\\}}{4}$.",
+        "Answer: $\\frac{3\\{(-3)^n-1\\}}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "3((-3)^n-1)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:n",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "n",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{5} 2^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "567b766f175a849358fb0049f6239f76",
+      "kind": "value",
+      "answer": "62",
+      "solution": [
+        "$2^k$: first term 2, ratio 2, 5 terms.",
+        "$\\frac{2(2^5-1)}{2-1}=2\\times31=62$.",
+        "Answer: 62."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "62",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:o",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "o",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n} 2^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ef78f1af405ab1e67396393814b3fe2c",
+      "kind": "value",
+      "answer": "2(2^n-1)",
+      "solution": [
+        "First term 2, ratio 2.",
+        "$\\frac{2(2^n-1)}{2-1}$.",
+        "Answer: $2(2^n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-10",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "2(2^n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-3:p",
+      "record_id": "eb11c2-3:exercise-3",
+      "part": "p",
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{4} (-3)^k$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1ddb01aaaa1d177a6f191528215dfb58",
+      "kind": "value",
+      "answer": "60",
+      "solution": [
+        "First term -3, ratio -3, 4 terms: $\\frac{-3\\{1-(-3)^4\\}}{1-(-3)}$.",
+        "$=\\frac{-3\\times(-80)}{4}=60$.",
+        "Check: -3+9-27+81 = 60.",
+        "Answer: 60."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-9",
+        "eb11c2-3:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "60",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-3",
+      "record_id": "eb11c2-3:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 75,
+      "question": {
+        "text": "Find the following sum: $\\sum_{r=5}^{9} (2r+7)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "31717cf88a68e018f187ed32c47c3796",
+      "kind": "value",
+      "answer": "105",
+      "solution": [
+        "Write out the terms: r=5: 17, r=6: 19, r=7: 21, r=8: 23, r=9: 25.",
+        "Add: 17+19+21+23+25 = 105.",
+        "Answer: 105."
+      ],
+      "grounded_in": [
+        "eb11c2-3:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "105",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-4:a",
+      "record_id": "eb11c2-3:warm-up-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 76,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{2\\times5}+\\frac{1}{5\\times8}+\\frac{1}{8\\times11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1d5414a393e9b751f482762935a95450",
+      "kind": "value",
+      "answer": "n/(2(3n+2))",
+      "solution": [
+        "Use $\\frac1{ab}=\\frac1{b-a}(\\frac1a-\\frac1b)$ with b-a=3 on each term.",
+        "$=\\frac13\\{(\\frac12-\\frac15)+(\\frac15-\\frac18)+\\dots+(\\frac1{3n-1}-\\frac1{3n+2})\\}$.",
+        "Cancel: $=\\frac13(\\frac12-\\frac1{3n+2})$.",
+        "Answer: $\\frac{n}{2(3n+2)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2",
+        "eb11c2-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "n/(2(3n+2))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-4:b",
+      "record_id": "eb11c2-3:warm-up-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 76,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c9b39e60858f0dce6854175f795537de",
+      "kind": "value",
+      "answer": "sqrt(n+2) - sqrt(2)",
+      "solution": [
+        "Rationalize: $\\frac1{\\sqrt{k+2}+\\sqrt{k+1}}=\\sqrt{k+2}-\\sqrt{k+1}$.",
+        "Write as a sum of terms: $(\\sqrt3-\\sqrt2)+(\\sqrt4-\\sqrt3)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$.",
+        "Cancel: $\\sqrt{n+2}-\\sqrt2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:rule-14",
+        "eb11c2-3:method-2",
+        "eb11c2-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{n+2}-\\sqrt{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:work-with-a-partner-2",
+      "record_id": "eb11c2-3:work-with-a-partner-2",
+      "part": null,
+      "type": "activity",
+      "page": 77,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "888e72bf95d4890f07619581981dc1aa",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the sums in the try section are not given, only the activity instruction.",
+      "solution": [
+        "The sums to be found in try-3 are not shown.",
+        "So no values can be read from the question."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the activity prompt has no specific values (the sums are not given).",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-3:a",
+      "record_id": "eb11c2-3:try-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{2\\times3}+\\frac{1}{3\\times4}+\\frac{1}{4\\times5}+\\dots+\\frac{1}{(n+1)(n+2)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e261e8d49153713a7378fcc98f09a16d",
+      "kind": "value",
+      "answer": "n/(2(n+2))",
+      "solution": [
+        "Each term $\\frac1{(k+1)(k+2)}=\\frac1{k+1}-\\frac1{k+2}$ (b-a=1).",
+        "Sum: $(\\frac12-\\frac13)+(\\frac13-\\frac14)+\\dots+(\\frac1{n+1}-\\frac1{n+2})$.",
+        "Cancel: $\\frac12-\\frac1{n+2}$.",
+        "Answer: $\\frac{n}{2(n+2)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(2(n+2))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-3:b",
+      "record_id": "eb11c2-3:try-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{1\\times3}+\\frac{1}{3\\times5}+\\frac{1}{5\\times7}+\\dots+\\frac{1}{(2n-1)(2n+1)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b69e500cae3da060ca472d1f8cab3275",
+      "kind": "value",
+      "answer": "n/(2n+1)",
+      "solution": [
+        "Each term $=\\frac12(\\frac1{2k-1}-\\frac1{2k+1})$ (b-a=2).",
+        "Cancel: $\\frac12(1-\\frac1{2n+1})$.",
+        "Answer: $\\frac{n}{2n+1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(2n+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-3:c",
+      "record_id": "eb11c2-3:try-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{4\\times6}+\\frac{1}{5\\times7}+\\frac{1}{6\\times8}+\\dots+\\frac{1}{(n+3)(n+5)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6bd23b1a5722366c911cfc810ba0f402",
+      "kind": "value",
+      "answer": "9/40 - (2n+9)/(2(n+4)(n+5))",
+      "solution": [
+        "Each term $\\frac1{(k+3)(k+5)}=\\frac12(\\frac1{k+3}-\\frac1{k+5})$, k=1 to n (b-a=2).",
+        "Terms: $\\frac12\\{(\\frac14-\\frac16)+(\\frac15-\\frac17)+(\\frac16-\\frac18)+\\dots+(\\frac1{n+3}-\\frac1{n+5})\\}$.",
+        "Cancel: what remains is $\\frac14+\\frac15-\\frac1{n+4}-\\frac1{n+5}$.",
+        "$=\\frac12\\left(\\frac9{20}-\\frac1{n+4}-\\frac1{n+5}\\right)$.",
+        "Answer: $\\frac9{40}-\\frac{2n+9}{2(n+4)(n+5)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "9/40 - (2n+9)/(2(n+4)(n+5))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-3:d",
+      "record_id": "eb11c2-3:try-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+1}+\\sqrt{k}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7f0c236284df7e94c7647c303695670a",
+      "kind": "value",
+      "answer": "sqrt(n+1) - 1",
+      "solution": [
+        "Rationalize: $\\frac1{\\sqrt{k+1}+\\sqrt k}=\\sqrt{k+1}-\\sqrt k$.",
+        "Sum: $(\\sqrt2-1)+(\\sqrt3-\\sqrt2)+\\dots+(\\sqrt{n+1}-\\sqrt n)$.",
+        "Cancel: $\\sqrt{n+1}-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:rule-14",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{n+1}-1$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-4:a",
+      "record_id": "eb11c2-3:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{1\\times2}+\\frac{1}{2\\times3}+\\frac{1}{3\\times4}+\\dots+\\frac{1}{n(n+1)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "82a39184e24319803e4da9c5ef6bf896",
+      "kind": "value",
+      "answer": "n/(n+1)",
+      "solution": [
+        "Each term $\\frac1{k(k+1)}=\\frac1k-\\frac1{k+1}$.",
+        "Cancel: $1-\\frac1{n+1}$.",
+        "Answer: $\\frac{n}{n+1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(n+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-4:b",
+      "record_id": "eb11c2-3:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{2\\times4}+\\frac{1}{4\\times6}+\\frac{1}{6\\times8}+\\dots+\\frac{1}{2n(2n+2)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b450d3229c7a47f5be8bef8eb294f4f0",
+      "kind": "value",
+      "answer": "n/(4(n+1))",
+      "solution": [
+        "Each term $\\frac1{2k(2k+2)}=\\frac14\\cdot\\frac1{k(k+1)}=\\frac14(\\frac1k-\\frac1{k+1})$.",
+        "Cancel: $\\frac14(1-\\frac1{n+1})$.",
+        "Answer: $\\frac{n}{4(n+1)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(4(n+1))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-4:c",
+      "record_id": "eb11c2-3:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{1\\times3}+\\frac{1}{2\\times4}+\\frac{1}{3\\times5}+\\dots+\\frac{1}{n(n+2)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "979e57871d6034cf3ea272d59a907068",
+      "kind": "value",
+      "answer": "3/4 - (2n+3)/(2(n+1)(n+2))",
+      "solution": [
+        "Each term $\\frac1{k(k+2)}=\\frac12(\\frac1k-\\frac1{k+2})$.",
+        "Terms: $\\frac12\\{(1-\\frac13)+(\\frac12-\\frac14)+(\\frac13-\\frac15)+\\dots+(\\frac1n-\\frac1{n+2})\\}$.",
+        "Cancel: remains $1+\\frac12-\\frac1{n+1}-\\frac1{n+2}$.",
+        "$=\\frac12\\left(\\frac32-\\frac1{n+1}-\\frac1{n+2}\\right)$.",
+        "Answer: $\\frac34-\\frac{2n+3}{2(n+1)(n+2)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "3/4 - (2n+3)/(2(n+1)(n+2))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-4:d",
+      "record_id": "eb11c2-3:exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k}+\\sqrt{k-1}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8bb7e20e02ec1fec5c6d377cb27b2d08",
+      "kind": "value",
+      "answer": "sqrt(n)",
+      "solution": [
+        "Rationalize: $\\frac1{\\sqrt k+\\sqrt{k-1}}=\\sqrt k-\\sqrt{k-1}$.",
+        "Sum: $(1-0)+(\\sqrt2-1)+\\dots+(\\sqrt n-\\sqrt{n-1})$.",
+        "Cancel: $\\sqrt n$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:rule-14",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{n}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-4:e",
+      "record_id": "eb11c2-3:exercise-4",
+      "part": "e",
+      "type": "exercise",
+      "page": 77,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{\\sqrt2+\\sqrt3}+\\frac{1}{\\sqrt3+\\sqrt4}+\\frac{1}{\\sqrt4+\\sqrt5}+\\dots+\\frac{1}{\\sqrt{n+1}+\\sqrt{n+2}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e46f74b5d8d969b998017a910405c4fb",
+      "kind": "value",
+      "answer": "sqrt(n+2) - sqrt(2)",
+      "solution": [
+        "Rationalize each term: $\\frac1{\\sqrt{k+1}+\\sqrt{k+2}}=\\sqrt{k+2}-\\sqrt{k+1}$.",
+        "Sum: $(\\sqrt3-\\sqrt2)+(\\sqrt4-\\sqrt3)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$.",
+        "Cancel: $\\sqrt{n+2}-\\sqrt2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:method-2",
+        "eb11c2-3:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{n+2}-\\sqrt{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-19:a",
+      "record_id": "eb11c2-3:exercise-19",
+      "part": "a",
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{3\\times4}+\\frac{1}{4\\times5}+\\frac{1}{5\\times6}+\\dots+\\frac{1}{(n+2)(n+3)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a20fe3a787a4ed6e2b2b4a260d6953de",
+      "kind": "value",
+      "answer": "n/(3(n+3))",
+      "solution": [
+        "Each term $\\frac1{(k+2)(k+3)}=\\frac1{k+2}-\\frac1{k+3}$.",
+        "Cancel: $\\frac13-\\frac1{n+3}$.",
+        "Answer: $\\frac{n}{3(n+3)}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(3(n+3))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-19:b",
+      "record_id": "eb11c2-3:exercise-19",
+      "part": "b",
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{1\\times4}+\\frac{1}{4\\times7}+\\frac{1}{7\\times10}+\\dots+\\frac{1}{(3n-2)(3n+1)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7a6ad71c68ec578d60c6e74423314c5e",
+      "kind": "value",
+      "answer": "n/(3n+1)",
+      "solution": [
+        "Each term $\\frac1{(3k-2)(3k+1)}=\\frac13(\\frac1{3k-2}-\\frac1{3k+1})$.",
+        "Cancel: $\\frac13(1-\\frac1{3n+1})$.",
+        "Answer: $\\frac{n}{3n+1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "n/(3n+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-19:c",
+      "record_id": "eb11c2-3:exercise-19",
+      "part": "c",
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{1\\times7}+\\frac{1}{4\\times10}+\\frac{1}{7\\times13}+\\dots+\\frac{1}{(3n-2)(3n+4)}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e9c6f8c5b02a925a3f4f65d908a5ba64",
+      "kind": "value",
+      "answer": "(1/6)(5/4 - 1/(3n+1) - 1/(3n+4))",
+      "solution": [
+        "Each term $\\frac1{(3k-2)(3k+4)}=\\frac16(\\frac1{3k-2}-\\frac1{3k+4})$ (b-a=6).",
+        "Terms: $\\frac16\\{(1-\\frac17)+(\\frac14-\\frac1{10})+(\\frac17-\\frac1{13})+\\dots\\}$.",
+        "Cancel: remains $1+\\frac14-\\frac1{3n+1}-\\frac1{3n+4}$.",
+        "Answer: $\\frac16\\left(\\frac54-\\frac1{3n+1}-\\frac1{3n+4}\\right)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "5/24 - (6n+5)/(6(3n+1)(3n+4))",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-19:d",
+      "record_id": "eb11c2-3:exercise-19",
+      "part": "d",
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{2k-1}+\\sqrt{2k+1}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "860d8455f3bff68ee6ea379be0886503",
+      "kind": "value",
+      "answer": "(sqrt(2n+1) - 1)/2",
+      "solution": [
+        "Rationalize: $\\frac1{\\sqrt{2k-1}+\\sqrt{2k+1}}=\\frac{\\sqrt{2k+1}-\\sqrt{2k-1}}{2}$.",
+        "Factor out $\\frac12$: $\\frac12\\{(\\sqrt3-1)+(\\sqrt5-\\sqrt3)+\\dots+(\\sqrt{2n+1}-\\sqrt{2n-1})\\}$.",
+        "Cancel: $\\frac12(\\sqrt{2n+1}-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:rule-14",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "$(\\sqrt{2n+1}-1)/2$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-19:e",
+      "record_id": "eb11c2-3:exercise-19",
+      "part": "e",
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "$\\frac{1}{\\sqrt1+\\sqrt2}+\\frac{1}{\\sqrt2+\\sqrt3}+\\frac{1}{\\sqrt3+\\sqrt4}+\\dots+\\frac{1}{\\sqrt n+\\sqrt{n+1}}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "11809492dcb611c6d60efbb27b741d88",
+      "kind": "value",
+      "answer": "sqrt(n+1) - 1",
+      "solution": [
+        "Rationalize: $\\frac1{\\sqrt k+\\sqrt{k+1}}=\\sqrt{k+1}-\\sqrt k$.",
+        "Sum: $(\\sqrt2-1)+(\\sqrt3-\\sqrt2)+\\dots+(\\sqrt{n+1}-\\sqrt n)$.",
+        "Cancel: $\\sqrt{n+1}-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-13",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{n+1}-1$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-4",
+      "record_id": "eb11c2-3:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 78,
+      "question": {
+        "text": "Find with steps $\\sum_{r=1}^{30}\\frac{1}{r(r+2)}$",
+        "stem": "",
+        "notes": "Printed in a Challenge box (star heading)."
+      },
+      "needs_page": false,
+      "question_fingerprint": "07da076a27012d50d61481722f9d6762",
+      "kind": "value",
+      "answer": "1425/1984",
+      "solution": [
+        "Split each term: $\\frac{1}{r(r+2)}=\\frac12\\left(\\frac1r-\\frac1{r+2}\\right)$.",
+        "Write the sum and cancel the terms that add to zero.",
+        "What remains is $\\frac12\\left(1+\\frac12-\\frac1{31}-\\frac1{32}\\right)$.",
+        "$\\frac12\\left(\\frac32-\\frac{63}{992}\\right)=\\frac12\\times\\frac{1425}{992}$.",
+        "The sum is 1425/1984."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-1",
+        "eb11c2-3:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "1425/1984",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-5:S",
+      "record_id": "eb11c2-3:warm-up-5",
+      "part": "S",
+      "type": "exercise",
+      "page": 79,
+      "question": {
+        "text": "Find the following sum S",
+        "stem": "$S=3\\times1+5\\times3+7\\times3^2+9\\times3^3+\\dots+(2n+1)\\times3^{n-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "eb98811a6c24648fcf7b4669c53f90ad",
+      "kind": "value",
+      "answer": "S = n x 3^n",
+      "solution": [
+        "Arithmetic (3, 5, 7, ...) times geometric (ratio 3).",
+        "$3S=3\\times3+5\\times3^2+\\dots+(2n+1)\\times3^n$.",
+        "$S-3S$: $-2S=3\\times1+2\\times3+2\\times3^2+\\dots+2\\times3^{n-1}-(2n+1)\\times3^n$.",
+        "Middle terms: geometric, first term 2, ratio 3, n-1 terms: $\\frac{2(3^n-1)}{3-1}-2$.",
+        "$-2S=3+(3^n-1)-2-(2n+1)3^n=3^n-(2n+1)3^n=-2n\\times3^n$.",
+        "Divide by -2: $S=n\\times3^n$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3",
+        "eb11c2-3:caution-1",
+        "eb11c2-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "S = n×3^n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-4:S",
+      "record_id": "eb11c2-3:try-4",
+      "part": "S",
+      "type": "exercise",
+      "page": 79,
+      "question": {
+        "text": "Find the following sum S (Work with a partner: collaborate with your group to solve the try section then discuss the answer.)",
+        "stem": "$S=2\\times1+3\\times3+4\\times3^2+5\\times3^3+\\dots+(n+1)\\times3^{n-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "078f9982df0c728fa098813dec391ed5",
+      "kind": "value",
+      "answer": "S = ((2n+1)·3^n - 1)/4",
+      "solution": [
+        "Arithmetic (2, 3, 4, ...) times geometric (ratio 3).",
+        "$3S=2\\times3+3\\times3^2+\\dots+n\\times3^{n-1}+(n+1)\\times3^n$.",
+        "$S-3S$: $-2S=2+3+3^2+\\dots+3^{n-1}-(n+1)3^n$ (the sign of the last term changes).",
+        "Geometric part $3+3^2+\\dots+3^{n-1}$: first term 3, ratio 3, n-1 terms $=\\frac{3(3^{n-1}-1)}{2}=\\frac{3^n-3}{2}$.",
+        "$-2S=2+\\frac{3^n-3}{2}-(n+1)3^n=\\frac{1-(2n+1)3^n}{2}$.",
+        "Divide by -2: $S=\\frac{(2n+1)3^n-1}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3",
+        "eb11c2-3:caution-1",
+        "eb11c2-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "S = ((2n+1)·3^n − 1)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-5",
+      "record_id": "eb11c2-3:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 80,
+      "question": {
+        "text": "Find the following sums S",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "62f66c1b5480a8426b4e2053ea8cef83",
+      "kind": "value",
+      "answer": "Sum 1: S = (n-1)·2^n + 1; Sum 2: S = (n-1)·3^(n+1) + 3",
+      "solution": [
+        "Sum 1: $2S=1\\times2+2\\times2^2+\\dots+(n-1)2^{n-1}+n\\times2^n$.",
+        "$S-2S=1+2+2^2+\\dots+2^{n-1}-n\\times2^n$.",
+        "$-S=(2^n-1)-n\\times2^n=(1-n)2^n-1$.",
+        "So $S=(n-1)2^n+1$.",
+        "Sum 2: $3S=1\\times3^2+3\\times3^3+\\dots+(2n-3)3^n+(2n-1)3^{n+1}$.",
+        "$S-3S$: $-2S=3+2\\times3^2+2\\times3^3+\\dots+2\\times3^n-(2n-1)3^{n+1}$.",
+        "Geometric part: first term 18, ratio 3, n-1 terms $=\\frac{18(3^{n-1}-1)}{2}=3^{n+1}-9$.",
+        "$-2S=3+3^{n+1}-9-(2n-1)3^{n+1}=-6-(2n-2)3^{n+1}$.",
+        "So $S=3+(n-1)3^{n+1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3",
+        "eb11c2-3:caution-1",
+        "eb11c2-3:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "(1) S = (n−1)·2^n + 1; (2) S = (n−1)·3^(n+1) + 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-6",
+      "record_id": "eb11c2-3:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 80,
+      "question": {
+        "text": "Find the sum $S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0b35d2de720645204c6261d78bad4b9a",
+      "kind": "value",
+      "answer": "S = (n-1)2^n + 1",
+      "solution": [
+        "S = 1 + 2·2 + 3·2² + ... + n·2^{n-1}.",
+        "Multiply by the ratio 2: 2S = 1·2 + 2·2² + ... + (n-1)·2^{n-1} + n·2^n.",
+        "Subtract: S - 2S = 1 + 2 + 2² + ... + 2^{n-1} - n·2^n.",
+        "The geometric sum is $\\frac{2^n-1}{2-1}=2^n-1$.",
+        "So -S = 2^n - 1 - n·2^n.",
+        "S = (n-1)2^n + 1."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3",
+        "eb11c2-3:rule-10",
+        "eb11c2-3:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "S = (n-1)2^n + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-7",
+      "record_id": "eb11c2-3:exercise-7",
+      "part": null,
+      "type": "exercise",
+      "page": 80,
+      "question": {
+        "text": "Find the sum $S = 1\\times3 + 3\\times3^2 + 5\\times3^3 + 7\\times3^4 + \\dots + (2n-1)\\times3^n$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "497d2c883c876526d093bc9f58fb6b62",
+      "kind": "value",
+      "answer": "S = (n-1)3^{n+1} + 3",
+      "solution": [
+        "S = 1·3 + 3·3² + 5·3³ + ... + (2n-1)·3^n.",
+        "Multiply by the ratio 3: 3S = 1·3² + 3·3³ + ... + (2n-3)·3^n + (2n-1)·3^{n+1}.",
+        "Subtract: -2S = 3 + 2(3² + 3³ + ... + 3^n) - (2n-1)3^{n+1}. The sign of the last term changes.",
+        "The geometric sum is 3² + ... + 3^n = $\\frac{9(3^{n-1}-1)}{2}$, so 2 times it is 3^{n+1} - 9.",
+        "-2S = 3 + 3^{n+1} - 9 - (2n-1)3^{n+1} = -6 + (2-2n)3^{n+1}.",
+        "S = (n-1)3^{n+1} + 3."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3",
+        "eb11c2-3:rule-10",
+        "eb11c2-3:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "S = (n-1)3^{n+1} + 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-5",
+      "record_id": "eb11c2-3:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 80,
+      "question": {
+        "text": "Find the following sum $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\dots\\dots+(4k+1)$",
+        "stem": "",
+        "notes": "Challenge box; sums listed with commas as printed."
+      },
+      "needs_page": true,
+      "question_fingerprint": "58193dc05e9f375056a2899189f59e2f",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the question does not say whether to find the k-th term or a total of a stated number of terms; only the k-th term, k(2k+3), can be found from the data.",
+      "solution": [
+        "The k-th term is $5+9+13+\\dots+(4k+1)=\\sum_{i=1}^{k}(4i+1)$.",
+        "$=4\\times\\frac12k(k+1)+k=2k^2+3k=k(2k+3)$.",
+        "The printed instruction does not state what total is wanted, so no single final value is asked for."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "The k-th term is 2k^2+3k = k(2k+3); the sum of the first k terms is k(k+1)(4k+11)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-6:a",
+      "record_id": "eb11c2-3:warm-up-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 81,
+      "question": {
+        "text": "Solve the following problems for the sequence $3, 3+5, 3+5+7, 3+5+7+9, \\dots$",
+        "stem": "Find the $k$-th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5b0b3a24389ce58c8a15c477d673a4cb",
+      "kind": "value",
+      "answer": "a_k = k(k+2)",
+      "solution": [
+        "$a_k=3+5+7+\\dots+(2k+1)=\\sum_{i=1}^{k}(2i+1)$.",
+        "$=2\\times\\frac12k(k+1)+k$.",
+        "$=k^2+2k$.",
+        "Answer: $a_k=k(k+2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_k = k(k+2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-6:b",
+      "record_id": "eb11c2-3:warm-up-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 81,
+      "question": {
+        "text": "Solve the following problems for the sequence $3, 3+5, 3+5+7, 3+5+7+9, \\dots$",
+        "stem": "Find the sum from the first term to the $n$-th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d3d0e54ca76d36b9d86ca477eb9eaaeb",
+      "kind": "value",
+      "answer": "S_n = (1/6)n(n+1)(2n+7)",
+      "solution": [
+        "$S_n=\\sum_{k=1}^{n}k(k+2)=\\sum(k^2+2k)$.",
+        "$=\\frac16n(n+1)(2n+1)+2\\times\\frac12n(n+1)$.",
+        "Calculating gives $S_n=\\frac16n(n+1)(2n+7)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = n(n+1)(2n+7)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-5",
+      "record_id": "eb11c2-3:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 81,
+      "question": {
+        "text": "Solve the following problems for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$ Find the $k$-th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2dc8185044b5918934f314cfe12b6a66",
+      "kind": "value",
+      "answer": "a_k = k^2",
+      "solution": [
+        "$a_k=1+3+5+\\dots+(2k-1)=\\sum_{i=1}^{k}(2i-1)$.",
+        "$=2\\times\\frac12k(k+1)-k$.",
+        "$=k^2$.",
+        "Answer: $a_k=k^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_k = k^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-6",
+      "record_id": "eb11c2-3:try-6",
+      "part": null,
+      "type": "exercise",
+      "page": 81,
+      "question": {
+        "text": "Find the sum from the first term to the $n$-th term (for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e53badd7584971d865236f4b74b7ec4c",
+      "kind": "value",
+      "answer": "S_n = n(n+1)(2n+1)/6",
+      "solution": [
+        "The k-th term is $a_k=\\sum_{i=1}^{k}(2i-1)=2\\cdot\\frac12k(k+1)-k=k^2$.",
+        "$S_n=\\sum_{k=1}^{n}k^2$.",
+        "Use the formula for Σk².",
+        "S_n = n(n+1)(2n+1)/6."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3",
+        "eb11c2-3:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = n(n+1)(2n+1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-8:a",
+      "record_id": "eb11c2-3:exercise-8",
+      "part": "a",
+      "type": "exercise",
+      "page": 82,
+      "question": {
+        "text": "Solve the following problems for the sequence $1, 1+5, 1+5+9, 1+5+9+13, \\ldots$",
+        "stem": "Find the $k$-th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7978e6cfe5412118cac0b278af797586",
+      "kind": "value",
+      "answer": "a_k = k(2k-1)",
+      "solution": [
+        "$a_k=1+5+9+\\dots+(4k-3)=\\sum_{i=1}^{k}(4i-3)$.",
+        "$=4\\times\\frac12k(k+1)-3k$.",
+        "$=2k^2-k$.",
+        "Answer: $a_k=k(2k-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-1",
+        "eb11c2-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_k = k(2k-1) = 2k^2 - k",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-8:b",
+      "record_id": "eb11c2-3:exercise-8",
+      "part": "b",
+      "type": "exercise",
+      "page": 82,
+      "question": {
+        "text": "Solve the following problems for the sequence $1, 1+5, 1+5+9, 1+5+9+13, \\ldots$",
+        "stem": "Find the sum from the first term to the $n$-th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "792b3e154005047c466ee17e79b236b6",
+      "kind": "value",
+      "answer": "S_n = (1/6)n(n+1)(4n-1)",
+      "solution": [
+        "$S_n=\\sum_{k=1}^{n}(2k^2-k)$.",
+        "$=2\\times\\frac16n(n+1)(2n+1)-\\frac12n(n+1)$.",
+        "$=\\frac16n(n+1)\\{2(2n+1)-3\\}$.",
+        "Answer: $S_n=\\frac16n(n+1)(4n-1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = n(n+1)(4n-1)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-9:a",
+      "record_id": "eb11c2-3:exercise-9",
+      "part": "a",
+      "type": "exercise",
+      "page": 82,
+      "question": {
+        "text": "Solve the following problems for the sequence $2, 2+4, 2+4+6, 2+4+6+8, \\ldots$",
+        "stem": "Find the $k$-th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1ee1799d41df873c6a6ee4619a78bfbe",
+      "kind": "value",
+      "answer": "a_k = k(k+1)",
+      "solution": [
+        "$a_k=2+4+6+\\dots+2k=\\sum_{i=1}^{k}2i$.",
+        "$=2\\times\\frac12k(k+1)$.",
+        "Answer: $a_k=k(k+1)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_k = k(k+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-9:b",
+      "record_id": "eb11c2-3:exercise-9",
+      "part": "b",
+      "type": "exercise",
+      "page": 82,
+      "question": {
+        "text": "Solve the following problems for the sequence $2, 2+4, 2+4+6, 2+4+6+8, \\ldots$",
+        "stem": "Find the sum from the first term to the $n$−th term.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "83dc9961cf76b59f907333df8e7ddf40",
+      "kind": "value",
+      "answer": "S_n = (1/3)n(n+1)(n+2)",
+      "solution": [
+        "$S_n=\\sum_{k=1}^{n}(k^2+k)$.",
+        "$=\\frac16n(n+1)(2n+1)+\\frac12n(n+1)$.",
+        "$=\\frac16n(n+1)\\{(2n+1)+3\\}=\\frac16n(n+1)(2n+4)$.",
+        "Answer: $S_n=\\frac13n(n+1)(n+2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:worked-example-3",
+        "eb11c2-3:rule-2",
+        "eb11c2-3:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = n(n+1)(n+2)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-6",
+      "record_id": "eb11c2-3:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 82,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum of the first n terms is given by the formula $S_n = 2n^2 + 5n$",
+        "stem": "",
+        "notes": "Boxed 'Challenge' with star."
+      },
+      "needs_page": false,
+      "question_fingerprint": "5b8016cf1b77876e75f2b2a44b43322e",
+      "kind": "value",
+      "answer": "a_n = 4n + 3",
+      "solution": [
+        "For n ≥ 2: a_n = S_n - S_{n-1} = (2n²+5n) - {2(n-1)²+5(n-1)} = 4n + 3.",
+        "a_1 = S_1 = 2+5 = 7.",
+        "Put n=1 in 4n+3: 7, which matches a_1.",
+        "So a_n = 4n + 3 for all n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4n+3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-7:a",
+      "record_id": "eb11c2-3:warm-up-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 83,
+      "question": {
+        "text": "Find the general term of the sequence {a_n} where the sum Sn from the first term to the n-th term is given by the following formulas.",
+        "stem": "$S_n = n^2-3n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "440b2c542eab1ea2cfc6069b09d313d2",
+      "kind": "value",
+      "answer": "a_n = 2n-4",
+      "solution": [
+        "For n ≥ 2: $a_n=S_n-S_{n-1}=(n^2-3n)-\\{(n-1)^2-3(n-1)\\}=2n-4$.",
+        "First term: $a_1=S_1=1-3=-2$.",
+        "n=1 in 2n-4 gives -2, so it also holds.",
+        "Answer: $a_n=2n-4$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:explanation-2",
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n-4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:warm-up-7:b",
+      "record_id": "eb11c2-3:warm-up-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 83,
+      "question": {
+        "text": "Find the general term of the sequence {a_n} where the sum Sn from the first term to the n-th term is given by the following formulas.",
+        "stem": "$S_n = 5^n-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b2566fe0a1bd331481a09dc0450fa6df",
+      "kind": "value",
+      "answer": "a_n = 4 x 5^(n-1)",
+      "solution": [
+        "For n ≥ 2: $a_n=S_n-S_{n-1}=(5^n-1)-(5^{n-1}-1)=5^n-5^{n-1}$.",
+        "$=5\\times5^{n-1}-5^{n-1}=4\\times5^{n-1}$.",
+        "First term: $a_1=S_1=5-1=4$.",
+        "n=1 in $4\\times5^{n-1}$ gives 4, so it also holds.",
+        "Answer: $a_n=4\\times5^{n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4×5^(n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-7",
+      "record_id": "eb11c2-3:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by the following formulas: $S_n = 2n^2+5n$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d5b3ce0955ec2298df63050beb267e58",
+      "kind": "value",
+      "answer": "a_n = 4n+3",
+      "solution": [
+        "For n ≥ 2: $a_n=S_n-S_{n-1}=(2n^2+5n)-\\{2(n-1)^2+5(n-1)\\}$.",
+        "$=2n^2+5n-2n^2+4n-2-5n+5=4n+3$.",
+        "First term: $a_1=S_1=2+5=7$.",
+        "n=1 in 4n+3 gives 7, so it also holds.",
+        "Answer: $a_n=4n+3$."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4n+3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-8",
+      "record_id": "eb11c2-3:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ is given by: $S_n = 3^n-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5b541a610030b715196f516f5dfe80c5",
+      "kind": "value",
+      "answer": "a_n = 2·3^{n-1}",
+      "solution": [
+        "For n ≥ 2: a_n = (3^n - 1) - (3^{n-1} - 1) = 3^n - 3^{n-1} = 2·3^{n-1}.",
+        "a_1 = S_1 = 3 - 1 = 2.",
+        "Put n=1 in 2·3^{n-1}: 2, which matches.",
+        "So a_n = 2·3^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2·3^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:try-9",
+      "record_id": "eb11c2-3:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ is given by: $S_n = n^3+2n+6$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1001afd410d776bf7092d5f88f0eafda",
+      "kind": "value",
+      "answer": "a_1 = 9, and a_n = 3n² - 3n + 3 when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (n³+2n+6) - {(n-1)³+2(n-1)+6} = 3n² - 3n + 3.",
+        "a_1 = S_1 = 1+2+6 = 9.",
+        "Put n=1 in 3n²-3n+3: 3, which does not match 9.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 9, and a_n = 3n^2 - 3n + 3 for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-10",
+      "record_id": "eb11c2-3:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by: $S_n = n^2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4930f9208c20916245d631c52378cf6b",
+      "kind": "value",
+      "answer": "a_n = 2n - 1",
+      "solution": [
+        "For n ≥ 2: a_n = n² - (n-1)² = 2n - 1.",
+        "a_1 = S_1 = 1.",
+        "Put n=1 in 2n-1: 1, which matches.",
+        "So a_n = 2n - 1."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-11",
+      "record_id": "eb11c2-3:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = n^2-4n$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "08957225d4681e9457fbaf608bab1f67",
+      "kind": "value",
+      "answer": "a_n = 2n - 5",
+      "solution": [
+        "For n ≥ 2: a_n = (n²-4n) - {(n-1)²-4(n-1)} = 2n - 5.",
+        "a_1 = S_1 = 1 - 4 = -3.",
+        "Put n=1 in 2n-5: -3, which matches.",
+        "So a_n = 2n - 5."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n-5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-12",
+      "record_id": "eb11c2-3:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = n^2+2n-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "47e6917c4a694bb3ea7f2b983406bec7",
+      "kind": "value",
+      "answer": "a_1 = 2, and a_n = 2n + 1 when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (n²+2n-1) - {(n-1)²+2(n-1)-1} = 2n + 1.",
+        "a_1 = S_1 = 1+2-1 = 2.",
+        "Put n=1 in 2n+1: 3, which does not match 2.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 2, and a_n = 2n+1 for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-13",
+      "record_id": "eb11c2-3:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = 2^n-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a8deab1250dd78c3290c05454fd72ff8",
+      "kind": "value",
+      "answer": "a_n = 2^{n-1}",
+      "solution": [
+        "For n ≥ 2: a_n = (2^n - 1) - (2^{n-1} - 1) = 2^{n-1}.",
+        "a_1 = S_1 = 2 - 1 = 1.",
+        "Put n=1 in 2^{n-1}: 1, which matches.",
+        "So a_n = 2^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-14",
+      "record_id": "eb11c2-3:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = 5^n-2$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cfd56641a6ee61e74895c33b387ab5b6",
+      "kind": "value",
+      "answer": "a_1 = 3, and a_n = 4·5^{n-1} when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (5^n - 2) - (5^{n-1} - 2) = 5^n - 5^{n-1} = 4·5^{n-1}.",
+        "a_1 = S_1 = 5 - 2 = 3.",
+        "Put n=1 in 4·5^{n-1}: 4, which does not match 3.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 3, and a_n = 4·5^{n-1} for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-15",
+      "record_id": "eb11c2-3:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = 7^n-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "df510bc0ab8baa29a7b486b07ea72f73",
+      "kind": "value",
+      "answer": "a_n = 6·7^{n-1}",
+      "solution": [
+        "For n ≥ 2: a_n = (7^n - 1) - (7^{n-1} - 1) = 7^n - 7^{n-1} = 6·7^{n-1}.",
+        "a_1 = S_1 = 7 - 1 = 6.",
+        "Put n=1 in 6·7^{n-1}: 6, which matches.",
+        "So a_n = 6·7^{n-1}."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-17"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 6·7^{n-1}",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-16",
+      "record_id": "eb11c2-3:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = n^3-1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b8a5a549b8e2d0ef507bfeffaba42184",
+      "kind": "value",
+      "answer": "a_1 = 0, and a_n = 3n² - 3n + 1 when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (n³-1) - {(n-1)³-1} = 3n² - 3n + 1.",
+        "a_1 = S_1 = 1 - 1 = 0.",
+        "Put n=1 in 3n²-3n+1: 1, which does not match 0.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 0, and a_n = 3n^2 - 3n + 1 for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:exercise-17",
+      "record_id": "eb11c2-3:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Same instruction: $S_n = 2^{n+2}-3$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "39a79b92b145eb0a7dcd28c66d83c4e0",
+      "kind": "value",
+      "answer": "a_1 = 5, and a_n = 2^{n+1} when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (2^{n+2} - 3) - (2^{n+1} - 3) = 2^{n+1}.",
+        "a_1 = S_1 = 2³ - 3 = 5.",
+        "Put n=1 in 2^{n+1}: 4, which does not match 5.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 5, and a_n = 2^{n+1} for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:challenge-7",
+      "record_id": "eb11c2-3:challenge-7",
+      "part": null,
+      "type": "exercise",
+      "page": 84,
+      "question": {
+        "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by: $S_n = 3^{n+1}-2n+1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "aec9c8beec7c0e3482ac92667ce91e1c",
+      "kind": "value",
+      "answer": "a_1 = 8, and a_n = 2·3^n - 2 when n ≥ 2",
+      "solution": [
+        "For n ≥ 2: a_n = (3^{n+1} - 2n + 1) - (3^n - 2(n-1) + 1) = 3^{n+1} - 3^n - 2 = 2·3^n - 2.",
+        "a_1 = S_1 = 9 - 2 + 1 = 8.",
+        "Put n=1 in 2·3^n-2: 4, which does not match 8.",
+        "So write both a_1 and a_n."
+      ],
+      "grounded_in": [
+        "eb11c2-3:rule-15",
+        "eb11c2-3:rule-16",
+        "eb11c2-3:method-4",
+        "eb11c2-3:rule-18"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 8, and a_n = 2·3^n - 2 for n ≥ 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-3:reflect-1",
+      "record_id": "eb11c2-3:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 84,
+      "question": {
+        "text": "How did breaking down a complex, combined sequence (AGS) into its simpler parts (arithmetic and geometric components) change your perspective on tackling intimidating multi-step problems in life or science?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0f6d8f4b82d24488ad75b2f158ee6119",
+      "kind": "explanation",
+      "answer": "Splitting a combined sequence into an arithmetic part and a geometric part makes a hard problem manageable (answers will vary).",
+      "solution": [
+        "An arithmetic × geometric sum looks hard at first.",
+        "Subtracting rS from S leaves a simple geometric sum plus one end term.",
+        "In the same way, any big problem can be broken into small steps that are each easy."
+      ],
+      "grounded_in": [
+        "eb11c2-3:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "Open reflection with no single answer. Splitting an arithmetic × geometric sum into S and rS turns it into two simpler parts, a geometric sum and a leftover end term. The same idea works on any big problem: break it into smaller, known pieces.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:13:02+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

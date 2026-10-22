@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-2-1:quad-by-linear",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-2-1",
+ "parent_question_id": "q:eb11c1-2-1:bk-challenge-1",
+ "source_page": 11,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "abs(m) < 2"
+  },
+  {
+   "name": "n",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "abs(n) < 2"
+  },
+  {
+   "name": "B",
+   "let": "m + n"
+  },
+  {
+   "name": "C",
+   "let": "m * n"
+  },
+  {
+   "require": "abs(B) > 1",
+   "why": "avoid a 1x or 0x term"
+  },
+  {
+   "name": "dv",
+   "let": "'x' + (' + ' if m > 0 else ' - ') + str(abs(m))"
+  },
+  {
+   "name": "tM",
+   "let": "(' + ' if m > 0 else ' - ') + str(abs(m)) + 'x'"
+  },
+  {
+   "name": "tB",
+   "let": "(' + ' if B > 0 else ' - ') + str(abs(B)) + 'x'"
+  },
+  {
+   "name": "tC",
+   "let": "(' + ' if C > 0 else ' - ') + str(abs(C))"
+  },
+  {
+   "name": "qp",
+   "let": "'x' + (' + ' if n > 0 else ' - ') + str(abs(n))"
+  }
+ ],
+ "constraints": [],
+ "stem": "Divide $x^2{=tB}{=tC}$ by $ {=dv} $ using long division, and write the quotient. (The remainder is zero.)",
+ "answer": "qp",
+ "solution": [
+  "Divide the first term $x^2$ by $x$ to get $x$. Multiply: $x({=dv})=x^2{=tM}$.",
+  "Subtract from $x^2{=tB}{=tC}$ (change every sign of the line taken away). What is left is ${=n}x{=tC}$.",
+  "Divide ${=n}x$ by $x$ to get ${=n}$. Multiply: ${=n}({=dv})={=n}x{=tC}$.",
+  "Subtract: the remainder is $0$, so the quotient is ${=qp}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=qp}",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Exact division of (x+m)(x+n) by x+m; m,n nonzero with |.|>=2 to avoid 1x terms. Python-style conditionals/str used in let strings."
+}

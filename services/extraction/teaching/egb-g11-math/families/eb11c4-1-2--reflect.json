@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-1-2:reflect",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-1-2",
+ "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+ "source_page": 154,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": "[v for v in range(-9, 10) if v != 0]"
+  },
+  {
+   "name": "b",
+   "choice": "[v for v in range(-9, 10) if v != 0]"
+  },
+  {
+   "name": "k",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "nm",
+   "let": "[\"x-axis\", \"y-axis\", \"origin\"][k]"
+  },
+  {
+   "name": "rx",
+   "let": "[a, -a, -a][k]"
+  },
+  {
+   "name": "ry",
+   "let": "[-b, b, -b][k]"
+  },
+  {
+   "name": "qn",
+   "let": "\"first\" if (a > 0 and b > 0) else (\"second\" if (a < 0 and b > 0) else (\"third\" if (a < 0 and b < 0) else \"fourth\"))"
+  }
+ ],
+ "constraints": [],
+ "stem": "The point $A({=a}, {=b})$ is given. Find the coordinates of the point symmetric to $A$ with respect to the {=nm}.",
+ "solution": [
+  "$A$ has $x = {=a}$ and $y = {=b}$, so it lies in the {=qn} quadrant.",
+  "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$.",
+  "With respect to the {=nm}, the symmetric point is $({=rx}, {=ry})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=rx}, {=ry})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Single skeleton: reflect a point in x-axis, y-axis or origin. Coordinates are never zero."
+}

@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "f3ffb29aa646631b02a907004ce9ef6c02ed14fa0860b1496ee502b567aba7a9",
+  "generated_sha256": "43443c949a08297b93565eb054cf102983efb8c93019255e191938e6b7751097",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c2-2:worked-example-2",
+    "verdict": "equivalent",
+    "reason": "Same ratio 1/2, A=48, B=6."
+   },
+   {
+    "ref": "eb11c2-2:explanation-1",
+    "verdict": "equivalent",
+    "reason": "Same two general terms (3·2^{n-1} or -3·(-2)^{n-1})."
+   },
+   {
+    "ref": "eb11c2-2:example-1",
+    "verdict": "equivalent",
+    "reason": "x=±4 is x=4 or x=-4."
+   },
+   {
+    "ref": "eb11c2-2:worked-example-3",
+    "verdict": "equivalent",
+    "reason": "Same two pairs: (5,2) and (35/3,-2)."
+   },
+   {
+    "ref": "eb11c2-2:worked-example-4",
+    "verdict": "equivalent",
+    "reason": "Same first term 3 and ratio 2."
+   }
+  ]
+ }
+}

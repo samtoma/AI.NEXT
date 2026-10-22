@@ -1,0 +1,117 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-4",
+  "source": "book-records/egb-g11-math/eb11c2-4.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 4,
+      "cost_usd": 0.0238,
+      "calls": [
+        {
+          "call": "check-printed.eb11c2-4",
+          "cost_usd": 0.0154,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c2-4",
+          "cost_usd": 0.0084,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c2-4:example-1",
+      "record_id": "eb11c2-4:example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 85,
+      "printed": "$-2, -4, -6, -8, \\ldots$",
+      "blind": "-2, -4, -6, -8, ...",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "840ab1c55fe477de5048e333360a20a8",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-4:example-1",
+        "verdict": "equivalent",
+        "reason": "Both give the same difference sequence -2, -4, -6, -8, ..."
+      },
+      "how": "judged equivalent: Both give the same difference sequence -2, -4, -6, -8, ...",
+      "made": {
+        "at": "2026-10-21T14:16:54+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-4:worked-example-1",
+      "record_id": "eb11c2-4:worked-example-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 86,
+      "printed": "$a_n = 2n^2-3n+3$",
+      "blind": "a_n = 2n^2 - 3n + 3 (it also holds for n=1, since a_1 = 2)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "1a0ffae162f4780970f537799c295cbd",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:54+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-4:worked-example-2:2",
+      "record_id": "eb11c2-4:worked-example-2",
+      "part": "2",
+      "type": "worked_example",
+      "page": 88,
+      "printed": "$2(2n-1)(n^2-n+1)$",
+      "blind": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available.",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-4:figure-4",
+        "eb11c2-4:figure-5"
+      ],
+      "question_fingerprint": "cb9e1de4547f1d81cd5e9ccb458c7ccc",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available.",
+      "made": {
+        "at": "2026-10-21T14:16:54+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-4:worked-example-2:3",
+      "record_id": "eb11c2-4:worked-example-2",
+      "part": "3",
+      "type": "worked_example",
+      "page": 88,
+      "printed": "the 8th term of the 7th group",
+      "blind": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available.",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-4:figure-4",
+        "eb11c2-4:figure-5"
+      ],
+      "question_fingerprint": "1f596659b2e7c543291cf5e7d3f5a5f9",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available.",
+      "made": {
+        "at": "2026-10-21T14:16:54+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

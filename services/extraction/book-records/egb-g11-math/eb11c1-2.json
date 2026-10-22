@@ -1,0 +1,818 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c1-2",
+    "syllabus_ref": "Concept 2",
+    "title": "Polynomial Division",
+    "module": "Unit 1 Algebraic Proofs",
+    "pages": [
+      10,
+      13
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c1-2:heading-1",
+      "type": "heading",
+      "source_page": 10,
+      "quote": "Concept 2 · Polynomial Division",
+      "text": "Concept 2 · Polynomial Division",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 10,
+      "quote": "Performs polynomial division using standard algorithm.",
+      "text": "Learning Outcomes: Performs polynomial division using standard algorithm.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-1",
+      "type": "linking_text",
+      "source_page": 10,
+      "quote": "When you were managing a smart food delivery app",
+      "text": "Motivating text: in a delivery app, daily orders grow at an accelerating non-linear rate while riders are hired at a steady linear rate. To find the average workload (orders per rider) you divide the total-orders function by the number-of-riders function. Polynomial division is the tool for breaking a large, rapidly growing system into smaller units to find the share of a single part.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:figure-1",
+      "type": "figure",
+      "source_page": 10,
+      "quote": "DELIVERY APP PERFORMANCE & RIDER WORKLOAD",
+      "caption": "Infographic titled 'Delivery App Performance & Rider Workload (Conceptual Over-Time Analysis)': graphs of daily orders over time (accelerating, non-linear), number of riders over time (linear), and workload = daily orders / number of riders over time; small text labels unreadable.",
+      "notes": "Text in the image is tiny; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.371,
+          0.1934,
+          0.661,
+          0.3124
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-2:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "How does dividing complex algebraic expressions help us",
+      "text": "Guiding Question: How does dividing complex algebraic expressions help us simplify massive amounts of data and understand the share of a single unit within a constantly growing system?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:rule-1",
+      "type": "rule",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "Division of polynomials can be calculated using long division",
+      "claim": "Division of polynomials can be calculated using long division, similar to integers.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:rule-2",
+      "type": "rule",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "treat other variables as constants",
+      "claim": "In problems where you 'treat as a polynomial in x', treat other variables as constants.",
+      "formula": "$x$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:caution-1",
+      "type": "caution",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "Errors in subtraction: Mistakes often happen when subtracting after multiplication",
+      "claim": "Common Mistakes: errors in subtraction, often after multiplication, especially forgetting to change signs or combine like terms properly. Partial multiplication: multiplying only by the leading term of the divisor instead of the entire divisor.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:heading-2",
+      "type": "heading",
+      "source_page": 10,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "Find the quotient and the remainder when",
+      "text": "Find the quotient and the remainder when $2x^3 - 5x^2 - 2$ is divided by $2x^2 - x - 1$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "For polynomials A = 4x² − 9ax − 9a² and B = x − 3a",
+      "text": "For polynomials $A = 4x^2 - 9ax - 9a^2$ and $B = x - 3a$, treating each as a polynomial in $x$, find the quotient and the remainder when $A$ is divided by $B$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:heading-3",
+      "type": "heading",
+      "source_page": 10,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:figure-2",
+      "type": "figure",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 10,
+      "quote": "2x² − x − 1 | 2x³ − 5x² − 2",
+      "caption": "Long division layout for Warm Up 1: divisor $2x^2-x-1$, dividend $2x^3-5x^2-2$ (gap left for the missing x term), quotient $x-2$ on top. Subtract $2x^3-x^2-x$, giving $-4x^2+x-2$. Subtract $-4x^2+2x+2$, giving remainder $-x-4$. Dotted lines connect steps to side notes.",
+      "notes": "Layout read from image; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.164,
+          0.6759,
+          0.7075,
+          0.9213
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": false
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-2",
+      "type": "linking_text",
+      "source_page": 10,
+      "quote": "Therefore, the quotient is x − 2 and the remainder is − x − 4",
+      "text": "Therefore, the quotient is $x-2$ and the remainder is $-x-4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-3",
+      "type": "linking_text",
+      "source_page": 10,
+      "quote": "If a term of a certain degree is missing in the dividend, leave that space blank.",
+      "text": "Side note: If a term of a certain degree is missing in the dividend, leave that space blank.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-4",
+      "type": "linking_text",
+      "source_page": 10,
+      "quote": "Subtract (2x² − x − 1) × x to eliminate 2x³",
+      "text": "Side note: Subtract $(2x^2 - x - 1)\\times x$ to eliminate $2x^3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-5",
+      "type": "linking_text",
+      "source_page": 10,
+      "quote": "Subtract (2x² − x − 1) × (−2) to eliminate −4x²",
+      "text": "Side note: Subtract $(2x^2 - x - 1)\\times(-2)$ to eliminate $-4x^2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-6",
+      "type": "linking_text",
+      "source_page": 10,
+      "pages": [
+        10,
+        11
+      ],
+      "quote": "It is the remainder when the degree becomes lower than the divisor.",
+      "text": "Side note: It is the remainder when the degree becomes lower than the divisor.",
+      "solution": [
+        "Since we treat it as a polynomial in x, treat variables other than x as numbers.",
+        "Long division of $4x^2-9ax-9a^2$ by $x-3a$: quotient line $4x+3a$; subtract $4x^2-12ax$ to get $3ax-9a^2$; subtract $3ax-9a^2$ to get $0$.",
+        "Therefore, the quotient is $4x+3a$ and the remainder is $0$"
+      ],
+      "answer": "quotient $4x+3a$, remainder $0$",
+      "solution_provenance": "book_printed",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:try-1",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = 2x^3 − 13x + 1, B = x^2 + 2x − 3",
+      "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$. $A=2x^3-13x+1,\\ B=x^2+2x-3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:try-2",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^3 − 3ax^2 + 5a^2x − 5a^3, B = x − 2a",
+      "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$ (calculate treating it as a polynomial in $x$). $A=x^3-3ax^2+5a^2x-5a^3,\\ B=x-2a$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-7",
+      "type": "linking_text",
+      "source_page": 11,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^2 − 5x + 1, B = x − 2",
+      "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$. $A=x^2-5x+1,\\ B=x-2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^3 − 4x + 1, B = x − 3",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=x^3-4x+1,\\ B=x-3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = 2x^3 − 3x^2 + 3x + 4, B = x^2 − 2x + 3",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=2x^3-3x^2+3x+4,\\ B=x^2-2x+3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = 6x^3 − 8x^2 + 5, B = 2x^2 − 2x − 5",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=6x^3-8x^2+5,\\ B=2x^2-2x-5$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^3 − 7x + 6, B = x^2 + 2x − 3",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=x^3-7x+6,\\ B=x^2+2x-3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = 3x^4 − 5x^3 + x − 1, B= −x^2 + 3x + 2",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=3x^4-5x^3+x-1,\\ B=-x^2+3x+2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = 4x^2 − 5ax − 6a^2, B = x − 2a",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$ (calculate treating it as a polynomial in $x$). $A=4x^2-5ax-6a^2,\\ B=x-2a$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x3 + ax2 + a2x − a3, B = x + 2a",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x3+ax2+a2x-a3,\\ B=x+2a$",
+      "misprints": [
+        {
+          "field": "text",
+          "printed": "x3 + ax2 + a2x − a3",
+          "intended": "x^3 + ax^2 + a^2x − a^3",
+          "notes": "Exponents printed as normal-size digits instead of superscripts."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^3 − 2ax^2 + 3a^3, B = x + a",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x^3-2ax^2+3a^3,\\ B=x+a$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A = x^3 + 3x^2y − 2y^3, B = x + y",
+      "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x^3+3x^2y-2y^3,\\ B=x+y$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 11,
+      "quote": "A cuboid shaped box of volume 4x^3 + 4x^2 − 9x − 9.",
+      "text": "Challenge — Find the Height: A cuboid shaped box of volume $4x^3+4x^2-9x-9$. If the area of its base is $2x^2-x-3$, write its height in terms of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:figure-3",
+      "type": "figure",
+      "source_page": 11,
+      "quote": "base area",
+      "caption": "Cuboid with front face labelled V, height marked h on the right edge, and the label 'base area' beneath.",
+      "notes": "Belongs to the Challenge.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.1085,
+          0.7702,
+          0.2685,
+          0.8651
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": false
+      }
+    },
+    {
+      "id": "eb11c1-2:heading-4",
+      "type": "heading",
+      "source_page": 12,
+      "quote": "Quotient and Remainder of Polynomials",
+      "text": "1-5 Quotient and Remainder of Polynomials (Chapter 1 Algebraic Proofs)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 12,
+      "quote": "Distinguishes the quotient and the remainder in polynomial division",
+      "text": "Learning Outcomes: Distinguishes the quotient and the remainder in polynomial division, deduces that the degree of the remainder is less than the degree of the divisor, and uses this fact to verify the correctness of the division.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:rule-3",
+      "type": "rule",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 12,
+      "quote": "If a polynomial A is divided by a polynomial B, yielding a quotient Q and a remainder R",
+      "claim": "If a polynomial A is divided by a polynomial B, giving quotient Q and remainder R, then A = B × Q + R.",
+      "formula": "$A = B \\times Q + R$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:linking-text-8",
+      "type": "linking_text",
+      "source_page": 12,
+      "quote": "Example: When 7 is divided by 3, the quotient is 2 and remainder is 1",
+      "text": "Example: When 7 is divided by 3, the quotient is 2 and remainder is 1, 7 = 3 × 2 + 1 (with brackets linking 3, 2 and 1 to the divisor, quotient and remainder).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:rule-4",
+      "type": "rule",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 12,
+      "quote": "In problems where the quotient and the remainder are given, substitute",
+      "claim": "In problems where the quotient and the remainder are given, substitute the known expressions into A = BQ + R.",
+      "formula": "$A = BQ + R$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 12,
+      "quote": "Find the polynomials A and B that satisfy the following conditions.",
+      "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions.",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "When $A$ is divided by $x^2 - 2x - 1$, the quotient is $x+3$ and remainder is $-2x+5$"
+        },
+        {
+          "label": "2",
+          "stem": "When $4x^3 + 8x - 9$ is divided by $B$, the quotient is $2x-3$ and remainder is $x+15$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:caution-2",
+      "type": "caution",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 12,
+      "quote": "Stopping too early: Ending the division before reaching a remainder",
+      "claim": "Stopping too early: ending the division before reaching a remainder of lower degree than the divisor.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:caution-3",
+      "type": "caution",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 12,
+      "quote": "Confusing quotient and remainder: Thinking the remainder must always be zero",
+      "claim": "Confusing quotient and remainder: thinking the remainder must always be zero, while in fact it can be a term (or more) of lower degree than the divisor.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 12,
+      "quote": "Since the quotient and the remainder are given, substitute the known expressions",
+      "stem": "Since the quotient and the remainder are given, substitute the known expressions into $A = BQ + R$. (Solves Warm Up 1 and 2.)",
+      "solution": [
+        "1: $A = (x^2-2x-1)(x+3) + (-2x+5)$",
+        "$= x^3 + 3x^2 - 2x^2 - 6x - x - 3 - 2x + 5$",
+        "$= x^3 + x^2 - 9x + 2$",
+        "2: $4x^3 + 8x - 9 = B \\times (2x-3) + (x+15)$",
+        "$B \\times (2x-3) + (x+15) = 4x^3 + 8x - 9$",
+        "$B \\times (2x-3) = 4x^3 + 7x - 24$",
+        "$B = (4x^3 + 7x - 24) \\div (2x-3)$",
+        "$= 2x^2 + 3x + 8$"
+      ],
+      "answer": "1: $A = x^3 + x^2 - 9x + 2$; 2: $B = 2x^2 + 3x + 8$",
+      "parts": [
+        {
+          "label": "1",
+          "answer": "$x^3 + x^2 - 9x + 2$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "2",
+          "answer": "$2x^2 + 3x + 8$",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "solution_provenance": "book_worked",
+      "notes": "In part 2 the printed B is upright 'B' in the first line; side notes 'Solve for B' and a long division are attached.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:figure-4",
+      "type": "figure",
+      "lo": "eb11c1-2:objective-2",
+      "belongs_to": "eb11c1-2:explanation-1",
+      "source_page": 12,
+      "quote": "Remainder must be 0",
+      "caption": "Long division of 4x^3 + 7x − 24 by 2x − 3: quotient 2x^2 + 3x + 8; subtract 4x^3 − 6x^2 leaving 6x^2 + 7x; subtract 6x^2 − 9x leaving 16x − 24; subtract 16x − 24 leaving 0 (highlighted). Note: 'Remainder must be 0' with arrow to 0. Side note box above: 'Solve for B'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6902,
+          0.7184,
+          0.9398,
+          0.94
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-2:try-3",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When A is divided by 2x^2 + x + 1, the quotient is 3x + 2",
+      "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions. When $A$ is divided by $2x^2+x+1$, the quotient is $3x+2$ and the remainder is $-2x+6$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:try-4",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When x^3 − x^2 + 3x + 1 is divided by B, the quotient is",
+      "text": "When $x^3-x^2+3x+1$ is divided by $B$, the quotient is $x^2-2x+5$ and the remainder is $-4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When A is divided by x^2 − 2x − 1, the quotient is 2x − 3",
+      "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions. When $A$ is divided by $x^2-2x-1$, the quotient is $2x-3$ and the remainder is $-2x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When A is divided by x^2 − 3x + 2, the quotient is 2x + 6",
+      "text": "When $A$ is divided by $x^2-3x+2$, the quotient is $2x+6$ and the remainder is $2x-3$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When A is divided by 2x^2 − x + 2, the quotient is 2x − 1",
+      "text": "When $A$ is divided by $2x^2-x+2$, the quotient is $2x-1$ and the remainder is $2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-14",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When 2x^3 + x^2 − 3x + 5 is divided by B, the quotient is x + 1",
+      "text": "When $2x^3+x^2-3x+5$ is divided by $B$, the quotient is $x+1$ and the remainder is $-5x+2$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-15",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When 6x^3 + 11x^2 − 2 is divided by B, the quotient is",
+      "text": "When $6x^3+11x^2-2$ is divided by $B$, the quotient is $2x^2+3x-1$ and the remainder is $-1$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:exercise-16",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "When 2x^3 + 4x^2 + 7 is divided by B, the quotient is x + 2",
+      "text": "When $2x^3+4x^2+7$ is divided by $B$, the quotient is $x+2$ and the remainder is $3x+13$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c1-2:objective-2",
+      "source_page": 13,
+      "quote": "Challenge — Recover the Divisor",
+      "text": "When $x^4+x^2+3x-1$ is divided by $B$, the quotient is $x^2+x+1$ with the remainder $3x-2$, then find the polynomial $B$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 13,
+      "quote": "why must the remainder always have a degree less than the divisor?",
+      "text": "When we divide one polynomial by another, why must the remainder always have a degree less than the divisor? How does this condition help us verify the correctness of the division steps and understand the relationship between the quotient and the remainder?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c1-2:objective-1",
+      "source_page": 13,
+      "quote": "Collaborate with your group to solve question 2, then discuss the answer.",
+      "text": "Collaborate with your group to solve question 2, then discuss the answer.",
+      "notes": "Side-column box; printed in right margin next to the Try section, so presumably refers to Try question 2.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c1-2:objective-1",
+      "label": "Polynomial long division",
+      "description": "Divide one polynomial by another using the long division algorithm, state the quotient and the remainder, and treat other variables as constants when dividing as a polynomial in x.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c1-2:heading-1",
+        "eb11c1-2:rule-1",
+        "eb11c1-2:rule-2",
+        "eb11c1-2:exercise-3",
+        "eb11c1-2:try-2"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-2:objective-2",
+      "label": "Use A = BQ + R",
+      "description": "Use A = B × Q + R to find the dividend A or the divisor B when the quotient and the remainder are given.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c1-2:rule-3",
+        "eb11c1-2:explanation-1",
+        "eb11c1-2:exercise-14"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (2)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (2)",
+    "2026-10-21: 6 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 4 cropped"
+  ]
+}

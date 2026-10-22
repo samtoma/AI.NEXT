@@ -1,0 +1,92 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c1-5",
+  "source": "book-records/egb-g11-math/eb11c1-5.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 3,
+      "cost_usd": 0.0414,
+      "calls": [
+        {
+          "call": "check-printed.eb11c1-5",
+          "cost_usd": 0.0219,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c1-5",
+          "cost_usd": 0.0195,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c1-5:explanation-3",
+      "record_id": "eb11c1-5:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 33,
+      "printed": "Equality holds when $a=2b$",
+      "blind": "LHS − RHS = a² + 4b² − 4ab = a² − 4ab + 4b² = (a − 2b)² ≥ 0, so a² + 4b² ≥ 4ab. Equality holds when a − 2b = 0, i.e. a = 2b.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "3bda295b0b511e2de2f847310c2a113e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:42+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-5:explanation-4",
+      "record_id": "eb11c1-5:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 35,
+      "printed": "Equality holds when $a=b$",
+      "blind": "Both sides are positive (a,b>0). (LHS)² − (RHS)² = (a²+b²)/2 − (a+b)²/4 = (2a²+2b² − a² − 2ab − b²)/4 = (a−b)²/4 ≥ 0. Hence (LHS)² ≥ (RHS)², so √((a²+b²)/2) ≥ (a+b)/2. Equality holds when a = b.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "a064d22bc4047c4d99ebff231c9d2f21",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:12:42+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c1-5:explanation-5",
+      "record_id": "eb11c1-5:explanation-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 37,
+      "printed": "Equality holds when $a=b$",
+      "blind": "Yes, equality holds (when a = b). Since a>0, b>0, by AM-GM b/a + a/b ≥ 2√((b/a)(a/b)) = 2√1 = 2. Equality holds when b/a = a/b, i.e. a² = b², so a = b (both positive).",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "6df780ca2f04bd9b77b3cab2fde9e9b0",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c1-5:explanation-5",
+        "verdict": "equivalent",
+        "reason": "Both conclude equality holds exactly when a = b; the solver adds the AM-GM proof."
+      },
+      "how": "judged equivalent: Both conclude equality holds exactly when a = b; the solver adds the AM-GM proof.",
+      "made": {
+        "at": "2026-10-21T14:12:42+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

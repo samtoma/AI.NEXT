@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-2-5:challenge-7-a",
+ "lo_id": "lo:eb11c3-2-5",
+ "book_item": "eb11c3-2:challenge-7#a",
+ "parent_question_id": "expl:eb11c3-2-5:bk-warm-up-9",
+ "parent_kind": "teaching",
+ "tier": "advanced",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -6,
+   0
+  ],
+  "from": -4,
+  "to": -3,
+  "openFrom": true,
+  "openTo": true
+ },
+ "stem": "The quadratic equation $x^2+(m+1)x+m+4=0$ has two distinct real solutions. Find the range of values for $m$ when both solutions are positive. Mark the interval for $m$ and set each end hollow or filled.",
+ "solution": [
+  "Two distinct real solutions: $D=(m+1)^2-4(m+4)=(m-5)(m+3)>0$, so $m<-3$ or $m>5$.",
+  "Both positive: $\\alpha+\\beta=-(m+1)>0$, so $m<-1$.",
+  "$\\alpha\\beta=m+4>0$, so $m>-4$.",
+  "Common range: $-4<m<-3$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "interval-wrong",
+   "misconception_id": "mc:eb11c3-2-5:sum-of-roots-sign-dropped"
+  }
+ ],
+ "hints": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "step": 1,
+   "text": "All conditions are strict; do they allow equality?"
+  },
+  {
+   "predicate": "interval-wrong",
+   "step": 4,
+   "text": "Find where the conditions from $D$, the sum and the product all hold together."
+  }
+ ],
+ "notes": "Loose diagnostic mapping."
+}

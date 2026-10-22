@@ -1,0 +1,1564 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "4750ed28659a20bd05f3e24500e3ff8dc8dff0fd25e0002675ea7b261419e62c",
+  "generated_sha256": "4a2d89f9861f2279702edc6f076486402d0ce16c27f36ade450f1f6f03529dfd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c3-4",
+   "pages": [
+    {
+     "printed": 142,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "High-Degree Equations Chapter 3 Complex Numbers and Equations",
+       "label": "",
+       "number": null,
+       "text": "High-Degree Equations (Chapter 3 Complex Numbers and Equations)",
+       "_key": "p142-k1",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "quote": "Concept 3 · Higher- degree equations",
+       "label": "",
+       "number": null,
+       "text": "Concept 3 · Higher- degree equations",
+       "notes": "Page prints 'Concept 3' and header '3-17', though lesson is called Concept 4; recorded as printed.",
+       "_key": "p142-k2",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "printed_objective",
+       "quote": "Learning Outcomes Solve higher-degree equations.",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Solve higher-degree equations.",
+       "_key": "p142-k3",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "quote": "In biomedical engineering, modeling physical structures requires moving beyond simple flat lines",
+       "label": "",
+       "number": null,
+       "text": "In biomedical engineering, modeling physical structures requires moving beyond simple flat lines or parabolas. When researchers design synthetic heart valves or model the blood flow velocity through a constricted artery, the fluid dynamics change in complex, non-linear ways. These phenomena are modeled using cubic and higher-degree polynomial equations.",
+       "_key": "p142-k4",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "quote": "Unlike quadratic equations, which only model a single peak or valley",
+       "label": "",
+       "number": null,
+       "text": "Unlike quadratic equations, which only model a single peak or valley, a cubic equation can capture a system that starts at a baseline, experiences a sudden surge (like a heartbeat), and stabilizes back to equilibrium.",
+       "_key": "p142-k5",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "open_prompt",
+       "quote": "Guiding Question: How do the algebraic properties of cubic equations",
+       "label": "Guiding Question",
+       "number": null,
+       "text": "How do the algebraic properties of cubic equations—such as multiple turning points, repeated roots, and cube roots of unity—enable us to model systems more accurately than quadratic equations?",
+       "_key": "p142-k6",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "quote": "An n−th degree equation always has n solutions when considered",
+       "label": "",
+       "number": null,
+       "claim": "An n-th degree equation always has n solutions when considered within the range of complex numbers (excluding cases with repeated solutions).",
+       "formula": "$n$",
+       "_key": "p142-k7",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "quote": "How to solve Cubic and Quartic Equations",
+       "label": "",
+       "number": null,
+       "claim": "Heading of the method: how to solve cubic and quartic equations (step 1 Factorise, step 2 Find the solutions).",
+       "_key": "p142-k8",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "method",
+       "quote": "For cubic equations: If it can be transformed into x^3 + a^3 = 0",
+       "label": "",
+       "number": null,
+       "claim": "Step 1 Factorise, cubic equations: if it can be transformed into x^3 + a^3 = 0, use x^3 + a^3 = (x + a)(x^2 − ax + a^2); otherwise use the Factor Theorem.",
+       "formula": "$x^3+a^3=(x+a)(x^2-ax+a^2)$",
+       "_key": "p142-k9",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "method",
+       "quote": "For quartic equations: If there are only x^4, x^2, and constant terms",
+       "label": "",
+       "number": null,
+       "claim": "Step 1 Factorise, quartic equations: if there are only x^4, x^2 and constant terms, treat x^2 as a chunk; otherwise use the Factor Theorem.",
+       "formula": "$x^4, x^2$",
+       "_key": "p142-k10",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "method",
+       "quote": "The solutions for (x − α)(x − β)(x − γ) = 0 are x = α or β or γ",
+       "label": "",
+       "number": null,
+       "claim": "Step 2 Find the solutions: the solutions of (x − α)(x − β)(x − γ) = 0 are x = α or β or γ.",
+       "formula": "$(x-\\alpha)(x-\\beta)(x-\\gamma)=0 \\Rightarrow x=\\alpha \\text{ or } \\beta \\text{ or } \\gamma$",
+       "_key": "p142-k11",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "method",
+       "quote": "For (x − a)(ax^2 + bx + c) = 0, if ax^2 + bx + c cannot be factorised",
+       "label": "",
+       "number": null,
+       "claim": "Step 2: for (x − a)(ax^2 + bx + c) = 0, if ax^2 + bx + c cannot be factorised, use the Quadratic Formula; the solutions in this case are x = a or x = (−b ± √(b² − 4ac))/(2a).",
+       "formula": "$x=a \\text{ or } \\dfrac{-b\\pm\\sqrt{b^2-4ac}}{2a}$",
+       "notes": "Printed uses 'a' both as the root and as the coefficient of x^2; recorded as printed.",
+       "_key": "p142-k12",
+       "source_page": 142,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 143,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p143-k1",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Solve the following equations.",
+       "text": "Solve the following equations.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$x^3 - 8 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$x^3 - 2x^2 - 5x + 6 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$x^4 - 7x^2 - 18 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$x^4 - 6x^3 + 8x^2 + 8x - 16 = 0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p143-k2",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p143-k3",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Therefore, the required solutions are x = 2, −1 ± √3i",
+       "stem": "Explanation of the Warm Up equations (a)-(d), with side notes beside the steps.",
+       "solution": [
+        "(a) $x^3-8=0$ [side note: Use $x^3+a^3=(x+a)(x^2-ax+a^2)$]",
+        "$(x-2)(x^2+2x+4)=0$ [side note: Since $x^2+2x+4$ cannot be factorised, find solutions using the quadratic formula.]",
+        "(b) $x^3-2x^2-5x+6=0$ [side note: Since formulas cannot be used, use the Factor Theorem.]",
+        "$(x-1)(x^2-x-6)=0$ [side note: Factorise the quadratic part.]",
+        "$(x-1)(x-3)(x+2)=0$",
+        "(c) $x^4-7x^2-18=0$ [side note: Since it's a quartic equation with only $x^4$, $x^2$, and constant terms, factorise treating $x^2$ as a chunk.]",
+        "$(x^2)^2-7x^2-18=0$",
+        "$(x^2-9)(x^2+2)=0$",
+        "$x^2=9$, or $x^2=-2$ [side note: Solve each quadratic equation.]",
+        "(d) $x^4-6x^3+8x^2+8x-16=0$ [side note: Use the Factor Theorem.]",
+        "$(x-2)(x^3-4x^2+8)=0$ [side note: Factorise the cubic part. Since formulas cannot be used, use the Factor Theorem.]",
+        "$(x-2)^2(x^2-2x-4)=0$ [side note: Since $x^2-2x-4$ cannot be factorised, find solutions using the quadratic formula.]"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$x=2,\\ -1\\pm\\sqrt{3}i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "$x=1,\\ 3,\\ -2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "$x=\\pm3,\\ \\pm\\sqrt{2}i$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "$x=2,\\ 1\\pm\\sqrt{5}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Unnumbered worked explanation of the Warm Up; side notes are printed in the right column linked by dotted lines; the link of notes to steps is read from the dotted lines, verify.",
+       "_key": "p143-k4",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p143-k5",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following equations.",
+       "text": "Solve the following equations.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$x^3=-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$3x^3+x^2-8x+4=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$2x^3-3x^2-x-2=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$x^3-x^2-16x-20=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$x^4-5x^2+4=0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$x^4-10x^3+35x^2-50x+24=0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p143-k6",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p143-k7",
+       "source_page": 143,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 144,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "quote": "Solve the following equations.",
+       "label": "Exercise",
+       "number": null,
+       "text": "Solve the following equations.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$x^3 = 27$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$x^3 = -125$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$8x^3 = 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$x^3 + 6x^2 + 11x + 6 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$x^3 + 3x^2 - 4x - 12 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$3x^3 - 2x^2 - 3x + 2 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$x^3 - x^2 - 4 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$x^3 + 4x^2 + 2x - 4 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$x^3 - 4x^2 + 9x - 10 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$x^3 + x^2 - 8x - 12 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$2x^3 + 7x^2 + 8x + 3 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$x^3 + 6x^2 + 12x + 8 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "m",
+         "stem": "$x^4 - 5x^2 - 36 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "n",
+         "stem": "$x^4 - 6x^2 - 27 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "o",
+         "stem": "$x^4 - x^2 - 2 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "p",
+         "stem": "$x^4 - 9x^3 + 29x^2 - 39x + 18 = 0$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "q",
+         "stem": "$x^4 - 4x^3 + 3x^2 + 2x - 6 = 0$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p144-k1",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "quote": "Challenge",
+       "label": "",
+       "number": null,
+       "text": "Challenge",
+       "_key": "p144-k2",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "quote": "COMPLEX INFLOW FLOW (LEFT) CONTROL VALVE (x = 1)",
+       "label": "",
+       "number": null,
+       "caption": "Illustration of a household water tank with pipes. Labels: COMPLEX INFLOW FLOW (LEFT) (top left), CONTROL VALVE (x = 1) (top right), STABLE LEVEL (water level inside tank), COMPLEX INFLOW FLOW (LEFT) (bottom left), REGULATED OUTFLOW FLOW (LEFT) (bottom right).",
+       "notes": "Labels read from the picture; small text, verify.",
+       "_key": "p144-k3",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "quote": "You have a household water tank.",
+       "label": "",
+       "number": null,
+       "text": "You have a household water tank. Water flows into the tank at different rates and flows out at other rates, all depending on the pressure level x: Inflow (increasing water): $x^4 + x^2 + x$. Outflow (decreasing water): $x^3 + 2$. For the water level in the tank to remain perfectly stable.",
+       "_key": "p144-k4",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "quote": "1-Write the equation that expresses the balance between inflow and outflow.",
+       "label": "Challenge",
+       "number": 1,
+       "text": "Write the equation that expresses the balance between inflow and outflow.",
+       "_key": "p144-k5",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "quote": "2-Solve the equation to find the values of x that keep the water level stable.",
+       "label": "Challenge",
+       "number": 2,
+       "text": "Solve the equation to find the values of x that keep the water level stable.",
+       "_key": "p144-k6",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "quote": "3-Determine whether the solutions are only real numbers or if complex solutions also exist.",
+       "label": "Challenge",
+       "number": 3,
+       "text": "Determine whether the solutions are only real numbers or if complex solutions also exist.",
+       "_key": "p144-k7",
+       "source_page": 144,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 145,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Determination of Cubic Equation",
+       "text": "Determination of Cubic Equation (3-18, Chapter 3 Complex Numbers and Equations)",
+       "_key": "p145-k1",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Solve higher-degree equations and formulate cubic equations based on given data",
+       "text": "Learning Outcomes: Solve higher-degree equations and formulate cubic equations based on given data.",
+       "_key": "p145-k2",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When a solution to a cubic equation is given, calculate by",
+       "claim": "When a solution to a cubic equation is given, calculate by substituting the solution into the given equation.",
+       "_key": "p145-k3",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p145-k4",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "If the cubic equation x^3 + ax^2 + bx + 5 = 0 has 2 + i as a solution",
+       "text": "If the cubic equation $x^3+ax^2+bx+5=0$ has $2+i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p145-k5",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p145-k6",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since x = 2 + i is a solution,",
+       "text": "Since $x=2+i$ is a solution, $(2+i)^3+a(2+i)^2+b(2+i)+5=0$; $(3a+2b+7)+(4a+b+11)i=0$. Therefore $3a+2b+7=0$ and $4a+b+11=0$. Solving this gives $a=-3, b=1$. In this case, the original equation is $x^3-3x^2+x+5=0$. Factorising the LHS gives $(x+1)(x^2-4x+5)=0$. Therefore, $x=-1$ or $2\\pm i$. Summarising the above: $a=-3, b=1$, and the other solutions are $x=-1$ or $2-i$.",
+       "_key": "p145-k7",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute the solution.",
+       "text": "Side notes: Substitute the solution. / Convert to $a+bi$ form. / Compare real and imaginary parts of both sides (see 3-1). / Since formulas cannot be used, use the Factor Theorem. / Do not include $2+i$ in the answer.",
+       "_key": "p145-k8",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p145-k9",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems. (Side box: Work with a partner — Collaborate with your group to solve the try section then discuss the answer.)",
+       "_key": "p145-k10",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "has −3 and 1 as solutions, find",
+       "text": "If the cubic equation $x^3+4x^2+ax+b=0$ has $-3$ and $1$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p145-k11",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "has 1 + i as a solution, find the",
+       "text": "If the cubic equation $x^3+ax^2+bx-4=0$ has $1+i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p145-k12",
+       "source_page": 145,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 146,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Exercise",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p146-k1",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p146-k2",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "If the cubic equation $x^3 - ax^2 - x + b = 0$ has −1 and 2",
+       "text": "If the cubic equation $x^3-ax^2-x+b=0$ has $-1$ and $2$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p146-k3",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If the cubic equation $x^3 + ax^2 + bx - 8 = 0$ has 1 and 2",
+       "text": "If the cubic equation $x^3+ax^2+bx-8=0$ has $1$ and $2$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p146-k4",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "If one solution of the cubic equation",
+       "text": "If one solution of the cubic equation $x^3-kx^2+(3k-1)x-24=0$ is $2$, find the value of the real number $k$. Also, find the other solutions.",
+       "_key": "p146-k5",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "has 1 − 3i as a solution, find the",
+       "text": "If the cubic equation $x^3+ax^2+bx-20=0$ has $1-3i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p146-k6",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "has 1 + 2i as a solution, find the",
+       "text": "If the cubic equation $x^3+ax^2+bx+10=0$ has $1+2i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "_key": "p146-k7",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "has 1 + √2 i as a solution, find",
+       "text": "If the cubic equation $x^3+ax+b=0$ has $1+\\sqrt{2}i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+       "notes": "Printed in a box headed '★ Challenge'.",
+       "_key": "p146-k8",
+       "source_page": 146,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 147,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Cube Roots of Unity",
+       "text": "Cube Roots of Unity (3-19, Chapter 3 Complex Numbers and Equations)",
+       "_key": "p147-k1",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Find the cube roots of unity and apply",
+       "text": "Find the cube roots of unity and apply their properties in simplifying algebraic expressions.",
+       "_key": "p147-k2",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "A number that becomes 1 when cubed is called a cube root of unity",
+       "claim": "A number that becomes 1 when cubed is called a cube root of unity.",
+       "_key": "p147-k3",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "One of these that is a complex not real number is denoted by ω(omega)",
+       "claim": "One of the cube roots of unity that is a complex non-real number is denoted by $\\omega$ (omega).",
+       "_key": "p147-k4",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "ω has the following properties: ω³ = 1",
+       "claim": "$\\omega$ has the property $\\omega^3=1$.",
+       "formula": "$\\omega^3=1$",
+       "_key": "p147-k5",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "ω²+ ω +1 = 0",
+       "claim": "$\\omega$ has the property $\\omega^2+\\omega+1=0$.",
+       "formula": "$\\omega^2+\\omega+1=0$",
+       "_key": "p147-k6",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "In calculations using ω, first use ω³ = 1 to lower the degree",
+       "claim": "In calculations using $\\omega$, first use $\\omega^3=1$ to lower the degree of $\\omega$.",
+       "formula": "$\\omega^3=1$",
+       "_key": "p147-k7",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "After that, if ω² and ω remain, use ω²+ ω +1 = 0",
+       "claim": "After that, if $\\omega^2$ and $\\omega$ remain, use $\\omega^2+\\omega+1=0$ to find the value of the expression.",
+       "formula": "$\\omega^2+\\omega+1=0$",
+       "_key": "p147-k8",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since ω³ = 1, ω³ − 1 = 0 → (ω − 1)(ω² + ω + 1) = 0",
+       "text": "Side note (linked to ω²+ω+1=0): Since $\\omega^3=1$, $\\omega^3-1=0 \\to (\\omega-1)(\\omega^2+\\omega+1)=0$. Since $\\omega\\neq1$, $\\omega^2+\\omega+1=0$",
+       "_key": "p147-k9",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Let ω be one of the imaginary cube roots of unity",
+       "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\omega^9$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\omega^4+\\omega^5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\omega+\\dfrac{1}{\\omega}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p147-k10",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Evaluate the value of the following expression without expanding",
+       "text": "Evaluate the value of the following expression without expanding the brackets directly: $(1-\\omega+\\omega^2)(1+\\omega-\\omega^2)$",
+       "_key": "p147-k11",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "ω⁹ = (ω³)³ = 1³ = 1",
+       "stem": "Warm Up: find (a) $\\omega^9$, (b) $\\omega^4+\\omega^5$, (c) $\\omega+\\frac{1}{\\omega}$.",
+       "solution": [
+        "(a) $\\omega^9=(\\omega^3)^3=1^3=1$",
+        "(b) $\\omega^4+\\omega^5=\\omega\\times\\omega^3+\\omega^2\\times\\omega^3=\\omega+\\omega^2=-1$",
+        "(c) $\\omega+\\frac{1}{\\omega}=\\frac{\\omega^2+1}{\\omega}=\\frac{-\\omega}{\\omega}=-1$"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "$-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "$-1$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Margin notes beside explanation: (a) 'Create ω³ to use ω³ = 1'; (b) 'Create ω³ to use ω³ = 1'; then 'Since ω²+ω+1 = 0, ω+ω² = −1'; 'Since ω²+ω+1 = 0, ω²+1 = −ω'. Attribution of notes to lines read from dotted connectors; verify.",
+       "_key": "p147-k12",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Let ω be one of the imaginary cube roots of unity",
+       "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\omega^{2010}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\omega^2+\\omega$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$(1+\\omega)(1+\\omega^2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p147-k13",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Let ω be one of the imaginary cube roots of unity. Find the value",
+       "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\omega^3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\omega^2+\\omega^4+\\omega^6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\dfrac{1}{\\omega}+\\dfrac{1}{\\omega^2}+1$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p147-k14",
+       "source_page": 147,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 148,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Solve cubic equations with repeated roots.",
+       "text": "Learning Outcomes: Solve cubic equations with repeated roots.",
+       "_key": "p148-k1",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Cubic Equation with Repeated Roots",
+       "text": "Cubic Equation with Repeated Roots",
+       "_key": "p148-k2",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Point!",
+       "text": "Point!",
+       "_key": "p148-k3",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The problem of determining an equation so that a cubic equation has a repeated root",
+       "claim": "To find a value making a cubic equation have a repeated root, first use the factor theorem to factor the cubic into the form (x − a)(x² + bx + c).",
+       "formula": "$(x-a)(x^2+bx+c)$",
+       "_key": "p148-k4",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "There are two cases where (x − a)(x² + bx + c) = 0 has a repeated root.",
+       "claim": "There are two cases where (x − a)(x² + bx + c) = 0 has a repeated root.",
+       "formula": "$(x-a)(x^2+bx+c)=0$",
+       "_key": "p148-k5",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If x² + bx + c = 0 has x = a as a solution: Substitute x = a into x² + bx + c = 0",
+       "claim": "Case 1: if x² + bx + c = 0 has x = a as a solution, substitute x = a into x² + bx + c = 0.",
+       "formula": "$x^2+bx+c=0$",
+       "_key": "p148-k6",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Find the condition where the discriminant D of x² + bx + c = 0 becomes 0",
+       "claim": "Case 2: if x² + bx + c = 0 has a repeated root, find the condition where the discriminant D of x² + bx + c = 0 becomes 0.",
+       "formula": "$D=0$",
+       "_key": "p148-k7",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p148-k8",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the value of the constant a such that x³ − 2x² + (a − 3)x + a = 0 has a repeated root.",
+       "text": "Find the value of the constant $a$ such that $x^3-2x^2+(a-3)x+a=0$ has a repeated root.",
+       "_key": "p148-k9",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p148-k10",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Let P (x) = x³ − 2x² + (a − 3)x + a......(i)",
+       "stem": "Find the value of the constant a such that x³ − 2x² + (a − 3)x + a = 0 has a repeated root (Warm Up explanation).",
+       "solution": [
+        "Let $P(x)=x^3-2x^2+(a-3)x+a$ ......(i)   [side note: Factorise using the Factor Theorem]",
+        "$P(-1)=0$",
+        "Therefore, $P(x)=(x+1)(x^2-3x+a)$",
+        "$(x+1)(x^2-3x+a)=0$ has a repeated root when: $x^2-3x+a=0$ has $x=-1$ as a solution, or $x^2-3x+a=0$ has a repeated root.",
+        "[1] Substitute $x=-1$ into $x^2-3x+a=0$ [side note: If x²−3x+a=0 has x=−1 as a solution:]",
+        "$(-1)^2-3\\times(-1)+a=0$",
+        "Solving this gives $a=-4$",
+        "In this case, (i) becomes $(x+1)^2(x-4)=0$, which satisfies the condition.",
+        "[2] When $x^2-3x+a=0$ has a repeated root, let $D$ be the discriminant of this expression:",
+        "$D=(-3)^2-4\\times1\\times a=0$",
+        "Solving this gives $a=\\frac{9}{4}$",
+        "In this case, (i) becomes $(x+1)\\left(x-\\frac{3}{2}\\right)^2=0$, which satisfies the condition.",
+        "Therefore, the required values of a are $a=-4,\\ \\frac{9}{4}$"
+       ],
+       "answer": "$a=-4,\\ \\frac{9}{4}$",
+       "notes": "Explanation of the Warm Up; side notes printed in the right column are included in solution steps.",
+       "_key": "p148-k11",
+       "source_page": 148,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 149,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the value of the constant a such that",
+       "text": "Find the value of the constant $a$ such that $x^3 - x^2 + (a-2)x + a = 0$ has a repeated root.",
+       "continues": false,
+       "_key": "p149-k1",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Side box \"Work with a partner\": Collaborate with your group to solve the try section then discuss the answer.",
+       "continues": false,
+       "_key": "p149-k2",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "continues": false,
+       "_key": "p149-k3",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the value of the constant a such that",
+       "text": "Find the value of the constant $a$ such that $x^3 - 7x^2 + (a+6)x - a = 0$ has a repeated root.",
+       "continues": false,
+       "_key": "p149-k4",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the value of the constant a such that",
+       "text": "Find the value of the constant $a$ such that $x^3 - (a+1)x^2 + (3a+5)x - 2a - 5 = 0$ has a repeated root.",
+       "continues": false,
+       "_key": "p149-k5",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Find the value of the constant a such that",
+       "text": "Find the value of the constant $a$ such that $x^3 + (2a-1)x^2 - 3(a-2)x + a - 6 = 0$ has a repeated root.",
+       "continues": false,
+       "_key": "p149-k6",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find the value of the constant a such that",
+       "text": "Find the value of the constant $a$ such that $x^3 + (a-1)x^2 + (a-3)x - 2a + 3 = 0$ has a repeated root.",
+       "continues": false,
+       "_key": "p149-k7",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "A quadratic equation (like x² + 1 = 0)might have no real solutions.",
+       "text": "A quadratic equation (like $x^2+1=0$) might have no real solutions. Why does a cubic equation (like $x^3+x+1=0$) always have at least one real solution? What does this show about the way these two types of equations behave?",
+       "continues": false,
+       "_key": "p149-k8",
+       "source_page": 149,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Solve cubic and quartic equations by factorising",
+      "description": "Solve higher-degree equations by factorising with the sum of cubes, treating x^2 as a chunk, or the Factor Theorem, then using the Quadratic Formula where needed to find all complex solutions.",
+      "evidence_keys": [
+       "p142-k8",
+       "p142-k9",
+       "p142-k10",
+       "p143-k4",
+       "p143-k6",
+       "p144-k1"
+      ]
+     },
+     {
+      "label": "Find unknown coefficients of a cubic from given solutions",
+      "description": "Substitute a given real or complex solution into a cubic to find unknown real coefficients, then factorise to find the remaining solutions.",
+      "evidence_keys": [
+       "p145-k3",
+       "p145-k5",
+       "p145-k7",
+       "p145-k11",
+       "p146-k3",
+       "p146-k6"
+      ]
+     },
+     {
+      "label": "Find cube roots of unity and use their properties",
+      "description": "Use ω^3=1 and ω^2+ω+1=0 to reduce powers of ω and evaluate algebraic expressions involving ω.",
+      "evidence_keys": [
+       "p147-k3",
+       "p147-k5",
+       "p147-k6",
+       "p147-k7",
+       "p147-k12",
+       "p147-k13",
+       "p147-k14"
+      ]
+     },
+     {
+      "label": "Find the constant that gives a cubic a repeated root",
+      "description": "Factor the cubic as (x−a)(x²+bx+c), then consider the two cases (a is a root of the quadratic, or the quadratic's discriminant is 0) to find the constant.",
+      "evidence_keys": [
+       "p148-k4",
+       "p148-k5",
+       "p148-k6",
+       "p148-k7",
+       "p148-k11",
+       "p149-k1",
+       "p149-k4"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p142-k6",
+      "objective": 1
+     },
+     {
+      "key": "p142-k7",
+      "objective": 1
+     },
+     {
+      "key": "p142-k8",
+      "objective": 1
+     },
+     {
+      "key": "p142-k9",
+      "objective": 1
+     },
+     {
+      "key": "p142-k10",
+      "objective": 1
+     },
+     {
+      "key": "p142-k11",
+      "objective": 1
+     },
+     {
+      "key": "p142-k12",
+      "objective": 1
+     },
+     {
+      "key": "p143-k2",
+      "objective": 1
+     },
+     {
+      "key": "p143-k4",
+      "objective": 1
+     },
+     {
+      "key": "p143-k6",
+      "objective": 1
+     },
+     {
+      "key": "p143-k7",
+      "objective": 1
+     },
+     {
+      "key": "p144-k1",
+      "objective": 1
+     },
+     {
+      "key": "p144-k3",
+      "objective": 1
+     },
+     {
+      "key": "p144-k5",
+      "objective": 1
+     },
+     {
+      "key": "p144-k6",
+      "objective": 1
+     },
+     {
+      "key": "p144-k7",
+      "objective": 1
+     },
+     {
+      "key": "p145-k3",
+      "objective": 2
+     },
+     {
+      "key": "p145-k5",
+      "objective": 2
+     },
+     {
+      "key": "p145-k11",
+      "objective": 2
+     },
+     {
+      "key": "p145-k12",
+      "objective": 2
+     },
+     {
+      "key": "p146-k3",
+      "objective": 2
+     },
+     {
+      "key": "p146-k4",
+      "objective": 2
+     },
+     {
+      "key": "p146-k5",
+      "objective": 2
+     },
+     {
+      "key": "p146-k6",
+      "objective": 2
+     },
+     {
+      "key": "p146-k7",
+      "objective": 2
+     },
+     {
+      "key": "p146-k8",
+      "objective": 2
+     },
+     {
+      "key": "p147-k3",
+      "objective": 3
+     },
+     {
+      "key": "p147-k4",
+      "objective": 3
+     },
+     {
+      "key": "p147-k5",
+      "objective": 3
+     },
+     {
+      "key": "p147-k6",
+      "objective": 3
+     },
+     {
+      "key": "p147-k7",
+      "objective": 3
+     },
+     {
+      "key": "p147-k8",
+      "objective": 3
+     },
+     {
+      "key": "p147-k10",
+      "objective": 3
+     },
+     {
+      "key": "p147-k11",
+      "objective": 3
+     },
+     {
+      "key": "p147-k12",
+      "objective": 3
+     },
+     {
+      "key": "p147-k13",
+      "objective": 3
+     },
+     {
+      "key": "p147-k14",
+      "objective": 3
+     },
+     {
+      "key": "p148-k4",
+      "objective": 4
+     },
+     {
+      "key": "p148-k5",
+      "objective": 4
+     },
+     {
+      "key": "p148-k6",
+      "objective": 4
+     },
+     {
+      "key": "p148-k7",
+      "objective": 4
+     },
+     {
+      "key": "p148-k9",
+      "objective": 4
+     },
+     {
+      "key": "p148-k11",
+      "objective": 4
+     },
+     {
+      "key": "p149-k1",
+      "objective": 4
+     },
+     {
+      "key": "p149-k4",
+      "objective": 4
+     },
+     {
+      "key": "p149-k5",
+      "objective": 4
+     },
+     {
+      "key": "p149-k6",
+      "objective": 4
+     },
+     {
+      "key": "p149-k7",
+      "objective": 4
+     },
+     {
+      "key": "p149-k8",
+      "objective": 1
+     }
+    ],
+    "prompt_figures": []
+   }
+  }
+ ],
+ "failed_lessons": []
+}

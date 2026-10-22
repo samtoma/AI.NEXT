@@ -1,0 +1,199 @@
+{
+  "format": "ainext.book-statements/1",
+  "lesson": "eb11c2-3",
+  "source": "book-records/egb-g11-math/eb11c2-3.json",
+  "groups": [
+    {
+      "lo": "lo:eb11c2-3-1",
+      "label": "Write and expand Σ",
+      "statements": [
+        {
+          "id": "eb11c2-3:definition-1",
+          "type": "definition",
+          "text": "For a sequence with n-th (general) term $a_n$, the sum from the 1st term to the n-th term is expressed as $\\sum_{k=1}^{n} a_k$.",
+          "page": 68
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-3-2",
+      "label": "Evaluate sums with formulas",
+      "statements": [
+        {
+          "id": "eb11c2-3:rule-1",
+          "type": "rule",
+          "text": "Sum of a constant c from k=1 to n equals nc (c is a constant). Formula: $\\sum_{k=1}^{n} c = nc$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-2",
+          "type": "rule",
+          "text": "Sum of k from k=1 to n equals one half n(n+1). Formula: $\\sum_{k=1}^{n} k = \\frac{1}{2}n(n+1)$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-3",
+          "type": "rule",
+          "text": "Sum of k squared from k=1 to n equals one sixth n(n+1)(2n+1). Formula: $\\sum_{k=1}^{n} k^2 = \\frac{1}{6}n(n+1)(2n+1)$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:convention-1",
+          "type": "convention",
+          "text": "In the properties of the summation symbol Σ, p is a constant independent of k.",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-4",
+          "type": "rule",
+          "text": "A constant factor can be taken out of the sum. Printed example: sum of 5k equals 5 times sum of k. Formula: $\\sum_{k=1}^{n} pa_k = p\\sum_{k=1}^{n} a_k$; Example: $\\sum_{k=1}^{n} 5k = 5\\sum_{k=1}^{n} k$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-5",
+          "type": "rule",
+          "text": "The sum of a sum is the sum of the sums. Printed example given. Formula: $\\sum_{k=1}^{n} (a_k+b_k) = \\sum_{k=1}^{n} a_k + \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (k^2+4) = \\sum_{k=1}^{n} k^2 + \\sum_{k=1}^{n} 4$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-6",
+          "type": "rule",
+          "text": "The sum of a difference is the difference of the sums. Printed example given. Formula: $\\sum_{k=1}^{n} (a_k-b_k) = \\sum_{k=1}^{n} a_k - \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (2k-3) = 2\\sum_{k=1}^{n} k - \\sum_{k=1}^{n} 3$",
+          "page": 71
+        },
+        {
+          "id": "eb11c2-3:rule-7",
+          "type": "rule",
+          "text": "Formula for the sum of cubes: the sum of k^3 for k from 1 to n equals the square of one half n(n+1). Formula: $\\sum_{k=1}^{n} k^3 = \\{\\frac{1}{2}n(n+1)\\}^2$",
+          "page": 74
+        },
+        {
+          "id": "eb11c2-3:rule-8",
+          "type": "rule",
+          "text": "The sum of a r^{k-1} for k from 1 to n is the sum from the first term to the n-th term of a geometric sequence with first term a and common ratio r. Formula: $\\sum_{k=1}^{n} ar^{k-1}$",
+          "page": 74
+        },
+        {
+          "id": "eb11c2-3:rule-9",
+          "type": "rule",
+          "text": "When r<1 the sum of the first n terms equals a(1-r^n)/(1-r). Formula: $\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(1-r^n)}{1-r}$",
+          "page": 74
+        },
+        {
+          "id": "eb11c2-3:rule-10",
+          "type": "rule",
+          "text": "When r>1 the sum of the first n terms equals a(r^n-1)/(r-1). Formula: $\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(r^n-1)}{r-1}$",
+          "page": 74
+        },
+        {
+          "id": "eb11c2-3:rule-11",
+          "type": "rule",
+          "text": "A sequence a_n = r^{n-1} can be rewritten as a_n = 1 × r^{n-1}, so it is a geometric sequence with first term 1 and common ratio r. Example: a_n = 4^{n-1} = 1 × 4^{n-1}; first term 1, common ratio 4. Formula: $a_n = r^{n-1} = 1\\times r^{n-1}$",
+          "page": 74
+        },
+        {
+          "id": "eb11c2-3:rule-12",
+          "type": "rule",
+          "text": "A sequence a_n = r^n can be rewritten as a_n = r × r^{n-1}, so it is a geometric sequence with first term r and common ratio r. Example: a_n = 4^n = 4 × 4^{n-1}; first term 4, common ratio 4. Formula: $a_n = r^n = r\\times r^{n-1}$",
+          "page": 74
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-3-3",
+      "label": "Sum fractional sequences",
+      "statements": [
+        {
+          "id": "eb11c2-3:method-1",
+          "type": "method",
+          "text": "Step 1: Transform each term using the formula 1/(ab) = 1/(b−a)(1/a − 1/b); e.g. 1/(4×10) = 1/6(1/4 − 1/10). Formula: $\\frac{1}{ab}=\\frac{1}{b-a}\\left(\\frac{1}{a}-\\frac{1}{b}\\right)$ Examples: $\\frac{1}{4\\times 10}=\\frac{1}{6}\\left(\\frac{1}{4}-\\frac{1}{10}\\right)$",
+          "page": 76
+        },
+        {
+          "id": "eb11c2-3:method-2",
+          "type": "method",
+          "text": "Step 2: Cancel out the terms that sum to zero and calculate the remaining parts.",
+          "page": 76
+        },
+        {
+          "id": "eb11c2-3:rule-13",
+          "type": "rule",
+          "text": "For sequences containing a square root in the denominator, first rationalize the denominator.",
+          "page": 76
+        },
+        {
+          "id": "eb11c2-3:rule-14",
+          "type": "rule",
+          "text": "When the sum of a sequence containing fractions or square roots is expressed using summation notation Σ, rewrite it into the form of a sum of terms.",
+          "page": 76
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-3-4",
+      "label": "Sum arithmetic × geometric",
+      "statements": [
+        {
+          "id": "eb11c2-3:method-3",
+          "type": "method",
+          "text": "For the sum S of (an arithmetic sequence) × (a geometric sequence with common ratio r), use S − rS. Formula: $S-rS$",
+          "page": 79
+        },
+        {
+          "id": "eb11c2-3:caution-1",
+          "type": "caution",
+          "text": "Common Mistakes: in subtracting 3S from S, writing −2S = 3×1 + 2×3 + 2×3² + 2×3³ + … + 2×3^{n−1} + (2n+1)×3^n is wrong; you forgot to change the sign of the last term to minus when subtracting 3S from S.",
+          "page": 79
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-3-5",
+      "label": "General term and sum S_n",
+      "statements": [
+        {
+          "id": "eb11c2-3:convention-2",
+          "type": "convention",
+          "text": "S_n denotes the sum from the first term a_1 to the n-th term of the sequence {a_n}.",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:rule-15",
+          "type": "rule",
+          "text": "When n ≥ 2, the general term is the difference of consecutive sums. Formula: $a_n = S_n - S_{n-1}$",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:rule-16",
+          "type": "rule",
+          "text": "The first term equals S_1. Formula: $a_1 = S_1$",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:method-4",
+          "type": "method",
+          "text": "Check whether the a_n obtained under the condition n ≥ 2 also holds for the first term by substituting n = 1 into the formula for a_n.",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:rule-17",
+          "type": "rule",
+          "text": "If it holds, keep a_n as is.",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:rule-18",
+          "type": "rule",
+          "text": "If it does not hold, write both a_1 and a_n.",
+          "page": 83
+        },
+        {
+          "id": "eb11c2-3:caution-2",
+          "type": "caution",
+          "text": "Common Mistakes: computing a_n = S_n − S_{n−1} = (n²−3n) − {(n−1)² − 3(n−1)} = 2n − 4 and concluding a_n = 2n−4 overlooks the prerequisite n ≥ 2 and fails to perform the final verification for n = 1. Formula: $a_n=S_n-S_{n-1}=(n^2-3n)-\\{(n-1)^2-3(n-1)\\}=2n-4$",
+          "page": 83
+        }
+      ]
+    }
+  ]
+}

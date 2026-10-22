@@ -1,0 +1,42 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-5-2:cross-term",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-5-2",
+ "parent_question_id": "q:eb11c1-5-2:bk-warm-up-3-1",
+ "source_page": 33,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "let": "m*m+1"
+  }
+ ],
+ "stem": "Prove that $x^2+{=2*m}xy+{=c}y^2-{=2*k}y+{=k*k} \\ge 0$ for all real numbers $x$ and $y$. Equality holds for exactly one pair $(x, y)$. Find the value of the product $xy$ at which equality holds.",
+ "answer": "-m*k*k",
+ "solution": [
+  "Group the terms so that $x^2+{=2*m}xy$ starts a perfect square: $x^2+{=2*m}xy+{=m*m}y^2=(x+{=m}y)^2$",
+  "Expression $= (x^2+{=2*m}xy+{=m*m}y^2)+(y^2-{=2*k}y+{=k*k})$",
+  "$= (x+{=m}y)^2+(y-{=k})^2$ (complete the square)",
+  "Both squares are $\\ge 0$, so the expression is $\\ge 0$ for all real $x$, $y$",
+  "Equality holds when $y-{=k}=0$ and $x+{=m}y=0$, so $y={=k}$ and $x=-{=m*k}$",
+  "So $xy=-{=m*k}\\times {=k}=-{=m*k*k}$"
+ ],
+ "notes": "Answer is -m*k^2, a negative whole number. Cross term forces the first square to include y."
+}

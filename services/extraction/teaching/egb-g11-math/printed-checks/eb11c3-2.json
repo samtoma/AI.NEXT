@@ -1,0 +1,373 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c3-2",
+  "source": "book-records/egb-g11-math/eb11c3-2.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 15,
+      "cost_usd": 0.071,
+      "calls": [
+        {
+          "call": "check-printed.eb11c3-2",
+          "cost_usd": 0.0479,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c3-2",
+          "cost_usd": 0.0231,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c3-2:worked-example-1:a",
+      "record_id": "eb11c3-2:worked-example-1",
+      "part": "a",
+      "type": "worked_example",
+      "page": 116,
+      "printed": "$x=\\pm 2i\\sqrt{2}$",
+      "blind": "x = 2√2 i or x = -2√2 i",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "a6673a1e071ef521e35c3404e7dd19c6",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:worked-example-1:a",
+        "verdict": "equivalent",
+        "reason": "Same roots ±2√2 i."
+      },
+      "how": "judged equivalent: Same roots ±2√2 i.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:worked-example-1:b",
+      "record_id": "eb11c3-2:worked-example-1",
+      "part": "b",
+      "type": "worked_example",
+      "page": 116,
+      "printed": "$x=-1$ or $x=\\frac{9}{2}$",
+      "blind": "x = 9/2 or x = -1",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "d6a0d8ec83724adeb2a809f313796f39",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:worked-example-1:c",
+      "record_id": "eb11c3-2:worked-example-1",
+      "part": "c",
+      "type": "worked_example",
+      "page": 116,
+      "printed": "$x=\\frac{-\\sqrt{6}\\pm 4i}{2}$",
+      "blind": "x = (-√6 + 4i)/2 or x = (-√6 - 4i)/2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "192745ee9ce2675badfb94ffc4fadf78",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:worked-example-1:c",
+        "verdict": "equivalent",
+        "reason": "Same two roots (-√6±4i)/2."
+      },
+      "how": "judged equivalent: Same two roots (-√6±4i)/2.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-1",
+      "record_id": "eb11c3-2:explanation-1",
+      "part": null,
+      "type": "worked_example",
+      "page": 118,
+      "printed": "two distinct imaginary solutions",
+      "blind": "D = 4² - 4·3·7 = -68 < 0, so the equation has two distinct imaginary solutions.",
+      "blind_kind": "explanation",
+      "figures": [],
+      "question_fingerprint": "e58815b17625de04b13df6105c6ddcd3",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-1",
+        "verdict": "equivalent",
+        "reason": "Both conclude two distinct imaginary solutions (D<0)."
+      },
+      "how": "judged equivalent: Both conclude two distinct imaginary solutions (D<0).",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:example-2",
+      "record_id": "eb11c3-2:example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 119,
+      "printed": "$-2\\le m\\le 6$",
+      "blind": "D = -3(m-6)(m+2). D>0 (two distinct real solutions) when -2<m<6; D=0 (repeated solution) when m=-2 or 6; D<0 (two distinct imaginary solutions) when m<-2 or m>6.",
+      "blind_kind": "explanation",
+      "figures": [
+        "eb11c3-2:figure-2"
+      ],
+      "question_fingerprint": "84115f5d0e46791847013f668f71bb22",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:example-2",
+        "verdict": "equivalent",
+        "reason": "Solver's D≥0 case (-2≤m≤6) matches printed range, with extra case detail."
+      },
+      "how": "judged equivalent: Solver's D≥0 case (-2≤m≤6) matches printed range, with extra case detail.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-2:a",
+      "record_id": "eb11c3-2:explanation-2",
+      "part": "a",
+      "type": "worked_example",
+      "page": 121,
+      "printed": "$12$",
+      "blind": "22/3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "aec6baa8df81319b028292d8a78c909a",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-2:a",
+        "verdict": "different",
+        "reason": "22/3 vs 12."
+      },
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-2:b",
+      "record_id": "eb11c3-2:explanation-2",
+      "part": "b",
+      "type": "worked_example",
+      "page": 121,
+      "printed": "$\\frac{81}{2}$",
+      "blind": "18",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "4022609cbd28e1f85668d6081525f8d5",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-2:b",
+        "verdict": "different",
+        "reason": "18 vs 81/2."
+      },
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-2:c",
+      "record_id": "eb11c3-2:explanation-2",
+      "part": "c",
+      "type": "worked_example",
+      "page": 121,
+      "printed": "$-4$",
+      "blind": "-12/5",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "af5e186624d06b31fe1a0e56857647e5",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-2:c",
+        "verdict": "different",
+        "reason": "-12/5 vs -4."
+      },
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-2:d",
+      "record_id": "eb11c3-2:explanation-2",
+      "part": "d",
+      "type": "worked_example",
+      "page": 121,
+      "printed": "$\\frac{5}{2}$",
+      "blind": "4/3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "e122bb74bafd6b4d3294b0d9100e1f33",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-2:d",
+        "verdict": "different",
+        "reason": "4/3 vs 5/2."
+      },
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:worked-example-2",
+      "record_id": "eb11c3-2:worked-example-2",
+      "part": null,
+      "type": "worked_example",
+      "page": 124,
+      "printed": "m=2: solutions -2, 3; m=0: solutions -3, 2",
+      "blind": "m = 2 with solutions -2 and 3; or m = 0 with solutions 2 and -3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "412c6d44b7b53ab8112ef625e496640f",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:worked-example-2",
+        "verdict": "equivalent",
+        "reason": "Same m values with same solution pairs."
+      },
+      "how": "judged equivalent: Same m values with same solution pairs.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:worked-example-3:a",
+      "record_id": "eb11c3-2:worked-example-3",
+      "part": "a",
+      "type": "worked_example",
+      "page": 126,
+      "printed": "$2\\left(x-\\frac{3+i\\sqrt{7}}{4}\\right)\\left(x-\\frac{3-i\\sqrt{7}}{4}\\right)$",
+      "blind": "2(x - (3+√7 i)/4)(x - (3-√7 i)/4)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "e3c5aeedafdb47c87f92854e4b9a6643",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:worked-example-3:a",
+        "verdict": "equivalent",
+        "reason": "Same factorisation."
+      },
+      "how": "judged equivalent: Same factorisation.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:worked-example-3:b",
+      "record_id": "eb11c3-2:worked-example-3",
+      "part": "b",
+      "type": "worked_example",
+      "page": 126,
+      "printed": "$(x+1)(x-1)(x+i\\sqrt{3})(x-i\\sqrt{3})$",
+      "blind": "(x-1)(x+1)(x-√3 i)(x+√3 i)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "767b10e7db8dd5a31dc6e9eb2b5bdaf4",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:worked-example-3:b",
+        "verdict": "equivalent",
+        "reason": "Same four factors."
+      },
+      "how": "judged equivalent: Same four factors.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-3",
+      "record_id": "eb11c3-2:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 127,
+      "printed": "$2x^2-2x+1=0$",
+      "blind": "x² - x + 1/2 = 0 (equivalently 2x² - 2x + 1 = 0)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "d0683beeca7ee0329001ca1d3b220459",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c3-2:explanation-3",
+        "verdict": "equivalent",
+        "reason": "Same equation up to scaling; solver also gives 2x²-2x+1=0."
+      },
+      "how": "judged equivalent: Same equation up to scaling; solver also gives 2x²-2x+1=0.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-4",
+      "record_id": "eb11c3-2:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 127,
+      "printed": "$\\frac{-1+\\sqrt7 i}{2},\\ \\frac{-1-\\sqrt7 i}{2}$",
+      "blind": "CANNOT ANSWER: the two numbers' sum and product are not given in the question.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "6a4cb6bb7a40345f57b8789128bf3b67",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the two numbers' sum and product are not given in the question.",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c3-2:explanation-5",
+      "record_id": "eb11c3-2:explanation-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 130,
+      "printed": "$-6<m<-2$",
+      "blind": "-6 < m < -2",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "985b0721b0491b3695ef464b11e1e898",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:31:49+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

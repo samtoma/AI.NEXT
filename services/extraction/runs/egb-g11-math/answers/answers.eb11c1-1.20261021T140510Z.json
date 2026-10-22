@@ -1,0 +1,1171 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "46c4c9e46c19a95e1693f8c8cdba7eb2740a3dcced555d3e9b13cfe3be4115d8",
+  "generated_sha256": "f43ca6f279fa829e5e201dd80d727e13e522bf376b8e3249a158c3a2b20f62dd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-1:open-prompt-2",
+      "kind": "explanation",
+      "answer": "The Binomial Theorem gives the term with $a^{n-r}b^r$ directly as ${}_nC_r\\,a^{n-r}b^r$, so its coefficient comes from ${}_nC_r$ (and the numbers inside the brackets) with no repeated multiplication.",
+      "solution": [
+       "In $(a+b)^n$ the term containing $a^{n-r}b^r$ is ${}_nC_r\\,a^{n-r}b^r$.",
+       "Find the exponent of the second term, r, and the exponent of the first term, n-r.",
+       "Calculate ${}_nC_r = \\frac{{}_nP_r}{r!}$ (for example ${}_5C_3 = \\frac{5\\times4\\times3}{3\\times2\\times1}=10$).",
+       "If the brackets hold numbers or coefficients, put them in with their powers, as in $(x-2y)^6$: ${}_6C_2\\,x^4(-2y)^2=60x^4y^2$.",
+       "So the formula and nCr give the coefficient of any term without multiplying the brackets out."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-3",
+       "eb11c1-1:rule-4",
+       "eb11c1-1:example-4",
+       "eb11c1-1:example-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:warm-up-1",
+      "kind": "value",
+      "answer": "-20412",
+      "solution": [
+       "The term $x^4$ comes from $(2x^2)^2$, so the exponent of $2x^2$ is 2.",
+       "The exponent of $-3$ is $7-2=5$.",
+       "The term is ${}_7C_5(2x^2)^2(-3)^5$.",
+       "${}_7C_5=\\frac{7\\times6\\times5\\times4\\times3}{5\\times4\\times3\\times2\\times1}=21$.",
+       "$(2x^2)^2=4x^4$ and $(-3)^5=-243$.",
+       "$21\\times4\\times(-243)=-20412$.",
+       "The coefficient of $x^4$ is -20412."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:warm-up-2",
+      "kind": "value",
+      "answer": "$81x^4-216x^3+216x^2-96x+16$",
+      "solution": [
+       "Write $(3x-2)^4={}_4C_0(3x)^4+{}_4C_1(3x)^3(-2)+{}_4C_2(3x)^2(-2)^2+{}_4C_3(3x)(-2)^3+{}_4C_4(-2)^4$.",
+       "The values are ${}_4C_0=1$, ${}_4C_1=4$, ${}_4C_2=6$, ${}_4C_3=4$, ${}_4C_4=1$.",
+       "The terms are $81x^4$, $4\\times27x^3\\times(-2)=-216x^3$, $6\\times9x^2\\times4=216x^2$, $4\\times3x\\times(-8)=-96x$, and $16$.",
+       "$(3x-2)^4=81x^4-216x^3+216x^2-96x+16$."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:challenge-1",
+      "kind": "value",
+      "answer": "32",
+      "solution": [
+       "$(1+x)^5=a+bx+cx^2+dx^3+ex^4+fx^5$.",
+       "Substitute $x=1$ to get $a+b+c+d+e+f$ on the right.",
+       "The left side becomes $(1+1)^5=2^5$.",
+       "$a+b+c+d+e+f=32$."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:open-prompt-3",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+       "For $(x+y+z)^4$ the term $x^2yz$ has p = 2, q = 1, r = 1.",
+       "Use $\\frac{n!}{p!q!r!}x^py^qz^r$ with n = 4.",
+       "Write the term as $\\frac{4!}{2!1!1!}x^2y^1z^1$ without removing the brackets.",
+       "$\\frac{24}{2}=12$.",
+       "The coefficient of $x^2yz$ is 12."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:challenge-2",
+      "kind": "value",
+      "answer": "19",
+      "solution": [
+       "A term is $\\frac{4!}{p!q!r!}1^p x^q (x^2)^r$ with $p+q+r=4$, and its power of x is $q+2r$.",
+       "Add the multinomial coefficients that give the same power of x.",
+       "$x^0$: 1. $x^1$: 4. $x^2$: 6+4=10. $x^3$: 4+12=16.",
+       "$x^4$: (p,q,r)=(0,4,0) gives 1, (1,2,1) gives 12, (2,0,2) gives 6, total 19.",
+       "By symmetry the coefficients are 1, 4, 10, 16, 19, 16, 10, 4, 1.",
+       "The greatest coefficient is 19."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:challenge-3",
+      "kind": "explanation",
+      "answer": "$8^n-1=(1+7)^n-1$, and every remaining term has a factor 7, so it is divisible by 7.",
+      "solution": [
+       "Write $8^n=(1+7)^n$.",
+       "Expand with the Binomial Theorem: $(1+7)^n={}_nC_0+{}_nC_1\\times7+{}_nC_2\\times7^2+\\dots+{}_nC_n\\times7^n$.",
+       "Since ${}_nC_0=1$, $8^n-1={}_nC_1\\times7+{}_nC_2\\times7^2+\\dots+{}_nC_n\\times7^n$.",
+       "Take out 7: $8^n-1=7({}_nC_1+{}_nC_2\\times7+\\dots+{}_nC_n\\times7^{n-1})$.",
+       "The bracket is a whole number, so $8^n-1$ is divisible by 7."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:rule-2",
+       "eb11c1-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:reflect-1",
+      "kind": "explanation",
+      "answer": "Both expansions give each term as a coefficient times powers of the variables, and the binomial is the multinomial with only two terms.",
+      "solution": [
+       "Binomial: the term $a^{n-r}b^r$ has coefficient ${}_nC_r=\\frac{n!}{(n-r)!r!}$.",
+       "Multinomial: the term $a^pb^qc^r$ has coefficient $\\frac{n!}{p!q!r!}$.",
+       "Similarity: in both, the exponents add up to n, and the coefficient is n! divided by the factorials of the exponents.",
+       "If the third term is dropped, the multinomial formula becomes the binomial formula.",
+       "So the binomial is a special case of the multinomial, and both count the ways of choosing which brackets give each term."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:rule-5",
+       "eb11c1-1:rule-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-1:open-prompt-2",
+      "kind": "explanation",
+      "answer": "The Binomial Theorem gives the term with $x_1^{n-r}x_2^r$ directly as ${}_nC_r\\,x_1^{n-r}x_2^r$, where ${}_nC_r = \\frac{n!}{r!(n-r)!}$ counts the ways to pick $x_2$ from $r$ of the $n$ brackets. So the coefficient of any term is found without multiplying out. Pascal's triangle gives the same numbers."
+     },
+     {
+      "ref": "eb11c1-1:warm-up-1",
+      "kind": "value",
+      "answer": "-20412"
+     },
+     {
+      "ref": "eb11c1-1:warm-up-2",
+      "kind": "value",
+      "answer": "$81x^4-216x^3+216x^2-96x+16$"
+     },
+     {
+      "ref": "eb11c1-1:challenge-1",
+      "kind": "value",
+      "answer": "32"
+     },
+     {
+      "ref": "eb11c1-1:open-prompt-3",
+      "kind": "explanation",
+      "answer": "Use the Multinomial Theorem. The term is $\\frac{4!}{2!\\,1!\\,1!}x^2y^1z^1 = 12x^2yz$, so the coefficient is 12. It can be written as $\\frac{4!}{2!1!1!}x^2yz$ without removing the brackets."
+     },
+     {
+      "ref": "eb11c1-1:challenge-2",
+      "kind": "value",
+      "answer": "19"
+     },
+     {
+      "ref": "eb11c1-1:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a group activity that points to the try section. It has no question of its own, and the try-5 equality is not given."
+     },
+     {
+      "ref": "eb11c1-1:challenge-3",
+      "kind": "explanation",
+      "answer": "Write $8^n=(1+7)^n={}_nC_0+{}_nC_1\\cdot7+{}_nC_2\\cdot7^2+\\dots+{}_nC_n7^n$. Then $8^n-1={}_nC_1\\cdot7+{}_nC_2\\cdot7^2+\\dots+{}_nC_n7^n = 7({}_nC_1+{}_nC_2\\cdot7+\\dots+{}_nC_n7^{n-1})$. Every term has a factor 7, so $8^n-1$ is divisible by 7."
+     },
+     {
+      "ref": "eb11c1-1:reflect-1",
+      "kind": "explanation",
+      "answer": "Both expansions raise a sum to the power $n$ and take each term from choosing one summand in each of the $n$ brackets. The coefficient counts the number of ways to do that. The binomial coefficient is ${}_nC_r=\\frac{n!}{r!(n-r)!}$. The multinomial coefficient is $\\frac{n!}{p!q!r!}$, and it has the same form. The exponents add up to $n$ in both. With two terms the multinomial formula becomes $\\frac{n!}{p!q!}$ with $p+q=n$, which equals ${}_nC_q$. So the binomial is the special case of the multinomial. This unifies algebraic powers with combinatorial counting of arrangements."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c1-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-1:open-prompt-1",
+      "kind": "value",
+      "answer": "11",
+      "solution": [
+       "The figure labels each row with its number of terms: Row 0 has 1 term, Row 1 has 2 terms, Row 2 has 3 terms.",
+       "So Row n has n + 1 terms.",
+       "The figure labels Row 10 as having 11 terms.",
+       "The tenth row (Row 10) has 11 terms."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-1:a",
+      "kind": "value",
+      "answer": "-1344",
+      "solution": [
+       "The term x^6 y has exponent 6 for 2x and exponent 1 for -3y.",
+       "The term is 7C1 (2x)^6 (-3y)^1.",
+       "= 7 × 64x^6 × (-3y)",
+       "= -1344 x^6 y",
+       "The coefficient is -1344."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:example-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-1:b",
+      "kind": "value",
+      "answer": "-720",
+      "solution": [
+       "The term x^2 has exponent 2 for 3x and exponent 5-2 = 3 for -2.",
+       "The term is 5C2 (3x)^2 (-2)^3.",
+       "= (5×4)/(2×1) × 9x^2 × (-8)",
+       "= 10 × 9 × (-8) x^2 = -720x^2",
+       "The coefficient is -720."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-1:c",
+      "kind": "value",
+      "answer": "-48384",
+      "solution": [
+       "a^6 = (a^2)^3, so the exponent of 3a^2 is 3 and the exponent of -2 is 8-3 = 5.",
+       "The term is 8C3 (3a^2)^3 (-2)^5.",
+       "= (8×7×6)/(3×2×1) × 27a^6 × (-32)",
+       "= 56 × 27 × (-32) a^6",
+       "= -48384 a^6",
+       "The coefficient is -48384."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-2:a",
+      "kind": "value",
+      "answer": "x^6 + 12x^5 + 60x^4 + 160x^3 + 240x^2 + 192x + 64",
+      "solution": [
+       "Write (x+2)^6 = 6C0 x^6 + 6C1 x^5·2 + 6C2 x^4·2^2 + 6C3 x^3·2^3 + 6C4 x^2·2^4 + 6C5 x·2^5 + 6C6·2^6.",
+       "The combinations are 1, 6, 15, 20, 15, 6, 1.",
+       "Terms: x^6, 6·2x^5 = 12x^5, 15·4x^4 = 60x^4, 20·8x^3 = 160x^3, 15·16x^2 = 240x^2, 6·32x = 192x, 64.",
+       "The expansion is x^6 + 12x^5 + 60x^4 + 160x^3 + 240x^2 + 192x + 64."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:example-6",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-2:b",
+      "kind": "value",
+      "answer": "243a^5 - 810a^4b + 1080a^3b^2 - 720a^2b^3 + 240ab^4 - 32b^5",
+      "solution": [
+       "Write (3a-2b)^5 = 5C0 (3a)^5 + 5C1 (3a)^4(-2b) + 5C2 (3a)^3(-2b)^2 + 5C3 (3a)^2(-2b)^3 + 5C4 (3a)(-2b)^4 + 5C5 (-2b)^5.",
+       "The combinations are 1, 5, 10, 10, 5, 1.",
+       "Terms: 243a^5; 5·81·(-2) = -810a^4b; 10·27·4 = 1080a^3b^2; 10·9·(-8) = -720a^2b^3; 5·3·16 = 240ab^4; -32b^5.",
+       "The expansion is 243a^5 - 810a^4b + 1080a^3b^2 - 720a^2b^3 + 240ab^4 - 32b^5."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:a",
+      "kind": "value",
+      "answer": "1120",
+      "solution": [
+       "The term x^4y^4 has exponent 4 for 2x and exponent 4 for -y.",
+       "The term is 8C4 (2x)^4 (-y)^4.",
+       "= 70 × 16x^4 × y^4",
+       "= 1120 x^4y^4",
+       "The coefficient is 1120."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:example-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:b",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+       "The term ab^3 has exponent 1 for 3a and exponent 3 for b.",
+       "The term is 4C3 (3a)^1 b^3.",
+       "= 4 × 3a × b^3",
+       "= 12ab^3",
+       "The coefficient is 12."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:c",
+      "kind": "value",
+      "answer": "160",
+      "solution": [
+       "The term x^3y^2 has exponent 3 for x and exponent 2 for -4y.",
+       "The term is 5C2 x^3 (-4y)^2.",
+       "= 10 × x^3 × 16y^2",
+       "= 160 x^3y^2",
+       "The coefficient is 160."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:example-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:d",
+      "kind": "value",
+      "answer": "405",
+      "solution": [
+       "The term x^4 has exponent 4 for 3x and exponent 1 for 1.",
+       "The term is 5C1 (3x)^4 (1)^1.",
+       "= 5 × 81x^4",
+       "= 405x^4",
+       "The coefficient is 405."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:e",
+      "kind": "value",
+      "answer": "-216",
+      "solution": [
+       "The term a has exponent 1 for 2a and exponent 4-1 = 3 for -3.",
+       "The term is 4C3 (2a)^1 (-3)^3.",
+       "= 4 × 2a × (-27)",
+       "= -216a",
+       "The coefficient is -216."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:f",
+      "kind": "value",
+      "answer": "1080",
+      "solution": [
+       "The term x^3 has exponent 3 for 3x and exponent 5-3 = 2 for 2.",
+       "The term is 5C3 (3x)^3 (2)^2.",
+       "= 10 × 27x^3 × 4",
+       "= 1080x^3",
+       "The coefficient is 1080."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:g",
+      "kind": "value",
+      "answer": "-160",
+      "solution": [
+       "x^6 = (x^2)^3, so the exponent of 2x^2 is 3 and the exponent of -1 is 6-3 = 3.",
+       "The term is 6C3 (2x^2)^3 (-1)^3.",
+       "= 20 × 8x^6 × (-1)",
+       "= -160x^6",
+       "The coefficient is -160."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:h",
+      "kind": "value",
+      "answer": "-90",
+      "solution": [
+       "x^4 = (x^2)^2, so the exponent of 3x^2 is 2 and the exponent of -1 is 5-2 = 3.",
+       "The term is 5C2 (3x^2)^2 (-1)^3.",
+       "= 10 × 9x^4 × (-1)",
+       "= -90x^4",
+       "The coefficient is -90."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:i",
+      "kind": "value",
+      "answer": "4320",
+      "solution": [
+       "x^6 = (x^2)^3, so the exponent of 3x^2 is 3 and the exponent of 2 is 6-3 = 3.",
+       "The term is 6C3 (3x^2)^3 (2)^3.",
+       "= 20 × 27x^6 × 8",
+       "= 4320x^6",
+       "The coefficient is 4320."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-3",
+       "eb11c1-1:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:a",
+      "kind": "value",
+      "answer": "x^4 + 4x^3 + 6x^2 + 4x + 1",
+      "solution": [
+       "(x+1)^4 = 4C0 x^4 + 4C1 x^3 + 4C2 x^2 + 4C3 x + 4C4.",
+       "The combinations are 1, 4, 6, 4, 1.",
+       "The expansion is x^4 + 4x^3 + 6x^2 + 4x + 1."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:b",
+      "kind": "value",
+      "answer": "a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4",
+      "solution": [
+       "(a+b)^4 = 4C0 a^4 + 4C1 a^3b + 4C2 a^2b^2 + 4C3 ab^3 + 4C4 b^4.",
+       "The combinations are 1, 4, 6, 4, 1.",
+       "The expansion is a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:c",
+      "kind": "value",
+      "answer": "a^4 - 8a^3b + 24a^2b^2 - 32ab^3 + 16b^4",
+      "solution": [
+       "(a-2b)^4 = 4C0 a^4 + 4C1 a^3(-2b) + 4C2 a^2(-2b)^2 + 4C3 a(-2b)^3 + 4C4 (-2b)^4.",
+       "Terms: a^4; 4·(-2) = -8a^3b; 6·4 = 24a^2b^2; 4·(-8) = -32ab^3; 16b^4.",
+       "The expansion is a^4 - 8a^3b + 24a^2b^2 - 32ab^3 + 16b^4."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:d",
+      "kind": "value",
+      "answer": "x^5 - 10x^4 + 40x^3 - 80x^2 + 80x - 32",
+      "solution": [
+       "(x-2)^5 = 5C0 x^5 + 5C1 x^4(-2) + 5C2 x^3(-2)^2 + 5C3 x^2(-2)^3 + 5C4 x(-2)^4 + 5C5 (-2)^5.",
+       "The combinations are 1, 5, 10, 10, 5, 1.",
+       "Terms: x^5; 5·(-2) = -10x^4; 10·4 = 40x^3; 10·(-8) = -80x^2; 5·16 = 80x; -32.",
+       "The expansion is x^5 - 10x^4 + 40x^3 - 80x^2 + 80x - 32."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:e",
+      "kind": "value",
+      "answer": "243x^5 + 810x^4y + 1080x^3y^2 + 720x^2y^3 + 240xy^4 + 32y^5",
+      "solution": [
+       "(3x+2y)^5 = 5C0 (3x)^5 + 5C1 (3x)^4(2y) + 5C2 (3x)^3(2y)^2 + 5C3 (3x)^2(2y)^3 + 5C4 (3x)(2y)^4 + 5C5 (2y)^5.",
+       "The combinations are 1, 5, 10, 10, 5, 1.",
+       "Terms: 243x^5; 5·81·2 = 810x^4y; 10·27·4 = 1080x^3y^2; 10·9·8 = 720x^2y^3; 5·3·16 = 240xy^4; 32y^5.",
+       "The expansion is 243x^5 + 810x^4y + 1080x^3y^2 + 720x^2y^3 + 240xy^4 + 32y^5."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:f",
+      "kind": "value",
+      "answer": "32a^10 - 80a^8 + 80a^6 - 40a^4 + 10a^2 - 1",
+      "solution": [
+       "(2a^2-1)^5 = 5C0 (2a^2)^5 + 5C1 (2a^2)^4(-1) + 5C2 (2a^2)^3(-1)^2 + 5C3 (2a^2)^2(-1)^3 + 5C4 (2a^2)(-1)^4 + 5C5 (-1)^5.",
+       "The combinations are 1, 5, 10, 10, 5, 1.",
+       "Terms: 32a^10; 5·16·(-1) = -80a^8; 10·8 = 80a^6; 10·4·(-1) = -40a^4; 5·2 = 10a^2; -1.",
+       "The expansion is 32a^10 - 80a^8 + 80a^6 - 40a^4 + 10a^2 - 1."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:g",
+      "kind": "value",
+      "answer": "x^6 - 18x^5 + 135x^4 - 540x^3 + 1215x^2 - 1458x + 729",
+      "solution": [
+       "(x-3)^6 = 6C0 x^6 + 6C1 x^5(-3) + 6C2 x^4(-3)^2 + 6C3 x^3(-3)^3 + 6C4 x^2(-3)^4 + 6C5 x(-3)^5 + 6C6 (-3)^6.",
+       "The combinations are 1, 6, 15, 20, 15, 6, 1.",
+       "Terms: x^6; 6·(-3) = -18x^5; 15·9 = 135x^4; 20·(-27) = -540x^3; 15·81 = 1215x^2; 6·(-243) = -1458x; 729.",
+       "The expansion is x^6 - 18x^5 + 135x^4 - 540x^3 + 1215x^2 - 1458x + 729."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:h",
+      "kind": "value",
+      "answer": "64x^6 - 576x^5y + 2160x^4y^2 - 4320x^3y^3 + 4860x^2y^4 - 2916xy^5 + 729y^6",
+      "solution": [
+       "(2x-3y)^6 = 6C0 (2x)^6 + 6C1 (2x)^5(-3y) + 6C2 (2x)^4(-3y)^2 + 6C3 (2x)^3(-3y)^3 + 6C4 (2x)^2(-3y)^4 + 6C5 (2x)(-3y)^5 + 6C6 (-3y)^6.",
+       "The combinations are 1, 6, 15, 20, 15, 6, 1.",
+       "Terms: 64x^6; 6·32·(-3) = -576x^5y; 15·16·9 = 2160x^4y^2; 20·8·(-27) = -4320x^3y^3; 15·4·81 = 4860x^2y^4; 6·2·(-243) = -2916xy^5; 729y^6.",
+       "The expansion is 64x^6 - 576x^5y + 2160x^4y^2 - 4320x^3y^3 + 4860x^2y^4 - 2916xy^5 + 729y^6."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:explanation-2",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:i",
+      "kind": "value",
+      "answer": "x^6 + 2x^5 + (5/3)x^4 + (20/27)x^3 + (5/27)x^2 + (2/81)x + 1/729",
+      "solution": [
+       "(x+1/3)^6 = 6C0 x^6 + 6C1 x^5(1/3) + 6C2 x^4(1/3)^2 + 6C3 x^3(1/3)^3 + 6C4 x^2(1/3)^4 + 6C5 x(1/3)^5 + 6C6 (1/3)^6.",
+       "The combinations are 1, 6, 15, 20, 15, 6, 1.",
+       "Terms: x^6; 6/3 = 2x^5; 15/9 = 5/3 x^4; 20/27 x^3; 15/81 = 5/27 x^2; 6/243 = 2/81 x; 1/729.",
+       "The expansion is x^6 + 2x^5 + (5/3)x^4 + (20/27)x^3 + (5/27)x^2 + (2/81)x + 1/729."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-4",
+       "eb11c1-1:example-6",
+       "eb11c1-1:rule-1",
+       "eb11c1-1:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:warm-up-3:a",
+      "kind": "value",
+      "answer": "280",
+      "solution": [
+       "Use n!/(p!q!r!) a^p b^q c^r with n = 8, p = 4, q = 3, r = 1.",
+       "8!/(4!3!1!) = 40320/(24×6×1) = 280.",
+       "The coefficient is 280."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:warm-up-3:b",
+      "kind": "value",
+      "answer": "-6720",
+      "solution": [
+       "The exponents are 4 for a, 3 for -2b and 1 for 3c.",
+       "The term is 8!/(4!3!1!) a^4 (-2b)^3 (3c)^1.",
+       "= 280 × (-8) × 3 a^4b^3c",
+       "= -6720 a^4b^3c",
+       "The coefficient is -6720."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-3:a",
+      "kind": "value",
+      "answer": "60",
+      "solution": [
+       "For a^3bc^2 in (a+b+c)^6: n = 6, p = 3, q = 1, r = 2.",
+       "6!/(3!1!2!) = 720/12 = 60.",
+       "The coefficient is 60."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-3:b",
+      "kind": "value",
+      "answer": "90",
+      "solution": [
+       "For a^2b^2c^2 in (a+b+c)^6: n = 6, p = q = r = 2.",
+       "6!/(2!2!2!) = 720/8 = 90.",
+       "The coefficient is 90."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-4:a",
+      "kind": "value",
+      "answer": "3240",
+      "solution": [
+       "The exponents are 2 for a, 2 for 3b and 2 for -2c.",
+       "The term is 6!/(2!2!2!) a^2 (3b)^2 (-2c)^2.",
+       "= 90 × 9 × 4 a^2b^2c^2",
+       "= 3240 a^2b^2c^2",
+       "The coefficient is 3240."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-4:b",
+      "kind": "value",
+      "answer": "-4320",
+      "solution": [
+       "The exponents are 1 for a, 2 for 3b and 3 for -2c.",
+       "The term is 6!/(1!2!3!) a (3b)^2 (-2c)^3.",
+       "= 60 × 9 × (-8) ab^2c^3",
+       "= -4320 ab^2c^3",
+       "The coefficient is -4320."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:a",
+      "kind": "value",
+      "answer": "42",
+      "solution": [
+       "For xy^5z in (x+y+z)^7: n = 7, p = 1, q = 5, r = 1.",
+       "7!/(1!5!1!) = 5040/120 = 42.",
+       "The coefficient is 42."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:b",
+      "kind": "value",
+      "answer": "105",
+      "solution": [
+       "For x^4y^2z in (x+y+z)^7: n = 7, p = 4, q = 2, r = 1.",
+       "7!/(4!2!1!) = 5040/48 = 105.",
+       "The coefficient is 105."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:c",
+      "kind": "value",
+      "answer": "210",
+      "solution": [
+       "For x^2y^3z^2 in (x+y+z)^7: n = 7, p = 2, q = 3, r = 2.",
+       "7!/(2!3!2!) = 5040/24 = 210.",
+       "The coefficient is 210."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:a",
+      "kind": "value",
+      "answer": "252",
+      "solution": [
+       "For x^6yz^2 in (x+y+z)^9: n = 9, p = 6, q = 1, r = 2.",
+       "9!/(6!1!2!) = 362880/1440 = 252.",
+       "The coefficient is 252."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:b",
+      "kind": "value",
+      "answer": "1680",
+      "solution": [
+       "For x^3y^3z^3 in (x+y+z)^9: n = 9, p = q = r = 3.",
+       "9!/(3!3!3!) = 362880/216 = 1680.",
+       "The coefficient is 1680."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:c",
+      "kind": "value",
+      "answer": "1260",
+      "solution": [
+       "For x^2y^4z^3 in (x+y+z)^9: n = 9, p = 2, q = 4, r = 3.",
+       "9!/(2!4!3!) = 362880/288 = 1260.",
+       "The coefficient is 1260."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:a",
+      "kind": "value",
+      "answer": "15120",
+      "solution": [
+       "The exponents are 2 for a, 3 for 2b and 2 for -3c.",
+       "The term is 7!/(2!3!2!) a^2 (2b)^3 (-3c)^2.",
+       "= 210 × 8 × 9 a^2b^3c^2",
+       "= 15120 a^2b^3c^2",
+       "The coefficient is 15120."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:b",
+      "kind": "value",
+      "answer": "-20412",
+      "solution": [
+       "The exponents are 1 for a, 1 for 2b and 5 for -3c.",
+       "The term is 7!/(1!1!5!) a (2b) (-3c)^5.",
+       "= 42 × 2 × (-243) abc^5",
+       "= -20412 abc^5",
+       "The coefficient is -20412."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:c",
+      "kind": "value",
+      "answer": "-5040",
+      "solution": [
+       "The exponents are 2 for a, 4 for 2b and 1 for -3c.",
+       "The term is 7!/(2!4!1!) a^2 (2b)^4 (-3c).",
+       "= 105 × 16 × (-3) a^2b^4c",
+       "= -5040 a^2b^4c",
+       "The coefficient is -5040."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:a",
+      "kind": "value",
+      "answer": "136080",
+      "solution": [
+       "The exponents are 2 for 2a, 2 for -b and 4 for 3c.",
+       "The term is 8!/(2!2!4!) (2a)^2 (-b)^2 (3c)^4.",
+       "= 420 × 4 × 1 × 81 a^2b^2c^4",
+       "= 136080 a^2b^2c^4",
+       "The coefficient is 136080."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:b",
+      "kind": "value",
+      "answer": "-120960",
+      "solution": [
+       "The exponents are 4 for 2a, 1 for -b and 3 for 3c.",
+       "The term is 8!/(4!1!3!) (2a)^4 (-b) (3c)^3.",
+       "= 280 × 16 × (-1) × 27 a^4bc^3",
+       "= -120960 a^4bc^3",
+       "The coefficient is -120960."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:c",
+      "kind": "value",
+      "answer": "-40320",
+      "solution": [
+       "The exponents are 3 for 2a, 3 for -b and 2 for 3c.",
+       "The term is 8!/(3!3!2!) (2a)^3 (-b)^3 (3c)^2.",
+       "= 560 × 8 × (-1) × 9 a^3b^3c^2",
+       "= -40320 a^3b^3c^2",
+       "The coefficient is -40320."
+      ],
+      "grounded_in": [
+       "eb11c1-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:warm-up-4:?",
+      "kind": "explanation",
+      "answer": "Substituting x = 1 into the expansion of (1+x)^n gives 2^n = nC0 + nC1 + ... + nCn.",
+      "solution": [
+       "Expand (1+x)^n = nC0 + nC1 x + nC2 x^2 + ... + nCn x^n.",
+       "Substitute x = 1: (1+1)^n = nC0 + nC1 + nC2 + ... + nCn.",
+       "The left side is 2^n.",
+       "So nC0 + nC1 + nC2 + ... + nCn = 2^n, and the equality holds."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:try-5:?",
+      "kind": "explanation",
+      "answer": "Substituting x = -1 into the expansion of (1+x)^n gives 0 = nC0 - nC1 + nC2 - ... + (-1)^n nCn.",
+      "solution": [
+       "Expand (1+x)^n = nC0 + nC1 x + nC2 x^2 + ... + nCn x^n.",
+       "Substitute x = -1: (1-1)^n = nC0 - nC1 + nC2 - ... + (-1)^n nCn.",
+       "The left side is 0^n = 0.",
+       "So nC0 - nC1 + nC2 - ... + (-1)^n nCn = 0, and the equality holds."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-7:?",
+      "kind": "explanation",
+      "answer": "Substituting x = 2 into the expansion of (1+x)^n gives 3^n = nC0 + 2 nC1 + 2^2 nC2 + ... + 2^n nCn.",
+      "solution": [
+       "Expand (1+x)^n = nC0 + nC1 x + nC2 x^2 + ... + nCn x^n.",
+       "Substitute x = 2: (1+2)^n = nC0 + 2 nC1 + 2^2 nC2 + ... + 2^n nCn.",
+       "The left side is 3^n.",
+       "So nC0 + 2 nC1 + 2^2 nC2 + ... + 2^n nCn = 3^n, and the equality holds."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-8:?",
+      "kind": "explanation",
+      "answer": "Substituting x = -2 into the expansion of (1+x)^n gives (-1)^n = nC0 - 2 nC1 + 2^2 nC2 - ... + (-2)^n nCn.",
+      "solution": [
+       "Expand (1+x)^n = nC0 + nC1 x + nC2 x^2 + ... + nCn x^n.",
+       "Substitute x = -2: (1-2)^n = nC0 + (-2) nC1 + (-2)^2 nC2 + ... + (-2)^n nCn.",
+       "The left side is (-1)^n.",
+       "So nC0 - 2 nC1 + 2^2 nC2 - ... + (-2)^n nCn = (-1)^n, and the equality holds."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-1:exercise-9:?",
+      "kind": "explanation",
+      "answer": "Substituting x = -1/2 into the expansion of (1+x)^n gives (1/2)^n = nC0 - nC1/2 + nC2/2^2 - ... + (-1)^n nCn/2^n.",
+      "solution": [
+       "Expand (1+x)^n = nC0 + nC1 x + nC2 x^2 + ... + nCn x^n.",
+       "Substitute x = -1/2: (1-1/2)^n = nC0 + nC1(-1/2) + nC2(-1/2)^2 + ... + nCn(-1/2)^n.",
+       "The left side is (1/2)^n.",
+       "The right side is nC0 - nC1/2 + nC2/2^2 - ... + (-1)^n nCn/2^n.",
+       "So the equality holds."
+      ],
+      "grounded_in": [
+       "eb11c1-1:method-1",
+       "eb11c1-1:method-2",
+       "eb11c1-1:explanation-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-1:open-prompt-1",
+      "kind": "value",
+      "answer": "11"
+     },
+     {
+      "ref": "eb11c1-1:try-1:a",
+      "kind": "value",
+      "answer": "-1344"
+     },
+     {
+      "ref": "eb11c1-1:try-1:b",
+      "kind": "value",
+      "answer": "-720"
+     },
+     {
+      "ref": "eb11c1-1:try-1:c",
+      "kind": "value",
+      "answer": "-48384"
+     },
+     {
+      "ref": "eb11c1-1:try-2:a",
+      "kind": "value",
+      "answer": "$x^6+12x^5+60x^4+160x^3+240x^2+192x+64$"
+     },
+     {
+      "ref": "eb11c1-1:try-2:b",
+      "kind": "value",
+      "answer": "$243a^5-810a^4b+1080a^3b^2-720a^2b^3+240ab^4-32b^5$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:a",
+      "kind": "value",
+      "answer": "1120"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:b",
+      "kind": "value",
+      "answer": "12"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:c",
+      "kind": "value",
+      "answer": "160"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:d",
+      "kind": "value",
+      "answer": "405"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:e",
+      "kind": "value",
+      "answer": "-216"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:f",
+      "kind": "value",
+      "answer": "1080"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:g",
+      "kind": "value",
+      "answer": "-160"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:h",
+      "kind": "value",
+      "answer": "-90"
+     },
+     {
+      "ref": "eb11c1-1:exercise-1:i",
+      "kind": "value",
+      "answer": "4320"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:a",
+      "kind": "value",
+      "answer": "$x^4+4x^3+6x^2+4x+1$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:b",
+      "kind": "value",
+      "answer": "$a^4+4a^3b+6a^2b^2+4ab^3+b^4$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:c",
+      "kind": "value",
+      "answer": "$a^4-8a^3b+24a^2b^2-32ab^3+16b^4$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:d",
+      "kind": "value",
+      "answer": "$x^5-10x^4+40x^3-80x^2+80x-32$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:e",
+      "kind": "value",
+      "answer": "$243x^5+810x^4y+1080x^3y^2+720x^2y^3+240xy^4+32y^5$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:f",
+      "kind": "value",
+      "answer": "$32a^{10}-80a^8+80a^6-40a^4+10a^2-1$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:g",
+      "kind": "value",
+      "answer": "$x^6-18x^5+135x^4-540x^3+1215x^2-1458x+729$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:h",
+      "kind": "value",
+      "answer": "$64x^6-576x^5y+2160x^4y^2-4320x^3y^3+4860x^2y^4-2916xy^5+729y^6$"
+     },
+     {
+      "ref": "eb11c1-1:exercise-2:i",
+      "kind": "value",
+      "answer": "$x^6+2x^5+\\frac{5}{3}x^4+\\frac{20}{27}x^3+\\frac{5}{27}x^2+\\frac{2}{81}x+\\frac{1}{729}$"
+     },
+     {
+      "ref": "eb11c1-1:warm-up-3:a",
+      "kind": "value",
+      "answer": "280"
+     },
+     {
+      "ref": "eb11c1-1:warm-up-3:b",
+      "kind": "value",
+      "answer": "-6720"
+     },
+     {
+      "ref": "eb11c1-1:try-3:a",
+      "kind": "value",
+      "answer": "60"
+     },
+     {
+      "ref": "eb11c1-1:try-3:b",
+      "kind": "value",
+      "answer": "90"
+     },
+     {
+      "ref": "eb11c1-1:try-4:a",
+      "kind": "value",
+      "answer": "3240"
+     },
+     {
+      "ref": "eb11c1-1:try-4:b",
+      "kind": "value",
+      "answer": "-4320"
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:a",
+      "kind": "value",
+      "answer": "42"
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:b",
+      "kind": "value",
+      "answer": "105"
+     },
+     {
+      "ref": "eb11c1-1:exercise-3:c",
+      "kind": "value",
+      "answer": "210"
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:a",
+      "kind": "value",
+      "answer": "252"
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:b",
+      "kind": "value",
+      "answer": "1680"
+     },
+     {
+      "ref": "eb11c1-1:exercise-4:c",
+      "kind": "value",
+      "answer": "1260"
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:a",
+      "kind": "value",
+      "answer": "15120"
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:b",
+      "kind": "value",
+      "answer": "-20412"
+     },
+     {
+      "ref": "eb11c1-1:exercise-5:c",
+      "kind": "value",
+      "answer": "-5040"
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:a",
+      "kind": "value",
+      "answer": "136080"
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:b",
+      "kind": "value",
+      "answer": "-120960"
+     },
+     {
+      "ref": "eb11c1-1:exercise-6:c",
+      "kind": "value",
+      "answer": "-40320"
+     },
+     {
+      "ref": "eb11c1-1:warm-up-4:?",
+      "kind": "explanation",
+      "answer": "Expand $(1+x)^n={}_nC_0+{}_nC_1x+\\dots+{}_nC_nx^n$ and substitute $x=1$: $2^n={}_nC_0+{}_nC_1+\\dots+{}_nC_n$."
+     },
+     {
+      "ref": "eb11c1-1:try-5:?",
+      "kind": "explanation",
+      "answer": "Substitute $x=-1$ into $(1+x)^n={}_nC_0+{}_nC_1x+\\dots+{}_nC_nx^n$: $0^n={}_nC_0-{}_nC_1+{}_nC_2-\\dots+(-1)^n{}_nC_n$, and $0^n=0$ for $n\\ge1$, so the sum is 0."
+     },
+     {
+      "ref": "eb11c1-1:exercise-7:?",
+      "kind": "explanation",
+      "answer": "Substitute $x=2$ into $(1+x)^n={}_nC_0+{}_nC_1x+\\dots+{}_nC_nx^n$: $3^n={}_nC_0+2\\,{}_nC_1+2^2\\,{}_nC_2+\\dots+2^n\\,{}_nC_n$."
+     },
+     {
+      "ref": "eb11c1-1:exercise-8:?",
+      "kind": "explanation",
+      "answer": "Substitute $x=-2$ into $(1+x)^n={}_nC_0+{}_nC_1x+\\dots+{}_nC_nx^n$: $(-1)^n={}_nC_0-2\\,{}_nC_1+2^2\\,{}_nC_2-\\dots+(-2)^n\\,{}_nC_n$."
+     },
+     {
+      "ref": "eb11c1-1:exercise-9:?",
+      "kind": "explanation",
+      "answer": "Substitute $x=-\\frac12$ into $(1+x)^n={}_nC_0+{}_nC_1x+\\dots+{}_nC_nx^n$: $(\\frac12)^n={}_nC_0-\\frac{{}_nC_1}{2}+\\frac{{}_nC_2}{2^2}-\\dots+(-1)^n\\frac{{}_nC_n}{2^n}$."
+     }
+    ]
+   }
+  }
+ ]
+}

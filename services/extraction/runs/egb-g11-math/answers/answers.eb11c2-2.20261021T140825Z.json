@@ -1,0 +1,1936 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "6469e6ff4d4f4c979a1a3edbc9909849e61641bc4cf04ce07f35a29f4f3bc28c",
+  "generated_sha256": "0ee7d370575dbe80f2c0907b9a4c304f3fba9e948697ab1229a37ff530b23754",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-2:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Repeated multiplication by a ratio r>1 makes terms grow faster and faster, and a_n = ar^{n-1} and S_n predict the term and the total.",
+      "solution": [
+       "Each step multiplies the previous term by the same ratio r (definition of a geometric sequence).",
+       "With r = 2, 1, 2, 4, 8, 16, ... the terms double every step, so even a small first term becomes huge.",
+       "The n-th term is predicted by $a_n = ar^{n-1}$.",
+       "The total after n steps is $S_n=\\frac{a(r^n-1)}{r-1}$ when r>1.",
+       "So we predict growth with $a_n = ar^{n-1}$ and the cumulative effect with $S_n$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:definition-1",
+       "eb11c2-2:rule-1",
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:challenge-1",
+      "kind": "value",
+      "answer": "648",
+      "solution": [
+       "Let the general term be $a_n = ar^{n-1}$; $a_4 = ar^3 = 24$.",
+       "Then $a_3 = 24/r$ and $a_5 = 24r$.",
+       "$24/r + 24r = 80$, so $24 + 24r^2 = 80r$, i.e. $3r^2 - 10r + 3 = 0$.",
+       "$r = 3$ or $r = 1/3$.",
+       "The sequence is increasing (terms positive), so $r = 3$.",
+       "$a_7 = a_4 \\times r^3 = 24 \\times 27 = 648$.",
+       "Answer: 648."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-4",
+      "kind": "value",
+      "answer": "x = 4 or x = -4",
+      "solution": [
+       "2, x, 8 form a geometric sequence, so $x^2 = 2 \\times 8$.",
+       "$x^2 = 16$.",
+       "$x = \\pm 4$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-4",
+       "eb11c2-2:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-5",
+      "kind": "value",
+      "answer": "a = 9, b = 12 or a = 1, b = -4",
+      "solution": [
+       "6, a, b arithmetic: $2a = 6 + b$, so $b = 2a - 6$.",
+       "a, b, 16 geometric: $b^2 = 16a$.",
+       "Substitute: $(2a-6)^2 = 16a$, giving $4a^2 - 40a + 36 = 0$.",
+       "$a = 9$ or $a = 1$.",
+       "When $a = 9$, $b = 12$; when $a = 1$, $b = -4$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-2",
+       "eb11c2-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-4",
+      "kind": "value",
+      "answer": "x = 2√3 or x = -2√3",
+      "solution": [
+       "1, x, 12 geometric: $x^2 = 1 \\times 12$.",
+       "$x^2 = 12$.",
+       "$x = \\pm 2\\sqrt{3}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-4",
+       "eb11c2-2:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-5",
+      "kind": "value",
+      "answer": "a = 2, b = 6 or a = 1/2, b = 3",
+      "solution": [
+       "-2, a, b arithmetic: $2a = -2 + b$, so $b = 2a + 2$.",
+       "a, b, 18 geometric: $b^2 = 18a$.",
+       "Substitute: $(2a+2)^2 = 18a$, so $4a^2 - 10a + 4 = 0$, i.e. $2a^2 - 5a + 2 = 0$.",
+       "$a = 2$ or $a = 1/2$.",
+       "When $a = 2$, $b = 6$; when $a = 1/2$, $b = 3$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-2",
+       "eb11c2-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-5",
+      "kind": "value",
+      "answer": "x = 5 or x = -5",
+      "solution": [
+       "1, x, 25 geometric: $x^2 = 25$.",
+       "$x = \\pm 5$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-4",
+       "eb11c2-2:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-6",
+      "kind": "value",
+      "answer": "x = 2 or x = -2",
+      "solution": [
+       "1/2, x, 8 geometric: $x^2 = \\frac12 \\times 8$.",
+       "$x^2 = 4$.",
+       "$x = \\pm 2$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-4",
+       "eb11c2-2:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-7",
+      "kind": "value",
+      "answer": "a = 2, b = 2 or a = -4, b = -1",
+      "solution": [
+       "a, b, 2 arithmetic: $2b = a + 2$, so $a = 2b - 2$.",
+       "a, 2, b geometric: $2^2 = ab$, so $ab = 4$.",
+       "Substitute: $(2b-2)b = 4$, so $b^2 - b - 2 = 0$.",
+       "$b = 2$ or $b = -1$.",
+       "When $b = 2$, $a = 2$; when $b = -1$, $a = -4$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-2",
+       "eb11c2-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:challenge-2",
+      "kind": "value",
+      "answer": "a = 5, b = 15 or a = 5/4, b = 15/2 (hundred thousand LE)",
+      "solution": [
+       "-5, a, b arithmetic: $2a = -5 + b$, so $b = 2a + 5$.",
+       "a, b, 45 geometric: $b^2 = 45a$.",
+       "Substitute: $(2a+5)^2 = 45a$, so $4a^2 - 25a + 25 = 0$.",
+       "$a = 5$ or $a = 5/4$.",
+       "When $a = 5$, $b = 15$; when $a = 5/4$, $b = 15/2$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-2",
+       "eb11c2-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a group on the try section; it has no single answer of its own.",
+      "solution": [
+       "The box asks students to solve the try section together and discuss.",
+       "The try answers are given under their own references."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-10",
+      "kind": "value",
+      "answer": "a = 3, r = 2 or a = 7, r = -2",
+      "solution": [
+       "$a + ar + ar^2 = 21$ ...(i)",
+       "$ar^2 + ar^3 + ar^4 = 84$ ...(ii)",
+       "(ii) is $r^2(a+ar+ar^2) = 84$; substitute (i): $21r^2 = 84$.",
+       "$r^2 = 4$, $r = \\pm 2$.",
+       "$r = 2$: $a+2a+4a = 21$, $a = 3$.",
+       "$r = -2$: $a-2a+4a = 21$, $3a = 21$, $a = 7$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-11",
+      "kind": "value",
+      "answer": "a = 2, r = 3",
+      "solution": [
+       "$a + ar + ar^2 = 26$ ...(i)",
+       "Sum of first 6 terms: $(a+ar+ar^2) + r^3(a+ar+ar^2) = 728$.",
+       "Substitute (i): $26 + 26r^3 = 728$, so $r^3 = 27$.",
+       "$r = 3$ (real).",
+       "From (i): $a + 3a + 9a = 26$, $a = 2$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-12",
+      "kind": "value",
+      "answer": "a = 1, r = 3 or a = 9, r = 1/3",
+      "solution": [
+       "2nd term is 3: $ar = 3$ ...(i)",
+       "$a + ar + ar^2 = 13$ ...(ii)",
+       "From (i), $a = 3/r$. Substitute into (ii): $\\frac3r + 3 + 3r = 13$.",
+       "Multiply by r: $3 + 3r^2 = 10r$, so $3r^2 - 10r + 3 = 0$.",
+       "$r = 3$ or $r = 1/3$.",
+       "$r = 3$: $a = 1$. $r = 1/3$: $a = 9$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-12",
+      "kind": "value",
+      "answer": "a = 3, r = -2",
+      "solution": [
+       "$a + ar + ar^2 = 9$ ...(i)",
+       "4th to 6th terms: $ar^3 + ar^4 + ar^5 = r^3(a+ar+ar^2) = -72$.",
+       "Substitute (i): $9r^3 = -72$, $r^3 = -8$.",
+       "$r = -2$ (real).",
+       "From (i): $a - 2a + 4a = 9$, $3a = 9$, $a = 3$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-3",
+       "eb11c2-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-13",
+      "kind": "value",
+      "answer": "a = 9/7, r = 2 or a = 3, r = -2",
+      "solution": [
+       "$a + ar + ar^2 = 9$ ...(i)",
+       "$ar^2 + ar^3 + ar^4 = r^2(a+ar+ar^2) = 36$.",
+       "Substitute (i): $9r^2 = 36$, $r = \\pm 2$.",
+       "$r = 2$: $7a = 9$, $a = 9/7$.",
+       "$r = -2$: $3a = 9$, $a = 3$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-14",
+      "kind": "value",
+      "answer": "a = 6, r = 3 or a = 78/7, r = -3",
+      "solution": [
+       "$a + ar + ar^2 = 78$ ...(i)",
+       "$r^2(a+ar+ar^2) = 702$.",
+       "Substitute (i): $78r^2 = 702$, $r^2 = 9$, $r = \\pm 3$.",
+       "$r = 3$: $13a = 78$, $a = 6$.",
+       "$r = -3$: $a - 3a + 9a = 7a = 78$, $a = 78/7$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-15",
+      "kind": "value",
+      "answer": "a = 3/5, r = 4 or a = -1, r = -4",
+      "solution": [
+       "$a + ar = 3$ ...(i)",
+       "Sum of first 4: $(a+ar) + r^2(a+ar) = 51$.",
+       "Substitute (i): $3 + 3r^2 = 51$, $r^2 = 16$, $r = \\pm 4$.",
+       "$r = 4$: $5a = 3$, $a = 3/5$.",
+       "$r = -4$: $a - 4a = 3$, $a = -1$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-16",
+      "kind": "value",
+      "answer": "a = 5, r = 3",
+      "solution": [
+       "$a + ar + ar^2 = 65$ ...(i)",
+       "Sum of first 6: $65 + 65r^3 = 1820$.",
+       "$r^3 = 27$, $r = 3$.",
+       "From (i): $a + 3a + 9a = 65$, $13a = 65$, $a = 5$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-18",
+      "kind": "value",
+      "answer": "a = 3, r = 2 or a = 12, r = 1/2",
+      "solution": [
+       "$ar = 6$ ...(i)",
+       "$a + ar + ar^2 = 21$ ...(ii)",
+       "From (i), $a = 6/r$. Substitute: $\\frac6r + 6 + 6r = 21$.",
+       "Multiply by r: $6 + 6r^2 = 15r$, so $2r^2 - 5r + 2 = 0$.",
+       "$r = 2$ or $r = 1/2$.",
+       "$r = 2$: $a = 3$. $r = 1/2$: $a = 12$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-19",
+      "kind": "value",
+      "answer": "a = 3, r = -2",
+      "solution": [
+       "$ar^2 = 12$ ...(i)",
+       "$a + ar + ar^2 = 9$ ...(ii)",
+       "From (i), $a = 12/r^2$. Substitute: $12 + 12r + 12r^2 = 9r^2$.",
+       "$3r^2 + 12r + 12 = 0$, so $(r+2)^2 = 0$, $r = -2$.",
+       "$4a = 12$, $a = 3$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-20",
+      "kind": "value",
+      "answer": "a = 5, r = 2 or a = 45, r = -2/3",
+      "solution": [
+       "$ar^2 = 20$ ...(i)",
+       "$a + ar + ar^2 = 35$ ...(ii)",
+       "From (i), $a = 20/r^2$. Substitute and multiply by $r^2$: $20 + 20r + 20r^2 = 35r^2$.",
+       "$3r^2 - 4r - 4 = 0$, so $r = 2$ or $r = -2/3$.",
+       "$r = 2$: $4a = 20$, $a = 5$.",
+       "$r = -2/3$: $\\frac49 a = 20$, $a = 45$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:challenge-4",
+      "kind": "value",
+      "answer": "512",
+      "solution": [
+       "$S_8 - S_6 = a_7 + a_8 = 255 - 63 = 192$.",
+       "$a_8 - a_7 = 64$.",
+       "Adding: $2a_8 = 256$, $a_8 = 128$; then $a_7 = 64$.",
+       "Common ratio $r = 128/64 = 2$.",
+       "$a_{10} = a_8 \\times r^2 = 128 \\times 4 = 512$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:reflect-1",
+      "kind": "explanation",
+      "answer": "If r>1 the terms grow without bound and the sum explodes; if 0<r<1 the terms shrink toward 0 (decay) and the sum stays limited.",
+      "solution": [
+       "With r>1, each term is bigger than the one before, so the quantity grows faster and faster (growth); use $S_n=\\frac{a(r^n-1)}{r-1}$.",
+       "With 0<r<1, each term is a fraction of the one before, so the quantity gets smaller (decay); use $S_n=\\frac{a(1-r^n)}{1-r}$.",
+       "So changing r changes the behavior from growth to decay, and the total from huge to limited."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:rule-6",
+       "eb11c2-2:rule-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-2:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Repeated multiplication by a ratio r>1 makes terms grow exponentially, as in a_n = a r^{n-1} (e.g. bacteria doubling). Their cumulative total is predicted with S_n = a(r^n - 1)/(r - 1)."
+     },
+     {
+      "ref": "eb11c2-2:challenge-1",
+      "kind": "value",
+      "answer": "648"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-4",
+      "kind": "value",
+      "answer": "x = 4 or x = -4"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-5",
+      "kind": "value",
+      "answer": "a = 9, b = 12 or a = 1, b = -4"
+     },
+     {
+      "ref": "eb11c2-2:try-4",
+      "kind": "value",
+      "answer": "x = 2√3 or x = -2√3"
+     },
+     {
+      "ref": "eb11c2-2:try-5",
+      "kind": "value",
+      "answer": "a = 2, b = 6 or a = 1/2, b = 3"
+     },
+     {
+      "ref": "eb11c2-2:exercise-5",
+      "kind": "value",
+      "answer": "x = 5 or x = -5"
+     },
+     {
+      "ref": "eb11c2-2:exercise-6",
+      "kind": "value",
+      "answer": "x = 2 or x = -2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-7",
+      "kind": "value",
+      "answer": "a = 2, b = 2 or a = -4, b = -1"
+     },
+     {
+      "ref": "eb11c2-2:challenge-2",
+      "kind": "value",
+      "answer": "a = 5, b = 15 or a = 5/4, b = 15/2 (hundred thousand LE)"
+     },
+     {
+      "ref": "eb11c2-2:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Group discussion activity: solve the try problems using S_n = a(1 - r^n)/(1 - r) (r<1) or a(r^n - 1)/(r - 1) (r>1), then compare answers with the group."
+     },
+     {
+      "ref": "eb11c2-2:try-10",
+      "kind": "value",
+      "answer": "First term 3, ratio 2 or first term 7, ratio -2"
+     },
+     {
+      "ref": "eb11c2-2:try-11",
+      "kind": "value",
+      "answer": "First term 2, common ratio 3"
+     },
+     {
+      "ref": "eb11c2-2:try-12",
+      "kind": "value",
+      "answer": "First term 1, ratio 3 or first term 9, ratio 1/3"
+     },
+     {
+      "ref": "eb11c2-2:exercise-12",
+      "kind": "value",
+      "answer": "First term 3, common ratio -2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-13",
+      "kind": "value",
+      "answer": "First term 9/7, ratio 2 or first term 3, ratio -2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-14",
+      "kind": "value",
+      "answer": "First term 6, ratio 3 or first term 78/7, ratio -3"
+     },
+     {
+      "ref": "eb11c2-2:exercise-15",
+      "kind": "value",
+      "answer": "First term 3/5, ratio 4 or first term -1, ratio -4"
+     },
+     {
+      "ref": "eb11c2-2:exercise-16",
+      "kind": "value",
+      "answer": "First term 5, common ratio 3"
+     },
+     {
+      "ref": "eb11c2-2:exercise-18",
+      "kind": "value",
+      "answer": "First term 3, ratio 2 or first term 12, ratio 1/2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-19",
+      "kind": "value",
+      "answer": "First term 3, common ratio -2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-20",
+      "kind": "value",
+      "answer": "First term 5, ratio 2 or first term 45, ratio -2/3"
+     },
+     {
+      "ref": "eb11c2-2:challenge-4",
+      "kind": "value",
+      "answer": "512"
+     },
+     {
+      "ref": "eb11c2-2:reflect-1",
+      "kind": "explanation",
+      "answer": "With r>1 terms grow without bound (exponential growth, e.g. bacteria or compounding), and sums explode. With 0<r<1 terms shrink toward 0 (decay, e.g. filtering or depreciation), and the sums stay bounded, approaching a/(1-r)."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c2-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1}",
+      "solution": [
+       "First term a = 2 and common ratio r = 3.",
+       "Use $a_n = ar^{n-1}$.",
+       "$a_n = 2 \\times 3^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "a_n = 5 × 2^{n-1}",
+      "solution": [
+       "First term is 5, second term is 10.",
+       "$5r = 10$, so $r = 2$.",
+       "$a_n = 5 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "a_n = -4 × (-3/2)^{n-1}",
+      "solution": [
+       "First term is $-4$, second term is 6.",
+       "$-4r = 6$, so $r = -\\frac{3}{2}$.",
+       "Use parentheses for the negative fraction: $a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-2",
+      "kind": "value",
+      "answer": "common ratio 1/2, A = 48, B = 6",
+      "solution": [
+       "Let $r$ be the common ratio: $24r = 12$, so $r = \\frac{1}{2}$.",
+       "A × 1/2 = 24, so $A = 24 \\div \\frac12 = 48$.",
+       "$B = 12 \\times \\frac12 = 6$.",
+       "Common ratio 1/2, A = 48, B = 6."
+      ],
+      "grounded_in": [
+       "eb11c2-2:definition-1",
+       "eb11c2-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:a",
+      "kind": "value",
+      "answer": "a_n = 3 × 4^{n-1}",
+      "solution": [
+       "a = 3, r = 4.",
+       "$a_n = 3 \\times 4^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:b",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2)^{n-1}",
+      "solution": [
+       "a = 5, r = $-2$.",
+       "Put the negative ratio in parentheses: $a_n = 5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:c",
+      "kind": "value",
+      "answer": "a_n = 8 × (-1/3)^{n-1}",
+      "solution": [
+       "a = 8, r = $-\\frac13$.",
+       "$a_n = 8 \\times \\left(-\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:d",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1}",
+      "solution": [
+       "First term 2, second term 6: $2r = 6$, so $r = 3$.",
+       "$a_n = 2 \\times 3^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:e",
+      "kind": "value",
+      "answer": "a_n = -8 × (-3/2)^{n-1}",
+      "solution": [
+       "First term $-8$, second term 12: $-8r = 12$, so $r = -\\frac32$.",
+       "$a_n = -8 \\times \\left(-\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-1:f",
+      "kind": "value",
+      "answer": "a_n = 2 × (1/3)^{n-1}",
+      "solution": [
+       "First term 2, second term $\\frac23$: $2r = \\frac23$, so $r = \\frac13$.",
+       "$a_n = 2 \\times \\left(\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-2",
+      "kind": "value",
+      "answer": "common ratio -1/3, A = 54, B = -2",
+      "solution": [
+       "$-18r = 6$, so $r = -\\frac13$.",
+       "A × (−1/3) = −18, so $A = -18 \\div \\left(-\\frac13\\right) = 54$.",
+       "$B = 6 \\times \\left(-\\frac13\\right) = -2$.",
+       "Common ratio $-\\frac13$, A = 54, B = −2."
+      ],
+      "grounded_in": [
+       "eb11c2-2:definition-1",
+       "eb11c2-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:a",
+      "kind": "value",
+      "answer": "a_n = 5 × 2^{n-1}",
+      "solution": [
+       "a = 5, r = 2.",
+       "$a_n = 5 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:b",
+      "kind": "value",
+      "answer": "a_n = 2 × 5^{n-1}",
+      "solution": [
+       "a = 2, r = 5.",
+       "$a_n = 2 \\times 5^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:c",
+      "kind": "value",
+      "answer": "a_n = 7 × 4^{n-1}",
+      "solution": [
+       "a = 7, r = 4.",
+       "$a_n = 7 \\times 4^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:d",
+      "kind": "value",
+      "answer": "a_n = 2 × (-3)^{n-1}",
+      "solution": [
+       "a = 2, r = $-3$.",
+       "$a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:e",
+      "kind": "value",
+      "answer": "a_n = 3 × (-5)^{n-1}",
+      "solution": [
+       "a = 3, r = $-5$.",
+       "$a_n = 3 \\times (-5)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:f",
+      "kind": "value",
+      "answer": "a_n = 4 × (-2)^{n-1}",
+      "solution": [
+       "a = 4, r = $-2$.",
+       "$a_n = 4 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:g",
+      "kind": "value",
+      "answer": "a_n = 4 × (1/3)^{n-1}",
+      "solution": [
+       "a = 4, r = $\\frac13$.",
+       "$a_n = 4 \\times \\left(\\frac13\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:h",
+      "kind": "value",
+      "answer": "a_n = 3 × (-1/2)^{n-1}",
+      "solution": [
+       "a = 3, r = $-\\frac12$.",
+       "$a_n = 3 \\times \\left(-\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:i",
+      "kind": "value",
+      "answer": "a_n = 6 × (1/2)^{n-1}",
+      "solution": [
+       "a = 6, r = $\\frac12$.",
+       "$a_n = 6 \\times \\left(\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:j",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1}",
+      "solution": [
+       "First term 3, second term 6: $3r = 6$, $r = 2$.",
+       "$a_n = 3 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:k",
+      "kind": "value",
+      "answer": "a_n = 2 × (-3)^{n-1}",
+      "solution": [
+       "$2r = -6$, so $r = -3$.",
+       "$a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:l",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2)^{n-1}",
+      "solution": [
+       "$5r = -10$, so $r = -2$.",
+       "$a_n = 5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:m",
+      "kind": "value",
+      "answer": "a_n = 48 × (1/2)^{n-1}",
+      "solution": [
+       "$48r = 24$, so $r = \\frac12$.",
+       "$a_n = 48 \\times \\left(\\frac12\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:n",
+      "kind": "value",
+      "answer": "a_n = (1/6) × (3/2)^{n-1}",
+      "solution": [
+       "$\\frac16 r = \\frac14$, so $r = \\frac32$.",
+       "$a_n = \\frac16 \\times \\left(\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:o",
+      "kind": "value",
+      "answer": "a_n = 8 × (2√2)^{n-1}",
+      "solution": [
+       "$8r = 16\\sqrt2$, so $r = 2\\sqrt2$.",
+       "$a_n = 8 \\times (2\\sqrt2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:p",
+      "kind": "value",
+      "answer": "a_n = 3 × (-5/2)^{n-1}",
+      "solution": [
+       "$3r = -\\frac{15}{2}$, so $r = -\\frac52$.",
+       "$a_n = 3 \\times \\left(-\\frac52\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:q",
+      "kind": "value",
+      "answer": "a_n = 9 × (-√3/3)^{n-1}",
+      "solution": [
+       "$9r = -3\\sqrt3$, so $r = -\\frac{3\\sqrt3}{9} = -\\frac{\\sqrt3}{3}$.",
+       "$a_n = 9 \\times \\left(-\\frac{\\sqrt3}{3}\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:r",
+      "kind": "value",
+      "answer": "a_n = 5 × (-2/3)^{n-1}",
+      "solution": [
+       "$5r = -\\frac{10}{3}$, so $r = -\\frac23$.",
+       "$a_n = 5 \\times \\left(-\\frac23\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1",
+       "eb11c2-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:a",
+      "kind": "value",
+      "answer": "common ratio -3, A = 1, B = -27",
+      "solution": [
+       "$-3r = 9$, so $r = -3$.",
+       "$A = -3 \\div (-3) = 1$.",
+       "$B = 9 \\times (-3) = -27$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:b",
+      "kind": "value",
+      "answer": "common ratio 1/3, A = 1, B = 1/27",
+      "solution": [
+       "$\\frac13 r = \\frac19$, so $r = \\frac13$.",
+       "$A = \\frac13 \\div \\frac13 = 1$.",
+       "$B = \\frac19 \\times \\frac13 = \\frac1{27}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:c",
+      "kind": "value",
+      "answer": "common ratio -1/2, A = 1/2, B = -1/16",
+      "solution": [
+       "$-\\frac14 r = \\frac18$, so $r = -\\frac12$.",
+       "$A = -\\frac14 \\div \\left(-\\frac12\\right) = \\frac12$.",
+       "$B = \\frac18 \\times \\left(-\\frac12\\right) = -\\frac1{16}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-3:a",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1} or a_n = -3 × (-2)^{n-1}",
+      "solution": [
+       "$ar^3 = 24$ (i), $ar^5 = 96$ (ii).",
+       "Divide (ii) by (i): $r^2 = 4$, so $r = \\pm2$.",
+       "$r = 2$: $8a = 24$, $a = 3$. $r = -2$: $-8a = 24$, $a = -3$.",
+       "$a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-3:b",
+      "kind": "value",
+      "answer": "a_n = 3 × (-2)^{n-1}",
+      "solution": [
+       "$ar^2 = 12$ (i), $ar^5 = -96$ (ii).",
+       "Divide (ii) by (i): $r^3 = -8$, so $r = -2$.",
+       "(i): $4a = 12$, $a = 3$.",
+       "$a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-3:a",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1} or a_n = 2 × (-3)^{n-1}",
+      "solution": [
+       "$ar^2 = 18$ (i), $ar^4 = 162$ (ii).",
+       "Divide: $r^2 = 9$, so $r = \\pm3$.",
+       "In both cases $9a = 18$, so $a = 2$.",
+       "$a_n = 2 \\times 3^{n-1}$ or $a_n = 2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-3:b",
+      "kind": "value",
+      "answer": "a_n = 3 × (-2)^{n-1}",
+      "solution": [
+       "$ar = -6$ (i), $ar^4 = 48$ (ii).",
+       "Divide: $r^3 = -8$, so $r = -2$.",
+       "(i): $-2a = -6$, $a = 3$.",
+       "$a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-3:c",
+      "kind": "value",
+      "answer": "a_n = 3 × 2^{n-1} or a_n = 3 × (-2)^{n-1}",
+      "solution": [
+       "$ar^2 = 12$ (i), $ar^6 = 192$ (ii).",
+       "Divide: $r^4 = 16$, so $r = \\pm2$.",
+       "In both cases $4a = 12$, so $a = 3$.",
+       "$a_n = 3 \\times 2^{n-1}$ or $a_n = 3 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the actual questions are exercises 1 to 4 answered separately.",
+      "solution": [
+       "The item contains no data to solve.",
+       "Its questions are answered in their own parts."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:a",
+      "kind": "value",
+      "answer": "a_n = 2 × 3^{n-1} or a_n = -2 × (-3)^{n-1}",
+      "solution": [
+       "$ar = 6$, $ar^3 = 54$.",
+       "Divide: $r^2 = 9$, $r = \\pm3$.",
+       "$r = 3$: $a = 2$. $r = -3$: $-3a = 6$, $a = -2$.",
+       "$a_n = 2 \\times 3^{n-1}$ or $-2 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:b",
+      "kind": "value",
+      "answer": "a_n = 3 × 3^{n-1} or a_n = 3 × (-3)^{n-1}",
+      "solution": [
+       "$ar^2 = 27$, $ar^4 = 243$.",
+       "Divide: $r^2 = 9$, $r = \\pm3$.",
+       "$9a = 27$, so $a = 3$ in both cases.",
+       "$a_n = 3 \\times 3^{n-1}$ or $3 \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:c",
+      "kind": "value",
+      "answer": "a_n = -7 × 2^{n-1} or a_n = -7 × (-2)^{n-1}",
+      "solution": [
+       "$ar^2 = -28$, $ar^4 = -112$.",
+       "Divide: $r^2 = 4$, $r = \\pm2$.",
+       "$4a = -28$, so $a = -7$ in both cases.",
+       "$a_n = -7 \\times 2^{n-1}$ or $-7 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:d",
+      "kind": "value",
+      "answer": "a_n = 7 × 2^{n-1}",
+      "solution": [
+       "$ar = 14$, $ar^4 = 112$.",
+       "Divide: $r^3 = 8$, so $r = 2$.",
+       "$2a = 14$, $a = 7$.",
+       "$a_n = 7 \\times 2^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:e",
+      "kind": "value",
+      "answer": "a_n = -2 × (-2)^{n-1}",
+      "solution": [
+       "$ar^3 = 16$, $ar^6 = -128$.",
+       "Divide: $r^3 = -8$, so $r = -2$.",
+       "$-8a = 16$, $a = -2$.",
+       "$a_n = -2 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:f",
+      "kind": "value",
+      "answer": "a_n = -5 × (-2)^{n-1}",
+      "solution": [
+       "$ar^2 = -20$, $ar^5 = 160$.",
+       "Divide: $r^3 = -8$, so $r = -2$.",
+       "$4a = -20$, $a = -5$.",
+       "$a_n = -5 \\times (-2)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:g",
+      "kind": "value",
+      "answer": "a_n = (3/4) × 4^{n-1} or a_n = -(3/4) × (-4)^{n-1}",
+      "solution": [
+       "$ar = 3$, $ar^5 = 768$.",
+       "Divide: $r^4 = 256$, so $r = \\pm4$.",
+       "$r = 4$: $4a = 3$, $a = \\frac34$. $r = -4$: $-4a = 3$, $a = -\\frac34$.",
+       "$a_n = \\frac34 \\times 4^{n-1}$ or $-\\frac34 \\times (-4)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:h",
+      "kind": "value",
+      "answer": "a_n = 4 × (3/2)^{n-1} or a_n = 4 × (-3/2)^{n-1}",
+      "solution": [
+       "$ar^2 = 9$, $ar^6 = \\frac{729}{16}$.",
+       "Divide: $r^4 = \\frac{81}{16}$, so $r = \\pm\\frac32$.",
+       "$r^2 = \\frac94$, so $\\frac94 a = 9$, $a = 4$.",
+       "$a_n = 4 \\times \\left(\\frac32\\right)^{n-1}$ or $4 \\times \\left(-\\frac32\\right)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:i",
+      "kind": "value",
+      "answer": "a_n = (2/243) × 3^{n-1} or a_n = -(2/243) × (-3)^{n-1}",
+      "solution": [
+       "$ar^3 = \\frac29$, $ar^7 = 18$.",
+       "Divide: $r^4 = 81$, so $r = \\pm3$.",
+       "$r = 3$: $27a = \\frac29$, $a = \\frac2{243}$. $r = -3$: $-27a = \\frac29$, $a = -\\frac2{243}$.",
+       "$a_n = \\frac2{243} \\times 3^{n-1}$ or $-\\frac2{243} \\times (-3)^{n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:explanation-1",
+       "eb11c2-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-6:a",
+      "kind": "value",
+      "answer": "484",
+      "solution": [
+       "a = 4, r = 3, n = 5; r > 1 so use $S = \\frac{a(r^n-1)}{r-1}$.",
+       "$S = \\frac{4(3^5-1)}{3-1} = 2 \\times 242 = 484$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6",
+       "eb11c2-2:warm-up-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-6:b",
+      "kind": "value",
+      "answer": "63/4",
+      "solution": [
+       "a = 8, r = 1/2, n = 6; r < 1 so use $S = \\frac{a(1-r^n)}{1-r}$.",
+       "$S = \\frac{8(1-\\frac1{64})}{\\frac12} = 16 \\times \\frac{63}{64}$.",
+       "$S = \\frac{63}{4}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:warm-up-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-7",
+      "kind": "value",
+      "answer": "S_n = (1 - (-3)^n)/2",
+      "solution": [
+       "a = 2, r = $-3$ (r < 1).",
+       "$S_n = \\frac{2\\{1-(-3)^n\\}}{1-(-3)}$.",
+       "$S_n = \\frac{1-(-3)^n}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:warm-up-9"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try heading; its questions are parts 1 and 2 answered separately.",
+      "solution": [
+       "The item has no data to solve."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c2-2:try-7:a",
+      "kind": "value",
+      "answer": "93",
+      "solution": [
+       "a = 3, r = 2, n = 5; r > 1.",
+       "$S = \\frac{3(2^5-1)}{2-1} = 3 \\times 31 = 93$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-7:b",
+      "kind": "value",
+      "answer": "-30",
+      "solution": [
+       "a = 6, r = $-2$, n = 4; r < 1.",
+       "$S = \\frac{6\\{1-(-2)^4\\}}{1-(-2)} = \\frac{6 \\times (-15)}{3}$.",
+       "$S = -30$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-7:c",
+      "kind": "value",
+      "answer": "189/16",
+      "solution": [
+       "a = 6, r = 1/2, n = 6; r < 1.",
+       "$S = \\frac{6(1-\\frac1{64})}{\\frac12} = 12 \\times \\frac{63}{64}$.",
+       "$S = \\frac{189}{16}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-8:a",
+      "kind": "value",
+      "answer": "S_n = 1 - (-2)^n",
+      "solution": [
+       "a = 3, r = $-2$.",
+       "$S_n = \\frac{3\\{1-(-2)^n\\}}{1-(-2)} = \\frac{3\\{1-(-2)^n\\}}{3}$.",
+       "$S_n = 1-(-2)^n$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-8:b",
+      "kind": "value",
+      "answer": "S_n = (16/3)(1 - (-1/2)^n)",
+      "solution": [
+       "a = 8, $r = -4 \\div 8 = -\\frac12$.",
+       "$S_n = \\frac{8\\{1-(-\\frac12)^n\\}}{1+\\frac12} = \\frac{16}{3}\\{1-(-\\frac12)^n\\}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise heading; its questions are parts 1 and 2 answered separately.",
+      "solution": [
+       "The item has no data to solve."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:a",
+      "kind": "value",
+      "answer": "200",
+      "solution": [
+       "a = 5, r = 3, n = 4; r > 1.",
+       "$S = \\frac{5(3^4-1)}{3-1} = \\frac{5 \\times 80}{2} = 200$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:b",
+      "kind": "value",
+      "answer": "-20",
+      "solution": [
+       "a = 1, r = $-3$, n = 4.",
+       "$S = \\frac{1-(-3)^4}{1-(-3)} = \\frac{1-81}{4}$.",
+       "$S = -20$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:c",
+      "kind": "value",
+      "answer": "13/9",
+      "solution": [
+       "a = 1, r = 1/3, n = 3.",
+       "$S = \\frac{1-\\frac1{27}}{\\frac23} = \\frac{26}{27} \\times \\frac32$.",
+       "$S = \\frac{13}{9}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:d",
+      "kind": "value",
+      "answer": "3069",
+      "solution": [
+       "a = 3, r = 2, n = 10.",
+       "$S = \\frac{3(2^{10}-1)}{2-1} = 3 \\times 1023$.",
+       "$S = 3069$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:e",
+      "kind": "value",
+      "answer": "-364",
+      "solution": [
+       "a = 2, r = $-3$, n = 6.",
+       "$S = \\frac{2\\{1-(-3)^6\\}}{1-(-3)} = \\frac{2(1-729)}{4}$.",
+       "$S = -364$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:f",
+      "kind": "value",
+      "answer": "255/128",
+      "solution": [
+       "a = 1, r = 1/2, n = 8.",
+       "$S = \\frac{1-\\frac1{256}}{\\frac12} = 2 \\times \\frac{255}{256}$.",
+       "$S = \\frac{255}{128}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:a",
+      "kind": "value",
+      "answer": "S_n = 7(2^n - 1)",
+      "solution": [
+       "a = 7, r = 2 (r > 1).",
+       "$S_n = \\frac{7(2^n-1)}{2-1} = 7(2^n-1)$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:b",
+      "kind": "value",
+      "answer": "S_n = 3(1 - (1/3)^n)",
+      "solution": [
+       "a = 2, r = 1/3 (r < 1).",
+       "$S_n = \\frac{2\\{1-(\\frac13)^n\\}}{\\frac23} = 3\\{1-(\\frac13)^n\\}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:c",
+      "kind": "value",
+      "answer": "S_n = 3^n - 1",
+      "solution": [
+       "a = 2, $r = 6 \\div 2 = 3$.",
+       "$S_n = \\frac{2(3^n-1)}{3-1} = 3^n-1$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:d",
+      "kind": "value",
+      "answer": "S_n = (1 - (-3)^n)/4",
+      "solution": [
+       "a = 1, r = $-3$.",
+       "$S_n = \\frac{1-(-3)^n}{1-(-3)} = \\frac{1-(-3)^n}{4}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:e",
+      "kind": "value",
+      "answer": "S_n = 4(2^n - 1)",
+      "solution": [
+       "a = 4, r = 2.",
+       "$S_n = \\frac{4(2^n-1)}{2-1} = 4(2^n-1)$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:f",
+      "kind": "value",
+      "answer": "S_n = (32/3)(1 - (-1/2)^n)",
+      "solution": [
+       "a = 16, r = $-\\frac12$.",
+       "$S_n = \\frac{16\\{1-(-\\frac12)^n\\}}{1+\\frac12}$.",
+       "$S_n = \\frac{32}{3}\\{1-(-\\frac12)^n\\}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5",
+       "eb11c2-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:g",
+      "kind": "value",
+      "answer": "S_n = (1 - (-2)^n)/3",
+      "solution": [
+       "a = 1, r = $-2$.",
+       "$S_n = \\frac{1-(-2)^n}{1-(-2)} = \\frac{1-(-2)^n}{3}$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:challenge-3",
+      "kind": "value",
+      "answer": "40/9 mg/L",
+      "solution": [
+       "Sequence 3, 1, 1/3, 1/9: a = 3, r = 1/3, n = 4.",
+       "$S = \\frac{3(1-\\frac1{81})}{1-\\frac13} = \\frac92 \\times \\frac{80}{81}$.",
+       "Total removed = $\\frac{40}{9}$ mg/L."
+      ],
+      "grounded_in": [
+       "eb11c2-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:1",
+      "kind": "value",
+      "answer": "First term 5, common ratio 2 or first term 35/3, common ratio -2",
+      "solution": [
+       "$a+ar+ar^2 = 35$ (i); $ar^2+ar^3+ar^4 = 140$ (ii).",
+       "(ii) gives $r^2(a+ar+ar^2) = 140$; substitute (i): $35r^2 = 140$, $r = \\pm2$.",
+       "$r = 2$: $7a = 35$, $a = 5$.",
+       "$r = -2$: $3a = 35$, $a = \\frac{35}{3}$.",
+       "First term 5, ratio 2 or first term 35/3, ratio −2."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:2",
+      "kind": "value",
+      "answer": "First term 3, common ratio 2",
+      "solution": [
+       "$a+ar+ar^2 = 21$ (i); sum of 6 terms $= 189$ (ii).",
+       "(ii): $(a+ar+ar^2)+r^3(a+ar+ar^2) = 189$; substitute (i): $21+21r^3 = 189$.",
+       "$r^3 = 8$, so $r = 2$.",
+       "(i): $7a = 21$, $a = 3$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:3",
+      "kind": "value",
+      "answer": "First term 1, common ratio 2 or first term 9, common ratio -2/3",
+      "solution": [
+       "$ar^2 = 4$ (i); $a+ar+ar^2 = 7$ (ii).",
+       "From (i), $a = \\frac4{r^2}$; substitute into (ii) and multiply by $r^2$: $4+4r+4r^2 = 7r^2$.",
+       "Solving: $r = 2$ or $r = -\\frac23$.",
+       "$r = 2$: $4a = 4$, $a = 1$.",
+       "$r = -\\frac23$: $\\frac49 a = 4$, $a = 9$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-2:try-9",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try heading; its questions are try-10, try-11 and try-12, answered separately.",
+      "solution": [
+       "The item has no data to solve."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c2-2:exercise-11",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise heading; its questions are exercises 12 to 16, answered separately.",
+      "solution": [
+       "The item has no data to solve."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c2-2:exercise-17",
+      "kind": "value",
+      "answer": "First term -2, common ratio 3 or first term 4, common ratio -3",
+      "solution": [
+       "$a+ar = -8$ (i); $a+ar+ar^2+ar^3 = -80$ (ii).",
+       "(ii): $(a+ar)+r^2(a+ar) = -80$; substitute (i): $-8-8r^2 = -80$.",
+       "$r^2 = 9$, so $r = \\pm3$.",
+       "$r = 3$: $4a = -8$, $a = -2$.",
+       "$r = -3$: $-2a = -8$, $a = 4$."
+      ],
+      "grounded_in": [
+       "eb11c2-2:worked-example-4",
+       "eb11c2-2:worked-example-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "$a_n = 2\\times 3^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "$a_n = 5\\times 2^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "$a_n = -4\\times(-\\frac{3}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-2",
+      "kind": "value",
+      "answer": "common ratio 1/2, A = 48, B = 6"
+     },
+     {
+      "ref": "eb11c2-2:try-1:a",
+      "kind": "value",
+      "answer": "$a_n = 3\\times 4^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-1:b",
+      "kind": "value",
+      "answer": "$a_n = 5\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-1:c",
+      "kind": "value",
+      "answer": "$a_n = 8\\times(-\\frac{1}{3})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-1:d",
+      "kind": "value",
+      "answer": "$a_n = 2\\times 3^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-1:e",
+      "kind": "value",
+      "answer": "$a_n = -8\\times(-\\frac{3}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-1:f",
+      "kind": "value",
+      "answer": "$a_n = 2\\times(\\frac{1}{3})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-2",
+      "kind": "value",
+      "answer": "common ratio -1/3, A = 54, B = -2"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:a",
+      "kind": "value",
+      "answer": "$a_n = 5\\times 2^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:b",
+      "kind": "value",
+      "answer": "$a_n = 2\\times 5^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:c",
+      "kind": "value",
+      "answer": "$a_n = 7\\times 4^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:d",
+      "kind": "value",
+      "answer": "$a_n = 2\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:e",
+      "kind": "value",
+      "answer": "$a_n = 3\\times(-5)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:f",
+      "kind": "value",
+      "answer": "$a_n = 4\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:g",
+      "kind": "value",
+      "answer": "$a_n = 4\\times(\\frac{1}{3})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:h",
+      "kind": "value",
+      "answer": "$a_n = 3\\times(-\\frac{1}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:i",
+      "kind": "value",
+      "answer": "$a_n = 6\\times(\\frac{1}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:j",
+      "kind": "value",
+      "answer": "$a_n = 3\\times 2^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:k",
+      "kind": "value",
+      "answer": "$a_n = 2\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:l",
+      "kind": "value",
+      "answer": "$a_n = 5\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:m",
+      "kind": "value",
+      "answer": "$a_n = 48\\times(\\frac{1}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:n",
+      "kind": "value",
+      "answer": "$a_n = \\frac{1}{6}\\times(\\frac{3}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:o",
+      "kind": "value",
+      "answer": "$a_n = 8\\times(2\\sqrt{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:p",
+      "kind": "value",
+      "answer": "$a_n = 3\\times(-\\frac{5}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:q",
+      "kind": "value",
+      "answer": "$a_n = 9\\times(-\\frac{\\sqrt{3}}{3})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-1:r",
+      "kind": "value",
+      "answer": "$a_n = 5\\times(-\\frac{2}{3})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:a",
+      "kind": "value",
+      "answer": "common ratio -3, A = 1, B = -27"
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:b",
+      "kind": "value",
+      "answer": "common ratio 1/3, A = 1, B = 1/27"
+     },
+     {
+      "ref": "eb11c2-2:exercise-2:c",
+      "kind": "value",
+      "answer": "common ratio -1/2, A = 1/2, B = -1/16"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-3:a",
+      "kind": "value",
+      "answer": "$a_n = 3\\times 2^{n-1}$ or $a_n = -3\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-3:b",
+      "kind": "value",
+      "answer": "$a_n = 3\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-3:a",
+      "kind": "value",
+      "answer": "$a_n = 2\\times 3^{n-1}$ or $a_n = 2\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-3:b",
+      "kind": "value",
+      "answer": "$a_n = 3\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:try-3:c",
+      "kind": "value",
+      "answer": "$a_n = 3\\times 2^{n-1}$ or $a_n = 3\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the section header 'Solve the following problems.'; the questions are the separate items (exercise-4 to exercise-7)."
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:a",
+      "kind": "value",
+      "answer": "$a_n = 2\\times 3^{n-1}$ or $a_n = -2\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:b",
+      "kind": "value",
+      "answer": "$a_n = 3\\times 3^{n-1}$ (= $3^n$) or $a_n = 3\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:c",
+      "kind": "value",
+      "answer": "$a_n = -7\\times 2^{n-1}$ or $a_n = -7\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:d",
+      "kind": "value",
+      "answer": "$a_n = 7\\times 2^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:e",
+      "kind": "value",
+      "answer": "$a_n = -2\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:f",
+      "kind": "value",
+      "answer": "$a_n = -5\\times(-2)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:g",
+      "kind": "value",
+      "answer": "$a_n = \\frac{3}{4}\\times 4^{n-1}$ or $a_n = -\\frac{3}{4}\\times(-4)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:h",
+      "kind": "value",
+      "answer": "$a_n = 4\\times(\\frac{3}{2})^{n-1}$ or $a_n = 4\\times(-\\frac{3}{2})^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-4:i",
+      "kind": "value",
+      "answer": "$a_n = \\frac{2}{243}\\times 3^{n-1}$ or $a_n = -\\frac{2}{243}\\times(-3)^{n-1}$"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-6:a",
+      "kind": "value",
+      "answer": "484"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-6:b",
+      "kind": "value",
+      "answer": "63/4"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-7",
+      "kind": "value",
+      "answer": "$S_n = \\frac{1-(-3)^n}{2}$"
+     },
+     {
+      "ref": "eb11c2-2:try-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try header; the questions are try-7 and try-8."
+     },
+     {
+      "ref": "eb11c2-2:try-7:a",
+      "kind": "value",
+      "answer": "93"
+     },
+     {
+      "ref": "eb11c2-2:try-7:b",
+      "kind": "value",
+      "answer": "-30"
+     },
+     {
+      "ref": "eb11c2-2:try-7:c",
+      "kind": "value",
+      "answer": "189/16"
+     },
+     {
+      "ref": "eb11c2-2:try-8:a",
+      "kind": "value",
+      "answer": "$S_n = 1-(-2)^n$"
+     },
+     {
+      "ref": "eb11c2-2:try-8:b",
+      "kind": "value",
+      "answer": "$S_n = \\frac{16}{3}\\left\\{1-(-\\frac{1}{2})^n\\right\\}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-8",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise header; the questions are exercise-9 and exercise-10."
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:a",
+      "kind": "value",
+      "answer": "200"
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:b",
+      "kind": "value",
+      "answer": "-20"
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:c",
+      "kind": "value",
+      "answer": "13/9"
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:d",
+      "kind": "value",
+      "answer": "3069"
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:e",
+      "kind": "value",
+      "answer": "-364"
+     },
+     {
+      "ref": "eb11c2-2:exercise-9:f",
+      "kind": "value",
+      "answer": "255/128"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:a",
+      "kind": "value",
+      "answer": "$S_n = 7(2^n-1)$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:b",
+      "kind": "value",
+      "answer": "$S_n = 3\\left\\{1-(\\frac{1}{3})^n\\right\\}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:c",
+      "kind": "value",
+      "answer": "$S_n = 3^n-1$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:d",
+      "kind": "value",
+      "answer": "$S_n = \\frac{1-(-3)^n}{4}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:e",
+      "kind": "value",
+      "answer": "$S_n = 4(2^n-1)$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:f",
+      "kind": "value",
+      "answer": "$S_n = \\frac{32}{3}\\left\\{1-(-\\frac{1}{2})^n\\right\\}$"
+     },
+     {
+      "ref": "eb11c2-2:exercise-10:g",
+      "kind": "value",
+      "answer": "$S_n = \\frac{1-(-2)^n}{3}$"
+     },
+     {
+      "ref": "eb11c2-2:challenge-3",
+      "kind": "value",
+      "answer": "40/9 mg/L"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:1",
+      "kind": "value",
+      "answer": "first term 5, common ratio 2; or first term 35/3, common ratio -2"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:2",
+      "kind": "value",
+      "answer": "first term 3, common ratio 2"
+     },
+     {
+      "ref": "eb11c2-2:warm-up-10:3",
+      "kind": "value",
+      "answer": "first term 1, common ratio 2; or first term 9, common ratio -2/3"
+     },
+     {
+      "ref": "eb11c2-2:try-9",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Try header; the questions are try-10, try-11 and try-12."
+     },
+     {
+      "ref": "eb11c2-2:exercise-11",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the Exercise header; the questions are exercise-12 to exercise-16."
+     },
+     {
+      "ref": "eb11c2-2:exercise-17",
+      "kind": "value",
+      "answer": "first term -2, common ratio 3; or first term 4, common ratio -3"
+     }
+    ]
+   }
+  }
+ ]
+}

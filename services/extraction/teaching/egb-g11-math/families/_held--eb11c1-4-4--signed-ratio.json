@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-4:signed-ratio",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-4",
+ "parent_question_id": "q:eb11c1-4-4:bk-exercise-19",
+ "source_page": 30,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "N",
+   "let": "m*m + n*n + p*p"
+  },
+  {
+   "name": "D",
+   "let": "-m*n - n*p + p*m"
+  },
+  {
+   "require": "D != 0",
+   "why": "denominator must be nonzero"
+  },
+  {
+   "name": "v",
+   "let": "N/D"
+  }
+ ],
+ "constraints": [
+  "gcd(gcd(m, n), p) == 1"
+ ],
+ "stem": "If $x:y:z={=m}:-{=n}:{=p}$, find the value of $\\frac{x^2+y^2+z^2}{xy+yz+zx}$",
+ "answer": "str(numerator(v)) + '/' + str(denominator(v)) if denominator(v) != 1 else str(numerator(v))",
+ "solution": [
+  "Let $x={=m}k$, $y=-{=n}k$, $z={=p}k$, where $k\\neq0$.",
+  "Numerator: $x^2+y^2+z^2=({=m*m}+{=n*n}+{=p*p})k^2={=N}k^2$.",
+  "Denominator: $xy+yz+zx=({=-m*n})k^2+({=-n*p})k^2+({=p*m})k^2={=D}k^2$.",
+  "Cancel $k^2$: value $=\\frac{{=N}}{{=D}}$, which in lowest terms is ${=v}$."
+ ],
+ "notes": "Advanced: three-term ratio with a negative term and mixed products, parent ex-19. Denominator nonzero by require; answer may be negative or whole.",
+ "proposed_misconceptions": []
+}

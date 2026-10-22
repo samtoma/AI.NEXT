@@ -1,0 +1,3072 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "08c9c4cb47ad6147c522c3262f1f31c4caef06dc293487743eba9a1236b42d0c",
+  "generated_sha256": "ffb18c9369877d7c87acca45792379954c71c22877985f2791d078e0e12a8947",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-1:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-1:open-prompt-1",
+      "kind": "explanation",
+      "answer": "A constant amount added each step is an arithmetic sequence: a_n = a + (n-1)d gives any single term and S_n gives the total.",
+      "solution": [
+       "A constant rate of additive change means each term is the previous term plus a fixed d.",
+       "This is an arithmetic sequence with first term a and common difference d.",
+       "Any single term is found with $a_n = a + (n-1)d$.",
+       "The total of the first n terms is found with $S_n=\\frac{1}{2}n(a+l)$ or $S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$.",
+       "So one formula gives individual terms and another gives cumulative sums."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3",
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "a_1 = 1/2, a_2 = 2/3, a_3 = 3/4",
+      "solution": [
+       "Substitute n = 1: $a_1=\\frac{1}{1+1}=\\frac12$.",
+       "Substitute n = 2: $a_2=\\frac{2}{3}$.",
+       "Substitute n = 3: $a_3=\\frac{3}{4}$.",
+       "The first three terms are 1/2, 2/3, 3/4."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-1",
+      "kind": "value",
+      "answer": "a_n = n/(n+1); a_20 = 20/21",
+      "solution": [
+       "Each term is (term number) × 1/(term number + 1).",
+       "So the numerator is n and the denominator is n+1.",
+       "$a_n = n \\times \\frac{1}{n+1} = \\frac{n}{n+1}$.",
+       "Substitute n = 20: $a_{20}=\\frac{20}{21}$.",
+       "Answer: $a_n=\\frac{n}{n+1}$, $a_{20}=\\frac{20}{21}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:linking-text-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-3",
+      "kind": "value",
+      "answer": "a_n = -6n + 14; a_20 = -106",
+      "solution": [
+       "Use $a_n=a+(n-1)d$ with a = 8, d = -6.",
+       "$a_n = 8+(n-1)\\times(-6) = -6n+14$.",
+       "Substitute n = 20: $a_{20}=-6\\times20+14=-106$.",
+       "Answer: $a_n=-6n+14$, $a_{20}=-106$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-2",
+      "kind": "value",
+      "answer": "a = 7, d = 3",
+      "solution": [
+       "Let the sequence be $a_n=a+(n-1)d$.",
+       "$a_3+a_7=38$: $(a+2d)+(a+6d)=38$, so $a+4d=19$ ......(i)",
+       "$a_4:a_{12}=2:5$, so $5(a+3d)=2(a+11d)$.",
+       "This simplifies to $3a-7d=0$ ......(ii)",
+       "From (ii) $a=\\frac{7d}{3}$. Put into (i): $\\frac{7d}{3}+4d=19$, so $d=3$.",
+       "Then $a=7$.",
+       "Check: $a_4=16$, $a_{12}=40$, ratio 2/5. Answer: a = 7, d = 3."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-3",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-4",
+      "kind": "value",
+      "answer": "a_n = 8n - 14",
+      "solution": [
+       "Let $a_n=a+(n-1)d$.",
+       "$a_3=10$: $a+2d=10$ ......(i)",
+       "$a_8=50$: $a+7d=50$ ......(ii)",
+       "Subtract (i) from (ii): $5d=40$, so $d=8$, then $a=-6$.",
+       "$a_n=-6+(n-1)\\times8=8n-14$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-6",
+      "kind": "value",
+      "answer": "x = -4, 3",
+      "solution": [
+       "Since x, 6, x² form an arithmetic sequence, $2b=a+c$.",
+       "$2\\times6=x+x^2$.",
+       "$x^2+x-12=0$, so $(x+4)(x-3)=0$.",
+       "x = -4 or x = 3."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-4",
+       "eb11c2-1:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-7",
+      "kind": "value",
+      "answer": "x = 4, -2",
+      "solution": [
+       "Since $x^2, x, -8$ form an arithmetic sequence, $2x=x^2+(-8)$.",
+       "$x^2-2x-8=0$.",
+       "$(x-4)(x+2)=0$.",
+       "x = 4 or x = -2."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-4",
+       "eb11c2-1:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-8",
+      "kind": "value",
+      "answer": "a = 4",
+      "solution": [
+       "Since a, 6, 2a form an arithmetic sequence, $2\\times6=a+2a$.",
+       "$12=3a$.",
+       "a = 4."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-9",
+      "kind": "value",
+      "answer": "x = 3, -1",
+      "solution": [
+       "Since $-3, x, x^2$ form an arithmetic sequence, $2x=-3+x^2$.",
+       "$x^2-2x-3=0$.",
+       "$(x-3)(x+1)=0$.",
+       "x = 3 or x = -1."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-4",
+       "eb11c2-1:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-3",
+      "kind": "value",
+      "answer": "x = 0, y = -2, z = -4",
+      "solution": [
+       "Let d be the common difference of 2, x, y, z: $x=2+d$, $y=2+2d$, $z=2+3d$.",
+       "Then $z-y=d$.",
+       "Since $2x, y+1, z-y$ are arithmetic, $2(y+1)=2x+(z-y)$.",
+       "$2(3+2d)=2(2+d)+d$, so $6+4d=4+3d$.",
+       "d = -2.",
+       "x = 0, y = -2, z = -4."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-4",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-9",
+      "kind": "value",
+      "answer": "66",
+      "solution": [
+       "Sum from 10th to 20th term = $S_{20}-S_9$.",
+       "a = 90, d = -6.",
+       "$S_{20}=\\frac12\\times20\\{180+19\\times(-6)\\}=660$.",
+       "$S_9=\\frac12\\times9\\{180+8\\times(-6)\\}=594$.",
+       "$660-594=66$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-3",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-4",
+      "kind": "value",
+      "answer": "414",
+      "solution": [
+       "Odd terms from 1st to 11th: 1st, 3rd, 5th, 7th, 9th, 11th, which is 6 terms.",
+       "First term 94, common difference $2\\times(-5)=-10$.",
+       "$S=\\frac12\\times6\\{2\\times94+(6-1)\\times(-10)\\}$.",
+       "$=3(188-50)=3\\times138=414$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-11",
+      "kind": "value",
+      "answer": "780",
+      "solution": [
+       "a = -9, d = 6.",
+       "Required sum = $S_{20}-S_{10}$.",
+       "$S_{20}=\\frac12\\times20\\{-18+19\\times6\\}=960$.",
+       "$S_{10}=\\frac12\\times10\\{-18+9\\times6\\}=180$.",
+       "$960-180=780$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-3",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-12",
+      "kind": "value",
+      "answer": "208",
+      "solution": [
+       "a = -53, d = 4.",
+       "Required sum = $S_{25}-S_9$.",
+       "$S_{25}=\\frac12\\times25\\{-106+24\\times4\\}=-125$.",
+       "$S_9=\\frac12\\times9\\{-106+8\\times4\\}=-333$.",
+       "$-125-(-333)=208$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-3",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-13",
+      "kind": "value",
+      "answer": "154",
+      "solution": [
+       "a = 74, d = -5.",
+       "Required sum = $S_{18}-S_7$.",
+       "$S_{18}=\\frac12\\times18\\{148+17\\times(-5)\\}=567$.",
+       "$S_7=\\frac12\\times7\\{148+6\\times(-5)\\}=413$.",
+       "$567-413=154$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-3",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-5",
+      "kind": "value",
+      "answer": "3750",
+      "solution": [
+       "Sum of 1 to 100: $\\frac12\\times100(1+100)=5050$.",
+       "Multiples of 4: 4, 8, ..., 100. Find n: $100=4+(n-1)\\times4$, so n = 25.",
+       "Their sum: $\\frac12\\times25(4+100)=1300$.",
+       "Not divisible by 4: $5050-1300=3750$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-3",
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-8",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+       "a = 4, d = 3, and $S_n=50$.",
+       "$50=\\frac12n\\{8+(n-1)\\times3\\}$.",
+       "This gives $3n^2+5n-100=0$, so $n=5$ or $-\\frac{20}{3}$.",
+       "n must be natural, so n = 5 (the 5th term)."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-4",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-9",
+      "kind": "value",
+      "answer": "a_n = 8n - 68",
+      "solution": [
+       "Let d be the common difference; a = -60, $S_{15}=-60$.",
+       "$-60=\\frac12\\times15\\{2\\times(-60)+14d\\}$.",
+       "Solving gives d = 8.",
+       "$a_n=-60+(n-1)\\times8=8n-68$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-5",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-10",
+      "kind": "value",
+      "answer": "17 terms; sum 561",
+      "solution": [
+       "$a_n=65+(n-1)(-4)=-4n+69$.",
+       "$-4n+69>0$ gives $n<17.25$.",
+       "Terms 1 to 17 are positive, so the sum is maximum at the 17th term.",
+       "$S_{17}=\\frac12\\times17\\{130+16\\times(-4)\\}=561$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-6",
+       "eb11c2-1:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-14",
+      "kind": "value",
+      "answer": "21",
+      "solution": [
+       "a = 17, d = -2, $S_n=-63$.",
+       "$-63=\\frac12n\\{34+(n-1)(-2)\\}=n(18-n)$.",
+       "$n^2-18n-63=0$, so $(n-21)(n+3)=0$.",
+       "n is natural, so n = 21."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-4",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-15",
+      "kind": "value",
+      "answer": "a_n = -3n + 11",
+      "solution": [
+       "a = 8, $S_{13}=-130$.",
+       "$-130=\\frac12\\times13\\{16+12d\\}$, so $-20=16+12d$.",
+       "d = -3.",
+       "$a_n=8+(n-1)(-3)=-3n+11$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-5",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-16",
+      "kind": "value",
+      "answer": "18 terms; sum 648",
+      "solution": [
+       "$a_n=70+(n-1)(-4)=-4n+74$.",
+       "$-4n+74>0$ gives $n<18.5$.",
+       "Terms 1 to 18 are positive, so the maximum sum is at the 18th term.",
+       "$S_{18}=\\frac12\\times18\\{140+17\\times(-4)\\}=9\\times72=648$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-6",
+       "eb11c2-1:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-17",
+      "kind": "value",
+      "answer": "a_n = (2n - 1)/10",
+      "solution": [
+       "Let first term a and common difference d.",
+       "$S_{10}=10$: $5(2a+9d)=10$, so $2a+9d=2$ ......(i)",
+       "$S_{20}=40$: $10(2a+19d)=40$, so $2a+19d=4$ ......(ii)",
+       "(ii) − (i): $10d=2$, so $d=\\frac15$.",
+       "Then $2a=2-\\frac95=\\frac15$, so $a=\\frac1{10}$.",
+       "$a_n=\\frac1{10}+(n-1)\\times\\frac15=\\frac{2n-1}{10}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6",
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-24",
+      "kind": "value",
+      "answer": "7",
+      "solution": [
+       "a = 3, d = 2, $S_n=63$.",
+       "$63=\\frac12n\\{6+(n-1)\\times2\\}=n(n+2)$.",
+       "$n^2+2n-63=0$, so $(n+9)(n-7)=0$.",
+       "n is natural, so n = 7."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-4",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-25",
+      "kind": "value",
+      "answer": "14",
+      "solution": [
+       "a = 24, d = -4, $S_n=-28$.",
+       "$-28=\\frac12n\\{48+(n-1)(-4)\\}=n(26-2n)$.",
+       "$n^2-13n-14=0$, so $(n-14)(n+1)=0$.",
+       "n is natural, so n = 14."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-4",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-26",
+      "kind": "value",
+      "answer": "a_n = 6n - 2",
+      "solution": [
+       "a = 4, $S_6=114$.",
+       "$114=\\frac12\\times6\\{8+5d\\}$, so $38=8+5d$.",
+       "d = 6.",
+       "$a_n=4+(n-1)\\times6=6n-2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-5",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-27",
+      "kind": "value",
+      "answer": "n = 4; sum 44",
+      "solution": [
+       "$a_n=20+(n-1)(-6)=-6n+26$.",
+       "$-6n+26>0$ gives $n<4.33$.",
+       "Terms 1 to 4 are positive, so n = 4.",
+       "$S_4=\\frac12\\times4\\{40+3\\times(-6)\\}=44$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-6",
+       "eb11c2-1:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-28",
+      "kind": "value",
+      "answer": "n = 10; sum 675",
+      "solution": [
+       "$a_n=126+(n-1)(-13)=-13n+139$.",
+       "$-13n+139>0$ gives $n<10.69$.",
+       "Terms 1 to 10 are positive, so n = 10.",
+       "$S_{10}=\\frac12\\times10\\{252+9\\times(-13)\\}=5\\times135=675$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-6",
+       "eb11c2-1:rule-13"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-29",
+      "kind": "value",
+      "answer": "a_n = 3n + 1",
+      "solution": [
+       "$a_3=10$: $a+2d=10$ ......(i)",
+       "$S_{10}=175$: $5(2a+9d)=175$, so $2a+9d=35$ ......(ii)",
+       "From (i) $a=10-2d$; into (ii): $20+5d=35$, so d = 3, a = 4.",
+       "$a_n=4+(n-1)\\times3=3n+1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-6",
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-30",
+      "kind": "value",
+      "answer": "a_n = 3n - 10",
+      "solution": [
+       "$S_6=3$: $3(2a+5d)=3$, so $2a+5d=1$ ......(i)",
+       "$S_{10}=65$: $5(2a+9d)=65$, so $2a+9d=13$ ......(ii)",
+       "(ii) − (i): $4d=12$, d = 3.",
+       "Then $2a=-14$, a = -7.",
+       "$a_n=-7+(n-1)\\times3=3n-10$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6",
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-31",
+      "kind": "value",
+      "answer": "a_n = 2n - 1",
+      "solution": [
+       "$S_{20}=400$: $10(2a+19d)=400$, so $2a+19d=40$ ......(i)",
+       "$S_{30}=900$: $15(2a+29d)=900$, so $2a+29d=60$ ......(ii)",
+       "(ii) − (i): $10d=20$, d = 2.",
+       "Then $2a=2$, a = 1.",
+       "$a_n=1+(n-1)\\times2=2n-1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6",
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:challenge-6",
+      "kind": "value",
+      "answer": "6557",
+      "solution": [
+       "The question probably asks for the sum of the first 79 terms.",
+       "$a_{15}=33$: $a+14d=33$; $a_{50}=103$: $a+49d=103$.",
+       "Subtract: $35d=70$, d = 2, then a = 5.",
+       "$S_{79}=\\frac12\\times79\\{10+78\\times2\\}=\\frac12\\times79\\times166$.",
+       "$=79\\times83=6557$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-6",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:reflect-1",
+      "kind": "explanation",
+      "answer": "A fixed daily drop is a common difference d, so a_n = a + (n-1)d gives the level on any day and shows when it reaches zero.",
+      "solution": [
+       "A fixed daily decrease means an arithmetic sequence with a negative common difference d.",
+       "The level on day n is $a_n=a+(n-1)d$.",
+       "Water runs out when the terms stop being positive, so solve $a_n>0$ to find the last positive day.",
+       "The sum S_n of the terms gives the total change over n days."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3",
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-13"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-1:open-prompt-1",
+      "kind": "explanation",
+      "answer": "A constant additive change is a common difference d, so a_n = a + (n-1)d gives any term directly and S_n = n(2a+(n-1)d)/2 gives the cumulative total."
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "a_1 = 1/2, a_2 = 2/3, a_3 = 3/4"
+     },
+     {
+      "ref": "eb11c2-1:challenge-1",
+      "kind": "value",
+      "answer": "a_n = n/(n+1); a_20 = 20/21"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-3",
+      "kind": "value",
+      "answer": "a_n = -6n + 14; a_20 = -106"
+     },
+     {
+      "ref": "eb11c2-1:challenge-2",
+      "kind": "value",
+      "answer": "a = 7, d = 3"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-4",
+      "kind": "value",
+      "answer": "a_n = 8n - 14"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-6",
+      "kind": "value",
+      "answer": "x = -4, 3"
+     },
+     {
+      "ref": "eb11c2-1:try-7",
+      "kind": "value",
+      "answer": "x = 4, -2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-8",
+      "kind": "value",
+      "answer": "a = 4"
+     },
+     {
+      "ref": "eb11c2-1:exercise-9",
+      "kind": "value",
+      "answer": "x = 3, -1"
+     },
+     {
+      "ref": "eb11c2-1:challenge-3",
+      "kind": "value",
+      "answer": "x = 0, y = -2, z = -4"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-9",
+      "kind": "value",
+      "answer": "66"
+     },
+     {
+      "ref": "eb11c2-1:challenge-4",
+      "kind": "value",
+      "answer": "414"
+     },
+     {
+      "ref": "eb11c2-1:exercise-11",
+      "kind": "value",
+      "answer": "780"
+     },
+     {
+      "ref": "eb11c2-1:exercise-12",
+      "kind": "value",
+      "answer": "208"
+     },
+     {
+      "ref": "eb11c2-1:exercise-13",
+      "kind": "value",
+      "answer": "154"
+     },
+     {
+      "ref": "eb11c2-1:challenge-5",
+      "kind": "value",
+      "answer": "3750"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-8",
+      "kind": "value",
+      "answer": "5 terms (the 5th term)"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-9",
+      "kind": "value",
+      "answer": "a_n = 8n - 68"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-10",
+      "kind": "value",
+      "answer": "17 terms; maximum sum 561"
+     },
+     {
+      "ref": "eb11c2-1:try-14",
+      "kind": "value",
+      "answer": "21 terms"
+     },
+     {
+      "ref": "eb11c2-1:try-15",
+      "kind": "value",
+      "answer": "a_n = -3n + 11"
+     },
+     {
+      "ref": "eb11c2-1:try-16",
+      "kind": "value",
+      "answer": "18 terms; maximum sum 648"
+     },
+     {
+      "ref": "eb11c2-1:try-17",
+      "kind": "value",
+      "answer": "a_n = (2n - 1)/10"
+     },
+     {
+      "ref": "eb11c2-1:exercise-24",
+      "kind": "value",
+      "answer": "n = 7"
+     },
+     {
+      "ref": "eb11c2-1:exercise-25",
+      "kind": "value",
+      "answer": "n = 14"
+     },
+     {
+      "ref": "eb11c2-1:exercise-26",
+      "kind": "value",
+      "answer": "a_n = 6n - 2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-27",
+      "kind": "value",
+      "answer": "n = 4; sum 44"
+     },
+     {
+      "ref": "eb11c2-1:exercise-28",
+      "kind": "value",
+      "answer": "n = 10; sum 675"
+     },
+     {
+      "ref": "eb11c2-1:exercise-29",
+      "kind": "value",
+      "answer": "a_n = 3n + 1"
+     },
+     {
+      "ref": "eb11c2-1:exercise-30",
+      "kind": "value",
+      "answer": "a_n = 3n - 10"
+     },
+     {
+      "ref": "eb11c2-1:exercise-31",
+      "kind": "value",
+      "answer": "a_n = 2n - 1"
+     },
+     {
+      "ref": "eb11c2-1:challenge-6",
+      "kind": "value",
+      "answer": "6557 (sum of the first 79 terms; a = 5, d = 2)"
+     },
+     {
+      "ref": "eb11c2-1:reflect-1",
+      "kind": "explanation",
+      "answer": "A fixed daily decrease d makes the levels an arithmetic sequence. With starting level a, the level after n days is a_n = a + (n-1)d. Solve a_n = 0 (or a_n ≤ 0) for n to find the day the water runs out."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c2-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:a",
+      "kind": "value",
+      "answer": "a_n = (n-1)^2",
+      "solution": [
+       "Compare each term with its term number: 0, 1, 4, 9, 16 are 0², 1², 2², 3², 4².",
+       "Each term is (term number − 1)².",
+       "So $a_n=(n-1)^2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:b",
+      "kind": "value",
+      "answer": "a_n = (-1)^(n-1) × 2n",
+      "solution": [
+       "The signs alternate and the first term is +, so the sign part is $(-1)^{n-1}$.",
+       "The numbers 2, 4, 6, 8, 10 are even numbers, so the number part is $2n$.",
+       "So $a_n=(-1)^{n-1}\\times 2n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:c",
+      "kind": "value",
+      "answer": "a_n = n/(2n-1)",
+      "solution": [
+       "Consider the numerator and the denominator separately.",
+       "Numerators 1, 2, 3, 4, 5 are the term number, so $n$.",
+       "Denominators 1, 3, 5, 7, 9 are odd numbers, so $2n-1$.",
+       "So $a_n=\\frac{n}{2n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:a",
+      "kind": "value",
+      "answer": "a_1 = -1, a_2 = 1, a_3 = 3",
+      "solution": [
+       "$a_1=2\\times1-3=-1$",
+       "$a_2=2\\times2-3=1$",
+       "$a_3=2\\times3-3=3$",
+       "The first three terms are -1, 1, 3."
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2",
+       "eb11c2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:b",
+      "kind": "value",
+      "answer": "a_1 = 6, a_2 = 18, a_3 = 54",
+      "solution": [
+       "$a_1=2\\times3^1=6$",
+       "$a_2=2\\times3^2=18$",
+       "$a_3=2\\times3^3=54$",
+       "The first three terms are 6, 18, 54."
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2",
+       "eb11c2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:c",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = -10, a_3 = -12",
+      "solution": [
+       "$a_1=1^2-7\\times1=-6$",
+       "$a_2=2^2-7\\times2=-10$",
+       "$a_3=3^2-7\\times3=-12$",
+       "The first three terms are -6, -10, -12."
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2",
+       "eb11c2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:d",
+      "kind": "value",
+      "answer": "a_1 = 1/3, a_2 = 2/5, a_3 = 3/7",
+      "solution": [
+       "$a_1=\\frac{1}{2\\times1+1}=\\frac13$",
+       "$a_2=\\frac{2}{2\\times2+1}=\\frac25$",
+       "$a_3=\\frac{3}{2\\times3+1}=\\frac37$",
+       "The first three terms are 1/3, 2/5, 3/7."
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2",
+       "eb11c2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:a",
+      "kind": "value",
+      "answer": "a_n = (n-1)^3",
+      "solution": [
+       "The terms 0, 1, 8, 27, 64 are 0³, 1³, 2³, 3³, 4³.",
+       "Each term is (term number − 1) cubed, in the same way as (term number − 1)² in the lesson example.",
+       "So $a_n=(n-1)^3$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:b",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 3n",
+      "solution": [
+       "The signs alternate and the first term is −, so the sign part is $(-1)^n$.",
+       "The numbers 3, 6, 9, 12, 15 are 3 × (term number), so $3n$.",
+       "So $a_n=(-1)^n\\times 3n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:c",
+      "kind": "value",
+      "answer": "a_n = 3n - 1",
+      "solution": [
+       "Each term is 3 more than the one before, so it is an arithmetic sequence with $a=2$, $d=3$.",
+       "$a_n=2+(n-1)\\times3$",
+       "$=3n-1$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:d",
+      "kind": "value",
+      "answer": "a_n = (2n-1)/n^2",
+      "solution": [
+       "Consider the numerator and the denominator separately.",
+       "Numerators 1, 3, 5, 7, 9 are odd numbers, so $2n-1$.",
+       "Denominators 1, 4, 9, 16, 25 are squares of the term number, so $n^2$.",
+       "So $a_n=\\frac{2n-1}{n^2}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:a",
+      "kind": "value",
+      "answer": "a_1 = -3, a_2 = 2, a_3 = 7",
+      "solution": [
+       "$a_1=5\\times1-8=-3$",
+       "$a_2=5\\times2-8=2$",
+       "$a_3=5\\times3-8=7$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:b",
+      "kind": "value",
+      "answer": "a_1 = -2, a_2 = -5, a_3 = -8",
+      "solution": [
+       "$a_1=-3\\times1+1=-2$",
+       "$a_2=-3\\times2+1=-5$",
+       "$a_3=-3\\times3+1=-8$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:c",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = -8, a_3 = -10",
+      "solution": [
+       "$a_1=-2\\times1-4=-6$",
+       "$a_2=-2\\times2-4=-8$",
+       "$a_3=-2\\times3-4=-10$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:d",
+      "kind": "value",
+      "answer": "a_1 = 2, a_2 = 8, a_3 = 26",
+      "solution": [
+       "$a_1=3^1-1=2$",
+       "$a_2=3^2-1=8$",
+       "$a_3=3^3-1=26$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:e",
+      "kind": "value",
+      "answer": "a_1 = -3, a_2 = 9, a_3 = -27",
+      "solution": [
+       "$a_1=(-3)^1=-3$",
+       "$a_2=(-3)^2=9$",
+       "$a_3=(-3)^3=-27$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:f",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = 12, a_3 = -24",
+      "solution": [
+       "$a_1=3\\times(-2)^1=-6$",
+       "$a_2=3\\times(-2)^2=12$",
+       "$a_3=3\\times(-2)^3=-24$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:g",
+      "kind": "value",
+      "answer": "a_1 = 0, a_2 = 3, a_3 = 8",
+      "solution": [
+       "$a_1=1^2-1=0$",
+       "$a_2=2^2-1=3$",
+       "$a_3=3^2-1=8$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:h",
+      "kind": "value",
+      "answer": "a_1 = 3, a_2 = 7, a_3 = 13",
+      "solution": [
+       "$a_1=1+1+1=3$",
+       "$a_2=4+2+1=7$",
+       "$a_3=9+3+1=13$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:i",
+      "kind": "value",
+      "answer": "a_1 = 7, a_2 = 12, a_3 = 19",
+      "solution": [
+       "$a_1=1+2+4=7$",
+       "$a_2=4+4+4=12$",
+       "$a_3=9+6+4=19$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:j",
+      "kind": "value",
+      "answer": "a_1 = 1, a_2 = 1/4, a_3 = 1/7",
+      "solution": [
+       "$a_1=\\frac{1}{3\\times1-2}=1$",
+       "$a_2=\\frac{1}{3\\times2-2}=\\frac14$",
+       "$a_3=\\frac{1}{3\\times3-2}=\\frac17$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:k",
+      "kind": "value",
+      "answer": "a_1 = 1/2, a_2 = 4/5, a_3 = 1",
+      "solution": [
+       "$a_1=\\frac{2}{1+3}=\\frac12$",
+       "$a_2=\\frac{4}{2+3}=\\frac45$",
+       "$a_3=\\frac{6}{3+3}=1$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:l",
+      "kind": "value",
+      "answer": "a_1 = 2, a_2 = 1, a_3 = 4/5",
+      "solution": [
+       "$a_1=\\frac{1+1}{2\\times1-1}=2$",
+       "$a_2=\\frac{2+1}{2\\times2-1}=1$",
+       "$a_3=\\frac{3+1}{2\\times3-1}=\\frac45$"
+      ],
+      "grounded_in": [
+       "eb11c2-1:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:a",
+      "kind": "value",
+      "answer": "a_n = 2n - 2",
+      "solution": [
+       "Even numbers are $2n$: 2, 4, 6, ...",
+       "Our terms are 2 less: 0, 2, 4, ...",
+       "So $a_n=2n-2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:linking-text-7"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:b",
+      "kind": "value",
+      "answer": "a_n = n^2",
+      "solution": [
+       "1, 4, 9, 16, 25 are 1², 2², 3², 4², 5².",
+       "So $a_n=n^2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:linking-text-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:c",
+      "kind": "value",
+      "answer": "a_n = 3n - 3",
+      "solution": [
+       "0, 3, 6, 9, 12 is 3 × (0, 1, 2, 3, 4).",
+       "The multiplier is (term number − 1).",
+       "So $a_n=3(n-1)=3n-3$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:d",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 5n",
+      "solution": [
+       "The first term is − and the signs alternate, so the sign part is $(-1)^n$.",
+       "The numbers 5, 10, 15, 20, 25 are $5n$.",
+       "So $a_n=(-1)^n\\times5n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:linking-text-4",
+       "eb11c2-1:linking-text-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:e",
+      "kind": "value",
+      "answer": "a_n = (-1)^(n-1) / (2n-1)",
+      "solution": [
+       "The first term is + and the signs alternate, so the sign part is $(-1)^{n-1}$.",
+       "The numerators are all 1.",
+       "The denominators 1, 3, 5, 7, 9 are odd numbers, $2n-1$.",
+       "So $a_n=\\frac{(-1)^{n-1}}{2n-1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:linking-text-4",
+       "eb11c2-1:linking-text-5",
+       "eb11c2-1:linking-text-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:f",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × (3n - 2)",
+      "solution": [
+       "The first term is − and the signs alternate, so the sign part is $(-1)^n$.",
+       "The numbers 1, 4, 7, 10, 13 increase by 3 starting at 1: $1+(n-1)\\times3=3n-2$.",
+       "So $a_n=(-1)^n(3n-2)$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:linking-text-6",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:g",
+      "kind": "value",
+      "answer": "a_n = (n+6)^2",
+      "solution": [
+       "The bases 7, 8, 9, 10, 11 are term number + 6.",
+       "So $a_n=(n+6)^2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:linking-text-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:h",
+      "kind": "value",
+      "answer": "a_n = 5n - 1",
+      "solution": [
+       "Each term is 5 more than the one before: $a=4$, $d=5$.",
+       "$a_n=4+(n-1)\\times5=5n-1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:i",
+      "kind": "value",
+      "answer": "a_n = 7n - 1",
+      "solution": [
+       "Each term is 7 more than the one before: $a=6$, $d=7$.",
+       "$a_n=6+(n-1)\\times7=7n-1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:j",
+      "kind": "value",
+      "answer": "a_n = n/(n+1)",
+      "solution": [
+       "Numerators 1, 2, 3, 4, 5 are $n$.",
+       "Denominators 2, 3, 4, 5, 6 are $n+1$.",
+       "So $a_n=\\frac{n}{n+1}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:linking-text-5",
+       "eb11c2-1:definition-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:k",
+      "kind": "value",
+      "answer": "a_n = n × 3^n",
+      "solution": [
+       "The first factors 1, 2, 3, 4, 5 are $n$.",
+       "The second factors 3, 9, 27, 81, 243 are $3^1,3^2,3^3,\\dots$, so $3^n$.",
+       "So $a_n=n\\times3^n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-2",
+       "eb11c2-1:objective-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-1:a",
+      "kind": "value",
+      "answer": "first term 2, common difference 3",
+      "solution": [
+       "The first term is 2.",
+       "$5-2=3$, $8-5=3$, so each step adds 3.",
+       "First term 2, common difference 3."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-1",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-1:b",
+      "kind": "value",
+      "answer": "first term 3, common difference -5",
+      "solution": [
+       "The first term is 3.",
+       "$-2-3=-5$, $-7-(-2)=-5$.",
+       "First term 3, common difference -5."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-1",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-2:a",
+      "kind": "value",
+      "answer": "d = -3, A = 5, B = -4",
+      "solution": [
+       "From 2 to −1 the step is $-1-2=-3$, so $d=-3$.",
+       "$A=2-(-3)=5$.",
+       "$B=-1+(-3)=-4$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-2:b",
+      "kind": "value",
+      "answer": "d = -5, A = 8, B = 3",
+      "solution": [
+       "From 13 to −2 there are 3 steps of $d$, total $-15$.",
+       "$3d=-15$, so $d=-5$.",
+       "$A=13-5=8$.",
+       "$B=8-5=3$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Try – Solve the following problems'; the actual questions are try-2, try-3 and try-4.",
+      "solution": [
+       "The heading has no question or data of its own.",
+       "Answer the sub-questions try-2 (first term and d), try-3 (A and B) and try-4 (general term and 7th term) instead."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-2:a",
+      "kind": "value",
+      "answer": "first term 1, common difference 4",
+      "solution": [
+       "The first term is 1.",
+       "$5-1=4$, $9-5=4$.",
+       "Common difference 4."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-2:b",
+      "kind": "value",
+      "answer": "first term 23, common difference -4",
+      "solution": [
+       "The first term is 23.",
+       "$19-23=-4$, $15-19=-4$.",
+       "Common difference -4."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-3:a",
+      "kind": "value",
+      "answer": "d = 7, A = 16, B = 23",
+      "solution": [
+       "$d=9-2=7$.",
+       "$A=9+7=16$.",
+       "$B=16+7=23$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-3:b",
+      "kind": "value",
+      "answer": "d = -6, A = 23, B = 11",
+      "solution": [
+       "From 17 to 5 there are 2 steps, so $2d=5-17=-12$ and $d=-6$.",
+       "$A=17-(-6)=23$.",
+       "$B=17+(-6)=11$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2",
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-4:a",
+      "kind": "value",
+      "answer": "a_n = 3n + 1; a_7 = 22",
+      "solution": [
+       "$a=4$, $d=3$.",
+       "$a_n=4+(n-1)\\times3=3n+1$.",
+       "$a_7=3\\times7+1=22$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-4:b",
+      "kind": "value",
+      "answer": "a_n = -3n + 5; a_7 = -16",
+      "solution": [
+       "$a=2$, $d=-3$.",
+       "$a_n=2+(n-1)\\times(-3)=-3n+5$.",
+       "$a_7=-3\\times7+5=-16$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Exercise – Solve the following problems'; the actual questions are exercise-4 and the unlabelled exercises on the next page.",
+      "solution": [
+       "The heading has no question or data of its own.",
+       "Answer the sub-questions instead."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:a",
+      "kind": "value",
+      "answer": "first term 3, common difference 2",
+      "solution": [
+       "First term 3.",
+       "$5-3=2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:b",
+      "kind": "value",
+      "answer": "first term -13, common difference 4",
+      "solution": [
+       "First term -13.",
+       "$-9-(-13)=4$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:c",
+      "kind": "value",
+      "answer": "first term -2, common difference 3",
+      "solution": [
+       "First term -2.",
+       "$1-(-2)=3$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:d",
+      "kind": "value",
+      "answer": "first term 10, common difference -3",
+      "solution": [
+       "First term 10.",
+       "$7-10=-3$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:e",
+      "kind": "value",
+      "answer": "first term 6, common difference -2/3",
+      "solution": [
+       "First term 6.",
+       "$\\frac{16}{3}-6=-\\frac23$.",
+       "Check: $\\frac{14}{3}-\\frac{16}{3}=-\\frac23$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:f",
+      "kind": "value",
+      "answer": "first term -4, common difference -1/2",
+      "solution": [
+       "First term -4.",
+       "$-\\frac92-(-4)=-\\frac12$.",
+       "Check: $-5-(-\\frac92)=-\\frac12$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:a",
+      "kind": "value",
+      "answer": "d = 7, A = 22, B = 29",
+      "solution": [
+       "$d=15-8=7$.",
+       "$A=15+7=22$.",
+       "$B=22+7=29$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:b",
+      "kind": "value",
+      "answer": "d = 6, A = 19, B = 25",
+      "solution": [
+       "$d=13-7=6$.",
+       "$A=13+6=19$.",
+       "$B=19+6=25$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:c",
+      "kind": "value",
+      "answer": "d = -5, A = 14, B = -1",
+      "solution": [
+       "From 9 to 4 is one step: $d=4-9=-5$.",
+       "$A=9-(-5)=14$.",
+       "$B=4+(-5)=-1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:d",
+      "kind": "value",
+      "answer": "d = -3, A = 18, B = 12",
+      "solution": [
+       "From 15 to 9 there are 2 steps: $2d=-6$, $d=-3$.",
+       "$A=15-(-3)=18$.",
+       "$B=15+(-3)=12$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:e",
+      "kind": "value",
+      "answer": "d = 3, A = 14, B = 17",
+      "solution": [
+       "From 11 to 20 there are 3 steps: $3d=9$, $d=3$.",
+       "$A=11+3=14$.",
+       "$B=14+3=17$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:f",
+      "kind": "value",
+      "answer": "d = -4, A = 13, B = 9, C = 1",
+      "solution": [
+       "From 17 to 5 there are 3 steps: $3d=-12$, $d=-4$.",
+       "$A=17-4=13$.",
+       "$B=13-4=9$.",
+       "$C=5-4=1$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:a",
+      "kind": "value",
+      "answer": "a_n = 4n + 1; a_7 = 29",
+      "solution": [
+       "$a_n=5+(n-1)\\times4=4n+1$.",
+       "$a_7=4\\times7+1=29$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:b",
+      "kind": "value",
+      "answer": "a_n = 3n - 5; a_7 = 16",
+      "solution": [
+       "$a_n=-2+(n-1)\\times3=3n-5$.",
+       "$a_7=3\\times7-5=16$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:c",
+      "kind": "value",
+      "answer": "a_n = -3n + 13; a_7 = -8",
+      "solution": [
+       "$a_n=10+(n-1)\\times(-3)=-3n+13$.",
+       "$a_7=-21+13=-8$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:d",
+      "kind": "value",
+      "answer": "a_n = -n/2; a_7 = -7/2",
+      "solution": [
+       "$a_n=-\\frac12+(n-1)\\times(-\\frac12)=-\\frac12-\\frac n2+\\frac12=-\\frac n2$.",
+       "$a_7=-\\frac72$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:a",
+      "kind": "value",
+      "answer": "a_n = 3n - 10; a_10 = 20",
+      "solution": [
+       "$a_n=-7+(n-1)\\times3=3n-10$.",
+       "$a_{10}=30-10=20$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:b",
+      "kind": "value",
+      "answer": "a_n = -3n + 1; a_10 = -29",
+      "solution": [
+       "$a_n=-2+(n-1)\\times(-3)=-3n+1$.",
+       "$a_{10}=-30+1=-29$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:c",
+      "kind": "value",
+      "answer": "a_n = (n+13)/2; a_10 = 23/2",
+      "solution": [
+       "$a_n=7+(n-1)\\times\\frac12=\\frac{n}{2}+\\frac{13}{2}=\\frac{n+13}{2}$.",
+       "$a_{10}=\\frac{23}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:d",
+      "kind": "value",
+      "answer": "a_n = 1 - n/3 (that is, (3-n)/3); a_10 = -7/3",
+      "solution": [
+       "$a_n=\\frac23+(n-1)\\times(-\\frac13)=\\frac23-\\frac n3+\\frac13=1-\\frac n3$.",
+       "$a_{10}=1-\\frac{10}{3}=-\\frac73$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-5:a",
+      "kind": "value",
+      "answer": "the 28th term",
+      "solution": [
+       "With $d=4$ and $a_8=33$: $33=a+7\\times4$, so $a=5$.",
+       "$a_n=5+(n-1)\\times4=4n+1$.",
+       "Set $4n+1=113$, so $n=28$.",
+       "It is the 28th term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-5:b",
+      "kind": "value",
+      "answer": "the 125th term",
+      "solution": [
+       "$a_n=4n+1$ (from $a=5$, $d=4$).",
+       "Need $4n+1>500$, so $n>\\frac{499}{4}=124.75$.",
+       "The smallest natural number is 125.",
+       "It is the 125th term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-5:a",
+      "kind": "value",
+      "answer": "a_n = 5n - 10",
+      "solution": [
+       "$a=-5$, $a_{17}=75$: $75=-5+16d$.",
+       "$16d=80$, $d=5$.",
+       "$a_n=-5+(n-1)\\times5=5n-10$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-5:b",
+      "kind": "value",
+      "answer": "a_n = 3n + 33",
+      "solution": [
+       "$d=3$, $a_{16}=81$: $81=a+15\\times3$.",
+       "$a=36$.",
+       "$a_n=36+(n-1)\\times3=3n+33$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-5:c",
+      "kind": "value",
+      "answer": "a_n = -3n + 20",
+      "solution": [
+       "$a_6=2$: $2=a+5d$ (i). $a_{15}=-25$: $-25=a+14d$ (ii).",
+       "(ii) − (i): $-27=9d$, so $d=-3$.",
+       "From (i): $a=2+15=17$.",
+       "$a_n=17+(n-1)\\times(-3)=-3n+20$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-6:a",
+      "kind": "value",
+      "answer": "the 14th term",
+      "solution": [
+       "$a_n=1+(n-1)\\times3=3n-2$.",
+       "Set $3n-2=40$, so $n=14$.",
+       "It is the 14th term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-6:b",
+      "kind": "value",
+      "answer": "the 35th term",
+      "solution": [
+       "$a_n=3n-2$.",
+       "Need $3n-2>100$, so $n>34$.",
+       "The smallest natural number is 35 (and $a_{35}=103$).",
+       "It is the 35th term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:a",
+      "kind": "value",
+      "answer": "a_n = 4n + 2",
+      "solution": [
+       "$a=6$, $a_4=18$: $18=6+3d$, $d=4$.",
+       "$a_n=6+(n-1)\\times4=4n+2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:b",
+      "kind": "value",
+      "answer": "a_n = -3n + 23",
+      "solution": [
+       "$a=20$, $a_8=-1$: $-1=20+7d$, $d=-3$.",
+       "$a_n=20+(n-1)\\times(-3)=-3n+23$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:c",
+      "kind": "value",
+      "answer": "a_n = 9n - 17",
+      "solution": [
+       "$a=-8$, $a_8=55$: $55=-8+7d$, $d=9$.",
+       "$a_n=-8+(n-1)\\times9=9n-17$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:d",
+      "kind": "value",
+      "answer": "a_n = -5n - 13",
+      "solution": [
+       "$a=-18$, $a_{10}=-63$: $-63=-18+9d$, $d=-5$.",
+       "$a_n=-18+(n-1)\\times(-5)=-5n-13$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:e",
+      "kind": "value",
+      "answer": "a_n = 2n - 12",
+      "solution": [
+       "$d=2$, $a_8=4$: $4=a+14$, $a=-10$.",
+       "$a_n=-10+(n-1)\\times2=2n-12$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:f",
+      "kind": "value",
+      "answer": "a_n = -4n + 13",
+      "solution": [
+       "$d=-4$, $a_5=-7$: $-7=a+4\\times(-4)$, $a=9$.",
+       "$a_n=9+(n-1)\\times(-4)=-4n+13$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:g",
+      "kind": "value",
+      "answer": "a_n = -7n + 18",
+      "solution": [
+       "$d=-7$, $a_6=-24$: $-24=a+5\\times(-7)$, $a=11$.",
+       "$a_n=11+(n-1)\\times(-7)=-7n+18$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:h",
+      "kind": "value",
+      "answer": "a_n = (2n - 37)/5",
+      "solution": [
+       "$d=\\frac25$, $a_{30}=\\frac{23}{5}$: $\\frac{23}{5}=a+29\\times\\frac25=a+\\frac{58}{5}$.",
+       "$a=-\\frac{35}{5}=-7$.",
+       "$a_n=-7+(n-1)\\times\\frac25=\\frac{2n-37}{5}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:i",
+      "kind": "value",
+      "answer": "a_n = 8n - 18",
+      "solution": [
+       "$14=a+3d$ (i), $62=a+9d$ (ii).",
+       "(ii) − (i): $48=6d$, $d=8$.",
+       "$a=14-24=-10$.",
+       "$a_n=-10+(n-1)\\times8=8n-18$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:j",
+      "kind": "value",
+      "answer": "a_n = -4n + 42",
+      "solution": [
+       "$30=a+2d$ (i), $2=a+9d$ (ii).",
+       "(ii) − (i): $-28=7d$, $d=-4$.",
+       "$a=30+8=38$.",
+       "$a_n=38+(n-1)\\times(-4)=-4n+42$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:k",
+      "kind": "value",
+      "answer": "a_n = -3n + 79",
+      "solution": [
+       "$49=a+9d$ (i), $10=a+22d$ (ii).",
+       "(ii) − (i): $-39=13d$, $d=-3$.",
+       "$a=49+27=76$.",
+       "$a_n=76+(n-1)\\times(-3)=-3n+79$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:l",
+      "kind": "value",
+      "answer": "a_n = 8n - 18",
+      "solution": [
+       "$6=a+2d$ (i), $62=a+9d$ (ii).",
+       "(ii) − (i): $56=7d$, $d=8$.",
+       "$a=6-16=-10$.",
+       "$a_n=-10+(n-1)\\times8=8n-18$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-6:a",
+      "kind": "value",
+      "answer": "the 22nd term",
+      "solution": [
+       "$d=-5$, $a_{13}=-7$: $-7=a+12\\times(-5)$, $a=53$.",
+       "$a_n=53+(n-1)\\times(-5)=-5n+58$.",
+       "Set $-5n+58=-52$, so $n=22$.",
+       "It is the 22nd term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-6:b",
+      "kind": "value",
+      "answer": "the 72nd term",
+      "solution": [
+       "$a_n=-5n+58$.",
+       "Need $-5n+58<-300$, so $5n>358$, $n>71.6$.",
+       "The smallest natural number is 72.",
+       "It is the 72nd term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-1",
+       "eb11c2-1:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-7:a",
+      "kind": "value",
+      "answer": "the 40th term",
+      "solution": [
+       "$-20=a+9d$ (i), $-50=a+19d$ (ii).",
+       "(ii) − (i): $-30=10d$, $d=-3$; $a=-20+27=7$.",
+       "$a_n=7+(n-1)\\times(-3)=-3n+10$.",
+       "Set $-3n+10=-110$, so $n=40$.",
+       "It is the 40th term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-7:b",
+      "kind": "value",
+      "answer": "the 171st term",
+      "solution": [
+       "$a_n=-3n+10$.",
+       "Need $-3n+10<-500$, so $3n>510$, $n>170$.",
+       "The smallest natural number is 171.",
+       "It is the 171st term."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-1",
+       "eb11c2-1:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:a",
+      "kind": "value",
+      "answer": "105",
+      "solution": [
+       "$a=8$, $l=22$, $n=7$.",
+       "$S_7=\\frac12\\times7(8+22)=105$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-2",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:b",
+      "kind": "value",
+      "answer": "392",
+      "solution": [
+       "Find $n$: $47=2+(n-1)\\times3$, so $n=16$.",
+       "$S=\\frac12\\times16(2+47)=392$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-2",
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:c",
+      "kind": "value",
+      "answer": "-130",
+      "solution": [
+       "$a=20$, $d=-5$, $n=13$.",
+       "$S_{13}=\\frac12\\times13\\{2\\times20+12\\times(-5)\\}=\\frac12\\times13\\times(-20)=-130$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-2",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:d",
+      "kind": "value",
+      "answer": "S_n = 2n^2 - n",
+      "solution": [
+       "$a=1$, $d=4$.",
+       "$S_n=\\frac12n\\{2+(n-1)\\times4\\}=\\frac12n(4n-2)$.",
+       "$=2n^2-n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-2",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-8:a",
+      "kind": "value",
+      "answer": "100",
+      "solution": [
+       "$a=7$, $l=13$, $n=10$.",
+       "$S_{10}=\\frac12\\times10(7+13)=100$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-8:b",
+      "kind": "value",
+      "answer": "343",
+      "solution": [
+       "Find $n$: $44=5+(n-1)\\times3$, so $n=14$.",
+       "$S=\\frac12\\times14(5+44)=343$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-8:c",
+      "kind": "value",
+      "answer": "126",
+      "solution": [
+       "$a=-6$, $d=3$, $n=12$.",
+       "$S_{12}=\\frac12\\times12\\{2\\times(-6)+11\\times3\\}=6\\times21=126$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-8:d",
+      "kind": "value",
+      "answer": "S_n = (7n - 3n^2)/2",
+      "solution": [
+       "$a=2$, $d=-3$.",
+       "$S_n=\\frac12n\\{4+(n-1)\\times(-3)\\}=\\frac12n(7-3n)$.",
+       "$=\\frac{7n-3n^2}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-9",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+       "The sum is $S_{30}-S_{19}$.",
+       "$S_{30}=\\frac12\\times30\\{2\\times48+29\\times(-2)\\}=15\\times38=570$.",
+       "$S_{19}=\\frac12\\times19\\{96+18\\times(-2)\\}=\\frac{19}{2}\\times60=570$.",
+       "$570-570=0$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:worked-example-3",
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:a",
+      "kind": "value",
+      "answer": "120",
+      "solution": [
+       "$S_{10}=\\frac12\\times10(3+21)=120$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:b",
+      "kind": "value",
+      "answer": "152",
+      "solution": [
+       "$S_8=\\frac12\\times8(5+33)=152$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:c",
+      "kind": "value",
+      "answer": "155",
+      "solution": [
+       "$S_{10}=\\frac12\\times10(2+29)=155$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:d",
+      "kind": "value",
+      "answer": "741",
+      "solution": [
+       "Find $n$: $75=3+(n-1)\\times4$, so $n=19$.",
+       "$S=\\frac12\\times19(3+75)=741$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:e",
+      "kind": "value",
+      "answer": "354",
+      "solution": [
+       "Find $n$: $57=2+(n-1)\\times5$, so $n=12$.",
+       "$S=\\frac12\\times12(2+57)=354$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:f",
+      "kind": "value",
+      "answer": "1716",
+      "solution": [
+       "Find $n$: $100=4+(n-1)\\times3$, so $n=33$.",
+       "$S=\\frac12\\times33(4+100)=1716$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:g",
+      "kind": "value",
+      "answer": "-165",
+      "solution": [
+       "$S_{15}=\\frac12\\times15\\{2\\times10+14\\times(-3)\\}=\\frac{15}{2}\\times(-22)=-165$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:h",
+      "kind": "value",
+      "answer": "176",
+      "solution": [
+       "$S_{11}=\\frac12\\times11\\{2\\times(-4)+10\\times4\\}=\\frac{11}{2}\\times32=176$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:i",
+      "kind": "value",
+      "answer": "360",
+      "solution": [
+       "$S_{18}=\\frac12\\times18\\{2\\times3+17\\times2\\}=9\\times40=360$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:j",
+      "kind": "value",
+      "answer": "S_n = (5n^2 - 5n)/2",
+      "solution": [
+       "$a=0$, $d=5$.",
+       "$S_n=\\frac12n\\{0+(n-1)\\times5\\}=\\frac{5n(n-1)}{2}$.",
+       "$=\\frac{5n^2-5n}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:k",
+      "kind": "value",
+      "answer": "S_n = 5n - 2n^2",
+      "solution": [
+       "$a=3$, $d=-4$.",
+       "$S_n=\\frac12n\\{6+(n-1)\\times(-4)\\}=\\frac12n(10-4n)$.",
+       "$=5n-2n^2$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:l",
+      "kind": "value",
+      "answer": "S_n = -n^2 - 3n",
+      "solution": [
+       "$a=-4$, $d=-2$.",
+       "$S_n=\\frac12n\\{-8+(n-1)\\times(-2)\\}=\\frac12n(-6-2n)$.",
+       "$=-n^2-3n$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:1",
+      "kind": "value",
+      "answer": "5050",
+      "solution": [
+       "First term 1, last term 100, 100 terms.",
+       "$\\frac12\\times100(1+100)=5050$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-3",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:2",
+      "kind": "value",
+      "answer": "15050",
+      "solution": [
+       "First term 101, last term 200, 100 terms.",
+       "$\\frac12\\times100(101+200)=15050$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:3",
+      "kind": "value",
+      "answer": "1665",
+      "solution": [
+       "The multiples of 3 with 2 digits are 12, 15, ..., 99: $a=12$, $d=3$, $l=99$.",
+       "Find $n$: $99=12+(n-1)\\times3$, so $n=30$.",
+       "$\\frac12\\times30(12+99)=1665$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-10",
+      "kind": "value",
+      "answer": "20100",
+      "solution": [
+       "First term 1, last term 200, 200 terms.",
+       "$\\frac12\\times200(1+200)=20100$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-3",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-11",
+      "kind": "value",
+      "answer": "25050",
+      "solution": [
+       "First term 201, last term 300, 100 terms.",
+       "$\\frac12\\times100(201+300)=25050$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-12",
+      "kind": "value",
+      "answer": "945",
+      "solution": [
+       "2-digit multiples of 5: 10, 15, ..., 95: $a=10$, $d=5$, $l=95$.",
+       "Find $n$: $95=10+(n-1)\\times5$, so $n=18$.",
+       "$\\frac12\\times18(10+95)=945$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:try-13",
+      "kind": "value",
+      "answer": "999",
+      "solution": [
+       "2-digit numbers with remainder 3 on division by 5: 13, 18, ..., 98: $a=13$, $d=5$, $l=98$.",
+       "Find $n$: $98=13+(n-1)\\times5$, so $n=18$.",
+       "$\\frac12\\times18(13+98)=999$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-14",
+      "kind": "value",
+      "answer": "11325",
+      "solution": [
+       "First term 1, last term 150, 150 terms.",
+       "$\\frac12\\times150(1+150)=11325$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-3",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-15",
+      "kind": "value",
+      "answer": "8085",
+      "solution": [
+       "First term 81, last term 150; number of terms $150-81+1=70$.",
+       "$\\frac12\\times70(81+150)=8085$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-16",
+      "kind": "value",
+      "answer": "35050",
+      "solution": [
+       "First term 301, last term 400, 100 terms.",
+       "$\\frac12\\times100(301+400)=35050$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-17",
+      "kind": "value",
+      "answer": "4905",
+      "solution": [
+       "2-digit natural numbers: 10, 11, ..., 99; number of terms $99-10+1=90$.",
+       "$\\frac12\\times90(10+99)=4905$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:explanation-4",
+       "eb11c2-1:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-18",
+      "kind": "value",
+      "answer": "2475",
+      "solution": [
+       "2-digit odd numbers: 11, 13, ..., 99: $a=11$, $d=2$, $l=99$.",
+       "Find $n$: $99=11+(n-1)\\times2$, so $n=45$.",
+       "$\\frac12\\times45(11+99)=2475$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-19",
+      "kind": "value",
+      "answer": "1300",
+      "solution": [
+       "Multiples of 4 from 1 to 100: 4, 8, ..., 100: $a=4$, $d=4$, $l=100$.",
+       "Find $n$: $100=4+(n-1)\\times4$, so $n=25$.",
+       "$\\frac12\\times25(4+100)=1300$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-20",
+      "kind": "value",
+      "answer": "1225",
+      "solution": [
+       "Numbers 1, 5, 9, ..., 97: $a=1$, $d=4$, $l=97$.",
+       "Find $n$: $97=1+(n-1)\\times4$, so $n=25$.",
+       "$\\frac12\\times25(1+97)=1225$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-21",
+      "kind": "value",
+      "answer": "810",
+      "solution": [
+       "Multiples of 6 from 10 to 100: 12, 18, ..., 96: $a=12$, $d=6$, $l=96$.",
+       "Find $n$: $96=12+(n-1)\\times6$, so $n=15$.",
+       "$\\frac12\\times15(12+96)=810$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-5",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-22",
+      "kind": "value",
+      "answer": "4195",
+      "solution": [
+       "Sum of all numbers 10 to 100: 91 terms, $\\frac12\\times91(10+100)=5005$.",
+       "Sum of multiples of 6 from 10 to 100 is 810 (12, 18, ..., 96; 15 terms).",
+       "Subtract: $5005-810=4195$."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-5",
+       "eb11c2-1:method-1",
+       "eb11c2-1:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c2-1:exercise-23",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Exercise – Solve the following problems'; the actual questions are exercise-24 to exercise-31.",
+      "solution": [
+       "The heading has no question or data of its own.",
+       "Answer the numbered sub-questions instead."
+      ],
+      "grounded_in": [
+       "eb11c2-1:rule-6"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:a",
+      "kind": "value",
+      "answer": "a_n = (n-1)^2"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:b",
+      "kind": "value",
+      "answer": "a_n = (-1)^{n-1} × 2n"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-2:c",
+      "kind": "value",
+      "answer": "a_n = n/(2n-1)"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:a",
+      "kind": "value",
+      "answer": "-1, 1, 3"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:b",
+      "kind": "value",
+      "answer": "6, 18, 54"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:c",
+      "kind": "value",
+      "answer": "-6, -10, -12"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-3:d",
+      "kind": "value",
+      "answer": "1/3, 2/5, 3/7"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:a",
+      "kind": "value",
+      "answer": "a_n = (n-1)^3"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:b",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 3n"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:c",
+      "kind": "value",
+      "answer": "a_n = 3n-1"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-4:d",
+      "kind": "value",
+      "answer": "a_n = (2n-1)/n^2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:a",
+      "kind": "value",
+      "answer": "-3, 2, 7"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:b",
+      "kind": "value",
+      "answer": "-2, -5, -8"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:c",
+      "kind": "value",
+      "answer": "-6, -8, -10"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:d",
+      "kind": "value",
+      "answer": "2, 8, 26"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:e",
+      "kind": "value",
+      "answer": "-3, 9, -27"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:f",
+      "kind": "value",
+      "answer": "-6, 12, -24"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:g",
+      "kind": "value",
+      "answer": "0, 3, 8"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:h",
+      "kind": "value",
+      "answer": "3, 7, 13"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:i",
+      "kind": "value",
+      "answer": "7, 12, 19"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:j",
+      "kind": "value",
+      "answer": "1, 1/4, 1/7"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:k",
+      "kind": "value",
+      "answer": "1/2, 4/5, 1"
+     },
+     {
+      "ref": "eb11c2-1:exercise-1:l",
+      "kind": "value",
+      "answer": "2, 1, 4/5"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:a",
+      "kind": "value",
+      "answer": "a_n = 2n-2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:b",
+      "kind": "value",
+      "answer": "a_n = n^2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:c",
+      "kind": "value",
+      "answer": "a_n = 3n-3"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:d",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 5n"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:e",
+      "kind": "value",
+      "answer": "a_n = (-1)^{n-1}/(2n-1)"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:f",
+      "kind": "value",
+      "answer": "a_n = (-1)^n (3n-2)"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:g",
+      "kind": "value",
+      "answer": "a_n = (n+6)^2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:h",
+      "kind": "value",
+      "answer": "a_n = 5n-1"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:i",
+      "kind": "value",
+      "answer": "a_n = 7n-1"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:j",
+      "kind": "value",
+      "answer": "a_n = n/(n+1)"
+     },
+     {
+      "ref": "eb11c2-1:exercise-2:k",
+      "kind": "value",
+      "answer": "a_n = n × 3^n"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-1:a",
+      "kind": "value",
+      "answer": "first term 2, common difference 3"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-1:b",
+      "kind": "value",
+      "answer": "first term 3, common difference -5"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-2:a",
+      "kind": "value",
+      "answer": "d = -3, A = 5, B = -4"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-2:b",
+      "kind": "value",
+      "answer": "d = -5, A = 8, B = 3"
+     },
+     {
+      "ref": "eb11c2-1:try-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately."
+     },
+     {
+      "ref": "eb11c2-1:try-2:a",
+      "kind": "value",
+      "answer": "first term 1, common difference 4"
+     },
+     {
+      "ref": "eb11c2-1:try-2:b",
+      "kind": "value",
+      "answer": "first term 23, common difference -4"
+     },
+     {
+      "ref": "eb11c2-1:try-3:a",
+      "kind": "value",
+      "answer": "d = 7, A = 16, B = 23"
+     },
+     {
+      "ref": "eb11c2-1:try-3:b",
+      "kind": "value",
+      "answer": "d = -6, A = 23, B = 11"
+     },
+     {
+      "ref": "eb11c2-1:try-4:a",
+      "kind": "value",
+      "answer": "a_n = 3n+1; a_7 = 22"
+     },
+     {
+      "ref": "eb11c2-1:try-4:b",
+      "kind": "value",
+      "answer": "a_n = -3n+5; a_7 = -16"
+     },
+     {
+      "ref": "eb11c2-1:exercise-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately."
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:a",
+      "kind": "value",
+      "answer": "first term 3, common difference 2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:b",
+      "kind": "value",
+      "answer": "first term -13, common difference 4"
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:c",
+      "kind": "value",
+      "answer": "first term -2, common difference 3"
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:d",
+      "kind": "value",
+      "answer": "first term 10, common difference -3"
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:e",
+      "kind": "value",
+      "answer": "first term 6, common difference -2/3"
+     },
+     {
+      "ref": "eb11c2-1:exercise-4:f",
+      "kind": "value",
+      "answer": "first term -4, common difference -1/2"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:a",
+      "kind": "value",
+      "answer": "d = 7, A = 22, B = 29"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:b",
+      "kind": "value",
+      "answer": "d = 6, A = 19, B = 25"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:c",
+      "kind": "value",
+      "answer": "d = -5, A = 14, B = -1"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:d",
+      "kind": "value",
+      "answer": "d = -3, A = 18, B = 12"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:e",
+      "kind": "value",
+      "answer": "d = 3, A = 14, B = 17"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-5:f",
+      "kind": "value",
+      "answer": "d = -4, A = 13, B = 9, C = 1"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:a",
+      "kind": "value",
+      "answer": "a_n = 4n+1; a_7 = 29"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:b",
+      "kind": "value",
+      "answer": "a_n = 3n-5; a_7 = 16"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:c",
+      "kind": "value",
+      "answer": "a_n = -3n+13; a_7 = -8"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-6:d",
+      "kind": "value",
+      "answer": "a_n = -n/2; a_7 = -7/2"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:a",
+      "kind": "value",
+      "answer": "a_n = 3n-10; a_10 = 20"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:b",
+      "kind": "value",
+      "answer": "a_n = -3n+1; a_10 = -29"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:c",
+      "kind": "value",
+      "answer": "a_n = (n+13)/2; a_10 = 23/2"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-7:d",
+      "kind": "value",
+      "answer": "a_n = (3-n)/3; a_10 = -7/3"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-5:a",
+      "kind": "value",
+      "answer": "the 28th term"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-5:b",
+      "kind": "value",
+      "answer": "the 125th term"
+     },
+     {
+      "ref": "eb11c2-1:try-5:a",
+      "kind": "value",
+      "answer": "a_n = 5n-10"
+     },
+     {
+      "ref": "eb11c2-1:try-5:b",
+      "kind": "value",
+      "answer": "a_n = 3n+33"
+     },
+     {
+      "ref": "eb11c2-1:try-5:c",
+      "kind": "value",
+      "answer": "a_n = -3n+20"
+     },
+     {
+      "ref": "eb11c2-1:try-6:a",
+      "kind": "value",
+      "answer": "the 14th term"
+     },
+     {
+      "ref": "eb11c2-1:try-6:b",
+      "kind": "value",
+      "answer": "the 35th term"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:a",
+      "kind": "value",
+      "answer": "a_n = 4n+2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:b",
+      "kind": "value",
+      "answer": "a_n = -3n+23"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:c",
+      "kind": "value",
+      "answer": "a_n = 9n-17"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:d",
+      "kind": "value",
+      "answer": "a_n = -5n-13"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:e",
+      "kind": "value",
+      "answer": "a_n = 2n-12"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:f",
+      "kind": "value",
+      "answer": "a_n = -4n+13"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:g",
+      "kind": "value",
+      "answer": "a_n = -7n+18"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:h",
+      "kind": "value",
+      "answer": "a_n = (2n-37)/5"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:i",
+      "kind": "value",
+      "answer": "a_n = 8n-18"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:j",
+      "kind": "value",
+      "answer": "a_n = -4n+42"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:k",
+      "kind": "value",
+      "answer": "a_n = -3n+79"
+     },
+     {
+      "ref": "eb11c2-1:exercise-5:l",
+      "kind": "value",
+      "answer": "a_n = 8n-18"
+     },
+     {
+      "ref": "eb11c2-1:exercise-6:a",
+      "kind": "value",
+      "answer": "the 22nd term"
+     },
+     {
+      "ref": "eb11c2-1:exercise-6:b",
+      "kind": "value",
+      "answer": "the 72nd term"
+     },
+     {
+      "ref": "eb11c2-1:exercise-7:a",
+      "kind": "value",
+      "answer": "the 40th term"
+     },
+     {
+      "ref": "eb11c2-1:exercise-7:b",
+      "kind": "value",
+      "answer": "the 171st term"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:a",
+      "kind": "value",
+      "answer": "105"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:b",
+      "kind": "value",
+      "answer": "392"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:c",
+      "kind": "value",
+      "answer": "-130"
+     },
+     {
+      "ref": "eb11c2-1:unlabelled-exercise-8:d",
+      "kind": "value",
+      "answer": "S_n = 2n^2 - n"
+     },
+     {
+      "ref": "eb11c2-1:try-8:a",
+      "kind": "value",
+      "answer": "100"
+     },
+     {
+      "ref": "eb11c2-1:try-8:b",
+      "kind": "value",
+      "answer": "343"
+     },
+     {
+      "ref": "eb11c2-1:try-8:c",
+      "kind": "value",
+      "answer": "126"
+     },
+     {
+      "ref": "eb11c2-1:try-8:d",
+      "kind": "value",
+      "answer": "S_n = (7n - 3n^2)/2"
+     },
+     {
+      "ref": "eb11c2-1:try-9",
+      "kind": "value",
+      "answer": "0"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:a",
+      "kind": "value",
+      "answer": "120"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:b",
+      "kind": "value",
+      "answer": "152"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:c",
+      "kind": "value",
+      "answer": "155"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:d",
+      "kind": "value",
+      "answer": "741"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:e",
+      "kind": "value",
+      "answer": "354"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:f",
+      "kind": "value",
+      "answer": "1716"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:g",
+      "kind": "value",
+      "answer": "-165"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:h",
+      "kind": "value",
+      "answer": "176"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:i",
+      "kind": "value",
+      "answer": "360"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:j",
+      "kind": "value",
+      "answer": "S_n = 5n(n-1)/2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:k",
+      "kind": "value",
+      "answer": "S_n = 5n - 2n^2"
+     },
+     {
+      "ref": "eb11c2-1:exercise-10:l",
+      "kind": "value",
+      "answer": "S_n = -n^2 - 3n"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:1",
+      "kind": "value",
+      "answer": "5050"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:2",
+      "kind": "value",
+      "answer": "15050"
+     },
+     {
+      "ref": "eb11c2-1:warm-up-7:3",
+      "kind": "value",
+      "answer": "1665"
+     },
+     {
+      "ref": "eb11c2-1:try-10",
+      "kind": "value",
+      "answer": "20100"
+     },
+     {
+      "ref": "eb11c2-1:try-11",
+      "kind": "value",
+      "answer": "25050"
+     },
+     {
+      "ref": "eb11c2-1:try-12",
+      "kind": "value",
+      "answer": "945"
+     },
+     {
+      "ref": "eb11c2-1:try-13",
+      "kind": "value",
+      "answer": "999"
+     },
+     {
+      "ref": "eb11c2-1:exercise-14",
+      "kind": "value",
+      "answer": "11325"
+     },
+     {
+      "ref": "eb11c2-1:exercise-15",
+      "kind": "value",
+      "answer": "8085"
+     },
+     {
+      "ref": "eb11c2-1:exercise-16",
+      "kind": "value",
+      "answer": "35050"
+     },
+     {
+      "ref": "eb11c2-1:exercise-17",
+      "kind": "value",
+      "answer": "4905"
+     },
+     {
+      "ref": "eb11c2-1:exercise-18",
+      "kind": "value",
+      "answer": "2475"
+     },
+     {
+      "ref": "eb11c2-1:exercise-19",
+      "kind": "value",
+      "answer": "1300"
+     },
+     {
+      "ref": "eb11c2-1:exercise-20",
+      "kind": "value",
+      "answer": "1225"
+     },
+     {
+      "ref": "eb11c2-1:exercise-21",
+      "kind": "value",
+      "answer": "810"
+     },
+     {
+      "ref": "eb11c2-1:exercise-22",
+      "kind": "value",
+      "answer": "4195"
+     },
+     {
+      "ref": "eb11c2-1:exercise-23",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately."
+     }
+    ]
+   }
+  }
+ ]
+}

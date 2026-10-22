@@ -1,0 +1,139 @@
+{
+  "format": "ainext.book-statements/1",
+  "lesson": "eb11c2-5",
+  "source": "book-records/egb-g11-math/eb11c2-5.json",
+  "groups": [
+    {
+      "lo": "lo:eb11c2-5-1",
+      "label": "Basic recurrence relations",
+      "statements": [
+        {
+          "id": "eb11c2-5:rule-1",
+          "type": "rule",
+          "text": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\dots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n=1, 2, 3, \\dots$).",
+          "page": 91
+        },
+        {
+          "id": "eb11c2-5:definition-1",
+          "type": "definition",
+          "text": "Condition (b), a relational expression to find $a_{n+1}$ from $a_n$, is called a recurrence relation.",
+          "page": 91
+        },
+        {
+          "id": "eb11c2-5:convention-1",
+          "type": "convention",
+          "text": "Hereafter, recurrence relations are assumed to hold for $n=1, 2, 3, \\dots$.",
+          "page": 91
+        },
+        {
+          "id": "eb11c2-5:rule-2",
+          "type": "rule",
+          "text": "The recurrence relation $a_{n+1}=a_n+d$ represents an arithmetic sequence with common difference $d$.",
+          "page": 91
+        },
+        {
+          "id": "eb11c2-5:rule-3",
+          "type": "rule",
+          "text": "The recurrence relation $a_{n+1}=ra_n$ represents a geometric sequence with common ratio $r$.",
+          "page": 91
+        },
+        {
+          "id": "eb11c2-5:rule-4",
+          "type": "rule",
+          "text": "General term of an arithmetic sequence with first term a and common difference d (side note beside part a). Formula: $a_n = a + (n-1)d$",
+          "page": 92
+        },
+        {
+          "id": "eb11c2-5:rule-5",
+          "type": "rule",
+          "text": "General term of a geometric sequence with first term a and common ratio r (side note beside part b). Formula: $a_n = ar^{n-1}$",
+          "page": 92
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-5-2",
+      "label": "General term from recurrences",
+      "statements": [
+        {
+          "id": "eb11c2-5:rule-6",
+          "type": "rule",
+          "text": "For a recurrence relation $a_{n+1}=a_n+f(n)$, $f(n)$ is the general term of the difference sequence of $\\{a_n\\}$ (an expression in terms of $n$; can be transformed to $a_{n+1}-a_n=f(n)$).",
+          "page": 94
+        },
+        {
+          "id": "eb11c2-5:rule-7",
+          "type": "rule",
+          "text": "When $n\\ge 2$, $a_n$ equals $a_1$ plus the sum of $f(k)$ for k from 1 to n−1. Formula: $a_n=a_1+\\sum_{k=1}^{n-1}f(k)$",
+          "page": 94
+        },
+        {
+          "id": "eb11c2-5:method-1",
+          "type": "method",
+          "text": "Step 1: Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$. Formula: $c=pc+q$",
+          "page": 96
+        },
+        {
+          "id": "eb11c2-5:method-2",
+          "type": "method",
+          "text": "Step 2: Solve the equation from step 1.",
+          "page": 96
+        },
+        {
+          "id": "eb11c2-5:method-3",
+          "type": "method",
+          "text": "Step 3: Substitute the solution from step 2 into $a_{n+1}-c=p(a_n-c)$.",
+          "page": 96
+        },
+        {
+          "id": "eb11c2-5:method-4",
+          "type": "method",
+          "text": "Step 4: Letting $a_n-c=b_n$, $\\{b_n\\}$ is a geometric sequence with common ratio p.",
+          "page": 96
+        },
+        {
+          "id": "eb11c2-5:method-5",
+          "type": "method",
+          "text": "Step 5: Find the general term of $\\{a_n\\}$ using the general term of $\\{b_n\\}$.",
+          "page": 96
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c2-5-3",
+      "label": "Prove by mathematical induction",
+      "statements": [
+        {
+          "id": "eb11c2-5:method-6",
+          "type": "method",
+          "text": "Procedure to prove that \"Condition (A) holds for all natural numbers n\": [1] Show that (A) holds when n = 1. [2] Assume that (A) holds when n = k, and write the equation that holds then. By transforming that equation, show that (A) also holds when n = k + 1. Formula: $n=1$, $n=k$, $n=k+1$",
+          "page": 98
+        },
+        {
+          "id": "eb11c2-5:caution-1",
+          "type": "caution",
+          "text": "When proving equalities or inequalities involving $a^n$, multiply both sides of the assumed expression by $a$.",
+          "page": 100
+        },
+        {
+          "id": "eb11c2-5:caution-2",
+          "type": "caution",
+          "text": "When proving that something is a multiple of $a$, use the assumed expression to show it takes the form $a \\times$ (integer). Formula: $a \\times (\\text{integer})$",
+          "page": 102
+        }
+      ]
+    },
+    {
+      "lo": null,
+      "label": null,
+      "statements": [
+        {
+          "id": "eb11c2-5:key-term-1",
+          "type": "key_term",
+          "text": "recurrence relation",
+          "page": 91
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1772 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c2-2",
+    "syllabus_ref": "Concept 2",
+    "title": "Geometric Sequences",
+    "module": "Unit 2 Sequences",
+    "pages": [
+      57,
+      67
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c2-2:heading-1",
+      "type": "heading",
+      "source_page": 57,
+      "quote": "Concept 2 · Geometric sequences",
+      "text": "Concept 2 · Geometric sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 57,
+      "quote": "Calculate the general term of a geometric sequence",
+      "text": "Learning Outcomes: Calculate the general term of a geometric sequence, and determine certain terms in it.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-1",
+      "type": "linking_text",
+      "source_page": 57,
+      "quote": "A single E. coli bacterium enters a bloodstream.",
+      "text": "A single E. coli bacterium enters a bloodstream. Under ideal conditions, it does not just split into two; those two split into four, those four split into eight, doubling every 20 minutes. Within 24 hours, that single cell multiplies into a colony numbering in the sextillions—outnumbering the stars in the galaxy. This is the reality of geometric growth.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:figure-1",
+      "type": "figure",
+      "source_page": 57,
+      "quote": "EXPONENTIAL GROWTH: SINGLE E. coli TO MASSIVE COLONY",
+      "caption": "Illustration of a bloodstream with E. coli bacteria, titled 'Exponential growth: single E. coli to massive colony in bloodstream'. Stages: introduction and entry; first division (geometric 1→2); multiplying exponentially (geometric 2→4→8→...); massive colony formation. Shows 2→4→8→16→32→64 and 2→4→8, with a growth curve at lower right. Small text is hard to read; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3842,
+          0.1827,
+          0.6908,
+          0.316
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-2:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "Guiding Question: How do processes with small starting values escalate rapidly",
+      "text": "How do processes with small starting values escalate rapidly, and how can we mathematically predict their cumulative impact over time?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:definition-1",
+      "type": "definition",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "A sequence obtained by successively multiplying each preceding term",
+      "claim": "A sequence obtained by successively multiplying each preceding term by a constant number r is called a geometric sequence, and the constant number r is called the common ratio.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-2",
+      "type": "linking_text",
+      "source_page": 57,
+      "quote": "Example: A geometric sequence with the first term 1 and the common ratio 2",
+      "text": "Example: A geometric sequence with the first term 1 and the common ratio 2: 1, 2, 4, 8, 16, ... (each step marked ×2)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-1",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "The general term of a geometric sequence with the first term a and the",
+      "claim": "The general term of a geometric sequence with the first term a and the common ratio r is a_n = ar^{n-1}.",
+      "formula": "$a_n = ar^{n-1}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:figure-2",
+      "type": "figure",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "Multiplying a by r, (n−1) times results in a_n",
+      "caption": "Side note diagram: a, a_2, a_3, ..., a_{n-1}, a_n with arrows each marked ×r; caption 'Multiplying a by r, (n−1) times results in a_n'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6894,
+          0.5736,
+          0.9339,
+          0.6583
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-2",
+      "type": "heading",
+      "source_page": 57,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "Find the general term of the following geometric sequences {a_n}.",
+      "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 2, the common ratio 3"
+        },
+        {
+          "label": "b",
+          "stem": "$5, 10, 20, 40, \\ldots$"
+        },
+        {
+          "label": "c",
+          "stem": "$-4, 6, -9, \\frac{27}{2}, \\ldots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 57,
+      "quote": "The following sequence is a geometric sequence. Find the common ratio",
+      "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. $A, 24, 12, B, \\ldots$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-3",
+      "type": "heading",
+      "source_page": 58,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:worked-example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 58,
+      "quote": "(b) Let r be the common ratio. Since the first term is 5",
+      "stem": "Explanation item 1: write the general term of each geometric sequence (parts a, b, c); the question itself is printed on the previous page.",
+      "solution": [
+        "(b) Let $r$ be the common ratio. Since the first term is 5 and the 2nd term is 10: $5r = 10$, $r = 2$",
+        "Therefore, since it is a geometric sequence with the first term 5 and the common ratio 2: $a_n = 5 \\times 2^{n-1}$",
+        "(c) Let $r$ be the common ratio. Since the first term is $-4$ and the 2nd term is 6: $-4r = 6$, $r = -\\frac{3}{2}$",
+        "Therefore, since it is a geometric sequence with the first term $-4$ and the common ratio $-\\frac{3}{2}$: $a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "answer": "$a_n = 2 \\times 3^{n-1}$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "answer": "$a_n = 5 \\times 2^{n-1}$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "c",
+          "answer": "$a_n = -4 \\times \\left(-\\frac{3}{2}\\right)^{n-1}$",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "notes": "Part (a) printed only as its answer; the stem is not on this page. Whether these are worked examples or answers to previous page's exercise: check.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:figure-3",
+      "type": "figure",
+      "lo": "eb11c2-2:objective-1",
+      "belongs_to": "eb11c2-2:worked-example-1",
+      "source_page": 58,
+      "quote": "5, 10, 20, 40, ... ×r ×r ×r",
+      "caption": "Side note beside 1(b): sequence 5, 10, 20, 40, ... with curved arrows between consecutive terms each labelled ×r.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.692,
+          0.09,
+          0.8615,
+          0.1367
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-2",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 58,
+      "quote": "a_n = ar^{n-1}",
+      "claim": "General term of a geometric sequence (side note).",
+      "formula": "$a_n = ar^{n-1}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:caution-1",
+      "type": "caution",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 58,
+      "quote": "Use parentheses ( ) when the common ratio is a negative number or a fraction.",
+      "claim": "Use parentheses when the common ratio is a negative number or a fraction.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:worked-example-2",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 58,
+      "quote": "Let r be the required common ratio.",
+      "stem": "Explanation item 2: find the common ratio and the missing terms A and B in the geometric sequence A, 24, 12, B, ... (stem on previous page).",
+      "solution": [
+        "Let $r$ be the required common ratio. $24r = 12$, $\\therefore r = \\frac{1}{2}$",
+        "Since A multiplied by $\\frac{1}{2}$ becomes 24: $\\therefore 24 \\div \\frac{1}{2} = 48$",
+        "Since 12 multiplied by $\\frac{1}{2}$ becomes B: $\\therefore 12 \\times \\frac{1}{2} = 6$",
+        "Therefore, Common ratio: $\\frac{1}{2}$, A: 48, B: 6"
+      ],
+      "answer": "common ratio $\\frac{1}{2}$, A = 48, B = 6",
+      "solution_provenance": "book_worked",
+      "notes": "Sequence inferred from the side figure.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:figure-4",
+      "type": "figure",
+      "lo": "eb11c2-2:objective-1",
+      "belongs_to": "eb11c2-2:worked-example-2",
+      "source_page": 58,
+      "quote": "A, 24, 12, B, ... ×1/2 ÷1/2",
+      "caption": "Side note beside item 2: sequence A, 24, 12, B, ... with arrows ×1/2 from A to 24 (and ÷1/2 backward from 24 to A), ×1/2 from 24 to 12, ×1/2 from 12 to B.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.7036,
+          0.5062,
+          0.9285,
+          0.5638
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-4",
+      "type": "heading",
+      "source_page": 59,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-3",
+      "type": "linking_text",
+      "source_page": 59,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-1",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 59,
+      "quote": "Find the general term of the following geometric sequences",
+      "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 3, the common ratio 4"
+        },
+        {
+          "label": "b",
+          "stem": "The first term 5, the common ratio $-2$"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 8, the common ratio $-\\frac{1}{3}$"
+        },
+        {
+          "label": "d",
+          "stem": "$2, 6, 18, 54, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "$-8, 12, -18, 27, \\dots$"
+        },
+        {
+          "label": "f",
+          "stem": "$2, \\frac{2}{3}, \\frac{2}{9}, \\frac{2}{27}, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-2",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 59,
+      "quote": "The following sequence is a geometric sequence. Find the common ratio",
+      "text": "The following sequence is a geometric sequence. Find the common ratio and the numbers that fit in the sequence below. A, $-18$, 6, B, ...",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-4",
+      "type": "linking_text",
+      "source_page": 59,
+      "quote": "Collaborate with your group to solve",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-5",
+      "type": "heading",
+      "source_page": 59,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-5",
+      "type": "linking_text",
+      "source_page": 59,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 59,
+      "quote": "Find the general term of the following geometric sequences",
+      "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 5, the common ratio 2"
+        },
+        {
+          "label": "b",
+          "stem": "The first term 2, the common ratio 5"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 7, the common ratio 4"
+        },
+        {
+          "label": "d",
+          "stem": "The first term 2, the common ratio -3"
+        },
+        {
+          "label": "e",
+          "stem": "The first term 3, the common ratio -5"
+        },
+        {
+          "label": "f",
+          "stem": "The first term 4, the common ratio -2"
+        },
+        {
+          "label": "g",
+          "stem": "The first term 4, the common ratio $\\frac{1}{3}$"
+        },
+        {
+          "label": "h",
+          "stem": "The first term 3, the common ratio $-\\frac{1}{2}$"
+        },
+        {
+          "label": "i",
+          "stem": "The first term 6, the common ratio $\\frac{1}{2}$"
+        },
+        {
+          "label": "j",
+          "stem": "$3, 6, 12, 24, \\dots$"
+        },
+        {
+          "label": "k",
+          "stem": "$2, -6, 18, -54, \\dots$"
+        },
+        {
+          "label": "l",
+          "stem": "$5, -10, 20, -40, \\dots$"
+        },
+        {
+          "label": "m",
+          "stem": "$48, 24, 12, 6, \\dots$"
+        },
+        {
+          "label": "n",
+          "stem": "$\\frac{1}{6}, \\frac{1}{4}, \\frac{3}{8}, \\frac{9}{16}, \\dots$"
+        },
+        {
+          "label": "o",
+          "stem": "$8, 16\\sqrt{2}, 64, 128\\sqrt{2}, \\dots$"
+        },
+        {
+          "label": "p",
+          "stem": "$3, -\\frac{15}{2}, \\frac{75}{4}, -\\frac{375}{8}, \\dots$"
+        },
+        {
+          "label": "q",
+          "stem": "$9, -3\\sqrt{3}, 3, -\\sqrt{3}, \\dots$"
+        },
+        {
+          "label": "r",
+          "stem": "$5, -\\frac{10}{3}, \\frac{20}{9}, -\\frac{40}{27}, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 59,
+      "quote": "The following sequences are geometric sequences. Find the common ratio",
+      "text": "The following sequences are geometric sequences. Find the common ratio and the numbers that fit in A and B.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "A, $-3$, 9, B, ..."
+        },
+        {
+          "label": "b",
+          "stem": "A, $\\frac{1}{3}$, $\\frac{1}{9}$, B, ..."
+        },
+        {
+          "label": "c",
+          "stem": "A, $-\\frac{1}{4}$, $\\frac{1}{8}$, B, ..."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 59,
+      "quote": "In an increasing geometric sequence, if $a_3 + a_5 = 80$ and $a_4 = 24$",
+      "text": "In an increasing geometric sequence, if $a_3 + a_5 = 80$ and $a_4 = 24$, then find $a_7$.",
+      "notes": "Printed 'and' is italic inside the math.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 60,
+      "quote": "Calculate the general term of a geometric sequence",
+      "text": "Learning Outcomes: Calculate the general term of a geometric sequence, and determine certain terms in it.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-3",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-1",
+      "source_page": 60,
+      "quote": "The general term of a geometric sequence with the first term",
+      "claim": "The general term of a geometric sequence with first term a and common ratio r is a_n = a r^{n-1}.",
+      "formula": "$a_n = ar^{n-1}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-4",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 60,
+      "quote": "When the sequence a, b, c is a geometric sequence in this order",
+      "claim": "When a, b, c form a geometric sequence in this order, b² = ac.",
+      "formula": "$b^2 = ac$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-6",
+      "type": "linking_text",
+      "source_page": 60,
+      "quote": "Considering a, b, c: b=ar, c=ar²",
+      "text": "Side note: Considering a, b, c with each term multiplied by r: b = ar, c = ar². b² = (ar)² = a²r² ......(i); ac = a × ar² = a²r² ......(ii). From (i) and (ii), b² = ac.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-6",
+      "type": "heading",
+      "source_page": 60,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-7",
+      "type": "linking_text",
+      "source_page": 60,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 60,
+      "quote": "Find the general term of the following geometric sequences",
+      "text": "Find the general term of the following geometric sequences {a_n}.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The 4th term is 24, the 6th term is 96"
+        },
+        {
+          "label": "b",
+          "stem": "The 3rd term is 12, the 6th term is $-96$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 60,
+      "quote": "When the 3 numbers 2, x, 8 form a geometric sequence",
+      "text": "When the 3 numbers 2, x, 8 form a geometric sequence in this order, find the value of x.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-5",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 60,
+      "quote": "When the 3 numbers 6, a, b form an arithmetic sequence",
+      "text": "When the 3 numbers 6, a, b form an arithmetic sequence in this order, and a, b, 16 form a geometric sequence in this order, find the values of a and b.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-7",
+      "type": "heading",
+      "source_page": 60,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 60,
+      "pages": [
+        60,
+        61
+      ],
+      "quote": "Let the general term be a_n = ar^{n-1}",
+      "stem": "(a) The 4th term is 24, the 6th term is 96; find the general term of the geometric sequence.",
+      "solution": [
+        "Let the general term be $a_n = ar^{n-1}$.",
+        "Since the 4th term is 24, $ar^3 = 24$ ......(i)",
+        "Since the 6th term is 96, $ar^5 = 96$ ......(ii)",
+        "From (i) and (ii), $a \\neq 0, r \\neq 0$. Dividing (ii) by (i) gives: $\\frac{ar^5}{ar^3} = \\frac{96}{24}$",
+        "$r^2 = 4$ Therefore, $r = \\pm 2$",
+        "From (i), when $r = 2$, $8a = 24$, so $a = 3$",
+        "When $r = -2$, $-8a = 24$, so $a = -3$",
+        "Therefore, $a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$",
+        "(b) Let the general term be $a_n = ar^{n-1}$",
+        "Since the 3rd term is 12, $ar^2 = 12$ ......(i)",
+        "Since the 6th term is $-96$, $ar^5 = -96$ ......(ii)",
+        "From (i) and (ii), $a\\neq 0$, $r\\neq 0$. Dividing (ii) by (i) gives: $\\frac{ar^5}{ar^2} = \\frac{-96}{12}$",
+        "$r^3 = -8$",
+        "Since $r$ is a real number, $r = -2$",
+        "Substitute this into (i): $4a = 12$, so $a = 3$",
+        "Therefore, $a_n = 3\\times(-2)^{n-1}$"
+      ],
+      "answer": "$a_n = 3 \\times 2^{n-1}$ or $a_n = -3 \\times (-2)^{n-1}$",
+      "solution_provenance": "book_worked",
+      "misprints": [
+        {
+          "field": "solution[2]",
+          "printed": "ar^{5,} = 96",
+          "intended": "ar^5 = 96",
+          "notes": "stray comma in exponent"
+        }
+      ],
+      "notes": "Margin notes: a_4 = ar^{4-1} = ar^3; a_6 = ar^{6-1} = ar^5; 'Reduce the fraction.' Only part (a) is solved on this page.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 61,
+      "quote": "Since 2, x, 8 form a geometric sequence in this order, x² = 16",
+      "stem": "2, x, 8 form a geometric sequence in this order (question implied; find x).",
+      "solution": [
+        "Since 2, $x$, 8 form a geometric sequence in this order, $x^2 = 16$",
+        "Solving this, $x = \\pm 4$."
+      ],
+      "answer": "$x=\\pm4$",
+      "solution_provenance": "book_worked",
+      "notes": "Stem not printed on this page; the numbered item is a continuation of the example's answers (numbered box 2). Label/number as read from the blue number box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:example-2",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 61,
+      "quote": "Since 6, a, b form an arithmetic sequence in this order, 2a = 6 + b",
+      "stem": "6, a, b form an arithmetic sequence and a, b, 16 form a geometric sequence (question implied; find a and b).",
+      "solution": [
+        "Since 6, $a$, $b$ form an arithmetic sequence in this order, $2a = 6 + b$ ......(i)",
+        "Since $a$, $b$, 16 form a geometric sequence in this order, $b^2 = 16a$ ......(ii)",
+        "From (i), $b = 2a - 6$ ......(i)'. Substituting this into (ii) and simplifying: $4a^2 - 40a + 36 = 0$",
+        "Solving this, $a = 9, 1$",
+        "From (i)', when $a=9$, $b=12$; when $a=1$, $b=-4$",
+        "Therefore, $a=9, b=12$ or $a=1, b=-4$"
+      ],
+      "answer": "$a=9, b=12$ or $a=1, b=-4$",
+      "solution_provenance": "book_worked",
+      "notes": "Stem not printed on this page; numbered boxes 2 and 3 are solutions to a previous-page question.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-8",
+      "type": "heading",
+      "source_page": 61,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-8",
+      "type": "linking_text",
+      "source_page": 61,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-3",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 61,
+      "quote": "Find the general term of the following geometric sequences",
+      "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The 3rd term is 18, and the 5th term is 162"
+        },
+        {
+          "label": "b",
+          "stem": "The 2nd term is $-6$, and the 5th term is 48"
+        },
+        {
+          "label": "c",
+          "stem": "The 3rd term is 12, and the 7th term is 192"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-4",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 61,
+      "quote": "When the 3 numbers 1, x, 12 form a geometric sequence",
+      "text": "When the 3 numbers $1, x, 12$ form a geometric sequence in this order, find the value of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-5",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 61,
+      "quote": "When the 3 numbers − 2, a, b form an arithmetic sequence",
+      "text": "When the 3 numbers $-2, a, b$ form an arithmetic sequence in this order, and $a, b, 18$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-9",
+      "type": "linking_text",
+      "source_page": 61,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "Find the general term of the following geometric sequences",
+      "text": "Find the general term of the following geometric sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The 2nd term is 6, and the 4th term is 54"
+        },
+        {
+          "label": "b",
+          "stem": "The 3rd term is 27, and the 5th term is 243"
+        },
+        {
+          "label": "c",
+          "stem": "The 3rd term is $-28$, and the 5th term is $-112$"
+        },
+        {
+          "label": "d",
+          "stem": "The 2nd term is 14, and the 5th term is 112"
+        },
+        {
+          "label": "e",
+          "stem": "The 4th term is 16, and the 7th term is $-128$"
+        },
+        {
+          "label": "f",
+          "stem": "The 3rd term is $-20$, and the 6th term is 160."
+        },
+        {
+          "label": "g",
+          "stem": "The 2nd term is 3, and the 6th term is 768."
+        },
+        {
+          "label": "h",
+          "stem": "The 3rd term is 9, and the 7th term is $\\frac{729}{16}$."
+        },
+        {
+          "label": "i",
+          "stem": "The 4th term is $\\frac{2}{9}$, and the 8th term is 18."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "When the 3 numbers 1, x, 25 form a geometric sequence",
+      "text": "When the 3 numbers $1, x, 25$ form a geometric sequence in this order, find the value of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "When the 3 numbers 1/2, x, 8 form a geometric sequence",
+      "text": "When the 3 numbers $\\frac{1}{2}, x, 8$ form a geometric sequence in this order, find the value of $x$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "When the 3 numbers a, b, 2 form an arithmetic sequence",
+      "text": "When the 3 numbers $a, b, 2$ form an arithmetic sequence in this order, and $a, 2, b$ form a geometric sequence in this order, find the values of $a$ and $b$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-2",
+      "source_page": 62,
+      "quote": "Budgeting for a Green Energy Initiative",
+      "text": "Budgeting for a Green Energy Initiative. A corporate sustainability department is planning a 3-year budget to phase out fossil fuels. They are tracking their yearly funding allocations across three consecutive stages, modeled under two different economic forecasts: Model 1 (Linear Expansion): Under steady conditions, the funding for Year 1 is capped at -5 hundred thousand LE (initial infrastructure debt), followed by Year 2 (a) and Year 3 (b). These three numbers form an arithmetic sequence. Model 2 (Compounding Scale): If a clean-energy breakthrough occurs, the budget shifts gears. The allocations for Year 2 (a), Year 3 (b), and a newly projected Year 4 budget of 45 hundred thousand LE form a geometric sequence. Determine the exact budget values for a (Year 2) and b (Year 3) that satisfy both planning models simultaneously so the company can transition smoothly.",
+      "notes": "Boxed star Challenge; label printed as 'Challenge'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-9",
+      "type": "heading",
+      "source_page": 63,
+      "quote": "Sum of Geometric Sequence (1)",
+      "text": "2-9 Sum of Geometric Sequence (1) — Chapter 2 Sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 63,
+      "quote": "Calculate the sum of a geometric sequence of n terms.",
+      "text": "Learning Outcomes: Calculate the sum of a geometric sequence of n terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-5",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "The sum S_n of a geometric sequence with the first term a and the",
+      "claim": "The sum $S_n$ of a geometric sequence with first term $a$ and common ratio $r$ from the first term to the $n$-th term, when $r \\neq 1$, is $S_n=\\frac{a(1-r^n)}{1-r}$ (formula to use when the common ratio r is less than 1).",
+      "formula": "$S_n=\\frac{a(1-r^n)}{1-r}$",
+      "notes": "Side note: 'Formula to use when the common ratio r is less than 1'. Same Point! box as k4.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:rule-6",
+      "type": "rule",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "a (r^n − 1) / r − 1",
+      "claim": "Equivalently, when $r \\neq 1$, $S_n=\\frac{a(r^n-1)}{r-1}$ (formula to use when the common ratio r is greater than 1).",
+      "formula": "$S_n=\\frac{a(r^n-1)}{r-1}$",
+      "notes": "Side note: 'Formula to use when the common ratio r is greater than 1'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-10",
+      "type": "heading",
+      "source_page": 63,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-10",
+      "type": "linking_text",
+      "source_page": 63,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-6",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "Find the sum S of the following geometric sequences.",
+      "text": "Find the sum $S$ of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 4, the common ratio 3, and the number of terms 5."
+        },
+        {
+          "label": "b",
+          "stem": "The first term 8, the common ratio $\\frac{1}{2}$, and the number of terms 6."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-7",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "Find the sum S_n from the first term to the n-th term",
+      "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequence: $2,-6,18,-54,\\dots$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-11",
+      "type": "heading",
+      "source_page": 63,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-8",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "Since a = 4, r = 3, n = 5 :",
+      "stem": "Warm Up 1: find the sum S of the given geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Since $a=4, r=3, n=5$",
+          "answer": "$484$",
+          "solution": [
+            "$S=\\frac{4(3^5-1)}{3-1}$",
+            "$=2(3^5-1)$",
+            "$=484$"
+          ],
+          "notes": "Side note: since r is greater than 1, use $S_n=\\frac{a(r^n-1)}{r-1}$.",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "b",
+          "stem": "Since $a=8, r=\\frac12, n=6$",
+          "answer": "$\\frac{63}{4}$",
+          "solution": [
+            "$S=\\frac{8\\{1-(\\frac12)^6\\}}{1-\\frac12}$",
+            "$=\\frac{16\\{1-(\\frac12)^6\\}}{2-1}$",
+            "$=16\\{1-(\\frac12)^6\\}$",
+            "$=\\frac{63}{4}$"
+          ],
+          "notes": "Side notes: since r is less than 1, use $S_n=\\frac{a(1-r^n)}{1-r}$; 'Multiply numerator and denominator by 2'.",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-9",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 63,
+      "quote": "Since a = 2, r = −3 :",
+      "stem": "Warm Up 2: find $S_n$ for $2,-6,18,-54,\\dots$",
+      "solution": [
+        "Since $a=2, r=-3$",
+        "$S_n=\\frac{2\\{1-(-3)^n\\}}{1-(-3)}$",
+        "$=\\frac{1-(-3)^n}{2}$"
+      ],
+      "notes": "Side note: since r is less than 1, use $S_n=\\frac{a(1-r^n)}{1-r}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-6",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems. (Try section)",
+      "notes": "Try header; contains numbered questions 1 and 2 as separate records.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-7",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Find the sum S of the following geometric sequences.",
+      "text": "Find the sum $S$ of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 3, the common ratio 2, and the number of terms 5"
+        },
+        {
+          "label": "b",
+          "stem": "The first term 6, the common ratio $-2$, and the number of terms 4"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 6, the common ratio $\\frac{1}{2}$, and the number of terms 6"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-8",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Find the sum S_n from the first term to the n-th term",
+      "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 3, the common ratio $-2$"
+        },
+        {
+          "label": "b",
+          "stem": "$8, -4, 2, -1, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box, 'Work with a partner'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems. (Exercise section)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Find the sum S of the following geometric sequences.",
+      "text": "Find the sum $S$ of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 5, the common ratio 3, and the number of terms 4"
+        },
+        {
+          "label": "b",
+          "stem": "The first term 1, the common ratio $-3$, and the number of terms 4"
+        },
+        {
+          "label": "c",
+          "stem": "The first term 1, the common ratio $\\frac{1}{3}$, and the number of terms 3"
+        },
+        {
+          "label": "d",
+          "stem": "The first term 3, the common ratio 2, and the number of terms 10"
+        },
+        {
+          "label": "e",
+          "stem": "The first term 2, the common ratio $-3$, and the number of terms 6"
+        },
+        {
+          "label": "f",
+          "stem": "The first term 1, the common ratio $\\frac{1}{2}$, and the number of terms 8"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-10",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "Find the sum S_n from the first term to the n-th term",
+      "text": "Find the sum $S_n$ from the first term to the $n$-th term of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "The first term 7, and the common ratio 2"
+        },
+        {
+          "label": "b",
+          "stem": "The first term 2, and the common ratio $\\frac{1}{3}$"
+        },
+        {
+          "label": "c",
+          "stem": "$2, 6, 18, 54, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$1, -3, 9, -27, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "The first term 4, and the common ratio 2"
+        },
+        {
+          "label": "f",
+          "stem": "The first term 16, and the common ratio $-\\frac{1}{2}$"
+        },
+        {
+          "label": "g",
+          "stem": "$1, -2, 4, -8, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 64,
+      "quote": "An environmental tech company designs sequential water filters",
+      "text": "An environmental tech company designs sequential water filters where each stage traps a third of the remaining microplastics compared to the previous stage. The filtration scale progresses geometrically: $3, 1, \\frac{1}{3}, \\frac{1}{9}, \\dots$ mg/L removed per stage. Calculate the total mass of contaminants removed if the system uses 4 filtration stages in total.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-12",
+      "type": "heading",
+      "source_page": 65,
+      "quote": "Sum of Geometric Sequence (2)",
+      "text": "Sum of Geometric Sequence (2)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:printed-objective-4",
+      "type": "printed_objective",
+      "source_page": 65,
+      "quote": "Calculate the general term of a geometric sequence",
+      "text": "Learning Outcomes: Calculate the general term of a geometric sequence, find certain terms in it, and also the sum of all or some of its terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-13",
+      "type": "heading",
+      "source_page": 65,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:warm-up-10",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 65,
+      "quote": "Find the first term and common ratio of the following geometric sequences.",
+      "text": "Find the first term and common ratio of the following geometric sequences.",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "The sum from the first term to the 3rd term is 35, the sum from the 3rd term to the 5th term is 140"
+        },
+        {
+          "label": "2",
+          "stem": "The sum from the first term to the 3rd term is 21, the sum from the first term to the 6th term is 189"
+        },
+        {
+          "label": "3",
+          "stem": "The 3rd term is 4, the sum from the first term to the 3rd term is 7"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:heading-14",
+      "type": "heading",
+      "source_page": 65,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:worked-example-3",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 65,
+      "quote": "Let a be the first term and r be the common ratio.",
+      "stem": "Warm Up 1: The sum from the first term to the 3rd term is 35, the sum from the 3rd term to the 5th term is 140. Find the first term and common ratio.",
+      "solution": [
+        "Let $a$ be the first term and $r$ the common ratio.",
+        "Sum from 1st to 3rd term is 35: $a+ar+ar^2=35$ ...(i)",
+        "Sum from 3rd to 5th term is 140: $ar^2+ar^3+ar^4=140$ ...(ii)",
+        "From (ii), $r^2(a+ar+ar^2)=140$ (side note: transform into a form where (i) can be substituted)",
+        "Substitute (i): $35r^2=140$",
+        "Solving this, $r=\\pm2$",
+        "When $r=2$, from (i): $a+2a+4a=35$",
+        "Solving this, $a=5$",
+        "When $r=-2$, from (i): $a-2a+4a=35$",
+        "Solving this, $a=\\frac{35}{3}$"
+      ],
+      "answer": "First term: 5, Common ratio: 2 or First term: $\\frac{35}{3}$, Common ratio: $-2$",
+      "solution_provenance": "book_worked",
+      "notes": "Side note printed beside step: 'Transform into a form where (i) can be substituted.' Example numbered 1 in a square badge, not labelled 'Example'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:worked-example-4",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 65,
+      "quote": "Since the sum from the first term to the 6th term is 189",
+      "stem": "Warm Up 2: The sum from the first term to the 3rd term is 21, the sum from the first term to the 6th term is 189. Find the first term and common ratio.",
+      "solution": [
+        "Let $a$ be the first term and $r$ the common ratio.",
+        "Sum from 1st to 3rd term is 21: $a+ar+ar^2=21$ ...(i)",
+        "Sum from 1st to 6th term is 189: $a+ar+ar^2+ar^3+ar^4+ar^5=189$ ...(ii)",
+        "From (ii), $(a+ar+ar^2)+r^3(a+ar+ar^2)=189$ (side note: transform into a form where (i) can be substituted)",
+        "Substitute (i): $21+21r^3=189$",
+        "Solving this in the real number range, $r=2$",
+        "From (i), $a+2a+4a=21$",
+        "Solving this, $a=3$"
+      ],
+      "answer": "First term: 3, Common ratio: 2",
+      "solution_provenance": "book_worked",
+      "notes": "Side note printed beside step: 'Transform into a form where (i) can be substituted.'",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:example-3",
+      "type": "worked_example",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "Let a be the first term and r be the common ratio.",
+      "solution": [
+        "Let $a$ be the first term and $r$ be the common ratio.",
+        "Since the 3rd term is 4, $ar^2 = 4$ ......(i)",
+        "Since the sum from the first term to the 3rd term is 7, $a + ar + ar^2 = 7$ ......(ii)",
+        "Since $r \\neq 0$, from (i), $a = \\frac{4}{r^2}$",
+        "Substitute this into (ii): $\\frac{4}{r^2} + \\frac{4}{r^2} \\times r + \\frac{4}{r^2} \\times r^2 = 7$ (side note: Multiply both sides by $r^2$)",
+        "$4 + 4r + 4r^2 = 7r^2$",
+        "Solving this, $r = 2, -\\frac{2}{3}$",
+        "When $r = 2$, from (i), $4a = 4$",
+        "Solving this, $a = 1$",
+        "$r = -\\frac{2}{3}$, from (i), $\\frac{4}{9}a = 4$",
+        "Solving this, $a = 9$"
+      ],
+      "answer": "First term: 1, Common ratio: 2 or First term: 9, Common ratio: $-\\frac{2}{3}$",
+      "stem": "Let a be the first term and r be the common ratio.",
+      "solution_provenance": "book_worked",
+      "notes": "Example number 3 is printed as a boxed number badge; the stem is on the previous page. A side note 'Multiply both sides by r^2' is attached to the substitution step.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-9",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "Find the first term and common ratio of the following geometric sequences.",
+      "text": "Find the first term and common ratio of the following geometric sequences.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-10",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 21",
+      "text": "The sum from the first to the 3rd term is 21, and the sum from the 3rd to the 5th term is 84",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-11",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 26",
+      "text": "The sum from the first to the 3rd term is 26, and the sum from the first to the 6th term is 728",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:try-12",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The 2nd term is 3, and the sum from the first to the 3rd term is 13",
+      "text": "The 2nd term is 3, and the sum from the first to the 3rd term is 13",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:linking-text-11",
+      "type": "linking_text",
+      "source_page": 66,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-11",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "Find the first term and common ratio of the following geometric sequences.",
+      "text": "Find the first term and common ratio of the following geometric sequences.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-12",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 9",
+      "text": "The sum from the first to the 3rd term is 9, and the sum from the 4th to the 6th term is $-72$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-13",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 9, and the sum from the 3rd",
+      "text": "The sum from the first to the 3rd term is 9, and the sum from the 3rd to the 5th term is 36",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-14",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 78",
+      "text": "The sum from the first to the 3rd term is 78, and the sum from the 3rd to the 5th term is 702",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-15",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum of the first and the 2nd terms is 3",
+      "text": "The sum of the first and the 2nd terms is 3, and the sum from the first to the 4th term is 51",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-16",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 66,
+      "quote": "The sum from the first to the 3rd term is 65",
+      "text": "The sum from the first to the 3rd term is 65, and the sum from the first to the 6th term is 1820",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-17",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 67,
+      "quote": "The sum of the first and the 2nd terms is – 8",
+      "text": "The sum of the first and the 2nd terms is $-8$, and the sum from the first to the 4th term is $-80$",
+      "notes": "Part of the Exercise whose earlier items are on the previous page; the item prints only a number badge 6.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-18",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 67,
+      "quote": "The 2nd term is 6, and the sum from the first to the 3rd term is 21",
+      "text": "The 2nd term is 6, and the sum from the first to the 3rd term is 21",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-19",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 67,
+      "quote": "The 3rd term is 12, and the sum from the first to the 3rd term is 9",
+      "text": "The 3rd term is 12, and the sum from the first to the 3rd term is 9",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:exercise-20",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 67,
+      "quote": "The 3rd term is 20, and the sum from the first to the 3rd term is 35",
+      "text": "The 3rd term is 20, and the sum from the first to the 3rd term is 35",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:challenge-4",
+      "type": "exercise",
+      "lo": "eb11c2-2:objective-4",
+      "source_page": 67,
+      "quote": "If S_n is the sum of the first n terms of the geometric sequence",
+      "text": "If $S_n$ is the sum of the first n terms of the geometric sequence such that $S_8 = 255,\\ S_6 = 63$ and $a_8 - a_7 = 64$, find $a_{10}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-2:objective-3",
+      "source_page": 67,
+      "quote": "How does changing the common ratio r from a value greater than 1",
+      "text": "How does changing the common ratio r from a value greater than 1 to a value between 0 and 1 fundamentally alter the real-world behavior modeled by a geometric sequence?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c2-2:objective-1",
+      "label": "General term from first term, ratio",
+      "description": "Calculate the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio or from listed terms, and find the common ratio and missing terms.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c2-2:definition-1",
+        "eb11c2-2:rule-1",
+        "eb11c2-2:worked-example-1",
+        "eb11c2-2:worked-example-2",
+        "eb11c2-2:exercise-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:objective-2",
+      "label": "Terms given; b² = ac",
+      "description": "Determine the general term of a geometric sequence from two given terms, and use b² = ac for three numbers in a geometric sequence, including with an arithmetic sequence.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c2-2:rule-4",
+        "eb11c2-2:explanation-1",
+        "eb11c2-2:example-1",
+        "eb11c2-2:example-2",
+        "eb11c2-2:exercise-4"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:objective-3",
+      "label": "Sum of n terms",
+      "description": "Calculate the sum S_n of a geometric sequence of n terms using the formula for S_n.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c2-2:printed-objective-3",
+        "eb11c2-2:rule-5",
+        "eb11c2-2:warm-up-9",
+        "eb11c2-2:exercise-9"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-2:objective-4",
+      "label": "First term, ratio from sums",
+      "description": "Determine the first term and common ratio of a geometric sequence from conditions on a term and sums of some of its terms.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c2-2:printed-objective-4",
+        "eb11c2-2:worked-example-3",
+        "eb11c2-2:example-3",
+        "eb11c2-2:exercise-14"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (4)",
+    "2026-10-21: 7 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 4 cropped"
+  ]
+}

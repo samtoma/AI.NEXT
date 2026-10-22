@@ -1,0 +1,97 @@
+{
+ "stage": "G2R",
+ "workflow": "g2-recommend",
+ "prompts_version": "g2rec-v1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "part": 1,
+ "parts": 1,
+ "batch": 8,
+ "verify_batch": 8,
+ "model": "sonnet",
+ "effort": "high",
+ "items_sha256": "6c84d39999918ef2bcdd5b0644fe13c540f36ee851fd722850ff85ce4ba9ef4b",
+ "keys": [
+  "eb11c4-2:WE1",
+  "eb11c4-2:WE2",
+  "eb11c4-2:WE3",
+  "eb11c4-2:WE4"
+ ],
+ "agents": {
+  "recommend": 1,
+  "verify": 0
+ },
+ "embedded": {
+  "source": "runbook/g2-recommend.workflow.js",
+  "source_sha256": "5c0a9ef82f1f0643ac9935f6a60e6623730012cf2bd415344941c4a6a5e1b361",
+  "args_sha256": "65285c67002fc0621c3f0d18383b486294ea11a35e2c88eea212515b98288eea",
+  "generated_sha256": "35cf4b5f8a5d3ed9fc524902f984d52553f9ad3f5c1c0ff0aeeeebd1529a7857",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "key": "eb11c4-2:WE1",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE1",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "Stem omits the Warm Up data for (a). Book gives y=-4 but the line's description is not shown, so it cannot be verified or answered. Page image needed.",
+    "own_value": "cannot derive",
+    "defect": "Stem lacks the line data for part (a)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE2",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE2",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "Stem omits the Warm Up data for (b). Book gives x=-3 but the line's description is not shown, so it cannot be verified or answered. Page image needed.",
+    "own_value": "cannot derive",
+    "defect": "Stem lacks the line data for part (b)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE3",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE3",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "Stem omits the two points for (c). Working says the x-coordinates are equal, giving x=-3, but the points are not shown. Page image needed.",
+    "own_value": "cannot derive",
+    "defect": "Stem lacks the two points for part (c)."
+   },
+   "ver": null
+  },
+  {
+   "key": "eb11c4-2:WE4",
+   "state": "held",
+   "rec": {
+    "key": "eb11c4-2:WE4",
+    "verdict": "hold",
+    "class": "needs the page image",
+    "confidence": "high",
+    "note": "Stem omits the two points for (d). Working says the y-coordinates are equal, giving y=3, but the points are not shown. Page image needed.",
+    "own_value": "cannot derive",
+    "defect": "Stem lacks the two points for part (d)."
+   },
+   "ver": null
+  }
+ ],
+ "tally": {
+  "hold": 4
+ },
+ "problems": [],
+ "meter": {
+  "stage": "G2R",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage G2R --run <runId>"
+ }
+}

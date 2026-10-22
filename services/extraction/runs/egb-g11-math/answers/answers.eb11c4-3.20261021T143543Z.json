@@ -1,0 +1,2728 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "e8282da5372504f3d59780472e42b2524cde25ab34684ad77b0ed2f8f140e544",
+  "generated_sha256": "dc220ee8a3f2b8936d8cd27aa997ddfaec977f1e499a26149e8df261cbd2f366",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c4-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-3:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Each signal is a circle (x−a)²+(y−b)²=r²; solving the circle equations together gives the exact points where the signals meet.",
+      "solution": [
+       "Each tower is the center (a, b) and its distance is the radius r, so its signal boundary is $(x-a)^2+(y-b)^2=r^2$.",
+       "Two circles overlap when $r-r'<d<r+r'$, where d is the distance between the centers.",
+       "To find where two boundaries meet, solve their equations simultaneously. Subtracting gives the line through the intersection points.",
+       "Substitute that line into one circle to get the exact points. A third circle picks out the one true location.",
+       "So circle equations model the boundaries and the simultaneous solution gives the intersection points."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:rule-20",
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-1",
+      "kind": "value",
+      "answer": "(x-5)^2+(y-3)^2=13",
+      "solution": [
+       "The center lies on x+y=8, so set the center as $(a, 8-a)$.",
+       "Equal radii to A and B: $(a-2)^2+(3-a)^2=(a-8)^2+(7-a)^2$.",
+       "Simplify: $2a^2-10a+13=2a^2-30a+113$, so $a=5$.",
+       "The center is (5, 3) and $r^2=(5-2)^2+(3-5)^2=13$.",
+       "The equation is $(x-5)^2+(y-3)^2=13$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2",
+       "eb11c4-3:rule-5",
+       "eb11c4-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-3",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=13",
+      "solution": [
+       "The center is (2, 3).",
+       "The radius is the distance to (4, 6): $r=\\sqrt{(2-4)^2+(3-6)^2}=\\sqrt{13}$.",
+       "The equation is $(x-2)^2+(y-3)^2=13$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-5",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-4",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=17",
+      "solution": [
+       "The center is the midpoint of AB: $(\\frac{1+3}{2},\\frac{3-5}{2})=(2,-1)$.",
+       "The radius is the distance to A: $\\sqrt{(2-1)^2+(-1-3)^2}=\\sqrt{17}$.",
+       "The equation is $(x-2)^2+(y+1)^2=17$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-5",
+      "kind": "value",
+      "answer": "x^2+y^2-5x-y+4=0",
+      "solution": [
+       "Three points are known, so use $x^2+y^2+lx+my+n=0$.",
+       "(1,1): $l+m+n+2=0$.",
+       "(2,−1): $2l-m+n+5=0$.",
+       "(3,2): $3l+2m+n+13=0$.",
+       "Solving gives $l=-5$, $m=-1$, $n=4$.",
+       "The equation is $x^2+y^2-5x-y+4=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-3",
+      "kind": "value",
+      "answer": "(x+3)^2+(y-1)^2=58",
+      "solution": [
+       "The center is (−3, 1).",
+       "$r^2=(4+3)^2+(-2-1)^2=49+9=58$.",
+       "The equation is $(x+3)^2+(y-1)^2=58$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-5",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-4",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-1)^2=10",
+      "solution": [
+       "The center is the midpoint: $(\\frac{3+5}{2},\\frac{4-2}{2})=(4,1)$.",
+       "$r^2=(4-3)^2+(1-4)^2=1+9=10$.",
+       "The equation is $(x-4)^2+(y-1)^2=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-5",
+      "kind": "value",
+      "answer": "x^2+y^2-3x-7y+6=0",
+      "solution": [
+       "Use $x^2+y^2+lx+my+n=0$.",
+       "(0,1): $m+n+1=0$.",
+       "(−1,2): $-l+2m+n+5=0$.",
+       "(3,1): $3l+m+n+10=0$.",
+       "Solving gives $l=-3$, $m=-7$, $n=6$.",
+       "The equation is $x^2+y^2-3x-7y+6=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:activity-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:exercise-3",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+3)^2=25",
+      "solution": [
+       "The center is (1, −3).",
+       "$r^2=(-3-1)^2+(0+3)^2=16+9=25$.",
+       "The equation is $(x-1)^2+(y+3)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-5",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-4",
+      "kind": "value",
+      "answer": "(x+4)^2+(y-1)^2=58",
+      "solution": [
+       "The center is (−4, 1).",
+       "$r^2=(3+4)^2+(-2-1)^2=49+9=58$.",
+       "The equation is $(x+4)^2+(y-1)^2=58$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-5",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-5",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=5",
+      "solution": [
+       "The center is (2, −1).",
+       "$r^2=(0-2)^2+(0+1)^2=5$.",
+       "The equation is $(x-2)^2+(y+1)^2=5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-5",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-6",
+      "kind": "value",
+      "answer": "x^2+y^2=25",
+      "solution": [
+       "The center is the origin, so use $x^2+y^2=r^2$.",
+       "$r^2=4^2+(-3)^2=25$.",
+       "The equation is $x^2+y^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-7",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-3)^2=25",
+      "solution": [
+       "The center is the midpoint: $(\\frac{4-2}{2},\\frac{7-1}{2})=(1,3)$.",
+       "$r^2=(4-1)^2+(7-3)^2=9+16=25$.",
+       "The equation is $(x-1)^2+(y-3)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-8",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=25",
+      "solution": [
+       "The center is the midpoint: $(\\frac{4-6}{2},\\frac{-2-2}{2})=(-1,-2)$.",
+       "$r^2=(4+1)^2+(-2+2)^2=25$.",
+       "The equation is $(x+1)^2+(y+2)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-9",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-1)^2=2",
+      "solution": [
+       "The center is the midpoint: $(\\frac{-3-1}{2},\\frac{0+2}{2})=(-2,1)$.",
+       "$r^2=(-3+2)^2+(0-1)^2=2$.",
+       "The equation is $(x+2)^2+(y-1)^2=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-10",
+      "kind": "value",
+      "answer": "x^2+(y-2)^2=25",
+      "solution": [
+       "The center is the midpoint: $(\\frac{-3+3}{2},\\frac{6-2}{2})=(0,2)$.",
+       "$r^2=(-3-0)^2+(6-2)^2=9+16=25$.",
+       "The equation is $x^2+(y-2)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-6",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-11",
+      "kind": "value",
+      "answer": "x^2+y^2-2x-4y=0",
+      "solution": [
+       "Use $x^2+y^2+lx+my+n=0$.",
+       "(0,0): $n=0$.",
+       "(−1,1): $2-l+m=0$.",
+       "(2,4): $20+2l+4m=0$.",
+       "Solving gives $l=-2$, $m=-4$.",
+       "The equation is $x^2+y^2-2x-4y=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-12",
+      "kind": "value",
+      "answer": "x^2+y^2-6y-16=0",
+      "solution": [
+       "Use $x^2+y^2+lx+my+n=0$.",
+       "(−4,6): $52-4l+6m+n=0$.",
+       "(0,8): $64+8m+n=0$.",
+       "(3,−1): $10+3l-m+n=0$.",
+       "Solving gives $l=0$, $m=-6$, $n=-16$.",
+       "The equation is $x^2+y^2-6y-16=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-13",
+      "kind": "value",
+      "answer": "x^2+y^2-2x+8y-8=0",
+      "solution": [
+       "Use $x^2+y^2+lx+my+n=0$.",
+       "(1,1): $l+m+n+2=0$.",
+       "(5,−1): $5l-m+n+26=0$.",
+       "(−3,−7): $-3l-7m+n+58=0$.",
+       "Solving gives $l=-2$, $m=8$, $n=-8$.",
+       "The equation is $x^2+y^2-2x+8y-8=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-6",
+      "kind": "value",
+      "answer": "(x-4)^2+(y+2)^2=4",
+      "solution": [
+       "The circle touches the x-axis, so the radius is the distance from the center (4, −2) to the x-axis.",
+       "$r=2$.",
+       "The equation is $(x-4)^2+(y+2)^2=4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8",
+       "eb11c4-3:caution-1",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-7",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-1)^2=1 and (x+5)^2+(y-5)^2=25",
+      "solution": [
+       "(−2, 1) is in the second quadrant, so the center is (−r, r).",
+       "The distance to (−2, 1) is r: $(-2+r)^2+(1-r)^2=r^2$.",
+       "Simplify: $r^2-6r+5=0$, so $r=1$ or $5$.",
+       "The equations are $(x+1)^2+(y-1)^2=1$ and $(x+5)^2+(y-5)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-2",
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-8",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+1)^2=25",
+      "solution": [
+       "The center is on y = −x, so set it as (a, −a).",
+       "(5,2): $(5-a)^2+(2+a)^2=r^2$.",
+       "(−2,3): $(-2-a)^2+(3+a)^2=r^2$.",
+       "Solving gives $a=1$, $r^2=25$.",
+       "The equation is $(x-1)^2+(y+1)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-6",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-3)^2=4",
+      "solution": [
+       "The circle touches the y-axis, so the radius is the distance from (−2, 3) to the y-axis.",
+       "$r=2$.",
+       "The equation is $(x+2)^2+(y-3)^2=4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8",
+       "eb11c4-3:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-7",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-1)^2=1 and (x-5)^2+(y-5)^2=25",
+      "solution": [
+       "(1, 2) is in the first quadrant, so the center is (r, r).",
+       "$(1-r)^2+(2-r)^2=r^2$.",
+       "Simplify: $r^2-6r+5=0$, so $r=1$ or $5$.",
+       "The equations are $(x-1)^2+(y-1)^2=1$ and $(x-5)^2+(y-5)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-2",
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-8",
+      "kind": "value",
+      "answer": "(x+5/2)^2+(y-5/2)^2=25/2",
+      "solution": [
+       "The center is on y = x + 5, so set it as (a, a+5).",
+       "Origin: $a^2+(a+5)^2=r^2$.",
+       "(1,2): $(1-a)^2+(a+3)^2=r^2$.",
+       "Equate: $2a^2+10a+25=2a^2+4a+10$, so $a=-\\frac52$.",
+       "The center is (−5/2, 5/2) and $r^2=\\frac{25}{4}+\\frac{25}{4}=\\frac{25}{2}$.",
+       "The equation is $(x+\\frac52)^2+(y-\\frac52)^2=\\frac{25}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:activity-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:exercise-14",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-4)^2=16",
+      "solution": [
+       "The circle touches the x-axis, so $r$ = the y-coordinate distance = 4.",
+       "The equation is $(x+1)^2+(y-4)^2=16$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-15",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+4)^2=16",
+      "solution": [
+       "The circle touches the x-axis, so $r=4$.",
+       "The equation is $(x-3)^2+(y+4)^2=16$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-16",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+4)^2=16",
+      "solution": [
+       "The circle touches the x-axis, so $r=4$.",
+       "The equation is $(x-5)^2+(y+4)^2=16$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-17",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-6)^2=1",
+      "solution": [
+       "The circle touches the y-axis, so $r=1$ (distance of x = −1 from the y-axis).",
+       "The equation is $(x+1)^2+(y-6)^2=1$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-18",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+5)^2=4",
+      "solution": [
+       "The circle touches the y-axis, so $r=2$.",
+       "The equation is $(x-2)^2+(y+5)^2=4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-19",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+4)^2=9",
+      "solution": [
+       "The circle touches the y-axis, so $r=3$.",
+       "The equation is $(x+3)^2+(y+4)^2=9$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-20",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+      "solution": [
+       "(−1, −2) is in the third quadrant, so the center is (−r, −r).",
+       "$(-1+r)^2+(-2+r)^2=r^2$, so $r^2-6r+5=0$ and $r=1$ or $5$.",
+       "The equations are $(x+1)^2+(y+1)^2=1$ and $(x+5)^2+(y+5)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-2",
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-21",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25",
+      "solution": [
+       "(−2, −1) is in the third quadrant, so the center is (−r, −r).",
+       "$(-2+r)^2+(-1+r)^2=r^2$, so $r^2-6r+5=0$ and $r=1$ or $5$.",
+       "The equations are $(x+1)^2+(y+1)^2=1$ and $(x+5)^2+(y+5)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-2",
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-22",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+5)^2=25 and (x-13)^2+(y+13)^2=169",
+      "solution": [
+       "(8, −1) is in the fourth quadrant, so the center is (r, −r).",
+       "$(8-r)^2+(-1+r)^2=r^2$, so $r^2-18r+65=0$ and $r=5$ or $13$.",
+       "The equations are $(x-5)^2+(y+5)^2=25$ and $(x-13)^2+(y+13)^2=169$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-2",
+       "eb11c4-3:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-23",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=2",
+      "solution": [
+       "Set the center as (a, a+1).",
+       "$(3-a)^2+(3-a)^2=(1-a)^2+(3-a)^2$ gives $(3-a)^2=(1-a)^2$, so $a=2$.",
+       "The center is (2, 3) and $r^2=1+1=2$.",
+       "The equation is $(x-2)^2+(y-3)^2=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-24",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-2)^2=26",
+      "solution": [
+       "Set the center as (a, 2a−6).",
+       "$(3-a)^2+(13-2a)^2=(-1-a)^2+(9-2a)^2$.",
+       "Simplify: $-58a+178=-34a+82$, so $a=4$.",
+       "The center is (4, 2) and $r^2=1+25=26$.",
+       "The equation is $(x-4)^2+(y-2)^2=26$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-3",
+      "kind": "value",
+      "answer": "(x+1)^2+y^2=5; center (-1, 0); radius √5",
+      "solution": [
+       "The center is on the x-axis: (a, 0).",
+       "$(-2-a)^2+4=(1-a)^2+1$, so $6a=-6$ and $a=-1$.",
+       "$r^2=(1+1)^2... $ use P2: $(1+1)^2+1^2=5$, so $r=\\sqrt5$.",
+       "The equation is $(x+1)^2+y^2=5$, center (−1, 0), radius $\\sqrt5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-2",
+       "eb11c4-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-9",
+      "kind": "value",
+      "answer": "k<-1 or k>3",
+      "solution": [
+       "Complete the square: $(x-k)^2+(y+k)^2=2k^2-4k-6$.",
+       "It is a circle when $2k^2-4k-6>0$.",
+       "Solving gives $k<-1$ or $k>3$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9",
+       "eb11c4-3:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-9",
+      "kind": "value",
+      "answer": "k<-√6 or k>√6",
+      "solution": [
+       "Complete the square: $(x+k)^2-k^2+(y-2k)^2-4k^2+4k^2+6=0$.",
+       "So $(x+k)^2+(y-2k)^2=k^2-6$.",
+       "It is a circle when $k^2-6>0$.",
+       "So $k<-\\sqrt6$ or $k>\\sqrt6$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-25",
+      "kind": "value",
+      "answer": "k<5/4",
+      "solution": [
+       "Complete the square: $(x+1)^2+(y-\\frac12)^2=\\frac54-k$.",
+       "It is a circle when $\\frac54-k>0$.",
+       "So $k<\\frac54$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-26",
+      "kind": "value",
+      "answer": "k<-1/5 or k>3",
+      "solution": [
+       "Complete the square: $(x+3k)^2+(y-k)^2=10k^2-28k-6$.",
+       "It is a circle when $5k^2-14k-3>0$, i.e. $(5k+1)(k-3)>0$.",
+       "So $k<-\\frac15$ or $k>3$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-27",
+      "kind": "value",
+      "answer": "-1<k<4",
+      "solution": [
+       "Complete the square: $(x+k)^2+(y-(k+3))^2=k^2+(k+3)^2-4k^2-1=-2k^2+6k+8$.",
+       "It is a circle when $-2k^2+6k+8>0$, i.e. $k^2-3k-4<0$.",
+       "So $(k-4)(k+1)<0$ and $-1<k<4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-4",
+      "kind": "value",
+      "answer": "0<k<4",
+      "solution": [
+       "Complete the square: $(x+3)^2-9+(y-k)^2-k^2+2k^2-4k+9=0$.",
+       "So $(x+3)^2+(y-k)^2=-k^2+4k$.",
+       "It is a circle when $-k^2+4k>0$, i.e. $k(k-4)<0$.",
+       "So $0<k<4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-9"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-10",
+      "kind": "value",
+      "answer": "(1,-1), (-1,3)",
+      "solution": [
+       "Substitute $y=-2x+1$ into the circle: $5x^2-5=0$.",
+       "$x=\\pm1$.",
+       "$x=1$ gives $y=-1$; $x=-1$ gives $y=3$.",
+       "The points are (1, −1) and (−1, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-3",
+       "eb11c4-3:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-11",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+       "$y=x+3$; substitute: $2x^2+6x+7=0$.",
+       "$D=36-56=-20<0$.",
+       "So there are 0 points of intersection."
+      ],
+      "grounded_in": [
+       "eb11c4-3:example-4",
+       "eb11c4-3:rule-12",
+       "eb11c4-3:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-10",
+      "kind": "value",
+      "answer": "(0,2), (2,0)",
+      "solution": [
+       "$y=2-x$; substitute: $x^2+(2-x)^2=4$.",
+       "$2x^2-4x=0$, so $x=0$ or $2$.",
+       "$x=0$ gives $y=2$; $x=2$ gives $y=0$.",
+       "The points are (0, 2) and (2, 0)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-10",
+       "eb11c4-3:rule-11",
+       "eb11c4-3:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-11",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "Substitute $y=2x-5$: $x^2+(2x-5)^2=10$.",
+       "$5x^2-20x+15=0$, i.e. $x^2-4x+3=0$.",
+       "$D=16-12=4>0$.",
+       "So there are 2 points of intersection."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-12",
+       "eb11c4-3:method-2",
+       "eb11c4-3:example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:activity-3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:warm-up-12",
+      "kind": "value",
+      "answer": "-5<k<5",
+      "solution": [
+       "Substitute $y=2x-k$: $5x^2-4kx+k^2-5=0$.",
+       "$D=16k^2-20(k^2-5)=-4k^2+100>0$.",
+       "So $-5<k<5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-3",
+       "eb11c4-3:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-13",
+      "kind": "value",
+      "answer": "√5",
+      "solution": [
+       "Tangent means $r=d$.",
+       "The center is (0,0), so $d=\\frac{|-5|}{\\sqrt{2^2+1^2}}=\\sqrt5$.",
+       "So $r=\\sqrt5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-13",
+       "eb11c4-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-12",
+      "kind": "value",
+      "answer": "m = √3 or m = -√3",
+      "solution": [
+       "Substitute $y=mx+4$: $(1+m^2)x^2+8mx+12=0$.",
+       "Tangent means $D=0$: $64m^2-48(1+m^2)=0$.",
+       "$16m^2=48$, so $m^2=3$.",
+       "$m=\\pm\\sqrt3$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-2",
+       "eb11c4-3:rule-12"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-13",
+      "kind": "value",
+      "answer": "0<r<√10",
+      "solution": [
+       "No intersection means $r<d$.",
+       "$d=\\frac{|-10|}{\\sqrt{1+9}}=\\sqrt{10}$.",
+       "With $r>0$: $0<r<\\sqrt{10}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:activity-4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:exercise-30",
+      "kind": "value",
+      "answer": "m = 4 or m = -4",
+      "solution": [
+       "Substitute $y=x+m$: $2x^2+2mx+m^2-8=0$.",
+       "Tangent means $D=0$: $4m^2-8(m^2-8)=-4m^2+64=0$.",
+       "$m^2=16$, so $m=\\pm4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-2",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-31",
+      "kind": "value",
+      "answer": "n<-10 or n>10",
+      "solution": [
+       "Substitute $y=3x+n$: $10x^2+6nx+n^2-10=0$.",
+       "No intersection means $D<0$: $36n^2-40(n^2-10)=-4n^2+400<0$.",
+       "$n^2>100$, so $n<-10$ or $n>10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-32",
+      "kind": "value",
+      "answer": "-5≤m≤5",
+      "solution": [
+       "Substitute $y=2x+m$: $5x^2+4mx+m^2-5=0$.",
+       "Having points of intersection (touching or crossing) means $D\\ge0$: $16m^2-20(m^2-5)=-4m^2+100\\ge0$.",
+       "So $-5\\le m\\le5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-33",
+      "kind": "value",
+      "answer": "√2",
+      "solution": [
+       "Tangent means $r=d$.",
+       "$d=\\frac{|2|}{\\sqrt{1+1}}=\\sqrt2$.",
+       "So $r=\\sqrt2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-13",
+       "eb11c4-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-34",
+      "kind": "value",
+      "answer": "r>√17",
+      "solution": [
+       "Two distinct points means $r>d$.",
+       "$d=\\frac{17}{\\sqrt{16+1}}=\\sqrt{17}$.",
+       "So $r>\\sqrt{17}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-5",
+      "kind": "value",
+      "answer": "0<r<2",
+      "solution": [
+       "No intersection means $r<d$.",
+       "$d=\\frac{|-10|}{\\sqrt{9+16}}=2$.",
+       "With $r>0$: $0<r<2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-14",
+      "kind": "value",
+      "answer": "√14",
+      "solution": [
+       "$d=\\frac{|-1|}{\\sqrt2}=\\frac1{\\sqrt2}$.",
+       "$l^2=4-\\frac12=\\frac72$, so $l=\\frac{\\sqrt{14}}2$.",
+       "Chord length $=2l=\\sqrt{14}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-4",
+       "eb11c4-3:rule-15"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-15",
+      "kind": "value",
+      "answer": "k = 2 or k = -2",
+      "solution": [
+       "Chord is 2, so $l=1$; $r^2=3$.",
+       "$d^2=r^2-l^2=3-1=2$.",
+       "$d=\\frac{|k|}{\\sqrt2}$, so $\\frac{k^2}{2}=2$ and $k^2=4$.",
+       "$k=\\pm2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-15",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-14",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+       "Center (2, −1), $r=3$.",
+       "$d=\\frac{|2-2-5|}{\\sqrt5}=\\sqrt5$.",
+       "$l^2=9-5=4$, so $l=2$.",
+       "Chord $=2l=4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-4",
+       "eb11c4-3:rule-15"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-15",
+      "kind": "value",
+      "answer": "k = √31 or k = -√31",
+      "solution": [
+       "$r^2=16$; chord $\\sqrt2$, so $l=\\frac{\\sqrt2}2$ and $l^2=\\frac12$.",
+       "$d^2=16-\\frac12=\\frac{31}2$.",
+       "$d=\\frac{|k|}{\\sqrt2}$, so $\\frac{k^2}2=\\frac{31}2$ and $k^2=31$.",
+       "$k=\\pm\\sqrt{31}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-15",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:activity-5",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:exercise-35",
+      "kind": "value",
+      "answer": "2√5",
+      "solution": [
+       "$d=\\frac{|-5|}{\\sqrt5}=\\sqrt5$.",
+       "$l^2=10-5=5$, so $l=\\sqrt5$.",
+       "Chord $=2\\sqrt5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-4",
+       "eb11c4-3:rule-15"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-36",
+      "kind": "value",
+      "answer": "3√2",
+      "solution": [
+       "Center (2, 1), $r^2=5$; line $x+y-4=0$.",
+       "$d=\\frac{|2+1-4|}{\\sqrt2}=\\frac1{\\sqrt2}$.",
+       "$l^2=5-\\frac12=\\frac92$, so $l=\\frac{3\\sqrt2}2$.",
+       "Chord $=2l=3\\sqrt2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-4",
+       "eb11c4-3:rule-15"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-37",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "Line $x-y-2=0$: $d=\\frac2{\\sqrt2}=\\sqrt2$.",
+       "$l^2=3-2=1$, so $l=1$.",
+       "Chord $=2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-4",
+       "eb11c4-3:rule-15"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-38",
+      "kind": "value",
+      "answer": "k = 2 or k = -2",
+      "solution": [
+       "Chord $4\\sqrt2$, so $l=2\\sqrt2$ and $l^2=8$.",
+       "$d^2=10-8=2$.",
+       "$d=\\frac{|k|}{\\sqrt2}$, so $k^2=4$.",
+       "$k=\\pm2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-15",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-39",
+      "kind": "value",
+      "answer": "k = 0 or k = -2",
+      "solution": [
+       "Center (1, 0), $r^2=5$; chord $3\\sqrt2$, so $l^2=\\frac92$.",
+       "$d^2=5-\\frac92=\\frac12$.",
+       "Line $x-y+k=0$: $d=\\frac{|1+k|}{\\sqrt2}$, so $(1+k)^2=1$.",
+       "$1+k=\\pm1$, so $k=0$ or $-2$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-15",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-6",
+      "kind": "value",
+      "answer": "k = 7 or k = -1",
+      "solution": [
+       "Complete the square: $(x+2)^2+(y-1)^2=12$, center (−2, 1).",
+       "Chord 4, so $l=2$; $d^2=12-4=8$.",
+       "Line $x-y+k=0$: $d=\\frac{|-2-1+k|}{\\sqrt2}$, so $(k-3)^2=16$.",
+       "$k-3=\\pm4$, so $k=7$ or $-1$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-15",
+       "eb11c4-3:caution-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-17",
+      "kind": "value",
+      "answer": "5x+3y=34",
+      "solution": [
+       "Use $ax+by=r^2$ at (5, 3).",
+       "$5x+3y=34$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16",
+       "eb11c4-3:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-18",
+      "kind": "value",
+      "answer": "-3x+y=10 and x+3y=10",
+      "solution": [
+       "Let the point of tangency be (a, b); the tangent is $ax+by=10$.",
+       "It passes through (−2, 4): $-2a+4b=10$, so $a=2b-5$.",
+       "On the circle: $a^2+b^2=10$, so $(2b-5)^2+b^2=10$, giving $b=1$ or $3$.",
+       "$b=1$ gives $a=-3$; $b=3$ gives $a=1$.",
+       "The tangents are $-3x+y=10$ and $x+3y=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is a partner discussion activity, not a question with a single answer.",
+      "solution": [
+       "The activity only asks students to work together and discuss.",
+       "No data is given to compute an answer."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c4-3:exercise-41",
+      "kind": "value",
+      "answer": "3x-y=10",
+      "solution": [
+       "Use $ax+by=r^2$ at (3, −1): $3x-y=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-42",
+      "kind": "value",
+      "answer": "-5x-2y=29",
+      "solution": [
+       "Use $ax+by=r^2$ at (−5, −2): $-5x-2y=29$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-43",
+      "kind": "value",
+      "answer": "-2x+y=5",
+      "solution": [
+       "Use $ax+by=r^2$ at (−2, 1): $-2x+y=5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-44",
+      "kind": "value",
+      "answer": "-2x+y=5 and x+2y=5",
+      "solution": [
+       "Let the point of tangency be (a, b); the tangent is $ax+by=5$.",
+       "Through (−1, 3): $-a+3b=5$, so $a=3b-5$.",
+       "$(3b-5)^2+b^2=5$ gives $b=1$ or $2$.",
+       "$b=1$ gives $a=-2$; $b=2$ gives $a=1$.",
+       "The tangents are $-2x+y=5$ and $x+2y=5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-45",
+      "kind": "value",
+      "answer": "y=1 and 4x-3y=5",
+      "solution": [
+       "Let the point of tangency be (a, b); the tangent is $ax+by=1$.",
+       "Through (2, 1): $2a+b=1$, so $b=1-2a$.",
+       "$a^2+(1-2a)^2=1$ gives $5a^2-4a=0$, so $a=0$ or $\\frac45$.",
+       "$a=0$ gives $b=1$ (tangent $y=1$); $a=\\frac45$ gives $b=-\\frac35$ (tangent $4x-3y=5$)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-46",
+      "kind": "value",
+      "answer": "2x+y=10 and -x+2y=10",
+      "solution": [
+       "Let the point of tangency be (a, b); the tangent is $ax+by=20$.",
+       "Through (2, 6): $2a+6b=20$, so $a=10-3b$.",
+       "$(10-3b)^2+b^2=20$ gives $b=2$ or $4$.",
+       "$b=2$ gives $a=4$; $b=4$ gives $a=-2$.",
+       "Tangents: $4x+2y=20$ i.e. $2x+y=10$, and $-2x+4y=20$ i.e. $-x+2y=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-18",
+      "kind": "value",
+      "answer": "They intersect at 2 points",
+      "solution": [
+       "Centers (0,0) and (4,0), so $d=4$.",
+       "Radii: $r=3$, $r'=2$.",
+       "$3-2<4<3+2$, so $r-r'<d<r+r'$.",
+       "The circles intersect at 2 points."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-20",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-19",
+      "kind": "value",
+      "answer": "(x-3)^2+(y-1)^2=45",
+      "solution": [
+       "The given circle has center (1, −3) and radius $\\sqrt5$.",
+       "$d=\\sqrt{(3-1)^2+(1+3)^2}=2\\sqrt5$.",
+       "Internal touching: $r-r'=d$, so $r-\\sqrt5=2\\sqrt5$ and $r=3\\sqrt5$.",
+       "The equation is $(x-3)^2+(y-1)^2=45$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-21",
+       "eb11c4-3:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-20",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+9)^2=16",
+      "solution": [
+       "The given circle has center (−6, −5) and radius 1.",
+       "$d=\\sqrt{(-3+6)^2+(-9+5)^2}=5$.",
+       "External touching: $r+r'=d$, so $r+1=5$ and $r=4$.",
+       "The equation is $(x+3)^2+(y+9)^2=16$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-19",
+       "eb11c4-3:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-49",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+9)^2=144",
+      "solution": [
+       "The given circle has center (3, 0) and radius 3.",
+       "$d=9$.",
+       "Internal touching: $r-r'=d$, so $r-3=9$ and $r=12$.",
+       "The equation is $(x-3)^2+(y+9)^2=144$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-21",
+       "eb11c4-3:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-8",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=9",
+      "solution": [
+       "Complete the square: $(x-2)^2+(y-2)^2=4$, center (2, 2), radius 2.",
+       "$d=\\sqrt{(-1-2)^2+(-2-2)^2}=5$.",
+       "External touching: $r+2=5$, so $r=3$.",
+       "The equation is $(x+1)^2+(y+2)^2=9$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-19"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-20",
+      "kind": "value",
+      "answer": "y=(1/2)x-5/4",
+      "solution": [
+       "Subtract (ii) from (i): $-2x+4y=-5$.",
+       "$y=\\frac12x-\\frac54$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-7",
+       "eb11c4-3:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-21",
+      "kind": "value",
+      "answer": "(-3,-1), (-1,3)",
+      "solution": [
+       "Subtract: $-2x+y=5$, so $y=2x+5$.",
+       "Substitute into $x^2+y^2=10$: $5x^2+20x+15=0$, so $x=-3$ or $-1$.",
+       "$x=-3$ gives $y=-1$; $x=-1$ gives $y=3$.",
+       "The points are (−3, −1) and (−1, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-8",
+       "eb11c4-3:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-22",
+      "kind": "value",
+      "answer": "x+y=1",
+      "solution": [
+       "Subtract the second equation from the first: $-3x-3y=-3$.",
+       "$x+y=1$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:explanation-7",
+       "eb11c4-3:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-23",
+      "kind": "value",
+      "answer": "(0,2), (8/5,-6/5)",
+      "solution": [
+       "Expand the second: $x^2+y^2-8x-4y+4=0$. With $x^2+y^2=4$: $8-8x-4y=0$, so $y=2-2x$.",
+       "Substitute into $x^2+y^2=4$: $5x^2-8x=0$, so $x=0$ or $\\frac85$.",
+       "$x=0$ gives $y=2$; $x=\\frac85$ gives $y=-\\frac65$.",
+       "The points are (0, 2) and (8/5, −6/5)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-52",
+      "kind": "value",
+      "answer": "(1,2), (2,1)",
+      "solution": [
+       "Expand the second: $x^2+y^2-4x-4y+7=0$. With $x^2+y^2=5$: $12-4x-4y=0$, so $y=3-x$.",
+       "Substitute into $x^2+y^2=5$: $2x^2-6x+4=0$, so $x=1$ or $2$.",
+       "$x=1$ gives $y=2$; $x=2$ gives $y=1$.",
+       "The points are (1, 2) and (2, 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-9",
+      "kind": "value",
+      "answer": "(3,-4), (-4,3)",
+      "solution": [
+       "Expand Beta: $x^2+y^2+10x+10y+50=65$. With $x^2+y^2=25$: $10x+10y=-10$, so $y=-1-x$.",
+       "Substitute into $x^2+y^2=25$: $x^2+x-12=0$, so $x=3$ or $-4$.",
+       "$x=3$ gives $y=-4$; $x=-4$ gives $y=3$.",
+       "The points are (3, −4) and (−4, 3)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-22",
+      "kind": "value",
+      "answer": "x^2+y^2+2x+6y-15=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-6y+5)+(x^2+y^2-5)=0$.",
+       "Through (3, 0): $8k+4=0$, so $k=-\\frac12$.",
+       "Substitute: $\\frac12x^2+\\frac12y^2+x+3y-\\frac{15}2=0$.",
+       "Make the coefficients of $x^2$ and $y^2$ equal 1: $x^2+y^2+2x+6y-15=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-24",
+      "kind": "value",
+      "answer": "x^2+y^2+4x+2y=0",
+      "solution": [
+       "Write $k(x^2+y^2-4x-2y-8)+(x^2+y^2-4)=0$.",
+       "Through the origin: $-8k-4=0$, so $k=-\\frac12$.",
+       "Substitute: $\\frac12x^2+\\frac12y^2+2x+y=0$.",
+       "Multiply by 2: $x^2+y^2+4x+2y=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-54",
+      "kind": "value",
+      "answer": "x^2+y^2+24x+32y-5=0",
+      "solution": [
+       "Write $k(x^2+y^2-6x-8y)+(x^2+y^2-1)=0$.",
+       "Through (−3, 2): $15k+12=0$, so $k=-\\frac45$.",
+       "Substitute: $\\frac15x^2+\\frac15y^2+\\frac{24}5x+\\frac{32}5y-1=0$.",
+       "Multiply by 5: $x^2+y^2+24x+32y-5=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-55",
+      "kind": "value",
+      "answer": "x^2+y^2-10x-6y+24=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-2y)+(x^2+y^2-6x-4y+12)=0$.",
+       "Through (4, 0): $8k+4=0$, so $k=-\\frac12$.",
+       "Substitute: $\\frac12x^2+\\frac12y^2-5x-3y+12=0$.",
+       "Multiply by 2: $x^2+y^2-10x-6y+24=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-10",
+      "kind": "value",
+      "answer": "3x^2+3y^2+6x-10y-16=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-6y+6)+(x^2+y^2+4x-2y-11)=0$.",
+       "Through (2, 2): $-2k+1=0$, so $k=\\frac12$.",
+       "Substitute: $\\frac32x^2+\\frac32y^2+3x-5y-8=0$.",
+       "Multiply by 2: $3x^2+3y^2+6x-10y-16=0$; dividing by 3 gives coefficient 1: $x^2+y^2+2x-\\frac{10}3y-\\frac{16}3=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-3:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Each tower's signal range is a circle $(x-a)^2+(y-b)^2=r^2$ (a boundary/inside region). Overlap regions are where the circle inequalities hold together; exact positions come from solving the circle equations simultaneously (subtract them to get the line through the intersection points, then substitute) — this is trilateration."
+     },
+     {
+      "ref": "eb11c4-3:challenge-1",
+      "kind": "value",
+      "answer": "(x-5)^2+(y-3)^2=13"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-1",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+2)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-2",
+      "kind": "explanation",
+      "answer": "$(x-3)^2+(y+1)^2=4$: a circle with center (3, -1) and radius 2."
+     },
+     {
+      "ref": "eb11c4-3:try-2",
+      "kind": "explanation",
+      "answer": "$(x-2)^2+(y-3)^2=9$: a circle with center (2, 3) and radius 3."
+     },
+     {
+      "ref": "eb11c4-3:warm-up-3",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=13"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-4",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=17"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-5",
+      "kind": "value",
+      "answer": "x^2+y^2-5x-y+4=0"
+     },
+     {
+      "ref": "eb11c4-3:try-3",
+      "kind": "value",
+      "answer": "(x+3)^2+(y-1)^2=58"
+     },
+     {
+      "ref": "eb11c4-3:try-4",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-1)^2=10"
+     },
+     {
+      "ref": "eb11c4-3:try-5",
+      "kind": "value",
+      "answer": "x^2+y^2-3x-7y+6=0"
+     },
+     {
+      "ref": "eb11c4-3:activity-1",
+      "kind": "explanation",
+      "answer": "Discussion of question 3: x^2+y^2-3x-7y+6=0 (circle through (0,1), (-1,2), (3,1), found by substituting the points into x^2+y^2+lx+my+n=0)."
+     },
+     {
+      "ref": "eb11c4-3:exercise-3",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+3)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-4",
+      "kind": "value",
+      "answer": "(x+4)^2+(y-1)^2=58"
+     },
+     {
+      "ref": "eb11c4-3:exercise-5",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+1)^2=5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-6",
+      "kind": "value",
+      "answer": "x^2+y^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-7",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-3)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-8",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-9",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-1)^2=2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-10",
+      "kind": "value",
+      "answer": "x^2+(y-2)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-11",
+      "kind": "value",
+      "answer": "x^2+y^2-2x-4y=0"
+     },
+     {
+      "ref": "eb11c4-3:exercise-12",
+      "kind": "value",
+      "answer": "x^2+y^2-6y-16=0"
+     },
+     {
+      "ref": "eb11c4-3:exercise-13",
+      "kind": "value",
+      "answer": "x^2+y^2-2x+8y-8=0"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-6",
+      "kind": "value",
+      "answer": "(x-4)^2+(y+2)^2=4"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-7",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-1)^2=1 and (x+5)^2+(y-5)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-8",
+      "kind": "value",
+      "answer": "(x-1)^2+(y+1)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:try-6",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-3)^2=4"
+     },
+     {
+      "ref": "eb11c4-3:try-7",
+      "kind": "value",
+      "answer": "(x-1)^2+(y-1)^2=1 and (x-5)^2+(y-5)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:try-8",
+      "kind": "value",
+      "answer": "(x+5/2)^2+(y-5/2)^2=25/2"
+     },
+     {
+      "ref": "eb11c4-3:activity-2",
+      "kind": "explanation",
+      "answer": "Discussion of question 3: (x+5/2)^2+(y-5/2)^2=25/2 (center (a, a+5) equidistant from the origin and (1,2) gives a = -5/2)."
+     },
+     {
+      "ref": "eb11c4-3:exercise-14",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-4)^2=16"
+     },
+     {
+      "ref": "eb11c4-3:exercise-15",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+4)^2=16"
+     },
+     {
+      "ref": "eb11c4-3:exercise-16",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+4)^2=16"
+     },
+     {
+      "ref": "eb11c4-3:exercise-17",
+      "kind": "value",
+      "answer": "(x+1)^2+(y-6)^2=1"
+     },
+     {
+      "ref": "eb11c4-3:exercise-18",
+      "kind": "value",
+      "answer": "(x-2)^2+(y+5)^2=4"
+     },
+     {
+      "ref": "eb11c4-3:exercise-19",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+4)^2=9"
+     },
+     {
+      "ref": "eb11c4-3:exercise-20",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-21",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+1)^2=1 and (x+5)^2+(y+5)^2=25"
+     },
+     {
+      "ref": "eb11c4-3:exercise-22",
+      "kind": "value",
+      "answer": "(x-5)^2+(y+5)^2=25 and (x-13)^2+(y+13)^2=169"
+     },
+     {
+      "ref": "eb11c4-3:exercise-23",
+      "kind": "value",
+      "answer": "(x-2)^2+(y-3)^2=2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-24",
+      "kind": "value",
+      "answer": "(x-4)^2+(y-2)^2=26"
+     },
+     {
+      "ref": "eb11c4-3:challenge-3",
+      "kind": "value",
+      "answer": "Equation (x+1)^2+y^2=5; center (-1, 0); radius √5"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-9",
+      "kind": "value",
+      "answer": "k < -1 or k > 3"
+     },
+     {
+      "ref": "eb11c4-3:try-9",
+      "kind": "value",
+      "answer": "k < -√6 or k > √6"
+     },
+     {
+      "ref": "eb11c4-3:exercise-25",
+      "kind": "value",
+      "answer": "k < 5/4"
+     },
+     {
+      "ref": "eb11c4-3:exercise-26",
+      "kind": "value",
+      "answer": "k < -1/5 or k > 3"
+     },
+     {
+      "ref": "eb11c4-3:exercise-27",
+      "kind": "value",
+      "answer": "-1 < k < 4"
+     },
+     {
+      "ref": "eb11c4-3:challenge-4",
+      "kind": "value",
+      "answer": "0 < k < 4"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-10",
+      "kind": "value",
+      "answer": "(1, -1), (-1, 3)"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-11",
+      "kind": "value",
+      "answer": "0"
+     },
+     {
+      "ref": "eb11c4-3:try-10",
+      "kind": "value",
+      "answer": "(0, 2), (2, 0)"
+     },
+     {
+      "ref": "eb11c4-3:try-11",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-3:activity-3",
+      "kind": "explanation",
+      "answer": "Discussion of question 2: the line y=2x-5 meets x^2+y^2=10 at 2 points (D>0; x=1 and x=3)."
+     },
+     {
+      "ref": "eb11c4-3:warm-up-12",
+      "kind": "value",
+      "answer": "-5 < k < 5"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-13",
+      "kind": "value",
+      "answer": "r = √5"
+     },
+     {
+      "ref": "eb11c4-3:try-12",
+      "kind": "value",
+      "answer": "m = √3 or m = -√3"
+     },
+     {
+      "ref": "eb11c4-3:try-13",
+      "kind": "value",
+      "answer": "0 < r < √10"
+     },
+     {
+      "ref": "eb11c4-3:activity-4",
+      "kind": "explanation",
+      "answer": "Discussion of question 2: x^2+y^2=r^2 and x-3y-10=0 have no common points when r < d = √10, i.e. 0 < r < √10."
+     },
+     {
+      "ref": "eb11c4-3:exercise-30",
+      "kind": "value",
+      "answer": "m = 4 or m = -4"
+     },
+     {
+      "ref": "eb11c4-3:exercise-31",
+      "kind": "value",
+      "answer": "n < -10 or n > 10"
+     },
+     {
+      "ref": "eb11c4-3:exercise-32",
+      "kind": "value",
+      "answer": "-5 ≤ m ≤ 5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-33",
+      "kind": "value",
+      "answer": "r = √2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-34",
+      "kind": "value",
+      "answer": "r > √17"
+     },
+     {
+      "ref": "eb11c4-3:challenge-5",
+      "kind": "value",
+      "answer": "0 < r < 2"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-14",
+      "kind": "value",
+      "answer": "√14"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-15",
+      "kind": "value",
+      "answer": "k = 2 or k = -2"
+     },
+     {
+      "ref": "eb11c4-3:try-14",
+      "kind": "value",
+      "answer": "4"
+     },
+     {
+      "ref": "eb11c4-3:try-15",
+      "kind": "value",
+      "answer": "k = √31 or k = -√31"
+     },
+     {
+      "ref": "eb11c4-3:activity-5",
+      "kind": "explanation",
+      "answer": "Discussion of question 2: use r^2 = d^2 + l^2 with d the distance from the center to the line; for x^2+y^2=16, y=x+k, chord √2 gives k = ±√31."
+     },
+     {
+      "ref": "eb11c4-3:exercise-35",
+      "kind": "value",
+      "answer": "2√5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-36",
+      "kind": "value",
+      "answer": "3√2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-37",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-38",
+      "kind": "value",
+      "answer": "k = 2 or k = -2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-39",
+      "kind": "value",
+      "answer": "k = 0 or k = -2"
+     },
+     {
+      "ref": "eb11c4-3:challenge-6",
+      "kind": "value",
+      "answer": "k = 7 or k = -1"
+     },
+     {
+      "ref": "eb11c4-3:try-17",
+      "kind": "value",
+      "answer": "5x+3y=34"
+     },
+     {
+      "ref": "eb11c4-3:try-18",
+      "kind": "value",
+      "answer": "-3x+y=10 and x+3y=10"
+     },
+     {
+      "ref": "eb11c4-3:work-with-a-partner-1",
+      "kind": "explanation",
+      "answer": "Discussion of question 2: tangents from (-2,4) to x^2+y^2=10 touch at (-3,1) and (1,3), giving -3x+y=10 and x+3y=10."
+     },
+     {
+      "ref": "eb11c4-3:exercise-41",
+      "kind": "value",
+      "answer": "3x-y=10"
+     },
+     {
+      "ref": "eb11c4-3:exercise-42",
+      "kind": "value",
+      "answer": "5x+2y=-29"
+     },
+     {
+      "ref": "eb11c4-3:exercise-43",
+      "kind": "value",
+      "answer": "-2x+y=5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-44",
+      "kind": "value",
+      "answer": "-2x+y=5 and x+2y=5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-45",
+      "kind": "value",
+      "answer": "y=1 and 4x-3y=5"
+     },
+     {
+      "ref": "eb11c4-3:exercise-46",
+      "kind": "value",
+      "answer": "4x+2y=20 (2x+y=10) and -2x+4y=20 (-x+2y=10)"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-18",
+      "kind": "value",
+      "answer": "The circles intersect at 2 points"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-19",
+      "kind": "value",
+      "answer": "(x-3)^2+(y-1)^2=45"
+     },
+     {
+      "ref": "eb11c4-3:try-20",
+      "kind": "value",
+      "answer": "(x+3)^2+(y+9)^2=16"
+     },
+     {
+      "ref": "eb11c4-3:exercise-49",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+9)^2=144"
+     },
+     {
+      "ref": "eb11c4-3:challenge-8",
+      "kind": "value",
+      "answer": "(x+1)^2+(y+2)^2=9"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-20",
+      "kind": "value",
+      "answer": "y = x/2 - 5/4 (i.e. 2x-4y=5)"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-21",
+      "kind": "value",
+      "answer": "(-3, -1), (-1, 3)"
+     },
+     {
+      "ref": "eb11c4-3:try-22",
+      "kind": "value",
+      "answer": "x+y=1"
+     },
+     {
+      "ref": "eb11c4-3:try-23",
+      "kind": "value",
+      "answer": "(0, 2), (8/5, -6/5)"
+     },
+     {
+      "ref": "eb11c4-3:exercise-52",
+      "kind": "value",
+      "answer": "(1, 2), (2, 1)"
+     },
+     {
+      "ref": "eb11c4-3:challenge-9",
+      "kind": "value",
+      "answer": "(3, -4), (-4, 3)"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-22",
+      "kind": "value",
+      "answer": "x^2+y^2+2x+6y-15=0"
+     },
+     {
+      "ref": "eb11c4-3:try-24",
+      "kind": "value",
+      "answer": "x^2+y^2+4x+2y=0"
+     },
+     {
+      "ref": "eb11c4-3:exercise-54",
+      "kind": "value",
+      "answer": "x^2+y^2+24x+32y-5=0"
+     },
+     {
+      "ref": "eb11c4-3:exercise-55",
+      "kind": "value",
+      "answer": "x^2+y^2-10x-6y+24=0"
+     },
+     {
+      "ref": "eb11c4-3:challenge-10",
+      "kind": "value",
+      "answer": "3x^2+3y^2+6x-10y-16=0 (i.e. x^2+y^2+2x-(10/3)y-16/3=0)"
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c4-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c4-3:warm-up-1",
+      "kind": "value",
+      "answer": "(x-3)^2+(y+2)^2=25",
+      "solution": [
+       "Center and radius are known, so use $(x-a)^2+(y-b)^2=r^2$.",
+       "Center $(3,-2)$ gives $a=3$, $b=-2$; radius $r=5$.",
+       "The equation is $(x-3)^2+(y+2)^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:method-1",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-1:a",
+      "kind": "value",
+      "answer": "(x+3)^2+(y-1)^2=4",
+      "solution": [
+       "Use $(x-a)^2+(y-b)^2=r^2$ with center $(-3,1)$, $r=2$.",
+       "$(x+3)^2+(y-1)^2=2^2$.",
+       "The equation is $(x+3)^2+(y-1)^2=4$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-1:b",
+      "kind": "value",
+      "answer": "x^2+y^2=16",
+      "solution": [
+       "The center is the origin, so use $x^2+y^2=r^2$.",
+       "$r=4$, so $r^2=16$.",
+       "The equation is $x^2+y^2=16$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-2",
+      "kind": "value",
+      "answer": "A circle with center (2, 3) and radius 3",
+      "solution": [
+       "Complete the square for $x$ and $y$: $(x-2)^2-4+(y-3)^2-9+4=0$.",
+       "Simplify: $(x-2)^2+(y-3)^2=9=3^2$.",
+       "Since $9>0$, it is a circle with center $(2,3)$ and radius 3."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:a",
+      "kind": "value",
+      "answer": "(x-3)^2+(y-4)^2=36",
+      "solution": [
+       "Use $(x-a)^2+(y-b)^2=r^2$ with center $(3,4)$, $r=6$.",
+       "$r^2=36$.",
+       "The equation is $(x-3)^2+(y-4)^2=36$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:b",
+      "kind": "value",
+      "answer": "(x+2)^2+(y-6)^2=12",
+      "solution": [
+       "Use $(x-a)^2+(y-b)^2=r^2$ with center $(-2,6)$.",
+       "$r^2=(2\\sqrt3)^2=12$.",
+       "The equation is $(x+2)^2+(y-6)^2=12$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1",
+       "eb11c4-3:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:c",
+      "kind": "value",
+      "answer": "x^2+y^2=25",
+      "solution": [
+       "The center is the origin, so use $x^2+y^2=r^2$.",
+       "$r^2=25$.",
+       "The equation is $x^2+y^2=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:a",
+      "kind": "value",
+      "answer": "A circle with center (2, -4) and radius 4",
+      "solution": [
+       "Complete the square: $(x-2)^2-4+(y+4)^2-16+4=0$.",
+       "Simplify: $(x-2)^2+(y+4)^2=16$.",
+       "Since $16>0$, it is a circle with center $(2,-4)$ and radius 4."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:b",
+      "kind": "value",
+      "answer": "A circle with center (2, 0) and radius 2",
+      "solution": [
+       "Complete the square: $(x-2)^2-4+y^2=0$.",
+       "Simplify: $(x-2)^2+y^2=4$.",
+       "Since $4>0$, it is a circle with center $(2,0)$ and radius 2."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:c",
+      "kind": "value",
+      "answer": "A circle with center (-1, 2) and radius 5",
+      "solution": [
+       "Complete the square: $(x+1)^2-1+(y-2)^2-4-20=0$.",
+       "Simplify: $(x+1)^2+(y-2)^2=25$.",
+       "Since $25>0$, it is a circle with center $(-1,2)$ and radius 5."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:d",
+      "kind": "value",
+      "answer": "A circle with center (-2, 3) and radius sqrt(13)",
+      "solution": [
+       "Complete the square: $(x+2)^2-4+(y-3)^2-9=0$.",
+       "Simplify: $(x+2)^2+(y-3)^2=13$.",
+       "Since $13>0$, it is a circle with center $(-2,3)$ and radius $\\sqrt{13}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-3",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-2",
+      "kind": "value",
+      "answer": "x^2+y^2-6x-6y+8=0, center (3, 3), radius sqrt(10)",
+      "solution": [
+       "Three points are known, so use $x^2+y^2+lx+my+n=0$.",
+       "Through $(0,2)$: $2m+n+4=0$ ...(i).",
+       "Through $(2,0)$: $2l+n+4=0$ ...(ii).",
+       "Through $(4,6)$: $4l+6m+n+52=0$ ...(iii).",
+       "From (i) and (ii), $l=m$. Then (iii) gives $10l+n+52=0$; with $n=-2l-4$ this gives $8l+48=0$, so $l=-6$, $m=-6$, $n=8$.",
+       "The equation is $x^2+y^2-6x-6y+8=0$.",
+       "Complete the square: $(x-3)^2+(y-3)^2=10$.",
+       "The center is $(3,3)$ and the radius is $\\sqrt{10}$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-7",
+       "eb11c4-3:example-1",
+       "eb11c4-3:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:a",
+      "kind": "value",
+      "answer": "(3, -1)",
+      "solution": [
+       "Substitute $y=3x-10$ into $x^2+y^2=10$.",
+       "$x^2+(3x-10)^2=10$ gives $10x^2-60x+90=0$, so $x^2-6x+9=0$.",
+       "$(x-3)^2=0$, so $x=3$.",
+       "From $y=3x-10$, $y=-1$.",
+       "The point of intersection is $(3,-1)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-10",
+       "eb11c4-3:rule-11",
+       "eb11c4-3:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:b",
+      "kind": "value",
+      "answer": "(-2, 1)",
+      "solution": [
+       "From $2x-y+5=0$, $y=2x+5$.",
+       "Substitute into $x^2+y^2=5$: $5x^2+20x+20=0$, so $x^2+4x+4=0$.",
+       "$x=-2$.",
+       "Then $y=2(-2)+5=1$.",
+       "The point of intersection is $(-2,1)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-10",
+       "eb11c4-3:rule-11",
+       "eb11c4-3:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:c",
+      "kind": "value",
+      "answer": "(-2, 1), (4, -1)",
+      "solution": [
+       "From $x+3y-1=0$, $x=1-3y$.",
+       "Substitute into $(x-1)^2+y^2=10$: $9y^2+y^2=10$, so $y^2=1$, $y=\\pm1$.",
+       "When $y=1$, $x=-2$; when $y=-1$, $x=4$.",
+       "The points are $(-2,1)$ and $(4,-1)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-10",
+       "eb11c4-3:rule-11",
+       "eb11c4-3:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:a",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+       "Substitute $y=x+2$ into $x^2+y^2=5$: $2x^2+4x-1=0$.",
+       "$D=4^2-4\\cdot2\\cdot(-1)=24>0$.",
+       "So there are 2 points of intersection."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-12",
+       "eb11c4-3:method-2",
+       "eb11c4-3:example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:b",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+       "From $2x+3y-6=0$, $y=\\frac{6-2x}{3}$.",
+       "Substitute into $x^2+y^2=2$ and multiply by 9: $13x^2-24x+18=0$.",
+       "$D=(-24)^2-4\\cdot13\\cdot18=576-936=-360<0$.",
+       "So there are 0 points of intersection."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-12",
+       "eb11c4-3:method-2",
+       "eb11c4-3:example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:c",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "From $x+2y+2=0$, $x=-2y-2$.",
+       "Substitute into $(x+1)^2+(y-2)^2=5$: $(-2y-1)^2+(y-2)^2=5$.",
+       "This simplifies to $5y^2=0$, i.e. $5y^2+0y+0=0$, so $D=0$.",
+       "$D=0$ means the line is tangent: 1 point of intersection."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-12",
+       "eb11c4-3:method-2",
+       "eb11c4-3:example-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-16",
+      "kind": "value",
+      "answer": "4x+3y=25",
+      "solution": [
+       "The point $(4,3)$ is on the circle, so use $ax+by=r^2$.",
+       "$a=4$, $b=3$, $r^2=25$.",
+       "The tangent is $4x+3y=25$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16",
+       "eb11c4-3:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:warm-up-17",
+      "kind": "value",
+      "answer": "2x+y=5 and -x+2y=5",
+      "solution": [
+       "Let the point of tangency be $(a,b)$; the tangent is $ax+by=5$.",
+       "It passes through $P(1,3)$: $a+3b=5$ ...(i).",
+       "$(a,b)$ is on the circle: $a^2+b^2=5$ ...(ii).",
+       "From (i), $a=-3b+5$. Substitute into (ii): $(-3b+5)^2+b^2=5$, so $b=1,2$.",
+       "When $b=1$, $a=2$; when $b=2$, $a=-1$.",
+       "The tangents are $2x+y=5$ and $-x+2y=5$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16",
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-16",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line 'Find the equations of the following tangents'; the tasks are the separate questions 1 and 2 (try-17 and try-18).",
+      "solution": [
+       "The record holds no circle or point to work with.",
+       "Answer try-17 and try-18 instead."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-40",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line 'Find the equations of the following tangents'; the tasks are the separate questions 1 to 6 (exercise-41 to exercise-46).",
+      "solution": [
+       "The record holds no circle or point to work with.",
+       "Answer exercise-41 to exercise-46 instead."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-7",
+      "kind": "value",
+      "answer": "Tangents: 2x+y=10 touching at (4, 2); -x+2y=10 touching at (-2, 4)",
+      "solution": [
+       "P(2,6) is not on the circle, so let the point of tangency be $(a,b)$; the tangent is $ax+by=20$.",
+       "It passes through $(2,6)$: $2a+6b=20$, so $a=10-3b$ ...(i).",
+       "$(a,b)$ is on the circle: $a^2+b^2=20$ ...(ii).",
+       "Substitute: $(10-3b)^2+b^2=20$ gives $b^2-6b+8=0$, so $b=2,4$.",
+       "When $b=2$, $a=4$; when $b=4$, $a=-2$.",
+       "Tangent at $(4,2)$: $4x+2y=20$, i.e. $2x+y=10$.",
+       "Tangent at $(-2,4)$: $-2x+4y=20$, i.e. $-x+2y=10$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-16",
+       "eb11c4-3:rule-17",
+       "eb11c4-3:explanation-6"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-19:a",
+      "kind": "value",
+      "answer": "B",
+      "solution": [
+       "Centers: $(0,0)$ and $(3,4)$; $d=\\sqrt{3^2+4^2}=5$.",
+       "Radii: $r=3$ and $r'=2$.",
+       "$r+r'=5=d$, so the circles touch externally.",
+       "Answer: B."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-19",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-19:b",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+       "First circle: center $(1,0)$, $r=\\sqrt{52}=2\\sqrt{13}$.",
+       "Second: complete the square: $(x+1)^2+(y-3)^2=13$, center $(-1,3)$, $r'=\\sqrt{13}$.",
+       "$d=\\sqrt{(1+1)^2+(0-3)^2}=\\sqrt{13}$.",
+       "$r-r'=2\\sqrt{13}-\\sqrt{13}=\\sqrt{13}=d$, so the circles touch internally.",
+       "Answer: C."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-21",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-47",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are the separate questions 1 and 2.",
+      "solution": [
+       "The record holds no circles to work with.",
+       "Answer exercise-48 and exercise-49 instead."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-18"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:a",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+       "Centers $(0,0)$ and $(1,0)$; $d=1$.",
+       "Radii $r=2$, $r'=1$.",
+       "$r-r'=1=d$, so the circles touch internally.",
+       "Answer: C."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-21",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:b",
+      "kind": "value",
+      "answer": "C",
+      "solution": [
+       "Centers $(0,0)$ and $(-2,2)$; $d=\\sqrt{8}=2\\sqrt2$.",
+       "Radii $r=\\sqrt{18}=3\\sqrt2$, $r'=\\sqrt2$.",
+       "$r-r'=2\\sqrt2=d$, so the circles touch internally.",
+       "Answer: C."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-21",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:c",
+      "kind": "value",
+      "answer": "E",
+      "solution": [
+       "First circle: center $(-3,0)$, $r=4$.",
+       "Second: complete the square: $(x-1)^2+(y-4)^2=25$, center $(1,4)$, $r'=5$.",
+       "$d=\\sqrt{4^2+4^2}=4\\sqrt2\\approx5.66$.",
+       "$r'-r=1<d<9=r+r'$, so the circles intersect at 2 points.",
+       "Answer: E."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-20",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:d",
+      "kind": "value",
+      "answer": "D",
+      "solution": [
+       "First circle: center $(0,3)$, $r=\\sqrt{45}=3\\sqrt5$.",
+       "Second: complete the square: $(x+1)^2+(y-1)^2=5$, center $(-1,1)$, $r'=\\sqrt5$.",
+       "$d=\\sqrt{1+4}=\\sqrt5$.",
+       "$r-r'=2\\sqrt5>\\sqrt5=d$, so one circle is inside the other.",
+       "Answer: D."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-22",
+       "eb11c4-3:rule-9",
+       "eb11c4-3:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-21",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are try-22 and try-23.",
+      "solution": [
+       "The record holds no circles to work with.",
+       "Answer try-22 and try-23 instead."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-50",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction heading 'Solve the following problems'; the tasks are exercise-51 and exercise-52.",
+      "solution": [
+       "The record holds no circles to work with.",
+       "Answer exercise-51 and exercise-52 instead."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-51:a",
+      "kind": "value",
+      "answer": "12x-6y-7=0 (that is, y=2x-7/6)",
+      "solution": [
+       "Write the equations: $x^2+y^2-10=0$ ...(i) and $x^2+y^2-12x+6y-3=0$ ...(ii).",
+       "Subtract (ii) from (i): $12x-6y-7=0$.",
+       "The line is $12x-6y-7=0$, i.e. $y=2x-\\frac76$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-51:b",
+      "kind": "value",
+      "answer": "x=1/2",
+      "solution": [
+       "Expand: $(x-1)^2+y^2=4$ becomes $x^2+y^2-2x-3=0$ ...(ii); the first is $x^2+y^2-4=0$ ...(i).",
+       "Subtract (ii) from (i): $2x-1=0$.",
+       "The line is $x=\\frac12$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-52",
+      "kind": "value",
+      "answer": "(1, 2), (2, 1)",
+      "solution": [
+       "Expand: $(x-2)^2+(y-2)^2=1$ becomes $x^2+y^2-4x-4y+7=0$ ...(ii); the first is $x^2+y^2-5=0$ ...(i).",
+       "Subtract (ii) from (i): $4x+4y-12=0$, so $y=3-x$ ...(iii).",
+       "Substitute into (i): $x^2+(3-x)^2=5$, so $x^2-3x+2=0$, $x=1,2$.",
+       "From (iii): when $x=1$, $y=2$; when $x=2$, $y=1$.",
+       "The points are $(1,2)$ and $(2,1)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-22",
+      "kind": "value",
+      "answer": "x+y=1",
+      "solution": [
+       "Write $x^2+y^2-6=0$ ...(i) and $x^2+y^2+3x+3y-9=0$ ...(ii).",
+       "Subtract (ii) from (i): $-3x-3y+3=0$.",
+       "Divide by $-3$: $x+y=1$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-7"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-23",
+      "kind": "value",
+      "answer": "(0, 2), (8/5, -6/5)",
+      "solution": [
+       "Expand: $(x-4)^2+(y-2)^2=16$ becomes $x^2+y^2-8x-4y+4=0$ ...(ii); the first is $x^2+y^2-4=0$ ...(i).",
+       "Subtract (ii) from (i): $8x+4y-8=0$, so $y=2-2x$ ...(iii).",
+       "Substitute into (i): $5x^2-8x=0$, so $x=0$ or $x=\\frac85$.",
+       "From (iii): $x=0$ gives $y=2$; $x=\\frac85$ gives $y=-\\frac65$.",
+       "The points are $(0,2)$ and $(\\frac85,-\\frac65)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-9",
+      "kind": "value",
+      "answer": "(3, -4), (-4, 3)",
+      "solution": [
+       "Expand: $(x+5)^2+(y+5)^2=65$ becomes $x^2+y^2+10x+10y-15=0$ ...(ii); the first is $x^2+y^2-25=0$ ...(i).",
+       "Subtract (ii) from (i): $-10x-10y-10=0$, so $y=-x-1$ ...(iii).",
+       "Substitute into (i): $x^2+(x+1)^2=25$, so $x^2+x-12=0$, $x=3,-4$.",
+       "From (iii): $x=3$ gives $y=-4$; $x=-4$ gives $y=3$.",
+       "The points are $(3,-4)$ and $(-4,3)$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:method-4",
+       "eb11c4-3:explanation-8"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-53",
+      "kind": "value",
+      "answer": "x^2+y^2+10x+20y-39=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-4y+3)+(x^2+y^2-4)=0$ ...(i).",
+       "It passes through $(3,0)$: $k(9-6+3)+9-4=0$, so $6k+5=0$, $k=-\\frac56$.",
+       "Substitute into (i) and multiply by 6: $-5(x^2+y^2-2x-4y+3)+6(x^2+y^2-4)=0$.",
+       "Simplify: $x^2+y^2+10x+20y-39=0$ (coefficients of $x^2$ and $y^2$ are 1)."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:try-24",
+      "kind": "value",
+      "answer": "x^2+y^2+4x+2y=0",
+      "solution": [
+       "Write $k(x^2+y^2-4x-2y-8)+(x^2+y^2-4)=0$ ...(i).",
+       "It passes through $(0,0)$: $-8k-4=0$, so $k=-\\frac12$.",
+       "Substitute into (i) and multiply by 2: $-(x^2+y^2-4x-2y-8)+2(x^2+y^2-4)=0$.",
+       "Simplify: $x^2+y^2+4x+2y=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-54",
+      "kind": "value",
+      "answer": "x^2+y^2+24x+32y-5=0",
+      "solution": [
+       "Write $k(x^2+y^2-6x-8y)+(x^2+y^2-1)=0$ ...(i).",
+       "It passes through $(-3,2)$: $k(9+4+18-16)+(9+4-1)=0$, so $15k+12=0$, $k=-\\frac45$.",
+       "Substitute into (i) and multiply by 5: $-4(x^2+y^2-6x-8y)+5(x^2+y^2-1)=0$.",
+       "Simplify: $x^2+y^2+24x+32y-5=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:exercise-55",
+      "kind": "value",
+      "answer": "x^2+y^2-10x-6y+24=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-2y)+(x^2+y^2-6x-4y+12)=0$ ...(i).",
+       "It passes through $(4,0)$: $k(16-8)+(16-24+12)=0$, so $8k+4=0$, $k=-\\frac12$.",
+       "Substitute into (i) and multiply by 2: $-(x^2+y^2-2x-2y)+2(x^2+y^2-6x-4y+12)=0$.",
+       "Simplify: $x^2+y^2-10x-6y+24=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     },
+     {
+      "ref": "eb11c4-3:challenge-10",
+      "kind": "value",
+      "answer": "x^2+y^2+2x-(10/3)y-16/3=0",
+      "solution": [
+       "Write $k(x^2+y^2-2x-6y+6)+(x^2+y^2+4x-2y-11)=0$ ...(i).",
+       "It passes through $(2,2)$: $k(8-4-12+6)+(8+8-4-11)=0$, so $-2k+1=0$, $k=\\frac12$.",
+       "Substitute into (i) and multiply by 2: $(x^2+y^2-2x-6y+6)+2(x^2+y^2+4x-2y-11)=0$.",
+       "This gives $3x^2+3y^2+6x-10y-16=0$.",
+       "Divide by 3 so the coefficients of $x^2$ and $y^2$ equal 1: $x^2+y^2+2x-\\frac{10}{3}y-\\frac{16}{3}=0$."
+      ],
+      "grounded_in": [
+       "eb11c4-3:rule-23",
+       "eb11c4-3:caution-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c4-3:warm-up-1",
+      "kind": "value",
+      "answer": "$(x-3)^2+(y+2)^2=25$"
+     },
+     {
+      "ref": "eb11c4-3:try-1:a",
+      "kind": "value",
+      "answer": "$(x+3)^2+(y-1)^2=4$"
+     },
+     {
+      "ref": "eb11c4-3:try-1:b",
+      "kind": "value",
+      "answer": "$x^2+y^2=16$"
+     },
+     {
+      "ref": "eb11c4-3:try-2",
+      "kind": "explanation",
+      "answer": "A circle with center (2, 3) and radius 3, since $(x-2)^2+(y-3)^2=9$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:a",
+      "kind": "value",
+      "answer": "$(x-3)^2+(y-4)^2=36$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:b",
+      "kind": "value",
+      "answer": "$(x+2)^2+(y-6)^2=12$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-1:c",
+      "kind": "value",
+      "answer": "$x^2+y^2=25$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:a",
+      "kind": "explanation",
+      "answer": "A circle with center (2, -4) and radius 4, since $(x-2)^2+(y+4)^2=16$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:b",
+      "kind": "explanation",
+      "answer": "A circle with center (2, 0) and radius 2, since $(x-2)^2+y^2=4$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:c",
+      "kind": "explanation",
+      "answer": "A circle with center (-1, 2) and radius 5, since $(x+1)^2+(y-2)^2=25$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-2:d",
+      "kind": "explanation",
+      "answer": "A circle with center (-2, 3) and radius $\\sqrt{13}$, since $(x+2)^2+(y-3)^2=13$"
+     },
+     {
+      "ref": "eb11c4-3:challenge-2",
+      "kind": "value",
+      "answer": "$x^2+y^2-6x-6y+8=0$, i.e. $(x-3)^2+(y-3)^2=10$; center (3, 3), radius $\\sqrt{10}$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:a",
+      "kind": "value",
+      "answer": "(3, -1)"
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:b",
+      "kind": "value",
+      "answer": "(-2, 1)"
+     },
+     {
+      "ref": "eb11c4-3:exercise-28:c",
+      "kind": "value",
+      "answer": "(-2, 1), (4, -1)"
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:a",
+      "kind": "value",
+      "answer": "2"
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:b",
+      "kind": "value",
+      "answer": "0"
+     },
+     {
+      "ref": "eb11c4-3:exercise-29:c",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-16",
+      "kind": "value",
+      "answer": "$4x+3y=25$"
+     },
+     {
+      "ref": "eb11c4-3:warm-up-17",
+      "kind": "value",
+      "answer": "$2x+y=5$ and $-x+2y=5$"
+     },
+     {
+      "ref": "eb11c4-3:try-16",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line; the questions are try-17 and try-18."
+     },
+     {
+      "ref": "eb11c4-3:exercise-40",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-41 to exercise-46."
+     },
+     {
+      "ref": "eb11c4-3:challenge-7",
+      "kind": "value",
+      "answer": "Tangents: $2x+y=10$ and $-x+2y=10$; touching points (4, 2) and (-2, 4)"
+     },
+     {
+      "ref": "eb11c4-3:try-19:a",
+      "kind": "value",
+      "answer": "B"
+     },
+     {
+      "ref": "eb11c4-3:try-19:b",
+      "kind": "value",
+      "answer": "C"
+     },
+     {
+      "ref": "eb11c4-3:exercise-47",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-48 and exercise-49."
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:a",
+      "kind": "value",
+      "answer": "C"
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:b",
+      "kind": "value",
+      "answer": "C"
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:c",
+      "kind": "value",
+      "answer": "E"
+     },
+     {
+      "ref": "eb11c4-3:exercise-48:d",
+      "kind": "value",
+      "answer": "D"
+     },
+     {
+      "ref": "eb11c4-3:try-21",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line; the questions are try-22 and try-23."
+     },
+     {
+      "ref": "eb11c4-3:exercise-50",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction line; the questions are exercise-51 and exercise-52."
+     },
+     {
+      "ref": "eb11c4-3:exercise-51:a",
+      "kind": "value",
+      "answer": "$12x-6y-7=0$ (i.e. $y=2x-\\frac{7}{6}$)"
+     },
+     {
+      "ref": "eb11c4-3:exercise-51:b",
+      "kind": "value",
+      "answer": "$x=\\frac{1}{2}$"
+     },
+     {
+      "ref": "eb11c4-3:exercise-53",
+      "kind": "value",
+      "answer": "$x^2+y^2+10x+20y-39=0$"
+     }
+    ]
+   }
+  }
+ ]
+}

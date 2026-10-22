@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-4:single-ratio",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-4",
+ "parent_question_id": "q:eb11c1-4-4:bk-exercise-20",
+ "source_page": 30,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    1,
+    9
+   ],
+   "resample_while": "n == m"
+  },
+  {
+   "name": "r",
+   "let": "(m + n) / (m - n)"
+  },
+  {
+   "name": "ans",
+   "let": "str(numerator(r)) if denominator(r) == 1 else str(numerator(r)) + '/' + str(denominator(r))"
+  }
+ ],
+ "constraints": [
+  "gcd(m, n) == 1"
+ ],
+ "stem": "If $x:y={=m}:{=n}$, find the value of $\\frac{x+y}{x-y}$. Give the answer as a whole number or a fraction a/b in lowest terms.",
+ "answer": "ans",
+ "solution": [
+  "Let $x={=m}k$ and $y={=n}k$, with $k\\neq0$.",
+  "Numerator: $x+y={=m}k+{=n}k={=m+n}k$.",
+  "Denominator: $x-y={=m}k-{=n}k={=m-n}k$.",
+  "Value $=\\frac{{=m+n}k}{{=m-n}k}=\\frac{{=m+n}}{{=m-n}}$, which in lowest terms is ${=r}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: two-term ratio, first-degree expression, one substitution. Answer string is lowest-terms fraction or integer."
+}

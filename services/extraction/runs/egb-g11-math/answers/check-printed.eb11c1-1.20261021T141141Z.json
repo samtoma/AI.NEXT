@@ -1,0 +1,57 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "066fcb31c1d16203360db041684c104c6f7a1ec54ddfa2a3230c10d85ea641d2",
+  "generated_sha256": "26442a6600461e7f94e222bf71561933763eabe1d4fea1ac4b4e417873072c04",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-1:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-1:example-1",
+      "kind": "value",
+      "answer": "10"
+     },
+     {
+      "ref": "eb11c1-1:example-2",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c1-1:example-3",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c1-1:example-4",
+      "kind": "value",
+      "answer": "$10a^3b^2$"
+     },
+     {
+      "ref": "eb11c1-1:example-5",
+      "kind": "value",
+      "answer": "$60x^4y^2$"
+     },
+     {
+      "ref": "eb11c1-1:explanation-1",
+      "kind": "value",
+      "answer": "-20412"
+     },
+     {
+      "ref": "eb11c1-1:explanation-2",
+      "kind": "value",
+      "answer": "$81x^4 - 216x^3 + 216x^2 - 96x + 16$"
+     }
+    ]
+   }
+  }
+ ]
+}

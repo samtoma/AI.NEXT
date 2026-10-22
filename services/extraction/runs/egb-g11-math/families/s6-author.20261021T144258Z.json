@@ -1,0 +1,1020 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v6",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "0f08d16b25eb768c75bf3bec15523080b70f8d0def2f63a62919c13f4a448079",
+  "generated_sha256": "0d8ca93243cfff22c19d2dc60fd8e811cc0a3dab7826279acd83f1b521e091d4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:eb11c3-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-1-1:imagpart",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-1-1",
+     "parent_question_id": "q:eb11c3-1-1:bk-exercise-2-b",
+     "source_page": 108,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        -9,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ]
+      },
+      {
+       "require": "a != abs(b)",
+       "why": "keeps the four options distinct"
+      },
+      {
+       "name": "s",
+       "let": "'-' if b < 0 else '+'"
+      },
+      {
+       "name": "c",
+       "let": "abs(b)"
+      }
+     ],
+     "constraints": [],
+     "stem": "What is the imaginary part of the complex number $z = {=a} {=s} {=c}i$?",
+     "answer": "{=b}",
+     "solution": [
+      "A complex number is written $a + bi$, where $a$ and $b$ are real numbers.",
+      "Here the real part is ${=a}$.",
+      "The imaginary part is the real coefficient of $i$, written without the $i$.",
+      "Writing $z = {=a} + ({=b})i$, the imaginary part is ${=b}$."
+     ],
+     "choices": {
+      "correct": "${=b}$",
+      "distractors": [
+       {
+        "text": "${=b}i$",
+        "misconception_id": "mc:eb11c3-1-1:imaginary-part-includes-i"
+       },
+       {
+        "text": "${=a}$",
+        "misconception_id": "mc:eb11c3-1-1:parts-swapped"
+       },
+       {
+        "text": "${=-b}$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "distinct_by_choices": false,
+     "proposed_misconceptions": [
+      {
+       "id": "mc:eb11c3-1-1:parts-swapped",
+       "label": "Gives the real part as the imaginary part",
+       "description": "The student answers with a, the real part, when asked for the imaginary part of a + bi."
+      }
+     ],
+     "notes": "Basic: identify the imaginary part of a + bi with b of either sign. Distractors: bi form (catalogued), real part swapped, sign flipped. a != |b| keeps options distinct; |b| >= 2."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-1-3:divide-conj",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-1-3",
+     "parent_question_id": "q:eb11c3-1-3:bk-example-1",
+     "source_page": 111,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "A",
+       "let": "p * c + q * d"
+      },
+      {
+       "name": "B",
+       "let": "q * c - p * d"
+      },
+      {
+       "require": "B > 0",
+       "why": "imaginary part of numerator positive so it prints cleanly"
+      },
+      {
+       "name": "N",
+       "let": "c * c + d * d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Write $\\dfrac{ {=A} + {=B}i}{ {=c} - {=d}i}$ in the form $a + bi$.",
+     "answer": "",
+     "solution": [
+      "The conjugate of the denominator ${=c}-{=d}i$ is ${=c}+{=d}i$. Multiply numerator and denominator by it: $\\dfrac{({=A}+{=B}i)({=c}+{=d}i)}{({=c}-{=d}i)({=c}+{=d}i)}$.",
+      "Denominator: $({=c}-{=d}i)({=c}+{=d}i)={=c*c}-{=d*d}i^2={=c*c}+{=d*d}={=N}$.",
+      "Numerator: $({=A}+{=B}i)({=c}+{=d}i)={=A*c}+{=A*d}i+{=B*c}i+{=B*d}i^2=({=A*c}-{=B*d})+({=A*d}+{=B*c})i={=N*p}+{=N*q}i$.",
+      "Divide by ${=N}$: $\\dfrac{ {=N*p}+{=N*q}i}{ {=N}}={=p}+{=q}i$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=p} + {=q}*i",
+      "form": null,
+      "variables": [
+       "i"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Numerator built as (p+qi)(c-di) so the quotient is the whole-number complex p+qi; the conjugate of the divisor is c+di. Requires q*c-p*d>0 so the numerator prints as A + Bi."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-1:rearrange-formula",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-1",
+     "parent_question_id": "q:eb11c3-2-1:bk-exercise-1-h",
+     "source_page": 117,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "B",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3,
+        5,
+        6,
+        7
+       ]
+      },
+      {
+       "require": "(B*B + s*s*n) % (4*a) == 0",
+       "why": "C must be a whole number"
+      },
+      {
+       "name": "C",
+       "let": "(B*B + s*s*n) // (4*a)"
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "f",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "B1",
+       "let": "B + e"
+      },
+      {
+       "name": "C1",
+       "let": "C + f"
+      },
+      {
+       "name": "D",
+       "let": "B*B - 4*a*C"
+      }
+     ],
+     "stem": "Solve the quadratic equation in the set of complex numbers, giving the roots in terms of $i$ with any square root simplified: ${=a}x^2+{=B1}x+{=C1}={=e}x+{=f}$",
+     "solution": [
+      "Collect all terms on the left: ${=a}x^2+{=B}x+{=C}=0$, so $a={=a}$, $b={=B}$, $c={=C}$.",
+      "$b^2-4ac={=B*B}-{=4*a*C}={=D}$, which is negative.",
+      "$\\sqrt{{=D}}=\\sqrt{{=s*s*n}}\\,i={=s}i\\sqrt{{=n}}$.",
+      "$x=\\dfrac{-{=B}\\pm {=s}i\\sqrt{{=n}}}{{=2*a}}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[(-{=B} + {=s}*i*sqrt({=n}))/{=2*a}, (-{=B} - {=s}*i*sqrt({=n}))/{=2*a}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: rearrange to standard form, then formula with negative discriminant whose root needs simplifying (e.g. sqrt(-12)=2i sqrt3). Discriminant is -s^2 n with n squarefree, so every instance is complex non-real. Roots are not reduced further; any equivalent form is accepted by value marker."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-2:imag-range",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-2",
+     "parent_question_id": "q:eb11c3-2-2:bk-exercise-4-a",
+     "source_page": 120,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "lo",
+       "let": "-2*m - p"
+      },
+      {
+       "name": "hi",
+       "let": "2*m - p"
+      },
+      {
+       "name": "q",
+       "let": "m*m"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the range of values of the constant $k$ for which the quadratic equation $x^2-(k+{=p})x+{=q}=0$ has two distinct imaginary solutions. Give your answer as an interval for $k$.",
+     "answer": "",
+     "solution": [
+      "Two distinct imaginary solutions means $D<0$.",
+      "$D=(k+{=p})^2-4\\times1\\times{=q}=(k+{=p})^2-{=4*q}$.",
+      "$(k+{=p})^2<{=4*q}$, so $-{=2*m}<k+{=p}<{=2*m}$.",
+      "Subtract {=p} from each part: ${=lo}<k<{=hi}$."
+     ],
+     "marker": {
+      "kind": "interval",
+      "answer": "interval({=lo}, {=hi}, false, false)",
+      "form": null,
+      "variables": [
+       "k"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: D is a perfect-square-difference in (k+p); solving D<0 gives a bounded open interval. Bounds are integers; strict inequality since distinct imaginary needs D<0."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-3:sum-roots",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-3",
+     "parent_question_id": "q:eb11c3-2-3:bk-exercise-6-a",
+     "source_page": 123,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "require": "s != 0",
+       "why": "sum nonzero so b nonzero"
+      },
+      {
+       "name": "p",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "require": "p != 0",
+       "why": "c nonzero"
+      },
+      {
+       "name": "b",
+       "let": "-a * s"
+      },
+      {
+       "name": "c",
+       "let": "a * p"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $ {=quadratic(a, b, c)} = 0$. Find the value of $\\alpha + \\beta$.",
+     "answer": "s",
+     "solution": [
+      "For $ax^2 + bx + c = 0$, the sum of the solutions is $\\alpha + \\beta = -\\frac{b}{a}$.",
+      "Here $a = {=a}$ and $b = {=b}$.",
+      "$\\alpha + \\beta = -\\frac{{=b}}{{=a}} = {=s}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: sum of roots from coefficients. b is a multiple of a so the answer is a whole number; c is irrelevant to the sum (a distractor of sorts). Relies on quadratic(a,b,c) rendering the polynomial in x."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-2-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-4:sum-squares",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-4",
+     "parent_question_id": "q:eb11c3-2-4:bk-exercise-14-a",
+     "source_page": 126,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "m",
+       "let": "k * k"
+      }
+     ],
+     "stem": "Factorise the following expression over the set of complex numbers. $x^2+{=m}$",
+     "answer": "(x - {=k}*i)*(x + {=k}*i)",
+     "solution": [
+      "Solve $x^2+{=m}=0$: $x^2=-{=m}$, so $x=\\pm {=k}i$.",
+      "The leading coefficient is 1, so $x^2+{=m}=(x-\\alpha)(x-\\beta)$ with $\\alpha={=k}i$ and $\\beta=-{=k}i$.",
+      "Answer: $(x-{=k}i)(x+{=k}i)$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "(x - {=k}*i)*(x + {=k}*i)",
+      "form": "factorised",
+      "variables": [
+       "i",
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry-point: pure sum of squares, roots ±ki with k integer. Needs i as a variable in the marker."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-4:quartic-lead",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-4",
+     "parent_question_id": "q:eb11c3-2-4:bk-exercise-14-g",
+     "source_page": 126,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "p",
+       "choice": [
+        2,
+        3,
+        5,
+        6,
+        7
+       ]
+      },
+      {
+       "name": "q",
+       "choice": [
+        2,
+        3,
+        5,
+        6,
+        7
+       ],
+       "resample_while": "q <= p"
+      },
+      {
+       "name": "b",
+       "let": "a * (q - p)"
+      },
+      {
+       "name": "c",
+       "let": "a * p * q"
+      }
+     ],
+     "constraints": [
+      "q > p"
+     ],
+     "stem": "Factorise the following expression over the set of complex numbers. ${=a}x^4+{=b}x^2-{=c}$",
+     "answer": "{=a}*(x - sqrt({=p}))*(x + sqrt({=p}))*(x - i*sqrt({=q}))*(x + i*sqrt({=q}))",
+     "solution": [
+      "Take out the leading coefficient: ${=a}x^4+{=b}x^2-{=c}={=a}(x^4+{=q-p}x^2-{=p*q})={=a}(x^2-{=p})(x^2+{=q})$.",
+      "$x^2-{=p}=0$ gives $x=\\pm\\sqrt{{=p}}$, so $x^2-{=p}=(x-\\sqrt{{=p}})(x+\\sqrt{{=p}})$.",
+      "$x^2+{=q}=0$ gives $x=\\pm i\\sqrt{{=q}}$, so $x^2+{=q}=(x-i\\sqrt{{=q}})(x+i\\sqrt{{=q}})$.",
+      "Answer: ${=a}(x-\\sqrt{{=p}})(x+\\sqrt{{=p}})(x-i\\sqrt{{=q}})(x+i\\sqrt{{=q}})$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=a}*(x - sqrt({=p}))*(x + sqrt({=p}))*(x - i*sqrt({=q}))*(x + i*sqrt({=q}))",
+      "form": "factorised",
+      "variables": [
+       "i",
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Quartic in x² with a leading coefficient a that must be kept (mc:forgets-leading-coefficient) and non-square p, q so roots are surds. Constraint q>p keeps the x² coefficient positive."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-2-5",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-2-5:integer-roots",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-2-5",
+     "parent_question_id": "q:eb11c3-2-5:bk-try-10",
+     "source_page": 128,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "require": "p != 0 and q != 0 and p + q != 0",
+       "why": "keep every coefficient nonzero"
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "m",
+       "let": "p * q"
+      },
+      {
+       "name": "A",
+       "let": "('+ ' + str(-s)) if -s > 0 else ('- ' + str(s))"
+      },
+      {
+       "name": "B",
+       "let": "('+ ' + str(m)) if m > 0 else ('- ' + str(-m))"
+      }
+     ],
+     "constraints": [],
+     "stem": "Create one quadratic equation, with the coefficient of $x^2$ equal to 1, that has the two numbers ${=p}$ and ${=q}$ as solutions.",
+     "solution": [
+      "Sum of the solutions $={=p}+({=q})={=s}$.",
+      "Product of the solutions $=({=p})({=q})={=m}$.",
+      "The equation is $x^2-(\\text{sum})x+\\text{product}=0$, that is $x^2-({=s})x+({=m})=0$.",
+      "Equation: $x^2 {=A}x {=B}=0$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "x^2 {=A}*x {=B} = 0",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: form x^2 - (sum)x + product = 0 from two given integer roots. p,q nonzero, distinct, with nonzero sum so both middle and constant terms appear."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-3-2:two-remainders",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-3-2",
+     "parent_question_id": "q:eb11c3-3-2:bk-exercise-9",
+     "source_page": 135,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        -4,
+        4
+       ],
+       "resample_while": "a == 0"
+      },
+      {
+       "name": "b",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "r1",
+       "let": "a * p + b"
+      },
+      {
+       "name": "r2",
+       "let": "b - a * q"
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      }
+     ],
+     "constraints": [],
+     "stem": "If a polynomial $P(x)$ is divided by $x-{=p}$, the remainder is ${=r1}$, and when divided by $x+{=q}$, the remainder is ${=r2}$. Find the remainder when $P(x)$ is divided by $(x-{=p})(x+{=q})$.",
+     "solution": [
+      "Write $P(x) = (x-{=p})(x+{=q})Q(x) + ax + b$, since the divisor has degree 2 and the remainder has the form $ax+b$.",
+      "Put $x={=p}$: $P({=p}) = {=r1}$, so ${=p}a + b = {=r1}$.",
+      "Put $x=-{=q}$: $P(-{=q}) = {=r2}$, so $-{=q}a + b = {=r2}$.",
+      "Subtract the second equation from the first: ${=s}a = {=r1 - r2}$, so $a = {=a}$.",
+      "Then $b = {=r1} - {=p}\\times({=a}) = {=b}$.",
+      "The remainder is ${=linear(a, b)}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=a})*x + ({=b})",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: factored divisor with roots p and -q; remainder values are built from a chosen ax+b so a, b are always integers. a is nonzero so the remainder is genuinely linear; b may be 0."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-3-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The objective has no book questions. Every family needs a parent_question_id that is a real book question of this objective, and there is no canonical solution to model. Any parent id would be invented."
+    },
+    {
+     "tier": "standard",
+     "reason": "No book questions or canonical solutions exist for this objective. I can't name a real parent or follow the book's own method and notation."
+    },
+    {
+     "tier": "advanced",
+     "reason": "No book questions exist for this objective. I can't tell which twists the book uses for its harder exercises, and I can't name a real parent question."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-3-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-3-4:cubic-root-pm1",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-3-4",
+     "parent_question_id": "q:eb11c3-3-4:bk-exercise-15-b",
+     "source_page": 141,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "r1",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        -4,
+        4
+       ],
+       "resample_while": "r2 == 0 or r2 == r1"
+      },
+      {
+       "name": "r3",
+       "randint": [
+        -4,
+        4
+       ],
+       "resample_while": "r3 == 0 or r3 == r1 or r3 == r2"
+      },
+      {
+       "name": "A",
+       "let": "-(r1 + r2 + r3)"
+      },
+      {
+       "name": "B",
+       "let": "r1*r2 + r1*r3 + r2*r3"
+      },
+      {
+       "name": "C",
+       "let": "-(r1*r2*r3)"
+      },
+      {
+       "name": "b",
+       "let": "-(r2 + r3)"
+      },
+      {
+       "name": "c",
+       "let": "r2*r3"
+      },
+      {
+       "require": "A != 0 and B != 0 and b != 0",
+       "why": "keep every term of the cubic and quotient present"
+      },
+      {
+       "name": "t2",
+       "let": "(\"+ \" if A > 0 else \"- \") + (str(abs(A)) if abs(A) != 1 else \"\") + \"x^2\""
+      },
+      {
+       "name": "t1",
+       "let": "(\"+ \" if B > 0 else \"- \") + (str(abs(B)) if abs(B) != 1 else \"\") + \"x\""
+      },
+      {
+       "name": "t0",
+       "let": "(\"+ \" if C > 0 else \"- \") + str(abs(C))"
+      },
+      {
+       "name": "q1",
+       "let": "(\"+ \" if b > 0 else \"- \") + (str(abs(b)) if abs(b) != 1 else \"\") + \"x\""
+      },
+      {
+       "name": "q0",
+       "let": "(\"+ \" if c > 0 else \"- \") + str(abs(c))"
+      },
+      {
+       "name": "f1",
+       "let": "\"(x \" + (\"- \" if r1 > 0 else \"+ \") + str(abs(r1)) + \")\""
+      },
+      {
+       "name": "f2",
+       "let": "\"(x \" + (\"- \" if r2 > 0 else \"+ \") + str(abs(r2)) + \")\""
+      },
+      {
+       "name": "f3",
+       "let": "\"(x \" + (\"- \" if r3 > 0 else \"+ \") + str(abs(r3)) + \")\""
+      }
+     ],
+     "constraints": [],
+     "stem": "Factorise completely: $x^3 {=t2} {=t1} {=t0}$",
+     "answer": "f1 + f2 + f3",
+     "solution": [
+      "Let $P(x)=x^3 {=t2} {=t1} {=t0}$. The constant term is {=C}; try its divisors in $P(a)$.",
+      "$P({=r1})=0$, so $x {=\"- \" if r1 > 0 else \"+ \"}{=abs(r1)}$ is a factor.",
+      "Divide $P(x)$ by this factor (synthetic division by {=r1}): the quotient is $x^2 {=q1} {=q0}$ with remainder 0.",
+      "Factorise the quotient: $x^2 {=q1} {=q0} = {=f2}{=f3}$.",
+      "So $P(x)={=f1}{=f2}{=f3}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=f1}*{=f2}*{=f3}",
+      "form": "factorised",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic: cubic with three distinct nonzero integer roots, one of them 1 or -1 (the first value to test, as in book exercise 15). Roots in [-4,4]; all coefficients nonzero. Quotient always factorises over integers."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-4-1:common-x",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-4-1",
+     "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+     "source_page": 144,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        7
+       ],
+       "resample_while": "q <= p"
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "m",
+       "let": "p * q"
+      }
+     ],
+     "constraints": [],
+     "stem": "Solve the equation $x^3 + {=s}x^2 + {=m}x = 0$. Give all the solutions.",
+     "answer": "",
+     "solution": [
+      "Take out the common factor $x$: $x(x^2 + {=s}x + {=m}) = 0$.",
+      "Factorise the quadratic: $x^2 + {=s}x + {=m} = (x + {=p})(x + {=q})$.",
+      "So $x(x + {=p})(x + {=q}) = 0$.",
+      "Set each factor equal to zero: $x = 0$, $x = -{=p}$ or $x = -{=q}$.",
+      "Answer: $x = 0,\\ -{=p},\\ -{=q}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[0, -{=p}, -{=q}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Entry point: common factor x then a factorisable quadratic. All roots real, distinct."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-4-1:factor-qf",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-4-1",
+     "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+     "source_page": 144,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        4,
+        7
+       ]
+      },
+      {
+       "name": "w",
+       "choice": [
+        3,
+        5,
+        6,
+        7,
+        10,
+        11
+       ]
+      },
+      {
+       "name": "d",
+       "let": "w - 1"
+      },
+      {
+       "name": "a",
+       "let": "k - 2"
+      },
+      {
+       "name": "b",
+       "let": "d + 2 * k"
+      },
+      {
+       "name": "c",
+       "let": "k * d"
+      }
+     ],
+     "constraints": [],
+     "stem": "Solve the equation $x^3 + {=a}x^2 - {=b}x - {=c} = 0$. Give all the solutions in exact form (using surds where needed).",
+     "answer": "",
+     "solution": [
+      "Let $P(x) = x^3 + {=a}x^2 - {=b}x - {=c}$. Try $x = -{=k}$: $P(-{=k}) = 0$, so $(x + {=k})$ is a factor by the Factor Theorem.",
+      "Divide: $P(x) = (x + {=k})(x^2 - 2x - {=d})$.",
+      "The quadratic $x^2 - 2x - {=d}$ does not factorise, so use the Quadratic Formula: $x = \\frac{2 \\pm \\sqrt{4 + {=4*d}}}{2} = \\frac{2 \\pm \\sqrt{{=4*w}}}{2} = 1 \\pm \\sqrt{{=w}}$.",
+      "Do not forget the root from the linear factor: $x = -{=k}$.",
+      "Answer: $x = -{=k},\\ 1 + \\sqrt{{=w}},\\ 1 - \\sqrt{{=w}}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[-{=k}, 1 + sqrt({=w}), 1 - sqrt({=w})]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Cubic = (x+k)(x^2-2x-d), w=d+1 is squarefree non-square so roots are 1±sqrt(w). Check k=4,w=5: x^3+2x^2-12x-16, P(-4)=-64+32+48-16=0. The existing misconception (drops linear root) is the natural wrong answer; marker is values so no mcq."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Complex-root cases avoided because the marker's support for complex values is unclear."
+  },
+  {
+   "lo_id": "lo:eb11c3-4-2",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for lo:eb11c3-4-2 is empty. Every family needs a parent_question_id and source_page from a book question of this objective, and I have no model solution to follow. I won't invent a parent or teach a method the book may not use."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason: there are no book questions or canonical solutions for this objective, so there is no valid parent_question_id or source_page, and no book method to match."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason: there is no book question to parent a harder family, and I can't tell which twists the book itself uses."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-4-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-question list for this objective is empty. A family needs a parent_question_id and source_page from a book question of this objective. I have no book question or canonical solution to model, so any parent id would be invented. I also cannot confirm the book's exact method, notation or wording for the shared-root and D=0 cases."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same reason as basic. There is no book question or canonical solution to use as a parent or to show the book's method for the repeated-root constant."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same reason as basic. There is no book question with a harder twist to model, and no valid parent id to cite."
+    }
+   ],
+   "notes": "I wrote no families. The objective has no book questions and no catalogued misconceptions, so the spec's parent_question_id rule can't be met honestly. Once the objective's book questions and solutions are supplied, three families would fit. Basic would find k so that a given cubic has a repeated root by Factor Theorem substitution. Standard would use the shared-root case, where f and f' share a root. Advanced would use the discriminant D=0 case, or a twist on the book's own method."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,397 @@
+{
+  "format": "ainext.printed-checks/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-1",
+  "source": "book-records/egb-g11-math/eb11c2-1.json",
+  "made_by": "answer_gen.py check-printed",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "chk-v1",
+      "parts": 17,
+      "cost_usd": 0.0601,
+      "calls": [
+        {
+          "call": "check-printed.eb11c2-1",
+          "cost_usd": 0.0438,
+          "model": "sonnet"
+        },
+        {
+          "call": "judge.eb11c2-1",
+          "cost_usd": 0.0163,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "ref": "eb11c2-1:explanation-1:a",
+      "record_id": "eb11c2-1:explanation-1",
+      "part": "a",
+      "type": "worked_example",
+      "page": 43,
+      "printed": "First term: 2, Common difference: 3",
+      "blind": "first term 2, common difference 3",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-1:figure-3",
+        "eb11c2-1:figure-4"
+      ],
+      "question_fingerprint": "ce6f9687f4cc0a3953c5221b7ee40831",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:explanation-1:a",
+        "verdict": "equivalent",
+        "reason": "Same first term 2 and difference 3."
+      },
+      "how": "judged equivalent: Same first term 2 and difference 3.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:explanation-1:b",
+      "record_id": "eb11c2-1:explanation-1",
+      "part": "b",
+      "type": "worked_example",
+      "page": 43,
+      "printed": "First term: 3, Common difference: -5",
+      "blind": "first term 3, common difference -5",
+      "blind_kind": "value",
+      "figures": [
+        "eb11c2-1:figure-3",
+        "eb11c2-1:figure-4"
+      ],
+      "question_fingerprint": "5322d99dbf00ae73eaa84b6299d43120",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:explanation-1:b",
+        "verdict": "equivalent",
+        "reason": "Same first term 3 and difference -5."
+      },
+      "how": "judged equivalent: Same first term 3 and difference -5.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:explanation-2:a",
+      "record_id": "eb11c2-1:explanation-2",
+      "part": "a",
+      "type": "worked_example",
+      "page": 43,
+      "printed": "Common difference: −3, A: 5, B: −4",
+      "blind": "A = 5, B = -4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "51e0ccbdf99a88c59584e8e0477c6ebb",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:explanation-2:a",
+        "verdict": "equivalent",
+        "reason": "A=5, B=-4 match; the printed common difference is extra."
+      },
+      "how": "judged equivalent: A=5, B=-4 match; the printed common difference is extra.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:explanation-2:b",
+      "record_id": "eb11c2-1:explanation-2",
+      "part": "b",
+      "type": "worked_example",
+      "page": 43,
+      "printed": "Common difference: −5, A: 8, B: 3",
+      "blind": "A = 8, B = 3",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "3f614662cc50dfc741e1964e9ba4b9ab",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:explanation-2:b",
+        "verdict": "equivalent",
+        "reason": "A=8, B=3 match; the printed common difference is extra."
+      },
+      "how": "judged equivalent: A=8, B=3 match; the printed common difference is extra.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-1:a",
+      "record_id": "eb11c2-1:worked-example-1",
+      "part": "a",
+      "type": "worked_example",
+      "page": 46,
+      "printed": "the 28th term",
+      "blind": "d = 8, a = -6",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "27e806635a8f1f460dbc114272083b10",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c2-1:worked-example-1:a",
+        "verdict": "different",
+        "reason": "Printed answer is 'the 28th term'; the solver gave d=8, a=-6, which is not the same."
+      },
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-1:b",
+      "record_id": "eb11c2-1:worked-example-1",
+      "part": "b",
+      "type": "worked_example",
+      "page": 46,
+      "printed": "the 125th term",
+      "blind": "a_n = 8n - 14",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "19acedd1406ced8e8c97fd0d35439b3a",
+      "status": "disagreed",
+      "judge": {
+        "ref": "eb11c2-1:worked-example-1:b",
+        "verdict": "different",
+        "reason": "Printed answer is 'the 125th term'; the solver gave the formula a_n=8n-14, which is not the same."
+      },
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:example-3",
+      "record_id": "eb11c2-1:example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 47,
+      "printed": "$x=-4, 3$",
+      "blind": "x = 3 or x = -4",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "23141338c83d6dafae21fa4957a381e3",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-2:a",
+      "record_id": "eb11c2-1:worked-example-2",
+      "part": "a",
+      "type": "worked_example",
+      "page": 50,
+      "printed": "105",
+      "blind": "CANNOT ANSWER: problem 1 (a) is on the previous page and is not given.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "8edfe47cf0545079e6db9b51297e929d",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: problem 1 (a) is on the previous page and is not given.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-2:b",
+      "record_id": "eb11c2-1:worked-example-2",
+      "part": "b",
+      "type": "worked_example",
+      "page": 50,
+      "printed": "392",
+      "blind": "CANNOT ANSWER: problem 1 (b) is on the previous page and is not given.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "7144222d5a7dff42ba43a771d33a42d8",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: problem 1 (b) is on the previous page and is not given.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-2:c",
+      "record_id": "eb11c2-1:worked-example-2",
+      "part": "c",
+      "type": "worked_example",
+      "page": 50,
+      "printed": "-130",
+      "blind": "CANNOT ANSWER: problem 1 (c) is on the previous page and is not given.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "5ebe2ebb4afb264991425b540143b179",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: problem 1 (c) is on the previous page and is not given.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-2:d",
+      "record_id": "eb11c2-1:worked-example-2",
+      "part": "d",
+      "type": "worked_example",
+      "page": 50,
+      "printed": "2n^2 - n",
+      "blind": "CANNOT ANSWER: problem 1 (d) is on the previous page and is not given.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "752b4473c51bd90301f8cade47f92935",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: problem 1 (d) is on the previous page and is not given.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-3",
+      "record_id": "eb11c2-1:worked-example-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 50,
+      "printed": "66",
+      "blind": "CANNOT ANSWER: the question (what to find for 90, 84, 78, ...) is not given.",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "35348c0da4f0dc682a0bd4cda61bdc16",
+      "status": "cannot_answer",
+      "note": "CANNOT ANSWER: the question (what to find for 90, 84, 78, ...) is not given.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:explanation-3",
+      "record_id": "eb11c2-1:explanation-3",
+      "part": null,
+      "type": "worked_example",
+      "page": 52,
+      "printed": "5050",
+      "blind": "5050",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "6be528dea8a9839cfb15f2150e3e632e",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:explanation-4",
+      "record_id": "eb11c2-1:explanation-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 52,
+      "printed": "15050",
+      "blind": "15050",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "b0b2200f920215c0fa089f57b3f23f8d",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-4",
+      "record_id": "eb11c2-1:worked-example-4",
+      "part": null,
+      "type": "worked_example",
+      "page": 55,
+      "printed": "the 5th term",
+      "blind": "n = 5",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "48d8572e546a7cb722f3e012f2427e30",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:worked-example-4",
+        "verdict": "equivalent",
+        "reason": "The 5th term means n=5."
+      },
+      "how": "judged equivalent: The 5th term means n=5.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-5",
+      "record_id": "eb11c2-1:worked-example-5",
+      "part": null,
+      "type": "worked_example",
+      "page": 55,
+      "printed": "$a_n=8n-68$",
+      "blind": "a_n = 8n - 68 (common difference 8)",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "2249ab66d9c557de3150765bf8cf97fb",
+      "status": "agreed",
+      "how": "the same answer",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    },
+    {
+      "ref": "eb11c2-1:worked-example-6",
+      "record_id": "eb11c2-1:worked-example-6",
+      "part": null,
+      "type": "worked_example",
+      "page": 55,
+      "printed": "the 17th term; 561",
+      "blind": "n = 17, maximum sum = 561",
+      "blind_kind": "value",
+      "figures": [],
+      "question_fingerprint": "a10e8fe7a42cc2281f16d7bce8d33511",
+      "status": "agreed",
+      "judge": {
+        "ref": "eb11c2-1:worked-example-6",
+        "verdict": "equivalent",
+        "reason": "Both give n=17 and maximum sum 561."
+      },
+      "how": "judged equivalent: Both give n=17 and maximum sum 561.",
+      "made": {
+        "at": "2026-10-21T14:16:00+00:00",
+        "model": "sonnet",
+        "prompts": "chk-v1"
+      }
+    }
+  ]
+}

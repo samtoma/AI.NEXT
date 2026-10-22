@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-4-1:factor-qf",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-4-1",
+ "parent_question_id": "q:eb11c3-4-1:bk-exercise-1-l",
+ "source_page": 144,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    4,
+    7
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    3,
+    5,
+    6,
+    7,
+    10,
+    11
+   ]
+  },
+  {
+   "name": "d",
+   "let": "w - 1"
+  },
+  {
+   "name": "a",
+   "let": "k - 2"
+  },
+  {
+   "name": "b",
+   "let": "d + 2 * k"
+  },
+  {
+   "name": "c",
+   "let": "k * d"
+  }
+ ],
+ "constraints": [],
+ "stem": "Solve the equation $x^3 + {=a}x^2 - {=b}x - {=c} = 0$. Give all the solutions in exact form (using surds where needed).",
+ "answer": "",
+ "solution": [
+  "Let $P(x) = x^3 + {=a}x^2 - {=b}x - {=c}$. Try $x = -{=k}$: $P(-{=k}) = 0$, so $(x + {=k})$ is a factor by the Factor Theorem.",
+  "Divide: $P(x) = (x + {=k})(x^2 - 2x - {=d})$.",
+  "The quadratic $x^2 - 2x - {=d}$ does not factorise, so use the Quadratic Formula: $x = \\frac{2 \\pm \\sqrt{4 + {=4*d}}}{2} = \\frac{2 \\pm \\sqrt{{=4*w}}}{2} = 1 \\pm \\sqrt{{=w}}$.",
+  "Do not forget the root from the linear factor: $x = -{=k}$.",
+  "Answer: $x = -{=k},\\ 1 + \\sqrt{{=w}},\\ 1 - \\sqrt{{=w}}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[-{=k}, 1 + sqrt({=w}), 1 - sqrt({=w})]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Cubic = (x+k)(x^2-2x-d), w=d+1 is squarefree non-square so roots are 1±sqrt(w). Check k=4,w=5: x^3+2x^2-12x-16, P(-4)=-64+32+48-16=0. The existing misconception (drops linear root) is the natural wrong answer; marker is values so no mcq."
+}

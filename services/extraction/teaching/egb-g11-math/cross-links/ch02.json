@@ -1,0 +1,77 @@
+{
+ "format": "ainext.cross-links/1",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "run": "runs/egb-g11-math/links/xlinks-ch02.20261021T140434Z.json",
+ "runs": [
+  "runs/egb-g11-math/links/xlinks-ch02.20261021T140434Z.json"
+ ],
+ "prompts_version": "links-v2-cross (cross-unit linker and removal-test checker)",
+ "prior_objectives": 18,
+ "links": [
+  {
+   "src": "lo:eb11c1-5-1",
+   "dst": "lo:eb11c2-5-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE41",
+     "anchor": "eb11c2-5:warm-up-6",
+     "printed_page": 100,
+     "quote": "$6k-3(k+1)=6k-3k-3=3k-3>0$"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "The step is present and uses the difference method (LHS−RHS, then show it is positive) taught by src. The induction lesson does not teach that method itself, so removal test passes. A student could still do it with basic algebra, but the link is reasonable."
+   },
+   "key": "lo:eb11c1-5-1->lo:eb11c2-5-3",
+   "backward": false,
+   "cross": true,
+   "src_statement": "Prove a conditional inequality by calculating LHS − RHS, factorising it and using the given conditions (e.g. a > b rewritten as a − b > 0) to show the result is positive.",
+   "dst_statement": "Prove equalities, inequalities and divisibility statements for natural numbers by mathematical induction: show n=1, then show n=k implies n=k+1.",
+   "fingerprint": "a068a7012019075dd851d0deb1237add",
+   "reason": "STEP: compares 6k with 3(k+1) by computing the difference and showing it is positive | RESULT: prove an inequality by calculating LHS − RHS and showing the result is positive | WHY NOT LOCAL: the induction lesson uses this difference method without teaching it",
+   "run": "runs/egb-g11-math/links/xlinks-ch02.20261021T140434Z.json"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:eb11c1-1-2->lo:eb11c2-5-3",
+   "src": "lo:eb11c1-1-2",
+   "dst": "lo:eb11c2-5-3",
+   "why": "the link checker said REJECTED: Removal test: expanding (k+3)^3 is earlier-grade algebra (cube of a sum), and src is the binomial theorem for general n. The step does not need it.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Removal test: expanding (k+3)^3 is earlier-grade algebra (cube of a sum), and src is the binomial theorem for general n. The step does not need it."
+   },
+   "cross": true
+  },
+  {
+   "key": "lo:eb11c1-3-3->lo:eb11c2-3-3",
+   "src": "lo:eb11c1-3-3",
+   "dst": "lo:eb11c2-3-3",
+   "why": "the link checker said REJECTED: Removal test: the step is applying the partial-fraction formula that the dst lesson states, and the cancellation is the point of the lesson. Fraction subtraction is earlier-grade knowledge. Test 2 also fails because the step does not need the rational-expression arithmetic as a new result.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Removal test: the step is applying the partial-fraction formula that the dst lesson states, and the cancellation is the point of the lesson. Fraction subtraction is earlier-grade knowledge. Test 2 also fails because the step does not need the rational-expression arithmetic as a new result."
+   },
+   "cross": true
+  }
+ ],
+ "inside_unit_found": 0,
+ "outside_book": [
+  {
+   "dst": "rationalizing denominators",
+   "anchor": "WE29",
+   "quote": "$\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
+   "printed_page": 76,
+   "note": "Rationalizing with conjugates is earlier-grade algebra."
+  }
+ ],
+ "failures": [],
+ "decisions": [],
+ "made": "2026-10-21"
+}

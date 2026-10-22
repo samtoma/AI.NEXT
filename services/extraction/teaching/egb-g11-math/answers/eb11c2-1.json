@@ -1,0 +1,5958 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c2-1",
+  "source": "book-records/egb-g11-math/eb11c2-1.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 161,
+      "cost_usd": 2.4474,
+      "calls": [
+        {
+          "call": "answers.eb11c2-1",
+          "cost_usd": 2.4474,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c2-1:open-prompt-1",
+      "record_id": "eb11c2-1:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 40,
+      "question": {
+        "text": "Guiding Question: How can constant rates of additive change be modeled mathematically to determine both specific individual terms and total cumulative sums across a sequence?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2ff7a519691ea9bc19cdb43b53fe9b71",
+      "kind": "explanation",
+      "answer": "A constant amount added each step is an arithmetic sequence: a_n = a + (n-1)d gives any single term and S_n gives the total.",
+      "solution": [
+        "A constant rate of additive change means each term is the previous term plus a fixed d.",
+        "This is an arithmetic sequence with first term a and common difference d.",
+        "Any single term is found with $a_n = a + (n-1)d$.",
+        "The total of the first n terms is found with $S_n=\\frac{1}{2}n(a+l)$ or $S_n=\\frac{1}{2}n\\{2a+(n-1)d\\}$.",
+        "So one formula gives individual terms and another gives cumulative sums."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3",
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "A constant additive change is a common difference d, so a_n = a + (n-1)d gives any term directly and S_n = n(2a+(n-1)d)/2 gives the cumulative total.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-1",
+      "record_id": "eb11c2-1:unlabelled-exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by $a_n=\\frac{n}{n+1}$, find the first term through the 3rd term of this sequence.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d0bce17ab6b2569dd1448716fa5ce8df",
+      "kind": "value",
+      "answer": "a_1 = 1/2, a_2 = 2/3, a_3 = 3/4",
+      "solution": [
+        "Substitute n = 1: $a_1=\\frac{1}{1+1}=\\frac12$.",
+        "Substitute n = 2: $a_2=\\frac{2}{3}$.",
+        "Substitute n = 3: $a_3=\\frac{3}{4}$.",
+        "The first three terms are 1/2, 2/3, 3/4."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_1 = 1/2, a_2 = 2/3, a_3 = 3/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-2:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$0, 1, 4, 9, 16, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cf75c67d6e503bf013aeed6d8d8624ff",
+      "kind": "value",
+      "answer": "a_n = (n-1)^2",
+      "solution": [
+        "Compare each term with its term number: 0, 1, 4, 9, 16 are 0², 1², 2², 3², 4².",
+        "Each term is (term number − 1)².",
+        "So $a_n=(n-1)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (n-1)^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-2:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, -4, 6, -8, 10, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "76efd33db93a295ec06cb03a1a374de8",
+      "kind": "value",
+      "answer": "a_n = (-1)^(n-1) × 2n",
+      "solution": [
+        "The signs alternate and the first term is +, so the sign part is $(-1)^{n-1}$.",
+        "The numbers 2, 4, 6, 8, 10 are even numbers, so the number part is $2n$.",
+        "So $a_n=(-1)^{n-1}\\times 2n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-1)^{n-1} × 2n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-2:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, \\frac{2}{3}, \\frac{3}{5}, \\frac{4}{7}, \\frac{5}{9}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "09fbc89e64935b302e73b0a6cb97943b",
+      "kind": "value",
+      "answer": "a_n = n/(2n-1)",
+      "solution": [
+        "Consider the numerator and the denominator separately.",
+        "Numerators 1, 2, 3, 4, 5 are the term number, so $n$.",
+        "Denominators 1, 3, 5, 7, 9 are odd numbers, so $2n-1$.",
+        "So $a_n=\\frac{n}{2n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n/(2n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-3:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n=2n-3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "11a3e06af5d6f8ad470211016ec41a64",
+      "kind": "value",
+      "answer": "a_1 = -1, a_2 = 1, a_3 = 3",
+      "solution": [
+        "$a_1=2\\times1-3=-1$",
+        "$a_2=2\\times2-3=1$",
+        "$a_3=2\\times3-3=3$",
+        "The first three terms are -1, 1, 3."
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2",
+        "eb11c2-1:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "-1, 1, 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-3:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n=2\\times 3^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "afa2a92d3f91bfb24df76b914f6d4d01",
+      "kind": "value",
+      "answer": "a_1 = 6, a_2 = 18, a_3 = 54",
+      "solution": [
+        "$a_1=2\\times3^1=6$",
+        "$a_2=2\\times3^2=18$",
+        "$a_3=2\\times3^3=54$",
+        "The first three terms are 6, 18, 54."
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2",
+        "eb11c2-1:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "6, 18, 54",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-3:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n=n^2-7n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b8ee7afe6391b9de56935b08ae958352",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = -10, a_3 = -12",
+      "solution": [
+        "$a_1=1^2-7\\times1=-6$",
+        "$a_2=2^2-7\\times2=-10$",
+        "$a_3=3^2-7\\times3=-12$",
+        "The first three terms are -6, -10, -12."
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2",
+        "eb11c2-1:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "-6, -10, -12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-3:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n=\\frac{n}{2n+1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cca65fa9bed5bf4ce200b550ff0203c6",
+      "kind": "value",
+      "answer": "a_1 = 1/3, a_2 = 2/5, a_3 = 3/7",
+      "solution": [
+        "$a_1=\\frac{1}{2\\times1+1}=\\frac13$",
+        "$a_2=\\frac{2}{2\\times2+1}=\\frac25$",
+        "$a_3=\\frac{3}{2\\times3+1}=\\frac37$",
+        "The first three terms are 1/3, 2/5, 3/7."
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2",
+        "eb11c2-1:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "1/3, 2/5, 3/7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-4:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$0, 1, 8, 27, 64, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cce73679ce2fbb9a0e92a4a541a09f79",
+      "kind": "value",
+      "answer": "a_n = (n-1)^3",
+      "solution": [
+        "The terms 0, 1, 8, 27, 64 are 0³, 1³, 2³, 3³, 4³.",
+        "Each term is (term number − 1) cubed, in the same way as (term number − 1)² in the lesson example.",
+        "So $a_n=(n-1)^3$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (n-1)^3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-4:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$-3, 6, -9, 12, -15, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "84bf622b33594a7959dcbb85fc06cc23",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 3n",
+      "solution": [
+        "The signs alternate and the first term is −, so the sign part is $(-1)^n$.",
+        "The numbers 3, 6, 9, 12, 15 are 3 × (term number), so $3n$.",
+        "So $a_n=(-1)^n\\times 3n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-1)^n × 3n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-4:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$2, 5, 8, 11, 14, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "75f32496c14797fd1b0d14e72b9150cd",
+      "kind": "value",
+      "answer": "a_n = 3n - 1",
+      "solution": [
+        "Each term is 3 more than the one before, so it is an arithmetic sequence with $a=2$, $d=3$.",
+        "$a_n=2+(n-1)\\times3$",
+        "$=3n-1$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-4:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 41,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, \\frac{3}{4}, \\frac{5}{9}, \\frac{7}{16}, \\frac{9}{25}, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "007a5c7e063da670c46c4b9e3b3324c0",
+      "kind": "value",
+      "answer": "a_n = (2n-1)/n^2",
+      "solution": [
+        "Consider the numerator and the denominator separately.",
+        "Numerators 1, 3, 5, 7, 9 are odd numbers, so $2n-1$.",
+        "Denominators 1, 4, 9, 16, 25 are squares of the term number, so $n^2$.",
+        "So $a_n=\\frac{2n-1}{n^2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (2n-1)/n^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:a",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = 5n-8$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0efe87d2afbe20aa1b5aa87f596f6f22",
+      "kind": "value",
+      "answer": "a_1 = -3, a_2 = 2, a_3 = 7",
+      "solution": [
+        "$a_1=5\\times1-8=-3$",
+        "$a_2=5\\times2-8=2$",
+        "$a_3=5\\times3-8=7$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-3, 2, 7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:b",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = -3n+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ea8f5e254b0d687360df8924e737b242",
+      "kind": "value",
+      "answer": "a_1 = -2, a_2 = -5, a_3 = -8",
+      "solution": [
+        "$a_1=-3\\times1+1=-2$",
+        "$a_2=-3\\times2+1=-5$",
+        "$a_3=-3\\times3+1=-8$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-2, -5, -8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:c",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = -2n-4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ec136717a6ca6b98b9ef0f270102f455",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = -8, a_3 = -10",
+      "solution": [
+        "$a_1=-2\\times1-4=-6$",
+        "$a_2=-2\\times2-4=-8$",
+        "$a_3=-2\\times3-4=-10$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-6, -8, -10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:d",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = 3^n - 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1da97ef624dd2727d07f1bfd5bef1589",
+      "kind": "value",
+      "answer": "a_1 = 2, a_2 = 8, a_3 = 26",
+      "solution": [
+        "$a_1=3^1-1=2$",
+        "$a_2=3^2-1=8$",
+        "$a_3=3^3-1=26$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "2, 8, 26",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:e",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = (-3)^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "697543cc829951601deed6c48da40fbc",
+      "kind": "value",
+      "answer": "a_1 = -3, a_2 = 9, a_3 = -27",
+      "solution": [
+        "$a_1=(-3)^1=-3$",
+        "$a_2=(-3)^2=9$",
+        "$a_3=(-3)^3=-27$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-3, 9, -27",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:f",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = 3\\times(-2)^n$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8d2022989d5215dbd737e52b14531a9a",
+      "kind": "value",
+      "answer": "a_1 = -6, a_2 = 12, a_3 = -24",
+      "solution": [
+        "$a_1=3\\times(-2)^1=-6$",
+        "$a_2=3\\times(-2)^2=12$",
+        "$a_3=3\\times(-2)^3=-24$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-6, 12, -24",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:g",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "g",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = n^2-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "984ada882fe9941d640e559a5729c812",
+      "kind": "value",
+      "answer": "a_1 = 0, a_2 = 3, a_3 = 8",
+      "solution": [
+        "$a_1=1^2-1=0$",
+        "$a_2=2^2-1=3$",
+        "$a_3=3^2-1=8$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "0, 3, 8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:h",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "h",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = n^2+n+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "93b80968313debdeb8374ec5ee96353f",
+      "kind": "value",
+      "answer": "a_1 = 3, a_2 = 7, a_3 = 13",
+      "solution": [
+        "$a_1=1+1+1=3$",
+        "$a_2=4+2+1=7$",
+        "$a_3=9+3+1=13$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "3, 7, 13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:i",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "i",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = n^2+2n+4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0e05544f4503c5d66c3507630e0f7122",
+      "kind": "value",
+      "answer": "a_1 = 7, a_2 = 12, a_3 = 19",
+      "solution": [
+        "$a_1=1+2+4=7$",
+        "$a_2=4+4+4=12$",
+        "$a_3=9+6+4=19$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "7, 12, 19",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:j",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "j",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = \\frac{1}{3n-2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7126810dbe462175e0197e3913763143",
+      "kind": "value",
+      "answer": "a_1 = 1, a_2 = 1/4, a_3 = 1/7",
+      "solution": [
+        "$a_1=\\frac{1}{3\\times1-2}=1$",
+        "$a_2=\\frac{1}{3\\times2-2}=\\frac14$",
+        "$a_3=\\frac{1}{3\\times3-2}=\\frac17$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "1, 1/4, 1/7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:k",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "k",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = \\frac{2n}{n+3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e0b052a054288987fbc7abc20d2451f6",
+      "kind": "value",
+      "answer": "a_1 = 1/2, a_2 = 4/5, a_3 = 1",
+      "solution": [
+        "$a_1=\\frac{2}{1+3}=\\frac12$",
+        "$a_2=\\frac{4}{2+3}=\\frac45$",
+        "$a_3=\\frac{6}{3+3}=1$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "1/2, 4/5, 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-1:l",
+      "record_id": "eb11c2-1:exercise-1",
+      "part": "l",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "When the general term of the sequence $\\{a_n\\}$ is given by the following formulas, find the first term through the 3rd term of the sequence.",
+        "stem": "$a_n = \\frac{n+1}{2n-1}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6a19ef7827a14a653b99fd6f984e7c79",
+      "kind": "value",
+      "answer": "a_1 = 2, a_2 = 1, a_3 = 4/5",
+      "solution": [
+        "$a_1=\\frac{1+1}{2\\times1-1}=2$",
+        "$a_2=\\frac{2+1}{2\\times2-1}=1$",
+        "$a_3=\\frac{3+1}{2\\times3-1}=\\frac45$"
+      ],
+      "grounded_in": [
+        "eb11c2-1:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "2, 1, 4/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:a",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$0, 2, 4, 6, 8, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "803406c9ae2b3646f70e4cde62d9329b",
+      "kind": "value",
+      "answer": "a_n = 2n - 2",
+      "solution": [
+        "Even numbers are $2n$: 2, 4, 6, ...",
+        "Our terms are 2 less: 0, 2, 4, ...",
+        "So $a_n=2n-2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:linking-text-7"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n-2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:b",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, 4, 9, 16, 25, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "56efa8999d01a05ebb6e3e80ebd2c8ac",
+      "kind": "value",
+      "answer": "a_n = n^2",
+      "solution": [
+        "1, 4, 9, 16, 25 are 1², 2², 3², 4², 5².",
+        "So $a_n=n^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:linking-text-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:c",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$0, 3, 6, 9, 12, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ede480c954ab24a67ebc09b626e4e178",
+      "kind": "value",
+      "answer": "a_n = 3n - 3",
+      "solution": [
+        "0, 3, 6, 9, 12 is 3 × (0, 1, 2, 3, 4).",
+        "The multiplier is (term number − 1).",
+        "So $a_n=3(n-1)=3n-3$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n-3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:d",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$-5, 10, -15, 20, -25, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e022c388beab38e9eee801bcc6e4e757",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × 5n",
+      "solution": [
+        "The first term is − and the signs alternate, so the sign part is $(-1)^n$.",
+        "The numbers 5, 10, 15, 20, 25 are $5n$.",
+        "So $a_n=(-1)^n\\times5n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:linking-text-4",
+        "eb11c2-1:linking-text-6"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-1)^n × 5n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:e",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "e",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1, -\\frac13, \\frac15, -\\frac17, \\frac19, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5f3298edd4fda76d0ba153a892107f6d",
+      "kind": "value",
+      "answer": "a_n = (-1)^(n-1) / (2n-1)",
+      "solution": [
+        "The first term is + and the signs alternate, so the sign part is $(-1)^{n-1}$.",
+        "The numerators are all 1.",
+        "The denominators 1, 3, 5, 7, 9 are odd numbers, $2n-1$.",
+        "So $a_n=\\frac{(-1)^{n-1}}{2n-1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:linking-text-4",
+        "eb11c2-1:linking-text-5",
+        "eb11c2-1:linking-text-8"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-1)^{n-1}/(2n-1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:f",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "f",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$-1, 4, -7, 10, -13, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4af5f39a9f5a1c93c0772d72272d91d8",
+      "kind": "value",
+      "answer": "a_n = (-1)^n × (3n - 2)",
+      "solution": [
+        "The first term is − and the signs alternate, so the sign part is $(-1)^n$.",
+        "The numbers 1, 4, 7, 10, 13 increase by 3 starting at 1: $1+(n-1)\\times3=3n-2$.",
+        "So $a_n=(-1)^n(3n-2)$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:linking-text-6",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (-1)^n (3n-2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:g",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "g",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$7^2, 8^2, 9^2, 10^2, 11^2, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fd0a8a86e29b20d46ff78caed79d5d11",
+      "kind": "value",
+      "answer": "a_n = (n+6)^2",
+      "solution": [
+        "The bases 7, 8, 9, 10, 11 are term number + 6.",
+        "So $a_n=(n+6)^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:linking-text-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (n+6)^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:h",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "h",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$4, 9, 14, 19, 24, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a65369b9a33d8cf3823f1c48eb630134",
+      "kind": "value",
+      "answer": "a_n = 5n - 1",
+      "solution": [
+        "Each term is 5 more than the one before: $a=4$, $d=5$.",
+        "$a_n=4+(n-1)\\times5=5n-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 5n-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:i",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "i",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$6, 13, 20, 27, 34, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8a6d416f8850a7cbafc342798c0d912e",
+      "kind": "value",
+      "answer": "a_n = 7n - 1",
+      "solution": [
+        "Each term is 7 more than the one before: $a=6$, $d=7$.",
+        "$a_n=6+(n-1)\\times7=7n-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 7n-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:j",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "j",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$\\frac12, \\frac23, \\frac34, \\frac45, \\frac56, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f234da8ec66f770fd2e113ede3072255",
+      "kind": "value",
+      "answer": "a_n = n/(n+1)",
+      "solution": [
+        "Numerators 1, 2, 3, 4, 5 are $n$.",
+        "Denominators 2, 3, 4, 5, 6 are $n+1$.",
+        "So $a_n=\\frac{n}{n+1}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:linking-text-5",
+        "eb11c2-1:definition-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n/(n+1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-2:k",
+      "record_id": "eb11c2-1:exercise-2",
+      "part": "k",
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "Deduce the general term of the following sequences $\\{a_n\\}$.",
+        "stem": "$1\\times3, 2\\times9, 3\\times27, 4\\times81, 5\\times243, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b8e4a597a0cd994031141f5cb4e4c488",
+      "kind": "value",
+      "answer": "a_n = n × 3^n",
+      "solution": [
+        "The first factors 1, 2, 3, 4, 5 are $n$.",
+        "The second factors 3, 9, 27, 81, 243 are $3^1,3^2,3^3,\\dots$, so $3^n$.",
+        "So $a_n=n\\times3^n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:objective-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n × 3^n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-1",
+      "record_id": "eb11c2-1:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 42,
+      "question": {
+        "text": "$1\\times\\frac12, 2\\times\\frac13, 3\\times\\frac14, 4\\times\\frac15, 5\\times\\frac16, \\dots$ Deduce the general term then find the 20th term.",
+        "stem": "",
+        "notes": "Boxed star Challenge."
+      },
+      "needs_page": false,
+      "question_fingerprint": "ec8a60c3defdd131925f1d37b6b6e943",
+      "kind": "value",
+      "answer": "a_n = n/(n+1); a_20 = 20/21",
+      "solution": [
+        "Each term is (term number) × 1/(term number + 1).",
+        "So the numerator is n and the denominator is n+1.",
+        "$a_n = n \\times \\frac{1}{n+1} = \\frac{n}{n+1}$.",
+        "Substitute n = 20: $a_{20}=\\frac{20}{21}$.",
+        "Answer: $a_n=\\frac{n}{n+1}$, $a_{20}=\\frac{20}{21}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-2",
+        "eb11c2-1:linking-text-5"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = n/(n+1); a_20 = 20/21",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-1:a",
+      "record_id": "eb11c2-1:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 43,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$2, 5, 8, 11, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7aef685fdcbc7aad711ae4140a72a62a",
+      "kind": "value",
+      "answer": "first term 2, common difference 3",
+      "solution": [
+        "The first term is 2.",
+        "$5-2=3$, $8-5=3$, so each step adds 3.",
+        "First term 2, common difference 3."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-1",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 2, common difference 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-1:b",
+      "record_id": "eb11c2-1:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 43,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$3, -2, -7, -12, -17, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "786fce7cea8ce904966f1fe325a8786f",
+      "kind": "value",
+      "answer": "first term 3, common difference -5",
+      "solution": [
+        "The first term is 3.",
+        "$-2-3=-5$, $-7-(-2)=-5$.",
+        "First term 3, common difference -5."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-1",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 3, common difference -5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-2:a",
+      "record_id": "eb11c2-1:warm-up-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 43,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$A, 2, -1, B, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3cd2d8c319372df5393f014fcf63a07a",
+      "kind": "value",
+      "answer": "d = -3, A = 5, B = -4",
+      "solution": [
+        "From 2 to −1 the step is $-1-2=-3$, so $d=-3$.",
+        "$A=2-(-3)=5$.",
+        "$B=-1+(-3)=-4$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "d = -3, A = 5, B = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-2:b",
+      "record_id": "eb11c2-1:warm-up-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 43,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$13, A, B, -2, \\ldots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "79ff7ef0194dd8ae51c482dfb00ef4cf",
+      "kind": "value",
+      "answer": "d = -5, A = 8, B = 3",
+      "solution": [
+        "From 13 to −2 there are 3 steps of $d$, total $-15$.",
+        "$3d=-15$, so $d=-5$.",
+        "$A=13-5=8$.",
+        "$B=8-5=3$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "d = -5, A = 8, B = 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-3",
+      "record_id": "eb11c2-1:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 43,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with the first term 8 and the common difference $-6$, find the general term. Also, find the 20th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6d7875755957e37f95ae0a8df9025647",
+      "kind": "value",
+      "answer": "a_n = -6n + 14; a_20 = -106",
+      "solution": [
+        "Use $a_n=a+(n-1)d$ with a = 8, d = -6.",
+        "$a_n = 8+(n-1)\\times(-6) = -6n+14$.",
+        "Substitute n = 20: $a_{20}=-6\\times20+14=-106$.",
+        "Answer: $a_n=-6n+14$, $a_{20}=-106$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -6n + 14; a_20 = -106",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-1",
+      "record_id": "eb11c2-1:try-1",
+      "part": null,
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": "Heading 'Try' with intro; sub-questions follow as k3-k5."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ca0a1bdacd6387edbb81c14352d36ae3",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Try – Solve the following problems'; the actual questions are try-2, try-3 and try-4.",
+      "solution": [
+        "The heading has no question or data of its own.",
+        "Answer the sub-questions try-2 (first term and d), try-3 (A and B) and try-4 (general term and 7th term) instead."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-2:a",
+      "record_id": "eb11c2-1:try-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$1, 5, 9, 13, 17, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "48c354d26152f4c52e7c9e289a9acbb8",
+      "kind": "value",
+      "answer": "first term 1, common difference 4",
+      "solution": [
+        "The first term is 1.",
+        "$5-1=4$, $9-5=4$.",
+        "Common difference 4."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 1, common difference 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-2:b",
+      "record_id": "eb11c2-1:try-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$23, 19, 15, 11, 7, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "88deb2dbc034f411423f04c63202f8c8",
+      "kind": "value",
+      "answer": "first term 23, common difference -4",
+      "solution": [
+        "The first term is 23.",
+        "$19-23=-4$, $15-19=-4$.",
+        "Common difference -4."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 23, common difference -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-3:a",
+      "record_id": "eb11c2-1:try-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$2, 9, A, B, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bcc17f732fd04bffd403215255b26b95",
+      "kind": "value",
+      "answer": "d = 7, A = 16, B = 23",
+      "solution": [
+        "$d=9-2=7$.",
+        "$A=9+7=16$.",
+        "$B=16+7=23$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "d = 7, A = 16, B = 23",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-3:b",
+      "record_id": "eb11c2-1:try-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$A, 17, B, 5, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e57f139d6d3eca66753c6b62c84c22db",
+      "kind": "value",
+      "answer": "d = -6, A = 23, B = 11",
+      "solution": [
+        "From 17 to 5 there are 2 steps, so $2d=5-17=-12$ and $d=-6$.",
+        "$A=17-(-6)=23$.",
+        "$B=17+(-6)=11$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2",
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "d = -6, A = 23, B = 11",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-4:a",
+      "record_id": "eb11c2-1:try-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "First term 4, common difference 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "33a9471f140921775f6c5ba9bc1bf85e",
+      "kind": "value",
+      "answer": "a_n = 3n + 1; a_7 = 22",
+      "solution": [
+        "$a=4$, $d=3$.",
+        "$a_n=4+(n-1)\\times3=3n+1$.",
+        "$a_7=3\\times7+1=22$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n+1; a_7 = 22",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-4:b",
+      "record_id": "eb11c2-1:try-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "First term 2, common difference −3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "78004ac88072663fba182fdd96828251",
+      "kind": "value",
+      "answer": "a_n = -3n + 5; a_7 = -16",
+      "solution": [
+        "$a=2$, $d=-3$.",
+        "$a_n=2+(n-1)\\times(-3)=-3n+5$.",
+        "$a_7=-3\\times7+5=-16$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+5; a_7 = -16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-3",
+      "record_id": "eb11c2-1:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6d391799f44ef5a0719ffbf17dff3bed",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Exercise – Solve the following problems'; the actual questions are exercise-4 and the unlabelled exercises on the next page.",
+      "solution": [
+        "The heading has no question or data of its own.",
+        "Answer the sub-questions instead."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:a",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$3, 5, 7, 9, 11, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "cd5f29def087f81280ab928c662836eb",
+      "kind": "value",
+      "answer": "first term 3, common difference 2",
+      "solution": [
+        "First term 3.",
+        "$5-3=2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 3, common difference 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:b",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$-13, -9, -5, -1, 3, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "490dae93ccc71f0b776c57104057529d",
+      "kind": "value",
+      "answer": "first term -13, common difference 4",
+      "solution": [
+        "First term -13.",
+        "$-9-(-13)=4$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term -13, common difference 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:c",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$-2, 1, 4, 7, 10, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "bddbbbafbcbc4a4eae3200c93178dd23",
+      "kind": "value",
+      "answer": "first term -2, common difference 3",
+      "solution": [
+        "First term -2.",
+        "$1-(-2)=3$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term -2, common difference 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:d",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "d",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$10, 7, 4, 1, -2, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "d1701a3ec07de81456802bd0443fd457",
+      "kind": "value",
+      "answer": "first term 10, common difference -3",
+      "solution": [
+        "First term 10.",
+        "$7-10=-3$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 10, common difference -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:e",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "e",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$6, \\frac{16}{3}, \\frac{14}{3}, 4, \\frac{10}{3}, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "989cc14f4413014cf82b3a4dc938b5e2",
+      "kind": "value",
+      "answer": "first term 6, common difference -2/3",
+      "solution": [
+        "First term 6.",
+        "$\\frac{16}{3}-6=-\\frac23$.",
+        "Check: $\\frac{14}{3}-\\frac{16}{3}=-\\frac23$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term 6, common difference -2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-4:f",
+      "record_id": "eb11c2-1:exercise-4",
+      "part": "f",
+      "type": "exercise",
+      "page": 44,
+      "question": {
+        "text": "Find the first term and the common difference of the following arithmetic sequences.",
+        "stem": "$-4, -\\frac{9}{2}, -5, -\\frac{11}{2}, -6, \\dots$",
+        "notes": "Fractions read from image; verify (e) terms 16/3, 14/3, 4, 10/3."
+      },
+      "needs_page": true,
+      "question_fingerprint": "dda7fc107c958a85e306cb95e9ff9fec",
+      "kind": "value",
+      "answer": "first term -4, common difference -1/2",
+      "solution": [
+        "First term -4.",
+        "$-\\frac92-(-4)=-\\frac12$.",
+        "Check: $-5-(-\\frac92)=-\\frac12$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3"
+      ],
+      "checks": {
+        "resolve_answer": "first term -4, common difference -1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$8, 15, A, B, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c59ad33e01f8e1c8ba57d4ec2da105c4",
+      "kind": "value",
+      "answer": "d = 7, A = 22, B = 29",
+      "solution": [
+        "$d=15-8=7$.",
+        "$A=15+7=22$.",
+        "$B=22+7=29$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = 7, A = 22, B = 29",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$7, 13, A, B, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e7090614bf98e504e334dacdb9b69606",
+      "kind": "value",
+      "answer": "d = 6, A = 19, B = 25",
+      "solution": [
+        "$d=13-7=6$.",
+        "$A=13+6=19$.",
+        "$B=19+6=25$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = 6, A = 19, B = 25",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$A, 9, 4, B, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a148434bb76388a5f3026cb66fcd1903",
+      "kind": "value",
+      "answer": "d = -5, A = 14, B = -1",
+      "solution": [
+        "From 9 to 4 is one step: $d=4-9=-5$.",
+        "$A=9-(-5)=14$.",
+        "$B=4+(-5)=-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = -5, A = 14, B = -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "d",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$A, 15, B, 9, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "20858755ca2d71a8cc33e06599e174c9",
+      "kind": "value",
+      "answer": "d = -3, A = 18, B = 12",
+      "solution": [
+        "From 15 to 9 there are 2 steps: $2d=-6$, $d=-3$.",
+        "$A=15-(-3)=18$.",
+        "$B=15+(-3)=12$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = -3, A = 18, B = 12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:e",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "e",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$11, A, B, 20, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6b77499c73bc4af61efa4082fde64b20",
+      "kind": "value",
+      "answer": "d = 3, A = 14, B = 17",
+      "solution": [
+        "From 11 to 20 there are 3 steps: $3d=9$, $d=3$.",
+        "$A=11+3=14$.",
+        "$B=14+3=17$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = 3, A = 14, B = 17",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-5:f",
+      "record_id": "eb11c2-1:unlabelled-exercise-5",
+      "part": "f",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "The following sequences are arithmetic sequences. Find the common difference and the numbers that fit in A and B.",
+        "stem": "$17, A, B, 5, C, \\dots$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5969732e9999bc0455288d81a846fde4",
+      "kind": "value",
+      "answer": "d = -4, A = 13, B = 9, C = 1",
+      "solution": [
+        "From 17 to 5 there are 3 steps: $3d=-12$, $d=-4$.",
+        "$A=17-4=13$.",
+        "$B=13-4=9$.",
+        "$C=5-4=1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "d = -4, A = 13, B = 9, C = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-6:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "The first term 5, and the common difference 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "01a713a9e0186e68d7b7ed6b699328c8",
+      "kind": "value",
+      "answer": "a_n = 4n + 1; a_7 = 29",
+      "solution": [
+        "$a_n=5+(n-1)\\times4=4n+1$.",
+        "$a_7=4\\times7+1=29$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4n+1; a_7 = 29",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-6:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "The first term $-2$, and the common difference 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9546ed95dea99fe22ace67a86cd4992a",
+      "kind": "value",
+      "answer": "a_n = 3n - 5; a_7 = 16",
+      "solution": [
+        "$a_n=-2+(n-1)\\times3=3n-5$.",
+        "$a_7=3\\times7-5=16$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n-5; a_7 = 16",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-6:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "The first term 10, and the common difference $-3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b4c70943dc1bbf2dd8286b99a2fe77e2",
+      "kind": "value",
+      "answer": "a_n = -3n + 13; a_7 = -8",
+      "solution": [
+        "$a_n=10+(n-1)\\times(-3)=-3n+13$.",
+        "$a_7=-21+13=-8$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+13; a_7 = -8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-6:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 7th term.",
+        "stem": "The first term $-\\frac{1}{2}$, and the common difference $-\\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5fb6d6fc84bf20ac2226cbe5cd71fcb0",
+      "kind": "value",
+      "answer": "a_n = -n/2; a_7 = -7/2",
+      "solution": [
+        "$a_n=-\\frac12+(n-1)\\times(-\\frac12)=-\\frac12-\\frac n2+\\frac12=-\\frac n2$.",
+        "$a_7=-\\frac72$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -n/2; a_7 = -7/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-7:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+        "stem": "The first term $-7$, and the common difference 3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6d921226531767b92168d3883ba8697b",
+      "kind": "value",
+      "answer": "a_n = 3n - 10; a_10 = 20",
+      "solution": [
+        "$a_n=-7+(n-1)\\times3=3n-10$.",
+        "$a_{10}=30-10=20$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n-10; a_10 = 20",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-7:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+        "stem": "The first term $-2$, and the common difference $-3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "728485825a476c6c355f93ad72e05f35",
+      "kind": "value",
+      "answer": "a_n = -3n + 1; a_10 = -29",
+      "solution": [
+        "$a_n=-2+(n-1)\\times(-3)=-3n+1$.",
+        "$a_{10}=-30+1=-29$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+1; a_10 = -29",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-7:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+        "stem": "The first term 7, and the common difference $\\frac{1}{2}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e2d398f5a340e370350fe65236e5eca0",
+      "kind": "value",
+      "answer": "a_n = (n+13)/2; a_10 = 23/2",
+      "solution": [
+        "$a_n=7+(n-1)\\times\\frac12=\\frac{n}{2}+\\frac{13}{2}=\\frac{n+13}{2}$.",
+        "$a_{10}=\\frac{23}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (n+13)/2; a_10 = 23/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-7:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-7",
+      "part": "d",
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "For the following arithmetic sequences $\\{a_n\\}$, find the general term. Also, find the 10th term.",
+        "stem": "The first term $\\frac{2}{3}$, and the common difference $-\\frac{1}{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1326a0c5c1abb6d97e6a388c19b88409",
+      "kind": "value",
+      "answer": "a_n = 1 - n/3 (that is, (3-n)/3); a_10 = -7/3",
+      "solution": [
+        "$a_n=\\frac23+(n-1)\\times(-\\frac13)=\\frac23-\\frac n3+\\frac13=1-\\frac n3$.",
+        "$a_{10}=1-\\frac{10}{3}=-\\frac73$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (3-n)/3; a_10 = -7/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-2",
+      "record_id": "eb11c2-1:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 45,
+      "question": {
+        "text": "In an arithmetic sequence, the sum of the 3rd and 7th terms is 38, and the ratio of the 4th term to the 12th term is $\\frac{2}{5}$. Find the first term of this sequence and the common difference.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cd823bcb11f0fce60c69b9df0296c3cf",
+      "kind": "value",
+      "answer": "a = 7, d = 3",
+      "solution": [
+        "Let the sequence be $a_n=a+(n-1)d$.",
+        "$a_3+a_7=38$: $(a+2d)+(a+6d)=38$, so $a+4d=19$ ......(i)",
+        "$a_4:a_{12}=2:5$, so $5(a+3d)=2(a+11d)$.",
+        "This simplifies to $3a-7d=0$ ......(ii)",
+        "From (ii) $a=\\frac{7d}{3}$. Put into (i): $\\frac{7d}{3}+4d=19$, so $d=3$.",
+        "Then $a=7$.",
+        "Check: $a_4=16$, $a_{12}=40$, ratio 2/5. Answer: a = 7, d = 3."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-3",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = 7, d = 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-4",
+      "record_id": "eb11c2-1:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ whose 3rd term is 10 and the 8th term is 50",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b8353422ab5954845b7b519cdf3951e9",
+      "kind": "value",
+      "answer": "a_n = 8n - 14",
+      "solution": [
+        "Let $a_n=a+(n-1)d$.",
+        "$a_3=10$: $a+2d=10$ ......(i)",
+        "$a_8=50$: $a+7d=50$ ......(ii)",
+        "Subtract (i) from (ii): $5d=40$, so $d=8$, then $a=-6$.",
+        "$a_n=-6+(n-1)\\times8=8n-14$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8n - 14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-5:a",
+      "record_id": "eb11c2-1:warm-up-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference 4 and the 8th term 33, solve the following problems.",
+        "stem": "Find which term number is 113",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ec682f60d4fac276d1e77623e86c3d04",
+      "kind": "value",
+      "answer": "the 28th term",
+      "solution": [
+        "With $d=4$ and $a_8=33$: $33=a+7\\times4$, so $a=5$.",
+        "$a_n=5+(n-1)\\times4=4n+1$.",
+        "Set $4n+1=113$, so $n=28$.",
+        "It is the 28th term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 28th term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-5:b",
+      "record_id": "eb11c2-1:warm-up-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference 4 and the 8th term 33, solve the following problems.",
+        "stem": "Find the first term number that is greater than 500",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ca31cdf5735d84beee4c7c831cac32ec",
+      "kind": "value",
+      "answer": "the 125th term",
+      "solution": [
+        "$a_n=4n+1$ (from $a=5$, $d=4$).",
+        "Need $4n+1>500$, so $n>\\frac{499}{4}=124.75$.",
+        "The smallest natural number is 125.",
+        "It is the 125th term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 125th term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-6",
+      "record_id": "eb11c2-1:warm-up-6",
+      "part": null,
+      "type": "exercise",
+      "page": 46,
+      "question": {
+        "text": "When the 3 numbers $x$, 6, $x^2$ form an arithmetic sequence in this order, find the value of $x$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "da4481845ca3d3df0200c63ccaba4c78",
+      "kind": "value",
+      "answer": "x = -4, 3",
+      "solution": [
+        "Since x, 6, x² form an arithmetic sequence, $2b=a+c$.",
+        "$2\\times6=x+x^2$.",
+        "$x^2+x-12=0$, so $(x+4)(x-3)=0$.",
+        "x = -4 or x = 3."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-4",
+        "eb11c2-1:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = -4, 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-5:a",
+      "record_id": "eb11c2-1:try-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The first term is $-5$, the 17th term is 75",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3463c6af50bc8278d87d34df33d36137",
+      "kind": "value",
+      "answer": "a_n = 5n - 10",
+      "solution": [
+        "$a=-5$, $a_{17}=75$: $75=-5+16d$.",
+        "$16d=80$, $d=5$.",
+        "$a_n=-5+(n-1)\\times5=5n-10$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 5n-10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-5:b",
+      "record_id": "eb11c2-1:try-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The common difference is 3, the 16th term is 81",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a08f65fb3a4b1217fed4291f2da1da08",
+      "kind": "value",
+      "answer": "a_n = 3n + 33",
+      "solution": [
+        "$d=3$, $a_{16}=81$: $81=a+15\\times3$.",
+        "$a=36$.",
+        "$a_n=36+(n-1)\\times3=3n+33$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n+33",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-5:c",
+      "record_id": "eb11c2-1:try-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The 6th term is 2, the 15th term is $-25$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "adb99d66355d893c6849b850734968c2",
+      "kind": "value",
+      "answer": "a_n = -3n + 20",
+      "solution": [
+        "$a_6=2$: $2=a+5d$ (i). $a_{15}=-25$: $-25=a+14d$ (ii).",
+        "(ii) − (i): $-27=9d$, so $d=-3$.",
+        "From (i): $a=2+15=17$.",
+        "$a_n=17+(n-1)\\times(-3)=-3n+20$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+20",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-6:a",
+      "record_id": "eb11c2-1:try-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with first term 1 and common difference 3, solve the following problems.",
+        "stem": "Determine which term is 40",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f0fb053350f3ea4d44e320545e948062",
+      "kind": "value",
+      "answer": "the 14th term",
+      "solution": [
+        "$a_n=1+(n-1)\\times3=3n-2$.",
+        "Set $3n-2=40$, so $n=14$.",
+        "It is the 14th term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 14th term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-6:b",
+      "record_id": "eb11c2-1:try-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with first term 1 and common difference 3, solve the following problems.",
+        "stem": "Find the first term that is greater than 100",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d9179df42bca62be493755f7118b264e",
+      "kind": "value",
+      "answer": "the 35th term",
+      "solution": [
+        "$a_n=3n-2$.",
+        "Need $3n-2>100$, so $n>34$.",
+        "The smallest natural number is 35 (and $a_{35}=103$).",
+        "It is the 35th term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 35th term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-7",
+      "record_id": "eb11c2-1:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 47,
+      "question": {
+        "text": "When the 3 numbers $x^2, x, -8$ form an arithmetic sequence in this order, find the value of $x$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "be923860c7e1787fd3cf3a5aebc08c32",
+      "kind": "value",
+      "answer": "x = 4, -2",
+      "solution": [
+        "Since $x^2, x, -8$ form an arithmetic sequence, $2x=x^2+(-8)$.",
+        "$x^2-2x-8=0$.",
+        "$(x-4)(x+2)=0$.",
+        "x = 4 or x = -2."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-4",
+        "eb11c2-1:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = 4, -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:a",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The first term is 6, the 4th term is 18",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1911227566edd1037783525a31df9e84",
+      "kind": "value",
+      "answer": "a_n = 4n + 2",
+      "solution": [
+        "$a=6$, $a_4=18$: $18=6+3d$, $d=4$.",
+        "$a_n=6+(n-1)\\times4=4n+2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 4n+2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:b",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The first term is 20, the 8th term is $-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9f3fb502bc9b6cc26cee59f739cef563",
+      "kind": "value",
+      "answer": "a_n = -3n + 23",
+      "solution": [
+        "$a=20$, $a_8=-1$: $-1=20+7d$, $d=-3$.",
+        "$a_n=20+(n-1)\\times(-3)=-3n+23$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+23",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:c",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The first term is $-8$, the 8th term is 55",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4b9c963f2db49560a952812a04156f99",
+      "kind": "value",
+      "answer": "a_n = 9n - 17",
+      "solution": [
+        "$a=-8$, $a_8=55$: $55=-8+7d$, $d=9$.",
+        "$a_n=-8+(n-1)\\times9=9n-17$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 9n-17",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:d",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "d",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The first term is $-18$, the 10th term is $-63$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "49b1f1bd354afc759df71188b8d8a554",
+      "kind": "value",
+      "answer": "a_n = -5n - 13",
+      "solution": [
+        "$a=-18$, $a_{10}=-63$: $-63=-18+9d$, $d=-5$.",
+        "$a_n=-18+(n-1)\\times(-5)=-5n-13$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -5n-13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:e",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "e",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The common difference is 2, the 8th term is 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "957abb7170f5d99673284671117ca365",
+      "kind": "value",
+      "answer": "a_n = 2n - 12",
+      "solution": [
+        "$d=2$, $a_8=4$: $4=a+14$, $a=-10$.",
+        "$a_n=-10+(n-1)\\times2=2n-12$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n-12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:f",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "f",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The common difference is $-4$, the 5th term is $-7$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a93b774df433c7c4eb53fb4d954dd474",
+      "kind": "value",
+      "answer": "a_n = -4n + 13",
+      "solution": [
+        "$d=-4$, $a_5=-7$: $-7=a+4\\times(-4)$, $a=9$.",
+        "$a_n=9+(n-1)\\times(-4)=-4n+13$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -4n+13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:g",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "g",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The common difference is $-7$, the 6th term is $-24$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "441596244f275ee143bfd975db47c72b",
+      "kind": "value",
+      "answer": "a_n = -7n + 18",
+      "solution": [
+        "$d=-7$, $a_6=-24$: $-24=a+5\\times(-7)$, $a=11$.",
+        "$a_n=11+(n-1)\\times(-7)=-7n+18$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -7n+18",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:h",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "h",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The common difference is $\\frac{2}{5}$, the 30th term is $\\frac{23}{5}$.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "234e4937099005cad4eb424987f1bc25",
+      "kind": "value",
+      "answer": "a_n = (2n - 37)/5",
+      "solution": [
+        "$d=\\frac25$, $a_{30}=\\frac{23}{5}$: $\\frac{23}{5}=a+29\\times\\frac25=a+\\frac{58}{5}$.",
+        "$a=-\\frac{35}{5}=-7$.",
+        "$a_n=-7+(n-1)\\times\\frac25=\\frac{2n-37}{5}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (2n-37)/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:i",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "i",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The 4th term is 14, the 10th term is 62",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "aa4e02f0ae09280c5a7c569ad84b2a0f",
+      "kind": "value",
+      "answer": "a_n = 8n - 18",
+      "solution": [
+        "$14=a+3d$ (i), $62=a+9d$ (ii).",
+        "(ii) − (i): $48=6d$, $d=8$.",
+        "$a=14-24=-10$.",
+        "$a_n=-10+(n-1)\\times8=8n-18$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8n-18",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:j",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "j",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 30, the 10th term is 2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cb5c0b88e18ff8b7dd6117db730172db",
+      "kind": "value",
+      "answer": "a_n = -4n + 42",
+      "solution": [
+        "$30=a+2d$ (i), $2=a+9d$ (ii).",
+        "(ii) − (i): $-28=7d$, $d=-4$.",
+        "$a=30+8=38$.",
+        "$a_n=38+(n-1)\\times(-4)=-4n+42$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -4n+42",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:k",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "k",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The 10th term is 49, the 23rd term is 10",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c1f174f96bb3b9a2e0c5c0e6793cc4d4",
+      "kind": "value",
+      "answer": "a_n = -3n + 79",
+      "solution": [
+        "$49=a+9d$ (i), $10=a+22d$ (ii).",
+        "(ii) − (i): $-39=13d$, $d=-3$.",
+        "$a=49+27=76$.",
+        "$a_n=76+(n-1)\\times(-3)=-3n+79$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n+79",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-5:l",
+      "record_id": "eb11c2-1:exercise-5",
+      "part": "l",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "Find the general term of the following arithmetic sequences $\\{a_n\\}$.",
+        "stem": "The 3rd term is 6, the 10th term is 62",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "289bac0ea553ac1d3dc1028df3a15897",
+      "kind": "value",
+      "answer": "a_n = 8n - 18",
+      "solution": [
+        "$6=a+2d$ (i), $62=a+9d$ (ii).",
+        "(ii) − (i): $56=7d$, $d=8$.",
+        "$a=6-16=-10$.",
+        "$a_n=-10+(n-1)\\times8=8n-18$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8n-18",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-6:a",
+      "record_id": "eb11c2-1:exercise-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference $-5$ and the 13th term $-7$, solve the following problems.",
+        "stem": "Determine which term is $-52$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "eeeb6c3e16ccf0d24ecaf9d37b88d25e",
+      "kind": "value",
+      "answer": "the 22nd term",
+      "solution": [
+        "$d=-5$, $a_{13}=-7$: $-7=a+12\\times(-5)$, $a=53$.",
+        "$a_n=53+(n-1)\\times(-5)=-5n+58$.",
+        "Set $-5n+58=-52$, so $n=22$.",
+        "It is the 22nd term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 22nd term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-6:b",
+      "record_id": "eb11c2-1:exercise-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ with the common difference $-5$ and the 13th term $-7$, solve the following problems.",
+        "stem": "Find the first term that is smaller than $-300$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "65f783fa36169ccfa1d7250ade83232d",
+      "kind": "value",
+      "answer": "the 72nd term",
+      "solution": [
+        "$a_n=-5n+58$.",
+        "Need $-5n+58<-300$, so $5n>358$, $n>71.6$.",
+        "The smallest natural number is 72.",
+        "It is the 72nd term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 72nd term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-7:a",
+      "record_id": "eb11c2-1:exercise-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ where the 10th term is $-20$ and the 20th term is $-50$, solve the following problems.",
+        "stem": "Determine which term is $-110$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6855751e2c9ac7b7497751d9d11fc660",
+      "kind": "value",
+      "answer": "the 40th term",
+      "solution": [
+        "$-20=a+9d$ (i), $-50=a+19d$ (ii).",
+        "(ii) − (i): $-30=10d$, $d=-3$; $a=-20+27=7$.",
+        "$a_n=7+(n-1)\\times(-3)=-3n+10$.",
+        "Set $-3n+10=-110$, so $n=40$.",
+        "It is the 40th term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 40th term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-7:b",
+      "record_id": "eb11c2-1:exercise-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "For the arithmetic sequence $\\{a_n\\}$ where the 10th term is $-20$ and the 20th term is $-50$, solve the following problems.",
+        "stem": "Find the first term that is smaller than $-500$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "754227e26effb24810839820bf4b2933",
+      "kind": "value",
+      "answer": "the 171st term",
+      "solution": [
+        "$a_n=-3n+10$.",
+        "Need $-3n+10<-500$, so $3n>510$, $n>170$.",
+        "The smallest natural number is 171.",
+        "It is the 171st term."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-1",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "the 171st term",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-8",
+      "record_id": "eb11c2-1:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "When the 3 numbers $a, 6, 2a$ form an arithmetic sequence in this order, find the value of $a$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "169c6cbf74918a43106ec1aed9b952e3",
+      "kind": "value",
+      "answer": "a = 4",
+      "solution": [
+        "Since a, 6, 2a form an arithmetic sequence, $2\\times6=a+2a$.",
+        "$12=3a$.",
+        "a = 4."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-9",
+      "record_id": "eb11c2-1:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "When the 3 numbers $-3, x, x^2$ form an arithmetic sequence in this order, find the value of $x$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dd0c5fecdb4f06ca1dfe2467244790e1",
+      "kind": "value",
+      "answer": "x = 3, -1",
+      "solution": [
+        "Since $-3, x, x^2$ form an arithmetic sequence, $2x=-3+x^2$.",
+        "$x^2-2x-3=0$.",
+        "$(x-3)(x+1)=0$.",
+        "x = 3 or x = -1."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-4",
+        "eb11c2-1:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3, -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-3",
+      "record_id": "eb11c2-1:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 48,
+      "question": {
+        "text": "When the 4 numbers $2, x, y, z$ form an arithmetic sequence in this order, and $2x, y+1, z-y$ also form an arithmetic sequence in this order, find the values of $x, y, z$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cb5dfe4103d553235ce2ba5015a6e011",
+      "kind": "value",
+      "answer": "x = 0, y = -2, z = -4",
+      "solution": [
+        "Let d be the common difference of 2, x, y, z: $x=2+d$, $y=2+2d$, $z=2+3d$.",
+        "Then $z-y=d$.",
+        "Since $2x, y+1, z-y$ are arithmetic, $2(y+1)=2x+(z-y)$.",
+        "$2(3+2d)=2(2+d)+d$, so $6+4d=4+3d$.",
+        "d = -2.",
+        "x = 0, y = -2, z = -4."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-4",
+        "eb11c2-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 0, y = -2, z = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-8:a",
+      "record_id": "eb11c2-1:unlabelled-exercise-8",
+      "part": "a",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_7$ of a sequence with the first term 8, the last term 22, the number of terms 7",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "981ce2fbeabb0cbaa8e09c8d190e84fd",
+      "kind": "value",
+      "answer": "105",
+      "solution": [
+        "$a=8$, $l=22$, $n=7$.",
+        "$S_7=\\frac12\\times7(8+22)=105$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-2",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "105",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-8:b",
+      "record_id": "eb11c2-1:unlabelled-exercise-8",
+      "part": "b",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S$ of a sequence with the first term 2, the common difference 3, the last term 47",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7a1386a4545975870a4e03e0c648deda",
+      "kind": "value",
+      "answer": "392",
+      "solution": [
+        "Find $n$: $47=2+(n-1)\\times3$, so $n=16$.",
+        "$S=\\frac12\\times16(2+47)=392$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-2",
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "392",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-8:c",
+      "record_id": "eb11c2-1:unlabelled-exercise-8",
+      "part": "c",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{13}$ of a sequence with the first term 20, the common difference $-5$, the number of terms 13",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d77265d5c5bba8c7057c748fdd6794d6",
+      "kind": "value",
+      "answer": "-130",
+      "solution": [
+        "$a=20$, $d=-5$, $n=13$.",
+        "$S_{13}=\\frac12\\times13\\{2\\times20+12\\times(-5)\\}=\\frac12\\times13\\times(-20)=-130$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-2",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "-130",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-8:d",
+      "record_id": "eb11c2-1:unlabelled-exercise-8",
+      "part": "d",
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "Solve the following problems. Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 1, the common difference 4",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2bae2f2dbee8ba6d4d2b28c3c5cf9cd9",
+      "kind": "value",
+      "answer": "S_n = 2n^2 - n",
+      "solution": [
+        "$a=1$, $d=4$.",
+        "$S_n=\\frac12n\\{2+(n-1)\\times4\\}=\\frac12n(4n-2)$.",
+        "$=2n^2-n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-2",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = 2n^2 - n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:unlabelled-exercise-9",
+      "record_id": "eb11c2-1:unlabelled-exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 49,
+      "question": {
+        "text": "For the arithmetic sequence 90, 84, 78, ..., find the sum from the 10th term to the 20th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "046eb8cb577b51b8e06b11113b92fc4b",
+      "kind": "value",
+      "answer": "66",
+      "solution": [
+        "Sum from 10th to 20th term = $S_{20}-S_9$.",
+        "a = 90, d = -6.",
+        "$S_{20}=\\frac12\\times20\\{180+19\\times(-6)\\}=660$.",
+        "$S_9=\\frac12\\times9\\{180+8\\times(-6)\\}=594$.",
+        "$660-594=66$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-3",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "66",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-8:a",
+      "record_id": "eb11c2-1:try-8",
+      "part": "a",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{10}$ of a sequence with the first term 7, the last term 13, the number of terms 10",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fcfcb6fde9bf9e91b8639019e18c01a3",
+      "kind": "value",
+      "answer": "100",
+      "solution": [
+        "$a=7$, $l=13$, $n=10$.",
+        "$S_{10}=\\frac12\\times10(7+13)=100$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "100",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-8:b",
+      "record_id": "eb11c2-1:try-8",
+      "part": "b",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S$ of a sequence with the first term 5, the common difference 3, the last term 44",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "92b2b809371da53862eed835894101b3",
+      "kind": "value",
+      "answer": "343",
+      "solution": [
+        "Find $n$: $44=5+(n-1)\\times3$, so $n=14$.",
+        "$S=\\frac12\\times14(5+44)=343$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "343",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-8:c",
+      "record_id": "eb11c2-1:try-8",
+      "part": "c",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{12}$ of a sequence with the first term $-6$, the common difference 3, the number of terms 12",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f89b0d5d697244d84c19a35aa938c704",
+      "kind": "value",
+      "answer": "126",
+      "solution": [
+        "$a=-6$, $d=3$, $n=12$.",
+        "$S_{12}=\\frac12\\times12\\{2\\times(-6)+11\\times3\\}=6\\times21=126$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "126",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-8:d",
+      "record_id": "eb11c2-1:try-8",
+      "part": "d",
+      "type": "exercise",
+      "page": 50,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_n$ from the first term to the $n$-th term of a sequence with the first term 2, the common difference $-3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "13058a70c9f881beb18ce4891bbc48b4",
+      "kind": "value",
+      "answer": "S_n = (7n - 3n^2)/2",
+      "solution": [
+        "$a=2$, $d=-3$.",
+        "$S_n=\\frac12n\\{4+(n-1)\\times(-3)\\}=\\frac12n(7-3n)$.",
+        "$=\\frac{7n-3n^2}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = (7n - 3n^2)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-9",
+      "record_id": "eb11c2-1:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "For the arithmetic sequence with first term 48 and common difference $-2$, find the sum from the 20th term to the 30th term",
+        "stem": "",
+        "notes": "Label 'Try' inferred from previous page's Try box; page prints only the number 2."
+      },
+      "needs_page": true,
+      "question_fingerprint": "8e28267e4ff6f2adad67344845384d81",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "The sum is $S_{30}-S_{19}$.",
+        "$S_{30}=\\frac12\\times30\\{2\\times48+29\\times(-2)\\}=15\\times38=570$.",
+        "$S_{19}=\\frac12\\times19\\{96+18\\times(-2)\\}=\\frac{19}{2}\\times60=570$.",
+        "$570-570=0$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-3",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-4",
+      "record_id": "eb11c2-1:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "For the arithmetic sequence 94, 89, 84, ..., find the sum of the odd terms from the first term to the 11th term.",
+        "stem": "",
+        "notes": "Side-column Challenge box."
+      },
+      "needs_page": false,
+      "question_fingerprint": "fc3ed0d42eb285f552c8b65e8e852704",
+      "kind": "value",
+      "answer": "414",
+      "solution": [
+        "Odd terms from 1st to 11th: 1st, 3rd, 5th, 7th, 9th, 11th, which is 6 terms.",
+        "First term 94, common difference $2\\times(-5)=-10$.",
+        "$S=\\frac12\\times6\\{2\\times94+(6-1)\\times(-10)\\}$.",
+        "$=3(188-50)=3\\times138=414$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "414",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:a",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "a",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{10}$ of sequence: the first term 3, the last term 21, the number of terms 10",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "11117824b22df59ecadc75d82dea586e",
+      "kind": "value",
+      "answer": "120",
+      "solution": [
+        "$S_{10}=\\frac12\\times10(3+21)=120$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "120",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:b",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "b",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_8$ of sequence: the first term 5, the last term 33, the number of terms 8",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5a4fe107b0f592908c6b5cbde252923a",
+      "kind": "value",
+      "answer": "152",
+      "solution": [
+        "$S_8=\\frac12\\times8(5+33)=152$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "152",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:c",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "c",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{10}$ of sequence: the first term 2, the last term 29, the number of terms 10",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7ce4e58521796f5c86399a24bd82e1b5",
+      "kind": "value",
+      "answer": "155",
+      "solution": [
+        "$S_{10}=\\frac12\\times10(2+29)=155$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "155",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:d",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "d",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S$ of sequence: the first term 3, the common difference 4, last term 75",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e11a13ec0b6c9dc80b880f9700b3efce",
+      "kind": "value",
+      "answer": "741",
+      "solution": [
+        "Find $n$: $75=3+(n-1)\\times4$, so $n=19$.",
+        "$S=\\frac12\\times19(3+75)=741$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "741",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:e",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "e",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S$ of sequence: the first term 2, the common difference 5, last term 57",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a54dd59a4a5e156dc96407de663da0d2",
+      "kind": "value",
+      "answer": "354",
+      "solution": [
+        "Find $n$: $57=2+(n-1)\\times5$, so $n=12$.",
+        "$S=\\frac12\\times12(2+57)=354$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "354",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:f",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "f",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S$ of sequence: the first term 4, the common difference 3, last term 100",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b202d691010db77138f17561ee231ca2",
+      "kind": "value",
+      "answer": "1716",
+      "solution": [
+        "Find $n$: $100=4+(n-1)\\times3$, so $n=33$.",
+        "$S=\\frac12\\times33(4+100)=1716$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "1716",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:g",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "g",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{15}$: the first term 10, the common difference $-3$, the number of terms 15",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0ba5f1e05f898ff9ff24ea2d4e332c84",
+      "kind": "value",
+      "answer": "-165",
+      "solution": [
+        "$S_{15}=\\frac12\\times15\\{2\\times10+14\\times(-3)\\}=\\frac{15}{2}\\times(-22)=-165$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "-165",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:h",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "h",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{11}$: the first term $-4$, the common difference 4, the number of terms 11",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a4d76c83bd54040ba47d9e1e8fd0a7b5",
+      "kind": "value",
+      "answer": "176",
+      "solution": [
+        "$S_{11}=\\frac12\\times11\\{2\\times(-4)+10\\times4\\}=\\frac{11}{2}\\times32=176$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "176",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:i",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "i",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_{18}$: the first term 3, the common difference 2, the number of terms 18",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3bcb2333ecbb7e160ba25b5128a74773",
+      "kind": "value",
+      "answer": "360",
+      "solution": [
+        "$S_{18}=\\frac12\\times18\\{2\\times3+17\\times2\\}=9\\times40=360$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "360",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:j",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "j",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 0, the common difference 5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b666be985e611e7d889dc51a41ef1531",
+      "kind": "value",
+      "answer": "S_n = (5n^2 - 5n)/2",
+      "solution": [
+        "$a=0$, $d=5$.",
+        "$S_n=\\frac12n\\{0+(n-1)\\times5\\}=\\frac{5n(n-1)}{2}$.",
+        "$=\\frac{5n^2-5n}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = 5n(n-1)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:k",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "k",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term 3, the common difference $-4$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "24ca084522a6795e3c587f122b19058d",
+      "kind": "value",
+      "answer": "S_n = 5n - 2n^2",
+      "solution": [
+        "$a=3$, $d=-4$.",
+        "$S_n=\\frac12n\\{6+(n-1)\\times(-4)\\}=\\frac12n(10-4n)$.",
+        "$=5n-2n^2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = 5n - 2n^2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-10:l",
+      "record_id": "eb11c2-1:exercise-10",
+      "part": "l",
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "Find the sum of the following arithmetic sequences.",
+        "stem": "The sum $S_n$ from the first term to the $n$-th term: the first term $-4$, the common difference $-2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "12429f289284971db19a613270d90d5d",
+      "kind": "value",
+      "answer": "S_n = -n^2 - 3n",
+      "solution": [
+        "$a=-4$, $d=-2$.",
+        "$S_n=\\frac12n\\{-8+(n-1)\\times(-2)\\}=\\frac12n(-6-2n)$.",
+        "$=-n^2-3n$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "S_n = -n^2 - 3n",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-11",
+      "record_id": "eb11c2-1:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "For the arithmetic sequence $-9, -3, 3, \\ldots$, find the sum from the 11th term to the 20th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "73ab2d2f95537932b72b5f62d6c0d00a",
+      "kind": "value",
+      "answer": "780",
+      "solution": [
+        "a = -9, d = 6.",
+        "Required sum = $S_{20}-S_{10}$.",
+        "$S_{20}=\\frac12\\times20\\{-18+19\\times6\\}=960$.",
+        "$S_{10}=\\frac12\\times10\\{-18+9\\times6\\}=180$.",
+        "$960-180=780$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-3",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "780",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-12",
+      "record_id": "eb11c2-1:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "For the arithmetic sequence with the first term $-53$ and the common difference 4, find the sum from the 10th term to the 25th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "de527516d06d9df74a2280a6dd749f88",
+      "kind": "value",
+      "answer": "208",
+      "solution": [
+        "a = -53, d = 4.",
+        "Required sum = $S_{25}-S_9$.",
+        "$S_{25}=\\frac12\\times25\\{-106+24\\times4\\}=-125$.",
+        "$S_9=\\frac12\\times9\\{-106+8\\times4\\}=-333$.",
+        "$-125-(-333)=208$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-3",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "208",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-13",
+      "record_id": "eb11c2-1:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 51,
+      "question": {
+        "text": "For the arithmetic sequence $74, 69, 64, \\ldots$, find the sum from the 8th term to the 18th term.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "aea8ea23bfa74cce19c0e81d9a26fc41",
+      "kind": "value",
+      "answer": "154",
+      "solution": [
+        "a = 74, d = -5.",
+        "Required sum = $S_{18}-S_7$.",
+        "$S_{18}=\\frac12\\times18\\{148+17\\times(-5)\\}=567$.",
+        "$S_7=\\frac12\\times7\\{148+6\\times(-5)\\}=413$.",
+        "$567-413=154$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-3",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "154",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-7:1",
+      "record_id": "eb11c2-1:warm-up-7",
+      "part": "1",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "The sum of natural numbers from 1 to 100",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2c2640fc59d5014ff7a1c8bd5a880e77",
+      "kind": "value",
+      "answer": "5050",
+      "solution": [
+        "First term 1, last term 100, 100 terms.",
+        "$\\frac12\\times100(1+100)=5050$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-3",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "5050",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-7:2",
+      "record_id": "eb11c2-1:warm-up-7",
+      "part": "2",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "The sum of natural numbers from 101 to 200",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3d822136fa4e27ac4de76c8c8a3b820d",
+      "kind": "value",
+      "answer": "15050",
+      "solution": [
+        "First term 101, last term 200, 100 terms.",
+        "$\\frac12\\times100(101+200)=15050$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "15050",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-7:3",
+      "record_id": "eb11c2-1:warm-up-7",
+      "part": "3",
+      "type": "exercise",
+      "page": 52,
+      "question": {
+        "text": "Find the following sums.",
+        "stem": "The sum of multiples of 3 among 2-digit natural numbers.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "94ab8852572482fed4a92377bda364a7",
+      "kind": "value",
+      "answer": "1665",
+      "solution": [
+        "The multiples of 3 with 2 digits are 12, 15, ..., 99: $a=12$, $d=3$, $l=99$.",
+        "Find $n$: $99=12+(n-1)\\times3$, so $n=30$.",
+        "$\\frac12\\times30(12+99)=1665$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "1665",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-10",
+      "record_id": "eb11c2-1:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of natural numbers from 1 to 200",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "92e648c957249b200348dc8660a24847",
+      "kind": "value",
+      "answer": "20100",
+      "solution": [
+        "First term 1, last term 200, 200 terms.",
+        "$\\frac12\\times200(1+200)=20100$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-3",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "20100",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-11",
+      "record_id": "eb11c2-1:try-11",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of natural numbers from 201 to 300",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f19fd682da253b9198c04f60fdb3d6a3",
+      "kind": "value",
+      "answer": "25050",
+      "solution": [
+        "First term 201, last term 300, 100 terms.",
+        "$\\frac12\\times100(201+300)=25050$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "25050",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-12",
+      "record_id": "eb11c2-1:try-12",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of all 2-digit natural numbers that are multiples of 5",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "25b6d023f43a1a33ad6270cb659c38d0",
+      "kind": "value",
+      "answer": "945",
+      "solution": [
+        "2-digit multiples of 5: 10, 15, ..., 95: $a=10$, $d=5$, $l=95$.",
+        "Find $n$: $95=10+(n-1)\\times5$, so $n=18$.",
+        "$\\frac12\\times18(10+95)=945$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "945",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-13",
+      "record_id": "eb11c2-1:try-13",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of all 2-digit natural numbers that leave a remainder of 3 when divided by 5",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7a6c7bbc90c460fd0273ebbee54520a1",
+      "kind": "value",
+      "answer": "999",
+      "solution": [
+        "2-digit numbers with remainder 3 on division by 5: 13, 18, ..., 98: $a=13$, $d=5$, $l=98$.",
+        "Find $n$: $98=13+(n-1)\\times5$, so $n=18$.",
+        "$\\frac12\\times18(13+98)=999$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "999",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-14",
+      "record_id": "eb11c2-1:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of natural numbers from 1 to 150",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b33bdcc530b60a339be8b7098885dafe",
+      "kind": "value",
+      "answer": "11325",
+      "solution": [
+        "First term 1, last term 150, 150 terms.",
+        "$\\frac12\\times150(1+150)=11325$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-3",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "11325",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-15",
+      "record_id": "eb11c2-1:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of natural numbers from 81 to 150",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a067cc4febedc78cc600d39303fd31b8",
+      "kind": "value",
+      "answer": "8085",
+      "solution": [
+        "First term 81, last term 150; number of terms $150-81+1=70$.",
+        "$\\frac12\\times70(81+150)=8085$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "8085",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-16",
+      "record_id": "eb11c2-1:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of natural numbers from 301 to 400",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "55dc007f3023b0f480460dc9d3b6a1cc",
+      "kind": "value",
+      "answer": "35050",
+      "solution": [
+        "First term 301, last term 400, 100 terms.",
+        "$\\frac12\\times100(301+400)=35050$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "35050",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-17",
+      "record_id": "eb11c2-1:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of 2-digit natural numbers.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dace69cb7a17e189008e1f3b20839afa",
+      "kind": "value",
+      "answer": "4905",
+      "solution": [
+        "2-digit natural numbers: 10, 11, ..., 99; number of terms $99-10+1=90$.",
+        "$\\frac12\\times90(10+99)=4905$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-4",
+        "eb11c2-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "4905",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-18",
+      "record_id": "eb11c2-1:exercise-18",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of 2-digit odd numbers.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "de6f35204076d58ba553d31027d69968",
+      "kind": "value",
+      "answer": "2475",
+      "solution": [
+        "2-digit odd numbers: 11, 13, ..., 99: $a=11$, $d=2$, $l=99$.",
+        "Find $n$: $99=11+(n-1)\\times2$, so $n=45$.",
+        "$\\frac12\\times45(11+99)=2475$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "2475",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-19",
+      "record_id": "eb11c2-1:exercise-19",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of multiples of 4 from 1 to 100",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5d03a8313ca4f1af33b3c4fe11b215be",
+      "kind": "value",
+      "answer": "1300",
+      "solution": [
+        "Multiples of 4 from 1 to 100: 4, 8, ..., 100: $a=4$, $d=4$, $l=100$.",
+        "Find $n$: $100=4+(n-1)\\times4$, so $n=25$.",
+        "$\\frac12\\times25(4+100)=1300$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "1300",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-20",
+      "record_id": "eb11c2-1:exercise-20",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of all natural numbers from 1 to 100 that leave a remainder of 1 when divided by 4",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "92b545346ef12d117bba73c81023e494",
+      "kind": "value",
+      "answer": "1225",
+      "solution": [
+        "Numbers 1, 5, 9, ..., 97: $a=1$, $d=4$, $l=97$.",
+        "Find $n$: $97=1+(n-1)\\times4$, so $n=25$.",
+        "$\\frac12\\times25(1+97)=1225$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "1225",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-21",
+      "record_id": "eb11c2-1:exercise-21",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of all multiples of 6 from 10 to 100",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1c12c84514b816d05e3d66936ffeb2b7",
+      "kind": "value",
+      "answer": "810",
+      "solution": [
+        "Multiples of 6 from 10 to 100: 12, 18, ..., 96: $a=12$, $d=6$, $l=96$.",
+        "Find $n$: $96=12+(n-1)\\times6$, so $n=15$.",
+        "$\\frac12\\times15(12+96)=810$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "810",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-22",
+      "record_id": "eb11c2-1:exercise-22",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find the following sums. The sum of all natural numbers from 10 to 100 that are not divisible by 6",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f37e34412810854dc1808df28366aa34",
+      "kind": "value",
+      "answer": "4195",
+      "solution": [
+        "Sum of all numbers 10 to 100: 91 terms, $\\frac12\\times91(10+100)=5005$.",
+        "Sum of multiples of 6 from 10 to 100 is 810 (12, 18, ..., 96; 15 terms).",
+        "Subtract: $5005-810=4195$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-5",
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "4195",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-5",
+      "record_id": "eb11c2-1:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 53,
+      "question": {
+        "text": "Find The sum of numbers which are not divisible by 4 from 1 to 100",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1e6c24b1841aa4a8024fce5c44627ef1",
+      "kind": "value",
+      "answer": "3750",
+      "solution": [
+        "Sum of 1 to 100: $\\frac12\\times100(1+100)=5050$.",
+        "Multiples of 4: 4, 8, ..., 100. Find n: $100=4+(n-1)\\times4$, so n = 25.",
+        "Their sum: $\\frac12\\times25(4+100)=1300$.",
+        "Not divisible by 4: $5050-1300=3750$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:explanation-3",
+        "eb11c2-1:method-1",
+        "eb11c2-1:rule-5",
+        "eb11c2-1:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "3750",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-8",
+      "record_id": "eb11c2-1:warm-up-8",
+      "part": null,
+      "type": "exercise",
+      "page": 54,
+      "question": {
+        "text": "In an arithmetic sequence with the first term 4 and the common difference 3, find how many terms from the first term sum up to 50",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9bc1723643e4391ae735418559980727",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+        "a = 4, d = 3, and $S_n=50$.",
+        "$50=\\frac12n\\{8+(n-1)\\times3\\}$.",
+        "This gives $3n^2+5n-100=0$, so $n=5$ or $-\\frac{20}{3}$.",
+        "n must be natural, so n = 5 (the 5th term)."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-4",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "5 terms (the 5th term)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-9",
+      "record_id": "eb11c2-1:warm-up-9",
+      "part": null,
+      "type": "exercise",
+      "page": 54,
+      "question": {
+        "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is $-60$ and the sum from the first term to the 15th term is $-60$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9264ca859b3581464d00487427e7877c",
+      "kind": "value",
+      "answer": "a_n = 8n - 68",
+      "solution": [
+        "Let d be the common difference; a = -60, $S_{15}=-60$.",
+        "$-60=\\frac12\\times15\\{2\\times(-60)+14d\\}$.",
+        "Solving gives d = 8.",
+        "$a_n=-60+(n-1)\\times8=8n-68$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-5",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 8n - 68",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:warm-up-10",
+      "record_id": "eb11c2-1:warm-up-10",
+      "part": null,
+      "type": "exercise",
+      "page": 54,
+      "question": {
+        "text": "For an arithmetic sequence with the first term 65 and the common difference $-4$, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ae459e98c0c8e112ad719568a248ff12",
+      "kind": "value",
+      "answer": "17 terms; sum 561",
+      "solution": [
+        "$a_n=65+(n-1)(-4)=-4n+69$.",
+        "$-4n+69>0$ gives $n<17.25$.",
+        "Terms 1 to 17 are positive, so the sum is maximum at the 17th term.",
+        "$S_{17}=\\frac12\\times17\\{130+16\\times(-4)\\}=561$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-6",
+        "eb11c2-1:rule-13"
+      ],
+      "checks": {
+        "resolve_answer": "17 terms; maximum sum 561",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-14",
+      "record_id": "eb11c2-1:try-14",
+      "part": null,
+      "type": "exercise",
+      "page": 55,
+      "question": {
+        "text": "In an arithmetic sequence with the first term 17 and the common difference −2, find how many terms from the first term sum up to −63",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "36c72aba6c5a3df51f29722e85dc25bb",
+      "kind": "value",
+      "answer": "21",
+      "solution": [
+        "a = 17, d = -2, $S_n=-63$.",
+        "$-63=\\frac12n\\{34+(n-1)(-2)\\}=n(18-n)$.",
+        "$n^2-18n-63=0$, so $(n-21)(n+3)=0$.",
+        "n is natural, so n = 21."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-4",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "21 terms",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-15",
+      "record_id": "eb11c2-1:try-15",
+      "part": null,
+      "type": "exercise",
+      "page": 55,
+      "question": {
+        "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the first term is 8 and the sum from the first term to the 13th term is −130",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5c79a823557dbb52ee93f660fa6559e8",
+      "kind": "value",
+      "answer": "a_n = -3n + 11",
+      "solution": [
+        "a = 8, $S_{13}=-130$.",
+        "$-130=\\frac12\\times13\\{16+12d\\}$, so $-20=16+12d$.",
+        "d = -3.",
+        "$a_n=8+(n-1)(-3)=-3n+11$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-5",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = -3n + 11",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-16",
+      "record_id": "eb11c2-1:try-16",
+      "part": null,
+      "type": "exercise",
+      "page": 55,
+      "question": {
+        "text": "For an arithmetic sequence with the first term 70 and the common difference −4, find the number of terms from the start that gives the maximum sum. Also, find the corresponding sum.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "35fe5f8e3ac53e644afe9e2f9b35d0b3",
+      "kind": "value",
+      "answer": "18 terms; sum 648",
+      "solution": [
+        "$a_n=70+(n-1)(-4)=-4n+74$.",
+        "$-4n+74>0$ gives $n<18.5$.",
+        "Terms 1 to 18 are positive, so the maximum sum is at the 18th term.",
+        "$S_{18}=\\frac12\\times18\\{140+17\\times(-4)\\}=9\\times72=648$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-6",
+        "eb11c2-1:rule-13"
+      ],
+      "checks": {
+        "resolve_answer": "18 terms; maximum sum 648",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:try-17",
+      "record_id": "eb11c2-1:try-17",
+      "part": null,
+      "type": "exercise",
+      "page": 55,
+      "question": {
+        "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ where the sum from the first term to the 10th term is 10, and the sum from the first term to the 20th term is 40",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6e6a20caa388b470dc1cba33a82ceabd",
+      "kind": "value",
+      "answer": "a_n = (2n - 1)/10",
+      "solution": [
+        "Let first term a and common difference d.",
+        "$S_{10}=10$: $5(2a+9d)=10$, so $2a+9d=2$ ......(i)",
+        "$S_{20}=40$: $10(2a+19d)=40$, so $2a+19d=4$ ......(ii)",
+        "(ii) − (i): $10d=2$, so $d=\\frac15$.",
+        "Then $2a=2-\\frac95=\\frac15$, so $a=\\frac1{10}$.",
+        "$a_n=\\frac1{10}+(n-1)\\times\\frac15=\\frac{2n-1}{10}$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6",
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = (2n - 1)/10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-23",
+      "record_id": "eb11c2-1:exercise-23",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "28bf57ad64bf5ee016bbe116b37c7e49",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Exercise – Solve the following problems'; the actual questions are exercise-24 to exercise-31.",
+      "solution": [
+        "The heading has no question or data of its own.",
+        "Answer the numbered sub-questions instead."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the sub-questions are answered separately.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-24",
+      "record_id": "eb11c2-1:exercise-24",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 3 and the common difference 2 is 63",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1f080684dbf83891917c79d8405e9771",
+      "kind": "value",
+      "answer": "7",
+      "solution": [
+        "a = 3, d = 2, $S_n=63$.",
+        "$63=\\frac12n\\{6+(n-1)\\times2\\}=n(n+2)$.",
+        "$n^2+2n-63=0$, so $(n+9)(n-7)=0$.",
+        "n is natural, so n = 7."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-4",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n = 7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-25",
+      "record_id": "eb11c2-1:exercise-25",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find $n$ such that the sum of the first $n$ terms of an arithmetic sequence with the first term 24 and the common difference $-4$ is $-28$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8699f6831f3ca85a56aaed94c5bf3fff",
+      "kind": "value",
+      "answer": "14",
+      "solution": [
+        "a = 24, d = -4, $S_n=-28$.",
+        "$-28=\\frac12n\\{48+(n-1)(-4)\\}=n(26-2n)$.",
+        "$n^2-13n-14=0$, so $(n-14)(n+1)=0$.",
+        "n is natural, so n = 14."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-4",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "n = 14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-26",
+      "record_id": "eb11c2-1:exercise-26",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find the general term of the arithmetic sequence $\\{a_n\\}$ with the first term 4 and the sum of the first 6 terms 114",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "24f22138c7009cea3018977c58acd676",
+      "kind": "value",
+      "answer": "a_n = 6n - 2",
+      "solution": [
+        "a = 4, $S_6=114$.",
+        "$114=\\frac12\\times6\\{8+5d\\}$, so $38=8+5d$.",
+        "d = 6.",
+        "$a_n=4+(n-1)\\times6=6n-2$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-5",
+        "eb11c2-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 6n - 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-27",
+      "record_id": "eb11c2-1:exercise-27",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "For a sequence with the first term 20, the common difference $-6$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8615829e8d218bdce7be1a3400e8bb32",
+      "kind": "value",
+      "answer": "n = 4; sum 44",
+      "solution": [
+        "$a_n=20+(n-1)(-6)=-6n+26$.",
+        "$-6n+26>0$ gives $n<4.33$.",
+        "Terms 1 to 4 are positive, so n = 4.",
+        "$S_4=\\frac12\\times4\\{40+3\\times(-6)\\}=44$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-6",
+        "eb11c2-1:rule-13"
+      ],
+      "checks": {
+        "resolve_answer": "n = 4; sum 44",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-28",
+      "record_id": "eb11c2-1:exercise-28",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "For a sequence with the first term 126, the common difference $-13$, find the value of $n$ that gives the maximum sum, and the corresponding sum.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "85a0e06a884fd752671abc7c94bc6c96",
+      "kind": "value",
+      "answer": "n = 10; sum 675",
+      "solution": [
+        "$a_n=126+(n-1)(-13)=-13n+139$.",
+        "$-13n+139>0$ gives $n<10.69$.",
+        "Terms 1 to 10 are positive, so n = 10.",
+        "$S_{10}=\\frac12\\times10\\{252+9\\times(-13)\\}=5\\times135=675$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:worked-example-6",
+        "eb11c2-1:rule-13"
+      ],
+      "checks": {
+        "resolve_answer": "n = 10; sum 675",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-29",
+      "record_id": "eb11c2-1:exercise-29",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find the general term of sequence $\\{a_n\\}$ where the 3rd term 10 and the sum of first 10 terms 175",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1f2dc28d196c6d81b656379ec709e644",
+      "kind": "value",
+      "answer": "a_n = 3n + 1",
+      "solution": [
+        "$a_3=10$: $a+2d=10$ ......(i)",
+        "$S_{10}=175$: $5(2a+9d)=175$, so $2a+9d=35$ ......(ii)",
+        "From (i) $a=10-2d$; into (ii): $20+5d=35$, so d = 3, a = 4.",
+        "$a_n=4+(n-1)\\times3=3n+1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-6",
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n + 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-30",
+      "record_id": "eb11c2-1:exercise-30",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find the general term of $\\{a_n\\}$ where sum of first 6 terms is 3 and the sum of first 10 terms is 65",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "192e07ca8cde544bb502a746c2c8e78e",
+      "kind": "value",
+      "answer": "a_n = 3n - 10",
+      "solution": [
+        "$S_6=3$: $3(2a+5d)=3$, so $2a+5d=1$ ......(i)",
+        "$S_{10}=65$: $5(2a+9d)=65$, so $2a+9d=13$ ......(ii)",
+        "(ii) − (i): $4d=12$, d = 3.",
+        "Then $2a=-14$, a = -7.",
+        "$a_n=-7+(n-1)\\times3=3n-10$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6",
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 3n - 10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:exercise-31",
+      "record_id": "eb11c2-1:exercise-31",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "Find the general term of $\\{a_n\\}$ where sum of first 20 terms is 400 and the sum of first 30 terms is 900",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "fcca37f0f6fa581849dfec5e8e89f30f",
+      "kind": "value",
+      "answer": "a_n = 2n - 1",
+      "solution": [
+        "$S_{20}=400$: $10(2a+19d)=400$, so $2a+19d=40$ ......(i)",
+        "$S_{30}=900$: $15(2a+29d)=900$, so $2a+29d=60$ ......(ii)",
+        "(ii) − (i): $10d=20$, d = 2.",
+        "Then $2a=2$, a = 1.",
+        "$a_n=1+(n-1)\\times2=2n-1$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-6",
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "a_n = 2n - 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:challenge-6",
+      "record_id": "eb11c2-1:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 56,
+      "question": {
+        "text": "The 15th of the arithmetic sequence is 33 and the 50th term is 103. What is the first 79 terms of the arithmetic sequence?",
+        "stem": "",
+        "notes": "Printed 'The 15th of the arithmetic sequence' (missing 'term'); wording 'What is the first 79 terms' probably means sum."
+      },
+      "needs_page": false,
+      "question_fingerprint": "16e03eaf1afefaa5d051a872f6e312f4",
+      "kind": "value",
+      "answer": "6557",
+      "solution": [
+        "The question probably asks for the sum of the first 79 terms.",
+        "$a_{15}=33$: $a+14d=33$; $a_{50}=103$: $a+49d=103$.",
+        "Subtract: $35d=70$, d = 2, then a = 5.",
+        "$S_{79}=\\frac12\\times79\\{10+78\\times2\\}=\\frac12\\times79\\times166$.",
+        "$=79\\times83=6557$."
+      ],
+      "grounded_in": [
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-6",
+        "eb11c2-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "6557 (sum of the first 79 terms; a = 5, d = 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c2-1:reflect-1",
+      "record_id": "eb11c2-1:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 56,
+      "question": {
+        "text": "\"If the water level in a lake decreases by a fixed amount each day, how can understanding arithmetic sequences help us predict when the water will run out?\"",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "441c1f398331d8fc8cb77b88260824d4",
+      "kind": "explanation",
+      "answer": "A fixed daily drop is a common difference d, so a_n = a + (n-1)d gives the level on any day and shows when it reaches zero.",
+      "solution": [
+        "A fixed daily decrease means an arithmetic sequence with a negative common difference d.",
+        "The level on day n is $a_n=a+(n-1)d$.",
+        "Water runs out when the terms stop being positive, so solve $a_n>0$ to find the last positive day.",
+        "The sum S_n of the terms gives the total change over n days."
+      ],
+      "grounded_in": [
+        "eb11c2-1:definition-3",
+        "eb11c2-1:rule-1",
+        "eb11c2-1:rule-13"
+      ],
+      "checks": {
+        "resolve_answer": "A fixed daily decrease d makes the levels an arithmetic sequence. With starting level a, the level after n days is a_n = a + (n-1)d. Solve a_n = 0 (or a_n ≤ 0) for n to find the day the water runs out.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:08:14+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

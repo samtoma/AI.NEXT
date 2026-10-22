@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-2-2:exercise-4-c",
+ "lo_id": "lo:eb11c3-2-2",
+ "book_item": "eb11c3-2:exercise-4#c",
+ "parent_question_id": "expl:eb11c3-2-2:bk-warm-up-3",
+ "parent_kind": "teaching",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "interval",
+  "range": [
+   -3,
+   6
+  ],
+  "from": 0,
+  "to": 3,
+  "openFrom": false,
+  "openTo": false
+ },
+ "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+2m^2-3m=0$ has real solutions. Mark the interval for $m$ and set each end hollow or filled.",
+ "solution": [
+  "Real solutions means $D\\ge0$.",
+  "$D=(-2m)^2-4(2m^2-3m)=-4m^2+12m$.",
+  "$-4m^2+12m\\ge0$; dividing by $-4$ reverses the sign: $m^2-3m\\le0$.",
+  "$m(m-3)\\le0$, so $0\\le m\\le3$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "endpoint-inclusion-wrong",
+   "step": 1,
+   "text": "Does the condition for real solutions allow $D=0$?"
+  },
+  {
+   "predicate": "interval-wrong",
+   "step": 3,
+   "text": "Remember that dividing an inequality by a negative number reverses its sign, then factorise."
+  }
+ ],
+ "notes": "Closed both ends."
+}

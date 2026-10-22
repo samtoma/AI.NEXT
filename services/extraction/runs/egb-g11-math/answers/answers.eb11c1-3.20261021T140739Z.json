@@ -1,0 +1,1130 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "1ca09f107894d66662398d43074627ddce0b0435dec7309ab944ef9f10969f11",
+  "generated_sha256": "f449ede02ceda12a1f1822fba985247d8aa375bab552f4a8356a010e8e80aceb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-3:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-3:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Rational expressions follow the same rules as numerical fractions, so we can factorise, find a common denominator, combine and reduce them step by step.",
+      "solution": [
+       "Rational expressions behave like numerical fractions.",
+       "First factorise the numerators and denominators.",
+       "To add or subtract, multiply top and bottom by the same expression to get a common denominator.",
+       "Calculate only the numerator, then factorise it and reduce common factors.",
+       "So complicated changing expressions, such as drug concentrations, become one simple fraction."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:rule-2",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:work-with-a-partner-1",
+      "kind": "value",
+      "answer": "(x+1)(x-3)/((x+2)(x+4))",
+      "solution": [
+       "Question 2 is $\\frac{x^2-4x-5}{2x^2+5x+2}\\div\\frac{x^2-x-20}{2x^2-5x-3}$.",
+       "Change to multiplication by the reciprocal of the divisor: $\\frac{x^2-4x-5}{2x^2+5x+2}\\times\\frac{2x^2-5x-3}{x^2-x-20}$.",
+       "Factorise: $\\frac{(x+1)(x-5)}{(2x+1)(x+2)}\\times\\frac{(2x+1)(x-3)}{(x-5)(x+4)}$.",
+       "Cancel $(x-5)$ and $(2x+1)$.",
+       "The answer is $\\frac{(x+1)(x-3)}{(x+2)(x+4)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:challenge-1",
+      "kind": "value",
+      "answer": "(15129√123 - 1)/2",
+      "solution": [
+       "Factorise: $x^3+8=(x+2)(x^2-2x+4)$, $x^2-x-6=(x-3)(x+2)$, $x^2-6x+9=(x-3)^2$, $2x-6=2(x-3)$.",
+       "Change division to multiplication by the reciprocal: $\\times\\frac{x^5-1}{2(x-3)}$.",
+       "Write: $\\frac{(x+2)(x^2-2x+4)}{(x-3)(x+2)}\\times\\frac{(x-3)^2}{x^2-2x+4}\\times\\frac{x^5-1}{2(x-3)}$.",
+       "Cancel $(x+2)$, $(x^2-2x+4)$ and the $(x-3)$ factors.",
+       "What is left is $\\frac{x^5-1}{2}$.",
+       "With $x=\\sqrt{123}$: $x^2=123$, $x^4=15129$, so $x^5=15129\\sqrt{123}$.",
+       "The value is $\\frac{15129\\sqrt{123}-1}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the expressions in question 3 are not given in the lesson material.",
+      "solution": [
+       "The page lists only the heading 'Simplify the following expressions' for the exercises.",
+       "The actual compound fractions in question 3 are not shown, so no value can be read.",
+       "Without them no answer can be worked out."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-5"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-3:guiding-question-1",
+      "kind": "explanation",
+      "answer": "The laws of arithmetic (common denominators, factorising, cancelling common factors, reciprocals) work the same for algebraic fractions as for numbers. So we can add, subtract, multiply and divide rational expressions, such as drug concentrations, and reduce them to one simple expression to predict outcomes."
+     },
+     {
+      "ref": "eb11c1-3:work-with-a-partner-1",
+      "kind": "value",
+      "answer": "(x+1)(x-3)/((x+2)(x+4))"
+     },
+     {
+      "ref": "eb11c1-3:challenge-1",
+      "kind": "value",
+      "answer": "(15129√123 - 1)/2"
+     },
+     {
+      "ref": "eb11c1-3:work-with-a-partner-2",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question 3 is not shown on the page, so I can't tell which expression it refers to."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c1-3:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c1-3:warm-up-1:a",
+      "kind": "value",
+      "answer": "4b^3/(3a^2)",
+      "solution": [
+       "Divide 12 and 9 by 3: 4/3.",
+       "Divide $b^5$ and $b^2$: $b^5/b^2=b^3$ stays on top.",
+       "Divide $a^3$ by $a$: $a^2$ stays on the bottom.",
+       "The answer is $\\frac{4b^3}{3a^2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:warm-up-1:b",
+      "kind": "value",
+      "answer": "(x-2)/(3x+1)",
+      "solution": [
+       "Factorise the top: $x^2-4=(x+2)(x-2)$.",
+       "Factorise the bottom: $3x^2+7x+2=(3x+1)(x+2)$.",
+       "Cancel the common factor $(x+2)$.",
+       "The answer is $\\frac{x-2}{3x+1}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:warm-up-2",
+      "kind": "value",
+      "answer": "(x+1)(x-3)/((x+2)(x+4))",
+      "solution": [
+       "Change ÷ to × using the reciprocal of the divisor: $\\frac{x^2-4x-5}{2x^2+5x+2}\\times\\frac{2x^2-5x-3}{x^2-x-20}$.",
+       "Factorise: $\\frac{(x+1)(x-5)}{(2x+1)(x+2)}\\times\\frac{(2x+1)(x-3)}{(x-5)(x+4)}$.",
+       "Cancel $(x-5)$ and $(2x+1)$.",
+       "The answer is $\\frac{(x+1)(x-3)}{(x+2)(x+4)}$ (do not expand)."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-1:a",
+      "kind": "value",
+      "answer": "3y^2/(10x)",
+      "solution": [
+       "Divide 6 and 20 by 2: 3/10.",
+       "Divide $x^2$ by $x^3$: $x$ stays on the bottom.",
+       "Divide $y^3$ by $y$: $y^2$ stays on top.",
+       "The answer is $\\frac{3y^2}{10x}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-1:b",
+      "kind": "value",
+      "answer": "(2x-5)/(x+2)",
+      "solution": [
+       "Factorise the top: $2x^2-3x-5=(2x-5)(x+1)$.",
+       "Factorise the bottom: $x^2+3x+2=(x+1)(x+2)$.",
+       "Cancel the common factor $(x+1)$.",
+       "The answer is $\\frac{2x-5}{x+2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-2:a",
+      "kind": "value",
+      "answer": "x/(x-3)",
+      "solution": [
+       "Factorise each part: $\\frac{(x-3)(x-8)}{(x-8)(x+2)}\\times\\frac{x(x+2)}{(x-3)(x-3)}$.",
+       "Cancel $(x-8)$, $(x+2)$ and one $(x-3)$.",
+       "The answer is $\\frac{x}{x-3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-2:b",
+      "kind": "value",
+      "answer": "(x-3)/((x-2)(2x-1))",
+      "solution": [
+       "Use the reciprocal of the divisor: $\\frac{x^2-9}{x^2-x-2}\\times\\frac{x+1}{2x^2+5x-3}$.",
+       "Factorise: $\\frac{(x-3)(x+3)}{(x-2)(x+1)}\\times\\frac{x+1}{(2x-1)(x+3)}$.",
+       "Cancel $(x+3)$ and $(x+1)$.",
+       "The answer is $\\frac{x-3}{(x-2)(2x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:a",
+      "kind": "value",
+      "answer": "3a/(4b^3)",
+      "solution": [
+       "Divide 6 and 8 by 2: 3/4.",
+       "Cancel $c^2$ top and bottom.",
+       "Divide $a^2$ by $a$: $a$ stays on top.",
+       "Divide $b$ by $b^4$: $b^3$ stays on the bottom.",
+       "The answer is $\\frac{3a}{4b^3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:b",
+      "kind": "value",
+      "answer": "1/(4ab^2)",
+      "solution": [
+       "Divide 2 and 8 by 2: 1/4.",
+       "Divide $a^2$ by $a^3$: $a$ stays on the bottom.",
+       "Divide $b$ by $b^3$: $b^2$ stays on the bottom.",
+       "The answer is $\\frac{1}{4ab^2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-1",
+       "eb11c1-3:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:c",
+      "kind": "value",
+      "answer": "x/(x-3)",
+      "solution": [
+       "Factorise the top: $x^2+3x=x(x+3)$.",
+       "Factorise the bottom: $x^2-9=(x-3)(x+3)$.",
+       "Cancel $(x+3)$.",
+       "The answer is $\\frac{x}{x-3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:d",
+      "kind": "value",
+      "answer": "(x+2)/(x-4)",
+      "solution": [
+       "Factorise the top: $x^2+x-2=(x+2)(x-1)$.",
+       "Factorise the bottom: $x^2-5x+4=(x-4)(x-1)$.",
+       "Cancel $(x-1)$.",
+       "The answer is $\\frac{x+2}{x-4}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:e",
+      "kind": "value",
+      "answer": "2(x-y)/(x(x+4y))",
+      "solution": [
+       "Top: $2x^2-4xy+2y^2=2(x^2-2xy+y^2)=2(x-y)^2$.",
+       "Bottom: $x^3+3x^2y-4xy^2=x(x^2+3xy-4y^2)=x(x+4y)(x-y)$.",
+       "Cancel one $(x-y)$.",
+       "The answer is $\\frac{2(x-y)}{x(x+4y)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:f",
+      "kind": "value",
+      "answer": "(x^2+x+1)/(x+3)",
+      "solution": [
+       "Factorise the top (difference of cubes): $x^3-1=(x-1)(x^2+x+1)$.",
+       "Factorise the bottom: $x^2+2x-3=(x+3)(x-1)$.",
+       "Cancel $(x-1)$.",
+       "The answer is $\\frac{x^2+x+1}{x+3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:example-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:a",
+      "kind": "value",
+      "answer": "3c^2/a",
+      "solution": [
+       "Multiply tops and bottoms: $\\frac{9a^3b^2c^3}{3a^4b^2c}$.",
+       "Divide 9 by 3: 3.",
+       "Cancel $b^2$.",
+       "Divide $c^3$ by $c$: $c^2$ on top.",
+       "Divide $a^3$ by $a^4$: $a$ on the bottom.",
+       "The answer is $\\frac{3c^2}{a}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:b",
+      "kind": "value",
+      "answer": "4a^2c^3/b^2",
+      "solution": [
+       "Multiply: $\\frac{60a^4bc^3}{15a^2b^3}$.",
+       "Divide 60 by 15: 4.",
+       "Divide $a^4$ by $a^2$: $a^2$ on top.",
+       "Divide $b$ by $b^3$: $b^2$ on the bottom.",
+       "$c^3$ stays on top.",
+       "The answer is $\\frac{4a^2c^3}{b^2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:c",
+      "kind": "value",
+      "answer": "3ab^2/(4x^2)",
+      "solution": [
+       "Use the reciprocal of the divisor: $\\frac{2xy}{3ab}\\times\\frac{9a^2b^3}{8x^3y}$.",
+       "Multiply: $\\frac{18a^2b^3xy}{24abx^3y}$.",
+       "Divide 18 and 24 by 6: 3/4.",
+       "Cancel $y$; $a^2/a=a$ on top; $b^3/b=b^2$ on top; $x/x^3$ leaves $x^2$ on the bottom.",
+       "The answer is $\\frac{3ab^2}{4x^2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:objective-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:d",
+      "kind": "value",
+      "answer": "(x-4)/(x(x-2))",
+      "solution": [
+       "Factorise: $\\frac{x+1}{(x-2)(x+2)}\\times\\frac{(x-4)(x+2)}{x(x+1)}$.",
+       "Cancel $(x+1)$ and $(x+2)$.",
+       "The answer is $\\frac{x-4}{x(x-2)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:e",
+      "kind": "value",
+      "answer": "(x+3)(x-5)/(x(x+4))",
+      "solution": [
+       "Factorise: $\\frac{(x-3)(x+3)}{x(x-2)}\\times\\frac{(x-2)(x-5)}{(x+4)(x-3)}$.",
+       "Cancel $(x-3)$ and $(x-2)$.",
+       "The answer is $\\frac{(x+3)(x-5)}{x(x+4)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:f",
+      "kind": "value",
+      "answer": "(x+3)(x+4)/((2x-3)(3x+1))",
+      "solution": [
+       "Factorise: $\\frac{(x+3)(x-2)}{(2x-3)(x+2)}\\times\\frac{(x+2)(x+4)}{(3x+1)(x-2)}$.",
+       "Cancel $(x-2)$ and $(x+2)$.",
+       "The answer is $\\frac{(x+3)(x+4)}{(2x-3)(3x+1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:g",
+      "kind": "value",
+      "answer": "(2x-5)(x-3)/((x+1)(x-1))",
+      "solution": [
+       "Use the reciprocal of the divisor: $\\frac{2x^2-x-10}{x^2-2x-3}\\times\\frac{x^2-6x+9}{x^2+x-2}$.",
+       "Factorise: $\\frac{(2x-5)(x+2)}{(x-3)(x+1)}\\times\\frac{(x-3)(x-3)}{(x+2)(x-1)}$.",
+       "Cancel $(x+2)$ and one $(x-3)$.",
+       "The answer is $\\frac{(2x-5)(x-3)}{(x+1)(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:h",
+      "kind": "value",
+      "answer": "3/(x+3)",
+      "solution": [
+       "Use the reciprocal of the divisor: $\\frac{x^2-3x-10}{2x^2+3x-2}\\times\\frac{6x-3}{x^2-2x-15}$.",
+       "Factorise: $\\frac{(x-5)(x+2)}{(2x-1)(x+2)}\\times\\frac{3(2x-1)}{(x-5)(x+3)}$.",
+       "Cancel $(x-5)$, $(x+2)$ and $(2x-1)$.",
+       "The answer is $\\frac{3}{x+3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:i",
+      "kind": "value",
+      "answer": "1/x",
+      "solution": [
+       "Use the reciprocal of the divisor: $\\frac{x^2-y^2}{x^2-2xy+y^2}\\times\\frac{x-y}{x^2+xy}$.",
+       "Factorise: $\\frac{(x-y)(x+y)}{(x-y)^2}\\times\\frac{x-y}{x(x+y)}$.",
+       "Cancel $(x+y)$ and all the $(x-y)$ factors.",
+       "The answer is $\\frac{1}{x}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-2",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:warm-up-3:?",
+      "kind": "value",
+      "answer": "(x+2)/(x(x-1))",
+      "solution": [
+       "Factorise the denominators: $\\frac{x+4}{x(x-2)}-\\frac{3}{(x-1)(x-2)}$.",
+       "Common denominator $x(x-1)(x-2)$: numerator $(x+4)(x-1)-3x$.",
+       "Numerator $=x^2-4=(x-2)(x+2)$.",
+       "Cancel $(x-2)$.",
+       "The answer is $\\frac{x+2}{x(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-3:1",
+      "kind": "value",
+      "answer": "x/((x+1)(x+2))",
+      "solution": [
+       "Factorise: $\\frac{x-1}{(x+1)(x+3)}+\\frac{2}{(x+2)(x+3)}$.",
+       "Common denominator $(x+1)(x+2)(x+3)$: numerator $(x-1)(x+2)+2(x+1)$.",
+       "Numerator $=x^2+3x=x(x+3)$.",
+       "Cancel $(x+3)$.",
+       "The answer is $\\frac{x}{(x+1)(x+2)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:example-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-3:2",
+      "kind": "value",
+      "answer": "(x+2)/(x+1)",
+      "solution": [
+       "Factorise: $\\frac{x}{x-1}-\\frac{2}{(x-1)(x+1)}$.",
+       "Common denominator $(x-1)(x+1)$: numerator $x(x+1)-2$.",
+       "Numerator $=x^2+x-2=(x+2)(x-1)$.",
+       "Cancel $(x-1)$.",
+       "The answer is $\\frac{x+2}{x+1}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-3",
+      "kind": "value",
+      "answer": "x-1",
+      "solution": [
+       "The denominators are the same, so combine the numerators: $\\frac{x^2-4+3}{x+1}$.",
+       "$=\\frac{x^2-1}{x+1}=\\frac{(x-1)(x+1)}{x+1}$.",
+       "Cancel $(x+1)$.",
+       "The answer is $x-1$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-4",
+       "eb11c1-3:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-4",
+      "kind": "value",
+      "answer": "1/(x+1)",
+      "solution": [
+       "The denominators are the same: $\\frac{3-(3-x)}{x^2+x}$.",
+       "$=\\frac{x}{x(x+1)}$.",
+       "Cancel $x$.",
+       "The answer is $\\frac{1}{x+1}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-5",
+      "kind": "value",
+      "answer": "(3x-2)/(x(x-1))",
+      "solution": [
+       "Common denominator $x(x-1)$: numerator $(x+2)(x-1)-x(x-2)$.",
+       "$=x^2+x-2-x^2+2x=3x-2$.",
+       "The numerator does not factorise to cancel anything.",
+       "The answer is $\\frac{3x-2}{x(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-2",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-6",
+      "kind": "value",
+      "answer": "2x/((x+2)(x-2))",
+      "solution": [
+       "Common denominator $(x+2)(x-2)$: numerator $(x-2)+(x+2)$.",
+       "Numerator $=2x$.",
+       "The answer is $\\frac{2x}{(x+2)(x-2)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:example-2",
+       "eb11c1-3:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-7",
+      "kind": "value",
+      "answer": "(2x+15)/((x-1)(x+6))",
+      "solution": [
+       "Factorise: $x^2+5x-6=(x+6)(x-1)$.",
+       "Common denominator $(x-1)(x+6)$: numerator $2(x+6)+3$.",
+       "Numerator $=2x+15$.",
+       "The answer is $\\frac{2x+15}{(x-1)(x+6)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:example-3",
+       "eb11c1-3:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-8",
+      "kind": "value",
+      "answer": "(2x^2-4x+3)/(x(x+1)(x-1))",
+      "solution": [
+       "Factorise: $x^2+x=x(x+1)$ and $x^2-1=(x-1)(x+1)$.",
+       "Common denominator $x(x+1)(x-1)$: numerator $(x-3)(x-1)+x\\cdot x$.",
+       "Numerator $=x^2-4x+3+x^2=2x^2-4x+3$, which does not factorise.",
+       "The answer is $\\frac{2x^2-4x+3}{x(x+1)(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:example-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-9",
+      "kind": "value",
+      "answer": "(3x-1)/(x(x-1))",
+      "solution": [
+       "Factorise: $x^2-1=(x-1)(x+1)$ and $x^2+x=x(x+1)$.",
+       "Common denominator $x(x-1)(x+1)$: numerator $4x\\cdot x-(x-1)(x-1)$.",
+       "Numerator $=4x^2-x^2+2x-1=3x^2+2x-1=(3x-1)(x+1)$.",
+       "Cancel $(x+1)$.",
+       "The answer is $\\frac{3x-1}{x(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-10",
+      "kind": "value",
+      "answer": "2/((x+2)(x+4))",
+      "solution": [
+       "Factorise: $\\frac{1}{(x+2)(x+3)}+\\frac{1}{(x+3)(x+4)}$.",
+       "Common denominator $(x+2)(x+3)(x+4)$: numerator $(x+4)+(x+2)=2x+6=2(x+3)$.",
+       "Cancel $(x+3)$.",
+       "The answer is $\\frac{2}{(x+2)(x+4)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:example-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-11",
+      "kind": "value",
+      "answer": "3/((x+2)(x+3))",
+      "solution": [
+       "Factorise: $\\frac{x-1}{(x+1)(x+2)}-\\frac{x-3}{(x+1)(x+3)}$.",
+       "Common denominator $(x+1)(x+2)(x+3)$: numerator $(x-1)(x+3)-(x-3)(x+2)$.",
+       "Numerator $=(x^2+2x-3)-(x^2-x-6)=3x+3=3(x+1)$.",
+       "Cancel $(x+1)$.",
+       "The answer is $\\frac{3}{(x+2)(x+3)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-12",
+      "kind": "value",
+      "answer": "-2/(x(x-1))",
+      "solution": [
+       "Factorise: $\\frac{x+4}{x(x+2)}-\\frac{x+5}{(x+2)(x-1)}$.",
+       "Common denominator $x(x+2)(x-1)$: numerator $(x+4)(x-1)-x(x+5)$.",
+       "Numerator $=x^2+3x-4-x^2-5x=-2x-4=-2(x+2)$.",
+       "Cancel $(x+2)$.",
+       "The answer is $\\frac{-2}{x(x-1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-13",
+      "kind": "value",
+      "answer": "2/((x+2)(x+1))",
+      "solution": [
+       "Factorise: $\\frac{x+8}{(x+2)(x-1)}-\\frac{x+5}{(x-1)(x+1)}$.",
+       "Common denominator $(x+2)(x-1)(x+1)$: numerator $(x+8)(x+1)-(x+5)(x+2)$.",
+       "Numerator $=(x^2+9x+8)-(x^2+7x+10)=2x-2=2(x-1)$.",
+       "Cancel $(x-1)$.",
+       "The answer is $\\frac{2}{(x+2)(x+1)}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:challenge-2",
+      "kind": "value",
+      "answer": "(x^2+2x+4)/(x+1)",
+      "solution": [
+       "Factorise: $x^2-x-2=(x-2)(x+1)$.",
+       "Subtract: $\\frac{x^3+8x}{(x-2)(x+1)}-\\frac{8}{x-2}$.",
+       "Common denominator $(x-2)(x+1)$: numerator $x^3+8x-8(x+1)=x^3-8$.",
+       "Factorise $x^3-8=(x-2)(x^2+2x+4)$.",
+       "Cancel $(x-2)$.",
+       "The answer is $\\frac{x^2+2x+4}{x+1}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-3",
+       "eb11c1-3:rule-3",
+       "eb11c1-3:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:warm-up-4:1",
+      "kind": "value",
+      "answer": "(x-1)/(x-2)",
+      "solution": [
+       "Multiply top and bottom by $(x-1)$.",
+       "Top: $x-1$. Bottom: $(x-1)-1=x-2$.",
+       "The answer is $\\frac{x-1}{x-2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:warm-up-5:2",
+      "kind": "value",
+      "answer": "1/x",
+      "solution": [
+       "Multiply top and bottom by $(1-x)(1+x)$.",
+       "Top: $(1+x)+(1-x)=2$. Bottom: $(1+x)-(1-x)=2x$.",
+       "$\\frac{2}{2x}=\\frac{1}{x}$.",
+       "The answer is $\\frac{1}{x}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-5",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-4:1",
+      "kind": "value",
+      "answer": "x+1",
+      "solution": [
+       "Multiply top and bottom by $(x+1)$.",
+       "Top: $x+1$. Bottom: $(x+1)-x=1$.",
+       "The answer is $x+1$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-4:2",
+      "kind": "value",
+      "answer": "-x/2",
+      "solution": [
+       "Multiply top and bottom by $(x+2)(x-2)$.",
+       "Top: $(x-2)+(x+2)=2x$.",
+       "Bottom: $(x-2)-(x+2)=-4$.",
+       "$\\frac{2x}{-4}=-\\frac{x}{2}$.",
+       "The answer is $-\\frac{x}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-5",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:try-4:3",
+      "kind": "value",
+      "answer": "1-x",
+      "solution": [
+       "Work on the inner part first: multiply top and bottom of $\\frac{1}{1-\\frac{1}{x}}$ by $x$ to get $\\frac{x}{x-1}$.",
+       "The expression becomes $\\frac{1}{1-\\frac{x}{x-1}}$.",
+       "Multiply top and bottom by $(x-1)$: top $x-1$, bottom $(x-1)-x=-1$.",
+       "$\\frac{x-1}{-1}=1-x$.",
+       "The answer is $1-x$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-14:1",
+      "kind": "value",
+      "answer": "-x-1",
+      "solution": [
+       "Multiply top and bottom by $(x-1)$.",
+       "Top: $x(x-1)-2=x^2-x-2=(x-2)(x+1)$.",
+       "Bottom: $x-2(x-1)=-x+2=-(x-2)$.",
+       "Cancel $(x-2)$.",
+       "The answer is $-(x+1)=-x-1$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5",
+       "eb11c1-3:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-15:2",
+      "kind": "value",
+      "answer": "x/y",
+      "solution": [
+       "Multiply top and bottom by $(x+y)$.",
+       "Top: $(x+y)+(x-y)=2x$.",
+       "Bottom: $(x+y)-(x-y)=2y$.",
+       "The answer is $\\frac{2x}{2y}=\\frac{x}{y}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-5",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-16:3",
+      "kind": "value",
+      "answer": "-x/y",
+      "solution": [
+       "Multiply top and bottom by $(x+y)(x-y)$.",
+       "Top: $(x-y)+(x+y)=2x$.",
+       "Bottom: $(x-y)-(x+y)=-2y$.",
+       "The answer is $\\frac{2x}{-2y}=-\\frac{x}{y}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-5",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-17:4",
+      "kind": "value",
+      "answer": "2x/(x^2+1)",
+      "solution": [
+       "Multiply top and bottom by $(x-1)(x+1)$.",
+       "Top: $(x+1)^2-(x-1)^2=4x$.",
+       "Bottom: $(x+1)^2+(x-1)^2=2x^2+2=2(x^2+1)$.",
+       "Cancel the common factor 2.",
+       "The answer is $\\frac{2x}{x^2+1}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-5",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:exercise-18:5",
+      "kind": "value",
+      "answer": "x+1",
+      "solution": [
+       "Inner part: multiply top and bottom of $\\frac{1}{1+\\frac{1}{x}}$ by $x$ to get $\\frac{x}{x+1}$.",
+       "The expression becomes $\\frac{1}{1-\\frac{x}{x+1}}$.",
+       "Multiply top and bottom by $(x+1)$: top $x+1$, bottom $(x+1)-x=1$.",
+       "The answer is $x+1$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:challenge-3",
+      "kind": "value",
+      "answer": "(x+2)/(2x+3)",
+      "solution": [
+       "Start with the innermost part: $1+\\frac{1}{1+x}=\\frac{x+2}{1+x}$.",
+       "Then $\\frac{1}{\\frac{x+2}{x+1}}=\\frac{x+1}{x+2}$, so the next part is $1+\\frac{x+1}{x+2}=\\frac{2x+3}{x+2}$.",
+       "The whole expression is $\\frac{1}{\\frac{2x+3}{x+2}}=\\frac{x+2}{2x+3}$.",
+       "So $A(x)=x+2$ and $B(x)=2x+3$.",
+       "The answer is $\\frac{x+2}{2x+3}$."
+      ],
+      "grounded_in": [
+       "eb11c1-3:explanation-4",
+       "eb11c1-3:rule-5",
+       "eb11c1-3:definition-3"
+      ]
+     },
+     {
+      "ref": "eb11c1-3:reflect-1",
+      "kind": "explanation",
+      "answer": "No, it is not true for all real x, because the left side is undefined at x = 4, so the graph has a hole at the point (4, 8).",
+      "solution": [
+       "Factorise the top: $x^2-16=(x-4)(x+4)$.",
+       "Cancelling $(x-4)$ gives $x+4$, but only when $x\\neq 4$.",
+       "At $x=4$ the denominator $x-4$ is 0, so the left side has no value.",
+       "The right side $x+4$ is defined at $x=4$ and equals 8, so the two sides are not equal for all real x.",
+       "The graph of $y=\\frac{x^2-16}{x-4}$ is the line $y=x+4$ with a single missing point (a hole) at (4, 8). A screen's resolution hides this one point."
+      ],
+      "grounded_in": [
+       "eb11c1-3:rule-1",
+       "eb11c1-3:definition-1",
+       "eb11c1-3:caution-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-3:warm-up-1:a",
+      "kind": "value",
+      "answer": "4b^3/(3a^2)"
+     },
+     {
+      "ref": "eb11c1-3:warm-up-1:b",
+      "kind": "value",
+      "answer": "(x-2)/(3x+1)"
+     },
+     {
+      "ref": "eb11c1-3:warm-up-2",
+      "kind": "value",
+      "answer": "(x+1)(x-3)/((x+2)(x+4))"
+     },
+     {
+      "ref": "eb11c1-3:try-1:a",
+      "kind": "value",
+      "answer": "3y^2/(10x)"
+     },
+     {
+      "ref": "eb11c1-3:try-1:b",
+      "kind": "value",
+      "answer": "(2x-5)/(x+2)"
+     },
+     {
+      "ref": "eb11c1-3:try-2:a",
+      "kind": "value",
+      "answer": "x/(x-3)"
+     },
+     {
+      "ref": "eb11c1-3:try-2:b",
+      "kind": "value",
+      "answer": "(x-3)/((x-2)(2x-1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:a",
+      "kind": "value",
+      "answer": "3a/(4b^3)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:b",
+      "kind": "value",
+      "answer": "1/(4ab^2)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:c",
+      "kind": "value",
+      "answer": "x/(x-3)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:d",
+      "kind": "value",
+      "answer": "(x+2)/(x-4)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:e",
+      "kind": "value",
+      "answer": "2(x-y)/(x(x+4y))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-1:f",
+      "kind": "value",
+      "answer": "(x^2+x+1)/(x+3)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:a",
+      "kind": "value",
+      "answer": "3c^2/a"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:b",
+      "kind": "value",
+      "answer": "4a^2c^3/b^2"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:c",
+      "kind": "value",
+      "answer": "3ab^2/(4x^2)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:d",
+      "kind": "value",
+      "answer": "(x-4)/(x(x-2))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:e",
+      "kind": "value",
+      "answer": "(x+3)(x-5)/(x(x+4))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:f",
+      "kind": "value",
+      "answer": "(x+3)(x+4)/((2x-3)(3x+1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:g",
+      "kind": "value",
+      "answer": "(2x-5)(x-3)/((x+1)(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:h",
+      "kind": "value",
+      "answer": "3/(x+3)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-2:i",
+      "kind": "value",
+      "answer": "1/x"
+     },
+     {
+      "ref": "eb11c1-3:warm-up-3:?",
+      "kind": "value",
+      "answer": "(x+2)/(x(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:try-3:1",
+      "kind": "value",
+      "answer": "x/((x+1)(x+2))"
+     },
+     {
+      "ref": "eb11c1-3:try-3:2",
+      "kind": "value",
+      "answer": "(x+2)/(x+1)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-3",
+      "kind": "value",
+      "answer": "Item 1, (x^2-4)/(x+1) + 3/(x+1) = x - 1"
+     },
+     {
+      "ref": "eb11c1-3:exercise-4",
+      "kind": "value",
+      "answer": "Item 2, 3/(x^2+x) - (3-x)/(x^2+x) = 1/(x+1)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-5",
+      "kind": "value",
+      "answer": "Item 3, (x+2)/x - (x-2)/(x-1) = (3x-2)/(x(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-6",
+      "kind": "value",
+      "answer": "Item 4, 1/(x+2) + 1/(x-2) = 2x/((x+2)(x-2))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-7",
+      "kind": "value",
+      "answer": "Item 5, 2/(x-1) + 3/(x^2+5x-6) = (2x+15)/((x-1)(x+6))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-8",
+      "kind": "value",
+      "answer": "Item 6, (x-3)/(x^2+x) + x/(x^2-1) = (2x^2-4x+3)/(x(x-1)(x+1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-9",
+      "kind": "value",
+      "answer": "Item 7, 4x/(x^2-1) - (x-1)/(x^2+x) = (3x-1)/(x(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-10",
+      "kind": "value",
+      "answer": "Item 8, 1/(x^2+5x+6) + 1/(x^2+7x+12) = 2/((x+2)(x+4))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-11",
+      "kind": "value",
+      "answer": "Item 9, (x-1)/(x^2+3x+2) - (x-3)/(x^2+4x+3) = 3/((x+2)(x+3))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-12",
+      "kind": "value",
+      "answer": "Item 10, (x+4)/(x^2+2x) - (x+5)/(x^2+x-2) = -2/(x(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:exercise-13",
+      "kind": "value",
+      "answer": "Item 11, (x+8)/(x^2+x-2) - (x+5)/(x^2-1) = 2/((x+1)(x+2))"
+     },
+     {
+      "ref": "eb11c1-3:challenge-2",
+      "kind": "value",
+      "answer": "(x^2+2x+4)/(x+1)"
+     },
+     {
+      "ref": "eb11c1-3:warm-up-4:1",
+      "kind": "value",
+      "answer": "(x-1)/(x-2)"
+     },
+     {
+      "ref": "eb11c1-3:warm-up-5:2",
+      "kind": "value",
+      "answer": "1/x"
+     },
+     {
+      "ref": "eb11c1-3:try-4:1",
+      "kind": "value",
+      "answer": "x+1"
+     },
+     {
+      "ref": "eb11c1-3:try-4:2",
+      "kind": "value",
+      "answer": "-x/2"
+     },
+     {
+      "ref": "eb11c1-3:try-4:3",
+      "kind": "value",
+      "answer": "1-x"
+     },
+     {
+      "ref": "eb11c1-3:exercise-14:1",
+      "kind": "value",
+      "answer": "-(x+1)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-15:2",
+      "kind": "value",
+      "answer": "x/y"
+     },
+     {
+      "ref": "eb11c1-3:exercise-16:3",
+      "kind": "value",
+      "answer": "-x/y"
+     },
+     {
+      "ref": "eb11c1-3:exercise-17:4",
+      "kind": "value",
+      "answer": "2x/(x^2+1)"
+     },
+     {
+      "ref": "eb11c1-3:exercise-18:5",
+      "kind": "value",
+      "answer": "x+1"
+     },
+     {
+      "ref": "eb11c1-3:challenge-3",
+      "kind": "value",
+      "answer": "A(x)/B(x) = (x+2)/(2x+3)"
+     },
+     {
+      "ref": "eb11c1-3:reflect-1",
+      "kind": "explanation",
+      "answer": "No. The two sides are equal only for $x\\neq 4$: the left side $\\frac{x^2-16}{x-4}=\\frac{(x-4)(x+4)}{x-4}$ is undefined at $x=4$ (division by zero), while $x+4$ equals 8 there. The graph hides a removable discontinuity, a single hole (missing point) at $(4, 8)$ in the line $y=x+4$."
+     }
+    ]
+   }
+  }
+ ]
+}

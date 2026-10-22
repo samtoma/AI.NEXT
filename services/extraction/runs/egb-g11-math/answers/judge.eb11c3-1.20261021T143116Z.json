@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "3ac55afd6d1833c831d143c1c43c261db0a894e0ed2cd49d08cc5ce9c519e71b",
+  "generated_sha256": "f6aa2224e41d120a410837ab0c5f722ef3d619b8a1416c6852d0731a6ddb8058",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c3-1:example-2",
+    "verdict": "equivalent",
+    "reason": "(-1-5i)/13 = -1/13 - 5/13 i."
+   },
+   {
+    "ref": "eb11c3-1:explanation-3",
+    "verdict": "equivalent",
+    "reason": "Same value 3/5 + 4/5 i."
+   },
+   {
+    "ref": "eb11c3-1:explanation-4",
+    "verdict": "equivalent",
+    "reason": "Both give ±i√6."
+   },
+   {
+    "ref": "eb11c3-1:explanation-5:b",
+    "verdict": "equivalent",
+    "reason": "-2i/3 equals -(2/3)i."
+   }
+  ]
+ }
+}

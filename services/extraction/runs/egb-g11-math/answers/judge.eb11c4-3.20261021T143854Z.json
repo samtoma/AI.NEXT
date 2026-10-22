@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "d9a5c74e7edab1486f01691a8636992735596b77137e24ce6e20bc975fc8698d",
+  "generated_sha256": "2282f97a8d71e601b992e77f4f7858d5c8a93e3f95440c519465a66c66c27766",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c4-3:warm-up-2:1",
+    "verdict": "different",
+    "reason": "Printed gives a specific equation (x-3)^2+(y+2)^2=25, while the solver gives no equation, only saying to complete the square first."
+   },
+   {
+    "ref": "eb11c4-3:example-4",
+    "verdict": "equivalent",
+    "reason": "Printed 0 is the number of intersection points, and the solver says there are none (D<0)."
+   },
+   {
+    "ref": "eb11c4-3:worked-example-1",
+    "verdict": "equivalent",
+    "reason": "Both say the circles intersect at 2 points."
+   },
+   {
+    "ref": "eb11c4-3:explanation-7",
+    "verdict": "equivalent",
+    "reason": "2x-4y-5=0 rearranges to y=x/2-5/4."
+   }
+  ]
+ }
+}

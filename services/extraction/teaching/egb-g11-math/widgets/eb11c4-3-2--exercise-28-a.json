@@ -1,0 +1,42 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-2:exercise-28-a",
+ "lo_id": "lo:eb11c4-3-2",
+ "book_item": "eb11c4-3:exercise-28#a",
+ "parent_question_id": "q:eb11c4-3-2:bk-exercise-28-a",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "pair_plotter",
+ "spec": {
+  "target": [
+   3,
+   -1
+  ]
+ },
+ "stem": "Find the point of intersection of the circle $x^2+y^2=10$ and the line $y=3x-10$. Plot it.",
+ "solution": [
+  "Substitute $y=3x-10$: $x^2+(3x-10)^2=10$.",
+  "Simplify: $10x^2-60x+90=0$, so $(x-3)^2=0$ and $x=3$ only.",
+  "$y=3\\cdot3-10=-1$.",
+  "The line touches the circle at $(3,-1)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "swapped-coordinates",
+   "step": 3,
+   "text": "The x value comes first; find y by putting x into the line."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 3,
+   "text": "Recheck the signs when you substitute x into the line."
+  },
+  {
+   "predicate": "off-target",
+   "step": 2,
+   "text": "Substitute the line into the circle and simplify to a quadratic in x; look at its roots."
+  }
+ ],
+ "notes": "Tangent case: one point."
+}

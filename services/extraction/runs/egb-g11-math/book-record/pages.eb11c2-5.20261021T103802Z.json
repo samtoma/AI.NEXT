@@ -1,0 +1,2208 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "8a29b2f5b58539989acd2b5c40a158ed4814234ab3a7962484fbf9168f323be0",
+  "generated_sha256": "69fd95137c4808c219612b057a811b0d675e91554d217b56e8116da580f17f11",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c2-5",
+   "pages": [
+    {
+     "printed": 91,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 5 · Recurrence and induction",
+       "text": "Concept 5 · Recurrence and induction",
+       "_key": "p91-k1",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+       "text": "Learning Outcomes: Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+       "_key": "p91-k2",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "When a doctor prescribes an antibiotic, the goal is to maintain",
+       "text": "A doctor prescribes an antibiotic to maintain a therapeutic amount of the drug in the bloodstream; each 24 hours a new dose is taken while the body eliminates a fixed percentage of the drug present. The amount tomorrow depends directly on the amount left over today; this step-by-step dependency is the essence of a recurrence relation. To prove the pattern remains safe over infinitely many days, mathematicians use a logical domino effect called mathematical induction.",
+       "_key": "p91-k3",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "STABLE DRUG LEVEL / THERAPEUTIC RANGE / NEW DAILY DOSE",
+       "caption": "Illustration of an arm with an IV drip and a tube showing a wavy drug level within a therapeutic range; labels read: STABLE DRUG LEVEL, THERAPEUTIC RANGE, METABOLIZES, ELIMINATES, NEW DAILY DOSE, 24h. Illustrates the antibiotic dosing text.",
+       "notes": "Illustrative picture; small labels read from image, verify.",
+       "_key": "p91-k4",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "label": "Guiding Question",
+       "number": null,
+       "quote": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+       "text": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+       "_key": "p91-k5",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "A sequence {a_n} is determined, and a_2, a_3, a_4, ... can be found in order",
+       "claim": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\dots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$).",
+       "formula": "$a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$)",
+       "_key": "p91-k6",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "The above (b) is called a recurrence relation.",
+       "claim": "Condition (b), a relational expression to find $a_{n+1}$ from $a_n$, is called a recurrence relation.",
+       "_key": "p91-k7",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "key_term",
+       "label": "",
+       "number": null,
+       "quote": "a recurrence relation",
+       "term": "recurrence relation",
+       "_key": "p91-k8",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "Hereafter, recurrence relations are assumed to hold for n = 1, 2, 3, ...",
+       "claim": "Hereafter, recurrence relations are assumed to hold for $n=1,2,3,\\dots$.",
+       "_key": "p91-k9",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a_{n+1} = a_n + d Arithmetic sequence with common difference d",
+       "claim": "The recurrence relation $a_{n+1}=a_n+d$ represents an arithmetic sequence with common difference $d$.",
+       "formula": "$a_{n+1}=a_n+d$",
+       "_key": "p91-k10",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a_{n+1} = r a_n Geometric sequence with common ratio r",
+       "claim": "The recurrence relation $a_{n+1}=ra_n$ represents a geometric sequence with common ratio $r$.",
+       "formula": "$a_{n+1}=ra_n$",
+       "_key": "p91-k11",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Adding d to a_n gives a_{n+1}",
+       "text": "Side notes: \"Adding $d$ to $a_n$ gives $a_{n+1}$\"; \"Multiplying $a_n$ by $r$ gives $a_{n+1}$\".",
+       "_key": "p91-k12",
+       "source_page": 91,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 92,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p92-k1",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p92-k2",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the 2nd through the 4th terms of the sequence",
+       "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1 = 2,\\ a_{n+1} = 3a_n + 2$",
+       "_key": "p92-k3",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Find the general term of the sequence",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1 = -1,\\ a_{n+1} = a_n + 5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1 = 2,\\ a_{n+1} = 3a_n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p92-k4",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p92-k5",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "The 2nd. term is found by substituting n = 1",
+       "stem": "Find the 2nd through the 4th terms of the sequence with $a_1=2$, $a_{n+1}=3a_n+2$ (Warm Up 1).",
+       "solution": [
+        "The 2nd term is found by substituting $n=1$ into the given recurrence relation: $a_{1+1}=3a_1+2$, $a_2=3\\times2+2=8$",
+        "The 3rd term is found using the 2nd term: $a_{2+1}=3a_2+2$, $a_3=3\\times8+2=26$",
+        "Similarly, the 4th term is found using the 3rd term: $a_{3+1}=3a_3+2$, $a_4=3\\times26+2=80$"
+       ],
+       "answer": "$a_2=8,\\ a_3=26,\\ a_4=80$",
+       "_key": "p92-k6",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "Since the sequence is an arithmetic sequence with the first term",
+       "stem": "Find the general term of the sequences in Warm Up 2.",
+       "parts": [
+        {
+         "label": "a",
+         "solution": [
+          "Since the sequence $\\{a_n\\}$ is an arithmetic sequence with the first term $-1$ and the common difference 5:",
+          "$a_n=-1+(n-1)\\times5$"
+         ],
+         "answer": "$a_n=5n-6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "solution": [
+          "Since the sequence $\\{a_n\\}$ is a geometric sequence with the first term 2 and the common ratio 3:"
+         ],
+         "answer": "$a_n=2\\times3^{n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p92-k7",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a_n = a + (n−1)d",
+       "claim": "General term of an arithmetic sequence with first term a and common difference d (side note beside part a).",
+       "formula": "$a_n = a + (n-1)d$",
+       "notes": "Side-box note.",
+       "_key": "p92-k8",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "a_n = ar^{n−1}",
+       "claim": "General term of a geometric sequence with first term a and common ratio r (side note beside part b).",
+       "formula": "$a_n = ar^{n-1}$",
+       "notes": "Side-box note.",
+       "_key": "p92-k9",
+       "source_page": 92,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 93,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p93-k1",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the 2nd. through the 4th terms of the sequence",
+       "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=-6,\\ a_{n+1}=2a_n+3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=2,\\ a_{n+1}=3a_n-n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p93-k2",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the general term of the sequence",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=1,\\ a_{n+1}=a_n+3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=4,\\ a_{n+1}=a_n-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_1=3,\\ a_{n+1}=5a_n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_1=-3,\\ a_{n+1}=-2a_n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p93-k3",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p93-k4",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the 2nd. through the 4th. terms of the sequence",
+       "text": "Find the 2nd through the 4th terms of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=1,\\ a_{n+1}=-2a_n+5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=-6,\\ a_{n+1}=a_n+n^2-2n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_1=3,\\ a_{n+1}=3a_n-n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_1=-2,\\ a_{n+1}=a_n-n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$a_1=-2,\\ a_{n+1}=a_n+3^n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p93-k5",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the general term of the sequence",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=1,\\ a_{n+1}=a_n+6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=3,\\ a_{n+1}=a_n-5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_1=4,\\ a_{n+1}=3a_n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_1=2,\\ a_{n+1}=-5a_n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$a_1=-2,\\ a_{n+1}=a_n+3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$a_1=4,\\ a_{n+1}=a_n-4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$a_1=1,\\ a_{n+1}=4a_n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$a_1=-2,\\ a_{n+1}=-4a_n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p93-k6",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Solve the recurrence relation for a_n",
+       "text": "Solve the recurrence relation for $a_n$: $a_n=6a_{n-1}-11a_{n-2}+6a_{n-3}$ for $n\\ge 3$. Given initial conditions: $a_0=0$, $a_1=1$, and $a_2=6$.",
+       "parts": [],
+       "_key": "p93-k7",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "parts": [],
+       "_key": "p93-k8",
+       "source_page": 93,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 94,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Recurrence Relations (2)",
+       "text": "Recurrence Relations (2)",
+       "_key": "p94-k1",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Solve recurrence relations at their different levels",
+       "text": "Learning Outcomes: Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+       "_key": "p94-k2",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Recurrence relations where the difference sequence is known",
+       "claim": "For a recurrence relation $a_{n+1}=a_n+f(n)$, $f(n)$ is the general term of the difference sequence of $\\{a_n\\}$ (an expression in terms of $n$; can be transformed to $a_{n+1}-a_n=f(n)$).",
+       "formula": "$a_{n+1}=a_n+f(n)$",
+       "_key": "p94-k3",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When n ≥ 2, a_n = a_1 + ∑ f(k)",
+       "claim": "When $n\\ge 2$, $a_n$ equals $a_1$ plus the sum of $f(k)$ for k from 1 to n−1.",
+       "formula": "$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$",
+       "_key": "p94-k4",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p94-k5",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the general term of the sequence {a n} determined by the following conditions.",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=a_n+2n-3$",
+       "_key": "p94-k6",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p94-k7",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Since a n+1 − a n = 2n−3, the general term of the difference sequence",
+       "stem": "Find the general term of $\\{a_n\\}$ with $a_1=1,\\ a_{n+1}=a_n+2n-3$.",
+       "solution": [
+        "Since $a_{n+1}-a_n=2n-3$, the general term of the difference sequence of $\\{a_n\\}$ is $2n-3$.",
+        "Therefore, when $n\\ge 2$: $a_n=1+\\sum_{k=1}^{n-1}(2k-3)$",
+        "$=1+2\\times\\frac{1}{2}(n-1)\\{(n-1)+1\\}-3(n-1)$",
+        "$=n^2-4n+4=(n-2)^2$",
+        "This formula also holds when $n=1$",
+        "Therefore, $a_n=(n-2)^2$"
+       ],
+       "answer": "$a_n=(n-2)^2$",
+       "_key": "p94-k8",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p94-k9",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the general term of the sequence {a n} determined by the following conditions.",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+n^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=1,\\ a_{n+1}=a_n+3^n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p94-k10",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box; on the previous page the record is the same activity but here it is printed on page 94 as well; check whether duplicate.",
+       "_key": "p94-k11",
+       "source_page": 94,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 95,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the general term of the sequence",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+2n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+3n^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_1=1,\\ a_{n+1}=a_n+2^n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+3n+1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n+2n^2+n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$a_1=2,\\ a_{n+1}=a_n-3^n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$a_1=4,\\ a_{n+1}=a_n-4^n$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p95-k1",
+       "source_page": 95,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A tech startup launches with a 400,000 LE cash reserve",
+       "text": "A tech startup launches with a 400,000 LE cash reserve ($a_1 = 4$ hundred thousand). They burn an amount of 4n thousand LE at the end of each quarter: $a_1=4,\\ a_{n+1}=a_n-0.04n$. Find an explicit formula for the general term $a_n$ to predict the company's cash reserve at the start of any quarter.",
+       "notes": "Starred Challenge box.",
+       "_key": "p95-k2",
+       "source_page": 95,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 96,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Recurrence Relations (3)",
+       "text": "Recurrence Relations (3)",
+       "label": "",
+       "number": null,
+       "_key": "p96-k1",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Solve recurrence relations at their different levels",
+       "text": "Solve recurrence relations at their different levels in order to deduce the terms of the sequence.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k2",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "quote": "Steps to find the general term from a recurrence relation",
+       "text": "Point! Steps to find the general term from a recurrence relation of the form $a_{n+1}=pa_n+q$.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k3",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "method",
+       "quote": "Replace both a_{n+1} and a_n in the recurrence relation with c",
+       "claim": "Step 1: Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$.",
+       "formula": "$c=pc+q$",
+       "label": "",
+       "number": null,
+       "_key": "p96-k4",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "method",
+       "quote": "Solve the equation from ❶",
+       "claim": "Step 2: Solve the equation from step 1.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k5",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "method",
+       "quote": "Substitute the solution from ❷ into a_{n+1} − c = p(a_n − c)",
+       "claim": "Step 3: Substitute the solution from step 2 into $a_{n+1}-c=p(a_n-c)$.",
+       "formula": "$a_{n+1}-c=p(a_n-c)$",
+       "label": "",
+       "number": null,
+       "_key": "p96-k6",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "method",
+       "quote": "Letting a_n − c = b_n, {b_n} is a geometric sequence with common ratio p",
+       "claim": "Step 4: Letting $a_n-c=b_n$, $\\{b_n\\}$ is a geometric sequence with common ratio p.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k7",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "quote": "Find the general term of {a_n} using the general term of {b_n}",
+       "claim": "Step 5: Find the general term of $\\{a_n\\}$ using the general term of $\\{b_n\\}$.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k8",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "quote": "Find the general term of the sequence {a_n} determined by the following conditions",
+       "text": "Warm Up: Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1=1,\\ a_{n+1}=3a_n+4$",
+       "label": "Warm Up",
+       "number": null,
+       "_key": "p96-k9",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "quote": "Replacing both a_{n+1} and a_n in the given recurrence relation",
+       "stem": "Explanation of the Warm Up: find the general term of $a_1=1,\\ a_{n+1}=3a_n+4$.",
+       "solution": [
+        "Replacing both $a_{n+1}$ and $a_n$ in $a_{n+1}=3a_n+4$ with $c$: $c=3c+4$",
+        "Solving this gives $c=-2$",
+        "Therefore, $a_{n+1}+2=3(a_n+2)$ ...... (i)",
+        "Here, letting $a_n+2=b_n$ ......(ii), we can express it as $a_{n+1}+2=b_{n+1}$",
+        "Substituting these into (i) gives $b_{n+1}=3b_n$, so $\\{b_n\\}$ is a geometric sequence with common ratio 3",
+        "Also, the first term $b_1$ of $\\{b_n\\}$ is, from (ii), $b_1=a_1+2=1+2=3$",
+        "Therefore, $b_n=3\\times3^{n-1}=3^n$",
+        "Substituting this into (ii) gives $a_n+2=3^n$",
+        "$a_n=3^n-2$"
+       ],
+       "answer": "$a_n=3^n-2$",
+       "label": "Explanation",
+       "number": null,
+       "_key": "p96-k10",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "linking_text",
+       "quote": "Substitute c = −2 into a_{n+1} − c = p(a_n − c)",
+       "text": "Side note: Substitute $c=-2$ into $a_{n+1}-c=p(a_n-c)$.",
+       "label": "",
+       "number": null,
+       "_key": "p96-k11",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "linking_text",
+       "quote": "{b_n} is a geometric sequence with the first term 3, the common ratio 3",
+       "text": "Side note: $\\{b_n\\}$ is a geometric sequence with the first term 3, the common ratio 3",
+       "label": "",
+       "number": null,
+       "_key": "p96-k12",
+       "source_page": 96,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 97,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the general term of the sequence {a_n} determined by the following",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1 = 1,\\ a_{n+1} = 5a_n + 8$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1 = 4,\\ a_{n+1} = -2a_n + 3$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p97-k1",
+       "source_page": 97,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the general term of the sequence {a_n} determined by the following",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$a_1 = 2,\\ a_{n+1} = 2a_n - 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$a_1 = -3,\\ a_{n+1} = 4a_n + 3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$a_1 = 3,\\ a_{n+1} = 3a_n - 2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$a_1 = -2,\\ a_{n+1} = -3a_n + 4$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$a_1 = 1,\\ a_{n+1} = \\frac{1}{3}a_n + 2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$a_1 = 2,\\ a_{n+1} = \\frac{2}{3}a_n - \\frac{1}{2}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p97-k2",
+       "source_page": 97,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p97-k3",
+       "source_page": 97,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 98,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Apply the principle of mathematical induction to prove",
+       "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of mathematical equalities and identities.",
+       "_key": "p98-k1",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Mathematical Induction for Proving Equalities",
+       "text": "Mathematical Induction for Proving Equalities",
+       "_key": "p98-k2",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Proof by mathematical induction",
+       "claim": "Procedure to prove that \"Condition (A) holds for all natural numbers n\": [1] Show that (A) holds when n = 1. [2] Assume that (A) holds when n = k, and write the equation that holds then. By transforming that equation, show that (A) also holds when n = k + 1.",
+       "formula": "$n=1$, $n=k$, $n=k+1$",
+       "notes": "Printed in a 'Point!' box with a heading 'Proof by mathematical induction'.",
+       "_key": "p98-k3",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p98-k4",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Use mathematical induction to prove that 1 + 2 + 3 + … + n",
+       "text": "Use mathematical induction to prove that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$",
+       "_key": "p98-k5",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p98-k6",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "Let the given equality be (A).",
+       "stem": "Prove by induction that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$ (the Warm Up); let the given equality be (A).",
+       "solution": [
+        "[1] When $n=1$: LHS $=1$, RHS $=\\frac{1}{2}\\times1\\times(1+1)=1$. Therefore, (A) holds when $n=1$.",
+        "[2] Assume (A) holds when $n=k$: $1+2+3+\\dots+k=\\frac{1}{2}k(k+1)\\dots\\dots$(i)",
+        "When $n=k+1$, from (i): LHS $=1+2+3+\\dots+k+(k+1)$",
+        "$=\\frac{1}{2}k(k+1)+(k+1)$",
+        "$=\\frac{1}{2}(k+1)(k+2)$",
+        "$=\\frac{1}{2}(k+1)\\{(k+1)+1\\}$",
+        "RHS $=\\frac{1}{2}(k+1)\\{(k+1)+1\\}$. Therefore, (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers."
+       ],
+       "answer": "",
+       "notes": "Explanation of the Warm Up; not labelled as an Example. Side notes beside lines: see k8-k10.",
+       "_key": "p98-k7",
+       "source_page": 98,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Derive the expression that holds for n = k + 1 using (i).",
+       "text": "Side note (beside LHS line): Derive the expression that holds for n = k + 1 using (i).",
+       "belongs_to_key": "p98-k7",
+       "_key": "p98-k8",
+       "source_page": 98,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Do not expand; factor out",
+       "text": "Side note (beside the second line): Do not expand; factor out $\\frac{1}{2}(k+1)$.",
+       "belongs_to_key": "p98-k7",
+       "_key": "p98-k9",
+       "source_page": 98,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Transform into the form obtained by substituting n =",
+       "text": "Side note (beside the third line): Transform into the form obtained by substituting $n=k+1$ into the RHS of (A).",
+       "belongs_to_key": "p98-k7",
+       "_key": "p98-k10",
+       "source_page": 98,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 99,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Use mathematical induction to prove the following equalities.",
+       "text": "Use mathematical induction to prove the following equalities.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$1+3+5+\\dots+(2n-1)=n^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$1\\times2+2\\times3+3\\times4+\\dots+n(n+1)=\\frac{1}{3}n(n+1)(n+2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p99-k1",
+       "source_page": 99,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p99-k2",
+       "source_page": 99,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Use mathematical induction to prove the following equalities.",
+       "text": "Use mathematical induction to prove the following equalities.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$1^2+3^2+5^2+\\dots+(2n-1)^2=\\frac{1}{3}n(2n-1)(2n+1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$3+3\\times4+3\\times4^2+\\dots+3\\times4^{n-1}=4^n-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1\\times3+2\\times4+3\\times5+\\dots+n(n+2)=\\frac{1}{6}n(n+1)(2n+7)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$1+10+10^2+\\dots+10^n=\\frac{1}{9}(10^{n+1}-1)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p99-k3",
+       "source_page": 99,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 100,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Mathematical Induction for Proving Inequalities",
+       "text": "2-24 Mathematical Induction for Proving Inequalities (Chapter 2 Sequences)",
+       "_key": "p100-k1",
+       "source_page": 100,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Apply the principle of mathematical induction to prove",
+       "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of algebraic inequalities.",
+       "_key": "p100-k2",
+       "source_page": 100,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "When proving equalities or inequalities involving a^n, multiply both sides",
+       "claim": "When proving equalities or inequalities involving $a^n$, multiply both sides of the assumed expression by $a$.",
+       "formula": "$a^n$",
+       "notes": "Printed in a 'Point!' box with a warning icon.",
+       "_key": "p100-k3",
+       "source_page": 100,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "worked_example",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "When n is a natural number greater than or equal to 4",
+       "stem": "When $n$ is a natural number greater than or equal to 4, prove the following inequality. $2^n > 3n$",
+       "solution": [
+        "Let the given inequality be (A).",
+        "[1] When $n=4$, LHS $=2^4=16$, RHS $=3\\times4=12$. Therefore, (A) holds when $n=4$.",
+        "[2] Assuming $k\\ge4$ and (A) holds when $n=k$, $2^k>3k$. Multiplying both sides by 2 gives $2^{k+1}>6k$ ...... (i)",
+        "Here, comparing $6k$ and $3(k+1)$: when $k\\ge4$, $6k-3(k+1)=6k-3k-3=3k-3>0$. Therefore, $6k>3(k+1)$ ......(ii)",
+        "From (i) and (ii), since $2^{k+1}>6k>3(k+1)$, $2^{k+1}>3(k+1)$. This shows that (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers greater than or equal to 4."
+       ],
+       "notes": "Warm Up with 'Explanation' section printed as its solution; no separate final answer line. Three margin notes follow (k5-k7).",
+       "_key": "p100-k4",
+       "source_page": 100,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since we are proving this for n ≥ 4",
+       "text": "Side note (beside step [1]): Since we are proving this for $n\\ge4$ or more, show it holds when $n=4$.",
+       "belongs_to_key": "p100-k4",
+       "_key": "p100-k5",
+       "source_page": 100,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Using this expression, show (A) for",
+       "text": "Side note (beside $2^k>3k$): Using this expression, show (A) for $n=k+1$, which is $2^{k+1}>3(k+1)$.",
+       "belongs_to_key": "p100-k4",
+       "_key": "p100-k6",
+       "source_page": 100,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Since the RHS when substituting",
+       "text": "Side note (beside comparing $6k$ and $3(k+1)$): Since the RHS when substituting $n=k+1$ into (A) is $3(k+1)$, show $2^{k+1}>6k>3(k+1)$.",
+       "belongs_to_key": "p100-k4",
+       "_key": "p100-k7",
+       "source_page": 100,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 101,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "When n is a natural number greater than or equal to 3",
+       "text": "When $n$ is a natural number greater than or equal to 3, prove the following inequality. $3^n > 5n+1$",
+       "notes": "Printed as a 'Try' box.",
+       "_key": "p101-k1",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side column box, printed to the right.",
+       "_key": "p101-k2",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p101-k3",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p101-k4",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "When n is a natural number, prove the following inequality.",
+       "text": "When $n$ is a natural number, prove the following inequality. $3^n > 2n$",
+       "_key": "p101-k5",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "When n is a natural number greater than or equal to 4",
+       "text": "When $n$ is a natural number greater than or equal to 4, prove the following inequality. $2^n > 3n+1$",
+       "_key": "p101-k6",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "When h > 0 and n is a natural number greater than or equal to 3",
+       "text": "When $h > 0$ and $n$ is a natural number greater than or equal to 3, prove the following inequality. $(1+h)^n > 1 + nh^2$",
+       "notes": "Printed in a 'Challenge' box with a star.",
+       "_key": "p101-k7",
+       "source_page": 101,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 102,
+     "records": [
+      {
+       "key": "k1",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "When proving that something is a multiple of a, use the assumed",
+       "claim": "When proving that something is a multiple of $a$, use the assumed expression to show it takes the form $a \\times$ (integer).",
+       "formula": "$a \\times (\\text{integer})$",
+       "notes": "Boxed under heading 'Point!'",
+       "_key": "p102-k1",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Apply the principle of mathematical induction to prove the validity of divisibility.",
+       "text": "Learning Outcomes: Apply the principle of mathematical induction to prove the validity of divisibility.",
+       "_key": "p102-k2",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Prove that n^3 + (n+1)^3 + (n+2)^3 is a multiple of 9",
+       "text": "Prove that $n^3+(n+1)^3+(n+2)^3$ is a multiple of 9 for all natural numbers $n$, using mathematical induction.",
+       "_key": "p102-k3",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p102-k4",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Let “(A)” be “n^3 + (n + 1)^3 + (n + 2)^3 is a multiple of 9”.",
+       "text": "Let “(A)” be “$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9”. [1] When $n=1$: $1^3+(1+1)^3+(1+2)^3=1+8+27=36$ (side note: 36 is a multiple of 9). Therefore (A) holds when $n=1$. [2] Assuming (A) holds when $n=k$, it can be expressed using an integer $m$ as $k^3+(k+1)^3+(k+2)^3=9m$ (side note: Using this equation, show that (A) holds when $n=k+1$). Considering $n=k+1$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3=9m-k^3+k^3+9k^2+27k+27=9(m+k^2+3k+3)$. Since $m+k^2+3k+3$ is an integer, $9(m+k^2+3k+3)$ is a multiple of 9. Therefore $(k+1)^3+(k+2)^3+(k+3)^3$ is a multiple of 9, and (A) also holds when $n=k+1$. From [1] and [2], (A) holds for all natural numbers. Side note: Since $(k+1)^3+(k+2)^3=9m-k^3$ from $k^3+(k+1)^3+(k+2)^3=9m$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3$ $n=k+1$.",
+       "notes": "Explanation is a worked solution to the Warm Up, printed as prose with side notes; recorded as one linking text. Side-note last line is printed 'n = k + 1' after the expression.",
+       "_key": "p102-k5",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Prove that n^3 + 2n is a multiple of 3 for all natural numbers n",
+       "text": "Prove that $n^3+2n$ is a multiple of 3 for all natural numbers $n$, using mathematical induction.",
+       "_key": "p102-k6",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "activity",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p102-k7",
+       "source_page": 102,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 103,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p103-k1",
+       "source_page": 103,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Prove that 2n^3 − 3n^2 + n is a multiple of 6",
+       "text": "Prove that $2n^3 - 3n^2 + n$ is a multiple of 6 for all natural numbers $n$, using mathematical induction.",
+       "_key": "p103-k2",
+       "source_page": 103,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Prove that 4n^3 − n is divisible by 3",
+       "text": "Prove that $4n^3 - n$ is divisible by 3 for all natural numbers $n$, using mathematical induction.",
+       "_key": "p103-k3",
+       "source_page": 103,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Prove that for any integer n ≥ 1: (n + 1)^n − 1 is a multiple of n^2.",
+       "text": "Prove that for any integer $n \\ge 1$: $(n+1)^n - 1$ is a multiple of $n^2$.",
+       "_key": "p103-k4",
+       "source_page": 103,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 104,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Employ mathematical induction to prove and validate recurrence relations of sequences.",
+       "text": "Learning Outcomes: Employ mathematical induction to prove and validate recurrence relations of sequences.",
+       "_key": "p104-k1",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p104-k2",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "For the sequence {a_n} determined by the conditions",
+       "text": "For the sequence $\\{a_n\\}$ determined by the conditions $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$, solve the following problems.",
+       "_key": "p104-k3",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find a 2 , a 3 , a 4 and estimate the general term",
+       "text": "Find $a_2, a_3, a_4$ and estimate the general term of this sequence.",
+       "_key": "p104-k4",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Prove that the estimation in 1 is correct using mathematical induction.",
+       "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+       "_key": "p104-k5",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p104-k6",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "From the given recurrence relation: a2 = a1^2 − 1 / 1+1",
+       "stem": "Find $a_2, a_3, a_4$ and estimate the general term of the sequence $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$.",
+       "solution": [
+        "From the given recurrence relation: $a_2=\\frac{a_1^2-1}{1+1}=\\frac{3^2-1}{2}=\\frac{8}{2}=4$",
+        "Similarly, $a_3=5$, $a_4=6$",
+        "Therefore, we can estimate $a_n=n+2$"
+       ],
+       "answer": "$a_n=n+2$",
+       "_key": "p104-k7",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "{a_n}, 3, 4, 5, 6, ...",
+       "text": "Margin note beside the computation of a_2, a_3, a_4: $\\{a_n\\}, 3, 4, 5, 6, \\ldots$",
+       "_key": "p104-k8",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "Let a n = n + 2 be (A).",
+       "stem": "Prove by mathematical induction that the estimation $a_n=n+2$ (call it (A)) is correct.",
+       "solution": [
+        "Let $a_n=n+2$ be (A).",
+        "[1] When $n=1$, substituting $n=1$ into (A) gives: $a_1=1+2=3$. Therefore, (A) holds when $n=1$.",
+        "[2] Assuming (A) holds when $n=k$, $a_k=k+2$.",
+        "At this time, finding $a_{k+1}$ from the given recurrence relation: $a_{k+1}=\\frac{a_k^2-1}{k+1}$",
+        "$=\\frac{(k+2)^2-1}{k+1}$",
+        "$=k+3$",
+        "$=(k+1)+2$",
+        "This shows that (A) also holds when $n=k+1$.",
+        "From [1] and [2], (A) holds for all natural numbers.",
+        "Therefore, the estimation in 1 is correct."
+       ],
+       "answer": "The estimation $a_n=n+2$ is correct",
+       "notes": "Margin notes: 'Substitute a_k = k + 2' beside the a_{k+1} line; 'Transform into the form obtained by substituting n = k + 1 into the RHS of (A)' beside (k+1)+2. Skipped step in the printed solution: (k+2)^2-1 over k+1 equals k+3 with no expansion shown.",
+       "_key": "p104-k9",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Substitute a k = k + 2",
+       "text": "Margin note: Substitute $a_k=k+2$",
+       "_key": "p104-k10",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Transform into the form obtained by substituting n = k + 1 into the RHS of (A)",
+       "text": "Margin note: Transform into the form obtained by substituting $n=k+1$ into the RHS of (A)",
+       "_key": "p104-k11",
+       "source_page": 104,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 105,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find a2, a3, a4 and estimate the general term.",
+       "text": "For the sequence {a_n} determined by $a_1=-1, a_{n+1}=a_n^2+2na_n-2$, solve the following problems. Find $a_2, a_3, a_4$ and estimate the general term.",
+       "notes": "Intro sentence shared with Try 2.",
+       "_key": "p105-k1",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Prove that the estimation in 1 is correct using mathematical induction.",
+       "text": "Prove that the estimation in 1 is correct using mathematical induction.",
+       "_key": "p105-k2",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box.",
+       "_key": "p105-k3",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "For the sequence {an} determined by a1 = 1, an+1 = an² − n²an + (n + 1)²",
+       "text": "Solve the following problems. For the sequence {a_n} determined by $a_1=1, a_{n+1}=a_n^2-n^2a_n+(n+1)^2$, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find $a_2, a_3, a_4$ and estimate the general term.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Prove that the estimation in (a) is correct using mathematical induction.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p105-k4",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "For the sequence {an} determined by a1 = 1, an+1 = (an − 4)/(an − 3)",
+       "text": "For the sequence {a_n} determined by $a_1=1, a_{n+1}=\\frac{a_n-4}{a_n-3}$, solve the following problems.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find $a_2, a_3, a_4$ and estimate the general term.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Prove that the estimation in (a) is correct using mathematical induction.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p105-k5",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Three numbers, A, B, C in that order, are in geometric sequence",
+       "text": "Three numbers, A, B, C in that order, are in geometric sequence with common ratio $r$. Given further that A, 2B, C in that order are in arithmetic sequence, determine the possible values of $r$.",
+       "_key": "p105-k6",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "How can mathematical induction help us confirm the correctness of a general",
+       "text": "How can mathematical induction help us confirm the correctness of a general formula for a sequence defined by a recurrence relation? Explain your answer.",
+       "_key": "p105-k7",
+       "source_page": 105,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Find terms and general terms from simple recurrences",
+      "description": "Find the first few terms of a sequence from its first term and a recurrence relation, and find the general term when the recurrence is arithmetic (a_{n+1}=a_n+d) or geometric (a_{n+1}=ra_n).",
+      "evidence_keys": [
+       "p91-k6",
+       "p91-k10",
+       "p91-k11",
+       "p92-k6",
+       "p92-k7",
+       "p93-k2",
+       "p93-k3"
+      ]
+     },
+     {
+      "label": "Find the general term of a_{n+1}=a_n+f(n)",
+      "description": "Find the general term of a sequence whose recurrence adds a function of n, by summing the difference sequence f(k) from 1 to n-1.",
+      "evidence_keys": [
+       "p94-k3",
+       "p94-k4",
+       "p94-k8",
+       "p94-k10",
+       "p95-k1"
+      ]
+     },
+     {
+      "label": "Solve a_{n+1}=pa_n+q",
+      "description": "Find the general term of a recurrence of the form a_{n+1}=pa_n+q by solving for c, rewriting as a_{n+1}-c=p(a_n-c), and using the geometric sequence b_n=a_n-c.",
+      "evidence_keys": [
+       "p96-k4",
+       "p96-k7",
+       "p96-k10",
+       "p97-k1",
+       "p97-k2"
+      ]
+     },
+     {
+      "label": "Prove equalities by mathematical induction",
+      "description": "Prove that an equality holds for all natural numbers n by checking n=1 and then showing that n=k implies n=k+1.",
+      "evidence_keys": [
+       "p98-k3",
+       "p98-k7",
+       "p99-k1",
+       "p99-k3"
+      ]
+     },
+     {
+      "label": "Prove inequalities by mathematical induction",
+      "description": "Prove inequalities for all n at or above a starting value by checking the base case and then using the assumed inequality to reach the n=k+1 inequality.",
+      "evidence_keys": [
+       "p100-k3",
+       "p100-k4",
+       "p101-k1",
+       "p101-k6"
+      ]
+     },
+     {
+      "label": "Prove divisibility by mathematical induction",
+      "description": "Prove that an expression is a multiple of a given number for all natural numbers n by writing the assumed case as a multiple and showing the next case has the same form.",
+      "evidence_keys": [
+       "p102-k1",
+       "p102-k3",
+       "p102-k6",
+       "p103-k2",
+       "p103-k3"
+      ]
+     },
+     {
+      "label": "Estimate and prove a general term of a recurrence by induction",
+      "description": "Compute the first few terms of a recurrence, estimate the general term, and then prove the estimate is correct by mathematical induction.",
+      "evidence_keys": [
+       "p104-k4",
+       "p104-k5",
+       "p104-k7",
+       "p104-k9",
+       "p105-k1",
+       "p105-k2",
+       "p105-k4"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p91-k4",
+      "objective": 1
+     },
+     {
+      "key": "p91-k5",
+      "objective": 1
+     },
+     {
+      "key": "p91-k6",
+      "objective": 1
+     },
+     {
+      "key": "p91-k7",
+      "objective": 1
+     },
+     {
+      "key": "p91-k9",
+      "objective": 1
+     },
+     {
+      "key": "p91-k10",
+      "objective": 1
+     },
+     {
+      "key": "p91-k11",
+      "objective": 1
+     },
+     {
+      "key": "p92-k3",
+      "objective": 1
+     },
+     {
+      "key": "p92-k4",
+      "objective": 1
+     },
+     {
+      "key": "p92-k6",
+      "objective": 1
+     },
+     {
+      "key": "p92-k7",
+      "objective": 1
+     },
+     {
+      "key": "p92-k8",
+      "objective": 1
+     },
+     {
+      "key": "p92-k9",
+      "objective": 1
+     },
+     {
+      "key": "p93-k1",
+      "objective": 1
+     },
+     {
+      "key": "p93-k2",
+      "objective": 1
+     },
+     {
+      "key": "p93-k3",
+      "objective": 1
+     },
+     {
+      "key": "p93-k4",
+      "objective": 1
+     },
+     {
+      "key": "p93-k5",
+      "objective": 1
+     },
+     {
+      "key": "p93-k6",
+      "objective": 1
+     },
+     {
+      "key": "p93-k7",
+      "objective": 1
+     },
+     {
+      "key": "p93-k8",
+      "objective": 1
+     },
+     {
+      "key": "p94-k3",
+      "objective": 2
+     },
+     {
+      "key": "p94-k4",
+      "objective": 2
+     },
+     {
+      "key": "p94-k6",
+      "objective": 2
+     },
+     {
+      "key": "p94-k8",
+      "objective": 2
+     },
+     {
+      "key": "p94-k10",
+      "objective": 2
+     },
+     {
+      "key": "p94-k11",
+      "objective": 2
+     },
+     {
+      "key": "p95-k1",
+      "objective": 2
+     },
+     {
+      "key": "p95-k2",
+      "objective": 2
+     },
+     {
+      "key": "p96-k4",
+      "objective": 3
+     },
+     {
+      "key": "p96-k5",
+      "objective": 3
+     },
+     {
+      "key": "p96-k6",
+      "objective": 3
+     },
+     {
+      "key": "p96-k7",
+      "objective": 3
+     },
+     {
+      "key": "p96-k8",
+      "objective": 3
+     },
+     {
+      "key": "p96-k9",
+      "objective": 3
+     },
+     {
+      "key": "p96-k10",
+      "objective": 3
+     },
+     {
+      "key": "p97-k1",
+      "objective": 3
+     },
+     {
+      "key": "p97-k2",
+      "objective": 3
+     },
+     {
+      "key": "p98-k3",
+      "objective": 4
+     },
+     {
+      "key": "p98-k5",
+      "objective": 4
+     },
+     {
+      "key": "p98-k7",
+      "objective": 4
+     },
+     {
+      "key": "p99-k1",
+      "objective": 4
+     },
+     {
+      "key": "p99-k3",
+      "objective": 4
+     },
+     {
+      "key": "p100-k3",
+      "objective": 5
+     },
+     {
+      "key": "p100-k4",
+      "objective": 5
+     },
+     {
+      "key": "p101-k1",
+      "objective": 5
+     },
+     {
+      "key": "p101-k5",
+      "objective": 5
+     },
+     {
+      "key": "p101-k6",
+      "objective": 5
+     },
+     {
+      "key": "p101-k7",
+      "objective": 5
+     },
+     {
+      "key": "p102-k1",
+      "objective": 6
+     },
+     {
+      "key": "p102-k3",
+      "objective": 6
+     },
+     {
+      "key": "p102-k6",
+      "objective": 6
+     },
+     {
+      "key": "p102-k7",
+      "objective": 6
+     },
+     {
+      "key": "p103-k1",
+      "objective": 6
+     },
+     {
+      "key": "p103-k2",
+      "objective": 6
+     },
+     {
+      "key": "p103-k3",
+      "objective": 6
+     },
+     {
+      "key": "p103-k4",
+      "objective": 6
+     },
+     {
+      "key": "p104-k4",
+      "objective": 7
+     },
+     {
+      "key": "p104-k5",
+      "objective": 7
+     },
+     {
+      "key": "p104-k7",
+      "objective": 7
+     },
+     {
+      "key": "p104-k9",
+      "objective": 7
+     },
+     {
+      "key": "p105-k1",
+      "objective": 7
+     },
+     {
+      "key": "p105-k2",
+      "objective": 7
+     },
+     {
+      "key": "p105-k4",
+      "objective": 7
+     },
+     {
+      "key": "p105-k5",
+      "objective": 7
+     },
+     {
+      "key": "p105-k6",
+      "objective": 1
+     },
+     {
+      "key": "p105-k7",
+      "objective": 7
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": []
+}

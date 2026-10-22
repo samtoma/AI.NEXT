@@ -1,0 +1,624 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "d1c2a49e997da928678dac9a1843cb666889dc7eec34f4061d73759188de5eb9",
+  "generated_sha256": "05474aa93b7838fadbb653c1d64050e2f8eab6dfbe8d77c207b126547f87cee5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-4:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-4:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Write the difference sequence; if the differences follow a pattern (for example an arithmetic sequence), use it to build the general term.",
+      "solution": [
+       "Find the differences between adjacent terms to get the difference sequence {b_n}.",
+       "If the differences keep changing, look at the differences themselves: they may form a regular pattern, such as an arithmetic sequence.",
+       "Find the formula for b_n from that pattern.",
+       "Then use $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$ for $n\\ge 2$.",
+       "Check whether the formula also holds for $n=1$."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-1",
+       "eb11c2-4:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:challenge-1",
+      "kind": "value",
+      "answer": "a_n = n^2 - n + 1; a_12 = 133, so Yes, surgery is required (133 > 130)",
+      "solution": [
+       "Difference sequence of 1, 3, 7, 13, 21, 31 is 2, 4, 6, 8, 10, ...",
+       "It is arithmetic with first term 2 and common difference 2, so $b_n = 2n$.",
+       "For $n\\ge2$: $a_n = 1+\\sum_{k=1}^{n-1}2k = 1+2\\times\\frac12(n-1)n = n^2-n+1$.",
+       "For $n=1$: $1-1+1=1=a_1$, so the formula holds for $n=1$.",
+       "So $a_n = n^2-n+1$.",
+       "$a_{12}=144-12+1=133$.",
+       "Since 133 > 130, yes, surgery is required."
+      ],
+      "grounded_in": [
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1",
+       "eb11c2-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:warm-up-2",
+      "kind": "value",
+      "answer": "164",
+      "solution": [
+       "{a_n}: $a_n=2n$. Group sizes {b_n}: $b_n=2n-1$.",
+       "Terms up to the 9th group: $\\frac12\\times9\\times\\{2\\times1+8\\times2\\}=81$.",
+       "The first term of the 10th group is the 82nd term of {a_n}.",
+       "$2\\times82=164$.",
+       "The answer is 164."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:warm-up-3",
+      "kind": "value",
+      "answer": "2(2n-1)(n^2-n+1)",
+      "solution": [
+       "The last term of the n-th group is the $n^2$-th term of {a_n}, so it is $2n^2$.",
+       "The first term is the $\\{(n-1)^2+1\\}$-th term, so it is $2(n^2-2n+2)$.",
+       "The number of terms in the group is $2n-1$.",
+       "Sum $=\\frac12(2n-1)\\{2(n^2-2n+2)+2n^2\\}$.",
+       "The answer is $2(2n-1)(n^2-n+1)$."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:warm-up-4",
+      "kind": "value",
+      "answer": "7th group, 8th term",
+      "solution": [
+       "$2n=88$ gives $n=44$, so 88 is the 44th term of {a_n}.",
+       "The last term of the n-th group is the $n^2$-th term of {a_n}.",
+       "$6^2=36$ and $7^2=49$, so the 44th term is in the 7th group.",
+       "$44-36=8$.",
+       "88 is the 8th term of the 7th group."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:try-2",
+      "kind": "value",
+      "answer": "91",
+      "solution": [
+       "{a_n}: odd numbers, $a_n=2n-1$. Group sizes are 1, 2, 3, ..., so the n-th group has n terms.",
+       "Terms up to the 9th group: $\\frac12\\times9\\times10=45$.",
+       "The first term of the 10th group is the 46th term of {a_n}.",
+       "$2\\times46-1=91$.",
+       "The answer is 91."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:try-3",
+      "kind": "value",
+      "answer": "1000",
+      "solution": [
+       "The 10th group has 10 terms.",
+       "Its first term is the 46th term of {a_n}: 91.",
+       "Its last term is the 55th term: $2\\times55-1=109$.",
+       "Sum $=\\frac12\\times10\\times(91+109)=1000$.",
+       "The answer is 1000."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:try-4",
+      "kind": "value",
+      "answer": "10th group, 6th term",
+      "solution": [
+       "$2n-1=101$ gives $n=51$, so 101 is the 51st term of {a_n}.",
+       "Terms up to the n-th group: $\\frac12n(n+1)$. This is 45 for $n=9$ and 55 for $n=10$.",
+       "$45<51\\le55$, so 101 is in the 10th group.",
+       "$51-45=6$.",
+       "101 is the 6th term of the 10th group."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:a",
+      "kind": "value",
+      "answer": "46",
+      "solution": [
+       "{a_n}: $a_n=n$. The n-th group has n terms.",
+       "Terms up to the 9th group: $\\frac12\\times9\\times10=45$.",
+       "The first term of the 10th group is the 46th term of {a_n}.",
+       "The answer is 46."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:b",
+      "kind": "value",
+      "answer": "505",
+      "solution": [
+       "The 10th group has 10 terms.",
+       "The first term is 46 and the last term is 55.",
+       "Sum $=\\frac12\\times10\\times(46+55)=505$.",
+       "The answer is 505."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:c",
+      "kind": "value",
+      "answer": "16th group, 4th term",
+      "solution": [
+       "$a_n=n$, so 124 is the 124th term of {a_n}.",
+       "Terms up to the n-th group: $\\frac12n(n+1)$. This is 120 for $n=15$ and 136 for $n=16$.",
+       "$120<124\\le136$, so 124 is in the 16th group.",
+       "$124-120=4$.",
+       "124 is the 4th term of the 16th group."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:a",
+      "kind": "value",
+      "answer": "271",
+      "solution": [
+       "{a_n}: $a_n=3n-2$. Group sizes 2, 4, 6, ... so $b_n=2n$.",
+       "Terms up to the 9th group: $\\frac12\\times9\\times\\{2\\times2+8\\times2\\}=90$.",
+       "The first term of the 10th group is the 91st term of {a_n}.",
+       "$3\\times91-2=271$.",
+       "The answer is 271."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:b",
+      "kind": "value",
+      "answer": "5990",
+      "solution": [
+       "The 10th group has $2\\times10=20$ terms.",
+       "The first term is the 91st term of {a_n}: 271.",
+       "The last term is the 110th term: $3\\times110-2=328$.",
+       "Sum $=\\frac12\\times20\\times(271+328)=5990$.",
+       "The answer is 5990."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:c",
+      "kind": "value",
+      "answer": "6th group, 4th term",
+      "solution": [
+       "$3n-2=100$ gives $n=34$, so 100 is the 34th term of {a_n}.",
+       "Terms up to the n-th group: $n(n+1)$. This is 30 for $n=5$ and 42 for $n=6$.",
+       "$30<34\\le42$, so 100 is in the 6th group.",
+       "$34-30=4$.",
+       "100 is the 4th term of the 6th group."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:a",
+      "kind": "value",
+      "answer": "310",
+      "solution": [
+       "{a_n}: $a_n=4n-2$. Group sizes 2, 3, 4, ... so $b_n=n+1$.",
+       "Terms up to the 11th group: $\\frac12\\times11\\times\\{2\\times2+10\\times1\\}=77$.",
+       "The first term of the 12th group is the 78th term of {a_n}.",
+       "$4\\times78-2=310$.",
+       "The answer is 310."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:b",
+      "kind": "value",
+      "answer": "2(n+1)(n^2+2n-1)",
+      "solution": [
+       "Terms up to the n-th group: $\\frac12n\\{4+(n-1)\\}=\\frac12n(n+3)$, so the last term is the $\\frac12n(n+3)$-th term of {a_n}: $2n^2+6n-2$.",
+       "Terms up to the (n-1)-th group: $\\frac12(n-1)(n+2)$, so the first term is the $\\frac12n(n+1)$-th term of {a_n}: $2n^2+2n-2$.",
+       "The n-th group has $n+1$ terms.",
+       "Sum $=\\frac12(n+1)\\{(2n^2+2n-2)+(2n^2+6n-2)\\}=\\frac12(n+1)(4n^2+8n-4)$.",
+       "The sum is $2(n+1)(n^2+2n-1)$."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:c",
+      "kind": "value",
+      "answer": "9th group, 7th term",
+      "solution": [
+       "$4n-2=202$ gives $n=51$, so 202 is the 51st term of {a_n}.",
+       "Terms up to the n-th group: $\\frac12n(n+3)$. This is 44 for $n=8$ and 54 for $n=9$.",
+       "$44<51\\le54$, so 202 is in the 9th group.",
+       "$51-44=7$.",
+       "202 is the 7th term of the 9th group."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:d",
+      "kind": "value",
+      "answer": "16200",
+      "solution": [
+       "Terms up to the 12th group: $\\frac12\\times12\\times15=90$.",
+       "So we need the sum of the first 90 terms of {a_n}, an arithmetic sequence with $a_n=4n-2$.",
+       "The first term is 2 and the 90th term is $4\\times90-2=358$.",
+       "Sum $=\\frac12\\times90\\times(2+358)=16200$.",
+       "The answer is 16200."
+      ],
+      "grounded_in": [
+       "eb11c2-4:worked-example-2"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:reflect-1",
+      "kind": "explanation",
+      "answer": "Choose the difference sequence method when the data is one unbroken list whose adjacent differences form a simple pattern; choose grouping when the list is visibly split into blocks with a regular number of terms.",
+      "solution": [
+       "The difference method fits a single list of values with no breaks, where it is hard to guess the general term.",
+       "A clue: the differences between adjacent terms are not constant but themselves form a regular pattern, such as an arithmetic sequence.",
+       "The group method fits data that is divided into blocks (separators like |) whose sizes follow a regular pattern.",
+       "So check the differences first; if the data is already in groups of regular size, use the group method."
+      ],
+      "grounded_in": [
+       "eb11c2-4:rule-1",
+       "eb11c2-4:caution-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-4:guiding-question-1",
+      "kind": "explanation",
+      "answer": "Write the difference sequence (differences of adjacent terms). If those differences are not constant, take differences again (or see they form an arithmetic sequence, e.g. 3, 5, 7, ...). The hidden constant pattern appears in the difference sequence, and then $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$ gives the general term (check $n=1$)."
+     },
+     {
+      "ref": "eb11c2-4:challenge-1",
+      "kind": "explanation",
+      "answer": "$a_n = n^2 - n + 1$ (differences 2, 4, 6, 8, 10 give $b_n=2n$; formula holds for n=1). $a_{12} = 133 > 130$, so Yes, the patient needs surgery."
+     },
+     {
+      "ref": "eb11c2-4:warm-up-2",
+      "kind": "value",
+      "answer": "164"
+     },
+     {
+      "ref": "eb11c2-4:warm-up-3",
+      "kind": "value",
+      "answer": "$2(2n-1)(n^2-n+1)$"
+     },
+     {
+      "ref": "eb11c2-4:warm-up-4",
+      "kind": "value",
+      "answer": "7th group, 8th position"
+     },
+     {
+      "ref": "eb11c2-4:try-2",
+      "kind": "value",
+      "answer": "163"
+     },
+     {
+      "ref": "eb11c2-4:try-3",
+      "kind": "value",
+      "answer": "3439"
+     },
+     {
+      "ref": "eb11c2-4:try-4",
+      "kind": "value",
+      "answer": "8th group, 2nd position"
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:a",
+      "kind": "value",
+      "answer": "46"
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:b",
+      "kind": "value",
+      "answer": "505"
+     },
+     {
+      "ref": "eb11c2-4:exercise-2:c",
+      "kind": "value",
+      "answer": "16th group, 4th position"
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:a",
+      "kind": "value",
+      "answer": "271"
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:b",
+      "kind": "value",
+      "answer": "5990"
+     },
+     {
+      "ref": "eb11c2-4:exercise-3:c",
+      "kind": "value",
+      "answer": "6th group, 4th position"
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:a",
+      "kind": "value",
+      "answer": "310"
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:b",
+      "kind": "value",
+      "answer": "$2(n+1)(n^2+2n-1)$"
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:c",
+      "kind": "value",
+      "answer": "9th group, 7th position"
+     },
+     {
+      "ref": "eb11c2-4:challenge-2:d",
+      "kind": "value",
+      "answer": "16200"
+     },
+     {
+      "ref": "eb11c2-4:reflect-1",
+      "kind": "explanation",
+      "answer": "Choose the difference sequence method when the data is one continuous list with no visible blocks, and the differences between neighbouring terms follow a simple pattern (constant or arithmetic, e.g. a steadily growing change, as in 1, 3, 7, 13, 21). Choose the group method when the terms visibly split into blocks (separators, resets, repeating segments) with a regular number of terms in each block."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c2-4:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c2-4:warm-up-1:1",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - 3n + 3",
+      "solution": [
+       "Write the difference sequence {b_n}: 3, 7, 11, 15, 19, ...",
+       "It is arithmetic with first term 3 and common difference 4, so b_n = 3 + (n-1)×4 = 4n - 1.",
+       "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (4k - 1) = 2 + 2n(n-1) - (n-1) = 2n^2 - 3n + 3.",
+       "Check n = 1: 2 - 3 + 3 = 2 = a_1, so the formula holds for n = 1.",
+       "a_n = 2n^2 - 3n + 3."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1",
+       "eb11c2-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:warm-up-1:2",
+      "kind": "value",
+      "answer": "a_n = (3^(n-1) + 3)/2",
+      "solution": [
+       "Write the difference sequence {b_n}: 1, 3, 9, 27, 81, ...",
+       "It is geometric with first term 1 and common ratio 3, so b_n = 3^(n-1).",
+       "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} 3^(k-1) = 2 + (3^(n-1) - 1)/(3 - 1) = (3^(n-1) + 3)/2.",
+       "Check n = 1: (1 + 3)/2 = 2 = a_1, so the formula holds for n = 1.",
+       "a_n = (3^(n-1) + 3)/2."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:try-1:a",
+      "kind": "value",
+      "answer": "a_n = 3n^2 - n",
+      "solution": [
+       "Difference sequence {b_n}: 8, 14, 20, 26, 32, ...",
+       "It is arithmetic with first term 8 and common difference 6, so b_n = 8 + (n-1)×6 = 6n + 2.",
+       "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (6k + 2) = 2 + 3n(n-1) + 2(n-1) = 3n^2 - n.",
+       "Check n = 1: 3 - 1 = 2 = a_1, so the formula holds for n = 1.",
+       "a_n = 3n^2 - n."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1",
+       "eb11c2-4:caution-1",
+       "eb11c2-4:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:try-1:b",
+      "kind": "value",
+      "answer": "a_n = 2^n + 3",
+      "solution": [
+       "Difference sequence {b_n}: 2, 4, 8, 16, ...",
+       "It is geometric with first term 2 and common ratio 2, so b_n = 2^n.",
+       "For n ≥ 2: a_n = 5 + sum_{k=1}^{n-1} 2^k = 5 + 2(2^(n-1) - 1)/(2 - 1) = 2^n + 3.",
+       "Check n = 1: 2 + 3 = 5 = a_1, so the formula holds for n = 1.",
+       "a_n = 2^n + 3."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:a",
+      "kind": "value",
+      "answer": "a_n = (3^(n-1) + 1)/2",
+      "solution": [
+       "Difference sequence {b_n}: 1, 3, 9, 27, 81, ...",
+       "It is geometric with first term 1 and common ratio 3, so b_n = 3^(n-1).",
+       "For n ≥ 2: a_n = 1 + sum_{k=1}^{n-1} 3^(k-1) = 1 + (3^(n-1) - 1)/2 = (3^(n-1) + 1)/2.",
+       "Check n = 1: (1 + 1)/2 = 1 = a_1, so the formula holds for n = 1.",
+       "a_n = (3^(n-1) + 1)/2."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:b",
+      "kind": "value",
+      "answer": "a_n = -n^2 + 6n",
+      "solution": [
+       "Difference sequence {b_n}: 3, 1, -1, -3, -5, ...",
+       "It is arithmetic with first term 3 and common difference -2, so b_n = 3 + (n-1)×(-2) = 5 - 2n.",
+       "For n ≥ 2: a_n = 5 + sum_{k=1}^{n-1} (5 - 2k) = 5 + 5(n-1) - n(n-1) = -n^2 + 6n.",
+       "Check n = 1: -1 + 6 = 5 = a_1, so the formula holds for n = 1.",
+       "a_n = -n^2 + 6n."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1",
+       "eb11c2-4:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:c",
+      "kind": "value",
+      "answer": "a_n = (7 - (-2)^(n-1))/3",
+      "solution": [
+       "Difference sequence {b_n}: 1, -2, 4, -8, 16, ...",
+       "It is geometric with first term 1 and common ratio -2, so b_n = (-2)^(n-1).",
+       "For n ≥ 2: a_n = 2 + sum_{k=1}^{n-1} (-2)^(k-1) = 2 + ((-2)^(n-1) - 1)/(-2 - 1) = 2 + (1 - (-2)^(n-1))/3 = (7 - (-2)^(n-1))/3.",
+       "Check n = 1: (7 - 1)/3 = 2 = a_1, so the formula holds for n = 1.",
+       "a_n = (7 - (-2)^(n-1))/3."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:d",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - n",
+      "solution": [
+       "Difference sequence {b_n}: 5, 9, 13, 17, 21, ...",
+       "It is arithmetic with first term 5 and common difference 4, so b_n = 5 + (n-1)×4 = 4n + 1.",
+       "For n ≥ 2: a_n = 1 + sum_{k=1}^{n-1} (4k + 1) = 1 + 2n(n-1) + (n-1) = 2n^2 - n.",
+       "Check n = 1: 2 - 1 = 1 = a_1, so the formula holds for n = 1.",
+       "a_n = 2n^2 - n."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1",
+       "eb11c2-4:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:e",
+      "kind": "value",
+      "answer": "a_n = (19 + (-3)^(n-1))/4",
+      "solution": [
+       "Difference sequence {b_n}: -1, 3, -9, 27, -81, ...",
+       "It is geometric with first term -1 and common ratio -3, so b_n = -(-3)^(n-1).",
+       "For n ≥ 2: a_n = 5 - sum_{k=1}^{n-1} (-3)^(k-1) = 5 - ((-3)^(n-1) - 1)/(-3 - 1) = 5 + ((-3)^(n-1) - 1)/4 = (19 + (-3)^(n-1))/4.",
+       "Check n = 1: (19 + 1)/4 = 5 = a_1, so the formula holds for n = 1.",
+       "a_n = (19 + (-3)^(n-1))/4."
+      ],
+      "grounded_in": [
+       "eb11c2-4:definition-1",
+       "eb11c2-4:rule-2",
+       "eb11c2-4:method-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-4:warm-up-1:1",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - 3n + 3"
+     },
+     {
+      "ref": "eb11c2-4:warm-up-1:2",
+      "kind": "value",
+      "answer": "a_n = (3^{n-1} + 3)/2"
+     },
+     {
+      "ref": "eb11c2-4:try-1:a",
+      "kind": "value",
+      "answer": "a_n = 3n^2 - n"
+     },
+     {
+      "ref": "eb11c2-4:try-1:b",
+      "kind": "value",
+      "answer": "a_n = 2^n + 3"
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:a",
+      "kind": "value",
+      "answer": "a_n = (3^{n-1} + 1)/2"
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:b",
+      "kind": "value",
+      "answer": "a_n = -n^2 + 6n"
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:c",
+      "kind": "value",
+      "answer": "a_n = (7 - (-2)^{n-1})/3"
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:d",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - n"
+     },
+     {
+      "ref": "eb11c2-4:exercise-1:e",
+      "kind": "value",
+      "answer": "a_n = (19 + (-3)^{n-1})/4"
+     }
+    ]
+   }
+  }
+ ]
+}

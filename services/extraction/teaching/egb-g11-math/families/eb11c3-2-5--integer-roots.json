@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-2-5:integer-roots",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-2-5",
+ "parent_question_id": "q:eb11c3-2-5:bk-try-10",
+ "source_page": 128,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "require": "p != 0 and q != 0 and p + q != 0",
+   "why": "keep every coefficient nonzero"
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "m",
+   "let": "p * q"
+  },
+  {
+   "name": "A",
+   "let": "('+ ' + str(-s)) if -s > 0 else ('- ' + str(s))"
+  },
+  {
+   "name": "B",
+   "let": "('+ ' + str(m)) if m > 0 else ('- ' + str(-m))"
+  }
+ ],
+ "constraints": [],
+ "stem": "Create one quadratic equation, with the coefficient of $x^2$ equal to 1, that has the two numbers ${=p}$ and ${=q}$ as solutions.",
+ "solution": [
+  "Sum of the solutions $={=p}+({=q})={=s}$.",
+  "Product of the solutions $=({=p})({=q})={=m}$.",
+  "The equation is $x^2-(\\text{sum})x+\\text{product}=0$, that is $x^2-({=s})x+({=m})=0$.",
+  "Equation: $x^2 {=A}x {=B}=0$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "x^2 {=A}*x {=B} = 0",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: form x^2 - (sum)x + product = 0 from two given integer roots. p,q nonzero, distinct, with nonzero sum so both middle and constant terms appear."
+}

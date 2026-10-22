@@ -1,0 +1,98 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-2-1:rearrange-formula",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-2-1",
+ "parent_question_id": "q:eb11c3-2-1:bk-exercise-1-h",
+ "source_page": 117,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "B",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "require": "(B*B + s*s*n) % (4*a) == 0",
+   "why": "C must be a whole number"
+  },
+  {
+   "name": "C",
+   "let": "(B*B + s*s*n) // (4*a)"
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "B1",
+   "let": "B + e"
+  },
+  {
+   "name": "C1",
+   "let": "C + f"
+  },
+  {
+   "name": "D",
+   "let": "B*B - 4*a*C"
+  }
+ ],
+ "stem": "Solve the quadratic equation in the set of complex numbers, giving the roots in terms of $i$ with any square root simplified: ${=a}x^2+{=B1}x+{=C1}={=e}x+{=f}$",
+ "solution": [
+  "Collect all terms on the left: ${=a}x^2+{=B}x+{=C}=0$, so $a={=a}$, $b={=B}$, $c={=C}$.",
+  "$b^2-4ac={=B*B}-{=4*a*C}={=D}$, which is negative.",
+  "$\\sqrt{{=D}}=\\sqrt{{=s*s*n}}\\,i={=s}i\\sqrt{{=n}}$.",
+  "$x=\\dfrac{-{=B}\\pm {=s}i\\sqrt{{=n}}}{{=2*a}}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[(-{=B} + {=s}*i*sqrt({=n}))/{=2*a}, (-{=B} - {=s}*i*sqrt({=n}))/{=2*a}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: rearrange to standard form, then formula with negative discriminant whose root needs simplifying (e.g. sqrt(-12)=2i sqrt3). Discriminant is -s^2 n with n squarefree, so every instance is complex non-real. Roots are not reduced further; any equivalent form is accepted by value marker."
+}

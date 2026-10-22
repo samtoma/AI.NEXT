@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-4-1:square-diff",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-4-1",
+ "parent_question_id": "q:eb11c2-4-1:bk-warm-up-1-1",
+ "source_page": 86,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "T",
+   "let": "[n**2 + s*n + t for n in range(1, 8)]"
+  }
+ ],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$: ${=T[0]}, {=T[1]}, {=T[2]}, {=T[3]}, {=T[4]}, {=T[5]}, \\dots$ Write your answer as $a_n = \\dots$",
+ "solution": [
+  "Write the difference sequence $\\{b_n\\}$: ${=T[1]-T[0]}, {=T[2]-T[1]}, {=T[3]-T[2]}, {=T[4]-T[3]}, {=T[5]-T[4]}, \\dots$",
+  "It is arithmetic with first term ${=s+3}$ and common difference $2$, so $b_n = {=s+3} + (n-1)\\times 2 = 2n + {=s+1}$.",
+  "For $n \\ge 2$: $a_n = a_1 + \\sum_{k=1}^{n-1} (2k + {=s+1}) = {=T[0]} + n(n-1) + {=s+1}(n-1) = n^2 + {=s}n + {=t}$.",
+  "Check $n = 1$: $1 + {=s} + {=t} = {=T[0]} = a_1$, so the formula holds for $n = 1$.",
+  "$a_n = n^2 + {=s}n + {=t}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = n**2 + {=s}*n + {=t}",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: differences are arithmetic with common difference 2, so a_n = n^2 + s n + t with small positive coefficients; same skeleton as the book's warm-up. Formula always holds for n=1."
+}

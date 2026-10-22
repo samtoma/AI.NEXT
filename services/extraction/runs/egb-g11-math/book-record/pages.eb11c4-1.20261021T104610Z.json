@@ -1,0 +1,2770 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "3e5c3d9c1137cbb298df9f9f294a1edca3f6b8428c37871c2317dac0989d17cf",
+  "generated_sha256": "f8a1b80112f1afe10ae3f17d1274b917a7300b3d67f1a9298e37fdca88c54ea0",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c4-1",
+   "pages": [
+    {
+     "printed": 150,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 1 · Coordinate Geometry Basics",
+       "text": "Concept 1 · Coordinate Geometry Basics",
+       "_key": "p150-k1",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Find the coordinates of the division point (internal and external)",
+       "text": "Learning Outcomes: Find the coordinates of the division point (internal and external) of a line segment on the number line.",
+       "_key": "p150-k2",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "When a surgeon plans a minimally invasive robotic surgery",
+       "text": "Intro: a surgeon's robotic arm must navigate 3D space inside the body to target a tumor without damaging tissue; imaging software maps anatomy onto a precise grid, each landmark given numerical coordinates, so the system determines optimal paths, distances and boundary midpoints.",
+       "_key": "p150-k3",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "open_prompt",
+       "label": "Guiding Question",
+       "number": null,
+       "quote": "How does mapping physical space onto a grid of numbers allow",
+       "text": "How does mapping physical space onto a grid of numbers allow us to precisely partition paths, find balances, and safely navigate complex physical environments?",
+       "_key": "p150-k4",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "On a number line, one real number a corresponds to point P.",
+       "claim": "On a number line, one real number $a$ corresponds to point P; $a$ is called the coordinate of P, and P with coordinate $a$ is denoted P($a$).",
+       "formula": "$P(a)$",
+       "_key": "p150-k5",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The distance AB between two points A(a) and B(b)",
+       "claim": "The distance AB between A($a$) and B($b$) on a number line is given by AB = |b − a|. Side note: since distance cannot be negative, we use the absolute value.",
+       "formula": "$AB=|b-a|$",
+       "_key": "p150-k6",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "point P is said to divide the line segment AB internally in the ratio",
+       "claim": "If P is on segment AB such that AP:PB = m : n, P is said to divide AB internally in the ratio m : n.",
+       "formula": "$AP:PB=m:n$",
+       "_key": "p150-k7",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "point Q is said to divide the line segment AB externally in the ratio",
+       "claim": "If Q is on the extension of segment AB such that AQ:QB = m : n, Q is said to divide AB externally in the ratio m : n.",
+       "formula": "$AQ:QB=m:n$",
+       "_key": "p150-k8",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Point P is a point m away from A and n away from B.",
+       "caption": "Two number lines with arrow labelled x. Top: A(a), P, B(b), with arcs m (A to P) and n (P to B); caption 'Point P is a point m away from A and n away from B.' Bottom: A(a), B(b), Q on the line, with a large arc m from A to Q and a small arc n from B to Q; caption 'Point Q is a point m away from A and n away from B.'",
+       "_key": "p150-k9",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Regarding the line segment AB connecting two points A(a) and B(b)",
+       "text": "Regarding the line segment AB connecting two points A(a) and B(b) on a number line:",
+       "_key": "p150-k10",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinate of point P dividing segment AB internally in the ratio",
+       "claim": "(i) The coordinate of P dividing AB internally in the ratio m : n is P((na + mb)/(m + n)).",
+       "formula": "$P\\left(\\frac{na+mb}{m+n}\\right)$",
+       "_key": "p150-k11",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinate of point Q dividing segment AB externally in the ratio",
+       "claim": "(ii) The coordinate of Q dividing AB externally in the ratio m : n is Q((−na + mb)/(m − n)).",
+       "formula": "$Q\\left(\\frac{-na+mb}{m-n}\\right)$",
+       "_key": "p150-k12",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Be careful with the order of multiplication (cross-multiply).",
+       "claim": "Side note beside formulas (i) and (ii): shows (na+mb)/(m+n) and (−na+mb)/(m−n); be careful with the order of multiplication (cross-multiply).",
+       "_key": "p150-k13",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinate of the midpoint M is (since it divides segment AB",
+       "claim": "(iii) The coordinate of the midpoint M (dividing AB internally in 1:1) is M((a+b)/2).",
+       "formula": "$M\\left(\\frac{a+b}{2}\\right)$",
+       "_key": "p150-k14",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A(a) M B(b) x",
+       "caption": "Number line with arrow x: points A(a), M, B(b); two equal arcs each labelled 1 (A to M and M to B), segment AB highlighted in blue.",
+       "_key": "p150-k15",
+       "source_page": 150,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 151,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p151-k1",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "For two points A( − 4) and B(8), find the following distances or coordinates.",
+       "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Distance AB between the two points.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Coordinate of midpoint M of segment AB.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p151-k2",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p151-k3",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "AB = | 8 − ( − 4) |",
+       "text": "Worked explanation of the Warm Up: (a) $AB=|8-(-4)|$; (b) $\\frac{1\\times(-4)+2\\times 8}{2+1}=4$ Therefore, C(4), then a stray line '$=12$' printed below; (c) $\\frac{-3\\times(-4)+2\\times 8}{2-3}=-28$ Therefore, D(−28); (d) $\\frac{-4+8}{2}=2$ Therefore, M(2).",
+       "notes": "Layout of (a) and (b) is odd: (a) has no final value printed; (b) prints '= 12' on a separate line below the fraction before/after '= 4'. Check against image.",
+       "misprints": [
+        {
+         "field": "text",
+         "printed": "(b) fraction ... = 4 with separate line '= 12'",
+         "intended": "numerator 1×(−4)+2×8 = 12, so 12/3 = 4",
+         "notes": "'= 12' is the numerator value and is misplaced under the fraction; (a) omits final value 12"
+        }
+       ],
+       "_key": "p151-k4",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p151-k5",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "For two points A( − 5) and B(7), find the following distances or coordinates.",
+       "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Distance AB between the two points.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:5",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Coordinate of midpoint M of segment AB.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p151-k6",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve parts (c and d) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve parts (c and d) then discuss the answer.",
+       "_key": "p151-k7",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p151-k8",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p151-k9",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "For two points A( − 2) and B(6), find the following distances or coordinates.",
+       "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Distance AB between the two points.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Coordinate of point C dividing segment AB internally in the ratio 3:1",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Coordinate of point D dividing segment AB externally in the ratio 5:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Coordinate of midpoint M of segment AB.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p151-k10",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "For two points A(4) and B(10), find the following distances or coordinates.",
+       "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Distance AB between the two points.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Coordinate of point D dividing segment AB externally in the ratio 1:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Coordinate of midpoint M of segment AB.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p151-k11",
+       "source_page": 151,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 152,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Challenge",
+       "text": "Challenge",
+       "_key": "p152-k1",
+       "source_page": 152,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Position along trench wall",
+       "caption": "Illustration of an underwater research habitat beside a trench wall, with a vertical axis 'Position along trench wall'. Labelled points from top: Sea level (0 km), Pod B, Hub M, Sensor C, Pod A (with axis break), Outpost D. A dome-shaped habitat, fish and jellyfish are shown. No numeric values besides 0 km are printed; positions are only schematic.",
+       "notes": "Labels read from image; verify.",
+       "_key": "p152-k2",
+       "source_page": 152,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Subterranean Research Lab Infrastructure",
+       "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Fiber-Optic Tether Length",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Internal Environmental Sensor Array — Point C divides AB internally in ratio 1:4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "External Deep-Trench Outpost — Point D divides AB externally in ratio 3:4",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Emergency Supply Hub Location (M) — Midpoint M of AB",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Figure k2 belongs to this challenge box.",
+       "_key": "p152-k3",
+       "source_page": 152,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 153,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Points on the Coordinate Plane",
+       "text": "Points on the Coordinate Plane",
+       "_key": "p153-k1",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Determine the quadrant of a point on the coordinate plane",
+       "text": "Learning Outcomes: Determine the quadrant of a point on the coordinate plane.",
+       "_key": "p153-k2",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "The coordinate plane is divided into 4 quadrants",
+       "claim": "The coordinate plane is divided into 4 quadrants as shown in the figure on the right, excluding the coordinate axes.",
+       "_key": "p153-k3",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Quadrant II Quadrant I Quadrant III Quadrant IV",
+       "caption": "Coordinate plane with x- and y-axes meeting at origin O; Quadrant I upper right, Quadrant II upper left, Quadrant III lower left, Quadrant IV lower right.",
+       "_key": "p153-k4",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p153-k5",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p153-k6",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Determine which quadrant the following points lie in.",
+       "text": "Determine which quadrant the following points lie in.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point A(2, 3)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point B(2, −3)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point C(−2, 3)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Point D(−2, −3)",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p153-k7",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "For point A( − 3, 2), find the coordinates of the following points.",
+       "text": "For point A(−3, 2), find the coordinates of the following points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the x−axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the y−axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p153-k8",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p153-k9",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "Plot the points on the coordinate plane to visualize.",
+       "stem": "Plot the points on the coordinate plane to visualize.",
+       "solution": [
+        "Plot the points A(2,3), B(2,−3), C(−2,3), D(−2,−3) on the coordinate plane."
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "1st Quadrant",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "4th Quadrant",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "2nd Quadrant",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "3rd Quadrant",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Explanation numbered 1 answers Warm Up 1; printed (a) 1st, (b) 4th, (c) 2nd, (d) 3rd.",
+       "_key": "p153-k10",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p153-k10",
+       "quote": "(b) Quadrant II (a) Quadrant I",
+       "caption": "Coordinate plane with points A (x=2, y=3) in (a) Quadrant I, C (x=−2, y=3) in (b) Quadrant II, D (x=−2, y=−3) in (c) Quadrant III, B (x=2, y=−3) in (d) Quadrant IV; dashed lines to axes labelled 3, −3, −2, 2.",
+       "notes": "Point coordinates read from figure; verify.",
+       "_key": "p153-k11",
+       "source_page": 153,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "Change the sign of other coordinate.",
+       "stem": "Change the sign of other coordinate. For A(−3, 2) find P, Q, R.",
+       "solution": [
+        "(a) P symmetric with respect to the x−axis: Change the sign of the y−coordinate. P(−3, −2)",
+        "(b) Q symmetric with respect to the y−axis: Change the sign of the x−coordinate. Q(3, 2)",
+        "(c) R symmetric with respect to the origin: Change the sign of the x−coordinate and the y−coordinate. R(3, −2)"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "P(−3, −2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "Q(3, 2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "R(3, −2)",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Page prints this under Explanation 2; label lines read in order.",
+       "_key": "p153-k12",
+       "source_page": 153,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p153-k12",
+       "quote": "(symmetric with respect to the y-axis)",
+       "caption": "Coordinate plane with A(−3, 2), Q(3, 2) (symmetric with respect to the y-axis), P(−3, −2) (symmetric with respect to the x-axis), R(3, −2) (symmetric with respect to the origin); dashed rectangle, diagonal A to R through O, tick marks; axis labels −3, 3, 2, −2.",
+       "notes": "Read from figure; verify.",
+       "_key": "p153-k13",
+       "source_page": 153,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 154,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Determine which quadrant the following points lie in.",
+       "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point A(−4, 2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point B(1, 2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point C(3, −2)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Point D(−3, −1)",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k1",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "For point A( − 1, 2), find the coordinates of the following points.",
+       "text": "For point A(−1, 2), find the coordinates of the following points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k2",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "_key": "p154-k3",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Determine which quadrant the following points lie in.",
+       "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point A(−3, 1)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point B(2, −8)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point C(4, 4)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Point D(−6, −4)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "Point E(−2, 6)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "Point F(3, −3)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "Point G(−5, −7)",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "Point H(1, 4)",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k4",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "For point A( − 4, − 2), find the coordinates of the following points.",
+       "text": "For point A(−4, −2), find the coordinates of the following points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k5",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "For point A(1, − 2), find the coordinates of the following points.",
+       "text": "For point A(1, −2), find the coordinates of the following points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k6",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "For point A( − 3, 4), find the coordinates of the following points.",
+       "text": "For point A(−3, 4), find the coordinates of the following points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the $x$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the $y$-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p154-k7",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A robotic welding arm is programmed at point A(−3, 4)",
+       "text": "A robotic welding arm is programmed at point A(−3, 4) on a metal sheet. To weld identical support brackets, the arm must mirror this point:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P symmetric with respect to the x-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q symmetric with respect to the y-axis",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Point R symmetric with respect to the origin",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "A photo of a robotic welding arm over a metal sheet with faint grid markings accompanies the challenge; treated as decorative.",
+       "_key": "p154-k8",
+       "source_page": 154,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 155,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Distance Between Two Points",
+       "text": "4-3 Distance Between Two Points (Chapter 4 Geometry and Equations)",
+       "_key": "p155-k1",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The distance AB between two points A(x1, y1) and B(x2, y2) is",
+       "claim": "The distance AB between two points A(x1, y1) and B(x2, y2) is the square root of (x2 − x1)² + (y2 − y1)².",
+       "formula": "$AB=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$",
+       "_key": "p155-k2",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "In problems where the distance between 2 points is known, square both sides",
+       "claim": "In problems where the distance between 2 points is known, square both sides.",
+       "_key": "p155-k3",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p155-k4",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the distance between the following 2 points. A(2, 6), B(5, 10)",
+       "text": "Find the distance between the following 2 points.",
+       "parts": [
+        {
+         "label": "",
+         "stem": "$A(2,6),\\ B(5,10)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Printed Explanation: $\\sqrt{(5-2)^2+(10-6)^2}=\\sqrt{3^2+4^2}=5$. Page prints instruction 'Solve the following problems.' above.",
+       "_key": "p155-k5",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "If the distance between points A(3, − 2) and B(x, 1) is 5, find the value of x.",
+       "text": "If the distance between points $A(3,-2)$ and $B(x,1)$ is 5, find the value of $x$.",
+       "notes": "Printed Explanation: since distance is 5, $\\sqrt{(x-3)^2+\\{1-(-2)\\}^2}=5$ (side note: Square both sides); $(x-3)^2+\\{1-(-2)\\}^2=25$; solving, $x=-1, 7$.",
+       "_key": "p155-k6",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p155-k7",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the distance between the following 2 points.",
+       "text": "Find the distance between the following 2 points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$A(4,3),\\ B(1,2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$A(\\sqrt{3},-1),\\ B(0,1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Origin $O$, $A(2,-4)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p155-k8",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "If the distance between points A(−1, 3) and B(x, 1) is √5",
+       "text": "If the distance between points $A(-1,3)$ and $B(x,1)$ is $\\sqrt{5}$, find the value of $x$.",
+       "_key": "p155-k9",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p155-k10",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the distance between the following 2 points.",
+       "text": "Find the distance between the following 2 points.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$A(1,2),\\ B(11,7)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$A(3,-1),\\ B(-1,3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Origin $O$, $A(-3,4)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p155-k11",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If the distance between points A(3, − 1) and B(x, 2) is 5, find x.",
+       "text": "If the distance between points $A(3,-1)$ and $B(x,2)$ is 5, find $x$.",
+       "_key": "p155-k12",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "If the distance between points A(1, −3) and B(−2, y) is √13, find y.",
+       "text": "If the distance between points $A(1,-3)$ and $B(-2,y)$ is $\\sqrt{13}$, find $y$.",
+       "_key": "p155-k13",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "If the distance between points A(−4, −2) and B(x, 3) is 5√5, find x.",
+       "text": "If the distance between points $A(-4,-2)$ and $B(x,3)$ is $5\\sqrt{5}$, find $x$.",
+       "_key": "p155-k14",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the distance between two points.",
+       "text": "Learning Outcomes: Calculate the distance between two points.",
+       "_key": "p155-k15",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Use the Pythagorean theorem.",
+       "caption": "Coordinate axes x, y with origin O. Point A at (x1, y1) and point B at (x2, y2) with dotted guide lines to axis values x1, x2, y1, y2. Right triangle ABC shaded yellow with right angle at lower right; horizontal leg labelled |x2 − x1|, vertical leg labelled |y2 − y1|, hypotenuse AB. Caption: Use the Pythagorean theorem.",
+       "notes": "Labels read from figure; verify.",
+       "_key": "p155-k16",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Square both sides.",
+       "text": "Square both sides. (side note beside Warm Up 2 explanation)",
+       "_key": "p155-k17",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k18",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "_key": "p155-k18",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k19",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If the distance between the two points (x,7) and (3x-1, -5) equals 13",
+       "text": "If the distance between the two points $(x,7)$ and $(3x-1,-5)$ equals 13 length units, then find the value(s) of $x$.",
+       "_key": "p155-k19",
+       "source_page": 155,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 156,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Determine the position of a point equidistant from two points.",
+       "text": "Learning Outcomes: Determine the position of a point equidistant from two points.",
+       "_key": "p156-k1",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "To find a point equidistant from two points, assign variables",
+       "claim": "To find a point equidistant from two points, assign variables to its coordinates based on the given conditions.",
+       "_key": "p156-k2",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Point on x−axis ⟹ The required point is ( s, 0)",
+       "claim": "A point on the x-axis: the required point is (s, 0).",
+       "formula": "$(s, 0)$",
+       "_key": "p156-k3",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Point on y−axis ⟹ The required point is ( 0, t)",
+       "claim": "A point on the y-axis: the required point is (0, t).",
+       "formula": "$(0, t)$",
+       "_key": "p156-k4",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Point on line y = ax + b ⟹ The required point is ( s, as+b)",
+       "claim": "A point on the line y = ax + b: the required point is (s, as+b).",
+       "formula": "$(s, as+b)$",
+       "_key": "p156-k5",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p156-k6",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p156-k7",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the coordinates of point P on the x-axis equidistant from 2 points A( − 2, 1)",
+       "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points $A(-2, 1)$ and $B(3, 4)$.",
+       "_key": "p156-k8",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "Find the coordinates of point Q on y = 2x − 1 equidistant from 2 points A(1, 4)",
+       "text": "Find the coordinates of point Q on $y = 2x - 1$ equidistant from 2 points $A(1, 4)$ and $B(3, 1)$.",
+       "_key": "p156-k9",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p156-k10",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "Let the coordinates of point P be (s, 0).",
+       "stem": "Find P on the x-axis equidistant from A(−2, 1) and B(3, 4).",
+       "solution": [
+        "Let the coordinates of point P be $(s, 0)$.",
+        "Since it is equidistant from 2 points A(−2, 1) and B(3, 4), $AP = BP$",
+        "$\\sqrt{\\{s-(-2)\\}^2+(-1)^2}=\\sqrt{(s-3)^2+(-4)^2}$",
+        "$\\{s-(-2)\\}^2+(-1)^2=(s-3)^2+(-4)^2$",
+        "Simplifying and solving this gives $s = 2$",
+        "Therefore, the required coordinates is P(2, 0)."
+       ],
+       "answer": "$P(2, 0)$",
+       "_key": "p156-k11",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A(−2, 1) B(3, 4) P(s, 0)",
+       "caption": "Coordinate axes with points A(−2, 1) in the second quadrant, B(3, 4) in the first quadrant, and P(s, 0) on the x-axis; segments AP and BP drawn with equal-length tick marks.",
+       "belongs_to_key": "p156-k11",
+       "_key": "p156-k12",
+       "source_page": 156,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "Let the coordinates of point Q be (s, 2s−1).",
+       "stem": "Find Q on y = 2x − 1 equidistant from A(1, 4) and B(3, 1).",
+       "solution": [
+        "Let the coordinates of point Q be $(s, 2s-1)$.",
+        "Since it is equidistant from 2 points A(1, 4) and B(3, 1), $AQ = BQ$",
+        "$\\sqrt{(s-1)^2+\\{(2s-1)-4\\}^2}=\\sqrt{(s-3)^2+\\{(2s-1)-1\\}^2}$",
+        "$(s-1)^2+\\{(2s-1)-4\\}^2=(s-3)^2+\\{(2s-1)-1\\}^2$",
+        "Simplifying and solving this gives $s=\\frac{13}{8}$",
+        "Since the required point is on y= 2x−1, Q(13/8, 9/4)"
+       ],
+       "answer": "$Q\\left(\\frac{13}{8}, \\frac{9}{4}\\right)$",
+       "_key": "p156-k13",
+       "source_page": 156,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A(1, 4) y=2x−1 Q(s, 2s−1) B(3, 1)",
+       "caption": "Axes with line y = 2x − 1 (y-intercept −1 marked), points A(1, 4), Q(s, 2s−1) on the line, and B(3, 1); segments AQ and BQ drawn with equal-length tick marks.",
+       "belongs_to_key": "p156-k13",
+       "_key": "p156-k14",
+       "source_page": 156,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 157,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p157-k1",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the coordinates of point P on the y-axis equidistant",
+       "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(4, 2) and B(1, −1).",
+       "parts": [],
+       "_key": "p157-k2",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the coordinates of point Q on y = 3x + 1",
+       "text": "Find the coordinates of point Q on $y = 3x + 1$ equidistant from 2 points A(4, −5) and B(2, −3).",
+       "parts": [],
+       "_key": "p157-k3",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Work with your colleagues",
+       "text": "Work with a partner: Work with your colleagues",
+       "_key": "p157-k4",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "parts": [],
+       "_key": "p157-k5",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the coordinates of point P on the x-axis equidistant",
+       "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(4, 3).",
+       "parts": [],
+       "_key": "p157-k6",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the coordinates of point P on the y-axis equidistant",
+       "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(−5, 2) and B(3, 5).",
+       "parts": [],
+       "_key": "p157-k7",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Find the coordinates of point P on the x-axis equidistant",
+       "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(3, 8).",
+       "parts": [],
+       "_key": "p157-k8",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "Find the coordinates of point Q on y = 2x − 3",
+       "text": "Find the coordinates of point Q on $y = 2x - 3$ equidistant from 2 points A(1, 4) and B(3, −2).",
+       "parts": [],
+       "_key": "p157-k9",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "Find the coordinates of point Q on y = x − 1",
+       "text": "Find the coordinates of point Q on $y = x - 1$ equidistant from 2 points A(−1, 5) and B(7, −1).",
+       "parts": [],
+       "_key": "p157-k10",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "Find the coordinates of point Q on y = − x + 1",
+       "text": "Find the coordinates of point Q on $y = -x + 1$ equidistant from 2 points A(1, 2) and B(−3, 6).",
+       "parts": [],
+       "_key": "p157-k11",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If A (2,1), B (4,5), C (3, y) and D (x,0)",
+       "text": "If A(2,1), B(4,5), C(3, y) and D(x,0) such that CA = CB and DA = DB, then find CD.",
+       "parts": [],
+       "_key": "p157-k12",
+       "source_page": 157,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 158,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Internal and External Division Points on the Coordinate Plane",
+       "text": "4-5 Internal and External Division Points on the Coordinate Plane (Chapter 4 Geometry and Equations)",
+       "_key": "p158-k1",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Find the coordinates of the division point (internal and external)",
+       "text": "Learning Outcomes: Find the coordinates of the division point (internal and external) of a line segment on the coordinate plane.",
+       "_key": "p158-k2",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Point!",
+       "text": "Point!",
+       "_key": "p158-k3",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Regarding the line segment AB connecting two points A(x1, y1) and B(",
+       "text": "Regarding the line segment AB connecting two points A(x₁, y₁) and B(x₂, y₂) on the coordinate plane:",
+       "_key": "p158-k4",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinates of point P dividing segment AB internally in the",
+       "claim": "(a) The point P dividing segment AB internally in the ratio m : n has coordinates ((n x₁ + m x₂)/(m + n), (n y₁ + m y₂)/(m + n)).",
+       "formula": "$P\\left(\\frac{nx_1+mx_2}{m+n},\\frac{ny_1+my_2}{m+n}\\right)$",
+       "_key": "p158-k5",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinates of point Q dividing segment AB externally in the",
+       "claim": "(b) The point Q dividing segment AB externally in the ratio m : n has coordinates ((−n x₁ + m x₂)/(m − n), (−n y₁ + m y₂)/(m − n)).",
+       "formula": "$Q\\left(\\frac{-nx_1+mx_2}{m-n},\\frac{-ny_1+my_2}{m-n}\\right)$",
+       "_key": "p158-k6",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Since the midpoint M divides segment AB internally in the ratio 1:1",
+       "claim": "(c) Since the midpoint M divides segment AB internally in the ratio 1:1, its coordinates are M((x₁+x₂)/2, (y₁+y₂)/2).",
+       "formula": "$M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$",
+       "_key": "p158-k7",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The coordinates of the centroid G of △ABC with vertices A(",
+       "claim": "The centroid G of triangle ABC with vertices A(x₁, y₁), B(x₂, y₂) and C(x₃, y₃) has coordinates ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3).",
+       "formula": "$G\\left(\\frac{x_1+x_2+x_3}{3},\\frac{y_1+y_2+y_3}{3}\\right)$",
+       "_key": "p158-k8",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Pay attention to the order of multiplication.",
+       "claim": "Side note beside (a) and (b): the formulas are written as (na+mb)/(m+n) and (−na+mb)/(m−n); pay attention to the order of multiplication (n goes with the first point, m with the second).",
+       "formula": "$\\frac{na+mb}{m+n},\\ \\frac{-na+mb}{m-n}$",
+       "notes": "Side margin note with dotted connectors to (a) and (b); the a, b notation is as printed.",
+       "_key": "p158-k9",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Given three points A( − 2, − 3), B(3, 7), and C(5, 2)",
+       "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P dividing segment BA internally in the ratio 1:2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q dividing segment BC externally in the ratio 1:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Midpoint M of segment CA",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Centroid G of triangle ABC",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p158-k10",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p158-k11",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "quote": "so P (4/3, 11/3)",
+       "stem": "Printed explanation (solution) of the Warm Up.",
+       "solution": [
+        "(a) $\\left(\\frac{2\\times3+1\\times(-2)}{1+2},\\frac{2\\times7+1\\times(-3)}{1+2}\\right)$, so $P\\left(\\frac43,\\frac{11}{3}\\right)$",
+        "(b) $\\left(\\frac{-3\\times3+1\\times5}{1-3},\\frac{-3\\times7+1\\times2}{1-3}\\right)$, so $Q\\left(2,\\frac{19}{2}\\right)$",
+        "(c) $\\left(\\frac{5+(-2)}{2},\\frac{2+(-3)}{2}\\right)$, so $M\\left(\\frac32,-\\frac12\\right)$",
+        "(d) $\\left(\\frac{-2+3+5}{3},\\frac{-3+7+2}{3}\\right)$, so $G(2,2)$"
+       ],
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$P\\left(\\frac43,\\frac{11}{3}\\right)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "$Q\\left(2,\\frac{19}{2}\\right)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "answer": "$M\\left(\\frac32,-\\frac12\\right)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "answer": "$G(2,2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Unlabelled explanation of the Warm Up, not an 'Example'. In (a) the ratio 2:1 is used (1:2 for BA with m=2? as printed), recorded as printed.",
+       "_key": "p158-k12",
+       "source_page": 158,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 159,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Point P dividing segment AC internally in the ratio 3:1",
+       "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point P dividing segment AC internally in the ratio 3:1",
+       "_key": "p159-k1",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Point Q dividing segment BC externally in the ratio 2:3",
+       "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point Q dividing segment BC externally in the ratio 2:3",
+       "_key": "p159-k2",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "Midpoint M of segment AB",
+       "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Midpoint M of segment AB",
+       "_key": "p159-k3",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 4,
+       "quote": "Centroid G of triangle ABC",
+       "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Centroid G of triangle ABC",
+       "_key": "p159-k4",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (3 and 4) then discuss the answer.",
+       "text": "Collaborate with your group to solve question (3 and 4) then discuss the answer.",
+       "notes": "Side box beside the Try questions.",
+       "_key": "p159-k5",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Given three points A(2, 3), B(2, − 3), and C( − 2, 3)",
+       "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P dividing segment AB internally in the ratio 4:1",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q dividing segment BC externally in the ratio 2:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Midpoint M of segment CA",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Centroid G of triangle ABC",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p159-k6",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Given three points A( − 2, 1), B(6, -3), and C(1, 7)",
+       "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P dividing segment BC internally in the ratio 3:2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q dividing segment CA externally in the ratio 3:2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Midpoint M of segment AB",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Centroid G of triangle ABC",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p159-k7",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Given three points A( − 4, 5), B(1, − 5), and C(3, 0)",
+       "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Point P dividing segment BA internally in the ratio 1:2",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Point Q dividing segment BC externally in the ratio 1:3",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Midpoint M of segment BC",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "Centroid G of triangle ABC",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p159-k8",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If A (-2,3), B (6,1) and C (0, y), such that CA = CB",
+       "text": "If $A(-2,3)$, $B(6,1)$ and $C(0,y)$, such that $CA = CB$, then find the coordinates of the centroid G of triangle ABC.",
+       "_key": "p159-k9",
+       "source_page": 159,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 160,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Symmetric Points",
+       "text": "Symmetric Points (4-6, Chapter 4 Geometry and Equations)",
+       "_key": "p160-k1",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Learning Outcomes Determine the symmetric point.",
+       "text": "Learning Outcomes: Determine the symmetric point.",
+       "_key": "p160-k2",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "B A C",
+       "caption": "Side figure: a line segment with points B (left, top), A (middle) and C (right, lower); A lies on the segment between B and C.",
+       "notes": "Positions read from figure.",
+       "_key": "p160-k3",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Two points B, C are symmetric with respect to point A",
+       "claim": "Two points B, C are symmetric with respect to point A if and only if point A is the midpoint of segment BC.",
+       "formula": "",
+       "notes": "Printed in the 'Point!' box.",
+       "_key": "p160-k4",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "When finding symmetric points, first draw a diagram",
+       "claim": "When finding symmetric points, first draw a diagram to understand the relative positions of the points. Next, let the required coordinates be (s, t) and express the midpoint in terms of s, t.",
+       "formula": "$(s, t)$",
+       "_key": "p160-k5",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p160-k6",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the coordinates of point B symmetric to point A( − 3, 2)",
+       "stem": "Find the coordinates of point B symmetric to point A$(-3,2)$ with respect to point P$(2,6)$.",
+       "solution": [
+        "Let the coordinates of point B be $(s, t)$.",
+        "The coordinates of the midpoint of segment AB can be expressed as $\\left(\\frac{-3+s}{2}, \\frac{2+t}{2}\\right)$.",
+        "Since this coincides with point P(2, 6): $\\frac{-3+s}{2}=2$ and $\\frac{2+t}{2}=6$.",
+        "Solving this gives $s = 7, t = 10$."
+       ],
+       "answer": "B(7, 10)",
+       "notes": "Under the heading 'Explanation'. Side note beside the midpoint: 'Express the midpoint in terms of s, t.'",
+       "_key": "p160-k7",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Express the midpoint in terms of s, t.",
+       "text": "Side note: Express the midpoint in terms of s, t.",
+       "belongs_to_key": "p160-k7",
+       "_key": "p160-k8",
+       "source_page": 160,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "A (−3, 2) P (2, 6) B (s, t)",
+       "caption": "Side figure: a horizontal segment with three points: A(−3, 2) on the left, P(2, 6) in the middle, B(s, t) on the right.",
+       "belongs_to_key": "p160-k7",
+       "notes": "Values read from figure; verify.",
+       "_key": "p160-k9",
+       "source_page": 160,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try: Solve the following problems.",
+       "_key": "p160-k10",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the coordinates of point B symmetric to point A(1, − 2)",
+       "text": "Find the coordinates of point B symmetric to point A$(1,-2)$ with respect to point P$(2,3)$.",
+       "_key": "p160-k11",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "Find the coordinates of point Q symmetric to point P(3, 2)",
+       "text": "Find the coordinates of point Q symmetric to point P$(3,2)$ with respect to point A$(-1,5)$.",
+       "_key": "p160-k12",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question (2) then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+       "_key": "p160-k13",
+       "source_page": 160,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 161,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p161-k1",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the coordinates of point B symmetric to point A( − 3, 1)",
+       "text": "Find the coordinates of point $B$ symmetric to point $A(-3,1)$ with respect to point $P(2,0)$.",
+       "_key": "p161-k2",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the coordinates of point B symmetric to point A(7, 4)",
+       "text": "Find the coordinates of point $B$ symmetric to point $A(7,4)$ with respect to point $M(-3,5)$.",
+       "_key": "p161-k3",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "Find the coordinates of point B symmetric to point A(4, − 8)",
+       "text": "Find the coordinates of point $B$ symmetric to point $A(4,-8)$ with respect to point $P(-3,2)$.",
+       "_key": "p161-k4",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "Find the coordinates of point Q symmetric to point P(0, − 4)",
+       "text": "Find the coordinates of point $Q$ symmetric to point $P(0,-4)$ with respect to point $A(-4,1)$.",
+       "_key": "p161-k5",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "Find the coordinates of point B symmetric to point A( − 4, 2)",
+       "text": "Find the coordinates of point $B$ symmetric to point $A(-4,2)$ with respect to point $P(-1,-3)$.",
+       "_key": "p161-k6",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If the points B (m, 5), C (4, n) are symmetric with respect to the point A",
+       "text": "If the points $B(m,5)$, $C(4,n)$ are symmetric with respect to the point $A(1,-1)$, then find $m+n$.",
+       "_key": "p161-k7",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "If we change the ratio of dividing a line segment, how will the position",
+       "text": "If we change the ratio of dividing a line segment, how will the position of the point on that line change? And how does thinking about ratios and reference distances help us understand locations in mathematics and in everyday life?",
+       "_key": "p161-k8",
+       "source_page": 161,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Number-line distance and division points",
+      "description": "Find the distance between two points on a number line and the coordinate of the internal, external or midpoint division point of a segment.",
+      "evidence_keys": [
+       "p150-k11",
+       "p150-k12",
+       "p151-k2",
+       "p151-k10"
+      ]
+     },
+     {
+      "label": "Quadrants and reflections",
+      "description": "Determine the quadrant of a point and find its symmetric points with respect to the x-axis, y-axis and origin.",
+      "evidence_keys": [
+       "p153-k3",
+       "p153-k7",
+       "p153-k12",
+       "p154-k4"
+      ]
+     },
+     {
+      "label": "Distance between two points",
+      "description": "Calculate the distance between two points in the plane and use a known distance to find an unknown coordinate.",
+      "evidence_keys": [
+       "p155-k2",
+       "p155-k5",
+       "p155-k6",
+       "p155-k11"
+      ]
+     },
+     {
+      "label": "Point equidistant from two points",
+      "description": "Determine the position of a point on an axis or a line that is equidistant from two given points.",
+      "evidence_keys": [
+       "p156-k2",
+       "p156-k8",
+       "p156-k11",
+       "p157-k6"
+      ]
+     },
+     {
+      "label": "Plane division points and centroid",
+      "description": "Find the coordinates of internal and external division points, the midpoint and the centroid on the coordinate plane.",
+      "evidence_keys": [
+       "p158-k5",
+       "p158-k6",
+       "p158-k8",
+       "p158-k10",
+       "p159-k6"
+      ]
+     },
+     {
+      "label": "Point symmetric about a point",
+      "description": "Determine the point symmetric to a given point with respect to another point by using the midpoint.",
+      "evidence_keys": [
+       "p160-k4",
+       "p160-k5",
+       "p160-k7",
+       "p161-k2"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p150-k5",
+      "objective": 1
+     },
+     {
+      "key": "p150-k6",
+      "objective": 1
+     },
+     {
+      "key": "p150-k7",
+      "objective": 1
+     },
+     {
+      "key": "p150-k8",
+      "objective": 1
+     },
+     {
+      "key": "p150-k9",
+      "objective": 1
+     },
+     {
+      "key": "p150-k11",
+      "objective": 1
+     },
+     {
+      "key": "p150-k12",
+      "objective": 1
+     },
+     {
+      "key": "p150-k13",
+      "objective": 1
+     },
+     {
+      "key": "p150-k14",
+      "objective": 1
+     },
+     {
+      "key": "p150-k15",
+      "objective": 1
+     },
+     {
+      "key": "p150-k4",
+      "objective": 1
+     },
+     {
+      "key": "p151-k2",
+      "objective": 1
+     },
+     {
+      "key": "p151-k6",
+      "objective": 1
+     },
+     {
+      "key": "p151-k10",
+      "objective": 1
+     },
+     {
+      "key": "p151-k11",
+      "objective": 1
+     },
+     {
+      "key": "p152-k2",
+      "objective": 1
+     },
+     {
+      "key": "p152-k3",
+      "objective": 1
+     },
+     {
+      "key": "p153-k3",
+      "objective": 2
+     },
+     {
+      "key": "p153-k4",
+      "objective": 2
+     },
+     {
+      "key": "p153-k7",
+      "objective": 2
+     },
+     {
+      "key": "p153-k8",
+      "objective": 2
+     },
+     {
+      "key": "p153-k10",
+      "objective": 2
+     },
+     {
+      "key": "p153-k11",
+      "objective": 2
+     },
+     {
+      "key": "p153-k12",
+      "objective": 2
+     },
+     {
+      "key": "p153-k13",
+      "objective": 2
+     },
+     {
+      "key": "p154-k1",
+      "objective": 2
+     },
+     {
+      "key": "p154-k2",
+      "objective": 2
+     },
+     {
+      "key": "p154-k3",
+      "objective": 2
+     },
+     {
+      "key": "p154-k4",
+      "objective": 2
+     },
+     {
+      "key": "p154-k5",
+      "objective": 2
+     },
+     {
+      "key": "p154-k6",
+      "objective": 2
+     },
+     {
+      "key": "p154-k7",
+      "objective": 2
+     },
+     {
+      "key": "p154-k8",
+      "objective": 2
+     },
+     {
+      "key": "p155-k2",
+      "objective": 3
+     },
+     {
+      "key": "p155-k3",
+      "objective": 3
+     },
+     {
+      "key": "p155-k5",
+      "objective": 3
+     },
+     {
+      "key": "p155-k6",
+      "objective": 3
+     },
+     {
+      "key": "p155-k8",
+      "objective": 3
+     },
+     {
+      "key": "p155-k9",
+      "objective": 3
+     },
+     {
+      "key": "p155-k11",
+      "objective": 3
+     },
+     {
+      "key": "p155-k12",
+      "objective": 3
+     },
+     {
+      "key": "p155-k13",
+      "objective": 3
+     },
+     {
+      "key": "p155-k14",
+      "objective": 3
+     },
+     {
+      "key": "p155-k16",
+      "objective": 3
+     },
+     {
+      "key": "p155-k18",
+      "objective": 3
+     },
+     {
+      "key": "p155-k19",
+      "objective": 3
+     },
+     {
+      "key": "p156-k2",
+      "objective": 4
+     },
+     {
+      "key": "p156-k3",
+      "objective": 4
+     },
+     {
+      "key": "p156-k4",
+      "objective": 4
+     },
+     {
+      "key": "p156-k5",
+      "objective": 4
+     },
+     {
+      "key": "p156-k8",
+      "objective": 4
+     },
+     {
+      "key": "p156-k9",
+      "objective": 4
+     },
+     {
+      "key": "p156-k11",
+      "objective": 4
+     },
+     {
+      "key": "p156-k12",
+      "objective": 4
+     },
+     {
+      "key": "p156-k13",
+      "objective": 4
+     },
+     {
+      "key": "p156-k14",
+      "objective": 4
+     },
+     {
+      "key": "p157-k2",
+      "objective": 4
+     },
+     {
+      "key": "p157-k3",
+      "objective": 4
+     },
+     {
+      "key": "p157-k6",
+      "objective": 4
+     },
+     {
+      "key": "p157-k7",
+      "objective": 4
+     },
+     {
+      "key": "p157-k8",
+      "objective": 4
+     },
+     {
+      "key": "p157-k9",
+      "objective": 4
+     },
+     {
+      "key": "p157-k10",
+      "objective": 4
+     },
+     {
+      "key": "p157-k11",
+      "objective": 4
+     },
+     {
+      "key": "p157-k12",
+      "objective": 4
+     },
+     {
+      "key": "p158-k5",
+      "objective": 5
+     },
+     {
+      "key": "p158-k6",
+      "objective": 5
+     },
+     {
+      "key": "p158-k7",
+      "objective": 5
+     },
+     {
+      "key": "p158-k8",
+      "objective": 5
+     },
+     {
+      "key": "p158-k9",
+      "objective": 5
+     },
+     {
+      "key": "p158-k10",
+      "objective": 5
+     },
+     {
+      "key": "p158-k12",
+      "objective": 5
+     },
+     {
+      "key": "p159-k1",
+      "objective": 5
+     },
+     {
+      "key": "p159-k2",
+      "objective": 5
+     },
+     {
+      "key": "p159-k3",
+      "objective": 5
+     },
+     {
+      "key": "p159-k4",
+      "objective": 5
+     },
+     {
+      "key": "p159-k5",
+      "objective": 5
+     },
+     {
+      "key": "p159-k6",
+      "objective": 5
+     },
+     {
+      "key": "p159-k7",
+      "objective": 5
+     },
+     {
+      "key": "p159-k8",
+      "objective": 5
+     },
+     {
+      "key": "p159-k9",
+      "objective": 5
+     },
+     {
+      "key": "p160-k3",
+      "objective": 6
+     },
+     {
+      "key": "p160-k4",
+      "objective": 6
+     },
+     {
+      "key": "p160-k5",
+      "objective": 6
+     },
+     {
+      "key": "p160-k7",
+      "objective": 6
+     },
+     {
+      "key": "p160-k9",
+      "objective": 6
+     },
+     {
+      "key": "p160-k11",
+      "objective": 6
+     },
+     {
+      "key": "p160-k12",
+      "objective": 6
+     },
+     {
+      "key": "p160-k13",
+      "objective": 6
+     },
+     {
+      "key": "p161-k2",
+      "objective": 6
+     },
+     {
+      "key": "p161-k3",
+      "objective": 6
+     },
+     {
+      "key": "p161-k4",
+      "objective": 6
+     },
+     {
+      "key": "p161-k5",
+      "objective": 6
+     },
+     {
+      "key": "p161-k6",
+      "objective": 6
+     },
+     {
+      "key": "p161-k7",
+      "objective": 6
+     },
+     {
+      "key": "p161-k8",
+      "objective": 1
+     }
+    ]
+   }
+  }
+ ],
+ "failed_lessons": []
+}

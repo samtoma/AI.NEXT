@@ -1,0 +1,68 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-2-3:from-two-terms",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-2-3",
+ "parent_question_id": "q:eb11c2-2-3:bk-try-7-b",
+ "source_page": 64,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3,
+    -2,
+    -3
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    5,
+    7
+   ]
+  },
+  {
+   "name": "t3",
+   "let": "a * r ** 2"
+  },
+  {
+   "name": "t6",
+   "let": "a * r ** 5"
+  },
+  {
+   "name": "q",
+   "let": "r ** 3"
+  },
+  {
+   "name": "rn",
+   "let": "r ** n"
+  },
+  {
+   "name": "S",
+   "let": "a * (r ** n - 1) / (r - 1)"
+  }
+ ],
+ "constraints": [],
+ "stem": "In a geometric sequence the third term is ${=t3}$ and the sixth term is ${=t6}$. Find the sum $S$ of the first {=n} terms of the sequence.",
+ "answer": "S",
+ "solution": [
+  "Let the first term be $a$ and the common ratio $r$. Then $ar^2 = {=t3}$ and $ar^5 = {=t6}$.",
+  "Dividing: $r^3 = \\frac{{=t6}}{{=t3}} = {=q}$, so $r = {=r}$.",
+  "$a = \\frac{{=t3}}{r^2} = \\frac{{=t3}}{{=r**2}} = {=a}$.",
+  "$S_{{=n}} = \\frac{a(r^{{=n}}-1)}{r-1} = \\frac{{=a}\\left(({=r})^{{=n}}-1\\right)}{{=r-1}} = \\frac{{=a}\\times({=rn}-1)}{{=r-1}}$.",
+  "$S = {=S}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Two-step: find r and a from third and sixth terms (nth-term formula from the preceding lesson), then apply the S_n formula. r in {2,3,-2,-3}; r^3 gives a unique real r; all sums are integers."
+}

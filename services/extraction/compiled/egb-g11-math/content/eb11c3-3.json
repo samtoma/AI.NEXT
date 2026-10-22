@@ -1,0 +1,157 @@
+{
+  "format": "ainext.book-statements/1",
+  "lesson": "eb11c3-3",
+  "source": "book-records/egb-g11-math/eb11c3-3.json",
+  "groups": [
+    {
+      "lo": "lo:eb11c3-3-1",
+      "label": "Remainder Theorem, linear divisors",
+      "statements": [
+        {
+          "id": "eb11c3-3:rule-1",
+          "type": "rule",
+          "text": "Remainder Theorem: the remainder when polynomial P(x) is divided by the linear expression x − a is P(a).",
+          "page": 132
+        },
+        {
+          "id": "eb11c3-3:rule-2",
+          "type": "rule",
+          "text": "The remainder when P(x) is divided by the linear expression ax − b is P(b/a). Formula: $P\\left(\\frac{b}{a}\\right)$",
+          "page": 132
+        },
+        {
+          "id": "eb11c3-3:caution-1",
+          "type": "caution",
+          "text": "Divisor confusion: students may substitute the wrong value (e.g., use x = 2 instead of x = 2/3 for 3x − 2). Formula: $x=2$ instead of $x=\\frac{2}{3}$ for $3x-2$",
+          "page": 133
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c3-3-2",
+      "label": "Remainder for quadratic divisors",
+      "statements": [
+        {
+          "id": "eb11c3-3:rule-3",
+          "type": "rule",
+          "text": "If P(x) is divided by a quadratic expression (x − α)(x − β), let the quotient be Q(x) and the remainder be ax + b. (Side note: the degree of the remainder must be lower than the degree of the divisor.) Formula: $(x-\\alpha)(x-\\beta)$",
+          "page": 134
+        },
+        {
+          "id": "eb11c3-3:rule-4",
+          "type": "rule",
+          "text": "Express it as P(x) = (x − α)(x − β)Q(x) + ax + b. (Side note: A = B × Q + R.) Formula: $P(x)=(x-\\alpha)(x-\\beta)Q(x)+ax+b$",
+          "page": 134
+        },
+        {
+          "id": "eb11c3-3:rule-5",
+          "type": "rule",
+          "text": "(x − α)(x − β)Q(x) becomes 0 when x = α or x = β is substituted. Formula: $(x-\\alpha)(x-\\beta)Q(x)=0$",
+          "page": 134
+        },
+        {
+          "id": "eb11c3-3:rule-6",
+          "type": "rule",
+          "text": "If P(x) is divided by a quadratic expression (x − α)(x − β), the remainder is of the form ax + b. Formula: $(x-\\alpha)(x-\\beta)$",
+          "page": 136
+        },
+        {
+          "id": "eb11c3-3:convention-1",
+          "type": "convention",
+          "text": "Let the quotient be Q(x) and the remainder be ax + b. Formula: $Q(x), \\ ax+b$",
+          "page": 136
+        },
+        {
+          "id": "eb11c3-3:rule-7",
+          "type": "rule",
+          "text": "Express it as P(x) = (x − α)(x − β)Q(x) + ax + b. Formula: $P(x)=(x-\\alpha)(x-\\beta)Q(x)+ax+b$",
+          "page": 136
+        },
+        {
+          "id": "eb11c3-3:caution-2",
+          "type": "caution",
+          "text": "The degree of the remainder must be lower than the degree of the divisor.",
+          "page": 136
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c3-3-3",
+      "label": "Synthetic division",
+      "statements": [
+        {
+          "id": "eb11c3-3:rule-8",
+          "type": "rule",
+          "text": "Point! When dividing a polynomial by a linear expression $x-a$, using Synthetic Division makes it easy to find the quotient and remainder.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:caution-3",
+          "type": "caution",
+          "text": "Misconception: forgetting to insert a zero coefficient for missing terms (like the $x^2$ term).",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:caution-4",
+          "type": "caution",
+          "text": "Misconception: mixing up the quotient coefficients with the remainder.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:method-1",
+          "type": "method",
+          "text": "Step 1: Extract the coefficients of $x^3+5x+11$: 1, 0, 5, 11. Side note: since there is no $x^2$ term, the coefficient is 0.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:method-2",
+          "type": "method",
+          "text": "Step 2: Since dividing by $x+2$, write $-2$ on the left, before the row 1, 0, 5, 11. Side note: when dividing by $x-a$, write the value of $a$ on the left.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:method-3",
+          "type": "method",
+          "text": "Step 3: Bring down the first number 1 as is, multiply by $-2$ written on the left, and write the answer in the second row.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:method-4",
+          "type": "method",
+          "text": "Step 4: Add the two numbers vertically.",
+          "page": 138
+        },
+        {
+          "id": "eb11c3-3:method-5",
+          "type": "method",
+          "text": "Step 5: Repeat steps 3 and 4 until the right end of the 3rd row is filled. Side note: from right to left: Remainder, Constant term of Quotient, Coefficient of x, Coefficient of $x^2$, ..., Coefficient of $x^n$.",
+          "page": 138
+        }
+      ]
+    },
+    {
+      "lo": "lo:eb11c3-3-4",
+      "label": "Factorise using Factor Theorem",
+      "statements": [
+        {
+          "id": "eb11c3-3:rule-9",
+          "type": "rule",
+          "text": "If a polynomial P(x) is divisible by the linear expression x − a, it can be factorised as P(x) = (x − a)Q(x). Formula: $P(x)=(x-a)Q(x)$",
+          "page": 140
+        },
+        {
+          "id": "eb11c3-3:method-6",
+          "type": "method",
+          "text": "In factorisation using the Factor Theorem, find a value a such that P(a) = 0.",
+          "page": 140
+        },
+        {
+          "id": "eb11c3-3:method-7",
+          "type": "method",
+          "text": "Values for a are easy to find by substituting ±(divisors of the constant term) in order.",
+          "page": 140
+        }
+      ]
+    }
+  ]
+}

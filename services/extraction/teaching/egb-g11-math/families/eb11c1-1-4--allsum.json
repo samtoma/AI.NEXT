@@ -1,0 +1,29 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-4:allsum",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-4",
+ "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+ "source_page": 6,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    3,
+    10
+   ]
+  }
+ ],
+ "stem": "Find the value of $\\binom{{=n}}{0}+\\binom{{=n}}{1}+\\binom{{=n}}{2}+\\dots+\\binom{{=n}}{{=n}}$ by expanding $(1+x)^{{=n}}$.",
+ "answer": "2**n",
+ "solution": [
+  "$(1+x)^{{=n}}=\\binom{{=n}}{0}+\\binom{{=n}}{1}x+\\binom{{=n}}{2}x^2+\\dots+\\binom{{=n}}{{=n}}x^{{=n}}$.",
+  "Substitute $x=1$: the right side becomes the required sum.",
+  "The left side becomes $(1+1)^{{=n}}=2^{{=n}}$.",
+  "The sum is ${=2**n}$."
+ ],
+ "notes": "Basic: substitute x=1 in the expansion of (1+x)^n."
+}

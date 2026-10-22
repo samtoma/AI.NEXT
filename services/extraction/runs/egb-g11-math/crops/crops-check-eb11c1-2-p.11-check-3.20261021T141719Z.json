@@ -1,0 +1,27 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "3ff95ea4dc8b7bb07527f3f458ca6249078ac78fcb845f34b1f8069e7bcfb3b0",
+  "generated_sha256": "9ad5799f9eadcde0ff1cea012742a43ad93e8854a1e775b951729122823afd59",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c1-2:figure-3",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "trim",
+    "bottom": "ok",
+    "note": "Right edge includes letters of adjacent paragraph text (A, t, t) beside the h marker; trim them."
+   }
+  ]
+ }
+}

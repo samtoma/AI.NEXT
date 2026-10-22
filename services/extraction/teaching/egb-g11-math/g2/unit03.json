@@ -1,0 +1,112 @@
+{
+ "status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs each verdict `auto-pass G2 (AI recommendation)`; a person's verdict in G2's file is never overwritten.",
+ "prepared_by": "g2_recommend.py g2rec-v1",
+ "prompts_version": "g2rec-v1",
+ "chapter": 3,
+ "from_runs": {
+  "run": "runs/egb-g11-math/g2/g2r.unit03.20261021T144145Z.json"
+ },
+ "by": null,
+ "items": {
+  "eb11c3-1:WE1": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "The stem is only a warm-up instruction (reverse the sign of the imaginary part) with no number. Part (c)'s number is missing, so the key 6 cannot be checked or derived.",
+   "if_corrected": {
+    "answer": "",
+    "defect": "The Warm Up 1(c) expression is missing from the stem. The working is only an instruction, so nothing shows the intended number. Key 6 is not supported.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c3-2:WE2": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "For $3x^2-6x-5=0$: $\\alpha+\\beta=2$, $\\alpha\\beta=-5/3$, so $\\alpha^2+\\beta^2=4+10/3=22/3$. The book's working uses sum 3 and product $-3/2$, which is a different equation. The stem and working do not match. Right answer by the agent's own derivation: 22/3.",
+   "if_corrected": {
+    "answer": "22/3",
+    "defect": "The working uses $\\alpha+\\beta=3$ and $\\alpha\\beta=-3/2$, which do not belong to $3x^2-6x-5=0$. The equation was changed or garbled, and the working does not show the intended one. Key 12 does not follow from the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  },
+  "eb11c3-2:WE3": {
+   "verdict": "exclude",
+   "class": "stem damaged",
+   "confidence": "high",
+   "note": "For $3x^2-6x-5=0$: $2(\\alpha+\\beta)/(\\alpha\\beta)=4/(-5/3)=-12/5$. The book's working uses sum 3 and product $-3/2$, giving $-4$, which belongs to a different equation. The stem and working do not match. Right answer by the agent's own derivation: -12/5.",
+   "if_corrected": {
+    "answer": "-12/5",
+    "defect": "The working uses $\\alpha+\\beta=3$ and $\\alpha\\beta=-3/2$, which do not match $3x^2-6x-5=0$. The stem equation is wrong or garbled, and the working does not show the intended one. Key $-4$ does not follow from the stem.",
+    "status": "NOT APPLIED: correcting the book's own answer or working is Samuel's to approve (decisions 43–45)"
+   }
+  }
+ },
+ "unanswered": [],
+ "report": {
+  "items": 3,
+  "recommended": 3,
+  "unanswered": [],
+  "by_verdict": {
+   "exclude": 3
+  },
+  "by_class": {
+   "stem damaged": 3
+  },
+  "by_confidence": {
+   "high": 3
+  },
+  "live": [],
+  "live_question_ids": [],
+  "not_live": {},
+  "low_confidence": [],
+  "stem_repairs": [],
+  "retyped": [],
+  "corrections_proposed": [
+   "eb11c3-1:WE1",
+   "eb11c3-2:WE2",
+   "eb11c3-2:WE3"
+  ],
+  "off_task": [],
+  "no_longer_owed": [],
+  "stale_items": [],
+  "by_state": {
+   "held": 3
+  },
+  "app_marker_identity_of_the_typed_key": {
+   "equal": [],
+   "different": [],
+   "unreadable": []
+  }
+ },
+ "questions": {
+  "eb11c3-1:WE1": {
+   "question": "q:eb11c3-1-3:bk-explanation-2-c",
+   "book_ref": "eb11c3-1:explanation-2:c",
+   "facts": {
+    "stem": "Warm Up 1: Reverse the sign of the imaginary part. (c)",
+    "answer": "6",
+    "hold_reason": "unverified"
+   }
+  },
+  "eb11c3-2:WE2": {
+   "question": "q:eb11c3-2-3:bk-explanation-2-a",
+   "book_ref": "eb11c3-2:explanation-2:a",
+   "facts": {
+    "stem": "$3x^2-6x-5=0$ $\\alpha^2+\\beta^2$",
+    "answer": "12",
+    "hold_reason": "answer_mismatch"
+   }
+  },
+  "eb11c3-2:WE3": {
+   "question": "q:eb11c3-2-3:bk-explanation-2-c",
+   "book_ref": "eb11c3-2:explanation-2:c",
+   "facts": {
+    "stem": "$3x^2-6x-5=0$ $\\frac{2}{\\alpha}+\\frac{2}{\\beta}$",
+    "answer": "-4",
+    "hold_reason": "answer_mismatch"
+   }
+  }
+ },
+ "line": "book-records (book_record_g2.py)"
+}

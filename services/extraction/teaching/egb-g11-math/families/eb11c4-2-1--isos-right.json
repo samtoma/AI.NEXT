@@ -1,0 +1,169 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-2-1:isos-right",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-2-1",
+ "parent_question_id": "q:eb11c4-2-1:bk-try-1",
+ "source_page": 163,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "sg",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "x0",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "name": "y0",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "base",
+   "let": "[[x0, y0], [x0 + p, y0 + q], [x0 - sg * q, y0 + sg * p]]"
+  },
+  {
+   "name": "pts",
+   "let": "[base[(i - v) % 3] for i in range(3)]"
+  },
+  {
+   "name": "names",
+   "let": "[\"A\", \"B\", \"C\"]"
+  },
+  {
+   "name": "abx",
+   "let": "pts[1][0] - pts[0][0]"
+  },
+  {
+   "name": "aby",
+   "let": "pts[1][1] - pts[0][1]"
+  },
+  {
+   "name": "bcx",
+   "let": "pts[2][0] - pts[1][0]"
+  },
+  {
+   "name": "bcy",
+   "let": "pts[2][1] - pts[1][1]"
+  },
+  {
+   "name": "cax",
+   "let": "pts[0][0] - pts[2][0]"
+  },
+  {
+   "name": "cay",
+   "let": "pts[0][1] - pts[2][1]"
+  },
+  {
+   "name": "ab2",
+   "let": "abx**2 + aby**2"
+  },
+  {
+   "name": "bc2",
+   "let": "bcx**2 + bcy**2"
+  },
+  {
+   "name": "ca2",
+   "let": "cax**2 + cay**2"
+  },
+  {
+   "name": "sq",
+   "let": "[bc2, ca2, ab2]"
+  },
+  {
+   "name": "sides",
+   "let": "[\"BC\", \"CA\", \"AB\"]"
+  },
+  {
+   "name": "hyp",
+   "let": "sides[v]"
+  },
+  {
+   "name": "l1",
+   "let": "sides[(v + 1) % 3]"
+  },
+  {
+   "name": "l2",
+   "let": "sides[(v + 2) % 3]"
+  },
+  {
+   "name": "leg",
+   "let": "sq[(v + 1) % 3]"
+  },
+  {
+   "name": "rv",
+   "let": "names[v]"
+  },
+  {
+   "name": "ov",
+   "let": "names[(v + 1) % 3]"
+  }
+ ],
+ "constraints": [
+  "sq[(v + 1) % 3] == sq[(v + 2) % 3]",
+  "sq[v] == 2 * sq[(v + 1) % 3]",
+  "ab2 != bc2 or bc2 != ca2"
+ ],
+ "stem": "Determine the shape of $\\triangle ABC$ with vertices A({=pts[0][0]}, {=pts[0][1]}), B({=pts[1][0]}, {=pts[1][1]}) and C({=pts[2][0]}, {=pts[2][1]}).",
+ "solution": [
+  "$(AB)^2=({=abx})^2+({=aby})^2={=ab2}$",
+  "$(BC)^2=({=bcx})^2+({=bcy})^2={=bc2}$",
+  "$(CA)^2=({=cax})^2+({=cay})^2={=ca2}$",
+  "$({=l1})^2=({=l2})^2={=leg}$, so the triangle is isosceles.",
+  "$({=hyp})^2={=sq[v]}={=leg}+{=leg}=({=l1})^2+({=l2})^2$, so it is right-angled at {=rv}.",
+  "$\\triangle ABC$ is an isosceles right-angled triangle with the right angle at {=rv}."
+ ],
+ "choices": {
+  "correct": "Isosceles right-angled triangle (right angle at {=rv})",
+  "distractors": [
+   {
+    "text": "Isosceles triangle, not right-angled",
+    "misconception_id": "mc:eb11c4-2-1:stops-at-isosceles"
+   },
+   {
+    "text": "Isosceles right-angled triangle (right angle at {=ov})",
+    "misconception_id": null
+   },
+   {
+    "text": "Equilateral triangle",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: one isosceles right triangle, right-angle vertex and orientation vary. Constructed by rotating the leg vector 90 degrees, so legs equal and hypotenuse squared is twice a leg squared. Non-degenerate since p>=1. Model: bk-try-1."
+}

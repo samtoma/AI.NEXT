@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-2-5:no-triangle",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-2-5",
+ "parent_question_id": "q:eb11c4-2-5:bk-challenge-9",
+ "source_page": 179,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "u",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "v",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "m0",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    -2,
+    -3,
+    -4
+   ]
+  },
+  {
+   "name": "s1",
+   "let": "u + v"
+  },
+  {
+   "name": "s2",
+   "let": "u - v"
+  },
+  {
+   "name": "c",
+   "let": "m0 * u + v"
+  }
+ ],
+ "constraints": [],
+ "stem": "If the three lines $x+y={=s1}$, $x-y={=s2}$ and $mx+y={=c}$ do not form a triangle, then find the sum of all possible values of $m$.",
+ "solution": [
+  "The three lines fail to form a triangle if the third is parallel to one of the others, or if all three pass through one point.",
+  "Gradients: $-1$, $1$, $-m$.",
+  "Parallel to the first: $-m=-1$, so $m=1$.",
+  "Parallel to the second: $-m=1$, so $m=-1$.",
+  "The first two lines meet at $({=u}, {=v})$.",
+  "The third passes through it: ${=m0 * u}$ is not needed; $m({=u})+{=v}={=c}$, so $m={=m0}$.",
+  "Sum $=1+(-1)+({=m0})={=m0}$."
+ ],
+ "answer": "m0",
+ "proposed_misconceptions": [
+  {
+   "id": "mc:eb11c4-2-5:no-triangle-only-one-case",
+   "label": "Stops after one way the lines can fail to make a triangle",
+   "description": "Finds only the concurrent value or only the parallel values and gives that as the whole answer."
+  }
+ ],
+ "notes": "First two lines meet at (u,v). Parallel cases m=1 and m=-1 never coincide with the other lines since m0 not +-1 and u>0. Sum = m0. Solution step 6 wording slightly awkward; step intended: m*u+v=c."
+}

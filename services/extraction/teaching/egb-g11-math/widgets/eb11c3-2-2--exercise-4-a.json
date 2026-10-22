@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-2-2:exercise-4-a",
+ "lo_id": "lo:eb11c3-2-2",
+ "book_item": "eb11c3-2:exercise-4#a",
+ "parent_question_id": "q:eb11c3-2-2:bk-exercise-4-a",
+ "parent_kind": "question",
+ "tier": "standard",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -8,
+   6
+  ],
+  "targets": [
+   -5,
+   3
+  ]
+ },
+ "stem": "Find the value(s) of the constant $a$ for which the quadratic equation $x^2-(a+1)x+4=0$ has a repeated solution. Tap the value(s) of $a$ on the number line.",
+ "solution": [
+  "A repeated solution needs $D=0$.",
+  "$D=(a+1)^2-4(1)(4)=(a+1)^2-16$.",
+  "$(a+1)^2=16$, so $a+1=4$ or $a+1=-4$.",
+  "$a=3$ or $a=-5$; mark both."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Taking a square root gives two cases, positive and negative."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 3,
+   "text": "Solve $a+1=\\text{each root}$ carefully for $a$; check the sign of the value you subtract."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 1,
+   "text": "Start from the condition $D=0$ for a repeated solution, then check each value by substituting it into $D$."
+  }
+ ],
+ "notes": "Book answer a=3, a=-5."
+}

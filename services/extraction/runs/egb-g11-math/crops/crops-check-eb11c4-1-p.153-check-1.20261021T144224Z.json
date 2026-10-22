@@ -1,0 +1,47 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "dbaa7f8f78b1da0e2f90f611f2e7b59e44f74af2e9e7b00fb493b572a48c85ee",
+  "generated_sha256": "8136640a1ca8573cceaa6ce6f6f3cc9c5115cec6ffd72c2da5df211fb9384ef2",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c4-1:figure-4",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete."
+   },
+   {
+    "id": "eb11c4-1:figure-5",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "ok",
+    "right": "extend",
+    "bottom": "ok",
+    "note": "Right side cut: '(a) Quadrant I' and '(d) Quadrant IV' labels truncated, and the right part of the plane is missing (A's dashed lines/x-axis end)."
+   },
+   {
+    "id": "eb11c4-1:figure-6",
+    "shows_figure": true,
+    "ok": true,
+    "left": "ok",
+    "top": "ok",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Complete."
+   }
+  ]
+ }
+}

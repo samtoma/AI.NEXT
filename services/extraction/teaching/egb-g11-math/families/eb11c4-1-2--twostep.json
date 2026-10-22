@@ -1,0 +1,83 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-1-2:twostep",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-1-2",
+ "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+ "source_page": 154,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "choice": "[v for v in range(-9, 10) if v != 0]"
+  },
+  {
+   "name": "b",
+   "choice": "[v for v in range(-9, 10) if v != 0]"
+  },
+  {
+   "name": "k1",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "k2",
+   "choice": [
+    0,
+    1,
+    2
+   ],
+   "resample_while": "k2 == k1"
+  },
+  {
+   "name": "n1",
+   "let": "[\"x-axis\", \"y-axis\", \"origin\"][k1]"
+  },
+  {
+   "name": "n2",
+   "let": "[\"x-axis\", \"y-axis\", \"origin\"][k2]"
+  },
+  {
+   "name": "bx",
+   "let": "[a, -a, -a][k1]"
+  },
+  {
+   "name": "by",
+   "let": "[-b, b, -b][k1]"
+  },
+  {
+   "name": "cx",
+   "let": "[bx, -bx, -bx][k2]"
+  },
+  {
+   "name": "cy",
+   "let": "[-by, by, -by][k2]"
+  },
+  {
+   "name": "qn",
+   "let": "\"first\" if (cx > 0 and cy > 0) else (\"second\" if (cx < 0 and cy > 0) else (\"third\" if (cx < 0 and cy < 0) else \"fourth\"))"
+  }
+ ],
+ "constraints": [],
+ "stem": "The point $B$ is the symmetric of $A({=a}, {=b})$ with respect to the {=n1}, and $C$ is the symmetric of $B$ with respect to the {=n2}. Find the coordinates of $C$.",
+ "solution": [
+  "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$.",
+  "$B$, the symmetric of $A({=a}, {=b})$ with respect to the {=n1}, is $({=bx}, {=by})$.",
+  "$C$, the symmetric of $B$ with respect to the {=n2}, is $({=cx}, {=cy})$.",
+  "Since $x = {=cx}$ and $y = {=cy}$, $C$ lies in the {=qn} quadrant."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=cx}, {=cy})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Two successive reflections with different mappings; nonzero coordinates."
+}

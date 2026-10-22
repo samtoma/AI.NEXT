@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-3-3:consec-telescope",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-3-3",
+ "parent_question_id": "q:eb11c2-3-3:bk-exercise-4-a",
+ "source_page": 77,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    "m + 4",
+    "m + 10"
+   ]
+  },
+  {
+   "name": "num",
+   "let": "n + 1 - m"
+  },
+  {
+   "name": "den",
+   "let": "m * (n + 1)"
+  },
+  {
+   "name": "g",
+   "let": "gcd(num, den)"
+  }
+ ],
+ "constraints": [
+  "gcd(num, den) >= 1"
+ ],
+ "stem": "Find the sum $\\frac{1}{{=m}\\times{=m+1}}+\\frac{1}{{=m+1}\\times{=m+2}}+\\frac{1}{{=m+2}\\times{=m+3}}+\\dots+\\frac{1}{{=n}\\times{=n+1}}$. Give the answer as a fraction in its simplest form, written a/b.",
+ "answer": "str(num // g) + \"/\" + str(den // g)",
+ "solution": [
+  "Split each term: $\\frac{1}{k(k+1)}=\\frac{1}{k}-\\frac{1}{k+1}$.",
+  "Write the sum: $\\left(\\frac{1}{{=m}}-\\frac{1}{{=m+1}}\\right)+\\left(\\frac{1}{{=m+1}}-\\frac{1}{{=m+2}}\\right)+\\dots+\\left(\\frac{1}{{=n}}-\\frac{1}{{=n+1}}\\right)$.",
+  "Cancel the terms that add to zero; what remains is $\\frac{1}{{=m}}-\\frac{1}{{=n+1}}$.",
+  "$\\frac{1}{{=m}}-\\frac{1}{{=n+1}}=\\frac{{=num}}{{=den}}$, which in simplest form is $\\frac{{=num // g}}{{=den // g}}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: unit-difference partial fractions 1/(k(k+1)), numeric start m (1-4) and end n; answer = 1/m - 1/(n+1) reduced. num<den always so answer is never a whole number. Answer string a/b matches book style (e.g. 1425/1984)."
+}

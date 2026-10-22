@@ -1,0 +1,27 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "4493287ec5e3601057a3355c010f03b09ea4df8d0b0a24d03d716dc64f519b28",
+  "generated_sha256": "d481e09a4ff6076d72a4c5ab5e571df0cc60b2ddca46a8eb0ccf4aa4f7e0637a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c1-2:figure-2",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "trim",
+    "bottom": "extend",
+    "note": "Top has problem text and a heading pill. Right edge has dotted side-note boxes cut off. Bottom cuts the remainder line and the text below it."
+   }
+  ]
+ }
+}

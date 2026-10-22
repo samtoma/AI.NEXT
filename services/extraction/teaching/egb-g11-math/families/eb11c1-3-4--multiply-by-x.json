@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-3-4:multiply-by-x",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-3-4",
+ "parent_question_id": "q:eb11c1-3-4:bk-exercise-18-5",
+ "source_page": 20,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "b == a"
+  }
+ ],
+ "constraints": [
+  "a != b"
+ ],
+ "stem": "Simplify the following expression to a single rational expression. $\\dfrac{{=a}+\\dfrac{1}{x}}{{=b}+\\dfrac{1}{x}}$",
+ "solution": [
+  "The only small fraction is $\\frac{1}{x}$, so multiply the numerator and the denominator by $x$.",
+  "Numerator: $x\\left({=a}+\\frac{1}{x}\\right)={=a}x+1$.",
+  "Denominator: $x\\left({=b}+\\frac{1}{x}\\right)={=b}x+1$.",
+  "The answer is $\\frac{{=a}x+1}{{=b}x+1}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=a}*x+1)/({=b}*x+1)",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: one small fraction 1/x, multiply top and bottom by x. a != b so the result does not reduce (ax+1 and bx+1 share no factor)."
+}

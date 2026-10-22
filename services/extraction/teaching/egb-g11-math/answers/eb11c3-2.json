@@ -1,0 +1,4786 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c3-2",
+  "source": "book-records/egb-g11-math/eb11c3-2.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 126,
+      "cost_usd": 1.8342,
+      "calls": [
+        {
+          "call": "answers.eb11c3-2",
+          "cost_usd": 1.8342,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c3-2:open-prompt-1",
+      "record_id": "eb11c3-2:open-prompt-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 115,
+      "question": {
+        "text": "Guiding Question: \"How can quadratic equations help us determine whether a system in life science or engineering will remain stable or collapse?\"",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f19556299097d166d63bc6ab16bb25d8",
+      "kind": "explanation",
+      "answer": "The discriminant and the solutions show whether the balance (equilibrium) values are real, repeated or imaginary, so we can tell if a system has a stable balance point.",
+      "solution": [
+        "Write the balance condition as a quadratic equation $ax^2+bx+c=0$.",
+        "Find $D=b^2-4ac$.",
+        "If $D\\ge0$ the solutions are real, so a real balance point exists.",
+        "If $D<0$ the solutions are imaginary, so there is no real balance point and the system cannot settle there.",
+        "So quadratics help predict stability or collapse."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Set the model equal to zero to get a quadratic. Its discriminant D = b²−4ac shows whether balance points exist: D>0 gives two real balance points, D=0 gives one repeated one, and D<0 gives none (imaginary solutions). A system with real equilibrium points can settle and stay stable. Without them it cannot balance, so it may collapse.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-1:a",
+      "record_id": "eb11c3-2:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2+8=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c7aa728bf6129aeab8b046a03016c918",
+      "kind": "value",
+      "answer": "x = ±2i√2",
+      "solution": [
+        "Write x² = -8.",
+        "x = ±√(-8).",
+        "Express in terms of i: x = ±i√8 = ±2i√2.",
+        "Answer: x = ±2i√2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1",
+        "eb11c3-2:caution-1",
+        "eb11c3-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±2i√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-1:b",
+      "record_id": "eb11c3-2:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2-7x-9=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b866ff27ff212532c0db4afdad267bc0",
+      "kind": "value",
+      "answer": "x = -1 or x = 9/2",
+      "solution": [
+        "Factorise: (x + 1)(2x - 9) = 0.",
+        "x + 1 = 0 gives x = -1.",
+        "2x - 9 = 0 gives x = 9/2.",
+        "Answer: x = -1 or 9/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-6",
+        "eb11c3-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1 or x = 9/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-1:c",
+      "record_id": "eb11c3-2:warm-up-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2+2\\sqrt{6}x+11=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2878cae80607310fc1f2de5a90e0fd4b",
+      "kind": "value",
+      "answer": "x = (-√6 ± 4i)/2",
+      "solution": [
+        "a = 2, b = 2√6, c = 11.",
+        "Use the quadratic formula: x = (-2√6 ± √((2√6)² - 4·2·11))/(2·2).",
+        "Inside the root: 24 - 88 = -64.",
+        "√(-64) = 8i, so x = (-2√6 ± 8i)/4.",
+        "Divide by 2: x = (-√6 ± 4i)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1",
+        "eb11c3-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (-√6 ± 4i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-1:a",
+      "record_id": "eb11c3-2:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "73099fc2ff189f09921567ecd9c55582",
+      "kind": "value",
+      "answer": "x = ±2i",
+      "solution": [
+        "x² = -4.",
+        "x = ±√(-4) = ±2i.",
+        "Answer: x = ±2i."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±2i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-1:b",
+      "record_id": "eb11c3-2:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$(x-3)^2=-8$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5d243b7c6c86161b52830a56e1df1286",
+      "kind": "value",
+      "answer": "x = 3 ± 2i√2",
+      "solution": [
+        "(x - 3)² = -8.",
+        "x - 3 = ±√(-8) = ±2i√2.",
+        "x = 3 ± 2i√2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-2",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3 ± 2i√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-1:c",
+      "record_id": "eb11c3-2:try-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2+5x-3=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b11cc745d315ccc4961be0c402750e16",
+      "kind": "value",
+      "answer": "x = -3 or x = 1/2",
+      "solution": [
+        "Factorise: (x + 3)(2x - 1) = 0.",
+        "x + 3 = 0 gives x = -3.",
+        "2x - 1 = 0 gives x = 1/2.",
+        "Answer: x = -3 or 1/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1/2 or x = -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-1:d",
+      "record_id": "eb11c3-2:try-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 116,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2+2\\sqrt{3}x+5=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "983a9d0f4f83b15f7f8e9ccc0ff15335",
+      "kind": "value",
+      "answer": "x = (-√3 ± i√7)/2",
+      "solution": [
+        "a = 2, b = 2√3, c = 5.",
+        "b² - 4ac = 12 - 40 = -28.",
+        "√(-28) = 2i√7.",
+        "x = (-2√3 ± 2i√7)/4.",
+        "Simplify: x = (-√3 ± i√7)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (-√3 ± i√7)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:a",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2+49=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dd4989227e1060e3cae9fbb832c5917b",
+      "kind": "value",
+      "answer": "x = ±7i",
+      "solution": [
+        "x² = -49.",
+        "x = ±√(-49) = ±7i."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±7i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:b",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$9x^2-4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a334c07cf2f7e40635b988b6f87f7ecd",
+      "kind": "value",
+      "answer": "x = ±2/3",
+      "solution": [
+        "9x² = 4, so x² = 4/9.",
+        "x = ±√(4/9) = ±2/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:c",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$(x-2)^2=5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3e517c527f543e77846399037031afbb",
+      "kind": "value",
+      "answer": "x = 2 ± √5",
+      "solution": [
+        "x - 2 = ±√5.",
+        "x = 2 ± √5."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2 ± √5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:d",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$(x+6)^2=-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3b6a4a06077b091895dcd1c53c393652",
+      "kind": "value",
+      "answer": "x = -6 ± i√6",
+      "solution": [
+        "x + 6 = ±√(-6) = ±i√6.",
+        "x = -6 ± i√6."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-2",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = -6 ± i√6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:e",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2+7x=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "846ae58444993fcb3aeb37900c8aee11",
+      "kind": "value",
+      "answer": "x = 0 or x = -7/2",
+      "solution": [
+        "Factorise: x(2x + 7) = 0.",
+        "x = 0 or 2x + 7 = 0.",
+        "x = 0 or x = -7/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-3",
+        "eb11c3-2:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "x = 0 or x = -7/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:f",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$2x^2+5x-12=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3e97a0bd4f9f1a05c5142542e52885b7",
+      "kind": "value",
+      "answer": "x = 3/2 or x = -4",
+      "solution": [
+        "Factorise: (2x - 3)(x + 4) = 0.",
+        "2x - 3 = 0 gives x = 3/2.",
+        "x + 4 = 0 gives x = -4."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3/2 or x = -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:g",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "g",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2+x+1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3f9e7f907012353351be2006eb769e4f",
+      "kind": "value",
+      "answer": "x = (-1 ± i√3)/2",
+      "solution": [
+        "a = 1, b = 1, c = 1.",
+        "b² - 4ac = 1 - 4 = -3.",
+        "x = (-1 ± √(-3))/2 = (-1 ± i√3)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (-1 ± i√3)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:h",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "h",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$3x^2-5x+3=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5af6a35edde0799b98c21f061543b8e0",
+      "kind": "value",
+      "answer": "x = (5 ± i√11)/6",
+      "solution": [
+        "a = 3, b = -5, c = 3.",
+        "b² - 4ac = 25 - 36 = -11.",
+        "x = (5 ± √(-11))/6 = (5 ± i√11)/6."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (5 ± i√11)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:i",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "i",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2-2\\sqrt{3}x+5=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "05038a4a77d1435274ac2338a3444b02",
+      "kind": "value",
+      "answer": "x = √3 ± i√2",
+      "solution": [
+        "a = 1, b = -2√3, c = 5.",
+        "b² - 4ac = 12 - 20 = -8.",
+        "√(-8) = 2i√2.",
+        "x = (2√3 ± 2i√2)/2 = √3 ± i√2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = √3 ± i√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-1:j",
+      "record_id": "eb11c3-2:exercise-1",
+      "part": "j",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$3x^2+2\\sqrt{2}x+1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7318b6f4fe632a6e3e9c3356b0e9cdd6",
+      "kind": "value",
+      "answer": "x = (-√2 ± i)/3",
+      "solution": [
+        "a = 3, b = 2√2, c = 1.",
+        "b² - 4ac = 8 - 12 = -4.",
+        "√(-4) = 2i.",
+        "x = (-2√2 ± 2i)/6 = (-√2 ± i)/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (-√2 ± i)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:a",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2-x+2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7f164b07370392ed7faa98b86e558471",
+      "kind": "value",
+      "answer": "x = (1 ± i√7)/2",
+      "solution": [
+        "a = 1, b = -1, c = 2.",
+        "b² - 4ac = 1 - 8 = -7.",
+        "x = (1 ± i√7)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (1 ± i√7)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:b",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$(x+4)^2=-18$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5f8fabab48865ae897c5d2f79c50f94b",
+      "kind": "value",
+      "answer": "x = -4 ± 3i√2",
+      "solution": [
+        "x + 4 = ±√(-18).",
+        "√(-18) = i√18 = 3i√2.",
+        "x = -4 ± 3i√2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-2",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = -4 ± 3i√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:c",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2-12=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6cfacdda46f7091e1f5fa5288c32fd28",
+      "kind": "value",
+      "answer": "x = ±2√3",
+      "solution": [
+        "x² = 12.",
+        "x = ±√12 = ±2√3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±2√3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:d",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$3x^2-4x-1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a8084aeab681d8be289410b1d1c3eaa3",
+      "kind": "value",
+      "answer": "x = (2 ± √7)/3",
+      "solution": [
+        "a = 3, b = -4, c = -1.",
+        "b² - 4ac = 16 + 12 = 28.",
+        "x = (4 ± 2√7)/6 = (2 ± √7)/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "x = (2 ± √7)/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:e",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "e",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$x^2-8x+15=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "820c795973172a789370e609857d9f89",
+      "kind": "value",
+      "answer": "x = 3 or x = 5",
+      "solution": [
+        "Factorise: (x - 3)(x - 5) = 0.",
+        "x = 3 or x = 5."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3 or x = 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:f",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "f",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$4x^2+3=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e77dc78048e377c0686e0717cb18c32c",
+      "kind": "value",
+      "answer": "x = ±(i√3)/2",
+      "solution": [
+        "4x² = -3, so x² = -3/4.",
+        "x = ±√(-3/4) = ±i√3/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±i√3/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:g",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "g",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$3x^2-\\sqrt{5}x+1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f605f95ffcbfbb4c7a9a9dc544796bb1",
+      "kind": "value",
+      "answer": "x = (√5 ± i√7)/6",
+      "solution": [
+        "a = 3, b = -√5, c = 1.",
+        "b² - 4ac = 5 - 12 = -7.",
+        "x = (√5 ± i√7)/6."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (√5 ± i√7)/6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:h",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "h",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$6x^2-12x+15=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8158674d0b164b377e9939126f65fe04",
+      "kind": "value",
+      "answer": "x = (2 ± i√6)/2",
+      "solution": [
+        "a = 6, b = -12, c = 15.",
+        "b² - 4ac = 144 - 360 = -216.",
+        "√(-216) = 6i√6.",
+        "x = (12 ± 6i√6)/12 = (2 ± i√6)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (2 ± i√6)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-2:i",
+      "record_id": "eb11c3-2:exercise-2",
+      "part": "i",
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "Solve the following quadratic equations.",
+        "stem": "$(2x-3)^2=7$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0d716f2e879164a8ad6c6347041efc53",
+      "kind": "value",
+      "answer": "x = (3 ± √7)/2",
+      "solution": [
+        "2x - 3 = ±√7.",
+        "2x = 3 ± √7.",
+        "x = (3 ± √7)/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (3 ± √7)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-1",
+      "record_id": "eb11c3-2:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 117,
+      "question": {
+        "text": "A research team studies the vibrations of a thin membrane in a medical device that uses ultrasound waves. The relationship between the vibration amplitude $x$ and the rate of energy transfer $R$ is given by $R=3x^2+2\\sqrt{3}x+2$. Determine the values of $x$ that make the system reach equilibrium (when the energy transfer rate is zero). And explain the meaning of the result.",
+        "stem": "",
+        "notes": "Boxed 'Challenge' with star; label printed as Challenge."
+      },
+      "needs_page": false,
+      "question_fingerprint": "58361d447559fd84c483be0252935ee0",
+      "kind": "value",
+      "answer": "x = (-√3 ± i√3)/3. The solutions are imaginary, so no real amplitude makes the energy transfer rate zero.",
+      "solution": [
+        "Set $3x^2+2\\sqrt3x+2=0$, so $a=3, b=2\\sqrt3, c=2$.",
+        "$D=12-24=-12<0$.",
+        "$x=\\frac{-2\\sqrt3\\pm\\sqrt{-12}}{6}$.",
+        "$\\sqrt{-12}=2i\\sqrt3$.",
+        "$x=\\frac{-2\\sqrt3\\pm2i\\sqrt3}{6}=\\frac{-\\sqrt3\\pm i\\sqrt3}{3}$.",
+        "Meaning: the solutions are imaginary, so the system never reaches equilibrium for a real amplitude."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-1",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = (-√3 + √3 i)/3 or x = (-√3 − √3 i)/3 (D = −12 < 0). The solutions are imaginary, so there is no real amplitude for which the energy transfer rate is zero. The system never reaches equilibrium for real amplitudes.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-2",
+      "record_id": "eb11c3-2:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 118,
+      "question": {
+        "text": "Solve the following problems. Determine the nature of the solutions for the quadratic equation $3x^2+4x+7=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b036cddc7208844d76095aee0ba25184",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+        "a = 3, b = 4, c = 7.",
+        "D = 4² - 4×3×7 = 16 - 84 = -68.",
+        "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "D = -68 < 0, so two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-3",
+      "record_id": "eb11c3-2:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 118,
+      "question": {
+        "text": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-mx+m^2-3m-9=0$ has real solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6b85299b5ea1823afbbcca0564c530ed",
+      "kind": "value",
+      "answer": "-2 ≤ m ≤ 6",
+      "solution": [
+        "Real solutions need $D\\ge0$.",
+        "$D=(-m)^2-4(m^2-3m-9)=-3m^2+12m+36$.",
+        "$-3m^2+12m+36\\ge0$, so $m^2-4m-12\\le0$.",
+        "$(m+2)(m-6)\\le0$.",
+        "$-2\\le m\\le6$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-4",
+        "eb11c3-2:example-2",
+        "eb11c3-2:definition-1"
+      ],
+      "checks": {
+        "resolve_answer": "-2 ≤ m ≤ 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-4",
+      "record_id": "eb11c3-2:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 118,
+      "question": {
+        "text": "Let $k$ be a real constant. Determine the nature of the solutions for the quadratic equation $x^2+kx+3-k=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "bf1970d6ca4319d39a393706297d1575",
+      "kind": "value",
+      "answer": "k < -6 or k > 2: two distinct real solutions; k = -6 or 2: a repeated solution; -6 < k < 2: two distinct imaginary solutions",
+      "solution": [
+        "$D=k^2-4(3-k)=k^2+4k-12=(k-2)(k+6)$.",
+        "$D>0$ when $k<-6$ or $k>2$: two distinct real solutions.",
+        "$D=0$ when $k=-6$ or $2$: a repeated solution.",
+        "$D<0$ when $-6<k<2$: two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:example-3",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = (k−2)(k+6). If k<−6 or k>2: two distinct real solutions. If k=−6 or k=2: a repeated (one real) solution. If −6<k<2: two distinct imaginary solutions.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-2:a",
+      "record_id": "eb11c3-2:try-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 119,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$3x^2-5x+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e6d71b46a236f1681df01f29a3482ea7",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+        "D = (-5)² - 4×3×4 = 25 - 48 = -23.",
+        "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = -23 < 0: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-2:b",
+      "record_id": "eb11c3-2:try-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 119,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$4x^2-7x-2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d3885501eba6da246e981820a4033294",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+        "D = (-7)² - 4×4×(-2) = 49 + 32 = 81.",
+        "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "D = 81 > 0: two distinct real solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-2:c",
+      "record_id": "eb11c3-2:try-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 119,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$25x^2-10x+1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4e10bc0e536d0e5f7d5c5a3aae887e89",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+        "D = (-10)² - 4×25×1 = 100 - 100 = 0.",
+        "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "D = 0: a repeated real solution",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-3",
+      "record_id": "eb11c3-2:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 119,
+      "question": {
+        "text": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+m+2=0$ has two distinct imaginary solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dbcd775b510b355f214a667acf56f473",
+      "kind": "value",
+      "answer": "-1 < m < 2",
+      "solution": [
+        "Two distinct imaginary solutions need $D<0$.",
+        "$D=(-2m)^2-4(m+2)=4m^2-4m-8$.",
+        "$4m^2-4m-8<0$, so $m^2-m-2<0$.",
+        "$(m-2)(m+1)<0$.",
+        "$-1<m<2$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-3",
+        "eb11c3-2:definition-1",
+        "eb11c3-2:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "-1 < m < 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-4",
+      "record_id": "eb11c3-2:try-4",
+      "part": null,
+      "type": "exercise",
+      "page": 119,
+      "question": {
+        "text": "Let $a$ be a real constant. Determine the nature of the solutions for the quadratic equation $x^2-ax+2a-3=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "142c30582416731980659b47129d9f85",
+      "kind": "value",
+      "answer": "a < 2 or a > 6: two distinct real solutions; a = 2 or 6: a repeated solution; 2 < a < 6: two distinct imaginary solutions",
+      "solution": [
+        "$D=(-a)^2-4(2a-3)=a^2-8a+12=(a-2)(a-6)$.",
+        "$D>0$ when $a<2$ or $a>6$: two distinct real solutions.",
+        "$D=0$ when $a=2$ or $6$: a repeated solution.",
+        "$D<0$ when $2<a<6$: two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:example-3",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = (a−2)(a−6). If a<2 or a>6: two distinct real solutions. If a=2 or a=6: a repeated solution. If 2<a<6: two distinct imaginary solutions.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:a",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$x^2-5x+3=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b116327d27a6a44c0437a4fcac814262",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+        "D = (-5)² - 4×1×3 = 25 - 12 = 13.",
+        "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "D = 13 > 0: two distinct real solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:b",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$9x^2-12x+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d4f595e4698aa25f41008e56459ccadb",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+        "D = (-12)² - 4×9×4 = 144 - 144 = 0.",
+        "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "D = 0: a repeated real solution",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:c",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$4x^2-8x+5=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4b216583acfcbc767489d80b8ddbe00c",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+        "D = (-8)² - 4×4×5 = 64 - 80 = -16.",
+        "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = -16 < 0: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:d",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$4x^2-4x+1=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "643eec369dbc00b245c577d4fa24ad7a",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+        "D = (-4)² - 4×4×1 = 16 - 16 = 0.",
+        "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "D = 0: a repeated real solution",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:e",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "e",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$x^2-3x+5=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7e0eec8863b2774182b52d231b1f3964",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+        "D = (-3)² - 4×1×5 = 9 - 20 = -11.",
+        "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = -11 < 0: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-3:f",
+      "record_id": "eb11c3-2:exercise-3",
+      "part": "f",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Determine the nature of the solutions for the following quadratic equations.",
+        "stem": "$x^2-x-2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fccb90279285241662d6758fa685c082",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+        "D = (-1)² - 4×1×(-2) = 1 + 8 = 9.",
+        "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "D = 9 > 0: two distinct real solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-4:a",
+      "record_id": "eb11c3-2:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Find the value(s) of the constant $a$ for which the quadratic equation $x^2-(a+1)x+4=0$ has a repeated solution.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4a28c809143a655edad71ede39dc13e5",
+      "kind": "value",
+      "answer": "a = 3 or a = -5",
+      "solution": [
+        "Repeated solution means D = 0.",
+        "D = (a+1)² - 4×1×4 = (a+1)² - 16.",
+        "(a+1)² = 16, so a + 1 = ±4.",
+        "a = 3 or a = -5."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-2",
+        "eb11c3-2:definition-1",
+        "eb11c3-2:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "a = 3 or a = -5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-4:b",
+      "record_id": "eb11c3-2:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2+(m+6)x-2m=0$ has two distinct imaginary solutions.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b609d1349a5829a9856c988862470040",
+      "kind": "value",
+      "answer": "-18 < m < -2",
+      "solution": [
+        "Two distinct imaginary solutions means D < 0.",
+        "D = (m+6)² - 4(-2m) = m² + 12m + 36 + 8m = m² + 20m + 36.",
+        "m² + 20m + 36 < 0, so (m + 2)(m + 18) < 0.",
+        "-18 < m < -2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-3",
+        "eb11c3-2:definition-1",
+        "eb11c3-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "-18 < m < -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-4:c",
+      "record_id": "eb11c3-2:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Find the range of values for the constant $m$ for which the quadratic equation $x^2-2mx+2m^2-3m=0$ has real solutions.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6eb95a39821972bfe67c53890ba90050",
+      "kind": "value",
+      "answer": "0 ≤ m ≤ 3",
+      "solution": [
+        "Real solutions means D ≥ 0.",
+        "D = (-2m)² - 4(2m² - 3m) = 4m² - 8m² + 12m = -4m² + 12m.",
+        "-4m² + 12m ≥ 0, reverse the sign: m² - 3m ≤ 0.",
+        "m(m - 3) ≤ 0, so 0 ≤ m ≤ 3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-4",
+        "eb11c3-2:definition-1",
+        "eb11c3-2:example-2"
+      ],
+      "checks": {
+        "resolve_answer": "0 ≤ m ≤ 3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-2:a",
+      "record_id": "eb11c3-2:challenge-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Let $a$ be a real constant. Determine the nature of the solutions for the quadratic equation $x^2+ax-a=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8d6a00b1d6901235c40ac95171a1e4ea",
+      "kind": "explanation",
+      "answer": "D = a(a+4): two distinct real solutions when a < -4 or a > 0; a repeated solution when a = -4 or 0; two distinct imaginary solutions when -4 < a < 0.",
+      "solution": [
+        "D = a² - 4(1)(-a) = a² + 4a = a(a + 4).",
+        "D > 0: a < -4 or a > 0, two distinct real solutions.",
+        "D = 0: a = -4 or a = 0, a repeated solution.",
+        "D < 0: -4 < a < 0, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = a(a+4). a < -4 or a > 0: two distinct real solutions; a = -4 or 0: repeated solution; -4 < a < 0: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-2:b",
+      "record_id": "eb11c3-2:challenge-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Let $k$ be a real constant. Determine the nature of the solutions for the quadratic equation $x^2-(k+2)x+k^2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "65c7f46c4bc96f5af377c827d27082b8",
+      "kind": "explanation",
+      "answer": "D = (2-k)(3k+2): two distinct real solutions when -2/3 < k < 2; a repeated solution when k = -2/3 or 2; two distinct imaginary solutions when k < -2/3 or k > 2.",
+      "solution": [
+        "D = (k+2)² - 4k² = -3k² + 4k + 4 = -(3k + 2)(k - 2).",
+        "D > 0: -2/3 < k < 2, two distinct real solutions.",
+        "D = 0: k = -2/3 or k = 2, a repeated solution.",
+        "D < 0: k < -2/3 or k > 2, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = (2-k)(3k+2). -2/3 < k < 2: two distinct real solutions; k = -2/3 or 2: repeated solution; k < -2/3 or k > 2: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-2:c",
+      "record_id": "eb11c3-2:challenge-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 120,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "Let $a$ be a real constant. Determine the nature of the solutions for the quadratic equation $x^2-2(a-1)x+a^2-3a+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d2bbd34a2d50bd3b7baa8a70a0304fa5",
+      "kind": "explanation",
+      "answer": "D = 4(a-3): two distinct real solutions when a > 3; a repeated solution when a = 3; two distinct imaginary solutions when a < 3.",
+      "solution": [
+        "D = 4(a-1)² - 4(a² - 3a + 4) = 4(a² - 2a + 1 - a² + 3a - 4) = 4(a - 3).",
+        "D > 0: a > 3, two distinct real solutions.",
+        "D = 0: a = 3, a repeated solution.",
+        "D < 0: a < 3, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-1",
+        "eb11c3-2:rule-2",
+        "eb11c3-2:rule-3",
+        "eb11c3-2:example-3"
+      ],
+      "checks": {
+        "resolve_answer": "D = 4(a-3). a > 3: two distinct real solutions; a = 3: repeated solution; a < 3: two distinct imaginary solutions",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-5",
+      "record_id": "eb11c3-2:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 121,
+      "question": {
+        "text": "Find the sum and product of the two solutions of the quadratic equation $3x^2-6x-5=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1747522d42cca9b3931de2ffb9cf1220",
+      "kind": "value",
+      "answer": "sum = 2, product = -5/3",
+      "solution": [
+        "$a=3,b=-6,c=-5$.",
+        "Sum $=-b/a=6/3=2$.",
+        "Product $=c/a=-5/3$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:explanation-2"
+      ],
+      "checks": {
+        "resolve_answer": "sum = 2, product = -5/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-6:a",
+      "record_id": "eb11c3-2:warm-up-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 121,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-6x-3=0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^2+\\beta^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "90f22a64aaa74f6f7793efe0fa85bb95",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+        "α + β = 3, αβ = -3/2.",
+        "α² + β² = (α+β)² - 2αβ = 9 + 3 = 12."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-6:b",
+      "record_id": "eb11c3-2:warm-up-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 121,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-6x-3=0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^3+\\beta^3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "139883b2e1e10278aa0c494f72ca981d",
+      "kind": "value",
+      "answer": "81/2",
+      "solution": [
+        "α + β = 3, αβ = -3/2.",
+        "α³ + β³ = (α+β)³ - 3αβ(α+β) = 27 + 27/2 = 81/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "81/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-6:c",
+      "record_id": "eb11c3-2:warm-up-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 121,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-6x-3=0$. Find the value of the following expressions.",
+        "stem": "$\\frac{2}{\\alpha}+\\frac{2}{\\beta}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3c53a98d9ecd26da8304ad8b35cc2d98",
+      "kind": "value",
+      "answer": "-4",
+      "solution": [
+        "2/α + 2/β = 2(α+β)/(αβ).",
+        "= 2×3 ÷ (-3/2) = -4."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "-4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-6:d",
+      "record_id": "eb11c3-2:warm-up-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 121,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-6x-3=0$. Find the value of the following expressions.",
+        "stem": "$(\\alpha+1)(\\beta+1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "046f36e98c2d9744824d7d776f3ed181",
+      "kind": "value",
+      "answer": "5/2",
+      "solution": [
+        "(α+1)(β+1) = αβ + α + β + 1.",
+        "= -3/2 + 3 + 1 = 5/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "5/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-5",
+      "record_id": "eb11c3-2:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 122,
+      "question": {
+        "text": "Find the sum and product of the two solutions of the quadratic equation $4x^2+2x-7=0$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cc3df63eddcea73c6384e65524b79231",
+      "kind": "value",
+      "answer": "sum = -1/2, product = -7/4",
+      "solution": [
+        "$a=4,b=2,c=-7$.",
+        "Sum $=-b/a=-2/4=-1/2$.",
+        "Product $=c/a=-7/4$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "sum = -1/2, product = -7/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-6:a",
+      "record_id": "eb11c3-2:try-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 122,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-4x+3=0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^2+\\beta^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "272924a9bc62ab74a897747aa1fd985c",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "α + β = 2, αβ = 3/2.",
+        "α² + β² = 4 - 3 = 1."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-6:b",
+      "record_id": "eb11c3-2:try-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 122,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-4x+3=0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^3+\\beta^3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1675c49801cb7bff2cac09c01da563e5",
+      "kind": "value",
+      "answer": "-1",
+      "solution": [
+        "α + β = 2, αβ = 3/2.",
+        "α³ + β³ = 8 - 3(3/2)(2) = 8 - 9 = -1."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-6:c",
+      "record_id": "eb11c3-2:try-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 122,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-4x+3=0$. Find the value of the following expressions.",
+        "stem": "$\\frac{\\beta}{\\alpha}+\\frac{\\alpha}{\\beta}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "85deb3033e9026e3bba9bd00a2620cd5",
+      "kind": "value",
+      "answer": "2/3",
+      "solution": [
+        "β/α + α/β = (α² + β²)/(αβ).",
+        "α² + β² = 1, αβ = 3/2.",
+        "= 1 ÷ 3/2 = 2/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-6:d",
+      "record_id": "eb11c3-2:try-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 122,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2-4x+3=0$. Find the value of the following expressions.",
+        "stem": "$(\\alpha-1)(\\beta-1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0803ca3adcb8bd03d86b23c2a42c48ca",
+      "kind": "value",
+      "answer": "1/2",
+      "solution": [
+        "(α-1)(β-1) = αβ - (α+β) + 1.",
+        "= 3/2 - 2 + 1 = 1/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-5:a",
+      "record_id": "eb11c3-2:exercise-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Find the sum and product of the two solutions of the following quadratic equations.",
+        "stem": "$x^2 + x + 2 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "518dce3b782bac9d08c8508e3e8431d7",
+      "kind": "value",
+      "answer": "sum -1, product 2",
+      "solution": [
+        "a = 1, b = 1, c = 2.",
+        "Sum = -b/a = -1.",
+        "Product = c/a = 2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "sum = -1, product = 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-5:b",
+      "record_id": "eb11c3-2:exercise-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Find the sum and product of the two solutions of the following quadratic equations.",
+        "stem": "$3x^2 - 7x - 6 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "025e73e2028b348ace61c432b01f2bbf",
+      "kind": "value",
+      "answer": "sum 7/3, product -2",
+      "solution": [
+        "a = 3, b = -7, c = -6.",
+        "Sum = 7/3.",
+        "Product = -6/3 = -2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "sum = 7/3, product = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-5:c",
+      "record_id": "eb11c3-2:exercise-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Find the sum and product of the two solutions of the following quadratic equations.",
+        "stem": "$5x^2 - 3 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e18b03f827f84e26282dacd7986fb88f",
+      "kind": "value",
+      "answer": "sum 0, product -3/5",
+      "solution": [
+        "a = 5, b = 0, c = -3.",
+        "Sum = 0.",
+        "Product = -3/5."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "sum = 0, product = -3/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-6:a",
+      "record_id": "eb11c3-2:exercise-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $x^2 - 2x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^2 + \\beta^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "200e1369385f272a818b49ff910f6712",
+      "kind": "value",
+      "answer": "-2",
+      "solution": [
+        "α + β = 2, αβ = 3.",
+        "α² + β² = 4 - 6 = -2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "-2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-6:b",
+      "record_id": "eb11c3-2:exercise-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $x^2 - 2x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^3 + \\beta^3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "83a1a22b8cc15ebfccdf0745378630bb",
+      "kind": "value",
+      "answer": "-10",
+      "solution": [
+        "α + β = 2, αβ = 3.",
+        "α³ + β³ = 8 - 3×3×2 = 8 - 18 = -10."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "-10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-6:c",
+      "record_id": "eb11c3-2:exercise-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $x^2 - 2x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\frac{1}{\\alpha} + \\frac{1}{\\beta}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2ba384513c5e0ccd2d63f32a9fba6545",
+      "kind": "value",
+      "answer": "2/3",
+      "solution": [
+        "1/α + 1/β = (α+β)/(αβ).",
+        "= 2/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "2/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-6:d",
+      "record_id": "eb11c3-2:exercise-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $x^2 - 2x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$(\\alpha + 2)(\\beta + 2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "69e944448623179a60aa57d78425a020",
+      "kind": "value",
+      "answer": "11",
+      "solution": [
+        "(α+2)(β+2) = αβ + 2(α+β) + 4.",
+        "= 3 + 4 + 4 = 11."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "11",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-7:a",
+      "record_id": "eb11c3-2:exercise-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $3x^2 + 6x - 1 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^2 + \\beta^2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f3de696249df371c0f0a15651c97dadd",
+      "kind": "value",
+      "answer": "14/3",
+      "solution": [
+        "α + β = -2, αβ = -1/3.",
+        "α² + β² = 4 + 2/3 = 14/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "14/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-7:b",
+      "record_id": "eb11c3-2:exercise-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $3x^2 + 6x - 1 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^3 + \\beta^3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dd9ca14ea6bffc84c34685bccc32962f",
+      "kind": "value",
+      "answer": "-10",
+      "solution": [
+        "α + β = -2, αβ = -1/3.",
+        "α³ + β³ = (-2)³ - 3(-1/3)(-2) = -8 - 2 = -10."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "-10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-7:c",
+      "record_id": "eb11c3-2:exercise-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $3x^2 + 6x - 1 = 0$. Find the value of the following expressions.",
+        "stem": "$\\frac{1}{\\alpha} + \\frac{1}{\\beta}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1b4d6f7576fdde68078704ac7c26684c",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+        "1/α + 1/β = (α+β)/(αβ).",
+        "= -2 ÷ (-1/3) = 6."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-7:d",
+      "record_id": "eb11c3-2:exercise-7",
+      "part": "d",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $3x^2 + 6x - 1 = 0$. Find the value of the following expressions.",
+        "stem": "$(\\alpha - 2)(\\beta - 2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "13ce20de164436e9b97c0f94d84b9b45",
+      "kind": "value",
+      "answer": "23/3",
+      "solution": [
+        "(α-2)(β-2) = αβ - 2(α+β) + 4.",
+        "= -1/3 + 4 + 4 = 23/3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "23/3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-3:a",
+      "record_id": "eb11c3-2:challenge-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2 - 6x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^2\\beta + \\alpha\\beta^2$",
+        "notes": "Printed in a boxed '★ Challenge' panel."
+      },
+      "needs_page": true,
+      "question_fingerprint": "1ff1e031caa1810338c216812ee456f9",
+      "kind": "value",
+      "answer": "9/2",
+      "solution": [
+        "α + β = 3, αβ = 3/2.",
+        "α²β + αβ² = αβ(α+β).",
+        "= 3/2 × 3 = 9/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "9/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-3:b",
+      "record_id": "eb11c3-2:challenge-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2 - 6x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$(\\alpha - \\beta)^2$",
+        "notes": "Printed in a boxed '★ Challenge' panel."
+      },
+      "needs_page": true,
+      "question_fingerprint": "fd631b01e206a18a8723c90b75d7057f",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+        "(α-β)² = α² - 2αβ + β² = (α+β)² - 4αβ.",
+        "= 9 - 6 = 3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-3:c",
+      "record_id": "eb11c3-2:challenge-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2 - 6x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\alpha^3 + \\beta^3$",
+        "notes": "Printed in a boxed '★ Challenge' panel."
+      },
+      "needs_page": true,
+      "question_fingerprint": "9b6082420d984cdcb99a162804439d90",
+      "kind": "value",
+      "answer": "27/2",
+      "solution": [
+        "α³ + β³ = (α+β)³ - 3αβ(α+β).",
+        "= 27 - 3(3/2)(3) = 27 - 27/2 = 27/2."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-8",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "27/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-3:d",
+      "record_id": "eb11c3-2:challenge-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 123,
+      "question": {
+        "text": "Let $\\alpha$ and $\\beta$ be the two solutions of the quadratic equation $2x^2 - 6x + 3 = 0$. Find the value of the following expressions.",
+        "stem": "$\\frac{\\beta^2}{\\alpha} + \\frac{\\alpha^2}{\\beta}$",
+        "notes": "Printed in a boxed '★ Challenge' panel."
+      },
+      "needs_page": true,
+      "question_fingerprint": "6f67487de8652f44387c5e0b0601f2f6",
+      "kind": "value",
+      "answer": "9",
+      "solution": [
+        "β²/α + α²/β = (α³ + β³)/(αβ).",
+        "α³ + β³ = 27/2, αβ = 3/2.",
+        "= 27/2 ÷ 3/2 = 9."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:unlabelled-exercise-1",
+      "record_id": "eb11c3-2:unlabelled-exercise-1",
+      "part": null,
+      "type": "exercise",
+      "page": 124,
+      "question": {
+        "text": "If the difference between the two solutions of the quadratic equation $x^2-(m-1)x-6=0$ is 5, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2d6be429e1b189c30a90e99408b70474",
+      "kind": "value",
+      "answer": "m = 2: solutions -2, 3; m = 0: solutions -3, 2",
+      "solution": [
+        "Let one solution be $\\alpha$ and the other $\\alpha+5$.",
+        "Sum: $2\\alpha+5=m-1$. Product: $\\alpha(\\alpha+5)=-6$.",
+        "$\\alpha^2+5\\alpha+6=0$, so $\\alpha=-2$ or $-3$.",
+        "$\\alpha=-2$: $m=2$, solutions $-2,3$.",
+        "$\\alpha=-3$: $m=0$, solutions $-3,2$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:worked-example-2",
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 2: solutions -2, 3; m = 0: solutions -3, 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-7",
+      "record_id": "eb11c3-2:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If one solution of the quadratic equation $x^2-8x+k=0$ is 3 times the other solution, find the value of the constant $k$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "2de9697109853db5c367598490dc435f",
+      "kind": "value",
+      "answer": "k = 12; solutions 2 and 6",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $3\\alpha$.",
+        "Sum: $4\\alpha=8$, so $\\alpha=2$.",
+        "Solutions are $2$ and $6$.",
+        "$k=\\alpha\\cdot3\\alpha=2\\times6=12$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "k = 12; solutions 2 and 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-8",
+      "record_id": "eb11c3-2:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If the difference between the two solutions of the quadratic equation $x^2-(m+1)x+2=0$ is 1, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "30f7414f55e3fc28ecd0a9b689bdc124",
+      "kind": "value",
+      "answer": "m = 2: solutions 1, 2; m = -4: solutions -2, -1",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $\\alpha+1$.",
+        "Product: $\\alpha(\\alpha+1)=2$, so $\\alpha^2+\\alpha-2=0$, $(\\alpha+2)(\\alpha-1)=0$.",
+        "$\\alpha=1$ or $-2$.",
+        "Sum: $2\\alpha+1=m+1$, so $m=2\\alpha$.",
+        "$\\alpha=1$: $m=2$, solutions $1,2$.",
+        "$\\alpha=-2$: $m=-4$, solutions $-2,-1$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:worked-example-2",
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 2: solutions 1, 2; m = -4: solutions -2, -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-8",
+      "record_id": "eb11c3-2:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If one solution of the quadratic equation $x^2+6x+m=0$ is 2 times the other solution, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6f7c66e0a799092e84b777937e07a1e1",
+      "kind": "value",
+      "answer": "m = 8; solutions -2 and -4",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $2\\alpha$.",
+        "Sum: $3\\alpha=-6$, so $\\alpha=-2$.",
+        "Solutions are $-2$ and $-4$.",
+        "$m=\\alpha\\cdot2\\alpha=(-2)(-4)=8$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 8; solutions -2 and -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-9",
+      "record_id": "eb11c3-2:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If one solution of the quadratic equation $8x^2-mx+1=0$ is 2 times the other solution, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c2032269958328f2c5d16e820972e625",
+      "kind": "value",
+      "answer": "m = 6: solutions 1/4, 1/2; m = -6: solutions -1/4, -1/2",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $2\\alpha$.",
+        "Product: $2\\alpha^2=\\frac18$, so $\\alpha^2=\\frac1{16}$, $\\alpha=\\pm\\frac14$.",
+        "Sum: $3\\alpha=\\frac m8$, so $m=24\\alpha$.",
+        "$\\alpha=\\frac14$: $m=6$, solutions $\\frac14,\\frac12$.",
+        "$\\alpha=-\\frac14$: $m=-6$, solutions $-\\frac14,-\\frac12$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 6: solutions 1/4, 1/2; m = -6: solutions -1/4, -1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-10",
+      "record_id": "eb11c3-2:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If the difference between the two solutions of the quadratic equation $x^2+6x+m=0$ is 4, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9075772872ce190e73078fcc0e307a16",
+      "kind": "value",
+      "answer": "m = 5; solutions -5 and -1",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $\\alpha+4$.",
+        "Sum: $2\\alpha+4=-6$, so $\\alpha=-5$.",
+        "Solutions are $-5$ and $-1$.",
+        "$m=(-5)(-1)=5$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:worked-example-2",
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 5; solutions -5 and -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-11",
+      "record_id": "eb11c3-2:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If the difference between the two solutions of the quadratic equation $4x^2+mx+3=0$ is 1, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "db1aec57389a194d39e5c3ec7ccf516d",
+      "kind": "value",
+      "answer": "m = -8: solutions 1/2, 3/2; m = 8: solutions -3/2, -1/2",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $\\alpha+1$.",
+        "Product: $\\alpha(\\alpha+1)=\\frac34$, so $4\\alpha^2+4\\alpha-3=0$, $(2\\alpha-1)(2\\alpha+3)=0$.",
+        "$\\alpha=\\frac12$ or $-\\frac32$.",
+        "Sum: $2\\alpha+1=-\\frac m4$, so $m=-4(2\\alpha+1)$.",
+        "$\\alpha=\\frac12$: $m=-8$, solutions $\\frac12,\\frac32$.",
+        "$\\alpha=-\\frac32$: $m=8$, solutions $-\\frac32,-\\frac12$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:worked-example-2",
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = -8: solutions 1/2, 3/2; m = 8: solutions -3/2, -1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-12",
+      "record_id": "eb11c3-2:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If the ratio of the two solutions of the quadratic equation $x^2-2x+m=0$ is 2 : 3, find the value of the constant $m$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "180f0a99137afc4219049469abb7d8bf",
+      "kind": "value",
+      "answer": "m = 24/25; solutions 4/5 and 6/5",
+      "solution": [
+        "Let the solutions be $2t$ and $3t$.",
+        "Sum: $5t=2$, so $t=\\frac25$.",
+        "Solutions are $\\frac45$ and $\\frac65$.",
+        "$m=\\frac45\\times\\frac65=\\frac{24}{25}$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m = 24/25; solutions 4/5 and 6/5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-13",
+      "record_id": "eb11c3-2:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "If one solution of the quadratic equation $x^2-6x+k=0$ is the square of the other solution, find the value of the constant $k$ and the two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5c48f21c5933930e941e14e5e5fca35c",
+      "kind": "value",
+      "answer": "k = 8: solutions 2, 4; k = -27: solutions -3, 9",
+      "solution": [
+        "Let the solutions be $\\alpha$ and $\\alpha^2$.",
+        "Sum: $\\alpha+\\alpha^2=6$, so $\\alpha^2+\\alpha-6=0$, $(\\alpha+3)(\\alpha-2)=0$.",
+        "$\\alpha=2$: solutions $2,4$, $k=2\\times4=8$.",
+        "$\\alpha=-3$: solutions $-3,9$, $k=-27$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-9",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "k = 8: solutions 2, 4; k = -27: solutions -3, 9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-4",
+      "record_id": "eb11c3-2:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 125,
+      "question": {
+        "text": "$x^2+ax+bc=0$ and $x^2+bx+ca=0$ have a non zero common root and $a\\neq b$. Show that the other two roots are roots of the quadratic equation $x^2+cx+ab=0$, $c\\neq 0$.",
+        "stem": "",
+        "notes": "Printed 'c ≠ 0' on a separate line after the equation, with no comma."
+      },
+      "needs_page": false,
+      "question_fingerprint": "cadab2388ae45a7a3071e5ddae57d869",
+      "kind": "explanation",
+      "answer": "The common root is c, the other roots are b and a, and a + b = -c and ab = ab, so a and b are roots of x² + cx + ab = 0.",
+      "solution": [
+        "Let $p$ be the common root: $p^2+ap+bc=0$ and $p^2+bp+ca=0$.",
+        "Subtract: $(a-b)p+c(b-a)=0$, so $(a-b)(p-c)=0$.",
+        "Since $a\\ne b$, $p=c$.",
+        "Put $p=c$ in the first equation: $c^2+ac+bc=0$. Since $c\\ne0$, $a+b+c=0$, so $a+b=-c$.",
+        "First equation: product of roots $=bc$, so the other root is $bc/c=b$.",
+        "Second equation: product of roots $=ca$, so the other root is $a$.",
+        "The other roots $a,b$ have sum $-c$ and product $ab$.",
+        "So they are roots of $x^2-(a+b)x+ab=x^2+cx+ab=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Let p be the common root. Subtracting the equations gives (a−b)p + c(b−a) = 0, so p = c because a≠b. Substituting into the first equation gives c²+ac+bc = 0, so a+b+c = 0 because c≠0. The product of the roots of the first equation is bc, so its other root is b. The second equation has other root a. Then a+b = −c and ab = ab, so a and b are roots of x²+cx+ab=0.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-7:a",
+      "record_id": "eb11c3-2:warm-up-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$2x^2-3x+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6124e694a3bfccbf24264d28993f67c2",
+      "kind": "value",
+      "answer": "2(x - (3+i√7)/4)(x - (3-i√7)/4)",
+      "solution": [
+        "Solve 2x² - 3x + 2 = 0 by the quadratic formula: x = (3 ± i√7)/4.",
+        "Use a(x-α)(x-β) with a = 2.",
+        "Answer: 2(x - (3+i√7)/4)(x - (3-i√7)/4)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:worked-example-3",
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "2(x - (3+i√7)/4)(x - (3-i√7)/4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-7:b",
+      "record_id": "eb11c3-2:warm-up-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^4+2x^2-3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "70465748cfe287f303b4501ae56b8282",
+      "kind": "value",
+      "answer": "(x+1)(x-1)(x+i√3)(x-i√3)",
+      "solution": [
+        "x⁴ + 2x² - 3 = (x² - 1)(x² + 3).",
+        "x² - 1 = (x+1)(x-1).",
+        "x² + 3 = 0 gives x = ±i√3, so x² + 3 = (x+i√3)(x-i√3).",
+        "Answer: (x+1)(x-1)(x+i√3)(x-i√3)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1)(x-1)(x+i√3)(x-i√3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-9:a",
+      "record_id": "eb11c3-2:try-9",
+      "part": "a",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^2+2x+5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7fd3d80c02fe26d4b0e484e361cd3e1c",
+      "kind": "value",
+      "answer": "(x+1-2i)(x+1+2i)",
+      "solution": [
+        "Solve x² + 2x + 5 = 0: D = 4 - 20 = -16, x = (-2 ± 4i)/2 = -1 ± 2i.",
+        "a = 1, so factorise as (x-(-1+2i))(x-(-1-2i)).",
+        "Answer: (x+1-2i)(x+1+2i)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "(x+1-2i)(x+1+2i)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-9:b",
+      "record_id": "eb11c3-2:try-9",
+      "part": "b",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$2x^2-6x+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ba8e89e8145d70c03838d925dcd1d31e",
+      "kind": "value",
+      "answer": "2(x - (3+√7)/2)(x - (3-√7)/2)",
+      "solution": [
+        "Solve 2x² - 6x + 1 = 0: D = 36 - 8 = 28, x = (6 ± 2√7)/4 = (3 ± √7)/2.",
+        "a = 2, so keep the factor 2.",
+        "Answer: 2(x - (3+√7)/2)(x - (3-√7)/2)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-7"
+      ],
+      "checks": {
+        "resolve_answer": "2(x - (3+√7)/2)(x - (3-√7)/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-9:c",
+      "record_id": "eb11c3-2:try-9",
+      "part": "c",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^4-x^2-6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2ca869e0d996d9599243e9e99798100c",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x-i√2)(x+i√2)",
+      "solution": [
+        "x⁴ - x² - 6 = (x² - 3)(x² + 2).",
+        "x² - 3 = 0 gives x = ±√3.",
+        "x² + 2 = 0 gives x = ±i√2.",
+        "Answer: (x-√3)(x+√3)(x-i√2)(x+i√2)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(x-√3)(x+√3)(x+i√2)(x-i√2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:a",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "a",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^2+4x+5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "38b605dbcbe828a5fe941e002672bfa3",
+      "kind": "value",
+      "answer": "(x+2-i)(x+2+i)",
+      "solution": [
+        "x² + 4x + 5 = 0: D = 16 - 20 = -4, x = -2 ± i.",
+        "Answer: (x+2-i)(x+2+i)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2-i)(x+2+i)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:b",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "b",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^2+4x+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9702ffd06e46bde3cfc43c1efbab6bfe",
+      "kind": "value",
+      "answer": "(x+2-√2)(x+2+√2)",
+      "solution": [
+        "x² + 4x + 2 = 0: D = 16 - 8 = 8, x = (-4 ± 2√2)/2 = -2 ± √2.",
+        "Answer: (x+2-√2)(x+2+√2)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "(x+2-√2)(x+2+√2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:c",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "c",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^2-4x+7$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "22d67d3cc1007e7e369d54d55ad081da",
+      "kind": "value",
+      "answer": "(x-2-i√3)(x-2+i√3)",
+      "solution": [
+        "x² - 4x + 7 = 0: D = 16 - 28 = -12, x = (4 ± 2i√3)/2 = 2 ± i√3.",
+        "Answer: (x-2-i√3)(x-2+i√3)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "(x-2-i√3)(x-2+i√3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:d",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "d",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$2x^2-x+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7963ff5c3d372b119932bc10d38646f9",
+      "kind": "value",
+      "answer": "2(x - (1+i√7)/4)(x - (1-i√7)/4)",
+      "solution": [
+        "2x² - x + 1 = 0: D = 1 - 8 = -7, x = (1 ± i√7)/4.",
+        "a = 2, so keep the factor 2.",
+        "Answer: 2(x - (1+i√7)/4)(x - (1-i√7)/4)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-7"
+      ],
+      "checks": {
+        "resolve_answer": "2(x - (1+i√7)/4)(x - (1-i√7)/4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:e",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "e",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$3x^2-5x+3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ab39d208bf674951e064e9fcf49e8b7a",
+      "kind": "value",
+      "answer": "3(x - (5+i√11)/6)(x - (5-i√11)/6)",
+      "solution": [
+        "3x² - 5x + 3 = 0: D = 25 - 36 = -11, x = (5 ± i√11)/6.",
+        "a = 3, so keep the factor 3.",
+        "Answer: 3(x - (5+i√11)/6)(x - (5-i√11)/6)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-7"
+      ],
+      "checks": {
+        "resolve_answer": "3(x - (5+i√11)/6)(x - (5-i√11)/6)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:f",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "f",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$2x^2-2x-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "66a0c2a6aae20ac45c971fdc63fbd8cb",
+      "kind": "value",
+      "answer": "2(x - (1+√3)/2)(x - (1-√3)/2)",
+      "solution": [
+        "2x² - 2x - 1 = 0: D = 4 + 8 = 12, x = (2 ± 2√3)/4 = (1 ± √3)/2.",
+        "a = 2, so keep the factor 2.",
+        "Answer: 2(x - (1+√3)/2)(x - (1-√3)/2)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:method-7",
+        "eb11c3-2:caution-7"
+      ],
+      "checks": {
+        "resolve_answer": "2(x - (1+√3)/2)(x - (1-√3)/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:g",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "g",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^4-9$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "769d8c1a86febd86732b3280a19db374",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x-i√3)(x+i√3)",
+      "solution": [
+        "x⁴ - 9 = (x² - 3)(x² + 3).",
+        "x² - 3 = (x-√3)(x+√3).",
+        "x² + 3 = (x-i√3)(x+i√3).",
+        "Answer: (x-√3)(x+√3)(x-i√3)(x+i√3)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(x-√3)(x+√3)(x-i√3)(x+i√3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-14:h",
+      "record_id": "eb11c3-2:exercise-14",
+      "part": "h",
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "Factorise the following expressions over the set of complex numbers.",
+        "stem": "$x^4-3x^2+2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c203b6ba0d121508f0448bf2ff9c6881",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x-√2)(x+√2)",
+      "solution": [
+        "x⁴ - 3x² + 2 = (x² - 1)(x² - 2).",
+        "x² - 1 = (x-1)(x+1).",
+        "x² - 2 = (x-√2)(x+√2).",
+        "Answer: (x-1)(x+1)(x-√2)(x+√2)."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-9",
+        "eb11c3-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "(x-1)(x+1)(x-√2)(x+√2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-5",
+      "record_id": "eb11c3-2:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 126,
+      "question": {
+        "text": "An engineer is designing a suspension bridge and models the stress on one of the cables. The stress depends on the square of the displacement x², and the overall balance of forces is represented by the equation: S(x) = 6x⁴ − 7x² − 3. Analyze the equation to determine the possible values of x and explain what these values mean in the context of cable stability under load.",
+        "stem": "",
+        "notes": "Accompanied by a decorative photo of an engineer at a computer."
+      },
+      "needs_page": false,
+      "question_fingerprint": "35fac24f48c879250b02bb41bb8ead70",
+      "kind": "value",
+      "answer": "x = ±√6/2 or x = ±i√3/3. The two real values balance the cable; the two imaginary values are not real displacements.",
+      "solution": [
+        "Let $t=x^2$: $6t^2-7t-3=0$.",
+        "$t=\\frac{7\\pm\\sqrt{49+72}}{12}=\\frac{7\\pm11}{12}$.",
+        "$t=\\frac32$ or $t=-\\frac13$.",
+        "$x^2=\\frac32$ gives $x=\\pm\\frac{\\sqrt6}{2}$.",
+        "$x^2=-\\frac13$ gives $x=\\pm\\frac{i\\sqrt3}{3}$.",
+        "Meaning: only the real values are real displacements where forces balance; the imaginary ones are not physical."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-7",
+        "eb11c3-2:method-1",
+        "eb11c3-2:caution-1",
+        "eb11c3-2:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "6x⁴−7x²−3 = (2x²−3)(3x²+1) = 0, so x = ±√6/2 (real) or x = ±i√3/3 (imaginary). The real values are the displacements where the force balance is zero, so those are the cable's equilibrium points. The imaginary values have no physical displacement.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-8",
+      "record_id": "eb11c3-2:warm-up-8",
+      "part": null,
+      "type": "exercise",
+      "page": 127,
+      "question": {
+        "text": "Create one quadratic equation with integer coefficients that has the two numbers $\\frac{1+i}{2}$ and $\\frac{1-i}{2}$ as solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f7b1fc45aafaf85e45053ae098cf60bb",
+      "kind": "value",
+      "answer": "2x² - 2x + 1 = 0",
+      "solution": [
+        "Sum $=\\frac{1+i}{2}+\\frac{1-i}{2}=1$.",
+        "Product $=\\frac{(1+i)(1-i)}{4}=\\frac12$.",
+        "$x^2-x+\\frac12=0$.",
+        "Multiply by 2: $2x^2-2x+1=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "2x² − 2x + 1 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-9",
+      "record_id": "eb11c3-2:warm-up-9",
+      "part": null,
+      "type": "exercise",
+      "page": 127,
+      "question": {
+        "text": "Find two numbers whose sum is $-1$ and product is 2",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "62c0e42a75a0b31994a6beb913480c69",
+      "kind": "value",
+      "answer": "(-1 + √7 i)/2 and (-1 - √7 i)/2",
+      "solution": [
+        "The numbers are solutions of $x^2-(\\text{sum})x+\\text{product}=0$.",
+        "$x^2+x+2=0$.",
+        "$x=\\frac{-1\\pm\\sqrt{1-8}}{2}=\\frac{-1\\pm\\sqrt7 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:method-7",
+        "eb11c3-2:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "(-1+√7 i)/2 and (-1−√7 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-10",
+      "record_id": "eb11c3-2:warm-up-10",
+      "part": null,
+      "type": "exercise",
+      "page": 127,
+      "question": {
+        "text": "Let $\\alpha,\\beta$ be the two solutions of the quadratic equation $x^2+2x-4=0$. Find a quadratic equation where the coefficient of $x^2$ is 1, having $\\alpha+2$ and $\\beta+2$ as its two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0f1bb2a4d038be9fe5a2d2acbbb5e107",
+      "kind": "value",
+      "answer": "x² - 2x - 4 = 0",
+      "solution": [
+        "$\\alpha+\\beta=-2$, $\\alpha\\beta=-4$.",
+        "New sum $=(\\alpha+2)+(\\beta+2)=\\alpha+\\beta+4=2$.",
+        "New product $=\\alpha\\beta+2(\\alpha+\\beta)+4=-4-4+4=-4$.",
+        "Equation: $x^2-2x-4=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "x² − 2x − 4 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-10",
+      "record_id": "eb11c3-2:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 128,
+      "question": {
+        "text": "Create one quadratic equation that has the two numbers $3+2i$ and $3-2i$ as solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9d94d4add6c53c4ff09f3d6e3ad6fca8",
+      "kind": "value",
+      "answer": "x² - 6x + 13 = 0",
+      "solution": [
+        "Sum $=(3+2i)+(3-2i)=6$.",
+        "Product $=9-4i^2=13$.",
+        "Equation: $x^2-6x+13=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "x² − 6x + 13 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-11",
+      "record_id": "eb11c3-2:try-11",
+      "part": null,
+      "type": "exercise",
+      "page": 128,
+      "question": {
+        "text": "Find two numbers where both the sum and the product are $1$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "23e4f768398a895113c36ddeeb1a92bb",
+      "kind": "value",
+      "answer": "(1 + √3 i)/2 and (1 - √3 i)/2",
+      "solution": [
+        "Sum 1 and product 1, so the numbers solve $x^2-x+1=0$.",
+        "$x=\\frac{1\\pm\\sqrt{1-4}}{2}=\\frac{1\\pm\\sqrt3 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:method-7",
+        "eb11c3-2:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "(1+√3 i)/2 and (1−√3 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-12",
+      "record_id": "eb11c3-2:try-12",
+      "part": null,
+      "type": "exercise",
+      "page": 128,
+      "question": {
+        "text": "Let $\\alpha,\\beta$ be the two solutions of the quadratic equation $x^2+x-3=0$. Find one quadratic equation that has $\\alpha^2$ and $\\beta^2$ as its two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e0034e16b1fa7c928d76cbe12af9cc83",
+      "kind": "value",
+      "answer": "x² - 7x + 9 = 0",
+      "solution": [
+        "$\\alpha+\\beta=-1$, $\\alpha\\beta=-3$.",
+        "$\\alpha^2+\\beta^2=(\\alpha+\\beta)^2-2\\alpha\\beta=1+6=7$.",
+        "$\\alpha^2\\beta^2=(-3)^2=9$.",
+        "Equation: $x^2-7x+9=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-7",
+        "eb11c3-2:rule-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "x² − 7x + 9 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-15",
+      "record_id": "eb11c3-2:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": "Heading 'Exercise' with intro line; questions 1-5 follow as separate records."
+      },
+      "needs_page": true,
+      "question_fingerprint": "4d565952a80d95e85ca391faffbe52f4",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are given as separate parts.",
+      "solution": [
+        "The record holds only the introduction line.",
+        "Each question is answered under its own reference."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading/intro line; the questions are separate parts.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-16:a",
+      "record_id": "eb11c3-2:exercise-16",
+      "part": "a",
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Create one quadratic equation that has the following two numbers as solutions.",
+        "stem": "$-1,\\ 2$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ff45d1cf9b427a61bd3dcec3ae025088",
+      "kind": "value",
+      "answer": "x² - x - 2 = 0",
+      "solution": [
+        "Sum = -1 + 2 = 1.",
+        "Product = (-1)(2) = -2.",
+        "Use x² - (sum)x + product = 0.",
+        "x² - x - 2 = 0."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "x^2 - x - 2 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-16:b",
+      "record_id": "eb11c3-2:exercise-16",
+      "part": "b",
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Create one quadratic equation that has the following two numbers as solutions.",
+        "stem": "$1+4i,\\ 1-4i$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "df291c336508e0307a95f43d44252025",
+      "kind": "value",
+      "answer": "x² - 2x + 17 = 0",
+      "solution": [
+        "Sum = (1+4i) + (1-4i) = 2.",
+        "Product = 1 - 16i² = 1 + 16 = 17.",
+        "x² - 2x + 17 = 0."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "x^2 - 2x + 17 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-16:c",
+      "record_id": "eb11c3-2:exercise-16",
+      "part": "c",
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Create one quadratic equation that has the following two numbers as solutions.",
+        "stem": "$\\frac{5+\\sqrt{7}}{3},\\ \\frac{5-\\sqrt{7}}{3}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e55d6b22f203a1b1f2b6d29926bdedd8",
+      "kind": "value",
+      "answer": "3x² - 10x + 6 = 0",
+      "solution": [
+        "Sum = (5+√7)/3 + (5-√7)/3 = 10/3.",
+        "Product = (25 - 7)/9 = 2.",
+        "x² - (10/3)x + 2 = 0.",
+        "Multiply by 3: 3x² - 10x + 6 = 0."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:explanation-3"
+      ],
+      "checks": {
+        "resolve_answer": "3x^2 - 10x + 6 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-17:a",
+      "record_id": "eb11c3-2:exercise-17",
+      "part": "a",
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Find two numbers whose sum and product are as follows.",
+        "stem": "Sum is 2, Product is 5",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "ec2be5d0c896e79bf7931d92afe83ec2",
+      "kind": "value",
+      "answer": "1 + 2i and 1 - 2i",
+      "solution": [
+        "The numbers solve $x^2-2x+5=0$.",
+        "$x=\\frac{2\\pm\\sqrt{4-20}}{2}=\\frac{2\\pm4i}{2}$.",
+        "$x=1\\pm2i$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:method-7",
+        "eb11c3-2:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "1+2i and 1−2i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-17:b",
+      "record_id": "eb11c3-2:exercise-17",
+      "part": "b",
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Find two numbers whose sum and product are as follows.",
+        "stem": "Sum is 4, Product is 2",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b60f8427028a920a992d66de4013cb0e",
+      "kind": "value",
+      "answer": "2 + √2 and 2 - √2",
+      "solution": [
+        "The numbers solve $x^2-4x+2=0$.",
+        "$x=\\frac{4\\pm\\sqrt{16-8}}{2}=\\frac{4\\pm2\\sqrt2}{2}$.",
+        "$x=2\\pm\\sqrt2$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-10",
+        "eb11c3-2:method-7",
+        "eb11c3-2:explanation-4"
+      ],
+      "checks": {
+        "resolve_answer": "2+√2 and 2−√2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-18",
+      "record_id": "eb11c3-2:exercise-18",
+      "part": null,
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Let $\\alpha, \\beta$ be the two solutions of the quadratic equation $x^2+2x+3=0$. Find one quadratic equation that has $\\alpha+3\\beta$ and $3\\alpha+\\beta$ as its two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "47415f4b4bd9fad4a7b483573e21a573",
+      "kind": "value",
+      "answer": "x² + 8x + 24 = 0",
+      "solution": [
+        "$\\alpha+\\beta=-2$, $\\alpha\\beta=3$.",
+        "New sum $=4(\\alpha+\\beta)=-8$.",
+        "$\\alpha^2+\\beta^2=4-6=-2$.",
+        "New product $=3(\\alpha^2+\\beta^2)+10\\alpha\\beta=-6+30=24$.",
+        "Equation: $x^2+8x+24=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-7",
+        "eb11c3-2:rule-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "x² + 8x + 24 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-19",
+      "record_id": "eb11c3-2:exercise-19",
+      "part": null,
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Let $\\alpha, \\beta$ be the two solutions of the quadratic equation $x^2-2x+7=0$. Find one quadratic equation that has $\\alpha^2$ and $\\beta^2$ as its two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "27a05366fceadd95440988a3d173934f",
+      "kind": "value",
+      "answer": "x² + 10x + 49 = 0",
+      "solution": [
+        "$\\alpha+\\beta=2$, $\\alpha\\beta=7$.",
+        "$\\alpha^2+\\beta^2=4-14=-10$.",
+        "$\\alpha^2\\beta^2=49$.",
+        "Equation: $x^2+10x+49=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-7",
+        "eb11c3-2:rule-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "x² + 10x + 49 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-20",
+      "record_id": "eb11c3-2:exercise-20",
+      "part": null,
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "Let $\\alpha, \\beta$ be the two solutions of the quadratic equation $2x^2+3x+4=0$. Find one quadratic equation with integer coefficients that has $\\frac{1}{\\alpha}$ and $\\frac{1}{\\beta}$ as its two solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9efacaaa52de0b3c7a2c9b3aacae6cd9",
+      "kind": "value",
+      "answer": "4x² + 3x + 2 = 0",
+      "solution": [
+        "$\\alpha+\\beta=-\\frac32$, $\\alpha\\beta=2$.",
+        "$\\frac1\\alpha+\\frac1\\beta=\\frac{\\alpha+\\beta}{\\alpha\\beta}=-\\frac34$.",
+        "$\\frac1\\alpha\\cdot\\frac1\\beta=\\frac12$.",
+        "$x^2+\\frac34x+\\frac12=0$.",
+        "Multiply by 4: $4x^2+3x+2=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:method-8",
+        "eb11c3-2:rule-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "4x² + 3x + 2 = 0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-6",
+      "record_id": "eb11c3-2:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 129,
+      "question": {
+        "text": "In the opposite figure: If $\\alpha$ and $\\beta$ are the two roots of the quadratic equation. Create a quadratic equation whose two roots are: $\\frac{1}{\\alpha}$ and $\\frac{1}{\\beta}$",
+        "stem": "",
+        "notes": "Printed in italics 'If α and β'."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c82811d3e83cf7616ad7804674d78b19",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the figure shows only a parabola with roots α<0<β and gives no equation or numbers.",
+      "solution": [
+        "The figure has no coefficients or values for α and β.",
+        "The sum and product of 1/α and 1/β cannot be found without the equation."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: the figure shows only a parabola with roots α<0<β and gives no equation or coefficients, so the new equation cannot be determined.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:warm-up-11",
+      "record_id": "eb11c3-2:warm-up-11",
+      "part": null,
+      "type": "exercise",
+      "page": 130,
+      "question": {
+        "text": "If the quadratic equation $x^2-2mx+m+6=0$ has two distinct negative solutions, find the range of values for the real number $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4ce9db2f7dfbf915af67b4cf7b48871c",
+      "kind": "value",
+      "answer": "-6 < m < -2",
+      "solution": [
+        "$D>0$: $4m^2-4(m+6)>0$, so $(m-3)(m+2)>0$, giving $m<-2$ or $m>3$.",
+        "$\\alpha+\\beta<0$: $2m<0$, so $m<0$.",
+        "$\\alpha\\beta>0$: $m+6>0$, so $m>-6$.",
+        "Common range: $-6<m<-2$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:explanation-5",
+        "eb11c3-2:rule-12",
+        "eb11c3-2:method-10"
+      ],
+      "checks": {
+        "resolve_answer": "-6 < m < -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-13",
+      "record_id": "eb11c3-2:try-13",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fe96c6fec3955ef9a1512a0f532c3a46",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are separate parts.",
+      "solution": [
+        "The record holds only the introduction line.",
+        "The questions are answered under their own references."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading line; the questions are separate parts.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-14",
+      "record_id": "eb11c3-2:try-14",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "If the quadratic equation $x^2+2mx+m+2=0$ has two distinct positive solutions, find the range of values for the real number $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1a2596b4599f5a07041da915d0cf8196",
+      "kind": "value",
+      "answer": "-2 < m < -1",
+      "solution": [
+        "$D>0$: $4m^2-4(m+2)>0$, so $(m-2)(m+1)>0$, giving $m<-1$ or $m>2$.",
+        "$\\alpha+\\beta>0$: $-2m>0$, so $m<0$.",
+        "$\\alpha\\beta>0$: $m+2>0$, so $m>-2$.",
+        "Common range: $-2<m<-1$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-11",
+        "eb11c3-2:method-10",
+        "eb11c3-2:caution-11",
+        "eb11c3-2:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "-2 < m < -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:try-15",
+      "record_id": "eb11c3-2:try-15",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "If the two solutions of the quadratic equation $x^2-(m-3)x-m-4=0$ have different signs, find the range of values for the real number $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f5f3a5cbded42efb1ca8918b9930d52f",
+      "kind": "value",
+      "answer": "m > -4",
+      "solution": [
+        "Different signs need $\\alpha\\beta<0$.",
+        "$\\alpha\\beta=-m-4<0$.",
+        "$m>-4$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-13",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "m > -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:activity-1",
+      "record_id": "eb11c3-2:activity-1",
+      "part": null,
+      "type": "activity",
+      "page": 131,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "67dd733611499acab41aa3cfedbcc0fd",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a partner on the try section. It has no question with a single answer.",
+      "solution": [
+        "The task is to solve the try questions with a partner and discuss them.",
+        "No separate question is given."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Solve try-14 and try-15 with a partner. Use D, α+β and αβ to get try-14: -2 < m < -1, and try-15: m > -4. Then compare and discuss the answers.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-21",
+      "record_id": "eb11c3-2:exercise-21",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fe96c6fec3955ef9a1512a0f532c3a46",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are separate parts.",
+      "solution": [
+        "The record holds only the introduction line.",
+        "The questions are answered under their own references."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: this is only the heading line; the questions are separate parts.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-22",
+      "record_id": "eb11c3-2:exercise-22",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "If the quadratic equation $x^2+2(m-1)x+2m^2-5m-3=0$ has two distinct positive solutions, find the range of values for the real number $m$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6ea6d0eba66582608cd57f8121797456",
+      "kind": "value",
+      "answer": "-1 < m < -1/2",
+      "solution": [
+        "$D>0$: $4(m-1)^2-4(2m^2-5m-3)>0$, so $m^2-3m-4<0$, $(m-4)(m+1)<0$, giving $-1<m<4$.",
+        "$\\alpha+\\beta>0$: $-2(m-1)>0$, so $m<1$.",
+        "$\\alpha\\beta>0$: $2m^2-5m-3>0$, $(2m+1)(m-3)>0$, so $m<-\\frac12$ or $m>3$.",
+        "Common range: $-1<m<-\\frac12$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-11",
+        "eb11c3-2:method-10",
+        "eb11c3-2:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "-1 < m < -1/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-23",
+      "record_id": "eb11c3-2:exercise-23",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "If the two solutions of the quadratic equation $x^2+4kx-k-3=0$ have different signs, find the range of values for the real number $k$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c427ee8bc342faf6972953809db48c79",
+      "kind": "value",
+      "answer": "k > -3",
+      "solution": [
+        "Different signs need $\\alpha\\beta<0$.",
+        "$\\alpha\\beta=-k-3<0$.",
+        "$k>-3$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-13",
+        "eb11c3-2:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "k > -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:exercise-24",
+      "record_id": "eb11c3-2:exercise-24",
+      "part": null,
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "If the quadratic equation $x^2+kx+2k+5=0$ has two distinct negative solutions, find the range of values for the real number $k$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3125034bfe482f4276d47b47654a3b1c",
+      "kind": "value",
+      "answer": "k > 10",
+      "solution": [
+        "$D>0$: $k^2-4(2k+5)>0$, so $k^2-8k-20>0$, $(k-10)(k+2)>0$, giving $k<-2$ or $k>10$.",
+        "$\\alpha+\\beta<0$: $-k<0$, so $k>0$.",
+        "$\\alpha\\beta>0$: $2k+5>0$, so $k>-\\frac52$.",
+        "Common range: $k>10$."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-12",
+        "eb11c3-2:method-10",
+        "eb11c3-2:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "k > 10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-7:a",
+      "record_id": "eb11c3-2:challenge-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "In a battery production factory, the efficiency factor $x$ depends on a design parameter $m$. The relationship is modeled by the quadratic equation $x^2+(m+1)x+m+4=0$. If the equation has two distinct real solutions, analyze the range of values for $m$ in each case:",
+        "stem": "When both solutions are positive, representing successful efficiency levels of the battery.",
+        "notes": "Challenge box also has a photo of a factory with monitors showing graphs (decorative)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "017e34319a21b2a015cc8720d2e1c4f3",
+      "kind": "value",
+      "answer": "-4 < m < -3",
+      "solution": [
+        "Two distinct real solutions: D = (m+1)² - 4(m+4) = m² - 2m - 15 = (m-5)(m+3) > 0, so m < -3 or m > 5.",
+        "Both positive: α+β = -(m+1) > 0, so m < -1.",
+        "αβ = m + 4 > 0, so m > -4.",
+        "Common range: -4 < m < -3."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-11",
+        "eb11c3-2:method-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "-4 < m < -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-7:b",
+      "record_id": "eb11c3-2:challenge-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "In a battery production factory, the efficiency factor $x$ depends on a design parameter $m$. The relationship is modeled by the quadratic equation $x^2+(m+1)x+m+4=0$. If the equation has two distinct real solutions, analyze the range of values for $m$ in each case:",
+        "stem": "When both solutions are negative, representing failure in performance.",
+        "notes": "Challenge box also has a photo of a factory with monitors showing graphs (decorative)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "91f8d165d954370f4eeacfa83bee5018",
+      "kind": "value",
+      "answer": "m > 5",
+      "solution": [
+        "D > 0: m < -3 or m > 5.",
+        "Both negative: α+β = -(m+1) < 0, so m > -1.",
+        "αβ = m + 4 > 0, so m > -4.",
+        "Common range: m > 5."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-12",
+        "eb11c3-2:method-10",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:explanation-5"
+      ],
+      "checks": {
+        "resolve_answer": "m > 5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:challenge-7:c",
+      "record_id": "eb11c3-2:challenge-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 131,
+      "question": {
+        "text": "In a battery production factory, the efficiency factor $x$ depends on a design parameter $m$. The relationship is modeled by the quadratic equation $x^2+(m+1)x+m+4=0$. If the equation has two distinct real solutions, analyze the range of values for $m$ in each case:",
+        "stem": "When one solution is positive and the other is negative, representing opposite behaviors of the battery (success in one case and failure in another).",
+        "notes": "Challenge box also has a photo of a factory with monitors showing graphs (decorative)."
+      },
+      "needs_page": true,
+      "question_fingerprint": "c1000ce9d48d9b0be2bf788f3e7ff0bb",
+      "kind": "value",
+      "answer": "m < -4",
+      "solution": [
+        "Different signs: αβ < 0.",
+        "αβ = m + 4 < 0, so m < -4.",
+        "Then D > 0 holds since m < -3 is included.",
+        "Answer: m < -4."
+      ],
+      "grounded_in": [
+        "eb11c3-2:rule-13",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "m < -4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-2:reflect-1",
+      "record_id": "eb11c3-2:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 131,
+      "question": {
+        "text": "How can analyzing the properties of an equation (such as knowing the number of its roots or their relation to the sum and product of the roots) without fully solving it help you understand mathematics better?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "fb88610152920664c1df54ed5a77d931",
+      "kind": "explanation",
+      "answer": "It lets you know the type and signs of the solutions quickly, so you understand the equation's behaviour and can check answers without solving fully.",
+      "solution": [
+        "The discriminant $D$ tells whether the solutions are real, repeated or imaginary.",
+        "The sum $-b/a$ and product $c/a$ give the signs of the solutions and let us form new equations.",
+        "This saves work and shows how the coefficients control the solutions, so you understand the structure better."
+      ],
+      "grounded_in": [
+        "eb11c3-2:definition-1",
+        "eb11c3-2:rule-5",
+        "eb11c3-2:rule-6",
+        "eb11c3-2:method-10"
+      ],
+      "checks": {
+        "resolve_answer": "Checking the discriminant, the sum and the product tells us the type of the roots (real or imaginary, positive or negative, equal or different) and lets us find constants or form new equations quickly. We see the structure of the problem and avoid heavy calculation. This builds understanding of how coefficients control the solutions.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:28:37+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

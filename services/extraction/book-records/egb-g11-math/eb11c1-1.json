@@ -1,0 +1,1206 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c1-1",
+    "syllabus_ref": "Concept 1",
+    "title": "Binomial and Multinomial Theorems",
+    "module": "Unit 1 Algebraic Proofs",
+    "pages": [
+      4,
+      9
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c1-1:heading-1",
+      "type": "heading",
+      "source_page": 4,
+      "quote": "Concept 1 · Binomial and Multinomial Theorems",
+      "text": "Concept 1 · Binomial and Multinomial Theorems",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 4,
+      "quote": "Applies the binomial theorem to find the expansion of algebraic expressions",
+      "text": "Learning Outcomes: Applies the binomial theorem to find the expansion of algebraic expressions and to determine the coefficients of certain terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:open-prompt-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Consider the first rows of Pascal's triangle, and notice how the number of terms changes",
+      "text": "Consider the first rows of Pascal's triangle, and notice how the number of terms changes in each horizontal row as shown in the figure. If you follow this pattern, how many terms will there be in the tenth row?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "uses_figure": "eb11c1-1:figure-1"
+    },
+    {
+      "id": "eb11c1-1:figure-1",
+      "type": "figure",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "The Pattern of Pascal's Triangle",
+      "caption": "Pascal's triangle poster 'The Pattern of Pascal's Triangle', Rows 0 to 10, with the number of terms at right (Row 0: 1 term, Row 1: 2 terms, ... Row 10: 11 terms). Row 10 reads 1 10 45 120 210 252 210 120 45 10 1. Below: (a+b)^10 = a^10 + 10a^9b + 45a^8b^2 + 120a^7b^3 + 210a^6b^4 + 252a^5b^5 + 210a^4b^6 + 120a^3b^7 + 45a^2b^8 + 10ab^9 + b^10.",
+      "notes": "Small text read from the image; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.3895,
+          0.1771,
+          0.6904,
+          0.3017
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c1-1:open-prompt-2",
+      "type": "open_prompt",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Guiding question: How can algebraic formulas and combinatorial coefficients predict",
+      "text": "Guiding question: How can algebraic formulas and combinatorial coefficients predict the precise coefficient of any term in an expanded polynomial $(x_1 + x_2)^n$ without performing sequential multiplication?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:rule-1",
+      "type": "rule",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Calculating nCr",
+      "claim": "Calculating combinations: nCr equals nPr divided by r!.",
+      "formula": "${}_nC_r = \\frac{{}_nP_r}{r!}$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-1",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Example: 5C3 = 5×4×3 / 3×2×1 = 10",
+      "stem": "Calculate $_5C_3$.",
+      "solution": [
+        "${}_5C_3 = \\frac{5\\times4\\times3}{3\\times2\\times1} = 10$"
+      ],
+      "answer": "10",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:rule-2",
+      "type": "rule",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "nC0 = 1 nCn = 1",
+      "claim": "nC0 equals 1 and nCn equals 1.",
+      "formula": "${}_nC_0 = 1,\\ {}_nC_n = 1$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-2",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Example: 5C0 = 1",
+      "stem": "Calculate $_5C_0$.",
+      "solution": [
+        "${}_5C_0 = 1$"
+      ],
+      "answer": "1",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-3",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "Example: 5C5 = 1",
+      "stem": "Calculate $_5C_5$.",
+      "solution": [
+        "${}_5C_5 = 1$"
+      ],
+      "answer": "1",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:rule-3",
+      "type": "rule",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "When expanding (a + b)^n, the term with a^(n-r) b^r becomes",
+      "claim": "When expanding (a+b)^n, the term with a^(n-r) b^r becomes nCr a^(n-r) b^r. Side notes label the exponent of the bracket's first term (a, shown as 'Exponent of ( )') and 'Exponent of b'.",
+      "formula": "${}_nC_r\\, a^{n-r} b^r$",
+      "notes": "Side callout boxes: 'Exponent of ( )' and 'Exponent of b' point at the formula; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-4",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "When expanding (a + b)^5, the term a^3b^2 is",
+      "stem": "When expanding $(a+b)^5$, the term $a^3b^2$ is:",
+      "solution": [
+        "${}_5C_2\\, a^3b^2 = \\frac{5\\times4}{2\\times1} a^3b^2 = 10a^3b^2$"
+      ],
+      "answer": "$10a^3b^2$",
+      "solution_provenance": "book_worked",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-5",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 4,
+      "quote": "When expanding (x – 2y)^6, the term x^4y^2 is:",
+      "stem": "When expanding $(x-2y)^6$, the term $x^4y^2$ is:",
+      "solution": [
+        "Since the exponent of $x$ is 4 and the exponent of $-2y$ is 2, ${}_6C_2 \\times x^4 \\times (-2y)^2$",
+        "$= \\frac{6\\times5}{2\\times1}\\times x^4\\times(-2y)^2 = 15\\times x^4\\times4\\times y^2 = 60x^4y^2$"
+      ],
+      "answer": "$60x^4y^2$",
+      "solution_provenance": "book_worked",
+      "misprints": [
+        {
+          "field": "solution[1]",
+          "printed": "6×5 / 2×1",
+          "intended": "6×5 / 2×1",
+          "notes": "Value 15 is correct; no error"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:rule-4",
+      "type": "rule",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 4,
+      "quote": "Expansion of (a + b)^n (Binomial Theorem)",
+      "claim": "Binomial Theorem: expansion of (a+b)^n as the sum of nCr a^(n-r) b^r for r from 0 to n.",
+      "formula": "$(a+b)^n = {}_nC_0 a^n + {}_nC_1 a^{n-1}b + {}_nC_2 a^{n-2}b^2 + \\dots + {}_nC_r a^{n-r}b^r + \\dots + {}_nC_n b^n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:example-6",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 4,
+      "quote": "Example: (x + 2)^5 = 5C0 × x^5 + 5C1 × x^4 × 2",
+      "stem": "Expand $(x+2)^5$.",
+      "solution": [
+        "$(x+2)^5 = {}_5C_0\\times x^5 + {}_5C_1\\times x^4\\times2 + {}_5C_2\\times x^3\\times2^2 + {}_5C_3\\times x^2\\times2^3 + {}_5C_4\\times x\\times2^4 + {}_5C_5\\times2^5$"
+      ],
+      "notes": "Side boxes: 'Start with 5C0, Exponent of x: 5, Exponent of 2: 0'; 'Exponent of x: 4, Exponent of 2: 1'; 'Exponent of x: 0, Exponent of 2: 5'. Binomial coefficients are printed in red as fill-ins; no final simplified answer printed.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-2",
+      "type": "heading",
+      "source_page": 5,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-1",
+      "type": "linking_text",
+      "source_page": 5,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 5,
+      "quote": "Find the coefficient of x^4 in the expansion of (2x^2 – 3)^7",
+      "text": "Find the coefficient of $x^4$ in the expansion of $(2x^2-3)^7$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 5,
+      "quote": "Find the expansion of (3x – 2)^4",
+      "text": "Find the expansion of $(3x-2)^4$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-3",
+      "type": "heading",
+      "source_page": 5,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:explanation-1",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 5,
+      "quote": "In the expansion of (2x^2 – 3)^7, the term x^4 has exponent 2",
+      "stem": "Find the coefficient of $x^4$ in the expansion of $(2x^2-3)^7$ (Warm Up 1): the term $x^4$ has exponent 2 for $2x^2$, and exponent $7-2=5$ for $-3$.",
+      "solution": [
+        "${}_7C_5\\,(2x^2)^2\\times(-3)^5$",
+        "$=\\dfrac{7\\times6\\times5\\times4\\times3}{5\\times4\\times3\\times2\\times1}\\times4x^4\\times(-243)$",
+        "$=-20412x^4$",
+        "Therefore, the coefficient of $x^4$ is $-20412$"
+      ],
+      "answer": "$-20412$",
+      "solution_provenance": "book_worked",
+      "misprints": [
+        {
+          "field": "stem",
+          "printed": "exponent 7 – 2 = 5 for –3 7C5 (2x^2)^2 × (–3)^5",
+          "intended": "exponent 7 – 2 = 5 for –3, so the term is = 7C5 (2x^2)^2 × (–3)^5",
+          "notes": "The '=' or punctuation before the first expression is missing; check against the page."
+        }
+      ],
+      "notes": "Printed under 'Explanation' as the worked solution to Warm Up 1; the final answer is underlined in red.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:explanation-2",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 5,
+      "quote": "Expand using the Binomial Theorem.",
+      "stem": "Expand using the Binomial Theorem: $(3x-2)^4$ (Warm Up 2).",
+      "solution": [
+        "$(3x-2)^4={}_4C_0\\times(3x)^4+{}_4C_1\\times(3x)^3\\times(-2)+{}_4C_2\\times(3x)^2\\times(-2)^2+{}_4C_3\\times3x\\times(-2)^3+{}_4C_4(-2)^4$",
+        "$=1\\times(3x)^4+\\dfrac{4}{1}\\times(3x)^3\\times(-2)+\\dfrac{4\\times3}{2\\times1}\\times(3x)^2\\times(-2)^2+\\dfrac{4\\times3\\times2}{3\\times2\\times1}\\times3x\\times(-2)^3+1\\times(-2)^4$",
+        "$=81x^4-216x^3+216x^2-96x+16$"
+      ],
+      "answer": "$81x^4-216x^3+216x^2-96x+16$",
+      "solution_provenance": "book_worked",
+      "misprints": [
+        {
+          "field": "solution[0]",
+          "printed": "4C4 (–2)^4",
+          "intended": "4C4 × (–2)^4",
+          "notes": "The multiplication sign is missing before (–2)^4."
+        }
+      ],
+      "notes": "Printed answer is underlined in red.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-4",
+      "type": "heading",
+      "source_page": 5,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-2",
+      "type": "linking_text",
+      "source_page": 5,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:try-1",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 5,
+      "quote": "Find the coefficient of the specified term in [ ] for the following expansions.",
+      "text": "Find the coefficient of the specified term in [ ] for the following expansions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$(2x-3y)^7\\,[x^6y]$"
+        },
+        {
+          "label": "b",
+          "stem": "$(3x-2)^5\\,[x^2]$"
+        },
+        {
+          "label": "c",
+          "stem": "$(3a^2-2)^8\\,[a^6]$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:try-2",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 5,
+      "quote": "Find the expansion of the following expressions.",
+      "text": "Find the expansion of the following expressions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$(x+2)^6$"
+        },
+        {
+          "label": "b",
+          "stem": "$(3a-2b)^5$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-3",
+      "type": "linking_text",
+      "source_page": 5,
+      "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "notes": "Side box printed to the right of the Try section.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-5",
+      "type": "heading",
+      "source_page": 6,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-4",
+      "type": "linking_text",
+      "source_page": 6,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-1",
+      "source_page": 6,
+      "quote": "Find the coefficient of the specified term in [ ] for the following expansions.",
+      "text": "Find the coefficient of the specified term in [ ] for the following expansions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$(2x-y)^8\\,[x^4y^4]$"
+        },
+        {
+          "label": "b",
+          "stem": "$(3a+b)^4\\,[ab^3]$"
+        },
+        {
+          "label": "c",
+          "stem": "$(x-4y)^5\\,[x^3y^2]$"
+        },
+        {
+          "label": "d",
+          "stem": "$(3x+1)^5\\,[x^4]$"
+        },
+        {
+          "label": "e",
+          "stem": "$(2a-3)^4\\,[a]$"
+        },
+        {
+          "label": "f",
+          "stem": "$(3x+2)^5\\,[x^3]$"
+        },
+        {
+          "label": "g",
+          "stem": "$(2x^2-1)^6\\,[x^6]$"
+        },
+        {
+          "label": "h",
+          "stem": "$(3x^2-1)^5\\,[x^4]$"
+        },
+        {
+          "label": "i",
+          "stem": "$(3x^2+2)^6\\,[x^6]$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-2",
+      "source_page": 6,
+      "quote": "Find the expansion of the following expressions.",
+      "text": "Find the expansion of the following expressions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$(x+1)^4$"
+        },
+        {
+          "label": "b",
+          "stem": "$(a+b)^4$"
+        },
+        {
+          "label": "c",
+          "stem": "$(a-2b)^4$"
+        },
+        {
+          "label": "d",
+          "stem": "$(x-2)^5$"
+        },
+        {
+          "label": "e",
+          "stem": "$(3x+2y)^5$"
+        },
+        {
+          "label": "f",
+          "stem": "$(2a^2-1)^5$"
+        },
+        {
+          "label": "g",
+          "stem": "$(x-3)^6$"
+        },
+        {
+          "label": "h",
+          "stem": "$(2x-3y)^6$"
+        },
+        {
+          "label": "i",
+          "stem": "$\\left(x+\\frac{1}{3}\\right)^6$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 6,
+      "quote": "Challenge — Sum of Coefficients",
+      "text": "If $(1+x)^5 = a+bx+cx^2+dx^3+ex^4+fx^5$, then find the numerical value of $a+b+c+d+e+f$.",
+      "notes": "Boxed challenge titled 'Challenge — Sum of Coefficients'; (a) of 1 is printed '(2x – y)^8'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-6",
+      "type": "heading",
+      "source_page": 7,
+      "quote": "Multinomial Theorem",
+      "text": "1-2 Multinomial Theorem (Chapter 1 Algebraic Proofs)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 7,
+      "quote": "Applies the multinomial theorem to find the expansion",
+      "text": "Learning Outcomes: Applies the multinomial theorem to find the expansion of algebraic expressions and determine the coefficients of certain terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:open-prompt-3",
+      "type": "open_prompt",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 7,
+      "quote": "If you want to expand an expression consisting of three terms",
+      "text": "If you want to expand an expression consisting of three terms: $(x+y+z)^4$. Without performing the multiplication operation, how can you determine the coefficient of the term containing $x^2yz$? How do I write without needing to remove the brackets?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:rule-5",
+      "type": "rule",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 7,
+      "quote": "When expanding (a + b + c)^n, the term containing a^p b^q c^r is",
+      "claim": "When expanding $(a+b+c)^n$, the term containing $a^p b^q c^r$ is $\\frac{n!}{p!q!r!}a^p b^q c^r$.",
+      "formula": "$\\frac{n!}{p!q!r!}a^p b^q c^r$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 7,
+      "quote": "Find the coefficient of the term a^4b^3c in the following expansions.",
+      "text": "Find the coefficient of the term $a^4b^3c$ in the following expansions.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$(a+b+c)^8$"
+        },
+        {
+          "label": "b",
+          "stem": "$(a-2b+3c)^8$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-7",
+      "type": "heading",
+      "source_page": 7,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-5",
+      "type": "linking_text",
+      "source_page": 7,
+      "quote": "When expanding (a + b + c)^8, the term a^4b^3c is",
+      "text": "(a) When expanding $(a+b+c)^8$, the term $a^4b^3c$ is $\\frac{8!}{4!3!1!}a^4b^3c^1 = 280a^4b^3c$. Therefore, the required coefficient is 280.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-6",
+      "type": "linking_text",
+      "source_page": 7,
+      "quote": "When expanding (a − 2b + 3c)^8, the term a^4b^3c is",
+      "text": "(b) When expanding $(a-2b+3c)^8$, the term $a^4b^3c$ is $\\frac{8!}{4!3!1!}a^4\\times(-2b)^3\\times(3c)^1 = -6720a^4b^3c$. Therefore, the required coefficient is $-6720$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-8",
+      "type": "heading",
+      "source_page": 7,
+      "quote": "Try",
+      "text": "Try",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-7",
+      "type": "linking_text",
+      "source_page": 7,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:try-3",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 7,
+      "quote": "Find the coefficient of the following terms in the expansion of (a + b + c)^6",
+      "text": "Find the coefficient of the following terms in the expansion of $(a+b+c)^6$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a^3bc^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$a^2b^2c^2$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:try-4",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 7,
+      "quote": "Find the coefficient of the following terms in the expansion of (a + 3b − 2c)^6",
+      "text": "Find the coefficient of the following terms in the expansion of $(a+3b-2c)^6$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a^2b^2c^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$ab^2c^3$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-8",
+      "type": "linking_text",
+      "source_page": 7,
+      "quote": "Collaborate with your group to answer question 2, then discuss the answer.",
+      "text": "Work with a partner: Collaborate with your group to answer question 2, then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-9",
+      "type": "heading",
+      "source_page": 8,
+      "quote": "Exercise",
+      "text": "Exercise",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-9",
+      "type": "linking_text",
+      "source_page": 8,
+      "quote": "Solve the following problems.",
+      "text": "Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 8,
+      "quote": "Find the coefficient of the following terms in the expansion of",
+      "text": "Find the coefficient of the following terms in the expansion of $(x+y+z)^7$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$xy^5z$"
+        },
+        {
+          "label": "b",
+          "stem": "$x^4y^2z$"
+        },
+        {
+          "label": "c",
+          "stem": "$x^2y^3z^2$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-4",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 8,
+      "quote": "Find the coefficient of the following terms in the expansion of",
+      "text": "Find the coefficient of the following terms in the expansion of $(x+y+z)^9$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$x^6yz^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$x^3y^3z^3$"
+        },
+        {
+          "label": "c",
+          "stem": "$x^2y^4z^3$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-5",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 8,
+      "quote": "Find the coefficient of the following terms in the expansion of",
+      "text": "Find the coefficient of the following terms in the expansion of $(a+2b-3c)^7$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a^2b^3c^2$"
+        },
+        {
+          "label": "b",
+          "stem": "$abc^5$"
+        },
+        {
+          "label": "c",
+          "stem": "$a^2b^4c$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-6",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 8,
+      "quote": "Find the coefficient of the following terms in the expansion of",
+      "text": "Find the coefficient of the following terms in the expansion of $(2a-b+3c)^8$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$a^2b^2c^4$"
+        },
+        {
+          "label": "b",
+          "stem": "$a^4bc^3$"
+        },
+        {
+          "label": "c",
+          "stem": "$a^3b^3c^2$"
+        }
+      ],
+      "notes": "Part labels printed as (a), (b), (c).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 8,
+      "quote": "Challenge — Greatest Coefficient",
+      "text": "Find the greatest coefficient in the expansion of $(1+x+x^2)^4$",
+      "notes": "Boxed challenge titled '★ Challenge — Greatest Coefficient'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:heading-10",
+      "type": "heading",
+      "source_page": 9,
+      "quote": "Applications of the Binomial Theorem",
+      "text": "1-3 Applications of the Binomial Theorem (Chapter 1 Algebraic Proofs)",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:printed-objective-3",
+      "type": "printed_objective",
+      "source_page": 9,
+      "quote": "Employs the binomial theorem in mathematical and computational applications.",
+      "text": "Learning Outcomes: Employs the binomial theorem in mathematical and computational applications.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:method-1",
+      "type": "method",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "For proof problems using the Binomial Theorem, use the expansion of",
+      "claim": "For proof problems using the Binomial Theorem, use the expansion of (1+x)^n.",
+      "formula": "$(1+x)^n = {}_nC_0 + {}_nC_1 x + {}_nC_2 x^2 + \\dots + {}_nC_n x^n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:method-2",
+      "type": "method",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Substitute an appropriate value for x to derive the required equality.",
+      "claim": "Substitute an appropriate value for x to derive the required equality.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Prove that the following equality holds.",
+      "text": "Prove that the following equality holds.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "${}_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n = 2^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:explanation-3",
+      "type": "worked_example",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Substituting x = 1 into this expression,",
+      "stem": "Prove ${}_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n = 2^n$.",
+      "solution": [
+        "Expanding $(1+x)^n$ using the Binomial Theorem: $(1+x)^n = {}_nC_0 + {}_nC_1 x + {}_nC_2 x^2 + \\dots + {}_nC_n x^n$",
+        "Substituting $x=1$ into this expression, $2^n = {}_nC_{0+}\\,1\\times {}_nC_1 + 1^2\\times {}_nC_2 + \\dots + 1^n\\times {}_nC_n$",
+        "$2^n = {}_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n$",
+        "Therefore, the given equality holds."
+      ],
+      "misprints": [
+        {
+          "field": "solution[1]",
+          "printed": "${}_nC_{0+}\\,1\\times {}_nC_1$",
+          "intended": "${}_nC_0 + 1\\times {}_nC_1$",
+          "notes": "The plus sign is printed as a subscript of C0 instead of after it."
+        }
+      ],
+      "notes": "Side note printed: 'Substitute x = 1 to make (1+x)^n = 2^n'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:linking-text-10",
+      "type": "linking_text",
+      "source_page": 9,
+      "quote": "Substitute x = 1 to make (1 + x)^n = 2^n",
+      "text": "Side note: Substitute $x=1$ to make $(1+x)^n = 2^n$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:try-5",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Prove that the following equality holds.",
+      "text": "Prove that the following equality holds.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "${}_nC_0 - {}_nC_1 + {}_nC_2 - \\dots + (-1)^n\\,{}_nC_n = 0$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:work-with-a-partner-1",
+      "type": "activity",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Collaborate with your group to answer the try section",
+      "text": "Collaborate with your group to answer the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-7",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "Prove that the following equalities hold.",
+      "text": "Prove that the following equalities hold.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "${}_nC_0 + 2\\,{}_nC_1 + 2^2\\,{}_nC_2 + \\dots + 2^n\\,{}_nC_n = 3^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-8",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "nC0 − 2 nC1 + 2² nC2 − …… + (−2)ⁿ nCn = (−1)ⁿ",
+      "text": "Prove that the following equalities hold.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "${}_nC_0 - 2\\,{}_nC_1 + 2^2\\,{}_nC_2 - \\dots + (-2)^n\\,{}_nC_n = (-1)^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:exercise-9",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "nC0 − nC1/2 + nC2/2² − …… + (−1)ⁿ nCn/2ⁿ = (1/2)ⁿ",
+      "text": "Prove that the following equalities hold.",
+      "parts": [
+        {
+          "label": "?",
+          "stem": "${}_nC_0 - \\dfrac{{}_nC_1}{2} + \\dfrac{{}_nC_2}{2^2} - \\dots + (-1)^n \\dfrac{{}_nC_n}{2^n} = \\left(\\dfrac12\\right)^n$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:challenge-3",
+      "type": "exercise",
+      "lo": "eb11c1-1:objective-4",
+      "source_page": 9,
+      "quote": "By using binomial theorem: Prove that (8ⁿ − 1) is divisible by 7",
+      "text": "Challenge — Divisibility: By using binomial theorem: Prove that $(8^n-1)$ is divisible by 7 ($n$ is a positive integer).",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c1-1:objective-3",
+      "source_page": 9,
+      "quote": "Compare binomial expansion and multinomial expansion.",
+      "text": "Compare binomial expansion and multinomial expansion. In what ways are they similar, and how does seeing the binomial as a special case of the multinomial help you unify your understanding of algebraic powers and combinatorial counting methods?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c1-1:objective-1",
+      "label": "Coefficients in binomial expansions",
+      "description": "Calculate combinations nCr and determine the term or the coefficient of a specified term in the expansion of (a+b)^n.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c1-1:rule-3",
+        "eb11c1-1:explanation-1",
+        "eb11c1-1:exercise-1",
+        "eb11c1-1:example-5"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:objective-2",
+      "label": "Expand using Binomial Theorem",
+      "description": "Expand expressions of the form (a+b)^n in full using the Binomial Theorem.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c1-1:rule-4",
+        "eb11c1-1:explanation-2",
+        "eb11c1-1:exercise-2"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:objective-3",
+      "label": "Multinomial Theorem coefficients",
+      "description": "Determine the coefficient of a specified term in the expansion of a three-term expression such as (a+b+c)^n using the Multinomial Theorem.",
+      "order_in_parent": 3,
+      "evidence": [
+        "eb11c1-1:rule-5",
+        "eb11c1-1:printed-objective-2",
+        "eb11c1-1:exercise-3"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c1-1:objective-4",
+      "label": "Prove identities with the binomial expansion",
+      "description": "Prove identities involving binomial coefficients (sums of combinations) and divisibility by expanding (1+x)^n and substituting an appropriate value for x.",
+      "order_in_parent": 4,
+      "evidence": [
+        "eb11c1-1:method-2",
+        "eb11c1-1:explanation-3",
+        "eb11c1-1:exercise-7"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (4)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json), approved at G1 (4)",
+    "2026-10-21: 4 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 1 cropped"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-2-4:sum-squares",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-2-4",
+ "parent_question_id": "q:eb11c3-2-4:bk-exercise-14-a",
+ "source_page": 126,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "m",
+   "let": "k * k"
+  }
+ ],
+ "stem": "Factorise the following expression over the set of complex numbers. $x^2+{=m}$",
+ "answer": "(x - {=k}*i)*(x + {=k}*i)",
+ "solution": [
+  "Solve $x^2+{=m}=0$: $x^2=-{=m}$, so $x=\\pm {=k}i$.",
+  "The leading coefficient is 1, so $x^2+{=m}=(x-\\alpha)(x-\\beta)$ with $\\alpha={=k}i$ and $\\beta=-{=k}i$.",
+  "Answer: $(x-{=k}i)(x+{=k}i)$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(x - {=k}*i)*(x + {=k}*i)",
+  "form": "factorised",
+  "variables": [
+   "i",
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point: pure sum of squares, roots ±ki with k integer. Needs i as a variable in the marker."
+}

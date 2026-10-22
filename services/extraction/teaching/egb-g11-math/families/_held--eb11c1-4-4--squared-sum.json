@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-4-4:squared-sum",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-4-4",
+ "parent_question_id": "q:eb11c1-4-4:bk-exercise-19",
+ "source_page": 30,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "p + q + r"
+  },
+  {
+   "name": "d",
+   "let": "p*q + q*r + r*p"
+  },
+  {
+   "require": "s != 0 and d != 0",
+   "why": "avoid zero numerator or zero denominator"
+  },
+  {
+   "require": "gcd(gcd(abs(p), abs(q)), abs(r)) == 1",
+   "why": "ratio in lowest terms"
+  },
+  {
+   "name": "v",
+   "let": "s*s / d"
+  },
+  {
+   "name": "ans",
+   "let": "str(numerator(v)) if denominator(v) == 1 else str(numerator(v)) + '/' + str(denominator(v))"
+  }
+ ],
+ "constraints": [
+  "gcd(gcd(abs(p), abs(q)), abs(r)) == 1"
+ ],
+ "stem": "If $\\frac{x}{{=p}}=\\frac{y}{{=q}}=\\frac{z}{{=r}}\\neq0$, find the value of $\\frac{(x+y+z)^2}{xy+yz+zx}$. Give the answer as a whole number or a fraction a/b in lowest terms.",
+ "answer": "ans",
+ "solution": [
+  "Let $\\frac{x}{{=p}}=\\frac{y}{{=q}}=\\frac{z}{{=r}}=k$, so $x={=p}k$, $y={=q}k$, $z={=r}k$ with $k\\neq0$.",
+  "Numerator: $x+y+z={=s}k$, so $(x+y+z)^2={=s*s}k^2$.",
+  "Denominator: $xy+yz+zx=({=p}\\cdot{=q}+{=q}\\cdot{=r}+{=r}\\cdot{=p})k^2={=d}k^2$ (each product taken with its sign).",
+  "Value $=\\frac{{=s*s}k^2}{{=d}k^2}={=v}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: three-term ratio with signs, a squared sum in the numerator and a cross-term denominator; requires sum and cross-sum nonzero. Answer string is lowest-terms."
+}

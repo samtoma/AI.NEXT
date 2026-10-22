@@ -1,0 +1,1004 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "025a2b785bb41bdd38bca37ca4972d9194bf5da198e4104d9a351275bb43d0a6",
+  "generated_sha256": "59c050b3d2c2dee43ad66784d4de9360007c483d1862be6ce5b99ccb1221dae3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c1-2",
+   "pages": [
+    {
+     "printed": 10,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 2 · Polynomial Division",
+       "text": "Concept 2 · Polynomial Division",
+       "_key": "p10-k1",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Performs polynomial division using standard algorithm.",
+       "text": "Learning Outcomes: Performs polynomial division using standard algorithm.",
+       "_key": "p10-k2",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "When you were managing a smart food delivery app",
+       "text": "Motivating text: in a delivery app, daily orders grow at an accelerating non-linear rate while riders are hired at a steady linear rate. To find the average workload (orders per rider) you divide the total-orders function by the number-of-riders function. Polynomial division is the tool for breaking a large, rapidly growing system into smaller units to find the share of a single part.",
+       "_key": "p10-k3",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "DELIVERY APP PERFORMANCE & RIDER WORKLOAD",
+       "caption": "Infographic titled 'Delivery App Performance & Rider Workload (Conceptual Over-Time Analysis)': graphs of daily orders over time (accelerating, non-linear), number of riders over time (linear), and workload = daily orders / number of riders over time; small text labels unreadable.",
+       "notes": "Text in the image is tiny; verify.",
+       "_key": "p10-k4",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "label": "Guiding Question",
+       "number": null,
+       "quote": "How does dividing complex algebraic expressions help us",
+       "text": "Guiding Question: How does dividing complex algebraic expressions help us simplify massive amounts of data and understand the share of a single unit within a constantly growing system?",
+       "_key": "p10-k5",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Division of polynomials can be calculated using long division",
+       "claim": "Division of polynomials can be calculated using long division, similar to integers.",
+       "formula": "",
+       "_key": "p10-k6",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "treat other variables as constants",
+       "claim": "In problems where you 'treat as a polynomial in x', treat other variables as constants.",
+       "formula": "$x$",
+       "_key": "p10-k7",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Errors in subtraction: Mistakes often happen when subtracting after multiplication",
+       "claim": "Common Mistakes: errors in subtraction, often after multiplication, especially forgetting to change signs or combine like terms properly. Partial multiplication: multiplying only by the leading term of the divisor instead of the entire divisor.",
+       "_key": "p10-k8",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p10-k9",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "Find the quotient and the remainder when",
+       "text": "Find the quotient and the remainder when $2x^3 - 5x^2 - 2$ is divided by $2x^2 - x - 1$",
+       "parts": [],
+       "_key": "p10-k10",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "For polynomials A = 4x² − 9ax − 9a² and B = x − 3a",
+       "text": "For polynomials $A = 4x^2 - 9ax - 9a^2$ and $B = x - 3a$, treating each as a polynomial in $x$, find the quotient and the remainder when $A$ is divided by $B$",
+       "parts": [],
+       "_key": "p10-k11",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p10-k12",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "2x² − x − 1 | 2x³ − 5x² − 2",
+       "caption": "Long division layout for Warm Up 1: divisor $2x^2-x-1$, dividend $2x^3-5x^2-2$ (gap left for the missing x term), quotient $x-2$ on top. Subtract $2x^3-x^2-x$, giving $-4x^2+x-2$. Subtract $-4x^2+2x+2$, giving remainder $-x-4$. Dotted lines connect steps to side notes.",
+       "notes": "Layout read from image; verify.",
+       "_key": "p10-k13",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Therefore, the quotient is x − 2 and the remainder is − x − 4",
+       "text": "Therefore, the quotient is $x-2$ and the remainder is $-x-4$",
+       "_key": "p10-k14",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "If a term of a certain degree is missing in the dividend, leave that space blank.",
+       "text": "Side note: If a term of a certain degree is missing in the dividend, leave that space blank.",
+       "_key": "p10-k15",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Subtract (2x² − x − 1) × x to eliminate 2x³",
+       "text": "Side note: Subtract $(2x^2 - x - 1)\\times x$ to eliminate $2x^3$",
+       "_key": "p10-k16",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Subtract (2x² − x − 1) × (−2) to eliminate −4x²",
+       "text": "Side note: Subtract $(2x^2 - x - 1)\\times(-2)$ to eliminate $-4x^2$",
+       "_key": "p10-k17",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k18",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "It is the remainder when the degree becomes lower than the divisor.",
+       "text": "Side note: It is the remainder when the degree becomes lower than the divisor.",
+       "_key": "p10-k18",
+       "source_page": 10,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 11,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "continues": true,
+       "quote": "Since we treat it as a polynomial in x, treat variables other than x as numbers.",
+       "stem": "Continuation of an example (step 2): divide $4x^2-9ax-9a^2$ by $x-3a$, treating it as a polynomial in x.",
+       "solution": [
+        "Since we treat it as a polynomial in x, treat variables other than x as numbers.",
+        "Long division of $4x^2-9ax-9a^2$ by $x-3a$: quotient line $4x+3a$; subtract $4x^2-12ax$ to get $3ax-9a^2$; subtract $3ax-9a^2$ to get $0$.",
+        "Therefore, the quotient is $4x+3a$ and the remainder is $0$"
+       ],
+       "answer": "quotient $4x+3a$, remainder $0$",
+       "notes": "Example number is not on this page (continues from previous page).",
+       "_key": "p11-k1",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "A = 2x^3 − 13x + 1, B = x^2 + 2x − 3",
+       "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$. $A=2x^3-13x+1,\\ B=x^2+2x-3$",
+       "_key": "p11-k2",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "A = x^3 − 3ax^2 + 5a^2x − 5a^3, B = x − 2a",
+       "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$ (calculate treating it as a polynomial in $x$). $A=x^3-3ax^2+5a^2x-5a^3,\\ B=x-2a$",
+       "_key": "p11-k3",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box.",
+       "_key": "p11-k4",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "A = x^2 − 5x + 1, B = x − 2",
+       "text": "Find the quotient and the remainder when polynomial $A$ is divided by polynomial $B$. $A=x^2-5x+1,\\ B=x-2$",
+       "_key": "p11-k5",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "A = x^3 − 4x + 1, B = x − 3",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=x^3-4x+1,\\ B=x-3$",
+       "_key": "p11-k6",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "A = 2x^3 − 3x^2 + 3x + 4, B = x^2 − 2x + 3",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=2x^3-3x^2+3x+4,\\ B=x^2-2x+3$",
+       "_key": "p11-k7",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "A = 6x^3 − 8x^2 + 5, B = 2x^2 − 2x − 5",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=6x^3-8x^2+5,\\ B=2x^2-2x-5$",
+       "_key": "p11-k8",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "A = x^3 − 7x + 6, B = x^2 + 2x − 3",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=x^3-7x+6,\\ B=x^2+2x-3$",
+       "_key": "p11-k9",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "A = 3x^4 − 5x^3 + x − 1, B= −x^2 + 3x + 2",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$. $A=3x^4-5x^3+x-1,\\ B=-x^2+3x+2$",
+       "_key": "p11-k10",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "A = 4x^2 − 5ax − 6a^2, B = x − 2a",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$ (calculate treating it as a polynomial in $x$). $A=4x^2-5ax-6a^2,\\ B=x-2a$",
+       "_key": "p11-k11",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 8,
+       "quote": "A = x3 + ax2 + a2x − a3, B = x + 2a",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x3+ax2+a2x-a3,\\ B=x+2a$",
+       "misprints": [
+        {
+         "field": "text",
+         "printed": "x3 + ax2 + a2x − a3",
+         "intended": "x^3 + ax^2 + a^2x − a^3",
+         "notes": "Exponents printed as normal-size digits instead of superscripts."
+        }
+       ],
+       "_key": "p11-k12",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 9,
+       "quote": "A = x^3 − 2ax^2 + 3a^3, B = x + a",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x^3-2ax^2+3a^3,\\ B=x+a$",
+       "_key": "p11-k13",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 10,
+       "quote": "A = x^3 + 3x^2y − 2y^3, B = x + y",
+       "text": "Find the quotient and the remainder when $A$ is divided by $B$ (treating it as a polynomial in $x$). $A=x^3+3x^2y-2y^3,\\ B=x+y$",
+       "_key": "p11-k14",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A cuboid shaped box of volume 4x^3 + 4x^2 − 9x − 9.",
+       "text": "Challenge — Find the Height: A cuboid shaped box of volume $4x^3+4x^2-9x-9$. If the area of its base is $2x^2-x-3$, write its height in terms of $x$.",
+       "_key": "p11-k15",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "base area",
+       "caption": "Cuboid with front face labelled V, height marked h on the right edge, and the label 'base area' beneath.",
+       "notes": "Belongs to the Challenge.",
+       "_key": "p11-k16",
+       "source_page": 11,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 12,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Quotient and Remainder of Polynomials",
+       "text": "1-5 Quotient and Remainder of Polynomials (Chapter 1 Algebraic Proofs)",
+       "_key": "p12-k1",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Distinguishes the quotient and the remainder in polynomial division",
+       "text": "Learning Outcomes: Distinguishes the quotient and the remainder in polynomial division, deduces that the degree of the remainder is less than the degree of the divisor, and uses this fact to verify the correctness of the division.",
+       "_key": "p12-k2",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If a polynomial A is divided by a polynomial B, yielding a quotient Q and a remainder R",
+       "claim": "If a polynomial A is divided by a polynomial B, giving quotient Q and remainder R, then A = B × Q + R.",
+       "formula": "$A = B \\times Q + R$",
+       "_key": "p12-k3",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Example: When 7 is divided by 3, the quotient is 2 and remainder is 1",
+       "text": "Example: When 7 is divided by 3, the quotient is 2 and remainder is 1, 7 = 3 × 2 + 1 (with brackets linking 3, 2 and 1 to the divisor, quotient and remainder).",
+       "_key": "p12-k4",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "In problems where the quotient and the remainder are given, substitute",
+       "claim": "In problems where the quotient and the remainder are given, substitute the known expressions into A = BQ + R.",
+       "formula": "$A = BQ + R$",
+       "_key": "p12-k5",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the polynomials A and B that satisfy the following conditions.",
+       "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions.",
+       "parts": [
+        {
+         "label": "1",
+         "stem": "When $A$ is divided by $x^2 - 2x - 1$, the quotient is $x+3$ and remainder is $-2x+5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "stem": "When $4x^3 + 8x - 9$ is divided by $B$, the quotient is $2x-3$ and remainder is $x+15$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p12-k6",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Stopping too early: Ending the division before reaching a remainder",
+       "claim": "Stopping too early: ending the division before reaching a remainder of lower degree than the divisor.",
+       "_key": "p12-k7",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "Confusing quotient and remainder: Thinking the remainder must always be zero",
+       "claim": "Confusing quotient and remainder: thinking the remainder must always be zero, while in fact it can be a term (or more) of lower degree than the divisor.",
+       "_key": "p12-k8",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Since the quotient and the remainder are given, substitute the known expressions",
+       "stem": "Since the quotient and the remainder are given, substitute the known expressions into $A = BQ + R$. (Solves Warm Up 1 and 2.)",
+       "solution": [
+        "1: $A = (x^2-2x-1)(x+3) + (-2x+5)$",
+        "$= x^3 + 3x^2 - 2x^2 - 6x - x - 3 - 2x + 5$",
+        "$= x^3 + x^2 - 9x + 2$",
+        "2: $4x^3 + 8x - 9 = B \\times (2x-3) + (x+15)$",
+        "$B \\times (2x-3) + (x+15) = 4x^3 + 8x - 9$",
+        "$B \\times (2x-3) = 4x^3 + 7x - 24$",
+        "$B = (4x^3 + 7x - 24) \\div (2x-3)$",
+        "$= 2x^2 + 3x + 8$"
+       ],
+       "answer": "1: $A = x^3 + x^2 - 9x + 2$; 2: $B = 2x^2 + 3x + 8$",
+       "parts": [
+        {
+         "label": "1",
+         "answer": "$x^3 + x^2 - 9x + 2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "answer": "$2x^2 + 3x + 8$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "In part 2 the printed B is upright 'B' in the first line; side notes 'Solve for B' and a long division are attached.",
+       "_key": "p12-k9",
+       "source_page": 12,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Remainder must be 0",
+       "belongs_to_key": "p12-k9",
+       "caption": "Long division of 4x^3 + 7x − 24 by 2x − 3: quotient 2x^2 + 3x + 8; subtract 4x^3 − 6x^2 leaving 6x^2 + 7x; subtract 6x^2 − 9x leaving 16x − 24; subtract 16x − 24 leaving 0 (highlighted). Note: 'Remainder must be 0' with arrow to 0. Side note box above: 'Solve for B'.",
+       "_key": "p12-k10",
+       "source_page": 12,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 13,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "When A is divided by 2x^2 + x + 1, the quotient is 3x + 2",
+       "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions. When $A$ is divided by $2x^2+x+1$, the quotient is $3x+2$ and the remainder is $-2x+6$",
+       "continues": false,
+       "_key": "p13-k1",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "When x^3 − x^2 + 3x + 1 is divided by B, the quotient is",
+       "text": "When $x^3-x^2+3x+1$ is divided by $B$, the quotient is $x^2-2x+5$ and the remainder is $-4$",
+       "continues": false,
+       "_key": "p13-k2",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "When A is divided by x^2 − 2x − 1, the quotient is 2x − 3",
+       "text": "Find the polynomials $A$ and $B$ that satisfy the following conditions. When $A$ is divided by $x^2-2x-1$, the quotient is $2x-3$ and the remainder is $-2x$.",
+       "continues": false,
+       "_key": "p13-k3",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "When A is divided by x^2 − 3x + 2, the quotient is 2x + 6",
+       "text": "When $A$ is divided by $x^2-3x+2$, the quotient is $2x+6$ and the remainder is $2x-3$",
+       "continues": false,
+       "_key": "p13-k4",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "When A is divided by 2x^2 − x + 2, the quotient is 2x − 1",
+       "text": "When $A$ is divided by $2x^2-x+2$, the quotient is $2x-1$ and the remainder is $2$",
+       "continues": false,
+       "_key": "p13-k5",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "When 2x^3 + x^2 − 3x + 5 is divided by B, the quotient is x + 1",
+       "text": "When $2x^3+x^2-3x+5$ is divided by $B$, the quotient is $x+1$ and the remainder is $-5x+2$",
+       "continues": false,
+       "_key": "p13-k6",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "When 6x^3 + 11x^2 − 2 is divided by B, the quotient is",
+       "text": "When $6x^3+11x^2-2$ is divided by $B$, the quotient is $2x^2+3x-1$ and the remainder is $-1$",
+       "continues": false,
+       "_key": "p13-k7",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "When 2x^3 + 4x^2 + 7 is divided by B, the quotient is x + 2",
+       "text": "When $2x^3+4x^2+7$ is divided by $B$, the quotient is $x+2$ and the remainder is $3x+13$",
+       "continues": false,
+       "_key": "p13-k8",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Challenge — Recover the Divisor",
+       "text": "When $x^4+x^2+3x-1$ is divided by $B$, the quotient is $x^2+x+1$ with the remainder $3x-2$, then find the polynomial $B$.",
+       "continues": false,
+       "_key": "p13-k9",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "why must the remainder always have a degree less than the divisor?",
+       "text": "When we divide one polynomial by another, why must the remainder always have a degree less than the divisor? How does this condition help us verify the correctness of the division steps and understand the relationship between the quotient and the remainder?",
+       "continues": false,
+       "_key": "p13-k10",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve question 2, then discuss the answer.",
+       "text": "Collaborate with your group to solve question 2, then discuss the answer.",
+       "notes": "Side-column box; printed in right margin next to the Try section, so presumably refers to Try question 2.",
+       "continues": false,
+       "_key": "p13-k11",
+       "source_page": 13,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Divide polynomials by long division",
+      "description": "Find the quotient and remainder when one polynomial in x is divided by another, using the standard long-division algorithm and subtracting the full multiple of the divisor at each step.",
+      "evidence_keys": [
+       "p10-k6",
+       "p10-k10",
+       "p10-k13",
+       "p11-k2",
+       "p11-k7"
+      ]
+     },
+     {
+      "label": "Divide polynomials with several variables",
+      "description": "Find the quotient and remainder when the polynomials contain other letters, by treating them as polynomials in x and the other letters as constants.",
+      "evidence_keys": [
+       "p10-k7",
+       "p10-k11",
+       "p11-k1",
+       "p11-k3",
+       "p11-k14"
+      ]
+     },
+     {
+      "label": "Use A = BQ + R to find a dividend or divisor",
+      "description": "Find the polynomial A or B from a given quotient and remainder by substituting the known expressions into A = BQ + R.",
+      "evidence_keys": [
+       "p12-k3",
+       "p12-k5",
+       "p12-k6",
+       "p12-k9",
+       "p13-k1",
+       "p13-k6"
+      ]
+     },
+     {
+      "label": "Check the remainder and verify a division",
+      "description": "Decide whether a division is finished and correct: the remainder has lower degree than the divisor, and may be nonzero.",
+      "evidence_keys": [
+       "p12-k7",
+       "p12-k8",
+       "p12-k10",
+       "p13-k10"
+      ]
+     },
+     {
+      "label": "Apply polynomial division to a context",
+      "description": "Use polynomial division to find a quantity such as an average workload or a box height, by dividing one expression by another.",
+      "evidence_keys": [
+       "p10-k4",
+       "p10-k5",
+       "p11-k15",
+       "p11-k16"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p10-k4",
+      "objective": 5
+     },
+     {
+      "key": "p10-k5",
+      "objective": 5
+     },
+     {
+      "key": "p10-k6",
+      "objective": 1
+     },
+     {
+      "key": "p10-k7",
+      "objective": 2
+     },
+     {
+      "key": "p10-k8",
+      "objective": 1
+     },
+     {
+      "key": "p10-k10",
+      "objective": 1
+     },
+     {
+      "key": "p10-k11",
+      "objective": 2
+     },
+     {
+      "key": "p10-k13",
+      "objective": 1
+     },
+     {
+      "key": "p11-k1",
+      "objective": 2
+     },
+     {
+      "key": "p11-k2",
+      "objective": 1
+     },
+     {
+      "key": "p11-k3",
+      "objective": 2
+     },
+     {
+      "key": "p11-k5",
+      "objective": 1
+     },
+     {
+      "key": "p11-k6",
+      "objective": 1
+     },
+     {
+      "key": "p11-k7",
+      "objective": 1
+     },
+     {
+      "key": "p11-k8",
+      "objective": 1
+     },
+     {
+      "key": "p11-k9",
+      "objective": 1
+     },
+     {
+      "key": "p11-k10",
+      "objective": 1
+     },
+     {
+      "key": "p11-k11",
+      "objective": 2
+     },
+     {
+      "key": "p11-k12",
+      "objective": 2
+     },
+     {
+      "key": "p11-k13",
+      "objective": 2
+     },
+     {
+      "key": "p11-k14",
+      "objective": 2
+     },
+     {
+      "key": "p11-k15",
+      "objective": 5
+     },
+     {
+      "key": "p11-k16",
+      "objective": 5
+     },
+     {
+      "key": "p12-k3",
+      "objective": 3
+     },
+     {
+      "key": "p12-k5",
+      "objective": 3
+     },
+     {
+      "key": "p12-k6",
+      "objective": 3
+     },
+     {
+      "key": "p12-k7",
+      "objective": 4
+     },
+     {
+      "key": "p12-k8",
+      "objective": 4
+     },
+     {
+      "key": "p12-k9",
+      "objective": 3
+     },
+     {
+      "key": "p12-k10",
+      "objective": 4
+     },
+     {
+      "key": "p13-k1",
+      "objective": 3
+     },
+     {
+      "key": "p13-k2",
+      "objective": 3
+     },
+     {
+      "key": "p13-k3",
+      "objective": 3
+     },
+     {
+      "key": "p13-k4",
+      "objective": 3
+     },
+     {
+      "key": "p13-k5",
+      "objective": 3
+     },
+     {
+      "key": "p13-k6",
+      "objective": 3
+     },
+     {
+      "key": "p13-k7",
+      "objective": 3
+     },
+     {
+      "key": "p13-k8",
+      "objective": 3
+     },
+     {
+      "key": "p13-k9",
+      "objective": 3
+     },
+     {
+      "key": "p13-k10",
+      "objective": 4
+     },
+     {
+      "key": "p13-k11",
+      "objective": 3
+     }
+    ],
+    "prompt_figures": []
+   }
+  }
+ ],
+ "failed_lessons": []
+}

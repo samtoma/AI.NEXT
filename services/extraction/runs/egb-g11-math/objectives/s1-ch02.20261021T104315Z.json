@@ -1,0 +1,4921 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v5",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "module": "module:eb11c2",
+ "packet_sha256": "5c6990c24dfd8f8c2d39d42149d96fb63e89af3acd8a104322d0b1868d288044",
+ "embedded": {
+  "source": "runbook/objectives.workflow.js",
+  "source_sha256": "afabf5af79f22a7e2dcb3060c7a8c4596ec06170296f865fd40e76ce1e9fef52",
+  "args_sha256": "e831bbf23675025f67761ef906c3078d2efae9a1717c7da727f6810fe1d7cc49",
+  "generated_sha256": "3ec52a0abc31fa9556db6ff2ec20bba045f27376e99430331e2c437807c5c6b5",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "teacher_only_dropped": 0,
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Terms from general term",
+       "statement": "Calculate the first terms of a sequence from its general term, and deduce the general term of a sequence from the pattern of its terms.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-1:definition-2",
+         "printed_page": 40,
+         "quote": "is called the general term of the sequence"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 40,
+         "quote": "$a_1=-2\\times1+7=5$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-2:e",
+         "printed_page": 42,
+         "quote": "Deduce the general term of the following sequences"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:open-prompt-1",
+        "eb11c2-1:unlabelled-exercise-1",
+        "eb11c2-1:unlabelled-exercise-2:a",
+        "eb11c2-1:unlabelled-exercise-2:b",
+        "eb11c2-1:unlabelled-exercise-2:c",
+        "eb11c2-1:unlabelled-exercise-3:a",
+        "eb11c2-1:unlabelled-exercise-3:b",
+        "eb11c2-1:unlabelled-exercise-3:c",
+        "eb11c2-1:unlabelled-exercise-3:d",
+        "eb11c2-1:unlabelled-exercise-4:a",
+        "eb11c2-1:unlabelled-exercise-4:b",
+        "eb11c2-1:unlabelled-exercise-4:c",
+        "eb11c2-1:unlabelled-exercise-4:d",
+        "eb11c2-1:exercise-1:a",
+        "eb11c2-1:exercise-1:b",
+        "eb11c2-1:exercise-1:c",
+        "eb11c2-1:exercise-1:d",
+        "eb11c2-1:exercise-1:e",
+        "eb11c2-1:exercise-1:f",
+        "eb11c2-1:exercise-1:g",
+        "eb11c2-1:exercise-1:h",
+        "eb11c2-1:exercise-1:i",
+        "eb11c2-1:exercise-1:j",
+        "eb11c2-1:exercise-1:k",
+        "eb11c2-1:exercise-1:l",
+        "eb11c2-1:exercise-2:a",
+        "eb11c2-1:exercise-2:b",
+        "eb11c2-1:exercise-2:c",
+        "eb11c2-1:exercise-2:d",
+        "eb11c2-1:exercise-2:e",
+        "eb11c2-1:exercise-2:f",
+        "eb11c2-1:exercise-2:g",
+        "eb11c2-1:exercise-2:h",
+        "eb11c2-1:exercise-2:i",
+        "eb11c2-1:exercise-2:j",
+        "eb11c2-1:exercise-2:k",
+        "eb11c2-1:challenge-1"
+       ],
+       "worked_examples": [
+        "WE1",
+        "WE2"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "General term of arithmetic sequence",
+       "statement": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-1:definition-3",
+         "printed_page": 43,
+         "quote": "is called the common difference"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 43,
+         "quote": "$a_n = a + (n-1)d$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:try-4:a",
+         "printed_page": 44,
+         "quote": "find the general term"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-1:a",
+        "eb11c2-1:warm-up-1:b",
+        "eb11c2-1:warm-up-2:a",
+        "eb11c2-1:warm-up-2:b",
+        "eb11c2-1:warm-up-3",
+        "eb11c2-1:try-1",
+        "eb11c2-1:try-2:a",
+        "eb11c2-1:try-2:b",
+        "eb11c2-1:try-3:a",
+        "eb11c2-1:try-3:b",
+        "eb11c2-1:try-4:a",
+        "eb11c2-1:try-4:b",
+        "eb11c2-1:exercise-3",
+        "eb11c2-1:exercise-4:a",
+        "eb11c2-1:exercise-4:b",
+        "eb11c2-1:exercise-4:c",
+        "eb11c2-1:exercise-4:d",
+        "eb11c2-1:exercise-4:e",
+        "eb11c2-1:exercise-4:f",
+        "eb11c2-1:unlabelled-exercise-5:a",
+        "eb11c2-1:unlabelled-exercise-5:b",
+        "eb11c2-1:unlabelled-exercise-5:c",
+        "eb11c2-1:unlabelled-exercise-5:d",
+        "eb11c2-1:unlabelled-exercise-5:e",
+        "eb11c2-1:unlabelled-exercise-5:f",
+        "eb11c2-1:unlabelled-exercise-6:a",
+        "eb11c2-1:unlabelled-exercise-6:b",
+        "eb11c2-1:unlabelled-exercise-6:c",
+        "eb11c2-1:unlabelled-exercise-6:d",
+        "eb11c2-1:unlabelled-exercise-7:a",
+        "eb11c2-1:unlabelled-exercise-7:b",
+        "eb11c2-1:unlabelled-exercise-7:c",
+        "eb11c2-1:unlabelled-exercise-7:d",
+        "eb11c2-1:challenge-2"
+       ],
+       "worked_examples": [
+        "WE3",
+        "WE4"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "General term from given conditions",
+       "statement": "Calculate the general term of an arithmetic sequence from two given conditions, determine which term has a given value, and find x when three numbers form an arithmetic sequence.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-4",
+         "printed_page": 46,
+         "quote": "2b = a + c"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 46,
+         "quote": "Solving (i) and (ii) as a system of equations"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-8",
+         "printed_page": 48,
+         "quote": "form an arithmetic sequence in this order"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-4",
+        "eb11c2-1:warm-up-5:a",
+        "eb11c2-1:warm-up-5:b",
+        "eb11c2-1:warm-up-6",
+        "eb11c2-1:try-5:a",
+        "eb11c2-1:try-5:b",
+        "eb11c2-1:try-5:c",
+        "eb11c2-1:try-6:a",
+        "eb11c2-1:try-6:b",
+        "eb11c2-1:try-7",
+        "eb11c2-1:exercise-5:a",
+        "eb11c2-1:exercise-5:b",
+        "eb11c2-1:exercise-5:c",
+        "eb11c2-1:exercise-5:d",
+        "eb11c2-1:exercise-5:e",
+        "eb11c2-1:exercise-5:f",
+        "eb11c2-1:exercise-5:g",
+        "eb11c2-1:exercise-5:h",
+        "eb11c2-1:exercise-5:i",
+        "eb11c2-1:exercise-5:j",
+        "eb11c2-1:exercise-5:k",
+        "eb11c2-1:exercise-5:l",
+        "eb11c2-1:exercise-6:a",
+        "eb11c2-1:exercise-6:b",
+        "eb11c2-1:exercise-7:a",
+        "eb11c2-1:exercise-7:b",
+        "eb11c2-1:exercise-8",
+        "eb11c2-1:exercise-9",
+        "eb11c2-1:challenge-3"
+       ],
+       "worked_examples": [
+        "WE5",
+        "WE6"
+       ],
+       "key": "A3"
+      },
+      {
+       "label": "Sum of arithmetic sequence",
+       "statement": "Calculate the sum S_n of an arithmetic sequence, including sums of a block of terms, natural numbers and multiples.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-6",
+         "printed_page": 49,
+         "quote": "S_n = 1/2 n{2a + (n–1)d}"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 50,
+         "quote": "$S_7=\\frac{1}{2}\\times 7(8+22)=105$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-10:a",
+         "printed_page": 51,
+         "quote": "Find the sum of the following arithmetic sequences"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:unlabelled-exercise-8:a",
+        "eb11c2-1:unlabelled-exercise-8:b",
+        "eb11c2-1:unlabelled-exercise-8:c",
+        "eb11c2-1:unlabelled-exercise-8:d",
+        "eb11c2-1:unlabelled-exercise-9",
+        "eb11c2-1:try-8:a",
+        "eb11c2-1:try-8:b",
+        "eb11c2-1:try-8:c",
+        "eb11c2-1:try-8:d",
+        "eb11c2-1:try-9",
+        "eb11c2-1:challenge-4",
+        "eb11c2-1:exercise-10:a",
+        "eb11c2-1:exercise-10:b",
+        "eb11c2-1:exercise-10:c",
+        "eb11c2-1:exercise-10:d",
+        "eb11c2-1:exercise-10:e",
+        "eb11c2-1:exercise-10:f",
+        "eb11c2-1:exercise-10:g",
+        "eb11c2-1:exercise-10:h",
+        "eb11c2-1:exercise-10:i",
+        "eb11c2-1:exercise-10:j",
+        "eb11c2-1:exercise-10:k",
+        "eb11c2-1:exercise-10:l",
+        "eb11c2-1:exercise-11",
+        "eb11c2-1:exercise-12",
+        "eb11c2-1:exercise-13",
+        "eb11c2-1:warm-up-7:1",
+        "eb11c2-1:warm-up-7:2",
+        "eb11c2-1:warm-up-7:3",
+        "eb11c2-1:try-10",
+        "eb11c2-1:try-11",
+        "eb11c2-1:try-12",
+        "eb11c2-1:try-13",
+        "eb11c2-1:exercise-14",
+        "eb11c2-1:exercise-15",
+        "eb11c2-1:exercise-16",
+        "eb11c2-1:exercise-17",
+        "eb11c2-1:exercise-18",
+        "eb11c2-1:exercise-19",
+        "eb11c2-1:exercise-20",
+        "eb11c2-1:exercise-21",
+        "eb11c2-1:exercise-22",
+        "eb11c2-1:challenge-5"
+       ],
+       "worked_examples": [
+        "WE7",
+        "WE8",
+        "WE9",
+        "WE10"
+       ],
+       "key": "A4"
+      },
+      {
+       "label": "Solve using given sums",
+       "statement": "Determine the number of terms or the general term from a given sum, and determine the number of terms giving the maximum sum.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-13",
+         "printed_page": 54,
+         "quote": "calculate the sum of the positive terms"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 55,
+         "quote": "the sum up to the 17th term is maximum"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-27",
+         "printed_page": 56,
+         "quote": "find the value of $n$ that gives the maximum sum"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-8",
+        "eb11c2-1:warm-up-9",
+        "eb11c2-1:warm-up-10",
+        "eb11c2-1:try-14",
+        "eb11c2-1:try-15",
+        "eb11c2-1:try-16",
+        "eb11c2-1:try-17",
+        "eb11c2-1:exercise-23",
+        "eb11c2-1:exercise-24",
+        "eb11c2-1:exercise-25",
+        "eb11c2-1:exercise-26",
+        "eb11c2-1:exercise-27",
+        "eb11c2-1:exercise-28",
+        "eb11c2-1:exercise-29",
+        "eb11c2-1:exercise-30",
+        "eb11c2-1:exercise-31",
+        "eb11c2-1:challenge-6",
+        "eb11c2-1:reflect-1"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "A5"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "General term of a sequence",
+       "statement": "Calculate terms of a sequence from its general term and deduce the general term from the pattern of the first few terms.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-1:definition-2",
+         "printed_page": 40,
+         "quote": "is called the general term of the sequence"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 40,
+         "quote": "$a_2=-2\\times2+7=3$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:unlabelled-exercise-1",
+         "printed_page": 41,
+         "quote": "find the first term through the 3rd term"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:open-prompt-1",
+        "eb11c2-1:unlabelled-exercise-1",
+        "eb11c2-1:unlabelled-exercise-2:a",
+        "eb11c2-1:unlabelled-exercise-2:b",
+        "eb11c2-1:unlabelled-exercise-2:c",
+        "eb11c2-1:unlabelled-exercise-3:a",
+        "eb11c2-1:unlabelled-exercise-3:b",
+        "eb11c2-1:unlabelled-exercise-3:c",
+        "eb11c2-1:unlabelled-exercise-3:d",
+        "eb11c2-1:unlabelled-exercise-4:a",
+        "eb11c2-1:unlabelled-exercise-4:b",
+        "eb11c2-1:unlabelled-exercise-4:c",
+        "eb11c2-1:unlabelled-exercise-4:d",
+        "eb11c2-1:exercise-1:a",
+        "eb11c2-1:exercise-1:b",
+        "eb11c2-1:exercise-1:c",
+        "eb11c2-1:exercise-1:d",
+        "eb11c2-1:exercise-1:e",
+        "eb11c2-1:exercise-1:f",
+        "eb11c2-1:exercise-1:g",
+        "eb11c2-1:exercise-1:h",
+        "eb11c2-1:exercise-1:i",
+        "eb11c2-1:exercise-1:j",
+        "eb11c2-1:exercise-1:k",
+        "eb11c2-1:exercise-1:l",
+        "eb11c2-1:exercise-2:a",
+        "eb11c2-1:exercise-2:b",
+        "eb11c2-1:exercise-2:c",
+        "eb11c2-1:exercise-2:d",
+        "eb11c2-1:exercise-2:e",
+        "eb11c2-1:exercise-2:f",
+        "eb11c2-1:exercise-2:g",
+        "eb11c2-1:exercise-2:h",
+        "eb11c2-1:exercise-2:i",
+        "eb11c2-1:exercise-2:j",
+        "eb11c2-1:exercise-2:k",
+        "eb11c2-1:challenge-1"
+       ],
+       "worked_examples": [
+        "WE1",
+        "WE2"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Arithmetic sequence general term",
+       "statement": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms using a_n = a + (n-1)d.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-1",
+         "printed_page": 43,
+         "quote": "$a_n = a + (n-1)d$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 43,
+         "quote": "Let the expected common difference be d"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:warm-up-3",
+         "printed_page": 43,
+         "quote": "find the general term"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-1:a",
+        "eb11c2-1:warm-up-1:b",
+        "eb11c2-1:warm-up-2:a",
+        "eb11c2-1:warm-up-2:b",
+        "eb11c2-1:warm-up-3",
+        "eb11c2-1:try-1",
+        "eb11c2-1:try-2:a",
+        "eb11c2-1:try-2:b",
+        "eb11c2-1:try-3:a",
+        "eb11c2-1:try-3:b",
+        "eb11c2-1:try-4:a",
+        "eb11c2-1:try-4:b",
+        "eb11c2-1:exercise-3",
+        "eb11c2-1:exercise-4:a",
+        "eb11c2-1:exercise-4:b",
+        "eb11c2-1:exercise-4:c",
+        "eb11c2-1:exercise-4:d",
+        "eb11c2-1:exercise-4:e",
+        "eb11c2-1:exercise-4:f",
+        "eb11c2-1:unlabelled-exercise-5:a",
+        "eb11c2-1:unlabelled-exercise-5:b",
+        "eb11c2-1:unlabelled-exercise-5:c",
+        "eb11c2-1:unlabelled-exercise-5:d",
+        "eb11c2-1:unlabelled-exercise-5:e",
+        "eb11c2-1:unlabelled-exercise-5:f",
+        "eb11c2-1:unlabelled-exercise-6:a",
+        "eb11c2-1:unlabelled-exercise-6:b",
+        "eb11c2-1:unlabelled-exercise-6:c",
+        "eb11c2-1:unlabelled-exercise-6:d",
+        "eb11c2-1:unlabelled-exercise-7:a",
+        "eb11c2-1:unlabelled-exercise-7:b",
+        "eb11c2-1:unlabelled-exercise-7:c",
+        "eb11c2-1:unlabelled-exercise-7:d",
+        "eb11c2-1:challenge-2"
+       ],
+       "worked_examples": [
+        "WE3",
+        "WE4"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Solve for terms from conditions",
+       "statement": "Determine the general term of an arithmetic sequence from given terms, find which term has a given value, and use 2b = a + c for three numbers in arithmetic sequence.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-4",
+         "printed_page": 46,
+         "quote": "$2b = a + c$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 47,
+         "quote": "$2\\times 6 = x + x^2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:warm-up-4",
+         "printed_page": 46,
+         "quote": "Find the general term of the arithmetic sequence"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-4",
+        "eb11c2-1:warm-up-5:a",
+        "eb11c2-1:warm-up-5:b",
+        "eb11c2-1:warm-up-6",
+        "eb11c2-1:try-5:a",
+        "eb11c2-1:try-5:b",
+        "eb11c2-1:try-5:c",
+        "eb11c2-1:try-6:a",
+        "eb11c2-1:try-6:b",
+        "eb11c2-1:try-7",
+        "eb11c2-1:exercise-5:a",
+        "eb11c2-1:exercise-5:b",
+        "eb11c2-1:exercise-5:c",
+        "eb11c2-1:exercise-5:d",
+        "eb11c2-1:exercise-5:e",
+        "eb11c2-1:exercise-5:f",
+        "eb11c2-1:exercise-5:g",
+        "eb11c2-1:exercise-5:h",
+        "eb11c2-1:exercise-5:i",
+        "eb11c2-1:exercise-5:j",
+        "eb11c2-1:exercise-5:k",
+        "eb11c2-1:exercise-5:l",
+        "eb11c2-1:exercise-6:a",
+        "eb11c2-1:exercise-6:b",
+        "eb11c2-1:exercise-7:a",
+        "eb11c2-1:exercise-7:b",
+        "eb11c2-1:exercise-8",
+        "eb11c2-1:exercise-9",
+        "eb11c2-1:challenge-3"
+       ],
+       "worked_examples": [
+        "WE5",
+        "WE6"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Sum of arithmetic sequence",
+       "statement": "Calculate the sum S_n of an arithmetic sequence, including sums over a range of terms and sums of natural numbers or multiples, finding the number of terms first when unknown.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-5",
+         "printed_page": 49,
+         "quote": "$S_n=\\frac{1}{2}n(a+l)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 50,
+         "quote": "$S_7=\\frac{1}{2}\\times 7(8+22)=105$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-17",
+         "printed_page": 53,
+         "quote": "The sum of 2-digit natural numbers."
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:unlabelled-exercise-8:a",
+        "eb11c2-1:unlabelled-exercise-8:b",
+        "eb11c2-1:unlabelled-exercise-8:c",
+        "eb11c2-1:unlabelled-exercise-8:d",
+        "eb11c2-1:unlabelled-exercise-9",
+        "eb11c2-1:try-8:a",
+        "eb11c2-1:try-8:b",
+        "eb11c2-1:try-8:c",
+        "eb11c2-1:try-8:d",
+        "eb11c2-1:try-9",
+        "eb11c2-1:challenge-4",
+        "eb11c2-1:exercise-10:a",
+        "eb11c2-1:exercise-10:b",
+        "eb11c2-1:exercise-10:c",
+        "eb11c2-1:exercise-10:d",
+        "eb11c2-1:exercise-10:e",
+        "eb11c2-1:exercise-10:f",
+        "eb11c2-1:exercise-10:g",
+        "eb11c2-1:exercise-10:h",
+        "eb11c2-1:exercise-10:i",
+        "eb11c2-1:exercise-10:j",
+        "eb11c2-1:exercise-10:k",
+        "eb11c2-1:exercise-10:l",
+        "eb11c2-1:exercise-11",
+        "eb11c2-1:exercise-12",
+        "eb11c2-1:exercise-13",
+        "eb11c2-1:warm-up-7:1",
+        "eb11c2-1:warm-up-7:2",
+        "eb11c2-1:warm-up-7:3",
+        "eb11c2-1:try-10",
+        "eb11c2-1:try-11",
+        "eb11c2-1:try-12",
+        "eb11c2-1:try-13",
+        "eb11c2-1:exercise-14",
+        "eb11c2-1:exercise-15",
+        "eb11c2-1:exercise-16",
+        "eb11c2-1:exercise-17",
+        "eb11c2-1:exercise-18",
+        "eb11c2-1:exercise-19",
+        "eb11c2-1:exercise-20",
+        "eb11c2-1:exercise-21",
+        "eb11c2-1:exercise-22",
+        "eb11c2-1:challenge-5"
+       ],
+       "worked_examples": [
+        "WE7",
+        "WE8",
+        "WE9",
+        "WE10"
+       ],
+       "key": "B4"
+      },
+      {
+       "label": "Use a given sum",
+       "statement": "Determine the number of terms, the general term, or the number of terms giving the maximum sum of an arithmetic sequence from a given sum.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-1:rule-13",
+         "printed_page": 54,
+         "quote": "calculate the sum of the positive terms"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 55,
+         "quote": "Let $d$ be the common difference of the required arithmetic sequence."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-1:exercise-27",
+         "printed_page": 56,
+         "quote": "find the value of $n$ that gives the maximum sum"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-1:warm-up-8",
+        "eb11c2-1:warm-up-9",
+        "eb11c2-1:warm-up-10",
+        "eb11c2-1:try-14",
+        "eb11c2-1:try-15",
+        "eb11c2-1:try-16",
+        "eb11c2-1:try-17",
+        "eb11c2-1:exercise-23",
+        "eb11c2-1:exercise-24",
+        "eb11c2-1:exercise-25",
+        "eb11c2-1:exercise-26",
+        "eb11c2-1:exercise-27",
+        "eb11c2-1:exercise-28",
+        "eb11c2-1:exercise-29",
+        "eb11c2-1:exercise-30",
+        "eb11c2-1:exercise-31",
+        "eb11c2-1:challenge-6",
+        "eb11c2-1:reflect-1"
+       ],
+       "worked_examples": [
+        "WE11",
+        "WE12",
+        "WE13"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate terms of a sequence from its general term, and deduce the general term of a sequence from the pattern of its first few terms.",
+      "label": "General term of a sequence",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-1:definition-2",
+        "printed_page": 40,
+        "quote": "is called the general term of the sequence"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE2",
+        "printed_page": 40,
+        "quote": "$a_1=-2\\times1+7=5$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-1:unlabelled-exercise-1",
+        "printed_page": 41,
+        "quote": "find the first term through the 3rd term"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-1:open-prompt-1",
+       "eb11c2-1:unlabelled-exercise-1",
+       "eb11c2-1:unlabelled-exercise-2:a",
+       "eb11c2-1:unlabelled-exercise-2:b",
+       "eb11c2-1:unlabelled-exercise-2:c",
+       "eb11c2-1:unlabelled-exercise-3:a",
+       "eb11c2-1:unlabelled-exercise-3:b",
+       "eb11c2-1:unlabelled-exercise-3:c",
+       "eb11c2-1:unlabelled-exercise-3:d",
+       "eb11c2-1:unlabelled-exercise-4:a",
+       "eb11c2-1:unlabelled-exercise-4:b",
+       "eb11c2-1:unlabelled-exercise-4:c",
+       "eb11c2-1:unlabelled-exercise-4:d",
+       "eb11c2-1:exercise-1:a",
+       "eb11c2-1:exercise-1:b",
+       "eb11c2-1:exercise-1:c",
+       "eb11c2-1:exercise-1:d",
+       "eb11c2-1:exercise-1:e",
+       "eb11c2-1:exercise-1:f",
+       "eb11c2-1:exercise-1:g",
+       "eb11c2-1:exercise-1:h",
+       "eb11c2-1:exercise-1:i",
+       "eb11c2-1:exercise-1:j",
+       "eb11c2-1:exercise-1:k",
+       "eb11c2-1:exercise-1:l",
+       "eb11c2-1:exercise-2:a",
+       "eb11c2-1:exercise-2:b",
+       "eb11c2-1:exercise-2:c",
+       "eb11c2-1:exercise-2:d",
+       "eb11c2-1:exercise-2:e",
+       "eb11c2-1:exercise-2:f",
+       "eb11c2-1:exercise-2:g",
+       "eb11c2-1:exercise-2:h",
+       "eb11c2-1:exercise-2:i",
+       "eb11c2-1:exercise-2:j",
+       "eb11c2-1:exercise-2:k",
+       "eb11c2-1:challenge-1"
+      ],
+      "worked_examples": [
+       "WE1",
+       "WE2"
+      ],
+      "terms": [
+       "sequence",
+       "general term",
+       "term"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms using a_n = a + (n-1)d.",
+      "label": "General term of an arithmetic sequence",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-1:definition-3",
+        "printed_page": 43,
+        "quote": "is called the common difference"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 43,
+        "quote": "$a_n = a + (n-1)d$"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-1:rule-1",
+        "printed_page": 43,
+        "quote": "$a_n = a + (n-1)d$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-1:warm-up-1:a",
+       "eb11c2-1:warm-up-1:b",
+       "eb11c2-1:warm-up-2:a",
+       "eb11c2-1:warm-up-2:b",
+       "eb11c2-1:warm-up-3",
+       "eb11c2-1:try-1",
+       "eb11c2-1:try-2:a",
+       "eb11c2-1:try-2:b",
+       "eb11c2-1:try-3:a",
+       "eb11c2-1:try-3:b",
+       "eb11c2-1:try-4:a",
+       "eb11c2-1:try-4:b",
+       "eb11c2-1:exercise-3",
+       "eb11c2-1:exercise-4:a",
+       "eb11c2-1:exercise-4:b",
+       "eb11c2-1:exercise-4:c",
+       "eb11c2-1:exercise-4:d",
+       "eb11c2-1:exercise-4:e",
+       "eb11c2-1:exercise-4:f",
+       "eb11c2-1:unlabelled-exercise-5:a",
+       "eb11c2-1:unlabelled-exercise-5:b",
+       "eb11c2-1:unlabelled-exercise-5:c",
+       "eb11c2-1:unlabelled-exercise-5:d",
+       "eb11c2-1:unlabelled-exercise-5:e",
+       "eb11c2-1:unlabelled-exercise-5:f",
+       "eb11c2-1:unlabelled-exercise-6:a",
+       "eb11c2-1:unlabelled-exercise-6:b",
+       "eb11c2-1:unlabelled-exercise-6:c",
+       "eb11c2-1:unlabelled-exercise-6:d",
+       "eb11c2-1:unlabelled-exercise-7:a",
+       "eb11c2-1:unlabelled-exercise-7:b",
+       "eb11c2-1:unlabelled-exercise-7:c",
+       "eb11c2-1:unlabelled-exercise-7:d",
+       "eb11c2-1:challenge-2"
+      ],
+      "worked_examples": [
+       "WE3",
+       "WE4"
+      ],
+      "terms": [
+       "arithmetic sequence",
+       "first term",
+       "common difference",
+       "general term"
+      ],
+      "term_flags": [
+       {
+        "term": "common difference",
+        "why": "Other curricula may also call it the constant difference or step."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the general term of an arithmetic sequence from two given conditions, find which term has a given value, and use 2b = a + c when three numbers form an arithmetic sequence.",
+      "label": "General term from given conditions",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-1:rule-4",
+        "printed_page": 46,
+        "quote": "$2b = a + c$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 46,
+        "quote": "Solving (i) and (ii) as a system of equations"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-1:exercise-8",
+        "printed_page": 48,
+        "quote": "form an arithmetic sequence in this order"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-1:warm-up-4",
+       "eb11c2-1:warm-up-5:a",
+       "eb11c2-1:warm-up-5:b",
+       "eb11c2-1:warm-up-6",
+       "eb11c2-1:try-5:a",
+       "eb11c2-1:try-5:b",
+       "eb11c2-1:try-5:c",
+       "eb11c2-1:try-6:a",
+       "eb11c2-1:try-6:b",
+       "eb11c2-1:try-7",
+       "eb11c2-1:exercise-5:a",
+       "eb11c2-1:exercise-5:b",
+       "eb11c2-1:exercise-5:c",
+       "eb11c2-1:exercise-5:d",
+       "eb11c2-1:exercise-5:e",
+       "eb11c2-1:exercise-5:f",
+       "eb11c2-1:exercise-5:g",
+       "eb11c2-1:exercise-5:h",
+       "eb11c2-1:exercise-5:i",
+       "eb11c2-1:exercise-5:j",
+       "eb11c2-1:exercise-5:k",
+       "eb11c2-1:exercise-5:l",
+       "eb11c2-1:exercise-6:a",
+       "eb11c2-1:exercise-6:b",
+       "eb11c2-1:exercise-7:a",
+       "eb11c2-1:exercise-7:b",
+       "eb11c2-1:exercise-8",
+       "eb11c2-1:exercise-9",
+       "eb11c2-1:challenge-3"
+      ],
+      "worked_examples": [
+       "WE5",
+       "WE6"
+      ],
+      "terms": [
+       "arithmetic sequence",
+       "general term",
+       "system of equations"
+      ],
+      "term_flags": [
+       {
+        "term": "arithmetic sequence",
+        "why": "Called an arithmetic progression (AP) in some curricula."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the sum S_n of an arithmetic sequence, including sums of a block of terms, sums of natural numbers or multiples, finding the number of terms first when unknown.",
+      "label": "Sum of an arithmetic sequence",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-1:rule-6",
+        "printed_page": 49,
+        "quote": "S_n = 1/2 n{2a + (n–1)d}"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 50,
+        "quote": "$S_7=\\frac{1}{2}\\times 7(8+22)=105$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-1:exercise-10:a",
+        "printed_page": 51,
+        "quote": "Find the sum of the following arithmetic sequences"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-1:unlabelled-exercise-8:a",
+       "eb11c2-1:unlabelled-exercise-8:b",
+       "eb11c2-1:unlabelled-exercise-8:c",
+       "eb11c2-1:unlabelled-exercise-8:d",
+       "eb11c2-1:unlabelled-exercise-9",
+       "eb11c2-1:try-8:a",
+       "eb11c2-1:try-8:b",
+       "eb11c2-1:try-8:c",
+       "eb11c2-1:try-8:d",
+       "eb11c2-1:try-9",
+       "eb11c2-1:challenge-4",
+       "eb11c2-1:exercise-10:a",
+       "eb11c2-1:exercise-10:b",
+       "eb11c2-1:exercise-10:c",
+       "eb11c2-1:exercise-10:d",
+       "eb11c2-1:exercise-10:e",
+       "eb11c2-1:exercise-10:f",
+       "eb11c2-1:exercise-10:g",
+       "eb11c2-1:exercise-10:h",
+       "eb11c2-1:exercise-10:i",
+       "eb11c2-1:exercise-10:j",
+       "eb11c2-1:exercise-10:k",
+       "eb11c2-1:exercise-10:l",
+       "eb11c2-1:exercise-11",
+       "eb11c2-1:exercise-12",
+       "eb11c2-1:exercise-13",
+       "eb11c2-1:warm-up-7:1",
+       "eb11c2-1:warm-up-7:2",
+       "eb11c2-1:warm-up-7:3",
+       "eb11c2-1:try-10",
+       "eb11c2-1:try-11",
+       "eb11c2-1:try-12",
+       "eb11c2-1:try-13",
+       "eb11c2-1:exercise-14",
+       "eb11c2-1:exercise-15",
+       "eb11c2-1:exercise-16",
+       "eb11c2-1:exercise-17",
+       "eb11c2-1:exercise-18",
+       "eb11c2-1:exercise-19",
+       "eb11c2-1:exercise-20",
+       "eb11c2-1:exercise-21",
+       "eb11c2-1:exercise-22",
+       "eb11c2-1:challenge-5"
+      ],
+      "worked_examples": [
+       "WE7",
+       "WE8",
+       "WE9",
+       "WE10"
+      ],
+      "terms": [
+       "sum",
+       "S_n",
+       "arithmetic sequence",
+       "natural numbers",
+       "multiples",
+       "number of terms"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Determine the number of terms or the general term from a given sum, and determine the number of terms giving the maximum sum of an arithmetic sequence.",
+      "label": "Use a given sum",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A5"
+       ],
+       "b": [
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-1:rule-13",
+        "printed_page": 54,
+        "quote": "calculate the sum of the positive terms"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE13",
+        "printed_page": 55,
+        "quote": "the sum up to the 17th term is maximum"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-1:exercise-27",
+        "printed_page": 56,
+        "quote": "find the value of $n$ that gives the maximum sum"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-1:warm-up-8",
+       "eb11c2-1:warm-up-9",
+       "eb11c2-1:warm-up-10",
+       "eb11c2-1:try-14",
+       "eb11c2-1:try-15",
+       "eb11c2-1:try-16",
+       "eb11c2-1:try-17",
+       "eb11c2-1:exercise-23",
+       "eb11c2-1:exercise-24",
+       "eb11c2-1:exercise-25",
+       "eb11c2-1:exercise-26",
+       "eb11c2-1:exercise-27",
+       "eb11c2-1:exercise-28",
+       "eb11c2-1:exercise-29",
+       "eb11c2-1:exercise-30",
+       "eb11c2-1:exercise-31",
+       "eb11c2-1:challenge-6",
+       "eb11c2-1:reflect-1"
+      ],
+      "worked_examples": [
+       "WE11",
+       "WE12",
+       "WE13"
+      ],
+      "terms": [
+       "sum",
+       "number of terms",
+       "general term",
+       "maximum sum",
+       "common difference"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c2-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "General term from first term, ratio",
+       "statement": "Calculate the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio or from listed terms, and find missing terms.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-2:definition-1",
+         "printed_page": 57,
+         "quote": "is called a geometric sequence"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 58,
+         "quote": "$a_n = 5 \\times 2^{n-1}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-1:c",
+         "printed_page": 59,
+         "quote": "The first term 7, the common ratio 4"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 58,
+         "quote": "$24r = 12$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:guiding-question-1",
+        "eb11c2-2:warm-up-1:a",
+        "eb11c2-2:warm-up-1:b",
+        "eb11c2-2:warm-up-1:c",
+        "eb11c2-2:warm-up-2",
+        "eb11c2-2:try-1:a",
+        "eb11c2-2:try-1:b",
+        "eb11c2-2:try-1:c",
+        "eb11c2-2:try-1:d",
+        "eb11c2-2:try-1:e",
+        "eb11c2-2:try-1:f",
+        "eb11c2-2:try-2",
+        "eb11c2-2:exercise-1:a",
+        "eb11c2-2:exercise-1:b",
+        "eb11c2-2:exercise-1:c",
+        "eb11c2-2:exercise-1:d",
+        "eb11c2-2:exercise-1:e",
+        "eb11c2-2:exercise-1:f",
+        "eb11c2-2:exercise-1:g",
+        "eb11c2-2:exercise-1:h",
+        "eb11c2-2:exercise-1:i",
+        "eb11c2-2:exercise-1:j",
+        "eb11c2-2:exercise-1:k",
+        "eb11c2-2:exercise-1:l",
+        "eb11c2-2:exercise-1:m",
+        "eb11c2-2:exercise-1:n",
+        "eb11c2-2:exercise-1:o",
+        "eb11c2-2:exercise-1:p",
+        "eb11c2-2:exercise-1:q",
+        "eb11c2-2:exercise-1:r",
+        "eb11c2-2:exercise-2:a",
+        "eb11c2-2:exercise-2:b",
+        "eb11c2-2:exercise-2:c"
+       ],
+       "worked_examples": [
+        "WE14",
+        "WE15"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "Terms given; b² = ac",
+       "statement": "Determine the general term of a geometric sequence from two given terms, and use b² = ac for three numbers in a geometric sequence, including with an arithmetic sequence.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-2:rule-4",
+         "printed_page": 60,
+         "quote": "b² = ac"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 60,
+         "quote": "Dividing (ii) by (i)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE18",
+         "printed_page": 61,
+         "quote": "$b^2 = 16a$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-4:a",
+         "printed_page": 62,
+         "quote": "The 2nd term is 6, and the 4th term is 54"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:challenge-1",
+        "eb11c2-2:warm-up-3:a",
+        "eb11c2-2:warm-up-3:b",
+        "eb11c2-2:warm-up-4",
+        "eb11c2-2:warm-up-5",
+        "eb11c2-2:try-3:a",
+        "eb11c2-2:try-3:b",
+        "eb11c2-2:try-3:c",
+        "eb11c2-2:try-4",
+        "eb11c2-2:try-5",
+        "eb11c2-2:exercise-3",
+        "eb11c2-2:exercise-4:a",
+        "eb11c2-2:exercise-4:b",
+        "eb11c2-2:exercise-4:c",
+        "eb11c2-2:exercise-4:d",
+        "eb11c2-2:exercise-4:e",
+        "eb11c2-2:exercise-4:f",
+        "eb11c2-2:exercise-4:g",
+        "eb11c2-2:exercise-4:h",
+        "eb11c2-2:exercise-4:i",
+        "eb11c2-2:exercise-5",
+        "eb11c2-2:exercise-6",
+        "eb11c2-2:exercise-7",
+        "eb11c2-2:challenge-2"
+       ],
+       "worked_examples": [
+        "WE16",
+        "WE17",
+        "WE18"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Sum of n terms",
+       "statement": "Calculate the sum S or S_n of a geometric sequence of n terms using the formula for S_n.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:printed-objective-3",
+         "printed_page": 63,
+         "quote": "Calculate the sum of a geometric sequence of n terms"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-2:rule-5",
+         "printed_page": 63,
+         "quote": "S_n=\\frac{a(1-r^n)}{1-r}"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 63,
+         "quote": "$a=2, r=-3$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-9:d",
+         "printed_page": 64,
+         "quote": "The first term 3, the common ratio 2, and the number of terms 10"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:warm-up-6:a",
+        "eb11c2-2:warm-up-6:b",
+        "eb11c2-2:warm-up-7",
+        "eb11c2-2:try-6",
+        "eb11c2-2:try-7:a",
+        "eb11c2-2:try-7:b",
+        "eb11c2-2:try-7:c",
+        "eb11c2-2:try-8:a",
+        "eb11c2-2:try-8:b",
+        "eb11c2-2:work-with-a-partner-1",
+        "eb11c2-2:exercise-8",
+        "eb11c2-2:exercise-9:a",
+        "eb11c2-2:exercise-9:b",
+        "eb11c2-2:exercise-9:c",
+        "eb11c2-2:exercise-9:d",
+        "eb11c2-2:exercise-9:e",
+        "eb11c2-2:exercise-9:f",
+        "eb11c2-2:exercise-10:a",
+        "eb11c2-2:exercise-10:b",
+        "eb11c2-2:exercise-10:c",
+        "eb11c2-2:exercise-10:d",
+        "eb11c2-2:exercise-10:e",
+        "eb11c2-2:exercise-10:f",
+        "eb11c2-2:exercise-10:g",
+        "eb11c2-2:challenge-3",
+        "eb11c2-2:reflect-1"
+       ],
+       "worked_examples": [
+        "WE19",
+        "WE20"
+       ],
+       "key": "A3"
+      },
+      {
+       "label": "First term, ratio from sums",
+       "statement": "Determine the first term and common ratio of a geometric sequence from conditions on a term and sums of some of its terms.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:printed-objective-4",
+         "printed_page": 65,
+         "quote": "also the sum of all or some of its terms"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 65,
+         "quote": "$35r^2=140$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 66,
+         "quote": "$ar^2 = 4$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-14",
+         "printed_page": 66,
+         "quote": "The sum from the first to the 3rd term is 78"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:warm-up-10:1",
+        "eb11c2-2:warm-up-10:2",
+        "eb11c2-2:warm-up-10:3",
+        "eb11c2-2:try-9",
+        "eb11c2-2:try-10",
+        "eb11c2-2:try-11",
+        "eb11c2-2:try-12",
+        "eb11c2-2:exercise-11",
+        "eb11c2-2:exercise-12",
+        "eb11c2-2:exercise-13",
+        "eb11c2-2:exercise-14",
+        "eb11c2-2:exercise-15",
+        "eb11c2-2:exercise-16",
+        "eb11c2-2:exercise-17",
+        "eb11c2-2:exercise-18",
+        "eb11c2-2:exercise-19",
+        "eb11c2-2:exercise-20",
+        "eb11c2-2:challenge-4"
+       ],
+       "worked_examples": [
+        "WE21",
+        "WE22",
+        "WE23"
+       ],
+       "key": "A4"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the general term of a geometric sequence from its first term and common ratio or from its listed terms, and determine the common ratio and missing terms.",
+       "label": "General term, common ratio",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:rule-1",
+         "printed_page": 57,
+         "quote": "$a_n = ar^{n-1}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE14",
+         "printed_page": 58,
+         "quote": "$a_n = 5 \\times 2^{n-1}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE15",
+         "printed_page": 58,
+         "quote": "$24 \\div \\frac{1}{2} = 48$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-1:a",
+         "printed_page": 59,
+         "quote": "The first term 5, the common ratio 2"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:warm-up-1:a",
+        "eb11c2-2:warm-up-1:b",
+        "eb11c2-2:warm-up-1:c",
+        "eb11c2-2:warm-up-2",
+        "eb11c2-2:try-1:a",
+        "eb11c2-2:try-1:b",
+        "eb11c2-2:try-1:c",
+        "eb11c2-2:try-1:d",
+        "eb11c2-2:try-1:e",
+        "eb11c2-2:try-1:f",
+        "eb11c2-2:try-2",
+        "eb11c2-2:exercise-1:a",
+        "eb11c2-2:exercise-1:b",
+        "eb11c2-2:exercise-1:c",
+        "eb11c2-2:exercise-1:d",
+        "eb11c2-2:exercise-1:e",
+        "eb11c2-2:exercise-1:f",
+        "eb11c2-2:exercise-1:g",
+        "eb11c2-2:exercise-1:h",
+        "eb11c2-2:exercise-1:i",
+        "eb11c2-2:exercise-1:j",
+        "eb11c2-2:exercise-1:k",
+        "eb11c2-2:exercise-1:l",
+        "eb11c2-2:exercise-1:m",
+        "eb11c2-2:exercise-1:n",
+        "eb11c2-2:exercise-1:o",
+        "eb11c2-2:exercise-1:p",
+        "eb11c2-2:exercise-1:q",
+        "eb11c2-2:exercise-1:r",
+        "eb11c2-2:exercise-2:a",
+        "eb11c2-2:exercise-2:b",
+        "eb11c2-2:exercise-2:c",
+        "eb11c2-2:reflect-1"
+       ],
+       "worked_examples": [
+        "WE14",
+        "WE15"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine the general term of a geometric sequence from two given terms, and solve for unknowns using b² = ac, including with arithmetic sequences.",
+       "label": "Terms given; b² = ac",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:rule-4",
+         "printed_page": 60,
+         "quote": "b² = ac"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE16",
+         "printed_page": 60,
+         "quote": "$r^2 = 4$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE17",
+         "printed_page": 61,
+         "quote": "$x^2 = 16$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE18",
+         "printed_page": 61,
+         "quote": "$b^2 = 16a$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:warm-up-5",
+         "printed_page": 60,
+         "quote": "form an arithmetic sequence in this order"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:warm-up-3:a",
+        "eb11c2-2:warm-up-3:b",
+        "eb11c2-2:warm-up-4",
+        "eb11c2-2:warm-up-5",
+        "eb11c2-2:try-3:a",
+        "eb11c2-2:try-3:b",
+        "eb11c2-2:try-3:c",
+        "eb11c2-2:try-4",
+        "eb11c2-2:try-5",
+        "eb11c2-2:exercise-3",
+        "eb11c2-2:exercise-4:a",
+        "eb11c2-2:exercise-4:b",
+        "eb11c2-2:exercise-4:c",
+        "eb11c2-2:exercise-4:d",
+        "eb11c2-2:exercise-4:e",
+        "eb11c2-2:exercise-4:f",
+        "eb11c2-2:exercise-4:g",
+        "eb11c2-2:exercise-4:h",
+        "eb11c2-2:exercise-4:i",
+        "eb11c2-2:exercise-5",
+        "eb11c2-2:exercise-6",
+        "eb11c2-2:exercise-7",
+        "eb11c2-2:challenge-1",
+        "eb11c2-2:challenge-2"
+       ],
+       "worked_examples": [
+        "WE16",
+        "WE17",
+        "WE18"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Calculate the sum S_n of a geometric sequence from the first term to the n-th term using the formula for r ≠ 1.",
+       "label": "Sum of n terms",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:printed-objective-3",
+         "printed_page": 63,
+         "quote": "Calculate the sum of a geometric sequence of n terms."
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-2:rule-5",
+         "printed_page": 63,
+         "quote": "$S_n=\\frac{a(1-r^n)}{1-r}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE20",
+         "printed_page": 63,
+         "quote": "Since $a=2, r=-3$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:exercise-9:a",
+         "printed_page": 64,
+         "quote": "the number of terms 4"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:guiding-question-1",
+        "eb11c2-2:warm-up-6:a",
+        "eb11c2-2:warm-up-6:b",
+        "eb11c2-2:warm-up-7",
+        "eb11c2-2:try-6",
+        "eb11c2-2:try-7:a",
+        "eb11c2-2:try-7:b",
+        "eb11c2-2:try-7:c",
+        "eb11c2-2:try-8:a",
+        "eb11c2-2:try-8:b",
+        "eb11c2-2:work-with-a-partner-1",
+        "eb11c2-2:exercise-8",
+        "eb11c2-2:exercise-9:a",
+        "eb11c2-2:exercise-9:b",
+        "eb11c2-2:exercise-9:c",
+        "eb11c2-2:exercise-9:d",
+        "eb11c2-2:exercise-9:e",
+        "eb11c2-2:exercise-9:f",
+        "eb11c2-2:exercise-10:a",
+        "eb11c2-2:exercise-10:b",
+        "eb11c2-2:exercise-10:c",
+        "eb11c2-2:exercise-10:d",
+        "eb11c2-2:exercise-10:e",
+        "eb11c2-2:exercise-10:f",
+        "eb11c2-2:exercise-10:g",
+        "eb11c2-2:challenge-3"
+       ],
+       "worked_examples": [
+        "WE19",
+        "WE20"
+       ],
+       "key": "B3"
+      },
+      {
+       "statement": "Determine the first term and common ratio of a geometric sequence from given sums of some of its terms.",
+       "label": "First term, ratio from sums",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-2:printed-objective-4",
+         "printed_page": 65,
+         "quote": "also the sum of all or some of its terms"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE21",
+         "printed_page": 65,
+         "quote": "$35r^2=140$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE23",
+         "printed_page": 66,
+         "quote": "$4 + 4r + 4r^2 = 7r^2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-2:try-10",
+         "printed_page": 66,
+         "quote": "the sum from the 3rd to the 5th term is 84"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-2:warm-up-10:1",
+        "eb11c2-2:warm-up-10:2",
+        "eb11c2-2:warm-up-10:3",
+        "eb11c2-2:try-9",
+        "eb11c2-2:try-10",
+        "eb11c2-2:try-11",
+        "eb11c2-2:try-12",
+        "eb11c2-2:exercise-11",
+        "eb11c2-2:exercise-12",
+        "eb11c2-2:exercise-13",
+        "eb11c2-2:exercise-14",
+        "eb11c2-2:exercise-15",
+        "eb11c2-2:exercise-16",
+        "eb11c2-2:exercise-17",
+        "eb11c2-2:exercise-18",
+        "eb11c2-2:exercise-19",
+        "eb11c2-2:exercise-20",
+        "eb11c2-2:challenge-4"
+       ],
+       "worked_examples": [
+        "WE21",
+        "WE22",
+        "WE23"
+       ],
+       "key": "B4"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio or from listed terms, and find the common ratio and missing terms.",
+      "label": "General term from first term, ratio",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-2:definition-1",
+        "printed_page": 57,
+        "quote": "is called a geometric sequence"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-2:rule-1",
+        "printed_page": 57,
+        "quote": "$a_n = ar^{n-1}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE14",
+        "printed_page": 58,
+        "quote": "$a_n = 5 \\times 2^{n-1}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE15",
+        "printed_page": 58,
+        "quote": "$24r = 12$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-2:exercise-1:c",
+        "printed_page": 59,
+        "quote": "The first term 7, the common ratio 4"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-2:guiding-question-1",
+       "eb11c2-2:warm-up-1:a",
+       "eb11c2-2:warm-up-1:b",
+       "eb11c2-2:warm-up-1:c",
+       "eb11c2-2:warm-up-2",
+       "eb11c2-2:try-1:a",
+       "eb11c2-2:try-1:b",
+       "eb11c2-2:try-1:c",
+       "eb11c2-2:try-1:d",
+       "eb11c2-2:try-1:e",
+       "eb11c2-2:try-1:f",
+       "eb11c2-2:try-2",
+       "eb11c2-2:exercise-1:a",
+       "eb11c2-2:exercise-1:b",
+       "eb11c2-2:exercise-1:c",
+       "eb11c2-2:exercise-1:d",
+       "eb11c2-2:exercise-1:e",
+       "eb11c2-2:exercise-1:f",
+       "eb11c2-2:exercise-1:g",
+       "eb11c2-2:exercise-1:h",
+       "eb11c2-2:exercise-1:i",
+       "eb11c2-2:exercise-1:j",
+       "eb11c2-2:exercise-1:k",
+       "eb11c2-2:exercise-1:l",
+       "eb11c2-2:exercise-1:m",
+       "eb11c2-2:exercise-1:n",
+       "eb11c2-2:exercise-1:o",
+       "eb11c2-2:exercise-1:p",
+       "eb11c2-2:exercise-1:q",
+       "eb11c2-2:exercise-1:r",
+       "eb11c2-2:exercise-2:a",
+       "eb11c2-2:exercise-2:b",
+       "eb11c2-2:exercise-2:c"
+      ],
+      "worked_examples": [
+       "WE14",
+       "WE15"
+      ],
+      "terms": [
+       "geometric sequence",
+       "general term",
+       "first term",
+       "common ratio"
+      ],
+      "term_flags": [
+       {
+        "term": "general term",
+        "why": "Other curricula call a_n the n-th term or term formula."
+       },
+       {
+        "term": "common ratio",
+        "why": "Sometimes called constant ratio."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the general term of a geometric sequence from two given terms, and use b² = ac for three numbers in a geometric sequence, including with an arithmetic sequence.",
+      "label": "Terms given; b² = ac",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-2:rule-4",
+        "printed_page": 60,
+        "quote": "b² = ac"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE16",
+        "printed_page": 60,
+        "quote": "Dividing (ii) by (i)"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE17",
+        "printed_page": 61,
+        "quote": "$x^2 = 16$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE18",
+        "printed_page": 61,
+        "quote": "$b^2 = 16a$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-2:exercise-4:a",
+        "printed_page": 62,
+        "quote": "The 2nd term is 6, and the 4th term is 54"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-2:challenge-1",
+       "eb11c2-2:warm-up-3:a",
+       "eb11c2-2:warm-up-3:b",
+       "eb11c2-2:warm-up-4",
+       "eb11c2-2:warm-up-5",
+       "eb11c2-2:try-3:a",
+       "eb11c2-2:try-3:b",
+       "eb11c2-2:try-3:c",
+       "eb11c2-2:try-4",
+       "eb11c2-2:try-5",
+       "eb11c2-2:exercise-3",
+       "eb11c2-2:exercise-4:a",
+       "eb11c2-2:exercise-4:b",
+       "eb11c2-2:exercise-4:c",
+       "eb11c2-2:exercise-4:d",
+       "eb11c2-2:exercise-4:e",
+       "eb11c2-2:exercise-4:f",
+       "eb11c2-2:exercise-4:g",
+       "eb11c2-2:exercise-4:h",
+       "eb11c2-2:exercise-4:i",
+       "eb11c2-2:exercise-5",
+       "eb11c2-2:exercise-6",
+       "eb11c2-2:exercise-7",
+       "eb11c2-2:challenge-2"
+      ],
+      "worked_examples": [
+       "WE16",
+       "WE17",
+       "WE18"
+      ],
+      "terms": [
+       "geometric sequence",
+       "general term",
+       "arithmetic sequence",
+       "common ratio"
+      ],
+      "term_flags": [
+       {
+        "term": "b² = ac",
+        "why": "Geometric mean relation for three consecutive terms; other curricula may call b the geometric mean."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate the sum S_n of a geometric sequence of n terms using the formula for S_n.",
+      "label": "Sum of n terms",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-2:printed-objective-3",
+        "printed_page": 63,
+        "quote": "Calculate the sum of a geometric sequence of n terms"
+       },
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-2:rule-5",
+        "printed_page": 63,
+        "quote": "S_n=\\frac{a(1-r^n)}{1-r}"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE20",
+        "printed_page": 63,
+        "quote": "$a=2, r=-3$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-2:exercise-9:d",
+        "printed_page": 64,
+        "quote": "The first term 3, the common ratio 2, and the number of terms 10"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-2:warm-up-6:a",
+       "eb11c2-2:warm-up-6:b",
+       "eb11c2-2:warm-up-7",
+       "eb11c2-2:try-6",
+       "eb11c2-2:try-7:a",
+       "eb11c2-2:try-7:b",
+       "eb11c2-2:try-7:c",
+       "eb11c2-2:try-8:a",
+       "eb11c2-2:try-8:b",
+       "eb11c2-2:work-with-a-partner-1",
+       "eb11c2-2:exercise-8",
+       "eb11c2-2:exercise-9:a",
+       "eb11c2-2:exercise-9:b",
+       "eb11c2-2:exercise-9:c",
+       "eb11c2-2:exercise-9:d",
+       "eb11c2-2:exercise-9:e",
+       "eb11c2-2:exercise-9:f",
+       "eb11c2-2:exercise-10:a",
+       "eb11c2-2:exercise-10:b",
+       "eb11c2-2:exercise-10:c",
+       "eb11c2-2:exercise-10:d",
+       "eb11c2-2:exercise-10:e",
+       "eb11c2-2:exercise-10:f",
+       "eb11c2-2:exercise-10:g",
+       "eb11c2-2:challenge-3",
+       "eb11c2-2:reflect-1"
+      ],
+      "worked_examples": [
+       "WE19",
+       "WE20"
+      ],
+      "terms": [
+       "sum",
+       "S_n",
+       "geometric sequence",
+       "first term",
+       "common ratio"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Determine the first term and common ratio of a geometric sequence from conditions on a term and sums of some of its terms.",
+      "label": "First term, ratio from sums",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-2:printed-objective-4",
+        "printed_page": 65,
+        "quote": "also the sum of all or some of its terms"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE21",
+        "printed_page": 65,
+        "quote": "$35r^2=140$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE23",
+        "printed_page": 66,
+        "quote": "$ar^2 = 4$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-2:exercise-14",
+        "printed_page": 66,
+        "quote": "The sum from the first to the 3rd term is 78"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-2:warm-up-10:1",
+       "eb11c2-2:warm-up-10:2",
+       "eb11c2-2:warm-up-10:3",
+       "eb11c2-2:try-9",
+       "eb11c2-2:try-10",
+       "eb11c2-2:try-11",
+       "eb11c2-2:try-12",
+       "eb11c2-2:exercise-11",
+       "eb11c2-2:exercise-12",
+       "eb11c2-2:exercise-13",
+       "eb11c2-2:exercise-14",
+       "eb11c2-2:exercise-15",
+       "eb11c2-2:exercise-16",
+       "eb11c2-2:exercise-17",
+       "eb11c2-2:exercise-18",
+       "eb11c2-2:exercise-19",
+       "eb11c2-2:exercise-20",
+       "eb11c2-2:challenge-4"
+      ],
+      "worked_examples": [
+       "WE21",
+       "WE22",
+       "WE23"
+      ],
+      "terms": [
+       "sum",
+       "geometric sequence",
+       "first term",
+       "common ratio"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'is called a geometric sequence' appears in definition. Defining the concept supports objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Formula '$a_n = ar^{n-1}$' appears in rule. States the formula directly required by objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_n = 5 \\times 2^{n-1}$' appears in worked example. Demonstrates calculating general term from first term and ratio."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Equation '$24r = 12$' appears in worked example. Demonstrates finding common ratio and missing terms."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Phrase 'The first term 7, the common ratio 4' appears in exercise. Students practice finding general term with these given values."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Property 'b² = ac' appears in definition. States the key property required for objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Method 'Dividing (ii) by (i)' appears in worked example. Demonstrates finding general term from two given terms."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Equation '$x^2 = 16$' appears in worked example. Applies b²=ac property to find missing term."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Equation '$b^2 = 16a$' appears in worked example. Shows using b²=ac with both arithmetic and geometric sequence conditions."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Phrase 'The 2nd term is 6, and the 4th term is 54' appears in exercise. Students practice finding general term from two given terms."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Learning outcome 'Calculate the sum of a geometric sequence of n terms' directly matches objective skill."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Formula '$S_n=\\frac{a(1-r^n)}{1-r}$' appears in rule. States the sum formula required by objective."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Values '$a=2, r=-3$' appear in warm-up. Demonstrates calculating sum using the formula."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Phrase 'The first term 3, the common ratio 2, and the number of terms 10' appears in exercise. Students practice calculating sum."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Learning outcome mentions 'the sum of all or some of its terms'. Introduces key concept (sums) that objective uses as conditions."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Equation '$35r^2=140$' appears in worked example. Demonstrates finding first term and ratio from sum conditions."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Equation '$ar^2 = 4$' appears in worked example. Demonstrates finding parameters from both term and sum conditions."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Phrase 'The sum from the first to the 3rd term is 78' appears in exercise. Students practice finding first term and ratio from sum conditions."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c2-3",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Write a sum of terms using the summation symbol Σ, and expand a Σ expression into a sum of terms.",
+       "label": "Write and expand Σ",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:definition-1",
+         "printed_page": 68,
+         "quote": "the sum from the 1st term to the n-th term is expressed as"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE26",
+         "printed_page": 69,
+         "quote": "Write sums using the summation symbol"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:exercise-2:a",
+         "printed_page": 70,
+         "quote": "$1+3+5+\\dots+(2n-1)$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:open-prompt-1",
+        "eb11c2-3:unlabelled-exercise-1:a",
+        "eb11c2-3:unlabelled-exercise-1:b",
+        "eb11c2-3:unlabelled-exercise-1:c",
+        "eb11c2-3:unlabelled-exercise-1:d",
+        "eb11c2-3:unlabelled-exercise-2:a",
+        "eb11c2-3:unlabelled-exercise-2:b",
+        "eb11c2-3:unlabelled-exercise-3:a",
+        "eb11c2-3:unlabelled-exercise-3:b",
+        "eb11c2-3:unlabelled-exercise-3:c",
+        "eb11c2-3:unlabelled-exercise-3:d",
+        "eb11c2-3:unlabelled-exercise-4:a",
+        "eb11c2-3:unlabelled-exercise-4:b",
+        "eb11c2-3:unlabelled-exercise-4:c",
+        "eb11c2-3:unlabelled-exercise-4:d",
+        "eb11c2-3:exercise-1:a",
+        "eb11c2-3:exercise-1:b",
+        "eb11c2-3:exercise-1:c",
+        "eb11c2-3:exercise-1:d",
+        "eb11c2-3:exercise-1:e",
+        "eb11c2-3:exercise-1:f",
+        "eb11c2-3:exercise-1:g",
+        "eb11c2-3:exercise-1:h",
+        "eb11c2-3:exercise-1:i",
+        "eb11c2-3:exercise-1:j",
+        "eb11c2-3:exercise-1:k",
+        "eb11c2-3:exercise-1:l",
+        "eb11c2-3:exercise-2:a",
+        "eb11c2-3:exercise-2:b",
+        "eb11c2-3:exercise-2:c",
+        "eb11c2-3:exercise-2:d",
+        "eb11c2-3:exercise-2:e",
+        "eb11c2-3:exercise-2:f",
+        "eb11c2-3:exercise-2:g",
+        "eb11c2-3:exercise-2:h",
+        "eb11c2-3:exercise-2:i",
+        "eb11c2-3:exercise-2:j",
+        "eb11c2-3:exercise-2:k",
+        "eb11c2-3:exercise-2:l",
+        "eb11c2-3:challenge-1"
+       ],
+       "worked_examples": [
+        "WE24",
+        "WE25",
+        "WE26",
+        "WE27"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Calculate sums in terms of n using the summation properties and the formulas for constants, k, k², k³ and geometric sequences, and evaluate sums with numerical limits.",
+       "label": "Evaluate sums with formulas",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:rule-2",
+         "printed_page": 71,
+         "quote": "$\\sum_{k=1}^{n} k = \\frac{1}{2}n(n+1)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE28",
+         "printed_page": 74,
+         "quote": "$=\\{\\frac{1}{2}n(n+1)\\}^2+\\frac{1}{6}n(n+1)(2n+1)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:warm-up-1:b",
+         "printed_page": 71,
+         "quote": "$\\sum_{k=1}^{n} (5k+4)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:exercise-3:e",
+         "printed_page": 75,
+         "quote": "$\\sum_{k=1}^{n} 6\\times 3^{k-1}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-1:a",
+        "eb11c2-3:warm-up-1:b",
+        "eb11c2-3:warm-up-1:c",
+        "eb11c2-3:warm-up-1:d",
+        "eb11c2-3:try-1:a",
+        "eb11c2-3:try-1:b",
+        "eb11c2-3:try-1:c",
+        "eb11c2-3:try-1:d",
+        "eb11c2-3:try-1:e",
+        "eb11c2-3:try-1:f",
+        "eb11c2-3:try-1:g",
+        "eb11c2-3:try-1:h",
+        "eb11c2-3:try-1:i",
+        "eb11c2-3:try-1:j",
+        "eb11c2-3:try-1:k",
+        "eb11c2-3:try-1:l",
+        "eb11c2-3:try-1:m",
+        "eb11c2-3:try-1:n",
+        "eb11c2-3:try-1:o",
+        "eb11c2-3:challenge-2",
+        "eb11c2-3:warm-up-2:a",
+        "eb11c2-3:warm-up-2:b",
+        "eb11c2-3:warm-up-2:c",
+        "eb11c2-3:try-2:a",
+        "eb11c2-3:try-2:b",
+        "eb11c2-3:try-2:c",
+        "eb11c2-3:try-2:d",
+        "eb11c2-3:work-with-a-partner-1",
+        "eb11c2-3:exercise-3:a",
+        "eb11c2-3:exercise-3:b",
+        "eb11c2-3:exercise-3:c",
+        "eb11c2-3:exercise-3:d",
+        "eb11c2-3:exercise-3:e",
+        "eb11c2-3:exercise-3:f",
+        "eb11c2-3:exercise-3:g",
+        "eb11c2-3:exercise-3:h",
+        "eb11c2-3:exercise-3:i",
+        "eb11c2-3:exercise-3:j",
+        "eb11c2-3:exercise-3:k",
+        "eb11c2-3:exercise-3:l",
+        "eb11c2-3:exercise-3:m",
+        "eb11c2-3:exercise-3:n",
+        "eb11c2-3:exercise-3:o",
+        "eb11c2-3:exercise-3:p",
+        "eb11c2-3:challenge-3"
+       ],
+       "worked_examples": [
+        "WE28"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Calculate the sum of fractional sequences by decomposing each term into partial fractions (or rationalizing square-root denominators) and cancelling terms.",
+       "label": "Sum fractional sequences",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:method-1",
+         "printed_page": 76,
+         "quote": "Transform each term using the formula"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE29",
+         "printed_page": 76,
+         "quote": "$=\\frac{n}{2(3n+2)}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:exercise-4:a",
+         "printed_page": 77,
+         "quote": "$\\frac{1}{1\\times2}+\\frac{1}{2\\times3}+\\frac{1}{3\\times4}+\\dots+\\frac{1}{n(n+1)}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-4:a",
+        "eb11c2-3:warm-up-4:b",
+        "eb11c2-3:work-with-a-partner-2",
+        "eb11c2-3:try-3:a",
+        "eb11c2-3:try-3:b",
+        "eb11c2-3:try-3:c",
+        "eb11c2-3:try-3:d",
+        "eb11c2-3:exercise-4:a",
+        "eb11c2-3:exercise-4:b",
+        "eb11c2-3:exercise-4:c",
+        "eb11c2-3:exercise-4:d",
+        "eb11c2-3:exercise-4:e",
+        "eb11c2-3:challenge-4"
+       ],
+       "worked_examples": [
+        "WE29"
+       ],
+       "key": "A3"
+      },
+      {
+       "statement": "Find the sum of the product of an arithmetic sequence and a geometric sequence using S − rS.",
+       "label": "Sum arithmetic × geometric",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:method-3",
+         "printed_page": 79,
+         "quote": "use S − rS"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-3:linking-text-17",
+         "printed_page": 79,
+         "quote": "Multiply both sides by the common ratio 3 of the geometric sequence"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:exercise-6",
+         "printed_page": 80,
+         "quote": "$S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-5:S",
+        "eb11c2-3:try-4:S",
+        "eb11c2-3:exercise-5",
+        "eb11c2-3:exercise-6",
+        "eb11c2-3:exercise-7",
+        "eb11c2-3:challenge-5",
+        "eb11c2-3:reflect-1"
+       ],
+       "worked_examples": [],
+       "key": "A4"
+      },
+      {
+       "statement": "Find the k-th term and the sum S_n of a sequence whose terms are themselves sums, and find the general term a_n from S_n using a_n = S_n − S_{n−1} for n ≥ 2 and a_1 = S_1.",
+       "label": "General term and sum S_n",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:rule-15",
+         "printed_page": 83,
+         "quote": "$a_n = S_n - S_{n-1}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE32",
+         "printed_page": 83,
+         "quote": "$a_1=S_1=1^2-3\\times1=-2$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE30",
+         "printed_page": 81,
+         "quote": "$=\\sum_{i=1}^{k}(2i+1)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:warm-up-7:b",
+         "printed_page": 83,
+         "quote": "$S_n = 5^n-1$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-6:a",
+        "eb11c2-3:warm-up-6:b",
+        "eb11c2-3:try-5",
+        "eb11c2-3:try-6",
+        "eb11c2-3:exercise-8:a",
+        "eb11c2-3:exercise-8:b",
+        "eb11c2-3:exercise-9:a",
+        "eb11c2-3:exercise-9:b",
+        "eb11c2-3:challenge-6",
+        "eb11c2-3:warm-up-7:a",
+        "eb11c2-3:warm-up-7:b",
+        "eb11c2-3:try-7",
+        "eb11c2-3:try-8",
+        "eb11c2-3:try-9",
+        "eb11c2-3:exercise-10",
+        "eb11c2-3:exercise-11",
+        "eb11c2-3:exercise-12",
+        "eb11c2-3:exercise-13",
+        "eb11c2-3:exercise-14",
+        "eb11c2-3:exercise-15",
+        "eb11c2-3:exercise-16",
+        "eb11c2-3:exercise-17",
+        "eb11c2-3:challenge-7"
+       ],
+       "worked_examples": [
+        "WE30",
+        "WE31",
+        "WE32"
+       ],
+       "key": "A5"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Translate between Σ and terms",
+       "statement": "Write a sum given in summation symbol Σ as a sum of terms, and express a sum of terms or a sum of a general term using Σ.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE26",
+         "printed_page": 69,
+         "quote": "Substitute $k=1,2,3,4,5$ into $2k$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:unlabelled-exercise-2:a",
+         "printed_page": 68,
+         "quote": "Express the following expressions using the summation symbol Σ"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:definition-1",
+         "printed_page": 68,
+         "quote": "the sum from the 1st term to the n-th term"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:unlabelled-exercise-1:a",
+        "eb11c2-3:unlabelled-exercise-1:b",
+        "eb11c2-3:unlabelled-exercise-1:c",
+        "eb11c2-3:unlabelled-exercise-1:d",
+        "eb11c2-3:unlabelled-exercise-2:a",
+        "eb11c2-3:unlabelled-exercise-2:b",
+        "eb11c2-3:unlabelled-exercise-3:a",
+        "eb11c2-3:unlabelled-exercise-3:b",
+        "eb11c2-3:unlabelled-exercise-3:c",
+        "eb11c2-3:unlabelled-exercise-3:d",
+        "eb11c2-3:unlabelled-exercise-4:a",
+        "eb11c2-3:unlabelled-exercise-4:b",
+        "eb11c2-3:unlabelled-exercise-4:c",
+        "eb11c2-3:unlabelled-exercise-4:d",
+        "eb11c2-3:exercise-1:a",
+        "eb11c2-3:exercise-1:b",
+        "eb11c2-3:exercise-1:c",
+        "eb11c2-3:exercise-1:d",
+        "eb11c2-3:exercise-1:e",
+        "eb11c2-3:exercise-1:f",
+        "eb11c2-3:exercise-1:g",
+        "eb11c2-3:exercise-1:h",
+        "eb11c2-3:exercise-1:i",
+        "eb11c2-3:exercise-1:j",
+        "eb11c2-3:exercise-1:k",
+        "eb11c2-3:exercise-1:l",
+        "eb11c2-3:exercise-2:a",
+        "eb11c2-3:exercise-2:b",
+        "eb11c2-3:exercise-2:c",
+        "eb11c2-3:exercise-2:d",
+        "eb11c2-3:exercise-2:e",
+        "eb11c2-3:exercise-2:f",
+        "eb11c2-3:exercise-2:g",
+        "eb11c2-3:exercise-2:h",
+        "eb11c2-3:exercise-2:i",
+        "eb11c2-3:exercise-2:j",
+        "eb11c2-3:exercise-2:k",
+        "eb11c2-3:exercise-2:l",
+        "eb11c2-3:challenge-1"
+       ],
+       "worked_examples": [
+        "WE24",
+        "WE25",
+        "WE26",
+        "WE27"
+       ],
+       "key": "B1"
+      },
+      {
+       "label": "Calculate sums with formulas",
+       "statement": "Calculate sums of the form Σ using the formulas for constants, k, k², k³ and the sum of a geometric sequence, with constant factors and sums/differences split.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE28",
+         "printed_page": 74,
+         "quote": "$=\\sum_{k=1}^{n}(k^3+k^2)$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:rule-3",
+         "printed_page": 71,
+         "quote": "$\\sum_{k=1}^{n} k^2 = \\frac{1}{6}n(n+1)(2n+1)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:exercise-3:o",
+         "printed_page": 75,
+         "quote": "$\\sum_{k=1}^{n} 2^k$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:open-prompt-1",
+        "eb11c2-3:warm-up-1:a",
+        "eb11c2-3:warm-up-1:b",
+        "eb11c2-3:warm-up-1:c",
+        "eb11c2-3:warm-up-1:d",
+        "eb11c2-3:try-1:a",
+        "eb11c2-3:try-1:b",
+        "eb11c2-3:try-1:c",
+        "eb11c2-3:try-1:d",
+        "eb11c2-3:try-1:e",
+        "eb11c2-3:try-1:f",
+        "eb11c2-3:try-1:g",
+        "eb11c2-3:try-1:h",
+        "eb11c2-3:try-1:i",
+        "eb11c2-3:try-1:j",
+        "eb11c2-3:try-1:k",
+        "eb11c2-3:try-1:l",
+        "eb11c2-3:try-1:m",
+        "eb11c2-3:try-1:n",
+        "eb11c2-3:try-1:o",
+        "eb11c2-3:challenge-2",
+        "eb11c2-3:warm-up-2:a",
+        "eb11c2-3:warm-up-2:b",
+        "eb11c2-3:warm-up-2:c",
+        "eb11c2-3:try-2:a",
+        "eb11c2-3:try-2:b",
+        "eb11c2-3:try-2:c",
+        "eb11c2-3:try-2:d",
+        "eb11c2-3:work-with-a-partner-1",
+        "eb11c2-3:exercise-3:a",
+        "eb11c2-3:exercise-3:b",
+        "eb11c2-3:exercise-3:c",
+        "eb11c2-3:exercise-3:d",
+        "eb11c2-3:exercise-3:e",
+        "eb11c2-3:exercise-3:f",
+        "eb11c2-3:exercise-3:g",
+        "eb11c2-3:exercise-3:h",
+        "eb11c2-3:exercise-3:i",
+        "eb11c2-3:exercise-3:j",
+        "eb11c2-3:exercise-3:k",
+        "eb11c2-3:exercise-3:l",
+        "eb11c2-3:exercise-3:m",
+        "eb11c2-3:exercise-3:n",
+        "eb11c2-3:exercise-3:p",
+        "eb11c2-3:challenge-3"
+       ],
+       "worked_examples": [
+        "WE28"
+       ],
+       "key": "B2"
+      },
+      {
+       "label": "Sum fractional sequences",
+       "statement": "Calculate the sum of fractional sequences by fraction decomposition and cancelling terms, rationalizing square-root denominators first.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE29",
+         "printed_page": 76,
+         "quote": "Transform each term using the formula"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:method-1",
+         "printed_page": 76,
+         "quote": "Transform each term using the formula"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:try-3:d",
+         "printed_page": 77,
+         "quote": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+1}+\\sqrt{k}}$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-4:a",
+        "eb11c2-3:warm-up-4:b",
+        "eb11c2-3:work-with-a-partner-2",
+        "eb11c2-3:try-3:a",
+        "eb11c2-3:try-3:b",
+        "eb11c2-3:try-3:c",
+        "eb11c2-3:try-3:d",
+        "eb11c2-3:exercise-4:a",
+        "eb11c2-3:exercise-4:b",
+        "eb11c2-3:exercise-4:c",
+        "eb11c2-3:exercise-4:d",
+        "eb11c2-3:exercise-4:e",
+        "eb11c2-3:challenge-4"
+       ],
+       "worked_examples": [
+        "WE29"
+       ],
+       "key": "B3"
+      },
+      {
+       "label": "Sum arithmetic × geometric",
+       "statement": "Find the sum S of the product of an arithmetic sequence and a geometric sequence using S − rS.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:method-3",
+         "printed_page": 79,
+         "quote": "use S − rS"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:warm-up-5:S",
+         "printed_page": 79,
+         "quote": "Find the following sum S"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-3:printed-objective-5",
+         "printed_page": 79,
+         "quote": "Find the sum of the product of an arithmetic sequence and a geometric sequence"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-5:S",
+        "eb11c2-3:try-4:S",
+        "eb11c2-3:exercise-5",
+        "eb11c2-3:exercise-6",
+        "eb11c2-3:exercise-7",
+        "eb11c2-3:challenge-5",
+        "eb11c2-3:reflect-1"
+       ],
+       "worked_examples": [],
+       "key": "B4"
+      },
+      {
+       "label": "Relate sums and general terms",
+       "statement": "Determine the k-th term and sum of a sequence whose terms are sums, and find the general term a_n from S_n using a_n = S_n − S_{n−1} and checking a_1 = S_1.",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE32",
+         "printed_page": 83,
+         "quote": "The first term is $a_1=S_1=1^2-3\\times1=-2$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-3:rule-15",
+         "printed_page": 83,
+         "quote": "$a_n = S_n - S_{n-1}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-3:warm-up-7:a",
+         "printed_page": 83,
+         "quote": "$S_n = n^2-3n$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-3:warm-up-6:a",
+        "eb11c2-3:warm-up-6:b",
+        "eb11c2-3:try-5",
+        "eb11c2-3:try-6",
+        "eb11c2-3:exercise-8:a",
+        "eb11c2-3:exercise-8:b",
+        "eb11c2-3:exercise-9:a",
+        "eb11c2-3:exercise-9:b",
+        "eb11c2-3:challenge-6",
+        "eb11c2-3:warm-up-7:a",
+        "eb11c2-3:warm-up-7:b",
+        "eb11c2-3:try-7",
+        "eb11c2-3:try-8",
+        "eb11c2-3:try-9",
+        "eb11c2-3:exercise-10",
+        "eb11c2-3:exercise-11",
+        "eb11c2-3:exercise-12",
+        "eb11c2-3:exercise-13",
+        "eb11c2-3:exercise-14",
+        "eb11c2-3:exercise-15",
+        "eb11c2-3:exercise-16",
+        "eb11c2-3:exercise-17",
+        "eb11c2-3:challenge-7"
+       ],
+       "worked_examples": [
+        "WE30",
+        "WE31",
+        "WE32"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Write a sum given with the summation symbol Σ as a sum of terms, and express a sum of terms or of a general term using Σ.",
+      "label": "Write and expand Σ",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-3:definition-1",
+        "printed_page": 68,
+        "quote": "the sum from the 1st term to the n-th term is expressed as"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE26",
+        "printed_page": 69,
+        "quote": "Substitute $k=1,2,3,4,5$ into $2k$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-3:exercise-2:a",
+        "printed_page": 70,
+        "quote": "$1+3+5+\\dots+(2n-1)$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-3:open-prompt-1",
+       "eb11c2-3:unlabelled-exercise-1:a",
+       "eb11c2-3:unlabelled-exercise-1:b",
+       "eb11c2-3:unlabelled-exercise-1:c",
+       "eb11c2-3:unlabelled-exercise-1:d",
+       "eb11c2-3:unlabelled-exercise-2:a",
+       "eb11c2-3:unlabelled-exercise-2:b",
+       "eb11c2-3:unlabelled-exercise-3:a",
+       "eb11c2-3:unlabelled-exercise-3:b",
+       "eb11c2-3:unlabelled-exercise-3:c",
+       "eb11c2-3:unlabelled-exercise-3:d",
+       "eb11c2-3:unlabelled-exercise-4:a",
+       "eb11c2-3:unlabelled-exercise-4:b",
+       "eb11c2-3:unlabelled-exercise-4:c",
+       "eb11c2-3:unlabelled-exercise-4:d",
+       "eb11c2-3:exercise-1:a",
+       "eb11c2-3:exercise-1:b",
+       "eb11c2-3:exercise-1:c",
+       "eb11c2-3:exercise-1:d",
+       "eb11c2-3:exercise-1:e",
+       "eb11c2-3:exercise-1:f",
+       "eb11c2-3:exercise-1:g",
+       "eb11c2-3:exercise-1:h",
+       "eb11c2-3:exercise-1:i",
+       "eb11c2-3:exercise-1:j",
+       "eb11c2-3:exercise-1:k",
+       "eb11c2-3:exercise-1:l",
+       "eb11c2-3:exercise-2:a",
+       "eb11c2-3:exercise-2:b",
+       "eb11c2-3:exercise-2:c",
+       "eb11c2-3:exercise-2:d",
+       "eb11c2-3:exercise-2:e",
+       "eb11c2-3:exercise-2:f",
+       "eb11c2-3:exercise-2:g",
+       "eb11c2-3:exercise-2:h",
+       "eb11c2-3:exercise-2:i",
+       "eb11c2-3:exercise-2:j",
+       "eb11c2-3:exercise-2:k",
+       "eb11c2-3:exercise-2:l",
+       "eb11c2-3:challenge-1"
+      ],
+      "worked_examples": [
+       "WE24",
+       "WE25",
+       "WE26",
+       "WE27"
+      ],
+      "terms": [
+       "summation symbol Σ",
+       "term",
+       "sum",
+       "general term"
+      ],
+      "term_flags": [
+       {
+        "term": "summation symbol Σ",
+        "why": "Called sigma notation in many curricula."
+       }
+      ]
+     },
+     {
+      "statement": "Calculate sums in terms of n using the summation properties and the formulas for constants, k, k², k³ and geometric sequences, and evaluate sums with numerical limits.",
+      "label": "Evaluate sums with formulas",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-3:rule-2",
+        "printed_page": 71,
+        "quote": "$\\sum_{k=1}^{n} k = \\frac{1}{2}n(n+1)$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE28",
+        "printed_page": 74,
+        "quote": "$=\\{\\frac{1}{2}n(n+1)\\}^2+\\frac{1}{6}n(n+1)(2n+1)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-3:exercise-3:e",
+        "printed_page": 75,
+        "quote": "$\\sum_{k=1}^{n} 6\\times 3^{k-1}$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-3:warm-up-1:a",
+       "eb11c2-3:warm-up-1:b",
+       "eb11c2-3:warm-up-1:c",
+       "eb11c2-3:warm-up-1:d",
+       "eb11c2-3:try-1:a",
+       "eb11c2-3:try-1:b",
+       "eb11c2-3:try-1:c",
+       "eb11c2-3:try-1:d",
+       "eb11c2-3:try-1:e",
+       "eb11c2-3:try-1:f",
+       "eb11c2-3:try-1:g",
+       "eb11c2-3:try-1:h",
+       "eb11c2-3:try-1:i",
+       "eb11c2-3:try-1:j",
+       "eb11c2-3:try-1:k",
+       "eb11c2-3:try-1:l",
+       "eb11c2-3:try-1:m",
+       "eb11c2-3:try-1:n",
+       "eb11c2-3:try-1:o",
+       "eb11c2-3:challenge-2",
+       "eb11c2-3:warm-up-2:a",
+       "eb11c2-3:warm-up-2:b",
+       "eb11c2-3:warm-up-2:c",
+       "eb11c2-3:try-2:a",
+       "eb11c2-3:try-2:b",
+       "eb11c2-3:try-2:c",
+       "eb11c2-3:try-2:d",
+       "eb11c2-3:work-with-a-partner-1",
+       "eb11c2-3:exercise-3:a",
+       "eb11c2-3:exercise-3:b",
+       "eb11c2-3:exercise-3:c",
+       "eb11c2-3:exercise-3:d",
+       "eb11c2-3:exercise-3:e",
+       "eb11c2-3:exercise-3:f",
+       "eb11c2-3:exercise-3:g",
+       "eb11c2-3:exercise-3:h",
+       "eb11c2-3:exercise-3:i",
+       "eb11c2-3:exercise-3:j",
+       "eb11c2-3:exercise-3:k",
+       "eb11c2-3:exercise-3:l",
+       "eb11c2-3:exercise-3:m",
+       "eb11c2-3:exercise-3:n",
+       "eb11c2-3:exercise-3:o",
+       "eb11c2-3:exercise-3:p",
+       "eb11c2-3:challenge-3"
+      ],
+      "worked_examples": [
+       "WE28"
+      ],
+      "terms": [
+       "summation properties",
+       "geometric sequence",
+       "sum",
+       "constant"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Calculate the sum of fractional sequences by decomposing each term into partial fractions (or rationalizing square-root denominators) and cancelling terms.",
+      "label": "Sum fractional sequences",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-3:method-1",
+        "printed_page": 76,
+        "quote": "Transform each term using the formula"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE29",
+        "printed_page": 76,
+        "quote": "$=\\frac{n}{2(3n+2)}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-3:try-3:d",
+        "printed_page": 77,
+        "quote": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+1}+\\sqrt{k}}$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-3:warm-up-4:a",
+       "eb11c2-3:warm-up-4:b",
+       "eb11c2-3:work-with-a-partner-2",
+       "eb11c2-3:try-3:a",
+       "eb11c2-3:try-3:b",
+       "eb11c2-3:try-3:c",
+       "eb11c2-3:try-3:d",
+       "eb11c2-3:exercise-4:a",
+       "eb11c2-3:exercise-4:b",
+       "eb11c2-3:exercise-4:c",
+       "eb11c2-3:exercise-4:d",
+       "eb11c2-3:exercise-4:e",
+       "eb11c2-3:challenge-4"
+      ],
+      "worked_examples": [
+       "WE29"
+      ],
+      "terms": [
+       "fractional sequence",
+       "partial fractions",
+       "rationalizing",
+       "cancelling"
+      ],
+      "term_flags": [
+       {
+        "term": "partial fractions",
+        "why": "The book also says fraction decomposition."
+       }
+      ]
+     },
+     {
+      "statement": "Find the sum of the product of an arithmetic sequence and a geometric sequence using S − rS.",
+      "label": "Sum arithmetic × geometric",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-3:method-3",
+        "printed_page": 79,
+        "quote": "use S − rS"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-3:printed-objective-5",
+        "printed_page": 79,
+        "quote": "Find the sum of the product of an arithmetic sequence and a geometric sequence"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-3:exercise-6",
+        "printed_page": 80,
+        "quote": "$S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-3:warm-up-5:S",
+       "eb11c2-3:try-4:S",
+       "eb11c2-3:exercise-5",
+       "eb11c2-3:exercise-6",
+       "eb11c2-3:exercise-7",
+       "eb11c2-3:challenge-5",
+       "eb11c2-3:reflect-1"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "arithmetic sequence",
+       "geometric sequence",
+       "common ratio",
+       "S − rS"
+      ],
+      "term_flags": [
+       {
+        "term": "arithmetic sequence",
+        "why": "Also called arithmetic progression elsewhere."
+       },
+       {
+        "term": "geometric sequence",
+        "why": "Also called geometric progression elsewhere."
+       }
+      ]
+     },
+     {
+      "statement": "Find the k-th term and the sum S_n of a sequence whose terms are themselves sums, and find the general term a_n from S_n using a_n = S_n − S_{n−1} for n ≥ 2 and a_1 = S_1.",
+      "label": "General term and sum S_n",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A5"
+       ],
+       "b": [
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE30",
+        "printed_page": 81,
+        "quote": "$=\\sum_{i=1}^{k}(2i+1)$"
+       },
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-3:rule-15",
+        "printed_page": 83,
+        "quote": "$a_n = S_n - S_{n-1}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE32",
+        "printed_page": 83,
+        "quote": "The first term is $a_1=S_1=1^2-3\\times1=-2$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-3:warm-up-6:a",
+       "eb11c2-3:warm-up-6:b",
+       "eb11c2-3:try-5",
+       "eb11c2-3:try-6",
+       "eb11c2-3:exercise-8:a",
+       "eb11c2-3:exercise-8:b",
+       "eb11c2-3:exercise-9:a",
+       "eb11c2-3:exercise-9:b",
+       "eb11c2-3:challenge-6",
+       "eb11c2-3:warm-up-7:a",
+       "eb11c2-3:warm-up-7:b",
+       "eb11c2-3:try-7",
+       "eb11c2-3:try-8",
+       "eb11c2-3:try-9",
+       "eb11c2-3:exercise-10",
+       "eb11c2-3:exercise-11",
+       "eb11c2-3:exercise-12",
+       "eb11c2-3:exercise-13",
+       "eb11c2-3:exercise-14",
+       "eb11c2-3:exercise-15",
+       "eb11c2-3:exercise-16",
+       "eb11c2-3:exercise-17",
+       "eb11c2-3:challenge-7"
+      ],
+      "worked_examples": [
+       "WE30",
+       "WE31",
+       "WE32"
+      ],
+      "terms": [
+       "k-th term",
+       "general term",
+       "S_n",
+       "first term"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Definition quote is present; clearly explains summation notation"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Example quote present; demonstrates writing sums from general terms"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise quote present; requires expressing sum using Σ"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Formula quote present; defines sum of k formula needed for calculations"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Example quote present; demonstrates sum calculation using formulas"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise quote present; requires calculating geometric sequence sum"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Definition quote present; defines partial fraction decomposition method"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Example quote present; demonstrates partial fractions with term cancellation"
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise quote present; requires rationalizing square-root denominators"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Definition quote present; defines S − rS method"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Intro quote present; states the objective's learning outcome"
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise quote present; requires finding sum of arithmetic × geometric product"
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Example quote present; demonstrates finding k-th term as a sum"
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Definition quote present; defines formula a_n = S_n − S_{n-1}"
+     },
+     {
+      "objective_n": 5,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Example quote present; demonstrates finding general term using both formulas"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c2-4",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Find the general term of a sequence by writing its difference sequence and using a_n = a_1 + sum of the first n-1 terms of the difference sequence, then check whether the formula holds for n=1.",
+       "label": "General term by differences",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-4:definition-1",
+         "printed_page": 85,
+         "quote": "is called a difference sequence"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-4:rule-2",
+         "printed_page": 85,
+         "quote": "$a_n = a_1 + \\sum_{k=1}^{n-1} b_k$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE34",
+         "printed_page": 86,
+         "quote": "This formula also holds when $n=1$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-4:exercise-1:d",
+         "printed_page": 87,
+         "quote": "$1, 6, 15, 28, 45, 66, \\dots$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-4:guiding-question-1",
+        "eb11c2-4:warm-up-1:1",
+        "eb11c2-4:warm-up-1:2",
+        "eb11c2-4:try-1:a",
+        "eb11c2-4:try-1:b",
+        "eb11c2-4:exercise-1:a",
+        "eb11c2-4:exercise-1:b",
+        "eb11c2-4:exercise-1:c",
+        "eb11c2-4:exercise-1:d",
+        "eb11c2-4:exercise-1:e",
+        "eb11c2-4:challenge-1",
+        "eb11c2-4:reflect-1"
+       ],
+       "worked_examples": [
+        "WE33",
+        "WE34"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Solve group sequence problems: find the first term of a given group, the sum of the terms in a group, and which group and position a given term is in.",
+       "label": "Solving group sequence problems",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-4:caution-2",
+         "printed_page": 88,
+         "quote": "regularity of the number of terms included in each group"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE35",
+         "printed_page": 88,
+         "quote": "the last term of the n-th group is $2n^2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-4:exercise-3:c",
+         "printed_page": 90,
+         "quote": "Find which group and which position 100 is in."
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-4:warm-up-2",
+        "eb11c2-4:warm-up-3",
+        "eb11c2-4:warm-up-4",
+        "eb11c2-4:try-2",
+        "eb11c2-4:try-3",
+        "eb11c2-4:try-4",
+        "eb11c2-4:exercise-2:a",
+        "eb11c2-4:exercise-2:b",
+        "eb11c2-4:exercise-2:c",
+        "eb11c2-4:exercise-3:a",
+        "eb11c2-4:exercise-3:b",
+        "eb11c2-4:exercise-3:c",
+        "eb11c2-4:challenge-2:a",
+        "eb11c2-4:challenge-2:b",
+        "eb11c2-4:challenge-2:c",
+        "eb11c2-4:challenge-2:d"
+       ],
+       "worked_examples": [
+        "WE35"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Find the general term of a sequence using its first term and its difference sequence, and check whether the formula holds for n=1.",
+       "label": "General term via difference sequence",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE34",
+         "printed_page": 86,
+         "quote": "$a_n = a_1+\\sum_{k=1}^{n-1} b_k$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-4:definition-1",
+         "printed_page": 85,
+         "quote": "is called a difference sequence"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-4:rule-2",
+         "printed_page": 85,
+         "quote": "the first term plus the sum of the first n−1 terms of the difference sequence"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-4:exercise-1:a",
+         "printed_page": 87,
+         "quote": "Find the general term of the following sequences"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-4:guiding-question-1",
+        "eb11c2-4:warm-up-1:1",
+        "eb11c2-4:warm-up-1:2",
+        "eb11c2-4:try-1:a",
+        "eb11c2-4:try-1:b",
+        "eb11c2-4:exercise-1:a",
+        "eb11c2-4:exercise-1:b",
+        "eb11c2-4:exercise-1:c",
+        "eb11c2-4:exercise-1:d",
+        "eb11c2-4:exercise-1:e",
+        "eb11c2-4:challenge-1",
+        "eb11c2-4:reflect-1"
+       ],
+       "worked_examples": [
+        "WE33",
+        "WE34"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Divide a sequence into groups and determine the first term of a group, the sum of the terms in a group, and which group and position a given term is in.",
+       "label": "Solving group sequence problems",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE35",
+         "printed_page": 88,
+         "quote": "the first term of the 10th group is the 82nd term"
+        },
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-4:printed-objective-2",
+         "printed_page": 88,
+         "quote": "dividing the sequence into groups to find a specific term or the sum of a particular group of terms"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-4:exercise-2:c",
+         "printed_page": 90,
+         "quote": "Find which group and which position 124 is in."
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-4:warm-up-2",
+        "eb11c2-4:warm-up-3",
+        "eb11c2-4:warm-up-4",
+        "eb11c2-4:try-2",
+        "eb11c2-4:try-3",
+        "eb11c2-4:try-4",
+        "eb11c2-4:exercise-2:a",
+        "eb11c2-4:exercise-2:b",
+        "eb11c2-4:exercise-2:c",
+        "eb11c2-4:exercise-3:a",
+        "eb11c2-4:exercise-3:b",
+        "eb11c2-4:exercise-3:c",
+        "eb11c2-4:challenge-2:a",
+        "eb11c2-4:challenge-2:b",
+        "eb11c2-4:challenge-2:c",
+        "eb11c2-4:challenge-2:d"
+       ],
+       "worked_examples": [
+        "WE35"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Find the general term of a sequence by writing its difference sequence and using a_n = a_1 + sum of the first n-1 terms of the difference sequence, then check whether the formula holds for n=1.",
+      "label": "General term by differences",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-4:definition-1",
+        "printed_page": 85,
+        "quote": "is called a difference sequence"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-4:rule-2",
+        "printed_page": 85,
+        "quote": "$a_n = a_1 + \\sum_{k=1}^{n-1} b_k$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE34",
+        "printed_page": 86,
+        "quote": "This formula also holds when $n=1$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-4:exercise-1:a",
+        "printed_page": 87,
+        "quote": "Find the general term of the following sequences"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-4:guiding-question-1",
+       "eb11c2-4:warm-up-1:1",
+       "eb11c2-4:warm-up-1:2",
+       "eb11c2-4:try-1:a",
+       "eb11c2-4:try-1:b",
+       "eb11c2-4:exercise-1:a",
+       "eb11c2-4:exercise-1:b",
+       "eb11c2-4:exercise-1:c",
+       "eb11c2-4:exercise-1:d",
+       "eb11c2-4:exercise-1:e",
+       "eb11c2-4:challenge-1",
+       "eb11c2-4:reflect-1"
+      ],
+      "worked_examples": [
+       "WE33",
+       "WE34"
+      ],
+      "terms": [
+       "general term",
+       "difference sequence",
+       "first term",
+       "sum of the first n-1 terms"
+      ],
+      "term_flags": [
+       {
+        "term": "difference sequence",
+        "why": "Other curricula may call it the sequence of successive (first) differences, or use method of differences."
+       },
+       {
+        "term": "general term",
+        "why": "Often called the nth term formula elsewhere."
+       }
+      ]
+     },
+     {
+      "statement": "Solve group sequence problems: divide a sequence into groups to find the first term of a given group, the sum of the terms in a group, and which group and position a given term is in.",
+      "label": "Solving group sequence problems",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-4:caution-2",
+        "printed_page": 88,
+        "quote": "regularity of the number of terms included in each group"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE35",
+        "printed_page": 88,
+        "quote": "the last term of the n-th group is $2n^2$"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-4:printed-objective-2",
+        "printed_page": 88,
+        "quote": "dividing the sequence into groups to find a specific term or the sum of a particular group of terms"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-4:exercise-3:c",
+        "printed_page": 90,
+        "quote": "Find which group and which position 100 is in."
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-4:warm-up-2",
+       "eb11c2-4:warm-up-3",
+       "eb11c2-4:warm-up-4",
+       "eb11c2-4:try-2",
+       "eb11c2-4:try-3",
+       "eb11c2-4:try-4",
+       "eb11c2-4:exercise-2:a",
+       "eb11c2-4:exercise-2:b",
+       "eb11c2-4:exercise-2:c",
+       "eb11c2-4:exercise-3:a",
+       "eb11c2-4:exercise-3:b",
+       "eb11c2-4:exercise-3:c",
+       "eb11c2-4:challenge-2:a",
+       "eb11c2-4:challenge-2:b",
+       "eb11c2-4:challenge-2:c",
+       "eb11c2-4:challenge-2:d"
+      ],
+      "worked_examples": [
+       "WE35"
+      ],
+      "terms": [
+       "group sequence",
+       "group",
+       "term",
+       "first term",
+       "sum"
+      ],
+      "term_flags": [
+       {
+        "term": "group sequence",
+        "why": "Other curricula may describe this as a sequence split into blocks or bracketed sequences."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'is called a difference sequence' appears in the anchored text. As a definition, it defines the 'difference sequence' concept that the objective uses."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The formula $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$ is present in the anchored text. As an intro, it states the formula that is central to the objective's method."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'This formula also holds when $n=1$' appears in the worked example. As a worked example, it demonstrates the verification step required by the objective."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'Find the general term of the following sequences' is present. As an exercise, it gives practice in finding general terms, the core skill of the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'regularity of the number of terms included in each group' is in the anchored text. As an intro, it explains a key consideration for solving group sequence problems."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'the last term of the n-th group is $2n^2$' appears in the worked example. As a worked example, it demonstrates finding first terms, sums, and positions—the three skills in the objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "The phrase 'dividing the sequence into groups to find a specific term or the sum of a particular group of terms' is present. As an intro (Learning Outcomes), it states the overall objective."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "The quote 'Find which group and which position 100 is in' is in the anchored text. As an exercise, it practices finding which group and position a given term occupies."
+     }
+    ]
+   }
+  },
+  {
+   "slug": "eb11c2-5",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "label": "Compute terms from recurrences",
+       "statement": "Calculate the 2nd to 4th terms of a sequence and find the general term when given the first term and a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n.",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-5:definition-1",
+         "printed_page": 91,
+         "quote": "is called a recurrence relation"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE36",
+         "printed_page": 92,
+         "quote": "$a_2=3\\times2+2=8$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:exercise-3:c",
+         "printed_page": 93,
+         "quote": "$a_1=4,\\ a_{n+1}=3a_n$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:guiding-question-1",
+        "eb11c2-5:warm-up-1",
+        "eb11c2-5:warm-up-2:a",
+        "eb11c2-5:warm-up-2:b",
+        "eb11c2-5:try-1",
+        "eb11c2-5:try-2:a",
+        "eb11c2-5:try-2:b",
+        "eb11c2-5:try-3:a",
+        "eb11c2-5:try-3:b",
+        "eb11c2-5:try-3:c",
+        "eb11c2-5:try-3:d",
+        "eb11c2-5:exercise-1",
+        "eb11c2-5:exercise-2:a",
+        "eb11c2-5:exercise-2:b",
+        "eb11c2-5:exercise-2:c",
+        "eb11c2-5:exercise-2:d",
+        "eb11c2-5:exercise-2:e",
+        "eb11c2-5:exercise-2:f",
+        "eb11c2-5:exercise-3:a",
+        "eb11c2-5:exercise-3:b",
+        "eb11c2-5:exercise-3:c",
+        "eb11c2-5:exercise-3:d",
+        "eb11c2-5:exercise-3:e",
+        "eb11c2-5:exercise-3:f",
+        "eb11c2-5:exercise-3:g",
+        "eb11c2-5:exercise-3:h",
+        "eb11c2-5:challenge-1",
+        "eb11c2-5:work-with-a-partner-1"
+       ],
+       "worked_examples": [
+        "WE36",
+        "WE37"
+       ],
+       "key": "A1"
+      },
+      {
+       "label": "General term from recurrences",
+       "statement": "Find the general term of a sequence from a_{n+1}=a_n+f(n) using the sum of the difference sequence, and from a_{n+1}=pa_n+q by writing a_{n+1}-c=p(a_n-c).",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "eb11c2-5:rule-7",
+         "printed_page": 94,
+         "quote": "$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE39",
+         "printed_page": 96,
+         "quote": "$a_n=3^n-2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:exercise-5:a",
+         "printed_page": 97,
+         "quote": "$a_1 = 2,\\ a_{n+1} = 2a_n - 1$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-3",
+        "eb11c2-5:try-4:a",
+        "eb11c2-5:try-4:b",
+        "eb11c2-5:work-with-a-partner-2",
+        "eb11c2-5:exercise-4:a",
+        "eb11c2-5:exercise-4:b",
+        "eb11c2-5:exercise-4:c",
+        "eb11c2-5:exercise-4:d",
+        "eb11c2-5:exercise-4:e",
+        "eb11c2-5:exercise-4:f",
+        "eb11c2-5:exercise-4:g",
+        "eb11c2-5:challenge-2",
+        "eb11c2-5:warm-up-4",
+        "eb11c2-5:try-5:a",
+        "eb11c2-5:try-5:b",
+        "eb11c2-5:exercise-5:a",
+        "eb11c2-5:exercise-5:b",
+        "eb11c2-5:exercise-5:c",
+        "eb11c2-5:exercise-5:d",
+        "eb11c2-5:exercise-5:e",
+        "eb11c2-5:exercise-5:f"
+       ],
+       "worked_examples": [
+        "WE38",
+        "WE39"
+       ],
+       "key": "A2"
+      },
+      {
+       "label": "Induction for equalities",
+       "statement": "Prove equalities for all natural numbers n by mathematical induction, showing n=1 and then n=k implies n=k+1.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:method-6",
+         "printed_page": 98,
+         "quote": "Show that (A) holds when n = 1"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE40",
+         "printed_page": 98,
+         "quote": "(A) holds for all natural numbers"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-6:a",
+         "printed_page": 99,
+         "quote": "$1+3+5+\\dots+(2n-1)=n^2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-5",
+        "eb11c2-5:try-6:a",
+        "eb11c2-5:try-6:b",
+        "eb11c2-5:exercise-6:a",
+        "eb11c2-5:exercise-6:b",
+        "eb11c2-5:exercise-6:c",
+        "eb11c2-5:exercise-6:d"
+       ],
+       "worked_examples": [
+        "WE40"
+       ],
+       "key": "A3"
+      },
+      {
+       "label": "Induction for inequalities, divisibility",
+       "statement": "Prove inequalities (starting from n=4 or n=3) and divisibility statements (a multiple of a) by mathematical induction.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:caution-2",
+         "printed_page": 102,
+         "quote": "$a \\times (\\text{integer})$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE41",
+         "printed_page": 100,
+         "quote": "$2^{k+1}>6k>3(k+1)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-8",
+         "printed_page": 102,
+         "quote": "$n^3+2n$ is a multiple of 3"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:try-7",
+        "eb11c2-5:exercise-7",
+        "eb11c2-5:exercise-8",
+        "eb11c2-5:challenge-3",
+        "eb11c2-5:linking-text-16",
+        "eb11c2-5:warm-up-7",
+        "eb11c2-5:try-8",
+        "eb11c2-5:activity-1",
+        "eb11c2-5:exercise-9",
+        "eb11c2-5:exercise-10",
+        "eb11c2-5:exercise-11",
+        "eb11c2-5:challenge-4"
+       ],
+       "worked_examples": [
+        "WE41"
+       ],
+       "key": "A4"
+      },
+      {
+       "label": "Estimate and prove general terms",
+       "statement": "Estimate the general term of a recurrence-defined sequence from its first terms and prove the estimate by mathematical induction.",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:printed-objective-7",
+         "printed_page": 104,
+         "quote": "prove and validate recurrence relations of sequences"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE43",
+         "printed_page": 104,
+         "quote": "$a_{k+1}=\\frac{a_k^2-1}{k+1}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:exercise-13:b",
+         "printed_page": 105,
+         "quote": "Prove that the estimation in (a) is correct"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-8",
+        "eb11c2-5:warm-up-9",
+        "eb11c2-5:try-9",
+        "eb11c2-5:try-10",
+        "eb11c2-5:exercise-12:a",
+        "eb11c2-5:exercise-12:b",
+        "eb11c2-5:exercise-13:a",
+        "eb11c2-5:exercise-13:b",
+        "eb11c2-5:challenge-5",
+        "eb11c2-5:reflect-1"
+       ],
+       "worked_examples": [
+        "WE42",
+        "WE43"
+       ],
+       "key": "A5"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate terms and find the general term of a sequence given by a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n.",
+       "label": "Basic recurrence relations",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:rule-2",
+         "printed_page": 91,
+         "quote": "represents an arithmetic sequence with common difference $d$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE36",
+         "printed_page": 92,
+         "quote": "$a_2=3\\times2+2=8$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:warm-up-2:a",
+         "printed_page": 92,
+         "quote": "$a_1 = -1,\\ a_{n+1} = a_n + 5$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-1",
+        "eb11c2-5:warm-up-2:a",
+        "eb11c2-5:warm-up-2:b",
+        "eb11c2-5:try-1",
+        "eb11c2-5:try-2:a",
+        "eb11c2-5:try-2:b",
+        "eb11c2-5:try-3:a",
+        "eb11c2-5:try-3:b",
+        "eb11c2-5:try-3:c",
+        "eb11c2-5:try-3:d",
+        "eb11c2-5:exercise-1",
+        "eb11c2-5:exercise-2:a",
+        "eb11c2-5:exercise-2:b",
+        "eb11c2-5:exercise-2:c",
+        "eb11c2-5:exercise-2:d",
+        "eb11c2-5:exercise-2:e",
+        "eb11c2-5:exercise-2:f",
+        "eb11c2-5:exercise-3:a",
+        "eb11c2-5:exercise-3:b",
+        "eb11c2-5:exercise-3:c",
+        "eb11c2-5:exercise-3:d",
+        "eb11c2-5:exercise-3:e",
+        "eb11c2-5:exercise-3:f",
+        "eb11c2-5:exercise-3:g",
+        "eb11c2-5:exercise-3:h",
+        "eb11c2-5:challenge-1",
+        "eb11c2-5:work-with-a-partner-1",
+        "eb11c2-5:challenge-5",
+        "eb11c2-5:guiding-question-1"
+       ],
+       "worked_examples": [
+        "WE36",
+        "WE37"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Find the general term of a sequence with a_{n+1}=a_n+f(n) using the general term of the difference sequence and a sum.",
+       "label": "Difference sequence recurrences",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:rule-7",
+         "printed_page": 94,
+         "quote": "$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE38",
+         "printed_page": 94,
+         "quote": "$a_n=(n-2)^2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-4:a",
+         "printed_page": 94,
+         "quote": "$a_1=2,\\ a_{n+1}=a_n+n^2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-3",
+        "eb11c2-5:try-4:a",
+        "eb11c2-5:try-4:b",
+        "eb11c2-5:work-with-a-partner-2",
+        "eb11c2-5:exercise-4:a",
+        "eb11c2-5:exercise-4:b",
+        "eb11c2-5:exercise-4:c",
+        "eb11c2-5:exercise-4:d",
+        "eb11c2-5:exercise-4:e",
+        "eb11c2-5:exercise-4:f",
+        "eb11c2-5:exercise-4:g",
+        "eb11c2-5:challenge-2"
+       ],
+       "worked_examples": [
+        "WE38"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Find the general term of a sequence with a_{n+1}=pa_n+q by solving c=pc+q and using a geometric sequence {b_n}.",
+       "label": "Recurrence a_{n+1}=pa_n+q",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:method-1",
+         "printed_page": 96,
+         "quote": "Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE39",
+         "printed_page": 96,
+         "quote": "$a_n=3^n-2$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-5:a",
+         "printed_page": 97,
+         "quote": "$a_1 = 1,\\ a_{n+1} = 5a_n + 8$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-4",
+        "eb11c2-5:try-5:a",
+        "eb11c2-5:try-5:b",
+        "eb11c2-5:exercise-5:a",
+        "eb11c2-5:exercise-5:b",
+        "eb11c2-5:exercise-5:c",
+        "eb11c2-5:exercise-5:d",
+        "eb11c2-5:exercise-5:e",
+        "eb11c2-5:exercise-5:f"
+       ],
+       "worked_examples": [
+        "WE39"
+       ],
+       "key": "B3"
+      },
+      {
+       "statement": "Prove equalities, inequalities and divisibility statements for natural numbers using mathematical induction.",
+       "label": "Prove by mathematical induction",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:method-6",
+         "printed_page": 98,
+         "quote": "Show that (A) holds when n = 1"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE40",
+         "printed_page": 98,
+         "quote": "(A) holds for all natural numbers"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-6:a",
+         "printed_page": 99,
+         "quote": "$1+3+5+\\dots+(2n-1)=n^2$"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-5",
+        "eb11c2-5:try-6:a",
+        "eb11c2-5:try-6:b",
+        "eb11c2-5:exercise-6:a",
+        "eb11c2-5:exercise-6:b",
+        "eb11c2-5:exercise-6:c",
+        "eb11c2-5:exercise-6:d",
+        "eb11c2-5:try-7",
+        "eb11c2-5:exercise-7",
+        "eb11c2-5:exercise-8",
+        "eb11c2-5:challenge-3",
+        "eb11c2-5:warm-up-7",
+        "eb11c2-5:try-8",
+        "eb11c2-5:activity-1",
+        "eb11c2-5:exercise-9",
+        "eb11c2-5:exercise-10",
+        "eb11c2-5:exercise-11",
+        "eb11c2-5:challenge-4"
+       ],
+       "worked_examples": [
+        "WE40",
+        "WE41"
+       ],
+       "key": "B4"
+      },
+      {
+       "statement": "Estimate the general term of a sequence from its first terms and prove the estimate by mathematical induction.",
+       "label": "Estimate and prove general term",
+       "evidence": [
+        {
+         "kind": "intro",
+         "anchor": "eb11c2-5:printed-objective-7",
+         "printed_page": 104,
+         "quote": "Employ mathematical induction to prove and validate recurrence relations"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE43",
+         "printed_page": 104,
+         "quote": "$a_{k+1}=\\frac{a_k^2-1}{k+1}$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "eb11c2-5:try-10",
+         "printed_page": 105,
+         "quote": "Prove that the estimation in 1 is correct"
+        }
+       ],
+       "exercise_items": [
+        "eb11c2-5:warm-up-8",
+        "eb11c2-5:warm-up-9",
+        "eb11c2-5:try-9",
+        "eb11c2-5:try-10",
+        "eb11c2-5:exercise-12:a",
+        "eb11c2-5:exercise-12:b",
+        "eb11c2-5:exercise-13:a",
+        "eb11c2-5:exercise-13:b",
+        "eb11c2-5:reflect-1"
+       ],
+       "worked_examples": [
+        "WE42",
+        "WE43"
+       ],
+       "key": "B5"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate terms and find the general term of a sequence given by a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n.",
+      "label": "Basic recurrence relations",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-5:definition-1",
+        "printed_page": 91,
+        "quote": "is called a recurrence relation"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-5:rule-2",
+        "printed_page": 91,
+        "quote": "represents an arithmetic sequence with common difference $d$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE36",
+        "printed_page": 92,
+        "quote": "$a_2=3\\times2+2=8$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-5:guiding-question-1",
+       "eb11c2-5:warm-up-1",
+       "eb11c2-5:warm-up-2:a",
+       "eb11c2-5:warm-up-2:b",
+       "eb11c2-5:try-1",
+       "eb11c2-5:try-2:a",
+       "eb11c2-5:try-2:b",
+       "eb11c2-5:try-3:a",
+       "eb11c2-5:try-3:b",
+       "eb11c2-5:try-3:c",
+       "eb11c2-5:try-3:d",
+       "eb11c2-5:exercise-1",
+       "eb11c2-5:exercise-2:a",
+       "eb11c2-5:exercise-2:b",
+       "eb11c2-5:exercise-2:c",
+       "eb11c2-5:exercise-2:d",
+       "eb11c2-5:exercise-2:e",
+       "eb11c2-5:exercise-2:f",
+       "eb11c2-5:exercise-3:a",
+       "eb11c2-5:exercise-3:b",
+       "eb11c2-5:exercise-3:c",
+       "eb11c2-5:exercise-3:d",
+       "eb11c2-5:exercise-3:e",
+       "eb11c2-5:exercise-3:f",
+       "eb11c2-5:exercise-3:g",
+       "eb11c2-5:exercise-3:h",
+       "eb11c2-5:challenge-1",
+       "eb11c2-5:work-with-a-partner-1"
+      ],
+      "worked_examples": [
+       "WE36",
+       "WE37"
+      ],
+      "terms": [
+       "sequence",
+       "term",
+       "general term",
+       "recurrence relation",
+       "arithmetic sequence",
+       "common difference",
+       "geometric sequence",
+       "common ratio"
+      ],
+      "term_flags": [
+       {
+        "term": "general term",
+        "why": "Other curricula may say 'nth term' or 'explicit formula'."
+       },
+       {
+        "term": "recurrence relation",
+        "why": "Other curricula may say 'recursive formula' or 'difference equation'."
+       }
+      ]
+     },
+     {
+      "statement": "Find the general term of a sequence from a_{n+1}=a_n+f(n) using the sum of the difference sequence, and from a_{n+1}=pa_n+q by solving c=pc+q and writing a_{n+1}-c=p(a_n-c) (a geometric sequence {b_n}).",
+      "label": "General term from recurrences",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2",
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "eb11c2-5:rule-7",
+        "printed_page": 94,
+        "quote": "$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE38",
+        "printed_page": 94,
+        "quote": "$a_n=(n-2)^2$"
+       },
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-5:method-1",
+        "printed_page": 96,
+        "quote": "Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE39",
+        "printed_page": 96,
+        "quote": "$a_n=3^n-2$"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-5:warm-up-3",
+       "eb11c2-5:try-4:a",
+       "eb11c2-5:try-4:b",
+       "eb11c2-5:work-with-a-partner-2",
+       "eb11c2-5:exercise-4:a",
+       "eb11c2-5:exercise-4:b",
+       "eb11c2-5:exercise-4:c",
+       "eb11c2-5:exercise-4:d",
+       "eb11c2-5:exercise-4:e",
+       "eb11c2-5:exercise-4:f",
+       "eb11c2-5:exercise-4:g",
+       "eb11c2-5:challenge-2",
+       "eb11c2-5:warm-up-4",
+       "eb11c2-5:try-5:a",
+       "eb11c2-5:try-5:b",
+       "eb11c2-5:exercise-5:a",
+       "eb11c2-5:exercise-5:b",
+       "eb11c2-5:exercise-5:c",
+       "eb11c2-5:exercise-5:d",
+       "eb11c2-5:exercise-5:e",
+       "eb11c2-5:exercise-5:f"
+      ],
+      "worked_examples": [
+       "WE38",
+       "WE39"
+      ],
+      "terms": [
+       "difference sequence",
+       "general term",
+       "recurrence relation",
+       "geometric sequence",
+       "sum"
+      ],
+      "term_flags": [
+       {
+        "term": "difference sequence",
+        "why": "Other curricula may say 'sequence of differences' or 'first differences'."
+       }
+      ]
+     },
+     {
+      "statement": "Prove equalities, inequalities and divisibility statements for natural numbers by mathematical induction: show n=1, then show n=k implies n=k+1.",
+      "label": "Prove by mathematical induction",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A3",
+        "A4"
+       ],
+       "b": [
+        "B4"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-5:method-6",
+        "printed_page": 98,
+        "quote": "Show that (A) holds when n = 1"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE40",
+        "printed_page": 98,
+        "quote": "(A) holds for all natural numbers"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE41",
+        "printed_page": 100,
+        "quote": "$2^{k+1}>6k>3(k+1)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-5:try-8",
+        "printed_page": 102,
+        "quote": "$n^3+2n$ is a multiple of 3"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-5:warm-up-5",
+       "eb11c2-5:try-6:a",
+       "eb11c2-5:try-6:b",
+       "eb11c2-5:exercise-6:a",
+       "eb11c2-5:exercise-6:b",
+       "eb11c2-5:exercise-6:c",
+       "eb11c2-5:exercise-6:d",
+       "eb11c2-5:try-7",
+       "eb11c2-5:exercise-7",
+       "eb11c2-5:exercise-8",
+       "eb11c2-5:challenge-3",
+       "eb11c2-5:warm-up-7",
+       "eb11c2-5:try-8",
+       "eb11c2-5:activity-1",
+       "eb11c2-5:exercise-9",
+       "eb11c2-5:exercise-10",
+       "eb11c2-5:exercise-11",
+       "eb11c2-5:challenge-4"
+      ],
+      "worked_examples": [
+       "WE40",
+       "WE41"
+      ],
+      "terms": [
+       "mathematical induction",
+       "natural number",
+       "equality",
+       "inequality",
+       "multiple"
+      ],
+      "term_flags": []
+     },
+     {
+      "statement": "Estimate the general term of a sequence defined by a recurrence relation from its first terms, and prove the estimate by mathematical induction.",
+      "label": "Estimate and prove general term",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A5"
+       ],
+       "b": [
+        "B5"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "intro",
+        "anchor": "eb11c2-5:printed-objective-7",
+        "printed_page": 104,
+        "quote": "prove and validate recurrence relations of sequences"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE43",
+        "printed_page": 104,
+        "quote": "$a_{k+1}=\\frac{a_k^2-1}{k+1}$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "eb11c2-5:try-10",
+        "printed_page": 105,
+        "quote": "Prove that the estimation in 1 is correct"
+       }
+      ],
+      "exercise_items": [
+       "eb11c2-5:warm-up-8",
+       "eb11c2-5:warm-up-9",
+       "eb11c2-5:try-9",
+       "eb11c2-5:try-10",
+       "eb11c2-5:exercise-12:a",
+       "eb11c2-5:exercise-12:b",
+       "eb11c2-5:exercise-13:a",
+       "eb11c2-5:exercise-13:b",
+       "eb11c2-5:challenge-5",
+       "eb11c2-5:reflect-1"
+      ],
+      "worked_examples": [
+       "WE42",
+       "WE43"
+      ],
+      "terms": [
+       "recurrence relation",
+       "general term",
+       "mathematical induction",
+       "estimate"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "B1 listed challenge-5 but A (and B5's topic) fit it with the estimate-and-prove objective, so it is placed there. A4 listed linking-text-16, which is not among the lesson's exercise items, so it is left out."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'is called a recurrence relation' is present. A definition of recurrence relations directly supports understanding how to work with them."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'represents an arithmetic sequence with common difference $d$' is present. This intro explains the $a_{n+1}=a_n+d$ form, essential for calculating terms from this recurrence relation type."
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_2=3\\times2+2=8$' is present. The worked example demonstrates calculating successive terms from a recurrence relation."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_n=a_1+\\sum_{k=1}^{n-1}f(k)$' is present. This states the formula for finding the general term using the difference sequence method, which is the core of objective 2."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_n=(n-2)^2$' is present. The worked example demonstrates finding a general term using the difference sequence method from $a_{n+1}=a_n+f(n)$ form."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'Replace both $a_{n+1}$ and $a_n$ in the recurrence relation with $c$' is present. This intro explains the first step of solving $a_{n+1}=pa_n+q$ form."
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_n=3^n-2$' is present. The worked example demonstrates the complete method for solving $a_{n+1}=pa_n+q$ recurrence relations."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'Show that (A) holds when n = 1' is present. This intro states both the base case and inductive step procedure for mathematical induction."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '(A) holds for all natural numbers' is present. The worked example demonstrates proving an equality using mathematical induction with both steps."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$2^{k+1}>6k>3(k+1)$' is present. The worked example demonstrates proving an inequality using mathematical induction."
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$n^3+2n$ is a multiple of 3' is present. This exercise asks students to prove a divisibility statement using mathematical induction."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'prove and validate recurrence relations of sequences' is present. The intro describes the learning outcome of proving recurrence relations by induction."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Quote '$a_{k+1}=\\frac{a_k^2-1}{k+1}$' is present. The worked example demonstrates estimating a general term and then proving the estimate by mathematical induction."
+     },
+     {
+      "objective_n": 4,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Quote 'Prove that the estimation in 1 is correct' is present. This exercise asks students to prove an estimation using mathematical induction."
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 0,
+  "batches": 0,
+  "mappers": [],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:eb11c2-1-2",
+    "dst": "lo:eb11c2-1-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE5",
+      "printed_page": 46,
+      "quote": "Let the general term be $a_n = a + (n-1)d$."
+     }
+    ],
+    "reason": "Two-condition problems use a_n = a+(n-1)d."
+   },
+   {
+    "src": "lo:eb11c2-1-2",
+    "dst": "lo:eb11c2-1-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE7",
+      "printed_page": 50,
+      "quote": "First find the number of terms."
+     }
+    ],
+    "reason": "Finding n uses l=a+(n-1)d."
+   },
+   {
+    "src": "lo:eb11c2-1-4",
+    "dst": "lo:eb11c2-1-5",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE11",
+      "printed_page": 55,
+      "quote": "Simplifying gives $3n^2+5n-100=0$"
+     }
+    ],
+    "reason": "Sum formula set equal to a given sum."
+   },
+   {
+    "src": "lo:eb11c2-2-1",
+    "dst": "lo:eb11c2-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE16",
+      "printed_page": 60,
+      "quote": "Let the general term be $a_n = ar^{n-1}$."
+     }
+    ],
+    "reason": "Uses the general term formula."
+   },
+   {
+    "src": "lo:eb11c2-1-3",
+    "dst": "lo:eb11c2-2-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE18",
+      "printed_page": 61,
+      "quote": "$2a = 6 + b$"
+     }
+    ],
+    "reason": "Uses 2b=a+c."
+   },
+   {
+    "src": "lo:eb11c2-2-1",
+    "dst": "lo:eb11c2-2-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE21",
+      "printed_page": 65,
+      "quote": "$ar^2+ar^3+ar^4=140$"
+     }
+    ],
+    "reason": "Terms written via ar^{n-1}."
+   },
+   {
+    "src": "lo:eb11c2-2-3",
+    "dst": "lo:eb11c2-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-3:rule-9",
+      "printed_page": 74,
+      "quote": "a(1-r^n)/(1-r)"
+     }
+    ],
+    "reason": "Geometric sum formula reused in sigma."
+   },
+   {
+    "src": "lo:eb11c2-3-1",
+    "dst": "lo:eb11c2-3-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE28",
+      "printed_page": 74,
+      "quote": "$=\\sum_{k=1}^{n}(k^3+k^2)$"
+     }
+    ],
+    "reason": "Sigma notation used."
+   },
+   {
+    "src": "lo:eb11c2-3-2",
+    "dst": "lo:eb11c2-3-5",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE30",
+      "printed_page": 81,
+      "quote": "$=2\\times\\frac{1}{2}k(k+1)+k$"
+     }
+    ],
+    "reason": "Sigma formulas used."
+   },
+   {
+    "src": "lo:eb11c2-3-2",
+    "dst": "lo:eb11c2-4-1",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE34",
+      "printed_page": 86,
+      "quote": "$= 2+\\sum_{k=1}^{n-1}(4k-1)$"
+     }
+    ],
+    "reason": "Sigma formula used for difference sequence sum."
+   },
+   {
+    "src": "lo:eb11c2-1-4",
+    "dst": "lo:eb11c2-4-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE35",
+      "printed_page": 88,
+      "quote": "$S=\\frac12 n\\{2a+(n-1)d\\}$"
+     }
+    ],
+    "reason": "Arithmetic sum used for group counts."
+   },
+   {
+    "src": "lo:eb11c2-1-2",
+    "dst": "lo:eb11c2-5-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-5:rule-4",
+      "printed_page": 92,
+      "quote": "General term of an arithmetic sequence with first term a and common difference d"
+     }
+    ],
+    "reason": "Refers back to arithmetic general term."
+   },
+   {
+    "src": "lo:eb11c2-2-1",
+    "dst": "lo:eb11c2-5-1",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-5:rule-5",
+      "printed_page": 92,
+      "quote": "General term of a geometric sequence with first term a and common ratio r"
+     }
+    ],
+    "reason": "Refers back to geometric general term."
+   },
+   {
+    "src": "lo:eb11c2-4-1",
+    "dst": "lo:eb11c2-5-2",
+    "signal": "reference",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-5:rule-6",
+      "printed_page": 94,
+      "quote": "f(n)$ is the general term of the difference sequence"
+     }
+    ],
+    "reason": "Difference sequence method reused."
+   },
+   {
+    "src": "lo:eb11c2-2-1",
+    "dst": "lo:eb11c2-5-2",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE39",
+      "printed_page": 96,
+      "quote": "$b_n=3\\times3^{n-1}=3^n$"
+     }
+    ],
+    "reason": "Geometric general term used for b_n."
+   },
+   {
+    "src": "lo:eb11c2-5-3",
+    "dst": "lo:eb11c2-5-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE43",
+      "printed_page": 104,
+      "quote": "Assuming (A) holds when $n=k$"
+     }
+    ],
+    "reason": "Induction used to prove estimate."
+   },
+   {
+    "src": "lo:eb11c2-5-1",
+    "dst": "lo:eb11c2-5-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "WE42",
+      "printed_page": 104,
+      "quote": "From the given recurrence relation"
+     }
+    ],
+    "reason": "Terms computed from recurrence."
+   },
+   {
+    "src": "lo:eb11c2-3-3",
+    "dst": "lo:eb11c2-3-4",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "text",
+      "anchor": "eb11c2-3:linking-text-17",
+      "printed_page": 79,
+      "quote": "3S"
+     }
+    ],
+    "reason": "placeholder"
+   }
+  ],
+  "outside_book": [],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "CONFIRMED",
+     "note": "Uses a_n=a+(n-1)d as method."
+    },
+    {
+     "i": 1,
+     "verdict": "REJECTED",
+     "note": "Text finds number of terms using the general term formula, but cited quote is about sum; it uses a_n formula, not S_n of src. Src is S_n; dst relies on... actually dst is S_n and src is S_n, no dependence shown."
+    },
+    {
+     "i": 2,
+     "verdict": "UNCLEAR",
+     "note": "Uses the sum formula to set up an equation; plausible reliance but quote is just algebra."
+    },
+    {
+     "i": 3,
+     "verdict": "CONFIRMED",
+     "note": "Uses a_n=ar^{n-1} as step."
+    },
+    {
+     "i": 4,
+     "verdict": "CONFIRMED",
+     "note": "Uses 2b=a+c arithmetic condition as a step."
+    },
+    {
+     "i": 5,
+     "verdict": "CONFIRMED",
+     "note": "Uses terms ar^k from the general term."
+    },
+    {
+     "i": 6,
+     "verdict": "REJECTED",
+     "note": "Text states the formula, but is it shown being used as a step in 3-2? It is the formula in the 3-2 section itself; no recall shown."
+    },
+    {
+     "i": 7,
+     "verdict": "UNCLEAR",
+     "note": "Rewriting inside sigma is notation use, but not clearly reliance."
+    },
+    {
+     "i": 8,
+     "verdict": "CONFIRMED",
+     "note": "Uses summation formulas for k and k^2 as steps."
+    },
+    {
+     "i": 9,
+     "verdict": "CONFIRMED",
+     "note": "Uses sum of k formula via summation."
+    },
+    {
+     "i": 10,
+     "verdict": "CONFIRMED",
+     "note": "Uses the arithmetic sum formula as a step."
+    },
+    {
+     "i": 11,
+     "verdict": "CONFIRMED",
+     "note": "Refers back to arithmetic general term."
+    },
+    {
+     "i": 12,
+     "verdict": "CONFIRMED",
+     "note": "Refers back to geometric general term."
+    },
+    {
+     "i": 13,
+     "verdict": "CONFIRMED",
+     "note": "Refers to difference sequence concept from 4-1."
+    },
+    {
+     "i": 14,
+     "verdict": "CONFIRMED",
+     "note": "Uses geometric general term for b_n."
+    },
+    {
+     "i": 15,
+     "verdict": "CONFIRMED",
+     "note": "Uses induction steps as method."
+    },
+    {
+     "i": 16,
+     "verdict": "REJECTED",
+     "note": "Computes terms from the recurrence; not of the simple types specifically shown; generic."
+    },
+    {
+     "i": 17,
+     "verdict": "REJECTED",
+     "note": "Text is S−rS method; no reliance on partial-fraction cancellation."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 10,
+   "S1 Reconcile": 5,
+   "S1 Evidence": 5,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "eb11c2-1": 4,
+   "eb11c2-2": 4,
+   "eb11c2-3": 4,
+   "eb11c2-4": 4,
+   "eb11c2-5": 4
+  },
+  "total": 22
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book egb-g11-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ }
+}

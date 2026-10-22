@@ -1,0 +1,2306 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c3-4",
+  "source": "book-records/egb-g11-math/eb11c3-4.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 58,
+      "cost_usd": 0.9343,
+      "calls": [
+        {
+          "call": "answers.eb11c3-4",
+          "cost_usd": 0.9343,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c3-4:guiding-question-1",
+      "record_id": "eb11c3-4:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 142,
+      "question": {
+        "text": "How do the algebraic properties of cubic equations—such as multiple turning points, repeated roots, and cube roots of unity—enable us to model systems more accurately than quadratic equations?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "93a51fc04f342c7cba7195d074c10532",
+      "kind": "explanation",
+      "answer": "A cubic has 3 solutions and can have a repeated root or complex roots, so it describes a rise, a peak and a settling back, which a quadratic cannot.",
+      "solution": [
+        "A quadratic has only 2 solutions and one turning point, so it models a single peak or valley.",
+        "A cubic has 3 solutions in the complex numbers (rule 1), so it can have more turning points. It can model a rise, a surge and a return to equilibrium.",
+        "A repeated root shows where the system just touches a level and stays steady. We find it with the Factor Theorem and D = 0.",
+        "The cube root of unity $\\omega$ with $\\omega^3=1$ and $\\omega^2+\\omega+1=0$ gives the complex solutions of $x^3-1=0$.",
+        "So cubic equations fit complex real-life behaviour better than quadratics."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-1",
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "A cubic can have up to two turning points (a rise then fall then rise, like a surge that settles back), can have repeated roots (tangency, where the curve touches the axis), and always has 3 complex roots, with at least one real root. Cube roots of unity ($\\omega^3=1$) give complex solutions and cyclic/periodic behaviour. A quadratic has only one turning point, so it cannot model this.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-1:a",
+      "record_id": "eb11c3-4:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 - 8 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "feee435d054576415503cc8c56eab877",
+      "kind": "value",
+      "answer": "x = 2, -1 ± √3 i",
+      "solution": [
+        "Use $x^3+a^3=(x+a)(x^2-ax+a^2)$ with $a=-2$.",
+        "$(x-2)(x^2+2x+4)=0$.",
+        "$x-2=0$ gives $x=2$.",
+        "$x^2+2x+4$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-2\\pm\\sqrt{4-16}}{2}=-1\\pm\\sqrt{3}i$.",
+        "Answer: $x=2,\\ -1\\pm\\sqrt3 i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2, -1 ± √3 i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-1:b",
+      "record_id": "eb11c3-4:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 - 2x^2 - 5x + 6 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3be5ea11ffcb882991e4fc4d32f0492d",
+      "kind": "value",
+      "answer": "x = 1, 3, -2",
+      "solution": [
+        "Let $P(x)=x^3-2x^2-5x+6$. $P(1)=1-2-5+6=0$, so $(x-1)$ is a factor (Factor Theorem).",
+        "$(x-1)(x^2-x-6)=0$.",
+        "Factorise: $x^2-x-6=(x-3)(x+2)$.",
+        "$(x-1)(x-3)(x+2)=0$.",
+        "Answer: $x=1,\\ 3,\\ -2$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, 3, -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-1:c",
+      "record_id": "eb11c3-4:warm-up-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 7x^2 - 18 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e915778b9970e0752ccd86af30bc6ac3",
+      "kind": "value",
+      "answer": "x = ±3, ±√2 i",
+      "solution": [
+        "Only $x^4$, $x^2$ and a constant appear, so treat $x^2$ as a chunk: $(x^2)^2-7x^2-18=0$.",
+        "Factorise: $(x^2-9)(x^2+2)=0$.",
+        "$x^2=9$ gives $x=\\pm3$.",
+        "$x^2=-2$ gives $x=\\pm\\sqrt2 i$.",
+        "Answer: $x=\\pm3,\\ \\pm\\sqrt2 i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±3, ±√2 i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-1:d",
+      "record_id": "eb11c3-4:warm-up-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 6x^3 + 8x^2 + 8x - 16 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "de901e6141ad0e6a63dc8dfd330b724d",
+      "kind": "value",
+      "answer": "x = 2, 1 ± √5",
+      "solution": [
+        "Let $P(x)=x^4-6x^3+8x^2+8x-16$. $P(2)=16-48+32+16-16=0$, so $(x-2)$ is a factor.",
+        "$(x-2)(x^3-4x^2+8)=0$.",
+        "For the cubic, $Q(2)=8-16+8=0$, so factor again: $(x-2)^2(x^2-2x-4)=0$.",
+        "$x-2=0$ gives $x=2$.",
+        "$x^2-2x-4$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{2\\pm\\sqrt{4+16}}{2}=1\\pm\\sqrt5$.",
+        "Answer: $x=2,\\ 1\\pm\\sqrt5$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-5",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2 (double root), 1 ± √5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:a",
+      "record_id": "eb11c3-4:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3=-1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "02de4aefc7cd96695aacc4a96a20ef05",
+      "kind": "value",
+      "answer": "x = -1, (1 ± √3 i)/2",
+      "solution": [
+        "Write $x^3+1=0$.",
+        "Use $x^3+a^3=(x+a)(x^2-ax+a^2)$ with $a=1$: $(x+1)(x^2-x+1)=0$.",
+        "$x+1=0$ gives $x=-1$.",
+        "$x^2-x+1$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{1\\pm\\sqrt{1-4}}{2}=\\frac{1\\pm\\sqrt3 i}{2}$.",
+        "Answer: $x=-1,\\ \\frac{1\\pm\\sqrt3 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1, (1 ± √3 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:b",
+      "record_id": "eb11c3-4:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$3x^3+x^2-8x+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b44a8109e96f5ee4c4c0326af9d5ce0b",
+      "kind": "value",
+      "answer": "x = 1, 2/3, -2",
+      "solution": [
+        "Let $P(x)=3x^3+x^2-8x+4$. $P(1)=3+1-8+4=0$, so $(x-1)$ is a factor.",
+        "$(x-1)(3x^2+4x-4)=0$.",
+        "Factorise: $3x^2+4x-4=(3x-2)(x+2)$.",
+        "$(x-1)(3x-2)(x+2)=0$.",
+        "Answer: $x=1,\\ \\frac23,\\ -2$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, 2/3, -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:c",
+      "record_id": "eb11c3-4:try-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$2x^3-3x^2-x-2=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "90d380dc9fcf5a1f9e2a56fd7d79a3f2",
+      "kind": "value",
+      "answer": "x = 2, (-1 ± √7 i)/4",
+      "solution": [
+        "Let $P(x)=2x^3-3x^2-x-2$. $P(2)=16-12-2-2=0$, so $(x-2)$ is a factor.",
+        "$(x-2)(2x^2+x+1)=0$.",
+        "$x-2=0$ gives $x=2$.",
+        "$2x^2+x+1$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-1\\pm\\sqrt{1-8}}{4}=\\frac{-1\\pm\\sqrt7 i}{4}$.",
+        "Answer: $x=2,\\ \\frac{-1\\pm\\sqrt7 i}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2, (-1 ± √7 i)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:d",
+      "record_id": "eb11c3-4:try-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3-x^2-16x-20=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "30f6a3eeeaa2fd9894f0d95219a61576",
+      "kind": "value",
+      "answer": "x = 5, -2 (repeated)",
+      "solution": [
+        "Let $P(x)=x^3-x^2-16x-20$. $P(5)=125-25-80-20=0$, so $(x-5)$ is a factor.",
+        "$(x-5)(x^2+4x+4)=0$.",
+        "Factorise: $x^2+4x+4=(x+2)^2$.",
+        "$(x-5)(x+2)^2=0$.",
+        "Answer: $x=5,\\ -2$ (−2 is repeated)."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 5, -2 (double root)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:e",
+      "record_id": "eb11c3-4:try-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4-5x^2+4=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "5e4923c9152a4aedeeedd3c1e8dfd58d",
+      "kind": "value",
+      "answer": "x = ±1, ±2",
+      "solution": [
+        "Treat $x^2$ as a chunk: $(x^2)^2-5x^2+4=0$.",
+        "Factorise: $(x^2-1)(x^2-4)=0$.",
+        "$x^2=1$ gives $x=\\pm1$; $x^2=4$ gives $x=\\pm2$.",
+        "Answer: $x=\\pm1,\\ \\pm2$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±1, ±2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-1:f",
+      "record_id": "eb11c3-4:try-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 143,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4-10x^3+35x^2-50x+24=0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "43facc86885a197e320433ea354daa77",
+      "kind": "value",
+      "answer": "x = 1, 2, 3, 4",
+      "solution": [
+        "Let $P(x)=x^4-10x^3+35x^2-50x+24$. $P(1)=1-10+35-50+24=0$, so $(x-1)$ is a factor.",
+        "$(x-1)(x^3-9x^2+26x-24)=0$.",
+        "For the cubic, $Q(2)=8-36+52-24=0$, so $(x-2)$ is a factor: $(x-1)(x-2)(x^2-7x+12)=0$.",
+        "Factorise: $x^2-7x+12=(x-3)(x-4)$.",
+        "Answer: $x=1,\\ 2,\\ 3,\\ 4$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, 2, 3, 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:work-with-a-partner-1",
+      "record_id": "eb11c3-4:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 143,
+      "question": {
+        "text": "Collaborate with your group to solve the try section then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c344927de8afccf9aeb18e1612e83703",
+      "kind": "explanation",
+      "answer": "Work through the try section with your group: factorise, then find the solutions.",
+      "solution": [
+        "For a cubic, use $x^3+a^3=(x+a)(x^2-ax+a^2)$ if it fits. Otherwise use the Factor Theorem.",
+        "For a quartic with only $x^4$, $x^2$ and a constant, treat $x^2$ as a chunk. Otherwise use the Factor Theorem.",
+        "Solve each factor. Use the Quadratic Formula when a quadratic cannot be factorised.",
+        "Compare your answers with your group."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-1",
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-4",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "Group activity; the Try equations are not given here. Method: use $x^3+a^3$ formula, Factor Theorem, or treat $x^2$ as a chunk, then the quadratic formula for non-factorisable parts.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:a",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 = 27$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "14738ad467eb9f7357ff267c7da96022",
+      "kind": "value",
+      "answer": "x = 3, (-3 ± 3√3 i)/2",
+      "solution": [
+        "Write $x^3-27=0$.",
+        "Use $x^3+a^3=(x+a)(x^2-ax+a^2)$ with $a=-3$: $(x-3)(x^2+3x+9)=0$.",
+        "$x-3=0$ gives $x=3$.",
+        "$x^2+3x+9$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-3\\pm\\sqrt{9-36}}{2}=\\frac{-3\\pm3\\sqrt3 i}{2}$.",
+        "Answer: $x=3,\\ \\frac{-3\\pm3\\sqrt3 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3, (-3 ± 3√3 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:b",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 = -125$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8a3d85910addbd1d2d3bacd0a1e0d6b6",
+      "kind": "value",
+      "answer": "x = -5, (5 ± 5√3 i)/2",
+      "solution": [
+        "Write $x^3+125=0$.",
+        "Use $x^3+a^3=(x+a)(x^2-ax+a^2)$ with $a=5$: $(x+5)(x^2-5x+25)=0$.",
+        "$x+5=0$ gives $x=-5$.",
+        "$x^2-5x+25$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{5\\pm\\sqrt{25-100}}{2}=\\frac{5\\pm5\\sqrt3 i}{2}$.",
+        "Answer: $x=-5,\\ \\frac{5\\pm5\\sqrt3 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = -5, (5 ± 5√3 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:c",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$8x^3 = 1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cca055362678027fb4d6ae785f2364d3",
+      "kind": "value",
+      "answer": "x = 1/2, (-1 ± √3 i)/4",
+      "solution": [
+        "Write $8x^3-1=0$, i.e. $(2x)^3+(-1)^3=0$.",
+        "Use $x^3+a^3=(x+a)(x^2-ax+a^2)$ with the cube $2x$ and $a=-1$: $(2x-1)(4x^2+2x+1)=0$.",
+        "$2x-1=0$ gives $x=\\frac12$.",
+        "$4x^2+2x+1$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-2\\pm\\sqrt{4-16}}{8}=\\frac{-1\\pm\\sqrt3 i}{4}$.",
+        "Answer: $x=\\frac12,\\ \\frac{-1\\pm\\sqrt3 i}{4}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1/2, (-1 ± √3 i)/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:d",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 + 6x^2 + 11x + 6 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "225670b696b5e1071c0c56c7b4302c3c",
+      "kind": "value",
+      "answer": "x = -1, -2, -3",
+      "solution": [
+        "Let $P(x)=x^3+6x^2+11x+6$. $P(-1)=-1+6-11+6=0$, so $(x+1)$ is a factor.",
+        "$(x+1)(x^2+5x+6)=0$.",
+        "Factorise: $x^2+5x+6=(x+2)(x+3)$.",
+        "Answer: $x=-1,\\ -2,\\ -3$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1, -2, -3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:e",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "e",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 + 3x^2 - 4x - 12 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f1fe7280baa8fcfa8cea9b497db4e833",
+      "kind": "value",
+      "answer": "x = 2, -2, -3",
+      "solution": [
+        "Let $P(x)=x^3+3x^2-4x-12$. $P(2)=8+12-8-12=0$, so $(x-2)$ is a factor.",
+        "$(x-2)(x^2+5x+6)=0$.",
+        "Factorise: $x^2+5x+6=(x+2)(x+3)$.",
+        "Answer: $x=2,\\ -2,\\ -3$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = -3, 2, -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:f",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "f",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$3x^3 - 2x^2 - 3x + 2 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ce11bd8dd9b99111d5a8aa09ebae6e35",
+      "kind": "value",
+      "answer": "x = 1, -1, 2/3",
+      "solution": [
+        "Let $P(x)=3x^3-2x^2-3x+2$. $P(1)=3-2-3+2=0$, so $(x-1)$ is a factor.",
+        "$(x-1)(3x^2+x-2)=0$.",
+        "Factorise: $3x^2+x-2=(3x-2)(x+1)$.",
+        "Answer: $x=1,\\ -1,\\ \\frac23$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2/3, 1, -1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:g",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "g",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 - x^2 - 4 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "2084d791592be54aea417c549abeb8c7",
+      "kind": "value",
+      "answer": "x = 2, (-1 ± √7 i)/2",
+      "solution": [
+        "Let $P(x)=x^3-x^2-4$. $P(2)=8-4-4=0$, so $(x-2)$ is a factor.",
+        "$(x-2)(x^2+x+2)=0$.",
+        "$x-2=0$ gives $x=2$.",
+        "$x^2+x+2$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-1\\pm\\sqrt{1-8}}{2}=\\frac{-1\\pm\\sqrt7 i}{2}$.",
+        "Answer: $x=2,\\ \\frac{-1\\pm\\sqrt7 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2, (-1 ± √7 i)/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:h",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "h",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 + 4x^2 + 2x - 4 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "840d20fac8652b16fda3a561a75c948f",
+      "kind": "value",
+      "answer": "x = -2, -1 ± √3",
+      "solution": [
+        "Let $P(x)=x^3+4x^2+2x-4$. $P(-2)=-8+16-4-4=0$, so $(x+2)$ is a factor.",
+        "$(x+2)(x^2+2x-2)=0$.",
+        "$x+2=0$ gives $x=-2$.",
+        "$x^2+2x-2$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{-2\\pm\\sqrt{4+8}}{2}=-1\\pm\\sqrt3$.",
+        "Answer: $x=-2,\\ -1\\pm\\sqrt3$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = -2, -1 ± √3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:i",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "i",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 - 4x^2 + 9x - 10 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e039353487ba58586da27224c793ec64",
+      "kind": "value",
+      "answer": "x = 2, 1 ± 2i",
+      "solution": [
+        "Let $P(x)=x^3-4x^2+9x-10$. $P(2)=8-16+18-10=0$, so $(x-2)$ is a factor.",
+        "$(x-2)(x^2-2x+5)=0$.",
+        "$x-2=0$ gives $x=2$.",
+        "$x^2-2x+5$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{2\\pm\\sqrt{4-20}}{2}=1\\pm2i$.",
+        "Answer: $x=2,\\ 1\\pm2i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 2, 1 ± 2i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:j",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "j",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 + x^2 - 8x - 12 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0456b12308a8c50a78455d47a3ad6476",
+      "kind": "value",
+      "answer": "x = -2 (repeated), 3",
+      "solution": [
+        "Let $P(x)=x^3+x^2-8x-12$. $P(-2)=-8+4+16-12=0$, so $(x+2)$ is a factor.",
+        "$(x+2)(x^2-x-6)=0$.",
+        "Factorise: $x^2-x-6=(x-3)(x+2)$.",
+        "$(x+2)^2(x-3)=0$.",
+        "Answer: $x=-2,\\ 3$ (−2 is repeated)."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3, -2 (double root)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:k",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "k",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$2x^3 + 7x^2 + 8x + 3 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b0a096fa247fa3da17e2e5addeee938a",
+      "kind": "value",
+      "answer": "x = -1 (repeated), -3/2",
+      "solution": [
+        "Let $P(x)=2x^3+7x^2+8x+3$. $P(-1)=-2+7-8+3=0$, so $(x+1)$ is a factor.",
+        "$(x+1)(2x^2+5x+3)=0$.",
+        "Factorise: $2x^2+5x+3=(2x+3)(x+1)$.",
+        "$(x+1)^2(2x+3)=0$.",
+        "Answer: $x=-1,\\ -\\frac32$ (−1 is repeated)."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1 (double root), -3/2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:l",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "l",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^3 + 6x^2 + 12x + 8 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f84228ba92a40db4f02f9d0d024a44ee",
+      "kind": "value",
+      "answer": "x = -2",
+      "solution": [
+        "Let $P(x)=x^3+6x^2+12x+8$. $P(-2)=-8+24-24+8=0$, so $(x+2)$ is a factor.",
+        "$(x+2)(x^2+4x+4)=0$.",
+        "Factorise: $x^2+4x+4=(x+2)^2$.",
+        "$(x+2)^3=0$.",
+        "Answer: $x=-2$ (repeated three times)."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = -2 (triple root)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:m",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "m",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 5x^2 - 36 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "419413703c0aa05c639336e80d06d207",
+      "kind": "value",
+      "answer": "x = ±3, ±2i",
+      "solution": [
+        "Treat $x^2$ as a chunk: $(x^2)^2-5x^2-36=0$.",
+        "Factorise: $(x^2-9)(x^2+4)=0$.",
+        "$x^2=9$ gives $x=\\pm3$; $x^2=-4$ gives $x=\\pm2i$.",
+        "Answer: $x=\\pm3,\\ \\pm2i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±3, ±2i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:n",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "n",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 6x^2 - 27 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ad185a853bfb69a48e3734d391b00f63",
+      "kind": "value",
+      "answer": "x = ±3, ±√3 i",
+      "solution": [
+        "Treat $x^2$ as a chunk: $(x^2)^2-6x^2-27=0$.",
+        "Factorise: $(x^2-9)(x^2+3)=0$.",
+        "$x^2=9$ gives $x=\\pm3$; $x^2=-3$ gives $x=\\pm\\sqrt3 i$.",
+        "Answer: $x=\\pm3,\\ \\pm\\sqrt3 i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±3, ±√3 i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:o",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "o",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - x^2 - 2 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fadcda986ae03187777eaad73ea53181",
+      "kind": "value",
+      "answer": "x = ±√2, ±i",
+      "solution": [
+        "Treat $x^2$ as a chunk: $(x^2)^2-x^2-2=0$.",
+        "Factorise: $(x^2-2)(x^2+1)=0$.",
+        "$x^2=2$ gives $x=\\pm\\sqrt2$; $x^2=-1$ gives $x=\\pm i$.",
+        "Answer: $x=\\pm\\sqrt2,\\ \\pm i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = ±√2, ±i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:p",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "p",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 9x^3 + 29x^2 - 39x + 18 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "205a425bac6d1f3d5785321f2f7207f3",
+      "kind": "value",
+      "answer": "x = 1, 2, 3 (repeated)",
+      "solution": [
+        "Let $P(x)=x^4-9x^3+29x^2-39x+18$. $P(1)=1-9+29-39+18=0$, so $(x-1)$ is a factor.",
+        "$(x-1)(x^3-8x^2+21x-18)=0$.",
+        "For the cubic, $Q(2)=8-32+42-18=0$, so $(x-2)$ is a factor: $(x-1)(x-2)(x^2-6x+9)=0$.",
+        "Factorise: $x^2-6x+9=(x-3)^2$.",
+        "Answer: $x=1,\\ 2,\\ 3$ (3 is repeated)."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, 2, 3 (double root)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-1:q",
+      "record_id": "eb11c3-4:exercise-1",
+      "part": "q",
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the following equations.",
+        "stem": "$x^4 - 4x^3 + 3x^2 + 2x - 6 = 0$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f20529091eea5c61d8cee25e42c7e63d",
+      "kind": "value",
+      "answer": "x = -1, 3, 1 ± i",
+      "solution": [
+        "Let $P(x)=x^4-4x^3+3x^2+2x-6$. $P(-1)=1+4+3-2-6=0$, so $(x+1)$ is a factor.",
+        "$(x+1)(x^3-5x^2+8x-6)=0$.",
+        "For the cubic, $Q(3)=27-45+24-6=0$, so $(x-3)$ is a factor: $(x+1)(x-3)(x^2-2x+2)=0$.",
+        "$x^2-2x+2$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{2\\pm\\sqrt{4-8}}{2}=1\\pm i$.",
+        "Answer: $x=-1,\\ 3,\\ 1\\pm i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1, 3, 1 ± i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-1",
+      "record_id": "eb11c3-4:challenge-1",
+      "part": null,
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Write the equation that expresses the balance between inflow and outflow.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "366db567189f6d168c06c1cec67250a9",
+      "kind": "value",
+      "answer": "x^4 - x^3 + x^2 + x - 2 = 0",
+      "solution": [
+        "Stable level means inflow = outflow: $x^4+x^2+x=x^3+2$.",
+        "Move everything to the left side: $x^4-x^3+x^2+x-2=0$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:challenge-1"
+      ],
+      "checks": {
+        "resolve_answer": "$x^4+x^2+x=x^3+2$, i.e. $x^4-x^3+x^2+x-2=0$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-2",
+      "record_id": "eb11c3-4:challenge-2",
+      "part": null,
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Solve the equation to find the values of x that keep the water level stable.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "77a7352d576f9eed2e24a70272566e71",
+      "kind": "value",
+      "answer": "x = 1, -1, (1 ± √7 i)/2",
+      "solution": [
+        "Let $P(x)=x^4-x^3+x^2+x-2$.",
+        "$P(1)=1-1+1+1-2=0$, so $(x-1)$ is a factor.",
+        "$P(x)=(x-1)(x^3+x+2)$.",
+        "Let $Q(x)=x^3+x+2$. $Q(-1)=-1-1+2=0$, so $(x+1)$ is a factor.",
+        "$Q(x)=(x+1)(x^2-x+2)$.",
+        "So $(x-1)(x+1)(x^2-x+2)=0$ and $x=1$ or $x=-1$.",
+        "$x^2-x+2$ cannot be factorised, so use the Quadratic Formula: $x=\\frac{1\\pm\\sqrt{1-8}}{2}=\\frac{1\\pm\\sqrt7 i}{2}$.",
+        "The solutions are $x=1,\\ -1,\\ \\frac{1\\pm\\sqrt7 i}{2}$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-3",
+        "eb11c3-4:method-4",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "x = 1, -1, (1 + √7 i)/2, (1 - √7 i)/2 (from $(x-1)(x+1)(x^2-x+2)=0$)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-3",
+      "record_id": "eb11c3-4:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 144,
+      "question": {
+        "text": "Determine whether the solutions are only real numbers or if complex solutions also exist.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6415928644a3915c1594b20b7276a9da",
+      "kind": "explanation",
+      "answer": "No, complex solutions also exist: (1 ± √7 i)/2 are non-real.",
+      "solution": [
+        "The solutions are $1$, $-1$ and $\\frac{1\\pm\\sqrt7 i}{2}$.",
+        "$1$ and $-1$ are real.",
+        "$\\frac{1\\pm\\sqrt7 i}{2}$ contain $i$, so they are complex non-real numbers.",
+        "So the solutions are not only real numbers."
+      ],
+      "grounded_in": [
+        "eb11c3-4:method-5",
+        "eb11c3-4:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "Complex solutions also exist: the real solutions are x = 1 and x = -1, and the other two, $(1\\pm\\sqrt{7}i)/2$, are non-real complex.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-2",
+      "record_id": "eb11c3-4:warm-up-2",
+      "part": null,
+      "type": "exercise",
+      "page": 145,
+      "question": {
+        "text": "If the cubic equation $x^3+ax^2+bx+5=0$ has $2+i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b60209da9f5204177cfeae8b4853e707",
+      "kind": "value",
+      "answer": "a = -3, b = 1; the other solutions are x = -1 and x = 2 - i",
+      "solution": [
+        "Substitute $x=2+i$: $(2+i)^3+a(2+i)^2+b(2+i)+5=0$.",
+        "Convert to $a+bi$ form: $(3a+2b+7)+(4a+b+11)i=0$.",
+        "Compare real and imaginary parts: $3a+2b+7=0$ and $4a+b+11=0$.",
+        "Solving gives $a=-3$, $b=1$.",
+        "The equation is $x^3-3x^2+x+5=0$. By the Factor Theorem, $(x+1)(x^2-4x+5)=0$.",
+        "So $x=-1$ or $x=2\\pm i$. Leave out $2+i$.",
+        "The other solutions are $x=-1$ and $x=2-i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a = -3, b = 1; other solutions x = -1, 2 - i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-2",
+      "record_id": "eb11c3-4:try-2",
+      "part": null,
+      "type": "exercise",
+      "page": 145,
+      "question": {
+        "text": "If the cubic equation $x^3+4x^2+ax+b=0$ has $-3$ and $1$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "5fc9514d2d25df979ec40312442b6fc9",
+      "kind": "value",
+      "answer": "a = 1, b = -6; the other solution is x = -2",
+      "solution": [
+        "Substitute $x=1$: $1+4+a+b=0$, so $a+b=-5$.",
+        "Substitute $x=-3$: $-27+36-3a+b=0$, so $-3a+b=-9$.",
+        "Subtract the equations: $4a=4$, so $a=1$ and $b=-6$.",
+        "The equation is $x^3+4x^2+x-6=0$. By the Factor Theorem, $(x-1)(x^2+5x+6)=0$.",
+        "$(x-1)(x+2)(x+3)=0$.",
+        "The other solution is $x=-2$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 1, b = -6; other solution x = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-3",
+      "record_id": "eb11c3-4:try-3",
+      "part": null,
+      "type": "exercise",
+      "page": 145,
+      "question": {
+        "text": "If the cubic equation $x^3+ax^2+bx-4=0$ has $1+i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e1d2141a7bb26f1f63298761b94db16f",
+      "kind": "value",
+      "answer": "a = -4, b = 6; the other solutions are x = 2 and x = 1 - i",
+      "solution": [
+        "$(1+i)^2=2i$ and $(1+i)^3=-2+2i$.",
+        "Substitute: $-2+2i+2ai+b+bi-4=0$.",
+        "Real part: $b-6=0$, so $b=6$. Imaginary part: $2+2a+b=0$, so $a=-4$.",
+        "The equation is $x^3-4x^2+6x-4=0$. By the Factor Theorem, $(x-2)(x^2-2x+2)=0$.",
+        "So $x=2$ or $x=1\\pm i$. Leave out $1+i$.",
+        "The other solutions are $x=2$ and $x=1-i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4, b = 6; other solutions x = 2, 1 - i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-2",
+      "record_id": "eb11c3-4:exercise-2",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If the cubic equation $x^3-ax^2-x+b=0$ has $-1$ and $2$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d00dc91198a758a2b181477da1f47609",
+      "kind": "value",
+      "answer": "a = 2, b = 2; the other solution is x = 1",
+      "solution": [
+        "Substitute $x=-1$: $-1-a+1+b=0$, so $b=a$.",
+        "Substitute $x=2$: $8-4a-2+b=0$, so $6-4a+b=0$.",
+        "Using $b=a$: $6-3a=0$, so $a=2$ and $b=2$.",
+        "The equation is $x^3-2x^2-x+2=0$. By the Factor Theorem, $(x-2)(x^2-1)=0$.",
+        "$(x-2)(x-1)(x+1)=0$.",
+        "The other solution is $x=1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = 2, b = 2; other solution x = 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-3",
+      "record_id": "eb11c3-4:exercise-3",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If the cubic equation $x^3+ax^2+bx-8=0$ has $1$ and $2$ as solutions, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "6bf6c4e996525735f030bbe0d795efbe",
+      "kind": "value",
+      "answer": "a = -7, b = 14; the other solution is x = 4",
+      "solution": [
+        "Substitute $x=1$: $1+a+b-8=0$, so $a+b=7$.",
+        "Substitute $x=2$: $8+4a+2b-8=0$, so $2a+b=0$.",
+        "Subtract: $a=-7$, so $b=14$.",
+        "The equation is $x^3-7x^2+14x-8=0$. By the Factor Theorem, $(x-1)(x^2-6x+8)=0$.",
+        "$(x-1)(x-2)(x-4)=0$.",
+        "The other solution is $x=4$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "a = -7, b = 14; other solution x = 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-4",
+      "record_id": "eb11c3-4:exercise-4",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If one solution of the cubic equation $x^3-kx^2+(3k-1)x-24=0$ is $2$, find the value of the real number $k$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "778566548806f7d9146852bbe0192591",
+      "kind": "value",
+      "answer": "k = 9; the other solutions are x = 3 and x = 4",
+      "solution": [
+        "Substitute $x=2$: $8-4k+2(3k-1)-24=0$.",
+        "$2k-18=0$, so $k=9$.",
+        "The equation is $x^3-9x^2+26x-24=0$. By the Factor Theorem, $(x-2)(x^2-7x+12)=0$.",
+        "$(x-2)(x-3)(x-4)=0$.",
+        "The other solutions are $x=3$ and $x=4$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-4"
+      ],
+      "checks": {
+        "resolve_answer": "k = 9; other solutions x = 3, 4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-5",
+      "record_id": "eb11c3-4:exercise-5",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If the cubic equation $x^3+ax^2+bx-20=0$ has $1-3i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "3b2f3754579b7de131e13eafa7c2138a",
+      "kind": "value",
+      "answer": "a = -4, b = 14; the other solutions are x = 2 and x = 1 + 3i",
+      "solution": [
+        "$(1-3i)^2=-8-6i$ and $(1-3i)^3=-26+18i$.",
+        "Substitute: $-26+18i+a(-8-6i)+b(1-3i)-20=0$.",
+        "Real part: $-46-8a+b=0$. Imaginary part: $18-6a-3b=0$, so $b=6-2a$.",
+        "Put $b=6-2a$ into the real part: $-40-10a=0$, so $a=-4$ and $b=14$.",
+        "The equation is $x^3-4x^2+14x-20=0$. By the Factor Theorem, $(x-2)(x^2-2x+10)=0$.",
+        "So $x=2$ or $x=1\\pm3i$. Leave out $1-3i$.",
+        "The other solutions are $x=2$ and $x=1+3i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4, b = 14; other solutions x = 2, 1 + 3i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-6",
+      "record_id": "eb11c3-4:exercise-6",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If the cubic equation $x^3+ax^2+bx+10=0$ has $1+2i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f9db94f76a8c32be2fa80664e8a7097e",
+      "kind": "value",
+      "answer": "a = 0, b = 1; the other solutions are x = -2 and x = 1 - 2i",
+      "solution": [
+        "$(1+2i)^2=-3+4i$ and $(1+2i)^3=-11-2i$.",
+        "Substitute: $-11-2i+a(-3+4i)+b(1+2i)+10=0$.",
+        "Real part: $-1-3a+b=0$. Imaginary part: $-2+4a+2b=0$, so $-1+2a+b=0$.",
+        "Subtract: $-5a=0$, so $a=0$ and $b=1$.",
+        "The equation is $x^3+x+10=0$. By the Factor Theorem, $(x+2)(x^2-2x+5)=0$.",
+        "So $x=-2$ or $x=1\\pm2i$. Leave out $1+2i$.",
+        "The other solutions are $x=-2$ and $x=1-2i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a = 0, b = 1; other solutions x = -2, 1 - 2i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-4",
+      "record_id": "eb11c3-4:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 146,
+      "question": {
+        "text": "If the cubic equation $x^3+ax+b=0$ has $1+\\sqrt{2}i$ as a solution, find the values of real numbers $a, b$. Also, find the other solutions.",
+        "stem": "",
+        "notes": "Printed in a box headed '★ Challenge'."
+      },
+      "needs_page": false,
+      "question_fingerprint": "81ce86150676e92066ed693d2e682f7c",
+      "kind": "value",
+      "answer": "a = -1, b = 6; the other solutions are x = -2 and x = 1 - √2 i",
+      "solution": [
+        "$(1+\\sqrt2 i)^2=-1+2\\sqrt2 i$ and $(1+\\sqrt2 i)^3=-5+\\sqrt2 i$.",
+        "Substitute: $-5+\\sqrt2 i+a+a\\sqrt2 i+b=0$.",
+        "Imaginary part: $\\sqrt2(1+a)=0$, so $a=-1$.",
+        "Real part: $-5+a+b=0$, so $b=6$.",
+        "The equation is $x^3-x+6=0$. By the Factor Theorem, $(x+2)(x^2-2x+3)=0$.",
+        "So $x=-2$ or $x=1\\pm\\sqrt2 i$. Leave out $1+\\sqrt2 i$.",
+        "The other solutions are $x=-2$ and $x=1-\\sqrt2 i$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-2",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "a = -1, b = 6; other solutions x = -2, 1 - √2 i",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-3:a",
+      "record_id": "eb11c3-4:warm-up-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^9$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8cf041bfd4260ac779e8e29d0af5096b",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "Create $\\omega^3$: $\\omega^9=(\\omega^3)^3$.",
+        "Use $\\omega^3=1$: $1^3=1$.",
+        "Answer: $1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:method-6",
+        "eb11c3-4:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-3:b",
+      "record_id": "eb11c3-4:warm-up-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^4+\\omega^5$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "29758b1384151acf382a4de6a49c7e61",
+      "kind": "value",
+      "answer": "-1",
+      "solution": [
+        "Create $\\omega^3$: $\\omega^4+\\omega^5=\\omega\\times\\omega^3+\\omega^2\\times\\omega^3$.",
+        "Use $\\omega^3=1$: $=\\omega+\\omega^2$.",
+        "Use $\\omega^2+\\omega+1=0$, so $\\omega+\\omega^2=-1$.",
+        "Answer: $-1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-6",
+        "eb11c3-4:method-7",
+        "eb11c3-4:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-3:c",
+      "record_id": "eb11c3-4:warm-up-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega+\\dfrac{1}{\\omega}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1c586719ea632c19f41bf8dbbb0689c9",
+      "kind": "value",
+      "answer": "-1",
+      "solution": [
+        "Combine over $\\omega$: $\\omega+\\frac1\\omega=\\frac{\\omega^2+1}{\\omega}$.",
+        "Since $\\omega^2+\\omega+1=0$, $\\omega^2+1=-\\omega$.",
+        "$\\frac{-\\omega}{\\omega}=-1$.",
+        "Answer: $-1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-7",
+        "eb11c3-4:explanation-1"
+      ],
+      "checks": {
+        "resolve_answer": "-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-5",
+      "record_id": "eb11c3-4:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Evaluate the value of the following expression without expanding the brackets directly: $(1-\\omega+\\omega^2)(1+\\omega-\\omega^2)$",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "afe2c2cd969bba2187c1f81cd4d4ab0c",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "Since $\\omega^2+\\omega+1=0$: $1+\\omega^2=-\\omega$, so $1-\\omega+\\omega^2=-\\omega-\\omega=-2\\omega$.",
+        "Also $1+\\omega=-\\omega^2$, so $1+\\omega-\\omega^2=-\\omega^2-\\omega^2=-2\\omega^2$.",
+        "Product: $(-2\\omega)(-2\\omega^2)=4\\omega^3$.",
+        "Use $\\omega^3=1$: $4$.",
+        "Answer: $4$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-6",
+        "eb11c3-4:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-4:a",
+      "record_id": "eb11c3-4:try-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^{2010}$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b59a78ac5c8b169a87bd6d024e81ad3c",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "$2010=3\\times670$, so $\\omega^{2010}=(\\omega^3)^{670}$.",
+        "Use $\\omega^3=1$: $1^{670}=1$.",
+        "Answer: $1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:method-6"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-4:b",
+      "record_id": "eb11c3-4:try-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^2+\\omega$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8acd473e6e5817cf6ab51a74cadc705c",
+      "kind": "value",
+      "answer": "-1",
+      "solution": [
+        "Use $\\omega^2+\\omega+1=0$.",
+        "So $\\omega^2+\\omega=-1$.",
+        "Answer: $-1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "-1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-4:c",
+      "record_id": "eb11c3-4:try-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$(1+\\omega)(1+\\omega^2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "c9ef928d8aee9c6eaa8195707725ee32",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "Expand: $(1+\\omega)(1+\\omega^2)=1+\\omega^2+\\omega+\\omega^3$.",
+        "Use $\\omega^3=1$: $=2+\\omega+\\omega^2$.",
+        "Use $\\omega^2+\\omega=-1$: $2-1=1$.",
+        "Answer: $1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-6",
+        "eb11c3-4:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-7:a",
+      "record_id": "eb11c3-4:exercise-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^3$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "17ef33c1bf6a265b2429d776a9408436",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "By the property of $\\omega$, $\\omega^3=1$.",
+        "Answer: $1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-7:b",
+      "record_id": "eb11c3-4:exercise-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\omega^2+\\omega^4+\\omega^6$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "efe8b13efc4fa911e2354f91fb9fc3ec",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "Lower the degree using $\\omega^3=1$: $\\omega^4=\\omega\\times\\omega^3=\\omega$ and $\\omega^6=(\\omega^3)^2=1$.",
+        "So $\\omega^2+\\omega^4+\\omega^6=\\omega^2+\\omega+1$.",
+        "Use $\\omega^2+\\omega+1=0$.",
+        "Answer: $0$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-6",
+        "eb11c3-4:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-7:c",
+      "record_id": "eb11c3-4:exercise-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 147,
+      "question": {
+        "text": "Let $\\omega$ be one of the imaginary cube roots of unity. Find the value of the following expressions.",
+        "stem": "$\\dfrac{1}{\\omega}+\\dfrac{1}{\\omega^2}+1$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4b6ccfcc2ebb660bba82fb908e316de9",
+      "kind": "value",
+      "answer": "0",
+      "solution": [
+        "Since $\\omega^3=1$: $\\frac1\\omega=\\frac{\\omega^3}{\\omega}=\\omega^2$.",
+        "Also $\\frac1{\\omega^2}=\\frac{\\omega^3}{\\omega^2}=\\omega$.",
+        "So the expression is $\\omega^2+\\omega+1$.",
+        "Use $\\omega^2+\\omega+1=0$.",
+        "Answer: $0$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-3",
+        "eb11c3-4:rule-4",
+        "eb11c3-4:method-6",
+        "eb11c3-4:method-7"
+      ],
+      "checks": {
+        "resolve_answer": "0",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:warm-up-4",
+      "record_id": "eb11c3-4:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 148,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3-2x^2+(a-3)x+a=0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "816d5c1968077174f3b63f6f03f9d853",
+      "kind": "value",
+      "answer": "a = -4, 9/4",
+      "solution": [
+        "Let $P(x)=x^3-2x^2+(a-3)x+a$. $P(-1)=0$, so $P(x)=(x+1)(x^2-3x+a)$.",
+        "Case 1: $x^2-3x+a=0$ has $x=-1$ as a solution. $1+3+a=0$, so $a=-4$.",
+        "Case 2: $x^2-3x+a=0$ has a repeated root. $D=9-4a=0$, so $a=\\frac94$.",
+        "Both values satisfy the condition: $a=-4,\\ \\frac94$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:worked-example-2",
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = -4, 9/4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:try-5",
+      "record_id": "eb11c3-4:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 149,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3 - x^2 + (a-2)x + a = 0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "37b75e62a2caf32d41bca086db42f8e3",
+      "kind": "value",
+      "answer": "a = -3, 1",
+      "solution": [
+        "Let $P(x)=x^3-x^2+(a-2)x+a$. $P(-1)=-1-1-(a-2)+a=0$, so $(x+1)$ is a factor.",
+        "$P(x)=(x+1)(x^2-2x+a)$.",
+        "Case 1: $x=-1$ is a solution of $x^2-2x+a=0$. $1+2+a=0$, so $a=-3$.",
+        "Case 2: $x^2-2x+a=0$ has a repeated root. $D=4-4a=0$, so $a=1$.",
+        "So $a=-3,\\ 1$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = -3, 1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-8",
+      "record_id": "eb11c3-4:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 149,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3 - 7x^2 + (a+6)x - a = 0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "8d2f00908067f87e776c41e1a8eadbef",
+      "kind": "value",
+      "answer": "a = 5, 9",
+      "solution": [
+        "Let $P(x)=x^3-7x^2+(a+6)x-a$. $P(1)=1-7+a+6-a=0$, so $(x-1)$ is a factor.",
+        "$P(x)=(x-1)(x^2-6x+a)$.",
+        "Case 1: $x=1$ is a solution of $x^2-6x+a=0$. $1-6+a=0$, so $a=5$.",
+        "Case 2: $x^2-6x+a=0$ has a repeated root. $D=36-4a=0$, so $a=9$.",
+        "So $a=5,\\ 9$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = 5, 9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-9",
+      "record_id": "eb11c3-4:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 149,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3 - (a+1)x^2 + (3a+5)x - 2a - 5 = 0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "cd71f131d338c51ff24fd6aae419cf82",
+      "kind": "value",
+      "answer": "a = -6, -2, 10",
+      "solution": [
+        "Let $P(x)=x^3-(a+1)x^2+(3a+5)x-2a-5$. $P(1)=1-a-1+3a+5-2a-5=0$, so $(x-1)$ is a factor.",
+        "$P(x)=(x-1)(x^2-ax+2a+5)$.",
+        "Case 1: $x=1$ is a solution of $x^2-ax+2a+5=0$. $1-a+2a+5=0$, so $a=-6$.",
+        "Case 2: $D=a^2-4(2a+5)=a^2-8a-20=0$.",
+        "$(a-10)(a+2)=0$, so $a=10$ or $a=-2$.",
+        "So $a=-6,\\ -2,\\ 10$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = -6, -2, 10",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:exercise-10",
+      "record_id": "eb11c3-4:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 149,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3 + (2a-1)x^2 - 3(a-2)x + a - 6 = 0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1a56724cdf1ceee524f15798d122feb4",
+      "kind": "value",
+      "answer": "a = -7, -3, 2",
+      "solution": [
+        "Let $P(x)=x^3+(2a-1)x^2-3(a-2)x+a-6$. $P(1)=1+2a-1-3a+6+a-6=0$, so $(x-1)$ is a factor.",
+        "$P(x)=(x-1)(x^2+2ax+6-a)$.",
+        "Case 1: $x=1$ is a solution of $x^2+2ax+6-a=0$. $1+2a+6-a=0$, so $a=-7$.",
+        "Case 2: $D=4a^2-4(6-a)=0$, so $a^2+a-6=0$.",
+        "$(a+3)(a-2)=0$, so $a=-3$ or $a=2$.",
+        "So $a=-7,\\ -3,\\ 2$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = -7, -3, 2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:challenge-6",
+      "record_id": "eb11c3-4:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 149,
+      "question": {
+        "text": "Find the value of the constant $a$ such that $x^3 + (a-1)x^2 + (a-3)x - 2a + 3 = 0$ has a repeated root.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "22477c71ebd3865f65c84028a3e982b6",
+      "kind": "value",
+      "answer": "a = 2/3, 2, 6",
+      "solution": [
+        "Let $P(x)=x^3+(a-1)x^2+(a-3)x-2a+3$. $P(1)=1+a-1+a-3-2a+3=0$, so $(x-1)$ is a factor.",
+        "$P(x)=(x-1)(x^2+ax+2a-3)$.",
+        "Case 1: $x=1$ is a solution of $x^2+ax+2a-3=0$. $1+a+2a-3=0$, so $a=\\frac23$.",
+        "Case 2: $D=a^2-4(2a-3)=a^2-8a+12=0$.",
+        "$(a-2)(a-6)=0$, so $a=2$ or $a=6$.",
+        "So $a=\\frac23,\\ 2,\\ 6$."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-5",
+        "eb11c3-4:rule-7",
+        "eb11c3-4:rule-8"
+      ],
+      "checks": {
+        "resolve_answer": "a = 2/3, 2, 6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c3-4:reflect-1",
+      "record_id": "eb11c3-4:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 149,
+      "question": {
+        "text": "A quadratic equation (like $x^2+1=0$) might have no real solutions. Why does a cubic equation (like $x^3+x+1=0$) always have at least one real solution? What does this show about the way these two types of equations behave?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "91b2016f225b34101f054620091856be",
+      "kind": "explanation",
+      "answer": "A cubic has 3 solutions and non-real ones come in pairs, so at least one is real, unlike a quadratic whose 2 solutions can both be non-real.",
+      "solution": [
+        "A cubic has 3 solutions in the complex numbers (rule 1).",
+        "Non-real solutions come in pairs like $2+i$ and $2-i$ (see the worked examples), so they use up 2 solutions at a time.",
+        "With 3 solutions, at most 2 can be non-real, so at least 1 is real.",
+        "A quadratic like $x^2+1=0$ has 2 solutions, $\\pm i$, and both can be a non-real pair.",
+        "So an odd-degree equation always has a real solution, but an even-degree equation may not."
+      ],
+      "grounded_in": [
+        "eb11c3-4:rule-1",
+        "eb11c3-4:method-5"
+      ],
+      "checks": {
+        "resolve_answer": "A cubic's graph goes to opposite infinities at the two ends (odd degree), so it must cross the x-axis at least once; hence at least one real root. A quadratic's graph has both ends going the same way, so it can lie entirely above or below the axis (e.g. $x^2+1$) and have no real roots. Odd-degree equations always have a real root; even-degree ones need not.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:31:05+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

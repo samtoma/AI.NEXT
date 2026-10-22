@@ -1,0 +1,4308 @@
+{
+  "format": "ainext.generated-answers/1",
+  "book": "egb-g11-math",
+  "lesson": "eb11c4-1",
+  "source": "book-records/egb-g11-math/eb11c4-1.json",
+  "made_by": "answer_gen.py",
+  "runs": [
+    {
+      "at": "2026-10-21",
+      "model": "sonnet",
+      "prompts": "ans-v3",
+      "parts": 116,
+      "cost_usd": 1.8337,
+      "calls": [
+        {
+          "call": "answers.eb11c4-1",
+          "cost_usd": 1.8337,
+          "model": "sonnet"
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "ref": "eb11c4-1:guiding-question-1",
+      "record_id": "eb11c4-1:guiding-question-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 150,
+      "question": {
+        "text": "How does mapping physical space onto a grid of numbers allow us to precisely partition paths, find balances, and safely navigate complex physical environments?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "532a92c460878f662cb7c881019ccd01",
+      "kind": "explanation",
+      "answer": "Giving every point a number (coordinate) lets us use formulas to measure distances, split segments in a ratio and find midpoints exactly.",
+      "solution": [
+        "Each point gets a coordinate, so a position becomes a number.",
+        "The distance formula $AB=|b-a|$ gives exact lengths.",
+        "The division formulas give the exact point that splits a path in a ratio m:n (internally or externally).",
+        "The midpoint formula finds the balance point.",
+        "So paths can be partitioned precisely and checked by calculation."
+      ],
+      "grounded_in": [
+        "eb11c4-1:definition-1",
+        "eb11c4-1:rule-1",
+        "eb11c4-1:rule-2",
+        "eb11c4-1:rule-3",
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Giving every point a numerical coordinate turns positions into numbers, so distances come from $|b-a|$, division points from the ratio formulas, and midpoints from averages. A path can be split exactly in a chosen ratio, and balance points or safe boundaries can be calculated precisely.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-1:a",
+      "record_id": "eb11c4-1:warm-up-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+        "stem": "Distance AB between the two points.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9cbf5da441ae616476feca9c28f97828",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+        "$AB=|b-a|=|8-(-4)|$",
+        "$=12$",
+        "The distance AB is 12."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-1:b",
+      "record_id": "eb11c4-1:warm-up-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+        "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e22961352b50ff42b0d0d4a3198b64c9",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "Internal ratio m:n = 2:1, so m = 2, n = 1, a = -4, b = 8.",
+        "$\\frac{na+mb}{m+n}=\\frac{1\\times(-4)+2\\times 8}{2+1}$",
+        "$=\\frac{12}{3}=4$",
+        "C(4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-1:c",
+      "record_id": "eb11c4-1:warm-up-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+        "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "16af49d95ed4753c6ff015ea54936101",
+      "kind": "value",
+      "answer": "-28",
+      "solution": [
+        "External ratio 2:3, so m = 2, n = 3, a = -4, b = 8.",
+        "$\\frac{-na+mb}{m-n}=\\frac{-3\\times(-4)+2\\times 8}{2-3}$",
+        "$=\\frac{28}{-1}=-28$",
+        "D(-28)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "-28",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-1:d",
+      "record_id": "eb11c4-1:warm-up-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−4) and B(8), find the following distances or coordinates.",
+        "stem": "Coordinate of midpoint M of segment AB.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4e8b5e89ed547f81a7d1de3b7656b18c",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "$M=\\frac{a+b}{2}=\\frac{-4+8}{2}$",
+        "$=2$",
+        "M(2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-1:a",
+      "record_id": "eb11c4-1:try-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+        "stem": "Distance AB between the two points.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6596327147af70ff6fb18c49d786a56f",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+        "$AB=|7-(-5)|$",
+        "$=12$",
+        "The distance is 12."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "12",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-1:b",
+      "record_id": "eb11c4-1:try-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+        "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "eeebdd881c5099c6d96c3503928f0256",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+        "m = 2, n = 1, a = -5, b = 7.",
+        "$\\frac{1\\times(-5)+2\\times 7}{2+1}=\\frac{9}{3}$",
+        "$=3$",
+        "C(3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "3",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-1:c",
+      "record_id": "eb11c4-1:try-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+        "stem": "Coordinate of point D dividing segment AB externally in the ratio 2:5",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fcbe6e5e3e117acc5456a340b46eeaaf",
+      "kind": "value",
+      "answer": "-13",
+      "solution": [
+        "External ratio 2:5, m = 2, n = 5, a = -5, b = 7.",
+        "$\\frac{-5\\times(-5)+2\\times 7}{2-5}=\\frac{39}{-3}$",
+        "$=-13$",
+        "D(-13)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "-13",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-1:d",
+      "record_id": "eb11c4-1:try-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−5) and B(7), find the following distances or coordinates.",
+        "stem": "Coordinate of midpoint M of segment AB.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e1cb66a78be53fb3362c2fcc5b234f6c",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "$M=\\frac{-5+7}{2}$",
+        "$=1$",
+        "M(1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-1:a",
+      "record_id": "eb11c4-1:exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+        "stem": "Distance AB between the two points.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9d6f2f7b82c8974fffa0bcf53230b6f2",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+        "$AB=|6-(-2)|$",
+        "$=8$",
+        "The distance is 8."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-1:b",
+      "record_id": "eb11c4-1:exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+        "stem": "Coordinate of point C dividing segment AB internally in the ratio 3:1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "272cd2339c55335c29b22d9436e82080",
+      "kind": "value",
+      "answer": "4",
+      "solution": [
+        "m = 3, n = 1, a = -2, b = 6.",
+        "$\\frac{1\\times(-2)+3\\times 6}{3+1}=\\frac{16}{4}$",
+        "$=4$",
+        "C(4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "4",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-1:c",
+      "record_id": "eb11c4-1:exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+        "stem": "Coordinate of point D dividing segment AB externally in the ratio 5:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fb2259fa7b26ab0cbcb7c33877dcc88a",
+      "kind": "value",
+      "answer": "18",
+      "solution": [
+        "External ratio 5:3, m = 5, n = 3, a = -2, b = 6.",
+        "$\\frac{-3\\times(-2)+5\\times 6}{5-3}=\\frac{36}{2}$",
+        "$=18$",
+        "D(18)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "18",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-1:d",
+      "record_id": "eb11c4-1:exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(−2) and B(6), find the following distances or coordinates.",
+        "stem": "Coordinate of midpoint M of segment AB.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "dc9cfbcca447732f9d5b9e7bfa19aac5",
+      "kind": "value",
+      "answer": "2",
+      "solution": [
+        "$M=\\frac{-2+6}{2}$",
+        "$=2$",
+        "M(2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-2:a",
+      "record_id": "eb11c4-1:exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+        "stem": "Distance AB between the two points.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "851853990b01992ad1ed7d81ebfd49fd",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+        "$AB=|10-4|$",
+        "$=6$",
+        "The distance is 6."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "6",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-2:b",
+      "record_id": "eb11c4-1:exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+        "stem": "Coordinate of point C dividing segment AB internally in the ratio 2:1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e56e5ae509a8bd70a9177031b0c6b1eb",
+      "kind": "value",
+      "answer": "8",
+      "solution": [
+        "m = 2, n = 1, a = 4, b = 10.",
+        "$\\frac{1\\times 4+2\\times 10}{2+1}=\\frac{24}{3}$",
+        "$=8$",
+        "C(8)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "8",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-2:c",
+      "record_id": "eb11c4-1:exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+        "stem": "Coordinate of point D dividing segment AB externally in the ratio 1:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9ea75c406ae857d2dd1fd1de076a5025",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+        "External ratio 1:3, m = 1, n = 3, a = 4, b = 10.",
+        "$\\frac{-3\\times 4+1\\times 10}{1-3}=\\frac{-2}{-2}$",
+        "$=1$",
+        "D(1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "1",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-2:d",
+      "record_id": "eb11c4-1:exercise-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 151,
+      "question": {
+        "text": "For two points A(4) and B(10), find the following distances or coordinates.",
+        "stem": "Coordinate of midpoint M of segment AB.",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9ae1b2ef037220570a4406eb8e846d45",
+      "kind": "value",
+      "answer": "7",
+      "solution": [
+        "$M=\\frac{4+10}{2}$",
+        "$=7$",
+        "M(7)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-1:a",
+      "record_id": "eb11c4-1:challenge-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 152,
+      "question": {
+        "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+        "stem": "Fiber-Optic Tether Length",
+        "notes": "Figure k2 belongs to this challenge box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "2b43646f2e5e1749e93ba28b6bfe6c00",
+      "kind": "value",
+      "answer": "5 km",
+      "solution": [
+        "A(-8), B(-3).",
+        "$AB=|-3-(-8)|$",
+        "$=5$",
+        "The tether is 5 km long."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-1"
+      ],
+      "checks": {
+        "resolve_answer": "5 km",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-1:b",
+      "record_id": "eb11c4-1:challenge-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 152,
+      "question": {
+        "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+        "stem": "Internal Environmental Sensor Array — Point C divides AB internally in ratio 1:4",
+        "notes": "Figure k2 belongs to this challenge box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "ee179a487ec08e31aac545931797cf0d",
+      "kind": "value",
+      "answer": "-7",
+      "solution": [
+        "Internal ratio 1:4, m = 1, n = 4, a = -8, b = -3.",
+        "$\\frac{4\\times(-8)+1\\times(-3)}{1+4}=\\frac{-35}{5}$",
+        "$=-7$",
+        "C(-7), a depth of 7 km."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-2"
+      ],
+      "checks": {
+        "resolve_answer": "-7 km",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-1:c",
+      "record_id": "eb11c4-1:challenge-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 152,
+      "question": {
+        "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+        "stem": "External Deep-Trench Outpost — Point D divides AB externally in ratio 3:4",
+        "notes": "Figure k2 belongs to this challenge box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "28ada67dd1cd48ef2aa25e5859910d5f",
+      "kind": "value",
+      "answer": "-23",
+      "solution": [
+        "External ratio 3:4, m = 3, n = 4, a = -8, b = -3.",
+        "$\\frac{-4\\times(-8)+3\\times(-3)}{3-4}=\\frac{23}{-1}$",
+        "$=-23$",
+        "D(-23), a depth of 23 km."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-3"
+      ],
+      "checks": {
+        "resolve_answer": "-23 km",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-1:d",
+      "record_id": "eb11c4-1:challenge-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 152,
+      "question": {
+        "text": "Subterranean Research Lab Infrastructure. A team of marine biologists is operating an underwater research habitat anchored along a straight vertical trench wall. To track positions along this deep-sea wall, they use a 1D reference axis measured in kilometers relative to sea level (0 km). Currently, two primary monitoring pods are anchored directly to the trench wall: Pod A is positioned at a depth of −8 km. Pod B is positioned closer to the surface at a depth of −3 km. Using your knowledge of coordinate division, calculate the exact locations and spacing required to expand their research network:",
+        "stem": "Emergency Supply Hub Location (M) — Midpoint M of AB",
+        "notes": "Figure k2 belongs to this challenge box."
+      },
+      "needs_page": true,
+      "question_fingerprint": "d72897b717c1056d70e079f77d095385",
+      "kind": "value",
+      "answer": "-11/2",
+      "solution": [
+        "$M=\\frac{-8+(-3)}{2}$",
+        "$=-\\frac{11}{2}$",
+        "M(-11/2), a depth of 5.5 km."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "-11/2 km (-5.5 km)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": false
+      },
+      "status": "disagreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-1:a",
+      "record_id": "eb11c4-1:unlabelled-exercise-1",
+      "part": "a",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "Determine which quadrant the following points lie in.",
+        "stem": "Point A(2, 3)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f7369f21ee60b67e5df2f3b0db8ce92d",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+        "x = 2 > 0 and y = 3 > 0.",
+        "Both positive: first quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "first quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-1:b",
+      "record_id": "eb11c4-1:unlabelled-exercise-1",
+      "part": "b",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "Determine which quadrant the following points lie in.",
+        "stem": "Point B(2, −3)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "82bdee37af75980a3edf257c3addb4f2",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+        "x = 2 > 0 and y = -3 < 0.",
+        "Fourth quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "fourth quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-1:c",
+      "record_id": "eb11c4-1:unlabelled-exercise-1",
+      "part": "c",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "Determine which quadrant the following points lie in.",
+        "stem": "Point C(−2, 3)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "514dfaa0640b4971b7c672c4df10adee",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+        "x = -2 < 0 and y = 3 > 0.",
+        "Second quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "second quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-1:d",
+      "record_id": "eb11c4-1:unlabelled-exercise-1",
+      "part": "d",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "Determine which quadrant the following points lie in.",
+        "stem": "Point D(−2, −3)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "037c2b1b3459abdb60b1ecc3ef2642f4",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+        "x = -2 < 0 and y = -3 < 0.",
+        "Third quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "third quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-2:a",
+      "record_id": "eb11c4-1:unlabelled-exercise-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "For point A(−3, 2), find the coordinates of the following points.",
+        "stem": "Point P symmetric with respect to the x−axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "fd964e591e05b00202ddb74bb5aedf77",
+      "kind": "value",
+      "answer": "P(-3, -2)",
+      "solution": [
+        "Symmetric about the x-axis: change the sign of the y-coordinate.",
+        "A(-3, 2) gives P(-3, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(-3, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-2:b",
+      "record_id": "eb11c4-1:unlabelled-exercise-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "For point A(−3, 2), find the coordinates of the following points.",
+        "stem": "Point Q symmetric with respect to the y−axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0858d3fb5d75cd66673731f6e50cb755",
+      "kind": "value",
+      "answer": "Q(3, 2)",
+      "solution": [
+        "Symmetric about the y-axis: change the sign of the x-coordinate.",
+        "A(-3, 2) gives Q(3, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(3, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:unlabelled-exercise-2:c",
+      "record_id": "eb11c4-1:unlabelled-exercise-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 153,
+      "question": {
+        "text": "For point A(−3, 2), find the coordinates of the following points.",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4f62cd4fd02e592f41508926ad6915f3",
+      "kind": "value",
+      "answer": "R(3, -2)",
+      "solution": [
+        "Symmetric about the origin: change both signs.",
+        "A(-3, 2) gives R(3, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(3, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-2:a",
+      "record_id": "eb11c4-1:try-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point A(−4, 2)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0341aa956caffe3642fcfe71e8380818",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+        "x = -4 < 0, y = 2 > 0.",
+        "Second quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "second quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-2:b",
+      "record_id": "eb11c4-1:try-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point B(1, 2)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "574c5ab72234f13337b9a7cec28f343e",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+        "x = 1 > 0, y = 2 > 0.",
+        "First quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "first quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-2:c",
+      "record_id": "eb11c4-1:try-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point C(3, −2)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "705ed40958c93e867585667e2ad65768",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+        "x = 3 > 0, y = -2 < 0.",
+        "Fourth quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "fourth quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-2:d",
+      "record_id": "eb11c4-1:try-2",
+      "part": "d",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point D(−3, −1)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "3347ded037c3b0f926e047d2e9bf58b8",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+        "x = -3 < 0, y = -1 < 0.",
+        "Third quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "third quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-3:a",
+      "record_id": "eb11c4-1:try-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−1, 2), find the coordinates of the following points.",
+        "stem": "Point P symmetric with respect to the $x$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "458fb43a74c8f26e96869d4f453179d6",
+      "kind": "value",
+      "answer": "P(-1, -2)",
+      "solution": [
+        "About the x-axis: change the sign of y.",
+        "A(-1, 2) gives P(-1, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(-1, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-3:b",
+      "record_id": "eb11c4-1:try-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−1, 2), find the coordinates of the following points.",
+        "stem": "Point Q symmetric with respect to the $y$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0f1d61b01ddc1804ff5c64f49e1cfe92",
+      "kind": "value",
+      "answer": "Q(1, 2)",
+      "solution": [
+        "About the y-axis: change the sign of x.",
+        "A(-1, 2) gives Q(1, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(1, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-3:c",
+      "record_id": "eb11c4-1:try-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−1, 2), find the coordinates of the following points.",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "07337a8e7a2292c5e7b5b75689a99431",
+      "kind": "value",
+      "answer": "R(1, -2)",
+      "solution": [
+        "About the origin: change both signs.",
+        "A(-1, 2) gives R(1, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(1, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:work-with-a-partner-1",
+      "record_id": "eb11c4-1:work-with-a-partner-1",
+      "part": null,
+      "type": "activity",
+      "page": 154,
+      "question": {
+        "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "9d4b882375601f87e7ba8587084a103f",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question (2) refers to a printed question whose data is not given here.",
+      "solution": [
+        "The activity only says to solve question (2) of the page.",
+        "The points or data of that question are not given.",
+        "So it cannot be answered."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: question (2) and its points are not given.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:a",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point A(−3, 1)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "8e0a6be151f8b4b3b0255e7881f0cd13",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+        "x = -3 < 0, y = 1 > 0.",
+        "Second quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "second quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:b",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point B(2, −8)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b1a651725eeb020109009ac720f6c5c3",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+        "x = 2 > 0, y = -8 < 0.",
+        "Fourth quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "fourth quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:c",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point C(4, 4)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b8320dda0e866daccfb5ab96da11246e",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+        "x = 4 > 0, y = 4 > 0.",
+        "First quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "first quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:d",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "d",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point D(−6, −4)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "25d5f7449a64b235e0633726b094c835",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+        "x = -6 < 0, y = -4 < 0.",
+        "Third quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "third quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:e",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "e",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point E(−2, 6)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "72bdd147ac7450166372cdfc2f974cc0",
+      "kind": "value",
+      "answer": "second quadrant",
+      "solution": [
+        "x = -2 < 0, y = 6 > 0.",
+        "Second quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "second quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:f",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "f",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point F(3, −3)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "48c868e5127fa380e8da97d84c9c547d",
+      "kind": "value",
+      "answer": "fourth quadrant",
+      "solution": [
+        "x = 3 > 0, y = -3 < 0.",
+        "Fourth quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "fourth quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:g",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "g",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point G(−5, −7)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "32c9655a900a579867fd2156a1b88247",
+      "kind": "value",
+      "answer": "third quadrant",
+      "solution": [
+        "x = -5 < 0, y = -7 < 0.",
+        "Third quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "third quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-3:h",
+      "record_id": "eb11c4-1:exercise-3",
+      "part": "h",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "Solve the following problems. Determine which quadrant the following points lie in.",
+        "stem": "Point H(1, 4)",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "cc42180ee6e40e14d0f0bfbd40ccf874",
+      "kind": "value",
+      "answer": "first quadrant",
+      "solution": [
+        "x = 1 > 0, y = 4 > 0.",
+        "First quadrant."
+      ],
+      "grounded_in": [
+        "eb11c4-1:convention-1",
+        "eb11c4-1:worked-example-1"
+      ],
+      "checks": {
+        "resolve_answer": "first quadrant",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-4:a",
+      "record_id": "eb11c4-1:exercise-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−4, −2), find the coordinates of the following points.",
+        "stem": "Point P symmetric with respect to the $x$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "31c70a892f41142ec7602255639d79d7",
+      "kind": "value",
+      "answer": "P(-4, 2)",
+      "solution": [
+        "About the x-axis: change the sign of y.",
+        "A(-4, -2) gives P(-4, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(-4, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-4:b",
+      "record_id": "eb11c4-1:exercise-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−4, −2), find the coordinates of the following points.",
+        "stem": "Point Q symmetric with respect to the $y$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d9181ee7e2450694dad71ebfe590c93a",
+      "kind": "value",
+      "answer": "Q(4, -2)",
+      "solution": [
+        "About the y-axis: change the sign of x.",
+        "A(-4, -2) gives Q(4, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(4, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-4:c",
+      "record_id": "eb11c4-1:exercise-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−4, −2), find the coordinates of the following points.",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bf63adbc54f0d391284157e23d125378",
+      "kind": "value",
+      "answer": "R(4, 2)",
+      "solution": [
+        "About the origin: change both signs.",
+        "A(-4, -2) gives R(4, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(4, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-5:a",
+      "record_id": "eb11c4-1:exercise-5",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(1, −2), find the coordinates of the following points.",
+        "stem": "Point P symmetric with respect to the $x$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6d0be2158bb71607932f3062e9e8cc3f",
+      "kind": "value",
+      "answer": "P(1, 2)",
+      "solution": [
+        "About the x-axis: change the sign of y.",
+        "A(1, -2) gives P(1, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(1, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-5:b",
+      "record_id": "eb11c4-1:exercise-5",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(1, −2), find the coordinates of the following points.",
+        "stem": "Point Q symmetric with respect to the $y$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "1a0dbd110eb12b98d611ef1289911f48",
+      "kind": "value",
+      "answer": "Q(-1, -2)",
+      "solution": [
+        "About the y-axis: change the sign of x.",
+        "A(1, -2) gives Q(-1, -2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(-1, -2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-5:c",
+      "record_id": "eb11c4-1:exercise-5",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(1, −2), find the coordinates of the following points.",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "a8575ee67638685acebf8c7750cfefc2",
+      "kind": "value",
+      "answer": "R(-1, 2)",
+      "solution": [
+        "About the origin: change both signs.",
+        "A(1, -2) gives R(-1, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(-1, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-6:a",
+      "record_id": "eb11c4-1:exercise-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−3, 4), find the coordinates of the following points.",
+        "stem": "Point P symmetric with respect to the $x$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "59ec89a1e27f341620d6d04c3bd436c5",
+      "kind": "value",
+      "answer": "P(-3, -4)",
+      "solution": [
+        "About the x-axis: change the sign of y.",
+        "A(-3, 4) gives P(-3, -4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(-3, -4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-6:b",
+      "record_id": "eb11c4-1:exercise-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−3, 4), find the coordinates of the following points.",
+        "stem": "Point Q symmetric with respect to the $y$-axis",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e9074ae1b344b6697ce4d9adfac4410d",
+      "kind": "value",
+      "answer": "Q(3, 4)",
+      "solution": [
+        "About the y-axis: change the sign of x.",
+        "A(-3, 4) gives Q(3, 4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(3, 4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-6:c",
+      "record_id": "eb11c4-1:exercise-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "For point A(−3, 4), find the coordinates of the following points.",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b0a2e7984e0c3fb6445c1540bbe59976",
+      "kind": "value",
+      "answer": "R(3, -4)",
+      "solution": [
+        "About the origin: change both signs.",
+        "A(-3, 4) gives R(3, -4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(3, -4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-2:a",
+      "record_id": "eb11c4-1:challenge-2",
+      "part": "a",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "A robotic welding arm is programmed at point A(−3, 4) on a metal sheet. To weld identical support brackets, the arm must mirror this point:",
+        "stem": "Point P symmetric with respect to the x-axis",
+        "notes": "A photo of a robotic welding arm over a metal sheet with faint grid markings accompanies the challenge; treated as decorative."
+      },
+      "needs_page": true,
+      "question_fingerprint": "aa3ae0b6cb66ad62bdc86bcfec002e13",
+      "kind": "value",
+      "answer": "P(-3, -4)",
+      "solution": [
+        "About the x-axis: change the sign of y.",
+        "A(-3, 4) gives P(-3, -4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "P(-3, -4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-2:b",
+      "record_id": "eb11c4-1:challenge-2",
+      "part": "b",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "A robotic welding arm is programmed at point A(−3, 4) on a metal sheet. To weld identical support brackets, the arm must mirror this point:",
+        "stem": "Point Q symmetric with respect to the y-axis",
+        "notes": "A photo of a robotic welding arm over a metal sheet with faint grid markings accompanies the challenge; treated as decorative."
+      },
+      "needs_page": true,
+      "question_fingerprint": "b021fdde13dbe70ed6d536e60ae38833",
+      "kind": "value",
+      "answer": "Q(3, 4)",
+      "solution": [
+        "About the y-axis: change the sign of x.",
+        "A(-3, 4) gives Q(3, 4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "Q(3, 4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-2:c",
+      "record_id": "eb11c4-1:challenge-2",
+      "part": "c",
+      "type": "exercise",
+      "page": 154,
+      "question": {
+        "text": "A robotic welding arm is programmed at point A(−3, 4) on a metal sheet. To weld identical support brackets, the arm must mirror this point:",
+        "stem": "Point R symmetric with respect to the origin",
+        "notes": "A photo of a robotic welding arm over a metal sheet with faint grid markings accompanies the challenge; treated as decorative."
+      },
+      "needs_page": true,
+      "question_fingerprint": "234f5529c23c2e8f3be8fda778daa9c4",
+      "kind": "value",
+      "answer": "R(3, -4)",
+      "solution": [
+        "About the origin: change both signs.",
+        "A(-3, 4) gives R(3, -4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:worked-example-2"
+      ],
+      "checks": {
+        "resolve_answer": "R(3, -4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-2:?",
+      "record_id": "eb11c4-1:warm-up-2",
+      "part": "?",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "$A(2,6),\\ B(5,10)$",
+        "notes": "Printed Explanation: $\\sqrt{(5-2)^2+(10-6)^2}=\\sqrt{3^2+4^2}=5$. Page prints instruction 'Solve the following problems.' above."
+      },
+      "needs_page": true,
+      "question_fingerprint": "d5259e91f5ac459334de1e241748e226",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+        "$AB=\\sqrt{(5-2)^2+(10-6)^2}$",
+        "$=\\sqrt{3^2+4^2}=\\sqrt{25}$",
+        "$=5$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-3",
+      "record_id": "eb11c4-1:warm-up-3",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between points $A(3,-2)$ and $B(x,1)$ is 5, find the value of $x$.",
+        "stem": "",
+        "notes": "Printed Explanation: since distance is 5, $\\sqrt{(x-3)^2+\\{1-(-2)\\}^2}=5$ (side note: Square both sides); $(x-3)^2+\\{1-(-2)\\}^2=25$; solving, $x=-1, 7$."
+      },
+      "needs_page": false,
+      "question_fingerprint": "cf16d1b5d1aee1f2476844ec2d80f82b",
+      "kind": "value",
+      "answer": "x = -1 or x = 7",
+      "solution": [
+        "Distance rule: $\\sqrt{(x-3)^2+(1-(-2))^2}=5$.",
+        "Square both sides: $(x-3)^2+9=25$.",
+        "$(x-3)^2=16$.",
+        "$x-3=4$ or $x-3=-4$.",
+        "x = 7 or x = -1."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1 or x = 7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-4:a",
+      "record_id": "eb11c4-1:try-4",
+      "part": "a",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "$A(4,3),\\ B(1,2)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "17e73a629f1cccf79f5f68d58a52cb4a",
+      "kind": "value",
+      "answer": "√10",
+      "solution": [
+        "$AB=\\sqrt{(1-4)^2+(2-3)^2}$",
+        "$=\\sqrt{9+1}$",
+        "$=\\sqrt{10}$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{10}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-4:b",
+      "record_id": "eb11c4-1:try-4",
+      "part": "b",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "$A(\\sqrt{3},-1),\\ B(0,1)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "ddc074832518bd53402a7b0471e2db23",
+      "kind": "value",
+      "answer": "√7",
+      "solution": [
+        "$AB=\\sqrt{(0-\\sqrt3)^2+(1-(-1))^2}$",
+        "$=\\sqrt{3+4}$",
+        "$=\\sqrt{7}$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$\\sqrt{7}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-4:c",
+      "record_id": "eb11c4-1:try-4",
+      "part": "c",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "Origin $O$, $A(2,-4)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b2f893c3f83599e964dd39ad8e82dff3",
+      "kind": "value",
+      "answer": "2√5",
+      "solution": [
+        "$OA=\\sqrt{(2-0)^2+(-4-0)^2}$",
+        "$=\\sqrt{4+16}=\\sqrt{20}$",
+        "$=2\\sqrt5$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$2\\sqrt{5}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-5",
+      "record_id": "eb11c4-1:try-5",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between points $A(-1,3)$ and $B(x,1)$ is $\\sqrt{5}$, find the value of $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d38842f07098b65395ef96228a3849d3",
+      "kind": "value",
+      "answer": "x = 0 or x = -2",
+      "solution": [
+        "$\\sqrt{(x+1)^2+(1-3)^2}=\\sqrt5$.",
+        "Square both sides: $(x+1)^2+4=5$.",
+        "$(x+1)^2=1$.",
+        "$x+1=1$ or $x+1=-1$.",
+        "x = 0 or x = -2."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 0 or x = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-7:a",
+      "record_id": "eb11c4-1:exercise-7",
+      "part": "a",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "$A(1,2),\\ B(11,7)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7e1133b7ad505d078acd6e28130459e6",
+      "kind": "value",
+      "answer": "5√5",
+      "solution": [
+        "$AB=\\sqrt{(11-1)^2+(7-2)^2}$",
+        "$=\\sqrt{100+25}=\\sqrt{125}$",
+        "$=5\\sqrt5$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$5\\sqrt{5}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-7:b",
+      "record_id": "eb11c4-1:exercise-7",
+      "part": "b",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "$A(3,-1),\\ B(-1,3)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d0885b2fead23b02c07593cbc3f3e4ff",
+      "kind": "value",
+      "answer": "4√2",
+      "solution": [
+        "$AB=\\sqrt{(-1-3)^2+(3-(-1))^2}$",
+        "$=\\sqrt{16+16}=\\sqrt{32}$",
+        "$=4\\sqrt2$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "$4\\sqrt{2}$",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-7:c",
+      "record_id": "eb11c4-1:exercise-7",
+      "part": "c",
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "Find the distance between the following 2 points.",
+        "stem": "Origin $O$, $A(-3,4)$",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0b6e1a84a19e56480147cdcd21828607",
+      "kind": "value",
+      "answer": "5",
+      "solution": [
+        "$OA=\\sqrt{(-3-0)^2+(4-0)^2}$",
+        "$=\\sqrt{9+16}=\\sqrt{25}$",
+        "$=5$"
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5"
+      ],
+      "checks": {
+        "resolve_answer": "5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-8",
+      "record_id": "eb11c4-1:exercise-8",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between points $A(3,-1)$ and $B(x,2)$ is 5, find $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "792b17b072c1aea0eee3bcaf3cd6b671",
+      "kind": "value",
+      "answer": "x = 7 or x = -1",
+      "solution": [
+        "$\\sqrt{(x-3)^2+(2-(-1))^2}=5$.",
+        "Square both sides: $(x-3)^2+9=25$.",
+        "$(x-3)^2=16$.",
+        "$x-3=\\pm4$.",
+        "x = 7 or x = -1."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = -1 or x = 7",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-9",
+      "record_id": "eb11c4-1:exercise-9",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between points $A(1,-3)$ and $B(-2,y)$ is $\\sqrt{13}$, find $y$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7e063c7e8138e7782b432967497c6997",
+      "kind": "value",
+      "answer": "y = -1 or y = -5",
+      "solution": [
+        "$\\sqrt{(-2-1)^2+(y+3)^2}=\\sqrt{13}$.",
+        "Square both sides: $9+(y+3)^2=13$.",
+        "$(y+3)^2=4$.",
+        "$y+3=\\pm2$.",
+        "y = -1 or y = -5."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "y = -1 or y = -5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-10",
+      "record_id": "eb11c4-1:exercise-10",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between points $A(-4,-2)$ and $B(x,3)$ is $5\\sqrt{5}$, find $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "7d13f1e1e4159e709ab64094c619769f",
+      "kind": "value",
+      "answer": "x = 6 or x = -14",
+      "solution": [
+        "$\\sqrt{(x+4)^2+(3+2)^2}=5\\sqrt5$.",
+        "Square both sides: $(x+4)^2+25=125$.",
+        "$(x+4)^2=100$.",
+        "$x+4=\\pm10$.",
+        "x = 6 or x = -14."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 6 or x = -14",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:work-with-a-partner-2",
+      "record_id": "eb11c4-1:work-with-a-partner-2",
+      "part": null,
+      "type": "activity",
+      "page": 155,
+      "question": {
+        "text": "Collaborate with your group to solve question (2) then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "f3607d6a6665e0070006cb39f022d488",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: question (2) refers to a printed question whose points are not given here.",
+      "solution": [
+        "The activity only says to solve question (2).",
+        "The points of that question are not given.",
+        "So it cannot be answered."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: question (2) is not identifiable from the given text.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-3",
+      "record_id": "eb11c4-1:challenge-3",
+      "part": null,
+      "type": "exercise",
+      "page": 155,
+      "question": {
+        "text": "If the distance between the two points $(x,7)$ and $(3x-1,-5)$ equals 13 length units, then find the value(s) of $x$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "611110ce1e04175a51d6ba58cce9fcb1",
+      "kind": "value",
+      "answer": "x = 3 or x = -2",
+      "solution": [
+        "$\\sqrt{(3x-1-x)^2+(-5-7)^2}=13$.",
+        "Square both sides: $(2x-1)^2+144=169$.",
+        "$(2x-1)^2=25$.",
+        "$2x-1=5$ or $2x-1=-5$.",
+        "x = 3 or x = -2."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-1"
+      ],
+      "checks": {
+        "resolve_answer": "x = 3 or x = -2",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-4",
+      "record_id": "eb11c4-1:warm-up-4",
+      "part": null,
+      "type": "exercise",
+      "page": 156,
+      "question": {
+        "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points $A(-2, 1)$ and $B(3, 4)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "63b77a33405a61d39f66816654988aaa",
+      "kind": "value",
+      "answer": "P(2, 0)",
+      "solution": [
+        "P is on the x-axis, so let P = (s, 0).",
+        "AP = BP gives $(s+2)^2+1=(s-3)^2+16$.",
+        "$4s+5=-6s+25$.",
+        "$10s=20$, so s = 2.",
+        "P(2, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:explanation-1",
+        "eb11c4-1:rule-6",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(2, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-5",
+      "record_id": "eb11c4-1:warm-up-5",
+      "part": null,
+      "type": "exercise",
+      "page": 156,
+      "question": {
+        "text": "Find the coordinates of point Q on $y = 2x - 1$ equidistant from 2 points $A(1, 4)$ and $B(3, 1)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1c2f67d678520dc56fa327927c47f07f",
+      "kind": "value",
+      "answer": "Q(13/8, 9/4)",
+      "solution": [
+        "Q is on y = 2x - 1, so let Q = (s, 2s-1).",
+        "AQ = BQ gives $(s-1)^2+(2s-5)^2=(s-3)^2+(2s-2)^2$.",
+        "Simplifying gives s = 13/8.",
+        "y = 2(13/8) - 1 = 9/4.",
+        "Q(13/8, 9/4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:explanation-2",
+        "eb11c4-1:rule-8",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(13/8, 9/4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-6",
+      "record_id": "eb11c4-1:try-6",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "424ed97acde418d27ffdafda10c030ad",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+        "The line contains no question or data.",
+        "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(1) P(0, 3); (2) Q(-4, -11)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-7",
+      "record_id": "eb11c4-1:try-7",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(4, 2) and B(1, −1).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "072bd1cbf0a80e74019398f0eb8b49bd",
+      "kind": "value",
+      "answer": "P(0, 3)",
+      "solution": [
+        "P is on the y-axis, so let P = (0, t).",
+        "PA = PB gives $16+(t-2)^2=1+(t+1)^2$.",
+        "$20-4t=2+2t$.",
+        "$6t=18$, so t = 3.",
+        "P(0, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-7",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(0, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-8",
+      "record_id": "eb11c4-1:try-8",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point Q on $y = 3x + 1$ equidistant from 2 points A(4, −5) and B(2, −3).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "315873a42c703bdd6ebd416c71d0fdb2",
+      "kind": "value",
+      "answer": "Q(-4, -11)",
+      "solution": [
+        "Q is on y = 3x + 1, so let Q = (s, 3s+1).",
+        "AQ = BQ gives $(s-4)^2+(3s+6)^2=(s-2)^2+(3s+4)^2$.",
+        "$10s^2+28s+52=10s^2+20s+20$.",
+        "$8s=-32$, so s = -4.",
+        "y = 3(-4)+1 = -11. Q(-4, -11)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-8",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(-4, -11)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-11",
+      "record_id": "eb11c4-1:exercise-11",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "424ed97acde418d27ffdafda10c030ad",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+        "The line contains no question or data.",
+        "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(1) P(2, 0); (2) P(0, 5/6); (3) P(17/2, 0); (4) Q(2, 1); (5) Q(3, 2); (6) Q(-2, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-12",
+      "record_id": "eb11c4-1:exercise-12",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(4, 3).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "acfc9b1209b2ca8746e66ab9caacd113",
+      "kind": "value",
+      "answer": "P(2, 0)",
+      "solution": [
+        "Let P = (s, 0).",
+        "PA = PB gives $(s+1)^2+4=(s-4)^2+9$.",
+        "$2s+5=-8s+25$.",
+        "$10s=20$, so s = 2.",
+        "P(2, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-6",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(2, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-13",
+      "record_id": "eb11c4-1:exercise-13",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point P on the $y$-axis equidistant from 2 points A(−5, 2) and B(3, 5).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c3743c05fa1b4585ac2b1a626696d9b6",
+      "kind": "value",
+      "answer": "P(0, 5/6)",
+      "solution": [
+        "Let P = (0, t).",
+        "PA = PB gives $25+(t-2)^2=9+(t-5)^2$.",
+        "$29-4t=34-10t$.",
+        "$6t=5$, so t = 5/6.",
+        "P(0, 5/6)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-7",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(0, 5/6)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-14",
+      "record_id": "eb11c4-1:exercise-14",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point P on the $x$-axis equidistant from 2 points A(−1, 2) and B(3, 8).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "85e6cac8cf5d52c22ae0ff4d7ed0e85c",
+      "kind": "value",
+      "answer": "P(17/2, 0)",
+      "solution": [
+        "Let P = (s, 0).",
+        "PA = PB gives $(s+1)^2+4=(s-3)^2+64$.",
+        "$2s+5=-6s+73$.",
+        "$8s=68$, so s = 17/2.",
+        "P(17/2, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-6",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(17/2, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-15",
+      "record_id": "eb11c4-1:exercise-15",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point Q on $y = 2x - 3$ equidistant from 2 points A(1, 4) and B(3, −2).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "a86c4553a1fa8d54ce50a1fde4f7b143",
+      "kind": "value",
+      "answer": "Q(2, 1)",
+      "solution": [
+        "Let Q = (s, 2s-3).",
+        "AQ = BQ gives $(s-1)^2+(2s-7)^2=(s-3)^2+(2s-1)^2$.",
+        "$5s^2-30s+50=5s^2-10s+10$.",
+        "$-20s=-40$, so s = 2.",
+        "y = 2(2)-3 = 1. Q(2, 1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-8",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(2, 1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-16",
+      "record_id": "eb11c4-1:exercise-16",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point Q on $y = x - 1$ equidistant from 2 points A(−1, 5) and B(7, −1).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e75ce6d6b30d762230f61fb45c11e37c",
+      "kind": "value",
+      "answer": "Q(3, 2)",
+      "solution": [
+        "Let Q = (s, s-1).",
+        "AQ = BQ gives $(s+1)^2+(s-6)^2=(s-7)^2+s^2$.",
+        "$2s^2-10s+37=2s^2-14s+49$.",
+        "$4s=12$, so s = 3.",
+        "y = 3-1 = 2. Q(3, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-8",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(3, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-17",
+      "record_id": "eb11c4-1:exercise-17",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "Find the coordinates of point Q on $y = -x + 1$ equidistant from 2 points A(1, 2) and B(−3, 6).",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "b56cf60bafc395ff221b46f94620be9c",
+      "kind": "value",
+      "answer": "Q(-2, 3)",
+      "solution": [
+        "Let Q = (s, -s+1).",
+        "AQ = BQ gives $(s-1)^2+(-s-1)^2=(s+3)^2+(-s-5)^2$.",
+        "$2s^2+2=2s^2+16s+34$.",
+        "$16s=-32$, so s = -2.",
+        "y = 2+1 = 3. Q(-2, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-8",
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2"
+      ],
+      "checks": {
+        "resolve_answer": "(-2, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-4",
+      "record_id": "eb11c4-1:challenge-4",
+      "part": null,
+      "type": "exercise",
+      "page": 157,
+      "question": {
+        "text": "If A(2,1), B(4,5), C(3, y) and D(x,0) such that CA = CB and DA = DB, then find CD.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "c0111e5f5a90c087f3f0fa1953f47973",
+      "kind": "value",
+      "answer": "CD = 3√5",
+      "solution": [
+        "CA = CB: $1+(y-1)^2=1+(y-5)^2$, so y - 1 = -(y - 5), giving y = 3. C(3, 3).",
+        "DA = DB: $(x-2)^2+1=(x-4)^2+25$, so $-4x+5=-8x+41$, giving x = 9. D(9, 0).",
+        "$CD=\\sqrt{(9-3)^2+(0-3)^2}=\\sqrt{45}$.",
+        "CD = 3√5."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:method-2",
+        "eb11c4-1:rule-6"
+      ],
+      "checks": {
+        "resolve_answer": "3√5",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-6:a",
+      "record_id": "eb11c4-1:warm-up-6",
+      "part": "a",
+      "type": "exercise",
+      "page": 158,
+      "question": {
+        "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+        "stem": "Point P dividing segment BA internally in the ratio 1:2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "9d480aca82371bd40c471fb5786605a9",
+      "kind": "value",
+      "answer": "(4/3, 11/3)",
+      "solution": [
+        "Segment BA: first point B(3, 7), second point A(-2, -3), m:n = 1:2.",
+        "$x=\\frac{2\\times3+1\\times(-2)}{1+2}=\\frac43$",
+        "$y=\\frac{2\\times7+1\\times(-3)}{1+2}=\\frac{11}{3}$",
+        "P(4/3, 11/3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-9",
+        "eb11c4-1:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "P(4/3, 11/3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-6:b",
+      "record_id": "eb11c4-1:warm-up-6",
+      "part": "b",
+      "type": "exercise",
+      "page": 158,
+      "question": {
+        "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+        "stem": "Point Q dividing segment BC externally in the ratio 1:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "b96aaaf81ad042154bf231a8cf2ad2d8",
+      "kind": "value",
+      "answer": "(2, 19/2)",
+      "solution": [
+        "Segment BC: B(3, 7), C(5, 2), external 1:3.",
+        "$x=\\frac{-3\\times3+1\\times5}{1-3}=\\frac{-4}{-2}=2$",
+        "$y=\\frac{-3\\times7+1\\times2}{1-3}=\\frac{-19}{-2}=\\frac{19}{2}$",
+        "Q(2, 19/2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-10",
+        "eb11c4-1:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "Q(2, 19/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-6:c",
+      "record_id": "eb11c4-1:warm-up-6",
+      "part": "c",
+      "type": "exercise",
+      "page": 158,
+      "question": {
+        "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+        "stem": "Midpoint M of segment CA",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7c2d9d12d8d526e74bf413306f7722c0",
+      "kind": "value",
+      "answer": "(3/2, -1/2)",
+      "solution": [
+        "C(5, 2), A(-2, -3).",
+        "$x=\\frac{5+(-2)}{2}=\\frac32$",
+        "$y=\\frac{2+(-3)}{2}=-\\frac12$",
+        "M(3/2, -1/2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-11",
+        "eb11c4-1:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "M(3/2, -1/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:warm-up-6:d",
+      "record_id": "eb11c4-1:warm-up-6",
+      "part": "d",
+      "type": "exercise",
+      "page": 158,
+      "question": {
+        "text": "Given three points A(−2, −3), B(3, 7), and C(5, 2), find the coordinates of the following points:",
+        "stem": "Centroid G of triangle ABC",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "7b1ab6fe861f07aae7ef48f1730b3a27",
+      "kind": "value",
+      "answer": "(2, 2)",
+      "solution": [
+        "$x=\\frac{-2+3+5}{3}=2$",
+        "$y=\\frac{-3+7+2}{3}=2$",
+        "G(2, 2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-12",
+        "eb11c4-1:worked-example-3"
+      ],
+      "checks": {
+        "resolve_answer": "G(2, 2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-9",
+      "record_id": "eb11c4-1:try-9",
+      "part": null,
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point P dividing segment AC internally in the ratio 3:1",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "0baa8f64d5c0292cf1eca4eeaf165af3",
+      "kind": "value",
+      "answer": "(-15/4, 13/4)",
+      "solution": [
+        "A(-3, 4) first, C(-4, 3) second, m:n = 3:1.",
+        "$x=\\frac{1\\times(-3)+3\\times(-4)}{4}=-\\frac{15}{4}$",
+        "$y=\\frac{1\\times4+3\\times3}{4}=\\frac{13}{4}$",
+        "P(-15/4, 13/4)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "P(-15/4, 13/4)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-10",
+      "record_id": "eb11c4-1:try-10",
+      "part": null,
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Point Q dividing segment BC externally in the ratio 2:3",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "313cc9f9e51a37bd8bccfb36bf4c4c1f",
+      "kind": "value",
+      "answer": "(11, -18)",
+      "solution": [
+        "B(1, -4) first, C(-4, 3) second, external 2:3.",
+        "$x=\\frac{-3\\times1+2\\times(-4)}{2-3}=\\frac{-11}{-1}=11$",
+        "$y=\\frac{-3\\times(-4)+2\\times3}{2-3}=\\frac{18}{-1}=-18$",
+        "Q(11, -18)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Q(11, -18)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-11",
+      "record_id": "eb11c4-1:try-11",
+      "part": null,
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Midpoint M of segment AB",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "29f8376df3a99c370e7d4c6413d75192",
+      "kind": "value",
+      "answer": "(-1, 0)",
+      "solution": [
+        "A(-3, 4), B(1, -4).",
+        "$x=\\frac{-3+1}{2}=-1$",
+        "$y=\\frac{4+(-4)}{2}=0$",
+        "M(-1, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "M(-1, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-12",
+      "record_id": "eb11c4-1:try-12",
+      "part": null,
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-3,4)$, $B(1,-4)$, and $C(-4,3)$, find the coordinates of the following points: Centroid G of triangle ABC",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "e0b11247c16cfebac2fce8a68783fec9",
+      "kind": "value",
+      "answer": "(-2, 1)",
+      "solution": [
+        "$x=\\frac{-3+1+(-4)}{3}=-2$",
+        "$y=\\frac{4+(-4)+3}{3}=1$",
+        "G(-2, 1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "G(-2, 1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:work-with-a-partner-3",
+      "record_id": "eb11c4-1:work-with-a-partner-3",
+      "part": null,
+      "type": "activity",
+      "page": 159,
+      "question": {
+        "text": "Collaborate with your group to solve question (3 and 4) then discuss the answer.",
+        "stem": "",
+        "notes": "Side box beside the Try questions."
+      },
+      "needs_page": false,
+      "question_fingerprint": "7e5452199701ba282e50c1c6108136af",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the activity only refers to questions (3 and 4) without giving their data.",
+      "solution": [
+        "The activity says to solve questions (3 and 4) in a group.",
+        "It is not clear which printed questions are meant.",
+        "So it cannot be answered."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "CANNOT ANSWER: questions (3) and (4) are not identifiable from the given text.",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-18:a",
+      "record_id": "eb11c4-1:exercise-18",
+      "part": "a",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+        "stem": "Point P dividing segment AB internally in the ratio 4:1",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "66daf207f7aa8523436b2e6a76b17601",
+      "kind": "value",
+      "answer": "(2, -9/5)",
+      "solution": [
+        "A(2, 3) first, B(2, -3) second, m:n = 4:1.",
+        "$x=\\frac{1\\times2+4\\times2}{5}=2$",
+        "$y=\\frac{1\\times3+4\\times(-3)}{5}=-\\frac95$",
+        "P(2, -9/5)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "P(2, -9/5)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-18:b",
+      "record_id": "eb11c4-1:exercise-18",
+      "part": "b",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+        "stem": "Point Q dividing segment BC externally in the ratio 2:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "992a735a169b36771a4abf8d2589c254",
+      "kind": "value",
+      "answer": "(10, -15)",
+      "solution": [
+        "B(2, -3) first, C(-2, 3) second, external 2:3.",
+        "$x=\\frac{-3\\times2+2\\times(-2)}{2-3}=\\frac{-10}{-1}=10$",
+        "$y=\\frac{-3\\times(-3)+2\\times3}{2-3}=\\frac{15}{-1}=-15$",
+        "Q(10, -15)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Q(10, -15)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-18:c",
+      "record_id": "eb11c4-1:exercise-18",
+      "part": "c",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+        "stem": "Midpoint M of segment CA",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "11ca4b3821271ce29529b78d26dbb6e9",
+      "kind": "value",
+      "answer": "(0, 3)",
+      "solution": [
+        "C(-2, 3), A(2, 3).",
+        "$x=\\frac{-2+2}{2}=0$",
+        "$y=\\frac{3+3}{2}=3$",
+        "M(0, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "M(0, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-18:d",
+      "record_id": "eb11c4-1:exercise-18",
+      "part": "d",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Solve the following problems. Given three points $A(2,3)$, $B(2,-3)$, and $C(-2,3)$, find the coordinates of the following points:",
+        "stem": "Centroid G of triangle ABC",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "4bac0013850cd418fb11ae82e2cf73f8",
+      "kind": "value",
+      "answer": "(2/3, 1)",
+      "solution": [
+        "$x=\\frac{2+2+(-2)}{3}=\\frac23$",
+        "$y=\\frac{3+(-3)+3}{3}=1$",
+        "G(2/3, 1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "G(2/3, 1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-19:a",
+      "record_id": "eb11c4-1:exercise-19",
+      "part": "a",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+        "stem": "Point P dividing segment BC internally in the ratio 3:2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "72459a1141ccf6118378c26661ee5222",
+      "kind": "value",
+      "answer": "(3, 3)",
+      "solution": [
+        "B(6, -3) first, C(1, 7) second, m:n = 3:2.",
+        "$x=\\frac{2\\times6+3\\times1}{5}=3$",
+        "$y=\\frac{2\\times(-3)+3\\times7}{5}=3$",
+        "P(3, 3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "P(3, 3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-19:b",
+      "record_id": "eb11c4-1:exercise-19",
+      "part": "b",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+        "stem": "Point Q dividing segment CA externally in the ratio 3:2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "71dafad6090b3b49d6b2b58f6a486c1a",
+      "kind": "value",
+      "answer": "(-8, -11)",
+      "solution": [
+        "C(1, 7) first, A(-2, 1) second, external 3:2.",
+        "$x=\\frac{-2\\times1+3\\times(-2)}{3-2}=-8$",
+        "$y=\\frac{-2\\times7+3\\times1}{3-2}=-11$",
+        "Q(-8, -11)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Q(-8, -11)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-19:c",
+      "record_id": "eb11c4-1:exercise-19",
+      "part": "c",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+        "stem": "Midpoint M of segment AB",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "95725b5827783105cea8a9f1548cdcde",
+      "kind": "value",
+      "answer": "(2, -1)",
+      "solution": [
+        "A(-2, 1), B(6, -3).",
+        "$x=\\frac{-2+6}{2}=2$",
+        "$y=\\frac{1+(-3)}{2}=-1$",
+        "M(2, -1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "M(2, -1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-19:d",
+      "record_id": "eb11c4-1:exercise-19",
+      "part": "d",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-2,1)$, $B(6,-3)$, and $C(1,7)$, find the coordinates of the following points:",
+        "stem": "Centroid G of triangle ABC",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "d0eaf70c26aa68bc0a439f09c18b0648",
+      "kind": "value",
+      "answer": "(5/3, 5/3)",
+      "solution": [
+        "$x=\\frac{-2+6+1}{3}=\\frac53$",
+        "$y=\\frac{1+(-3)+7}{3}=\\frac53$",
+        "G(5/3, 5/3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "G(5/3, 5/3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-20:a",
+      "record_id": "eb11c4-1:exercise-20",
+      "part": "a",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+        "stem": "Point P dividing segment BA internally in the ratio 1:2",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "bcbb80a3f11546f0dfbe6bcd8b1c1637",
+      "kind": "value",
+      "answer": "(-2/3, -5/3)",
+      "solution": [
+        "B(1, -5) first, A(-4, 5) second, m:n = 1:2.",
+        "$x=\\frac{2\\times1+1\\times(-4)}{3}=-\\frac23$",
+        "$y=\\frac{2\\times(-5)+1\\times5}{3}=-\\frac53$",
+        "P(-2/3, -5/3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-9"
+      ],
+      "checks": {
+        "resolve_answer": "P(-2/3, -5/3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-20:b",
+      "record_id": "eb11c4-1:exercise-20",
+      "part": "b",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+        "stem": "Point Q dividing segment BC externally in the ratio 1:3",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "6a86d37b7d014a5dc5cef3461bee812d",
+      "kind": "value",
+      "answer": "(0, -15/2)",
+      "solution": [
+        "B(1, -5) first, C(3, 0) second, external 1:3.",
+        "$x=\\frac{-3\\times1+1\\times3}{1-3}=0$",
+        "$y=\\frac{-3\\times(-5)+1\\times0}{1-3}=-\\frac{15}{2}$",
+        "Q(0, -15/2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-10"
+      ],
+      "checks": {
+        "resolve_answer": "Q(0, -15/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-20:c",
+      "record_id": "eb11c4-1:exercise-20",
+      "part": "c",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+        "stem": "Midpoint M of segment BC",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "f25e9465fee9de7685d3e08c1284c578",
+      "kind": "value",
+      "answer": "(2, -5/2)",
+      "solution": [
+        "B(1, -5), C(3, 0).",
+        "$x=\\frac{1+3}{2}=2$",
+        "$y=\\frac{-5+0}{2}=-\\frac52$",
+        "M(2, -5/2)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "M(2, -5/2)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-20:d",
+      "record_id": "eb11c4-1:exercise-20",
+      "part": "d",
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "Given three points $A(-4,5)$, $B(1,-5)$, and $C(3,0)$, find the coordinates of the following points:",
+        "stem": "Centroid G of triangle ABC",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "16d5aa9cbf6d2a2c960a01471b6c63ec",
+      "kind": "value",
+      "answer": "(0, 0)",
+      "solution": [
+        "$x=\\frac{-4+1+3}{3}=0$",
+        "$y=\\frac{5+(-5)+0}{3}=0$",
+        "G(0, 0)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-12"
+      ],
+      "checks": {
+        "resolve_answer": "G(0, 0)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-5",
+      "record_id": "eb11c4-1:challenge-5",
+      "part": null,
+      "type": "exercise",
+      "page": 159,
+      "question": {
+        "text": "If $A(-2,3)$, $B(6,1)$ and $C(0,y)$, such that $CA = CB$, then find the coordinates of the centroid G of triangle ABC.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "0254bdb5ea46abbc08c031ebb576160e",
+      "kind": "value",
+      "answer": "G(4/3, -2/3)",
+      "solution": [
+        "CA = CB: $4+(y-3)^2=36+(y-1)^2$.",
+        "$13-6y=37-2y$.",
+        "$-4y=24$, so y = -6. C(0, -6).",
+        "G = ((-2+6+0)/3, (3+1-6)/3).",
+        "G(4/3, -2/3)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-5",
+        "eb11c4-1:rule-12",
+        "eb11c4-1:rule-7"
+      ],
+      "checks": {
+        "resolve_answer": "G(4/3, -2/3)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-13",
+      "record_id": "eb11c4-1:try-13",
+      "part": null,
+      "type": "exercise",
+      "page": 160,
+      "question": {
+        "text": "Find the coordinates of point B symmetric to point A$(1,-2)$ with respect to point P$(2,3)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "1ea04ce187bee2306e815741e1ae77c0",
+      "kind": "value",
+      "answer": "B(3, 8)",
+      "solution": [
+        "Let B = (s, t).",
+        "The midpoint of AB is ((1+s)/2, (-2+t)/2) and it equals P(2, 3).",
+        "(1+s)/2 = 2, so s = 3.",
+        "(-2+t)/2 = 3, so t = 8.",
+        "B(3, 8)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "B(3, 8)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:try-14",
+      "record_id": "eb11c4-1:try-14",
+      "part": null,
+      "type": "exercise",
+      "page": 160,
+      "question": {
+        "text": "Find the coordinates of point Q symmetric to point P$(3,2)$ with respect to point A$(-1,5)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "d728690242fcbd7e2a382bde4de760a5",
+      "kind": "value",
+      "answer": "Q(-5, 8)",
+      "solution": [
+        "Let Q = (s, t).",
+        "The midpoint of PQ is ((3+s)/2, (2+t)/2) and it equals A(-1, 5).",
+        "(3+s)/2 = -1, so s = -5.",
+        "(2+t)/2 = 5, so t = 8.",
+        "Q(-5, 8)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "Q(-5, 8)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:work-with-a-partner-4",
+      "record_id": "eb11c4-1:work-with-a-partner-4",
+      "part": null,
+      "type": "activity",
+      "page": 160,
+      "question": {
+        "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "dd56f255f1b2db415232240083445d88",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the activity only refers to question (2) without giving its data.",
+      "solution": [
+        "The activity says to solve question (2) in a group.",
+        "The question's data is not given.",
+        "So it cannot be answered."
+      ],
+      "grounded_in": [],
+      "checks": {
+        "resolve_answer": "Q(-5, 8) (question 2 taken as Try 14)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-21",
+      "record_id": "eb11c4-1:exercise-21",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Solve the following problems.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": true,
+      "question_fingerprint": "23fe82432e519e1c64094ed7de9ae908",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the instruction 'Solve the following problems.'; the actual questions are the separate numbered problems.",
+      "solution": [
+        "The line contains no question or data.",
+        "The questions are answered under their own references."
+      ],
+      "grounded_in": [
+        "eb11c4-1:method-3"
+      ],
+      "checks": {
+        "resolve_answer": "(1) B(7, -1); (2) B(-13, 6); (3) B(-10, 12); (4) Q(-8, 6); (5) B(2, -8)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "cannot_answer",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-22",
+      "record_id": "eb11c4-1:exercise-22",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Find the coordinates of point $B$ symmetric to point $A(-3,1)$ with respect to point $P(2,0)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "58f81d6f410dacbfe06c1ea9d0b34217",
+      "kind": "value",
+      "answer": "B(7, -1)",
+      "solution": [
+        "Let B = (s, t).",
+        "Midpoint of AB: ((-3+s)/2, (1+t)/2) = P(2, 0).",
+        "(-3+s)/2 = 2, so s = 7.",
+        "(1+t)/2 = 0, so t = -1.",
+        "B(7, -1)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "B(7, -1)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-23",
+      "record_id": "eb11c4-1:exercise-23",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Find the coordinates of point $B$ symmetric to point $A(7,4)$ with respect to point $M(-3,5)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "230a132467bed4ea07746ed8e7d05c27",
+      "kind": "value",
+      "answer": "B(-13, 6)",
+      "solution": [
+        "Let B = (s, t).",
+        "Midpoint of AB: ((7+s)/2, (4+t)/2) = M(-3, 5).",
+        "(7+s)/2 = -3, so s = -13.",
+        "(4+t)/2 = 5, so t = 6.",
+        "B(-13, 6)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "B(-13, 6)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-24",
+      "record_id": "eb11c4-1:exercise-24",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Find the coordinates of point $B$ symmetric to point $A(4,-8)$ with respect to point $P(-3,2)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "88b6b7bd48c141719a6ce9bcfc76dfd1",
+      "kind": "value",
+      "answer": "B(-10, 12)",
+      "solution": [
+        "Let B = (s, t).",
+        "Midpoint of AB: ((4+s)/2, (-8+t)/2) = P(-3, 2).",
+        "(4+s)/2 = -3, so s = -10.",
+        "(-8+t)/2 = 2, so t = 12.",
+        "B(-10, 12)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "B(-10, 12)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-25",
+      "record_id": "eb11c4-1:exercise-25",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Find the coordinates of point $Q$ symmetric to point $P(0,-4)$ with respect to point $A(-4,1)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "4e69c77d67cde3e34ac029a522786d98",
+      "kind": "value",
+      "answer": "Q(-8, 6)",
+      "solution": [
+        "Let Q = (s, t).",
+        "Midpoint of PQ: ((0+s)/2, (-4+t)/2) = A(-4, 1).",
+        "s/2 = -4, so s = -8.",
+        "(-4+t)/2 = 1, so t = 6.",
+        "Q(-8, 6)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "Q(-8, 6)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:exercise-26",
+      "record_id": "eb11c4-1:exercise-26",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "Find the coordinates of point $B$ symmetric to point $A(-4,2)$ with respect to point $P(-1,-3)$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "28d98420b0a64271a1b005a4b162d71b",
+      "kind": "value",
+      "answer": "B(2, -8)",
+      "solution": [
+        "Let B = (s, t).",
+        "Midpoint of AB: ((-4+s)/2, (2+t)/2) = P(-1, -3).",
+        "(-4+s)/2 = -1, so s = 2.",
+        "(2+t)/2 = -3, so t = -8.",
+        "B(2, -8)."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:method-3",
+        "eb11c4-1:warm-up-7"
+      ],
+      "checks": {
+        "resolve_answer": "B(2, -8)",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:challenge-6",
+      "record_id": "eb11c4-1:challenge-6",
+      "part": null,
+      "type": "exercise",
+      "page": 161,
+      "question": {
+        "text": "If the points $B(m,5)$, $C(4,n)$ are symmetric with respect to the point $A(1,-1)$, then find $m+n$.",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "82f1c977c2d10214872ea3af761ad32b",
+      "kind": "value",
+      "answer": "-9",
+      "solution": [
+        "A is the midpoint of BC.",
+        "(m+4)/2 = 1, so m = -2.",
+        "(5+n)/2 = -1, so n = -7.",
+        "m + n = -2 + (-7) = -9."
+      ],
+      "grounded_in": [
+        "eb11c4-1:rule-13",
+        "eb11c4-1:rule-11"
+      ],
+      "checks": {
+        "resolve_answer": "-9",
+        "resolve_kind": "value",
+        "numeric_flags": [],
+        "agree": true
+      },
+      "status": "agreed",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    },
+    {
+      "ref": "eb11c4-1:reflect-1",
+      "record_id": "eb11c4-1:reflect-1",
+      "part": null,
+      "type": "open_prompt",
+      "page": 161,
+      "question": {
+        "text": "If we change the ratio of dividing a line segment, how will the position of the point on that line change? And how does thinking about ratios and reference distances help us understand locations in mathematics and in everyday life?",
+        "stem": "",
+        "notes": null
+      },
+      "needs_page": false,
+      "question_fingerprint": "e3227ab0c4863ded5b3defc4501f803a",
+      "kind": "explanation",
+      "answer": "Changing the ratio m : n slides the point along the line of the segment; ratios and reference distances let us describe a location relative to known points.",
+      "solution": [
+        "For an internal ratio m : n, the point lies on segment AB. A larger m compared with n puts it closer to B, and a smaller m puts it closer to A.",
+        "With ratio 1 : 1 the point is the midpoint.",
+        "For an external ratio, the point lies on the extension of AB, outside the segment.",
+        "Ratios and distances from reference points fix a position, for example on a map or when sharing a distance between two places."
+      ],
+      "grounded_in": [
+        "eb11c4-1:definition-2",
+        "eb11c4-1:definition-3",
+        "eb11c4-1:rule-2",
+        "eb11c4-1:rule-3",
+        "eb11c4-1:rule-4"
+      ],
+      "checks": {
+        "resolve_answer": "Changing the ratio $m:n$ slides the dividing point along the segment. A larger $m$ moves it toward B, and a larger $n$ moves it toward A. Equal ratios $1:1$ give the midpoint. Internal ratios keep the point between A and B. External ratios put it outside the segment. Ratios and reference distances let us describe positions relative to known points. Examples are maps, dividing a road into parts, and placing objects at set fractions of a distance.",
+        "resolve_kind": "explanation",
+        "numeric_flags": [],
+        "agree": null
+      },
+      "status": "needs_person",
+      "made": {
+        "at": "2026-10-21T14:33:41+00:00",
+        "model": "sonnet",
+        "prompts": "ans-v3"
+      }
+    }
+  ]
+}

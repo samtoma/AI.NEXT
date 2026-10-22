@@ -1,0 +1,1563 @@
+{
+ "format": "ainext.s1-result/1",
+ "book": "egb-g11-math",
+ "chapter": 1,
+ "module": "module:eb11c1",
+ "run": "runs/egb-g11-math/objectives/s1-ch01.20261021T103522Z.json",
+ "prompts_version": "s1-v5",
+ "status": "failures",
+ "lessons": [
+  {
+   "slug": "eb11c1-1",
+   "objectives": [
+    {
+     "id": "lo:eb11c1-1-1",
+     "n": 1,
+     "label": "Coefficients in binomial expansions",
+     "statement": "Calculate combinations nCr and determine the term or the coefficient of a specified term in the expansion of (a+b)^n.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-1:rule-3",
+       "printed_page": 4,
+       "quote": "${}_nC_r\\, a^{n-r} b^r$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE7",
+       "anchor": "eb11c1-1:explanation-1",
+       "printed_page": 5,
+       "quote": "${}_7C_5\\,(2x^2)^2\\times(-3)^5$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-1:exercise-1:a",
+       "printed_page": 6,
+       "quote": "Find the coefficient of the specified term",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE5",
+       "anchor": "eb11c1-1:example-5",
+       "printed_page": 4,
+       "quote": "${}_6C_2 \\times x^4 \\times (-2y)^2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-1:open-prompt-1",
+      "eb11c1-1:open-prompt-2",
+      "eb11c1-1:warm-up-1",
+      "eb11c1-1:try-1:a",
+      "eb11c1-1:try-1:b",
+      "eb11c1-1:try-1:c",
+      "eb11c1-1:exercise-1:a",
+      "eb11c1-1:exercise-1:b",
+      "eb11c1-1:exercise-1:c",
+      "eb11c1-1:exercise-1:d",
+      "eb11c1-1:exercise-1:e",
+      "eb11c1-1:exercise-1:f",
+      "eb11c1-1:exercise-1:g",
+      "eb11c1-1:exercise-1:h",
+      "eb11c1-1:exercise-1:i"
+     ],
+     "worked_examples": [
+      "eb11c1-1:example-1",
+      "eb11c1-1:example-2",
+      "eb11c1-1:example-3",
+      "eb11c1-1:example-4",
+      "eb11c1-1:example-5",
+      "eb11c1-1:explanation-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "combination",
+      "nCr",
+      "binomial expansion",
+      "coefficient",
+      "term"
+     ],
+     "failures": [],
+     "fingerprint": "65b08ae97c15edf715c90de2ec2960da"
+    },
+    {
+     "id": "lo:eb11c1-1-2",
+     "n": 2,
+     "label": "Expand using Binomial Theorem",
+     "statement": "Expand expressions of the form (a+b)^n in full using the Binomial Theorem.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-1:rule-4",
+       "printed_page": 4,
+       "quote": "Binomial Theorem",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE8",
+       "anchor": "eb11c1-1:explanation-2",
+       "printed_page": 5,
+       "quote": "$=81x^4-216x^3+216x^2-96x+16$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-1:exercise-2:a",
+       "printed_page": 6,
+       "quote": "Find the expansion of the following expressions",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-1:warm-up-2",
+      "eb11c1-1:try-2:a",
+      "eb11c1-1:try-2:b",
+      "eb11c1-1:exercise-2:a",
+      "eb11c1-1:exercise-2:b",
+      "eb11c1-1:exercise-2:c",
+      "eb11c1-1:exercise-2:d",
+      "eb11c1-1:exercise-2:e",
+      "eb11c1-1:exercise-2:f",
+      "eb11c1-1:exercise-2:g",
+      "eb11c1-1:exercise-2:h",
+      "eb11c1-1:exercise-2:i"
+     ],
+     "worked_examples": [
+      "eb11c1-1:example-6",
+      "eb11c1-1:explanation-2"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "Binomial Theorem",
+      "expansion"
+     ],
+     "failures": [],
+     "fingerprint": "02e0fa49e3a8d4aed8ef579960a59555"
+    },
+    {
+     "id": "lo:eb11c1-1-3",
+     "n": 3,
+     "label": "Multinomial Theorem coefficients",
+     "statement": "Determine the coefficient of a specified term in the expansion of a three-term expression such as (a+b+c)^n using the Multinomial Theorem.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-1:rule-5",
+       "printed_page": 7,
+       "quote": "$\\frac{n!}{p!q!r!}a^p b^q c^r$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-1:printed-objective-2",
+       "printed_page": 7,
+       "quote": "Applies the multinomial theorem",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-1:exercise-3:a",
+       "printed_page": 8,
+       "quote": "Find the coefficient of the following terms",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-1:open-prompt-3",
+      "eb11c1-1:warm-up-3:a",
+      "eb11c1-1:warm-up-3:b",
+      "eb11c1-1:try-3:a",
+      "eb11c1-1:try-3:b",
+      "eb11c1-1:try-4:a",
+      "eb11c1-1:try-4:b",
+      "eb11c1-1:exercise-3:a",
+      "eb11c1-1:exercise-3:b",
+      "eb11c1-1:exercise-3:c",
+      "eb11c1-1:exercise-4:a",
+      "eb11c1-1:exercise-4:b",
+      "eb11c1-1:exercise-4:c",
+      "eb11c1-1:exercise-5:a",
+      "eb11c1-1:exercise-5:b",
+      "eb11c1-1:exercise-5:c",
+      "eb11c1-1:exercise-6:a",
+      "eb11c1-1:exercise-6:b",
+      "eb11c1-1:exercise-6:c",
+      "eb11c1-1:challenge-2",
+      "eb11c1-1:reflect-1"
+     ],
+     "worked_examples": [],
+     "confidence": "agreed",
+     "terms": [
+      "Multinomial Theorem",
+      "coefficient",
+      "term",
+      "expansion"
+     ],
+     "failures": [],
+     "fingerprint": "9b711a0f6fbc2db24bebc0fce3642831"
+    },
+    {
+     "id": "lo:eb11c1-1-4",
+     "n": 4,
+     "label": "Prove identities with the binomial expansion",
+     "statement": "Prove identities involving binomial coefficients (sums of combinations) and divisibility by expanding (1+x)^n and substituting an appropriate value for x.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-1:method-2",
+       "printed_page": 9,
+       "quote": "Substitute an appropriate value for x",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE9",
+       "anchor": "eb11c1-1:explanation-3",
+       "printed_page": 9,
+       "quote": "Substituting $x=1$ into this expression",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-1:exercise-7:?",
+       "printed_page": 9,
+       "quote": "Prove that the following equalities hold",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-1:challenge-1",
+      "eb11c1-1:warm-up-4:?",
+      "eb11c1-1:try-5:?",
+      "eb11c1-1:work-with-a-partner-1",
+      "eb11c1-1:exercise-7:?",
+      "eb11c1-1:exercise-8:?",
+      "eb11c1-1:exercise-9:?",
+      "eb11c1-1:challenge-3"
+     ],
+     "worked_examples": [
+      "eb11c1-1:explanation-3"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "binomial coefficient",
+      "combination",
+      "divisibility",
+      "expansion",
+      "identity"
+     ],
+     "failures": [],
+     "fingerprint": "de48a34d7752cd0a0f53b2932143fd58"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-2",
+   "objectives": [
+    {
+     "id": "lo:eb11c1-2-1",
+     "n": 1,
+     "label": "Polynomial long division",
+     "statement": "Divide one polynomial by another using the long division algorithm, state the quotient and the remainder, and treat other variables as constants when dividing as a polynomial in x.",
+     "evidence": [
+      {
+       "kind": "heading",
+       "anchor": "eb11c1-2:heading-1",
+       "printed_page": 10,
+       "quote": "Polynomial Division",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-2:rule-1",
+       "printed_page": 10,
+       "quote": "Division of polynomials can be calculated using long division",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-2:rule-2",
+       "printed_page": 10,
+       "quote": "treat other variables as constants",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-2:exercise-3",
+       "printed_page": 11,
+       "quote": "Find the quotient and the remainder when $A$ is divided by $B$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-2:try-2",
+       "printed_page": 11,
+       "quote": "calculate treating it as a polynomial in $x$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-2:guiding-question-1",
+      "eb11c1-2:warm-up-1",
+      "eb11c1-2:warm-up-2",
+      "eb11c1-2:try-1",
+      "eb11c1-2:try-2",
+      "eb11c1-2:exercise-1",
+      "eb11c1-2:exercise-2",
+      "eb11c1-2:exercise-3",
+      "eb11c1-2:exercise-4",
+      "eb11c1-2:exercise-5",
+      "eb11c1-2:exercise-6",
+      "eb11c1-2:exercise-7",
+      "eb11c1-2:exercise-8",
+      "eb11c1-2:exercise-9",
+      "eb11c1-2:exercise-10",
+      "eb11c1-2:challenge-1",
+      "eb11c1-2:reflect-1",
+      "eb11c1-2:work-with-a-partner-1"
+     ],
+     "worked_examples": [],
+     "confidence": "merged",
+     "terms": [
+      "polynomial",
+      "long division",
+      "quotient",
+      "remainder",
+      "divisor",
+      "degree",
+      "polynomial in x",
+      "constant"
+     ],
+     "failures": [],
+     "fingerprint": "d558e412b83d8fbf42d7721333196cd0"
+    },
+    {
+     "id": "lo:eb11c1-2-2",
+     "n": 2,
+     "label": "Use A = BQ + R",
+     "statement": "Use A = B × Q + R to find the dividend A or the divisor B when the quotient and the remainder are given.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-2:rule-3",
+       "printed_page": 12,
+       "quote": "$A = B \\times Q + R$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE10",
+       "anchor": "eb11c1-2:explanation-1",
+       "printed_page": 12,
+       "quote": "$A = (x^2-2x-1)(x+3) + (-2x+5)$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-2:exercise-14",
+       "printed_page": 13,
+       "quote": "the quotient is $x+1$ and the remainder is $-5x+2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-2:warm-up-3:1",
+      "eb11c1-2:warm-up-3:2",
+      "eb11c1-2:try-3",
+      "eb11c1-2:try-4",
+      "eb11c1-2:exercise-11",
+      "eb11c1-2:exercise-12",
+      "eb11c1-2:exercise-13",
+      "eb11c1-2:exercise-14",
+      "eb11c1-2:exercise-15",
+      "eb11c1-2:exercise-16",
+      "eb11c1-2:challenge-2"
+     ],
+     "worked_examples": [
+      "eb11c1-2:explanation-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "dividend",
+      "divisor",
+      "quotient",
+      "remainder",
+      "polynomial"
+     ],
+     "failures": [],
+     "fingerprint": "6cad358ecfb12d78919763823e348f4a"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-3",
+   "objectives": [
+    {
+     "id": "lo:eb11c1-3-1",
+     "n": 1,
+     "label": "Reduce rational expressions",
+     "statement": "Simplify a rational expression by factorising the numerator and denominator and reducing common factors.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-3:rule-1",
+       "printed_page": 14,
+       "quote": "first factorise them to check if they can be reduced",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE11",
+       "anchor": "eb11c1-3:example-1",
+       "printed_page": 14,
+       "quote": "\\frac{x-1}{x}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-3:exercise-1:c",
+       "printed_page": 16,
+       "quote": "\\frac{x^2+3x}{x^2-9}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [
+      {
+       "kind": "worked_example",
+       "cited_as": "WE12",
+       "anchor": "eb11c1-3:explanation-1",
+       "printed_page": 15,
+       "quote": "Simplify the rational expressions",
+       "contained": true,
+       "present": true,
+       "supports": false,
+       "dropped": "the evidence check says it does not support the objective: The problem statement is present but the actual worked solutions are not shown (only blank placeholders for (a) and (b)). A worked_example requires demonstration of the solution process."
+      }
+     ],
+     "exercise_items": [
+      "eb11c1-3:warm-up-1:a",
+      "eb11c1-3:warm-up-1:b",
+      "eb11c1-3:try-1:a",
+      "eb11c1-3:try-1:b",
+      "eb11c1-3:exercise-1:a",
+      "eb11c1-3:exercise-1:b",
+      "eb11c1-3:exercise-1:c",
+      "eb11c1-3:exercise-1:d",
+      "eb11c1-3:exercise-1:e",
+      "eb11c1-3:exercise-1:f",
+      "eb11c1-3:reflect-1"
+     ],
+     "worked_examples": [
+      "eb11c1-3:example-1",
+      "eb11c1-3:explanation-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "rational expression",
+      "numerator",
+      "denominator",
+      "factorise",
+      "reduce"
+     ],
+     "failures": [],
+     "fingerprint": "55c02777b53e53fab42411f4e69f7240"
+    },
+    {
+     "id": "lo:eb11c1-3-2",
+     "n": 2,
+     "label": "Multiply and divide rational expressions",
+     "statement": "Calculate the product or quotient of rational expressions by factorising, using the reciprocal of the divisor, and cancelling common factors.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-3:printed-objective-1",
+       "printed_page": 14,
+       "quote": "by doing multiplication and division",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE13",
+       "anchor": "eb11c1-3:explanation-2",
+       "printed_page": 15,
+       "quote": "Change division to multiplication by using the reciprocal of the divisor.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-3:try-2:b",
+       "printed_page": 15,
+       "quote": "\\div\\frac{2x^2+5x-3}{x+1}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-3:exercise-2:g",
+       "printed_page": 16,
+       "quote": "Calculate the following.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-3:warm-up-2",
+      "eb11c1-3:try-2:a",
+      "eb11c1-3:try-2:b",
+      "eb11c1-3:work-with-a-partner-1",
+      "eb11c1-3:exercise-2:a",
+      "eb11c1-3:exercise-2:b",
+      "eb11c1-3:exercise-2:c",
+      "eb11c1-3:exercise-2:d",
+      "eb11c1-3:exercise-2:e",
+      "eb11c1-3:exercise-2:f",
+      "eb11c1-3:exercise-2:g",
+      "eb11c1-3:exercise-2:h",
+      "eb11c1-3:exercise-2:i",
+      "eb11c1-3:challenge-1"
+     ],
+     "worked_examples": [
+      "eb11c1-3:explanation-2"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "rational expression",
+      "reciprocal",
+      "divisor",
+      "product",
+      "quotient"
+     ],
+     "failures": [],
+     "fingerprint": "0e27e38a251d43bfdc74a92ba957825c"
+    },
+    {
+     "id": "lo:eb11c1-3-3",
+     "n": 3,
+     "label": "Add and subtract rational expressions",
+     "statement": "Add and subtract rational expressions with different denominators by factorising the denominators, finding a common denominator, and reducing the result.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-3:rule-3",
+       "printed_page": 17,
+       "quote": "first factorise the denominators",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-3:rule-4",
+       "printed_page": 17,
+       "quote": "calculate only the numerator",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE14",
+       "anchor": "eb11c1-3:example-2",
+       "printed_page": 17,
+       "quote": "\\frac{2x-1}{(x+1)(x-2)}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE16",
+       "anchor": "eb11c1-3:explanation-3",
+       "printed_page": 17,
+       "quote": "Always reduce the fraction",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-3:try-3:2",
+       "printed_page": 18,
+       "quote": "\\frac{x}{x-1}-\\frac{2}{x^2-1}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-3:guiding-question-1",
+      "eb11c1-3:warm-up-3:?",
+      "eb11c1-3:try-3:1",
+      "eb11c1-3:try-3:2",
+      "eb11c1-3:exercise-3",
+      "eb11c1-3:exercise-4",
+      "eb11c1-3:exercise-5",
+      "eb11c1-3:exercise-6",
+      "eb11c1-3:exercise-7",
+      "eb11c1-3:exercise-8",
+      "eb11c1-3:exercise-9",
+      "eb11c1-3:exercise-10",
+      "eb11c1-3:exercise-11",
+      "eb11c1-3:exercise-12",
+      "eb11c1-3:exercise-13",
+      "eb11c1-3:challenge-2"
+     ],
+     "worked_examples": [
+      "eb11c1-3:example-2",
+      "eb11c1-3:example-3",
+      "eb11c1-3:explanation-3"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "rational expression",
+      "common denominator",
+      "numerator",
+      "denominator",
+      "factorise",
+      "reduce"
+     ],
+     "failures": [],
+     "fingerprint": "81a1cc81191ee9e3342e4c0daf8e342f"
+    },
+    {
+     "id": "lo:eb11c1-3-4",
+     "n": 4,
+     "label": "Simplify compound fractions",
+     "statement": "Simplify compound fractions by multiplying the numerator and denominator by the same expression to give a single rational expression.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-3:definition-3",
+       "printed_page": 19,
+       "quote": "are called compound fractions",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-3:rule-5",
+       "printed_page": 19,
+       "quote": "multiply the numerator and denominator by the same expression",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE17",
+       "anchor": "eb11c1-3:explanation-4",
+       "printed_page": 19,
+       "quote": "\\frac{x-1}{x-2}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-3:try-4:2",
+       "printed_page": 20,
+       "quote": "\\dfrac{1}{x+2}+\\dfrac{1}{x-2}",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-3:warm-up-4:1",
+      "eb11c1-3:warm-up-5:2",
+      "eb11c1-3:try-4:1",
+      "eb11c1-3:try-4:2",
+      "eb11c1-3:try-4:3",
+      "eb11c1-3:work-with-a-partner-2",
+      "eb11c1-3:exercise-14:1",
+      "eb11c1-3:exercise-15:2",
+      "eb11c1-3:exercise-16:3",
+      "eb11c1-3:exercise-17:4",
+      "eb11c1-3:exercise-18:5",
+      "eb11c1-3:challenge-3"
+     ],
+     "worked_examples": [
+      "eb11c1-3:explanation-4",
+      "eb11c1-3:explanation-5"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "compound fraction",
+      "numerator",
+      "denominator",
+      "rational expression"
+     ],
+     "failures": [],
+     "fingerprint": "4ef83b4f9552ae96ebb7fcaa5dd3577d"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-4",
+   "objectives": [
+    {
+     "id": "lo:eb11c1-4-1",
+     "n": 1,
+     "label": "Find constants in identities",
+     "statement": "Find the values of constants in an identity in x by arranging both sides in descending powers of x (clearing denominators where needed) and comparing coefficients of terms of the same degree.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-4:definition-1",
+       "printed_page": 21,
+       "quote": "is called an identity in x",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-4:method-2",
+       "printed_page": 21,
+       "quote": "first clear the denominators",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE19",
+       "anchor": "eb11c1-4:explanation-1",
+       "printed_page": 22,
+       "quote": "Compare the coefficients of terms with the same degree.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE20",
+       "anchor": "eb11c1-4:explanation-2",
+       "printed_page": 22,
+       "quote": "Multiply both sides by $(x+2)(x-3)$ to clear the denominators.",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-4:exercise-9",
+       "printed_page": 23,
+       "quote": "$\\frac{3x-8}{3x^2+5x-2}=\\frac{a}{x+2}+\\frac{b}{3x-1}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-4:warm-up-1:?",
+      "eb11c1-4:warm-up-2:?",
+      "eb11c1-4:try-1:?",
+      "eb11c1-4:try-2:?",
+      "eb11c1-4:exercise-1",
+      "eb11c1-4:exercise-2",
+      "eb11c1-4:exercise-3",
+      "eb11c1-4:exercise-4",
+      "eb11c1-4:exercise-5",
+      "eb11c1-4:exercise-6",
+      "eb11c1-4:exercise-7",
+      "eb11c1-4:exercise-8",
+      "eb11c1-4:exercise-9",
+      "eb11c1-4:challenge-1"
+     ],
+     "worked_examples": [
+      "eb11c1-4:explanation-1",
+      "eb11c1-4:explanation-2"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "identity",
+      "coefficient",
+      "descending powers",
+      "degree",
+      "denominator"
+     ],
+     "failures": [],
+     "fingerprint": "a59554fb16af8ad27c09f0765b73773f"
+    },
+    {
+     "id": "lo:eb11c1-4-2",
+     "n": 2,
+     "label": "Prove equalities by simplifying",
+     "statement": "Prove an algebraic equality by simplifying the LHS and RHS respectively until they become the same expression.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-4:rule-2",
+       "printed_page": 24,
+       "quote": "simplify the LHS and RHS respectively",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE22",
+       "anchor": "eb11c1-4:explanation-4",
+       "printed_page": 24,
+       "quote": "Calculate and simplify the LHS and RHS respectively",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE21",
+       "anchor": "eb11c1-4:explanation-3",
+       "printed_page": 24,
+       "quote": "$=4xy$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-4:exercise-10:3",
+       "printed_page": 25,
+       "quote": "$(a+b+c)(a^2+b^2+c^2-ab-bc-ca)=a^3+b^3+c^3-3abc$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-4:warm-up-3:1",
+      "eb11c1-4:warm-up-3:2",
+      "eb11c1-4:try-3:1",
+      "eb11c1-4:try-3:2",
+      "eb11c1-4:exercise-10:1",
+      "eb11c1-4:exercise-10:2",
+      "eb11c1-4:exercise-10:3",
+      "eb11c1-4:exercise-10:4",
+      "eb11c1-4:exercise-10:5",
+      "eb11c1-4:exercise-10:6",
+      "eb11c1-4:challenge-2",
+      "eb11c1-4:reflect-1",
+      "eb11c1-4:open-prompt-1"
+     ],
+     "worked_examples": [
+      "eb11c1-4:explanation-3",
+      "eb11c1-4:explanation-4"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "LHS",
+      "RHS",
+      "simplify",
+      "equality"
+     ],
+     "failures": [],
+     "fingerprint": "35f8504914aeaeb53e211d04388faaab"
+    },
+    {
+     "id": "lo:eb11c1-4-3",
+     "n": 3,
+     "label": "Prove conditional equalities",
+     "statement": "Prove an equality that holds under a given condition by expressing one variable in terms of the others from the condition and substituting to eliminate it.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-4:method-3",
+       "printed_page": 26,
+       "quote": "substitute it to eliminate that variable",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE23",
+       "anchor": "eb11c1-4:worked-example-1",
+       "printed_page": 26,
+       "quote": "From $a+b+c=0$, $c=-a-b$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE23",
+       "anchor": "eb11c1-4:worked-example-1",
+       "printed_page": 26,
+       "quote": "Substituting (i) into the LHS",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-4:try-5",
+       "printed_page": 26,
+       "quote": "If $a+b+c=0$, prove $a^3+b^3+c^3=3abc$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-4:unlabelled-exercise-1",
+      "eb11c1-4:try-4",
+      "eb11c1-4:try-5",
+      "eb11c1-4:work-with-a-partner-1",
+      "eb11c1-4:exercise-11",
+      "eb11c1-4:unlabelled-exercise-2",
+      "eb11c1-4:unlabelled-exercise-3",
+      "eb11c1-4:unlabelled-exercise-4",
+      "eb11c1-4:unlabelled-exercise-5",
+      "eb11c1-4:unlabelled-exercise-6",
+      "eb11c1-4:challenge-3"
+     ],
+     "worked_examples": [
+      "eb11c1-4:worked-example-1"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "condition",
+      "substitute",
+      "eliminate",
+      "variable"
+     ],
+     "failures": [],
+     "fingerprint": "00dfd149170bcfb5dc2bff41b88d1e72"
+    },
+    {
+     "id": "lo:eb11c1-4-4",
+     "n": 4,
+     "label": "Prove with proportions",
+     "statement": "Prove equalities and find values of expressions given a proportion, by letting the ratios equal a constant k and substituting.",
+     "evidence": [
+      {
+       "kind": "definition",
+       "anchor": "eb11c1-4:method-4",
+       "printed_page": 28,
+       "quote": "first let a/b = c/d = k",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-4:method-5",
+       "printed_page": 28,
+       "quote": "let k be a constant",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE24",
+       "anchor": "eb11c1-4:worked-example-2",
+       "printed_page": 29,
+       "quote": "Let $\\frac{a}{b}=\\frac{c}{d}=k$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE25",
+       "anchor": "eb11c1-4:worked-example-3",
+       "printed_page": 29,
+       "quote": "$x=2k,\\ y=3k,\\ z=5k\\ldots\\ldots$(i)",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-4:exercise-18",
+       "printed_page": 30,
+       "quote": "If $a:b:c=3:5:2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-4:warm-up-4",
+      "eb11c1-4:warm-up-5",
+      "eb11c1-4:try-6",
+      "eb11c1-4:try-7",
+      "eb11c1-4:try-8",
+      "eb11c1-4:work-with-a-partner-2",
+      "eb11c1-4:exercise-12",
+      "eb11c1-4:exercise-13",
+      "eb11c1-4:exercise-14",
+      "eb11c1-4:exercise-15",
+      "eb11c1-4:exercise-16",
+      "eb11c1-4:exercise-17",
+      "eb11c1-4:exercise-18",
+      "eb11c1-4:exercise-19",
+      "eb11c1-4:exercise-20",
+      "eb11c1-4:challenge-4"
+     ],
+     "worked_examples": [
+      "eb11c1-4:worked-example-2",
+      "eb11c1-4:worked-example-3"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "ratio",
+      "proportion",
+      "constant",
+      "k"
+     ],
+     "failures": [],
+     "fingerprint": "49460bb267cae8f242db0404696d5c63"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-5",
+   "objectives": [
+    {
+     "id": "lo:eb11c1-5-1",
+     "n": 1,
+     "label": "Prove conditional inequalities",
+     "statement": "Prove a conditional inequality by calculating LHS − RHS, factorising it and using the given conditions (e.g. a > b rewritten as a − b > 0) to show the result is positive.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-5:method-1",
+       "printed_page": 31,
+       "quote": "calculate their difference LHS – RHS and show that it is positive",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-5:method-2",
+       "printed_page": 31,
+       "quote": "rewrite it as a − b > 0 to use in your proof",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE26",
+       "anchor": "eb11c1-5:explanation-1",
+       "printed_page": 32,
+       "quote": "Since $a>b$ and $x>y$, we have $a-b>0$ and $x-y>0$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-5:exercise-3",
+       "printed_page": 32,
+       "quote": "If $a>1$ and $b>1$, prove that $ab+1>a+b$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-5:guiding-question-1",
+      "eb11c1-5:warm-up-1",
+      "eb11c1-5:warm-up-2",
+      "eb11c1-5:try-1",
+      "eb11c1-5:try-2",
+      "eb11c1-5:exercise-1",
+      "eb11c1-5:exercise-2",
+      "eb11c1-5:exercise-3",
+      "eb11c1-5:exercise-4",
+      "eb11c1-5:challenge-1"
+     ],
+     "worked_examples": [
+      "eb11c1-5:explanation-1",
+      "eb11c1-5:explanation-2"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "inequality",
+      "LHS",
+      "RHS",
+      "factorising"
+     ],
+     "failures": [],
+     "fingerprint": "99f21c85280b0c8c78df2aa649bdda43"
+    },
+    {
+     "id": "lo:eb11c1-5-2",
+     "n": 2,
+     "label": "Prove by completing the square",
+     "statement": "Prove an inequality for all real numbers by completing the square to form X² or X² + Y², and determine when equality holds.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-5:method-3",
+       "printed_page": 33,
+       "quote": "use completing the square to form $X^2$ or $X^2 + Y^2$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE28",
+       "anchor": "eb11c1-5:explanation-3",
+       "printed_page": 33,
+       "quote": "Equality holds when $X=0$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-5:exercise-10",
+       "printed_page": 34,
+       "quote": "$x^2+y^2-6x+8y+25 \\ge 0$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-5:warm-up-3:1",
+      "eb11c1-5:warm-up-3:2",
+      "eb11c1-5:try-3",
+      "eb11c1-5:try-4",
+      "eb11c1-5:work-with-a-partial-placeholder"
+     ],
+     "worked_examples": [
+      "eb11c1-5:explanation-3"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "completing the square",
+      "equality holds"
+     ],
+     "failures": [],
+     "fingerprint": "d3a6904396694fc3865b2cbd25b98f24"
+    },
+    {
+     "id": "lo:eb11c1-5-3",
+     "n": 3,
+     "label": "Prove inequalities with roots",
+     "statement": "Prove inequalities containing square roots by calculating (LHS)² − (RHS)², showing LHS > 0 and RHS > 0, and determine when equality holds.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-5:method-4",
+       "printed_page": 35,
+       "quote": "calculate the difference of their squares",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE29",
+       "anchor": "eb11c1-5:explanation-4",
+       "printed_page": 35,
+       "quote": "Must show LHS > 0, RHS > 0",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-5:exercise-15",
+       "printed_page": 36,
+       "quote": "$\\sqrt{a}+\\sqrt{b}>\\sqrt{a+b}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-5:warm-up-4",
+      "eb11c1-5:warm-up-5",
+      "eb11c1-5:try-5",
+      "eb11c1-5:try-6",
+      "eb11c1-5:try-7",
+      "eb11c1-5:exercise-11",
+      "eb11c1-5:exercise-12",
+      "eb11c1-5:exercise-13",
+      "eb11c1-5:exercise-14",
+      "eb11c1-5:exercise-15",
+      "eb11c1-5:exercise-16",
+      "eb11c1-5:exercise-17",
+      "eb11c1-5:challenge-3"
+     ],
+     "worked_examples": [
+      "eb11c1-5:explanation-4"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "square root",
+      "LHS",
+      "RHS"
+     ],
+     "failures": [],
+     "fingerprint": "2ad663a51bc3b3dc8c77a8398d81be79"
+    },
+    {
+     "id": "lo:eb11c1-5-4",
+     "n": 4,
+     "label": "Apply the AM-GM inequality",
+     "statement": "Apply the AM-GM inequality for positive a and b to prove inequalities, determine when equality holds (a = b), and find maximum values such as an area.",
+     "evidence": [
+      {
+       "kind": "intro",
+       "anchor": "eb11c1-5:rule-8",
+       "printed_page": 37,
+       "quote": "$a+b\\ge 2\\sqrt{ab}$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "worked_example",
+       "cited_as": "WE30",
+       "anchor": "eb11c1-5:explanation-5",
+       "printed_page": 37,
+       "quote": "By the AM-GM inequality",
+       "contained": true,
+       "present": true,
+       "supports": true
+      },
+      {
+       "kind": "exercise",
+       "anchor": "eb11c1-5:exercise-22",
+       "printed_page": 38,
+       "quote": "$\\left(x+\\frac{1}{x}\\right)\\left(x+\\frac{4}{x}\\right)\\ge 9$",
+       "contained": true,
+       "present": true,
+       "supports": true
+      }
+     ],
+     "evidence_dropped": [],
+     "exercise_items": [
+      "eb11c1-5:warm-up-6",
+      "eb11c1-5:warm-up-7",
+      "eb11c1-5:warm-up-8",
+      "eb11c1-5:try-8",
+      "eb11c1-5:try-9",
+      "eb11c1-5:try-10",
+      "eb11c1-5:exercise-18",
+      "eb11c1-5:exercise-19",
+      "eb11c1-5:exercise-20",
+      "eb11c1-5:exercise-21",
+      "eb11c1-5:exercise-22",
+      "eb11c1-5:exercise-23",
+      "eb11c1-5:exercise-24",
+      "eb11c1-5:challenge-4",
+      "eb11c1-5:question-for-reflection-1",
+      "eb11c1-5:unlabelled-exercise-1",
+      "eb11c1-5:unlabelled-exercise-2",
+      "eb11c1-5:unlabelled-exercise-3",
+      "eb11c1-5:open-prompt-1"
+     ],
+     "worked_examples": [
+      "eb11c1-5:explanation-5"
+     ],
+     "confidence": "agreed",
+     "terms": [
+      "AM-GM inequality",
+      "equality holds",
+      "maximum"
+     ],
+     "failures": [],
+     "fingerprint": "85d7dbbb4abf6e6fb23209c7fd8a55da"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "src": "lo:eb11c1-1-1",
+   "dst": "lo:eb11c1-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "cited_as": "WE8",
+     "anchor": "eb11c1-1:explanation-2",
+     "printed_page": 5,
+     "quote": "{}_4C_2\\times(3x)^2\\times(-2)^2"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Expansion uses nCr calculation as step."
+   },
+   "key": "lo:eb11c1-1-1->lo:eb11c1-1-2",
+   "backward": false,
+   "fingerprint": "a637966252d20c63379d3c8b5063e02d"
+  },
+  {
+   "src": "lo:eb11c1-1-2",
+   "dst": "lo:eb11c1-1-4",
+   "signal": "reference",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "eb11c1-1:method-1",
+     "printed_page": 9,
+     "quote": "use the expansion of (1+x)^n"
+    },
+    {
+     "kind": "worked_example",
+     "cited_as": "WE9",
+     "anchor": "eb11c1-1:explanation-3",
+     "printed_page": 9,
+     "quote": "Expanding $(1+x)^n$ using the Binomial Theorem"
+    }
+   ],
+   "evidence_dropped": [],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Proof uses binomial expansion of (1+x)^n."
+   },
+   "key": "lo:eb11c1-1-2->lo:eb11c1-1-4",
+   "backward": false,
+   "fingerprint": "984918a9b323bb1629e6dcdf29e0f55f"
+  }
+ ],
+ "links_dropped": [
+  {
+   "key": "lo:eb11c1-1-1->lo:eb11c1-1-3",
+   "src": "lo:eb11c1-1-1",
+   "dst": "lo:eb11c1-1-3",
+   "why": "Multinomial coefficient extends the binomial term idea; the worked solution picks the coefficient of a specified term.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Text states multinomial formula; no reference to combinations."
+   }
+  },
+  {
+   "key": "lo:eb11c1-2-1->lo:eb11c1-2-2",
+   "src": "lo:eb11c1-2-1",
+   "dst": "lo:eb11c1-2-2",
+   "why": "Finding B requires polynomial division.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Quote uses division but text doesn't refer back to long division explicitly... it does use a division step, though weak."
+   }
+  },
+  {
+   "key": "lo:eb11c1-3-1->lo:eb11c1-3-2",
+   "src": "lo:eb11c1-3-1",
+   "dst": "lo:eb11c1-3-2",
+   "why": "Product/quotient factorises and cancels.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Cancelling common factors is used, but it's the simplification skill only implicitly; text doesn't refer back explicitly."
+   }
+  },
+  {
+   "key": "lo:eb11c1-3-2->lo:eb11c1-3-3",
+   "src": "lo:eb11c1-3-2",
+   "dst": "lo:eb11c1-3-3",
+   "why": "Addition ends with factorising and reducing.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Reducing is the simplification skill, not product/quotient."
+   }
+  },
+  {
+   "key": "lo:eb11c1-3-3->lo:eb11c1-3-4",
+   "src": "lo:eb11c1-3-3",
+   "dst": "lo:eb11c1-3-4",
+   "why": "Compound fractions require combining and simplifying rational expressions.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Compound fraction step doesn't rely on add/subtract of fractions in the shown text."
+   }
+  },
+  {
+   "key": "lo:eb11c1-3-3->lo:eb11c1-4-1",
+   "src": "lo:eb11c1-3-3",
+   "dst": "lo:eb11c1-4-1",
+   "why": "Clearing denominators uses common-denominator reasoning.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Clearing denominators is not adding rational expressions."
+   }
+  },
+  {
+   "key": "lo:eb11c1-4-2->lo:eb11c1-4-3",
+   "src": "lo:eb11c1-4-2",
+   "dst": "lo:eb11c1-4-3",
+   "why": "Conditional proof simplifies LHS and RHS to same expression.",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Proof by simplifying LHS and RHS used as a method in the substitution example; plausible but not explicit."
+   }
+  },
+  {
+   "key": "lo:eb11c1-4-2->lo:eb11c1-4-4",
+   "src": "lo:eb11c1-4-2",
+   "dst": "lo:eb11c1-4-4",
+   "why": "Proportion proofs simplify both sides.",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Same approach of simplifying LHS and RHS separately; not explicitly referenced."
+   }
+  },
+  {
+   "key": "lo:eb11c1-3-1->lo:eb11c1-4-4",
+   "src": "lo:eb11c1-3-1",
+   "dst": "lo:eb11c1-4-4",
+   "why": "Factorising and cancelling k-expressions.",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Factoring and cancelling b^2 used as a step, but not explicitly recalled."
+   }
+  },
+  {
+   "key": "lo:eb11c1-5-1->lo:eb11c1-5-2",
+   "src": "lo:eb11c1-5-1",
+   "dst": "lo:eb11c1-5-2",
+   "why": "Same difference method extended.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Rule is a general statement, not showing reliance on the conditional-inequality objective."
+   }
+  },
+  {
+   "key": "lo:eb11c1-5-2->lo:eb11c1-5-3",
+   "src": "lo:eb11c1-5-2",
+   "dst": "lo:eb11c1-5-3",
+   "why": "Square difference ends with X² ≥ 0 and equality condition.",
+   "check": {
+    "verdict": "UNCLEAR",
+    "note": "Uses X^2>=0 idea and equality at X=0, similar to completing square, but not explicit."
+   }
+  },
+  {
+   "key": "lo:eb11c1-5-2->lo:eb11c1-5-4",
+   "src": "lo:eb11c1-5-2",
+   "dst": "lo:eb11c1-5-4",
+   "why": "Equality-case determination.",
+   "check": {
+    "verdict": "REJECTED",
+    "note": "Text uses AM-GM, not completing the square."
+   }
+  }
+ ],
+ "decisions": [
+  {
+   "key": "term:binomial coefficient",
+   "kind": "terminology",
+   "lesson": "eb11c1-1",
+   "objective": "lo:eb11c1-1-4",
+   "detail": "binomial coefficient: this book never prints it"
+  },
+  {
+   "key": "term:lhs / rhs",
+   "kind": "terminology",
+   "lesson": "eb11c1-4",
+   "objective": "lo:eb11c1-4-2",
+   "detail": "LHS / RHS: Abbreviations for left-hand side and right-hand side of an equation."
+  },
+  {
+   "key": "term:factorising",
+   "kind": "terminology",
+   "lesson": "eb11c1-5",
+   "objective": "lo:eb11c1-5-1",
+   "detail": "factorising: this book never prints it"
+  }
+ ],
+ "failures": [
+  "eb11c1-5: eb11c1-5:work-with-a-partial-placeholder is not an item of this lesson",
+  "eb11c1-5: eb11c1-5:work-with-a-partner-1 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-5 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-6 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-7 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-8 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-9 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:exercise-10 maps to no objective (rule 2)",
+  "eb11c1-5: eb11c1-5:challenge-2 maps to no objective (rule 2)"
+ ],
+ "warnings": [
+  "eb11c1-1: objectives are not numbered in the order the book practises them (rule 6)",
+  "eb11c1-2: objectives are not numbered in the order the book practises them (rule 6)"
+ ]
+}

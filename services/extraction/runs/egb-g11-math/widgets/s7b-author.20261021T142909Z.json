@@ -1,0 +1,107 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s7b-v4",
+ "embedded": {
+  "source": "runbook/widgets-book.workflow.js",
+  "source_sha256": "5c103a7fb8d46b0260c97a13e5a676b12879af22ff92829d2b5fb1b8463db787",
+  "args_sha256": "d7b7321ee93e271688c1bf2e2117e91b8f0e6585cbd34e7ecbbc1c5ff0e94197",
+  "generated_sha256": "d776fa7793ac55b8f6f462f721fd935a11ab09b1a21ac50df8c79e7d641793b1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "eb11c2-1",
+   "templates": [],
+   "gaps": [],
+   "notes": "No template and no gap for lesson eb11c2-1. Every exercise asks the student to compute a term, a general term, a common difference, a missing term, a term number, an x value or a sum. None asks for a construction. A pair_plotter or number_line_marker would only collect a typed-in answer, which stretches the instrument. The book never asks the student to plot terms, draw a line or graph a sequence. None of the open prompts or reflection items is a construction either."
+  },
+  {
+   "lesson": "eb11c2-2",
+   "templates": [],
+   "gaps": [],
+   "notes": "No templates were written for eb11c2-2, and no gaps are recorded. Every exercise in this lesson is a symbolic computation. The student writes a general term a_n = ar^{n-1}, finds a ratio or missing terms, solves for x or for a and b using b² = ac, finds a sum S_n, or solves for a and b from sums. None of these is a construction, so none belongs in a gap list. None fits a widget kind exactly either. number_line_marker could mark the answers x = ±4, ±5 or ±2 on a line, but that only has the student mark a finished answer. It is not what the part asks, and it would also miss try-4 (x = ±2√3, which is not a whole number). I did not stretch it to fit. The pair_plotter, line_drawer and curve_sketcher kinds could plot terms of a sequence, but no exercise asks for a plot or a graph."
+  },
+  {
+   "lesson": "eb11c2-3",
+   "templates": [],
+   "gaps": [
+    {
+     "lo_id": "lo:eb11c2-3-1",
+     "need_kind": "expression builder / symbolic entry",
+     "description": "Exercises 1 and 3 (and the unlabelled sets) ask the student to expand a Σ into a written sum of terms. Exercises 2 and 4 and the challenge ask for a Σ expression written from a list of terms.",
+     "why": "The answer is a typed expression: a list of terms, or Σ with a general term and limits. No kind takes symbolic input. A number line, plotter or bar builder would only test the numerical values, not the notation."
+    },
+    {
+     "lo_id": "lo:eb11c2-3-2",
+     "need_kind": "symbolic or numeric answer entry",
+     "description": "The sums in n (such as n(2n+1) and 4(2^n−1)), the numeric sums (such as 100 and 280) and the challenge sums over r=4..8 and r=5..9 all need an exact algebraic or numeric answer.",
+     "why": "All ten kinds grade a position or a drag. None accepts a typed formula or number. The numeric answers (16, 100, 280, 245, 105 and so on) have no instrument to place them on. The −3 to 60 range is not a number line task either."
+    },
+    {
+     "lo_id": "lo:eb11c2-3-3",
+     "need_kind": "symbolic answer entry",
+     "description": "The telescoping partial-fraction sums and the √ rationalising sums give closed forms such as n/(3n+1), or a value such as 1425/1984.",
+     "why": "The answer is an algebraic expression or a fraction found by cancelling terms. No kind can grade it."
+    },
+    {
+     "lo_id": "lo:eb11c2-3-4",
+     "need_kind": "symbolic answer entry / step-by-step derivation",
+     "description": "The arithmetic×geometric sums use the S − rS method, for example S = (n−1)2^n + 1.",
+     "why": "The result is a closed-form formula in n. The 'last term sign' misconception is a manipulation error inside an algebraic derivation, and no widget instrument exposes that step."
+    },
+    {
+     "lo_id": "lo:eb11c2-3-5",
+     "need_kind": "symbolic answer entry",
+     "description": "Finding a_k and S_n for sums of sums, and finding a_n from S_n with the n=1 check.",
+     "why": "The answers are formulas, sometimes piecewise (a_1 and then a_n for n≥2). No kind accepts a typed formula or a piecewise rule, so the n=1 check cannot be graded."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lesson": "eb11c2-4",
+   "templates": [],
+   "gaps": [],
+   "notes": "No widget fits eb11c2-4. Every exercise asks for a general-term formula, a numeric value (first term, sum), or a group and position. None asks the student to build something on a board. Sketching a_n = 3n² − n or plotting terms would not be what the part asks, and the answers are algebraic or numeric. No part is a construction, so I recorded no gaps."
+  },
+  {
+   "lesson": "eb11c2-5",
+   "templates": [],
+   "gaps": [],
+   "notes": "No template fits any exercise in eb11c2-5. The exercises are all calculations (terms of a recurrence, general terms), proofs by induction, or open prompts. Any of those on an existing kind would be a stretch. Marking computed terms on number_line_marker would only test a typed value, and many terms (8, 26, 80 and so on) fall outside its ±20 range. Plotting terms or sketching a general term would not be what the book asks. None of the exercises asks the student to build a figure, so I recorded no gaps."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:eb11c2-3-1",
+   "need_kind": "expression builder / symbolic entry",
+   "description": "Exercises 1 and 3 (and the unlabelled sets) ask the student to expand a Σ into a written sum of terms. Exercises 2 and 4 and the challenge ask for a Σ expression written from a list of terms.",
+   "why": "The answer is a typed expression: a list of terms, or Σ with a general term and limits. No kind takes symbolic input. A number line, plotter or bar builder would only test the numerical values, not the notation."
+  },
+  {
+   "lo_id": "lo:eb11c2-3-2",
+   "need_kind": "symbolic or numeric answer entry",
+   "description": "The sums in n (such as n(2n+1) and 4(2^n−1)), the numeric sums (such as 100 and 280) and the challenge sums over r=4..8 and r=5..9 all need an exact algebraic or numeric answer.",
+   "why": "All ten kinds grade a position or a drag. None accepts a typed formula or number. The numeric answers (16, 100, 280, 245, 105 and so on) have no instrument to place them on. The −3 to 60 range is not a number line task either."
+  },
+  {
+   "lo_id": "lo:eb11c2-3-3",
+   "need_kind": "symbolic answer entry",
+   "description": "The telescoping partial-fraction sums and the √ rationalising sums give closed forms such as n/(3n+1), or a value such as 1425/1984.",
+   "why": "The answer is an algebraic expression or a fraction found by cancelling terms. No kind can grade it."
+  },
+  {
+   "lo_id": "lo:eb11c2-3-4",
+   "need_kind": "symbolic answer entry / step-by-step derivation",
+   "description": "The arithmetic×geometric sums use the S − rS method, for example S = (n−1)2^n + 1.",
+   "why": "The result is a closed-form formula in n. The 'last term sign' misconception is a manipulation error inside an algebraic derivation, and no widget instrument exposes that step."
+  },
+  {
+   "lo_id": "lo:eb11c2-3-5",
+   "need_kind": "symbolic answer entry",
+   "description": "Finding a_k and S_n for sums of sums, and finding a_n from S_n with the n=1 check.",
+   "why": "The answers are formulas, sometimes piecewise (a_1 and then a_n for n≥2). No kind accepts a typed formula or a piecewise rule, so the n=1 check cannot be graded."
+  }
+ ]
+}

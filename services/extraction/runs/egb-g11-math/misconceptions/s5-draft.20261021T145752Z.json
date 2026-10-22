@@ -1,0 +1,561 @@
+{
+ "book": "egb-g11-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "6df7433934bc0d7f8af51c677fef65415a92f0d18a13eedd3f16cb56f18bf21e",
+  "generated_sha256": "c5e3df16bc3e5a4ef86572af16ebbbe6f22f010c1ecfc6cba9eff79f47955d90",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:eb11c4-1-1",
+   "entries": [
+    {
+     "id": "mc:eb11c4-1-1:swapped-multipliers",
+     "lo_id": "lo:eb11c4-1-1",
+     "label": "Multiplies a by m and b by n",
+     "description": "The student pairs each coordinate with its own ratio number (m with a, n with b) instead of cross-multiplying.",
+     "signal": "Point lands nearer to the wrong end; e.g. 0 instead of 4 for A(-4), B(8) in ratio 2:1.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right pieces: $m$, $n$, $a$, $b$ and the denominator $m+n$. The slip is which number multiplies which coordinate."
+      },
+      {
+       "step": 2,
+       "text_md": "Take A(−4), B(8), ratio 2:1. Pairing straight across gives $\\frac{2\\times(-4)+1\\times 8}{2+1}=\\frac{0}{3}=0$."
+      },
+      {
+       "step": 3,
+       "text_md": "A point dividing AB in the ratio 2:1 should be twice as far from A as from B, so it should sit closer to B. 0 is only 4 from A and 8 from B, so it is closer to A. That is the wrong way round."
+      },
+      {
+       "step": 4,
+       "text_md": "The book's formula cross-multiplies: $\\frac{na+mb}{m+n}=\\frac{1\\times(-4)+2\\times 8}{3}=\\frac{12}{3}=4$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, write $n$ under $a$ and $m$ under $b$ (cross-multiply) before you calculate."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c4-1-1:external-uses-internal-formula",
+     "lo_id": "lo:eb11c4-1-1",
+     "label": "Uses the internal formula for an external ratio",
+     "description": "The student uses $\\frac{na+mb}{m+n}$ (plus in the numerator and denominator) for an externally divided segment.",
+     "signal": "A point inside the segment, e.g. 0.8 instead of −28 for A(−4), B(8) in ratio 2:3 external.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "The cross-multiplying is right. The slip is using the internal formula when the question says externally."
+      },
+      {
+       "step": 2,
+       "text_md": "For A(−4), B(8), external ratio 2:3, the internal formula gives $\\frac{3\\times(-4)+2\\times 8}{2+3}=\\frac{4}{5}$, a point between A and B."
+      },
+      {
+       "step": 3,
+       "text_md": "An external point lies outside the segment AB, so an answer between −4 and 8 cannot be right."
+      },
+      {
+       "step": 4,
+       "text_md": "The external formula is $\\frac{-na+mb}{m-n}=\\frac{-3\\times(-4)+2\\times 8}{2-3}=\\frac{28}{-1}=-28$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, check the word internally or externally first. For external, use a minus sign in the numerator on the $na$ term and $m-n$ in the denominator."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c4-1-1:distance-no-absolute-value",
+     "lo_id": "lo:eb11c4-1-1",
+     "label": "Distance as a−b or without absolute value",
+     "description": "The student subtracts in the wrong order or leaves the result negative, giving a negative distance.",
+     "signal": "Negative distance, e.g. −12 for A(−4), B(8).",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "Subtracting the two coordinates is the right idea. The slip is the order, or forgetting to take the absolute value."
+      },
+      {
+       "step": 2,
+       "text_md": "For A(−4), B(8), computing $a-b=-4-8=-12$ gives a negative number, but a distance cannot be negative."
+      },
+      {
+       "step": 3,
+       "text_md": "The book uses $AB=|b-a|=|8-(-4)|=12$. The absolute value makes the answer positive whichever order you subtract."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, subtract, then put bars around it so that the distance comes out non-negative."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c4-1:rule-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "terminology",
+     "text": "The caution says 'cross-multiply'; I used that wording but the book's exact name for the external formula is not given beyond 'externally'."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries, and the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-1-4",
+   "entries": [
+    {
+     "id": "mc:eb11c4-1-4:swapped-ratio-weights",
+     "lo_id": "lo:eb11c4-1-4",
+     "label": "Multiplies each point by the wrong part of the ratio",
+     "description": "The student uses the right denominator but pairs m with the first point and n with the second, instead of n with the first point and m with the second.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right shape for the formula: add two products and divide by $m+n$ (or $m-n$ for an external point). The slip is which number multiplies which point. You paired $m$ with the first point and $n$ with the second."
+      },
+      {
+       "step": 2,
+       "text_md": "The formula is $\\frac{na+mb}{m+n}$: $n$ goes with the first point and $m$ goes with the second. The order of multiplication matters."
+      },
+      {
+       "step": 3,
+       "text_md": "Take the point dividing segment BA internally in the ratio $1:2$, with B$(3, 7)$ first and A$(-2, -3)$ second. The correct $x$ is $\\frac{2\\times3+1\\times(-2)}{1+2}=\\frac43$. With the weights swapped you get $\\frac{1\\times3+2\\times(-2)}{3}=-\\frac13$, which is a different point."
+      },
+      {
+       "step": 4,
+       "text_md": "Before you substitute, write which point is first and which is second, since the order of the segment's name decides this. Then put $n$ beside the first point and $m$ beside the second. For the external case, the first product is $-n$ times the first point."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-1:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only supporting evidence is the book's caution about the order of multiplication. There were no wrong options or re-solve wrong turns, so I wrote no entries for sign errors in the external formula, for averaging the centroid, or for the symmetric point."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-2-1",
+   "entries": [
+    {
+     "id": "mc:eb11c4-2-1:stops-at-isosceles",
+     "lo_id": "lo:eb11c4-2-1",
+     "label": "Stops at 'isosceles' without testing for a right angle",
+     "description": "After finding two equal squared sides, the student names the triangle isosceles and never checks whether the largest squared side equals the sum of the other two.",
+     "signal": "Answers 'isosceles triangle' when the book's answer is 'isosceles right-angled triangle'.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the equal sides correctly, and that does show the triangle is isosceles. The slip is treating that as the whole answer, when equal sides say nothing about whether there is a right angle."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $A(1, 2)$, $B(5, 8)$, $C(11, 4)$. Then $(AB)^2=16+36=52$ and $(BC)^2=36+16=52$, so it is isosceles. But $(CA)^2=100+4=104$ is still unused."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it: $52+52=104=(CA)^2$. So the triangle is right-angled at $B$ as well. Answering only 'isosceles' leaves out half of what is true."
+      },
+      {
+       "step": 4,
+       "text_md": "The rule is that if both conditions are met, the triangle is isosceles right-angled. So you need to check both conditions every time."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, once two squared lengths match, add those two and compare the sum with the third squared length. If they are equal, say 'isosceles right-angled'. If not, say 'isosceles'."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c4-2:rule-3 p.162"
+      },
+      {
+       "type": "remark",
+       "ref": "eb11c4-2:rule-5 p.162"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong-option distractors or re-solve wrong turns were supplied. Only the two rule remarks supported an entry, so I wrote one."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence is two neutral remarks (the gradient formula for two points, and that ax + by + c = 0 is a straight line). There are no caution boxes, no wrong options and no re-solve wrong turns. I added no entries, because any error I named would be my own guess and not supported. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": [
+    "canonical solutions truncated from 14661 to 14000 characters"
+   ]
+  },
+  {
+   "lo": "lo:eb11c4-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence supplied is the remark that ax + by + c = 0 represents a straight line. It names no error and gives no wrong turn, so I wrote no entries. The runtime will fall back to the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, wrong options or widget predicates were supplied, and there were no re-solve wrong turns. The list of wrong options is empty, so there are no distractors to assign."
+    },
+    {
+     "kind": "other",
+     "text": "The question list was truncated after the second worked example on symmetric points. Any further evidence there was not available to me."
+    }
+   ],
+   "notes": [
+    "canonical solutions truncated from 17046 to 14000 characters"
+   ]
+  },
+  {
+   "lo": "lo:eb11c4-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-2-5",
+   "entries": [
+    {
+     "id": "mc:eb11c4-2-5:no-triangle-only-one-case",
+     "lo_id": "lo:eb11c4-2-5",
+     "label": "Stops after one way the lines can fail to make a triangle",
+     "description": "The student finds only the value of the constant that makes the three lines meet at one point, or only the parallel values, and gives that as the whole answer.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found a value of the constant that really does stop the lines forming a triangle, and that part is right. The slip is treating it as the only value. Three lines fail to form a triangle in more than one way."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $x-y+1=0$, $2x+y+2=0$ and $ax+3y-4=0$. The first two lines meet at $(-1, 0)$. If the third line passes through that point, all three meet at one point and there is no triangle. That gives $a=-4$."
+      },
+      {
+       "step": 3,
+       "text_md": "But the third line can also be parallel to one of the others. Its gradient is $-\\frac a3$. The first line has gradient $1$, so $-\\frac a3=1$ gives $a=-3$. The second has gradient $-2$, so $-\\frac a3=-2$ gives $a=6$. Neither value makes the lines meet at one point, yet with two lines parallel there is still no triangle."
+      },
+      {
+       "step": 4,
+       "text_md": "So an answer of only $a=-4$, or only $-3$ and $6$, is incomplete. The full answer is $a=-4, -3, 6$."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time, check every case. First write the gradients and test each pair for parallel lines. Then find where the two non-parallel lines meet and make the third line pass through that point. List every value you get."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "remark",
+       "ref": "eb11c4-2:linking-text-28"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, wrong options or re-solve wrong turns were supplied, so no fixed-point errors are catalogued. The only evidence used is the remark about checking the parallel cases. The 'misses a case' error is inferred from that remark and from the book's multi-value answers."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-3-1",
+   "entries": [
+    {
+     "id": "mc:eb11c4-3-1:tangent-axis-wrong-coordinate",
+     "lo_id": "lo:eb11c4-3-1",
+     "label": "Uses the wrong coordinate as the radius for a circle tangent to an axis",
+     "description": "For a circle tangent to the $x$-axis the student takes the $x$-coordinate of the center as the radius (or the $y$-coordinate for the $y$-axis), so $r^2$ is wrong.",
+     "signal": "The right-hand side is the square of the other coordinate, e.g. 16 instead of 4 for center (4, -2) tangent to the x-axis.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You know the equation needs $r^2$ and that the radius comes from the center. The slip is picking the wrong coordinate: the radius is the distance from the center to the axis the circle touches."
+      },
+      {
+       "step": 2,
+       "text_md": "Take center $(4, -2)$ tangent to the $x$-axis. The $x$-axis is the line $y=0$, so the nearest point on it is straight below the center, at $(4, 0)$. That distance is the size of the $y$-coordinate, 2. Using $x=4$ would give $r^2=16$, a circle that crosses the $x$-axis instead of touching it."
+      },
+      {
+       "step": 3,
+       "text_md": "The same holds for the $y$-axis. For center $(-2, 3)$ tangent to the $y$-axis, the distance to the line $x=0$ is the size of the $x$-coordinate, so $r=2$, not 3."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time, sketch the center and the axis, and draw the short segment from the center straight to the axis. Its length is $r$. Tangent to the $x$-axis uses the $y$-coordinate, and tangent to the $y$-axis uses the $x$-coordinate. Ignore any minus sign, then square it: $(x-4)^2+(y+2)^2=4$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-3:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were given, and the re-solve wrong turns were not listed; only the tangent-axis caution supported an entry."
+    }
+   ],
+   "notes": [
+    "canonical solutions truncated from 22903 to 14000 characters"
+   ]
+  },
+  {
+   "lo": "lo:eb11c4-3-2",
+   "entries": [
+    {
+     "id": "mc:eb11c4-3-2:drops-plus-minus-on-absolute-value",
+     "lo_id": "lo:eb11c4-3-2",
+     "label": "Drops the ± when removing the absolute value",
+     "description": "When solving for a constant (tangent or chord condition), the student writes the square root or the absolute value as a single positive value and so reports only one constant instead of two.",
+     "signal": "Gives only one value of the constant, such as k = 2 or m = \\sqrt{3}, where the answer has both a positive and a negative value.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You set up the equation correctly and reached something like $\\frac{|k|}{\\sqrt2}=d$ or $k^2=4$. Then you took only the positive root. That step is the one to fix."
+      },
+      {
+       "step": 2,
+       "text_md": "The absolute value $|k|$ only tells us the distance is positive. It does not tell us $k$ is positive. $|k|=2$ is true for $k=2$ and for $k=-2$."
+      },
+      {
+       "step": 3,
+       "text_md": "Check with the circle $x^2+y^2=10$ and the line $y=x+k$, where the chord is $4\\sqrt2$. The book gets $d^2=2$, so $\\frac{k^2}{2}=2$ and $k^2=4$. Both $y=x+2$ and $y=x-2$ are at distance $\\sqrt2$ from the center $(0, 0)$. Each cuts a chord of length $4\\sqrt2$, so $k=2$ alone is incomplete."
+      },
+      {
+       "step": 4,
+       "text_md": "Whenever you remove an absolute value sign or take a square root to find a constant, write $\\pm$. For $k^2=4$ write $k=\\pm2$. For $m^2=3$ write $m=\\pm\\sqrt3$. Then give both values as the answer."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-3:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only the caution about adding ± was usable. No other evidence (re-solve wrong turns, wrong options) was provided, so no other entries were written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were written; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c4-3-4",
+   "entries": [
+    {
+     "id": "mc:eb11c4-3-4:leave-coefficients-not-one",
+     "lo_id": "lo:eb11c4-3-4",
+     "label": "Stops before making the x² and y² coefficients equal 1",
+     "description": "After finding k for the circle through the intersection points and another point, the student substitutes k and stops, leaving an equation such as $\\tfrac12x^2+\\tfrac12y^2+x+3y-\\tfrac{15}{2}=0$.",
+     "signal": "Final answer has fractions (or a common factor) as the coefficients of $x^2$ and $y^2$, instead of 1.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the hard part correctly: you wrote $k(\\dots)+(\\dots)=0$, used the extra point to find $k$, and substituted it back. The slip is stopping there."
+      },
+      {
+       "step": 2,
+       "text_md": "Take the circle through the intersection points of $x^2+y^2-2x-6y+5=0$ and $x^2+y^2=5$ and the point $(3, 0)$. You get $k=-\\tfrac12$, and the equation becomes $\\tfrac12x^2+\\tfrac12y^2+x+3y-\\tfrac{15}{2}=0$."
+      },
+      {
+       "step": 3,
+       "text_md": "That is still the right curve, but it is not the form asked for. A circle equation has the form $x^2+y^2+\\dots=0$, with the coefficients of $x^2$ and $y^2$ equal to 1. With $\\tfrac12$ in front, the terms $x$ and $3y$ do not read off as the circle's own coefficients, so your answer will not match $x^2+y^2+2x+6y-15=0$."
+      },
+      {
+       "step": 4,
+       "text_md": "Multiply every term by the same number to clear the fractions. Here that is 2. Do not multiply only some terms. In another case $k=-\\tfrac56$, so you multiply by 6 and get $x^2+y^2+10x+20y-39=0$."
+      },
+      {
+       "step": 5,
+       "text_md": "Last step every time: after substituting $k$, look at the coefficients of $x^2$ and $y^2$. Multiply the whole equation by the number that makes both equal 1, then write the answer."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c4-3:caution-3"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were given, so there are no distractor assignments. Only the one printed caution supported an entry. The wrong turns from the independent re-solve were not listed, so none were used."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 13,
+  "entries": 9,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 15
+ }
+}

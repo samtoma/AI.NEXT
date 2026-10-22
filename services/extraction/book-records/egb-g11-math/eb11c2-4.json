@@ -1,0 +1,847 @@
+{
+  "schema": "book-record",
+  "schema_version": 2,
+  "role": "extraction",
+  "source_document": {
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "publisher": "Arab Republic of Egypt, Ministry of Education & Technical Education",
+    "language": "en",
+    "grade": "11",
+    "subject": "math",
+    "course_id": "course:egb-g11-math-en",
+    "file_path": "docs/Source/Mathematics-En-EB-Part1.pdf",
+    "page_offset": 2,
+    "text_layer": "almost empty; read from the page images"
+  },
+  "lesson": {
+    "slug": "eb11c2-4",
+    "syllabus_ref": "Concept 4",
+    "title": "Advanced Sequences",
+    "module": "Unit 2 Sequences",
+    "pages": [
+      85,
+      90
+    ],
+    "provenance": {
+      "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+      "method": "page image"
+    }
+  },
+  "items": [
+    {
+      "id": "eb11c2-4:heading-1",
+      "type": "heading",
+      "source_page": 85,
+      "quote": "Concept 4 · Advanced sequences",
+      "text": "Concept 4 · Advanced sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:printed-objective-1",
+      "type": "printed_objective",
+      "source_page": 85,
+      "quote": "Finds the general term using difference sequences.",
+      "text": "Learning Outcomes: Finds the general term using difference sequences.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-1",
+      "type": "linking_text",
+      "source_page": 85,
+      "quote": "Consider how a single viral cell reproduces inside a host",
+      "text": "Consider how a single viral cell reproduces inside a host, or how a public health department tracks the spread of an epidemic. On Day 1, maybe 2 people are infected. On Day 2, 5 people. On Day 3, 10 people. On Day 4, 17 people. If you look closely at the changes day by day, the virus isn't spreading at a constant speed, but the acceleration of the spread follows a predictable, hidden pattern. By analyzing these layers of changes, epidemiologists can predict peak infection rates and allocate hospital resources effectively.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:figure-1",
+      "type": "figure",
+      "source_page": 85,
+      "quote": "EPIDEMIC SPREAD TRACKING",
+      "caption": "Illustration of viral cell reproduction and epidemic spread: 'Day 1: Reproduction & Initial Spread, based on a single viral cell', epidemic spread tracking for Day 1 to Day 4 with people icons (2, 5, 10, 17 people infected), and a growth data chart rising over days 1-4 with a key. Small text; values read from figure, verify.",
+      "notes": "Text in image is tiny; counts 2, 5, 10, 17 taken from the surrounding text.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.376,
+          0.1888,
+          0.666,
+          0.3077
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-4:guiding-question-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "How can we discover a hidden, constant pattern in a sequence of",
+      "text": "Guiding Question: How can we discover a hidden, constant pattern in a sequence of numbers when the initial differences between them keep changing?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:definition-1",
+      "type": "definition",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "A sequence formed by the differences between adjacent terms is called",
+      "claim": "A sequence formed by the differences between adjacent terms is called a difference sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:key-term-1",
+      "type": "key_term",
+      "source_page": 85,
+      "quote": "a difference sequence",
+      "term": "a difference sequence",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "The difference sequence of 10, 8, 4, −2, −10, ... is −2, −4, −6, −8, ...",
+      "stem": "The difference sequence of $10, 8, 4, -2, -10, \\ldots$",
+      "answer": "$-2, -4, -6, -8, \\ldots$",
+      "solution_provenance": "book_worked",
+      "notes": "Printed in the Point! box as an unnumbered 'Example:' statement.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:rule-1",
+      "type": "rule",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "For sequences where the general term is difficult to estimate",
+      "claim": "For sequences where the general term is difficult to estimate, it can sometimes be found from the first term and the difference sequence.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:rule-2",
+      "type": "rule",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "When n ≥ 2, a_n = a_1+ Σ b_k",
+      "claim": "When $n \\ge 2$, the general term is the first term plus the sum of the first n−1 terms of the difference sequence.",
+      "formula": "$a_n = a_1 + \\sum_{k=1}^{n-1} b_k$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:method-1",
+      "type": "method",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "Check if it holds for n = 1 by substituting",
+      "claim": "Check if it holds for $n=1$ by substituting $n=1$ into the formula for $a_n$ and seeing if it equals the given $a_1$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:figure-2",
+      "type": "figure",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 85,
+      "quote": "a_n = a_1 + b_1 + b_2 + ... +b_{n-1}",
+      "caption": "Side box: sequence $a_1, a_2, a_3, \\ldots, a_{n-1}, a_n$ with arrows beneath showing differences $b_1$ (between a1,a2), $b_2$ (a2,a3), ..., $b_{n-1}$ (a_{n-1},a_n); below: $a_n = a_1 + b_1 + b_2 + \\ldots + b_{n-1}$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.6876,
+          0.6455,
+          0.9357,
+          0.7395
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-4:heading-2",
+      "type": "heading",
+      "source_page": 86,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:warm-up-1",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 86,
+      "quote": "Find the general term of the following sequences",
+      "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "1",
+          "stem": "$2, 5, 12, 23, 38, 57, \\dots$"
+        },
+        {
+          "label": "2",
+          "stem": "$2, 3, 6, 15, 42, 123, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:heading-3",
+      "type": "heading",
+      "source_page": 86,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:worked-example-1",
+      "type": "worked_example",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 86,
+      "quote": "Let {b_n} be the difference sequence of the given sequence.",
+      "stem": "Warm Up question 1: find the general term of $2, 5, 12, 23, 38, 57, \\dots$",
+      "solution": [
+        "Let $\\{b_n\\}$ be the difference sequence of the given sequence.",
+        "$\\{a_n\\}$: 2, 5, 12, 23, 38, 57, …",
+        "$\\{b_n\\}$: 3, 7, 11, 15, 19, …",
+        "Since $\\{b_n\\}$ is an arithmetic sequence with the first term 3 and the common difference 4: $b_n = 3+(n-1)\\times 4 = 4n-1$",
+        "Therefore, when $n\\ge 2$, $a_n = a_1+\\sum_{k=1}^{n-1} b_k$",
+        "$= 2+\\sum_{k=1}^{n-1}(4k-1)$",
+        "$= 2+4\\times\\frac{1}{2}(n-1)\\{(n-1)+1\\}-(n-1)$",
+        "$= 2+2n(n-1)-(n-1)$",
+        "$= 2+2n^2-2n-n+1$",
+        "$= 2n^2-3n+3$",
+        "This formula also holds when $n=1$",
+        "Therefore, $a_n = 2n^2-3n+3$"
+      ],
+      "answer": "$a_n = 2n^2-3n+3$",
+      "solution_provenance": "book_worked",
+      "notes": "Explanation numbered 1 only; part 2 not worked on this page. Side annotations: 'Deduction if not written.' (twice, at the difference sequence statement and at 'Therefore, when n≥2'); 'Use the formula noting that it is the sum up to the (n-1)-th term' with $\\sum_{k=1}^{n}(4k-1)=4\\times\\frac12 n(n+1)-n$; 'Deduction if not written. Be sure to substitute n=1 into the derived formula for a_n to confirm it equals the given a_1. a1 = 2×1²−3×1+3 = 2'.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:caution-1",
+      "type": "caution",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 86,
+      "pages": [
+        86,
+        87
+      ],
+      "quote": "You missed replacing all instances of n with n − 1 in the formula.",
+      "claim": "Common Mistakes: a wrong working $a_n=a_1+\\sum_{k=1}^{n-1}b_k = 2+\\sum_{k=1}^{n-1}(4k-1) = 2+4\\times\\frac12\\times n(n+1)-n = 2+2n^2+2n-n = 2n^2+n+2$ is shown; the error is not replacing all instances of n with n−1 in the formula.",
+      "formula": "$2n^2+n+2$",
+      "solution": [
+        "Let $\\{b_n\\}$ be the difference sequence of the given sequence. $\\{a_n\\}: 2, 3, 6, 15, 42, 123, \\dots$; $\\{b_n\\}: 1, 3, 9, 27, 81, \\dots$",
+        "Since $\\{b_n\\}$ is a geometric sequence with the first term 1 and the common ratio 3: $b_n = 1 \\times 3^{n-1}$",
+        "Therefore, when $n \\ge 2$, $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$",
+        "$= 2 + \\sum_{k=1}^{n-1} 1 \\times 3^{k-1} = 2 + \\frac{3^{n-1}-1}{3-1} = \\frac{4+3^{n-1}-1}{2} = \\frac{3^{n-1}+3}{2}$",
+        "This formula also holds when $n = 1$"
+      ],
+      "answer": "$a_n = \\frac{3^{n-1}+3}{2}$",
+      "solution_provenance": "book_printed",
+      "notes": "Side-column box titled Common Mistakes, printed before annotations.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:try-1",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 87,
+      "quote": "Find the general term of the following sequences {a_n}.",
+      "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$2, 10, 24, 44, 70, 102, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$5, 7, 11, 19, 35, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-2",
+      "type": "linking_text",
+      "source_page": 87,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:exercise-1",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 87,
+      "quote": "Find the general term of the following sequences {a_n}.",
+      "text": "Find the general term of the following sequences $\\{a_n\\}$.",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "$1, 2, 5, 14, 41, 122, \\dots$"
+        },
+        {
+          "label": "b",
+          "stem": "$5, 8, 9, 8, 5, 0, \\dots$"
+        },
+        {
+          "label": "c",
+          "stem": "$2, 3, 1, 5, -3, 13, \\dots$"
+        },
+        {
+          "label": "d",
+          "stem": "$1, 6, 15, 28, 45, 66, \\dots$"
+        },
+        {
+          "label": "e",
+          "stem": "$5, 4, 7, -2, 25, -56, \\dots$"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:challenge-1",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 87,
+      "quote": "An oncology team monitors a tissue mass over six weeks",
+      "text": "An oncology team monitors a tissue mass over six weeks and records its volume mm^3 as: 1, 3, 7, 13, 21, 31, …. Find its general formula $a_n$. If volume exceeds 130 mm^3 by week 12, immediate surgery is required. Calculate $a_{12}$ to determine if the patient needs surgery.",
+      "notes": "Printed 'mm³as :1, 3, 7, ...' with odd italic formatting.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:printed-objective-2",
+      "type": "printed_objective",
+      "source_page": 88,
+      "quote": "Solve various problems by dividing the sequence into groups",
+      "text": "Learning Outcomes: Solve various problems by dividing the sequence into groups to find a specific term or the sum of a particular group of terms.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:heading-4",
+      "type": "heading",
+      "source_page": 88,
+      "quote": "Group Sequences",
+      "text": "Group Sequences",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:caution-2",
+      "type": "caution",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "quote": "For group sequences, consider the regularity of the sequence before grouping",
+      "claim": "For group sequences, consider the regularity of the sequence before grouping and the regularity of the number of terms included in each group.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:heading-5",
+      "type": "heading",
+      "source_page": 88,
+      "quote": "Warm Up",
+      "text": "Warm Up",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-3",
+      "type": "linking_text",
+      "source_page": 88,
+      "quote": "Divide the sequence of natural numbers into groups as shown below",
+      "text": "Divide the sequence of natural numbers into groups as shown below. Solve the following problems. 2| 4, 6, 8 | 10, 12, 14, 16, 18 | 20, 22, …",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:warm-up-2",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "quote": "Find the first term of the 10th group.",
+      "text": "Find the first term of the 10th group.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "uses_figure": "eb11c2-4:figure-3"
+    },
+    {
+      "id": "eb11c2-4:warm-up-3",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "quote": "Find the sum of the terms included in the n-th group.",
+      "text": "Find the sum of the terms included in the $n$-th group.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "uses_figure": "eb11c2-4:figure-3"
+    },
+    {
+      "id": "eb11c2-4:warm-up-4",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "quote": "Find which group and which position 88 is in.",
+      "text": "Find which group and which position 88 is in.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "uses_figure": "eb11c2-4:figure-3"
+    },
+    {
+      "id": "eb11c2-4:heading-6",
+      "type": "heading",
+      "source_page": 88,
+      "quote": "Explanation",
+      "text": "Explanation",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-4",
+      "type": "linking_text",
+      "source_page": 88,
+      "quote": "Let {a_n} be the sequence before grouping.",
+      "text": "Let $\\{a_n\\}$ be the sequence before grouping. Since it is an arithmetic sequence with the first term 2 and the common difference 2, $a_n=2n$. Let $\\{b_n\\}$ be the sequence of the number of terms in each group. Since it is an arithmetic sequence with the first term 1 and the common difference 2, $b_n=2n-1$.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:figure-3",
+      "type": "figure",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "quote": "the 1st group the 2nd group the 3rd group",
+      "caption": "Grouped sequence: {a_n}: 2 | 4, 6, 8 | 10, 12, 14, 16, 18 | 20, 22, … labelled the 1st, 2nd, 3rd group; {b_n} (terms per group): 1, 3, 5. Side notes: 'Sequence before grouping.' for {a_n}; 'Sequence of term counts in each group.' for {b_n}.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.054,
+          0.6042,
+          0.941,
+          0.6947
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": false
+      }
+    },
+    {
+      "id": "eb11c2-4:worked-example-2",
+      "type": "worked_example",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 88,
+      "pages": [
+        88,
+        89
+      ],
+      "quote": "Find the first term of the 10th group by finding what position",
+      "stem": "Find the first term of the 10th group by finding what position the last term of the 9th group is in {a_n}.",
+      "solution": [
+        "Diagram: 2 | 4, 6, 8 | 10, 12, 14, 16, 18 | … | …, ○ | ○, … with one term, three terms, five terms under the first groups (9th group, 10th group marked).",
+        "The sum of the number of terms up to the 9th group is: $\\frac12\\times9\\times\\{2\\times1+(9-1)\\times2\\}=81$ (side note: consider the sum from the first term to the 9th term for {b_n}, $S=\\frac12 n\\{2a+(n-1)d\\}$).",
+        "Therefore, since the first term of the 10th group is the 82nd term of {a_n}: $2\\times82=164$ (side note: $a_n=2n$).",
+        "2: Find the sum using the 1 last term, 2 first term, and 3 number of terms of the n-th group.",
+        "1 Find the last term of the n-th group. Finding what position the last term of the n-th group is in {a_n}: $\\frac{1}{2}n\\{2\\times 1+(n-1)\\times 2\\}=n^2$ ...... (i). Therefore, the last term of the n-th group is $2n^2$.",
+        "2 Find the first term of the n-th group using the last term of the (n-1)-th group, similar to 1. From (i), the last term of the (n-1)-th group is the $(n-1)^2$-th term of {a_n}. Therefore, the first term of the n-th group is the $\\{(n-1)^2+1\\}$-th term of {a_n}. That is, the $(n^2-2n+2)$-th term, so: $2(n^2-2n+2)$.",
+        "3 The number of terms in the n-th group is $2n-1$. Therefore, the required sum is the sum of an arithmetic sequence with the last term $2n^2$, the first term $2(n^2-2n+2)$, and number of terms $2n-1$: $\\frac{1}{2}(2n-1)\\{2(n^2-2n+2)+2n^2\\}=2(2n-1)(n^2-n+1)$.",
+        "3: First, find what position 88 is in {a_n}. Solving $2n=88$ gives $n=44$.",
+        "Here, from 2, the last terms of the (n-1)-th and n-th groups are the $(n-1)^2$-th and $n^2$-th terms of {a_n} respectively.",
+        "Substitute specific numbers for n to check which group the 44th term belongs to.",
+        "Since $6^2=36$ and $7^2=49$, the 44th term is in the 7th group.",
+        "Since $44-36=8$, 88 is the 8th term of the 7th group."
+      ],
+      "answer": "164",
+      "parts": [
+        {
+          "label": "2",
+          "stem": "Find the sum using the last term, first term, and number of terms of the n-th group.",
+          "answer": "$2(2n-1)(n^2-n+1)$",
+          "solution_provenance": "book_worked"
+        },
+        {
+          "label": "3",
+          "stem": "Find which group, and which term of it, 88 is (first find what position 88 is in {a_n}).",
+          "answer": "the 8th term of the 7th group",
+          "solution_provenance": "book_worked"
+        }
+      ],
+      "solution_provenance": "book_worked",
+      "notes": "Printed with a '1' badge as the explanation of Warm Up question 1; no 'Example' label. 164 is underlined in red.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:figure-4",
+      "type": "figure",
+      "lo": "eb11c2-4:objective-2",
+      "belongs_to": "eb11c2-4:worked-example-2",
+      "source_page": 89,
+      "quote": "..., ○ | ○, ..., ○ | ...",
+      "caption": "Diagram of the sequence split into groups: '...,  ○ | ○, ..., ○ | ...' with labels 'the (n-1)-th group' and 'the n-th group' above; the bars mark group boundaries.",
+      "notes": "Layout read from the page; labels sit above the circles.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.0975,
+          0.2642,
+          0.3718,
+          0.3212
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-4:figure-5",
+      "type": "figure",
+      "lo": "eb11c2-4:objective-2",
+      "belongs_to": "eb11c2-4:worked-example-2",
+      "source_page": 89,
+      "quote": "the 6th group the 7th group",
+      "caption": "Diagram: '..., (the 36th term) | ..., 88, ..., (the 49th term) |' with labels 'the 6th group' and 'the 7th group' above, and '(the 44th term)' below 88.",
+      "notes": "Layout read from the page; verify.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      },
+      "region": {
+        "box": [
+          0.094,
+          0.7023,
+          0.586,
+          0.7805
+        ],
+        "by": "crop_figures.py crop-v2, sonnet, 2026-10-21",
+        "checked": true
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-5",
+      "type": "linking_text",
+      "source_page": 89,
+      "quote": "a_n = 2n",
+      "text": "Side note beside 'Therefore, the last term of the n-th group is 2n^2': $a_n=2n$.",
+      "notes": "Printed in the side column in a dotted box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-6",
+      "type": "linking_text",
+      "source_page": 89,
+      "quote": "b_n = 2n-1",
+      "text": "Side note beside 'The number of terms in the n-th group is 2n-1': $b_n=2n-1$.",
+      "notes": "Printed in the side column in a dotted box.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-7",
+      "type": "linking_text",
+      "source_page": 90,
+      "quote": "Collaborate with your group to solve the try section",
+      "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-8",
+      "type": "linking_text",
+      "source_page": 90,
+      "quote": "Divide the sequence of natural numbers into groups as shown below.",
+      "text": "Try: Divide the sequence of natural numbers into groups as shown below. Solve the following problems. $1 | 3, 5 | 7, 9, 11 | 13, 15, 17, 19 | 21, 23, \\dots$",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:try-2",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "Find the first term of the 10th group.",
+      "text": "Find the first term of the 10th group.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:try-3",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "Find the sum of the terms included in the 10th group.",
+      "text": "Find the sum of the terms included in the 10th group.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:try-4",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "Find which group and which position 101 is in.",
+      "text": "Find which group and which position 101 is in.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:linking-text-9",
+      "type": "linking_text",
+      "source_page": 90,
+      "quote": "Divide the sequence of natural numbers into groups as shown below.",
+      "text": "Exercise: Divide the sequence of natural numbers into groups as shown below. Solve the following problems.",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:exercise-2",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, …",
+      "text": "$1 | 2, 3 | 4, 5, 6 | 7, 8, 9, 10 | 11, 12, \\dots$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find the first term of the 10th group."
+        },
+        {
+          "label": "b",
+          "stem": "Find the sum of the terms included in the 10th group."
+        },
+        {
+          "label": "c",
+          "stem": "Find which group and which position 124 is in."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:exercise-3",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "1, 4 | 7, 10, 13, 16 | 19, 22, 25, 28, 31, 34 | 37, 40, …",
+      "text": "$1, 4 | 7, 10, 13, 16 | 19, 22, 25, 28, 31, 34 | 37, 40, \\dots$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find the first term of the 10th group."
+        },
+        {
+          "label": "b",
+          "stem": "Find the sum of the terms included in the 10th group."
+        },
+        {
+          "label": "c",
+          "stem": "Find which group and which position 100 is in."
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:challenge-2",
+      "type": "exercise",
+      "lo": "eb11c2-4:objective-2",
+      "source_page": 90,
+      "quote": "2, 6|10, 14, 18| 22, 26, 30, 34|……",
+      "text": "$2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$",
+      "parts": [
+        {
+          "label": "a",
+          "stem": "Find the first term of the 12th group."
+        },
+        {
+          "label": "b",
+          "stem": "Derive a formula for the sum of all terms in the n-th group."
+        },
+        {
+          "label": "c",
+          "stem": "Determine in which group and at which position the number 202 appears."
+        },
+        {
+          "label": "d",
+          "stem": "Challenge extension: Find the total sum of all terms from Group 1 up to Group 12"
+        }
+      ],
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:reflect-1",
+      "type": "open_prompt",
+      "lo": "eb11c2-4:objective-1",
+      "source_page": 90,
+      "quote": "what indicators or visual clues would lead you to choose difference sequence method",
+      "text": "When analyzing an unfamiliar sequence of real-world data, what indicators or visual clues would lead you to choose difference sequence method over a group sequence method?",
+      "provenance": {
+        "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+        "method": "page image"
+      }
+    }
+  ],
+  "learning_objectives": [
+    {
+      "id": "eb11c2-4:objective-1",
+      "label": "General term by differences",
+      "description": "Find the general term of a sequence by writing its difference sequence and using a_n = a_1 + sum of the first n-1 terms of the difference sequence, then check whether the formula holds for n=1.",
+      "order_in_parent": 1,
+      "evidence": [
+        "eb11c2-4:definition-1",
+        "eb11c2-4:rule-2",
+        "eb11c2-4:worked-example-1",
+        "eb11c2-4:exercise-1"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    },
+    {
+      "id": "eb11c2-4:objective-2",
+      "label": "Solving group sequence problems",
+      "description": "Solve group sequence problems: divide a sequence into groups to find the first term of a given group, the sum of the terms in a group, and which group and position a given term is in.",
+      "order_in_parent": 2,
+      "evidence": [
+        "eb11c2-4:caution-2",
+        "eb11c2-4:worked-example-2",
+        "eb11c2-4:printed-objective-2",
+        "eb11c2-4:exercise-3"
+      ],
+      "provenance": {
+        "by": "book_record_objectives.py, S1 (s1-v5), approved at G1",
+        "method": "page image"
+      }
+    }
+  ],
+  "provenance": {
+    "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
+    "method": "page image"
+  },
+  "review": {
+    "status": "draft",
+    "reviewed_by": null,
+    "reviewed_at": null
+  },
+  "open_questions": [],
+  "history": [
+    "2026-10-21: extracted from the page images (ext-v5, sonnet)",
+    "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (2)",
+    "2026-10-21: 7 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 5 cropped"
+  ]
+}

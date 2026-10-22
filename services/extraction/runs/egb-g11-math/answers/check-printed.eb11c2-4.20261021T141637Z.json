@@ -1,0 +1,42 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "cafbfa3fcb66395698fa01a9b2f14774bf5d3b5caae4b7df921d74e7ab77d35c",
+  "generated_sha256": "a39d8a57c31eae9f53ce1bb3dd3c396b12a883f641f4e2eb8719804bf00435d7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c2-4:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c2-4:example-1",
+      "kind": "value",
+      "answer": "-2, -4, -6, -8, ..."
+     },
+     {
+      "ref": "eb11c2-4:worked-example-1",
+      "kind": "value",
+      "answer": "a_n = 2n^2 - 3n + 3 (it also holds for n=1, since a_1 = 2)"
+     },
+     {
+      "ref": "eb11c2-4:worked-example-2:2",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available."
+     },
+     {
+      "ref": "eb11c2-4:worked-example-2:3",
+      "kind": "value",
+      "answer": "CANNOT ANSWER: the sequence {a_n} and the grouping rule are in the figure, which is not available."
+     }
+    ]
+   }
+  }
+ ]
+}

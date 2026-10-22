@@ -1,0 +1,48 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c4-3-2:try-10",
+ "lo_id": "lo:eb11c4-3-2",
+ "book_item": "eb11c4-3:try-10",
+ "parent_question_id": "expl:eb11c4-3-2:bk-warm-up-10",
+ "parent_kind": "teaching",
+ "tier": "basic",
+ "kind": "pair_plotter",
+ "spec": {
+  "targets": [
+   [
+    0,
+    2
+   ],
+   [
+    2,
+    0
+   ]
+  ]
+ },
+ "stem": "Find the coordinates of the points of intersection of the circle $x^2+y^2=4$ and the line $x+y=2$. Plot both points.",
+ "solution": [
+  "Write $y=2-x$ and substitute: $x^2+(2-x)^2=4$.",
+  "Simplify: $2x^2-4x=0$, so $x=0$ or $x=2$.",
+  "$x=0$ gives $y=2$; $x=2$ gives $y=0$.",
+  "The points are $(0,2)$ and $(2,0)$."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missing-points",
+   "step": 2,
+   "text": "Factor the quadratic and take both roots, each gives a point."
+  },
+  {
+   "predicate": "extra-points",
+   "step": 3,
+   "text": "Each point must lie on the line as well as the circle. Find y from the line for each x."
+  },
+  {
+   "predicate": "wrong-quadrant",
+   "step": 3,
+   "text": "Recheck the signs when finding y from the line."
+  }
+ ],
+ "notes": "Swapped points form the same set, so swapped-coordinates cannot be distinguished."
+}

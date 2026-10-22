@@ -1,0 +1,27 @@
+{
+ "stage": "S0a-crops",
+ "workflow": "crops",
+ "mode": "check",
+ "prompts_version": "crop-v2",
+ "embedded": {
+  "source": "runbook/crops.workflow.js",
+  "source_sha256": "9b294f45550ca529920d03073a5d02f57cdae273ce583afa6463cbe6767aeb0a",
+  "args_sha256": "a995181e22306d63428067985e1cae2c038a72c10dd218eb975d4af4c1e9cb4a",
+  "generated_sha256": "46989d0f2f80673a75bb1f58d49902b5f3a83ebe576dfa00e3e5b63d95c91cfb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "result": {
+  "crops": [
+   {
+    "id": "eb11c1-1:figure-1",
+    "shows_figure": true,
+    "ok": false,
+    "left": "ok",
+    "top": "trim",
+    "right": "ok",
+    "bottom": "ok",
+    "note": "Teal heading text fragment at the very top of the crop is not part of the poster; trim it. The poster itself is complete."
+   }
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c4-2-5:fixed-point",
+ "kind": "family",
+ "lo_id": "lo:eb11c4-2-5",
+ "parent_question_id": "q:eb11c4-2-5:bk-exercise-35",
+ "source_page": 177,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "x0",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "let": "p - q"
+  },
+  {
+   "name": "s",
+   "let": "d * x0"
+  },
+  {
+   "name": "y0",
+   "let": "-x0"
+  }
+ ],
+ "constraints": [],
+ "stem": "The line $(k+{=p})x+(k+{=q})y={=s}$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+ "solution": [
+  "Move all terms to the left and rearrange in $k$: $(x+y)k+({=p}x+{=q}y-({=s}))=0$.",
+  "This holds for every $k$, so $x+y=0$ and ${=p}x+{=q}y={=s}$.",
+  "From the first, $y=-x$. Substitute: ${=p}x-{=q}x={=s}$, so ${=d}x={=s}$.",
+  "Hence $x={=x0}$ and $y={=y0}$.",
+  "The fixed point is $({=x0}, {=y0})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, {=y0})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Line rewritten as k(x+y) + (px+qy-s)=0. Fixed point (x0, -x0), p!=q so d!=0 and s=d*x0 exactly."
+}

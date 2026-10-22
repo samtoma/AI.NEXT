@@ -1,0 +1,719 @@
+{
+ "book": "egb-g11-math",
+ "stage": "draft",
+ "prompts_version": "s5-v5",
+ "embedded": {
+  "source": "runbook/misconceptions.workflow.js",
+  "source_sha256": "8a48496f9fb571481f131c340cefa1ee28d2d1a96b8ab5a348e2adf4166e0a0a",
+  "args_sha256": "a2c936dffa774fe77e5578a08bb46c8630edc2d9d78ef5f4d39b26502d9f621a",
+  "generated_sha256": "46d60b13ce1b93d1964d80883824573627d3902d2ff0d3fdce027b4337211a4a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "max_per_objective": 4,
+ "records": [
+  {
+   "lo": "lo:eb11c2-1-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I added no entries; the runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-1-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so I added no entries. Any entry would rest on general expectations about student errors, not on evidence."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-1-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-1-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. I added no entries. The runtime will fall back to the canonical solutions."
+    },
+    {
+     "kind": "other",
+     "text": "The question list was truncated after exercise 21. I did not see the remaining questions."
+    }
+   ],
+   "notes": [
+    "canonical solutions truncated from 15512 to 14000 characters"
+   ]
+  },
+  {
+   "lo": "lo:eb11c2-1-5",
+   "entries": [
+    {
+     "id": "mc:eb11c2-1-5:sum-positive-instead-of-term-positive",
+     "lo_id": "lo:eb11c2-1-5",
+     "label": "Solving $S_n>0$ instead of $a_n>0$ for the maximum sum",
+     "description": "To find the number of terms that gives the maximum sum, the student writes the sum formula and solves $S_n>0$, instead of finding how long the terms $a_n$ stay positive.",
+     "signal": "For first term 65 and common difference −4, the student answers 33 (from $S_n>0$) instead of 17.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are using the sum formula $S_n=\\frac12 n\\{2\\times 65+(n-1)(-4)\\}$ and asking when it is still positive. That is a natural move, because the sum is the thing we want to make as large as possible. But the question is a different one: which terms are worth adding?"
+      },
+      {
+       "step": 2,
+       "text_md": "Adding a positive term makes the sum bigger. Adding a negative term makes it smaller. So the sum is largest at the last term that is still positive. That means we need $a_n>0$, not $S_n>0$."
+      },
+      {
+       "step": 3,
+       "text_md": "Try $S_n>0$ on the sequence with first term 65 and common difference −4. We get $S_n=n(67-2n)>0$, so $n<33.5$ and you would answer 33. But the 18th term onwards are already negative, so those terms only shrink the sum."
+      },
+      {
+       "step": 4,
+       "text_md": "Compare the sums. $S_{17}=561$, while $S_{33}=33$, which is far smaller. So 33 cannot give the maximum."
+      },
+      {
+       "step": 5,
+       "text_md": "The move that works: write $a_n=65+(n-1)(-4)=-4n+69$ and solve $a_n>0$. This gives $n<17.25$, so terms 1 to 17 are positive and the maximum sum is at the 17th term. Only then put $n=17$ into the sum formula to get 561."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-1:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-2-1",
+   "entries": [
+    {
+     "id": "mc:eb11c2-2-1:ratio-without-parentheses",
+     "lo_id": "lo:eb11c2-2-1",
+     "label": "Negative or fractional ratio written without parentheses",
+     "description": "The student finds the right ratio but writes it in the formula without brackets, e.g. $5 \\times -2^{n-1}$ or $8 \\times -\\frac{1}{3}^{n-1}$, so the exponent no longer applies to the whole ratio.",
+     "signal": "Right first term and ratio, but the general term has a bare $-2^{n-1}$, $-3^{n-1}$ or a fraction like $\\frac{1}{3}^{n-1}$ with no brackets around the ratio.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found the right first term and the right common ratio, and that is the hard part. The slip is in how the ratio is written: without brackets, the power $n-1$ may attach only to the $2$, not to the minus sign."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it on the sequence $5, -10, 20, -40, \\dots$ with $a = 5$ and $r = -2$. The third term must be $20$. With brackets, $5 \\times (-2)^{2} = 5 \\times 4 = 20$. Without brackets, $-2^{2}$ reads as $-4$, giving $5 \\times (-4) = -20$, which is wrong."
+      },
+      {
+       "step": 3,
+       "text_md": "The same happens with a fraction. In $8 \\times -\\frac{1}{3}^{n-1}$ it is unclear that the whole of $-\\frac{1}{3}$ is being raised to the power, so the sign and the numerator can get left out."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: once you have $r$, put the whole ratio in brackets whenever it is negative or a fraction. Write $a_n = 5 \\times (-2)^{n-1}$ and $a_n = 8 \\times \\left(-\\frac{1}{3}\\right)^{n-1}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-2:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The E. coli remark is motivational context, not an error source, so it was not used. No re-solve wrong turns were supplied, so no entries were added for missing-term errors such as multiplying instead of dividing to find A, or using $n$ instead of $n-1$ as the exponent."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-2-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns, or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-2-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The only evidence given is two remarks stating the formulas. There is no caution box, no wrong option and no recorded wrong turn from a re-solve. I added no entries because any error I named, such as mishandling $(-r)^n$ or choosing the wrong formula form, would be my own guess and not something the evidence supports."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-2-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-3-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options/predicates were supplied for this objective, so no error is supported. I added no entries. The runtime will use the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-3-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. I wrote no entries. The runtime will use the canonical solutions."
+    },
+    {
+     "kind": "evidence",
+     "text": "The worked example's margin notes ('Expand the expression inside the summation', 'Do not expand the parentheses; factor out…') are procedural hints, not warnings about a named error. I did not turn them into an entry."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-3-3",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, worked-example remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error entry is supported. Runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-3-4",
+   "entries": [
+    {
+     "id": "mc:eb11c2-3-4:forget-sign-change-last-term",
+     "lo_id": "lo:eb11c2-3-4",
+     "label": "Keeps the last term of 3S positive when subtracting",
+     "description": "When subtracting rS from S, the student lines up the terms correctly but writes the last term of rS with a plus sign instead of a minus.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You multiplied by the ratio and lined the terms up correctly, and the middle terms combine properly. The slip is at the end: the last term of $3S$ has nothing in $S$ to pair with, and you copied it across as $+(n+1)\\times3^n$."
+      },
+      {
+       "step": 2,
+       "text_md": "We are working out $S-3S$, so every term of $3S$ is subtracted. That includes the last one, $(n+1)\\times3^n$, so it appears as $-(n+1)\\times3^n$. The sign changes."
+      },
+      {
+       "step": 3,
+       "text_md": "Test it with $n=1$, where the sum is just $S=2\\times1=2$. Keeping the plus sign gives $-2S=2+2\\times3=8$ (from $2+$ the geometric part, which is 0 here, plus $(1+1)\\times3^1$). That makes $S=-4$, which cannot be right, because every term of $S$ is positive."
+      },
+      {
+       "step": 4,
+       "text_md": "With the minus sign, $-2S=2+0-2\\times3=-4$, so $S=2$. This matches."
+      },
+      {
+       "step": 5,
+       "text_md": "The move that works: after writing $3S$, subtract it term by term and check the last term. It should read $-(n+1)\\times3^n$. Then sum the geometric part and divide by $-2$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-3:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "other",
+     "text": "The caution's printed wrong expression ends in (2n+1)×3^n, which does not match the exercise's last term (n+1)×3^n. I did not reuse it and wrote my own n=1 check."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-3-5",
+   "entries": [
+    {
+     "id": "mc:eb11c2-3-5:skip-n1-check",
+     "lo_id": "lo:eb11c2-3-5",
+     "label": "Stops after S_n − S_{n−1} without checking n = 1",
+     "description": "The student subtracts S_n − S_{n−1}, simplifies, and states that formula as a_n for all n, without saying it holds only for n ≥ 2 and without comparing with a_1 = S_1.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You did the subtraction $S_n - S_{n-1}$ correctly, and that part is the heart of the method. The step that is missing is the one afterwards: the subtraction only gives $a_n$ for $n \\ge 2$, so the formula you get has not yet been shown to work for $n = 1$."
+      },
+      {
+       "step": 2,
+       "text_md": "The reason is that $S_{n-1}$ must be a sum of at least one term. For $n = 1$ it would be $S_0$, which is not a sum of terms from this sequence. So the first term has to come separately: $a_1 = S_1$."
+      },
+      {
+       "step": 3,
+       "text_md": "The two can disagree. Suppose the subtraction gives $a_n = 2n^2 - 2n + 1$ but $S_1$ gives $a_1 = 0$. Putting $n = 1$ into the formula gives $1$, not $0$. Writing $a_n = 2n^2-2n+1$ for every $n$ would then give the wrong first term."
+      },
+      {
+       "step": 4,
+       "text_md": "When they do agree, as for $S_n = n^2 - 3n$, you can write one formula. There $a_1 = S_1 = -2$, and $2n-4$ at $n=1$ also gives $-2$, so $a_n = 2n-4$ for all $n$."
+      },
+      {
+       "step": 5,
+       "text_md": "Always do three things: (1) find $a_n = S_n - S_{n-1}$ for $n \\ge 2$; (2) find $a_1 = S_1$; (3) put $n=1$ into your formula. If it matches, write one formula. If not, write $a_1$ and the formula for $n \\ge 2$ separately."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-3:caution-2"
+      },
+      {
+       "type": "remark",
+       "ref": "eb11c2-3:rule-18"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "The caution and remark are treated as one error (omitting the n=1 check / the separate a_1 case). No re-solve wrong turns or wrong options were provided, so no other entries were written."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-4-1",
+   "entries": [
+    {
+     "id": "mc:eb11c2-4-1:sum-limit-n-not-n-minus-1",
+     "lo_id": "lo:eb11c2-4-1",
+     "label": "Substituting n instead of n−1 after summing the differences",
+     "description": "The student sums the difference sequence correctly in k but, when writing the sum up to n−1, replaces only some of the n−1's with n, so the sum is really taken up to n terms.",
+     "signal": "For 2, 5, 12, 23, 38, 57, … the answer 2n^2 + n + 2 instead of 2n^2 − 3n + 3.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You set up the right formula, $a_n = a_1 + \\sum_{k=1}^{n-1} b_k$, and you used the right sum rule. The slip is in putting the number of terms into that rule: the sum has only $n-1$ terms, so $n-1$ must go in everywhere the rule asks for the number of terms."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $2, 5, 12, 23, 38, 57, \\dots$, where $b_k = 4k-1$. Summing $k$ from 1 to $n-1$ gives $4\\times\\frac12(n-1)\\{(n-1)+1\\} - (n-1) = 2n(n-1) - (n-1)$. If you write $4\\times\\frac12 n(n+1) - n$ instead, you have summed $n$ terms."
+      },
+      {
+       "step": 3,
+       "text_md": "That slip gives $2n^2+n+2$. Test it at $n=2$: it gives $8+2+2=12$, but $a_2 = 5$. The correct $2n^2-3n+3$ gives $8-6+3=5$."
+      },
+      {
+       "step": 4,
+       "text_md": "The move that works: write the number of terms as $n-1$ first, put it into the sum rule and into the constant part, then expand. Finally, test your formula on $n=1$ and $n=2$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-4:caution-1"
+      },
+      {
+       "type": "remark",
+       "ref": "eb11c2-4:caution-1"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "Only one caution exists. The re-solve's wrong turns were not supplied, so no other entries were written. No distractors were supplied."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-4-2",
+   "entries": [
+    {
+     "id": "mc:eb11c2-4-2:first-term-is-last-position-of-previous-groups",
+     "lo_id": "lo:eb11c2-4-2",
+     "label": "Stops at the last term of the previous group",
+     "description": "The student counts the terms in the groups before and takes that count as the position of the first term of the next group, forgetting to add 1.",
+     "signal": "Answer is the last term of the (n-1)-th group, e.g. 45 instead of 46 for the 1 | 2, 3 | 4, 5, 6 | … sequence, or 268 instead of 271 for 1, 4 | 7, 10, 13, 16 | …",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You found correctly how many terms come before the 10th group, and that is the hard part. The slip is treating that count as the position of the group's first term."
+      },
+      {
+       "step": 2,
+       "text_md": "For $1 | 2, 3 | 4, 5, 6 | \\dots$, the first 9 groups hold $\\frac12\\times9\\times10=45$ terms. So the 45th term of $\\{a_n\\}$ is the **last** term of the 9th group, and it is 45."
+      },
+      {
+       "step": 3,
+       "text_md": "The 10th group starts with the very next term, the 46th. Check with small groups: the 2nd group starts at 2, the 1st group has 1 term, and 2 is the 1+1 = 2nd term, not the 1st."
+      },
+      {
+       "step": 4,
+       "text_md": "The same happens for $1, 4 | 7, 10, \\dots$: 90 terms come before, so the first term of the 10th group is the 91st term, $3\\times91-2=271$, not the 90th term, 268."
+      },
+      {
+       "step": 5,
+       "text_md": "Next time: count the terms before the group, add 1 for its position, then put that position into $a_n$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "canonical_solution",
+       "ref": "expl:eb11c2-4-2:bk-worked-example-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c2-4-2:bk-exercise-2-a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c2-4-2:bk-exercise-3-a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c2-4-2:group-number-used-as-term-position",
+     "lo_id": "lo:eb11c2-4-2",
+     "label": "Uses the group number as the term position",
+     "description": "The student puts the group number straight into the formula for $a_n$, as if the 10th group began at the 10th term of the sequence.",
+     "signal": "Answer is $a_{10}$ or $a_{12}$, e.g. 28 instead of 271, or 46 instead of 310.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have spotted the formula for the sequence before grouping, which is the right start. The slip is mixing up two different counts: which group, and which term of $\\{a_n\\}$."
+      },
+      {
+       "step": 2,
+       "text_md": "Take $2, 6 | 10, 14, 18 | 22, 26, 30, 34 | \\dots$ with $a_n=4n-2$. The 3rd group starts at 22, which is the 6th term, not the 3rd. Putting $n=3$ would give 10, which is in the 2nd group."
+      },
+      {
+       "step": 3,
+       "text_md": "Groups hold more than one term, so the term number runs ahead of the group number. For the 12th group, $a_{12}=46$ is far too small. The correct answer is 310."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: first find the position of the group's first term by adding up the terms in the earlier groups, then put that position into $a_n$. Here the position is 78, and $4\\times78-2=310$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-4:caution-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c2-4-2:bk-exercise-3-a"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c2-4-2:bk-challenge-2-a"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c2-4-2:wrong-number-of-terms-in-group",
+     "lo_id": "lo:eb11c2-4-2",
+     "label": "Uses the wrong number of terms per group",
+     "description": "The student does not check how many terms each group has, and assumes the group sizes or the number of terms in the n-th group, so the count of earlier terms or the sum is wrong.",
+     "signal": "For 1, 4 | 7, 10, 13, 16 | …, counts 45 terms before the 10th group and gets 136; or sums 10 terms for the 10th group instead of 20.",
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that the number of terms in each group matters. The slip is assuming the sizes follow the pattern $1, 2, 3, \\dots$ without looking at the groups in front of you."
+      },
+      {
+       "step": 2,
+       "text_md": "In $1, 4 | 7, 10, 13, 16 | 19, \\dots, 34 | \\dots$ the groups have 2, 4, 6 terms, so the 10th group has $2\\times10=20$ terms, not 10. Counting $1+2+\\dots+9=45$ terms before it would put the 10th group's start at the 46th term, giving 136 instead of 271."
+      },
+      {
+       "step": 3,
+       "text_md": "Using 10 terms for the 10th group would also halve the sum. The correct sum uses 20 terms: $\\frac12\\times20\\times(271+328)=5990$."
+      },
+      {
+       "step": 4,
+       "text_md": "Next time: write the group sizes as their own sequence $\\{b_n\\}$ (here $b_n=2n$), and use it to find the terms before the group and the terms in the group."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-4:caution-2"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "q:eb11c2-4-2:bk-exercise-3-b"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No re-solve wrong turns or wrong options were supplied; entries rest on the printed caution and on predictable errors from the worked solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-5-1",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported. I added no entries. The runtime will fall back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-5-2",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported by evidence. No entries were added; the runtime falls back to the canonical solutions."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-5-3",
+   "entries": [
+    {
+     "id": "mc:eb11c2-5-3:power-step-add-not-multiply",
+     "lo_id": "lo:eb11c2-5-3",
+     "label": "Treats going from 2^k to 2^(k+1) as adding, not multiplying",
+     "description": "When the statement contains a power such as $2^n$, the student gets the $n=k+1$ case by adding to both sides of the assumed expression instead of multiplying both sides by the base.",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You are right that the assumption $2^k>3k$ has to be changed into a statement about $2^{k+1}$. The slip is in how: adding something to both sides, such as $2^k+2>3k+2$, does not give $2^{k+1}$."
+      },
+      {
+       "step": 2,
+       "text_md": "Test it with $k=4$. $2^{k+1}=2^5=32$, but $2^k+2=16+2=18$. These are different numbers, so $2^{k+1}$ is not $2^k+2$."
+      },
+      {
+       "step": 3,
+       "text_md": "What links the two is multiplication: $2^{k+1}=2\\times2^k$. So multiply both sides of $2^k>3k$ by $2$. This gives $2^{k+1}>6k$, and every step stays true."
+      },
+      {
+       "step": 4,
+       "text_md": "Next compare $6k$ with $3(k+1)$. For $k\\ge4$, $6k-3(k+1)=3k-3>0$, so $2^{k+1}>6k>3(k+1)$."
+      },
+      {
+       "step": 5,
+       "text_md": "Whenever the statement has $a^n$, multiply both sides of the assumed expression by $a$ to reach $a^{k+1}$."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-5:caution-1"
+      },
+      {
+       "type": "canonical_solution",
+       "ref": "expl:eb11c2-5-3:bk-warm-up-6"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    },
+    {
+     "id": "mc:eb11c2-5-3:divisibility-not-written-as-multiple",
+     "lo_id": "lo:eb11c2-5-3",
+     "label": "Does not write the k+1 expression as a × (integer)",
+     "description": "In a divisibility proof, the student checks some values or says the expression 'looks divisible', instead of using the assumed expression to show it equals $a\\times$ (an integer).",
+     "signal": null,
+     "kind": "conceptual",
+     "refutation": [
+      {
+       "step": 1,
+       "text_md": "You have the right goal: showing the expression is a multiple of $a$. The trouble is that checking a few values of $k$, or just asserting divisibility, does not prove it for every $k$."
+      },
+      {
+       "step": 2,
+       "text_md": "The induction step needs the assumption. Assuming the $n=k$ expression is a multiple of $a$ lets you write it as $a\\times$ (an integer). Without this, the $k$ case is never used and the step is not an induction step."
+      },
+      {
+       "step": 3,
+       "text_md": "Rewrite the $n=k+1$ expression using that assumed form, and rearrange until $a$ is a factor of the whole thing, with an integer left beside it."
+      },
+      {
+       "step": 4,
+       "text_md": "Once the result reads $a\\times$ (integer), it is a multiple of $a$ for every $k$. State that, then conclude using the $n=1$ check and the $k\\to k+1$ step."
+      }
+     ],
+     "maps": [],
+     "aliases": [],
+     "sources": [
+      {
+       "type": "caution",
+       "ref": "eb11c2-5:caution-2"
+      }
+     ],
+     "covers": [],
+     "verified": false
+    }
+   ],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No wrong options or widget predicates were supplied, so no distractors were assigned. Both entries rest on the book's caution boxes only."
+    },
+    {
+     "kind": "evidence",
+     "text": "The divisibility entry is deliberately generic. The supplied questions contain no divisibility example, so none was worked."
+    },
+    {
+     "kind": "terminology",
+     "text": "Please check 'multiple of a' and 'assumed expression' against the book's wording."
+    }
+   ],
+   "notes": []
+  },
+  {
+   "lo": "lo:eb11c2-5-4",
+   "entries": [],
+   "dropped": [],
+   "stripped": [],
+   "flags": [
+    {
+     "kind": "evidence",
+     "text": "No caution boxes, remarks, re-solve wrong turns or wrong options were supplied for this objective, so no error is supported and no entries were written. The canonical solutions will be used as the fallback."
+    },
+    {
+     "kind": "other",
+     "text": "The challenge question on geometric and arithmetic sequences (common ratio r) does not match this objective's description of estimating and proving a general term. It was not used."
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "totals": {
+  "objectives": 20,
+  "entries": 10,
+  "dropped": 0,
+  "stripped": 0,
+  "skipped": 0,
+  "flags": 24
+ }
+}

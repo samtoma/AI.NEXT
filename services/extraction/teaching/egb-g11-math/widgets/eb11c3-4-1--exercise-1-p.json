@@ -1,0 +1,49 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:eb11c3-4-1:exercise-1-p",
+ "lo_id": "lo:eb11c3-4-1",
+ "book_item": "eb11c3-4:exercise-1#p",
+ "parent_question_id": "expl:eb11c3-4-1:bk-warm-up-1-a",
+ "parent_kind": "teaching",
+ "tier": "advanced",
+ "kind": "number_line_marker",
+ "spec": {
+  "mode": "points",
+  "range": [
+   -6,
+   6
+  ],
+  "targets": [
+   1,
+   2,
+   3
+  ]
+ },
+ "stem": "Solve $x^4 - 9x^3 + 29x^2 - 39x + 18 = 0$. Tap every solution on the number line.",
+ "solution": [
+  "Let $P(x)=x^4-9x^3+29x^2-39x+18$. $P(1)=0$, so $(x-1)$ is a factor.",
+  "Divide: $(x-1)(x^3-8x^2+21x-18)=0$.",
+  "For the cubic, $Q(2)=8-32+42-18=0$, so $(x-2)$ is a factor: $(x-1)(x-2)(x^2-6x+9)=0$.",
+  "Factorise: $x^2-6x+9=(x-3)^2$.",
+  "Set each factor to zero: $x=1,\\ 2,\\ 3$ (3 is repeated)."
+ ],
+ "diagnostics": [],
+ "hints": [
+  {
+   "predicate": "missed-values",
+   "step": 3,
+   "text": "Apply the Factor Theorem again to the cubic quotient, then factorise what is left."
+  },
+  {
+   "predicate": "extra-values",
+   "step": 1,
+   "text": "Substitute each marked value into $P(x)$; only values giving $0$ are solutions."
+  },
+  {
+   "predicate": "sign-flipped",
+   "step": 5,
+   "text": "A factor $(x-a)$ gives $x=a$, not $-a$."
+  }
+ ],
+ "notes": "Repeated root marked once."
+}

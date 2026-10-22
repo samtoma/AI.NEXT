@@ -1,0 +1,3506 @@
+{
+ "stage": "S0a-maths-reading",
+ "workflow": "maths-reading",
+ "prompts_version": "mread-v4",
+ "mode": "second",
+ "embedded": {
+  "source": "runbook/maths-reading.workflow.js",
+  "source_sha256": "381d181800d44b3ac31651d86d6bb425b1473712a642c881c1d0683c32c87d82",
+  "args_sha256": "aa8ddca9ec3248b13203a70aae1651a2e9b962a2aedefb42457252546ac75b9f",
+  "generated_sha256": "67863751af1b4b84ac2942a6fdcb1d6b1276226505d7fcb77c662e44617d1737",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "egb-g11-math",
+ "pages": [
+  {
+   "lesson": "eb11c1-1",
+   "printed": 4,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:open-prompt-2|text|0",
+     "latex": "(x_1 + x_2)^n"
+    },
+    {
+     "ref": "eb11c1-1:example-1|stem|0",
+     "latex": "{}_5C_3"
+    },
+    {
+     "ref": "eb11c1-1:example-1|solution[0]|0",
+     "latex": "{}_5C_3 = \\frac{5 \\times 4 \\times 3}{3 \\times 2 \\times 1} = 10"
+    },
+    {
+     "ref": "eb11c1-1:example-2|stem|0",
+     "latex": "{}_5C_0"
+    },
+    {
+     "ref": "eb11c1-1:example-2|solution[0]|0",
+     "latex": "{}_5C_0 = 1"
+    },
+    {
+     "ref": "eb11c1-1:example-3|stem|0",
+     "latex": "{}_5C_5"
+    },
+    {
+     "ref": "eb11c1-1:example-3|solution[0]|0",
+     "latex": "{}_5C_5 = 1"
+    },
+    {
+     "ref": "eb11c1-1:example-4|stem|0",
+     "latex": "(a + b)^5"
+    },
+    {
+     "ref": "eb11c1-1:example-4|stem|1",
+     "latex": "a^3b^2"
+    },
+    {
+     "ref": "eb11c1-1:example-4|solution[0]|0",
+     "latex": "{}_5C_2\\, a^3b^2 = \\frac{5 \\times 4}{2 \\times 1} a^3b^2 = 10a^3b^2"
+    },
+    {
+     "ref": "eb11c1-1:example-5|stem|0",
+     "latex": "(x - 2y)^6"
+    },
+    {
+     "ref": "eb11c1-1:example-5|stem|1",
+     "latex": "x^4y^2"
+    },
+    {
+     "ref": "eb11c1-1:example-5|solution[0]|0",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-1:example-5|solution[0]|1",
+     "latex": "-2y"
+    },
+    {
+     "ref": "eb11c1-1:example-5|solution[0]|2",
+     "latex": "{}_6C_2 \\times x^4 \\times (-2y)^2 = \\frac{6 \\times 5}{2 \\times 1} \\times x^4 \\times (-2y)^2 = 15 \\times x^4 \\times 4 \\times y^2 = 60x^4y^2"
+    },
+    {
+     "ref": "eb11c1-1:example-5|solution[1]|0",
+     "latex": "{}_6C_2 \\times x^4 \\times (-2y)^2 = \\frac{6 \\times 5}{2 \\times 1} \\times x^4 \\times (-2y)^2 = 15 \\times x^4 \\times 4 \\times y^2 = 60x^4y^2"
+    },
+    {
+     "ref": "eb11c1-1:example-6|stem|0",
+     "latex": "(x + 2)^5"
+    },
+    {
+     "ref": "eb11c1-1:example-6|solution[0]|0",
+     "latex": "(x + 2)^5 = {}_5C_0 \\times x^5 + {}_5C_1 \\times x^4 \\times 2 + {}_5C_2 \\times x^3 \\times 2^2 + {}_5C_3 \\times x^2 \\times 2^3 + {}_5C_4 \\times x \\times 2^4 + {}_5C_5 \\times 2^5",
+     "notes": "Printed with blanks for the leading factors; the 5C4 term shows 'x' as printed."
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-1",
+   "printed": 5,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:warm-up-1|text|0",
+     "latex": "x^4"
+    },
+    {
+     "ref": "eb11c1-1:warm-up-1|text|1",
+     "latex": "(2x^2 - 3)^7"
+    },
+    {
+     "ref": "eb11c1-1:warm-up-2|text|0",
+     "latex": "(3x - 2)^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|0",
+     "latex": "x^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|1",
+     "latex": "(2x^2 - 3)^7"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|2",
+     "latex": "x^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|3",
+     "latex": "2x^2"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|4",
+     "latex": "7 - 2 = 5"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|stem|5",
+     "latex": "-3"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[0]",
+     "latex": "{}_7C_5\\ (2x^2)^2 \\times (-3)^5",
+     "unreadable": false
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[0]|0",
+     "latex": "{}_7C_5\\ (2x^2)^2 \\times (-3)^5"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[1]|0",
+     "latex": "= \\frac{7 \\times 6 \\times 5 \\times 4 \\times 3}{5 \\times 4 \\times 3 \\times 2 \\times 1} \\times 4x^4 \\times (-243)"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[2]|0",
+     "latex": "= -20412x^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[3]|0",
+     "latex": "x^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-1|solution[3]|1",
+     "latex": "-20412"
+    },
+    {
+     "ref": "eb11c1-1:explanation-2|stem|0",
+     "latex": "(3x - 2)^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-2|solution[0]|0",
+     "latex": "(3x - 2)^4 = {}_4C_0 \\times (3x)^4 + {}_4C_1 \\times (3x)^3 \\times (-2) + {}_4C_2 \\times (3x)^2 \\times (-2)^2 + {}_4C_3 \\times 3x \\times (-2)^3 + {}_4C_4 (-2)^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-2|solution[1]|0",
+     "latex": "= 1 \\times (3x)^4 + \\frac{4}{1} \\times (3x)^3 \\times (-2) + \\frac{4 \\times 3}{2 \\times 1} \\times (3x)^2 \\times (-2)^2 + \\frac{4 \\times 3 \\times 2}{3 \\times 2 \\times 1} \\times 3x \\times (-2)^3 + 1 \\times (-2)^4"
+    },
+    {
+     "ref": "eb11c1-1:explanation-2|solution[2]|0",
+     "latex": "= 81x^4 - 216x^3 + 216x^2 - 96x + 16"
+    },
+    {
+     "ref": "eb11c1-1:try-1|parts[0].stem|0",
+     "latex": "(2x - 3y)^7 [x^6 y]"
+    },
+    {
+     "ref": "eb11c1-1:try-1|parts[1].stem|0",
+     "latex": "(3x - 2)^5 [x^2]"
+    },
+    {
+     "ref": "eb11c1-1:try-1|parts[2].stem|0",
+     "latex": "(3a^2 - 2)^8 [a^6]"
+    },
+    {
+     "ref": "eb11c1-1:try-2|parts[0].stem|0",
+     "latex": "(x + 2)^6"
+    },
+    {
+     "ref": "eb11c1-1:try-2|parts[1].stem|0",
+     "latex": "(3a - 2b)^5"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-1",
+   "printed": 6,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:exercise-1|parts[0].stem|0",
+     "latex": "(2x - y)^{8}[x^{4}y^{4}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[1].stem|0",
+     "latex": "(3a + b)^{4}[ab^{3}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[2].stem|0",
+     "latex": "(x - 4y)^{5}\\,[x^{3}y^{2}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[3].stem|0",
+     "latex": "(3x + 1)^{5}[x^{4}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[4].stem|0",
+     "latex": "(2a - 3)^{4}[a]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[5].stem|0",
+     "latex": "(3x + 2)^{5}[x^{3}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[6].stem|0",
+     "latex": "(2x^{2} - 1)^{6}[x^{6}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[7].stem|0",
+     "latex": "(3x^{2} - 1)^{5}[x^{4}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-1|parts[8].stem|0",
+     "latex": "(3x^{2} + 2)^{6}[x^{6}]"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[0].stem|0",
+     "latex": "(x + 1)^{4}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[1].stem|0",
+     "latex": "(a + b)^{4}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[2].stem|0",
+     "latex": "(a - 2b)^{4}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[3].stem|0",
+     "latex": "(x - 2)^{5}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[4].stem|0",
+     "latex": "(3x + 2y)^{5}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[5].stem|0",
+     "latex": "(2a^{2} - 1)^{5}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[6].stem|0",
+     "latex": "(x - 3)^{6}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[7].stem|0",
+     "latex": "(2x - 3y)^{6}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-2|parts[8].stem|0",
+     "latex": "\\left(x + \\frac{1}{3}\\right)^{6}"
+    },
+    {
+     "ref": "eb11c1-1:challenge-1|text|0",
+     "latex": "(1 + x)^{5} = a + bx + cx^{2} + dx^{3} + ex^{4} + fx^{5}"
+    },
+    {
+     "ref": "eb11c1-1:challenge-1|text|1",
+     "latex": "a + b + c + d + e + f"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-1",
+   "printed": 7,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:open-prompt-3|text|0",
+     "latex": "(x+y+z)^4"
+    },
+    {
+     "ref": "eb11c1-1:open-prompt-3|text|1",
+     "latex": "x^2yz"
+    },
+    {
+     "ref": "eb11c1-1:rule-5|claim|0",
+     "latex": "(a+b+c)^n"
+    },
+    {
+     "ref": "eb11c1-1:rule-5|claim|1",
+     "latex": "a^p b^q c^r"
+    },
+    {
+     "ref": "eb11c1-1:rule-5|claim|2",
+     "latex": "\\frac{n!}{p!q!r!}a^p b^q c^r"
+    },
+    {
+     "ref": "eb11c1-1:warm-up-3|text|0",
+     "latex": "a^4b^3c"
+    },
+    {
+     "ref": "eb11c1-1:warm-up-3|parts[0].stem|0",
+     "latex": "(a+b+c)^8"
+    },
+    {
+     "ref": "eb11c1-1:warm-up-3|parts[1].stem|0",
+     "latex": "(a-2b+3c)^8"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-5|text|0",
+     "latex": "(a+b+c)^8"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-5|text|1",
+     "latex": "a^4b^3c"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-5|text|2",
+     "latex": "\\frac{8!}{4!3!1!}a^4b^3c^1 = 280a^4b^3c"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-6|text|0",
+     "latex": "(a-2b+3c)^8"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-6|text|1",
+     "latex": "a^4b^3c"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-6|text|2",
+     "latex": "\\frac{8!}{4!3!1!}a^4\\times(-2b)^3\\times(3c)^1 = -6720a^4b^3c"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-6|text|3",
+     "latex": "-6720"
+    },
+    {
+     "ref": "eb11c1-1:try-3|text|0",
+     "latex": "(a+b+c)^6"
+    },
+    {
+     "ref": "eb11c1-1:try-3|parts[0].stem|0",
+     "latex": "a^3bc^2"
+    },
+    {
+     "ref": "eb11c1-1:try-3|parts[1].stem|0",
+     "latex": "a^2b^2c^2"
+    },
+    {
+     "ref": "eb11c1-1:try-4|text|0",
+     "latex": "(a+3b-2c)^6"
+    },
+    {
+     "ref": "eb11c1-1:try-4|parts[0].stem|0",
+     "latex": "a^2b^2c^2"
+    },
+    {
+     "ref": "eb11c1-1:try-4|parts[1].stem|0",
+     "latex": "ab^2c^3"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-1",
+   "printed": 8,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:exercise-3|text|0",
+     "latex": "(x+y+z)^{7}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-3|parts[0].stem|0",
+     "latex": "xy^{5}z"
+    },
+    {
+     "ref": "eb11c1-1:exercise-3|parts[1].stem|0",
+     "latex": "x^{4}y^{2}z"
+    },
+    {
+     "ref": "eb11c1-1:exercise-3|parts[2].stem|0",
+     "latex": "x^{2}y^{3}z^{2}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-4|text|0",
+     "latex": "(x+y+z)^{9}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-4|parts[0].stem|0",
+     "latex": "x^{6}yz^{2}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-4|parts[1].stem|0",
+     "latex": "x^{3}y^{3}z^{3}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-4|parts[2].stem|0",
+     "latex": "x^{2}y^{4}z^{3}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-5|text|0",
+     "latex": "(a+2b-3c)^{7}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-5|parts[0].stem|0",
+     "latex": "a^{2}b^{3}c^{2}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-5|parts[1].stem|0",
+     "latex": "abc^{5}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-5|parts[2].stem|0",
+     "latex": "a^{2}b^{4}c"
+    },
+    {
+     "ref": "eb11c1-1:exercise-6|text|0",
+     "latex": "(2a-b+3c)^{8}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-6|parts[0].stem|0",
+     "latex": "a^{2}b^{2}c^{4}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-6|parts[1].stem|0",
+     "latex": "a^{4}bc^{3}"
+    },
+    {
+     "ref": "eb11c1-1:exercise-6|parts[2].stem|0",
+     "latex": "a^{3}b^{3}c^{2}"
+    },
+    {
+     "ref": "eb11c1-1:challenge-2|text|0",
+     "latex": "(1+x+x^{2})^{4}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-1",
+   "printed": 9,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-1:warm-up-4|parts[0].stem|0",
+     "latex": "{}_{n}C_0 + {}_{n}C_1 + {}_{n}C_2 + \\cdots\\cdots + {}_{n}C_n = 2^n"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|stem|0",
+     "latex": "{}_{n}C_0 + {}_{n}C_1 + {}_{n}C_2 + \\cdots\\cdots + {}_{n}C_n = 2^n"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|solution[0]|0",
+     "latex": "(1+x)^n"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|solution[0]|1",
+     "latex": "(1+x)^n = {}_{n}C_0 + {}_{n}C_1 x + {}_{n}C_2 x^2 + \\cdots\\cdots + {}_{n}C_n x^n"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|solution[1]|0",
+     "latex": "x = 1"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|solution[1]|1",
+     "latex": "2^n = {}_{n}C_{0+}\\,1 \\times {}_{n}C_1 + 1^2 \\times {}_{n}C_2 + \\cdots\\cdots + 1^n \\times {}_{n}C_n"
+    },
+    {
+     "ref": "eb11c1-1:explanation-3|solution[2]|0",
+     "latex": "2^n = {}_{n}C_0 + {}_{n}C_1 + {}_{n}C_2 + \\cdots\\cdots + {}_{n}C_n"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-10|text|0",
+     "latex": "x = 1"
+    },
+    {
+     "ref": "eb11c1-1:linking-text-10|text|1",
+     "latex": "(1+x)^n = 2^n"
+    },
+    {
+     "ref": "eb11c1-1:try-5|parts[0].stem|0",
+     "latex": "{}_{n}C_0 - {}_{n}C_1 + {}_{n}C_2 - \\cdots\\cdots + (-1)^n {}_{n}C_n = 0"
+    },
+    {
+     "ref": "eb11c1-1:exercise-7|parts[0].stem|0",
+     "latex": "{}_{n}C_0 + 2\\,{}_{n}C_1 + 2^2 {}_{n}C_2 + \\cdots\\cdots + 2^n {}_{n}C_n = 3^n"
+    },
+    {
+     "ref": "eb11c1-1:exercise-8|parts[0].stem|0",
+     "latex": "{}_{n}C_0 - 2\\,{}_{n}C_1 + 2^2 {}_{n}C_2 - \\cdots\\cdots + (-2)^n {}_{n}C_n = (-1)^n"
+    },
+    {
+     "ref": "eb11c1-1:exercise-9|parts[0].stem|0",
+     "latex": "{}_{n}C_0 - \\frac{{}_{n}C_1}{2} + \\frac{{}_{n}C_2}{2^2} - \\cdots\\cdots + (-1)^n \\frac{{}_{n}C_n}{2^n} = \\left(\\frac{1}{2}\\right)^n"
+    },
+    {
+     "ref": "eb11c1-1:challenge-3|text|0",
+     "latex": "(8^n - 1)"
+    },
+    {
+     "ref": "eb11c1-1:challenge-3|text|1",
+     "latex": "n"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-2",
+   "printed": 10,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-2:warm-up-1|text|0",
+     "latex": "2x^3 - 5x^2 - 2"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-1|text|1",
+     "latex": "2x^2 - x - 1"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-2|text|0",
+     "latex": "A = 4x^2 - 9ax - 9a^2"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-2|text|1",
+     "latex": "B = x - 3a"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-2|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-2|text|3",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-2|text|4",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|0",
+     "latex": "2x^2 - x - 1"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|1",
+     "latex": "2x^3 - 5x^2 - 2"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|2",
+     "latex": "x - 2"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|3",
+     "latex": "2x^3 - x^2 - x"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|4",
+     "latex": "-4x^2 + x - 2"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|5",
+     "latex": "-4x^2 + 2x + 2"
+    },
+    {
+     "ref": "eb11c1-2:figure-2|caption|6",
+     "latex": "-x - 4"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-2|text|0",
+     "latex": "x - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-2|text|1",
+     "latex": "-x - 4"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-4|text|0",
+     "latex": "(2x^2 - x - 1) \\times x"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-4|text|1",
+     "latex": "2x^3"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-5|text|0",
+     "latex": "(2x^2 - x - 1) \\times (-2)"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-5|text|1",
+     "latex": "-4x^2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|answer|0",
+     "latex": "x - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|answer|1",
+     "latex": "-x - 4"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|0",
+     "latex": "2x^3 - 5x^2 - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|1",
+     "latex": "2x^2 - x - 1"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|2",
+     "latex": "x - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|3",
+     "latex": "2x^3 - x^2 - x"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|4",
+     "latex": "-4x^2 + x - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|5",
+     "latex": "-4x^2 + 2x + 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|6",
+     "latex": "-x - 4"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[2]|0",
+     "latex": "x - 2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[2]|1",
+     "latex": "-x - 4"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-2",
+   "printed": 11,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-2:linking-text-6|answer|0",
+     "latex": "4x + 3a"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|answer|1",
+     "latex": "0"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|0",
+     "latex": "4x^2 - 9ax - 9a^2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|1",
+     "latex": "x - 3a"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|2",
+     "latex": "4x + 3a"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|3",
+     "latex": "4x^2 - 12ax"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|4",
+     "latex": "3ax - 9a^2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|5",
+     "latex": "3ax - 9a^2"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[1]|6",
+     "latex": "0"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[2]|0",
+     "latex": "4x + 3a"
+    },
+    {
+     "ref": "eb11c1-2:linking-text-6|solution[2]|1",
+     "latex": "0"
+    },
+    {
+     "ref": "eb11c1-2:try-1|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:try-1|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:try-1|text|2",
+     "latex": "A = 2x^3 - 13x + 1,\\ B = x^2 + 2x - 3"
+    },
+    {
+     "ref": "eb11c1-2:try-2|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:try-2|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:try-2|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:try-2|text|3",
+     "latex": "A = x^3 - 3ax^2 + 5a^2x - 5a^3,\\ B = x - 2a"
+    },
+    {
+     "ref": "eb11c1-2:exercise-1|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-1|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-1|text|2",
+     "latex": "A = x^2 - 5x + 1,\\ B = x - 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-2|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-2|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-2|text|2",
+     "latex": "A = x^3 - 4x + 1,\\ B = x - 3"
+    },
+    {
+     "ref": "eb11c1-2:exercise-3|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-3|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-3|text|2",
+     "latex": "A = 2x^3 - 3x^2 + 3x + 4,\\ B = x^2 - 2x + 3"
+    },
+    {
+     "ref": "eb11c1-2:exercise-4|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-4|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-4|text|2",
+     "latex": "A = 6x^3 - 8x^2 + 5,\\ B = 2x^2 - 2x - 5"
+    },
+    {
+     "ref": "eb11c1-2:exercise-5|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-5|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-5|text|2",
+     "latex": "A = x^3 - 7x + 6,\\ B = x^2 + 2x - 3"
+    },
+    {
+     "ref": "eb11c1-2:exercise-6|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-6|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-6|text|2",
+     "latex": "A = 3x^4 - 5x^3 + x - 1,\\ B = -x^2 + 3x + 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-7|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-7|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-7|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:exercise-7|text|3",
+     "latex": "A = 4x^2 - 5ax - 6a^2,\\ B = x - 2a"
+    },
+    {
+     "ref": "eb11c1-2:exercise-8|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-8|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-8|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:exercise-8|text|3",
+     "latex": "A = x3 + ax2 + a2x - a3,\\ B = x + 2a",
+     "notes": "printed with non-superscript exponents (x3, ax2, a2x, a3)"
+    },
+    {
+     "ref": "eb11c1-2:exercise-9|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-9|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-9|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:exercise-9|text|3",
+     "latex": "A = x^3 - 2ax^2 + 3a^3,\\ B = x + a"
+    },
+    {
+     "ref": "eb11c1-2:exercise-10|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-10|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-10|text|2",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-2:exercise-10|text|3",
+     "latex": "A = x^3 + 3x^2y - 2y^3,\\ B = x + y"
+    },
+    {
+     "ref": "eb11c1-2:challenge-1|text|0",
+     "latex": "4x^3 + 4x^2 - 9x - 9"
+    },
+    {
+     "ref": "eb11c1-2:challenge-1|text|1",
+     "latex": "2x^2 - x - 3"
+    },
+    {
+     "ref": "eb11c1-2:challenge-1|text|2",
+     "latex": "x"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-2",
+   "printed": 12,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-2:warm-up-3|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[0].stem|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[0].stem|1",
+     "latex": "x^2-2x-1"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[0].stem|2",
+     "latex": "x+3"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[0].stem|3",
+     "latex": "-2x+5"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[1].stem|0",
+     "latex": "4x^3+8x-9"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[1].stem|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[1].stem|2",
+     "latex": "2x-3"
+    },
+    {
+     "ref": "eb11c1-2:warm-up-3|parts[1].stem|3",
+     "latex": "x+15"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|stem|0",
+     "latex": "A=BQ+R"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[0]|0",
+     "latex": "A=\\left(x^2-2x-1\\right)(x+3)+(-2x+5)"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[1]|0",
+     "latex": "=x^3+3x^2-2x^2-6x-x-3-2x+5"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[2]|0",
+     "latex": "=x^3+x^2-9x+2"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[3]|0",
+     "latex": "4x^3+8x-9=B\\times(2x-3)+(x+15)"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[4]|0",
+     "latex": "B\\times(2x-3)+(x+15)=4x^3+8x-9"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[5]|0",
+     "latex": "B\\times(2x-3)=4x^3+7x-24"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[6]|0",
+     "latex": "B=\\left(4x^3+7x-24\\right)\\div(2x-3)"
+    },
+    {
+     "ref": "eb11c1-2:explanation-1|solution[7]|0",
+     "latex": "=2x^2+3x+8"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-2",
+   "printed": 13,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-2:try-3|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:try-3|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:try-3|text|2",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:try-3|text|3",
+     "latex": "2x^2 + x + 1"
+    },
+    {
+     "ref": "eb11c1-2:try-3|text|4",
+     "latex": "3x + 2"
+    },
+    {
+     "ref": "eb11c1-2:try-3|text|5",
+     "latex": "-2x + 6"
+    },
+    {
+     "ref": "eb11c1-2:try-4|text|0",
+     "latex": "x^3 - x^2 + 3x + 1"
+    },
+    {
+     "ref": "eb11c1-2:try-4|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:try-4|text|2",
+     "latex": "x^2 - 2x + 5"
+    },
+    {
+     "ref": "eb11c1-2:try-4|text|3",
+     "latex": "-4"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|2",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|3",
+     "latex": "x^2 - 2x - 1"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|4",
+     "latex": "2x - 3"
+    },
+    {
+     "ref": "eb11c1-2:exercise-11|text|5",
+     "latex": "-2x"
+    },
+    {
+     "ref": "eb11c1-2:exercise-12|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-12|text|1",
+     "latex": "x^2 - 3x + 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-12|text|2",
+     "latex": "2x + 6"
+    },
+    {
+     "ref": "eb11c1-2:exercise-12|text|3",
+     "latex": "2x - 3"
+    },
+    {
+     "ref": "eb11c1-2:exercise-13|text|0",
+     "latex": "A"
+    },
+    {
+     "ref": "eb11c1-2:exercise-13|text|1",
+     "latex": "2x^2 - x + 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-13|text|2",
+     "latex": "2x - 1"
+    },
+    {
+     "ref": "eb11c1-2:exercise-13|text|3",
+     "latex": "2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-14|text|0",
+     "latex": "2x^3 + x^2 - 3x + 5"
+    },
+    {
+     "ref": "eb11c1-2:exercise-14|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-14|text|2",
+     "latex": "x + 1"
+    },
+    {
+     "ref": "eb11c1-2:exercise-14|text|3",
+     "latex": "-5x + 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-15|text|0",
+     "latex": "6x^3 + 11x^2 - 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-15|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-15|text|2",
+     "latex": "2x^2 + 3x - 1"
+    },
+    {
+     "ref": "eb11c1-2:exercise-15|text|3",
+     "latex": "-1"
+    },
+    {
+     "ref": "eb11c1-2:exercise-16|text|0",
+     "latex": "2x^3 + 4x^2 + 7"
+    },
+    {
+     "ref": "eb11c1-2:exercise-16|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:exercise-16|text|2",
+     "latex": "x + 2"
+    },
+    {
+     "ref": "eb11c1-2:exercise-16|text|3",
+     "latex": "3x + 13"
+    },
+    {
+     "ref": "eb11c1-2:challenge-2|text|0",
+     "latex": "x^4 + x^2 + 3x - 1"
+    },
+    {
+     "ref": "eb11c1-2:challenge-2|text|1",
+     "latex": "B"
+    },
+    {
+     "ref": "eb11c1-2:challenge-2|text|2",
+     "latex": "x^2 + x + 1"
+    },
+    {
+     "ref": "eb11c1-2:challenge-2|text|3",
+     "latex": "3x - 2"
+    },
+    {
+     "ref": "eb11c1-2:challenge-2|text|4",
+     "latex": "B"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 14,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:example-1|stem|0",
+     "latex": "\\frac{(x-1)(x-3)}{x(x-3)}"
+    },
+    {
+     "ref": "eb11c1-3:example-1|solution[0]|0",
+     "latex": "\\frac{(x-1)(x-3)}{x(x-3)} = \\frac{x-1}{x}",
+     "notes": "Printed with the (x−3) factors crossed out in the middle fraction; gives ... = (x−1)/x. Transcribed as the chain from 'gives' onward: middle fraction (x-1)(x-3)/x(x-3) = (x-1)/x."
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 15,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:warm-up-1|parts[0].stem|0",
+     "latex": "\\frac{12ab^5}{9a^3b^2}"
+    },
+    {
+     "ref": "eb11c1-3:warm-up-1|parts[1].stem|0",
+     "latex": "\\frac{x^2-4}{3x^2+7x+2}"
+    },
+    {
+     "ref": "eb11c1-3:warm-up-2|text|0",
+     "latex": "\\frac{x^2-4x-5}{2x^2+5x+2}\\div\\frac{x^2-x-20}{2x^2-5x-3}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|stem|0",
+     "latex": "\\frac{12ab^5}{9a^3b^2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|stem|1",
+     "latex": "\\frac{x^2-4}{3x^2+7x+2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[0].solution[0]|0",
+     "latex": "\\frac{12ab^5}{9a^3b^2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[0].solution[1]|0",
+     "latex": "=\\frac{4b^3}{3a^2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[1].solution[0]|0",
+     "latex": "\\frac{x^2-4}{3x^2+7x+2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[1].solution[1]|0",
+     "latex": "=\\frac{(x+2)(x-2)}{(3x+1)(x+2)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[1].solution[1]|1",
+     "latex": "(x+2)"
+    },
+    {
+     "ref": "eb11c1-3:explanation-1|parts[1].solution[2]|0",
+     "latex": "=\\frac{x-2}{3x+1}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-2|stem|0",
+     "latex": "\\frac{x^2-4x-5}{2x^2+5x+2}\\div\\frac{x^2-x-20}{2x^2-5x-3}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-2|solution[0]|0",
+     "latex": "=\\frac{x^2-4x-5}{2x^2+5x+2}\\times\\frac{2x^2-5x-3}{x^2-x-20}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-2|solution[1]|0",
+     "latex": "=\\frac{(x+1)(x-5)}{(2x+1)(x+2)}\\times\\frac{(2x+1)(x-3)}{(x-5)(x+4)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-2|solution[2]|0",
+     "latex": "=\\frac{(x+1)(x-3)}{(x+2)(x+4)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-2|solution[3]|0",
+     "latex": "=\\frac{(x+1)(x-3)}{(x+2)(x+4)}",
+     "notes": "Same expression printed in the last line; solution[2] and [3] appear to map to the final line and cancel line ambiguously."
+    },
+    {
+     "ref": "eb11c1-3:try-1|parts[0].stem|0",
+     "latex": "\\frac{6x^2y^3}{20x^3y}"
+    },
+    {
+     "ref": "eb11c1-3:try-1|parts[1].stem|0",
+     "latex": "\\frac{2x^2-3x-5}{x^2+3x+2}"
+    },
+    {
+     "ref": "eb11c1-3:try-2|parts[0].stem|0",
+     "latex": "\\frac{x^2-11x+24}{x^2-6x-16}\\times\\frac{x^2+2x}{x^2-6x+9}"
+    },
+    {
+     "ref": "eb11c1-3:try-2|parts[1].stem|0",
+     "latex": "\\frac{x^2-9}{x^2-x-2}\\div\\frac{2x^2+5x-3}{x+1}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 16,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:exercise-1|parts[0].stem|0",
+     "latex": "\\frac{6a^2bc^2}{8ab^4c^2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-1|parts[1].stem|0",
+     "latex": "\\frac{2a^2b}{8a^3b^3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-1|parts[2].stem|0",
+     "latex": "\\frac{x^2+3x}{x^2-9}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-1|parts[3].stem|0",
+     "latex": "\\frac{x^2+x-2}{x^2-5x+4}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-1|parts[4].stem|0",
+     "latex": "\\frac{2x^2-4xy+2y^2}{x^3+3x^2y-4xy^2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-1|parts[5].stem|0",
+     "latex": "\\frac{x^3-1}{x^2+2x-3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[0].stem|0",
+     "latex": "\\frac{a^3b^2}{3c}\\times\\frac{9c^3}{a^4b^2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[1].stem|0",
+     "latex": "\\frac{6bc^3}{5a^2}\\times\\frac{10a^4}{3b^3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[2].stem|0",
+     "latex": "\\frac{2xy}{3ab}\\div\\frac{8x^3y}{9a^2b^3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[3].stem|0",
+     "latex": "\\frac{x+1}{x^2-4}\\times\\frac{x^2-2x-8}{x^2+x}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[4].stem|0",
+     "latex": "\\frac{x^2-9}{x^2-2x}\\times\\frac{x^2-7x+10}{x^2+x-12}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[5].stem|0",
+     "latex": "\\frac{x^2+x-6}{2x^2+x-6}\\times\\frac{x^2+6x+8}{3x^2-5x-2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[6].stem|0",
+     "latex": "\\frac{2x^2-x-10}{x^2-2x-3}\\div\\frac{x^2+x-2}{x^2-6x+9}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[7].stem|0",
+     "latex": "\\frac{x^2-3x-10}{2x^2+3x-2}\\div\\frac{x^2-2x-15}{6x-3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-2|parts[8].stem|0",
+     "latex": "\\frac{x^2-y^2}{x^2-2xy+y^2}\\div\\frac{x^2+xy}{x-y}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-1|text|0",
+     "latex": "x=\\sqrt{123}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-1|text|1",
+     "latex": "\\frac{x^3+8}{x^2-x-6}\\times\\frac{x^2-6x+9}{x^2-2x+4}\\div\\frac{2x-6}{x^5-1}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 17,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:example-2|stem|0",
+     "latex": "\\frac{1}{x+1}+\\frac{1}{x-2}"
+    },
+    {
+     "ref": "eb11c1-3:example-2|solution[0]|0",
+     "latex": "=\\frac{(x-2)}{(x+1)(x-2)}+\\frac{(x+1)}{(x-2)(x+1)}"
+    },
+    {
+     "ref": "eb11c1-3:example-2|solution[1]|0",
+     "latex": "=\\frac{(x-2)+(x+1)}{(x+1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:example-2|solution[2]|0",
+     "latex": "=\\frac{2x-1}{(x+1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:example-3|stem|0",
+     "latex": "\\frac{2}{x^2-x-2}+\\frac{3}{x^2-5x+6}"
+    },
+    {
+     "ref": "eb11c1-3:example-3|solution[0]|0",
+     "latex": "=\\frac{2}{(x+1)(x-2)}+\\frac{3}{(x-2)(x-3)}"
+    },
+    {
+     "ref": "eb11c1-3:example-3|solution[1]|0",
+     "latex": "=\\frac{2(x-3)}{(x+1)(x-2)(x-3)}+\\frac{3(x+1)}{(x-2)(x-3)(x+1)}"
+    },
+    {
+     "ref": "eb11c1-3:example-3|solution[2]|0",
+     "latex": "=\\frac{2(x-3)+3(x+1)}{(x+1)(x-2)(x-3)}=\\frac{5x-3}{(x+1)(x-2)(x-3)}"
+    },
+    {
+     "ref": "eb11c1-3:warm-up-3|parts[0].stem|0",
+     "latex": "\\frac{x+4}{x^2-2x}-\\frac{3}{x^2-3x+2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|stem|0",
+     "latex": "\\frac{x+4}{x^2-2x}-\\frac{3}{x^2-3x+2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|solution[0]|0",
+     "latex": "=\\frac{x+4}{x(x-2)}-\\frac{3}{(x-1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|solution[1]|0",
+     "latex": "=\\frac{(x+4)(x-1)-3x}{x(x-1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|solution[2]|0",
+     "latex": "=\\frac{x^2-4}{x(x-1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|solution[3]|0",
+     "latex": "=\\frac{(x-2)(x+2)}{x(x-1)(x-2)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-3|solution[4]|0",
+     "latex": "=\\frac{x+2}{x(x-1)}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 18,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:try-3|parts[0].stem|0",
+     "latex": "\\frac{x-1}{x^2+4x+3}+\\frac{2}{x^2+5x+6}"
+    },
+    {
+     "ref": "eb11c1-3:try-3|parts[1].stem|0",
+     "latex": "\\frac{x}{x-1}-\\frac{2}{x^2-1}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-3|stem|0",
+     "latex": "\\frac{x^2-4}{x+1}+\\frac{3}{x+1}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-4|stem|0",
+     "latex": "\\frac{3}{x^2+x}-\\frac{3-x}{x^2+x}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-5|stem|0",
+     "latex": "\\frac{x+2}{x}-\\frac{x-2}{x-1}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-6|stem|0",
+     "latex": "\\frac{1}{x+2}+\\frac{1}{x-2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-7|stem|0",
+     "latex": "\\frac{2}{x-1}+\\frac{3}{x^2+5x-6}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-8|stem|0",
+     "latex": "\\frac{x-3}{x^2+x}+\\frac{x}{x^2-1}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-9|stem|0",
+     "latex": "\\frac{4x}{x^2-1}-\\frac{x-1}{x^2+x}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-10|stem|0",
+     "latex": "\\frac{1}{x^2+5x+6}+\\frac{1}{x^2+7x+12}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-11|stem|0",
+     "latex": "\\frac{x-1}{x^2+3x+2}-\\frac{x-3}{x^2+4x+3}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-12|stem|0",
+     "latex": "\\frac{x+4}{x^2+2x}-\\frac{x+5}{x^2+x-2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-13|stem|0",
+     "latex": "\\frac{x+8}{x^2+x-2}-\\frac{x+5}{x^2-1}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-2|text|0",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-3:challenge-2|text|1",
+     "latex": "\\frac{x^3+8x}{x^2-x-2}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-2|text|2",
+     "latex": "\\frac{8}{x-2}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 19,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:figure-2|caption|0",
+     "latex": "\\dfrac{\\frac{1}{y}}{\\frac{2}{x}}"
+    },
+    {
+     "ref": "eb11c1-3:figure-2|caption|1",
+     "latex": "\\dfrac{1-\\frac{y}{x}}{1+\\frac{y}{x}}"
+    },
+    {
+     "ref": "eb11c1-3:warm-up-4|parts[0].stem|0",
+     "latex": "\\dfrac{1}{1-\\dfrac{1}{x-1}}"
+    },
+    {
+     "ref": "eb11c1-3:warm-up-5|parts[0].stem|0",
+     "latex": "\\dfrac{\\dfrac{1}{1-x}+\\dfrac{1}{1+x}}{\\dfrac{1}{1-x}-\\dfrac{1}{1+x}}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-4|stem|0",
+     "latex": "\\dfrac{1}{1-\\dfrac{1}{x-1}}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-4|solution[0]|0",
+     "latex": "=\\dfrac{1\\times(x-1)}{\\left(1-\\dfrac{1}{x-1}\\right)\\times(x-1)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-4|solution[1]|0",
+     "latex": "=\\dfrac{x-1}{(x-1)-\\dfrac{\\cancel{x-1}}{\\cancel{x-1}}}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-4|solution[2]|0",
+     "latex": "=\\dfrac{x-1}{(x-1)-1}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-4|solution[3]|0",
+     "latex": "=\\dfrac{x-1}{x-2}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|stem|0",
+     "latex": "\\dfrac{\\dfrac{1}{1-x}+\\dfrac{1}{1+x}}{\\dfrac{1}{1-x}-\\dfrac{1}{1+x}}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|solution[0]|0",
+     "latex": "=\\dfrac{\\left(\\dfrac{1}{1-x}+\\dfrac{1}{1+x}\\right)\\times(1-x)(1+x)}{\\left(\\dfrac{1}{1-x}-\\dfrac{1}{1+x}\\right)\\times(1-x)(1+x)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|solution[1]|0",
+     "latex": "=\\dfrac{\\dfrac{\\cancel{(1-x)}(1+x)}{\\cancel{1-x}}+\\dfrac{(1-x)\\cancel{(1+x)}}{\\cancel{1+x}}}{\\dfrac{\\cancel{(1-x)}(1+x)}{\\cancel{1-x}}-\\dfrac{(1-x)\\cancel{(1+x)}}{\\cancel{1+x}}}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|solution[2]|0",
+     "latex": "=\\dfrac{(1+x)+(1-x)}{(1+x)-(1-x)}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|solution[3]|0",
+     "latex": "=\\dfrac{2}{2x}"
+    },
+    {
+     "ref": "eb11c1-3:explanation-5|solution[4]|0",
+     "latex": "=\\dfrac{1}{x}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-3",
+   "printed": 20,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-3:try-4|parts[0].stem|0",
+     "latex": "\\frac{1}{1-\\frac{x}{x+1}}"
+    },
+    {
+     "ref": "eb11c1-3:try-4|parts[1].stem|0",
+     "latex": "\\frac{\\frac{1}{x+2}+\\frac{1}{x-2}}{\\frac{1}{x+2}-\\frac{1}{x-2}}"
+    },
+    {
+     "ref": "eb11c1-3:try-4|parts[2].stem|0",
+     "latex": "\\frac{1}{1-\\frac{1}{1-\\frac{1}{x}}}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-14|parts[0].stem|0",
+     "latex": "\\frac{x-\\frac{2}{x-1}}{\\frac{x}{x-1}-2}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-15|parts[0].stem|0",
+     "latex": "\\frac{1+\\frac{x-y}{x+y}}{1-\\frac{x-y}{x+y}}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-16|parts[0].stem|0",
+     "latex": "\\frac{\\frac{1}{x+y}+\\frac{1}{x-y}}{\\frac{1}{x+y}-\\frac{1}{x-y}}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-17|parts[0].stem|0",
+     "latex": "\\frac{\\frac{x+1}{x-1}-\\frac{x-1}{x+1}}{\\frac{x+1}{x-1}+\\frac{x-1}{x+1}}"
+    },
+    {
+     "ref": "eb11c1-3:exercise-18|parts[0].stem|0",
+     "latex": "\\frac{1}{1-\\frac{1}{1+\\frac{1}{x}}}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-3|text|0",
+     "latex": "E(x)"
+    },
+    {
+     "ref": "eb11c1-3:challenge-3|text|1",
+     "latex": "E(x)=\\frac{1}{1+\\frac{1}{1+\\frac{1}{1+x}}}"
+    },
+    {
+     "ref": "eb11c1-3:challenge-3|text|2",
+     "latex": "x>0"
+    },
+    {
+     "ref": "eb11c1-3:challenge-3|text|3",
+     "latex": "\\frac{A(x)}{B(x)}"
+    },
+    {
+     "ref": "eb11c1-3:reflect-1|text|0",
+     "latex": "\\frac{x^2-16}{x-4}=x+4"
+    },
+    {
+     "ref": "eb11c1-3:reflect-1|text|1",
+     "latex": "y=\\frac{x^2-16}{x-4}=x+4"
+    },
+    {
+     "ref": "eb11c1-3:reflect-1|text|2",
+     "latex": "y=x+4"
+    },
+    {
+     "ref": "eb11c1-3:reflect-1|text|3",
+     "latex": "x=4"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 22,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:warm-up-1|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-1|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-1|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-1|text|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-1|parts[0].stem|0",
+     "latex": "x^2 + 6 = a(x + 1)^2 + b(x + 1) + c"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-2|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-2|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-2|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-2|text|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-2|parts[0].stem|0",
+     "latex": "\\frac{3x + 1}{(x + 2)(x - 3)} = \\frac{a}{x + 2} + \\frac{b}{x - 3}"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|stem|0",
+     "latex": "x^2 + 6 = a(x + 1)^2 + b(x + 1) + c"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[0]|0",
+     "latex": "x^2 + 6 = ax^2 + (2a + b)x + (a + b + c)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[0]|1",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[1]|0",
+     "latex": "1 = a"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[1]|1",
+     "latex": "0 = 2a + b"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[1]|2",
+     "latex": "6 = a + b + c"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|0",
+     "latex": "a = 1"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|1",
+     "latex": "b = -2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|2",
+     "latex": "c = 7"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|4",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|5",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:explanation-1|solution[2]|6",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|stem|0",
+     "latex": "\\frac{3x + 1}{(x + 2)(x - 3)} = \\frac{a}{x + 2} + \\frac{b}{x - 3}"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[0]|0",
+     "latex": "(x + 2)(x - 3)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[1]|0",
+     "latex": "3x + 1 = a(x - 3) + b(x + 2)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[1]|1",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[2]|0",
+     "latex": "3x + 1 = (a + b)x + (-3a + 2b)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[3]|0",
+     "latex": "3 = a + b"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[3]|1",
+     "latex": "1 = -3a + 2b"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[4]|0",
+     "latex": "a = 1"
+    },
+    {
+     "ref": "eb11c1-4:explanation-2|solution[4]|1",
+     "latex": "b = 2"
+    },
+    {
+     "ref": "eb11c1-4:try-1|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:try-1|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:try-1|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:try-1|text|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:try-1|parts[0].stem|0",
+     "latex": "x^2 - x - 3 = a(x - 1)^2 + b(x - 1) + c"
+    },
+    {
+     "ref": "eb11c1-4:try-2|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:try-2|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:try-2|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:try-2|text|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:try-2|parts[0].stem|0",
+     "latex": "\\frac{1}{(2x - 1)(x + 1)} = \\frac{a}{2x - 1} + \\frac{b}{x + 1}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 23,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:exercise-1|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:exercise-1|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:exercise-1|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:exercise-1|text|3",
+     "latex": "x"
+    },
+    {
+     "ref": "eb11c1-4:exercise-2|text|0",
+     "latex": "a(x+1)-b(x+5)=8x"
+    },
+    {
+     "ref": "eb11c1-4:exercise-3|text|0",
+     "latex": "(x+a)(b+3)=4x+12"
+    },
+    {
+     "ref": "eb11c1-4:exercise-4|text|0",
+     "latex": "2x^2+5x+4=(x+1)(ax+b)+c"
+    },
+    {
+     "ref": "eb11c1-4:exercise-5|text|0",
+     "latex": "(ax+b)(x+1)=4x^2+cx+1"
+    },
+    {
+     "ref": "eb11c1-4:exercise-6|text|0",
+     "latex": "2x^2-7x+8=(x-3)(ax+b)+c"
+    },
+    {
+     "ref": "eb11c1-4:exercise-7|text|0",
+     "latex": "\\frac{a}{x-1}+\\frac{b}{x-5}=\\frac{5x-1}{(x-1)(x-5)}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-8|text|0",
+     "latex": "\\frac{x+8}{(x-2)(x+3)}=\\frac{a}{x-2}+\\frac{b}{x+3}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-9|text|0",
+     "latex": "\\frac{3x-8}{3x^2+5x-2}=\\frac{a}{x+2}+\\frac{b}{3x-1}"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|0",
+     "latex": "f(t)"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|1",
+     "latex": "t"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|2",
+     "latex": "t>0"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|3",
+     "latex": "f(t)=\\frac{22t+15}{8t^2+10t+3}"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|4",
+     "latex": "\\frac{a}{2t+1}+\\frac{b}{4t+3}"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|5",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:challenge-1|text|6",
+     "latex": "b"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 24,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:warm-up-3|parts[0].stem|0",
+     "latex": "(x+y)^2-(x-y)^2=4xy"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-3|parts[1].stem|0",
+     "latex": "(a^2+b^2)(c^2+d^2)=(ac-bd)^2+(ad+bc)^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-3|stem|0",
+     "latex": "(x+y)^2-(x-y)^2=4xy"
+    },
+    {
+     "ref": "eb11c1-4:explanation-3|solution[0]|0",
+     "latex": "=(x^2+2xy+y^2)-(x^2-2xy+y^2)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-3|solution[1]|0",
+     "latex": "=x^2+2xy+y^2-x^2+2xy-y^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-3|solution[2]|0",
+     "latex": "=4xy"
+    },
+    {
+     "ref": "eb11c1-4:explanation-3|solution[3]|0",
+     "latex": "(x+y)^2-(x-y)^2=4xy"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|stem|0",
+     "latex": "(a^2+b^2)(c^2+d^2)=(ac-bd)^2+(ad+bc)^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|solution[0]|0",
+     "latex": "=a^2c^2+a^2d^2+b^2c^2+b^2d^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|solution[1]|0",
+     "latex": "=(a^2c^2-2abcd+b^2d^2)+(a^2d^2+2abcd+b^2c^2)"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|solution[2]|0",
+     "latex": "=a^2c^2+b^2d^2+a^2d^2+b^2c^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|solution[3]|0",
+     "latex": "=a^2c^2+a^2d^2+b^2c^2+b^2d^2"
+    },
+    {
+     "ref": "eb11c1-4:explanation-4|solution[4]|0",
+     "latex": "(a^2+b^2)(c^2+d^2)=(ac-bd)^2+(ad+bc)^2"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 25,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:try-3|parts[0].stem|0",
+     "latex": "(x+y)^2+(x-y)^2=2x^2+2y^2"
+    },
+    {
+     "ref": "eb11c1-4:try-3|parts[1].stem|0",
+     "latex": "(a^2-b^2)(c^2-d^2)=(ac-bd)^2-(ad-bc)^2"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[0].stem|0",
+     "latex": "(x^2+x+1)(x^2-x+1)=x^4+x^2+1"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[1].stem|0",
+     "latex": "(a+b)^3-3ab(a+b)=a^3+b^3"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[2].stem|0",
+     "latex": "(a+b+c)(a^2+b^2+c^2-ab-bc-ca)=a^3+b^3+c^3-3abc"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[3].stem|0",
+     "latex": "(a+2b)^2-4ab=(a-2b)^2+4ab"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[4].stem|0",
+     "latex": "(x^2+1)(y^2+1)=(xy+1)^2+(x-y)^2"
+    },
+    {
+     "ref": "eb11c1-4:exercise-10|parts[5].stem|0",
+     "latex": "(2a+b)^2-(a+2b)^2=3(a^2-b^2)"
+    },
+    {
+     "ref": "eb11c1-4:challenge-2|text|0",
+     "latex": "(a^2-ab+b^2)(a^2+ab+b^2)=(a^2+b^2)^2-(ab)^2"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 26,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:rule-3|claim|0",
+     "latex": "x + y = 1"
+    },
+    {
+     "ref": "eb11c1-4:rule-3|claim|1",
+     "latex": "y = 1 - x"
+    },
+    {
+     "ref": "eb11c1-4:rule-3|claim|2",
+     "latex": "y"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-1|text|0",
+     "latex": "a + b + c = 0"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-1|text|1",
+     "latex": "a^2 + b^2 + c^2 = -2(ab + bc + ca)"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|stem|0",
+     "latex": "a + b + c = 0"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|stem|1",
+     "latex": "a^2 + b^2 + c^2 = -2(ab + bc + ca)"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[0]|0",
+     "latex": "a + b + c = 0"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[0]|1",
+     "latex": "c = -a - b"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[1]|0",
+     "latex": "= a^2 + b^2 + (-a - b)^2"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[2]|0",
+     "latex": "= a^2 + b^2 + a^2 + 2ab + b^2"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[3]|0",
+     "latex": "= 2a^2 + 2ab + 2b^2"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[4]|0",
+     "latex": "= -2\\{ab + b(-a - b) + (-a - b)a\\}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[5]|0",
+     "latex": "= -2\\left(ab - ab - b^2 - a^2 - ab\\right)"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[6]|0",
+     "latex": "= -2\\left(-a^2 - ab - b^2\\right)"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[7]|0",
+     "latex": "= 2a^2 + 2ab + 2b^2"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-1|solution[8]|0",
+     "latex": "a^2 + b^2 + c^2 = -2(ab + bc + ca)"
+    },
+    {
+     "ref": "eb11c1-4:linking-text-5|text|0",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:try-4|text|0",
+     "latex": "x + y = 1"
+    },
+    {
+     "ref": "eb11c1-4:try-4|text|1",
+     "latex": "x^2 + y^2 + 1 = 2(x + y - xy)"
+    },
+    {
+     "ref": "eb11c1-4:try-5|text|0",
+     "latex": "a + b + c = 0"
+    },
+    {
+     "ref": "eb11c1-4:try-5|text|1",
+     "latex": "a^3 + b^3 + c^3 = 3abc"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 27,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-2|text|0",
+     "latex": "x+y=1"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-2|text|1",
+     "latex": "x^2+y^2=1-2xy"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-3|text|0",
+     "latex": "x-y=1"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-3|text|1",
+     "latex": "x^2+y^2=2xy+1"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-4|text|0",
+     "latex": "x+y=1"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-4|text|1",
+     "latex": "x^2-x=y^2-y"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-5|text|0",
+     "latex": "a+b+c=0"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-5|text|1",
+     "latex": "a^2+ca=b^2+bc"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-6|text|0",
+     "latex": "a+b+c=0"
+    },
+    {
+     "ref": "eb11c1-4:unlabelled-exercise-6|text|1",
+     "latex": "(a+b)(b+c)(c+a)+abc=0"
+    },
+    {
+     "ref": "eb11c1-4:challenge-3|text|0",
+     "latex": "a,\\ b,\\ c"
+    },
+    {
+     "ref": "eb11c1-4:challenge-3|text|1",
+     "latex": "a+b+c=0"
+    },
+    {
+     "ref": "eb11c1-4:challenge-3|text|2",
+     "latex": "-3"
+    },
+    {
+     "ref": "eb11c1-4:challenge-3|text|3",
+     "latex": "\\frac{a}{b+c}+\\frac{b}{c+a}+\\frac{c}{a+b}=-3"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 28,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:warm-up-4|text|0",
+     "latex": "\\frac{a}{b} = \\frac{c}{d}"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-4|text|1",
+     "latex": "\\frac{ab}{a^2 + b^2} = \\frac{cd}{c^2 + d^2}"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-5|text|0",
+     "latex": "x : y : z = 2 : 3 : 5"
+    },
+    {
+     "ref": "eb11c1-4:warm-up-5|text|1",
+     "latex": "\\frac{2xy + yz + 3zx}{x^2 + y^2 + z^2}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 29,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[0]|0",
+     "latex": "\\frac{a}{b}=\\frac{c}{d}=k"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[0]|1",
+     "latex": "a=bk,\\ c=dk"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[2]|0",
+     "latex": "\\text{LHS}=\\frac{bk\\times b}{(bk)^2+b^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[3]|0",
+     "latex": "=\\frac{b^2k}{b^2k^2+b^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[4]|0",
+     "latex": "=\\frac{b^2k}{b^2(k^2+1)}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[5]|0",
+     "latex": "=\\frac{k}{k^2+1}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[7]|0",
+     "latex": "\\text{RHS}=\\frac{dk\\times d}{(dk)^2+d^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[8]|0",
+     "latex": "=\\frac{d^2k}{d^2k^2+d^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[9]|0",
+     "latex": "=\\frac{d^2k}{d^2(k^2+1)}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[10]|0",
+     "latex": "=\\frac{k}{k^2+1}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-2|solution[11]|0",
+     "latex": "\\frac{ab}{a^2+b^2}=\\frac{cd}{c^2+d^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|stem|0",
+     "latex": "x:y:z=2:3:5",
+     "unreadable": true,
+     "notes": "stem not printed on this page; inferred from solution"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|stem|1",
+     "latex": "\\frac{2xy+yz+3zx}{x^2+y^2+z^2}",
+     "unreadable": true,
+     "notes": "stem not printed on this page; inferred from solution"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[0]|0",
+     "latex": "x:y:z=2:3:5"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[0]|1",
+     "latex": "k"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[1]|0",
+     "latex": "x=2k,\\ y=3k,\\ z=5k"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[2]|0",
+     "latex": "\\frac{2xy+yz+3zx}{x^2+y^2+z^2}=\\frac{2\\times 2k\\times 3k+3k\\times 5k+3\\times 5k\\times 2k}{(2k)^2+(3k)^2+(5k)^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[3]|0",
+     "latex": "=\\frac{57k^2}{38k^2}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[4]|0",
+     "latex": "=\\frac{57}{38}"
+    },
+    {
+     "ref": "eb11c1-4:worked-example-3|solution[5]|0",
+     "latex": "=\\frac{3}{2}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-4",
+   "printed": 30,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-4:try-6|text|0",
+     "latex": "\\frac{a}{b} = \\frac{c}{d}"
+    },
+    {
+     "ref": "eb11c1-4:try-6|text|1",
+     "latex": "\\frac{ab + cd}{ab - cd} = \\frac{a^2 + c^2}{a^2 - c^2}"
+    },
+    {
+     "ref": "eb11c1-4:try-7|text|0",
+     "latex": "\\frac{x}{a} = \\frac{y}{b} = \\frac{z}{c}"
+    },
+    {
+     "ref": "eb11c1-4:try-7|text|1",
+     "latex": "\\frac{x^2 + y^2 + z^2}{a^2 + b^2 + c^2} = \\frac{xy + yz + zx}{ab + bc + ca}"
+    },
+    {
+     "ref": "eb11c1-4:try-8|text|0",
+     "latex": "a : b : c = 2 : 3 : 4"
+    },
+    {
+     "ref": "eb11c1-4:try-8|text|1",
+     "latex": "\\frac{ab + bc + ca}{a^2 + b^2 + c^2}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-12|text|0",
+     "latex": "\\frac{a}{b} = \\frac{c}{d}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-12|text|1",
+     "latex": "\\frac{a + b}{a - b} = \\frac{c + d}{c - d}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-13|text|0",
+     "latex": "\\frac{a}{b} = \\frac{c}{d}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-13|text|1",
+     "latex": "\\frac{3a + c}{3b + d} = \\frac{2a - c}{2b - d}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-14|text|0",
+     "latex": "\\frac{x}{a} = \\frac{y}{b}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-14|text|1",
+     "latex": "\\frac{a^2 + x^2}{a^2 - x^2} = \\frac{b^2 + y^2}{b^2 - y^2}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-15|text|0",
+     "latex": "\\frac{x}{a} = \\frac{y}{b} = \\frac{z}{c}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-15|text|1",
+     "latex": "\\frac{x + y + z}{a + b + c} = \\frac{x}{a}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-16|text|0",
+     "latex": "\\frac{x}{a} = \\frac{y}{b} = \\frac{z}{c}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-16|text|1",
+     "latex": "\\frac{x + 2y + 3z}{a + 2b + 3c} = \\frac{x + y + z}{a + b + c}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-17|text|0",
+     "latex": "\\frac{x}{a} = \\frac{y}{b} = \\frac{z}{c}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-17|text|1",
+     "latex": "(a^2 + b^2 + c^2)(x^2 + y^2 + z^2) = (ax + by + cz)^2"
+    },
+    {
+     "ref": "eb11c1-4:exercise-18|text|0",
+     "latex": "a : b : c = 3 : 5 : 2"
+    },
+    {
+     "ref": "eb11c1-4:exercise-18|text|1",
+     "latex": "\\frac{a^2 + b^2 - c^2}{a^2 - b^2 + c^2}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-19|text|0",
+     "latex": "x : y : z = 2 : -3 : 4"
+    },
+    {
+     "ref": "eb11c1-4:exercise-19|text|1",
+     "latex": "\\frac{x^2 + y^2 + z^2}{xy + yz + zx}"
+    },
+    {
+     "ref": "eb11c1-4:exercise-20|text|0",
+     "latex": "\\frac{x}{7} = \\frac{y}{3} \\neq 0"
+    },
+    {
+     "ref": "eb11c1-4:exercise-20|text|1",
+     "latex": "\\frac{x^2 + 5y^2}{x^2 + xy + y^2}"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|0",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|1",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|2",
+     "latex": "c"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|3",
+     "latex": "d"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|4",
+     "latex": "\\frac{a}{b} = \\frac{c}{d}"
+    },
+    {
+     "ref": "eb11c1-4:challenge-4|text|5",
+     "latex": "\\frac{a + b}{a - b} = \\frac{c + d}{c - d}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 31,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:warm-up-1|text|0",
+     "latex": "a > b"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-1|text|1",
+     "latex": "x > y"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-1|text|2",
+     "latex": "2(ax + by) > (a + b)(x + y)"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-2|text|0",
+     "latex": "x > 3"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-2|text|1",
+     "latex": "y > -5"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-2|text|2",
+     "latex": "xy + 5x > 3y + 15"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 32,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:explanation-1|solution[0]|0",
+     "latex": "= 2(ax+by)-(a+b)(x+y)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[1]|0",
+     "latex": "= 2ax+2by-ax-ay-bx-by"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[2]|0",
+     "latex": "= ax-ay-bx+by"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[3]|0",
+     "latex": "= a(x-y)-b(x-y)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[4]|0",
+     "latex": "= (a-b)(x-y)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[5]|0",
+     "latex": "a>b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[5]|1",
+     "latex": "x>y"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[5]|2",
+     "latex": "a-b>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[5]|3",
+     "latex": "x-y>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[6]|0",
+     "latex": "(a-b)(x-y)>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-1|solution[7]|0",
+     "latex": "2(ax+by)>(a+b)(x+y)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[0]|0",
+     "latex": "= xy+5x-(3y+15)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[1]|0",
+     "latex": "= xy+5x-3y-15"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[2]|0",
+     "latex": "= x(y+5)-3(y+5)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[3]|0",
+     "latex": "= (x-3)(y+5)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[4]|0",
+     "latex": "x>3"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[4]|1",
+     "latex": "y>-5"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[4]|2",
+     "latex": "x-3>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[4]|3",
+     "latex": "y+5>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[5]|0",
+     "latex": "(x-3)(y+5)>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-2|solution[6]|0",
+     "latex": "xy+5x>3y+15"
+    },
+    {
+     "ref": "eb11c1-5:try-1|text|0",
+     "latex": "a>b"
+    },
+    {
+     "ref": "eb11c1-5:try-1|text|1",
+     "latex": "c>d"
+    },
+    {
+     "ref": "eb11c1-5:try-1|text|2",
+     "latex": "ac+bd>ad+bc"
+    },
+    {
+     "ref": "eb11c1-5:try-2|text|0",
+     "latex": "x>2"
+    },
+    {
+     "ref": "eb11c1-5:try-2|text|1",
+     "latex": "y>1"
+    },
+    {
+     "ref": "eb11c1-5:try-2|text|2",
+     "latex": "xy+2>x+2y"
+    },
+    {
+     "ref": "eb11c1-5:exercise-1|text|0",
+     "latex": "x>y"
+    },
+    {
+     "ref": "eb11c1-5:exercise-1|text|1",
+     "latex": "3x-4y>2x-3y"
+    },
+    {
+     "ref": "eb11c1-5:exercise-2|text|0",
+     "latex": "a>c"
+    },
+    {
+     "ref": "eb11c1-5:exercise-2|text|1",
+     "latex": "b>d"
+    },
+    {
+     "ref": "eb11c1-5:exercise-2|text|2",
+     "latex": "ab+cd>ad+bc"
+    },
+    {
+     "ref": "eb11c1-5:exercise-3|text|0",
+     "latex": "a>1"
+    },
+    {
+     "ref": "eb11c1-5:exercise-3|text|1",
+     "latex": "b>1"
+    },
+    {
+     "ref": "eb11c1-5:exercise-3|text|2",
+     "latex": "ab+1>a+b"
+    },
+    {
+     "ref": "eb11c1-5:exercise-4|text|0",
+     "latex": "a>b>x>y"
+    },
+    {
+     "ref": "eb11c1-5:exercise-4|text|1",
+     "latex": "ax+by>ay+bx"
+    },
+    {
+     "ref": "eb11c1-5:challenge-1|text|0",
+     "latex": "a>b>c>0"
+    },
+    {
+     "ref": "eb11c1-5:challenge-1|text|1",
+     "latex": "x>y>z>0"
+    },
+    {
+     "ref": "eb11c1-5:challenge-1|text|2",
+     "latex": "ax+by+cz>ay+bz+cx"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 33,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:method-3|claim|0",
+     "latex": "X^2"
+    },
+    {
+     "ref": "eb11c1-5:method-3|claim|1",
+     "latex": "X^2 + Y^2"
+    },
+    {
+     "ref": "eb11c1-5:rule-3|claim|0",
+     "latex": "X^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:rule-3|claim|1",
+     "latex": "X = 0"
+    },
+    {
+     "ref": "eb11c1-5:rule-4|claim|0",
+     "latex": "X^2 + Y^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:rule-4|claim|1",
+     "latex": "X = 0"
+    },
+    {
+     "ref": "eb11c1-5:rule-4|claim|2",
+     "latex": "Y = 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-3|parts[0].stem|0",
+     "latex": "a^2 + 4b^2 \\geq 4ab"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-3|parts[1].stem|0",
+     "latex": "x^2 + y^2 \\geq 2(x - y - 1)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|stem|0",
+     "latex": "a^2 + 4b^2 \\geq 4ab"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[0]|0",
+     "latex": "a^2 + 4b^2 - 4ab"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[1]|0",
+     "latex": "= a^2 - 4ab + 4b^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[1]|1",
+     "latex": "X^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[2]|0",
+     "latex": "= (a - 2b)^2 - 4b^2 + 4b^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[3]|0",
+     "latex": "= (a - 2b)^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[3]|1",
+     "latex": "X^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[4]|0",
+     "latex": "a^2 + 4b^2 \\geq 4ab"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|0",
+     "latex": "a - 2b = 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|1",
+     "latex": "a = 2b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|2",
+     "latex": "X = 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[6]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[7]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[8]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[9]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[10]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|2",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|3",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 34,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:explanation-3|stem|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[0]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[1]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[1]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[2]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[3]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[3]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[4]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[5]|2",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[6]|0",
+     "latex": "x^2 + y^2 - 2(x - y - 1)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[7]|0",
+     "latex": "= x^2 - 2x + y^2 + 2y + 2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[8]|0",
+     "latex": "= (x - 1)^2 - 1 + (y + 1)^2 - 1 + 2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[9]|0",
+     "latex": "= (x - 1)^2 + (y + 1)^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[10]|0",
+     "latex": "x^2 + y^2 \\geq 2(x - y - 1)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|0",
+     "latex": "x - 1 = 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|1",
+     "latex": "y + 1 = 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|2",
+     "latex": "x = 1"
+    },
+    {
+     "ref": "eb11c1-5:explanation-3|solution[11]|3",
+     "latex": "y = -1"
+    },
+    {
+     "ref": "eb11c1-5:try-3|text|0",
+     "latex": "(a^2 + b^2)(x^2 + y^2) \\geq (ax + by)^2"
+    },
+    {
+     "ref": "eb11c1-5:try-4|text|0",
+     "latex": "a^2 + 5b^2 \\geq 4ab"
+    },
+    {
+     "ref": "eb11c1-5:exercise-5|text|0",
+     "latex": "9x^2 \\geq y(6x - y)"
+    },
+    {
+     "ref": "eb11c1-5:exercise-6|text|0",
+     "latex": "2(x^2 + y^2) \\geq (x + y)^2"
+    },
+    {
+     "ref": "eb11c1-5:exercise-7|text|0",
+     "latex": "(2x - y)^2 \\geq 3(x^2 - y^2)"
+    },
+    {
+     "ref": "eb11c1-5:exercise-8|text|0",
+     "latex": "(2a + 3b)^2 \\geq 12ab"
+    },
+    {
+     "ref": "eb11c1-5:exercise-9|text|0",
+     "latex": "x^2 + 2 > 2x"
+    },
+    {
+     "ref": "eb11c1-5:exercise-10|text|0",
+     "latex": "x^2 + y^2 - 6x + 8y + 25 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:challenge-2|text|0",
+     "latex": "x^2 + 2y^2 - 10x + 12y + 43"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 35,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:warm-up-4|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-4|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-4|text|2",
+     "latex": "\\sqrt{\\frac{a^2+b^2}{2}} \\geq \\frac{a+b}{2}"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-5|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-5|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-5|text|2",
+     "latex": "\\sqrt{a} + 4\\sqrt{b} > \\sqrt{a+16b}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[0]|0",
+     "latex": "(\\mathrm{LHS})^2 - (\\mathrm{RHS})^2 = \\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2 - \\left(\\frac{a+b}{2}\\right)^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[1]|0",
+     "latex": "= \\frac{a^2+b^2}{2} - \\frac{a^2+2ab+b^2}{4}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[2]|0",
+     "latex": "= \\frac{a^2-2ab+b^2}{4}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[3]|0",
+     "latex": "= \\left(\\frac{a-b}{2}\\right)^2 \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[4]|0",
+     "latex": "\\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2 \\geq \\left(\\frac{a+b}{2}\\right)^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[5]|0",
+     "latex": "\\sqrt{\\frac{a^2+b^2}{2}} > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[5]|1",
+     "latex": "\\frac{a+b}{2} > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[6]|0",
+     "latex": "\\sqrt{\\frac{a^2+b^2}{2}} \\geq \\frac{a+b}{2}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[7]|0",
+     "latex": "\\frac{a-b}{2} = 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[7]|1",
+     "latex": "a = b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[8]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[9]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[10]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[11]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[12]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|2",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[14]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 36,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:explanation-4|solution[0]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[1]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[2]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[3]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[4]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[5]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[5]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[6]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[7]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[7]|1",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[8]|0",
+     "latex": "(\\text{LHS})^2 - (\\text{RHS})^2 = \\left(\\sqrt{a}+4\\sqrt{b}\\right)^2 - \\left(\\sqrt{a+16b}\\right)^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[9]|0",
+     "latex": "= a + 8\\sqrt{ab} + 16b - (a+16b)"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[10]|0",
+     "latex": "= a + 8\\sqrt{ab} + 16b - a - 16b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[11]|0",
+     "latex": "= 8\\sqrt{ab} > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[12]|0",
+     "latex": "\\left(\\sqrt{a}+4\\sqrt{b}\\right)^2 > \\left(\\sqrt{a+16b}\\right)^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|0",
+     "latex": "a > 0, b > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|1",
+     "latex": "\\sqrt{a}+4\\sqrt{b} > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[13]|2",
+     "latex": "\\sqrt{a+16b} > 0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-4|solution[14]|0",
+     "latex": "\\sqrt{a}+4\\sqrt{b} > \\sqrt{a+16b}"
+    },
+    {
+     "ref": "eb11c1-5:try-6|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:try-6|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:try-6|text|2",
+     "latex": "\\sqrt{2(a+b)} \\geq \\sqrt{a}+\\sqrt{b}"
+    },
+    {
+     "ref": "eb11c1-5:try-7|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:try-7|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:try-7|text|2",
+     "latex": "2\\sqrt{a}+\\sqrt{b} > \\sqrt{4a+b}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-12|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-12|text|1",
+     "latex": "2 + a \\geq \\sqrt{3+6a}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-13|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-13|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-13|text|2",
+     "latex": "\\sqrt{2(a^2+b^2)} \\geq a + b"
+    },
+    {
+     "ref": "eb11c1-5:exercise-14|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-14|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-14|text|2",
+     "latex": "\\sqrt{\\frac{a+b}{2}} \\geq \\frac{\\sqrt{a}+\\sqrt{b}}{2}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-15|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-15|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-15|text|2",
+     "latex": "\\sqrt{a}+\\sqrt{b} > \\sqrt{a+b}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-16|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-16|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-16|text|2",
+     "latex": "2\\sqrt{a}+3\\sqrt{b} > \\sqrt{4a+9b}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-17|text|0",
+     "latex": "a > b > 0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-17|text|1",
+     "latex": "\\sqrt{a-b} > \\sqrt{a}-\\sqrt{b}"
+    },
+    {
+     "ref": "eb11c1-5:challenge-3|text|0",
+     "latex": "a > b"
+    },
+    {
+     "ref": "eb11c1-5:challenge-3|text|1",
+     "latex": "a"
+    },
+    {
+     "ref": "eb11c1-5:challenge-3|text|2",
+     "latex": "b"
+    },
+    {
+     "ref": "eb11c1-5:challenge-3|text|3",
+     "latex": "\\sqrt{a-b} < \\sqrt{a} - \\frac{b}{2\\sqrt{a}}"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 37,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:warm-up-7|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-7|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-7|text|2",
+     "latex": "\\frac{b}{a} + \\frac{a}{b} \\geq 2"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-8|text|0",
+     "latex": "a > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-8|text|1",
+     "latex": "b > 0"
+    },
+    {
+     "ref": "eb11c1-5:warm-up-8|text|2",
+     "latex": "(a + b)\\left(\\frac{1}{a} + \\frac{1}{b}\\right) \\geq 4"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[0]|0",
+     "latex": "\\frac{b}{a} > 0, \\frac{a}{b} > 0,"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[1]|0",
+     "latex": "\\frac{b}{a} + \\frac{a}{b} \\geq 2\\sqrt{\\frac{b}{a} \\times \\frac{a}{b}}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[2]|0",
+     "latex": "\\frac{b}{a} + \\frac{a}{b} \\geq 2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[3]|0",
+     "latex": "\\frac{b}{a} + \\frac{a}{b} \\geq 2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[4]|0",
+     "latex": "\\frac{b}{a} = \\frac{a}{b}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[5]|0",
+     "latex": "b^2 = a^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[6]|0",
+     "latex": "a > 0, b > 0, a = b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[7]|0",
+     "latex": "a = b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[8]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[9]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[10]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[11]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[12]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[13]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[14]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[15]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[16]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[17]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[18]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 38,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:explanation-5|solution[0]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[1]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[2]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[3]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[4]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[5]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[6]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[7]|0",
+     "latex": "",
+     "unreadable": true,
+     "notes": "not on this page"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[8]|0",
+     "latex": "(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)=a\\times\\frac{1}{a}+\\frac{a}{b}+\\frac{b}{a}+b\\times\\frac{1}{b}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[9]|0",
+     "latex": "=\\frac{a}{b}+\\frac{b}{a}+2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[10]|0",
+     "latex": "\\frac{a}{b}>0,\\ \\frac{b}{a}>0"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[11]|0",
+     "latex": "\\frac{a}{b}+\\frac{b}{a}\\geq 2\\sqrt{\\frac{a}{b}\\times\\frac{b}{a}}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[12]|0",
+     "latex": "\\frac{a}{b}+\\frac{b}{a}\\geq 2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[13]|0",
+     "latex": "\\frac{a}{b}+\\frac{b}{a}+2\\geq 4"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[14]|0",
+     "latex": "(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\geq 4"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[15]|0",
+     "latex": "\\frac{a}{b}=\\frac{b}{a}"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[16]|0",
+     "latex": "a^2=b^2"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[17]|0",
+     "latex": "a>0,\\ b>0,\\ a=b"
+    },
+    {
+     "ref": "eb11c1-5:explanation-5|solution[18]|0",
+     "latex": "a=b"
+    },
+    {
+     "ref": "eb11c1-5:try-9|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:try-9|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:try-9|text|2",
+     "latex": "\\frac{b}{3a}+\\frac{12a}{b}\\geq 4"
+    },
+    {
+     "ref": "eb11c1-5:try-10|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:try-10|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:try-10|text|2",
+     "latex": "\\left(a+\\frac{1}{b}\\right)\\left(b+\\frac{9}{a}\\right)\\geq 16"
+    },
+    {
+     "ref": "eb11c1-5:exercise-19|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-19|text|1",
+     "latex": "a+\\frac{4}{a}\\geq 4"
+    },
+    {
+     "ref": "eb11c1-5:exercise-20|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-20|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-20|text|2",
+     "latex": "3ab+\\frac{4}{ab}\\geq 4\\sqrt{3}"
+    },
+    {
+     "ref": "eb11c1-5:exercise-21|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-21|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-21|text|2",
+     "latex": "a+b+\\frac{9}{a+b}\\geq 6"
+    },
+    {
+     "ref": "eb11c1-5:exercise-22|text|0",
+     "latex": "x>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-22|text|1",
+     "latex": "\\left(x+\\frac{1}{x}\\right)\\left(x+\\frac{4}{x}\\right)\\geq 9"
+    },
+    {
+     "ref": "eb11c1-5:exercise-23|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-23|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-23|text|2",
+     "latex": "(a+8b)\\left(\\frac{2}{a}+\\frac{1}{b}\\right)\\geq 18"
+    },
+    {
+     "ref": "eb11c1-5:exercise-24|text|0",
+     "latex": "a>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-24|text|1",
+     "latex": "b>0"
+    },
+    {
+     "ref": "eb11c1-5:exercise-24|text|2",
+     "latex": "\\left(a+\\frac{3}{b}\\right)\\left(b+\\frac{3}{a}\\right)\\geq 12"
+    }
+   ]
+  },
+  {
+   "lesson": "eb11c1-5",
+   "printed": 39,
+   "failed": false,
+   "readings": [
+    {
+     "ref": "eb11c1-5:linking-text-14|text|0",
+     "latex": "\\frac{a+b}{2} \\geq \\sqrt{ab}"
+    },
+    {
+     "ref": "eb11c1-5:linking-text-14|text|1",
+     "latex": "a,\\ b \\geq 0"
+    },
+    {
+     "ref": "eb11c1-5:question-for-reflection-1|text|0",
+     "latex": "a = -2"
+    },
+    {
+     "ref": "eb11c1-5:question-for-reflection-1|text|1",
+     "latex": "b = -8"
+    },
+    {
+     "ref": "eb11c1-5:unlabelled-exercise-3|text|0",
+     "latex": "\\geq"
+    }
+   ]
+  }
+ ]
+}

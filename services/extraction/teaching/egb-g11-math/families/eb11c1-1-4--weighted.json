@@ -1,0 +1,39 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c1-1-4:weighted",
+ "kind": "family",
+ "lo_id": "lo:eb11c1-1-4",
+ "parent_question_id": "q:eb11c1-1-4:bk-challenge-1",
+ "source_page": 6,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    4
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Using the binomial expansion of $(1+x)^{{=n}}$, find the value of $^{{=n}}C_0 + {=k}\\,{}^{{=n}}C_1 + {=k}^2\\,{}^{{=n}}C_2 + \\dots + {=k}^{{=n}}\\,{}^{{=n}}C_{{=n}}$.",
+ "answer": "(1+k)**n",
+ "solution": [
+  "Expand: $(1+x)^{{=n}} = {}^{{=n}}C_0 + {}^{{=n}}C_1x + {}^{{=n}}C_2x^2 + \\dots + {}^{{=n}}C_{{=n}}x^{{=n}}$.",
+  "The required sum has the powers ${=k}, {=k}^2, \\dots$ multiplying the coefficients, so substitute $x={=k}$.",
+  "The right side becomes $^{{=n}}C_0 + {=k}\\,{}^{{=n}}C_1 + \\dots + {=k}^{{=n}}\\,{}^{{=n}}C_{{=n}}$, the required sum.",
+  "The left side is $(1+{=k})^{{=n}} = {=(1+k)**n}$.",
+  "So the sum equals ${=(1+k)**n}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Sum of k^r nCr = (1+k)^n; substitute x=k. n<=6, k<=4 so max 5^6=15625."
+}

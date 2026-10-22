@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-2-1:two-terms",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-2-1",
+ "parent_question_id": "q:eb11c2-2-1:bk-exercise-1-d",
+ "source_page": 59,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3,
+    -2,
+    -3
+   ]
+  },
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "let": "p + 3"
+  },
+  {
+   "name": "ap",
+   "let": "a * r ** (p - 1)"
+  },
+  {
+   "name": "aq",
+   "let": "a * r ** (q - 1)"
+  }
+ ],
+ "constraints": [],
+ "stem": "$\\{a_n\\}$ is a geometric sequence in which $a_{{=p}} = {=ap}$ and $a_{{=q}} = {=aq}$. Find the common ratio, the first term, and hence the general term $a_n$. Write your answer in the form $a_n = a \\times r^{n-1}$, putting a negative ratio in brackets.",
+ "answer": "a_n = {=a} * ({=r})^(n-1)",
+ "solution": [
+  "Since $a_n = ar^{n-1}$, we have $a_{{=p}} = ar^{{=p - 1}} = {=ap}$ and $a_{{=q}} = ar^{{=q - 1}} = {=aq}$.",
+  "Divide the second equation by the first: $r^3 = \\frac{{=aq}}{{=ap}} = {=r ** 3}$.",
+  "So $r = {=r}$.",
+  "Then $a \\times {=paren(r)}^{{=p - 1}} = {=ap}$, so $a = {=a}$.",
+  "$a_n = {=a} \\times {=paren(r)}^{n-1}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=a} * ({=r})^(n-1)",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Two listed terms three places apart, so r^3 has a unique real root (no ± ambiguity). All values integers, max about 1215. Marker always brackets r; equivalent forms like a*r^(n-1) with r positive should match."
+}

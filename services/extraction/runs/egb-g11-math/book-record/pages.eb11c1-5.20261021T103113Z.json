@@ -1,0 +1,1892 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "9e77b03c2825327ad01ff9dc999caf13b4bad40ebdb3de94f868ae6065c712f4",
+  "generated_sha256": "c6fef588907a7d4f05b040082a24622e56d033a4a3a7bf1645737b3db01eea1f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c1-5",
+   "pages": [
+    {
+     "printed": 31,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 5 · Inequalities",
+       "text": "Concept 5 · Inequalities",
+       "_key": "p31-k1",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Prove that algebraic inequalities are correct in various math situations (conditional).",
+       "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (conditional).",
+       "_key": "p31-k2",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "You are a bio-engineer designing a biodegradable capsule",
+       "text": "You are a bio-engineer designing a biodegradable capsule to deliver a life-saving drug to a specific tumour inside the human body. To ensure the drug releases at the perfect rate, you need the capsule to have the maximum possible volume, but you have a strict limit on the amount of expensive raw polymer available to create its outer surface area.",
+       "_key": "p31-k3",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Exact mathematical equation",
+       "caption": "Illustration of a capsule with labels: 'Exact mathematical equation', 'Single Equation', 'Specific Case: V=f(S) Traditional equation' (crossed out in a panel), 'VOLUME (to maximize)', 'LIFE-SAVING DRUG', 'SURFACE AREA (limited raw polymer)', and a small crossed-out capsule labelled 'Specific Case: V=f(S)'.",
+       "notes": "Illustrative picture referred to by the text; labels read from image.",
+       "_key": "p31-k4",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "How do you find the absolute best design when you can't",
+       "text": "How do you find the absolute best design when you can't just use an exact equation to give you a single answer? You use inequalities. While regular equations tell us exactly when things are equal, inequalities tell us the optimal limits of what is physically possible—the absolute maximums and minimums. In life sciences, economics, and logistics, the most powerful tool for finding these bounds is a beautiful, universal mathematical law known as the AM-GM Inequality.",
+       "_key": "p31-k5",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "open_prompt",
+       "label": "Guiding question",
+       "number": null,
+       "quote": "How can algebraic techniques and the structural properties of positive real numbers",
+       "text": "Guiding question: How can algebraic techniques and the structural properties of positive real numbers be used to establish definitive upper and lower bounds for variable expressions, and how does equality emerge as a special boundary condition?",
+       "_key": "p31-k6",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "To prove the inequality LHS > RHS, calculate their difference LHS – RHS",
+       "claim": "To prove the inequality LHS > RHS, calculate their difference LHS – RHS and show that it is positive (LHS – RHS > 0).",
+       "formula": "$LHS - RHS > 0$",
+       "_key": "p31-k7",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "If a condition like a > b is given, rewrite it as a – b > 0",
+       "claim": "If a condition like a > b is given, rewrite it as a − b > 0 to use in your proof.",
+       "formula": "$a-b>0$",
+       "_key": "p31-k8",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p31-k9",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "If a > b and x > y, prove that 2(ax + by) > (a + b)(x + y)",
+       "text": "Prove the following inequalities. If $a>b$ and $x>y$, prove that $2(ax+by)>(a+b)(x+y)$",
+       "_key": "p31-k10",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "If x > 3 and y > −5, prove that xy + 5x > 3y + 15",
+       "text": "Prove the following inequalities. If $x>3$ and $y>-5$, prove that $xy+5x>3y+15$",
+       "_key": "p31-k11",
+       "source_page": 31,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 32,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p32-k1",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "[Proof] LHS − RHS = 2(ax + by) − (a + b)(x + y)",
+       "stem": "Proof (question not printed on this page; from the proof it is: if a > b and x > y, prove that 2(ax + by) > (a + b)(x + y))",
+       "solution": [
+        "LHS − RHS $= 2(ax+by)-(a+b)(x+y)$",
+        "$= 2ax+2by-ax-ay-bx-by$",
+        "$= ax-ay-bx+by$",
+        "$= a(x-y)-b(x-y)$",
+        "$= (a-b)(x-y)$",
+        "Since $a>b$ and $x>y$, we have $a-b>0$ and $x-y>0$,",
+        "$(a-b)(x-y)>0$",
+        "Therefore, $2(ax+by)>(a+b)(x+y)$"
+       ],
+       "answer": "",
+       "notes": "Stem is not printed; inferred from the proof. Terms a(x − y) and b(x − y) are highlighted in pink.",
+       "_key": "p32-k2",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Start with “LHS−RHS = ”",
+       "text": "Margin note (beside first line): Start with “LHS−RHS = ”",
+       "belongs_to_key": "p32-k2",
+       "_key": "p32-k3",
+       "source_page": 32,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Factor the expression. Factor out the common factor",
+       "text": "Margin note (beside line ax − ay − bx + by): Factor the expression. Factor out the common factor from the first and second terms.",
+       "belongs_to_key": "p32-k2",
+       "_key": "p32-k4",
+       "source_page": 32,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "If A > 0 and B > 0, then AB > 0",
+       "text": "Margin note (beside (a − b)(x − y) > 0): If A > 0 and B > 0, then AB > 0",
+       "belongs_to_key": "p32-k2",
+       "_key": "p32-k5",
+       "source_page": 32,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "[Proof] LHS − RHS = xy + 5x − (3y + 15)",
+       "stem": "Proof (question is the Warm Up on the previous page: if x > 3 and y > −5, prove that xy + 5x > 3y + 15)",
+       "solution": [
+        "LHS − RHS $= xy+5x-(3y+15)$",
+        "$= xy+5x-3y-15$",
+        "$= x(y+5)-3(y+5)$",
+        "$= (x-3)(y+5)$",
+        "Since $x>3$ and $y>-5$, we have $x-3>0$ and $y+5>0$,",
+        "$(x-3)(y+5)>0$",
+        "Therefore, $xy+5x>3y+15$"
+       ],
+       "answer": "",
+       "notes": "Terms x(y + 5) and 3(y + 5) highlighted in pink.",
+       "_key": "p32-k6",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Start by writing “LHS−RHS = ”",
+       "text": "Margin note (beside first line): Start by writing “LHS−RHS = ”",
+       "belongs_to_key": "p32-k6",
+       "_key": "p32-k7",
+       "source_page": 32,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Factor the expression; factor out the common factors",
+       "text": "Margin note (beside xy + 5x − 3y − 15): Factor the expression; factor out the common factors from the two preceding and succeeding terms.",
+       "belongs_to_key": "p32-k6",
+       "_key": "p32-k8",
+       "source_page": 32,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p32-k9",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Prove the following inequalities.",
+       "text": "Prove the following inequalities.",
+       "_key": "p32-k10",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "If a > b and c > d, prove that ac + bd > ad + bc",
+       "text": "If $a>b$ and $c>d$, prove that $ac+bd>ad+bc$",
+       "_key": "p32-k11",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "If x > 2 and y > 1, prove that xy + 2 > x + 2y",
+       "text": "If $x>2$ and $y>1$, prove that $xy+2>x+2y$",
+       "_key": "p32-k12",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Work with a partner Collaborate with your group to solve",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p32-k13",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p32-k14",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Prove the following inequalities.",
+       "text": "Prove the following inequalities.",
+       "_key": "p32-k15",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "If x > y, prove that 3x − 4y > 2x − 3y",
+       "text": "If $x>y$, prove that $3x-4y>2x-3y$",
+       "_key": "p32-k16",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If a > c and b > d, prove that ab + cd > ad + bc",
+       "text": "If $a>c$ and $b>d$, prove that $ab+cd>ad+bc$",
+       "_key": "p32-k17",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k18",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "If a > 1 and b > 1, prove that ab + 1 > a + b",
+       "text": "If $a>1$ and $b>1$, prove that $ab+1>a+b$",
+       "_key": "p32-k18",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k19",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "If a > b > x > y, prove that ax + by > ay + bx",
+       "text": "If $a>b>x>y$, prove that $ax+by>ay+bx$",
+       "_key": "p32-k19",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k20",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Challenge — Rearrangement If a > b > c > 0 and x > y > z > 0",
+       "text": "Challenge — Rearrangement: If $a>b>c>0$ and $x>y>z>0$, prove that $ax+by+cz>ay+bz+cx$",
+       "_key": "p32-k20",
+       "source_page": 32,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 33,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Prove that algebraic inequalities are correct in various math situations",
+       "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (unconditional).",
+       "_key": "p33-k1",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "To prove LHS ≥ RHS, calculate their difference",
+       "claim": "To prove LHS ≥ RHS, calculate their difference and show that LHS − RHS ≥ 0.",
+       "formula": "$LHS - RHS \\ge 0$",
+       "_key": "p33-k2",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "To prove an inequality for all real numbers, use completing the square",
+       "claim": "To prove an inequality for all real numbers, use completing the square to form $X^2$ or $X^2 + Y^2$.",
+       "formula": "$X^2$ or $X^2+Y^2$",
+       "_key": "p33-k3",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "For inequalities with ≥ or ≤, you must state the condition for equality.",
+       "claim": "For inequalities with ≥ or ≤, you must state the condition for equality.",
+       "_key": "p33-k4",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "For real numbers X, Y : X² ≥ 0. Equality holds when X = 0",
+       "claim": "For real numbers X, Y: $X^2 \\ge 0$. Equality holds when $X = 0$.",
+       "formula": "$X^2 \\ge 0$",
+       "_key": "p33-k5",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "X² + Y² ≥ 0. Equality holds when X = 0 and Y = 0",
+       "claim": "$X^2+Y^2 \\ge 0$. Equality holds when $X = 0$ and $Y = 0$.",
+       "formula": "$X^2+Y^2 \\ge 0$",
+       "_key": "p33-k6",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine when equality holds.",
+       "text": "Prove the following inequalities. Also, determine when equality holds.",
+       "parts": [
+        {
+         "label": "1",
+         "stem": "$a^2+4b^2 \\ge 4ab$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "2",
+         "stem": "$x^2+y^2 \\ge 2(x-y-1)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p33-k7",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "[Proof] LHS − RHS = a² + 4b² − 4ab",
+       "stem": "Prove $a^2+4b^2 \\ge 4ab$ and determine when equality holds (Warm Up 1).",
+       "solution": [
+        "LHS − RHS = $a^2+4b^2-4ab$ (side note: Start with \"LHS−RHS\")",
+        "$= a^2-4ab+4b^2$ (side note: Complete the square to form $X^2$)",
+        "$= (a-2b)^2-4b^2+4b^2$",
+        "$= (a-2b)^2 \\ge 0$ (side note: $X^2 \\ge 0$)",
+        "Therefore, $a^2+4b^2 \\ge 4ab$",
+        "Also, equality holds when $a-2b=0$, that is, when $a=2b$ (side note: Equality holds when $X=0$)"
+       ],
+       "answer": "Equality holds when $a=2b$",
+       "notes": "Printed as 'Explanation 1 [Proof]'. Side notes in right column attached to steps. Printed line '= (a−2b)^2 − 4b^2 + 4b^2' is as printed.",
+       "_key": "p33-k8",
+       "source_page": 33,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 34,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 2,
+       "quote": "LHS − RHS = x² + y² − 2(x − y − 1)",
+       "continues": true,
+       "stem": "[Proof] (second explanation item, continued from previous page; inequality being proved: x² + y² ≥ 2(x − y − 1))",
+       "solution": [
+        "LHS − RHS = $x^2+y^2-2(x-y-1)$",
+        "$= x^2-2x+y^2+2y+2$",
+        "$= (x-1)^2-1+(y+1)^2-1+2$",
+        "$= (x-1)^2+(y+1)^2 \\ge 0$",
+        "Therefore, $x^2+y^2 \\ge 2(x-y-1)$.",
+        "Also, equality holds when $x-1=0$ and $y+1=0$, that is, when $x=1$ and $y=-1$"
+       ],
+       "answer": "Equality holds when x = 1 and y = −1",
+       "notes": "Side callouts: 'Start with “LHS−RHS”' (first line); 'Complete the square for x and y to form X² + Y²' (second line, shown in red underlined); 'X² + Y² ≥ 0' (line 4); 'Equality holds when X = 0 and Y = 0' (last line). Second and third lines printed partly in red/underlined. The explanation number '2' is a printed marker; label read as Explanation from previous page.",
+       "_key": "p34-k1",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Prove the following inequalities. Also, determine when equality holds.",
+       "text": "Prove the following inequalities. Also, determine when equality holds: $(a^2+b^2)(x^2+y^2) \\ge (ax+by)^2$",
+       "_key": "p34-k2",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "a² + 5b² ≥ 4ab",
+       "text": "Prove the following inequalities. Also, determine when equality holds: $a^2+5b^2 \\ge 4ab$",
+       "_key": "p34-k3",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p34-k4",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "9x² ≥ y (6x − y)",
+       "text": "Prove the following inequalities. Also, determine when equality holds except for 5: $9x^2 \\ge y(6x-y)$",
+       "notes": "Shared instruction 'Prove the following inequalities. Also, determine when equality holds except for 5.' printed once above items 1–6.",
+       "_key": "p34-k5",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "2 (x² + y²) ≥ (x + y)²",
+       "text": "Prove the inequality and determine when equality holds: $2(x^2+y^2) \\ge (x+y)^2$",
+       "_key": "p34-k6",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "(2x − y)² ≥ 3 (x² − y²)",
+       "text": "Prove the inequality and determine when equality holds: $(2x-y)^2 \\ge 3(x^2-y^2)$",
+       "_key": "p34-k7",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "(2a + 3b)² ≥ 12ab",
+       "text": "Prove the inequality and determine when equality holds: $(2a+3b)^2 \\ge 12ab$",
+       "_key": "p34-k8",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "x² + 2 > 2x",
+       "text": "Prove the inequality and determine when equality holds: $x^2+2 > 2x$",
+       "notes": "Strict inequality; the instruction says 'except for 5', i.e. equality question does not apply to item 5.",
+       "_key": "p34-k9",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "x² + y² − 6x + 8y + 25 ≥ 0",
+       "text": "Prove the inequality and determine when equality holds: $x^2+y^2-6x+8y+25 \\ge 0$",
+       "_key": "p34-k10",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Challenge — Never Negative",
+       "text": "You are a data analyst at a factory that produces precision drone components using two machines, X and Y. Due to mechanical wear, calibration drifts, and energy spikes, the daily overhead cost (in dollars) based on the settings x and y is modelled by Overhead Cost = $x^2+2y^2-10x+12y+43$. Prove that no matter what settings x and y are chosen, the factory will never have a negative overhead cost.",
+       "_key": "p34-k11",
+       "source_page": 34,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Drone Manufacturing Factory",
+       "caption": "Illustration titled 'Drone Manufacturing Factory' showing two machines (Machine X and Machine Y), with labels Mechanical Wear, Energy Spikes and Daily Overhead Cost C(x,y) = x² + 2y² − 10x + 12y + 43 on a central screen with a 3D surface graph. Small text, read at low resolution; verify.",
+       "belongs_to_key": "p34-k11",
+       "notes": "Mostly decorative; small text hard to read.",
+       "_key": "p34-k12",
+       "source_page": 34,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 35,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Proving Inequalities (3)",
+       "text": "1-15 Proving Inequalities (3)",
+       "_key": "p35-k1",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Prove that algebraic inequalities are correct in various math situations",
+       "text": "Learning Outcomes: Prove that algebraic inequalities are correct in various math situations (including those with roots).",
+       "_key": "p35-k2",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "To prove inequalities with radicals, calculate the difference of their squares",
+       "claim": "To prove inequalities with radicals, calculate the difference of their squares, (LHS)^2 − (RHS)^2.",
+       "formula": "$(LHS)^2-(RHS)^2$",
+       "_key": "p35-k3",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When LHS > 0, RHS > 0 : (LHS)² > (RHS)² ⟺ LHS > RHS",
+       "claim": "When LHS > 0 and RHS > 0: (LHS)^2 > (RHS)^2 if and only if LHS > RHS.",
+       "formula": "$(LHS)^2>(RHS)^2 \\iff LHS>RHS$",
+       "_key": "p35-k4",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "(LHS)² ≥ (RHS)² ⟺ LHS ≥ RHS",
+       "claim": "(LHS)^2 ≥ (RHS)^2 if and only if LHS ≥ RHS (under the same condition LHS>0, RHS>0).",
+       "formula": "$(LHS)^2\\ge(RHS)^2 \\iff LHS\\ge RHS$",
+       "notes": "Printed as continuation line of the first bullet, without its own bullet.",
+       "_key": "p35-k5",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When a > 0, √a > 0",
+       "claim": "When a > 0, the square root of a is greater than 0.",
+       "formula": "$a>0 \\Rightarrow \\sqrt{a}>0$",
+       "_key": "p35-k6",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p35-k7",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine when equality holds for 1.",
+       "text": "Prove the following inequalities. Also, determine when equality holds for 1.",
+       "_key": "p35-k8",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "If a > 0 and b > 0, √((a²+b²)/2) ≥ (a+b)/2",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{\\dfrac{a^2+b^2}{2}}\\ge\\dfrac{a+b}{2}$",
+       "_key": "p35-k9",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, √a + 4√b > √(a + 16b)",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{a}+4\\sqrt{b}>\\sqrt{a+16b}$",
+       "_key": "p35-k10",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p35-k11",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "[Proof] (LHS)² – (RHS)² = (√((a²+b²)/2))² − ((a+b)/2)²",
+       "stem": "Prove that if a > 0 and b > 0, √((a²+b²)/2) ≥ (a+b)/2, and determine when equality holds (Warm Up 1).",
+       "solution": [
+        "$(LHS)^2-(RHS)^2=\\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2-\\left(\\frac{a+b}{2}\\right)^2$ (side note: Calculate (LHS)² − (RHS)²)",
+        "$=\\frac{a^2+b^2}{2}-\\frac{a^2+2ab+b^2}{4}$",
+        "$=\\frac{a^2-2ab+b^2}{4}$",
+        "$=\\left(\\frac{a-b}{2}\\right)^2\\ge 0$ (side note: X² ≥ 0)",
+        "Thus, $\\left(\\sqrt{\\frac{a^2+b^2}{2}}\\right)^2\\ge\\left(\\frac{a+b}{2}\\right)^2$ ...(i) (side note: Showed (LHS)² ≥ (RHS)²)",
+        "Since a > 0, b > 0, $\\sqrt{\\frac{a^2+b^2}{2}}>0$, $\\frac{a+b}{2}>0$ ...(ii) (side note: Must show LHS > 0, RHS > 0)",
+        "From (i) and (ii), $\\sqrt{\\frac{a^2+b^2}{2}}\\ge\\frac{a+b}{2}$ (side note: Proved LHS ≥ RHS)",
+        "Also, equality holds when $\\frac{a-b}{2}=0$, that is, when $a=b$. (side note: Equality holds when X = 0)"
+       ],
+       "answer": "Equality holds when $a=b$",
+       "notes": "Printed as '1 [Proof]' under Explanation; stem inferred from Warm Up 1. Side notes printed in right column.",
+       "_key": "p35-k12",
+       "source_page": 35,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 36,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "(LHS)² – (RHS)² = (√a + 4√b)² − (√a + 16b)²",
+       "continues": true,
+       "stem": "",
+       "solution": [
+        "$(\\text{LHS})^2-(\\text{RHS})^2=(\\sqrt{a}+4\\sqrt{b})^2-(\\sqrt{a+16b})^2$",
+        "$=a+8\\sqrt{ab}+16b-(a+16b)$",
+        "$=a+8\\sqrt{ab}+16b-a-16b$",
+        "$=8\\sqrt{ab}>0$",
+        "Thus, $(\\sqrt{a}+4\\sqrt{b})^2>(\\sqrt{a+16b})^2$ ......(i)",
+        "Since $a>0, b>0$, $\\sqrt{a}+4\\sqrt{b}>0$, $\\sqrt{a+16b}>0$ ...... (ii)",
+        "From (i) and (ii), $\\sqrt{a}+4\\sqrt{b}>\\sqrt{a+16b}$"
+       ],
+       "answer": "",
+       "notes": "Continuation of the proof, printed as item 2 [Proof]. Side notes: 'Calculate (LHS)²–(RHS)²' beside first line; '√ab > 0' beside 8√ab>0; 'Must show LHS > 0, RHS > 0' beside (ii). Radical extents read from image; verify.",
+       "_key": "p36-k1",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine if equality holds for 1",
+       "text": "Prove the following inequalities. Also, determine if equality holds for 1",
+       "parts": [],
+       "_key": "p36-k2",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "If a > 0 and b > 0, √(2(a + b)) ≥ √a + √b",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{2(a+b)}\\ge\\sqrt{a}+\\sqrt{b}$",
+       "parts": [],
+       "_key": "p36-k3",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, 2√a + √b > √(4a + b)",
+       "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+\\sqrt{b}>\\sqrt{4a+b}$",
+       "parts": [],
+       "_key": "p36-k4",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "notes": "Side box.",
+       "_key": "p36-k5",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine if equality holds for 1 to 3",
+       "text": "Prove the following inequalities. Also, determine if equality holds for 1 to 3",
+       "parts": [],
+       "_key": "p36-k6",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "If a > 0, 2 + a ≥ √(3 + 6a)",
+       "text": "If $a>0$, $2+a\\ge\\sqrt{3+6a}$",
+       "parts": [],
+       "_key": "p36-k7",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, √(2(a² + b²)) ≥ a + b",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{2(a^2+b^2)}\\ge a+b$",
+       "parts": [],
+       "_key": "p36-k8",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "If a > 0 and b > 0, √((a + b)/2) ≥ (√a + √b)/2",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{\\frac{a+b}{2}}\\ge\\frac{\\sqrt{a}+\\sqrt{b}}{2}$",
+       "parts": [],
+       "_key": "p36-k9",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "If a > 0 and b > 0, √a + √b > √(a + b)",
+       "text": "If $a>0$ and $b>0$, $\\sqrt{a}+\\sqrt{b}>\\sqrt{a+b}$",
+       "parts": [],
+       "_key": "p36-k10",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "If a > 0 and b > 0, 2√a + 3√b > √(4a + 9b)",
+       "text": "If $a>0$ and $b>0$, $2\\sqrt{a}+3\\sqrt{b}>\\sqrt{4a+9b}$",
+       "parts": [],
+       "_key": "p36-k11",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "If a > b > 0, √(a − b) > √a − √b",
+       "text": "If $a>b>0$, $\\sqrt{a-b}>\\sqrt{a}-\\sqrt{b}$",
+       "parts": [],
+       "_key": "p36-k12",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Challenge — A Root Inequality",
+       "text": "Challenge — A Root Inequality",
+       "_key": "p36-k13",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "If a > b, where a and b are two positive numbers, prove that",
+       "text": "If $a>b$, where $a$ and $b$ are two positive numbers, prove that $\\sqrt{a-b}<\\sqrt{a}-\\frac{b}{2\\sqrt{a}}$",
+       "parts": [],
+       "_key": "p36-k14",
+       "source_page": 36,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 37,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Proving Inequalities (4) (AM-GM Inequality)",
+       "text": "Proving Inequalities (4) (AM-GM Inequality)",
+       "_key": "p37-k1",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Applies the arithmetic-geometric mean inequality to prove inequalities",
+       "text": "Learning Outcomes: Applies the arithmetic-geometric mean inequality to prove inequalities and find max values.",
+       "_key": "p37-k2",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The Arithmetic-Geometric Mean (AM-GM) Inequality",
+       "claim": "When a > 0, b > 0, (a+b)/2 ≥ √(ab), or a + b ≥ 2√(ab).",
+       "formula": "$a>0,\\ b>0,\\ \\frac{a+b}{2}\\ge\\sqrt{ab}$, or $a+b\\ge 2\\sqrt{ab}$",
+       "_key": "p37-k3",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Equality holds when a = b",
+       "claim": "Equality holds when a = b.",
+       "formula": "$a=b$",
+       "_key": "p37-k4",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The AM-GM inequality is highly useful when the product of the terms simplifies to a constant.",
+       "claim": "The AM-GM inequality is highly useful when the product of the terms simplifies to a constant. Example: a + 1/a ⇒ a × 1/a = 1.",
+       "formula": "$a+\\frac{1}{a}\\Rightarrow a\\times\\frac{1}{a}=1$",
+       "_key": "p37-k5",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine if equality holds.",
+       "text": "Prove the following inequalities. Also, determine if equality holds.",
+       "parts": [],
+       "_key": "p37-k6",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 1,
+       "quote": "If a > 0 and b > 0, b/a + a/b ≥ 2",
+       "text": "If $a>0$ and $b>0$, $\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+       "_key": "p37-k7",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, (a + b)(1/a + 1/b) ≥ 4",
+       "text": "If $a>0$ and $b>0$, $(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\ge 4$",
+       "_key": "p37-k8",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": 1,
+       "quote": "[Proof] Since b/a > 0, a/b > 0, By the AM-GM inequality",
+       "stem": "Warm Up 1: If a > 0 and b > 0, prove b/a + a/b ≥ 2 and determine if equality holds.",
+       "solution": [
+        "Since $\\frac{b}{a}>0,\\ \\frac{a}{b}>0$, (side note: Always write this)",
+        "By the AM-GM inequality, $\\frac{b}{a}+\\frac{a}{b}\\ge 2\\sqrt{\\frac{b}{a}\\times\\frac{a}{b}}$",
+        "$\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+        "Therefore, $\\frac{b}{a}+\\frac{a}{b}\\ge 2$",
+        "Also, equality holds when $\\frac{b}{a}=\\frac{a}{b}$ (side note: Multiply both sides by ab)",
+        "$b^2=a^2$",
+        "Since $a>0, b>0, a=b$",
+        "Thus, equality holds when $a=b$"
+       ],
+       "answer": "Equality holds when $a=b$",
+       "notes": "Labelled 'Explanation 1' with Proof; side notes in margin: 'Always write this', 'Multiply both sides by ab'. Solution for Warm Up 2 not on this page.",
+       "_key": "p37-k9",
+       "source_page": 37,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 38,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": 2,
+       "continues": true,
+       "quote": "[Proof] (a + b)(1/a + 1/b) = a × 1/a + a/b + b/a + b × 1/b",
+       "stem": "",
+       "solution": [
+        "$(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)=a\\times\\frac{1}{a}+\\frac{a}{b}+\\frac{b}{a}+b\\times\\frac{1}{b}$",
+        "$=\\frac{a}{b}+\\frac{b}{a}+2$ ...... (i)",
+        "Since $\\frac{a}{b}>0,\\ \\frac{b}{a}>0$ [side note: Always write this]",
+        "By the AM-GM inequality, $\\frac{a}{b}+\\frac{b}{a}\\ge 2\\sqrt{\\frac{a}{b}\\times\\frac{b}{a}}$",
+        "$\\frac{a}{b}+\\frac{b}{a}\\ge 2$",
+        "$\\frac{a}{b}+\\frac{b}{a}+2\\ge 4$ [side note: Add 2 to both sides to match (i)]",
+        "Therefore, $(a+b)\\left(\\frac{1}{a}+\\frac{1}{b}\\right)\\ge 4$ [side note: Showed (Expression (i)) ≥ 4]",
+        "Also, equality holds when $\\frac{a}{b}=\\frac{b}{a}$ [side note: Multiply both sides by ab]",
+        "$a^2=b^2$",
+        "Since $a>0, b>0, a=b$",
+        "Thus, equality holds when $a=b$"
+       ],
+       "answer": "Equality holds when $a=b$",
+       "notes": "Continuation of Example 2 proof from previous page. Margin notes: 'Always write this', 'Add 2 to both sides to match (i)', 'Showed (Expression (i)) ≥ 4', 'Multiply both sides by ab'.",
+       "_key": "p38-k1",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine if equality holds.",
+       "text": "Prove the following inequalities. Also, determine if equality holds.",
+       "parts": [],
+       "_key": "p38-k2",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "If a > 0 and b > 0, b/3a + 12a/b ≥ 4",
+       "text": "If $a>0$ and $b>0$, $\\frac{b}{3a}+\\frac{12a}{b}\\ge 4$",
+       "_key": "p38-k3",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, (a + 1/b)(b + 9/a) ≥ 16",
+       "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{1}{b}\\right)\\left(b+\\frac{9}{a}\\right)\\ge 16$",
+       "_key": "p38-k4",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section then discuss the answer.",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p38-k5",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Prove the following inequalities. Also, determine if equality holds.",
+       "text": "Prove the following inequalities. Also, determine if equality holds.",
+       "_key": "p38-k6",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "If a > 0, a + 4/a ≥ 4",
+       "text": "If $a>0$, $a+\\frac{4}{a}\\ge 4$",
+       "_key": "p38-k7",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "If a > 0 and b > 0, 3ab + 4/ab ≥ 4√3",
+       "text": "If $a>0$ and $b>0$, $3ab+\\frac{4}{ab}\\ge 4\\sqrt{3}$",
+       "_key": "p38-k8",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "If a > 0 and b > 0, a + b + 9/(a + b) ≥ 6",
+       "text": "If $a>0$ and $b>0$, $a+b+\\frac{9}{a+b}\\ge 6$",
+       "_key": "p38-k9",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "If x > 0, (x + 1/x)(x + 4/x) ≥ 9",
+       "text": "If $x>0$, $\\left(x+\\frac{1}{x}\\right)\\left(x+\\frac{4}{x}\\right)\\ge 9$",
+       "_key": "p38-k10",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "If a > 0 and b > 0, (a + 8b)(2/a + 1/b) ≥ 18",
+       "text": "If $a>0$ and $b>0$, $(a+8b)\\left(\\frac{2}{a}+\\frac{1}{b}\\right)\\ge 18$",
+       "_key": "p38-k11",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "If a > 0 and b > 0, (a + 3/b)(b + 3/a) ≥ 12",
+       "text": "If $a>0$ and $b>0$, $\\left(a+\\frac{3}{b}\\right)\\left(b+\\frac{3}{a}\\right)\\ge 12$",
+       "_key": "p38-k12",
+       "source_page": 38,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 39,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Challenge — Maximum Area",
+       "label": "",
+       "number": null,
+       "text": "Challenge — Maximum Area",
+       "_key": "p39-k1",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A rectangle has a perimeter of 200 cm.",
+       "text": "A rectangle has a perimeter of 200 cm. Using the relation between A.M. and G.M., prove that the area of the rectangle ≤ 2500 cm².",
+       "notes": "Label is the box title 'Challenge — Maximum Area'.",
+       "_key": "p39-k2",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "Perimeter = 200 cm",
+       "caption": "A rectangle labelled 'Perimeter = 200 cm' above it, with the vertical side marked W (double arrow) and the horizontal side marked L (double arrow).",
+       "_key": "p39-k3",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Reflect",
+       "text": "Reflect",
+       "_key": "p39-k4",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "We proved in the lesson that the AM-GM Inequality",
+       "text": "We proved in the lesson that the AM-GM Inequality ($\\frac{a+b}{2} \\ge \\sqrt{ab}$) always holds true, provided that the numbers are non-negative ($a, b \\ge 0$).",
+       "_key": "p39-k5",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "open_prompt",
+       "label": "Question for Reflection",
+       "number": null,
+       "quote": "What happens if we try to break this condition",
+       "text": "What happens if we try to break this condition and apply the inequality to negative numbers? Suppose that $a = -2$ and $b = -8$.",
+       "_key": "p39-k6",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Calculate their Arithmetic Mean (AM).",
+       "text": "Calculate their Arithmetic Mean (AM).",
+       "_key": "p39-k7",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Attempt to calculate their Geometric Mean (GM).",
+       "text": "Attempt to calculate their Geometric Mean (GM).",
+       "_key": "p39-k8",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "",
+       "number": 3,
+       "quote": "Does the inequality sign (≥) still hold true",
+       "text": "Does the inequality sign ($\\ge$) still hold true and remain valid?",
+       "_key": "p39-k9",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "open_prompt",
+       "label": "",
+       "number": null,
+       "quote": "Explain the algebraic and logical breakdown that occurs here",
+       "text": "Explain the algebraic and logical breakdown that occurs here, and why defining “domains and restrictions” in inequalities is vital to prevent medical and engineering models from collapsing in the real world.",
+       "_key": "p39-k10",
+       "source_page": 39,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Prove conditional inequalities",
+      "description": "Prove an inequality under given conditions by computing LHS − RHS, factoring it, and using the given conditions (such as a − b > 0) to show the difference is positive.",
+      "evidence_keys": [
+       "p31-k7",
+       "p31-k8",
+       "p32-k2",
+       "p32-k6",
+       "p32-k11",
+       "p32-k16"
+      ]
+     },
+     {
+      "label": "Prove unconditional inequalities and state equality",
+      "description": "Prove inequalities that hold for all real numbers by completing the square to form X² or X² + Y², and state when equality holds.",
+      "evidence_keys": [
+       "p33-k3",
+       "p33-k5",
+       "p33-k6",
+       "p33-k8",
+       "p34-k1",
+       "p34-k2",
+       "p34-k6"
+      ]
+     },
+     {
+      "label": "Prove inequalities involving square roots",
+      "description": "Prove inequalities with radicals by comparing the squares of both sides, given positive sides, and decide when equality holds.",
+      "evidence_keys": [
+       "p35-k3",
+       "p35-k4",
+       "p35-k12",
+       "p36-k1",
+       "p36-k3",
+       "p36-k8"
+      ]
+     },
+     {
+      "label": "Apply AM-GM to prove inequalities and find bounds",
+      "description": "Use a + b ≥ 2√(ab) for positive numbers, especially when the terms multiply to a constant, to prove inequalities, find the equality condition and bound a maximum such as an area.",
+      "evidence_keys": [
+       "p37-k3",
+       "p37-k5",
+       "p37-k9",
+       "p38-k1",
+       "p38-k3",
+       "p38-k8",
+       "p39-k2"
+      ]
+     },
+     {
+      "label": "Explain why domain restrictions matter",
+      "description": "Explain why the AM-GM inequality fails for negative numbers and why conditions on variables must be stated when proving inequalities.",
+      "evidence_keys": [
+       "p39-k6",
+       "p39-k7",
+       "p39-k8",
+       "p39-k9",
+       "p39-k10"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p31-k4",
+      "objective": 1
+     },
+     {
+      "key": "p31-k6",
+      "objective": 1
+     },
+     {
+      "key": "p31-k7",
+      "objective": 1
+     },
+     {
+      "key": "p31-k8",
+      "objective": 1
+     },
+     {
+      "key": "p31-k10",
+      "objective": 1
+     },
+     {
+      "key": "p31-k11",
+      "objective": 1
+     },
+     {
+      "key": "p32-k2",
+      "objective": 1
+     },
+     {
+      "key": "p32-k6",
+      "objective": 1
+     },
+     {
+      "key": "p32-k11",
+      "objective": 1
+     },
+     {
+      "key": "p32-k12",
+      "objective": 1
+     },
+     {
+      "key": "p32-k16",
+      "objective": 1
+     },
+     {
+      "key": "p32-k17",
+      "objective": 1
+     },
+     {
+      "key": "p32-k18",
+      "objective": 1
+     },
+     {
+      "key": "p32-k19",
+      "objective": 1
+     },
+     {
+      "key": "p32-k20",
+      "objective": 1
+     },
+     {
+      "key": "p33-k2",
+      "objective": 2
+     },
+     {
+      "key": "p33-k3",
+      "objective": 2
+     },
+     {
+      "key": "p33-k4",
+      "objective": 2
+     },
+     {
+      "key": "p33-k5",
+      "objective": 2
+     },
+     {
+      "key": "p33-k6",
+      "objective": 2
+     },
+     {
+      "key": "p33-k7",
+      "objective": 2
+     },
+     {
+      "key": "p33-k8",
+      "objective": 2
+     },
+     {
+      "key": "p34-k1",
+      "objective": 2
+     },
+     {
+      "key": "p34-k2",
+      "objective": 2
+     },
+     {
+      "key": "p34-k3",
+      "objective": 2
+     },
+     {
+      "key": "p34-k4",
+      "objective": 2
+     },
+     {
+      "key": "p34-k5",
+      "objective": 2
+     },
+     {
+      "key": "p34-k6",
+      "objective": 2
+     },
+     {
+      "key": "p34-k7",
+      "objective": 2
+     },
+     {
+      "key": "p34-k8",
+      "objective": 2
+     },
+     {
+      "key": "p34-k9",
+      "objective": 2
+     },
+     {
+      "key": "p34-k10",
+      "objective": 2
+     },
+     {
+      "key": "p34-k11",
+      "objective": 2
+     },
+     {
+      "key": "p34-k12",
+      "objective": 2
+     },
+     {
+      "key": "p35-k3",
+      "objective": 3
+     },
+     {
+      "key": "p35-k4",
+      "objective": 3
+     },
+     {
+      "key": "p35-k5",
+      "objective": 3
+     },
+     {
+      "key": "p35-k6",
+      "objective": 3
+     },
+     {
+      "key": "p35-k9",
+      "objective": 3
+     },
+     {
+      "key": "p35-k10",
+      "objective": 3
+     },
+     {
+      "key": "p35-k12",
+      "objective": 3
+     },
+     {
+      "key": "p36-k1",
+      "objective": 3
+     },
+     {
+      "key": "p36-k2",
+      "objective": 3
+     },
+     {
+      "key": "p36-k3",
+      "objective": 3
+     },
+     {
+      "key": "p36-k4",
+      "objective": 3
+     },
+     {
+      "key": "p36-k6",
+      "objective": 3
+     },
+     {
+      "key": "p36-k7",
+      "objective": 3
+     },
+     {
+      "key": "p36-k8",
+      "objective": 3
+     },
+     {
+      "key": "p36-k9",
+      "objective": 3
+     },
+     {
+      "key": "p36-k10",
+      "objective": 3
+     },
+     {
+      "key": "p36-k11",
+      "objective": 3
+     },
+     {
+      "key": "p36-k12",
+      "objective": 3
+     },
+     {
+      "key": "p36-k14",
+      "objective": 3
+     },
+     {
+      "key": "p37-k3",
+      "objective": 4
+     },
+     {
+      "key": "p37-k4",
+      "objective": 4
+     },
+     {
+      "key": "p37-k5",
+      "objective": 4
+     },
+     {
+      "key": "p37-k6",
+      "objective": 4
+     },
+     {
+      "key": "p37-k7",
+      "objective": 4
+     },
+     {
+      "key": "p37-k8",
+      "objective": 4
+     },
+     {
+      "key": "p37-k9",
+      "objective": 4
+     },
+     {
+      "key": "p38-k1",
+      "objective": 4
+     },
+     {
+      "key": "p38-k2",
+      "objective": 4
+     },
+     {
+      "key": "p38-k3",
+      "objective": 4
+     },
+     {
+      "key": "p38-k4",
+      "objective": 4
+     },
+     {
+      "key": "p38-k6",
+      "objective": 4
+     },
+     {
+      "key": "p38-k7",
+      "objective": 4
+     },
+     {
+      "key": "p38-k8",
+      "objective": 4
+     },
+     {
+      "key": "p38-k9",
+      "objective": 4
+     },
+     {
+      "key": "p38-k10",
+      "objective": 4
+     },
+     {
+      "key": "p38-k11",
+      "objective": 4
+     },
+     {
+      "key": "p38-k12",
+      "objective": 4
+     },
+     {
+      "key": "p39-k2",
+      "objective": 4
+     },
+     {
+      "key": "p39-k3",
+      "objective": 4
+     },
+     {
+      "key": "p39-k6",
+      "objective": 5
+     },
+     {
+      "key": "p39-k7",
+      "objective": 5
+     },
+     {
+      "key": "p39-k8",
+      "objective": 5
+     },
+     {
+      "key": "p39-k9",
+      "objective": 5
+     },
+     {
+      "key": "p39-k10",
+      "objective": 5
+     }
+    ],
+    "prompt_figures": []
+   }
+  }
+ ],
+ "failed_lessons": []
+}

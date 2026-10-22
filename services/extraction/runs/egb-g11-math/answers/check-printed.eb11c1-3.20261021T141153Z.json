@@ -1,0 +1,67 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "b4965782170b4e56199944cf7fc38899fc06e7529fe9df066fd6554669e4f665",
+  "generated_sha256": "e4b6674746fb6dd1c4270aab97c9073c875ee7af7d7c0bb31c33f3385efd3c09",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-3:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-3:example-1",
+      "kind": "value",
+      "answer": "(x-1)/x, for x ≠ 0, 3"
+     },
+     {
+      "ref": "eb11c1-3:explanation-1:a",
+      "kind": "value",
+      "answer": "4b^3/(3a^2)"
+     },
+     {
+      "ref": "eb11c1-3:explanation-1:b",
+      "kind": "value",
+      "answer": "(x-2)/(3x+1)"
+     },
+     {
+      "ref": "eb11c1-3:explanation-2",
+      "kind": "value",
+      "answer": "(x+1)(x-3)/((x+2)(x+4))"
+     },
+     {
+      "ref": "eb11c1-3:example-2",
+      "kind": "value",
+      "answer": "(2x-1)/((x+1)(x-2))"
+     },
+     {
+      "ref": "eb11c1-3:example-3",
+      "kind": "value",
+      "answer": "(5x-3)/((x+1)(x-2)(x-3))"
+     },
+     {
+      "ref": "eb11c1-3:explanation-3",
+      "kind": "value",
+      "answer": "(x+2)/(x(x-1))"
+     },
+     {
+      "ref": "eb11c1-3:explanation-4",
+      "kind": "value",
+      "answer": "(x-1)/(x-2)"
+     },
+     {
+      "ref": "eb11c1-3:explanation-5",
+      "kind": "value",
+      "answer": "1/x"
+     }
+    ]
+   }
+  }
+ ]
+}

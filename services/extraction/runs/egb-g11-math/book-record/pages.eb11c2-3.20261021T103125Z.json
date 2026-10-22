@@ -1,0 +1,3299 @@
+{
+ "stage": "S0a-pages",
+ "workflow": "book-record",
+ "prompts_version": "ext-v5",
+ "book": "egb-g11-math",
+ "embedded": {
+  "source": "runbook/book-record.workflow.js",
+  "source_sha256": "35ab42da7e0d86430c00603a7e608c6bca04b8da6b264d40e077bc1ef1c5ff89",
+  "args_sha256": "02c105aede1ab184a0e630892141a5a6fa72c61d7e67dbd951c3085e8d0f12a0",
+  "generated_sha256": "8191370744a380992a41d51e4a16f503f90532abdec50dea9885f35ed90f6d55",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "slug": "eb11c2-3",
+   "pages": [
+    {
+     "printed": 68,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Concept 3 · Summation",
+       "text": "Concept 3 · Summation",
+       "_key": "p68-k1",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Use the summation symbol to represent mathematical sequences",
+       "text": "Learning Outcomes: Use the summation symbol to represent mathematical sequences and calculate their values in different sequences.",
+       "_key": "p68-k2",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "In environmental biology, forest recovery follows a dual-force mathematical pattern.",
+       "text": "Forest recovery example: after a wildfire conservationists plant 200 saplings, adding 100 more each year (arithmetic progression 200, 300, 400...), while only 60% of trees survive from one year to the next (geometric decay, ratio 0.6). Calculating the total surviving population after a decade needs tracking how each year's planting cycle decays; summation notation gives a unified framework to analyze linear growth and exponential decay.",
+       "_key": "p68-k3",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "SIMPLE SAPLINGS PLANTING",
+       "caption": "Two-panel illustration: left 'SIMPLE SAPLINGS PLANTING' shows people planting and watering saplings; right 'DROUGHT PRESSURE' shows sun, dry ground and wilting saplings with a person watering. No numeric values.",
+       "notes": "Illustrative picture referred to by the text; no maths values.",
+       "_key": "p68-k4",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "open_prompt",
+       "label": "",
+       "number": null,
+       "quote": "Guiding Question: How can we simplify operations on sequences",
+       "text": "Guiding Question: How can we simplify operations on sequences, such as multiplying terms or adding nested sums, to find a clear algebraic formula?",
+       "_key": "p68-k5",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "definition",
+       "label": "",
+       "number": null,
+       "quote": "For a sequence where the n−th term (general term) is a n",
+       "claim": "For a sequence with n-th (general) term $a_n$, the sum from the 1st term to the n-th term is expressed as $\\sum_{k=1}^{n} a_k$.",
+       "formula": "$\\sum_{k=1}^{n} a_k$",
+       "notation": {
+        "printed": "n−th term (general term) is a n",
+        "normalised": "n-th term (general term) is $a_n$",
+        "notes": ""
+       },
+       "_key": "p68-k6",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "Example: 7k= 7 + 14 + 21 + 28",
+       "stem": "Sum from the first to the 4th term of a sequence with general term 7n: $\\sum_{k=1}^{4} 7k$",
+       "solution": [
+        "$\\sum_{k=1}^{4} 7k = 7+14+21+28$"
+       ],
+       "answer": "$7+14+21+28$",
+       "misprints": [],
+       "notes": "Inside Point! box; side note: 'The sum from the first to the 4th term of a sequence with the general term 7n.' Printed as '7k= 7 + 14 + 21 + 28'.",
+       "_key": "p68-k7",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "The sum from the first to the 8th term of a sequence with the n-th",
+       "stem": "The sum from the first to the 8th term of a sequence with the n-th term (general term) 3n: $\\sum_{k=1}^{8} 3k$",
+       "solution": [
+        "$\\sum_{k=1}^{8} 3k$"
+       ],
+       "notes": "Inside Point! box; side note: 'Change n to k.' with bracket lines pointing at the 8 and 1 limits.",
+       "_key": "p68-k8",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p68-k9",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p68-k10",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Write the sums of the following sequences in the form of a sum of terms",
+       "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{5} 2k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{3} (k^2-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{4} 3^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{3} 2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p68-k11",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Express the following expressions using the summation symbol Σ.",
+       "text": "Express the following expressions using the summation symbol Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$3+7+11+\\dots+(4n-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$6^2+7^2+8^2+\\dots+15^2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p68-k12",
+       "source_page": 68,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 69,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p69-k1",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "worked_example",
+       "label": "",
+       "number": 1,
+       "quote": "Substitute k= 1, 2, 3, 4, 5 into 2k",
+       "stem": "Write sums using the summation symbol by substituting k values into the general term.",
+       "solution": [],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Substitute $k=1,2,3,4,5$ into $2k$ and write them as terms in a sum.",
+         "solution": [
+          "$\\sum_{k=1}^{5} 2k = 2+4+6+8+10$"
+         ],
+         "answer": "$2+4+6+8+10$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Substitute $k=1,2,3$ into $k^2-3$ and write them as terms in a sum.",
+         "solution": [
+          "$\\sum_{k=1}^{3}(k^2-3) = -2+1+6$"
+         ],
+         "answer": "$-2+1+6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "Substitute $k=1,2,3,4$ into $3^k$ and write them as terms in a sum.",
+         "solution": [
+          "$\\sum_{k=1}^{4} 3^k = 3+9+27+81$"
+         ],
+         "answer": "$3+9+27+81$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The sequence where the n-th term is represented by 2 is 2, 2, 2, ...",
+         "solution": [
+          "$\\sum_{k=1}^{3} 2 = 2+2+2$"
+         ],
+         "answer": "$2+2+2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Numbered box 1 under Explanation; no 'Example' label printed. Answers printed in red.",
+       "_key": "p69-k2",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "worked_example",
+       "label": "",
+       "number": 2,
+       "quote": "For problems where the last term is expressed as an expression in terms of n",
+       "stem": "Express sums with the symbol Σ.",
+       "solution": [],
+       "parts": [
+        {
+         "label": "a",
+         "stem": "For problems where the last term is expressed as an expression in terms of $n$, just change $n$ to $k$ and write it inside Σ. (Below Σ is $k=1$, above is $n$)",
+         "solution": [
+          "Change $n$ to $k$ and write inside Σ: $\\sum_{k=1}^{n}(4k-1)$"
+         ],
+         "answer": "$\\sum_{k=1}^{n}(4k-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "To express with the symbol Σ, you need the general term $a_n$ and the index of the last term.",
+         "solution": [
+          "First, find the general term. The general term is $a_n=(n+5)^2$.",
+          "Find the index of the last term. $15^2$ is the 10th term.",
+          "Therefore, $\\sum_{k=1}^{10}(k+5)^2$"
+         ],
+         "answer": "$\\sum_{k=1}^{10}(k+5)^2$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Part (a) has no given expression in the stem; only the result $\\sum (4k-1)$ is printed.",
+       "_key": "p69-k3",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Try",
+       "text": "Try",
+       "_key": "p69-k4",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p69-k5",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "",
+       "number": 1,
+       "quote": "Write the sums of the following sequences in the form of a sum of terms",
+       "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{5}(2k+1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{3}(3k^2+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{4}2^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{6}3$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p69-k6",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "",
+       "number": 2,
+       "quote": "Express the following expressions using the summation symbol Σ.",
+       "text": "Express the following expressions using the summation symbol Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$5+8+11+\\dots+(3n+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "The sum from the 1st to the n-th term of the sequence $a_n=2n+1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$4^2+5^2+6^2+\\dots+13^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$2+5+8+\\dots+29$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Same exercise as the previous page's last record is printed here as Try 2, so not a continuation.",
+       "_key": "p69-k7",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p69-k8",
+       "source_page": 69,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 70,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Exercise Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p70-k1",
+       "source_page": 70,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p70-k2",
+       "source_page": 70,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+       "text": "Write the sums of the following sequences in the form of a sum of terms without using Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{5} 3k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{4} (4k-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{5} (2k-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{4} k^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\sum_{k=1}^{3} (2k^2+3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\sum_{k=1}^{4} (k^2-2k)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$\\sum_{k=1}^{3} 3^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$\\sum_{k=1}^{3} (5^k+3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$\\sum_{k=1}^{4} (2^k-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$\\sum_{k=1}^{4} 5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$\\sum_{k=1}^{3} 3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$\\sum_{k=1}^{5} 4$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p70-k3",
+       "source_page": 70,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Express the following expressions using the summation symbol Σ.",
+       "text": "Express the following expressions using the summation symbol Σ.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$1+3+5+\\dots+(2n-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$1+7+25+79+\\dots+(3^n-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1+2+4+8+\\dots+2^{n-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "The sum from the 1st to the n-th term of sequence $a_n=7n-1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "The sum from the 1st to the n-th term of sequence $a_n=4n+5$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "The sum from the 1st to the n-th term of sequence $a_n=3n-2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$7^2+8^2+9^2+\\dots+21^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$12^2+13^2+14^2+\\dots+18^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$10^2+11^2+12^2+\\dots+20^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$8+16+24+\\dots+56$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$7+13+19+\\dots+73$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$4+9+14+\\dots+119$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p70-k4",
+       "source_page": 70,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "A green-tech startup is expanding its network of solar-powered charging stations",
+       "text": "A green-tech startup is expanding its network of solar-powered charging stations across a metropolitan area. A startup installs 1 solar panel in (Week 1), 4 in (Week 2), 7 in (Week 3), and (3n - 2) panels in (Week n). Write a single mathematical expression using the summation symbol Σ to represent the total cumulative panels installed from Week 1 through Week n.",
+       "notes": "Boxed 'Challenge' with star; recorded as exercise. Mismatch: first sentence says 'A startup' as printed.",
+       "_key": "p70-k5",
+       "source_page": 70,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 71,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Summation Symbol Σ (2)",
+       "label": "",
+       "number": null,
+       "text": "Summation Symbol Σ (2)",
+       "_key": "p71-k1",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "quote": "Use the summation symbol to represent mathematical sequences",
+       "label": "",
+       "number": null,
+       "text": "Learning Outcomes: Use the summation symbol to represent mathematical sequences and calculate their values in different sequences.",
+       "_key": "p71-k2",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "rule",
+       "quote": "Formulas for Summation Symbol Σ",
+       "label": "",
+       "number": null,
+       "claim": "Sum of a constant c from k=1 to n equals nc (c is a constant).",
+       "formula": "$\\sum_{k=1}^{n} c = nc$",
+       "_key": "p71-k3",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "quote": "Formulas for Summation Symbol Σ",
+       "label": "",
+       "number": null,
+       "claim": "Sum of k from k=1 to n equals one half n(n+1).",
+       "formula": "$\\sum_{k=1}^{n} k = \\frac{1}{2}n(n+1)$",
+       "_key": "p71-k4",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "quote": "Formulas for Summation Symbol Σ",
+       "label": "",
+       "number": null,
+       "claim": "Sum of k squared from k=1 to n equals one sixth n(n+1)(2n+1).",
+       "formula": "$\\sum_{k=1}^{n} k^2 = \\frac{1}{6}n(n+1)(2n+1)$",
+       "_key": "p71-k5",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "convention",
+       "quote": "where p is a constant independent of k",
+       "label": "",
+       "number": null,
+       "claim": "In the properties of the summation symbol Σ, p is a constant independent of k.",
+       "_key": "p71-k6",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "quote": "Example: 5k = 5 Σ k",
+       "label": "",
+       "number": null,
+       "claim": "A constant factor can be taken out of the sum. Printed example: sum of 5k equals 5 times sum of k.",
+       "formula": "$\\sum_{k=1}^{n} pa_k = p\\sum_{k=1}^{n} a_k$; Example: $\\sum_{k=1}^{n} 5k = 5\\sum_{k=1}^{n} k$",
+       "_key": "p71-k7",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "quote": "Example: (k²+4) = Σ k² + Σ 4",
+       "label": "",
+       "number": null,
+       "claim": "The sum of a sum is the sum of the sums. Printed example given.",
+       "formula": "$\\sum_{k=1}^{n} (a_k+b_k) = \\sum_{k=1}^{n} a_k + \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (k^2+4) = \\sum_{k=1}^{n} k^2 + \\sum_{k=1}^{n} 4$",
+       "_key": "p71-k8",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "quote": "Example: (2k−3) = 2 Σ k − Σ 3",
+       "label": "",
+       "number": null,
+       "claim": "The sum of a difference is the difference of the sums. Printed example given.",
+       "formula": "$\\sum_{k=1}^{n} (a_k-b_k) = \\sum_{k=1}^{n} a_k - \\sum_{k=1}^{n} b_k$; Example: $\\sum_{k=1}^{n} (2k-3) = 2\\sum_{k=1}^{n} k - \\sum_{k=1}^{n} 3$",
+       "_key": "p71-k9",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "quote": "Find the following sums.",
+       "label": "Warm Up",
+       "number": null,
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n} (-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} (5k+4)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{4} (2k-1)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p71-k10",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "heading",
+       "quote": "Explanation",
+       "label": "",
+       "number": null,
+       "text": "Explanation",
+       "_key": "p71-k11",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "linking_text",
+       "quote": "(a) Σ (−3) = −3n",
+       "label": "",
+       "number": null,
+       "text": "(a) $\\sum_{k=1}^{n} (-3) = -3n$ (explanation of Warm Up (a); continues on next page)",
+       "notes": "Only part (a) of the explanation is printed on this page.",
+       "_key": "p71-k12",
+       "source_page": 71,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 72,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "continues": true,
+       "quote": "(b) Σ (5k + 4) = 5Σ k + Σ 4",
+       "stem": "Continuation of the example's parts (b), (c), (d): (b) $\\sum_{k=1}^{n}(5k+4)$; (c) $1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$; (d) $\\sum_{k=1}^{4}(2k-1)$.",
+       "parts": [
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n}(5k+4)$",
+         "solution": [
+          "$=5\\sum_{k=1}^{n}k+\\sum_{k=1}^{n}4$",
+          "$=5\\times\\frac{1}{2}n(n+1)+4n$",
+          "$=\\frac{1}{2}n\\{5(n+1)+8\\}=\\frac{1}{2}n(5n+13)$"
+         ],
+         "answer": "$\\frac{1}{2}n(5n+13)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$",
+         "solution": [
+          "$=\\sum_{k=1}^{n}k(5k-2)$",
+          "$=\\sum_{k=1}^{n}(5k^2-2k)$",
+          "$=5\\sum_{k=1}^{n}k^2-2\\sum_{k=1}^{n}k$",
+          "$=5\\times\\frac{1}{6}n(n+1)(2n+1)-2\\times\\frac{1}{2}n(n+1)$",
+          "$=\\frac{5}{6}n(n+1)(2n+1)-n(n+1)$",
+          "$=\\frac{1}{6}n(n+1)\\{5(2n+1)-6\\}$",
+          "$=\\frac{1}{6}n(n+1)(10n-1)$"
+         ],
+         "answer": "$\\frac{1}{6}n(n+1)(10n-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{4}(2k-1)$",
+         "solution": [
+          "$=2\\sum_{k=1}^{4}k-\\sum_{k=1}^{4}1$",
+          "$=2\\times\\frac{1}{2}\\times4(4+1)-4$",
+          "$=16$"
+         ],
+         "answer": "$16$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Margin side-notes (next records) annotate steps. Pink highlight on 4(4+1) and 4 in (d). Example number is on the previous page. Part (c) stem printed 'n(5n − 2)' as last term; nothing else flagged.",
+       "_key": "p72-k1",
+       "source_page": 72,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p72-k1",
+       "quote": "Do not expand the parentheses; factor out the fraction and common factor.",
+       "text": "Side note at (b) step 3: Do not expand the parentheses; factor out the fraction and common factor.",
+       "_key": "p72-k2",
+       "source_page": 72,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p72-k1",
+       "quote": "Write using summation notation Σ",
+       "text": "Side note at (c) first line: Write using summation notation Σ",
+       "_key": "p72-k3",
+       "source_page": 72,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p72-k1",
+       "quote": "Expand the expression inside the summation.",
+       "text": "Side note at (c) k(5k − 2) step: Expand the expression inside the summation.",
+       "_key": "p72-k4",
+       "source_page": 72,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p72-k1",
+       "quote": "Do not expand the parentheses; factor out the fraction and common factor.",
+       "text": "Side note at (c) step 5/6 n(n+1)(2n+1) − n(n+1): Do not expand the parentheses; factor out the fraction and common factor.",
+       "_key": "p72-k5",
+       "source_page": 72,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "belongs_to_key": "p72-k1",
+       "quote": "Substitute 4 for n in the formula.",
+       "text": "Side note at (d): Substitute 4 for n in the formula.",
+       "_key": "p72-k6",
+       "source_page": 72,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n}3$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n}(2k-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n}(k-1)(3k-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$1\\times3+2\\times5+3\\times7+\\dots+n(2n+1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\sum_{k=1}^{5}(3k-2)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Side box: 'Work with a partner — Collaborate with your group to solve the try section then discuss the answer.'",
+       "_key": "p72-k7",
+       "source_page": 72,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 73,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following sums.",
+       "continues": true,
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n} 6$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} (-4)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n} 1$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n} (4k-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\sum_{k=1}^{n} (3k+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\sum_{k=1}^{n} (6k-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$\\sum_{k=1}^{n} k(k-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$\\sum_{k=1}^{n} k(2k-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$\\sum_{k=1}^{n} (k-1)^2$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$1\\times4+2\\times5+3\\times6+\\dots+n(n+3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$1\\times5+2\\times8+3\\times11+\\dots+n(3n+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$2\\times5+3\\times6+4\\times7+\\dots+(n+1)(n+4)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "m",
+         "stem": "$\\sum_{k=1}^{20} (2k-7)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "n",
+         "stem": "$\\sum_{k=1}^{8} (4k+5)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "o",
+         "stem": "$\\sum_{k=1}^{10} (2k-1)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Page headed 'Exercise' box; first record is the page's only exercise block, apparently the continuation of the previous Try/Exercise. Label set as continued from previous record.",
+       "_key": "p73-k1",
+       "source_page": 73,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find the following sum: $\\sum_{r=4}^{8}(r^2+r+5)$",
+       "text": "Find the following sum: $\\sum_{r=4}^{8} (r^2+r+5)$",
+       "parts": [],
+       "_key": "p73-k2",
+       "source_page": 73,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 74,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Summation Symbol Σ (3)",
+       "text": "Summation Symbol Σ (3)",
+       "_key": "p74-k1",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Use the summation symbol to represent mathematical sequences",
+       "text": "Use the summation symbol to represent mathematical sequences and calculate their values in different sequences.",
+       "_key": "p74-k2",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Point!",
+       "text": "Point!",
+       "_key": "p74-k3",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "Formulas for Summation Symbol Σ",
+       "claim": "Formula for the sum of cubes: the sum of k^3 for k from 1 to n equals the square of one half n(n+1).",
+       "formula": "$\\sum_{k=1}^{n} k^3 = \\{\\frac{1}{2}n(n+1)\\}^2$",
+       "notes": "Side note: Remember as \"the square of sum of k\" (the printed margin note reads 'the square of Σ k').",
+       "_key": "p74-k4",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "is the sum from the first term to the n−th term of a geometric",
+       "claim": "The sum of a r^{k-1} for k from 1 to n is the sum from the first term to the n-th term of a geometric sequence with first term a and common ratio r.",
+       "formula": "$\\sum_{k=1}^{n} ar^{k-1}$",
+       "_key": "p74-k5",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When r < 1, Σ ar^{k-1} = a(1 − r^n)/(1 − r)",
+       "claim": "When r<1 the sum of the first n terms equals a(1-r^n)/(1-r).",
+       "formula": "$\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(1-r^n)}{1-r}$",
+       "_key": "p74-k6",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When r > 1, Σ ar^{k-1} = a(r^n − 1)/(r − 1)",
+       "claim": "When r>1 the sum of the first n terms equals a(r^n-1)/(r-1).",
+       "formula": "$\\sum_{k=1}^{n} ar^{k-1} = \\frac{a(r^n-1)}{r-1}$",
+       "_key": "p74-k7",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "A sequence expressed as a_n = r^{n−1} can be rewritten as",
+       "claim": "A sequence a_n = r^{n-1} can be rewritten as a_n = 1 × r^{n-1}, so it is a geometric sequence with first term 1 and common ratio r. Example: a_n = 4^{n-1} = 1 × 4^{n-1}; first term 1, common ratio 4.",
+       "formula": "$a_n = r^{n-1} = 1\\times r^{n-1}$",
+       "_key": "p74-k8",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "A sequence expressed as a_n = r^n can be rewritten as",
+       "claim": "A sequence a_n = r^n can be rewritten as a_n = r × r^{n-1}, so it is a geometric sequence with first term r and common ratio r. Example: a_n = 4^n = 4 × 4^{n-1}; first term 4, common ratio 4.",
+       "formula": "$a_n = r^n = r\\times r^{n-1}$",
+       "_key": "p74-k9",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "_key": "p74-k10",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n} k^2(k+1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} 2\\times(-3)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n} 4^k$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p74-k11",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p74-k12",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "worked_example",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "(a) Σ k²(k+1) = Σ (k³ + k²)",
+       "stem": "Find $\\sum_{k=1}^{n} k^2(k+1)$ (part a of the Warm Up). Margin notes: 'Expand the expression inside the summation.' and 'Do not expand the parentheses; factor out the fraction and common factor.'",
+       "solution": [
+        "$\\sum_{k=1}^{n} k^2(k+1)$",
+        "$=\\sum_{k=1}^{n}(k^3+k^2)$",
+        "$=\\{\\frac{1}{2}n(n+1)\\}^2+\\frac{1}{6}n(n+1)(2n+1)$",
+        "$=\\frac{1}{4}n^2(n+1)^2+\\frac{1}{6}n(n+1)(2n+1)$",
+        "$=\\frac{1}{12}n(n+1)\\{3n(n+1)+2(2n+1)\\}$"
+       ],
+       "notes": "Solution continues on next page; no final answer printed here.",
+       "_key": "p74-k13",
+       "source_page": 74,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 75,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "n(n+1)(3n²+7n+2)",
+       "continues": true,
+       "stem": "",
+       "solution": [
+        "(a) $= \\frac{1}{12}n(n+1)(3n^2+7n+2)$",
+        "$= \\frac{1}{12}n(n+1)(n+2)(3n+1)$"
+       ],
+       "answer": "",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "continued from previous page",
+         "solution": [
+          "$=\\frac{1}{12}n(n+1)(3n^2+7n+2)$",
+          "$=\\frac{1}{12}n(n+1)(n+2)(3n+1)$"
+         ],
+         "answer": "$\\frac{1}{12}n(n+1)(n+2)(3n+1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} 2\\times(-3)^{k-1}$",
+         "solution": [
+          "$=\\frac{2\\{1-(-3)^n\\}}{1-(-3)}$",
+          "$=\\frac{2\\{1-(-3)^n\\}}{4}$",
+          "$=\\frac{1-(-3)^n}{2}$"
+         ],
+         "answer": "$\\frac{1-(-3)^n}{2}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n} 4^k$",
+         "solution": [
+          "$=\\sum_{k=1}^{n} 4\\times 4^{k-1}$",
+          "$=\\frac{4(4^n-1)}{4-1}$",
+          "$=\\frac{4(4^n-1)}{3}$"
+         ],
+         "answer": "$\\frac{4(4^n-1)}{3}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Continuation of Warm Up example; side hints given as separate records.",
+       "_key": "p75-k1",
+       "source_page": 75,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Factorise if possible.",
+       "text": "Side note beside the line 1/12 n(n+1)(3n²+7n+2): Factorise if possible.",
+       "belongs_to_key": "p75-k1",
+       "_key": "p75-k2",
+       "source_page": 75,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "First term: 2, Common ratio: − 3",
+       "text": "Side note beside (b): First term: 2, Common ratio: −3",
+       "belongs_to_key": "p75-k1",
+       "_key": "p75-k3",
+       "source_page": 75,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Write in the form arn−1.",
+       "text": "Side note beside (c) $\\sum 4^k$: Write in the form $ar^{n-1}$.",
+       "belongs_to_key": "p75-k1",
+       "_key": "p75-k4",
+       "source_page": 75,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "First term: 4, Common ratio: 4",
+       "text": "Side note beside (c): First term: 4, Common ratio: 4",
+       "belongs_to_key": "p75-k1",
+       "_key": "p75-k5",
+       "source_page": 75,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n} k^2(k-2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} 3\\times(-2)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n} 4^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n} (-5)^k$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p75-k6",
+       "source_page": 75,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p75-k7",
+       "source_page": 75,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\sum_{k=1}^{n} k(k^2-1)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n} k^2(k+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\sum_{k=1}^{n} k(k^2+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n} k^2(k-3)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\sum_{k=1}^{n} 6\\times 3^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "f",
+         "stem": "$\\sum_{k=1}^{n} 2\\times(-1)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "g",
+         "stem": "$\\sum_{k=1}^{n} 4\\times 2^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "h",
+         "stem": "$\\sum_{k=1}^{n} 8\\times(-3)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "i",
+         "stem": "$\\sum_{k=1}^{n} 3^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "j",
+         "stem": "$\\sum_{k=1}^{4} (-2)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "k",
+         "stem": "$\\sum_{k=1}^{n} (-2)^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "l",
+         "stem": "$\\sum_{k=1}^{3} 3^{k-1}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "m",
+         "stem": "$\\sum_{k=1}^{n} (-3)^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "n",
+         "stem": "$\\sum_{k=1}^{5} 2^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "o",
+         "stem": "$\\sum_{k=1}^{n} 2^k$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "p",
+         "stem": "$\\sum_{k=1}^{4} (-3)^k$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p75-k8",
+       "source_page": 75,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find the following sum:",
+       "text": "Find the following sum: $\\sum_{r=5}^{9} (2r+7)$",
+       "_key": "p75-k9",
+       "source_page": 75,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 76,
+     "records": [
+      {
+       "key": "k1",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Calculate the sum of fractional sequences using fraction decomposition.",
+       "text": "Learning Outcomes: Calculate the sum of fractional sequences using fraction decomposition.",
+       "_key": "p76-k1",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Point! Steps to Find the Sum of Fractional Sequences.",
+       "text": "Point! Steps to Find the Sum of Fractional Sequences.",
+       "_key": "p76-k2",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Transform each term using the following formula.",
+       "claim": "Step 1: Transform each term using the formula 1/(ab) = 1/(b−a)(1/a − 1/b); e.g. 1/(4×10) = 1/6(1/4 − 1/10).",
+       "formula": "$\\frac{1}{ab}=\\frac{1}{b-a}\\left(\\frac{1}{a}-\\frac{1}{b}\\right)$",
+       "examples": [
+        "$\\frac{1}{4\\times 10}=\\frac{1}{6}\\left(\\frac{1}{4}-\\frac{1}{10}\\right)$"
+       ],
+       "_key": "p76-k3",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Cancel out the terms that sum to zero and calculate the remaining parts.",
+       "claim": "Step 2: Cancel out the terms that sum to zero and calculate the remaining parts.",
+       "_key": "p76-k4",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "For sequences containing √ in the denominator, first rationalize the denominator.",
+       "claim": "For sequences containing a square root in the denominator, first rationalize the denominator.",
+       "_key": "p76-k5",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "summation notation Σ, rewrite it into the form of a sum of terms.",
+       "claim": "When the sum of a sequence containing fractions or square roots is expressed using summation notation Σ, rewrite it into the form of a sum of terms.",
+       "_key": "p76-k6",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{1}{2\\times5}+\\frac{1}{5\\times8}+\\frac{1}{8\\times11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p76-k7",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "Transform each term using the formula.",
+       "stem": "(a) Find $\\frac{1}{2\\times5}+\\frac{1}{5\\times8}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
+       "solution": [
+        "Transform each term using the formula: $=\\frac13\\left(\\frac12-\\frac15\\right)+\\frac13\\left(\\frac15-\\frac18\\right)+\\frac13\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\frac13\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)$",
+        "Factor out 1/3 and cancel out the terms that sum to zero: $=\\frac13\\left\\{\\left(\\frac12-\\frac15\\right)+\\left(\\frac15-\\frac18\\right)+\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)\\right\\}$",
+        "$=\\frac13\\left(\\frac12-\\frac1{3n+2}\\right)$",
+        "$=\\frac{n}{2(3n+2)}$"
+       ],
+       "answer": "$\\frac{n}{2(3n+2)}$",
+       "notes": "Side notes: 'Transform each term using the formula.', 'Factor out 1/3', 'Cancel out the terms that sum to zero and calculate the remaining parts.' Only part (a) shown on this page; cancellation strokes in figure not recorded.",
+       "_key": "p76-k8",
+       "source_page": 76,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 77,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "",
+       "number": null,
+       "continues": true,
+       "quote": "First rationalize the denominator.",
+       "stem": "(b) $\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$",
+       "parts": [
+        {
+         "label": "b",
+         "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$",
+         "solution": [
+          "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
+          "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(k+2)-(k+1)}$",
+          "$=\\sum_{k=1}^{n}(\\sqrt{k+2}-\\sqrt{k+1})$",
+          "$=(\\sqrt3-\\sqrt2)+(\\sqrt4-\\sqrt3)+(\\sqrt5-\\sqrt4)+(\\sqrt6-\\sqrt5)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$",
+          "$=\\sqrt{n+2}-\\sqrt2$"
+         ],
+         "answer": "$\\sqrt{n+2}-\\sqrt{2}$",
+         "notes": "Side explanations: 'First rationalize the denominator.'; 'Rewrite in the form of a sum of terms.'; 'Cancel out the terms that sum to zero and calculate the remaining parts.' Cancelled terms are crossed out in the telescoping line.",
+         "answer_figure_keys": []
+        }
+       ],
+       "solution": [
+        "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
+        "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(k+2)-(k+1)}$",
+        "$=\\sum_{k=1}^{n}(\\sqrt{k+2}-\\sqrt{k+1})$",
+        "$=(\\sqrt3-\\sqrt2)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$",
+        "$=\\sqrt{n+2}-\\sqrt2$"
+       ],
+       "answer": "$\\sqrt{n+2}-\\sqrt{2}$",
+       "notes": "Continuation of previous page's example; part (a) is on the previous page.",
+       "_key": "p77-k1",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "activity",
+       "label": "Work with a partner",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p77-k2",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{1}{2\\times3}+\\frac{1}{3\\times4}+\\frac{1}{4\\times5}+\\dots+\\frac{1}{(n+1)(n+2)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{1}{1\\times3}+\\frac{1}{3\\times5}+\\frac{1}{5\\times7}+\\dots+\\frac{1}{(2n-1)(2n+1)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{1}{4\\times6}+\\frac{1}{5\\times7}+\\frac{1}{6\\times8}+\\dots+\\frac{1}{(n+3)(n+5)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+1}+\\sqrt{k}}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p77-k3",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Exercise",
+       "text": "Exercise",
+       "_key": "p77-k4",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Solve the following problems.",
+       "text": "Solve the following problems.",
+       "_key": "p77-k5",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "Find the following sums.",
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{1}{1\\times2}+\\frac{1}{2\\times3}+\\frac{1}{3\\times4}+\\dots+\\frac{1}{n(n+1)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{1}{2\\times4}+\\frac{1}{4\\times6}+\\frac{1}{6\\times8}+\\dots+\\frac{1}{2n(2n+2)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{1}{1\\times3}+\\frac{1}{2\\times4}+\\frac{1}{3\\times5}+\\dots+\\frac{1}{n(n+2)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k}+\\sqrt{k-1}}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\frac{1}{\\sqrt2+\\sqrt3}+\\frac{1}{\\sqrt3+\\sqrt4}+\\frac{1}{\\sqrt4+\\sqrt5}+\\dots+\\frac{1}{\\sqrt{n+1}+\\sqrt{n+2}}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p77-k6",
+       "source_page": 77,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 78,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "Find the following sums.",
+       "continues": true,
+       "text": "Find the following sums.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$\\frac{1}{3\\times4}+\\frac{1}{4\\times5}+\\frac{1}{5\\times6}+\\dots+\\frac{1}{(n+2)(n+3)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$\\frac{1}{1\\times4}+\\frac{1}{4\\times7}+\\frac{1}{7\\times10}+\\dots+\\frac{1}{(3n-2)(3n+1)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "c",
+         "stem": "$\\frac{1}{1\\times7}+\\frac{1}{4\\times10}+\\frac{1}{7\\times13}+\\dots+\\frac{1}{(3n-2)(3n+4)}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "d",
+         "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{2k-1}+\\sqrt{2k+1}}$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "e",
+         "stem": "$\\frac{1}{\\sqrt1+\\sqrt2}+\\frac{1}{\\sqrt2+\\sqrt3}+\\frac{1}{\\sqrt3+\\sqrt4}+\\dots+\\frac{1}{\\sqrt n+\\sqrt{n+1}}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Question number 2 printed on this page; continues from previous page's exercise.",
+       "_key": "p78-k1",
+       "source_page": 78,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find with steps",
+       "continues": false,
+       "text": "Find with steps $\\sum_{r=1}^{30}\\frac{1}{r(r+2)}$",
+       "notes": "Printed in a Challenge box (star heading).",
+       "_key": "p78-k2",
+       "source_page": 78,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 79,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of (Arithmetic Sequence)×(Geometric Sequence)",
+       "text": "2-15 Sum of (Arithmetic Sequence)×(Geometric Sequence) — Chapter 2 Sequences",
+       "_key": "p79-k1",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Find the sum of the product of an arithmetic sequence and a geometric sequence.",
+       "text": "Learning Outcomes: Find the sum of the product of an arithmetic sequence and a geometric sequence.",
+       "_key": "p79-k2",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "For the sum S of (an arithmetic sequence) × (a geometric sequence with the common ratio r), use S−rS",
+       "claim": "For the sum S of (an arithmetic sequence) × (a geometric sequence with common ratio r), use S − rS.",
+       "formula": "$S-rS$",
+       "_key": "p79-k3",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the following sum S",
+       "text": "Find the following sum S",
+       "parts": [
+        {
+         "label": "S",
+         "stem": "$S=3\\times1+5\\times3+7\\times3^2+9\\times3^3+\\dots+(2n+1)\\times3^{n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p79-k4",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Explanation",
+       "text": "Explanation",
+       "_key": "p79-k5",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "The sum to be found is the sum of (Arithmetic sequence with first term 3",
+       "text": "The sum to be found is the sum of (Arithmetic sequence with first term 3, the common difference 2) × (Geometric sequence with the first term 1, the common ratio 3). Then S = 3×1+5×3+7×3²+9×3³+…+(2n+1)×3^{n−1}. Multiply both sides by the common ratio 3 of the geometric sequence: 3S = 3×3+5×3²+7×3³+9×3⁴+…+(2n+1)×3^n. Subtract the sides of the two equations: S−3S gives −2S = 3×1+2×3+2×3²+2×3³+…+2×3^{n−1} −(2n+1)×3^n; then −2S = 3 + 2(3^n−1)/(3−1) −2 −(2n+1)×3^n; −2S = 3^n −(2n+1)×3^n; −2S = −2n×3^n; S = n×3^n.",
+       "_key": "p79-k6",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Use S − rS.",
+       "text": "Side notes beside the explanation: 'Use S − rS.'; 'Write the equations so that the powers of the common ratio align vertically.'; 'Supplement terms to make subtraction easier.'; 'The sum from the 2nd term to the n-th term of a geometric sequence with first term 2, common ratio 3. (The sum from the first term to the n-th term The first term)'; 'Divide both sides by -2 Watch the '-' sign.'",
+       "_key": "p79-k7",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "You forgot to change the sign of the last term to minus",
+       "claim": "Common Mistakes: in subtracting 3S from S, writing −2S = 3×1 + 2×3 + 2×3² + 2×3³ + … + 2×3^{n−1} + (2n+1)×3^n is wrong; you forgot to change the sign of the last term to minus when subtracting 3S from S.",
+       "formula": "",
+       "notes": "Box shows the wrong working (S, −)3S, −2S lines) with the last term +(2n+1)×3^n; intentional error shown.",
+       "_key": "p79-k8",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": null,
+       "quote": "Find the following sum S",
+       "text": "Find the following sum S (Work with a partner: collaborate with your group to solve the try section then discuss the answer.)",
+       "parts": [
+        {
+         "label": "S",
+         "stem": "$S=2\\times1+3\\times3+4\\times3^2+5\\times3^3+\\dots+(n+1)\\times3^{n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p79-k9",
+       "source_page": 79,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 80,
+     "records": [
+      {
+       "key": "k1",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": null,
+       "quote": "Find the following sums S",
+       "text": "Find the following sums S",
+       "parts": [],
+       "_key": "p80-k1",
+       "source_page": 80,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "S = 1 × 1 + 2 × 2 + 3 × 2^2+4 × 2^3",
+       "text": "Find the sum $S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$",
+       "_key": "p80-k2",
+       "source_page": 80,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "S = 1 × 3 + 3 × 3^2+5 × 3^3+7 × 3^4",
+       "text": "Find the sum $S = 1\\times3 + 3\\times3^2 + 5\\times3^3 + 7\\times3^4 + \\dots + (2n-1)\\times3^n$",
+       "_key": "p80-k3",
+       "source_page": 80,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find the following sum 5 , 5 + 9 , 5 + 9 + 13",
+       "text": "Find the following sum $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\dots\\dots+(4k+1)$",
+       "notes": "Challenge box; sums listed with commas as printed.",
+       "_key": "p80-k4",
+       "source_page": 80,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 81,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "2-16 Sequence where General Term is a Sum",
+       "text": "Sequence where General Term is a Sum (2-16, Chapter 2 Sequences)",
+       "label": "",
+       "number": null,
+       "_key": "p81-k1",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Calculate the k-th term of a sequence where each term",
+       "text": "Point! Calculate the k-th term of a sequence where each term is expressed as a sum using summation notation Σ.",
+       "label": "",
+       "number": null,
+       "notes": "Boxed 'Point!' aim statement; typed as linking_text.",
+       "_key": "p81-k2",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "printed_objective",
+       "quote": "Deduce the sum of a sequence when its general term",
+       "text": "Learning Outcomes: Deduce the sum of a sequence when its general term is expressed as the sum of some of its terms, and connect the sum of the sequence with its general term.",
+       "label": "",
+       "number": null,
+       "_key": "p81-k3",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "heading",
+       "quote": "Warm Up",
+       "text": "Warm Up",
+       "label": "",
+       "number": null,
+       "_key": "p81-k4",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "quote": "Solve the following problems for the sequence 3, 3+5, 3+5+7, 3+5+7+9, ...",
+       "text": "Solve the following problems for the sequence $3, 3+5, 3+5+7, 3+5+7+9, \\dots$",
+       "label": "Warm Up",
+       "number": null,
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find the $k$-th term.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the sum from the first term to the $n$-th term.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p81-k5",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "heading",
+       "quote": "Explanation",
+       "text": "Explanation",
+       "label": "",
+       "number": null,
+       "_key": "p81-k6",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "worked_example",
+       "quote": "The k—th term of this sequence is:",
+       "stem": "Explanation of the Warm Up: (a) find the k-th term; (b) find the sum S_n from the first term to the n-th term.",
+       "solution": [
+        "(a) $a_k = 3+5+7+\\dots+(2k+1)$",
+        "$=\\sum_{i=1}^{k}(2i+1)$",
+        "$=2\\times\\frac{1}{2}k(k+1)+k$",
+        "Calculating this gives $a_k = k(k+2)$",
+        "(b) $S_n=\\sum_{k=1}^{n}k(k+2)$",
+        "$=\\sum_{k=1}^{n}(k^2+2k)$ $=\\frac{1}{6}n(n+1)(2n+1)+2\\times\\frac{1}{2}n(n+1)$",
+        "Calculating this gives $S_n=\\frac{1}{6}n(n+1)(2n+7)$"
+       ],
+       "label": "",
+       "number": null,
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$a_k=k(k+2)$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "answer": "$S_n=\\frac{1}{6}n(n+1)(2n+7)$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Unlabelled explanation of the Warm Up; margin notes recorded separately.",
+       "_key": "p81-k7",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "linking_text",
+       "quote": "Create a formula considering the regularity.",
+       "text": "Side note: Create a formula considering the regularity.",
+       "label": "",
+       "number": null,
+       "_key": "p81-k8",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "linking_text",
+       "quote": "Calculate using summation notation Σ.",
+       "text": "Side note: Calculate using summation notation Σ.",
+       "label": "",
+       "number": null,
+       "_key": "p81-k9",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "linking_text",
+       "quote": "Since it is the sum from the first term to the k—th term",
+       "text": "Side note: Since it is the sum from the first term to the k—th term, we use the variable i.",
+       "label": "",
+       "number": null,
+       "_key": "p81-k10",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "linking_text",
+       "quote": "Put a_k inside Σ. S_n = Σ a_k",
+       "text": "Side note: Put $a_k$ inside Σ. $S_n=\\sum_{k=1}^{n}a_k$",
+       "label": "",
+       "number": null,
+       "_key": "p81-k11",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "heading",
+       "quote": "Try",
+       "text": "Try",
+       "label": "",
+       "number": null,
+       "_key": "p81-k12",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "quote": "Find the k-th term.",
+       "text": "Solve the following problems for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$ Find the $k$-th term.",
+       "label": "Try",
+       "number": 1,
+       "_key": "p81-k13",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "quote": "Find the sum from the first term to the n-th term.",
+       "text": "Find the sum from the first term to the $n$-th term (for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$).",
+       "label": "Try",
+       "number": 2,
+       "_key": "p81-k14",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "linking_text",
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "label": "",
+       "number": null,
+       "_key": "p81-k15",
+       "source_page": 81,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 82,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "quote": "Exercise",
+       "label": "",
+       "number": null,
+       "text": "Exercise",
+       "_key": "p82-k1",
+       "source_page": 82,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "quote": "Solve the following problems.",
+       "label": "",
+       "number": null,
+       "text": "Solve the following problems.",
+       "_key": "p82-k2",
+       "source_page": 82,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "exercise",
+       "quote": "Solve the following problems for the sequence 1, 1 + 5, 1 + 5 + 9",
+       "label": "Exercise",
+       "number": 1,
+       "text": "Solve the following problems for the sequence $1, 1+5, 1+5+9, 1+5+9+13, \\ldots$",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find the $k$-th term.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the sum from the first term to the $n$-th term.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p82-k3",
+       "source_page": 82,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "exercise",
+       "quote": "Solve the following problems for the sequence 2, 2 + 4, 2 + 4 + 6",
+       "label": "Exercise",
+       "number": 2,
+       "text": "Solve the following problems for the sequence $2, 2+4, 2+4+6, 2+4+6+8, \\ldots$",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "Find the $k$-th term.",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "Find the sum from the first term to the $n$−th term.",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p82-k4",
+       "source_page": 82,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "exercise",
+       "quote": "Find the general term of the sequence {a_n} where the sum of the first n terms is",
+       "label": "Challenge",
+       "number": null,
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum of the first n terms is given by the formula $S_n = 2n^2 + 5n$",
+       "notes": "Boxed 'Challenge' with star.",
+       "_key": "p82-k5",
+       "source_page": 82,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 83,
+     "records": [
+      {
+       "key": "k1",
+       "type": "heading",
+       "label": "",
+       "number": null,
+       "quote": "Sum of Sequence and General Term",
+       "text": "Sum of Sequence and General Term (2-17, Chapter 2 Sequences)",
+       "_key": "p83-k1",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "printed_objective",
+       "label": "",
+       "number": null,
+       "quote": "Deduce the sum of a sequence when its general term",
+       "text": "Deduce the sum of a sequence when its general term is expressed as the sum of some of its terms, and connect the sum of the sequence with its general term.",
+       "_key": "p83-k2",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "convention",
+       "label": "",
+       "number": null,
+       "quote": "Let S_n be the sum from the first term",
+       "claim": "S_n denotes the sum from the first term a_1 to the n-th term of the sequence {a_n}.",
+       "formula": "$S_n$",
+       "_key": "p83-k3",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "When n ≥2, a_n = S_n − S_{n−1}.",
+       "claim": "When n ≥ 2, the general term is the difference of consecutive sums.",
+       "formula": "$a_n = S_n - S_{n-1}$",
+       "_key": "p83-k4",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "The first term is a_1 = S_1.",
+       "claim": "The first term equals S_1.",
+       "formula": "$a_1 = S_1$",
+       "_key": "p83-k5",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "method",
+       "label": "",
+       "number": null,
+       "quote": "Check if a_n obtained under the condition n ≥ 2 also holds",
+       "claim": "Check whether the a_n obtained under the condition n ≥ 2 also holds for the first term by substituting n = 1 into the formula for a_n.",
+       "formula": "",
+       "_key": "p83-k6",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If it holds ⇒ Keep a_n as is.",
+       "claim": "If it holds, keep a_n as is.",
+       "_key": "p83-k7",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "rule",
+       "label": "",
+       "number": null,
+       "quote": "If it does not hold ⇒ Write both a_1 and a_n.",
+       "claim": "If it does not hold, write both a_1 and a_n.",
+       "_key": "p83-k8",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "quote": "If a_n found by S_n − S_{n−1} is a_n= 2n²−2n+1",
+       "stem": "If $a_n$ found by $S_n - S_{n-1}$ is $a_n = 2n^2-2n+1$ ...(i), and $a_1$ found from $S_1$ is $a_1=0$ ...(ii), substituting $n=1$ into (i) gives $a_1=1$, which does not hold.",
+       "solution": [
+        "Substituting $n=1$ into (i) gives $a_1=1$, which does not hold (differs from $a_1=0$).",
+        "Therefore, the general term is $a_1=0$, and $a_n = 2n^2-2n+1$ when $n\\ge2$."
+       ],
+       "answer": "$a_1=0$, and $a_n=2n^2-2n+1$ when $n\\ge 2$",
+       "notes": "Example is unnumbered, inside the Point box.",
+       "_key": "p83-k9",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "figure",
+       "label": "",
+       "number": null,
+       "quote": "a_1 + a_2 + a_3+ ... +a_{n−1} + a_n",
+       "caption": "Side diagram: a_1 + a_2 + a_3 + ... + a_{n-1} + a_n, with a brace under a_1 ... a_{n-1} labelled S_{n-1} and a larger brace under the whole sum labelled S_n; a_n is highlighted in pink. Linked by a dotted line to a_n = S_n − S_{n−1}.",
+       "_key": "p83-k10",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "caution",
+       "label": "",
+       "number": null,
+       "quote": "You overlooked the prerequisite n ≥ 2 and failed",
+       "claim": "Common Mistakes: computing a_n = S_n − S_{n−1} = (n²−3n) − {(n−1)² − 3(n−1)} = 2n − 4 and concluding a_n = 2n−4 overlooks the prerequisite n ≥ 2 and fails to perform the final verification for n = 1.",
+       "formula": "$a_n=S_n-S_{n-1}=(n^2-3n)-\\{(n-1)^2-3(n-1)\\}=2n-4$",
+       "_key": "p83-k11",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Warm Up",
+       "number": null,
+       "quote": "Find the general term of the sequence {a_n} where the sum Sn",
+       "text": "Find the general term of the sequence {a_n} where the sum Sn from the first term to the n-th term is given by the following formulas.",
+       "parts": [
+        {
+         "label": "a",
+         "stem": "$S_n = n^2-3n$",
+         "answer_figure_keys": []
+        },
+        {
+         "label": "b",
+         "stem": "$S_n = 5^n-1$",
+         "answer_figure_keys": []
+        }
+       ],
+       "_key": "p83-k12",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "worked_example",
+       "label": "Explanation",
+       "number": null,
+       "quote": "(a) When n ≥ 2, a_n = S_n − S_{n−1}",
+       "stem": "Explanation of Warm Up (a): $S_n=n^2-3n$",
+       "solution": [
+        "When $n\\ge2$, $a_n=S_n-S_{n-1}=(n^2-3n)-\\{(n-1)^2-3(n-1)\\}=2n-4$ ...(i)",
+        "The first term is $a_1=S_1=1^2-3\\times1=-2$ ...(ii)",
+        "From (i) and (ii), $a_n=2n-4$ also holds when $n=1$",
+        "Therefore, the general term is $a_n=2n-4$"
+       ],
+       "answer": "$a_n=2n-4$",
+       "parts": [
+        {
+         "label": "a",
+         "answer": "$a_n=2n-4$",
+         "answer_figure_keys": []
+        }
+       ],
+       "notes": "Only part (a) is explained; (b) not printed on this page. Side notes attached: 'Deduction if not written.', S_{n-1} = (n−1)²−3(n−1), 'Deduction if not written.', 'Deduction if not written. Check by substituting n = 1 into formula (i).'",
+       "_key": "p83-k13",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Deduction if not written.",
+       "text": "Side notes next to the explanation: 'Deduction if not written.' (at When n ≥ 2); '$S_{n-1}=(n-1)^2-3(n-1)$' (n−1 underlined in red); 'Deduction if not written.' (at first term); 'Deduction if not written. Check by substituting n = 1 into formula (i).'",
+       "_key": "p83-k14",
+       "source_page": 83,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    },
+    {
+     "printed": 84,
+     "records": [
+      {
+       "key": "k1",
+       "type": "worked_example",
+       "label": "Example",
+       "number": null,
+       "continues": true,
+       "quote": "When n ≥ 2, a_n = S_n − S_{n−1}",
+       "stem": "",
+       "parts": [
+        {
+         "label": "b",
+         "stem": "",
+         "solution": [
+          "When $n \\ge 2$,",
+          "$a_n = S_n - S_{n-1}$",
+          "$= (5^n-1)-(5^{n-1}-1)$",
+          "$= 5^n - 5^{n-1}$",
+          "$= 5\\times 5^{n-1} - 1\\times 5^{n-1}$",
+          "$= 4\\times 5^{n-1}$ ...... (i)",
+          "The first term is $a_1 = S_1$",
+          "$= 5^1 - 1 = 4$ ...... (ii)",
+          "From (i) and (ii), $a_n = 4\\times 5^{n-1}$ also holds when $n=1$",
+          "Therefore, the general term is $a_n = 4\\times 5^{n-1}$"
+         ],
+         "answer": "$a_n = 4\\times 5^{n-1}$",
+         "answer_figure_keys": []
+        }
+       ],
+       "solution": [],
+       "answer": "$a_n = 4\\times 5^{n-1}$",
+       "notes": "Continues from previous page; only part (b) is on this page. Side notes are printed beside the steps.",
+       "_key": "p84-k1",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k2",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Deduction if not written.",
+       "text": "Side note beside \"When n ≥ 2\": Deduction if not written.",
+       "belongs_to_key": "p84-k1",
+       "_key": "p84-k2",
+       "source_page": 84,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k3",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "5^n = 5^1 × 5^{n−1}",
+       "text": "Side note beside $5^n-5^{n-1}$: $5^n = 5^1 \\times 5^{n-1}$",
+       "belongs_to_key": "p84-k1",
+       "_key": "p84-k3",
+       "source_page": 84,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k4",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Deduction if not written.",
+       "text": "Side note beside \"The first term is a_1 = S_1\": Deduction if not written.",
+       "belongs_to_key": "p84-k1",
+       "_key": "p84-k4",
+       "source_page": 84,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k5",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Deduction if not written.",
+       "text": "Side note beside \"also holds when n = 1\": Deduction if not written.",
+       "belongs_to_key": "p84-k1",
+       "_key": "p84-k5",
+       "source_page": 84,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k6",
+       "type": "linking_text",
+       "label": "",
+       "number": null,
+       "quote": "Collaborate with your group to solve the try section",
+       "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+       "_key": "p84-k6",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k7",
+       "type": "exercise",
+       "label": "Try",
+       "number": 1,
+       "quote": "Find the general term of the sequence",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by the following formulas: $S_n = 2n^2+5n$",
+       "parts": [],
+       "_key": "p84-k7",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k8",
+       "type": "exercise",
+       "label": "Try",
+       "number": 2,
+       "quote": "S_n = 3^n − 1",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ is given by: $S_n = 3^n-1$",
+       "parts": [],
+       "_key": "p84-k8",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k9",
+       "type": "exercise",
+       "label": "Try",
+       "number": 3,
+       "quote": "S_n = n^3+2n + 6",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ is given by: $S_n = n^3+2n+6$",
+       "parts": [],
+       "_key": "p84-k9",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k10",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 1,
+       "quote": "S_n = n^2",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by: $S_n = n^2$",
+       "parts": [],
+       "_key": "p84-k10",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k11",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 2,
+       "quote": "S_n = n^2 − 4n",
+       "text": "Same instruction: $S_n = n^2-4n$",
+       "parts": [],
+       "_key": "p84-k11",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k12",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 3,
+       "quote": "S_n = n^2 + 2n−1",
+       "text": "Same instruction: $S_n = n^2+2n-1$",
+       "parts": [],
+       "_key": "p84-k12",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k13",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 4,
+       "quote": "S_n = 2^n−1",
+       "text": "Same instruction: $S_n = 2^n-1$",
+       "parts": [],
+       "_key": "p84-k13",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k14",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 5,
+       "quote": "S_n = 5^n−2",
+       "text": "Same instruction: $S_n = 5^n-2$",
+       "parts": [],
+       "_key": "p84-k14",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k15",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 6,
+       "quote": "S_n = 7^n−1",
+       "text": "Same instruction: $S_n = 7^n-1$",
+       "parts": [],
+       "_key": "p84-k15",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k16",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 7,
+       "quote": "S_n = n^3−1",
+       "text": "Same instruction: $S_n = n^3-1$",
+       "parts": [],
+       "_key": "p84-k16",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k17",
+       "type": "exercise",
+       "label": "Exercise",
+       "number": 8,
+       "quote": "S_n = 2^{n+2}−3",
+       "text": "Same instruction: $S_n = 2^{n+2}-3$",
+       "parts": [],
+       "_key": "p84-k17",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k18",
+       "type": "exercise",
+       "label": "Challenge",
+       "number": null,
+       "quote": "Find the general term of the sequence {a_n} where the sum",
+       "text": "Find the general term of the sequence $\\{a_n\\}$ where the sum $S_n$ from the first term to the $n$-th term is given by: $S_n = 3^{n+1}-2n+1$",
+       "parts": [],
+       "_key": "p84-k18",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      },
+      {
+       "key": "k19",
+       "type": "open_prompt",
+       "label": "Reflect",
+       "number": null,
+       "quote": "How did breaking down a complex, combined sequence (AGS)",
+       "text": "How did breaking down a complex, combined sequence (AGS) into its simpler parts (arithmetic and geometric components) change your perspective on tackling intimidating multi-step problems in life or science?",
+       "_key": "p84-k19",
+       "source_page": 84,
+       "belongs_to_key": null,
+       "answer_figure_keys": []
+      }
+     ],
+     "failed": false
+    }
+   ],
+   "filing": {
+    "objectives": [
+     {
+      "label": "Write sums in Σ notation and expand them",
+      "description": "Represent a sum of terms with the summation symbol and expand a Σ expression into its terms by substituting k.",
+      "evidence_keys": [
+       "p68-k6",
+       "p68-k7",
+       "p68-k11",
+       "p69-k2",
+       "p69-k3",
+       "p70-k3"
+      ]
+     },
+     {
+      "label": "Evaluate sums with the standard Σ formulas",
+      "description": "Find sums using the formulas for a constant, k and k², and the rules for taking out a constant and splitting sums and differences.",
+      "evidence_keys": [
+       "p71-k3",
+       "p71-k4",
+       "p71-k5",
+       "p71-k7",
+       "p72-k1",
+       "p73-k1"
+      ]
+     },
+     {
+      "label": "Find sums of cubic-type and geometric terms",
+      "description": "Use the sum of cubes and the geometric series formulas to find sums such as Σk²(k+1) and Σar^(k-1).",
+      "evidence_keys": [
+       "p74-k4",
+       "p74-k6",
+       "p74-k13",
+       "p75-k1",
+       "p75-k8"
+      ]
+     },
+     {
+      "label": "Sum fractional sequences by decomposition",
+      "description": "Split fractions into partial fractions or rationalize square roots, then cancel terms to find the sum.",
+      "evidence_keys": [
+       "p76-k3",
+       "p76-k8",
+       "p77-k1",
+       "p77-k3",
+       "p77-k6"
+      ]
+     },
+     {
+      "label": "Sum an arithmetic × geometric sequence",
+      "description": "Find the sum of such a sequence by computing S − rS and using the geometric sum.",
+      "evidence_keys": [
+       "p79-k3",
+       "p79-k6",
+       "p79-k9",
+       "p80-k2"
+      ]
+     },
+     {
+      "label": "Find the k-th term and sum when each term is itself a sum",
+      "description": "Express the general term using Σ and then sum these terms from 1 to n.",
+      "evidence_keys": [
+       "p81-k5",
+       "p81-k7",
+       "p81-k13",
+       "p82-k3"
+      ]
+     },
+     {
+      "label": "Find a general term from the sum S_n",
+      "description": "Use a_n = S_n − S_{n−1} for n ≥ 2, a_1 = S_1, and check whether the formula holds for n = 1.",
+      "evidence_keys": [
+       "p83-k4",
+       "p83-k6",
+       "p83-k13",
+       "p84-k1",
+       "p84-k7",
+       "p84-k10"
+      ]
+     }
+    ],
+    "item_objective": [
+     {
+      "key": "p68-k3",
+      "objective": 1
+     },
+     {
+      "key": "p68-k4",
+      "objective": 1
+     },
+     {
+      "key": "p68-k5",
+      "objective": 1
+     },
+     {
+      "key": "p68-k6",
+      "objective": 1
+     },
+     {
+      "key": "p68-k7",
+      "objective": 1
+     },
+     {
+      "key": "p68-k8",
+      "objective": 1
+     },
+     {
+      "key": "p68-k11",
+      "objective": 1
+     },
+     {
+      "key": "p68-k12",
+      "objective": 1
+     },
+     {
+      "key": "p69-k2",
+      "objective": 1
+     },
+     {
+      "key": "p69-k3",
+      "objective": 1
+     },
+     {
+      "key": "p69-k6",
+      "objective": 1
+     },
+     {
+      "key": "p69-k7",
+      "objective": 1
+     },
+     {
+      "key": "p70-k3",
+      "objective": 1
+     },
+     {
+      "key": "p70-k4",
+      "objective": 1
+     },
+     {
+      "key": "p70-k5",
+      "objective": 1
+     },
+     {
+      "key": "p71-k3",
+      "objective": 2
+     },
+     {
+      "key": "p71-k4",
+      "objective": 2
+     },
+     {
+      "key": "p71-k5",
+      "objective": 2
+     },
+     {
+      "key": "p71-k6",
+      "objective": 2
+     },
+     {
+      "key": "p71-k7",
+      "objective": 2
+     },
+     {
+      "key": "p71-k8",
+      "objective": 2
+     },
+     {
+      "key": "p71-k9",
+      "objective": 2
+     },
+     {
+      "key": "p71-k10",
+      "objective": 2
+     },
+     {
+      "key": "p72-k1",
+      "objective": 2
+     },
+     {
+      "key": "p72-k7",
+      "objective": 2
+     },
+     {
+      "key": "p73-k1",
+      "objective": 2
+     },
+     {
+      "key": "p73-k2",
+      "objective": 2
+     },
+     {
+      "key": "p74-k4",
+      "objective": 3
+     },
+     {
+      "key": "p74-k5",
+      "objective": 3
+     },
+     {
+      "key": "p74-k6",
+      "objective": 3
+     },
+     {
+      "key": "p74-k7",
+      "objective": 3
+     },
+     {
+      "key": "p74-k8",
+      "objective": 3
+     },
+     {
+      "key": "p74-k9",
+      "objective": 3
+     },
+     {
+      "key": "p74-k11",
+      "objective": 3
+     },
+     {
+      "key": "p74-k13",
+      "objective": 3
+     },
+     {
+      "key": "p75-k1",
+      "objective": 3
+     },
+     {
+      "key": "p75-k6",
+      "objective": 3
+     },
+     {
+      "key": "p75-k7",
+      "objective": 3
+     },
+     {
+      "key": "p75-k8",
+      "objective": 3
+     },
+     {
+      "key": "p75-k9",
+      "objective": 3
+     },
+     {
+      "key": "p76-k3",
+      "objective": 4
+     },
+     {
+      "key": "p76-k4",
+      "objective": 4
+     },
+     {
+      "key": "p76-k5",
+      "objective": 4
+     },
+     {
+      "key": "p76-k6",
+      "objective": 4
+     },
+     {
+      "key": "p76-k7",
+      "objective": 4
+     },
+     {
+      "key": "p76-k8",
+      "objective": 4
+     },
+     {
+      "key": "p77-k1",
+      "objective": 4
+     },
+     {
+      "key": "p77-k2",
+      "objective": 4
+     },
+     {
+      "key": "p77-k3",
+      "objective": 4
+     },
+     {
+      "key": "p77-k6",
+      "objective": 4
+     },
+     {
+      "key": "p78-k1",
+      "objective": 4
+     },
+     {
+      "key": "p78-k2",
+      "objective": 4
+     },
+     {
+      "key": "p79-k3",
+      "objective": 5
+     },
+     {
+      "key": "p79-k4",
+      "objective": 5
+     },
+     {
+      "key": "p79-k8",
+      "objective": 5
+     },
+     {
+      "key": "p79-k9",
+      "objective": 5
+     },
+     {
+      "key": "p80-k1",
+      "objective": 5
+     },
+     {
+      "key": "p80-k2",
+      "objective": 5
+     },
+     {
+      "key": "p80-k3",
+      "objective": 5
+     },
+     {
+      "key": "p80-k4",
+      "objective": 5
+     },
+     {
+      "key": "p84-k19",
+      "objective": 5
+     },
+     {
+      "key": "p81-k5",
+      "objective": 6
+     },
+     {
+      "key": "p81-k7",
+      "objective": 6
+     },
+     {
+      "key": "p81-k13",
+      "objective": 6
+     },
+     {
+      "key": "p81-k14",
+      "objective": 6
+     },
+     {
+      "key": "p82-k3",
+      "objective": 6
+     },
+     {
+      "key": "p82-k4",
+      "objective": 6
+     },
+     {
+      "key": "p82-k5",
+      "objective": 7
+     },
+     {
+      "key": "p83-k3",
+      "objective": 7
+     },
+     {
+      "key": "p83-k4",
+      "objective": 7
+     },
+     {
+      "key": "p83-k5",
+      "objective": 7
+     },
+     {
+      "key": "p83-k6",
+      "objective": 7
+     },
+     {
+      "key": "p83-k7",
+      "objective": 7
+     },
+     {
+      "key": "p83-k8",
+      "objective": 7
+     },
+     {
+      "key": "p83-k9",
+      "objective": 7
+     },
+     {
+      "key": "p83-k10",
+      "objective": 7
+     },
+     {
+      "key": "p83-k11",
+      "objective": 7
+     },
+     {
+      "key": "p83-k12",
+      "objective": 7
+     },
+     {
+      "key": "p83-k13",
+      "objective": 7
+     },
+     {
+      "key": "p84-k1",
+      "objective": 7
+     },
+     {
+      "key": "p84-k7",
+      "objective": 7
+     },
+     {
+      "key": "p84-k8",
+      "objective": 7
+     },
+     {
+      "key": "p84-k9",
+      "objective": 7
+     },
+     {
+      "key": "p84-k10",
+      "objective": 7
+     },
+     {
+      "key": "p84-k11",
+      "objective": 7
+     },
+     {
+      "key": "p84-k12",
+      "objective": 7
+     },
+     {
+      "key": "p84-k13",
+      "objective": 7
+     },
+     {
+      "key": "p84-k14",
+      "objective": 7
+     },
+     {
+      "key": "p84-k15",
+      "objective": 7
+     },
+     {
+      "key": "p84-k16",
+      "objective": 7
+     },
+     {
+      "key": "p84-k17",
+      "objective": 7
+     },
+     {
+      "key": "p84-k18",
+      "objective": 7
+     }
+    ],
+    "prompt_figures": []
+   }
+  }
+ ],
+ "failed_lessons": []
+}

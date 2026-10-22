@@ -1,0 +1,2563 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "481a64df28527294ea98fa393428c0d809baddc84ab9046625bae0d44fbd0b72",
+  "generated_sha256": "47a7f8e3642bf07b59c92c0479ff3c259d1b1137303d890d89bb443aa628df4c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c3-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c3-2:open-prompt-1",
+      "kind": "explanation",
+      "answer": "The discriminant and the solutions show whether the balance (equilibrium) values are real, repeated or imaginary, so we can tell if a system has a stable balance point.",
+      "solution": [
+       "Write the balance condition as a quadratic equation $ax^2+bx+c=0$.",
+       "Find $D=b^2-4ac$.",
+       "If $D\\ge0$ the solutions are real, so a real balance point exists.",
+       "If $D<0$ the solutions are imaginary, so there is no real balance point and the system cannot settle there.",
+       "So quadratics help predict stability or collapse."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:rule-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-1",
+      "kind": "value",
+      "answer": "x = (-√3 ± i√3)/3. The solutions are imaginary, so no real amplitude makes the energy transfer rate zero.",
+      "solution": [
+       "Set $3x^2+2\\sqrt3x+2=0$, so $a=3, b=2\\sqrt3, c=2$.",
+       "$D=12-24=-12<0$.",
+       "$x=\\frac{-2\\sqrt3\\pm\\sqrt{-12}}{6}$.",
+       "$\\sqrt{-12}=2i\\sqrt3$.",
+       "$x=\\frac{-2\\sqrt3\\pm2i\\sqrt3}{6}=\\frac{-\\sqrt3\\pm i\\sqrt3}{3}$.",
+       "Meaning: the solutions are imaginary, so the system never reaches equilibrium for a real amplitude."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-3",
+      "kind": "value",
+      "answer": "-2 ≤ m ≤ 6",
+      "solution": [
+       "Real solutions need $D\\ge0$.",
+       "$D=(-m)^2-4(m^2-3m-9)=-3m^2+12m+36$.",
+       "$-3m^2+12m+36\\ge0$, so $m^2-4m-12\\le0$.",
+       "$(m+2)(m-6)\\le0$.",
+       "$-2\\le m\\le6$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-4",
+       "eb11c3-2:example-2",
+       "eb11c3-2:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-4",
+      "kind": "value",
+      "answer": "k < -6 or k > 2: two distinct real solutions; k = -6 or 2: a repeated solution; -6 < k < 2: two distinct imaginary solutions",
+      "solution": [
+       "$D=k^2-4(3-k)=k^2+4k-12=(k-2)(k+6)$.",
+       "$D>0$ when $k<-6$ or $k>2$: two distinct real solutions.",
+       "$D=0$ when $k=-6$ or $2$: a repeated solution.",
+       "$D<0$ when $-6<k<2$: two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:example-3",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-3",
+      "kind": "value",
+      "answer": "-1 < m < 2",
+      "solution": [
+       "Two distinct imaginary solutions need $D<0$.",
+       "$D=(-2m)^2-4(m+2)=4m^2-4m-8$.",
+       "$4m^2-4m-8<0$, so $m^2-m-2<0$.",
+       "$(m-2)(m+1)<0$.",
+       "$-1<m<2$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-3",
+       "eb11c3-2:definition-1",
+       "eb11c3-2:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-4",
+      "kind": "value",
+      "answer": "a < 2 or a > 6: two distinct real solutions; a = 2 or 6: a repeated solution; 2 < a < 6: two distinct imaginary solutions",
+      "solution": [
+       "$D=(-a)^2-4(2a-3)=a^2-8a+12=(a-2)(a-6)$.",
+       "$D>0$ when $a<2$ or $a>6$: two distinct real solutions.",
+       "$D=0$ when $a=2$ or $6$: a repeated solution.",
+       "$D<0$ when $2<a<6$: two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:example-3",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-5",
+      "kind": "value",
+      "answer": "sum = 2, product = -5/3",
+      "solution": [
+       "$a=3,b=-6,c=-5$.",
+       "Sum $=-b/a=6/3=2$.",
+       "Product $=c/a=-5/3$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:explanation-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-5",
+      "kind": "value",
+      "answer": "sum = -1/2, product = -7/4",
+      "solution": [
+       "$a=4,b=2,c=-7$.",
+       "Sum $=-b/a=-2/4=-1/2$.",
+       "Product $=c/a=-7/4$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "m = 2: solutions -2, 3; m = 0: solutions -3, 2",
+      "solution": [
+       "Let one solution be $\\alpha$ and the other $\\alpha+5$.",
+       "Sum: $2\\alpha+5=m-1$. Product: $\\alpha(\\alpha+5)=-6$.",
+       "$\\alpha^2+5\\alpha+6=0$, so $\\alpha=-2$ or $-3$.",
+       "$\\alpha=-2$: $m=2$, solutions $-2,3$.",
+       "$\\alpha=-3$: $m=0$, solutions $-3,2$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:worked-example-2",
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-7",
+      "kind": "value",
+      "answer": "k = 12; solutions 2 and 6",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $3\\alpha$.",
+       "Sum: $4\\alpha=8$, so $\\alpha=2$.",
+       "Solutions are $2$ and $6$.",
+       "$k=\\alpha\\cdot3\\alpha=2\\times6=12$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-8",
+      "kind": "value",
+      "answer": "m = 2: solutions 1, 2; m = -4: solutions -2, -1",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $\\alpha+1$.",
+       "Product: $\\alpha(\\alpha+1)=2$, so $\\alpha^2+\\alpha-2=0$, $(\\alpha+2)(\\alpha-1)=0$.",
+       "$\\alpha=1$ or $-2$.",
+       "Sum: $2\\alpha+1=m+1$, so $m=2\\alpha$.",
+       "$\\alpha=1$: $m=2$, solutions $1,2$.",
+       "$\\alpha=-2$: $m=-4$, solutions $-2,-1$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:worked-example-2",
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-8",
+      "kind": "value",
+      "answer": "m = 8; solutions -2 and -4",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $2\\alpha$.",
+       "Sum: $3\\alpha=-6$, so $\\alpha=-2$.",
+       "Solutions are $-2$ and $-4$.",
+       "$m=\\alpha\\cdot2\\alpha=(-2)(-4)=8$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-9",
+      "kind": "value",
+      "answer": "m = 6: solutions 1/4, 1/2; m = -6: solutions -1/4, -1/2",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $2\\alpha$.",
+       "Product: $2\\alpha^2=\\frac18$, so $\\alpha^2=\\frac1{16}$, $\\alpha=\\pm\\frac14$.",
+       "Sum: $3\\alpha=\\frac m8$, so $m=24\\alpha$.",
+       "$\\alpha=\\frac14$: $m=6$, solutions $\\frac14,\\frac12$.",
+       "$\\alpha=-\\frac14$: $m=-6$, solutions $-\\frac14,-\\frac12$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-10",
+      "kind": "value",
+      "answer": "m = 5; solutions -5 and -1",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $\\alpha+4$.",
+       "Sum: $2\\alpha+4=-6$, so $\\alpha=-5$.",
+       "Solutions are $-5$ and $-1$.",
+       "$m=(-5)(-1)=5$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:worked-example-2",
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-11",
+      "kind": "value",
+      "answer": "m = -8: solutions 1/2, 3/2; m = 8: solutions -3/2, -1/2",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $\\alpha+1$.",
+       "Product: $\\alpha(\\alpha+1)=\\frac34$, so $4\\alpha^2+4\\alpha-3=0$, $(2\\alpha-1)(2\\alpha+3)=0$.",
+       "$\\alpha=\\frac12$ or $-\\frac32$.",
+       "Sum: $2\\alpha+1=-\\frac m4$, so $m=-4(2\\alpha+1)$.",
+       "$\\alpha=\\frac12$: $m=-8$, solutions $\\frac12,\\frac32$.",
+       "$\\alpha=-\\frac32$: $m=8$, solutions $-\\frac32,-\\frac12$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:worked-example-2",
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-12",
+      "kind": "value",
+      "answer": "m = 24/25; solutions 4/5 and 6/5",
+      "solution": [
+       "Let the solutions be $2t$ and $3t$.",
+       "Sum: $5t=2$, so $t=\\frac25$.",
+       "Solutions are $\\frac45$ and $\\frac65$.",
+       "$m=\\frac45\\times\\frac65=\\frac{24}{25}$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-13",
+      "kind": "value",
+      "answer": "k = 8: solutions 2, 4; k = -27: solutions -3, 9",
+      "solution": [
+       "Let the solutions be $\\alpha$ and $\\alpha^2$.",
+       "Sum: $\\alpha+\\alpha^2=6$, so $\\alpha^2+\\alpha-6=0$, $(\\alpha+3)(\\alpha-2)=0$.",
+       "$\\alpha=2$: solutions $2,4$, $k=2\\times4=8$.",
+       "$\\alpha=-3$: solutions $-3,9$, $k=-27$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-9",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-4",
+      "kind": "explanation",
+      "answer": "The common root is c, the other roots are b and a, and a + b = -c and ab = ab, so a and b are roots of x² + cx + ab = 0.",
+      "solution": [
+       "Let $p$ be the common root: $p^2+ap+bc=0$ and $p^2+bp+ca=0$.",
+       "Subtract: $(a-b)p+c(b-a)=0$, so $(a-b)(p-c)=0$.",
+       "Since $a\\ne b$, $p=c$.",
+       "Put $p=c$ in the first equation: $c^2+ac+bc=0$. Since $c\\ne0$, $a+b+c=0$, so $a+b=-c$.",
+       "First equation: product of roots $=bc$, so the other root is $bc/c=b$.",
+       "Second equation: product of roots $=ca$, so the other root is $a$.",
+       "The other roots $a,b$ have sum $-c$ and product $ab$.",
+       "So they are roots of $x^2-(a+b)x+ab=x^2+cx+ab=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-5",
+      "kind": "value",
+      "answer": "x = ±√6/2 or x = ±i√3/3. The two real values balance the cable; the two imaginary values are not real displacements.",
+      "solution": [
+       "Let $t=x^2$: $6t^2-7t-3=0$.",
+       "$t=\\frac{7\\pm\\sqrt{49+72}}{12}=\\frac{7\\pm11}{12}$.",
+       "$t=\\frac32$ or $t=-\\frac13$.",
+       "$x^2=\\frac32$ gives $x=\\pm\\frac{\\sqrt6}{2}$.",
+       "$x^2=-\\frac13$ gives $x=\\pm\\frac{i\\sqrt3}{3}$.",
+       "Meaning: only the real values are real displacements where forces balance; the imaginary ones are not physical."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:method-1",
+       "eb11c3-2:caution-1",
+       "eb11c3-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-8",
+      "kind": "value",
+      "answer": "2x² - 2x + 1 = 0",
+      "solution": [
+       "Sum $=\\frac{1+i}{2}+\\frac{1-i}{2}=1$.",
+       "Product $=\\frac{(1+i)(1-i)}{4}=\\frac12$.",
+       "$x^2-x+\\frac12=0$.",
+       "Multiply by 2: $2x^2-2x+1=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-9",
+      "kind": "value",
+      "answer": "(-1 + √7 i)/2 and (-1 - √7 i)/2",
+      "solution": [
+       "The numbers are solutions of $x^2-(\\text{sum})x+\\text{product}=0$.",
+       "$x^2+x+2=0$.",
+       "$x=\\frac{-1\\pm\\sqrt{1-8}}{2}=\\frac{-1\\pm\\sqrt7 i}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:method-7",
+       "eb11c3-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-10",
+      "kind": "value",
+      "answer": "x² - 2x - 4 = 0",
+      "solution": [
+       "$\\alpha+\\beta=-2$, $\\alpha\\beta=-4$.",
+       "New sum $=(\\alpha+2)+(\\beta+2)=\\alpha+\\beta+4=2$.",
+       "New product $=\\alpha\\beta+2(\\alpha+\\beta)+4=-4-4+4=-4$.",
+       "Equation: $x^2-2x-4=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-10",
+      "kind": "value",
+      "answer": "x² - 6x + 13 = 0",
+      "solution": [
+       "Sum $=(3+2i)+(3-2i)=6$.",
+       "Product $=9-4i^2=13$.",
+       "Equation: $x^2-6x+13=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-11",
+      "kind": "value",
+      "answer": "(1 + √3 i)/2 and (1 - √3 i)/2",
+      "solution": [
+       "Sum 1 and product 1, so the numbers solve $x^2-x+1=0$.",
+       "$x=\\frac{1\\pm\\sqrt{1-4}}{2}=\\frac{1\\pm\\sqrt3 i}{2}$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:method-7",
+       "eb11c3-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-12",
+      "kind": "value",
+      "answer": "x² - 7x + 9 = 0",
+      "solution": [
+       "$\\alpha+\\beta=-1$, $\\alpha\\beta=-3$.",
+       "$\\alpha^2+\\beta^2=(\\alpha+\\beta)^2-2\\alpha\\beta=1+6=7$.",
+       "$\\alpha^2\\beta^2=(-3)^2=9$.",
+       "Equation: $x^2-7x+9=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-7",
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-17:a",
+      "kind": "value",
+      "answer": "1 + 2i and 1 - 2i",
+      "solution": [
+       "The numbers solve $x^2-2x+5=0$.",
+       "$x=\\frac{2\\pm\\sqrt{4-20}}{2}=\\frac{2\\pm4i}{2}$.",
+       "$x=1\\pm2i$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:method-7",
+       "eb11c3-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-17:b",
+      "kind": "value",
+      "answer": "2 + √2 and 2 - √2",
+      "solution": [
+       "The numbers solve $x^2-4x+2=0$.",
+       "$x=\\frac{4\\pm\\sqrt{16-8}}{2}=\\frac{4\\pm2\\sqrt2}{2}$.",
+       "$x=2\\pm\\sqrt2$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:method-7",
+       "eb11c3-2:explanation-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-18",
+      "kind": "value",
+      "answer": "x² + 8x + 24 = 0",
+      "solution": [
+       "$\\alpha+\\beta=-2$, $\\alpha\\beta=3$.",
+       "New sum $=4(\\alpha+\\beta)=-8$.",
+       "$\\alpha^2+\\beta^2=4-6=-2$.",
+       "New product $=3(\\alpha^2+\\beta^2)+10\\alpha\\beta=-6+30=24$.",
+       "Equation: $x^2+8x+24=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-7",
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-19",
+      "kind": "value",
+      "answer": "x² + 10x + 49 = 0",
+      "solution": [
+       "$\\alpha+\\beta=2$, $\\alpha\\beta=7$.",
+       "$\\alpha^2+\\beta^2=4-14=-10$.",
+       "$\\alpha^2\\beta^2=49$.",
+       "Equation: $x^2+10x+49=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-7",
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-20",
+      "kind": "value",
+      "answer": "4x² + 3x + 2 = 0",
+      "solution": [
+       "$\\alpha+\\beta=-\\frac32$, $\\alpha\\beta=2$.",
+       "$\\frac1\\alpha+\\frac1\\beta=\\frac{\\alpha+\\beta}{\\alpha\\beta}=-\\frac34$.",
+       "$\\frac1\\alpha\\cdot\\frac1\\beta=\\frac12$.",
+       "$x^2+\\frac34x+\\frac12=0$.",
+       "Multiply by 4: $4x^2+3x+2=0$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the quadratic equation for α and β is not given in the text, and the figure only shows the parabola crossing the x-axis at α and β with no equation.",
+      "solution": [
+       "To form the equation with roots $1/\\alpha$ and $1/\\beta$ we need $\\alpha+\\beta$ and $\\alpha\\beta$.",
+       "These need the coefficients of the equation, which are not given."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:rule-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-11",
+      "kind": "value",
+      "answer": "-6 < m < -2",
+      "solution": [
+       "$D>0$: $4m^2-4(m+6)>0$, so $(m-3)(m+2)>0$, giving $m<-2$ or $m>3$.",
+       "$\\alpha+\\beta<0$: $2m<0$, so $m<0$.",
+       "$\\alpha\\beta>0$: $m+6>0$, so $m>-6$.",
+       "Common range: $-6<m<-2$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:explanation-5",
+       "eb11c3-2:rule-12",
+       "eb11c3-2:method-10"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-14",
+      "kind": "value",
+      "answer": "-2 < m < -1",
+      "solution": [
+       "$D>0$: $4m^2-4(m+2)>0$, so $(m-2)(m+1)>0$, giving $m<-1$ or $m>2$.",
+       "$\\alpha+\\beta>0$: $-2m>0$, so $m<0$.",
+       "$\\alpha\\beta>0$: $m+2>0$, so $m>-2$.",
+       "Common range: $-2<m<-1$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-11",
+       "eb11c3-2:method-10",
+       "eb11c3-2:caution-11",
+       "eb11c3-2:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-15",
+      "kind": "value",
+      "answer": "m > -4",
+      "solution": [
+       "Different signs need $\\alpha\\beta<0$.",
+       "$\\alpha\\beta=-m-4<0$.",
+       "$m>-4$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-13",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:activity-1",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is an instruction to work with a partner on the try section. It has no question with a single answer.",
+      "solution": [
+       "The task is to solve the try questions with a partner and discuss them.",
+       "No separate question is given."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c3-2:exercise-22",
+      "kind": "value",
+      "answer": "-1 < m < -1/2",
+      "solution": [
+       "$D>0$: $4(m-1)^2-4(2m^2-5m-3)>0$, so $m^2-3m-4<0$, $(m-4)(m+1)<0$, giving $-1<m<4$.",
+       "$\\alpha+\\beta>0$: $-2(m-1)>0$, so $m<1$.",
+       "$\\alpha\\beta>0$: $2m^2-5m-3>0$, $(2m+1)(m-3)>0$, so $m<-\\frac12$ or $m>3$.",
+       "Common range: $-1<m<-\\frac12$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-11",
+       "eb11c3-2:method-10",
+       "eb11c3-2:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-23",
+      "kind": "value",
+      "answer": "k > -3",
+      "solution": [
+       "Different signs need $\\alpha\\beta<0$.",
+       "$\\alpha\\beta=-k-3<0$.",
+       "$k>-3$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-13",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-24",
+      "kind": "value",
+      "answer": "k > 10",
+      "solution": [
+       "$D>0$: $k^2-4(2k+5)>0$, so $k^2-8k-20>0$, $(k-10)(k+2)>0$, giving $k<-2$ or $k>10$.",
+       "$\\alpha+\\beta<0$: $-k<0$, so $k>0$.",
+       "$\\alpha\\beta>0$: $2k+5>0$, so $k>-\\frac52$.",
+       "Common range: $k>10$."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-12",
+       "eb11c3-2:method-10",
+       "eb11c3-2:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-7",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the cases to analyse are not given. Two distinct real solutions need m < -3 or m > 5.",
+      "solution": [
+       "The question says 'in each case' but the cases are not printed here.",
+       "Two distinct real solutions need $D>0$: $(m+1)^2-4(m+4)=m^2-2m-15=(m-5)(m+3)>0$.",
+       "So $m<-3$ or $m>5$.",
+       "Without the cases the sign conditions cannot be applied."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-1",
+       "eb11c3-2:definition-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:reflect-1",
+      "kind": "explanation",
+      "answer": "It lets you know the type and signs of the solutions quickly, so you understand the equation's behaviour and can check answers without solving fully.",
+      "solution": [
+       "The discriminant $D$ tells whether the solutions are real, repeated or imaginary.",
+       "The sum $-b/a$ and product $c/a$ give the signs of the solutions and let us form new equations.",
+       "This saves work and shows how the coefficients control the solutions, so you understand the structure better."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:method-10"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-2:open-prompt-1",
+      "kind": "explanation",
+      "answer": "Set the model equal to zero to get a quadratic. Its discriminant D = b²−4ac shows whether balance points exist: D>0 gives two real balance points, D=0 gives one repeated one, and D<0 gives none (imaginary solutions). A system with real equilibrium points can settle and stay stable. Without them it cannot balance, so it may collapse."
+     },
+     {
+      "ref": "eb11c3-2:challenge-1",
+      "kind": "explanation",
+      "answer": "x = (-√3 + √3 i)/3 or x = (-√3 − √3 i)/3 (D = −12 < 0). The solutions are imaginary, so there is no real amplitude for which the energy transfer rate is zero. The system never reaches equilibrium for real amplitudes."
+     },
+     {
+      "ref": "eb11c3-2:warm-up-3",
+      "kind": "value",
+      "answer": "-2 ≤ m ≤ 6"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-4",
+      "kind": "explanation",
+      "answer": "D = (k−2)(k+6). If k<−6 or k>2: two distinct real solutions. If k=−6 or k=2: a repeated (one real) solution. If −6<k<2: two distinct imaginary solutions."
+     },
+     {
+      "ref": "eb11c3-2:try-3",
+      "kind": "value",
+      "answer": "-1 < m < 2"
+     },
+     {
+      "ref": "eb11c3-2:try-4",
+      "kind": "explanation",
+      "answer": "D = (a−2)(a−6). If a<2 or a>6: two distinct real solutions. If a=2 or a=6: a repeated solution. If 2<a<6: two distinct imaginary solutions."
+     },
+     {
+      "ref": "eb11c3-2:warm-up-5",
+      "kind": "value",
+      "answer": "sum = 2, product = -5/3"
+     },
+     {
+      "ref": "eb11c3-2:try-5",
+      "kind": "value",
+      "answer": "sum = -1/2, product = -7/4"
+     },
+     {
+      "ref": "eb11c3-2:unlabelled-exercise-1",
+      "kind": "value",
+      "answer": "m = 2: solutions -2, 3; m = 0: solutions -3, 2"
+     },
+     {
+      "ref": "eb11c3-2:try-7",
+      "kind": "value",
+      "answer": "k = 12; solutions 2 and 6"
+     },
+     {
+      "ref": "eb11c3-2:try-8",
+      "kind": "value",
+      "answer": "m = 2: solutions 1, 2; m = -4: solutions -2, -1"
+     },
+     {
+      "ref": "eb11c3-2:exercise-8",
+      "kind": "value",
+      "answer": "m = 8; solutions -2 and -4"
+     },
+     {
+      "ref": "eb11c3-2:exercise-9",
+      "kind": "value",
+      "answer": "m = 6: solutions 1/4, 1/2; m = -6: solutions -1/4, -1/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-10",
+      "kind": "value",
+      "answer": "m = 5; solutions -5 and -1"
+     },
+     {
+      "ref": "eb11c3-2:exercise-11",
+      "kind": "value",
+      "answer": "m = -8: solutions 1/2, 3/2; m = 8: solutions -3/2, -1/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-12",
+      "kind": "value",
+      "answer": "m = 24/25; solutions 4/5 and 6/5"
+     },
+     {
+      "ref": "eb11c3-2:exercise-13",
+      "kind": "value",
+      "answer": "k = 8: solutions 2, 4; k = -27: solutions -3, 9"
+     },
+     {
+      "ref": "eb11c3-2:challenge-4",
+      "kind": "explanation",
+      "answer": "Let p be the common root. Subtracting the equations gives (a−b)p + c(b−a) = 0, so p = c because a≠b. Substituting into the first equation gives c²+ac+bc = 0, so a+b+c = 0 because c≠0. The product of the roots of the first equation is bc, so its other root is b. The second equation has other root a. Then a+b = −c and ab = ab, so a and b are roots of x²+cx+ab=0."
+     },
+     {
+      "ref": "eb11c3-2:challenge-5",
+      "kind": "explanation",
+      "answer": "6x⁴−7x²−3 = (2x²−3)(3x²+1) = 0, so x = ±√6/2 (real) or x = ±i√3/3 (imaginary). The real values are the displacements where the force balance is zero, so those are the cable's equilibrium points. The imaginary values have no physical displacement."
+     },
+     {
+      "ref": "eb11c3-2:warm-up-8",
+      "kind": "value",
+      "answer": "2x² − 2x + 1 = 0"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-9",
+      "kind": "value",
+      "answer": "(-1+√7 i)/2 and (-1−√7 i)/2"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-10",
+      "kind": "value",
+      "answer": "x² − 2x − 4 = 0"
+     },
+     {
+      "ref": "eb11c3-2:try-10",
+      "kind": "value",
+      "answer": "x² − 6x + 13 = 0"
+     },
+     {
+      "ref": "eb11c3-2:try-11",
+      "kind": "value",
+      "answer": "(1+√3 i)/2 and (1−√3 i)/2"
+     },
+     {
+      "ref": "eb11c3-2:try-12",
+      "kind": "value",
+      "answer": "x² − 7x + 9 = 0"
+     },
+     {
+      "ref": "eb11c3-2:exercise-17:a",
+      "kind": "value",
+      "answer": "1+2i and 1−2i"
+     },
+     {
+      "ref": "eb11c3-2:exercise-17:b",
+      "kind": "value",
+      "answer": "2+√2 and 2−√2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-18",
+      "kind": "value",
+      "answer": "x² + 8x + 24 = 0"
+     },
+     {
+      "ref": "eb11c3-2:exercise-19",
+      "kind": "value",
+      "answer": "x² + 10x + 49 = 0"
+     },
+     {
+      "ref": "eb11c3-2:exercise-20",
+      "kind": "value",
+      "answer": "4x² + 3x + 2 = 0"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-11",
+      "kind": "value",
+      "answer": "-6 < m < -2"
+     },
+     {
+      "ref": "eb11c3-2:try-14",
+      "kind": "value",
+      "answer": "-2 < m < -1"
+     },
+     {
+      "ref": "eb11c3-2:try-15",
+      "kind": "value",
+      "answer": "m > -4"
+     },
+     {
+      "ref": "eb11c3-2:activity-1",
+      "kind": "explanation",
+      "answer": "Solve try-14 and try-15 with a partner. Use D, α+β and αβ to get try-14: -2 < m < -1, and try-15: m > -4. Then compare and discuss the answers."
+     },
+     {
+      "ref": "eb11c3-2:exercise-22",
+      "kind": "value",
+      "answer": "-1 < m < -1/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-23",
+      "kind": "value",
+      "answer": "k > -3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-24",
+      "kind": "value",
+      "answer": "k > 10"
+     },
+     {
+      "ref": "eb11c3-2:reflect-1",
+      "kind": "explanation",
+      "answer": "Checking the discriminant, the sum and the product tells us the type of the roots (real or imaginary, positive or negative, equal or different) and lets us find constants or form new equations quickly. We see the structure of the problem and avoid heavy calculation. This builds understanding of how coefficients control the solutions."
+     },
+     {
+      "ref": "eb11c3-2:challenge-7",
+      "kind": "explanation",
+      "answer": "The page text does not show the cases, so I assumed the usual three. D>0 gives m<-3 or m>5. Both solutions positive: -4<m<-3. Both solutions negative: m>5. Solutions of different signs: m<-4."
+     }
+    ]
+   }
+  },
+  {
+   "label": "eb11c3-2:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "eb11c3-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "x = ±2i√2",
+      "solution": [
+       "Write x² = -8.",
+       "x = ±√(-8).",
+       "Express in terms of i: x = ±i√8 = ±2i√2.",
+       "Answer: x = ±2i√2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1",
+       "eb11c3-2:caution-1",
+       "eb11c3-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "x = -1 or x = 9/2",
+      "solution": [
+       "Factorise: (x + 1)(2x - 9) = 0.",
+       "x + 1 = 0 gives x = -1.",
+       "2x - 9 = 0 gives x = 9/2.",
+       "Answer: x = -1 or 9/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-6",
+       "eb11c3-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "x = (-√6 ± 4i)/2",
+      "solution": [
+       "a = 2, b = 2√6, c = 11.",
+       "Use the quadratic formula: x = (-2√6 ± √((2√6)² - 4·2·11))/(2·2).",
+       "Inside the root: 24 - 88 = -64.",
+       "√(-64) = 8i, so x = (-2√6 ± 8i)/4.",
+       "Divide by 2: x = (-√6 ± 4i)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1",
+       "eb11c3-2:worked-example-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-1:a",
+      "kind": "value",
+      "answer": "x = ±2i",
+      "solution": [
+       "x² = -4.",
+       "x = ±√(-4) = ±2i.",
+       "Answer: x = ±2i."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-1:b",
+      "kind": "value",
+      "answer": "x = 3 ± 2i√2",
+      "solution": [
+       "(x - 3)² = -8.",
+       "x - 3 = ±√(-8) = ±2i√2.",
+       "x = 3 ± 2i√2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-2",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-1:c",
+      "kind": "value",
+      "answer": "x = -3 or x = 1/2",
+      "solution": [
+       "Factorise: (x + 3)(2x - 1) = 0.",
+       "x + 3 = 0 gives x = -3.",
+       "2x - 1 = 0 gives x = 1/2.",
+       "Answer: x = -3 or 1/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-1:d",
+      "kind": "value",
+      "answer": "x = (-√3 ± i√7)/2",
+      "solution": [
+       "a = 2, b = 2√3, c = 5.",
+       "b² - 4ac = 12 - 40 = -28.",
+       "√(-28) = 2i√7.",
+       "x = (-2√3 ± 2i√7)/4.",
+       "Simplify: x = (-√3 ± i√7)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:a",
+      "kind": "value",
+      "answer": "x = ±7i",
+      "solution": [
+       "x² = -49.",
+       "x = ±√(-49) = ±7i."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:b",
+      "kind": "value",
+      "answer": "x = ±2/3",
+      "solution": [
+       "9x² = 4, so x² = 4/9.",
+       "x = ±√(4/9) = ±2/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:c",
+      "kind": "value",
+      "answer": "x = 2 ± √5",
+      "solution": [
+       "x - 2 = ±√5.",
+       "x = 2 ± √5."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:d",
+      "kind": "value",
+      "answer": "x = -6 ± i√6",
+      "solution": [
+       "x + 6 = ±√(-6) = ±i√6.",
+       "x = -6 ± i√6."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-2",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:e",
+      "kind": "value",
+      "answer": "x = 0 or x = -7/2",
+      "solution": [
+       "Factorise: x(2x + 7) = 0.",
+       "x = 0 or 2x + 7 = 0.",
+       "x = 0 or x = -7/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-3",
+       "eb11c3-2:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:f",
+      "kind": "value",
+      "answer": "x = 3/2 or x = -4",
+      "solution": [
+       "Factorise: (2x - 3)(x + 4) = 0.",
+       "2x - 3 = 0 gives x = 3/2.",
+       "x + 4 = 0 gives x = -4."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:g",
+      "kind": "value",
+      "answer": "x = (-1 ± i√3)/2",
+      "solution": [
+       "a = 1, b = 1, c = 1.",
+       "b² - 4ac = 1 - 4 = -3.",
+       "x = (-1 ± √(-3))/2 = (-1 ± i√3)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:h",
+      "kind": "value",
+      "answer": "x = (5 ± i√11)/6",
+      "solution": [
+       "a = 3, b = -5, c = 3.",
+       "b² - 4ac = 25 - 36 = -11.",
+       "x = (5 ± √(-11))/6 = (5 ± i√11)/6."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:i",
+      "kind": "value",
+      "answer": "x = √3 ± i√2",
+      "solution": [
+       "a = 1, b = -2√3, c = 5.",
+       "b² - 4ac = 12 - 20 = -8.",
+       "√(-8) = 2i√2.",
+       "x = (2√3 ± 2i√2)/2 = √3 ± i√2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:j",
+      "kind": "value",
+      "answer": "x = (-√2 ± i)/3",
+      "solution": [
+       "a = 3, b = 2√2, c = 1.",
+       "b² - 4ac = 8 - 12 = -4.",
+       "√(-4) = 2i.",
+       "x = (-2√2 ± 2i)/6 = (-√2 ± i)/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:a",
+      "kind": "value",
+      "answer": "x = (1 ± i√7)/2",
+      "solution": [
+       "a = 1, b = -1, c = 2.",
+       "b² - 4ac = 1 - 8 = -7.",
+       "x = (1 ± i√7)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:b",
+      "kind": "value",
+      "answer": "x = -4 ± 3i√2",
+      "solution": [
+       "x + 4 = ±√(-18).",
+       "√(-18) = i√18 = 3i√2.",
+       "x = -4 ± 3i√2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-2",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:c",
+      "kind": "value",
+      "answer": "x = ±2√3",
+      "solution": [
+       "x² = 12.",
+       "x = ±√12 = ±2√3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:d",
+      "kind": "value",
+      "answer": "x = (2 ± √7)/3",
+      "solution": [
+       "a = 3, b = -4, c = -1.",
+       "b² - 4ac = 16 + 12 = 28.",
+       "x = (4 ± 2√7)/6 = (2 ± √7)/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:e",
+      "kind": "value",
+      "answer": "x = 3 or x = 5",
+      "solution": [
+       "Factorise: (x - 3)(x - 5) = 0.",
+       "x = 3 or x = 5."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-4"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:f",
+      "kind": "value",
+      "answer": "x = ±(i√3)/2",
+      "solution": [
+       "4x² = -3, so x² = -3/4.",
+       "x = ±√(-3/4) = ±i√3/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:g",
+      "kind": "value",
+      "answer": "x = (√5 ± i√7)/6",
+      "solution": [
+       "a = 3, b = -√5, c = 1.",
+       "b² - 4ac = 5 - 12 = -7.",
+       "x = (√5 ± i√7)/6."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:h",
+      "kind": "value",
+      "answer": "x = (2 ± i√6)/2",
+      "solution": [
+       "a = 6, b = -12, c = 15.",
+       "b² - 4ac = 144 - 360 = -216.",
+       "√(-216) = 6i√6.",
+       "x = (12 ± 6i√6)/12 = (2 ± i√6)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:i",
+      "kind": "value",
+      "answer": "x = (3 ± √7)/2",
+      "solution": [
+       "2x - 3 = ±√7.",
+       "2x = 3 ± √7.",
+       "x = (3 ± √7)/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-2",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+       "a = 3, b = 4, c = 7.",
+       "D = 4² - 4×3×7 = 16 - 84 = -68.",
+       "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:explanation-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-2:a",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+       "D = (-5)² - 4×3×4 = 25 - 48 = -23.",
+       "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-2:b",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+       "D = (-7)² - 4×4×(-2) = 49 + 32 = 81.",
+       "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-2:c",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+       "D = (-10)² - 4×25×1 = 100 - 100 = 0.",
+       "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:a",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+       "D = (-5)² - 4×1×3 = 25 - 12 = 13.",
+       "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:b",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+       "D = (-12)² - 4×9×4 = 144 - 144 = 0.",
+       "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:c",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+       "D = (-8)² - 4×4×5 = 64 - 80 = -16.",
+       "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:d",
+      "kind": "value",
+      "answer": "a repeated real solution",
+      "solution": [
+       "D = (-4)² - 4×4×1 = 16 - 16 = 0.",
+       "D = 0, so one repeated real solution."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:e",
+      "kind": "value",
+      "answer": "two distinct imaginary solutions",
+      "solution": [
+       "D = (-3)² - 4×1×5 = 9 - 20 = -11.",
+       "D < 0, so two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:f",
+      "kind": "value",
+      "answer": "two distinct real solutions",
+      "solution": [
+       "D = (-1)² - 4×1×(-2) = 1 + 8 = 9.",
+       "D > 0, so two distinct real solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:a",
+      "kind": "value",
+      "answer": "a = 3 or a = -5",
+      "solution": [
+       "Repeated solution means D = 0.",
+       "D = (a+1)² - 4×1×4 = (a+1)² - 16.",
+       "(a+1)² = 16, so a + 1 = ±4.",
+       "a = 3 or a = -5."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-2",
+       "eb11c3-2:definition-1",
+       "eb11c3-2:method-1"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:b",
+      "kind": "value",
+      "answer": "-18 < m < -2",
+      "solution": [
+       "Two distinct imaginary solutions means D < 0.",
+       "D = (m+6)² - 4(-2m) = m² + 12m + 36 + 8m = m² + 20m + 36.",
+       "m² + 20m + 36 < 0, so (m + 2)(m + 18) < 0.",
+       "-18 < m < -2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-3",
+       "eb11c3-2:definition-1",
+       "eb11c3-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:c",
+      "kind": "value",
+      "answer": "0 ≤ m ≤ 3",
+      "solution": [
+       "Real solutions means D ≥ 0.",
+       "D = (-2m)² - 4(2m² - 3m) = 4m² - 8m² + 12m = -4m² + 12m.",
+       "-4m² + 12m ≥ 0, reverse the sign: m² - 3m ≤ 0.",
+       "m(m - 3) ≤ 0, so 0 ≤ m ≤ 3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-4",
+       "eb11c3-2:definition-1",
+       "eb11c3-2:example-2"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:a",
+      "kind": "explanation",
+      "answer": "D = a(a+4): two distinct real solutions when a < -4 or a > 0; a repeated solution when a = -4 or 0; two distinct imaginary solutions when -4 < a < 0.",
+      "solution": [
+       "D = a² - 4(1)(-a) = a² + 4a = a(a + 4).",
+       "D > 0: a < -4 or a > 0, two distinct real solutions.",
+       "D = 0: a = -4 or a = 0, a repeated solution.",
+       "D < 0: -4 < a < 0, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:b",
+      "kind": "explanation",
+      "answer": "D = (2-k)(3k+2): two distinct real solutions when -2/3 < k < 2; a repeated solution when k = -2/3 or 2; two distinct imaginary solutions when k < -2/3 or k > 2.",
+      "solution": [
+       "D = (k+2)² - 4k² = -3k² + 4k + 4 = -(3k + 2)(k - 2).",
+       "D > 0: -2/3 < k < 2, two distinct real solutions.",
+       "D = 0: k = -2/3 or k = 2, a repeated solution.",
+       "D < 0: k < -2/3 or k > 2, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:c",
+      "kind": "explanation",
+      "answer": "D = 4(a-3): two distinct real solutions when a > 3; a repeated solution when a = 3; two distinct imaginary solutions when a < 3.",
+      "solution": [
+       "D = 4(a-1)² - 4(a² - 3a + 4) = 4(a² - 2a + 1 - a² + 3a - 4) = 4(a - 3).",
+       "D > 0: a > 3, two distinct real solutions.",
+       "D = 0: a = 3, a repeated solution.",
+       "D < 0: a < 3, two distinct imaginary solutions."
+      ],
+      "grounded_in": [
+       "eb11c3-2:definition-1",
+       "eb11c3-2:rule-1",
+       "eb11c3-2:rule-2",
+       "eb11c3-2:rule-3",
+       "eb11c3-2:example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:a",
+      "kind": "value",
+      "answer": "12",
+      "solution": [
+       "α + β = 3, αβ = -3/2.",
+       "α² + β² = (α+β)² - 2αβ = 9 + 3 = 12."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:b",
+      "kind": "value",
+      "answer": "81/2",
+      "solution": [
+       "α + β = 3, αβ = -3/2.",
+       "α³ + β³ = (α+β)³ - 3αβ(α+β) = 27 + 27/2 = 81/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:c",
+      "kind": "value",
+      "answer": "-4",
+      "solution": [
+       "2/α + 2/β = 2(α+β)/(αβ).",
+       "= 2×3 ÷ (-3/2) = -4."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:d",
+      "kind": "value",
+      "answer": "5/2",
+      "solution": [
+       "(α+1)(β+1) = αβ + α + β + 1.",
+       "= -3/2 + 3 + 1 = 5/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-6:a",
+      "kind": "value",
+      "answer": "1",
+      "solution": [
+       "α + β = 2, αβ = 3/2.",
+       "α² + β² = 4 - 3 = 1."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-6:b",
+      "kind": "value",
+      "answer": "-1",
+      "solution": [
+       "α + β = 2, αβ = 3/2.",
+       "α³ + β³ = 8 - 3(3/2)(2) = 8 - 9 = -1."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-6:c",
+      "kind": "value",
+      "answer": "2/3",
+      "solution": [
+       "β/α + α/β = (α² + β²)/(αβ).",
+       "α² + β² = 1, αβ = 3/2.",
+       "= 1 ÷ 3/2 = 2/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-6:d",
+      "kind": "value",
+      "answer": "1/2",
+      "solution": [
+       "(α-1)(β-1) = αβ - (α+β) + 1.",
+       "= 3/2 - 2 + 1 = 1/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:a",
+      "kind": "value",
+      "answer": "sum -1, product 2",
+      "solution": [
+       "a = 1, b = 1, c = 2.",
+       "Sum = -b/a = -1.",
+       "Product = c/a = 2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:b",
+      "kind": "value",
+      "answer": "sum 7/3, product -2",
+      "solution": [
+       "a = 3, b = -7, c = -6.",
+       "Sum = 7/3.",
+       "Product = -6/3 = -2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:c",
+      "kind": "value",
+      "answer": "sum 0, product -3/5",
+      "solution": [
+       "a = 5, b = 0, c = -3.",
+       "Sum = 0.",
+       "Product = -3/5."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:a",
+      "kind": "value",
+      "answer": "-2",
+      "solution": [
+       "α + β = 2, αβ = 3.",
+       "α² + β² = 4 - 6 = -2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:b",
+      "kind": "value",
+      "answer": "-10",
+      "solution": [
+       "α + β = 2, αβ = 3.",
+       "α³ + β³ = 8 - 3×3×2 = 8 - 18 = -10."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:c",
+      "kind": "value",
+      "answer": "2/3",
+      "solution": [
+       "1/α + 1/β = (α+β)/(αβ).",
+       "= 2/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:d",
+      "kind": "value",
+      "answer": "11",
+      "solution": [
+       "(α+2)(β+2) = αβ + 2(α+β) + 4.",
+       "= 3 + 4 + 4 = 11."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:a",
+      "kind": "value",
+      "answer": "14/3",
+      "solution": [
+       "α + β = -2, αβ = -1/3.",
+       "α² + β² = 4 + 2/3 = 14/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:b",
+      "kind": "value",
+      "answer": "-10",
+      "solution": [
+       "α + β = -2, αβ = -1/3.",
+       "α³ + β³ = (-2)³ - 3(-1/3)(-2) = -8 - 2 = -10."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:c",
+      "kind": "value",
+      "answer": "6",
+      "solution": [
+       "1/α + 1/β = (α+β)/(αβ).",
+       "= -2 ÷ (-1/3) = 6."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:d",
+      "kind": "value",
+      "answer": "23/3",
+      "solution": [
+       "(α-2)(β-2) = αβ - 2(α+β) + 4.",
+       "= -1/3 + 4 + 4 = 23/3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:a",
+      "kind": "value",
+      "answer": "9/2",
+      "solution": [
+       "α + β = 3, αβ = 3/2.",
+       "α²β + αβ² = αβ(α+β).",
+       "= 3/2 × 3 = 9/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:b",
+      "kind": "value",
+      "answer": "3",
+      "solution": [
+       "(α-β)² = α² - 2αβ + β² = (α+β)² - 4αβ.",
+       "= 9 - 6 = 3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:c",
+      "kind": "value",
+      "answer": "27/2",
+      "solution": [
+       "α³ + β³ = (α+β)³ - 3αβ(α+β).",
+       "= 27 - 3(3/2)(3) = 27 - 27/2 = 27/2."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-8",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:d",
+      "kind": "value",
+      "answer": "9",
+      "solution": [
+       "β²/α + α²/β = (α³ + β³)/(αβ).",
+       "α³ + β³ = 27/2, αβ = 3/2.",
+       "= 27/2 ÷ 3/2 = 9."
+      ],
+      "grounded_in": [
+       "eb11c3-2:method-8",
+       "eb11c3-2:rule-8"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-7:a",
+      "kind": "value",
+      "answer": "2(x - (3+i√7)/4)(x - (3-i√7)/4)",
+      "solution": [
+       "Solve 2x² - 3x + 2 = 0 by the quadratic formula: x = (3 ± i√7)/4.",
+       "Use a(x-α)(x-β) with a = 2.",
+       "Answer: 2(x - (3+i√7)/4)(x - (3-i√7)/4)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:worked-example-3",
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:warm-up-7:b",
+      "kind": "value",
+      "answer": "(x+1)(x-1)(x+i√3)(x-i√3)",
+      "solution": [
+       "x⁴ + 2x² - 3 = (x² - 1)(x² + 3).",
+       "x² - 1 = (x+1)(x-1).",
+       "x² + 3 = 0 gives x = ±i√3, so x² + 3 = (x+i√3)(x-i√3).",
+       "Answer: (x+1)(x-1)(x+i√3)(x-i√3)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-9:a",
+      "kind": "value",
+      "answer": "(x+1-2i)(x+1+2i)",
+      "solution": [
+       "Solve x² + 2x + 5 = 0: D = 4 - 20 = -16, x = (-2 ± 4i)/2 = -1 ± 2i.",
+       "a = 1, so factorise as (x-(-1+2i))(x-(-1-2i)).",
+       "Answer: (x+1-2i)(x+1+2i)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-9:b",
+      "kind": "value",
+      "answer": "2(x - (3+√7)/2)(x - (3-√7)/2)",
+      "solution": [
+       "Solve 2x² - 6x + 1 = 0: D = 36 - 8 = 28, x = (6 ± 2√7)/4 = (3 ± √7)/2.",
+       "a = 2, so keep the factor 2.",
+       "Answer: 2(x - (3+√7)/2)(x - (3-√7)/2)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:try-9:c",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x-i√2)(x+i√2)",
+      "solution": [
+       "x⁴ - x² - 6 = (x² - 3)(x² + 2).",
+       "x² - 3 = 0 gives x = ±√3.",
+       "x² + 2 = 0 gives x = ±i√2.",
+       "Answer: (x-√3)(x+√3)(x-i√2)(x+i√2)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:a",
+      "kind": "value",
+      "answer": "(x+2-i)(x+2+i)",
+      "solution": [
+       "x² + 4x + 5 = 0: D = 16 - 20 = -4, x = -2 ± i.",
+       "Answer: (x+2-i)(x+2+i)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:b",
+      "kind": "value",
+      "answer": "(x+2-√2)(x+2+√2)",
+      "solution": [
+       "x² + 4x + 2 = 0: D = 16 - 8 = 8, x = (-4 ± 2√2)/2 = -2 ± √2.",
+       "Answer: (x+2-√2)(x+2+√2)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:c",
+      "kind": "value",
+      "answer": "(x-2-i√3)(x-2+i√3)",
+      "solution": [
+       "x² - 4x + 7 = 0: D = 16 - 28 = -12, x = (4 ± 2i√3)/2 = 2 ± i√3.",
+       "Answer: (x-2-i√3)(x-2+i√3)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:d",
+      "kind": "value",
+      "answer": "2(x - (1+i√7)/4)(x - (1-i√7)/4)",
+      "solution": [
+       "2x² - x + 1 = 0: D = 1 - 8 = -7, x = (1 ± i√7)/4.",
+       "a = 2, so keep the factor 2.",
+       "Answer: 2(x - (1+i√7)/4)(x - (1-i√7)/4)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:e",
+      "kind": "value",
+      "answer": "3(x - (5+i√11)/6)(x - (5-i√11)/6)",
+      "solution": [
+       "3x² - 5x + 3 = 0: D = 25 - 36 = -11, x = (5 ± i√11)/6.",
+       "a = 3, so keep the factor 3.",
+       "Answer: 3(x - (5+i√11)/6)(x - (5-i√11)/6)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:f",
+      "kind": "value",
+      "answer": "2(x - (1+√3)/2)(x - (1-√3)/2)",
+      "solution": [
+       "2x² - 2x - 1 = 0: D = 4 + 8 = 12, x = (2 ± 2√3)/4 = (1 ± √3)/2.",
+       "a = 2, so keep the factor 2.",
+       "Answer: 2(x - (1+√3)/2)(x - (1-√3)/2)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:method-7",
+       "eb11c3-2:caution-7"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:g",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x-i√3)(x+i√3)",
+      "solution": [
+       "x⁴ - 9 = (x² - 3)(x² + 3).",
+       "x² - 3 = (x-√3)(x+√3).",
+       "x² + 3 = (x-i√3)(x+i√3).",
+       "Answer: (x-√3)(x+√3)(x-i√3)(x+i√3)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:h",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x-√2)(x+√2)",
+      "solution": [
+       "x⁴ - 3x² + 2 = (x² - 1)(x² - 2).",
+       "x² - 1 = (x-1)(x+1).",
+       "x² - 2 = (x-√2)(x+√2).",
+       "Answer: (x-1)(x+1)(x-√2)(x+√2)."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-9",
+       "eb11c3-2:worked-example-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-15",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are given as separate parts.",
+      "solution": [
+       "The record holds only the introduction line.",
+       "Each question is answered under its own reference."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:a",
+      "kind": "value",
+      "answer": "x² - x - 2 = 0",
+      "solution": [
+       "Sum = -1 + 2 = 1.",
+       "Product = (-1)(2) = -2.",
+       "Use x² - (sum)x + product = 0.",
+       "x² - x - 2 = 0."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:b",
+      "kind": "value",
+      "answer": "x² - 2x + 17 = 0",
+      "solution": [
+       "Sum = (1+4i) + (1-4i) = 2.",
+       "Product = 1 - 16i² = 1 + 16 = 17.",
+       "x² - 2x + 17 = 0."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:c",
+      "kind": "value",
+      "answer": "3x² - 10x + 6 = 0",
+      "solution": [
+       "Sum = (5+√7)/3 + (5-√7)/3 = 10/3.",
+       "Product = (25 - 7)/9 = 2.",
+       "x² - (10/3)x + 2 = 0.",
+       "Multiply by 3: 3x² - 10x + 6 = 0."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-10",
+       "eb11c3-2:explanation-3"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the figure shows only a parabola with roots α<0<β and gives no equation or numbers.",
+      "solution": [
+       "The figure has no coefficients or values for α and β.",
+       "The sum and product of 1/α and 1/β cannot be found without the equation."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c3-2:try-13",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are separate parts.",
+      "solution": [
+       "The record holds only the introduction line.",
+       "The questions are answered under their own references."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c3-2:exercise-21",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading 'Solve the following problems'; the questions are separate parts.",
+      "solution": [
+       "The record holds only the introduction line.",
+       "The questions are answered under their own references."
+      ],
+      "grounded_in": []
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:a",
+      "kind": "value",
+      "answer": "-4 < m < -3",
+      "solution": [
+       "Two distinct real solutions: D = (m+1)² - 4(m+4) = m² - 2m - 15 = (m-5)(m+3) > 0, so m < -3 or m > 5.",
+       "Both positive: α+β = -(m+1) > 0, so m < -1.",
+       "αβ = m + 4 > 0, so m > -4.",
+       "Common range: -4 < m < -3."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-11",
+       "eb11c3-2:method-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:b",
+      "kind": "value",
+      "answer": "m > 5",
+      "solution": [
+       "D > 0: m < -3 or m > 5.",
+       "Both negative: α+β = -(m+1) < 0, so m > -1.",
+       "αβ = m + 4 > 0, so m > -4.",
+       "Common range: m > 5."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-12",
+       "eb11c3-2:method-10",
+       "eb11c3-2:rule-5",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:explanation-5"
+      ]
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:c",
+      "kind": "value",
+      "answer": "m < -4",
+      "solution": [
+       "Different signs: αβ < 0.",
+       "αβ = m + 4 < 0, so m < -4.",
+       "Then D > 0 holds since m < -3 is included.",
+       "Answer: m < -4."
+      ],
+      "grounded_in": [
+       "eb11c3-2:rule-13",
+       "eb11c3-2:rule-6",
+       "eb11c3-2:rule-1"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c3-2:warm-up-1:a",
+      "kind": "value",
+      "answer": "x = ±2i√2"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-1:b",
+      "kind": "value",
+      "answer": "x = -1 or x = 9/2"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-1:c",
+      "kind": "value",
+      "answer": "x = (-√6 ± 4i)/2"
+     },
+     {
+      "ref": "eb11c3-2:try-1:a",
+      "kind": "value",
+      "answer": "x = ±2i"
+     },
+     {
+      "ref": "eb11c3-2:try-1:b",
+      "kind": "value",
+      "answer": "x = 3 ± 2i√2"
+     },
+     {
+      "ref": "eb11c3-2:try-1:c",
+      "kind": "value",
+      "answer": "x = 1/2 or x = -3"
+     },
+     {
+      "ref": "eb11c3-2:try-1:d",
+      "kind": "value",
+      "answer": "x = (-√3 ± i√7)/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:a",
+      "kind": "value",
+      "answer": "x = ±7i"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:b",
+      "kind": "value",
+      "answer": "x = ±2/3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:c",
+      "kind": "value",
+      "answer": "x = 2 ± √5"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:d",
+      "kind": "value",
+      "answer": "x = -6 ± i√6"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:e",
+      "kind": "value",
+      "answer": "x = 0 or x = -7/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:f",
+      "kind": "value",
+      "answer": "x = 3/2 or x = -4"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:g",
+      "kind": "value",
+      "answer": "x = (-1 ± i√3)/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:h",
+      "kind": "value",
+      "answer": "x = (5 ± i√11)/6"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:i",
+      "kind": "value",
+      "answer": "x = √3 ± i√2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-1:j",
+      "kind": "value",
+      "answer": "x = (-√2 ± i)/3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:a",
+      "kind": "value",
+      "answer": "x = (1 ± i√7)/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:b",
+      "kind": "value",
+      "answer": "x = -4 ± 3i√2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:c",
+      "kind": "value",
+      "answer": "x = ±2√3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:d",
+      "kind": "value",
+      "answer": "x = (2 ± √7)/3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:e",
+      "kind": "value",
+      "answer": "x = 3 or x = 5"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:f",
+      "kind": "value",
+      "answer": "x = ±i√3/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:g",
+      "kind": "value",
+      "answer": "x = (√5 ± i√7)/6"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:h",
+      "kind": "value",
+      "answer": "x = (2 ± i√6)/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-2:i",
+      "kind": "value",
+      "answer": "x = (3 ± √7)/2"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-2",
+      "kind": "explanation",
+      "answer": "D = -68 < 0, so two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:try-2:a",
+      "kind": "explanation",
+      "answer": "D = -23 < 0: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:try-2:b",
+      "kind": "explanation",
+      "answer": "D = 81 > 0: two distinct real solutions"
+     },
+     {
+      "ref": "eb11c3-2:try-2:c",
+      "kind": "explanation",
+      "answer": "D = 0: a repeated real solution"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:a",
+      "kind": "explanation",
+      "answer": "D = 13 > 0: two distinct real solutions"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:b",
+      "kind": "explanation",
+      "answer": "D = 0: a repeated real solution"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:c",
+      "kind": "explanation",
+      "answer": "D = -16 < 0: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:d",
+      "kind": "explanation",
+      "answer": "D = 0: a repeated real solution"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:e",
+      "kind": "explanation",
+      "answer": "D = -11 < 0: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:exercise-3:f",
+      "kind": "explanation",
+      "answer": "D = 9 > 0: two distinct real solutions"
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:a",
+      "kind": "value",
+      "answer": "a = 3 or a = -5"
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:b",
+      "kind": "value",
+      "answer": "-18 < m < -2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-4:c",
+      "kind": "value",
+      "answer": "0 ≤ m ≤ 3"
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:a",
+      "kind": "explanation",
+      "answer": "D = a(a+4). a < -4 or a > 0: two distinct real solutions; a = -4 or 0: repeated solution; -4 < a < 0: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:b",
+      "kind": "explanation",
+      "answer": "D = (2-k)(3k+2). -2/3 < k < 2: two distinct real solutions; k = -2/3 or 2: repeated solution; k < -2/3 or k > 2: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:challenge-2:c",
+      "kind": "explanation",
+      "answer": "D = 4(a-3). a > 3: two distinct real solutions; a = 3: repeated solution; a < 3: two distinct imaginary solutions"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:a",
+      "kind": "value",
+      "answer": "12"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:b",
+      "kind": "value",
+      "answer": "81/2"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:c",
+      "kind": "value",
+      "answer": "-4"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-6:d",
+      "kind": "value",
+      "answer": "5/2"
+     },
+     {
+      "ref": "eb11c3-2:try-6:a",
+      "kind": "value",
+      "answer": "1"
+     },
+     {
+      "ref": "eb11c3-2:try-6:b",
+      "kind": "value",
+      "answer": "-1"
+     },
+     {
+      "ref": "eb11c3-2:try-6:c",
+      "kind": "value",
+      "answer": "2/3"
+     },
+     {
+      "ref": "eb11c3-2:try-6:d",
+      "kind": "value",
+      "answer": "1/2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:a",
+      "kind": "value",
+      "answer": "sum = -1, product = 2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:b",
+      "kind": "value",
+      "answer": "sum = 7/3, product = -2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-5:c",
+      "kind": "value",
+      "answer": "sum = 0, product = -3/5"
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:a",
+      "kind": "value",
+      "answer": "-2"
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:b",
+      "kind": "value",
+      "answer": "-10"
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:c",
+      "kind": "value",
+      "answer": "2/3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-6:d",
+      "kind": "value",
+      "answer": "11"
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:a",
+      "kind": "value",
+      "answer": "14/3"
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:b",
+      "kind": "value",
+      "answer": "-10"
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:c",
+      "kind": "value",
+      "answer": "6"
+     },
+     {
+      "ref": "eb11c3-2:exercise-7:d",
+      "kind": "value",
+      "answer": "23/3"
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:a",
+      "kind": "value",
+      "answer": "9/2"
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:b",
+      "kind": "value",
+      "answer": "3"
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:c",
+      "kind": "value",
+      "answer": "27/2"
+     },
+     {
+      "ref": "eb11c3-2:challenge-3:d",
+      "kind": "value",
+      "answer": "9"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-7:a",
+      "kind": "value",
+      "answer": "2(x - (3+i√7)/4)(x - (3-i√7)/4)"
+     },
+     {
+      "ref": "eb11c3-2:warm-up-7:b",
+      "kind": "value",
+      "answer": "(x+1)(x-1)(x+i√3)(x-i√3)"
+     },
+     {
+      "ref": "eb11c3-2:try-9:a",
+      "kind": "value",
+      "answer": "(x+1-2i)(x+1+2i)"
+     },
+     {
+      "ref": "eb11c3-2:try-9:b",
+      "kind": "value",
+      "answer": "2(x - (3+√7)/2)(x - (3-√7)/2)"
+     },
+     {
+      "ref": "eb11c3-2:try-9:c",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x+i√2)(x-i√2)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:a",
+      "kind": "value",
+      "answer": "(x+2-i)(x+2+i)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:b",
+      "kind": "value",
+      "answer": "(x+2-√2)(x+2+√2)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:c",
+      "kind": "value",
+      "answer": "(x-2-i√3)(x-2+i√3)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:d",
+      "kind": "value",
+      "answer": "2(x - (1+i√7)/4)(x - (1-i√7)/4)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:e",
+      "kind": "value",
+      "answer": "3(x - (5+i√11)/6)(x - (5-i√11)/6)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:f",
+      "kind": "value",
+      "answer": "2(x - (1+√3)/2)(x - (1-√3)/2)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:g",
+      "kind": "value",
+      "answer": "(x-√3)(x+√3)(x-i√3)(x+i√3)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-14:h",
+      "kind": "value",
+      "answer": "(x-1)(x+1)(x-√2)(x+√2)"
+     },
+     {
+      "ref": "eb11c3-2:exercise-15",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading/intro line; the questions are separate parts."
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:a",
+      "kind": "value",
+      "answer": "x^2 - x - 2 = 0"
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:b",
+      "kind": "value",
+      "answer": "x^2 - 2x + 17 = 0"
+     },
+     {
+      "ref": "eb11c3-2:exercise-16:c",
+      "kind": "value",
+      "answer": "3x^2 - 10x + 6 = 0"
+     },
+     {
+      "ref": "eb11c3-2:challenge-6",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: the figure shows only a parabola with roots α<0<β and gives no equation or coefficients, so the new equation cannot be determined."
+     },
+     {
+      "ref": "eb11c3-2:try-13",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading line; the questions are separate parts."
+     },
+     {
+      "ref": "eb11c3-2:exercise-21",
+      "kind": "explanation",
+      "answer": "CANNOT ANSWER: this is only the heading line; the questions are separate parts."
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:a",
+      "kind": "value",
+      "answer": "-4 < m < -3"
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:b",
+      "kind": "value",
+      "answer": "m > 5"
+     },
+     {
+      "ref": "eb11c3-2:challenge-7:c",
+      "kind": "value",
+      "answer": "m < -4"
+     }
+    ]
+   }
+  }
+ ]
+}

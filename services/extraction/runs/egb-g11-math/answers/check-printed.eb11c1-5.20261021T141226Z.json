@@ -1,0 +1,37 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "blind",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "80e0d5cce05635f3e5f4e23d51d43b81ed5c149cf9493d64e1c9fab7501270fc",
+  "generated_sha256": "91fe22f337ab06bef7ed73b7a606e7d580086505ac51968170df72c2a316dc75",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "eb11c1-5:printed",
+   "resolved": {
+    "answers": [
+     {
+      "ref": "eb11c1-5:explanation-3",
+      "kind": "explanation",
+      "answer": "LHS − RHS = a² + 4b² − 4ab = a² − 4ab + 4b² = (a − 2b)² ≥ 0, so a² + 4b² ≥ 4ab. Equality holds when a − 2b = 0, i.e. a = 2b."
+     },
+     {
+      "ref": "eb11c1-5:explanation-4",
+      "kind": "explanation",
+      "answer": "Both sides are positive (a,b>0). (LHS)² − (RHS)² = (a²+b²)/2 − (a+b)²/4 = (2a²+2b² − a² − 2ab − b²)/4 = (a−b)²/4 ≥ 0. Hence (LHS)² ≥ (RHS)², so √((a²+b²)/2) ≥ (a+b)/2. Equality holds when a = b."
+     },
+     {
+      "ref": "eb11c1-5:explanation-5",
+      "kind": "explanation",
+      "answer": "Yes, equality holds (when a = b). Since a>0, b>0, by AM-GM b/a + a/b ≥ 2√((b/a)(a/b)) = 2√1 = 2. Equality holds when b/a = a/b, i.e. a² = b², so a = b (both positive)."
+     }
+    ]
+   }
+  }
+ ]
+}

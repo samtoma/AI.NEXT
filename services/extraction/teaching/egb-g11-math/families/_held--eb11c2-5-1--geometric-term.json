@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c2-5-1:geometric-term",
+ "kind": "family",
+ "lo_id": "lo:eb11c2-5-1",
+ "parent_question_id": "q:eb11c2-5-1:bk-exercise-3-g",
+ "source_page": 93,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    5,
+    -1,
+    -2,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    -2,
+    -3
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the general term of the sequence $\\{a_n\\}$ determined by the following conditions. $a_1={=c}, \\ a_{n+1}={=r}a_n$",
+ "solution": [
+  "The relation $a_{n+1}={=r}a_n$ means each term is {=r} times the previous one, so the sequence is geometric with first term {=c} and common ratio {=r}.",
+  "$a_n = a_1 r^{n-1} = ({=c})\\times({=r})^{n-1}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "a_n = {=c}*({=r})**(n-1)",
+  "form": null,
+  "variables": [
+   "a",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Geometric recurrence with first term not 1 and possibly negative ratio. Same skeleton as book 3-g."
+}

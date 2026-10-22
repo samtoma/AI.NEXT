@@ -1,0 +1,77 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "2d8e6f8c7ca184263d642d3cfc3b5e4ac94f54784a267aa8dfb15133c56825a9",
+  "generated_sha256": "90df1db7edcc62487e9945647ce265c0e0c3aa7a72b326a04ae61a00d09789f9",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c3-2:worked-example-1:a",
+    "verdict": "equivalent",
+    "reason": "Same roots ±2√2 i."
+   },
+   {
+    "ref": "eb11c3-2:worked-example-1:c",
+    "verdict": "equivalent",
+    "reason": "Same two roots (-√6±4i)/2."
+   },
+   {
+    "ref": "eb11c3-2:explanation-1",
+    "verdict": "equivalent",
+    "reason": "Both conclude two distinct imaginary solutions (D<0)."
+   },
+   {
+    "ref": "eb11c3-2:example-2",
+    "verdict": "equivalent",
+    "reason": "Solver's D≥0 case (-2≤m≤6) matches printed range, with extra case detail."
+   },
+   {
+    "ref": "eb11c3-2:explanation-2:a",
+    "verdict": "different",
+    "reason": "22/3 vs 12."
+   },
+   {
+    "ref": "eb11c3-2:explanation-2:b",
+    "verdict": "different",
+    "reason": "18 vs 81/2."
+   },
+   {
+    "ref": "eb11c3-2:explanation-2:c",
+    "verdict": "different",
+    "reason": "-12/5 vs -4."
+   },
+   {
+    "ref": "eb11c3-2:explanation-2:d",
+    "verdict": "different",
+    "reason": "4/3 vs 5/2."
+   },
+   {
+    "ref": "eb11c3-2:worked-example-2",
+    "verdict": "equivalent",
+    "reason": "Same m values with same solution pairs."
+   },
+   {
+    "ref": "eb11c3-2:worked-example-3:a",
+    "verdict": "equivalent",
+    "reason": "Same factorisation."
+   },
+   {
+    "ref": "eb11c3-2:worked-example-3:b",
+    "verdict": "equivalent",
+    "reason": "Same four factors."
+   },
+   {
+    "ref": "eb11c3-2:explanation-3",
+    "verdict": "equivalent",
+    "reason": "Same equation up to scaling; solver also gives 2x²-2x+1=0."
+   }
+  ]
+ }
+}

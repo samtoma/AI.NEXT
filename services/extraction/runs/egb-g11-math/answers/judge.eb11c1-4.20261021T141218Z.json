@@ -1,0 +1,32 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "judge",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "ea79f853e0537058d499a36483435afa4754e5c7c0a9b5c32b97eb43a6e2e107",
+  "generated_sha256": "1d05dab09d3722240c2b94b611c90dbb888f1f07ca72c4385108a9affc02d77f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "judge": {
+  "verdicts": [
+   {
+    "ref": "eb11c1-4:explanation-3",
+    "verdict": "equivalent",
+    "reason": "Both conclude the identity (x+y)^2-(x-y)^2=4xy is proved; solver shows the work."
+   },
+   {
+    "ref": "eb11c1-4:explanation-4",
+    "verdict": "equivalent",
+    "reason": "Both conclude the identity is true; solver's expansion shows both sides equal."
+   },
+   {
+    "ref": "eb11c1-4:worked-example-2",
+    "verdict": "equivalent",
+    "reason": "Both conclude ab/(a²+b²)=cd/(c²+d²); solver proves it via a/b=c/d=k."
+   }
+  ]
+ }
+}
