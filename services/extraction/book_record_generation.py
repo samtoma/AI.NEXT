@@ -127,13 +127,18 @@ def finish(book: str, slugs: list[str], dsn: str | None) -> int:
     # found defective is moved to runs/<book>/widgets/superseded/ with the reason, never silently outvoted.
     verdicts = latest(book, "widgets", "s7-verify") + latest(book, "widgets", "s7b-verify")
     if any(wdir.glob("*.json")) and verdicts and dsn:
-        run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn,
+        # --catalogue: the unit's own entries (pass 1, above) are not in the scratch database yet, so without it every
+        # widget diagnostic naming one is dropped as "not in the catalogue" and the bundle pass cannot strip it
+        run("generate_widget_questions.py", "--templates", str(wdir), "--book", str(view), "--dsn", dsn, "--catalogue", str(cat),
             "--verdicts", *map(str, verdicts), "--gaps", *map(str, latest(book, "widgets", "s7-author") + latest(book, "widgets", "s7b-author")),
             "--pending-review", str(HERE / "reviews" / book / f"widget-mappings-pending.{slugs[0]}.json"), "--out", str(wq_out))
         bundles.append(wq_out)
     if bundles:
+        # --graph: a widget may name a prerequisite's misconception (FR-1215), checked against the book's SeedBundles'
+        # prerequisite edges, as Samuel's fan-out passes them (fanout_advance.py)
+        seeds = [book_config.REPO_ROOT / b for b in json.loads(view.read_text()).get("bundles") or []]
         run("assemble_misconceptions.py", str(final[-1]), "--book", str(view), "--out", str(cat),
-            *[x for b in bundles for x in ("--bundle", str(b))])
+            *[x for b in bundles for x in ("--bundle", str(b))], *[x for g in seeds for x in ("--graph", str(g))])
     for f in [cat, *bundles]:
         n = merge_unit(f, gdir / f.name, slugs)
         print(f"finished: {n} row(s) of {slugs[0]}… into {(gdir / f.name).relative_to(HERE)}", file=sys.stderr)
@@ -349,6 +354,9 @@ def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
         # families that evaluate to nothing ("families that produced nothing: tpl:<obj>:<slug>, …"): held
         for line in re.findall(r"families that produced nothing: (.*)$", out, re.M):
             bad |= {f"{o}--{b}.json" for o, b in re.findall(r"tpl:([a-z0-9-]+):([a-z0-9-]+)", line)}
+        # families whose instances fail to evaluate ("rejected: tpl:<obj>:<slug>: evaluation error: …" — a spec bug,
+        # e.g. a numeric answer written as '28/29'): held, or the unit's --check fails on them every round
+        bad |= {f"{o}--{b}.json" for o, b in re.findall(r"^\s*x rejected: tpl:([a-z0-9-]+):([a-z0-9-]+): evaluation error", out, re.M)}
         # a family whose parent is not a book question of the unit (FR-1101: an anchor book question; S6 has
         # written "q:<objective>:none" for an objective with none)
         cfg = json.loads(view.read_text())
