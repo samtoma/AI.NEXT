@@ -101,7 +101,7 @@
       "lo": "eb11c2-5:objective-1",
       "source_page": 91,
       "quote": "A sequence {a_n} is determined, and a_2, a_3, a_4, ... can be found in order",
-      "claim": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\dots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$).",
+      "claim": "A sequence $\\{a_n\\}$ is determined, and $a_2, a_3, a_4, \\ldots$ can be found in order, if two conditions are given: (a) the first term; (b) a relational expression to find $a_{n+1}$ from $a_n$ ($n = 1, 2, 3, \\ldots$).",
       "formula": "$a_{n+1}$ from $a_n$ ($n=1,2,3,\\dots$)",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
@@ -137,7 +137,7 @@
       "lo": "eb11c2-5:objective-1",
       "source_page": 91,
       "quote": "Hereafter, recurrence relations are assumed to hold for n = 1, 2, 3, ...",
-      "claim": "Hereafter, recurrence relations are assumed to hold for $n=1,2,3,\\dots$.",
+      "claim": "Hereafter, recurrence relations are assumed to hold for $n = 1, 2, 3, \\ldots$.",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -992,7 +992,7 @@
       "lo": "eb11c2-5:objective-3",
       "source_page": 98,
       "quote": "Use mathematical induction to prove that 1 + 2 + 3 + … + n",
-      "text": "Use mathematical induction to prove that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$",
+      "text": "Use mathematical induction to prove that $1+2+3+\\ldots+n=\\frac{1}{2}n(n+1)$",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -1015,10 +1015,10 @@
       "lo": "eb11c2-5:objective-3",
       "source_page": 98,
       "quote": "Let the given equality be (A).",
-      "stem": "Prove by induction that $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$ (the Warm Up); let the given equality be (A).",
+      "stem": "Prove by induction that $1+2+3+\\ldots+n=\\frac{1}{2}n(n+1)$ (the Warm Up); let the given equality be (A).",
       "solution": [
         "[1] When $n=1$: LHS $=1$, RHS $=\\frac{1}{2}\\times1\\times(1+1)=1$. Therefore, (A) holds when $n=1$.",
-        "[2] Assume (A) holds when $n=k$: $1+2+3+\\dots+k=\\frac{1}{2}k(k+1)\\dots\\dots$(i)",
+        "[2] Assume (A) holds when $n=k$: $1+2+3+\\ldots+k=\\frac{1}{2}k(k+1)\\ldots\\ldots$(i)",
         "When $n=k+1$, from (i): LHS $=1+2+3+\\dots+k+(k+1)$",
         "$=\\frac{1}{2}k(k+1)+(k+1)$",
         "$=\\frac{1}{2}(k+1)(k+2)$",
@@ -1514,7 +1514,7 @@
       "lo": "eb11c2-5:objective-4",
       "source_page": 104,
       "quote": "From the given recurrence relation: a2 = a1^2 − 1 / 1+1",
-      "stem": "Find $a_2, a_3, a_4$ and estimate the general term of the sequence $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$.",
+      "stem": "Find $a_2, a_3, a_4$ and estimate the general term of the sequence $\\{a_n\\}$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$.",
       "solution": [
         "From the given recurrence relation: $a_2=\\frac{a_1^2-1}{1+1}=\\frac{3^2-1}{2}=\\frac{8}{2}=4$",
         "Similarly, $a_3=5$, $a_4=6$",
@@ -1771,6 +1771,13 @@
     "2026-10-21: extracted from the page images (ext-v5, sonnet)",
     "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (4)",
     "2026-10-21: 12 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
-    "2026-10-21: figure regions placed (crop-v2, sonnet): 1 cropped"
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 1 cropped",
+    "2026-10-22: eb11c2-5:rule-1 claim: $a_2, a_3, a_4, \\dots$ → $a_2, a_3, a_4, \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:rule-1 claim: $n=1,2,3,\\dots$ → $n = 1, 2, 3, \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:convention-1 claim: $n=1,2,3,\\dots$ → $n = 1, 2, 3, \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:warm-up-5 text: $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$ → $1+2+3+\\ldots+n=\\frac{1}{2}n(n+1)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:worked-example-1 stem: $1+2+3+\\dots+n=\\frac{1}{2}n(n+1)$ → $1+2+3+\\ldots+n=\\frac{1}{2}n(n+1)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:worked-example-1 solution[1]: $1+2+3+\\dots+k=\\frac{1}{2}k(k+1)\\dots\\dots$ → $1+2+3+\\ldots+k=\\frac{1}{2}k(k+1)\\ldots\\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-5:explanation-5 stem: $a_1=3$ → $\\{a_n\\}$ (maths reading, settled by a third reading that agreed with the second)"
   ]
 }

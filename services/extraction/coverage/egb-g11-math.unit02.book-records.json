@@ -14,9 +14,9 @@
   "status": "RED",
   "summary": {
     "checks": 20,
-    "hold": 14,
+    "hold": 13,
     "excepted": 0,
-    "fail": 6
+    "fail": 7
   },
   "checks": [
     {
@@ -544,9 +544,22 @@
       "id": "statements_checked",
       "title": "Statements = statements the provenance check kept + those it flagged that a person labelled",
       "want": 84,
-      "got": 84,
-      "state": "holds",
-      "failures": [],
+      "got": 81,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "item eb11c2-4:caution-1",
+          "detail": "edited since it was checked"
+        },
+        {
+          "scope": "item eb11c2-5:rule-1",
+          "detail": "edited since it was checked"
+        },
+        {
+          "scope": "item eb11c2-5:convention-1",
+          "detail": "edited since it was checked"
+        }
+      ],
       "excepted_scopes": []
     },
     {
@@ -629,11 +642,11 @@
     "book-records/egb-g11-math/misprint-candidates.json": "862b946037d5c69b40b1f1f205f1637504f7e615d100b724b7ec051d5ddf01b9",
     "groundtruth/egb-g11-math/misprint-decisions.json": "4e15e4489cee3971b5047aaaeeb5c2aebca18d186a268db63da5b2adcbafffee",
     "teaching/egb-g11-math/held.json": "efda67084b12ea79f7eb6f457af3fd479c57f00325ca8b5677dda1d0899e5d07",
-    "book-records/egb-g11-math/eb11c2-1.json": "f2b5718f2882d0266263cec54a1ed058c803605eb006e159335acd4ce92a6391",
-    "book-records/egb-g11-math/eb11c2-2.json": "e83a63aab706df7a662ee773c8486ccb97699069ad6a7b6ba31715063a1c427e",
-    "book-records/egb-g11-math/eb11c2-3.json": "5a25533d8ca3b05924786464ebe0839cd5c7cd0f67b5856fe6aa396b3bdaf173",
-    "book-records/egb-g11-math/eb11c2-4.json": "d94be10122b3db9849d65050743fbddecd6b915e810579b88f23f57374cc05ec",
-    "book-records/egb-g11-math/eb11c2-5.json": "48ebc3a0e282a95e7de897bf7853155b7548b871c5d76fdc590a1f55f8546ea3",
+    "book-records/egb-g11-math/eb11c2-1.json": "41b4fd6a3462d361ce8befbe8bded3b948a04ad7da34da886d7d39dbc0e66c2b",
+    "book-records/egb-g11-math/eb11c2-2.json": "eb3ff552254c4e37e88f34d52a0f00edba4bcf4b6dfd21b117b944b57ce457f4",
+    "book-records/egb-g11-math/eb11c2-3.json": "be0960603330f5c4ce1998c6f248378a88608e80a8db52ce3329cc395f797f6b",
+    "book-records/egb-g11-math/eb11c2-4.json": "4ad1b89f13faa11d644ceca8f5c26baba1bbcd5ad474adab87571654eacd59c5",
+    "book-records/egb-g11-math/eb11c2-5.json": "f69c17f3977352f8cf1ff7c6dd60709017de90cb6a39bbe8c19afdf02f0ee8a0",
     "book-records/egb-g11-math/maths-reading/eb11c2-1.json": "598be290cdba9dbf7fa6c8e8fefd47144079626a144ca7847ba61ea37c0fdd85",
     "book-records/egb-g11-math/maths-reading/eb11c2-2.json": "04c5d995b1908b58adf9978062d36801e5e8ef29a2c5c843557823ef5833da84",
     "book-records/egb-g11-math/maths-reading/eb11c2-3.json": "e18e72759cae29f00d7650254a11dbf4fabff22240b6e9b3c954a02c94799e1b",
@@ -644,20 +657,20 @@
     "teaching/egb-g11-math/visuals/eb11c2-3.json": "eb58d6d9ada3ebbf92af663454d6caa796542f4124b370d797a6913a1cb7e86b",
     "teaching/egb-g11-math/visuals/eb11c2-4.json": "5bf10793bc416e146360b1760059b61575627e3c30caf155aab370dfbda8268a",
     "teaching/egb-g11-math/visuals/eb11c2-5.json": "39ce1a0fb93955113776b46f9e055c96abbd01837657cfdd0c6d7f45d55614d7",
-    "compiled/egb-g11-math/compile-report.json": "37f178e97c7e246f43c5c1169c47208ee41c8b4811cb118b99fed5fbde1f369d",
-    "compiled/egb-g11-math/eb11c1.json": "3268767585e2917bfad4799622f06224c79436d36900b95f18e515430c1553a5",
-    "compiled/egb-g11-math/eb11c2.json": "7717a23f41be423972bbab429db83d705148254540dba43c9e443210a240ba81",
-    "compiled/egb-g11-math/eb11c3.json": "3c1d16015afad3a60d5d8eabc308692a6c563d0f4eb867f1757221a40415feb7",
-    "compiled/egb-g11-math/eb11c4.json": "a15fb398a850514945652c560c18117baa4c9f7b0e7109aea77a88d2d009fe0b",
+    "compiled/egb-g11-math/compile-report.json": "0442449aff3976285de19190e5ab92236c82a04fe6ca7ea90f4c923fe2a3062d",
+    "compiled/egb-g11-math/eb11c1.json": "785b653adfd81a45b4daee45b67f2ed442a101e3d83d3502e9e584b509acffeb",
+    "compiled/egb-g11-math/eb11c2.json": "61abbb07589805a83d17538b29e3e6f55b956fc6afccbbd89159733b1503016b",
+    "compiled/egb-g11-math/eb11c3.json": "014d40098445573a962204be1c94b787ca4e1dcc2d638f339ac9757778848d76",
+    "compiled/egb-g11-math/eb11c4.json": "86a58dcc940848b4cfe3ae0432f7d7385dddc638202439bbe77a0da5862e2ee3",
     "compiled/egb-g11-math/generated-questions.json": "1fa977283b10bfe2b5423602441fbdb99952d8ed71918a5a1265e49e2bcc0d2e",
     "compiled/egb-g11-math/misconceptions.json": "8a17a48d3975bc8cb588501aea8d42819cf95095d09edbb1367c07e2934c8ae5",
     "compiled/egb-g11-math/review-stamps.json": "fea9e38bc0338b26aefa31adc193622578ef10bb675b09b9ae93275089b1a8d8",
     "compiled/egb-g11-math/widget-questions.json": "18884dc9ebb4b513117be5b7735589478f11e230ffecd86433d66f1318c1d300",
-    "compiled/egb-g11-math/content/eb11c2-1.json": "ecff3d3b9d7be0b6610e0ca1430ccfaf89deebfeffbbb6a97920c5a1013969a4",
-    "compiled/egb-g11-math/content/eb11c2-2.json": "f6bc41e422a3cd08d378f76c4ae95ad6ddaaa03370c4a3fbf08063e82aa45794",
-    "compiled/egb-g11-math/content/eb11c2-3.json": "5902df45d615eafc49f7b50ac18e28c61f630994d2003f13f047ab83182319ae",
-    "compiled/egb-g11-math/content/eb11c2-4.json": "cb9d817c3fbe1d82383639f8374ca897f6bf2d62c6a5c31e337b6b645d6e110e",
-    "compiled/egb-g11-math/content/eb11c2-5.json": "8338d41f479a3a9d8826810113b4b26d20ba0accc9e1594db3698c31daf00e47"
+    "compiled/egb-g11-math/content/eb11c2-1.json": "90d1cbdc9ee95fc383afaa34412807064069bfdadb03d2370f6a06844f794988",
+    "compiled/egb-g11-math/content/eb11c2-2.json": "f73a5926daf1c9306943889692eb70064928a2c3103e26b8a6d97332bbfde4ef",
+    "compiled/egb-g11-math/content/eb11c2-3.json": "fd024618724cea9cab42e3882b03f0cc85cb16d5d161913ef620d932a08d6c2f",
+    "compiled/egb-g11-math/content/eb11c2-4.json": "c23309a86a244035dcbde9a932edb073edbad2e4feee02627f4b4d8ae5e1b8ea",
+    "compiled/egb-g11-math/content/eb11c2-5.json": "6cdfb2f448f22ab0dc9ed76e47214665495d3989657fd9d42324407928831c0f"
   },
   "exceptions": []
 }

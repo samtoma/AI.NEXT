@@ -208,11 +208,11 @@
       "parts": [
         {
           "label": "a",
-          "stem": "$3+7+11+\\dots+(4n-1)$"
+          "stem": "$3 + 7 + 11 + \\ldots + (4n - 1)$"
         },
         {
           "label": "b",
-          "stem": "$6^2+7^2+8^2+\\dots+15^2$"
+          "stem": "$6^2 + 7^2 + 8^2 + \\ldots + 15^2$"
         }
       ],
       "provenance": {
@@ -700,7 +700,7 @@
         },
         {
           "label": "c",
-          "stem": "$1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$"
+          "stem": "$1 \\times 3 + 2 \\times 8 + 3 \\times 13 + \\ldots + n(5n-2)$"
         },
         {
           "label": "d",
@@ -736,11 +736,11 @@
       "parts": [
         {
           "label": "b",
-          "stem": "$\\sum_{k=1}^{n}(5k+4)$",
-          "answer": "$\\frac{1}{2}n(5n+13)$",
+          "stem": "$\\sum_{k=1}^{n} (-3)$",
+          "answer": "$-3n$",
           "solution": [
-            "$=5\\sum_{k=1}^{n}k+\\sum_{k=1}^{n}4$",
-            "$=5\\times\\frac{1}{2}n(n+1)+4n$",
+            "$\\sum_{k=1}^{n} (-3)$",
+            "$= -3n$",
             "$=\\frac{1}{2}n\\{5(n+1)+8\\}=\\frac{1}{2}n(5n+13)$"
           ],
           "solution_provenance": "book_printed"
@@ -1469,11 +1469,11 @@
         77
       ],
       "quote": "Transform each term using the formula.",
-      "stem": "(a) Find $\\frac{1}{2\\times5}+\\frac{1}{5\\times8}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
+      "stem": "(a) Find $\\frac{1}{2\\times 5}+\\frac{1}{5\\times 8}+\\frac{1}{8\\times 11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
       "solution": [
-        "Transform each term using the formula: $=\\frac13\\left(\\frac12-\\frac15\\right)+\\frac13\\left(\\frac15-\\frac18\\right)+\\frac13\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\frac13\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)$",
-        "Factor out 1/3 and cancel out the terms that sum to zero: $=\\frac13\\left\\{\\left(\\frac12-\\frac15\\right)+\\left(\\frac15-\\frac18\\right)+\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)\\right\\}$",
-        "$=\\frac13\\left(\\frac12-\\frac1{3n+2}\\right)$",
+        "Transform each term using the formula: $=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\frac{1}{3}\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\frac{1}{3}\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\frac{1}{3}\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)$",
+        "Factor out 1/3 and cancel out the terms that sum to zero: $=\\frac{1}{3}\\left\\{\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)\\right\\}$",
+        "$=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{3n+2}\\right)$",
         "$=\\frac{n}{2(3n+2)}$",
         "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
         "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(k+2)-(k+1)}$",
@@ -1485,13 +1485,13 @@
       "parts": [
         {
           "label": "b",
-          "stem": "$\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$",
+          "stem": "$\\frac{1}{2\\times 5}+\\frac{1}{5\\times 8}+\\frac{1}{8\\times 11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$",
           "answer": "$\\sqrt{n+2}-\\sqrt{2}$",
           "solution": [
-            "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$",
-            "$=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(k+2)-(k+1)}$",
-            "$=\\sum_{k=1}^{n}(\\sqrt{k+2}-\\sqrt{k+1})$",
-            "$=(\\sqrt3-\\sqrt2)+(\\sqrt4-\\sqrt3)+(\\sqrt5-\\sqrt4)+(\\sqrt6-\\sqrt5)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$",
+            "$=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\frac{1}{3}\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\frac{1}{3}\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\frac{1}{3}\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)$",
+            "$=\\frac{1}{3}\\left\\{\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)\\right\\}$",
+            "$=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{3n+2}\\right)$",
+            "$=\\frac{n}{2(3n+2)}$",
             "$=\\sqrt{n+2}-\\sqrt2$"
           ],
           "notes": "Side explanations: 'First rationalize the denominator.'; 'Rewrite in the form of a sum of terms.'; 'Cancel out the terms that sum to zero and calculate the remaining parts.' Cancelled terms are crossed out in the telescoping line.",
@@ -1695,7 +1695,7 @@
       "parts": [
         {
           "label": "S",
-          "stem": "$S=3\\times1+5\\times3+7\\times3^2+9\\times3^3+\\dots+(2n+1)\\times3^{n-1}$"
+          "stem": "$S= 3\\times 1+5\\times 3+7\\times 3^{2}+9\\times 3^{3}+\\ldots+(2n+1)\\times 3^{n-1}$"
         }
       ],
       "provenance": {
@@ -1759,7 +1759,7 @@
       "parts": [
         {
           "label": "S",
-          "stem": "$S=2\\times1+3\\times3+4\\times3^2+5\\times3^3+\\dots+(n+1)\\times3^{n-1}$"
+          "stem": "$S = 2\\times 1+3\\times 3+4\\times 3^{2}+5\\times 3^{3}+\\ldots+(n+1)\\times 3^{n-1}$"
         }
       ],
       "provenance": {
@@ -1785,7 +1785,7 @@
       "lo": "eb11c2-3:objective-4",
       "source_page": 80,
       "quote": "S = 1 × 1 + 2 × 2 + 3 × 2^2+4 × 2^3",
-      "text": "Find the sum $S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$",
+      "text": "Find the sum $S = 1 \\times 1 + 2 \\times 2 + 3 \\times 2^2 + 4 \\times 2^3 + \\ldots + n \\times 2^{n-1}$",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -1797,7 +1797,7 @@
       "lo": "eb11c2-3:objective-4",
       "source_page": 80,
       "quote": "S = 1 × 3 + 3 × 3^2+5 × 3^3+7 × 3^4",
-      "text": "Find the sum $S = 1\\times3 + 3\\times3^2 + 5\\times3^3 + 7\\times3^4 + \\dots + (2n-1)\\times3^n$",
+      "text": "Find the sum $S = 1 \\times 3 + 3 \\times 3^2 + 5 \\times 3^3 + 7 \\times 3^4 + \\ldots + (2n-1) \\times 3^n$",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -1809,7 +1809,7 @@
       "lo": "eb11c2-3:objective-4",
       "source_page": 80,
       "quote": "Find the following sum 5 , 5 + 9 , 5 + 9 + 13",
-      "text": "Find the following sum $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\dots\\dots+(4k+1)$",
+      "text": "Find the following sum $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\ \\ldots\\ldots + (4k+1)$",
       "notes": "Challenge box; sums listed with commas as printed.",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
@@ -1867,7 +1867,7 @@
       "lo": "eb11c2-3:objective-5",
       "source_page": 81,
       "quote": "Solve the following problems for the sequence 3, 3+5, 3+5+7, 3+5+7+9, ...",
-      "text": "Solve the following problems for the sequence $3, 3+5, 3+5+7, 3+5+7+9, \\dots$",
+      "text": "Solve the following problems for the sequence $3,\\ 3+5,\\ 3+5+7,\\ 3+5+7+9,\\ \\ldots$",
       "parts": [
         {
           "label": "a",
@@ -1989,7 +1989,7 @@
       "lo": "eb11c2-3:objective-5",
       "source_page": 81,
       "quote": "Find the k-th term.",
-      "text": "Solve the following problems for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$ Find the $k$-th term.",
+      "text": "Solve the following problems for the sequence $1,\\ 1+3,\\ 1+3+5,\\ 1+3+5+7,\\ \\ldots$ Find the $k$-th term.",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -2001,7 +2001,7 @@
       "lo": "eb11c2-3:objective-5",
       "source_page": 81,
       "quote": "Find the sum from the first term to the n-th term.",
-      "text": "Find the sum from the first term to the $n$-th term (for the sequence $1, 1+3, 1+3+5, 1+3+5+7, \\dots$).",
+      "text": "Find the sum from the first term to the $n$-th term (for the sequence $1,\\ 1+3,\\ 1+3+5,\\ 1+3+5+7,\\ \\ldots$).",
       "provenance": {
         "by": "runbook/book-record.workflow.js ext-v5, sonnet, 2026-10-21",
         "method": "page image"
@@ -2308,22 +2308,22 @@
       ],
       "quote": "Deduction if not written.",
       "text": "Side notes next to the explanation: 'Deduction if not written.' (at When n ≥ 2); '$S_{n-1}=(n-1)^2-3(n-1)$' (n−1 underlined in red); 'Deduction if not written.' (at first term); 'Deduction if not written. Check by substituting n = 1 into formula (i).'",
-      "answer": "$a_n = 4\\times 5^{n-1}$",
+      "answer": "$a_n = 2n - 4$",
       "parts": [
         {
           "label": "b",
-          "answer": "$a_n = 4\\times 5^{n-1}$",
+          "answer": "$a_n = 2n - 4$",
           "solution": [
             "When $n \\ge 2$,",
             "$a_n = S_n - S_{n-1}$",
             "$= (5^n-1)-(5^{n-1}-1)$",
-            "$= 5^n - 5^{n-1}$",
+            "$= (n^2 - 3n) - \\{(n-1)^2 - 3(n-1)\\}$",
             "$= 5\\times 5^{n-1} - 1\\times 5^{n-1}$",
-            "$= 4\\times 5^{n-1}$ ...... (i)",
+            "$= 2n - 4$ ...... (i)",
             "The first term is $a_1 = S_1$",
-            "$= 5^1 - 1 = 4$ ...... (ii)",
-            "From (i) and (ii), $a_n = 4\\times 5^{n-1}$ also holds when $n=1$",
-            "Therefore, the general term is $a_n = 4\\times 5^{n-1}$"
+            "$= 1^2 - 3 \\times 1 = -2$ ...... (ii)",
+            "From (i) and (ii), $a_n = 2n - 4$ also holds when $n=1$",
+            "Therefore, the general term is $a_n = 2n - 4$"
           ],
           "solution_provenance": "book_printed"
         }
@@ -2642,6 +2642,37 @@
     "2026-10-21: try-1 (p.72) held p.73's Exercise as parts f–o, and exercise-4 (p.77) held p.78's question 2: split into exercise-18 and exercise-19 by hand",
     "objectives from S1 (runs/egb-g11-math/objectives/s1-ch02.20261021T104315Z.json), approved at G1 (5)",
     "2026-10-21: 23 statement(s), table(s) and figure(s) filed under the approved objectives (book_record_filing.py: two readings, or a person)",
-    "2026-10-21: figure regions placed (crop-v2, sonnet): 2 cropped"
+    "2026-10-21: figure regions placed (crop-v2, sonnet): 2 cropped",
+    "2026-10-22: eb11c2-3:unlabelled-exercise-2 parts[0].stem: $3+7+11+\\dots+(4n-1)$ → $3 + 7 + 11 + \\ldots + (4n - 1)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:unlabelled-exercise-2 parts[1].stem: $6^2+7^2+8^2+\\dots+15^2$ → $6^2 + 7^2 + 8^2 + \\ldots + 15^2$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:warm-up-1 parts[2].stem: $1\\times3+2\\times8+3\\times13+\\dots+n(5n-2)$ → $1 \\times 3 + 2 \\times 8 + 3 \\times 13 + \\ldots + n(5n-2)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-6 parts[0].stem: $\\sum_{k=1}^{n}(5k+4)$ → $\\sum_{k=1}^{n} (-3)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-6 parts[0].answer: $\\frac{1}{2}n(5n+13)$ → $-3n$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-6 parts[0].solution[0]: $=5\\sum_{k=1}^{n}k+\\sum_{k=1}^{n}4$ → $\\sum_{k=1}^{n} (-3)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-6 parts[0].solution[1]: $=5\\times\\frac{1}{2}n(n+1)+4n$ → $= -3n$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 stem: $\\frac{1}{2\\times5}+\\frac{1}{5\\times8}+\\dots+\\frac{1}{(3n-1)(3n+2)}$ → $\\frac{1}{2\\times 5}+\\frac{1}{5\\times 8}+\\frac{1}{8\\times 11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 solution[0]: $=\\frac13\\left(\\frac12-\\frac15\\right)+\\frac13\\left(\\frac15-\\frac18\\right)+\\frac13\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\frac13\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)$ → $=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\frac{1}{3}\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\frac{1}{3}\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\frac{1}{3}\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 solution[1]: $=\\frac13\\left\\{\\left(\\frac12-\\frac15\\right)+\\left(\\frac15-\\frac18\\right)+\\left(\\frac18-\\frac1{11}\\right)+\\dots+\\left(\\frac1{3n-1}-\\frac1{3n+2}\\right)\\right\\}$ → $=\\frac{1}{3}\\left\\{\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)\\right\\}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 solution[2]: $=\\frac13\\left(\\frac12-\\frac1{3n+2}\\right)$ → $=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{3n+2}\\right)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 parts[0].stem: $\\sum_{k=1}^{n}\\frac{1}{\\sqrt{k+2}+\\sqrt{k+1}}$ → $\\frac{1}{2\\times 5}+\\frac{1}{5\\times 8}+\\frac{1}{8\\times 11}+\\dots+\\frac{1}{(3n-1)(3n+2)}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 parts[0].solution[0]: $=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(\\sqrt{k+2}+\\sqrt{k+1})(\\sqrt{k+2}-\\sqrt{k+1})}$ → $=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\frac{1}{3}\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\frac{1}{3}\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\frac{1}{3}\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 parts[0].solution[1]: $=\\sum_{k=1}^{n}\\frac{\\sqrt{k+2}-\\sqrt{k+1}}{(k+2)-(k+1)}$ → $=\\frac{1}{3}\\left\\{\\left(\\frac{1}{2}-\\frac{1}{5}\\right)+\\left(\\frac{1}{5}-\\frac{1}{8}\\right)+\\left(\\frac{1}{8}-\\frac{1}{11}\\right)+\\dots+\\left(\\frac{1}{3n-1}-\\frac{1}{3n+2}\\right)\\right\\}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 parts[0].solution[2]: $=\\sum_{k=1}^{n}(\\sqrt{k+2}-\\sqrt{k+1})$ → $=\\frac{1}{3}\\left(\\frac{1}{2}-\\frac{1}{3n+2}\\right)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:explanation-1 parts[0].solution[3]: $=(\\sqrt3-\\sqrt2)+(\\sqrt4-\\sqrt3)+(\\sqrt5-\\sqrt4)+(\\sqrt6-\\sqrt5)+\\dots+(\\sqrt{n+2}-\\sqrt{n+1})$ → $=\\frac{n}{2(3n+2)}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:warm-up-5 parts[0].stem: $S=3\\times1+5\\times3+7\\times3^2+9\\times3^3+\\dots+(2n+1)\\times3^{n-1}$ → $S= 3\\times 1+5\\times 3+7\\times 3^{2}+9\\times 3^{3}+\\ldots+(2n+1)\\times 3^{n-1}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:try-4 parts[0].stem: $S=2\\times1+3\\times3+4\\times3^2+5\\times3^3+\\dots+(n+1)\\times3^{n-1}$ → $S = 2\\times 1+3\\times 3+4\\times 3^{2}+5\\times 3^{3}+\\ldots+(n+1)\\times 3^{n-1}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:exercise-6 text: $S = 1\\times1 + 2\\times2 + 3\\times2^2 + 4\\times2^3 + \\dots + n\\times2^{n-1}$ → $S = 1 \\times 1 + 2 \\times 2 + 3 \\times 2^2 + 4 \\times 2^3 + \\ldots + n \\times 2^{n-1}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:exercise-7 text: $S = 1\\times3 + 3\\times3^2 + 5\\times3^3 + 7\\times3^4 + \\dots + (2n-1)\\times3^n$ → $S = 1 \\times 3 + 3 \\times 3^2 + 5 \\times 3^3 + 7 \\times 3^4 + \\ldots + (2n-1) \\times 3^n$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:challenge-5 text: $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\dots\\dots+(4k+1)$ → $5,\\ 5+9,\\ 5+9+13,\\ 5+9+13+17,\\ \\ldots\\ldots + (4k+1)$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:warm-up-6 text: $3, 3+5, 3+5+7, 3+5+7+9, \\dots$ → $3,\\ 3+5,\\ 3+5+7,\\ 3+5+7+9,\\ \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:try-5 text: $1, 1+3, 1+3+5, 1+3+5+7, \\dots$ → $1,\\ 1+3,\\ 1+3+5,\\ 1+3+5+7,\\ \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:try-6 text: $1, 1+3, 1+3+5, 1+3+5+7, \\dots$ → $1,\\ 1+3,\\ 1+3+5,\\ 1+3+5+7,\\ \\ldots$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 answer: $a_n = 4\\times 5^{n-1}$ → $a_n = 2n - 4$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].answer: $a_n = 4\\times 5^{n-1}$ → $a_n = 2n - 4$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].solution[3]: $= 5^n - 5^{n-1}$ → $= (n^2 - 3n) - \\{(n-1)^2 - 3(n-1)\\}$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].solution[5]: $= 4\\times 5^{n-1}$ → $= 2n - 4$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].solution[7]: $= 5^1 - 1 = 4$ → $= 1^2 - 3 \\times 1 = -2$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].solution[8]: $a_n = 4\\times 5^{n-1}$ → $a_n = 2n - 4$ (maths reading, settled by a third reading that agreed with the second)",
+    "2026-10-22: eb11c2-3:linking-text-26 parts[0].solution[9]: $a_n = 4\\times 5^{n-1}$ → $a_n = 2n - 4$ (maths reading, settled by a third reading that agreed with the second)"
   ]
 }
