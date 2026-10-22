@@ -430,8 +430,12 @@ def refresh_book(book: str) -> dict:
     try:
         argv = ["uv", "run", "ingest.py", "refresh", book, "--json", *(["--dsn", SCRATCH_DSN[0]] if SCRATCH_DSN else [])]
         p = subprocess.run(argv, cwd=EXTRACTION, text=True, capture_output=True, timeout=1800)
+        # the report is the JSON object on stdout; a library may write a line before it (MuPDF prints "format error:
+        # cmsOpenProfileFromMem failed" to stdout on a book whose PDF carries a colour profile), which is not a failure
+        out = p.stdout
+        start = 0 if out.startswith("{") else out.find("\n{") + 1
         try:   # a refresh that finishes records its start in reviews/<book>/last-refresh.json (ingest.py refresh)
-            return json.loads(p.stdout)
+            return json.loads(out[start:]) if start or out.startswith("{") else json.loads(out)
         except ValueError:
             return {"ok": False, "steps": [], "error": (p.stderr or p.stdout).strip()[-600:] or f"exit {p.returncode}"}
     finally:
